@@ -27,12 +27,12 @@ Client_Task::svc (void)
   for (CORBA::ULong j = 0; j != payload.length (); ++j)
     payload[j] = (j % 256);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       for (int i = 0; i != this->event_count_; ++i)
         {
-          this->receiver_->receive_data (payload, ACE_TRY_ENV);
+          this->receiver_->receive_data (payload TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

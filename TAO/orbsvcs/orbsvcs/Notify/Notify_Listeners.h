@@ -70,19 +70,19 @@ class  TAO_Notify_Export TAO_Notify_EventListener : virtual public TAO_Notify_Re
   //
 
 public:
-  virtual void dispatch_event (TAO_Notify_Event &event,
-                               CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void dispatch_event (TAO_Notify_Event &event
+                               TAO_ENV_ARG_DECL) = 0;
   // Callback methods to supply the event to the listener.
 
   virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event,
-                                          CORBA::Boolean eval_parent,
-                                          CORBA::Environment &ACE_TRY_ENV) = 0;
+                                          CORBA::Boolean eval_parent
+                                          TAO_ENV_ARG_DECL) = 0;
   // Evaluates true if this event is acceptable by the listener.
   // The <eval_parent> is a hint to the listener to help it determine
   // if its wise to evaluate the parents filter too. This helps in
   // implementing the "interfilter group operator" logic.
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL) = 0;
   // Ask the listener to relinquish any bindings and prepare to be
   // disposed.
 
@@ -106,8 +106,8 @@ class TAO_Notify_Export TAO_Notify_EventSource : virtual public TAO_Notify_RefCo
  public:
   // TODO: add a shutdown method to this interface!!
 
-  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event,
-                                          CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event
+                                          TAO_ENV_ARG_DECL) = 0;
   // Evaluates true if this event is acceptable by the Source.
 
   virtual TAO_Notify_Worker_Task* filter_eval_task (void) = 0;
@@ -129,8 +129,8 @@ class TAO_Notify_Export TAO_Notify_UpdateListener : virtual public TAO_Notify_Re
 
  public:
   virtual void dispatch_update (TAO_Notify_EventType_List& added,
-                                TAO_Notify_EventType_List& removed,
-                                CORBA::Environment &ACE_TRY_ENV) = 0;
+                                TAO_Notify_EventType_List& removed
+                                TAO_ENV_ARG_DECL) = 0;
   // Callback method to supply updates.
 };
 

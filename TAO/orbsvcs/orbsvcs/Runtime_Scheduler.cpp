@@ -28,8 +28,8 @@ ACE_Runtime_Scheduler (int config_count,
 // it's not present.
 
 RtecScheduler::handle_t
-ACE_Runtime_Scheduler::create (const char *entry_point,
-                               CORBA::Environment &)
+ACE_Runtime_Scheduler::create (const char *entry_point
+                               TAO_ENV_ARG_DECL_NOT_USED)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::DUPLICATE_NAME))
 {
@@ -47,19 +47,19 @@ ACE_Runtime_Scheduler::create (const char *entry_point,
 // value if it's not present.
 
 RtecScheduler::handle_t
-ACE_Runtime_Scheduler::lookup (const char * entry_point,
-                               CORBA::Environment &ACE_TRY_ENV)
+ACE_Runtime_Scheduler::lookup (const char * entry_point
+                               TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return create (entry_point, ACE_TRY_ENV);
+  return create (entry_point TAO_ENV_ARG_PARAMETER);
 }
 
 
 // Return a pointer to the RT_Info corresponding to the passed handle.
 
 RtecScheduler::RT_Info *
-ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
-                            CORBA::Environment &ACE_TRY_ENV)
+ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle
+                            TAO_ENV_ARG_DECL)
      ACE_THROW_SPEC((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK))
 {
@@ -109,8 +109,8 @@ ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
                                  RtecScheduler::Importance_t importance,
                                  RtecScheduler::Quantum_t quantum,
                                  CORBA::Long threads,
-                                 RtecScheduler::Info_Type_t info_type,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 RtecScheduler::Info_Type_t info_type
+                                 TAO_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
 {
@@ -146,8 +146,8 @@ void
 ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
                                  RtecScheduler::OS_Priority& o_priority,
                                  RtecScheduler::Preemption_Subpriority_t& subpriority,
-                                 RtecScheduler::Preemption_Priority_t& p_priority,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 RtecScheduler::Preemption_Priority_t& p_priority
+                                 TAO_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK,
                       RtecScheduler::NOT_SCHEDULED))
@@ -169,23 +169,23 @@ void
 ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
                                              RtecScheduler::OS_Priority& priority,
                                              RtecScheduler::Preemption_Subpriority_t& subpriority,
-                                             RtecScheduler::Preemption_Priority_t& p_priority,
-                                             CORBA::Environment &ACE_TRY_ENV)
+                                             RtecScheduler::Preemption_Priority_t& p_priority
+                                             TAO_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK,
                       RtecScheduler::NOT_SCHEDULED))
 {
-  RtecScheduler::handle_t handle = lookup (entry_point, ACE_TRY_ENV);
+  RtecScheduler::handle_t handle = lookup (entry_point TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (handle < -1)
-    // The exception was thrown or is in ACE_TRY_ENV already.
+    // The exception was thrown or is in TAO_ENV_SINGLE_ARG_PARAMETER already.
     return;
   this->priority (handle,
                   priority,
                   subpriority,
-                  p_priority,
-                  ACE_TRY_ENV);
+                  p_priority
+                  TAO_ENV_ARG_PARAMETER);
 }
 
 
@@ -196,8 +196,8 @@ void
 ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
                                        RtecScheduler::handle_t /* dependency */,
                                        CORBA::Long /* number_of_calls */,
-                                       RtecScheduler::Dependency_Type_t /* dependency_type */,
-                                       CORBA::Environment &ACE_TRY_ENV)
+                                       RtecScheduler::Dependency_Type_t /* dependency_type */
+                                       TAO_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))
 {
@@ -231,8 +231,8 @@ ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long /* minimum_priority */,
                                            CORBA::Long /* maximum_priority */,
                                            RtecScheduler::RT_Info_Set_out /* infos */,
                                            RtecScheduler::Config_Info_Set_out /* configs */,
-                                           RtecScheduler::Scheduling_Anomaly_Set_out /* anomalies */,
-                                           CORBA::Environment &)
+                                           RtecScheduler::Scheduling_Anomaly_Set_out /* anomalies */
+                                           TAO_ENV_ARG_DECL_NOT_USED)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                       RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
@@ -250,8 +250,8 @@ ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long /* minimum_priority */,
 void
 ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                                RtecScheduler::OS_Priority& priority,
-                                               RtecScheduler::Dispatching_Type_t & d_type,
-                                               CORBA::Environment &ACE_TRY_ENV)
+                                               RtecScheduler::Dispatching_Type_t & d_type
+                                               TAO_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::NOT_SCHEDULED,
                       RtecScheduler::UNKNOWN_PRIORITY_LEVEL))
@@ -284,7 +284,7 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
 // to the number returned, inclusive.
 
 RtecScheduler::Preemption_Priority_t
-ACE_Runtime_Scheduler::last_scheduled_priority (CORBA::Environment &ACE_TRY_ENV)
+ACE_Runtime_Scheduler::last_scheduled_priority (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED))
 {

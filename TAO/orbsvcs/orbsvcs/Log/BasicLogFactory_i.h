@@ -50,15 +50,15 @@ public:
   // Dtor
 
   DsLogAdmin::BasicLogFactory_ptr
-    activate (PortableServer::POA_ptr poa,
-              CORBA::Environment &ACE_TRY_ENV);
+    activate (PortableServer::POA_ptr poa
+              TAO_ENV_ARG_DECL);
   // Activate this servant with the POA passed in.
 
   DsLogAdmin::BasicLog_ptr
     create (DsLogAdmin::LogFullAction full_action,
             CORBA::ULongLong max_size,
-            DsLogAdmin::LogId_out id,
-            CORBA_Environment& ACE_TRY_ENV)
+            DsLogAdmin::LogId_out id
+            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::NoResources
                      ));
@@ -68,8 +68,8 @@ public:
   DsLogAdmin::BasicLog_ptr
     create_with_id (DsLogAdmin::LogId id,
                     DsLogAdmin::LogFullAction full_action,
-                    CORBA::ULongLong max_size,
-                    CORBA_Environment& ACE_TRY_ENV)
+                    CORBA::ULongLong max_size
+                    TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      DsLogAdmin::NoResources,

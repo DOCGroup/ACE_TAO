@@ -37,15 +37,15 @@ Time_Date_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       CORBA::Long l;
 
       // Get the time & date in binary format.
-      client_->bin_date (l,
-                         ACE_TRY_ENV);
+      client_->bin_date (l
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -54,14 +54,14 @@ Time_Date_Client_i::run (const char *name,
 
       // Get the time & date in string format.
       CORBA::String_var str_var;
-      client_->str_date (str_var.out(),
-                         ACE_TRY_ENV);
+      client_->str_date (str_var.out()
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) String time_date = %s\n",
                   str_var.in()));
-  
+
       client_.shutdown ();
     }
   ACE_CATCH (CORBA::UserException, range_ex)

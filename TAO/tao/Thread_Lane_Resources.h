@@ -49,8 +49,8 @@ public:
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Open the acceptor registry.
-  int open_acceptor_registry (int ignore_address,
-                              CORBA::Environment &ACE_TRY_ENV);
+  int open_acceptor_registry (int ignore_address
+                              TAO_ENV_ARG_DECL);
 
   /// Finalize resources.
   void finalize (void);

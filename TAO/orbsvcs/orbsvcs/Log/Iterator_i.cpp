@@ -31,29 +31,29 @@ Iterator_i::~Iterator_i (void)
 }
 
 void
-Iterator_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+Iterator_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::POA_ptr poa = this->_default_POA (ACE_TRY_ENV);
+  PortableServer::POA_ptr poa = this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this,
-                        ACE_TRY_ENV);
+    poa->servant_to_id (this
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Goodbye cruel world...
   // deactivate from the poa.
-  poa->deactivate_object (oid.in (),
-                          ACE_TRY_ENV);
+  poa->deactivate_object (oid.in ()
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   return;
 }
 
 DsLogAdmin::RecordList*
 Iterator_i::get (CORBA::ULong position,
-                 CORBA::ULong how_many,
-                 CORBA::Environment &ACE_TRY_ENV)
+                 CORBA::ULong how_many
+                 TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
@@ -72,8 +72,8 @@ Iterator_i::get (CORBA::ULong position,
     }
 
   // Use an Interpreter to build an expression tree.
-  TAO_Log_Constraint_Interpreter interpreter (constraint_,
-                                              ACE_TRY_ENV);
+  TAO_Log_Constraint_Interpreter interpreter (constraint_
+                                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Sequentially iterate over all the records and pick the ones that
@@ -122,7 +122,7 @@ Iterator_i::get (CORBA::ULong position,
   if (done == 1)
     {
       // destroy this object..
-      this->destroy (ACE_TRY_ENV);
+      this->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (rec_list);
     }
 

@@ -48,9 +48,9 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
        TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "register_stdin_handler"),
-		      -1);
+                       "%p\n",
+                       "register_stdin_handler"),
+                      -1);
 
 
   return 0;
@@ -66,7 +66,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
   // Read up to BUFSIZ worth of data from ACE_HANDLE h.
 
   if (ACE_OS::fgets (buf,
-		     sizeof buf - 1,
+                     sizeof buf - 1,
                      stdin) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -79,12 +79,12 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
 
       // Null terminate the buffer, replacing the '\n' with '\0'.
       if (buf[n - 1] == '\n')
-	buf[n - 1] = '\0';
+        buf[n - 1] = '\0';
       else
-	buf[n] = '\0';
+        buf[n] = '\0';
       ACE_DEBUG ((LM_DEBUG,
-		  "notifying for event %s\n",
-		  buf));
+                  "notifying for event %s\n",
+                  buf));
     }
 
 
@@ -109,8 +109,8 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
           // reference...  event.value_ = ...
 
           // Forward <Event> to all <Consumers>.
-          notifier->push (event, ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+          notifier->push (event TAO_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {

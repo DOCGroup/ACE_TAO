@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "Consumer.h"
 #include "Supplier.h"
 #include "AddrServer.h"
@@ -11,7 +12,9 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(EC_Examples, MCast, "$Id$")
+ACE_RCSID (EC_Examples,
+           MCast,
+           "$Id$")
 
 const char *udp_mcast_address =
     ACE_DEFAULT_MULTICAST_ADDR ":10001";
@@ -34,32 +37,24 @@ main (int argc, char* argv[])
   //
   // and defined in:
   //
-  // $ACE_ROOT/ace/CORBA_macros.h
+  // $ACE_ROOT/TAO/tao/orbconf.h - for Environment parameter definitions
+  //
+  // $ACE_ROOT/ace/CORBA_macros.h - for try/catch et al.
   //
   // If your platform supports native exceptions, and TAO was compiled
   // with native exception support then you can simply use try/catch
-  // and avoid the ACE_TRY_ENV argument.
+  // and avoid the TAO_ENV_SINGLE_ARG_PARAMETER argument.
   // Unfortunately many embedded systems cannot use exceptions due to
   // the space and time overhead.
   //
-  // This would be OK except for the fact that event channel library
-  // is compiled with support for platforms without exceptions, so
-  // some of the classes (the consumers and suppliers), must receive
-  // the extra CORBA::Environment argument.
-  // In platforms with native C++ exception support the argument must
-  // be present, but it can be ignored, and the standard C++ exception
-  // mechanisms can be used instead.
-  // Still we are workin on some way to avoid the extra argument
-  // altogether, at least for platforms that do not require it.
-  //
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // **************** HERE STARTS THE ORB SETUP
 
       // Create the ORB, pass the argv list for parsing.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the arguments, you usually want to do this after
@@ -77,15 +72,15 @@ main (int argc, char* argv[])
       // The POA starts in the holding state, if it is not activated
       // it will not process any requests.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **************** THAT COMPLETS THE ORB SETUP
@@ -108,14 +103,14 @@ main (int argc, char* argv[])
       // that may involve creating some threads.
       // But it should always be invoked because several internal data
       // structures are initialized at that point.
-      ec_impl.activate (ACE_TRY_ENV);
+      ec_impl.activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The event channel is activated as any other CORBA servant.
       // In this case we use the simple implicit activation with the
       // RootPOA
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_TRY_ENV);
+        ec_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **************** THAT COMPLETES THE LOCAL EVENT CHANNEL SETUP
@@ -152,7 +147,7 @@ main (int argc, char* argv[])
       // Now we create and activate the servant
       AddrServer as_impl (addr);
       RtecUDPAdmin::AddrServer_var address_server =
-        as_impl._this (ACE_TRY_ENV);
+        as_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // We need a local socket to send the data, open it and check
@@ -168,8 +163,8 @@ main (int argc, char* argv[])
       TAO_ECG_UDP_Sender sender;
       sender.init (event_channel.in (),
                    address_server.in (),
-                   &endpoint,
-                   ACE_TRY_ENV);
+                   &endpoint
+                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Now we connect the sender as a consumer of events, it will
@@ -184,7 +179,7 @@ main (int argc, char* argv[])
       sub.dependencies[0].event.header.source =
         ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
-      sender.open (sub, ACE_TRY_ENV);
+      sender.open (sub TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // To receive events we need to setup an event handler:
@@ -201,8 +196,8 @@ main (int argc, char* argv[])
       // required by all the local consumer.
       // Then it register for the multicast groups that carry those
       // events:
-      int r = mcast_eh.open (event_channel.in (),
-                             ACE_TRY_ENV);
+      int r = mcast_eh.open (event_channel.in ()
+                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (r == -1)
         {
@@ -225,8 +220,8 @@ main (int argc, char* argv[])
                      address_server.in (),
                      orb->orb_core ()->reactor (),
                      expire,
-                     max_expiration_count,
-                     ACE_TRY_ENV);
+                     max_expiration_count
+                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The Receiver is also a supplier of events.  The exact type of
@@ -246,7 +241,7 @@ main (int argc, char* argv[])
       pub.publications[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
       pub.is_gateway = 1;
 
-      receiver.open (pub, ACE_TRY_ENV);
+      receiver.open (pub TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **************** THAT COMPLETES THE FEDERATION SETUP
@@ -257,19 +252,19 @@ main (int argc, char* argv[])
       // channel
       Consumer consumer;
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_TRY_ENV);
+        event_channel->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      consumer.connect (consumer_admin.in (),
-                        ACE_TRY_ENV);
+      consumer.connect (consumer_admin.in ()
+                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // And now create a supplier
       Supplier supplier;
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_TRY_ENV);
+        event_channel->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      supplier.connect (supplier_admin.in (),
-                        ACE_TRY_ENV);
+      supplier.connect (supplier_admin.in ()
+                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **************** THAT COMPLETES THE CLIENT SETUP
@@ -282,7 +277,7 @@ main (int argc, char* argv[])
       for (int i = 0; i != 1000; ++i)
         {
           CORBA::Boolean there_is_work =
-            orb->work_pending (ACE_TRY_ENV);
+            orb->work_pending (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           if (there_is_work)
             {
@@ -291,12 +286,12 @@ main (int argc, char* argv[])
               // perform_work() or work_pending(), so just calling
               // them results in a spin loop.
               ACE_Time_Value tv (0, 50000);
-              orb->perform_work (tv, ACE_TRY_ENV);
+              orb->perform_work (tv TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           ACE_Time_Value tv (0, 100000);
           ACE_OS::sleep (tv);
-          supplier.perform_push (ACE_TRY_ENV);
+          supplier.perform_push (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -305,16 +300,16 @@ main (int argc, char* argv[])
       // **************** HERE STARTS THE CLEANUP CODE
 
       // First the easy ones
-      supplier.disconnect (ACE_TRY_ENV);
+      supplier.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      consumer.disconnect (ACE_TRY_ENV);
+      consumer.disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Now let us close the Receiver
-      receiver.close (ACE_TRY_ENV);
+      receiver.close (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      r = mcast_eh.close (ACE_TRY_ENV);
+      r = mcast_eh.close (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (r == -1)
         {
@@ -323,13 +318,13 @@ main (int argc, char* argv[])
         }
 
       // And also close the sender of events
-      sender.close (ACE_TRY_ENV);
+      sender.close (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The event channel must be destroyed, so it can release its
       // resources, and inform all the clients that are still
       // connected that it is going away.
-      event_channel->destroy (ACE_TRY_ENV);
+      event_channel->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Deactivating the event channel implementation is not strictly
@@ -341,24 +336,24 @@ main (int argc, char* argv[])
         // is the root POA, but the code is more robust if we don't
         // rely on that.
         PortableServer::POA_var poa =
-          ec_impl._default_POA (ACE_TRY_ENV);
+          ec_impl._default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
         // Get the Object Id used for the servant..
         PortableServer::ObjectId_var oid =
-          poa->servant_to_id (&ec_impl, ACE_TRY_ENV);
+          poa->servant_to_id (&ec_impl TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
         // Deactivate the object
-        poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+        poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
       // Now we can destroy the POA, the flags mean that we want to
       // wait until the POA is really destroyed
-      poa->destroy (1, 1, ACE_TRY_ENV);
+      poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Finally destroy the ORB
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **************** THAT COMPLETES THE CLEANUP CODE

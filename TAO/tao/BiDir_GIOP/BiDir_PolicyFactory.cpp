@@ -21,8 +21,6 @@ TAO_BiDir_PolicyFactory::create_policy (
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
-  TAO_ENV_ARG_DEFN;
-
   if (type == BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE)
     {
       BiDirPolicy::BidirectionalPolicyValue val;

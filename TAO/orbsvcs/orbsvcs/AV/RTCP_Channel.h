@@ -218,5 +218,3 @@ private:
 
 #include "ace/post.h"
 #endif /* RTCP_CHANNEL_INCLUDE */
-
-

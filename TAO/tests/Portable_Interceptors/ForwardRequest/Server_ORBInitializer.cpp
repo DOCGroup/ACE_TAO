@@ -29,8 +29,6 @@ Server_ORBInitializer::post_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
-
   PortableInterceptor::ServerRequestInterceptor_ptr interceptor;
   // Install the server request interceptor.
   ACE_NEW_THROW_EX (interceptor,
@@ -44,8 +42,8 @@ Server_ORBInitializer::post_init (
 
   this->server_interceptor_ = interceptor;
 
-  info->add_server_request_interceptor (interceptor,
-                                        ACE_TRY_ENV);
+  info->add_server_request_interceptor (interceptor
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

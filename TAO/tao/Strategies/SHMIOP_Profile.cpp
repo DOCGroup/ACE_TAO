@@ -175,8 +175,8 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
 }
 
 void
-TAO_SHMIOP_Profile::parse_string (const char *string,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_SHMIOP_Profile::parse_string (const char *string
+                                  TAO_ENV_ARG_DECL)
 {
   if (!string || !*string)
     {
@@ -355,8 +355,8 @@ TAO_SHMIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_SHMIOP_Profile::hash (CORBA::ULong max,
-                          CORBA::Environment &)
+TAO_SHMIOP_Profile::hash (CORBA::ULong max
+                          TAO_ENV_ARG_DECL_NOT_USED)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
@@ -389,7 +389,7 @@ TAO_SHMIOP_Profile::add_endpoint (TAO_SHMIOP_Endpoint *endp)
 }
 
 char *
-TAO_SHMIOP_Profile::to_string (CORBA::Environment &)
+TAO_SHMIOP_Profile::to_string (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   CORBA::String_var key;
   TAO_ObjectKey::encode_sequence_to_string (key.inout(),

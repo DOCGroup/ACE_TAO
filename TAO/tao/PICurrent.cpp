@@ -31,12 +31,12 @@ TAO_PICurrent::~TAO_PICurrent (void)
 }
 
 CORBA::Any *
-TAO_PICurrent::get_slot (PortableInterceptor::SlotId id,
-			 CORBA::Environment &ACE_TRY_ENV)
+TAO_PICurrent::get_slot (PortableInterceptor::SlotId id
+                         TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   PortableInterceptor::InvalidSlot))
+                   PortableInterceptor::InvalidSlot))
 {
-  this->check_validity (id, ACE_TRY_ENV);
+  this->check_validity (id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_PICurrent_Impl *impl = this->tsc ();
@@ -48,17 +48,17 @@ TAO_PICurrent::get_slot (PortableInterceptor::SlotId id,
                         0);
     }
 
-  return impl->get_slot (id, ACE_TRY_ENV);
+  return impl->get_slot (id TAO_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_PICurrent::set_slot (PortableInterceptor::SlotId id,
-			 const CORBA::Any & data,
-			 CORBA::Environment &ACE_TRY_ENV)
+                         const CORBA::Any & data
+                         TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   PortableInterceptor::InvalidSlot))
+                   PortableInterceptor::InvalidSlot))
 {
-  this->check_validity (id, ACE_TRY_ENV);
+  this->check_validity (id TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_PICurrent_Impl *impl = this->tsc ();
@@ -69,7 +69,7 @@ TAO_PICurrent::set_slot (PortableInterceptor::SlotId id,
                                        CORBA::COMPLETED_NO));
     }
 
-  impl->set_slot (id, data, ACE_TRY_ENV);
+  impl->set_slot (id, data TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -108,10 +108,10 @@ TAO_PICurrent_Impl::~TAO_PICurrent_Impl (void)
 }
 
 CORBA::Any *
-TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id,
-			      CORBA::Environment &ACE_TRY_ENV)
+TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
+                              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   PortableInterceptor::InvalidSlot))
+                   PortableInterceptor::InvalidSlot))
 {
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
@@ -127,12 +127,12 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id,
       // return an Any with a TCKind of tk_null.  A default
       // constructed Any has that TCKind.
       ACE_NEW_THROW_EX (any,
-			CORBA::Any,
-			CORBA::NO_MEMORY (
-			  CORBA_SystemException::_tao_minor_code (
+                        CORBA::Any,
+                        CORBA::NO_MEMORY (
+                          CORBA_SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
-			    ENOMEM),
-			  CORBA::COMPLETED_NO));
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
 
       return any;
@@ -154,10 +154,10 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id,
 
 void
 TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
-			      const CORBA::Any & data,
-			      CORBA::Environment &ACE_TRY_ENV)
+                              const CORBA::Any & data
+                              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-		   PortableInterceptor::InvalidSlot))
+                   PortableInterceptor::InvalidSlot))
 {
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
@@ -217,7 +217,7 @@ TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
   ACE_NEW_THROW_EX (any,
                     CORBA::Any (data),  // Make a copy.
                     CORBA::NO_MEMORY (
-		      CORBA_SystemException::_tao_minor_code (
+                      CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
@@ -238,13 +238,13 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 
       this->slot_table_.size (new_size);
 
-      ACE_DECLARE_NEW_CORBA_ENV;
+      TAO_ENV_DECLARE_NEW_ENV;
       ACE_TRY
         {
           for (size_t i = 0; i < new_size; ++i)
             {
               this->slot_table_[i] =
-                rhs.get_slot (i, ACE_TRY_ENV);  // Deep copy
+                rhs.get_slot (i TAO_ENV_ARG_PARAMETER);  // Deep copy
               ACE_TRY_CHECK;
             }
         }

@@ -22,8 +22,6 @@ IFR_ServantLocator::preinvoke (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   CORBA::String_var s =
     PortableServer::ObjectId_to_string (oid);
 
@@ -42,8 +40,8 @@ IFR_ServantLocator::preinvoke (
 
   PortableServer::Servant servant =
     this->repo_->servant_factory ()->create_tie (servant_key,
-                                                 poa,
-                                                 ACE_TRY_ENV);
+                                                 poa
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   cookie = servant;

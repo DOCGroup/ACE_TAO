@@ -44,7 +44,7 @@ TimeoutClient::svc ()
 {
   this->initialize ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
 
@@ -61,14 +61,14 @@ TimeoutClient::svc ()
       this->none_test ();
 
       // shut down remote ORB
-      timeoutObject_->shutdown (ACE_TRY_ENV);
+      timeoutObject_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Time_Value tv (0, 20); // wait for the ORB to deliver the shutdonw
       ACE_OS::sleep (tv);
 
       // shut down local ORB
-      orb_->shutdown (0, ACE_TRY_ENV);
+      orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -87,16 +87,16 @@ TimeoutClient::svc ()
 int
 TimeoutClient::initialize ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       CORBA::Object_var object =
-        orb_->resolve_initial_references ("ORBPolicyManager",
-                                          ACE_TRY_ENV);
+        orb_->resolve_initial_references ("ORBPolicyManager"
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_manager_ =
-        CORBA::PolicyManager::_narrow (object.in (), ACE_TRY_ENV);
+        CORBA::PolicyManager::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -131,7 +131,7 @@ TimeoutClient::send (CORBA::Boolean async,
 
   CORBA::PolicyList policy_list (1);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY_EX (normal)
     {
       if (local_timeout != 0)
@@ -144,21 +144,21 @@ TimeoutClient::send (CORBA::Boolean async,
           policy_list.length (1);
           policy_list[0] =
             orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                                 any_orb,
-                                 ACE_TRY_ENV);
+                                 any_orb
+                                 TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (normal);
 
           policy_manager_->set_policy_overrides (policy_list,
-                                                 CORBA::SET_OVERRIDE,
-                                                 ACE_TRY_ENV);
+                                                 CORBA::SET_OVERRIDE
+                                                 TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (normal);
         }
       else
         {
           policy_list.length (0);
           policy_manager_->set_policy_overrides (policy_list,
-                                                 CORBA::SET_OVERRIDE,
-                                                 ACE_TRY_ENV);
+                                                 CORBA::SET_OVERRIDE
+                                                 TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (normal);
         }
 
@@ -169,13 +169,13 @@ TimeoutClient::send (CORBA::Boolean async,
       if (async)
         {
           timeoutObject_->sendc_sendTimeToWait (replyHandlerObject_.in (),
-                                                remote_sleep,
-                                                ACE_TRY_ENV);
+                                                remote_sleep
+                                                TAO_ENV_ARG_PARAMETER);
         }
       else // synch
         {
-          timeoutObject_->sendTimeToWait (remote_sleep,
-                                          ACE_TRY_ENV);
+          timeoutObject_->sendTimeToWait (remote_sleep
+                                          TAO_ENV_ARG_PARAMETER);
         }
       ACE_TRY_CHECK_EX (normal);
     }
@@ -196,7 +196,7 @@ TimeoutClient::send (CORBA::Boolean async,
     {
       if (local_timeout != 0)
         {
-          policy_list[0]->destroy (ACE_TRY_ENV);
+          policy_list[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (cleanup);
         }
     }

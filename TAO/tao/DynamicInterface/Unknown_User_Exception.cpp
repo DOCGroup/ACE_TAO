@@ -41,9 +41,9 @@ CORBA_UnknownUserException::exception (void)
 int
 CORBA_UnknownUserException::_is_a (const char *interface_id) const
 {
-  return 
+  return
     ((ACE_OS_String::strcmp (interface_id,
-                             "IDL:omg.org/CORBA/UnknownUserException:1.0") 
+                             "IDL:omg.org/CORBA/UnknownUserException:1.0")
         == 0)
       || CORBA_UserException::_is_a (interface_id));
 }
@@ -68,16 +68,16 @@ CORBA_UnknownUserException::_raise (void)
 
 void
 CORBA_UnknownUserException::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void
-CORBA_UnknownUserException::_tao_decode (TAO_InputCDR &,
-                                         CORBA::Environment &ACE_TRY_ENV)
+CORBA_UnknownUserException::_tao_decode (TAO_InputCDR &
+                                         TAO_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::MARSHAL ());
 }

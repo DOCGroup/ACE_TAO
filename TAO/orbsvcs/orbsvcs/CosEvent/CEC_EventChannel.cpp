@@ -74,7 +74,7 @@ TAO_CEC_EventChannel::~TAO_CEC_EventChannel (void)
 }
 
 void
-TAO_CEC_EventChannel::activate (CORBA::Environment&)
+TAO_CEC_EventChannel::activate (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->dispatching_->activate ();
   this->pulling_strategy_->activate ();
@@ -83,7 +83,7 @@ TAO_CEC_EventChannel::activate (CORBA::Environment&)
 }
 
 void
-TAO_CEC_EventChannel::shutdown (CORBA::Environment& ACE_TRY_ENV)
+TAO_CEC_EventChannel::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 {
   this->dispatching_->shutdown ();
   this->pulling_strategy_->shutdown ();
@@ -91,87 +91,87 @@ TAO_CEC_EventChannel::shutdown (CORBA::Environment& ACE_TRY_ENV)
   this->consumer_control_->shutdown ();
 
   PortableServer::POA_var consumer_poa =
-    this->consumer_admin_->_default_POA (ACE_TRY_ENV);
+    this->consumer_admin_->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (this->consumer_admin_, ACE_TRY_ENV);
+    consumer_poa->servant_to_id (this->consumer_admin_ TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  consumer_poa->deactivate_object (consumer_id.in (), ACE_TRY_ENV);
+  consumer_poa->deactivate_object (consumer_id.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POA_var supplier_poa =
-    this->supplier_admin_->_default_POA (ACE_TRY_ENV);
+    this->supplier_admin_->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var supplier_id =
-    supplier_poa->servant_to_id (this->supplier_admin_, ACE_TRY_ENV);
+    supplier_poa->servant_to_id (this->supplier_admin_ TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  supplier_poa->deactivate_object (supplier_id.in (), ACE_TRY_ENV);
+  supplier_poa->deactivate_object (supplier_id.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->supplier_admin_->shutdown (ACE_TRY_ENV);
+  this->supplier_admin_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 
-  this->consumer_admin_->shutdown (ACE_TRY_ENV);
+  this->consumer_admin_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_CEC_EventChannel::connected (TAO_CEC_ProxyPushConsumer* consumer,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_EventChannel::connected (TAO_CEC_ProxyPushConsumer* consumer
+                                 TAO_ENV_ARG_DECL)
 {
-  this->supplier_admin_->connected (consumer, ACE_TRY_ENV);
+  this->supplier_admin_->connected (consumer TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_CEC_EventChannel::reconnected (TAO_CEC_ProxyPushConsumer* consumer,
-                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_EventChannel::reconnected (TAO_CEC_ProxyPushConsumer* consumer
+                                   TAO_ENV_ARG_DECL)
 {
-  this->supplier_admin_->reconnected (consumer, ACE_TRY_ENV);
+  this->supplier_admin_->reconnected (consumer TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_CEC_EventChannel::disconnected (TAO_CEC_ProxyPushConsumer* consumer,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_EventChannel::disconnected (TAO_CEC_ProxyPushConsumer* consumer
+                                    TAO_ENV_ARG_DECL)
 {
-  this->supplier_admin_->disconnected (consumer, ACE_TRY_ENV);
+  this->supplier_admin_->disconnected (consumer TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_CEC_EventChannel::connected (TAO_CEC_ProxyPullConsumer* consumer,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_EventChannel::connected (TAO_CEC_ProxyPullConsumer* consumer
+                                 TAO_ENV_ARG_DECL)
 {
-  this->supplier_admin_->connected (consumer, ACE_TRY_ENV);
+  this->supplier_admin_->connected (consumer TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_CEC_EventChannel::reconnected (TAO_CEC_ProxyPullConsumer* consumer,
-                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_EventChannel::reconnected (TAO_CEC_ProxyPullConsumer* consumer
+                                   TAO_ENV_ARG_DECL)
 {
-  this->supplier_admin_->reconnected (consumer, ACE_TRY_ENV);
+  this->supplier_admin_->reconnected (consumer TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_CEC_EventChannel::disconnected (TAO_CEC_ProxyPullConsumer* consumer,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_EventChannel::disconnected (TAO_CEC_ProxyPullConsumer* consumer
+                                    TAO_ENV_ARG_DECL)
 {
-  this->supplier_admin_->disconnected (consumer, ACE_TRY_ENV);
+  this->supplier_admin_->disconnected (consumer TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_CEC_EventChannel::connected (TAO_CEC_ProxyPushSupplier* supplier,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_EventChannel::connected (TAO_CEC_ProxyPushSupplier* supplier
+                                 TAO_ENV_ARG_DECL)
 {
-  this->consumer_admin_->connected (supplier, ACE_TRY_ENV);
+  this->consumer_admin_->connected (supplier TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_CEC_EventChannel::reconnected (TAO_CEC_ProxyPushSupplier* supplier,
-                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_EventChannel::reconnected (TAO_CEC_ProxyPushSupplier* supplier
+                                   TAO_ENV_ARG_DECL)
 {
   this->consumer_admin_->reconnected (supplier TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;

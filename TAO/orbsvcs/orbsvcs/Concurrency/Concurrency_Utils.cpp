@@ -29,7 +29,7 @@ TAO_Concurrency_Server::TAO_Concurrency_Server (void)
 // Constructor which takes an ORB and POA.
 
 TAO_Concurrency_Server::TAO_Concurrency_Server (CORBA::ORB_var &orb,
-						PortableServer::POA_var &poa)
+                                                PortableServer::POA_var &poa)
 {
   this->init (orb, poa);
 }
@@ -39,7 +39,7 @@ TAO_Concurrency_Server::TAO_Concurrency_Server (CORBA::ORB_var &orb,
 
 int
 TAO_Concurrency_Server::init (CORBA::ORB_var &orb,
-			      PortableServer::POA_var &poa)
+                              PortableServer::POA_var &poa)
 {
   ACE_TRY_NEW_ENV
     {
@@ -49,24 +49,24 @@ TAO_Concurrency_Server::init (CORBA::ORB_var &orb,
       //      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id =
-	PortableServer::string_to_ObjectId ("ConcurrencyService");
+        PortableServer::string_to_ObjectId ("ConcurrencyService");
 
       poa->activate_object_with_id (id.in (),
-                                    &lock_set_factory_,
-                                    ACE_TRY_ENV);
+                                    &lock_set_factory_
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
       // client.  Then release the object.
       CORBA::Object_var obj =
-	poa->id_to_reference (id.in (),
-                              ACE_TRY_ENV);
+        poa->id_to_reference (id.in ()
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
-	orb->object_to_string (obj.in (),
-			       ACE_TRY_ENV);
+        orb->object_to_string (obj.in ()
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

@@ -85,7 +85,7 @@ int main (int argc, char *argv[])
                                             argv);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
@@ -97,8 +97,8 @@ int main (int argc, char *argv[])
       mgr->activate ();
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in (),
-                                      ACE_TRY_ENV);
+                                      poa.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Connect the two streams and run them...
@@ -128,19 +128,19 @@ int main (int argc, char *argv[])
       TAO_StreamCtrl stream_control_impl;
 
       AVStreams::StreamCtrl_var stream_control =
-        stream_control_impl._this (ACE_TRY_ENV);
+        stream_control_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      obj = orb->string_to_object (ping_ior, ACE_TRY_ENV);
+      obj = orb->string_to_object (ping_ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       AVStreams::MMDevice_var ping_sender =
-        AVStreams::MMDevice::_narrow (obj.in (), ACE_TRY_ENV);
+        AVStreams::MMDevice::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      obj = orb->string_to_object (pong_ior, ACE_TRY_ENV);
+      obj = orb->string_to_object (pong_ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       AVStreams::MMDevice_var pong_sender =
-        AVStreams::MMDevice::_narrow (obj.in (), ACE_TRY_ENV);
+        AVStreams::MMDevice::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       AVStreams::streamQoS_var the_qos =
@@ -149,29 +149,29 @@ int main (int argc, char *argv[])
       stream_control->bind_devs (pong_sender.in (),
                                  ping_sender.in (),
                                  the_qos.inout (),
-                                 flow_spec,
-                                 ACE_TRY_ENV);
+                                 flow_spec
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       flow_spec.length (0);
-      stream_control->start (flow_spec, ACE_TRY_ENV);
+      stream_control->start (flow_spec TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Time_Value tv (100, 0);
-      orb->run (tv, ACE_TRY_ENV);
+      orb->run (tv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
      // flow_spec.length (0);
-     // stream_control->stop (flow_spec, ACE_TRY_ENV);
+     // stream_control->stop (flow_spec TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

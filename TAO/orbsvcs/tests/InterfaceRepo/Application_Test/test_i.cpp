@@ -8,8 +8,8 @@ ACE_RCSID(Application_Test, test_i, "$Id$")
 CORBA::Boolean
 inventory_i::getCDinfo (const char * artist,
                         char *& title,
-                        CORBA::Float_out price,
-                        CORBA::Environment &)
+                        CORBA::Float_out price
+                        TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean in_stock = 0;
@@ -24,7 +24,7 @@ inventory_i::getCDinfo (const char * artist,
 
       if (working_title.strstr (title_key) != -1)
         {
-          title = 
+          title =
             CORBA::string_dup ("Sgt. Pepper's Lonely Hearts Club Band");
 
           price = 13.49f;

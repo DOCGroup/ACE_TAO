@@ -185,18 +185,18 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::~_TAO_ReplyHandler_St
 
 Messaging::_TAO_ReplyHandler_Proxy_Impl&
 POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::select_proxy (
-    ::Messaging::ReplyHandler *object,
-    CORBA::Environment &ACE_TRY_ENV
+    ::Messaging::ReplyHandler *object
+    TAO_ENV_ARG_DECL
   )
 {
   int strategy =
-    TAO_ORB_Core::collocation_strategy (object, ACE_TRY_ENV);
+    TAO_ORB_Core::collocation_strategy (object TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
 
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
 
-  this->create_proxy (strategy, ACE_TRY_ENV);
+  this->create_proxy (strategy TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
 
   return *this->proxy_cache_[strategy];
@@ -205,8 +205,8 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::select_proxy (
 
 void
 POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
-    int strategy,
-    CORBA::Environment &ACE_TRY_ENV
+    int strategy
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
@@ -318,8 +318,8 @@ POA_Messaging::ReplyHandler::~ReplyHandler (void)
 void POA_Messaging::ReplyHandler::_is_a_skel (
     TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
-    void * /* Servant_Upcall */,
-    CORBA::Environment &ACE_TRY_ENV
+    void * /* Servant_Upcall */
+    TAO_ENV_ARG_DECL
   )
 {
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
@@ -329,7 +329,7 @@ void POA_Messaging::ReplyHandler::_is_a_skel (
   if (!(_tao_in >> value.out ()))
     ACE_THROW (CORBA::MARSHAL ());
 
-  _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
+  _tao_retval = _tao_impl->_is_a (value.in ()TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   _tao_server_request.init_reply ();
@@ -341,12 +341,12 @@ void POA_Messaging::ReplyHandler::_is_a_skel (
 void POA_Messaging::ReplyHandler::_non_existent_skel (
     TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
-    void * /* Servant_Upcall */,
-    CORBA::Environment &ACE_TRY_ENV
+    void * /* Servant_Upcall */
+    TAO_ENV_ARG_DECL
   )
 {
   POA_Messaging::ReplyHandler *_tao_impl = (POA_Messaging::ReplyHandler *) _tao_object_reference;
-  CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
+  CORBA::Boolean _tao_retval = _tao_impl->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   _tao_server_request.init_reply ();
@@ -358,8 +358,8 @@ void POA_Messaging::ReplyHandler::_non_existent_skel (
 void POA_Messaging::ReplyHandler::_interface_skel (
     TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
-    void * /* Servant_Upcall */,
-    CORBA::Environment &ACE_TRY_ENV
+    void * /* Servant_Upcall */
+    TAO_ENV_ARG_DECL
   )
 {
   POA_Messaging::ReplyHandler *_tao_impl = (POA_Messaging::ReplyHandler *) _tao_object_reference;
@@ -378,7 +378,7 @@ void POA_Messaging::ReplyHandler::_interface_skel (
 
   ACE_TRY
     {
-      _tao_retval = _tao_impl->_get_interface (ACE_TRY_ENV);
+      _tao_retval = _tao_impl->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       _tao_server_request.init_reply ();
@@ -404,11 +404,11 @@ void POA_Messaging::ReplyHandler::_interface_skel (
 }
 
 CORBA::Boolean POA_Messaging::ReplyHandler::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
+    const char* value
+    TAO_ENV_ARG_DECL
   )
 {
-  const char *base_id = CORBA::_tc_Object->id (ACE_TRY_ENV);
+  const char *base_id = CORBA::_tc_Object->id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (
@@ -430,12 +430,12 @@ void* POA_Messaging::ReplyHandler::_downcast (
   return 0;
 }
 
-void POA_Messaging::ReplyHandler::_dispatch (TAO_ServerRequest &req, void *servant_upcall, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::ReplyHandler::_dispatch (TAO_ServerRequest &req, void *servant_upcall TAO_ENV_ARG_DECL)
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this,
-                                     ACE_TRY_ENV);
+                                     this
+                                     TAO_ENV_ARG_PARAMETER);
 }
 
 const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
@@ -444,9 +444,9 @@ const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
 }
 
 Messaging::ReplyHandler*
-POA_Messaging::ReplyHandler::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_Messaging::ReplyHandler::_this (TAO_ENV_SINGLE_ARG_DECL)
 {
-  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
+  TAO_Stub *stub = this->_create_stub (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_Stub_Auto_Ptr safe_stub (stub);

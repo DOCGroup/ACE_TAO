@@ -9,8 +9,8 @@ TAO_PICurrent::slot_count (void) const
 }
 
 ACE_INLINE void
-TAO_PICurrent::check_validity (const PortableInterceptor::SlotId &id,
-			       CORBA::Environment &ACE_TRY_ENV)
+TAO_PICurrent::check_validity (const PortableInterceptor::SlotId &id
+                               TAO_ENV_ARG_DECL)
 {
   // No need to acquire a lock for this check.  At this point, these
   // attributes are read only.

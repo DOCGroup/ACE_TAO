@@ -17,8 +17,8 @@ TAO_Notify_Filter_i::TAO_Notify_Filter_i (void)
 // Implementation skeleton destructor
 TAO_Notify_Filter_i::~TAO_Notify_Filter_i (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->remove_all_constraints (ACE_TRY_ENV);
+  TAO_ENV_DECLARE_NEW_ENV;
+  this->remove_all_constraints (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (TAO_debug_level > 0)
@@ -26,26 +26,26 @@ TAO_Notify_Filter_i::~TAO_Notify_Filter_i (void)
 }
 
 CosNotifyFilter::Filter_ptr
-TAO_Notify_Filter_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Filter_i::get_ref (TAO_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POA_var my_POA = _default_POA ();
 
   PortableServer::ServantBase_var filter_var (this);
 
   PortableServer::ObjectId_var oid =
-    my_POA->activate_object (this, ACE_TRY_ENV);
+    my_POA->activate_object (this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
 
   CORBA::Object_var obj =
-    my_POA->id_to_reference (oid.in (), ACE_TRY_ENV);
+    my_POA->id_to_reference (oid.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
 
-  return CosNotifyFilter::Filter::_narrow (obj.in (), ACE_TRY_ENV);
+  return CosNotifyFilter::Filter::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
 }
 
 char*
 TAO_Notify_Filter_i::constraint_grammar (
-    CORBA::Environment & /* ACE_TRY_ENV */
+    TAO_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -57,8 +57,8 @@ TAO_Notify_Filter_i::constraint_grammar (
 
 void
 TAO_Notify_Filter_i::add_constraints_i (
-    const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -81,8 +81,8 @@ TAO_Notify_Filter_i::add_constraints_i (
             constraint_info_seq[index].constraint_expression;
 
           notify_constr_expr->interpreter.
-            build_tree (expr.constraint_expr.in (),
-                        ACE_TRY_ENV);
+            build_tree (expr.constraint_expr.in ()
+                        TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           notify_constr_expr->constr_expr = expr;
@@ -108,8 +108,8 @@ TAO_Notify_Filter_i::add_constraints_i (
 
 CosNotifyFilter::ConstraintInfoSeq*
 TAO_Notify_Filter_i::add_constraints (
-    const CosNotifyFilter::ConstraintExpSeq& constraint_list,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotifyFilter::ConstraintExpSeq& constraint_list
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -144,8 +144,8 @@ TAO_Notify_Filter_i::add_constraints (
                     constraint_expr.in ()));
     }
 
-  this->add_constraints_i (*infoseq,
-                           ACE_TRY_ENV);
+  this->add_constraints_i (*infoseq
+                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   auto_infoseq.release ();
@@ -156,8 +156,8 @@ TAO_Notify_Filter_i::add_constraints (
 void
 TAO_Notify_Filter_i::modify_constraints (
     const CosNotifyFilter::ConstraintIDSeq & del_list,
-    const CosNotifyFilter::ConstraintInfoSeq & modify_list,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotifyFilter::ConstraintInfoSeq & modify_list
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -199,8 +199,8 @@ TAO_Notify_Filter_i::modify_constraints (
 
   ACE_TRY
     {
-      this->add_constraints_i (modify_list,
-                               ACE_TRY_ENV);
+      this->add_constraints_i (modify_list
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -239,8 +239,8 @@ TAO_Notify_Filter_i::modify_constraints (
 }
 
 CosNotifyFilter::ConstraintInfoSeq*
-TAO_Notify_Filter_i::get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list,
-                                      CORBA::Environment &ACE_TRY_ENV
+TAO_Notify_Filter_i::get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list
+                                      TAO_ENV_ARG_DECL
                                       )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -276,7 +276,7 @@ TAO_Notify_Filter_i::get_constraints (const CosNotifyFilter::ConstraintIDSeq & i
 }
 
 CosNotifyFilter::ConstraintInfoSeq*
-TAO_Notify_Filter_i::get_all_constraints (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Filter_i::get_all_constraints (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -315,7 +315,7 @@ TAO_Notify_Filter_i::get_all_constraints (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_Notify_Filter_i::remove_all_constraints (CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_Filter_i::remove_all_constraints (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -336,12 +336,12 @@ TAO_Notify_Filter_i::remove_all_constraints (CORBA::Environment &/*ACE_TRY_ENV*/
 }
 
 void
-TAO_Notify_Filter_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Filter_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  this->remove_all_constraints (ACE_TRY_ENV);
+  this->remove_all_constraints (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POA_var my_POA = _default_POA ();
@@ -353,8 +353,8 @@ TAO_Notify_Filter_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Boolean
-TAO_Notify_Filter_i::match (const CORBA::Any & /*filterable_data */,
-                                           CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Filter_i::match (const CORBA::Any & /*filterable_data */
+                                           TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData
@@ -364,8 +364,9 @@ TAO_Notify_Filter_i::match (const CORBA::Any & /*filterable_data */,
 }
 
 CORBA::Boolean
-TAO_Notify_Filter_i::match_structured (const CosNotification::StructuredEvent & filterable_data, CORBA::Environment & //ACE_TRY_ENV
-                                       )
+TAO_Notify_Filter_i::match_structured
+   (const CosNotification::StructuredEvent & filterable_data
+    TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData
@@ -390,7 +391,9 @@ TAO_Notify_Filter_i::match_structured (const CosNotification::StructuredEvent & 
 }
 
 CORBA::Boolean
-TAO_Notify_Filter_i::match_typed (const CosNotification::PropertySeq & /*filterable_data */,CORBA::Environment & ACE_TRY_ENV)
+TAO_Notify_Filter_i::match_typed
+   (const CosNotification::PropertySeq & /*filterable_data */
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData
@@ -400,8 +403,9 @@ TAO_Notify_Filter_i::match_typed (const CosNotification::PropertySeq & /*filtera
 }
 
 CosNotifyFilter::CallbackID
-TAO_Notify_Filter_i::attach_callback (CosNotifyComm::NotifySubscribe_ptr /*callback */, CORBA::Environment & ACE_TRY_ENV
-                                      )
+TAO_Notify_Filter_i::attach_callback
+   (CosNotifyComm::NotifySubscribe_ptr /*callback */
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -410,8 +414,8 @@ TAO_Notify_Filter_i::attach_callback (CosNotifyComm::NotifySubscribe_ptr /*callb
 }
 
 void
-TAO_Notify_Filter_i::detach_callback (CosNotifyFilter::CallbackID /*callback*/,
-                                      CORBA::Environment & ACE_TRY_ENV)
+TAO_Notify_Filter_i::detach_callback (CosNotifyFilter::CallbackID /*callback*/
+                                      TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::CallbackNotFound
@@ -421,7 +425,7 @@ TAO_Notify_Filter_i::detach_callback (CosNotifyFilter::CallbackID /*callback*/,
 }
 
 CosNotifyFilter::CallbackIDSeq*
-TAO_Notify_Filter_i::get_callbacks (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Filter_i::get_callbacks (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

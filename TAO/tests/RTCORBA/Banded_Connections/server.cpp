@@ -11,15 +11,15 @@ class Test_i : public POA_Test
 {
 public:
   Test_i (CORBA::ORB_ptr orb,
-          RTCORBA::PriorityBands &bands,
-          CORBA::Environment &ACE_TRY_ENV);
+          RTCORBA::PriorityBands &bands
+          TAO_ENV_ARG_DECL);
 
   void test_method (CORBA::Boolean client_propagated,
-                    CORBA::Short priority,
-                    CORBA::Environment&)
+                    CORBA::Short priority
+                    TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment&)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -29,33 +29,33 @@ private:
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb,
-                RTCORBA::PriorityBands &bands,
-                CORBA::Environment &ACE_TRY_ENV)
+                RTCORBA::PriorityBands &bands
+                TAO_ENV_ARG_DECL)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      bands_ (bands),
      rt_current_ ()
 {
   // We resolve and store the RT Current for later use.
   CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("RTCurrent",
-                                            ACE_TRY_ENV);
+    this->orb_->resolve_initial_references ("RTCurrent"
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->rt_current_ =
-    RTCORBA::Current::_narrow (obj.in (),
-                               ACE_TRY_ENV);
+    RTCORBA::Current::_narrow (obj.in ()
+                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Test_i::test_method (CORBA::Boolean client_propagated,
-                     CORBA::Short client_priority,
-                     CORBA::Environment &ACE_TRY_ENV)
+                     CORBA::Short client_priority
+                     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the upcall thread's priority.
   CORBA::Short server_priority =
-    this->rt_current_->the_priority (ACE_TRY_ENV);
+    this->rt_current_->the_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Check which policy we are dealing with.
@@ -116,11 +116,11 @@ Test_i::test_method (CORBA::Boolean client_propagated,
 }
 
 void
-Test_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
+Test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0,
-                        ACE_TRY_ENV);
+  this->orb_->shutdown (0
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -232,25 +232,25 @@ int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *server_impl,
-               const char *filename,
-               CORBA::Environment &ACE_TRY_ENV)
+               const char *filename
+               TAO_ENV_ARG_DECL)
 {
   // Register servant with the POA.
   PortableServer::ObjectId_var id;
-  id = poa->activate_object (server_impl,
-                             ACE_TRY_ENV);
+  id = poa->activate_object (server_impl
+                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Create object reference.
   CORBA::Object_var server =
-    poa->id_to_reference (id.in (),
-                          ACE_TRY_ENV);
+    poa->id_to_reference (id.in ()
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Print out the IOR.
   CORBA::String_var ior =
-    orb->object_to_string (server.in (),
-                           ACE_TRY_ENV);
+    orb->object_to_string (server.in ()
+                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Print ior to the file.
@@ -275,16 +275,16 @@ create_object (PortableServer::POA_ptr poa,
 void
 object_activation_exception_test (RTPortableServer::POA_ptr poa,
                                   Test_i *server_impl,
-                                  CORBA::Short priority,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::Short priority
+                                  TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       // Register servant with POA.
       PortableServer::ObjectId_var id =
         poa->activate_object_with_priority (server_impl,
-                                            priority,
-                                            ACE_TRY_ENV);
+                                            priority
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This next line of code should not run because an exception
@@ -310,8 +310,8 @@ object_activation_exception_test (RTPortableServer::POA_ptr poa,
 void
 poa_creation_exception_test (PortableServer::POA_ptr root_poa,
                              PortableServer::POAManager_ptr manager,
-                             CORBA::PolicyList &policies,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::PolicyList &policies
+                             TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -319,8 +319,8 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("Child_POA",
                               manager,
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This next line of code should not run because an exception
@@ -356,8 +356,8 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         "",
-                         ACE_TRY_ENV);
+                         ""
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse arguments.
@@ -369,28 +369,28 @@ main (int argc, char *argv[])
 
       // Get the RTORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RTORB"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in (),
-                                 ACE_TRY_ENV);
+        RTCORBA::RTORB::_narrow (object.in ()
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the RootPOA.
       object =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA Manager.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain priority bands to be used in this test from the file
@@ -435,8 +435,8 @@ main (int argc, char *argv[])
                                               allow_borrowing,
                                               allow_request_buffering,
                                               max_buffered_requests,
-                                              max_request_buffer_size,
-                                              ACE_TRY_ENV);
+                                              max_request_buffer_size
+                                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test: Attempt to create a POA with priority bands that do not
@@ -454,22 +454,22 @@ main (int argc, char *argv[])
 
       // Create a bands policy.
       poa_policy_list[0] =
-        rt_orb->create_priority_banded_connection_policy (false_bands,
-                                                          ACE_TRY_ENV);
+        rt_orb->create_priority_banded_connection_policy (false_bands
+                                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create a thread-pool policy.
       poa_policy_list[1] =
-        rt_orb->create_threadpool_policy (threadpool_id,
-                                          ACE_TRY_ENV);
+        rt_orb->create_threadpool_policy (threadpool_id
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to create a POA with invalid policies.  Should throw an
       // exception.
       poa_creation_exception_test (root_poa.in (),
                                    poa_manager.in (),
-                                   poa_policy_list,
-                                   ACE_TRY_ENV);
+                                   poa_policy_list
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Two policies for the next POA.
@@ -478,14 +478,14 @@ main (int argc, char *argv[])
       // Create a priority model policy.
       poa_policy_list[0] =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                              0,
-                                              ACE_TRY_ENV);
+                                              0
+                                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create a thread-pool policy.
       poa_policy_list[1] =
-        rt_orb->create_threadpool_policy (threadpool_id,
-                                          ACE_TRY_ENV);
+        rt_orb->create_threadpool_policy (threadpool_id
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create POA with CLIENT_PROPAGATED priority model, with lanes
@@ -493,8 +493,8 @@ main (int argc, char *argv[])
       PortableServer::POA_var client_propagated_poa =
         root_poa->create_POA ("client_propagated_poa",
                               poa_manager.in (),
-                              poa_policy_list,
-                              ACE_TRY_ENV);
+                              poa_policy_list
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Three policies for the next POA.
@@ -507,20 +507,20 @@ main (int argc, char *argv[])
       // Create a priority model policy.
       poa_policy_list[0] =
         rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
-                                              poa_priority,
-                                              ACE_TRY_ENV);
+                                              poa_priority
+                                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create a bands policy.
       poa_policy_list[1] =
-        rt_orb->create_priority_banded_connection_policy (bands,
-                                                          ACE_TRY_ENV);
+        rt_orb->create_priority_banded_connection_policy (bands
+                                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create a thread-pool policy.
       poa_policy_list[2] =
-        rt_orb->create_threadpool_policy (threadpool_id,
-                                          ACE_TRY_ENV);
+        rt_orb->create_threadpool_policy (threadpool_id
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create POA with SERVER_DECLARED priority model, with bands
@@ -528,8 +528,8 @@ main (int argc, char *argv[])
       PortableServer::POA_var server_declared_poa =
         root_poa->create_POA ("server_declared_poa",
                               poa_manager.in (),
-                              poa_policy_list,
-                              ACE_TRY_ENV);
+                              poa_policy_list
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test: Attempt to register an object with priority that
@@ -538,55 +538,55 @@ main (int argc, char *argv[])
                   "\n<---Test--->: Servant priority does not match lanes\n\n"));
 
       RTPortableServer::POA_var rt_server_declared_poa =
-        RTPortableServer::POA::_narrow (server_declared_poa.in (), ACE_TRY_ENV);
+        RTPortableServer::POA::_narrow (server_declared_poa.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Activation with incorrect priority should fail.
       CORBA::Short wrong_priority = 10000;
       object_activation_exception_test (rt_server_declared_poa.in (),
                                         0,
-                                        wrong_priority,
-                                        ACE_TRY_ENV);
+                                        wrong_priority
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create first servant and register with <client_propagated_poa>.
       Test_i server_impl (orb.in (),
-                          bands,
-                          ACE_TRY_ENV);
+                          bands
+                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       result = create_object (client_propagated_poa.in (),
                               orb.in (),
                               &server_impl,
-                              ior_output_file1,
-                              ACE_TRY_ENV);
+                              ior_output_file1
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
         return result;
 
       // Create second servant and register with <server_declared_poa>.
       Test_i server_impl2 (orb.in (),
-                           bands,
-                           ACE_TRY_ENV);
+                           bands
+                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       result = create_object (server_declared_poa.in (),
                               orb.in (),
                               &server_impl2,
-                              ior_output_file2,
-                              ACE_TRY_ENV);
+                              ior_output_file2
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
         return result;
 
       // Activate POA manager.
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Run ORB.
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Destroy ORB.
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

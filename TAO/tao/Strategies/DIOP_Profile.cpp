@@ -1,6 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
-
 
 #include "DIOP_Profile.h"
 
@@ -162,8 +162,8 @@ TAO_DIOP_Profile::decode (TAO_InputCDR& cdr)
 }
 
 void
-TAO_DIOP_Profile::parse_string (const char *ior,
-                                CORBA::Environment &ACE_TRY_ENV)
+TAO_DIOP_Profile::parse_string (const char *ior
+                                TAO_ENV_ARG_DECL)
 {
   if (!ior || !*ior)
     {
@@ -328,8 +328,8 @@ TAO_DIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_DIOP_Profile::hash (CORBA::ULong max,
-                        CORBA::Environment &)
+TAO_DIOP_Profile::hash (CORBA::ULong max
+                        TAO_ENV_ARG_DECL_NOT_USED)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
@@ -374,7 +374,7 @@ TAO_DIOP_Profile::add_endpoint (TAO_DIOP_Endpoint *endp)
 }
 
 char *
-TAO_DIOP_Profile::to_string (CORBA::Environment &)
+TAO_DIOP_Profile::to_string (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   CORBA::String_var key;
   TAO_ObjectKey::encode_sequence_to_string (key.inout(),

@@ -32,7 +32,7 @@ public:
   ~TAO_CosEC_PushSupplierWrapper (void);
   // Destructor.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnects the push supplier.
 
@@ -64,24 +64,24 @@ TAO_CosEC_PushSupplierWrapper::~TAO_CosEC_PushSupplierWrapper (void)
 }
 
 void
-TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->supplier_->disconnect_push_supplier (ACE_TRY_ENV);
+  this->supplier_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Deactivate the supplier proxy
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
+    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this,
-                        ACE_TRY_ENV);
+    poa->servant_to_id (this
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
+  poa->deactivate_object (id.in ()
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ If we keep a list remember to remove this object from the
@@ -103,8 +103,8 @@ TAO_CosEC_ProxyPushConsumer_i::~TAO_CosEC_ProxyPushConsumer_i (void)
 }
 
 void
-TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data,
-                                     CORBA::Environment &ACE_TRY_ENV)
+TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data
+                                     TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::Event buffer[1];
@@ -137,36 +137,36 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data,
 
   e.data.any_value = data;
 
-  this->proxypushconsumer_->push (events,
-                                  ACE_TRY_ENV);
+  this->proxypushconsumer_->push (events
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->proxypushconsumer_->disconnect_push_consumer (ACE_TRY_ENV);
+  this->proxypushconsumer_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Deactivate the ProxyPushConsumer
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
+    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this,
-                        ACE_TRY_ENV);
+    poa->servant_to_id (this
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
+  poa->deactivate_object (id.in ()
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier,
-                                                      CORBA::Environment &ACE_TRY_ENV)
+TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier
+                                                      TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected))
 {
@@ -184,17 +184,17 @@ TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier
     auto_wrapper (wrapper);
 
   RtecEventComm::PushSupplier_ptr rtecpushsupplier
-    = auto_wrapper.get ()->_this (ACE_TRY_ENV);
+    = auto_wrapper.get ()->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // give the ownership to the POA.
-  auto_wrapper.get ()->_remove_ref (ACE_TRY_ENV);
+  auto_wrapper.get ()->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->proxypushconsumer_->connect_push_supplier
     (rtecpushsupplier,
-     this->qos_,
-     ACE_TRY_ENV);
+     this->qos_
+     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->wrapper_ = auto_wrapper.release ();

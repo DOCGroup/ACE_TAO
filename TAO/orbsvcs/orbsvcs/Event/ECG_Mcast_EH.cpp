@@ -26,8 +26,8 @@ TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH (void)
 // @@ TODO Why have a return code *and* exceptions?  Only one would do!
 
 int
-TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment& ACE_TRY_ENV)
+TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec
+                        TAO_ENV_ARG_DECL)
 {
   // @@ TODO Think about the exception safety (or lack thereof) of
   // this code, what if the following operations fail?
@@ -42,13 +42,13 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
   // its lifetime.
 
   RtecEventChannelAdmin::Observer_var obs =
-    this->observer_._this (ACE_TRY_ENV);
+    this->observer_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_TRY
     {
       this->handle_ =
-        this->ec_->append_observer (obs.in (), ACE_TRY_ENV);
+        this->ec_->append_observer (obs.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
   ACE_CATCH(CORBA::SystemException, ex)
@@ -58,12 +58,12 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
       // we should encapsulate it in a Deactivator.
 
       PortableServer::POA_var poa =
-        this->observer_._default_POA (ACE_TRY_ENV);
+        this->observer_._default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (&this->observer_, ACE_TRY_ENV);
+        poa->servant_to_id (&this->observer_ TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       ACE_RE_THROW;
@@ -75,26 +75,26 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 int
-TAO_ECG_Mcast_EH::close (CORBA::Environment& ACE_TRY_ENV)
+TAO_ECG_Mcast_EH::close (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (this->handle_ == 0)
     return 0;
 
   RtecEventChannelAdmin::Observer_Handle h = this->handle_;
   this->handle_ = 0;
-  this->ec_->remove_observer (h, ACE_TRY_ENV);
+  this->ec_->remove_observer (h TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // @@ TODO If the first operation raises an exception then the
   // second one never executes!!!
   {
     PortableServer::POA_var poa =
-      this->observer_._default_POA (ACE_TRY_ENV);
+      this->observer_._default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
     PortableServer::ObjectId_var id =
-      poa->servant_to_id (&this->observer_, ACE_TRY_ENV);
+      poa->servant_to_id (&this->observer_ TAO_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
-    poa->deactivate_object (id.in (), ACE_TRY_ENV);
+    poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
   }
 
@@ -141,8 +141,8 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 void
 TAO_ECG_Mcast_EH::compute_required_subscriptions (
     const RtecEventChannelAdmin::ConsumerQOS& sub,
-    Address_Set& multicast_addresses,
-    CORBA::Environment& ACE_TRY_ENV)
+    Address_Set& multicast_addresses
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong count = sub.dependencies.length ();
@@ -168,7 +168,7 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
       //   opportunity to recover it.
       // + Close the MCast Event Handler completely, too much policy
       //   for this level.
-      this->receiver_->get_addr (header, addr, ACE_TRY_ENV);
+      this->receiver_->get_addr (header, addr TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
@@ -296,8 +296,8 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (
 
 void
 TAO_ECG_Mcast_EH::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& sub,
-    CORBA::Environment& ACE_TRY_ENV)
+    const RtecEventChannelAdmin::ConsumerQOS& sub
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ TODO This function turned out to be too long, we need to break
@@ -308,7 +308,7 @@ TAO_ECG_Mcast_EH::update_consumer (
 
   Address_Set multicast_addresses;
 
-  this->compute_required_subscriptions (sub, multicast_addresses, ACE_TRY_ENV);
+  this->compute_required_subscriptions (sub, multicast_addresses TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // 2) To conserve OS and network resources we first unsubscribe from
@@ -326,8 +326,8 @@ TAO_ECG_Mcast_EH::update_consumer (
 }
 
 void
-TAO_ECG_Mcast_EH::update_supplier (const RtecEventChannelAdmin::SupplierQOS&,
-                                   CORBA::Environment&)
+TAO_ECG_Mcast_EH::update_supplier (const RtecEventChannelAdmin::SupplierQOS&
+                                   TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing
@@ -342,20 +342,20 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 
 void
 TAO_ECG_Mcast_EH::Observer::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& sub,
-    CORBA::Environment& ACE_TRY_ENV)
+    const RtecEventChannelAdmin::ConsumerQOS& sub
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->eh_->update_consumer (sub, ACE_TRY_ENV);
+  this->eh_->update_consumer (sub TAO_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_ECG_Mcast_EH::Observer::update_supplier (
-    const RtecEventChannelAdmin::SupplierQOS& pub,
-    CORBA::Environment& ACE_TRY_ENV)
+    const RtecEventChannelAdmin::SupplierQOS& pub
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->eh_->update_supplier (pub, ACE_TRY_ENV);
+  this->eh_->update_supplier (pub TAO_ENV_ARG_PARAMETER);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

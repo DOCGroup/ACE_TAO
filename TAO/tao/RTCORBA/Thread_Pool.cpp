@@ -101,7 +101,7 @@ TAO_Thread_Pool_Threads::svc (void)
   ACE_TRY_NEW_ENV
     {
       // Run the ORB.
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -134,8 +134,8 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
                                   CORBA::ULong id,
                                   CORBA::Short lane_priority,
                                   CORBA::ULong static_threads,
-                                  CORBA::ULong dynamic_threads,
-                                  CORBA::Environment &)
+                                  CORBA::ULong dynamic_threads
+                                  TAO_ENV_ARG_DECL_NOT_USED)
   : pool_ (pool),
     id_ (id),
     lane_priority_ (lane_priority),
@@ -151,7 +151,7 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
 }
 
 void
-TAO_Thread_Lane::validate_and_map_priority (CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Lane::validate_and_map_priority (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Check that the priority is in bounds.
   if (this->lane_priority_ < RTCORBA::minPriority ||
@@ -163,13 +163,13 @@ TAO_Thread_Lane::validate_and_map_priority (CORBA::Environment &ACE_TRY_ENV)
 
   // Get the priority mapping manager.
   CORBA::Object_var obj =
-    orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER,
-                                     ACE_TRY_ENV);
+    orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_Priority_Mapping_Manager_var mapping_manager =
-    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
-                                           ACE_TRY_ENV);
+    TAO_Priority_Mapping_Manager::_narrow (obj.in ()
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   RTCORBA::PriorityMapping *pm =
@@ -192,17 +192,17 @@ TAO_Thread_Lane::validate_and_map_priority (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_Thread_Lane::open (CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Lane::open (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Validate and map priority.
-  this->validate_and_map_priority (ACE_TRY_ENV);
+  this->validate_and_map_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Open the acceptor registry.
   int result = 0;
   result =
-    this->resources_.open_acceptor_registry (1,
-                                             ACE_TRY_ENV);
+    this->resources_.open_acceptor_registry (1
+                                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (result == -1)
@@ -376,8 +376,8 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                                   CORBA::Short default_priority,
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,
-                                  CORBA::ULong max_request_buffer_size,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::ULong max_request_buffer_size
+                                  TAO_ENV_ARG_DECL)
   : manager_ (manager),
     id_ (id),
     stack_size_ (stack_size),
@@ -400,8 +400,8 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                          0,
                          default_priority,
                          static_threads,
-                         dynamic_threads,
-                         ACE_TRY_ENV);
+                         dynamic_threads
+                         TAO_ENV_ARG_PARAMETER);
 }
 
 TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
@@ -411,8 +411,8 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                                   CORBA::Boolean allow_borrowing,
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,
-                                  CORBA::ULong max_request_buffer_size,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::ULong max_request_buffer_size
+                                  TAO_ENV_ARG_DECL)
   : manager_ (manager),
     id_ (id),
     stack_size_ (stack_size),
@@ -439,19 +439,19 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                            i,
                            lanes[i].lane_priority,
                            lanes[i].static_threads,
-                           lanes[i].dynamic_threads,
-                           ACE_TRY_ENV);
+                           lanes[i].dynamic_threads
+                           TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Thread_Pool::open (CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Pool::open (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Open all the lanes.
   for (CORBA::ULong i = 0;
        i != this->number_of_lanes_;
        ++i)
     {
-      this->lanes_[i]->open (ACE_TRY_ENV);
+      this->lanes_[i]->open (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -677,8 +677,8 @@ TAO_Thread_Pool_Manager::create_threadpool (CORBA::ULong stacksize,
                                             RTCORBA::Priority default_priority,
                                             CORBA::Boolean allow_request_buffering,
                                             CORBA::ULong max_buffered_requests,
-                                            CORBA::ULong max_request_buffer_size,
-                                            CORBA::Environment &ACE_TRY_ENV)
+                                            CORBA::ULong max_request_buffer_size
+                                            TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_THREAD_POOL_MANAGER_GUARD;
@@ -690,8 +690,8 @@ TAO_Thread_Pool_Manager::create_threadpool (CORBA::ULong stacksize,
                                     default_priority,
                                     allow_request_buffering,
                                     max_buffered_requests,
-                                    max_request_buffer_size,
-                                    ACE_TRY_ENV);
+                                    max_request_buffer_size
+                                    TAO_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::ThreadpoolId
@@ -700,8 +700,8 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                                        CORBA::Boolean allow_borrowing,
                                                        CORBA::Boolean allow_request_buffering,
                                                        CORBA::ULong max_buffered_requests,
-                                                       CORBA::ULong max_request_buffer_size,
-                                                       CORBA::Environment &ACE_TRY_ENV)
+                                                       CORBA::ULong max_request_buffer_size
+                                                       TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_THREAD_POOL_MANAGER_GUARD;
@@ -712,21 +712,21 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                                allow_borrowing,
                                                allow_request_buffering,
                                                max_buffered_requests,
-                                               max_request_buffer_size,
-                                               ACE_TRY_ENV);
+                                               max_request_buffer_size
+                                               TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool,
-                                             CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool
+                                             TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::InvalidThreadpool))
 {
   TAO_THREAD_POOL_MANAGER_GUARD;
   ACE_CHECK;
 
-  this->destroy_threadpool_i (threadpool,
-                              ACE_TRY_ENV);
+  this->destroy_threadpool_i (threadpool
+                              TAO_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::ThreadpoolId
@@ -736,8 +736,8 @@ TAO_Thread_Pool_Manager::create_threadpool_i (CORBA::ULong stacksize,
                                               RTCORBA::Priority default_priority,
                                               CORBA::Boolean allow_request_buffering,
                                               CORBA::ULong max_buffered_requests,
-                                              CORBA::ULong max_request_buffer_size,
-                                              CORBA::Environment &ACE_TRY_ENV)
+                                              CORBA::ULong max_request_buffer_size
+                                              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create the thread pool.
@@ -752,13 +752,13 @@ TAO_Thread_Pool_Manager::create_threadpool_i (CORBA::ULong stacksize,
                                      default_priority,
                                      allow_request_buffering,
                                      max_buffered_requests,
-                                     max_request_buffer_size,
-                                     ACE_TRY_ENV),
+                                     max_request_buffer_size
+                                     TAO_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  return this->create_threadpool_helper (thread_pool,
-                                         ACE_TRY_ENV);
+  return this->create_threadpool_helper (thread_pool
+                                         TAO_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::ThreadpoolId
@@ -767,8 +767,8 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes_i (CORBA::ULong stacksize,
                                                          CORBA::Boolean allow_borrowing,
                                                          CORBA::Boolean allow_request_buffering,
                                                          CORBA::ULong max_buffered_requests,
-                                                         CORBA::ULong max_request_buffer_size,
-                                                         CORBA::Environment &ACE_TRY_ENV)
+                                                         CORBA::ULong max_request_buffer_size
+                                                         TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create the thread pool.
@@ -782,25 +782,25 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes_i (CORBA::ULong stacksize,
                                      allow_borrowing,
                                      allow_request_buffering,
                                      max_buffered_requests,
-                                     max_request_buffer_size,
-                                     ACE_TRY_ENV),
+                                     max_request_buffer_size
+                                     TAO_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  return this->create_threadpool_helper (thread_pool,
-                                         ACE_TRY_ENV);
+  return this->create_threadpool_helper (thread_pool
+                                         TAO_ENV_ARG_PARAMETER);
 }
 
 RTCORBA::ThreadpoolId
-TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool,
-                                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool
+                                                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Make sure of safe deletion in case of errors.
   auto_ptr<TAO_Thread_Pool> safe_thread_pool (thread_pool);
 
   // Open the pool.
-  thread_pool->open (ACE_TRY_ENV);
+  thread_pool->open (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Create the static threads.
@@ -834,8 +834,8 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool,
 }
 
 void
-TAO_Thread_Pool_Manager::destroy_threadpool_i (RTCORBA::ThreadpoolId thread_pool_id,
-                                               CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Pool_Manager::destroy_threadpool_i (RTCORBA::ThreadpoolId thread_pool_id
+                                               TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::InvalidThreadpool))
 {

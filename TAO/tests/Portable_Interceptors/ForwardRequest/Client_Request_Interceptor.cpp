@@ -38,12 +38,10 @@ Client_Request_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   ++this->request_count_;
 
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_TRY_ENV);
+    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected)   // A one-way request.
@@ -59,19 +57,19 @@ Client_Request_Interceptor::send_request (
           int argc = 0;
           this->orb_ = CORBA::ORB_init (argc,
                                         0,
-                                        this->orb_id_.in (),
-                                        ACE_TRY_ENV);
+                                        this->orb_id_.in ()
+                                        TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
       CORBA::Object_var forward =
-        this->orb_->string_to_object (this->forward_str_.in (),
-                                      ACE_TRY_ENV);
+        this->orb_->string_to_object (this->forward_str_.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::String_var forward_str =
-        this->orb_->object_to_string (forward.in (),
-                                      ACE_TRY_ENV);
+        this->orb_->object_to_string (forward.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -118,14 +116,13 @@ Client_Request_Interceptor::receive_other (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
 
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_TRY_ENV);
+    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableInterceptor::ReplyStatus reply_status =
-    ri->reply_status (ACE_TRY_ENV);
+    ri->reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected   // A one-way or asynchronous request.
@@ -139,7 +136,7 @@ Client_Request_Interceptor::receive_other (
   // This will throw an exception if a location forward has not
   // occured.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference (ACE_TRY_ENV);
+  CORBA::Object_var forward = ri->forward_reference (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (forward.in ()))

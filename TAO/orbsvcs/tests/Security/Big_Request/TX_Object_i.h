@@ -33,18 +33,15 @@ public:
   // Destructor
   virtual ~TX_Object_i (void);
 
-  virtual void send (const DataSeq & data,
-                     CORBA::Environment &ACE_TRY_ENV =
-                       TAO_default_environment ())
+  virtual void send (const DataSeq & data
+                     TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void recv (DataSeq_out data,
-                     CORBA::Environment &ACE_TRY_ENV =
-                       TAO_default_environment ())
+  virtual void recv (DataSeq_out data
+                     TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV =
-                           TAO_default_environment ())
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

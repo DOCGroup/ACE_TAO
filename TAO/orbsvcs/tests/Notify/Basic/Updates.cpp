@@ -14,8 +14,8 @@ Update_StructuredPushConsumer::Update_StructuredPushConsumer (Updates *test_clie
 void
 Update_StructuredPushConsumer::offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &ACE_TRY_ENV
+        const CosNotification::EventTypeSeq & removed
+        TAO_ENV_ARG_DECL
       )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -25,14 +25,14 @@ Update_StructuredPushConsumer::offer_change (
   if (added.length () > 0)
     {
       test_client_->offers_added_ = added.length ();
-      this->test_client_->end_test (ACE_TRY_ENV);
+      this->test_client_->end_test (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   if (removed.length () > 0)
     {
       test_client_->offers_removed_ = removed.length ();
-      this->test_client_->end_test (ACE_TRY_ENV);
+      this->test_client_->end_test (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -51,8 +51,8 @@ Update_StructuredPushSupplier::~Update_StructuredPushSupplier ()
 void
 Update_StructuredPushSupplier::subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &ACE_TRY_ENV
+        const CosNotification::EventTypeSeq & removed
+        TAO_ENV_ARG_DECL
         )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -62,14 +62,14 @@ Update_StructuredPushSupplier::subscription_change (
   if (added.length () > 0)
     {
       test_client_->subscriptions_added_ = added.length ();
-      this->test_client_->end_test (ACE_TRY_ENV);
+      this->test_client_->end_test (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   if (removed.length () > 0)
     {
       test_client_->subscriptions_removed_ = removed.length ();
-      this->test_client_->end_test (ACE_TRY_ENV);
+      this->test_client_->end_test (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -87,42 +87,42 @@ Updates::~Updates ()
 }
 
 void
-Updates::init (int argc, char* argv [], CORBA::Environment &ACE_TRY_ENV)
+Updates::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 {
   // init base class
-  Notify_Test_Client::init (argc, argv, ACE_TRY_ENV);
+  Notify_Test_Client::init (argc, argv TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Create all participents ...
-  this->create_EC (ACE_TRY_ENV);
+  this->create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
-    ec_->new_for_suppliers (this->ifgop_, adminid, ACE_TRY_ENV);
+    ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
-    ec_->new_for_consumers (this->ifgop_, adminid, ACE_TRY_ENV);
+    ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
   consumer_ = new Update_StructuredPushConsumer (this);
-  consumer_->init (root_poa_.in (), ACE_TRY_ENV);
+  consumer_->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  consumer_->connect (this->consumer_admin_.in (), ACE_TRY_ENV);
+  consumer_->connect (this->consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   supplier_ = new Update_StructuredPushSupplier (this);
-  supplier_->init (root_poa_.in (), ACE_TRY_ENV);
+  supplier_->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  supplier_->connect (this->supplier_admin_.in (), ACE_TRY_ENV);
+  supplier_->connect (this->supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -160,21 +160,21 @@ Updates::parse_args(int argc, char *argv[])
 }
 
 void
-Updates::create_EC (CORBA::Environment &ACE_TRY_ENV)
+Updates::create_EC (TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
   ec_ = notify_factory_->create_channel (initial_qos_,
                                          initial_admin_,
-                                         id,
-                                         ACE_TRY_ENV);
+                                         id
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
 
 void
-Updates::run_test (CORBA::Environment &ACE_TRY_ENV)
+Updates::run_test (TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNotification::EventTypeSeq added (update_count_), removed (update_count_);
   added.length (update_count_);
@@ -193,11 +193,11 @@ Updates::run_test (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // test added
-  this->supplier_->get_proxy_consumer ()->offer_change (added, removed, ACE_TRY_ENV);
+  this->supplier_->get_proxy_consumer ()->offer_change (added, removed TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->consumer_->get_proxy_supplier ()->subscription_change (added, removed,
-                                                               ACE_TRY_ENV);
+  this->consumer_->get_proxy_supplier ()->subscription_change (added, removed
+                                                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // test removed
@@ -214,20 +214,20 @@ Updates::run_test (CORBA::Environment &ACE_TRY_ENV)
       removed[i].type_name = CORBA::string_dup (update_test_buf);
     }
 
-  this->supplier_->get_proxy_consumer ()->offer_change (added, removed, ACE_TRY_ENV);
+  this->supplier_->get_proxy_consumer ()->offer_change (added, removed TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->consumer_->get_proxy_supplier ()->subscription_change (added, removed,
-                                                               ACE_TRY_ENV);
+  this->consumer_->get_proxy_supplier ()->subscription_change (added, removed
+                                                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Updates::end_test (CORBA::Environment &ACE_TRY_ENV)
+Updates::end_test (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (++this->result_count_ == 4)
     {
-      this->shutdown (ACE_TRY_ENV);
+      this->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -236,8 +236,8 @@ int
 Updates::check_results (void)
 {
   // Destroy the channel
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->ec_->destroy (ACE_TRY_ENV);
+  TAO_ENV_DECLARE_NEW_ENV;
+  this->ec_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG((LM_DEBUG, "offers_added_ = %d, offers_removed_ = %d, subscriptions_added_= %d, subscriptions_removed_ = %d\n",
@@ -267,11 +267,11 @@ main (int argc, char* argv[])
 
   ACE_TRY_NEW_ENV
     {
-      updates.init (argc, argv,
-                      ACE_TRY_ENV); //Init the Client
+      updates.init (argc, argv
+                      TAO_ENV_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 
-      updates.run_test (ACE_TRY_ENV);
+      updates.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       updates.ORB_run ();

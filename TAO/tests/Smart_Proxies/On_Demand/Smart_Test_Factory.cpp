@@ -9,8 +9,8 @@ Smart_Test_Factory::Smart_Test_Factory (void)
 }
 
 Test_ptr
-Smart_Test_Factory::create_proxy (Test_ptr proxy,
-                                  CORBA::Environment &)
+Smart_Test_Factory::create_proxy (Test_ptr proxy
+                                  TAO_ENV_ARG_DECL_NOT_USED)
  {
    ACE_DEBUG ((LM_DEBUG,
                "create_smart_proxy\n"));
@@ -19,7 +19,7 @@ Smart_Test_Factory::create_proxy (Test_ptr proxy,
      ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
 
    return proxy;
-   
+
  }
 
 // The following Factory is used by the <ACE_Service_Config> to

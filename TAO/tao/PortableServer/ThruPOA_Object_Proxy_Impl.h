@@ -48,17 +48,17 @@ public:
   virtual ~TAO_ThruPOA_Object_Proxy_Impl (void);
 
   virtual CORBA::Boolean _is_a (const CORBA::Object_ptr target,
-                                const CORBA::Char *logical_type_id,
-                                CORBA_Environment &ACE_TRY_ENV);
+                                const CORBA::Char *logical_type_id
+                                TAO_ENV_ARG_DECL);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  virtual CORBA::Boolean _non_existent (const CORBA::Object_ptr target,
-                                        CORBA_Environment &ACE_TRY_ENV);
+  virtual CORBA::Boolean _non_existent (const CORBA::Object_ptr target
+                                        TAO_ENV_ARG_DECL);
 
   virtual CORBA_InterfaceDef_ptr _get_interface (
-      const CORBA::Object_ptr target,
-      CORBA_Environment &ACE_TRY_ENV
+      const CORBA::Object_ptr target
+      TAO_ENV_ARG_DECL
     );
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -17,21 +17,21 @@ Stopwatch_imp::Stopwatch_imp (CORBA::ORB_ptr orb, Timer_imp *timer)
 }
 
 void
-Stopwatch_imp::start (CORBA::Environment&)
+Stopwatch_imp::start (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->timer_->start ();
 }
 
 void
-Stopwatch_imp::stop (CORBA::Environment&)
+Stopwatch_imp::stop (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->timer_->stop ();
 }
 
 void
-Stopwatch_imp::shutdown (CORBA::Environment&)
+Stopwatch_imp::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);

@@ -66,15 +66,13 @@ public:
   // the static operations
   static TAO_Priority_Mapping_Manager_ptr _duplicate (TAO_Priority_Mapping_Manager_ptr obj);
   static TAO_Priority_Mapping_Manager_ptr _narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   static TAO_Priority_Mapping_Manager_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   static TAO_Priority_Mapping_Manager_ptr _nil (void)
     {
       return (TAO_Priority_Mapping_Manager_ptr)0;
@@ -126,7 +124,7 @@ public:
   static TAO_Priority_Mapping_Manager_ptr duplicate (TAO_Priority_Mapping_Manager_ptr);
   static void release (TAO_Priority_Mapping_Manager_ptr);
   static TAO_Priority_Mapping_Manager_ptr nil (void);
-  static TAO_Priority_Mapping_Manager_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static TAO_Priority_Mapping_Manager_ptr narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
   static CORBA::Object * upcast (void *);
 
 private:

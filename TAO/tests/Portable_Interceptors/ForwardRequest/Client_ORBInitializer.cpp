@@ -26,12 +26,10 @@ Client_ORBInitializer::post_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
-
-  CORBA::String_var orb_id = info->orb_id (ACE_TRY_ENV);
+  CORBA::String_var orb_id = info->orb_id (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::StringSeq_var args = info->arguments (ACE_TRY_ENV);
+  CORBA::StringSeq_var args = info->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var forward_str;

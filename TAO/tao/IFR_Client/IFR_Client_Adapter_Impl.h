@@ -33,7 +33,7 @@
  * which use the Interface Repository. This is the derived class
  * that contains the actual implementations.
  */
-class TAO_IFR_Client_Export TAO_IFR_Client_Adapter_Impl 
+class TAO_IFR_Client_Export TAO_IFR_Client_Adapter_Impl
   : public TAO_IFR_Client_Adapter
 {
 public:
@@ -55,13 +55,13 @@ public:
 
   virtual CORBA_InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
-      const char *repo_id,
-      CORBA::Environment &ACE_TRY_ENV
+      const char *repo_id
+      TAO_ENV_ARG_DECL
     );
 
   virtual CORBA_InterfaceDef_ptr get_interface_remote (
-      const CORBA::Object_ptr target,
-      CORBA_Environment &ACE_TRY_ENV
+      const CORBA::Object_ptr target
+      TAO_ENV_ARG_DECL
     );
 
   // Used to force the initialization of the ORB code.
@@ -76,13 +76,13 @@ ACE_FACTORY_DECLARE (TAO_IFR_Client, TAO_IFR_Client_Adapter_Impl)
 typedef int (*TAO_Module_Initializer) (void);
 
 static TAO_Module_Initializer
-TAO_Requires_IFR_Client_Initializer = 
+TAO_Requires_IFR_Client_Initializer =
   &TAO_IFR_Client_Adapter_Impl::Initializer;
 
 #else
 
 static int
-TAO_Requires_IFR_Client_Initializer = 
+TAO_Requires_IFR_Client_Initializer =
   TAO_IFR_Client_Adapter_Impl::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */

@@ -63,8 +63,8 @@ public:
 
   void init (CosNotifyChannelAdmin::AdminID myID,
              CosNotifyChannelAdmin::InterFilterGroupOperator myOperator,
-             PortableServer::POA_ptr my_POA,
-             CORBA::Environment &ACE_TRY_ENV);
+             PortableServer::POA_ptr my_POA
+             TAO_ENV_ARG_DECL);
   //Initialize the Supplier Admin.
 
   // @@ Pradeep: could this method be const?  Try to use const
@@ -72,8 +72,8 @@ public:
   TAO_Notify_FilterAdmin_i& get_filter_admin (void);
   // Get our filter admin.
 
-  void deactivate_proxy_pushconsumer (PortableServer::Servant servant,
-                                      CORBA::Environment &ACE_TRY_ENV);
+  void deactivate_proxy_pushconsumer (PortableServer::Servant servant
+                                      TAO_ENV_ARG_DECL);
   // Deactivate servant from <proxy_pushconsumer_POA_>.
 
   void proxy_pushconsumer_destroyed (CosNotifyChannelAdmin::ProxyID proxyID);
@@ -81,13 +81,13 @@ public:
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::AdminID MyID (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
-  CosNotifyChannelAdmin::SupplierAdmin_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
+  CosNotifyChannelAdmin::SupplierAdmin_ptr get_ref (TAO_ENV_SINGLE_ARG_DECL);
   // Return the CORBA object for this servant.
 
   TAO_Notify_Event_Manager* get_event_manager (void);
@@ -96,36 +96,36 @@ public:
   // @@ Pradeep: Don't forget to indent this stuff, at the very least
   // it should not start in the first column!
   virtual CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
-      CORBA::Environment &ACE_TRY_ENV
+      TAO_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
 virtual CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::ProxyIDSeq * pull_consumers (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::ProxyIDSeq * push_consumers (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::ProxyConsumer_ptr get_proxy_consumer (
-    CosNotifyChannelAdmin::ProxyID proxy_id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::ProxyID proxy_id
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -134,8 +134,8 @@ virtual CosNotifyChannelAdmin::ProxyConsumer_ptr get_proxy_consumer (
 
 virtual CosNotifyChannelAdmin::ProxyConsumer_ptr obtain_notification_pull_consumer (
     CosNotifyChannelAdmin::ClientType ctype,
-    CosNotifyChannelAdmin::ProxyID_out proxy_id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::ProxyID_out proxy_id
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -144,8 +144,8 @@ virtual CosNotifyChannelAdmin::ProxyConsumer_ptr obtain_notification_pull_consum
 
 virtual CosNotifyChannelAdmin::ProxyConsumer_ptr obtain_notification_push_consumer (
     CosNotifyChannelAdmin::ClientType ctype,
-    CosNotifyChannelAdmin::ProxyID_out proxy_id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::ProxyID_out proxy_id
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -153,22 +153,22 @@ virtual CosNotifyChannelAdmin::ProxyConsumer_ptr obtain_notification_push_consum
   ));
 
 virtual void destroy (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotification::QoSProperties * get_qos (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual void set_qos (
-    const CosNotification::QoSProperties & qos,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotification::QoSProperties & qos
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -177,8 +177,8 @@ virtual void set_qos (
 
 virtual void validate_qos (
     const CosNotification::QoSProperties & required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotification::NamedPropertyRangeSeq_out available_qos
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -187,8 +187,8 @@ virtual void validate_qos (
 
 virtual void offer_change (
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotification::EventTypeSeq & removed
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -196,16 +196,16 @@ virtual void offer_change (
   ));
 
 virtual CosNotifyFilter::FilterID add_filter (
-    CosNotifyFilter::Filter_ptr new_filter,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyFilter::Filter_ptr new_filter
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual void remove_filter (
-    CosNotifyFilter::FilterID filter,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyFilter::FilterID filter
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -213,8 +213,8 @@ virtual void remove_filter (
   ));
 
 virtual CosNotifyFilter::Filter_ptr get_filter (
-    CosNotifyFilter::FilterID filter,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyFilter::FilterID filter
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -222,28 +222,28 @@ virtual CosNotifyFilter::Filter_ptr get_filter (
   ));
 
 virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual void remove_all_filters (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -251,13 +251,13 @@ virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer (
 
 protected:
   // = Helper methods
-  CORBA::Object_ptr obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Object_ptr obtain_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL);
   // Obtain a proxy pushconsumer object
 
-  CORBA::Object_ptr obtain_struct_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Object_ptr obtain_struct_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL);
   // Obtain a structured proxy pushconsumer object.
 
-  CORBA::Object_ptr obtain_sequence_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Object_ptr obtain_sequence_proxy_pushconsumer_i (CosNotifyChannelAdmin::ProxyID proxy_id TAO_ENV_ARG_DECL);
   // Obtain a sequence pushconsumer object
 
   // = Data members

@@ -43,30 +43,30 @@ TAO_Adapter_Registry::~TAO_Adapter_Registry (void)
 }
 
 void
-TAO_Adapter_Registry::close (int wait_for_completion,
-                             CORBA::Environment &ACE_TRY_ENV)
+TAO_Adapter_Registry::close (int wait_for_completion
+                             TAO_ENV_ARG_DECL)
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
-      this->adapters_[i]->close (wait_for_completion, ACE_TRY_ENV);
+      this->adapters_[i]->close (wait_for_completion TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-TAO_Adapter_Registry::check_close (int wait_for_completion,
-                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_Adapter_Registry::check_close (int wait_for_completion
+                                   TAO_ENV_ARG_DECL)
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
-      this->adapters_[i]->check_close (wait_for_completion, ACE_TRY_ENV);
+      this->adapters_[i]->check_close (wait_for_completion TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-TAO_Adapter_Registry::insert (TAO_Adapter *adapter,
-                              CORBA::Environment &ACE_TRY_ENV)
+TAO_Adapter_Registry::insert (TAO_Adapter *adapter
+                              TAO_ENV_ARG_DECL)
 {
   if (this->adapters_capacity_ == this->adapters_count_)
     {
@@ -105,16 +105,16 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter,
 void
 TAO_Adapter_Registry::dispatch (TAO_ObjectKey &key,
                                 TAO_ServerRequest &request,
-                                CORBA::Object_out forward_to,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::Object_out forward_to
+                                TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     {
       int r = this->adapters_[i]->dispatch (key,
                                             request,
-                                            forward_to,
-                                            ACE_TRY_ENV);
+                                            forward_to
+                                             TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (r != TAO_Adapter::DS_MISMATCHED_KEY)

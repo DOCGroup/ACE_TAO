@@ -20,16 +20,16 @@ TAO_Contained_i::~TAO_Contained_i (void)
 }
 
 void
-TAO_Contained_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->destroy_i (ACE_TRY_ENV);
+  this->destroy_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Contained_i::destroy_i (CORBA::Environment &)
+TAO_Contained_i::destroy_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
@@ -85,16 +85,16 @@ TAO_Contained_i::destroy_i (CORBA::Environment &)
 }
 
 char *
-TAO_Contained_i::id (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::id (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->id_i (ACE_TRY_ENV);
+  return this->id_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 char *
-TAO_Contained_i::id_i (CORBA::Environment &)
+TAO_Contained_i::id_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString retval;
@@ -106,19 +106,19 @@ TAO_Contained_i::id_i (CORBA::Environment &)
 }
 
 void
-TAO_Contained_i::id (const char *id,
-                     CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::id (const char *id
+                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->id_i (id,
-              ACE_TRY_ENV);
+  this->id_i (id
+              TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Contained_i::id_i (const char *id,
-                       CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::id_i (const char *id
+                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString tmp;
@@ -162,16 +162,16 @@ TAO_Contained_i::id_i (const char *id,
 }
 
 char *
-TAO_Contained_i::name (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::name (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->name_i (ACE_TRY_ENV);
+  return this->name_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 char *
-TAO_Contained_i::name_i (CORBA::Environment &)
+TAO_Contained_i::name_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString retval;
@@ -183,16 +183,16 @@ TAO_Contained_i::name_i (CORBA::Environment &)
 }
 
 char *
-TAO_Contained_i::version (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::version (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->version_i (ACE_TRY_ENV);
+  return this->version_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 char *
-TAO_Contained_i::version_i (CORBA::Environment &)
+TAO_Contained_i::version_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString retval;
@@ -204,24 +204,24 @@ TAO_Contained_i::version_i (CORBA::Environment &)
 }
 
 void
-TAO_Contained_i::name (const char *name,
-                       CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::name (const char *name
+                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->name_i (name,
-                ACE_TRY_ENV);
+  this->name_i (name
+                TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Contained_i::name_i (const char *name,
-                         CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::name_i (const char *name
+                         TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check if name already exists in this container.
-  CORBA::Boolean exists = this->name_exists (name,
-                                             ACE_TRY_ENV);
+  CORBA::Boolean exists = this->name_exists (name
+                                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (exists)
@@ -252,19 +252,19 @@ TAO_Contained_i::name_i (const char *name,
 }
 
 void
-TAO_Contained_i::version (const char *version,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::version (const char *version
+                          TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->version_i (version,
-                   ACE_TRY_ENV);
+  this->version_i (version
+                   TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Contained_i::version_i (const char *version,
-                            CORBA::Environment &)
+TAO_Contained_i::version_i (const char *version
+                            TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_string_value (this->section_key_,
@@ -273,16 +273,16 @@ TAO_Contained_i::version_i (const char *version,
 }
 
 CORBA_Container_ptr
-TAO_Contained_i::defined_in (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::defined_in (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA_Container::_nil ());
 
-  return this->defined_in_i (ACE_TRY_ENV);
+  return this->defined_in_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA_Container_ptr
-TAO_Contained_i::defined_in_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::defined_in_i (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString container_id;
@@ -314,28 +314,28 @@ TAO_Contained_i::defined_in_i (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (def_kind,
-                                                    container_path.c_str (),
-                                                    ACE_TRY_ENV);
+                                                    container_path.c_str ()
+                                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_Container::_nil ());
 
-  CORBA_Container_var retval = CORBA_Container::_narrow (obj.in (),
-                                                         ACE_TRY_ENV);
+  CORBA_Container_var retval = CORBA_Container::_narrow (obj.in ()
+                                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA_Container::_nil ());
 
   return retval._retn ();
 }
 
 char *
-TAO_Contained_i::absolute_name (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::absolute_name (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->absolute_name_i (ACE_TRY_ENV);
+  return this->absolute_name_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 char *
-TAO_Contained_i::absolute_name_i (CORBA::Environment &)
+TAO_Contained_i::absolute_name_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString absolute_name;
@@ -347,16 +347,16 @@ TAO_Contained_i::absolute_name_i (CORBA::Environment &)
 }
 
 CORBA_Repository_ptr
-TAO_Contained_i::containing_repository (CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::containing_repository (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA_Repository::_nil ());
 
-  return this->containing_repository_i (ACE_TRY_ENV);
+  return this->containing_repository_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA_Repository_ptr
-TAO_Contained_i::containing_repository_i (CORBA::Environment &)
+TAO_Contained_i::containing_repository_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->repo_->repo_objref ();
@@ -365,8 +365,8 @@ TAO_Contained_i::containing_repository_i (CORBA::Environment &)
 void
 TAO_Contained_i::move (CORBA_Container_ptr new_container,
                        const char *new_name,
-                       const char *new_version,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       const char *new_version
+                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
@@ -374,13 +374,13 @@ TAO_Contained_i::move (CORBA_Container_ptr new_container,
   this->move_i (new_container,
                 new_name,
                 new_version,
-                1,
-                ACE_TRY_ENV);
+                1
+                TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
-TAO_Contained_i::name_exists (const char *name,
-                              CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::name_exists (const char *name
+                              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString container_id;
@@ -390,8 +390,8 @@ TAO_Contained_i::name_exists (const char *name,
 
   if (container_id == "")
     {
-      return this->repo_->name_exists (name,
-                                       ACE_TRY_ENV);
+      return this->repo_->name_exists (name
+                                       TAO_ENV_ARG_PARAMETER);
     }
 
   ACE_TString container_path;
@@ -484,16 +484,16 @@ void
 TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
                          const char *new_name,
                          const char *new_version,
-                         CORBA::Boolean cleanup,
-                         CORBA::Environment &ACE_TRY_ENV)
+                         CORBA::Boolean cleanup
+                         TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA_Repository_var my_repo =
-    this->containing_repository_i (ACE_TRY_ENV);
+    this->containing_repository_i (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::DefinitionKind container_dk =
-    new_container->def_kind (ACE_TRY_ENV);
+    new_container->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_Configuration_Section_Key container_key;
@@ -515,8 +515,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
   else
     {
       PortableServer::ObjectId_var oid =
-        this->repo_->ir_poa ()->reference_to_id (new_container,
-                                                 ACE_TRY_ENV);
+        this->repo_->ir_poa ()->reference_to_id (new_container
+                                                 TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::String_var container_path =
@@ -527,15 +527,15 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
                                            container_key,
                                            0);
 
-      TAO_Contained_i *impl = 
-        this->repo_->servant_factory ()->create_contained (container_key,
-                                                           ACE_TRY_ENV);
+      TAO_Contained_i *impl =
+        this->repo_->servant_factory ()->create_contained (container_key
+                                                           TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       auto_ptr<TAO_Contained_i> safety (impl);
 
       CORBA_Repository_var your_repo =
-        impl->containing_repository_i (ACE_TRY_ENV);
+        impl->containing_repository_i (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (my_repo.in () != your_repo.in ())
@@ -543,16 +543,16 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           ACE_THROW (CORBA::BAD_PARAM (4, CORBA::COMPLETED_NO));
         }
 
-      container_impl = 
-        this->repo_->servant_factory ()->create_container (container_key,
-                                                           ACE_TRY_ENV);
+      container_impl =
+        this->repo_->servant_factory ()->create_container (container_key
+                                                           TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
-  CORBA::DefinitionKind my_dk = this->def_kind (ACE_TRY_ENV);
+  CORBA::DefinitionKind my_dk = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::String_var id = this->id_i (ACE_TRY_ENV);
+  CORBA::String_var id = this->id_i (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // If an exception is thrown, this must be restored.
@@ -576,7 +576,7 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           TAO_EnumDef_i impl (this->repo_,
                               this->section_key_);
 
-          CORBA_EnumMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
+          CORBA_EnumMemberSeq_var members = impl.members_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (container_dk == CORBA::dk_Struct
@@ -585,8 +585,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
             {
               this->move_pre_process (new_container,
                                       my_path.c_str (),
-                                      new_name,
-                                      ACE_TRY_ENV);
+                                      new_name
+                                      TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -594,8 +594,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
             container_impl->create_enum_i (id.in (),
                                            new_name,
                                            new_version,
-                                           members.in (),
-                                           ACE_TRY_ENV);
+                                           members.in ()
+                                           TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           break;
         }
@@ -604,14 +604,14 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           TAO_AliasDef_i impl (this->repo_,
                                this->section_key_);
 
-          CORBA_IDLType_var otype = impl.original_type_def_i (ACE_TRY_ENV);
+          CORBA_IDLType_var otype = impl.original_type_def_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           container_impl->create_alias_i (id.in (),
                                           new_name,
                                           new_version,
-                                          otype.in (),
-                                          ACE_TRY_ENV);
+                                          otype.in ()
+                                          TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           break;
         }
@@ -619,8 +619,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
         {
           container_impl->create_native_i (id.in (),
                                            new_name,
-                                           new_version,
-                                           ACE_TRY_ENV);
+                                           new_version
+                                           TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           break;
         }
@@ -629,14 +629,14 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           TAO_ValueBoxDef_i impl (this->repo_,
                                   this->section_key_);
 
-          CORBA_IDLType_var otype = impl.original_type_def_i (ACE_TRY_ENV);
+          CORBA_IDLType_var otype = impl.original_type_def_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           container_impl->create_value_box_i (id.in (),
                                               new_name,
                                               new_version,
-                                              otype.in (),
-                                              ACE_TRY_ENV);
+                                              otype.in ()
+                                              TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           break;
         }
@@ -645,7 +645,7 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           TAO_StructDef_i impl (this->repo_,
                                 this->section_key_);
 
-          CORBA_StructMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
+          CORBA_StructMemberSeq_var members = impl.members_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (container_dk == CORBA::dk_Struct
@@ -654,8 +654,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
             {
               this->move_pre_process (new_container,
                                       my_path.c_str (),
-                                      new_name,
-                                      ACE_TRY_ENV);
+                                      new_name
+                                      TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -663,12 +663,12 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
             container_impl->create_struct_i (id.in (),
                                              new_name,
                                              new_version,
-                                             members.in (),
-                                             ACE_TRY_ENV);
+                                             members.in ()
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          this->move_contents (new_defn.in (),
-                               ACE_TRY_ENV);
+          this->move_contents (new_defn.in ()
+                               TAO_ENV_ARG_PARAMETER);
 
           break;
         }
@@ -678,10 +678,10 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
                                this->section_key_);
 
           CORBA_IDLType_var disc_type =
-            impl.discriminator_type_def_i (ACE_TRY_ENV);
+            impl.discriminator_type_def_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA_UnionMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
+          CORBA_UnionMemberSeq_var members = impl.members_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (container_dk == CORBA::dk_Struct
@@ -690,8 +690,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
             {
               this->move_pre_process (new_container,
                                       my_path.c_str (),
-                                      new_name,
-                                      ACE_TRY_ENV);
+                                      new_name
+                                      TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -700,12 +700,12 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
                                             new_name,
                                             new_version,
                                             disc_type.in (),
-                                            members.in (),
-                                            ACE_TRY_ENV);
+                                            members.in ()
+                                            TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          this->move_contents (new_defn.in (),
-                               ACE_TRY_ENV);
+          this->move_contents (new_defn.in ()
+                               TAO_ENV_ARG_PARAMETER);
 
           break;
         }
@@ -714,12 +714,12 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           CORBA_ModuleDef_var new_defn =
             container_impl->create_module_i (id.in (),
                                              new_name,
-                                             new_version,
-                                             ACE_TRY_ENV);
+                                             new_version
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          this->move_contents (new_defn.in (),
-                               ACE_TRY_ENV);
+          this->move_contents (new_defn.in ()
+                               TAO_ENV_ARG_PARAMETER);
 
           break;
         }
@@ -728,19 +728,19 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           TAO_ExceptionDef_i impl (this->repo_,
                                    this->section_key_);
 
-          CORBA_StructMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
+          CORBA_StructMemberSeq_var members = impl.members_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA_ExceptionDef_var new_defn =
             container_impl->create_exception_i (id.in (),
                                                 new_name,
                                                 new_version,
-                                                members.in (),
-                                                ACE_TRY_ENV);
+                                                members.in ()
+                                                TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          this->move_contents (new_defn.in (),
-                               ACE_TRY_ENV);
+          this->move_contents (new_defn.in ()
+                               TAO_ENV_ARG_PARAMETER);
 
           break;
         }
@@ -749,20 +749,20 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           TAO_InterfaceDef_i impl (this->repo_,
                                    this->section_key_);
 
-          CORBA_InterfaceDefSeq_var bases = 
-            impl.base_interfaces_i (ACE_TRY_ENV);
+          CORBA_InterfaceDefSeq_var bases =
+            impl.base_interfaces_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA_InterfaceDef_var new_defn =
             container_impl->create_interface_i (id.in (),
                                                 new_name,
                                                 new_version,
-                                                bases.in (),
-                                                ACE_TRY_ENV);
+                                                bases.in ()
+                                                TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          this->move_contents (new_defn.in (),
-                               ACE_TRY_ENV);
+          this->move_contents (new_defn.in ()
+                               TAO_ENV_ARG_PARAMETER);
 
           break;
         }
@@ -771,18 +771,18 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           TAO_ConstantDef_i impl (this->repo_,
                                   this->section_key_);
 
-          CORBA_IDLType_var type_def = impl.type_def_i (ACE_TRY_ENV);
+          CORBA_IDLType_var type_def = impl.type_def_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::Any_var value = impl.value_i (ACE_TRY_ENV);
+          CORBA::Any_var value = impl.value_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           container_impl->create_constant_i (id.in (),
                                              new_name,
                                              new_version,
                                              type_def.in (),
-                                             value.in (),
-                                             ACE_TRY_ENV);
+                                             value.in ()
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           break;
         }
@@ -791,10 +791,10 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           TAO_AttributeDef_i impl (this->repo_,
                                    this->section_key_);
 
-          CORBA_IDLType_var type_def = impl.type_def_i (ACE_TRY_ENV);
+          CORBA_IDLType_var type_def = impl.type_def_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::AttributeMode mode = impl.mode_i (ACE_TRY_ENV);
+          CORBA::AttributeMode mode = impl.mode_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (container_dk == CORBA::dk_Interface)
@@ -806,8 +806,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
                                        new_name,
                                        new_version,
                                        type_def.in (),
-                                       mode,
-                                       ACE_TRY_ENV);
+                                       mode
+                                       TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               break;
             }
@@ -820,8 +820,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
                                        new_name,
                                        new_version,
                                        type_def.in (),
-                                       mode,
-                                       ACE_TRY_ENV);
+                                       mode
+                                       TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               break;
             }
@@ -835,20 +835,20 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
           TAO_OperationDef_i impl (this->repo_,
                                    this->section_key_);
 
-          CORBA_IDLType_var result = impl.result_def_i (ACE_TRY_ENV);
+          CORBA_IDLType_var result = impl.result_def_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::OperationMode mode = impl.mode_i (ACE_TRY_ENV);
+          CORBA::OperationMode mode = impl.mode_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA_ParDescriptionSeq_var params = impl.params_i (ACE_TRY_ENV);
+          CORBA_ParDescriptionSeq_var params = impl.params_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA_ExceptionDefSeq_var exceptions = 
-            impl.exceptions_i (ACE_TRY_ENV);
+          CORBA_ExceptionDefSeq_var exceptions =
+            impl.exceptions_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA_ContextIdSeq_var contexts = impl.contexts_i (ACE_TRY_ENV);
+          CORBA_ContextIdSeq_var contexts = impl.contexts_i (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (container_dk == CORBA::dk_Interface)
@@ -863,8 +863,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
                                        mode,
                                        params.in (),
                                        exceptions.in (),
-                                       contexts.in (),
-                                       ACE_TRY_ENV);
+                                       contexts.in ()
+                                       TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               break;
             }
@@ -880,8 +880,8 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
                                        mode,
                                        params.in (),
                                        exceptions.in (),
-                                       contexts.in (),
-                                       ACE_TRY_ENV);
+                                       contexts.in ()
+                                       TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               break;
             }
@@ -966,13 +966,13 @@ TAO_Contained_i::move_i (CORBA_Container_ptr new_container,
 void
 TAO_Contained_i::move_pre_process (CORBA_Container_ptr container,
                                    const char *contained_path,
-                                   const char *name,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                   const char *name
+                                   TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var container_oid =
-    this->repo_->ir_poa ()->reference_to_id (container,
-                                             ACE_TRY_ENV);
+    this->repo_->ir_poa ()->reference_to_id (container
+                                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::String_var container_path =
@@ -1026,8 +1026,8 @@ TAO_Contained_i::move_pre_process (CORBA_Container_ptr container,
 }
 
 void
-TAO_Contained_i::move_contents (CORBA_Container_ptr new_container,
-                                CORBA::Environment &ACE_TRY_ENV)
+TAO_Contained_i::move_contents (CORBA_Container_ptr new_container
+                                TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString name;
@@ -1069,8 +1069,8 @@ TAO_Contained_i::move_contents (CORBA_Container_ptr new_container,
 
               TAO_Contained_i *impl =
                 this->repo_->servant_factory ()->create_contained (
-                                                     defn_key,
-                                                     ACE_TRY_ENV
+                                                     defn_key
+                                                     TAO_ENV_ARG_PARAMETER
                                                    );
               ACE_CHECK;
 
@@ -1079,14 +1079,14 @@ TAO_Contained_i::move_contents (CORBA_Container_ptr new_container,
               impl->move_i (new_container,
                             name.c_str (),
                             version.c_str (),
-                            0,
-                            ACE_TRY_ENV);
+                            0
+                            TAO_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }
     }
 
-  CORBA::DefinitionKind kind = this->def_kind (ACE_TRY_ENV);
+  CORBA::DefinitionKind kind = this->def_kind (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Specific to InterfaceDef_i and ValueDef_i
@@ -1130,8 +1130,8 @@ TAO_Contained_i::move_contents (CORBA_Container_ptr new_container,
               impl.move_i (new_container,
                            name.c_str (),
                            version.c_str (),
-                           0,
-                           ACE_TRY_ENV);
+                           0
+                           TAO_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }
@@ -1173,8 +1173,8 @@ TAO_Contained_i::move_contents (CORBA_Container_ptr new_container,
               impl.move_i (new_container,
                            name.c_str (),
                            version.c_str (),
-                           0,
-                           ACE_TRY_ENV);
+                           0
+                           TAO_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }

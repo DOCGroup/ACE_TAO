@@ -17,10 +17,10 @@ ifr_adding_visitor_operation::~ifr_adding_visitor_operation (void)
 {
 }
 
-int 
+int
 ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // If this operation is already in the repository (for example, if
@@ -29,8 +29,8 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // compiler front end would have told us.
 
       CORBA_Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID (),
-                                             ACE_TRY_ENV);
+        be_global->repository ()->lookup_id (node->repoID ()
+                                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (prev_def.in ()))
@@ -42,7 +42,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // will look up each parameter and add its repository entry to
       // our params_ member.
 
-      CORBA::ULong length = ACE_static_cast (CORBA::ULong, 
+      CORBA::ULong length = ACE_static_cast (CORBA::ULong,
                                              node->argument_count ());
 
       this->params_.length (length);
@@ -54,7 +54,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
               ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
               ACE_TEXT ("visit_operation -")
               ACE_TEXT (" visit_scope failed\n")
-            ),  
+            ),
             -1
           );
         }
@@ -87,12 +87,12 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           ex = ex_iter.item ();
 
           prev_def =
-            be_global->repository ()->lookup_id (ex->repoID (),
-                                                 ACE_TRY_ENV);
+            be_global->repository ()->lookup_id (ex->repoID ()
+                                                 TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          exceptions[i++] = CORBA_ExceptionDef::_narrow (prev_def.in (),
-                                                         ACE_TRY_ENV);
+          exceptions[i++] = CORBA_ExceptionDef::_narrow (prev_def.in ()
+                                                         TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ex_iter.next ();
@@ -133,13 +133,13 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       AST_Type *return_type = node->return_type ();
 
       // Updates ir_current_.
-      this->get_referenced_type (return_type,
-                                 ACE_TRY_ENV);
+      this->get_referenced_type (return_type
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Is the operation oneway?
-      CORBA::OperationMode mode = node->flags () == AST_Operation::OP_oneway 
-                                 ? CORBA::OP_ONEWAY 
+      CORBA::OperationMode mode = node->flags () == AST_Operation::OP_oneway
+                                 ? CORBA::OP_ONEWAY
                                  : CORBA::OP_NORMAL;
 
       // Create the repository entry.
@@ -148,9 +148,9 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
-          CORBA_InterfaceDef_var iface = 
-            CORBA_InterfaceDef::_narrow (current_scope,
-                                         ACE_TRY_ENV);
+          CORBA_InterfaceDef_var iface =
+            CORBA_InterfaceDef::_narrow (current_scope
+                                         TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA_OperationDef_var new_def =
@@ -161,8 +161,8 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                      mode,
                                      this->params_,
                                      exceptions,
-                                     contexts,
-                                     ACE_TRY_ENV);
+                                     contexts
+                                     TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else
@@ -172,7 +172,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
               ACE_TEXT ("(%N:%l) ifr_adding_visitor_operation::")
               ACE_TEXT ("visit_operation -")
               ACE_TEXT (" scope stack is empty\n")
-            ),  
+            ),
             -1
           );
         }
@@ -191,7 +191,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
   return 0;
 }
 
-int 
+int
 ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 {
   // Get the parameter's name.
@@ -199,21 +199,21 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
   AST_Type *arg_type = node->field_type ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Updates ir_current_.
-      this->get_referenced_type (arg_type,
-                                 ACE_TRY_ENV);
+      this->get_referenced_type (arg_type
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->params_[this->index_].type_def = 
+      this->params_[this->index_].type_def =
         CORBA_IDLType::_duplicate (this->ir_current_.in ());
 
 
-      // Fortunately, AST_Field::Direction and CORBA_ParameterMode 
+      // Fortunately, AST_Field::Direction and CORBA_ParameterMode
       // are ordered identically.
-      this->params_[this->index_].mode = 
+      this->params_[this->index_].mode =
         (CORBA::ParameterMode) node->direction ();
 
       // IfR method create_operation does not use this - it just needs

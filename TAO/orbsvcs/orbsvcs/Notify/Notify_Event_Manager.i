@@ -7,45 +7,45 @@
 
 ACE_INLINE void
 TAO_Notify_Event_Manager::process_event  (TAO_Notify_Event* event,
-                                          TAO_Notify_EventSource* event_source,
-                                          CORBA::Environment &ACE_TRY_ENV)
+                                          TAO_Notify_EventSource* event_source
+                                          TAO_ENV_ARG_DECL)
 {
   if (admin_properties_->reject_new_events () == 1
       && admin_properties_->queue_full ())
     ACE_THROW (CORBA::IMP_LIMIT ());
 
   this->event_processor_->evaluate_source_filter (event,
-                                                  event_source,
-                                                  ACE_TRY_ENV);
+                                                  event_source
+                                                  TAO_ENV_ARG_PARAMETER);
   // Start by checking if the event passes through the Source's filter.
 }
 
 ACE_INLINE void
-TAO_Notify_Event_Manager::register_for_publication_updates (TAO_Notify_UpdateListener* update_listener, CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Event_Manager::register_for_publication_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL)
 {
-  this->event_map_->register_for_publication_updates (update_listener,
-                                                     ACE_TRY_ENV);
+  this->event_map_->register_for_publication_updates (update_listener
+                                                     TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE void
-TAO_Notify_Event_Manager::register_for_subscription_updates (TAO_Notify_UpdateListener* update_listener, CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Event_Manager::register_for_subscription_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL)
 {
-  this->event_map_->register_for_subscription_updates (update_listener,
-                                                      ACE_TRY_ENV);
+  this->event_map_->register_for_subscription_updates (update_listener
+                                                      TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE void
-TAO_Notify_Event_Manager:: unregister_from_subscription_updates (TAO_Notify_UpdateListener* update_listener, CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Event_Manager:: unregister_from_subscription_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL)
 {
-  this->event_map_->unregister_from_subscription_updates (update_listener,
-                                                         ACE_TRY_ENV);
+  this->event_map_->unregister_from_subscription_updates (update_listener
+                                                         TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE void
-TAO_Notify_Event_Manager::unregister_from_publication_updates (TAO_Notify_UpdateListener* update_listener, CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Event_Manager::unregister_from_publication_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL)
 {
-  this->event_map_->unregister_from_publication_updates(update_listener,
-                                                       ACE_TRY_ENV);
+  this->event_map_->unregister_from_publication_updates(update_listener
+                                                       TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE TAO_Notify_Event_Map*

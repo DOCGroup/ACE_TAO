@@ -165,7 +165,7 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
 int
 TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // @todo: This hard-coding should be fixed once SECIOP is
@@ -183,8 +183,8 @@ TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
 
       PortableInterceptor::ORBInitializer_var initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Register the SSLIOP ORB initializer.
@@ -201,8 +201,8 @@ TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
       //PortableInterceptor::ORBInitializer_var initializer = tmp;
       initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

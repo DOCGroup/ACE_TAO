@@ -12,9 +12,8 @@ public:
 
   Smart_Test_Factory (void);
 
-  virtual Test_ptr create_proxy (Test_ptr proxy,
-                                 CORBA::Environment &env =
-                                 TAO_default_environment ());
+  virtual Test_ptr create_proxy (Test_ptr proxy
+                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // This method will create the smart_proxy.
 };
 

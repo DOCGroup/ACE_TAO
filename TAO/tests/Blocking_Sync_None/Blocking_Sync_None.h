@@ -26,11 +26,11 @@ public:
 
   // = The skeleton methods
   virtual void slow_operation (const Test::Payload &the_payload,
-                               CORBA::ULong sleep_microseconds,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::ULong sleep_microseconds
+                               TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -37,26 +37,26 @@ Consumer_Handler::init (int argc,
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (argc,
-				    argv,
-				    0,
-				    ACE_TRY_ENV);
+                                    argv,
+                                    0
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object  =
-        this->orb_->resolve_initial_references("RootPOA",
-                                           ACE_TRY_ENV);
+        this->orb_->resolve_initial_references("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_object.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Save the Shutdown callback.
@@ -67,20 +67,20 @@ Consumer_Handler::init (int argc,
 
       // Start the servant.
       this->receiver_ =
-	this->receiver_i_._this (ACE_TRY_ENV);
+        this->receiver_i_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       if (this->get_notifier () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the notifier "
                            "the TAO_Naming_Client. \n"),
                           -1);
 
       // Subscribe ourselves with the notifier's broker.
       this->notifier_->subscribe (this->receiver_.in (),
-				  filtering_criteria,
-				  ACE_TRY_ENV);
+                                  filtering_criteria
+                                  TAO_ENV_ARG_PARAMETER);
     }
   ACE_CATCHANY
    {
@@ -110,15 +110,15 @@ Consumer_Handler::get_notifier (void)
       notifier_ref_name[0].id = CORBA::string_dup (NOTIFIER_BIND_NAME);
 
       CORBA::Object_var notifier_obj =
-        this->naming_services_client_->resolve (notifier_ref_name,
-                                                ACE_TRY_ENV);
+        this->naming_services_client_->resolve (notifier_ref_name
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
-        Event_Comm::Notifier::_narrow (notifier_obj.in (),
-                                       ACE_TRY_ENV);
+        Event_Comm::Notifier::_narrow (notifier_obj.in ()
+                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -153,10 +153,10 @@ Consumer_Handler::run (void)
               "Running the Consumer...\n"));
 
   // Run the ORB.
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      this->orb_->run (ACE_TRY_ENV);
+      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

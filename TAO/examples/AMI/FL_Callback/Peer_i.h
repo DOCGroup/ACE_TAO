@@ -27,18 +27,18 @@ public:
   Peer_Handler_i (Peer_i *peer);
   // The peer
 
-  virtual void request (CORBA::Long retval, 
-                         CORBA::Environment &ACE_TRY_ENV)
+  virtual void request (CORBA::Long retval
+                         TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void request_excep (AMI_PeerExceptionHolder * excep_holder,
-                              CORBA::Environment &ACE_TRY_ENV)
+  virtual void request_excep (AMI_PeerExceptionHolder * excep_holder
+                              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void start (CORBA::Environment &ACE_TRY_ENV)
+  virtual void start (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -57,27 +57,27 @@ public:
 
   void init (CORBA::ORB_ptr orb,
              Progress_ptr progress,
-             const ACE_Time_Value &delay,
-             CORBA::Environment &ACE_TRY_ENV)
+             const ACE_Time_Value &delay
+             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void reply (CORBA::Long result,
-              CORBA::Environment &ACE_TRY_ENV)
+  void reply (CORBA::Long result
+              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used by the Reply_Handler to indicate that a reply has been
   // received.
 
    // = See test.idl for an explanation of these methods.
-  CORBA::Long request (CORBA::Long id,
-                       CORBA::Environment& ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  
-  void start (const PeerSet& the_peers,
-              CORBA::Long iterations,
-              CORBA::Environment& ACE_TRY_ENV)
+  CORBA::Long request (CORBA::Long id
+                       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment& ACE_TRY_ENV)
+  void start (const PeerSet& the_peers,
+              CORBA::Long iterations
+              TAO_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -41,14 +41,12 @@ public:
   ACE_PushConsumer_Adapter (TARGET *target);
   // Forwards all calls to <owner>.
 
-  virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &env =
-                         TAO_default_environment ())
+  virtual void push (const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC (( CORBA::SystemException));
   // Forwards to target_.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &env =
-                                             TAO_default_environment ())
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC (( CORBA::SystemException));
   // Forwards to target_.
 
@@ -73,8 +71,7 @@ public:
   ACE_PushSupplier_Adapter (TARGET *target);
   // Forwards all calls to <owner>.
 
-  virtual void disconnect_push_supplier (CORBA::Environment & env =
-                                             TAO_default_environment ())
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC (( CORBA::SystemException));
   // Forwards to target_.
 

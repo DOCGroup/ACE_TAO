@@ -22,7 +22,10 @@
 #include "ace/Sched_Params.h"
 #include "ace/Task.h"
 
-ACE_RCSID(EC_Latency, client, "$Id$")
+ACE_RCSID (EC_Latency,
+           client,
+           "$Id$")
+
 
 const char *ior = "file://test.ior";
 int iterations = 10000;
@@ -57,17 +60,17 @@ main (int argc, char *argv [])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var manager_object =
-        orb->resolve_initial_references ("ORBPolicyManager",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("ORBPolicyManager"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (manager_object.in (),
-                                       ACE_TRY_ENV);
+        CORBA::PolicyManager::_narrow (manager_object.in ()
+                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Any sync_scope;
@@ -77,16 +80,16 @@ main (int argc, char *argv [])
       policy_list.length (1);
       policy_list[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            sync_scope,
-                            ACE_TRY_ENV);
+                            sync_scope
+                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       policy_manager->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE,
-                                            ACE_TRY_ENV);
+                                            CORBA::SET_OVERRIDE
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -95,14 +98,14 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -110,12 +113,12 @@ main (int argc, char *argv [])
 
       // Get the event channel object reference
       CORBA::Object_var ec_object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in (),
-                                                      ACE_TRY_ENV);
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
+                                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (ec.in ()))
         {
@@ -130,7 +133,7 @@ main (int argc, char *argv [])
                       1);
       PortableServer::ServantBase_var consumer_owner (consumer_impl);
 
-      consumer_impl->connect (ec.in (), ACE_TRY_ENV);
+      consumer_impl->connect (ec.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ECL_Supplier *supplier_impl;
@@ -139,7 +142,7 @@ main (int argc, char *argv [])
                       1);
       PortableServer::ServantBase_var supplier_owner (supplier_impl);
 
-      supplier_impl->connect (ec.in (), ACE_TRY_ENV);
+      supplier_impl->connect (ec.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Connected consumer & supplier\n"));
@@ -161,14 +164,14 @@ main (int argc, char *argv [])
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                          creation);
           // push one event...
-          supplier_impl->push (event, ACE_TRY_ENV);
+          supplier_impl->push (event TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_hrtime_t end = ACE_OS::gethrtime ();
 
-      consumer_impl->disconnect (ACE_TRY_ENV);
+      consumer_impl->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      supplier_impl->disconnect (ACE_TRY_ENV);
+      supplier_impl->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Calibrate the high resolution timer *before* starting the
@@ -195,12 +198,12 @@ main (int argc, char *argv [])
                                              stats.samples_count ());
 
 
-      orb->shutdown (0, ACE_TRY_ENV);
+      orb->shutdown (0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Thread_Manager::instance ()->wait ();
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::Exception, ex)

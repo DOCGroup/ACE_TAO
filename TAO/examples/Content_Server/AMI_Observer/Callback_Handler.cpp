@@ -28,12 +28,12 @@ Callback_Handler::~Callback_Handler (void)
 }
 
 void
-Callback_Handler::next_chunk (CORBA::Environment &ACE_TRY_ENV)
+Callback_Handler::next_chunk (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->last_chunk_ == 1)
     {
-      this->deactivate (ACE_TRY_ENV);
+      this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       return;
@@ -79,26 +79,26 @@ Callback_Handler::next_chunk (CORBA::Environment &ACE_TRY_ENV)
 
   this->callback_->sendc_next_chunk (this->ami_handler_.in (),
                                      this->chunk_.in (),
-                                     this->last_chunk_,
-                                     ACE_TRY_ENV);
+                                     this->last_chunk_
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Callback_Handler::next_chunk_excep
-  (Web_Server::AMI_CallbackExceptionHolder *excep_holder,
-   CORBA::Environment &)
+  (Web_Server::AMI_CallbackExceptionHolder *excep_holder
+   TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->last_chunk_ = 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      this->deactivate (ACE_TRY_ENV);
+      this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      excep_holder->raise_next_chunk (ACE_TRY_ENV);
+      excep_holder->raise_next_chunk (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -111,27 +111,27 @@ Callback_Handler::next_chunk_excep
 }
 
 void
-Callback_Handler::run (CORBA::Environment &ACE_TRY_ENV)
+Callback_Handler::run (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
   // Open the file to be downloaded
-  this->open_file (ACE_TRY_ENV);
+  this->open_file (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Activate this Reply Handler.
-  this->ami_handler_ = this->_this (ACE_TRY_ENV);
+  this->ami_handler_ = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Begin the asynchronous invocation.  Note that the AMI
   // "sendc_next_chunk()" call is done within the following call,
   // since data must first be read into the Chunk.
-  this->next_chunk (ACE_TRY_ENV);
+  this->next_chunk (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Callback_Handler::open_file (CORBA::Environment &ACE_TRY_ENV)
+Callback_Handler::open_file (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
@@ -149,23 +149,23 @@ Callback_Handler::open_file (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Callback_Handler::deactivate (CORBA::Environment &ACE_TRY_ENV)
+Callback_Handler::deactivate (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Close the file that was sent to the client.
   (void) this->file_io_.close ();
 
   // Get the POA used when activating the Reply Handler object.
-  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  PortableServer::POA_var poa = this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this,
-                        ACE_TRY_ENV);
+    poa->servant_to_id (this
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now deactivate the AMI_CallbackHandler object.
-  poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+  poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

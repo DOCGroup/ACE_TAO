@@ -42,8 +42,8 @@ Broadcaster_i::~Broadcaster_i (void)
 
 void
 Broadcaster_i::add (Receiver_ptr receiver,
-                    const char *nickname,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    const char *nickname
+                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotAdd
@@ -67,8 +67,8 @@ Broadcaster_i::add (Receiver_ptr receiver,
 
   ACE_TRY
     {
-      this->broadcast (broadcast_string.fast_rep (),
-		       ACE_TRY_ENV);
+      this->broadcast (broadcast_string.fast_rep ()
+                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -81,8 +81,8 @@ Broadcaster_i::add (Receiver_ptr receiver,
 }
 
 void
-Broadcaster_i::remove (Receiver_ptr receiver,
-                       CORBA::Environment &ACE_TRY_ENV)
+Broadcaster_i::remove (Receiver_ptr receiver
+                       TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotRemove
@@ -117,15 +117,15 @@ Broadcaster_i::remove (Receiver_ptr receiver,
     + " left the chat"
     + " ****\n";
 
-  this->broadcast (broadcast_string.fast_rep (),
-                   ACE_TRY_ENV);
+  this->broadcast (broadcast_string.fast_rep ()
+                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Broadcaster_i::say (Receiver_ptr receiver,
-                    const char *text,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    const char *text
+                    TAO_ENV_ARG_DECL)
  ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -145,14 +145,14 @@ Broadcaster_i::say (Receiver_ptr receiver,
            // behave well on other ORBs since <_is_equivalent> isn't
            // guaranteed to differentiate object references.
           if ((*iter).receiver_.in ()->_is_equivalent (receiver) == 1)
-	    sender_nickname = (*iter).nickname_;
+            sender_nickname = (*iter).nickname_;
         }
 
       // Broadcast the message to all registered clients
       ACE_CString broadcast_string ("[" + sender_nickname + "] " + text);
 
-      this->broadcast (broadcast_string.fast_rep (),
-                       ACE_TRY_ENV);
+      this->broadcast (broadcast_string.fast_rep ()
+                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -165,8 +165,8 @@ Broadcaster_i::say (Receiver_ptr receiver,
 }
 
 void
-Broadcaster_i::broadcast (const char *text,
-                          CORBA::Environment &ACE_TRY_ENV)
+Broadcaster_i::broadcast (const char *text
+                          TAO_ENV_ARG_DECL)
 {
   // Broadcast the message to all registered clients.
 
@@ -176,9 +176,9 @@ Broadcaster_i::broadcast (const char *text,
     {
       ACE_TRY
         {
-          (*iter).receiver_->message (text,
-                                      ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+          (*iter).receiver_->message (text
+                                      TAO_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {

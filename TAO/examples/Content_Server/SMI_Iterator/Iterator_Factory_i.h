@@ -46,9 +46,8 @@ public:
 
   virtual void get_iterator (const char *pathname,
                              Web_Server::Content_Iterator_out contents,
-                             Web_Server::Metadata_Type_out metadata,
-                             CORBA::Environment &ACE_TRY_ENV =
-                               TAO_default_environment ())
+                             Web_Server::Metadata_Type_out metadata
+                             TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
   // This factory method returns a <Content_Iterator> that can be used

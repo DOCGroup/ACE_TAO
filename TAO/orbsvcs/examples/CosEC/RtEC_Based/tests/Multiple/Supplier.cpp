@@ -43,19 +43,19 @@ Supplier::parse_args (int argc, char *argv [])
 }
 
 void
-Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-                     CORBA::Environment& ACE_TRY_ENV)
+Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel
+                     TAO_ENV_ARG_DECL)
 {
   // = Connect as a consumer.
   this->supplier_admin_ =
-    event_channel->for_suppliers (ACE_TRY_ENV);
+    event_channel->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Supplier::close (CORBA::Environment &ACE_TRY_ENV)
+Supplier::close (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->disconnect (ACE_TRY_ENV);
+  this->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_admin_ =
@@ -63,31 +63,31 @@ Supplier::close (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Supplier::connect (CORBA::Environment &ACE_TRY_ENV)
+Supplier::connect (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->supplier_admin_.in ()))
     return;
 
   this->consumer_proxy_ =
-    this->supplier_admin_->obtain_push_consumer (ACE_TRY_ENV);
+    this->supplier_admin_->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CosEventComm::PushSupplier_var objref = this->_this (ACE_TRY_ENV);
+  CosEventComm::PushSupplier_var objref = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->consumer_proxy_->connect_push_supplier (objref.in (),
-                                                ACE_TRY_ENV);
+  this->consumer_proxy_->connect_push_supplier (objref.in ()
+                                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
+Supplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ())
       || CORBA::is_nil (this->supplier_admin_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
+  this->consumer_proxy_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_ =
@@ -95,15 +95,15 @@ Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Supplier::send_event (const CORBA::Any & data,
-                           CORBA::Environment &ACE_TRY_ENV)
+Supplier::send_event (const CORBA::Any & data
+                           TAO_ENV_ARG_DECL)
 {
-  this->consumer_proxy_->push (data, ACE_TRY_ENV);
+  this->consumer_proxy_->push (data TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Supplier::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+Supplier::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
         CORBA::SystemException
         ))
@@ -111,23 +111,23 @@ Supplier::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
   // Deactivate this object.
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
+    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this,
-                        ACE_TRY_ENV);
+    poa->servant_to_id (this
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
+  poa->deactivate_object (id.in ()
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Supplier::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Create an Any type to pass to the Cos EC.
@@ -136,11 +136,11 @@ Supplier::run (void)
       CORBA::Any any;
       cany >>= any;
 
-      this->open (this->cos_ec_,
-                  ACE_TRY_ENV);
+      this->open (this->cos_ec_
+                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->connect (ACE_TRY_ENV);
+      this->connect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -151,15 +151,15 @@ Supplier::run (void)
            count != 0;
            count--)
         {
-          this->send_event (any,
-                            ACE_TRY_ENV);
+          this->send_event (any
+                            TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P):Done!. exiting now..\n"));
 
-      this->close (ACE_TRY_ENV);
+      this->close (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

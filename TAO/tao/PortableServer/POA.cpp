@@ -51,8 +51,8 @@ TAO_POA::_tao_poa_downcast(void)
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ThreadPolicy_ptr
-TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
-                               CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
+                               TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Thread_Policy *thread_policy = 0;
@@ -67,8 +67,8 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::LifespanPolicy_ptr
-TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
+                                 TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Lifespan_Policy *lifespan_policy = 0;
@@ -81,8 +81,8 @@ TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
 }
 
 PortableServer::IdUniquenessPolicy_ptr
-TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value,
-                                      CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value
+                                      TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Id_Uniqueness_Policy *id_uniqueness_policy = 0;
@@ -95,8 +95,8 @@ TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
 }
 
 PortableServer::IdAssignmentPolicy_ptr
-TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
-                                      CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value
+                                      TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Id_Assignment_Policy *id_assignment_policy = 0;
@@ -111,8 +111,8 @@ TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ImplicitActivationPolicy_ptr
-TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
-                                            CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value
+                                            TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Implicit_Activation_Policy *implicit_activation_policy = 0;
@@ -125,8 +125,8 @@ TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
 }
 
 PortableServer::ServantRetentionPolicy_ptr
-TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,
-                                          CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value
+                                          TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Servant_Retention_Policy *servant_retention_policy = 0;
@@ -139,8 +139,8 @@ TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
 }
 
 PortableServer::RequestProcessingPolicy_ptr
-TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
-                                           CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value
+                                           TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Request_Processing_Policy *request_processing_policy = 0;
@@ -161,8 +161,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                   ACE_Lock &lock,
                   TAO_SYNCH_MUTEX &thread_lock,
                   TAO_ORB_Core &orb_core,
-                  TAO_Object_Adapter *object_adapter,
-                  CORBA::Environment &ACE_TRY_ENV)
+                  TAO_Object_Adapter *object_adapter
+                  TAO_ENV_ARG_DECL)
   : name_ (name),
     poa_manager_ (poa_manager),
     policies_ (policies),
@@ -205,8 +205,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 {
   // Parse the policies that are used in the critical path in
   // a cache.
-  this->cached_policies_.update (this->policies_,
-                                 ACE_TRY_ENV);
+  this->cached_policies_.update (this->policies_
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 #if (TAO_HAS_MINIMUM_POA == 1)
@@ -235,8 +235,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                     TAO_Active_Object_Map (!this->system_id (),
                                            this->cached_policies_.id_uniqueness () == PortableServer::UNIQUE_ID,
                                            this->persistent (),
-                                           this->orb_core_.server_factory ()->active_object_map_creation_parameters (),
-                                           ACE_TRY_ENV),
+                                           this->orb_core_.server_factory ()->active_object_map_creation_parameters ()
+                                           TAO_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
 
   // Give ownership of the new map to the auto pointer.  Note, that it
@@ -295,7 +295,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     {
       int temp = this->use_imr_;
       this->use_imr_ = 0;
-      this->imr_notify_startup (ACE_TRY_ENV);
+      this->imr_notify_startup (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       this->use_imr_ = temp;
     }
@@ -309,7 +309,7 @@ TAO_POA::~TAO_POA (void)
 }
 
 void
-TAO_POA::complete_destruction_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::complete_destruction_i (TAO_ENV_SINGLE_ARG_DECL)
 {
   // No longer awaiting destruction.
   this->waiting_destruction_ = 0;
@@ -370,8 +370,8 @@ TAO_POA::complete_destruction_i (CORBA::Environment &ACE_TRY_ENV)
 PortableServer::POA_ptr
 TAO_POA::create_POA_i (const char *adapter_name,
                        PortableServer::POAManager_ptr poa_manager,
-                       const CORBA::PolicyList &policies,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       const CORBA::PolicyList &policies
+                       TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::AdapterAlreadyExists,
                    PortableServer::POA::InvalidPolicy))
@@ -381,13 +381,13 @@ TAO_POA::create_POA_i (const char *adapter_name,
   TAO_POA_Policy_Set tao_policies (this->object_adapter ().default_poa_policies ());
 
   // Merge policies from the ORB level.
-  this->object_adapter ().validator ().merge_policies (tao_policies.policies (),
-                                                       ACE_TRY_ENV);
+  this->object_adapter ().validator ().merge_policies (tao_policies.policies ()
+                                                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Merge in any policies that the user may have specified.
-  tao_policies.merge_policies (policies,
-                               ACE_TRY_ENV);
+  tao_policies.merge_policies (policies
+                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // If any of the policy objects specified are not valid for the ORB
@@ -397,8 +397,8 @@ TAO_POA::create_POA_i (const char *adapter_name,
   // InvalidPolicy exception is raised containing the index in the
   // policies parameter value of the first offending policy object.
   tao_policies.validate_policies (this->object_adapter ().validator (),
-                                  this->orb_core_,
-                                  ACE_TRY_ENV);
+                                  this->orb_core_
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // If the poa_manager parameter is null, a new POAManager object is
@@ -422,8 +422,8 @@ TAO_POA::create_POA_i (const char *adapter_name,
 
   TAO_POA *poa = this->create_POA_i (adapter_name,
                                      *tao_poa_manager,
-                                     tao_policies,
-                                     ACE_TRY_ENV);
+                                     tao_policies
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   return PortableServer::POA::_duplicate (poa);
@@ -437,8 +437,8 @@ TAO_POA::new_POA (const String &name,
                   ACE_Lock &lock,
                   TAO_SYNCH_MUTEX &thread_lock,
                   TAO_ORB_Core &orb_core,
-                  TAO_Object_Adapter *object_adapter,
-                  CORBA_Environment &ACE_TRY_ENV)
+                  TAO_Object_Adapter *object_adapter
+                  TAO_ENV_ARG_DECL)
 {
   TAO_POA *poa;
 
@@ -450,8 +450,8 @@ TAO_POA::new_POA (const String &name,
                              lock,
                              thread_lock,
                              orb_core,
-                             object_adapter,
-                             ACE_TRY_ENV),
+                             object_adapter
+                             TAO_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -461,8 +461,8 @@ TAO_POA::new_POA (const String &name,
 TAO_POA *
 TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
                        TAO_POA_Manager &poa_manager,
-                       const TAO_POA_Policy_Set &policies,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       const TAO_POA_Policy_Set &policies
+                       TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::AdapterAlreadyExists,
                    PortableServer::POA::InvalidPolicy))
@@ -497,8 +497,8 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
                                 this->object_adapter ().lock (),
                                 this->object_adapter ().thread_lock (),
                                 this->orb_core_,
-                                this->object_adapter_,
-                                ACE_TRY_ENV);
+                                this->object_adapter_
+                                TAO_ENV_ARG_PARAMETER);
 
   // Give ownership of the new map to the POA_var.  Note, that it
   // is important for the POA_var to take ownership before
@@ -539,8 +539,8 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
 
 PortableServer::POA_ptr
 TAO_POA::find_POA (const char *adapter_name,
-                   CORBA::Boolean activate_it,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   CORBA::Boolean activate_it
+                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::AdapterNonExistent))
 {
@@ -558,8 +558,8 @@ TAO_POA::find_POA (const char *adapter_name,
   ACE_UNUSED_ARG (non_servant_upcall);
 
   TAO_POA *poa = this->find_POA_i (adapter_name,
-                                   activate_it,
-                                   ACE_TRY_ENV);
+                                   activate_it
+                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   return PortableServer::POA::_duplicate (poa);
@@ -567,8 +567,8 @@ TAO_POA::find_POA (const char *adapter_name,
 
 TAO_POA *
 TAO_POA::find_POA_i (const ACE_CString &child_name,
-                     CORBA::Boolean activate_it,
-                     CORBA::Environment &ACE_TRY_ENV)
+                     CORBA::Boolean activate_it
+                     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::AdapterNonExistent))
 {
@@ -585,13 +585,13 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
           if (!CORBA::is_nil (this->adapter_activator_.in ()))
             {
               // Check the state of the POA Manager.
-              this->check_poa_manager_state (ACE_TRY_ENV);
+              this->check_poa_manager_state (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK_RETURN (0);
 
               CORBA::Boolean success =
                 this->adapter_activator_->unknown_adapter (this,
-                                                           child_name.c_str (),
-                                                           ACE_TRY_ENV);
+                                                           child_name.c_str ()
+                                                           TAO_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (0);
 
               if (success)
@@ -632,8 +632,8 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
 
 void
 TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
-                    CORBA::Boolean wait_for_completion,
-                    CORBA::Environment &ACE_TRY_ENV)
+                    CORBA::Boolean wait_for_completion
+                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->cleanup_in_progress_)
@@ -641,8 +641,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (this->orb_core (),
-                                                 wait_for_completion,
-                                                 ACE_TRY_ENV);
+                                                 wait_for_completion
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->cleanup_in_progress_ = 1;
@@ -670,8 +670,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
     {
       TAO_POA *child_poa = (*iterator).int_id_;
       child_poa->destroy_i (etherealize_objects,
-                            wait_for_completion,
-                            ACE_TRY_ENV);
+                            wait_for_completion
+                            TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -689,15 +689,15 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           TAO_POA *tao_poa = 0;
 
           PortableServer::POA_var poa =
-            this->server_object_->_default_POA (ACE_TRY_ENV);
+            this->server_object_->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           tao_poa = poa->_tao_poa_downcast();
           PortableServer::ObjectId_var id =
-            tao_poa->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
+            tao_poa->servant_to_id_i (this->server_object_ TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          tao_poa->deactivate_object_i (id.in (), ACE_TRY_ENV);
+          tao_poa->deactivate_object_i (id.in ()TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -717,8 +717,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // destroying the POAs.
 
   this->deactivate_all_objects_i (etherealize_objects,
-                                  wait_for_completion,
-                                  ACE_TRY_ENV);
+                                  wait_for_completion
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // If there are no outstanding requests and that we are not in a
@@ -730,7 +730,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       (non_servant_upcall_in_progress == 0 ||
        &non_servant_upcall_in_progress->poa () != this))
     {
-      this->complete_destruction_i (ACE_TRY_ENV);
+      this->complete_destruction_i (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
   else
@@ -758,7 +758,7 @@ TAO_POA::delete_child (const TAO_POA::String &child)
 }
 
 PortableServer::POAList *
-TAO_POA::the_children_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::the_children_i (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POAList_var children;
@@ -785,7 +785,7 @@ TAO_POA::the_children_i (CORBA::Environment &ACE_TRY_ENV)
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ServantManager_ptr
-TAO_POA::get_servant_manager_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::get_servant_manager_i (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -807,8 +807,8 @@ TAO_POA::get_servant_manager_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_POA::set_servant_manager_i (PortableServer::ServantManager_ptr imgr,
-                                CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::set_servant_manager_i (PortableServer::ServantManager_ptr imgr
+                                TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -823,8 +823,8 @@ TAO_POA::set_servant_manager_i (PortableServer::ServantManager_ptr imgr,
   // the POA.
   if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
     {
-      this->servant_activator_ = PortableServer::ServantActivator::_narrow (imgr,
-                                                                            ACE_TRY_ENV);
+      this->servant_activator_ = PortableServer::ServantActivator::_narrow (imgr
+                                                                            TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (CORBA::is_nil (this->servant_activator_.in ()))
@@ -834,8 +834,8 @@ TAO_POA::set_servant_manager_i (PortableServer::ServantManager_ptr imgr,
     }
   else
     {
-      this->servant_locator_ = PortableServer::ServantLocator::_narrow (imgr,
-                                                                        ACE_TRY_ENV);
+      this->servant_locator_ = PortableServer::ServantLocator::_narrow (imgr
+                                                                        TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (CORBA::is_nil (this->servant_locator_.in ()))
@@ -846,7 +846,7 @@ TAO_POA::set_servant_manager_i (PortableServer::ServantManager_ptr imgr,
 }
 
 PortableServer::Servant
-TAO_POA::get_servant_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::get_servant_i (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::NoServant,
                    PortableServer::POA::WrongPolicy))
@@ -882,7 +882,7 @@ TAO_POA::get_servant_i (CORBA::Environment &ACE_TRY_ENV)
       // conforming caller need not invoke _remove_ref on the returned
       // Servant if the type of the Servant uses the default reference
       // counting inherited from ServantBase.
-      result->_add_ref (ACE_TRY_ENV);
+      result->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return result;
@@ -897,8 +897,8 @@ TAO_POA::get_servant_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_POA::set_servant_i (PortableServer::Servant servant,
-                        CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::set_servant_i (PortableServer::Servant servant
+                        TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -931,7 +931,7 @@ TAO_POA::set_servant_i (PortableServer::Servant servant,
       TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
       ACE_UNUSED_ARG (non_servant_upcall);
 
-      servant->_add_ref (ACE_TRY_ENV);
+      servant->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -1018,8 +1018,8 @@ TAO_POA::is_user_id_in_map (const PortableServer::ObjectId &id,
 
 PortableServer::ObjectId *
 TAO_POA::activate_object_i (PortableServer::Servant servant,
-                            CORBA::Short priority,
-                            CORBA::Environment &ACE_TRY_ENV)
+                            CORBA::Short priority
+                            TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantAlreadyActive,
                    PortableServer::POA::WrongPolicy))
@@ -1073,7 +1073,7 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   // least once on the Servant argument before returning. When the POA
   // no longer needs the Servant, it will invoke _remove_ref on it the
   // same number of times.
-  servant->_add_ref (ACE_TRY_ENV);
+  servant->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return user_id._retn ();
@@ -1082,8 +1082,8 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
 void
 TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                                     PortableServer::Servant servant,
-                                    CORBA::Short priority,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Short priority
+                                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantAlreadyActive,
                    PortableServer::POA::ObjectAlreadyActive,
@@ -1171,29 +1171,29 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // _add_ref at least once on the Servant argument before
   // returning. When the POA no longer needs the Servant, it will
   // invoke _remove_ref on it the same number of times.
-  servant->_add_ref (ACE_TRY_ENV);
+  servant->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
-                                   CORBA::Boolean wait_for_completion,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                   CORBA::Boolean wait_for_completion
+                                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
-  this->deactivate_all_objects_i (etherealize_objects,
-                                  ACE_TRY_ENV);
+  this->deactivate_all_objects_i (etherealize_objects
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->wait_for_completions (wait_for_completion,
-                              ACE_TRY_ENV);
+  this->wait_for_completions (wait_for_completion
+                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_POA::wait_for_completions (CORBA::Boolean wait_for_completion,
-                               CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::wait_for_completions (CORBA::Boolean wait_for_completion
+                               TAO_ENV_ARG_DECL)
 {
   while (this->object_adapter ().enable_locking_ &&
          wait_for_completion &&
@@ -1212,8 +1212,8 @@ TAO_POA::wait_for_completions (CORBA::Boolean wait_for_completion,
 /* static */
 void
 TAO_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core,
-                                               CORBA::Boolean wait_for_completion,
-                                               CORBA::Environment &ACE_TRY_ENV)
+                                               CORBA::Boolean wait_for_completion
+                                               TAO_ENV_ARG_DECL)
 {
   if (wait_for_completion)
     {
@@ -1248,8 +1248,8 @@ TAO_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core,
 }
 
 void
-TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
-                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects
+                                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -1298,15 +1298,15 @@ TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
        i < counter;
        ++i)
     {
-      this->deactivate_map_entry (map_entries[i],
-                                  ACE_TRY_ENV);
+      this->deactivate_map_entry (map_entries[i]
+                                  TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
-                              CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id
+                              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -1329,22 +1329,22 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
       ACE_THROW (PortableServer::POA::ObjectNotActive ());
     }
 
-  this->deactivate_map_entry (active_object_map_entry,
-                              ACE_TRY_ENV);
+  this->deactivate_map_entry (active_object_map_entry
+                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_POA::deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry,
-                               CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+                               TAO_ENV_ARG_DECL)
 {
   // Decrement the reference count.
   CORBA::UShort new_count = --active_object_map_entry->reference_count_;
 
   if (new_count == 0)
     {
-      this->cleanup_servant (active_object_map_entry,
-                             ACE_TRY_ENV);
+      this->cleanup_servant (active_object_map_entry
+                             TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
   else
@@ -1365,8 +1365,8 @@ TAO_POA::deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_m
 }
 
 void
-TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_entry,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+                          TAO_ENV_ARG_DECL)
 {
   // If a servant manager is associated with the POA,
   // ServantLocator::etherealize will be invoked with the oid and the
@@ -1440,7 +1440,7 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
           TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          active_object_map_entry->servant_->_remove_ref (ACE_TRY_ENV);
+          active_object_map_entry->servant_->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -1457,7 +1457,7 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
 }
 
 void
-TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::check_poa_manager_state (TAO_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POAManager::State state = this->poa_manager_.get_state_i ();
 
@@ -1530,8 +1530,8 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::Object_ptr
 TAO_POA::create_reference_i (const char *intf,
-                             CORBA::Short priority,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::Short priority
+                             TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -1587,15 +1587,15 @@ TAO_POA::create_reference_i (const char *intf,
                               intf,
                               0,
                               1,
-                              priority,
-                              ACE_TRY_ENV);
+                              priority
+                              TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
 TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                                      const char *intf,
-                                     CORBA::Short priority,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA::Short priority
+                                     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -1665,13 +1665,13 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                               intf,
                               servant,
                               1,
-                              priority,
-                              ACE_TRY_ENV);
+                              priority
+                              TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId *
-TAO_POA::servant_to_id_i (PortableServer::Servant servant,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::servant_to_id_i (PortableServer::Servant servant
+                          TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -1738,7 +1738,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       // is invoked at least once on the Servant argument before
       // returning. Otherwise, the POA does not increment or decrement
       // the reference count of the Servant passed to this function.
-      servant->_add_ref (ACE_TRY_ENV);
+      servant->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return user_id._retn ();
@@ -1769,7 +1769,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
           if (poa_current_impl != 0 &&
               servant == poa_current_impl->servant ())
             {
-              return poa_current_impl->get_object_id (ACE_TRY_ENV);
+              return poa_current_impl->get_object_id (TAO_ENV_SINGLE_ARG_PARAMETER);
             }
         }
     }
@@ -1783,8 +1783,8 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
 
 PortableServer::ObjectId *
 TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
-                                 CORBA::Short &priority,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Short &priority
+                                 TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -1851,7 +1851,7 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       // is invoked at least once on the Servant argument before
       // returning. Otherwise, the POA does not increment or decrement
       // the reference count of the Servant passed to this function.
-      servant->_add_ref (ACE_TRY_ENV);
+      servant->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return system_id._retn ();
@@ -1863,8 +1863,8 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
 }
 
 CORBA::Object_ptr
-TAO_POA::servant_to_reference (PortableServer::Servant servant,
-                               CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::servant_to_reference (PortableServer::Servant servant
+                               TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -1878,8 +1878,8 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   CORBA::Short priority =
     this->cached_policies_.server_priority ();
   PortableServer::ObjectId_var id = this->servant_to_system_id (servant,
-                                                                priority,
-                                                                ACE_TRY_ENV);
+                                                                priority
+                                                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Create object key.
@@ -1890,13 +1890,13 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
                               servant->_interface_repository_id (),
                               servant,
                               1,
-                              priority,
-                              ACE_TRY_ENV);
+                              priority
+                              TAO_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
-TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
-                               CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::reference_to_servant (CORBA::Object_ptr reference
+                               TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongAdapter,
@@ -1924,7 +1924,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
   // servant associated with that object in the Active Object Map.
   if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
     {
-      TAO_ObjectKey_var key = reference->_key (ACE_TRY_ENV);
+      TAO_ObjectKey_var key = reference->_key (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // If the object reference was not created by this POA, the
@@ -1999,7 +1999,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
           // _remove_ref on the returned Servant if the type of the
           // Servant uses the default reference counting inherited
           // from ServantBase.
-          servant->_add_ref (ACE_TRY_ENV);
+          servant->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return servant;
@@ -2044,7 +2044,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
           // _remove_ref on the returned Servant if the type of the
           // Servant uses the default reference counting inherited
           // from ServantBase.
-          result->_add_ref (ACE_TRY_ENV);
+          result->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           return result;
@@ -2064,8 +2064,8 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
 }
 
 PortableServer::ObjectId *
-TAO_POA::reference_to_id (CORBA::Object_ptr reference,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::reference_to_id (CORBA::Object_ptr reference
+                          TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongAdapter,
                    PortableServer::POA::WrongPolicy))
@@ -2086,7 +2086,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   // POA on which the operation is being performed.  If the object
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
-  TAO_ObjectKey_var key = reference->_key (ACE_TRY_ENV);
+  TAO_ObjectKey_var key = reference->_key (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   PortableServer::ObjectId system_id;
@@ -2144,8 +2144,8 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
 }
 
 PortableServer::Servant
-TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id
+                          TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -2183,7 +2183,7 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id,
       // conforming caller need not invoke _remove_ref on the returned
       // Servant if the type of the Servant uses the default reference
       // counting inherited from ServantBase.
-      servant->_add_ref (ACE_TRY_ENV);
+      servant->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return servant;
@@ -2197,8 +2197,8 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id,
 }
 
 CORBA::Object_ptr
-TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
-                            CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
+                            TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -2230,8 +2230,8 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
                                   servant->_interface_repository_id (),
                                   servant,
                                   1,
-                                  priority,
-                                  ACE_TRY_ENV);
+                                  priority
+                                  TAO_ENV_ARG_PARAMETER);
     }
   else
     // If the Object Id value is not active in the POA, an
@@ -2243,7 +2243,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
 }
 
 CORBA::OctetSeq *
-TAO_POA::id (CORBA::Environment & /*ACE_TRY_ENV*/)
+TAO_POA::id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new CORBA::OctetSeq (this->id_);
@@ -2251,8 +2251,8 @@ TAO_POA::id (CORBA::Environment & /*ACE_TRY_ENV*/)
 
 TAO_SERVANT_LOCATION
 TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
-                           PortableServer::Servant &servant,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           PortableServer::Servant &servant
+                           TAO_ENV_ARG_DECL)
 {
   // If the POA has the RETAIN policy, the POA looks in the Active
   // Object Map to find if there is a servant associated with the
@@ -2339,8 +2339,8 @@ PortableServer::Servant
 TAO_POA::locate_servant_i (const char *operation,
                            const PortableServer::ObjectId &system_id,
                            TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-                           TAO_POA_Current_Impl &poa_current_impl,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           TAO_POA_Current_Impl &poa_current_impl
+                           TAO_ENV_ARG_DECL)
 {
   // If we have the RETAIN policy, convert/transform from system id to
   // user id.
@@ -3054,8 +3054,8 @@ TAO_Adapter_Activator::TAO_Adapter_Activator (PortableServer::POAManager_ptr poa
 
 CORBA::Boolean
 TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
-                                        const char *name,
-                                        CORBA::Environment &ACE_TRY_ENV)
+                                        const char *name
+                                        TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Default policies
@@ -3064,20 +3064,20 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   // This assumes that the lock on the parent is recursive
   PortableServer::POA_var child = parent->create_POA (name,
                                                       this->poa_manager_.in (),
-                                                      default_policies,
-                                                      ACE_TRY_ENV);
+                                                      default_policies
+                                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_TRY
     {
-      child->the_activator (this, ACE_TRY_ENV);
+      child->the_activator (this TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       child->destroy (1,
-                      1,
-                      ACE_TRY_ENV);
+                      1
+                      TAO_ENV_ARG_PARAMETER);
 
       return 0;
     }
@@ -3095,13 +3095,13 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
                         const char *type_id,
                         TAO_ServantBase *servant,
                         CORBA::Boolean collocated,
-                        CORBA::Short priority,
-                        CORBA_Environment &ACE_TRY_ENV)
+                        CORBA::Short priority
+                        TAO_ENV_ARG_DECL)
 {
   // Check if the ORB is still running, otherwise throw an exception.
   // @@ What if the ORB was destroyed?  In that case we shouldn't even
   //    get here!
-  this->orb_core_.check_shutdown (ACE_TRY_ENV);
+  this->orb_core_.check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   //
@@ -3129,7 +3129,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
         }
 
       CORBA::String_var imr_str =
-        imr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
+        imr->_stubobj ()->profile_in_use ()->to_string (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (obj);
 
       if (TAO_debug_level > 0)
@@ -3171,7 +3171,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
                     ior.c_str ()));
 
       obj =
-        this->orb_core_.orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
+        this->orb_core_.orb ()->string_to_object (ior.c_str ()TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (obj);
 
       return obj;
@@ -3182,7 +3182,7 @@ orbkey:
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   TAO_Stub *data =
-    this->key_to_stub_i (key, type_id, priority, ACE_TRY_ENV);
+    this->key_to_stub_i (key, type_id, priority TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
 
@@ -3219,27 +3219,27 @@ orbkey:
 TAO_Stub *
 TAO_POA::key_to_stub (const TAO_ObjectKey &key,
                       const char *type_id,
-                      CORBA::Short priority,
-                      CORBA_Environment &ACE_TRY_ENV)
+                      CORBA::Short priority
+                      TAO_ENV_ARG_DECL)
 {
   // Check if the ORB is still running, otherwise throw an exception.
   // @@ What if the ORB was destroyed?  In that case we shouldn't even
   //    get here!
-  this->orb_core_.check_shutdown (ACE_TRY_ENV);
+  this->orb_core_.check_shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->key_to_stub_i (key, type_id, priority, ACE_TRY_ENV);
+  return this->key_to_stub_i (key, type_id, priority TAO_ENV_ARG_PARAMETER);
 }
 
 TAO_Stub *
 TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                         const char *type_id,
-                        CORBA::Short priority,
-                        CORBA_Environment &ACE_TRY_ENV)
+                        CORBA::Short priority
+                        TAO_ENV_ARG_DECL)
 {
   CORBA::PolicyList_var client_exposed_policies =
-    this->client_exposed_policies (priority,
-                                   ACE_TRY_ENV);
+    this->client_exposed_policies (priority
+                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_Default_Acceptor_Filter filter;
@@ -3248,8 +3248,8 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                               type_id,
                               client_exposed_policies._retn (),
                               &filter,
-                              this->orb_core_.lane_resources ().acceptor_registry (),
-                              ACE_TRY_ENV);
+                              this->orb_core_.lane_resources ().acceptor_registry ()
+                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return data;
@@ -3260,8 +3260,8 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
                              const char *type_id,
                              CORBA::PolicyList *policy_list,
                              TAO_Acceptor_Filter *filter,
-                             TAO_Acceptor_Registry &acceptor_registry,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             TAO_Acceptor_Registry &acceptor_registry
+                             TAO_ENV_ARG_DECL)
 {
   int error = 0;
 
@@ -3319,13 +3319,13 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
   return
     this->orb_core_.create_stub_object (mprofile,
                                         type_id,
-                                        policy_list,
-                                        ACE_TRY_ENV);
+                                        policy_list
+                                        TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::PolicyList *
-TAO_POA::client_exposed_policies (CORBA::Short object_priority,
-                                  CORBA_Environment &ACE_TRY_ENV)
+TAO_POA::client_exposed_policies (CORBA::Short object_priority
+                                  TAO_ENV_ARG_DECL)
 {
   CORBA::PolicyList *client_exposed_policies = 0;
   ACE_NEW_THROW_EX (client_exposed_policies,
@@ -3337,8 +3337,8 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
   CORBA::PolicyList_var policies = client_exposed_policies;
 
   // Add in all of the client exposed policies.
-  this->policies_.add_client_exposed_fixed_policies (client_exposed_policies,
-                                                     ACE_TRY_ENV);
+  this->policies_.add_client_exposed_fixed_policies (client_exposed_policies
+                                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_UNUSED_ARG (object_priority);
@@ -3352,7 +3352,7 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 void
-TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
+TAO_POA::imr_notify_startup (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notifying IMR of startup\n"));
@@ -3375,17 +3375,17 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   // Activate the servant in the root poa.
   PortableServer::ObjectId_var id =
     root_poa->activate_object_i (this->server_object_,
-                                 this->cached_policies_.server_priority (),
-                                 ACE_TRY_ENV);
+                                 this->cached_policies_.server_priority ()
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var obj = root_poa->id_to_reference_i (id.in  (),
-                                                       ACE_TRY_ENV);
+  CORBA::Object_var obj = root_poa->id_to_reference_i (id.in  ()
+                                                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ImplementationRepository::ServerObject_var svr
-    = ImplementationRepository::ServerObject::_narrow (obj.in (),
-                                                       ACE_TRY_ENV);
+    = ImplementationRepository::ServerObject::_narrow (obj.in ()
+                                                       TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
@@ -3395,7 +3395,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
     }
 
   CORBA::String_var svr_str =
-    svr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
+    svr->_stubobj ()->profile_in_use ()->to_string (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Search for "corbaloc:" alone, without the protocol.  This code
@@ -3421,7 +3421,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   CORBA::String_var curr_addr (svr_str);
 
   ImplementationRepository::Administration_var imr_admin =
-    ImplementationRepository::Administration::_narrow (imr.in (), ACE_TRY_ENV);
+    ImplementationRepository::Administration::_narrow (imr.in ()TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (TAO_debug_level > 0)
@@ -3431,12 +3431,14 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
     {
       imr_admin->server_is_running (this->name ().c_str (),
                                     curr_addr.in (),
-                                    svr.in (),
-                                    ACE_TRY_ENV);
+                                    svr.in ()
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
+      // Avoid warnings on platforms with native C++ exceptions
+      ACE_UNUSED_ARG (sysex);
       ACE_RE_THROW;
     }
   ACE_CATCHANY
@@ -3469,10 +3471,10 @@ TAO_POA::imr_notify_shutdown (void)
     {
       // Get the IMR's administrative object and call shutting_down on it
       ImplementationRepository::Administration_var imr_admin =
-        ImplementationRepository::Administration::_narrow (imr.in (), ACE_TRY_ENV);
+        ImplementationRepository::Administration::_narrow (imr.in ()TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      imr_admin->server_is_shutting_down (this->the_name (), ACE_TRY_ENV);
+      imr_admin->server_is_shutting_down (this->the_name ()TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -3485,8 +3487,8 @@ TAO_POA::imr_notify_shutdown (void)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
-                              CORBA::Environment &ACE_TRY_ENV,
+TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
+                              TAO_ENV_ARG_DECL,
                               int check_for_destruction)
   : guard_ (poa.lock ())
 {
@@ -3501,7 +3503,7 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
-  poa.object_adapter ().wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
+  poa.object_adapter ().wait_for_non_servant_upcalls_to_complete (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (check_for_destruction &&

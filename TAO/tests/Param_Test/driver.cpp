@@ -61,8 +61,7 @@ int
 Driver::init (int argc, char **argv)
 {
   // environment to track exceptions
-  ACE_DECLARE_NEW_CORBA_ENV;
-  //CORBA::Environment env;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   // retrieve the instance of Options
   Options *opt = OPTIONS::instance ();
@@ -76,8 +75,8 @@ Driver::init (int argc, char **argv)
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    "internet",
-                                    ACE_TRY_ENV);
+                                    "internet"
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
@@ -90,7 +89,7 @@ Driver::init (int argc, char **argv)
       ACE_OS::strcpy (exception_string,"ORB::string_to_object() failed.");
 
       CORBA::Object_var temp =
-        this->orb_->string_to_object (opt->param_test_ior (), ACE_TRY_ENV);
+        this->orb_->string_to_object (opt->param_test_ior () TAO_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -103,7 +102,7 @@ Driver::init (int argc, char **argv)
       // Get the object reference
       ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
 
-      this->objref_ = Param_Test::_narrow (temp.in(), ACE_TRY_ENV);
+      this->objref_ = Param_Test::_narrow (temp.in() TAO_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
     }
@@ -614,12 +613,12 @@ Driver::run (void)
     }
 
   // Get in a new environment variable
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       if (opt->shutdown ())
         {
-          this->objref_->shutdown (ACE_TRY_ENV);
+          this->objref_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

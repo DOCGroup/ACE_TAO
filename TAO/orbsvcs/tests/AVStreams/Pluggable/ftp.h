@@ -33,11 +33,11 @@ class FTP_Client_Callback : public TAO_AV_Callback
 {
   // = TITLE
   //    Defines the client applcation callback.
-  //   
+  //
   // = DESCRIPTION
-  //    This class can override the methods of 
-  //    the TAO_AV_Callback to do application 
-  //    specific processing. 
+  //    This class can override the methods of
+  //    the TAO_AV_Callback to do application
+  //    specific processing.
 public:
   FTP_Client_Callback (void);
   //Constructor
@@ -48,25 +48,25 @@ class FTP_Client_StreamEndPoint  : public TAO_Client_StreamEndPoint
 {
   // = TITLE
   //    Defines the client stream endpoint.
-  // 
+  //
   // = DESCRIPTION
-  //    This class overrides the methods of TAO_ClientStreamendpoint 
+  //    This class overrides the methods of TAO_ClientStreamendpoint
   //    so the application can perform its processing during post and pre
   //    connection set up.
-  
+
 public:
   FTP_Client_StreamEndPoint (void);
   //Contructor
 
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
-  // Create the application client callback and return its handle to the 
+  // Create the application client callback and return its handle to the
   // AVSTreams for further application callbacks
 
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);
   // Set protocol object corresponding to the transport protocol chosen.
-  
+
 protected:
   FTP_Client_Callback callback_;
   // reference to the cllient application callback.
@@ -79,7 +79,7 @@ class Client
 {
   // = TITLE
   //    Defines the Client Application
-  // 
+  //
   // = DESCRIPTION
   //    The actual client program that acts as the ftp client that streams data
   //    to the ftp servers that are waiting for data.
@@ -87,15 +87,15 @@ public:
   Client (void);
   // Constructor
 
-  int init (int argc, 
-	    char **argv,
-	    CORBA::Environment&);
+  int init (int argc,
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   // Method to initialize the various data components.
-  
+
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object);
   // Set the protocol object corresponding to the transport protocol chosen.
-  
-  int pace_data (CORBA::Environment&);
+
+  int pace_data (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Method to pace and send data from a file.
 
   FILE *file (void);
@@ -106,17 +106,17 @@ public:
 
   char *flowname (void);
   // name of the flow set up.
-  
+
   int frame_rate (void);
   // The requested frame rate for sending each frame of data read from the file.
-  
+
 private:
   int parse_args (int argc, char **argv);
   // Method to parse the command line arguments.
-  
-  int bind_to_server (CORBA::Environment& ACE_TRY_ENV);
+
+  int bind_to_server (TAO_ENV_SINGLE_ARG_DECL);
   // Method that binds the ftp client to the server
-  
+
   ENDPOINT_STRATEGY endpoint_strategy_;
   // The reacfive strategy of the client.
 
@@ -131,7 +131,7 @@ private:
 
   int count_;
   // Number of frames sent.
-  
+
   int argc_;
   char **argv_;
 
@@ -152,7 +152,7 @@ private:
   // Selected protocol - default is UDP
 
   char *flowname_;
-    
+
   int use_sfp_;
   // If set to 1 then use sfp as the flow carrier protocol.
 

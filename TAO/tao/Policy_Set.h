@@ -51,8 +51,8 @@ public:
 
   /// Copy the state from <source>, it uses the copy() operator to
   /// obtain independent copies of all the policies.
-  void copy_from (TAO_Policy_Set* source,
-                  CORBA::Environment &ACE_TRY_ENV);
+  void copy_from (TAO_Policy_Set* source
+                  TAO_ENV_ARG_DECL);
 
   /**
    * Modify the list of policies to include <policies>.
@@ -62,23 +62,20 @@ public:
    * No attempt is made to validate the policies for consistency.
    */
   void set_policy_overrides (const CORBA::PolicyList & policies,
-                             CORBA::SetOverrideType set_add,
-                             CORBA::Environment &ACE_TRY_ENV =
-                             TAO_default_environment ()
-    );
+                             CORBA::SetOverrideType set_add
+                             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   /// Get the values (if any) for the policies in <types>, if <types>
   /// is an empty list the method returns *all* the current policies.
-  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types,
-                                            CORBA::Environment &ACE_TRY_ENV =
-                                            TAO_default_environment ()
-    );
+  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types
+                                            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   /// Obtain a single policy.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ()
-    );
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
   /// Obtain a cached policy for speedy lookups.
   /// This method just returns a const reference to the policy to
@@ -93,8 +90,8 @@ public:
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   /// Utility method to set a single policy.
-  void set_policy (const CORBA::Policy_ptr policy,
-                   CORBA::Environment &ACE_TRY_ENV);
+  void set_policy (const CORBA::Policy_ptr policy
+                   TAO_ENV_ARG_DECL);
 
   /// Returns the policy at the specified index.
   /// CORBA::Policy::_nil () is returned if the policy doesn't exist
@@ -107,7 +104,7 @@ private:
 
   /// Remove and destroy all the policy objects owned by this policy
   /// manager.
-  void cleanup_i (CORBA::Environment &ACE_TRY_ENV);
+  void cleanup_i (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Utility method to determine if a policy's scope is compatible with ours.
   CORBA::Boolean compatible_scope (TAO_Policy_Scope policy_scope) const;

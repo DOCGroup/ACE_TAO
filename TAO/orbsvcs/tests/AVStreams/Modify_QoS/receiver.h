@@ -6,7 +6,7 @@
  *  @file   receiver.h
  *
  *  receiver.h,v 1.1 2001/04/15 02:56:26 yamuna Exp
- *  
+ *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
 //=============================================================================
@@ -36,14 +36,14 @@ public:
 
   /// Set the related stream control for this flow.
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
-  
+
 private:
   int frame_count_;
   /// Keeping a count of the incoming frames.
-  
+
   /// Related stream control.
   AVStreams::StreamCtrl_ptr streamctrl_;
-  
+
 };
 
 // = AVStreams calls this class during connection setup.
@@ -54,7 +54,7 @@ public:
   /// Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
-    
+
 private:
   Receiver_Callback callback_;
   /// Receiver application callback.
@@ -71,11 +71,11 @@ public:
   /// Destructor.
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment &);
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   /// Initialize data components.
-  
-  
+
+
 protected:
   TAO_Naming_Client naming_client_;
   /// The Naming Service Client.

@@ -35,7 +35,7 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
       generic_Factory_Name[0].id = CORBA::string_dup ("IDL_Quoter");
       generic_Factory_Name[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
       if (this->quoterNamingContext_var_.ptr () != 0)
-        this->quoterNamingContext_var_->unbind (generic_Factory_Name,ACE_TRY_ENV);
+        this->quoterNamingContext_var_->unbind (generic_Factory_Name TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
@@ -51,8 +51,8 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
 
 int
 Quoter_Generic_Factory_Server::init (int argc,
-                                     char *argv[],
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     char *argv[]
+                                     TAO_ENV_ARG_DECL)
 {
   const char *exception_message = "Null Message";
 
@@ -61,7 +61,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       int result = 0;
       // Initialize the ORB Manager
       exception_message = "While initing the orb_manager";
-      result = this->orb_manager_.init (argc, argv, ACE_TRY_ENV);
+      result = this->orb_manager_.init (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result == -1)
@@ -69,7 +69,7 @@ Quoter_Generic_Factory_Server::init (int argc,
 
       // Activate the POA manager
       exception_message = "While activating the POA manager";
-      result = this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+      result = this->orb_manager_.activate_poa_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result == -1)
@@ -87,8 +87,8 @@ Quoter_Generic_Factory_Server::init (int argc,
       // Activate the object.
       exception_message = "While activating the Generic Factory";
       CORBA::String_var str  =
-        this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_,
-                                     ACE_TRY_ENV);
+        this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_
+                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Print the IOR.
@@ -103,7 +103,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       // Get the Naming Service object reference.
       exception_message = "While getting the Naming Service Reference";
       CORBA::Object_var namingObj_var =
-        orb_manager_.orb()->resolve_initial_references ("NameService", ACE_TRY_ENV);
+        orb_manager_.orb()->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (namingObj_var.in ()))
@@ -113,8 +113,8 @@ Quoter_Generic_Factory_Server::init (int argc,
       // Narrow the object reference to a Naming Context.
       exception_message = "While narrowing the Naming Context";
       CosNaming::NamingContext_var namingContext_var =
-        CosNaming::NamingContext::_narrow (namingObj_var.in (),
-                                           ACE_TRY_ENV);
+        CosNaming::NamingContext::_narrow (namingObj_var.in ()
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (namingContext_var.in ()))
@@ -133,14 +133,14 @@ Quoter_Generic_Factory_Server::init (int argc,
 
       exception_message = "While resolving the Quoter";
       CORBA::Object_var quoterNamingObj_var =
-        namingContext_var->resolve (quoterContextName,
-                                    ACE_TRY_ENV);
+        namingContext_var->resolve (quoterContextName
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       exception_message = "While narrowing the Quoter";
       quoterNamingContext_var_ =
-        CosNaming::NamingContext::_narrow (quoterNamingObj_var.in (),
-                                           ACE_TRY_ENV);
+        CosNaming::NamingContext::_narrow (quoterNamingObj_var.in ()
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 2)
@@ -154,13 +154,13 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoter_Generic_Factory_Name[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
 
       exception_message = "Generic_Factory::_this";
-      CORBA::Object_var gf_obj = this->quoter_Generic_Factory_i_ptr_->_this(ACE_TRY_ENV);
+      CORBA::Object_var gf_obj = this->quoter_Generic_Factory_i_ptr_->_this(TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       exception_message = "While binding the Generic Factory";
       quoterNamingContext_var_->bind (quoter_Generic_Factory_Name,
-                                      gf_obj.in (),
-                                      ACE_TRY_ENV);
+                                      gf_obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->debug_level_ >= 2)
@@ -180,29 +180,29 @@ Quoter_Generic_Factory_Server::init (int argc,
 
         exception_message = "While resolving the Life Cycle Service";
         CORBA::Object_var life_Cycle_Service_Obj_var =
-          namingContext_var->resolve (life_Cycle_Service_Name,
-                                      ACE_TRY_ENV);
+          namingContext_var->resolve (life_Cycle_Service_Name
+                                      TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         exception_message = "While narrowing the Life Cycle Service";
         LifeCycleService::Life_Cycle_Service_var  life_Cycle_Service_var =
-          LifeCycleService::Life_Cycle_Service::_narrow (life_Cycle_Service_Obj_var.in (),
-                                                         ACE_TRY_ENV);
+          LifeCycleService::Life_Cycle_Service::_narrow (life_Cycle_Service_Obj_var.in ()
+                                                         TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         if (this->debug_level_ >= 2)
           ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Have a proper reference to Life Cycle Service.\n"));
 
         exception_message = "While _this on Generic Factory";
-        CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this(ACE_TRY_ENV);
+        CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this(TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         exception_message = "While registering the generic factory";
         life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
                                                   "Bryan 503",               // location
                                                   "Generic Factory",         // description
-                                                  object_var.in (),
-                                                  ACE_TRY_ENV);
+                                                  object_var.in ()
+                                                  TAO_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         if (this->debug_level_ >= 2)
@@ -224,13 +224,13 @@ Quoter_Generic_Factory_Server::init (int argc,
 }
 
 int
-Quoter_Generic_Factory_Server::run (CORBA::Environment &ACE_TRY_ENV)
+Quoter_Generic_Factory_Server::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Generic_Factory_Server is running\n"));
 
-  orb_manager_.orb()->run (ACE_TRY_ENV);
+  orb_manager_.orb()->run (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -283,12 +283,12 @@ main (int argc, char *argv [])
   ACE_TRY_NEW_ENV
     {
       if (quoter_Generic_Factory_Server.init (argc,
-                                              argv,
-                                              ACE_TRY_ENV) == -1)
+                                              argv
+                                              TAO_ENV_ARG_PARAMETER) == -1)
         return 1;
       else
         {
-          quoter_Generic_Factory_Server.run (ACE_TRY_ENV);
+          quoter_Generic_Factory_Server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -14,7 +14,9 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Naming, Naming_Utils, "$Id$")
+ACE_RCSID (Naming,
+           Naming_Utils,
+           "$Id$")
 
 TAO_Naming_Server::TAO_Naming_Server (void)
   : naming_context_ (),
@@ -75,14 +77,14 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 {
   if (resolve_for_existing_naming_service)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
+      TAO_ENV_DECLARE_NEW_ENV;
       ACE_TRY
         {
           // Try to find an existing Naming Service.
           CORBA::Object_var naming_obj =
             orb->resolve_initial_references ("NameService",
-                                             timeout,
-                                             ACE_TRY_ENV);
+                                             timeout
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (!CORBA::is_nil (naming_obj.in ()))
@@ -95,13 +97,13 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                             "\nNameService found!\n"));
 
               this->naming_context_ =
-                CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                                   ACE_TRY_ENV);
+                CosNaming::NamingContext::_narrow (naming_obj.in ()
+                                                   TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               this->naming_service_ior_ =
-                orb->object_to_string (naming_obj.in (),
-                                       ACE_TRY_ENV);
+                orb->object_to_string (naming_obj.in ()
+                                       TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               return 0;
@@ -200,7 +202,7 @@ TAO_Naming_Server::init_with_orb (int argc,
 {
   int result;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Duplicate the ORB
@@ -208,7 +210,7 @@ TAO_Naming_Server::init_with_orb (int argc,
 
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -219,16 +221,16 @@ TAO_Naming_Server::init_with_orb (int argc,
         }
 
       // Get the POA object.
-      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in (),
-                                                      ACE_TRY_ENV);
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
+                                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_Manager.
       PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager (ACE_TRY_ENV);
+        this->root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList policies (2);
@@ -236,22 +238,22 @@ TAO_Naming_Server::init_with_orb (int argc,
 
       // Id Assignment policy
       policies[0] =
-        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
-                                                      ACE_TRY_ENV);
+        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
+                                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Lifespan policy
       policies[1] =
-        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
-                                                 ACE_TRY_ENV);
+        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
+                                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // We use a different POA, otherwise the user would have to change
       // the object key each time it invokes the server.
       this->ns_poa_ = this->root_poa_->create_POA ("NameService",
                                                    poa_manager.in (),
-                                                   policies,
-                                                   ACE_TRY_ENV);
+                                                   policies
+                                                   TAO_ENV_ARG_PARAMETER);
       // Warning!  If create_POA fails, then the policies won't be
       // destroyed and there will be hell to pay in memory leaks!
       ACE_TRY_CHECK;
@@ -262,7 +264,7 @@ TAO_Naming_Server::init_with_orb (int argc,
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_TRY_ENV);
+          policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -326,7 +328,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     size_t context_size,
                                     int enable_multicast)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       if (persistence_location != 0)
@@ -361,24 +363,24 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           this->naming_context_ =
             TAO_Transient_Naming_Context::make_new_context (poa,
                                                             TAO_ROOT_NAMING_CONTEXT,
-                                                            context_size,
-                                                            ACE_TRY_ENV);
+                                                            context_size
+                                                            TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
         }
 
       // Set the ior of the root Naming Context.
       this->naming_service_ior_=
-        orb->object_to_string (this->naming_context_.in (),
-                               ACE_TRY_ENV);
+        orb->object_to_string (this->naming_context_.in ()
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var table_object =
-        orb->resolve_initial_references ("IORTable", ACE_TRY_ENV);
+        orb->resolve_initial_references ("IORTable" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+        IORTable::Table::_narrow (table_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -387,10 +389,10 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       else
         {
           CORBA::String_var ior =
-            orb->object_to_string (this->naming_context_.in (),
-                                   ACE_TRY_ENV);
+            orb->object_to_string (this->naming_context_.in ()
+                                   TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          adapter->bind ("NameService", ior.in (), ACE_TRY_ENV);
+          adapter->bind ("NameService", ior.in () TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -490,17 +492,17 @@ TAO_Naming_Server::fini (void)
   // the Naming Service
   ACE_TRY_NEW_ENV
     {
-      this->ns_poa_->destroy (1, 1, ACE_TRY_ENV);
+      this->ns_poa_->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable",
-                                                ACE_TRY_ENV);
+        this->orb_->resolve_initial_references ("IORTable"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+        IORTable::Table::_narrow (table_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -508,7 +510,7 @@ TAO_Naming_Server::fini (void)
         }
       else
         {
-          adapter->unbind ("NameService", ACE_TRY_ENV);
+          adapter->unbind ("NameService" TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -562,11 +564,11 @@ int
 TAO_Naming_Client::init (CORBA::ORB_ptr orb,
                          ACE_Time_Value *timeout)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService", timeout, ACE_TRY_ENV);
+        orb->resolve_initial_references ("NameService", timeout TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -574,8 +576,8 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb,
                            " (%P|%t) Unable to initialize the NameService.\n"),
                           -1);
       this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           ACE_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in ()
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

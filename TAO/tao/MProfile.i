@@ -253,7 +253,7 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
 }
 
 ACE_INLINE void
-TAO_MProfile::create_policy_list (CORBA::Environment &ACE_TRY_ENV)
+TAO_MProfile::create_policy_list (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->policy_list_,
                     CORBA::PolicyList,

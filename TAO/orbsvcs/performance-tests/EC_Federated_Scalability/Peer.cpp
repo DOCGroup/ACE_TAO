@@ -32,74 +32,74 @@ ECFS_Peer::~ECFS_Peer (void)
 }
 
 void
-ECFS_Peer::init (PortableServer::POA_ptr root_poa,
-                 CORBA::Environment &ACE_TRY_ENV)
+ECFS_Peer::init (PortableServer::POA_ptr root_poa
+                 TAO_ENV_ARG_DECL)
 {
   TAO_EC_Event_Channel_Attributes attr (root_poa, root_poa);
   Servant_var<TAO_EC_Event_Channel> ec_impl (
          new TAO_EC_Event_Channel (attr)
          );
 
-  ec_impl->activate (ACE_TRY_ENV);
+  ec_impl->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->event_channel_ =
-    ec_impl->_this (ACE_TRY_ENV);
+    ec_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
-ECFS_Peer::channel (CORBA::Environment &)
+ECFS_Peer::channel (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RtecEventChannelAdmin::EventChannel::_duplicate (this->event_channel_.in ());
 }
 
 void
-ECFS_Peer::connect (RtecEventChannelAdmin::EventChannel_ptr remote_ec,
-                    CORBA::Environment &ACE_TRY_ENV)
+ECFS_Peer::connect (RtecEventChannelAdmin::EventChannel_ptr remote_ec
+                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Connecting....\n"));
   Servant_var<TAO_EC_Gateway_IIOP> gateway (new TAO_EC_Gateway_IIOP);
   gateway->init (remote_ec,
-                 this->event_channel_.in (),
-                 ACE_TRY_ENV);
+                 this->event_channel_.in ()
+                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::Observer_var observer =
-    gateway->_this (ACE_TRY_ENV);
+    gateway->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::Observer_Handle h =
-    this->event_channel_->append_observer (observer.in (),
-                                           ACE_TRY_ENV);
+    this->event_channel_->append_observer (observer.in ()
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   gateway->observer_handle (h);
 }
 
 Control::Loopback_ptr
-ECFS_Peer::setup_loopback (CORBA::Long experiment_id,
-                           CORBA::Environment &ACE_TRY_ENV)
+ECFS_Peer::setup_loopback (CORBA::Long experiment_id
+                           TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Servant_var<ECFS_Loopback> loopback (new ECFS_Loopback);
 
   loopback->init (experiment_id,
-                  this->event_channel_.in (),
-                  ACE_TRY_ENV);
+                  this->event_channel_.in ()
+                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Control::Loopback::_nil ());
 
-  return loopback->_this (ACE_TRY_ENV);
+  return loopback->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 Control::Samples *
 ECFS_Peer::run_experiment (CORBA::Long consumer_count,
                            CORBA::Long experiment_id,
                            CORBA::Long iterations,
-                           CORBA::Long_out gsf,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Long_out gsf
+                           TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Servant_var<ECFS_Consumer> *consumer;
@@ -113,7 +113,7 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
       consumer[i] =
         Servant_var<ECFS_Consumer> (new ECFS_Consumer (experiment_id,
                                                        iterations));
-      consumer[i]->connect (this->event_channel_.in (), ACE_TRY_ENV);
+      consumer[i]->connect (this->event_channel_.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -121,7 +121,7 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
           new ECFS_Supplier (experiment_id)
           );
 
-  supplier->connect (this->event_channel_.in (), ACE_TRY_ENV);
+  supplier->connect (this->event_channel_.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // ACE_DEBUG ((LM_DEBUG, "Connected consumer & supplier\n"));
@@ -138,11 +138,11 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      creation);
       // push one event...
-      supplier->push (event, ACE_TRY_ENV);
+      supplier->push (event TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
-  supplier->disconnect (ACE_TRY_ENV);
+  supplier->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   Control::Samples_var samples (new Control::Samples (iterations));
@@ -159,7 +159,7 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
           if (samples[j] < sample)
             samples[j] = sample;
         }
-      consumer[i]->disconnect (ACE_TRY_ENV);
+      consumer[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -172,13 +172,13 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
 }
 
 void
-ECFS_Peer::shutdown (CORBA::Environment &ACE_TRY_ENV)
+ECFS_Peer::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->event_channel_->destroy (ACE_TRY_ENV);
+  this->event_channel_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

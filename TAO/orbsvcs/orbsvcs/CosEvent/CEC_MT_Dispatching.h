@@ -47,11 +47,11 @@ public:
   virtual void activate (void);
   virtual void shutdown (void);
   virtual void push (TAO_CEC_ProxyPushSupplier* proxy,
-                     const CORBA::Any & event,
-                     CORBA::Environment& env);
+                     const CORBA::Any & event
+                     TAO_ENV_ARG_DECL);
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                            CORBA::Any& event,
-                            CORBA::Environment& env);
+                            CORBA::Any& event
+                            TAO_ENV_ARG_DECL);
 
 private:
   /// Use our own thread manager.

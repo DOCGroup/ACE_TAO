@@ -43,15 +43,15 @@ svr_worker (void *arg)
   ACE_TRY_NEW_ENV
     {
       int result = cubit_server.init (args.argc (),
-                                      args.argv (),
-                                      ACE_TRY_ENV);
+                                      args.argv ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result == -1)
         return (void *) 1;
 
       barrier->server_init_.wait ();
-      cubit_server.run (ACE_TRY_ENV);
+      cubit_server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       barrier->client_fini_.wait ();

@@ -31,20 +31,20 @@ TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks (void)
 }
 
 void
-TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
+                                    TAO_ENV_ARG_DECL)
 {
   this->orb_core_ = orb_core;
 
   // Save a reference to the priority mapping manager.
   CORBA::Object_var obj =
-    orb_core->object_ref_table ().resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER,
-                                                              ACE_TRY_ENV);
+    orb_core->object_ref_table ().resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER
+                                                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->mapping_manager_ =
-    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
-                                           ACE_TRY_ENV);
+    TAO_Priority_Mapping_Manager::_narrow (obj.in ()
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -105,8 +105,8 @@ TAO_RT_Protocols_Hooks::set_server_protocols_hook (Server_Protocols_Hook hook)
 void
 TAO_RT_Protocols_Hooks::rt_service_context (TAO_Stub *stub,
                                             TAO_Service_Context &service_context,
-                                            CORBA::Boolean restart,
-                                            CORBA::Environment &ACE_TRY_ENV)
+                                            CORBA::Boolean restart
+                                            TAO_ENV_ARG_DECL)
 {
   // If the restart flag is true, then this call for a
   // reinvocation. We need not prepare the Service Context List once
@@ -116,26 +116,26 @@ TAO_RT_Protocols_Hooks::rt_service_context (TAO_Stub *stub,
       TAO_RT_Stub *rt_stub = ACE_dynamic_cast (TAO_RT_Stub *,
                                                stub);
       CORBA::Policy *priority_model_policy =
-        rt_stub->exposed_priority_model (ACE_TRY_ENV);
+        rt_stub->exposed_priority_model (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
       if (priority_model_policy)
         {
 
           CORBA::Policy *priority_model_policy =
-            rt_stub->exposed_priority_model (ACE_TRY_ENV);
+            rt_stub->exposed_priority_model (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           CORBA::Short client_priority;
-          int status = this->get_thread_CORBA_priority (client_priority,
-                                                        ACE_TRY_ENV);
+          int status = this->get_thread_CORBA_priority (client_priority
+                                                        TAO_ENV_ARG_PARAMETER);
           if (status == -1)
             ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 
 
           this->add_rt_service_context_hook (service_context,
                                              priority_model_policy,
-                                             client_priority,
-                                             ACE_TRY_ENV);
+                                             client_priority
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       else
@@ -149,13 +149,13 @@ TAO_RT_Protocols_Hooks::rt_service_context (TAO_Stub *stub,
 void
 TAO_RT_Protocols_Hooks::add_rt_service_context_hook (TAO_Service_Context &service_context,
                                                      CORBA::Policy *model_policy,
-                                                     CORBA::Short &client_priority,
-                                                     CORBA::Environment &ACE_TRY_ENV)
+                                                     CORBA::Short &client_priority
+                                                     TAO_ENV_ARG_DECL)
 {
 
   RTCORBA::PriorityModelPolicy_var model_policy_ptr =
-    RTCORBA::PriorityModelPolicy::_narrow (model_policy,
-                                           ACE_TRY_ENV);
+    RTCORBA::PriorityModelPolicy::_narrow (model_policy
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_PriorityModelPolicy *priority_model =
@@ -232,14 +232,14 @@ TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (
 }
 
 int
-TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority,
-                                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority
+                                                   TAO_ENV_ARG_DECL)
 {
   CORBA::Short native_priority = 0;
   int result =
     this->get_thread_CORBA_and_native_priority (priority,
-                                                native_priority,
-                                                ACE_TRY_ENV);
+                                                native_priority
+                                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (result == -1)
@@ -249,8 +249,8 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority,
 }
 
 int
-TAO_RT_Protocols_Hooks::get_thread_native_priority (CORBA::Short &native_priority,
-                                                    CORBA::Environment &)
+TAO_RT_Protocols_Hooks::get_thread_native_priority (CORBA::Short &native_priority
+                                                    TAO_ENV_ARG_DECL_NOT_USED)
 {
   ACE_hthread_t current;
   ACE_Thread::self (current);
@@ -273,12 +273,12 @@ TAO_RT_Protocols_Hooks::get_thread_native_priority (CORBA::Short &native_priorit
 
 int
 TAO_RT_Protocols_Hooks::get_thread_CORBA_and_native_priority (CORBA::Short &priority,
-                                                              CORBA::Short &native_priority,
-                                                              CORBA::Environment &ACE_TRY_ENV)
+                                                              CORBA::Short &native_priority
+                                                              TAO_ENV_ARG_DECL)
 {
   int result =
-    this->get_thread_native_priority (native_priority,
-                                      ACE_TRY_ENV);
+    this->get_thread_native_priority (native_priority
+                                      TAO_ENV_ARG_PARAMETER);
   if (result == -1)
     return result;
 
@@ -298,8 +298,8 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_and_native_priority (CORBA::Short &prio
 }
 
 int
-TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority,
-                                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority
+                                                   TAO_ENV_ARG_DECL)
 {
   TAO_Priority_Mapping *priority_mapping =
     this->mapping_manager_.in ()->mapping ();
@@ -308,13 +308,13 @@ TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority,
   if (priority_mapping->to_native (priority, native_priority) == 0)
     return -1;
 
-  return this->set_thread_native_priority (native_priority,
-                                           ACE_TRY_ENV);
+  return this->set_thread_native_priority (native_priority
+                                           TAO_ENV_ARG_PARAMETER);
 }
 
 int
-TAO_RT_Protocols_Hooks::set_thread_native_priority (CORBA::Short native_priority,
-                                                    CORBA::Environment &)
+TAO_RT_Protocols_Hooks::set_thread_native_priority (CORBA::Short native_priority
+                                                    TAO_ENV_ARG_DECL_NOT_USED)
 {
   ACE_hthread_t current;
   ACE_Thread::self (current);
@@ -326,7 +326,7 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (CORBA::Short native_priority
 }
 
 int
-TAO_RT_Protocols_Hooks::set_default_policies (CORBA::Environment &ACE_TRY_ENV)
+TAO_RT_Protocols_Hooks::set_default_policies (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Set RTCORBA policy defaults.
   // Set RTCORBA::ServerProtocolPolicy and
@@ -367,8 +367,8 @@ TAO_RT_Protocols_Hooks::set_default_policies (CORBA::Environment &ACE_TRY_ENV)
   RTCORBA::ServerProtocolPolicy_var safe_server_protocol_policy =
     server_protocol_policy;
 
-  this->orb_core_->get_default_policies ()->set_policy (server_protocol_policy,
-                                                 ACE_TRY_ENV);
+  this->orb_core_->get_default_policies ()->set_policy (server_protocol_policy
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Set ClientProtocolPolicy.
@@ -384,16 +384,16 @@ TAO_RT_Protocols_Hooks::set_default_policies (CORBA::Environment &ACE_TRY_ENV)
   RTCORBA::ClientProtocolPolicy_var safe_client_protocol_policy =
     client_protocol_policy;
 
-  this->orb_core_->get_default_policies ()->set_policy (client_protocol_policy,
-                                                 ACE_TRY_ENV);
+  this->orb_core_->get_default_policies ()->set_policy (client_protocol_policy
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-TAO_RT_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry,
-                                                            CORBA::Environment &ACE_TRY_ENV)
+TAO_RT_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry
+                                                            TAO_ENV_ARG_DECL)
 {
   RTCORBA::ProtocolList protocols;
 
@@ -437,8 +437,8 @@ TAO_RT_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registr
   RTCORBA::ServerProtocolPolicy_var safe_server_protocol_policy =
     server_protocol_policy;
 
-  this->orb_core_->get_default_policies ()->set_policy (server_protocol_policy,
-                                                        ACE_TRY_ENV);
+  this->orb_core_->get_default_policies ()->set_policy (server_protocol_policy
+                                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;

@@ -63,12 +63,12 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 
 void
 exception_test (Test_ptr server,
-                const char *msg,
-                CORBA::Environment &ACE_TRY_ENV)
+                const char *msg
+                TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      server->test_method (ACE_TRY_ENV);
+      server->test_method (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
      }
   ACE_CATCH (CORBA::INV_POLICY, ex)
@@ -94,7 +94,7 @@ main (int argc, char *argv[])
 
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse arguments.
@@ -103,48 +103,48 @@ main (int argc, char *argv[])
 
       // RTORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RTORB" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in (),
-                                                           ACE_TRY_ENV);
+      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
+                                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return 1;
 
       // PolicyManager.
-      object = orb->resolve_initial_references ("ORBPolicyManager",
-                                                ACE_TRY_ENV);
+      object = orb->resolve_initial_references ("ORBPolicyManager"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (object.in (), ACE_TRY_ENV);
+        CORBA::PolicyManager::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (policy_manager.in (), "PolicyManager")
           == -1)
         return 1;
 
       // PolicyCurrent.
-      object = orb->resolve_initial_references ("PolicyCurrent",
-                                                ACE_TRY_ENV);
+      object = orb->resolve_initial_references ("PolicyCurrent"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in (), ACE_TRY_ENV);
+        CORBA::PolicyCurrent::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
         return 1;
 
       // Test object 1 (ClientProtocolPolicy set on server).
-      object = orb->string_to_object (ior1, ACE_TRY_ENV);
+      object = orb->string_to_object (ior1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      Test_var server1 = Test::_narrow (object.in (), ACE_TRY_ENV);
+      Test_var server1 = Test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (server1.in (), "server1") == -1)
         return 1;
 
       // Test object 2 (no client-exposed ClientProtocolPolicy).
-      object = orb->string_to_object (ior2, ACE_TRY_ENV);
+      object = orb->string_to_object (ior2 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      Test_var server2 = Test::_narrow (object.in (), ACE_TRY_ENV);
+      Test_var server2 = Test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (server2.in (), "server2") == -1)
         return 1;
@@ -155,7 +155,7 @@ main (int argc, char *argv[])
       // ClientProtocolPolicy set on the server side.
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Test 1\n"));
-      server1->test_method (ACE_TRY_ENV);
+      server1->test_method (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test 2: Set the ORB-level ClientProtocolPolicy override, and
@@ -175,17 +175,17 @@ main (int argc, char *argv[])
       CORBA::PolicyList policy_list;
       policy_list.length (1);
       policy_list[0] =
-        rt_orb->create_client_protocol_policy (protocols,
-                                               ACE_TRY_ENV);
+        rt_orb->create_client_protocol_policy (protocols
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_manager->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE,
-                                            ACE_TRY_ENV);
+                                            CORBA::SET_OVERRIDE
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       exception_test (server1.in (),
-                      "ERROR: Test 2 failed\n", ACE_TRY_ENV);
+                      "ERROR: Test 2 failed\n" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test 3: Attempt the invocation on the second object reference
@@ -194,7 +194,7 @@ main (int argc, char *argv[])
       // conflicts.
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Test 3\n"));
-      server2->test_method (ACE_TRY_ENV);
+      server2->test_method (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test 4: Override ClientProtocolPolicy on the Current level.
@@ -211,17 +211,17 @@ main (int argc, char *argv[])
       protocols[1].protocol_type = 4;
       protocols[2].protocol_type = 5;
       policy_list[0] =
-        rt_orb->create_client_protocol_policy (protocols,
-                                               ACE_TRY_ENV);
+        rt_orb->create_client_protocol_policy (protocols
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE,
-                                            ACE_TRY_ENV);
+                                            CORBA::SET_OVERRIDE
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       exception_test (server2.in (),
-                      "ERROR: Test 4 failed\n", ACE_TRY_ENV);
+                      "ERROR: Test 4 failed\n" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test 5: Override ClientProtocolPolicy on the Current level
@@ -234,22 +234,22 @@ main (int argc, char *argv[])
       protocols[0].protocol_type = 3;
       protocols[1].protocol_type = protocol_type;
       policy_list[0] =
-        rt_orb->create_client_protocol_policy (protocols,
-                                               ACE_TRY_ENV);
+        rt_orb->create_client_protocol_policy (protocols
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE,
-                                            ACE_TRY_ENV);
+                                            CORBA::SET_OVERRIDE
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      server2->test_method (ACE_TRY_ENV);
+      server2->test_method (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Testing over.  Shut down server ORB.
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Testing over\n"));
-      server2->shutdown (ACE_TRY_ENV);
+      server2->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

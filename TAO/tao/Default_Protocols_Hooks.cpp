@@ -18,8 +18,8 @@ TAO_Default_Protocols_Hooks::~TAO_Default_Protocols_Hooks (void)
 }
 
 void
-TAO_Default_Protocols_Hooks::init_hooks (TAO_ORB_Core *,
-                                         CORBA::Environment &)
+TAO_Default_Protocols_Hooks::init_hooks (TAO_ORB_Core *
+                                         TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -44,8 +44,8 @@ TAO_Default_Protocols_Hooks::call_server_protocols_hook (int &,
 void
 TAO_Default_Protocols_Hooks::add_rt_service_context_hook (TAO_Service_Context &,
                                                           CORBA::Policy *,
-                                                          CORBA::Short &,
-                                                          CORBA::Environment &)
+                                                          CORBA::Short &
+                                                          TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -66,50 +66,50 @@ TAO_Default_Protocols_Hooks::get_selector_bands_policy_hook (CORBA::Policy *,
 }
 
 int
-TAO_Default_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &,
-                                                        CORBA::Environment &)
+TAO_Default_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &
+                                                        TAO_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::get_thread_native_priority (CORBA::Short &,
-                                                         CORBA::Environment &)
+TAO_Default_Protocols_Hooks::get_thread_native_priority (CORBA::Short &
+                                                         TAO_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }
 
 int
 TAO_Default_Protocols_Hooks::get_thread_CORBA_and_native_priority (CORBA::Short &,
-                                                                   CORBA::Short &,
-                                                                   CORBA::Environment &)
+                                                                   CORBA::Short &
+                                                                   TAO_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short,
-                                                        CORBA::Environment &)
+TAO_Default_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short
+                                                        TAO_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short,
-                                                         CORBA::Environment &)
+TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short
+                                                         TAO_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::set_default_policies (CORBA::Environment &)
+TAO_Default_Protocols_Hooks::set_default_policies (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registry &,
-                                                                 CORBA::Environment &)
+TAO_Default_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registry &
+                                                                 TAO_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }
@@ -117,8 +117,8 @@ TAO_Default_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Re
 void
 TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
                                                  TAO_Service_Context &,
-                                                 CORBA::Boolean ,
-                                                 CORBA::Environment &)
+                                                 CORBA::Boolean
+                                                 TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 

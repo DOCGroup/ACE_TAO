@@ -142,15 +142,15 @@ MT_Server::init (int argc,
                        "MT_Server::init: ORB_Manager is nil!\n"),
                        -1);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Call the init of TAO_ORB_Manager to create a child POA
       // under the root POA.
       this->orb_manager_ptr_->init_child_poa (argc,
                                               argv,
-                                              "child_poa",
-                                              ACE_TRY_ENV);
+                                              "child_poa"
+                                              TAO_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -159,8 +159,8 @@ MT_Server::init (int argc,
 
       this->str_  =
         this->orb_manager_ptr_->activate_under_child_poa ("MT",
-                                                          &this->mT_Object_i_,
-                                                          ACE_TRY_ENV);
+                                                          &this->mT_Object_i_
+                                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -184,8 +184,8 @@ MT_Server::init (int argc,
       CORBA::ORB_var orb_var = this->orb_manager_ptr_->orb ();
 
       CORBA::Object_var object_var =
-        orb_var->string_to_object (this->object_key_,
-                                   ACE_TRY_ENV);
+        orb_var->string_to_object (this->object_key_
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object_var.in()))
@@ -193,8 +193,8 @@ MT_Server::init (int argc,
                            "No proper object has been returned.\n"),
                           -1);
 
-      this->mT_Object_var_ = MT_Object::_narrow (object_var.in(),
-                                                 ACE_TRY_ENV);
+      this->mT_Object_var_ = MT_Object::_narrow (object_var.in()
+                                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->mT_Object_var_.in()))
@@ -220,10 +220,10 @@ MT_Server::init (int argc,
 int
 MT_Server::run ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      int r = this->orb_manager_ptr_->run (ACE_TRY_ENV);
+      int r = this->orb_manager_ptr_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (r == -1)
@@ -245,12 +245,12 @@ MT_Server::~MT_Server (void)
   if (this->object_key_ != 0)
     ACE_OS::free (this->object_key_);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       if (this->orb_manager_ptr_)
-        this->orb_manager_ptr_->deactivate_under_child_poa (this->str_.in (),
-                                                            ACE_TRY_ENV);
+        this->orb_manager_ptr_->deactivate_under_child_poa (this->str_.in ()
+                                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -266,7 +266,7 @@ MT_Server::run_ORB_briefly (void)
 {
   if (this->iterations_ > 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
+      TAO_ENV_DECLARE_NEW_ENV;
       ACE_TRY
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -276,12 +276,12 @@ MT_Server::run_ORB_briefly (void)
           for (unsigned int i = 0; i < this->iterations_; i++)
             {
               MT_Object_var tmp =
-                this->mT_Object_i_._this (ACE_TRY_ENV);
+                this->mT_Object_i_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               this->mT_Object_var_->yadda (0,
-                                           tmp.in (),
-                                           ACE_TRY_ENV);
+                                           tmp.in ()
+                                           TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }

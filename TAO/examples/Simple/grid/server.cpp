@@ -12,18 +12,18 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n\tGrid server\n\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       if (server.init ("Grid",
                        argc,
-                       argv,
-                       ACE_TRY_ENV) == -1)
+                       argv
+                       TAO_ENV_ARG_PARAMETER) == -1)
         return 1;
       else
         {
-          server.run (ACE_TRY_ENV);
+          server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

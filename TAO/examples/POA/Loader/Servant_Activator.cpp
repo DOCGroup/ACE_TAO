@@ -70,8 +70,6 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   // Obtain the servant else exception.
   PortableServer::Servant servant =
     (*servant_supplier_) (oid,

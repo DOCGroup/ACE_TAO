@@ -24,15 +24,15 @@ public:
   // dtor
 
   // Return the Default POA of this Servant
-  PortableServer::POA_ptr _default_POA (CORBA::Environment &/*env*/)
+  PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*env*/)
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     };
 
-  virtual void M302 (CORBA::Environment &env)
+  virtual void M302 (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &env)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

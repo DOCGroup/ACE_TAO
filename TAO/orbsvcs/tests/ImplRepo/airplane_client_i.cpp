@@ -59,11 +59,11 @@ Airplane_Client_i::get_planes (size_t count)
 {
   for (size_t i = 0; i < count; i++)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
+      TAO_ENV_DECLARE_NEW_ENV;
       ACE_TRY
         {
           CORBA::String_var response =
-            this->server_->get_plane (ACE_TRY_ENV);
+            this->server_->get_plane (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Plane %d is %s\n", i, response.in ()));
@@ -103,14 +103,14 @@ Airplane_Client_i::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "internet",
-                                    ACE_TRY_ENV);
+                                    "internet"
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
@@ -124,10 +124,10 @@ Airplane_Client_i::init (int argc, char **argv)
                           -1);
 
       CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->server_key_, ACE_TRY_ENV);
+        this->orb_->string_to_object (this->server_key_ TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->server_ = Paper_Airplane_Server::_narrow (server_object.in(), ACE_TRY_ENV);
+      this->server_ = Paper_Airplane_Server::_narrow (server_object.in() TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_object.in ()))

@@ -12,12 +12,12 @@ TAO_Default_Servant_Dispatcher::~TAO_Default_Servant_Dispatcher (void)
 void
 TAO_Default_Servant_Dispatcher::dispatch (
   TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-  TAO_ServerRequest &req,
-  CORBA::Environment &ACE_TRY_ENV)
+  TAO_ServerRequest &req
+  TAO_ENV_ARG_DECL)
 {
   servant_upcall.servant ()->_dispatch (req,
-                                        &servant_upcall,
-                                        ACE_TRY_ENV);
+                                        &servant_upcall
+                                        TAO_ENV_ARG_PARAMETER);
 }
 
 TAO_POA *
@@ -28,8 +28,8 @@ TAO_Default_Servant_Dispatcher::create_POA (const ACE_CString &name,
                                             ACE_Lock &lock,
                                             TAO_SYNCH_MUTEX &thread_lock,
                                             TAO_ORB_Core &orb_core,
-                                            TAO_Object_Adapter *object_adapter,
-                                            CORBA_Environment &ACE_TRY_ENV)
+                                            TAO_Object_Adapter *object_adapter
+                                            TAO_ENV_ARG_DECL)
 {
   TAO_POA *poa;
 
@@ -41,8 +41,8 @@ TAO_Default_Servant_Dispatcher::create_POA (const ACE_CString &name,
                              lock,
                              thread_lock,
                              orb_core,
-                             object_adapter,
-                             ACE_TRY_ENV),
+                             object_adapter
+                             TAO_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

@@ -37,7 +37,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
 #if 0
@@ -50,24 +50,24 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif  /* 0 */
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "client_orb", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "client_orb" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PICurrentTest::test_var server =
-        PICurrentTest::test::_narrow (obj.in (), ACE_TRY_ENV);
+        PICurrentTest::test::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -78,10 +78,10 @@ main (int argc, char *argv[])
                             1);
         }
 
-      server->invoke_me (ACE_TRY_ENV);
+      server->invoke_me (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      server->shutdown (ACE_TRY_ENV);
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -24,7 +24,6 @@ Echo_Client_ORBInitializer::post_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
   PortableInterceptor::ClientRequestInterceptor_ptr interceptor =
     PortableInterceptor::ClientRequestInterceptor::_nil ();

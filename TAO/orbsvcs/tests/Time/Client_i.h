@@ -86,9 +86,6 @@ private:
   int shutdown_;
   // Flag for server shutdown.
 
-  CORBA::Environment env_;
-  // Environment variable.
-
   CosTime::TimeService_var clerk_;
   // Time Service Server object ptr.
 

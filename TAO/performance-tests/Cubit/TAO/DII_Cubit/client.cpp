@@ -200,8 +200,8 @@ DII_Cubit_Client::init (int argc, char **argv)
       // Initialize the ORB.
       this->orb_var_ = CORBA::ORB_init (this->argc_,
                                         this->argv_,
-                                        "internet",
-                                        ACE_TRY_ENV);
+                                        "internet"
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
@@ -213,13 +213,13 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       // Get a factory object reference from the factory IOR.
       this->factory_var_ =
-        this->orb_var_->string_to_object (this->factory_IOR_,
-                                          ACE_TRY_ENV);
+        this->orb_var_->string_to_object (this->factory_IOR_
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get a Cubit object with a DII request on the Cubit factory.
-      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit",
-                                                               ACE_TRY_ENV));
+      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit"
+                                                               TAO_ENV_ARG_PARAMETER));
 
       ACE_TRY_CHECK;
 
@@ -233,7 +233,7 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       // Invoke the <make_cubit> operation to ask the Cubit factory
       // for a Cubit object.
-      mc_req->invoke (ACE_TRY_ENV);
+      mc_req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Extract the returned object reference from the request.
@@ -387,8 +387,8 @@ DII_Cubit_Client::cube_short_dii (void)
   ACE_TRY_NEW_ENV
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_short",
-                                                        ACE_TRY_ENV));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_short"
+                                                        TAO_ENV_ARG_PARAMETER));
 
       ACE_TRY_CHECK;
 
@@ -402,7 +402,7 @@ DII_Cubit_Client::cube_short_dii (void)
 
       this->call_count_++;
 
-      req->invoke (ACE_TRY_ENV);
+      req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       req->return_value () >>= ret_short;
@@ -431,8 +431,8 @@ DII_Cubit_Client::cube_long_dii (void)
   ACE_TRY_NEW_ENV
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_long",
-                                                        ACE_TRY_ENV));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_long"
+                                                        TAO_ENV_ARG_PARAMETER));
 
       ACE_TRY_CHECK;
 
@@ -446,7 +446,7 @@ DII_Cubit_Client::cube_long_dii (void)
 
       this->call_count_++;
 
-      req->invoke (ACE_TRY_ENV);
+      req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -476,8 +476,8 @@ DII_Cubit_Client::cube_octet_dii (void)
   ACE_TRY_NEW_ENV
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_octet",
-                                                        ACE_TRY_ENV));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_octet"
+                                                        TAO_ENV_ARG_PARAMETER));
 
       ACE_TRY_CHECK;
 
@@ -493,7 +493,7 @@ DII_Cubit_Client::cube_octet_dii (void)
       // Invoke, check for an exception and verify the result.
       this->call_count_++;
 
-      req->invoke (ACE_TRY_ENV);
+      req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -524,8 +524,8 @@ DII_Cubit_Client::cube_union_dii (void)
   ACE_TRY_NEW_ENV
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_union",
-                                                        ACE_TRY_ENV));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_union"
+                                                        TAO_ENV_ARG_PARAMETER));
 
       ACE_TRY_CHECK;
 
@@ -545,7 +545,7 @@ DII_Cubit_Client::cube_union_dii (void)
 
       this->call_count_++;
 
-      req->invoke (ACE_TRY_ENV);
+      req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -579,8 +579,8 @@ DII_Cubit_Client::cube_struct_dii (void)
   ACE_TRY_NEW_ENV
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_struct",
-                                                        ACE_TRY_ENV));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_struct"
+                                                        TAO_ENV_ARG_PARAMETER));
 
       ACE_TRY_CHECK;
 
@@ -599,7 +599,7 @@ DII_Cubit_Client::cube_struct_dii (void)
 
       this->call_count_++;
 
-      req->invoke (ACE_TRY_ENV);
+      req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -631,8 +631,8 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
   ACE_TRY_NEW_ENV
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_octet_sequence",
-                                                         ACE_TRY_ENV));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_octet_sequence"
+                                                         TAO_ENV_ARG_PARAMETER));
 
       ACE_TRY_CHECK;
 
@@ -652,7 +652,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
 
       this->call_count_++;
 
-      req->invoke (ACE_TRY_ENV);
+      req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -692,8 +692,8 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
   ACE_TRY_NEW_ENV
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_long_sequence",
-                                                        ACE_TRY_ENV));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_long_sequence"
+                                                        TAO_ENV_ARG_PARAMETER));
 
       ACE_TRY_CHECK;
 
@@ -714,7 +714,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
 
       this->call_count_++;
 
-      req->invoke (ACE_TRY_ENV);
+      req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -821,13 +821,13 @@ DII_Cubit_Client::run (void)
       // Shut down server via a DII request.
       if (this->shutdown_)
         {
-          CORBA::Request_var req (this->obj_var_->_request ("shutdown",
-                                                            ACE_TRY_ENV));
+          CORBA::Request_var req (this->obj_var_->_request ("shutdown"
+                                                            TAO_ENV_ARG_PARAMETER));
 
           ACE_TRY_CHECK;
 
           // Cubit::shutdown () is a oneway operation.
-          req->send_oneway (ACE_TRY_ENV);
+          req->send_oneway (TAO_ENV_SINGLE_ARG_PARAMETER);
 
           ACE_TRY_CHECK;
 

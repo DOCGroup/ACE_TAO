@@ -58,8 +58,8 @@ public:
   virtual int open (TAO_ORB_Core *orb_core);
   virtual int close (void);
   virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc,
-                       CORBA::Environment &ACE_TRY_ENV);
+                       TAO_Transport_Descriptor_Interface *desc
+                       TAO_ENV_ARG_DECL);
   virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
   //@}
 
@@ -70,22 +70,22 @@ protected:
    *
    * Please check the documentation in Pluggable.h.
    */
-  virtual TAO_Profile * make_profile (CORBA::Environment &ACE_TRY_ENV);
+  virtual TAO_Profile * make_profile (TAO_ENV_SINGLE_ARG_DECL);
 
   /// IIOP-specific connection establishment.
   /**
    * @note The IIOP endpoint is extracted from the SSLIOP endpoint.
    */
   int iiop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
-                    TAO_GIOP_Invocation *invocation,
-                    CORBA::Environment &ACE_TRY_ENV);
+                    TAO_GIOP_Invocation *invocation
+                    TAO_ENV_ARG_DECL);
 
   /// SSLIOP-specific connection establishment.
   int ssliop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
                       Security::EstablishTrust *trust,
                       TAO_GIOP_Invocation *invocation,
-                      TAO_Transport_Descriptor_Interface *desc,
-                      CORBA::Environment &ACE_TRY_ENV);
+                      TAO_Transport_Descriptor_Interface *desc
+                      TAO_ENV_ARG_DECL);
 
 public:
 

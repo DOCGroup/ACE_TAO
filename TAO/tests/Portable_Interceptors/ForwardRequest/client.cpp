@@ -50,7 +50,7 @@ main (int argc, char *argv[])
 {
   int status = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -63,15 +63,15 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Client ORB",
-                                            ACE_TRY_ENV);
+                                            "Client ORB"
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
@@ -81,11 +81,11 @@ main (int argc, char *argv[])
       // IOR occurs during the various interceptions executed during
       // this test.
       CORBA::Object_var object =
-        orb->string_to_object (ior1, ACE_TRY_ENV);
+        orb->string_to_object (ior1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ForwardRequestTest::test_var server =
-        ForwardRequestTest::test::_narrow (object.in (), ACE_TRY_ENV);
+        ForwardRequestTest::test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -112,7 +112,7 @@ main (int argc, char *argv[])
           if (i > 1)
             old_number = number;
 
-          number = server->number (ACE_TRY_ENV);
+          number = server->number (TAO_ENV_SINGLE_ARG_PARAMETER);
 
           ACE_TRY_CHECK;
 
@@ -141,7 +141,7 @@ main (int argc, char *argv[])
             }
         }
 
-      server->shutdown (ACE_TRY_ENV);
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

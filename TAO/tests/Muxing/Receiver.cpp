@@ -23,8 +23,8 @@ Receiver::dump_results ()
 }
 
 void
-Receiver::receive_data (const Test::Payload &payload,
-                        CORBA::Environment &)
+Receiver::receive_data (const Test::Payload &payload
+                        TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -33,7 +33,7 @@ Receiver::receive_data (const Test::Payload &payload,
 }
 
 CORBA::Long
-Receiver::get_event_count (CORBA::Environment &)
+Receiver::get_event_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);

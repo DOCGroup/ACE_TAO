@@ -68,9 +68,8 @@ public:
 
   /// Set the references to which requests will be forwarded.
   virtual void forward_references (CORBA::Object_ptr obj1,
-                                   CORBA::Object_ptr obj2,
-                                   CORBA::Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ())
+                                   CORBA::Object_ptr obj2
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**

@@ -18,8 +18,8 @@ TAO_EC_Priority_Scheduling::~TAO_EC_Priority_Scheduling (void)
 void
 TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
-      TAO_EC_ProxyPushConsumer *consumer,
-      CORBA::Environment &ACE_TRY_ENV)
+      TAO_EC_ProxyPushConsumer *consumer
+      TAO_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "add_proxy_supplier_dependencies - %x %x\n",
               supplier, consumer));
@@ -38,12 +38,12 @@ TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
       this->scheduler_->priority (qos_info.rt_info,
                                   os_priority,
                                   p_subpriority,
-                                  p_priority,
-                                  ACE_TRY_ENV);
+                                  p_priority
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
       qos_info.preemption_priority = p_priority;
 
-      supplier->add_dependencies (header, qos_info, ACE_TRY_ENV);
+      supplier->add_dependencies (header, qos_info TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -52,8 +52,8 @@ void
 TAO_EC_Priority_Scheduling::init_event_qos (
     const RtecEventComm::EventHeader &header,
     TAO_EC_ProxyPushConsumer *consumer,
-    TAO_EC_QOS_Info &qos_info,
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_EC_QOS_Info &qos_info
+    TAO_ENV_ARG_DECL)
 {
   const RtecEventChannelAdmin::SupplierQOS& qos =
     consumer->publications ();
@@ -73,8 +73,8 @@ TAO_EC_Priority_Scheduling::init_event_qos (
       this->scheduler_->priority (qos_info.rt_info,
                                   os_priority,
                                   p_subpriority,
-                                  p_priority,
-                                  ACE_TRY_ENV);
+                                  p_priority
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
       qos_info.preemption_priority = p_priority;
     }

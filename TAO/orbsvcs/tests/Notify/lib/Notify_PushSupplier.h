@@ -21,24 +21,24 @@ public:
   TAO_Notify_PushSupplier (void);
   // Constructor.
 
-  void init (PortableServer::POA_ptr poa, CORBA::Environment &ACE_TRY_ENV);
+  void init (PortableServer::POA_ptr poa TAO_ENV_ARG_DECL);
   // Init
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin, CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin TAO_ENV_ARG_DECL);
   // Activates this object with the <default_POA_>
   // Creates a new proxy consumer and connects to it.
 
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the consumer proxy.
 
-  void send_event (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV);
+  void send_event (const CORBA::Any & data TAO_ENV_ARG_DECL);
   // Send the event to the channel.
 
-  void deactivate (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void deactivate (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Deactivate the object.
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   CosNotifyChannelAdmin::ProxyID my_id_;
   // This supplier's id.
@@ -50,8 +50,8 @@ public:
   // = NotifySubscribe methods
     void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &ACE_TRY_ENV
+        const CosNotification::EventTypeSeq & removed
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -59,7 +59,7 @@ public:
       ));
 
     void disconnect_push_supplier (
-        CORBA::Environment &ACE_TRY_ENV
+        TAO_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

@@ -108,15 +108,15 @@ write_iors_to_file (const char *ior)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0,
-                                            ACE_TRY_ENV);
+                                            0
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
@@ -125,19 +125,19 @@ main (int argc, char **argv)
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create a servant.
@@ -149,16 +149,16 @@ main (int argc, char **argv)
                       -1);
 
       // Get Object Reference for the foo_impl object.
-      Foo_var foo = foo_impl->_this (ACE_TRY_ENV);
+      Foo_var foo = foo_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This means that the ownership of <foo_impl> now belongs to
       // the POA.
-      foo_impl->_remove_ref (ACE_TRY_ENV);
+      foo_impl->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Stringyfy all the object references and print them out.
-      CORBA::String_var ior = orb->object_to_string (foo.in (), ACE_TRY_ENV);
+      CORBA::String_var ior = orb->object_to_string (foo.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -169,10 +169,10 @@ main (int argc, char **argv)
       if (write_result != 0)
         return write_result;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -294,7 +294,7 @@ TAO_Literal_Constraint (CORBA::Any* any)
   CORBA::TCKind corba_type = CORBA::tk_null;
   ACE_TRY
     {
-      corba_type = type->kind (ACE_TRY_ENV);
+      corba_type = type->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -487,7 +487,7 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   CORBA::TCKind kind = CORBA::tk_null;
   ACE_TRY
     {
-      kind = type->kind (ACE_TRY_ENV);
+      kind = type->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -525,9 +525,9 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
         CORBA::TCKind kind = CORBA::tk_void;
         ACE_TRY_EX (label2)
           {
-            CORBA::TypeCode_var typecode = type->content_type (ACE_TRY_ENV);
+            CORBA::TypeCode_var typecode = type->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK_EX (label2);
-            kind = typecode->kind (ACE_TRY_ENV);
+            kind = typecode->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK_EX (label2);;
           }
         ACE_CATCHANY

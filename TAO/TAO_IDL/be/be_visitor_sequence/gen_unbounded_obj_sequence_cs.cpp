@@ -19,7 +19,7 @@
 //    Modifications by Aniruddha Gokhale
 // ============================================================================
 
-#include	"be.h"
+#include        "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -57,7 +57,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       pt = bt;
     }
 
-  const char *name = 
+  const char *name =
     be_decl::narrow_from_decl (pt)->full_name ();
 
   idl_bool bt_is_defined;
@@ -82,22 +82,22 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   const char * class_name = node->instance_name ();
 
   static char full_class_name [NAMEBUFSIZE];
-  ACE_OS::memset (full_class_name, 
-                  '\0', 
+  ACE_OS::memset (full_class_name,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (node->is_nested ())
     {
       be_scope *parent = be_scope::narrow_from_scope (node->defined_in ());
 
-      ACE_OS::sprintf (full_class_name, 
+      ACE_OS::sprintf (full_class_name,
                        "%s::%s",
                        parent->decl ()->full_name (),
                        class_name);
     }
   else
     {
-      ACE_OS::sprintf (full_class_name, 
+      ACE_OS::sprintf (full_class_name,
                        "%s",
                        class_name);
     }
@@ -115,10 +115,10 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   os->indent ();
 
   // allocate_buffer.
-  *os << "// The Base_Sequence functions, please see tao/Sequence.h" 
+  *os << "// The Base_Sequence functions, please see tao/Sequence.h"
       << be_nl
       << "void" << be_nl
-      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" 
+      << full_class_name << "::_allocate_buffer (CORBA::ULong length)"
       << be_nl
       << "{" << be_idt_nl;
 
@@ -158,12 +158,12 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << "tmp[i] = old[i];" << be_uidt_nl 
+      << "tmp[i] = old[i];" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "if (this->release_)" << be_idt_nl
       << "{" << be_idt_nl
-      << "delete[] old;" << be_uidt_nl 
+      << "delete[] old;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl
       << "this->buffer_ = tmp;" << be_uidt_nl
@@ -219,7 +219,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   // shrink_buffer.
   *os << "void" << be_nl
-      << full_class_name 
+      << full_class_name
       << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
       << "{" << be_idt_nl;
 
@@ -263,12 +263,11 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       // Pseudo objects do not require these methods.
       *os << "void " << be_nl
           << full_class_name << "::_downcast (" << be_idt << be_idt_nl
-	        << "void* target," << be_nl
-	        << "CORBA_Object *src," << be_nl
-	        << "CORBA_Environment &ACE_TRY_ENV"
-	        << be_uidt_nl
-	        << ")" << be_uidt_nl
-	        << "{" << be_idt_nl;
+                << "void* target," << be_nl
+                << "CORBA_Object *src" << be_nl
+                << "TAO_ENV_ARG_DECL" << be_uidt_nl
+                << ")" << be_uidt_nl
+                << "{" << be_idt_nl;
 
       bt->accept (visitor);
 
@@ -277,27 +276,27 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       bt->accept (visitor);
 
       *os << "**, target);" << be_nl
-	        << "*tmp = ";
+                << "*tmp = ";
 
       if (bt_is_defined)
         {
           bt->accept (visitor);
 
-          *os << "::_narrow (src, ACE_TRY_ENV);";
+          *os << "::_narrow (src TAO_ENV_ARG_PARAMETER);";
         }
       else
         {
-          *os << "tao_" << pt->flat_name () 
-              << "_narrow (src, ACE_TRY_ENV);";
+          *os << "tao_" << pt->flat_name ()
+              << "_narrow (src TAO_ENV_ARG_PARAMETER);";
         }
 
       *os << be_nl
           << "ACE_CHECK;" << be_uidt_nl
-	        << "}\n" << be_nl;
+                << "}\n" << be_nl;
 
       *os << "CORBA_Object*" << be_nl
           << full_class_name << "::_upcast (void *src) const" <<  be_nl
-	        << "{" << be_idt_nl;
+                << "{" << be_idt_nl;
 
       if (bt_is_defined)
         {
@@ -312,11 +311,11 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
         }
       else
         {
-	        *os << "return tao_" << pt->flat_name () << "_upcast (src);";
+                *os << "return tao_" << pt->flat_name () << "_upcast (src);";
         }
 
       *os << be_uidt_nl
-	        << "}" << be_nl;
+                << "}" << be_nl;
     }
 
   os->gen_endif ();

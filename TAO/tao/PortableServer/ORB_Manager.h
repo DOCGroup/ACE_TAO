@@ -38,13 +38,13 @@ class TAO_PortableServer_Export TAO_ORB_Manager
 public:
   // = Initialization and termination methods.
   /** Constructor.
-   *  
+   *
    *  @param orb  pointer to an ORB which is duplicated an stored
    *              internally in an ORB_var.  If pointer is 0,
    *              a new ORB pointer is created internally in the init()
    *              call.
    *
-   *  @param poa  pointer to a POA which is duplicated and stored 
+   *  @param poa  pointer to a POA which is duplicated and stored
    *              internally in a POA_var.  If pointer is 0,
    *              a pointer to the Root POA is obtained from the ORB.
    *
@@ -63,18 +63,18 @@ public:
    *  @return -1 on failure, 0 on success
    */
   int init (int &argc,
-            char *argv[],
-            CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+            char *argv[]
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Initialize the ORB/root POA, using the supplied command line
-    * arguments or the default ORB components.  
+    * arguments or the default ORB components.
     *
     * @return -1 on failure, 0 on success
     */
   int init (int &argc,
             char *argv[],
-            const char *orb_name,
-            CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+            const char *orb_name
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Creates a child poa under the root poa with PERSISTENT and
@@ -85,9 +85,8 @@ public:
    */
   int init_child_poa (int &argc,
                       char *argv[],
-                      const char *poa_name,
-                      CORBA_Environment &ACE_TRY_ENV =
-                          TAO_default_environment ());
+                      const char *poa_name
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Creates a child poa under the root poa with PERSISTENT and
@@ -97,15 +96,14 @@ public:
   int init_child_poa (int &argc,
                       char *argv[],
                       const char *poa_name,
-                      const char *orb_name,
-                      CORBA_Environment &ACE_TRY_ENV =
-                          TAO_default_environment ());
+                      const char *orb_name
+                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Shut down.  Invoke the destroy() methods on the orb and poa.
    *
    * @return -1 on failure, 0 on success
    */
-  int fini (CORBA_Environment &ACE_TRY_ENV);
+  int fini (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Destructor.
   ~TAO_ORB_Manager (void);
@@ -117,33 +115,30 @@ public:
    *  requests are processed.  This method is useful for clients,
    *  which are not going to enter "orb->run" loop, yet may want to
    *  service incoming requests while waiting for a result of CORBA
-   *  call on a server.  
+   *  call on a server.
    *
    *  @return -1 on failure, 0 on success
    */
-  int activate_poa_manager (CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
+  int activate_poa_manager (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Activate <servant>, using the POA <activate_object> call.  Users
    * can call this method multiple times to activate multiple objects.
-   * 
+   *
    * @return 0 on failure, a string representation of the object ID if
    *         successful.  Caller of this method is responsible for
    *         memory deallocation of the string.
    */
-  char *activate (PortableServer::Servant servant,
-                  CORBA_Environment &ACE_TRY_ENV =
-                      TAO_default_environment ());
+  char *activate (PortableServer::Servant servant
+                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Deactivate object in RootPOA.
    *
    *  @param id  a string representation of the Object ID
-   *             of the servant to deactivate in the POA 
+   *             of the servant to deactivate in the POA
    */
-  void deactivate (const char *id,
-                   CORBA_Environment &ACE_TRY_ENV =
-                       TAO_default_environment ());
+  void deactivate (const char *id
+                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Precondition: init_child_poa has been called.  Activate <servant>
@@ -160,29 +155,25 @@ public:
    *           memory deallocation of the string.
    */
   char *activate_under_child_poa (const char *object_name,
-                                  PortableServer::Servant servant,
-                                  CORBA_Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ());
+                                  PortableServer::Servant servant
+                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Deactivate object in child POA.
    *
    *  @param id  string representation of the object ID, which represents
    *             the object to deactivate in the POA
    */
-  void deactivate_under_child_poa (const char *id,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ());
+  void deactivate_under_child_poa (const char *id
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /** Run the ORB event loop with the specified <tv> time value.
-   * 
+   *
    * @param tv  the time interval for how long to run the ORB event loop.
    * @return -1 on failure, 0 on success
    */
-  int run (CORBA_Environment &ACE_TRY_ENV,
-           ACE_Time_Value *tv);
-  int run (ACE_Time_Value &tv,
-           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  int run (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  int run (ACE_Time_Value &tv
+           TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  int run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Accessor which returns the ORB pointer.  Following the normal
@@ -200,7 +191,7 @@ public:
    * memory management rules of return values from functions, this
    * function duplicates the poa return value before returning it.
    *
-   * @return poa  Root POA pointer which has been duplicated.  Caller 
+   * @return poa  Root POA pointer which has been duplicated.  Caller
    *              must release pointer when done.
    */
   PortableServer::POA_ptr root_poa (void);
@@ -222,7 +213,7 @@ public:
    * returning it.
    *
    * @return POAManager pointer which has been duplicated.  Caller
-   *         must release pointer when done.  
+   *         must release pointer when done.
    */
   PortableServer::POAManager_ptr poa_manager (void);
 

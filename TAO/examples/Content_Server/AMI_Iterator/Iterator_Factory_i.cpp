@@ -11,8 +11,8 @@ ACE_RCSID (AMI_Iterator, Iterator_Factory_i, "$Id$")
 void
 Iterator_Factory_i::get_iterator (const char *pathname,
                                   Web_Server::Content_Iterator_out contents,
-                                  Web_Server::Metadata_Type_out metadata,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  Web_Server::Metadata_Type_out metadata
+                                  TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -44,7 +44,7 @@ Iterator_Factory_i::get_iterator (const char *pathname,
 
   // Activate the Content_Iterator object.
   Web_Server::Content_Iterator_var iterator =
-    iterator_servant->_this (ACE_TRY_ENV);
+    iterator_servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   Web_Server::Metadata_Type *tmp = 0;
@@ -52,7 +52,7 @@ Iterator_Factory_i::get_iterator (const char *pathname,
                     Web_Server::Metadata_Type,
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
-  
+
   metadata = tmp;
 
   if (this->modification_date (&file_status,

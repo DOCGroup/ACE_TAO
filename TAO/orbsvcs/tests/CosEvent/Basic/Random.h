@@ -47,15 +47,15 @@ public:
   RND_Consumer (RND_Driver *driver);
   // Constructor
 
-  void push (const CORBA::Any &event,
-             CORBA::Environment &ACE_TRY_ENV)
+  void push (const CORBA::Any &event
+             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin,
-                CORBA::Environment &ACE_TRY_ENV);
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
 
 protected:
   RND_Driver *driver_;
@@ -81,8 +81,8 @@ class RND_Timer : public RND_Consumer
 public:
   RND_Timer (RND_Driver *driver);
 
-  void push (const CORBA::Any &event,
-             CORBA::Environment &ACE_TRY_ENV)
+  void push (const CORBA::Any &event
+             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -108,16 +108,16 @@ public:
   RND_Supplier (void);
   // Constructor
 
-  void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin,
-                CORBA::Environment &ACE_TRY_ENV);
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
 
-  void push_new_event (CORBA::Environment &ACE_TRY_ENV);
-  void push (CORBA::Any &event,
-             CORBA::Environment &ACE_TRY_ENV);
+  void push_new_event (TAO_ENV_SINGLE_ARG_DECL);
+  void push (CORBA::Any &event
+             TAO_ENV_ARG_DECL);
   // Push a single event...
 
-  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual int svc (void);
@@ -146,12 +146,12 @@ public:
   int run (int argc, char *argv[]);
   // Run the test
 
-  void timer (const CORBA::Any &e,
-              CORBA::Environment &ACE_TRY_ENV);
+  void timer (const CORBA::Any &e
+              TAO_ENV_ARG_DECL);
   // The main timer has expired
 
-  void event (const CORBA::Any &e,
-              CORBA::Environment &ACE_TRY_ENV);
+  void event (const CORBA::Any &e
+              TAO_ENV_ARG_DECL);
   // One of the consumers has received an event
 
 private:

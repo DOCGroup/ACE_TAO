@@ -119,17 +119,17 @@ protected:
   const char *gen_version (AST_Decl *node);
   // Defaults to "1.0" for now.
 
-  void element_type (AST_Type *base_type,
-                     CORBA::Environment &ACE_TRY_ENV);
+  void element_type (AST_Type *base_type
+                     TAO_ENV_ARG_DECL);
   // Creates or looks up the element type of an array or sequence,
   // and stores the result in ir_current_.
 
-  int create_interface_def (AST_Interface *node,
-                            CORBA::Environment &ACE_TRY_ENV);
+  int create_interface_def (AST_Interface *node
+                            TAO_ENV_ARG_DECL);
   // Common code factored out of visit_interface().
 
-  void get_referenced_type (AST_Type *node,
-                            CORBA::Environment &ACE_TRY_ENV);
+  void get_referenced_type (AST_Type *node
+                            TAO_ENV_ARG_DECL);
   // Utility method to update ir_current_ for struct members, union
   // members, operation parameters and operation return types.
 

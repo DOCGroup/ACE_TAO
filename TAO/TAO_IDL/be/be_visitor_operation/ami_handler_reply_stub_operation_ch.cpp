@@ -20,9 +20,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -79,9 +79,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
           << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
           << "CORBA::ULong reply_status";
 
-      *os << "," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+      *os << be_nl
+          << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
     }
   return 0;

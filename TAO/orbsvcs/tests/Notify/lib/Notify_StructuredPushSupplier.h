@@ -44,28 +44,28 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_StructuredPushSupplier:public POA_CosNot
   TAO_Notify_StructuredPushSupplier (void);
   // Constructor.
 
-  void init (PortableServer::POA_ptr poa, CORBA::Environment & /*ACE_TRY_ENV*/);
+  void init (PortableServer::POA_ptr poa  TAO_ENV_ARG_DECL);
   // Init
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin, CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin TAO_ENV_ARG_DECL);
   // Activates this servant with the POA supplied in init.
   // Creates a new proxy supplier and connects to it.
 
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.
 
-  virtual void send_event (const CosNotification::StructuredEvent& event,
-                           CORBA::Environment &ACE_TRY_ENV);
+  virtual void send_event (const CosNotification::StructuredEvent& event
+                           TAO_ENV_ARG_DECL);
   // Send one event.
 
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr get_proxy_consumer (void);
   // Accessor for <proxy_consumer_>.
 
-  void deactivate (CORBA::Environment &ACE_TRY_ENV);
+  void deactivate (TAO_ENV_SINGLE_ARG_DECL);
   // Deactivate the object.
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
   // = Data Members
@@ -84,8 +84,8 @@ protected:
   // = NotifySubscribe
     virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &ACE_TRY_ENV
+        const CosNotification::EventTypeSeq & removed
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -94,7 +94,7 @@ protected:
 
     // = StructuredPushSupplier method
     virtual void disconnect_structured_push_supplier (
-        CORBA::Environment &ACE_TRY_ENV
+        TAO_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

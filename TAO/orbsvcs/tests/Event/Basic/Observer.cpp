@@ -48,7 +48,7 @@ EC_Master::run (int argc, char* argv[])
 
       this->seed_ = ACE_OS::time (0);
 
-      this->initialize_orb_and_poa (argc, argv, ACE_TRY_ENV);
+      this->initialize_orb_and_poa (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv))
@@ -84,7 +84,7 @@ EC_Master::run (int argc, char* argv[])
             int targc = argc;
             for (int j = 0; j < targc; ++j)
               targv[j] = argv[j];
-            this->channels_[i]->run_init (targc, targv, ACE_TRY_ENV);
+            this->channels_[i]->run_init (targc, targv TAO_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
         delete[] targv;
@@ -93,7 +93,7 @@ EC_Master::run (int argc, char* argv[])
       {
         for (int i = 0; i != this->n_channels_; ++i)
           {
-            this->channels_[i]->execute_test (ACE_TRY_ENV);
+            this->channels_[i]->execute_test (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
       }
@@ -115,7 +115,7 @@ EC_Master::run (int argc, char* argv[])
       {
         for (int i = 0; i != this->n_channels_; ++i)
           {
-            this->channels_[i]->run_cleanup (ACE_TRY_ENV);
+            this->channels_[i]->run_cleanup (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
       }
@@ -123,13 +123,13 @@ EC_Master::run (int argc, char* argv[])
       {
         for (int i = 0; i != this->n_channels_; ++i)
           {
-            this->channels_[i]->disconnect_clients (ACE_TRY_ENV);
+            this->channels_[i]->disconnect_clients (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
-            this->channels_[i]->shutdown_clients (ACE_TRY_ENV);
+            this->channels_[i]->shutdown_clients (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
-            this->channels_[i]->destroy_ec (ACE_TRY_ENV);
+            this->channels_[i]->destroy_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
-            this->channels_[i]->deactivate_ec (ACE_TRY_ENV);
+            this->channels_[i]->deactivate_ec (TAO_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
             this->channels_[i]->cleanup_tasks ();
             this->channels_[i]->cleanup_suppliers ();
@@ -139,11 +139,11 @@ EC_Master::run (int argc, char* argv[])
       }
 
       this->root_poa_->destroy (1,
-                                1,
-                                ACE_TRY_ENV);
+                                1
+                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->orb_->destroy (ACE_TRY_ENV);
+      this->orb_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
    }
   ACE_CATCHANY
@@ -159,15 +159,15 @@ EC_Master::run (int argc, char* argv[])
 }
 
 void
-EC_Master::initialize_orb_and_poa (int &argc, char* argv[],
-                                   CORBA::Environment& ACE_TRY_ENV)
+EC_Master::initialize_orb_and_poa (int &argc, char* argv[]
+                                   TAO_ENV_ARG_DECL)
 {
   this->orb_ =
-    CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+    CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+    this->orb_->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (poa_object.in ()))
@@ -178,14 +178,14 @@ EC_Master::initialize_orb_and_poa (int &argc, char* argv[],
     }
 
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+    PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POAManager_var poa_manager =
-    this->root_poa_->the_POAManager (ACE_TRY_ENV);
+    this->root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa_manager->activate (ACE_TRY_ENV);
+  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -249,8 +249,8 @@ EC_Observer::~EC_Observer (void)
 }
 
 void
-EC_Observer::initialize_orb_and_poa (int&, char*[],
-                                     CORBA::Environment&)
+EC_Observer::initialize_orb_and_poa (int&, char*[]
+                                     TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -273,7 +273,7 @@ EC_Observer::print_usage (void)
 }
 
 void
-EC_Observer::execute_test (CORBA::Environment& ACE_TRY_ENV)
+EC_Observer::execute_test (TAO_ENV_SINGLE_ARG_DECL)
 {
   int peer_count = this->master_->channel_count ();
   ACE_NEW (this->gwys_, TAO_EC_Gateway_IIOP[peer_count]);
@@ -287,15 +287,15 @@ EC_Observer::execute_test (CORBA::Environment& ACE_TRY_ENV)
         this->master_->channel (i)->event_channel_.in ();
 
       this->gwys_[i].init (rmt_ec,
-                           this->event_channel_.in (),
-                           ACE_TRY_ENV);
+                           this->event_channel_.in ()
+                           TAO_ENV_ARG_PARAMETER);
 
       RtecEventChannelAdmin::Observer_var obs =
-        this->gwys_[i]._this (ACE_TRY_ENV);
+        this->gwys_[i]._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       RtecEventChannelAdmin::Observer_Handle h =
-        rmt_ec->append_observer (obs.in (), ACE_TRY_ENV);
+        rmt_ec->append_observer (obs.in () TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->gwys_[i].observer_handle (h);
@@ -306,7 +306,7 @@ EC_Observer::execute_test (CORBA::Environment& ACE_TRY_ENV)
   if (this->allocate_tasks () == -1)
     return;
 
-  this->activate_tasks (ACE_TRY_ENV);
+  this->activate_tasks (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->verbose ())
@@ -315,7 +315,7 @@ EC_Observer::execute_test (CORBA::Environment& ACE_TRY_ENV)
 }
 
 void
-EC_Observer::run_cleanup (CORBA::Environment& ACE_TRY_ENV)
+EC_Observer::run_cleanup (TAO_ENV_SINGLE_ARG_DECL)
 {
   for (int j = 0; j != this->master_->channel_count (); ++j)
     {
@@ -324,11 +324,11 @@ EC_Observer::run_cleanup (CORBA::Environment& ACE_TRY_ENV)
 
       RtecEventChannelAdmin::EventChannel_ptr rmt_ec =
         this->master_->channel (j)->event_channel_.in ();
-      rmt_ec->remove_observer (this->gwys_[j].observer_handle (),
-                               ACE_TRY_ENV);
+      rmt_ec->remove_observer (this->gwys_[j].observer_handle ()
+                               TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->gwys_[j].shutdown (ACE_TRY_ENV);
+      this->gwys_[j].shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -362,25 +362,25 @@ EC_Observer::dump_results (void)
 void
 EC_Observer::connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i,
-    CORBA::Environment &ACE_TRY_ENV)
+    int i
+    TAO_ENV_ARG_DECL)
 {
   if (i == 0)
     {
-      this->EC_Driver::connect_consumer (consumer_admin, i,
-                                         ACE_TRY_ENV);
+      this->EC_Driver::connect_consumer (consumer_admin, i
+                                         TAO_ENV_ARG_PARAMETER);
       return;
     }
   unsigned int x = ACE_OS::rand_r (this->seed_);
   if (x < RAND_MAX / 8)
-    this->EC_Driver::connect_consumer (consumer_admin, i,
-                                       ACE_TRY_ENV);
+    this->EC_Driver::connect_consumer (consumer_admin, i
+                                       TAO_ENV_ARG_PARAMETER);
 }
 
 void
 EC_Observer::consumer_push (void*,
-                            const RtecEventComm::EventSet&,
-                            CORBA::Environment& ACE_TRY_ENV)
+                            const RtecEventComm::EventSet&
+                            TAO_ENV_ARG_DECL)
 {
   unsigned int x = ACE_OS::rand_r (this->seed_);
   if (x < (RAND_MAX / 64))
@@ -390,7 +390,7 @@ EC_Observer::consumer_push (void*,
                     "EC_Observer[%d] (%P|%t) reconnecting\n", this->id_));
 
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        this->event_channel_->for_consumers (ACE_TRY_ENV);
+        this->event_channel_->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       for (int i = 1; i < this->n_consumers_; ++i)
@@ -399,13 +399,13 @@ EC_Observer::consumer_push (void*,
 
           if (this->consumers_[i]->connected ())
             {
-              this->consumers_[i]->disconnect (ACE_TRY_ENV);
+              this->consumers_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
             }
           else
             {
               this->EC_Driver::connect_consumer (consumer_admin.in (),
-                                                 i, ACE_TRY_ENV);
+                                                 i TAO_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }

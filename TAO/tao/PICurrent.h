@@ -69,19 +69,17 @@ public:
   //@{
   /// Retrieve information stored in the slot table at the given
   /// SlotId.
-  virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id,
-				 CORBA::Environment &ACE_TRY_ENV =
-				   TAO_default_environment ())
+  virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id
+                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::InvalidSlot));
+                     PortableInterceptor::InvalidSlot));
 
   /// Set information in the slot table at the given SlotId.
   virtual void set_slot (PortableInterceptor::SlotId id,
-			 const CORBA::Any & data,
-			 CORBA::Environment &ACE_TRY_ENV =
-                           TAO_default_environment ())
+                         const CORBA::Any & data
+                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::InvalidSlot));
+                     PortableInterceptor::InvalidSlot));
   //@}
 
   /// Allocate a new SlotId.
@@ -99,8 +97,8 @@ public:
   TAO_PICurrent_Impl * tsc (void);
 
   /// Verify the validity of the given SlotId.
-  void check_validity (const PortableInterceptor::SlotId &id,
-		       CORBA::Environment &ACE_TRY_ENV);
+  void check_validity (const PortableInterceptor::SlotId &id
+                       TAO_ENV_ARG_DECL);
 
 protected:
 
@@ -166,17 +164,17 @@ public:
 
   /// Retrieve information stored in the slot table at the given
   /// SlotId.
-  CORBA::Any * get_slot (PortableInterceptor::SlotId id,
-			 CORBA::Environment &ACE_TRY_ENV)
+  CORBA::Any * get_slot (PortableInterceptor::SlotId id
+                         TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::InvalidSlot));
+                     PortableInterceptor::InvalidSlot));
 
   /// Set information in the slot table at the given SlotId.
   void set_slot (PortableInterceptor::SlotId id,
-		 const CORBA::Any & data,
-		 CORBA::Environment &ACE_TRY_ENV)
+                 const CORBA::Any & data
+                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::InvalidSlot));
+                     PortableInterceptor::InvalidSlot));
 
 
   /// Get the PICurrent peer associated with this PICurrent

@@ -69,12 +69,12 @@ Identity_Server::init (int argc,
 {
   int result;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       result = this->orb_manager_.init (argc,
-                                        argv,
-                                        ACE_TRY_ENV);
+                                        argv
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
         return result;
@@ -88,12 +88,12 @@ Identity_Server::init (int argc,
       // <Object_Group>s, one random and one rr.
       CORBA::ORB_var orb = orb_manager_.orb ();
       CORBA::Object_var obj =
-        orb->string_to_object (this->group_factory_ior_,
-                               ACE_TRY_ENV);
+        orb->string_to_object (this->group_factory_ior_
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       Load_Balancer::Object_Group_Factory_var factory =
-        Load_Balancer::Object_Group_Factory::_narrow (obj.in (),
-                                                      ACE_TRY_ENV);
+        Load_Balancer::Object_Group_Factory::_narrow (obj.in ()
+                                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
@@ -107,8 +107,8 @@ Identity_Server::init (int argc,
                   "Group with id <Identity, Random>\n"));
 
       Load_Balancer::Object_Group_var random_group =
-        factory->make_random ("Identity, Random",
-                              ACE_TRY_ENV);
+        factory->make_random ("Identity, Random"
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -116,8 +116,8 @@ Identity_Server::init (int argc,
                   "Object Group with id <Identity, Round Robin>\n"));
 
       Load_Balancer::Object_Group_var rr_group =
-        factory->make_round_robin ("Identity, Round Robin",
-                                   ACE_TRY_ENV);
+        factory->make_round_robin ("Identity, Round Robin"
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create the requested number of <Identity> objects, and
@@ -129,8 +129,8 @@ Identity_Server::init (int argc,
                   "with <Identity, Random> Object Group\n",
                     random_objects_));
       create_objects (random_objects_,
-                      random_group.in (),
-                      ACE_TRY_ENV);
+                      random_group.in ()
+                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -138,8 +138,8 @@ Identity_Server::init (int argc,
                   "with <Identity, Round Robin> Object Group\n",
                     random_objects_));
       create_objects (rr_objects_,
-                      rr_group.in (),
-                      ACE_TRY_ENV);
+                      rr_group.in ()
+                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -155,8 +155,8 @@ Identity_Server::init (int argc,
 
 void
 Identity_Server::create_objects (size_t number_of_objects,
-                                 Load_Balancer::Object_Group_ptr group,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 Load_Balancer::Object_Group_ptr group
+                                 TAO_ENV_ARG_DECL)
 {
   // Create the specified number of servants, and register each one
   // with the provided <Object_Group>.
@@ -175,30 +175,30 @@ Identity_Server::create_objects (size_t number_of_objects,
                         CORBA::NO_MEMORY ());
       ACE_CHECK;
       PortableServer::ServantBase_var s = identity_servant;
-      orb_manager_.activate (identity_servant,
-                             ACE_TRY_ENV);
+      orb_manager_.activate (identity_servant
+                             TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       Load_Balancer::Member member;
       member.id = CORBA::string_dup (id);
-      member.obj = identity_servant->_this (ACE_TRY_ENV);
+      member.obj = identity_servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Bind the servant in the <Object_Group>.
-      group->bind (member, ACE_TRY_ENV);
+      group->bind (member TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 int
-Identity_Server::run (CORBA::Environment &ACE_TRY_ENV)
+Identity_Server::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Server: Initialized \n"));
 
   int result;
 
-  result = this->orb_manager_.run (ACE_TRY_ENV);
+  result = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return result;
@@ -217,10 +217,10 @@ main (int argc, char *argv[])
   if (server.init (argc, argv) == -1)
     return 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      result = server.run (ACE_TRY_ENV);
+      result = server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

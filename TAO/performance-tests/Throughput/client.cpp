@@ -23,20 +23,20 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-	ior = get_opts.optarg;
-	break;
+        ior = get_opts.optarg;
+        break;
 
       case 'b':
-	message_size = ACE_OS::atoi (get_opts.optarg);
-	break;
+        message_size = ACE_OS::atoi (get_opts.optarg);
+        break;
 
       case 'i':
-	message_count = ACE_OS::atoi (get_opts.optarg);
-	break;
+        message_count = ACE_OS::atoi (get_opts.optarg);
+        break;
 
       case 'n':
-	test_runs = ACE_OS::atoi (get_opts.optarg);
-	break;
+        test_runs = ACE_OS::atoi (get_opts.optarg);
+        break;
 
       case 'x':
         do_shutdown = 1;
@@ -46,10 +46,10 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-k <ior> "
-			   "-b <message_size> "
-			   "-i <message_count> "
-			   "-n <test_repetitions> "
+                           "-k <ior> "
+                           "-b <message_size> "
+                           "-i <message_count> "
+                           "-n <test_repetitions> "
                            "\n",
                            argv [0]),
                           -1);
@@ -64,18 +64,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior, ACE_TRY_ENV);
+        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Receiver_Factory_var receiver_factory =
-        Test::Receiver_Factory::_narrow(tmp.in (), ACE_TRY_ENV);
+        Test::Receiver_Factory::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (receiver_factory.in ()))
@@ -100,18 +100,18 @@ main (int argc, char *argv[])
           message.the_payload.length (message_size);
 
           Test::Receiver_var receiver =
-            receiver_factory->create_receiver (ACE_TRY_ENV);
+            receiver_factory->create_receiver (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           for (int i = 0; i != message_count; ++i)
             {
               message.message_id = i;
-              receiver->receive_data (message, ACE_TRY_ENV);
+              receiver->receive_data (message TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
-          receiver->done (ACE_TRY_ENV);
+          receiver->done (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_hrtime_t elapsed_time = ACE_OS::gethrtime () - start;
 
@@ -140,11 +140,11 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          receiver_factory->shutdown (ACE_TRY_ENV);
+          receiver_factory->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -92,13 +92,13 @@ public:
   int idle (void);
   int execute_delayed_operations (void);
 
-  void connected_i (PROXY *proxy,
-                    CORBA::Environment &ACE_TRY_ENV);
-  void reconnected_i (PROXY *proxy,
-                    CORBA::Environment &ACE_TRY_ENV);
-  void disconnected_i (PROXY *proxy,
-                     CORBA::Environment &ACE_TRY_ENV);
-  void shutdown_i (CORBA::Environment &ACE_TRY_ENV);
+  void connected_i (PROXY *proxy
+                    TAO_ENV_ARG_DECL);
+  void reconnected_i (PROXY *proxy
+                    TAO_ENV_ARG_DECL);
+  void disconnected_i (PROXY *proxy
+                     TAO_ENV_ARG_DECL);
+  void shutdown_i (TAO_ENV_SINGLE_ARG_DECL);
 
   typedef TAO_ESF_Connected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Connected_Command;
   typedef TAO_ESF_Reconnected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Reconnected_Command;
@@ -106,15 +106,15 @@ public:
   typedef TAO_ESF_Shutdown_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE> > Shutdown_Command;
 
   // = The TAO_ESF_Proxy methods
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker,
-                         CORBA::Environment &ACE_TRY_ENV);
-  virtual void connected (PROXY *proxy,
-                          CORBA::Environment &ACE_TRY_ENV);
-  virtual void reconnected (PROXY *proxy,
-                            CORBA::Environment &ACE_TRY_ENV);
-  virtual void disconnected (PROXY *proxy,
-                             CORBA::Environment &ACE_TRY_ENV);
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  virtual void for_each (TAO_ESF_Worker<PROXY> *worker
+                         TAO_ENV_ARG_DECL);
+  virtual void connected (PROXY *proxy
+                          TAO_ENV_ARG_DECL);
+  virtual void reconnected (PROXY *proxy
+                            TAO_ENV_ARG_DECL);
+  virtual void disconnected (PROXY *proxy
+                             TAO_ENV_ARG_DECL);
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   COLLECTION collection_;

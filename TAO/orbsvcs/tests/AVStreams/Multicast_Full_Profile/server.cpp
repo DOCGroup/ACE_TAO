@@ -9,11 +9,11 @@ FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
   protocols.length (2);
   protocols [0] = CORBA::string_dup ("TCP");
   protocols [1] = CORBA::string_dup ("UDP");
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      this->set_protocol_restriction (protocols,
-                                      ACE_TRY_ENV);
+      this->set_protocol_restriction (protocols
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -82,14 +82,14 @@ FTP_Server_Callback::handle_end_stream (void)
 //                                 AVStreams::QoS & the_qos,
 //                                 CORBA::Boolean_out met_qos,
 //                                 char *& named_fdev,
-//                                 CORBA::Environment &ACE_TRY_ENV)
+//                                 TAO_ENV_SINGLE_ARG_DECL)
 // {
 //   ACE_DEBUG ((LM_DEBUG,"FTP_Server_FDev::make_consumer"));
 //   FTP_Server_FlowEndPoint *endpoint;
 //   ACE_NEW_RETURN (endpoint,
 //                   FTP_Server_FlowEndPoint,
 //                   0);
-//   return endpoint->_this (ACE_TRY_ENV);
+//   return endpoint->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
 //   ACE_CHECK_RETURN (0);
 // }
 
@@ -119,7 +119,7 @@ int
 Server::init (int argc,
               char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
 
@@ -148,12 +148,12 @@ Server::init (int argc,
                       FTP_Server_FDev,
                       -1);
       this->fdev_->flowname ("Data");
-      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_TRY_ENV);
+      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      AVStreams::FDev_var fdev = this->fdev_->_this (ACE_TRY_ENV);
+      AVStreams::FDev_var fdev = this->fdev_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      mmdevice->add_fdev (fdev.in (),
-                          ACE_TRY_ENV);
+      mmdevice->add_fdev (fdev.in ()
+                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Register the mmdevice with the naming service.
@@ -164,16 +164,16 @@ Server::init (int argc,
         {
           // Register the video control object with the naming server.
           this->my_naming_client_->bind (server_mmdevice_name,
-                                         mmdevice.in (),
-                                         ACE_TRY_ENV);
+                                         mmdevice.in ()
+                                         TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (bind);
         }
       ACE_CATCH (CosNaming::NamingContext::AlreadyBound,al_ex)
         {
           server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice2");
           this->my_naming_client_->bind (server_mmdevice_name,
-                                         mmdevice.in (),
-                                         ACE_TRY_ENV);
+                                         mmdevice.in ()
+                                         TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_ENDTRY;
@@ -192,10 +192,10 @@ Server::init (int argc,
 int
 Server::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      TAO_AV_CORE::instance ()->orb ()->run (ACE_TRY_ENV);
+      TAO_AV_CORE::instance ()->orb ()->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
     ACE_CATCHANY
@@ -249,20 +249,20 @@ main (int argc,
 
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in (),
-                                      ACE_TRY_ENV);
+                                      poa.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -52,15 +52,15 @@ public:
   virtual int svc (void);
   // The thread entry point.
 
-	void done (void);
-	// set done flag.
+        void done (void);
+        // set done flag.
 
 private:
   CORBA::ORB_var orb_;
   // The orb
 
-	CORBA::Boolean done_;
-	// Flag to tell that we're done servicing.
+        CORBA::Boolean done_;
+        // Flag to tell that we're done servicing.
 };
 
 class RedGreen_Test
@@ -79,10 +79,10 @@ class RedGreen_Test
 
   void dump_results (void);
 
-  void init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
+  void init (int argc, char *argv [] TAO_ENV_ARG_DECL);
   // Init the Client.
 
-  void run (CORBA::Environment &ACE_TRY_ENV);
+  void run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the demo.
 
   void done (void);
@@ -94,31 +94,31 @@ class RedGreen_Test
   int nthreads_;
 
  protected:
-  void init_ORB (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
+  void init_ORB (int argc, char *argv [] TAO_ENV_ARG_DECL);
   // Initializes the ORB.
 
-  void resolve_naming_service (CORBA::Environment &ACE_TRY_ENV);
+  void resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
   // Try to get hold of a running naming service.
 
-  void resolve_Notify_factory (CORBA::Environment &ACE_TRY_ENV);
+  void resolve_Notify_factory (TAO_ENV_SINGLE_ARG_DECL);
   // Try to resolve the Notify factory from the Naming service.
 
-  void create_EC (CORBA::Environment &ACE_TRY_ENV);
+  void create_EC (TAO_ENV_SINGLE_ARG_DECL);
   // Create an EC.
 
-  void create_supplieradmin(CORBA::Environment &ACE_TRY_ENV);
+  void create_supplieradmin(TAO_ENV_SINGLE_ARG_DECL);
   // Create the Supplier Admin.
 
-  void create_consumeradmin (CORBA::Environment &ACE_TRY_ENV);
+  void create_consumeradmin (TAO_ENV_SINGLE_ARG_DECL);
   // Create the Consumer Admin.
 
-  void create_consumers (CORBA::Environment &ACE_TRY_ENV);
+  void create_consumers (TAO_ENV_SINGLE_ARG_DECL);
   // Create and initialize the consumers.
 
-  void create_suppliers (CORBA::Environment &ACE_TRY_ENV);
+  void create_suppliers (TAO_ENV_SINGLE_ARG_DECL);
   // create and initialize the suppliers.
 
-  void send_events (CORBA::Environment &ACE_TRY_ENV);
+  void send_events (TAO_ENV_SINGLE_ARG_DECL);
   // send the events.
 
   // = Data Members
@@ -173,11 +173,11 @@ class RedGreen_Test_StructuredPushConsumer : public POA_CosNotifyComm::Structure
   RedGreen_Test_StructuredPushConsumer (RedGreen_Test* RedGreen_Test);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin TAO_ENV_ARG_DECL);
   // Connect the Consumer to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  virtual void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  virtual void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.
 
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
@@ -215,8 +215,8 @@ protected:
   // = NotifyPublish method
     virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &ACE_TRY_ENV
+        const CosNotification::EventTypeSeq & removed
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -225,8 +225,8 @@ protected:
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification,
-        CORBA::Environment &ACE_TRY_ENV
+        const CosNotification::StructuredEvent & notification
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -234,7 +234,7 @@ protected:
        ));
 
   virtual void disconnect_structured_push_consumer (
-        CORBA::Environment &ACE_TRY_ENV
+        TAO_ENV_SINGLE_ARG_DECL
         )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -249,8 +249,8 @@ public:
   SlowConsumer (RedGreen_Test* RedGreen_Test);
 
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification,
-        CORBA::Environment &ACE_TRY_ENV
+        const CosNotification::StructuredEvent & notification
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -273,16 +273,16 @@ class RedGreen_Test_StructuredPushSupplier : public POA_CosNotifyComm::Structure
   RedGreen_Test_StructuredPushSupplier (void);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
+                TAO_ENV_ARG_DECL);
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.
 
-  virtual void send_event (CosNotification::StructuredEvent& event,
-                           CORBA::Environment &ACE_TRY_ENV);
+  virtual void send_event (CosNotification::StructuredEvent& event
+                           TAO_ENV_ARG_DECL);
   // Send one event.
 
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -309,8 +309,8 @@ protected:
   // = NotifyRedGreen_Test
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed,
-        CORBA::Environment &ACE_TRY_ENV
+        const CosNotification::EventTypeSeq & removed
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -319,7 +319,7 @@ protected:
 
   // = StructuredPushSupplier method
     virtual void disconnect_structured_push_supplier (
-        CORBA::Environment &ACE_TRY_ENV
+        TAO_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

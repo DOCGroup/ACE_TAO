@@ -50,14 +50,17 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
   *os << " (" << be_idt // idt = 1
       << be_idt_nl; // idt = 2
 
+  bool arg_emitted = false;
+
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
       *os << "CORBA_Object *_collocated_tao_target_";
-      if (node->argument_count () > 0 || !be_global->exception_support () )
+      if (node->argument_count () > 0)
         *os << "," << be_nl;
+      arg_emitted = true;
       break;
 
     default:
@@ -77,11 +80,10 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
   // generate the CORBA::Environment parameter for the alternative mapping
   if (!be_global->exception_support ())
     {
-      // if the operation node has parameters, then we need to insert a comma
-      if (node->argument_count () > 0)
-        {
-          *os << "," << be_nl;
-        }
+      // Use TAO_ENV_SINGLE_ARG_DECL or TAO_ENV_ARG_DECL depending on
+      // whether the operation node has parameters.
+      const char *env_decl = (arg_emitted || node->argument_count () > 0 ?
+                              " TAO_ENV_ARG_DECL" : "TAO_ENV_SINGLE_ARG_DECL");
 
       switch (this->ctx_->state ())
         {
@@ -89,20 +91,17 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
           // last argument - is always CORBA::Environment
-          *os << "CORBA::Environment &ACE_TRY_ENV";
-          *os << " = " << be_idt_nl
-              << "TAO_default_environment ()"
-              << be_uidt;
+          *os << env_decl << "_WITH_DEFAULTS";
           break;
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
-          // last argument - is always CORBA::Environment
-          *os << "CORBA::Environment &ACE_TRY_ENV";
+          // last argument - is always TAO_ENV_ARG_DECL
+          *os << env_decl;
           break;
         default:
-          *os << "CORBA::Environment &ACE_TRY_ENV";
+          *os << env_decl;
           break;
         }
     }

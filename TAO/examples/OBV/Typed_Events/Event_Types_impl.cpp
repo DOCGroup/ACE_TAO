@@ -18,7 +18,7 @@ Event_impl::~Event_impl ()
 }
 
 void
-Event_impl::do_print (CORBA::Environment &)
+Event_impl::do_print (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG((LM_DEBUG, "(time %d origin %d)  ",
              (CORBA::ULong) this->time_(),
@@ -54,10 +54,10 @@ Temperature_impl::~Temperature_impl ()
 }
 
 void
-Temperature_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
+Temperature_impl::do_print (TAO_ENV_SINGLE_ARG_DECL)
 {
   // The timestamp
-  Event_impl::do_print (ACE_TRY_ENV);
+  Event_impl::do_print (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG((LM_DEBUG, "Temperature is %f\n", this->temperature_() ));
@@ -91,51 +91,51 @@ Position_impl::~Position_impl ()
 }
 
 void
-Position_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
+Position_impl::do_print (TAO_ENV_SINGLE_ARG_DECL)
 {
   // The timestamp
-  Event_impl::do_print (ACE_TRY_ENV);
+  Event_impl::do_print (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Float x =
-    this->x(ACE_TRY_ENV);
+    this->x(TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   CORBA::Float y =
-    this->y(ACE_TRY_ENV);
+    this->y(TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   CORBA::Float z =
-    this->z(ACE_TRY_ENV);
+    this->z(TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   ACE_DEBUG((LM_DEBUG, "Position is (%f, %f, %f)\n",
              x, y, z));
 }
 
-CORBA::Float Position_impl::x (CORBA::Environment &)
+CORBA::Float Position_impl::x (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->xyz()[0];
 }
 
-void Position_impl::x (CORBA::Float x, CORBA::Environment &)
+void Position_impl::x (CORBA::Float x TAO_ENV_ARG_DECL_NOT_USED)
 {
   this->xyz()[0] = x;
 }
 
-CORBA::Float Position_impl::y (CORBA::Environment &)
+CORBA::Float Position_impl::y (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->xyz()[1];
 }
 
-void Position_impl::y (CORBA::Float y, CORBA::Environment &)
+void Position_impl::y (CORBA::Float y TAO_ENV_ARG_DECL_NOT_USED)
 {
   this->xyz()[1] = y;
 }
 
-CORBA::Float Position_impl::z (CORBA::Environment &)
+CORBA::Float Position_impl::z (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->xyz()[2];
 }
 
-void Position_impl::z (CORBA::Float z, CORBA::Environment &)
+void Position_impl::z (CORBA::Float z TAO_ENV_ARG_DECL_NOT_USED)
 {
   this->xyz()[2] = z;
 }
@@ -169,10 +169,10 @@ Log_Msg_impl::~Log_Msg_impl ()
 }
 
 void
-Log_Msg_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
+Log_Msg_impl::do_print (TAO_ENV_SINGLE_ARG_DECL)
 {
   // The timestamp
-  Event_impl::do_print (ACE_TRY_ENV);
+  Event_impl::do_print (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->urgency () > 0)
@@ -221,20 +221,20 @@ Event_List_Link_impl::~Event_List_Link_impl ()
 }
 
 Event*
-Event_List_Link_impl::get_event (CORBA::Environment &)
+Event_List_Link_impl::get_event (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->my_event ();
 }
 
 Event_List_Link*
-Event_List_Link_impl::get_next_link (CORBA::Environment &)
+Event_List_Link_impl::get_next_link (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->next ();
 }
 
 void
-Event_List_Link_impl::attach_next_link (Event_List_Link *n,
-                                        CORBA::Environment &)
+Event_List_Link_impl::attach_next_link (Event_List_Link *n
+                                        TAO_ENV_ARG_DECL_NOT_USED)
 {
   this->next (n);
 }
@@ -264,7 +264,7 @@ Event_List_impl::~Event_List_impl ()
 }
 
 void
-Event_List_impl::store_event (Event* e, CORBA::Environment &)
+Event_List_impl::store_event (Event* e TAO_ENV_ARG_DECL_NOT_USED)
 {
   // This operation should perform atomically and should
   // guard against the access to the list from another thread.
@@ -405,8 +405,8 @@ Temperature_Criterion_impl::~Temperature_Criterion_impl ()
 
 
 CORBA::Boolean
-Temperature_Criterion_impl::is_critical (Event* e,
-                                         CORBA::Environment &)
+Temperature_Criterion_impl::is_critical (Event* e
+                                         TAO_ENV_ARG_DECL_NOT_USED)
 {
   // Downcast to a temperature.
   Temperature* t = Temperature::_downcast (e);
@@ -423,7 +423,7 @@ Temperature_Criterion_impl::is_critical (Event* e,
 
 
 void
-Temperature_Criterion_impl::do_print (CORBA::Environment &)
+Temperature_Criterion_impl::do_print (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG((LM_DEBUG, "Alarm boundary for events with origin id %d is\n",
              this->origin_id_ () ));
@@ -462,7 +462,7 @@ Position_Criterion_impl::~Position_Criterion_impl ()
 
 
 CORBA::Boolean
-Position_Criterion_impl::is_critical (Event* e, CORBA::Environment &)
+Position_Criterion_impl::is_critical (Event* e TAO_ENV_ARG_DECL_NOT_USED)
 {
   Position* p = Position::_downcast (e);
   // Is Event really a Position ?
@@ -483,13 +483,13 @@ Position_Criterion_impl::is_critical (Event* e, CORBA::Environment &)
 
 
 void
-Position_Criterion_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
+Position_Criterion_impl::do_print (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG((LM_DEBUG,
              "Alarm boundary for events with origin id %d is the box\n",
              this->origin_id_ () ));
-  this->leftbottom ()->do_print(ACE_TRY_ENV);
-  this->topright ()->do_print(ACE_TRY_ENV);
+  this->leftbottom ()->do_print(TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->topright ()->do_print(TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 Position_Criterion_factory::~Position_Criterion_factory ()
@@ -515,8 +515,8 @@ Log_Msg_Criterion_impl::~Log_Msg_Criterion_impl ()
 
 
 CORBA::Boolean
-Log_Msg_Criterion_impl::is_critical (Event* e,
-                                     CORBA::Environment &)
+Log_Msg_Criterion_impl::is_critical (Event* e
+                                     TAO_ENV_ARG_DECL_NOT_USED)
 {
   Log_Msg* lm = Log_Msg::_downcast (e);
 
@@ -530,7 +530,7 @@ Log_Msg_Criterion_impl::is_critical (Event* e,
 
 
 void
-Log_Msg_Criterion_impl::do_print (CORBA::Environment &)
+Log_Msg_Criterion_impl::do_print (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG((LM_DEBUG,
              "All log messages with urgency greater zero are registered.\n" ));
@@ -564,8 +564,8 @@ Criterion_List_impl::~Criterion_List_impl ()
 }
 
 void
-Criterion_List_impl::store_criterion (Criterion *c,
-                                      CORBA::Environment &)
+Criterion_List_impl::store_criterion (Criterion *c
+                                      TAO_ENV_ARG_DECL_NOT_USED)
 {
   if (!my_list ())
     {
@@ -578,7 +578,7 @@ Criterion_List_impl::store_criterion (Criterion *c,
 }
 
 CORBA::Boolean
-Criterion_List_impl::is_critical (Event *e, CORBA::Environment &)
+Criterion_List_impl::is_critical (Event *e TAO_ENV_ARG_DECL_NOT_USED)
 {
   // Try all criterions. Walking the list is efficient enough for
   // demonstration.

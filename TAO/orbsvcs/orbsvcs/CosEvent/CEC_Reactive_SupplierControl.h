@@ -85,18 +85,18 @@ public:
   // = Documented in TAO_CEC_SupplierControl
   virtual int activate (void);
   virtual int shutdown (void);
-  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy,
-                                   CORBA::Environment &);
-  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy,
-                                   CORBA::Environment &);
+  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy
+                                   TAO_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy
+                                   TAO_ENV_ARG_DECL_NOT_USED);
   virtual void system_exception (TAO_CEC_ProxyPullConsumer *proxy,
-                                 CORBA::SystemException &,
-                                 CORBA::Environment &);
+                                 CORBA::SystemException &
+                                 TAO_ENV_ARG_DECL_NOT_USED);
 
 private:
   /// Check if the suppliers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_suppliers (CORBA::Environment &ACE_TRY_ENV);
+  void query_suppliers (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// The polling rate
@@ -128,8 +128,8 @@ class TAO_CEC_Ping_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPushConsum
 public:
   TAO_CEC_Ping_Push_Supplier (TAO_CEC_SupplierControl *control);
 
-  virtual void work (TAO_CEC_ProxyPushConsumer *consumer,
-                     CORBA::Environment &ACE_TRY_ENV);
+  virtual void work (TAO_CEC_ProxyPushConsumer *consumer
+                     TAO_ENV_ARG_DECL);
 
 private:
   TAO_CEC_SupplierControl *control_;
@@ -142,8 +142,8 @@ class TAO_CEC_Ping_Pull_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPullConsum
 public:
   TAO_CEC_Ping_Pull_Supplier (TAO_CEC_SupplierControl *control);
 
-  virtual void work (TAO_CEC_ProxyPullConsumer *consumer,
-                     CORBA::Environment &ACE_TRY_ENV);
+  virtual void work (TAO_CEC_ProxyPullConsumer *consumer
+                     TAO_ENV_ARG_DECL);
 
 private:
   TAO_CEC_SupplierControl *control_;

@@ -43,8 +43,8 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
                         int burst_pause,
                         int type_start,
                         int type_count,
-                        RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        RtecEventChannelAdmin::EventChannel_ptr ec
+                        TAO_ENV_ARG_DECL)
 {
   this->burst_count_ = burst_count;
   this->burst_size_ = burst_size;
@@ -54,7 +54,7 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
   this->type_count_ = type_count;
 
   RtecScheduler::handle_t rt_info =
-    scheduler->create (name, ACE_TRY_ENV);
+    scheduler->create (name TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_Time_Value tv (0, burst_pause);
@@ -74,8 +74,8 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
                   RtecScheduler::VERY_LOW_IMPORTANCE,
                   time,
                   1,
-                  RtecScheduler::OPERATION,
-                  ACE_TRY_ENV);
+                  RtecScheduler::OPERATION
+                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_id_ = ACE::crc32 (name);
@@ -94,30 +94,30 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
               rt_info, 1);
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->for_suppliers (ACE_TRY_ENV);
+    ec->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
+    supplier_admin->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventComm::PushSupplier_var objref =
-    this->supplier_._this (ACE_TRY_ENV);
+    this->supplier_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
-                                                qos.get_SupplierQOS (),
-                                                ACE_TRY_ENV);
+                                                qos.get_SupplierQOS ()
+                                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Test_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
+Test_Supplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
+  this->consumer_proxy_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_ =
@@ -125,19 +125,19 @@ Test_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 
   // Deactivate the servant
   PortableServer::POA_var poa =
-    this->supplier_._default_POA (ACE_TRY_ENV);
+    this->supplier_._default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (&this->supplier_, ACE_TRY_ENV);
+    poa->servant_to_id (&this->supplier_ TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 int
 Test_Supplier::svc ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialize a time value to pace the test
@@ -173,7 +173,7 @@ Test_Supplier::svc ()
               ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                              request_start);
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
-              this->consumer_proxy ()->push (event, ACE_TRY_ENV);
+              this->consumer_proxy ()->push (event TAO_ENV_ARG_PARAMETER);
 
               ACE_TRY_CHECK;
               ACE_hrtime_t end = ACE_OS::gethrtime ();
@@ -197,7 +197,7 @@ Test_Supplier::svc ()
       ACE_hrtime_t request_start = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      request_start);
-      this->consumer_proxy ()->push(event, ACE_TRY_ENV);
+      this->consumer_proxy ()->push(event TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_hrtime_t end = ACE_OS::gethrtime ();
       this->throughput_.sample (end - test_start,
@@ -220,7 +220,7 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (CORBA::Environment &)
+Test_Supplier::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 

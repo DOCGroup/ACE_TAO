@@ -24,8 +24,8 @@ TAO_EC_Basic_Filter_Builder::~TAO_EC_Basic_Filter_Builder (void)
 TAO_EC_Filter*
 TAO_EC_Basic_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *supplier,
-    RtecEventChannelAdmin::ConsumerQOS& qos,
-    CORBA::Environment&) const
+    RtecEventChannelAdmin::ConsumerQOS& qos
+    TAO_ENV_ARG_DECL_NOT_USED) const
 {
   CORBA::ULong pos = 0;
   return this->recursive_build (supplier, qos, pos);
@@ -74,7 +74,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
     {
       pos++; // Consume the designator
       CORBA::ULong n = this->count_children (qos, pos);
-      
+
       TAO_EC_Filter** children;
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
       CORBA::ULong i = 0;

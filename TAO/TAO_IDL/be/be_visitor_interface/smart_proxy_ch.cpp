@@ -66,8 +66,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "public:" << be_idt_nl << be_nl
           << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory (int permanent = 1);"
-          << be_nl 
-          <<"// <permanent> signifies that the proxy factory will remain" <<be_nl 
+          << be_nl
+          <<"// <permanent> signifies that the proxy factory will remain" <<be_nl
           <<"// registered with the Proxy Factory Adapter until the program"<<be_nl
           <<"// terminates. That is, it will be a one-shot factory for the "<<be_nl
           <<"// interface.  If this value is set to 0, then the factory will"<<be_nl
@@ -79,9 +79,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "virtual "<< node->local_name ()
           << "_ptr create_proxy (" << be_idt << be_idt_nl
           << node->local_name ()
-          << "_ptr proxy," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+          << "_ptr proxy" << be_nl
+          << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "};\n\n";
 
@@ -94,19 +93,16 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;" << be_nl << be_nl
           << "int register_proxy_factory (" << be_idt << be_idt_nl
           << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
-          << "int one_shot_factory = 1,"<<be_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+          << "int one_shot_factory = 1" << be_nl
+          << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl
           << "int unregister_proxy_factory (" << be_idt << be_idt_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+          << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl
           << node->local_name ()
           << "_ptr create_proxy (" << be_idt << be_idt_nl
-          << node->local_name () << "_ptr proxy," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+          << node->local_name () << "_ptr proxy" << be_nl
+          << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl << be_nl
           << "protected:" << be_idt_nl
           << "TAO_" << node->flat_name ()

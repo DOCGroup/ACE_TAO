@@ -13,8 +13,8 @@ ACE_RCSID(FaultTolerance, TAO_FT_IOGR_Property, "$Id$")
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
-    CORBA::Object_ptr ior,
-    CORBA::Environment & /*ACE_TRY_ENV*/)
+    CORBA::Object_ptr ior
+    TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_IOP::Invalid_IOR))
 {
@@ -62,8 +62,8 @@ TAO_FT_IOGR_Property::set_property (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::is_primary_set (
-    CORBA::Object_ptr ior,
-    CORBA::Environment & /*ACE_TRY_ENV*/)
+    CORBA::Object_ptr ior
+    TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ))
@@ -77,8 +77,8 @@ TAO_FT_IOGR_Property::is_primary_set (
 
 CORBA::Object_ptr
 TAO_FT_IOGR_Property::get_primary (
-    CORBA::Object_ptr ior,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Object_ptr ior
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
@@ -150,8 +150,8 @@ TAO_FT_IOGR_Property::get_primary (
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_primary (
     CORBA::Object_ptr ior1,
-    CORBA::Object_ptr ior2,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Object_ptr ior2
+    TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound,

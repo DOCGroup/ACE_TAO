@@ -50,19 +50,19 @@ TAO_Notify_Proxy<SERVANT_TYPE>::_decr_refcnt (void)
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::_add_ref (CORBA_Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_Proxy<SERVANT_TYPE>::_add_ref (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
 {
   this->_incr_refcnt ();
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::_remove_ref (CORBA_Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_Proxy<SERVANT_TYPE>::_remove_ref (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
 {
   this->_decr_refcnt ();
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::dispatch_update (TAO_Notify_EventType_List& added_list, TAO_Notify_EventType_List& removed_list, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Proxy<SERVANT_TYPE>::dispatch_update (TAO_Notify_EventType_List& added_list, TAO_Notify_EventType_List& removed_list TAO_ENV_ARG_DECL)
 {
   CosNotification::EventTypeSeq added (added_list.size ());
   CosNotification::EventTypeSeq removed (removed_list.size ());
@@ -70,11 +70,11 @@ TAO_Notify_Proxy<SERVANT_TYPE>::dispatch_update (TAO_Notify_EventType_List& adde
   added_list.populate (added);
   removed_list.populate (removed);
 
-  this->dispatch_update_i (added, removed, ACE_TRY_ENV);
+  this->dispatch_update_i (added, removed TAO_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotifyChannelAdmin::ProxyType
-TAO_Notify_Proxy<SERVANT_TYPE>::MyType (CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_Proxy<SERVANT_TYPE>::MyType (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -83,7 +83,7 @@ TAO_Notify_Proxy<SERVANT_TYPE>::MyType (CORBA::Environment &/*ACE_TRY_ENV*/)
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::validate_event_qos (const CosNotification::QoSProperties & /*required_qos*/, CosNotification::NamedPropertyRangeSeq_out /*available_qos*/, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Proxy<SERVANT_TYPE>::validate_event_qos (const CosNotification::QoSProperties & /*required_qos*/, CosNotification::NamedPropertyRangeSeq_out /*available_qos*/ TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotification::UnsupportedQoS
@@ -93,86 +93,86 @@ TAO_Notify_Proxy<SERVANT_TYPE>::validate_event_qos (const CosNotification::QoSPr
 }
 
 template <class SERVANT_TYPE> CosNotification::QoSProperties*
-TAO_Notify_Proxy<SERVANT_TYPE>::get_qos (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Proxy<SERVANT_TYPE>::get_qos (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->qos_admin_.get_qos (ACE_TRY_ENV);
+  return this->qos_admin_.get_qos (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::set_qos (const CosNotification::QoSProperties & qos, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Proxy<SERVANT_TYPE>::set_qos (const CosNotification::QoSProperties & qos TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotification::UnsupportedQoS
                    ))
 {
-  this->qos_admin_.set_qos (qos, ACE_TRY_ENV);
+  this->qos_admin_.set_qos (qos TAO_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void
 TAO_Notify_Proxy<SERVANT_TYPE>::validate_qos (
     const CosNotification::QoSProperties & required_qos,
-    CosNotification::NamedPropertyRangeSeq_out available_qos,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotification::NamedPropertyRangeSeq_out available_qos
+    TAO_ENV_ARG_DECL
     )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotification::UnsupportedQoS
                    ))
 {
-  this->qos_admin_.validate_qos (required_qos, available_qos, ACE_TRY_ENV);
+  this->qos_admin_.validate_qos (required_qos, available_qos TAO_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotifyFilter::FilterID
-TAO_Notify_Proxy<SERVANT_TYPE>::add_filter (CosNotifyFilter::Filter_ptr new_filter, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Proxy<SERVANT_TYPE>::add_filter (CosNotifyFilter::Filter_ptr new_filter TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->filter_admin_.add_filter (new_filter, ACE_TRY_ENV);
+  return this->filter_admin_.add_filter (new_filter TAO_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void
 TAO_Notify_Proxy<SERVANT_TYPE>::remove_filter (
-    CosNotifyFilter::FilterID filter,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyFilter::FilterID filter
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
                    ))
 {
-  this->filter_admin_.remove_filter (filter, ACE_TRY_ENV);
+  this->filter_admin_.remove_filter (filter TAO_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotifyFilter::Filter_ptr
-TAO_Notify_Proxy<SERVANT_TYPE>::get_filter (CosNotifyFilter::FilterID filter, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Proxy<SERVANT_TYPE>::get_filter (CosNotifyFilter::FilterID filter TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
                    ))
 {
-  return this->filter_admin_.get_filter (filter, ACE_TRY_ENV);
+  return this->filter_admin_.get_filter (filter TAO_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotifyFilter::FilterIDSeq*
-TAO_Notify_Proxy<SERVANT_TYPE>::get_all_filters (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Proxy<SERVANT_TYPE>::get_all_filters (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->filter_admin_.get_all_filters (ACE_TRY_ENV);
+  return this->filter_admin_.get_all_filters (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::remove_all_filters (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Proxy<SERVANT_TYPE>::remove_all_filters (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  this->filter_admin_.remove_all_filters (ACE_TRY_ENV);
+  this->filter_admin_.remove_all_filters (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 #endif /* TAO_NOTIFY_PROXY_T_C */

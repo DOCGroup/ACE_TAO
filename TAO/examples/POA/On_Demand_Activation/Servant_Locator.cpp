@@ -38,8 +38,6 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   // Convert ObjectID to String.
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
@@ -60,11 +58,6 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
   else
     {
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
-      //
-      //CORBA::Exception *exception =
-      //  new CORBA::OBJECT_NOT_EXIST ();
-      //env.exception (exception);
-      //return 0;
     }
 }
 

@@ -51,23 +51,20 @@ public:
    * @name CORBA::Policy Methods
    */
   //@{
-  virtual CORBA::PolicyType policy_type (CORBA::Environment &ACE_TRY_ENV =
-                                           TAO_default_environment ())
+  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                    TAO_default_environment ())
+  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                          TAO_default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
   /// Return the "establish trust" value associated with this
   /// policy.
   virtual Security::EstablishTrust trust (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

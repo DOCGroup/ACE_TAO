@@ -35,8 +35,8 @@ TAO_MCAST_Parser::match_prefix (const char *ior_string) const
 
 CORBA::Object_ptr
 TAO_MCAST_Parser::parse_string (const char *ior,
-                                CORBA::ORB_ptr orb,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                CORBA::ORB_ptr orb
+                                TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *mcast_name =
@@ -60,8 +60,8 @@ TAO_MCAST_Parser::parse_string (const char *ior,
                                  this->mcast_ttl_.in (),
                                  this->mcast_nic_.in (),
                                  orb,
-                                 timeout,
-                                 ACE_TRY_ENV);
+                                 timeout
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object;
@@ -74,8 +74,8 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
                                         const char *mcast_ttl,
                                         const char *mcast_nic,
                                         CORBA::ORB_ptr orb,
-                                        ACE_Time_Value *timeout,
-                                        CORBA::Environment& ACE_TRY_ENV)
+                                        ACE_Time_Value *timeout
+                                        TAO_ENV_ARG_DECL)
 {
   char buf[2048];
   char *ior = buf;
@@ -104,8 +104,8 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
     {
       // Convert IOR to an object reference.
       return_value =
-        orb->string_to_object (ior,
-                               ACE_TRY_ENV);
+        orb->string_to_object (ior
+                                TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA_Object::_nil ());
     }
 
@@ -326,9 +326,9 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
 
   if (pos_colon1 == 0)
     {
-	  const char *default_addr = ACE_DEFAULT_MULTICAST_ADDR;
-	  this->mcast_address_ = CORBA::string_alloc (ACE_OS::strlen (default_addr));
-	  this->mcast_address_ = default_addr;
+          const char *default_addr = ACE_DEFAULT_MULTICAST_ADDR;
+          this->mcast_address_ = CORBA::string_alloc (ACE_OS::strlen (default_addr));
+          this->mcast_address_ = default_addr;
 
     }
   else
@@ -408,8 +408,8 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
   if (pos_colon4 == 0)
     {
       // And, the default TTL to be 1
-	  const char *default_ttl = "1";
-	  this->mcast_ttl_ = CORBA::string_alloc (ACE_OS::strlen (default_ttl));
+          const char *default_ttl = "1";
+          this->mcast_ttl_ = CORBA::string_alloc (ACE_OS::strlen (default_ttl));
       this->mcast_ttl_ = default_ttl;
     }
   else

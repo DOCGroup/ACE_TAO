@@ -285,8 +285,8 @@ CORBA_SystemException::_downcast (CORBA_Exception* exception)
 }
 
 void
-CORBA_SystemException::_tao_encode (TAO_OutputCDR &cdr,
-                                    CORBA::Environment &ACE_TRY_ENV) const
+CORBA_SystemException::_tao_encode (TAO_OutputCDR &cdr
+                                    TAO_ENV_ARG_DECL) const
 {
   if (cdr.write_string (this->_id ())
       && cdr.write_ulong (this->minor ())
@@ -296,8 +296,8 @@ CORBA_SystemException::_tao_encode (TAO_OutputCDR &cdr,
 }
 
 void
-CORBA_SystemException::_tao_decode (TAO_InputCDR &cdr,
-                                    CORBA::Environment &ACE_TRY_ENV)
+CORBA_SystemException::_tao_decode (TAO_InputCDR &cdr
+                                    TAO_ENV_ARG_DECL)
 {
   // The string is read by the caller, to determine the exact type of
   // the exception.  We just decode the fields...
@@ -825,8 +825,8 @@ CORBA_SystemException::_tao_get_omg_exception_description (
 // then overwritten.
 
 void
-TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-                                            CORBA::Environment &ACE_TRY_ENV)
+TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp
+                                            TAO_ENV_ARG_DECL)
 {
   // Create the TypeCode for the CORBA_UnknownUserException.
 
@@ -881,8 +881,8 @@ void
 TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                                         const char *name,
                                         char *buffer,
-                                        size_t buflen,
-                                        CORBA::Environment &ACE_TRY_ENV)
+                                        size_t buflen
+                                        TAO_ENV_ARG_DECL)
 {
   // This function must only be called ONCE, and with a global lock
   // held!  The <CORBA::ORB_init> method is responsible for ensuring
@@ -1032,7 +1032,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 #undef TAO_TC_BUF_LEN
 
 void
-TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
+TAO_Exceptions::init (TAO_ENV_SINGLE_ARG_DECL)
 {
   // This routine should only be called once.
 
@@ -1051,19 +1051,19 @@ TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
   TAO_Exceptions::make_standard_typecode (CORBA::_tc_ ## name, \
                                           #name, \
                                           (char*)tc_buf_##name, \
-                                          sizeof(tc_buf_##name), \
-                                          ACE_TRY_ENV); \
+                                          sizeof(tc_buf_##name) \
+                                           TAO_ENV_ARG_PARAMETER); \
   ACE_CHECK;
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-  TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException,
-                                              ACE_TRY_ENV);
+  TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException
+                                               TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA_SystemException *
-TAO_Exceptions::create_system_exception (const char *id,
-                                         CORBA::Environment &)
+TAO_Exceptions::create_system_exception (const char *id
+                                         TAO_ENV_ARG_DECL_NOT_USED)
 {
 #define TAO_SYSTEM_EXCEPTION(name) \
   { \
@@ -1159,11 +1159,11 @@ tao_insert_for_insertion_system_exception (CORBA::Any &any,
                                            const CORBA::SystemException &ex,
                                            const char *msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       TAO_OutputCDR stream;
-      ex._tao_encode (stream, ACE_TRY_ENV);
+      ex._tao_encode (stream TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       any._tao_replace (ex._type (),
                         TAO_ENCAP_BYTE_ORDER,
@@ -1195,11 +1195,11 @@ tao_insert_system_exception (CORBA::Any &any,
                              CORBA::Any::_tao_destructor destructor,
                              const char *msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       TAO_OutputCDR stream;
-      ex->_tao_encode (stream, ACE_TRY_ENV);
+      ex->_tao_encode (stream TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       any._tao_replace (ex->_type (),
                         TAO_ENCAP_BYTE_ORDER,
@@ -1249,12 +1249,12 @@ tao_insert_in_extractor_system_exception (
         const char *compare_IR_Id,
         const char *msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       CORBA::TypeCode_var type = any.type ();
       CORBA::Boolean equiv =
-        type->equivalent (tc_name, ACE_TRY_ENV);
+        type->equivalent (tc_name TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (!equiv)
         return 0;
@@ -1276,7 +1276,7 @@ tao_insert_in_extractor_system_exception (
                                      compare_IR_Id))
             return 0;
           CORBA::SystemException *tmp = allocator ();
-          tmp->_tao_decode (stream, ACE_TRY_ENV);
+          tmp->_tao_decode (stream TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ((CORBA::Any *)&any)->_tao_replace (
               tc_name,

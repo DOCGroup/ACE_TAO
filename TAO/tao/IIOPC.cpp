@@ -34,7 +34,7 @@ static const CORBA::Long _oc_IIOP_ListenPoint[] =
   12, ACE_NTOHL (0x4c697374), ACE_NTOHL (0x656e506f), ACE_NTOHL (0x696e7400),  // name = ListenPoint
   2, // member count
   5, ACE_NTOHL (0x686f7374), ACE_NTOHL (0x0),  // name = host
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   5, ACE_NTOHL (0x706f7274), ACE_NTOHL (0x0),  // name = port
   CORBA::tk_ushort,
@@ -53,7 +53,7 @@ void IIOP::ListenPoint::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IIOP_LISTENPOINTLIST_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IIOP_LISTENPOINTLIST_CS_
 
@@ -62,43 +62,43 @@ void IIOP::ListenPoint::_tao_any_destructor (void *x)
   {
     IIOP::ListenPoint* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       IIOP::ListenPoint *old = ACE_reinterpret_cast (IIOP::ListenPoint *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_IIOP_ListenPointList::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     IIOP::ListenPoint *tmp = ACE_reinterpret_cast (IIOP::ListenPoint *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_IIOP_ListenPointList::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::~_TAO_Unbounded_Sequence_IIOP_ListenPointList (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IIOP_LISTENPOINTLIST_CS_)
 #define _IIOP_LISTENPOINTLIST_CS_
@@ -110,30 +110,30 @@ void IIOP::ListenPoint::_tao_any_destructor (void *x)
 IIOP::ListenPointList::ListenPointList (void)
 {}
 IIOP::ListenPointList::ListenPointList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IIOP_ListenPointList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IIOP::ListenPoint>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IIOP::ListenPointList::ListenPointList (CORBA::ULong max, CORBA::ULong length, IIOP::ListenPoint *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IIOP_ListenPointList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IIOP::ListenPoint>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IIOP::ListenPointList::ListenPointList (const ListenPointList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IIOP_ListenPointList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IIOP::ListenPoint>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IIOP::ListenPointList::~ListenPointList (void) // dtor
@@ -162,7 +162,7 @@ static const CORBA::Long _oc_IIOP_ListenPointList[] =
       12, ACE_NTOHL (0x4c697374), ACE_NTOHL (0x656e506f), ACE_NTOHL (0x696e7400),  // name = ListenPoint
       2, // member count
       5, ACE_NTOHL (0x686f7374), ACE_NTOHL (0x0),  // name = host
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       5, ACE_NTOHL (0x706f7274), ACE_NTOHL (0x0),  // name = port
       CORBA::tk_ushort,
@@ -198,7 +198,7 @@ static const CORBA::Long _oc_IIOP_BiDirIIOPServiceContext[] =
         12, ACE_NTOHL (0x4c697374), ACE_NTOHL (0x656e506f), ACE_NTOHL (0x696e7400),  // name = ListenPoint
         2, // member count
         5, ACE_NTOHL (0x686f7374), ACE_NTOHL (0x0),  // name = host
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
         5, ACE_NTOHL (0x706f7274), ACE_NTOHL (0x0),  // name = port
         CORBA::tk_ushort,
@@ -256,7 +256,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IIOP::ListenPoint 
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (IIOP::_tc_ListenPoint, ACE_TRY_ENV);
+      type->equivalent (IIOP::_tc_ListenPoint TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -349,7 +349,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IIOP::ListenPointL
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (IIOP::_tc_ListenPointList, ACE_TRY_ENV);
+      type->equivalent (IIOP::_tc_ListenPointList TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -434,8 +434,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IIOP::BiDirIIOPSer
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (IIOP::_tc_BiDirIIOPServiceContext,
-                        ACE_TRY_ENV);
+      type->equivalent (IIOP::_tc_BiDirIIOPServiceContext
+                         TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -512,7 +512,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;

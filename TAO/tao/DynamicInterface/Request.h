@@ -78,8 +78,8 @@ public:
   // Return a list of the request's result's contexts. Since
   // TAO does not implement Contexts, this will always be 0.
 
-  CORBA::Environment_ptr env (void);
-  // Return the <Environment> for this request.
+  // CORBA::Environment_ptr env (void);
+  // *** DEPRECATED ***  Return the <Environment> for this request.
 
   // Argument manipulation helper functions.
 
@@ -99,8 +99,7 @@ public:
   CORBA_Any &return_value (void);
   // Returns reference to Any for extraction using >>=.
 
-  void invoke (CORBA::Environment &ACE_TRY_ENV =
-                 CORBA::Environment::default_environment ());
+  void invoke (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Perform method resolution and invoke an appropriate method. If
   // the method returns successfully, its result is placed in the
   // result argument specified on <create_request>. The behavior is
@@ -110,25 +109,20 @@ public:
   // A default argument is set, but please note that this not recommended
   // as the user may not be able to propagate the exceptions
 
-  void send_oneway (CORBA::Environment &ACE_TRY_ENV =
-                      CORBA::Environment::default_environment ());
+  void send_oneway (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Send a oneway request.
   // A default argument is set, but please note that this not recommended
   // as the user may not be able to propagate the exceptions.
 
   // The 'deferred synchronous' methods.
-  void send_deferred (CORBA::Environment &ACE_TRY_ENV =
-                        CORBA::Environment::default_environment ());
-  void get_response (CORBA::Environment &ACE_TRY_ENV =
-                      CORBA::Environment::default_environment ());
-  CORBA::Boolean poll_response (CORBA::Environment &ACE_TRY_ENV =
-                                  CORBA::Environment::default_environment ());
+  void send_deferred (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void get_response (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  CORBA::Boolean poll_response (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   // Callback method for deferred synchronous requests.
   void handle_response (TAO_InputCDR &incoming,
-                        CORBA::ULong reply_status,
-                        CORBA::Environment &ACE_TRY_ENV =
-                          CORBA::Environment::default_environment ());
+                        CORBA::ULong reply_status
+                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // Pseudo object methods.
   static CORBA_Request* _duplicate (CORBA_Request*);
@@ -171,15 +165,13 @@ private:
                  CORBA::NVList_ptr args,
                  CORBA::NamedValue_ptr result,
                  CORBA::Flags flags,
-                 CORBA::ExceptionList_ptr exceptions,
-                 CORBA::Environment &ACE_TRY_ENV =
-                   TAO_default_environment ());
+                 CORBA::ExceptionList_ptr exceptions
+                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   CORBA_Request (CORBA::Object_ptr obj,
                  CORBA::ORB_ptr orb,
-                 const CORBA::Char *op,
-                 CORBA::Environment &ACE_TRY_ENV =
-                   TAO_default_environment ());
+                 const CORBA::Char *op
+                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   ~CORBA_Request (void);
 
@@ -201,8 +193,8 @@ private:
   CORBA::Flags flags_;
   // Invocation flags.
 
-  CORBA::Environment env_;
-  // Holds exceptions.
+  // CORBA::Environment env_;
+  // *** DEPRECATED ***  Holds exceptions.
 
   CORBA_ExceptionList_var exceptions_;
   // List of exceptions raised by the operation.

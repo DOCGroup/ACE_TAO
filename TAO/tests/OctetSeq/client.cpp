@@ -57,18 +57,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Database_var server =
-        Test::Database::_narrow (object.in (), ACE_TRY_ENV);
+        Test::Database::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -112,8 +112,8 @@ main (int argc, char *argv[])
                   server->set (Test::Index (j),
                                elements[j],
                                token,
-                               returned_token,
-                               ACE_TRY_ENV);
+                               returned_token
+                               TAO_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   if (token != returned_token)
@@ -127,7 +127,7 @@ main (int argc, char *argv[])
             }
 
           CORBA::ULong crc_remote =
-            server->get_crc (idx, ACE_TRY_ENV);
+            server->get_crc (idx TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::ULong crc_local =
@@ -149,16 +149,16 @@ main (int argc, char *argv[])
 
         }
 
-      server->shutdown (ACE_TRY_ENV);
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

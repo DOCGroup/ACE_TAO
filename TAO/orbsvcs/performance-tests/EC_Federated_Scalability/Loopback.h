@@ -33,13 +33,13 @@ public:
 
   /// Initialize the loopback
   void init (CORBA::Long experiment_id,
-             RtecEventChannelAdmin::EventChannel_ptr ec,
-             CORBA::Environment &ACE_TRY_ENV);
+             RtecEventChannelAdmin::EventChannel_ptr ec
+             TAO_ENV_ARG_DECL);
 
   //@{
   /** @name The Control::Loopback methods
    */
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV)
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

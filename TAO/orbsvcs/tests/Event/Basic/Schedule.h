@@ -59,12 +59,12 @@ public:
   // add some command line args to change the scheduling service to
   // use.
 
-  void initialize_ec_impl (CORBA::Environment &ACE_TRY_ENV);
+  void initialize_ec_impl (TAO_ENV_SINGLE_ARG_DECL);
   void cleanup_ec (void);
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
   // Set the scheduling service attribute
 
-  void execute_test (CORBA::Environment& ACE_TRY_ENV);
+  void execute_test (TAO_ENV_SINGLE_ARG_DECL);
   // Don't run the suppliers, just compute the schedule.
 
   void dump_results (void);
@@ -73,13 +73,13 @@ public:
   virtual void build_consumer_qos (
       int i,
       RtecEventChannelAdmin::ConsumerQOS& qos,
-      int& shutdown_event_type,
-      CORBA::Environment&);
+      int& shutdown_event_type
+      TAO_ENV_ARG_DECL_NOT_USED);
   virtual void build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type,
-      CORBA::Environment&);
+      int& shutdown_event_type
+      TAO_ENV_ARG_DECL_NOT_USED);
   // This time really connect to the scheduler
 
 private:

@@ -22,7 +22,7 @@ TAO_Notify_Buffering_Strategy::~TAO_Notify_Buffering_Strategy ()
 }
 
 void
-TAO_Notify_Buffering_Strategy::execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue, TAO_Notify_Command *mb, CORBA::Environment& /*ACE_TRY_ENV*/, ACE_Time_Value *tv)
+TAO_Notify_Buffering_Strategy::execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue, TAO_Notify_Command *mb TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/, ACE_Time_Value *tv)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Enqueing command priority %d, queue_length = %d\n",

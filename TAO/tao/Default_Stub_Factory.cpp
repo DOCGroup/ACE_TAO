@@ -12,8 +12,8 @@ TAO_Default_Stub_Factory::~TAO_Default_Stub_Factory (void)
 TAO_Stub *
 TAO_Default_Stub_Factory::create_stub (const char *repository_id,
                                const TAO_MProfile &profiles,
-                               TAO_ORB_Core *orb_core,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               TAO_ORB_Core *orb_core
+                               TAO_ENV_ARG_DECL)
 {
   TAO_Stub *retval = 0;
 

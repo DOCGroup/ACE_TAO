@@ -21,7 +21,7 @@
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_PORTABLESERVER_POALIST_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_PORTABLESERVER_POALIST_CI_
 
@@ -29,36 +29,36 @@
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::allocbuf (CORBA::ULong nelems)
   {
     PortableServer::POA **buf = 0;
-    
+
     ACE_NEW_RETURN (buf, PortableServer::POA*[nelems], 0);
-    
+
     for (CORBA::ULong i = 0; i < nelems; i++)
       {
         buf[i] = PortableServer::POA::_nil ();
       }
-    
+
     return buf;
   }
-  
-  ACE_INLINE void 
+
+  ACE_INLINE void
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::freebuf (PortableServer::POA **buffer)
   {
     if (buffer == 0)
       return;
     delete[] buffer;
   }
-  
+
   ACE_INLINE
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_TAO_Unbounded_Object_Sequence_PortableServer_POAList (void)
   {
   }
-  
+
   ACE_INLINE
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_TAO_Unbounded_Object_Sequence_PortableServer_POAList (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_PortableServer_POAList::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_TAO_Unbounded_Object_Sequence_PortableServer_POAList (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -67,7 +67,7 @@
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
   {
   }
-  
+
   ACE_INLINE
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_TAO_Unbounded_Object_Sequence_PortableServer_POAList(const _TAO_Unbounded_Object_Sequence_PortableServer_POAList &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
@@ -76,12 +76,12 @@
     {
       PortableServer::POA **tmp1 = _TAO_Unbounded_Object_Sequence_PortableServer_POAList::allocbuf (this->maximum_);
       PortableServer::POA ** const tmp2 = ACE_reinterpret_cast (PortableServer::POA ** ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
           tmp1[i] = PortableServer::POA::_duplicate (tmp2[i]);
         }
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -89,17 +89,17 @@
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList &
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::operator= (const _TAO_Unbounded_Object_Sequence_PortableServer_POAList &rhs)
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       PortableServer::POA **tmp = ACE_reinterpret_cast (PortableServer::POA **, this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
         CORBA::release (tmp[i]);
@@ -113,20 +113,20 @@
     }
     else
       this->buffer_ = _TAO_Unbounded_Object_Sequence_PortableServer_POAList::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     PortableServer::POA **tmp1 = ACE_reinterpret_cast (PortableServer::POA **, this->buffer_);
     PortableServer::POA ** const tmp2 = ACE_reinterpret_cast (PortableServer::POA ** ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
       {
         tmp1[i] = PortableServer::POA::_duplicate (tmp2[i]);
       }
-    
+
     return *this;
   }
-  
+
   ACE_INLINE TAO_Object_Manager<PortableServer::POA,PortableServer::POA_var>
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::operator[] (CORBA::ULong index) const
   // read-write accessor
@@ -135,7 +135,7 @@
     PortableServer::POA ** const tmp = ACE_reinterpret_cast (PortableServer::POA ** ACE_CAST_CONST, this->buffer_);
     return TAO_Object_Manager<PortableServer::POA,PortableServer::POA_var> (tmp + index, this->release_);
   }
-  
+
   ACE_INLINE PortableServer::POA* *
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::get_buffer (CORBA::Boolean orphan)
   {
@@ -169,18 +169,18 @@
     }
     return result;
   }
-  
+
   ACE_INLINE const PortableServer::POA* *
   PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const PortableServer::POA ** ACE_CAST_CONST, this->buffer_);
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_PORTABLESERVER_POALIST_CI_)
 #define _PORTABLESERVER_POALIST_CI_
@@ -236,7 +236,7 @@ PortableServer::POAList_var::operator= (const ::PortableServer::POAList_var &p)
         {
           POAList *deep_copy =
             new POAList (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               POAList *tmp = deep_copy;
@@ -246,7 +246,7 @@ PortableServer::POAList_var::operator= (const ::PortableServer::POAList_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -262,27 +262,27 @@ PortableServer::POAList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::POAList_var::operator const ::PortableServer::POAList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::POAList_var::operator ::PortableServer::POAList &() // cast 
+ACE_INLINE
+PortableServer::POAList_var::operator ::PortableServer::POAList &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::POAList_var::operator ::PortableServer::POAList &() const // cast 
+ACE_INLINE
+PortableServer::POAList_var::operator ::PortableServer::POAList &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-PortableServer::POAList_var::operator ::PortableServer::POAList *&() // cast 
+PortableServer::POAList_var::operator ::PortableServer::POAList *&() // cast
 {
   return this->ptr_;
 }
@@ -305,7 +305,7 @@ PortableServer::POAList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::PortableServer::POAList *&
 PortableServer::POAList_var::out (void)
 {
@@ -366,7 +366,7 @@ PortableServer::POAList_out::operator= (POAList *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::POAList_out::operator ::PortableServer::POAList *&() // cast
 {
   return this->ptr_;
@@ -455,7 +455,7 @@ PortableServer::ObjectId_var::operator= (const ::PortableServer::ObjectId_var &p
         {
           ObjectId *deep_copy =
             new ObjectId (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               ObjectId *tmp = deep_copy;
@@ -465,7 +465,7 @@ PortableServer::ObjectId_var::operator= (const ::PortableServer::ObjectId_var &p
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -493,20 +493,20 @@ PortableServer::ObjectId_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::ObjectId_var::operator const ::PortableServer::ObjectId &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::ObjectId_var::operator ::PortableServer::ObjectId &() // cast 
+ACE_INLINE
+PortableServer::ObjectId_var::operator ::PortableServer::ObjectId &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-PortableServer::ObjectId_var::operator ::PortableServer::ObjectId &() const // cast 
+ACE_INLINE
+PortableServer::ObjectId_var::operator ::PortableServer::ObjectId &() const // cast
 {
   return *this->ptr_;
 }
@@ -535,7 +535,7 @@ PortableServer::ObjectId_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::PortableServer::ObjectId *&
 PortableServer::ObjectId_var::out (void)
 {
@@ -596,7 +596,7 @@ PortableServer::ObjectId_out::operator= (ObjectId *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 PortableServer::ObjectId_out::operator ::PortableServer::ObjectId *&() // cast
 {
   return this->ptr_;
@@ -659,11 +659,11 @@ tao_PortableServer_ThreadPolicy_nil (
 
 ACE_INLINE PortableServer::ThreadPolicy_ptr
 tao_PortableServer_ThreadPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::ThreadPolicy::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::ThreadPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -711,11 +711,11 @@ tao_PortableServer_LifespanPolicy_nil (
 
 ACE_INLINE PortableServer::LifespanPolicy_ptr
 tao_PortableServer_LifespanPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::LifespanPolicy::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::LifespanPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -761,11 +761,11 @@ tao_PortableServer_IdUniquenessPolicy_nil (
 
 ACE_INLINE PortableServer::IdUniquenessPolicy_ptr
 tao_PortableServer_IdUniquenessPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::IdUniquenessPolicy::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::IdUniquenessPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -811,11 +811,11 @@ tao_PortableServer_IdAssignmentPolicy_nil (
 
 ACE_INLINE PortableServer::IdAssignmentPolicy_ptr
 tao_PortableServer_IdAssignmentPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::IdAssignmentPolicy::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::IdAssignmentPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -863,11 +863,11 @@ tao_PortableServer_ImplicitActivationPolicy_nil (
 
 ACE_INLINE PortableServer::ImplicitActivationPolicy_ptr
 tao_PortableServer_ImplicitActivationPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::ImplicitActivationPolicy::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::ImplicitActivationPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -913,11 +913,11 @@ tao_PortableServer_ServantRetentionPolicy_nil (
 
 ACE_INLINE PortableServer::ServantRetentionPolicy_ptr
 tao_PortableServer_ServantRetentionPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::ServantRetentionPolicy::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::ServantRetentionPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -963,11 +963,11 @@ tao_PortableServer_RequestProcessingPolicy_nil (
 
 ACE_INLINE PortableServer::RequestProcessingPolicy_ptr
 tao_PortableServer_RequestProcessingPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::RequestProcessingPolicy::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::RequestProcessingPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1019,11 +1019,11 @@ tao_PortableServer_POAManager_nil (
 
 ACE_INLINE PortableServer::POAManager_ptr
 tao_PortableServer_POAManager_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::POAManager::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::POAManager::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1071,11 +1071,11 @@ tao_PortableServer_AdapterActivator_nil (
 
 ACE_INLINE PortableServer::AdapterActivator_ptr
 tao_PortableServer_AdapterActivator_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::AdapterActivator::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::AdapterActivator::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1121,11 +1121,11 @@ tao_PortableServer_ServantManager_nil (
 
 ACE_INLINE PortableServer::ServantManager_ptr
 tao_PortableServer_ServantManager_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::ServantManager::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::ServantManager::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1171,11 +1171,11 @@ tao_PortableServer_ServantActivator_nil (
 
 ACE_INLINE PortableServer::ServantActivator_ptr
 tao_PortableServer_ServantActivator_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::ServantActivator::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::ServantActivator::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1221,11 +1221,11 @@ tao_PortableServer_ServantLocator_nil (
 
 ACE_INLINE PortableServer::ServantLocator_ptr
 tao_PortableServer_ServantLocator_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::ServantLocator::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::ServantLocator::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1313,11 +1313,11 @@ tao_PortableServer_POA_nil (
 
 ACE_INLINE PortableServer::POA_ptr
 tao_PortableServer_POA_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::POA::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::POA::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1367,11 +1367,11 @@ tao_PortableServer_Current_nil (
 
 ACE_INLINE PortableServer::Current_ptr
 tao_PortableServer_Current_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableServer::Current::_narrow (p, ACE_TRY_ENV);
+  return PortableServer::Current::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -1446,12 +1446,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Thread
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::ThreadPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1467,12 +1467,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Lifesp
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::LifespanPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1486,12 +1486,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdUniq
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::IdUniquenessPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1505,12 +1505,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::IdAssi
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::IdAssignmentPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1526,12 +1526,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Implic
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::ImplicitActivationPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1545,12 +1545,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Servan
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::ServantRetentionPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 
@@ -1564,12 +1564,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, PortableServer::Reques
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (PortableServer::RequestProcessingPolicyValue, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 

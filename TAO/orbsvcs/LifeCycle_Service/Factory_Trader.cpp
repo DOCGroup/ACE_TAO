@@ -46,7 +46,8 @@ Factory_Trader::Factory_Trader (int debug_level)
       // this pointer is deleted when the trader_ptr is deleted
 
       // Set the service type repository
-      support_Attributes_ptr_->type_repos (this->repository_._this (ACE_TRY_ENV));
+      support_Attributes_ptr_->type_repos
+                     (this->repository_._this (TAO_ENV_SINGLE_ARG_PARAMETER));
       ACE_TRY_CHECK;
 
       // Add the "Factory" type to the repository
@@ -100,8 +101,8 @@ Factory_Trader::add_type ()
       this->repository_.add_type (CORBA::string_dup("GenericFactory"),
                                   GENERIC_FACTORY_INTERFACE_REPOSITORY_ID,
                                   propStructSeq,
-                                  superTypeSeq,
-                                  ACE_TRY_ENV);
+                                  superTypeSeq
+                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -145,8 +146,8 @@ Factory_Trader::_cxx_export (const char * name,
       // invoke the export method on the Register interface of the Trading Service
       register_ptr->_cxx_export (CORBA::Object::_duplicate (object_ptr),
                                  CORBA::string_dup("GenericFactory"),
-                                 propertySeq,
-                                 ACE_TRY_ENV);
+                                 propertySeq
+                                 TAO_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
     }
@@ -190,8 +191,8 @@ Factory_Trader::query (const char* constraint)
                          1,                 // Number of wanted results
                          CosTrading::OfferSeq_out(offerSeq_ptr),               // results
                          CosTrading::OfferIterator_out(offerIterator_ptr),     // more results
-                         CosTrading::PolicyNameSeq_out(policyNameSeq_ptr),     // Policies
-                         ACE_TRY_ENV);
+                         CosTrading::PolicyNameSeq_out(policyNameSeq_ptr)      // Policies
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize

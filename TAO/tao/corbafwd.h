@@ -608,8 +608,10 @@ typedef u_int CORBA_Flags;
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
     void *,
-    void *,
-    CORBA_Environment &ACE_TRY_ENV
+    void *
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
+    , CORBA_Environment &
+#endif
   );
 
 // forward declare sequences.

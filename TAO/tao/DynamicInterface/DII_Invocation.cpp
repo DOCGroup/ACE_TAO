@@ -16,12 +16,12 @@ ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
 
 
 int
-TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions
+                                 TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, CORBA::UnknownUserException))
 {
-  int retval = this->invoke_i (0,
-                               ACE_TRY_ENV);
+  int retval = this->invoke_i (0
+                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (retval);
 
   // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
@@ -51,11 +51,11 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
            exceptions != 0 && i < exceptions->count ();
            i++)
         {
-          CORBA::TypeCode_ptr tcp = exceptions->item (i,
-                                                      ACE_TRY_ENV);
+          CORBA::TypeCode_ptr tcp = exceptions->item (i
+                                                      TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
-          const char *xid = tcp->id (ACE_TRY_ENV);
+          const char *xid = tcp->id (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           if (ACE_OS::strcmp (buf.in (), xid) != 0)
@@ -80,13 +80,15 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
 
           // @@ Think about a better way to raise the exception here,
           //    maybe we need some more macros?
-          ACE_TRY_ENV.exception (exception);  // We can not use ACE_THROW here.
+#if !defined (ACE_HAS_EXCEPTIONS)
+          TAO_ENV_SINGLE_ARG_PARAMETER.exception (exception);  // We can not use ACE_THROW here.
+#endif
           return TAO_INVOKE_EXCEPTION;
         }
 
       // If we couldn't find the right exception, report it as
-      // CORBA::UNKNOWN. 
-      
+      // CORBA::UNKNOWN.
+
       // But first, save the user exception in case we
       // are being used in a TAO gateway.
       this->host_->raw_user_exception (this->inp_stream ());
@@ -105,15 +107,15 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
 //***************************************************************************
 
 int
-TAO_GIOP_DII_Deferred_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_DII_Deferred_Invocation::invoke (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->invoke_i (ACE_TRY_ENV);
+  return this->invoke_i (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 
 int
-TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_DII_Deferred_Invocation::invoke_i (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Register a reply dispatcher for this Asynch_Invocation. Use the
@@ -132,8 +134,8 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Just send the request, without trying to wait for the reply.
-  retval = TAO_GIOP_Invocation::invoke (0,
-                                        ACE_TRY_ENV);
+  retval = TAO_GIOP_Invocation::invoke (0
+                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)

@@ -56,16 +56,16 @@ void CORBA_WrongTransaction::_raise (void)
   TAO_RAISE(*this);
 }
 
-void CORBA_WrongTransaction::_tao_encode (TAO_OutputCDR &cdr,
-                                          CORBA::Environment &ACE_TRY_ENV) const
+void CORBA_WrongTransaction::_tao_encode (TAO_OutputCDR &cdr
+                                          TAO_ENV_ARG_DECL) const
 {
   if (cdr << *this)
     return;
   ACE_THROW (CORBA::MARSHAL ());
 }
 
-void CORBA_WrongTransaction::_tao_decode (TAO_InputCDR &cdr,
-                                          CORBA::Environment &ACE_TRY_ENV)
+void CORBA_WrongTransaction::_tao_decode (TAO_InputCDR &cdr
+                                          TAO_ENV_ARG_DECL)
 {
   if (cdr >> *this)
     return;

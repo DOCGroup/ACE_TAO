@@ -9,7 +9,7 @@
  *
  *
  *  @author  Thomas Lockhart, NASA/JPL <Thomas.Lockhart@jpl.nasa.gov>
- *  @date 1999-06-03 
+ *  @date 1999-06-03
  */
 //=============================================================================
 
@@ -25,8 +25,8 @@ int showIOR = 0;
 int showNSonly = 0;
 
 static void list_context (CosNaming::NamingContext_ptr nc,
-                          int level,
-                          CORBA::Environment &ACE_TRY_ENV);
+                          int level
+                          TAO_ENV_ARG_DECL);
 
 static void
 get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
@@ -42,7 +42,7 @@ get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
     case TAO_TAG_SHMEM_PROFILE:
       tag_string = "SHMEM";
       break;
-#ifdef TAO_TAG_UDP_PROFILE 
+#ifdef TAO_TAG_UDP_PROFILE
     case TAO_TAG_UDP_PROFILE:
       tag_string = "GIOP over UDP";
 #endif /* TAO_TAG_UDP_PROFILE */
@@ -81,7 +81,7 @@ display_endpoint_info (CORBA::Object_ptr obj)
 
   CORBA::ULong tag = endpoint->tag ();
   ACE_CString tag_name;
-  get_tag_name (tag, tag_name); 
+  get_tag_name (tag, tag_name);
 
   char buf[255];
   if (endpoint->addr_to_string (buf, 255) < 0)
@@ -89,7 +89,7 @@ display_endpoint_info (CORBA::Object_ptr obj)
       ACE_DEBUG ((LM_DEBUG, "Could not put endpoint address in string.\n"));
       return;
     }
-    
+
   ACE_DEBUG ((LM_DEBUG,
               "Protocol: %s,   Endpoint: %s\n",
               tag_name.c_str(),
@@ -101,8 +101,8 @@ display_endpoint_info (CORBA::Object_ptr obj)
 static void
 show_chunk (CosNaming::NamingContext_ptr nc,
             const CosNaming::BindingList &bl,
-            int level,
-            CORBA::Environment &ACE_TRY_ENV)
+            int level
+            TAO_ENV_ARG_DECL)
 {
   for (CORBA::ULong i = 0;
        i < bl.length ();
@@ -126,7 +126,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
       Name[0].kind =
         CORBA::string_dup (bl[i].binding_name[0].kind);
 
-      CORBA::Object_var obj = nc->resolve (Name, ACE_TRY_ENV);
+      CORBA::Object_var obj = nc->resolve (Name TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // If this is a context node, follow it down to the next
@@ -137,10 +137,10 @@ show_chunk (CosNaming::NamingContext_ptr nc,
                       ": naming context\n"));
 
           CosNaming::NamingContext_var xc =
-            CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
+            CosNaming::NamingContext::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          list_context (xc.in (), level + 1, ACE_TRY_ENV);
+          list_context (xc.in (), level + 1 TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       // Mark this node as a reference
@@ -149,8 +149,8 @@ show_chunk (CosNaming::NamingContext_ptr nc,
           if (showIOR)
             {
               CORBA::String_var str =
-                orb->object_to_string (obj.in (),
-                                       ACE_TRY_ENV);
+                orb->object_to_string (obj.in ()
+                                       TAO_ENV_ARG_PARAMETER);
               ACE_CHECK;
               ACE_DEBUG ((LM_DEBUG,
                           ": <%s>\n",
@@ -168,17 +168,17 @@ show_chunk (CosNaming::NamingContext_ptr nc,
 
 static void
 list_context (CosNaming::NamingContext_ptr nc,
-              int level,
-              CORBA::Environment &ACE_TRY_ENV)
+              int level
+              TAO_ENV_ARG_DECL)
 {
   CosNaming::BindingIterator_var it;
   CosNaming::BindingList_var bl;
   const CORBA::ULong CHUNK = 100;
 
-  nc->list (CHUNK, bl, it, ACE_TRY_ENV);
+  nc->list (CHUNK, bl, it TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  show_chunk (nc, bl.in (), level, ACE_TRY_ENV);
+  show_chunk (nc, bl.in (), level TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (it.in ()))
@@ -188,12 +188,12 @@ list_context (CosNaming::NamingContext_ptr nc,
       do
         {
           more = it->next_n (CHUNK, bl);
-          show_chunk (nc, bl.in (), level, ACE_TRY_ENV);
+          show_chunk (nc, bl.in (), level TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       while (more);
 
-      it->destroy (ACE_TRY_ENV);
+      it->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -204,10 +204,10 @@ main (int argc, char *argv[])
   showIOR = 0;
   showNSonly = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      orb = CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      orb = CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       char *pname = argv[0];
@@ -246,16 +246,16 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("NameService", ACE_TRY_ENV);
+        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var root_nc =
-        CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
+        CosNaming::NamingContext::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
-        orb->object_to_string (root_nc.in (),
-                               ACE_TRY_ENV);
+        orb->object_to_string (root_nc.in ()
+                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()) || CORBA::is_nil (root_nc.in ()))
@@ -282,7 +282,7 @@ main (int argc, char *argv[])
                           "Naming Service:\n---------\n"));
             }
 
-          list_context (root_nc.in (), 1, ACE_TRY_ENV);
+          list_context (root_nc.in (), 1 TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

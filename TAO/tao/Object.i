@@ -75,7 +75,7 @@ CORBA_Object::_nil (void)
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment &)
+CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj TAO_ENV_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (obj))
     return CORBA::Object::_nil ();
@@ -91,9 +91,9 @@ CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment &)
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment &ACE_TRY_ENV)
+CORBA_Object::_narrow (CORBA_Object_ptr obj TAO_ENV_ARG_DECL)
 {
-  return CORBA_Object::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return CORBA_Object::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE TAO_Stub *
@@ -220,8 +220,8 @@ CORBA_Object_var::tao_nil (void)
 
 ACE_INLINE CORBA_Object_ptr
 CORBA_Object_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   return CORBA_Object::_duplicate (p);

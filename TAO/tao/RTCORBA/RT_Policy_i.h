@@ -64,27 +64,19 @@ public:
    */
   RTCORBA::PriorityModel get_priority_model (void);
 
-  virtual RTCORBA::PriorityModel priority_model (CORBA::Environment
-                                                 &ACE_TRY_ENV =
-                                                 TAO_default_environment ())
+  virtual RTCORBA::PriorityModel priority_model (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual RTCORBA::Priority server_priority (CORBA::Environment
-                                             &ACE_TRY_ENV =
-                                             TAO_default_environment ())
+  virtual RTCORBA::Priority server_priority (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (CORBA::Environment
-                                         &ACE_TRY_ENV =
-                                         TAO_default_environment ())
+  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ())
+  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of the object state.
@@ -137,22 +129,16 @@ public:
   /// Copy constructor.
   TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
 
-  virtual RTCORBA::ThreadpoolId threadpool (CORBA::Environment
-                                            &ACE_TRY_ENV =
-                                            TAO_default_environment ())
+  virtual RTCORBA::ThreadpoolId threadpool (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (CORBA::Environment
-                                         &ACE_TRY_ENV =
-                                         TAO_default_environment ())
+  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
+  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -195,17 +181,13 @@ public:
   /// Copy constructor.
   TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
 
-  virtual CORBA::PolicyType policy_type (CORBA::Environment
-                                         &ACE_TRY_ENV =
-                                         TAO_default_environment ())
+  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
+  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -251,22 +233,17 @@ public:
    */
   RTCORBA::PriorityBands &priority_bands_rep (void);
 
-  virtual RTCORBA::PriorityBands * priority_bands (CORBA::Environment
-                                                   &ACE_TRY_ENV =
-                                                   TAO_default_environment ())
+  virtual RTCORBA::PriorityBands * priority_bands
+                                    (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (CORBA::Environment
-                                         &ACE_TRY_ENV =
-                                         TAO_default_environment ())
+  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
+  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of the current object.
@@ -326,22 +303,17 @@ public:
    */
   RTCORBA::ProtocolList & protocols_rep (void);
 
-  virtual RTCORBA::ProtocolList * protocols (CORBA::Environment
-                                             &ACE_TRY_ENV =
-                                             TAO_default_environment ())
+  virtual RTCORBA::ProtocolList * protocols
+                                     (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (CORBA::Environment
-                                         &ACE_TRY_ENV =
-                                         TAO_default_environment ())
+  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
+  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static int hook (TAO_ORB_Core *orb_core,
@@ -396,18 +368,14 @@ public:
    */
   RTCORBA::ProtocolList & protocols_rep (void);
 
-  virtual RTCORBA::ProtocolList * protocols (CORBA::Environment
-                                             &ACE_TRY_ENV =
-                                             TAO_default_environment ())
+  virtual RTCORBA::ProtocolList * protocols
+                                   (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (CORBA::Environment
-                                         &ACE_TRY_ENV =
-                                         TAO_default_environment ())
+  virtual CORBA::PolicyType policy_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
+  virtual CORBA::Policy_ptr copy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static int hook (TAO_ORB_Core *orb_core,
@@ -416,8 +384,7 @@ public:
                    int &no_delay,
                    const char* protocol_type);
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = CDR Encoder/Decoder.
@@ -473,51 +440,39 @@ public:
                       CORBA::Boolean dont_route = 0,
                       CORBA::Boolean no_delay = 1);
 
-  virtual CORBA::Long send_buffer_size (CORBA::Environment
-                                        &ACE_TRY_ENV =
-                                        TAO_default_environment ())
+  virtual CORBA::Long send_buffer_size (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_buffer_size (CORBA::Long send_buffer_size,
-                                 CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+  virtual void send_buffer_size (CORBA::Long send_buffer_size
+                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Long recv_buffer_size (CORBA::Environment
-                                        &ACE_TRY_ENV =
-                                        TAO_default_environment ())
+  virtual CORBA::Long recv_buffer_size (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void recv_buffer_size (CORBA::Long recv_buffer_size,
-                                 CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+  virtual void recv_buffer_size (CORBA::Long recv_buffer_size
+                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean keep_alive (CORBA::Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ())
+  virtual CORBA::Boolean keep_alive (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void keep_alive (CORBA::Boolean keep_alive,
-                           CORBA::Environment &ACE_TRY_ENV =
-                           TAO_default_environment ())
+  virtual void keep_alive (CORBA::Boolean keep_alive
+                           TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean dont_route (CORBA::Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ())
+  virtual CORBA::Boolean dont_route (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void dont_route (CORBA::Boolean dont_route,
-                           CORBA::Environment &ACE_TRY_ENV =
-                           TAO_default_environment ())
+  virtual void dont_route (CORBA::Boolean dont_route
+                           TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean no_delay (CORBA::Environment &ACE_TRY_ENV =
-                                   TAO_default_environment ())
+  virtual CORBA::Boolean no_delay (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void no_delay (CORBA::Boolean no_delay,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ())
+  virtual void no_delay (CORBA::Boolean no_delay
+                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -565,24 +520,18 @@ public:
                               CORBA::Long recv_buffer_size =
                               ACE_DEFAULT_MAX_SOCKET_BUFSIZ);
 
-  virtual CORBA::Long send_buffer_size (CORBA::Environment
-                                        &ACE_TRY_ENV =
-                                        TAO_default_environment ())
+  virtual CORBA::Long send_buffer_size (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_buffer_size (CORBA::Long send_buffer_size,
-                                 CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+  virtual void send_buffer_size (CORBA::Long send_buffer_size
+                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Long recv_buffer_size (CORBA::Environment
-                                        &ACE_TRY_ENV =
-                                        TAO_default_environment ())
+  virtual CORBA::Long recv_buffer_size (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void recv_buffer_size (CORBA::Long recv_buffer_size,
-                                 CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
+  virtual void recv_buffer_size (CORBA::Long recv_buffer_size
+                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -637,34 +586,26 @@ public:
 
   // = IDL interface methods.
 
-  virtual CORBA::Long preallocate_buffer_size (CORBA::Environment
-                                               &ACE_TRY_ENV =
-                                               TAO_default_environment
-                                               ())
+  virtual CORBA::Long preallocate_buffer_size
+                                   (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void preallocate_buffer_size (CORBA::Long preallocate_buffer_size,
-                                        CORBA::Environment
-                                        &ACE_TRY_ENV = TAO_default_environment
-                                        ())
+  virtual void preallocate_buffer_size (CORBA::Long preallocate_buffer_size
+                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual char * mmap_filename (CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ())
+  virtual char * mmap_filename (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void mmap_filename (const char * mmap_filename,
-                              CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ())
+  virtual void mmap_filename (const char * mmap_filename
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual char * mmap_lockname (CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ())
+  virtual char * mmap_lockname (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void mmap_lockname (const char * mmap_lockname,
-                              CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ())
+  virtual void mmap_lockname (const char * mmap_lockname
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**

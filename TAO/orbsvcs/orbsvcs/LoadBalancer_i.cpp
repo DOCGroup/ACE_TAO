@@ -29,8 +29,8 @@ TAO_LB_LoadBalancer::~TAO_LB_LoadBalancer (void)
 
 LoadBalancing::ReplicaProxy_ptr
 TAO_LB_LoadBalancer::connect (LoadBalancing::ReplicaControl_ptr control,
-                              CORBA::Object_ptr replica,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Object_ptr replica
+                              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
                    LoadBalancing::ReplicaProxy::NilReplica,
                    CORBA::SystemException))
@@ -47,7 +47,7 @@ TAO_LB_LoadBalancer::connect (LoadBalancing::ReplicaControl_ptr control,
 
   PortableServer::ServantBase_var proxy_servant = proxy;
 
-  proxy->connect (this, control, replica, ACE_TRY_ENV);
+  proxy->connect (this, control, replica TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (LoadBalancing::ReplicaProxy::_nil ());
 
   if (this->strategy_->insert (proxy) == -1)
@@ -56,21 +56,21 @@ TAO_LB_LoadBalancer::connect (LoadBalancing::ReplicaControl_ptr control,
                         LoadBalancing::ReplicaProxy::_nil ());
     }
 
-  return proxy->_this (ACE_TRY_ENV);
+  return proxy->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
-TAO_LB_LoadBalancer::group_identity (CORBA::Environment &)
+TAO_LB_LoadBalancer::group_identity (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Object::_duplicate (this->group_identity_.in ());
 }
 
 void
-TAO_LB_LoadBalancer::load_changed (TAO_LB_ReplicaProxy *proxy,
-                                   CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_LoadBalancer::load_changed (TAO_LB_ReplicaProxy *proxy
+                                   TAO_ENV_ARG_DECL)
 {
-  this->strategy_->load_changed (proxy, ACE_TRY_ENV);
+  this->strategy_->load_changed (proxy TAO_ENV_ARG_PARAMETER);
 }
 
 int
@@ -84,14 +84,14 @@ TAO_LB_LoadBalancer::init (const char * repository_id,
       // for a ServantLocator.
       PortableServer::RequestProcessingPolicy_var request =
         root_poa->create_request_processing_policy (
-          PortableServer::USE_SERVANT_MANAGER,
-          ACE_TRY_ENV);
+          PortableServer::USE_SERVANT_MANAGER
+          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::ServantRetentionPolicy_var retention =
         root_poa->create_servant_retention_policy (
-          PortableServer::NON_RETAIN,
-          ACE_TRY_ENV);
+          PortableServer::NON_RETAIN
+          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Create the PolicyList.
@@ -107,28 +107,28 @@ TAO_LB_LoadBalancer::init (const char * repository_id,
       // Create the child POA with the ServantManager (ReplicaLocator)
       // above policies.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       this->poa_ = root_poa->create_POA ("TAO_LB_ReplicaLocator_POA",
                                          poa_manager.in (),
-                                         policy_list,
-                                         ACE_TRY_ENV);
+                                         policy_list
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Activate the child POA.
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      request->destroy (ACE_TRY_ENV);
+      request->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      retention->destroy (ACE_TRY_ENV);
+      retention->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Now set the ReplicaLocator as the child POA's Servant
       // Manager.
-      this->poa_->set_servant_manager (&this->locator_,
-                                       ACE_TRY_ENV);
+      this->poa_->set_servant_manager (&this->locator_
+                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // @@ What ObjectId should be used?
@@ -137,8 +137,8 @@ TAO_LB_LoadBalancer::init (const char * repository_id,
 
       this->group_identity_ =
         this->poa_->create_reference_with_id (oid.in (),
-                                              repository_id,
-                                              ACE_TRY_ENV);
+                                              repository_id
+                                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -267,8 +267,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
-      << "void * /* Servant_Upcall */," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "void * /* Servant_Upcall */" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" << be_nl;
@@ -281,7 +281,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << "throw CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
-  *os << "_tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);" << be_nl;
+  *os << "_tao_retval = _tao_impl->_is_a (value.in () TAO_ENV_ARG_PARAMETER);" << be_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
   *os << "_tao_server_request.init_reply ();" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
@@ -298,13 +298,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
-      << "void * /* Servant_Upcall */," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "void * /* Servant_Upcall */" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << node->full_skel_name () << " *_tao_impl = ("
       << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
-  *os << "CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);" << be_nl;
+  *os << "CORBA::Boolean _tao_retval = _tao_impl->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
   *os << "_tao_server_request.init_reply ();" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
@@ -320,8 +320,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
-      << "void * /* Servant_Upcall */," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "void * /* Servant_Upcall */" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << node->full_skel_name () << " *_tao_impl = ("
@@ -339,7 +339,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "}" << be_uidt_nl << be_nl;
   *os << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_retval = _tao_impl->_get_interface (ACE_TRY_ENV);" << be_nl
+      << "_tao_retval = _tao_impl->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl << be_nl
       << "_tao_server_request.init_reply ();" << be_nl << be_nl
       << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
@@ -365,11 +365,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   os->indent ();
   *os << "CORBA::Boolean " << node->full_skel_name ()
       << "::_is_a (" << be_idt << be_idt_nl
-      << "const char* value," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "const char* value" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "const char *base_id = CORBA::_tc_Object->id (ACE_TRY_ENV);" << be_nl
+      << "const char *base_id = CORBA::_tc_Object->id (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
       << "if (\n" << be_idt;
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
@@ -516,9 +516,9 @@ be_visitor_interface_ss::this_method (be_interface *node)
   // the _this () operation
   *os << node->full_name () << "*" << be_nl
       << node->full_skel_name ()
-      << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
+      << "::_this (TAO_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl // idt = 1
-      << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
+      << "TAO_Stub *stub = this->_create_stub (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl << be_nl;
 }
@@ -531,13 +531,13 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
   // now the dispatch method
   *os << "void " << node->full_skel_name () <<
     "::_dispatch (TAO_ServerRequest &req, " <<
-    "void *servant_upcall, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
+    "void *servant_upcall TAO_ENV_ARG_DECL)" << be_nl;
   *os << "{" << be_idt_nl;
   //BRT
   *os << "this->synchronous_upcall_dispatch (req," << be_nl
       << "                                   servant_upcall," << be_nl
-      << "                                   this," << be_nl
-      << "                                   ACE_TRY_ENV);" << be_uidt_nl;
+      << "                                   this" << be_nl
+      << "                                   TAO_ENV_ARG_PARAMETER);" << be_uidt_nl;
   //  *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
 //  *os << "const char *opname = req.operation (); // retrieve operation name"
 //      << be_nl;
@@ -552,6 +552,6 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
 //  *os << be_uidt_nl;
 //  *os << "}" << be_nl;
 //  *os << "else" << be_idt_nl;
-//  *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
+//  *os << "skel (req, this, context TAO_ENV_ARG_PARAMETER);" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 }

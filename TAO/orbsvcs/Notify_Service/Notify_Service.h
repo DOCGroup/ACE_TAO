@@ -64,8 +64,8 @@ class Notify_Service
   virtual ~Notify_Service (void);
   // Destructor.
 
-  int init (int argc, char *argv[],
-            CORBA::Environment &ACE_TRY_ENV);
+  int init (int argc, char *argv[]
+            TAO_ENV_ARG_DECL);
   // Initializes the Service.
   // Returns 0 on success, -1 on error.
 
@@ -73,19 +73,18 @@ class Notify_Service
   // run the Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Shutdown the Service.
   // Returns 0 on success, -1 on error.
 
   // CosNotifyChannelAdmin::EventChannelFactory_var obj;
   //
 protected:
-  int init_ORB (int& argc, char *argv [],
-                CORBA::Environment &ACE_TRY_ENV);
+  int init_ORB (int& argc, char *argv []
+                TAO_ENV_ARG_DECL);
   // initialize the ORB.
 
-  int resolve_naming_service (CORBA::Environment &ACE_TRY_ENV);
+  int resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
 
   int parse_args (int argc, char *argv []);

@@ -37,7 +37,7 @@ UDP_Client_i::svc (void)
   client_name += "_";
   client_name += pid;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
@@ -50,28 +50,28 @@ UDP_Client_i::svc (void)
         {
           udp_->invoke (corba_client_name.in (),
                         udpHandler_.inout (),
-                        i,
-                        ACE_TRY_ENV);
+                        i
+                        TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "invoked %s %d, going to wait %d ms\n",
                       corba_client_name.in (),
                       i,
-          					  delay_));
+                                                  delay_));
           ACE_Time_Value tv (0, delay_ * 1000);
           ACE_OS::sleep (tv);  // wait to not flood the server
         }
 
       // shut down remote ORB
-      udp_->shutdown (ACE_TRY_ENV);
+      udp_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Time_Value tv (0, 500); // 50ms
       ACE_OS::sleep (tv);  // let the previous request go through
 
       // Shut down local ORB, trigger the end of the ORB event loop
-	  // in the main thread.
+          // in the main thread.
       orb_->shutdown ();
 
     }

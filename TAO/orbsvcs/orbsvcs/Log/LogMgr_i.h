@@ -40,25 +40,22 @@ public:
   // Destructor.
 
   DsLogAdmin::LogList *
-    list_logs (CORBA::Environment &ACE_TRY_ENV =
-               CORBA::default_environment ())
+    list_logs (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
   // Lists all logs created by the log factory
 
   DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id,
-              CORBA::Environment &ACE_TRY_ENV =
-              CORBA::default_environment ())
+    find_log (DsLogAdmin::LogId id
+              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
   // Returns a reference to the log with the supplied id
 
   DsLogAdmin::LogIdList *
-  list_logs_by_id (CORBA::Environment &ACE_TRY_ENV =
-		   CORBA::default_environment ())
+  list_logs_by_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

@@ -62,7 +62,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       // Default constructor.
       *os << "// Default constructor." << be_nl;
-      *os << node->name () << "::" << node->local_name () 
+      *os << node->name () << "::" << node->local_name ()
           << " (void)" << be_nl;
       *os << "  : CORBA_UserException (\""
           << node->repoID () << "\")\n";
@@ -70,9 +70,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "}" << be_nl << be_nl;
 
       // Destructor.
-      *os << "// Destructor - all members are of self managing types." 
+      *os << "// Destructor - all members are of self managing types."
           << be_nl;
-      *os << node->name () << "::~" << node->local_name () 
+      *os << node->name () << "::~" << node->local_name ()
           << " (void)" << be_nl;
       *os << "{" << be_nl;
       *os << "}" << be_nl << be_nl;
@@ -80,7 +80,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       if (!node->is_local ())
         {
           *os << "void "
-              << node->name () 
+              << node->name ()
               << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
               << "{" << be_idt_nl
               << node->local_name () << " *tmp = ACE_static_cast ("
@@ -145,7 +145,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cs::"
                              "visit_exception -"
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
 
@@ -181,9 +181,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       if (!node->is_local ())
         {
-          *os << "TAO_OutputCDR &cdr," << be_nl
-              << "CORBA::Environment &ACE_TRY_ENV"
-              << be_uidt_nl
+          *os << "TAO_OutputCDR &cdr" << be_nl
+              << "TAO_ENV_ARG_DECL" << be_uidt_nl
               << ") const" << be_uidt_nl
               << "{" << be_idt_nl
               << "if (cdr << *this)" << be_idt_nl
@@ -204,9 +203,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         }
       else
         {
-          *os << "TAO_OutputCDR &," << be_nl
-              << "CORBA::Environment &ACE_TRY_ENV"
-              << be_uidt_nl
+          *os << "TAO_OutputCDR &" << be_nl
+              << "TAO_ENV_ARG_DECL" << be_uidt_nl
               << ") const" << be_uidt_nl
               << "{" << be_idt_nl;
 
@@ -227,9 +225,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       if (!node->is_local ())
         {
-          *os << "TAO_InputCDR &cdr," << be_nl
-              << "CORBA::Environment &ACE_TRY_ENV"
-              << be_uidt_nl
+          *os << "TAO_InputCDR &cdr" << be_nl
+              << "TAO_ENV_ARG_DECL" << be_uidt_nl
               << ")" << be_uidt_nl
               << "{" << be_idt_nl
               << "if (cdr >> *this)" << be_idt_nl
@@ -250,9 +247,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         }
       else
         {
-          *os << "TAO_InputCDR &," << be_nl
-              << "CORBA::Environment &ACE_TRY_ENV"
-              << be_uidt_nl
+          *os << "TAO_InputCDR &" << be_nl
+              << "TAO_ENV_ARG_DECL" << be_uidt_nl
               << ")" << be_uidt_nl
               << "{" << be_idt_nl;
 
@@ -293,7 +289,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_exception::"
                                  "visit_exception - "
-                                 "codegen for ctor failed\n"), 
+                                 "codegen for ctor failed\n"),
                                 -1);
             }
 

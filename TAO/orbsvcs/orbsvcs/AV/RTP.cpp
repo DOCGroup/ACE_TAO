@@ -92,15 +92,15 @@ RTP_Packet::RTP_Packet(unsigned char padding,
                        ACE_UINT32 ssrc,
                        unsigned char csrc_count,
                        ACE_UINT32 *csrc_list,
-        	       char *data,
-        	       ACE_UINT16 data_size)
+                       char *data,
+                       ACE_UINT16 data_size)
   :extension_bytes_(0)
 {
   //size of header (in octets) without contributing sources
   ACE_UINT16 size = 3*4;
   int index = 0;
 
-  if (data_size > RTP_MTU-12) 
+  if (data_size > RTP_MTU-12)
   {
     data_size = RTP_MTU-12;
     ACE_DEBUG ((LM_DEBUG, "\n(%N,%l) RTP_Packet: Warning - packet truncated\n"));
@@ -747,5 +747,3 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_RTP_Flow_Factory,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
-
-

@@ -20,8 +20,6 @@ TAO_Messaging_PolicyFactory::create_policy (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
-  TAO_ENV_ARG_DEFN;
-
   switch (type)
     {
 

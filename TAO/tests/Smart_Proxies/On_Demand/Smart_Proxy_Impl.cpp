@@ -6,20 +6,20 @@ Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
 {
 }
 
-CORBA::Short 
-Smart_Test_Proxy::method (CORBA::Short boo,
-                          CORBA::Environment &ACE_TRY_ENV)
+CORBA::Short
+Smart_Test_Proxy::method (CORBA::Short boo
+                          TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Test::Oops))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Yahoo, I am smart\n"));
-  
+
   CORBA::Short retval = 0;
-  ACE_TRY 
+  ACE_TRY
     {
-      retval = TAO_Test_Smart_Proxy_Base::method (boo,
-                                                  ACE_TRY_ENV);
+      retval = TAO_Test_Smart_Proxy_Base::method (boo
+                                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (Test::Oops, reason)
@@ -29,7 +29,7 @@ Smart_Test_Proxy::method (CORBA::Short boo,
       return -1;
     }
   ACE_ENDTRY;
-  
+
   return retval;
 }
 

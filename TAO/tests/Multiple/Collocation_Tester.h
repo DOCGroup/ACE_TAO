@@ -39,7 +39,7 @@ public:
   ~Collocation_Tester ();
 
   // -- Command --
-  void run (CORBA::Environment &ACE_TRY_ENV);
+  void run (TAO_ENV_SINGLE_ARG_DECL);
   // Runs the test.
 
 
@@ -47,19 +47,19 @@ private:
 
   // -- Helper Methods --
 
-  int  test_top (CORBA::Environment &ACE_TRY_ENV);
+  int  test_top (TAO_ENV_SINGLE_ARG_DECL);
   // Tests the method accessible thru the
   // Top interface.
 
-  int test_right (CORBA::Environment &ACE_TRY_ENV);
+  int test_right (TAO_ENV_SINGLE_ARG_DECL);
   // Tests the method accessible thru the
   // Right interface.
 
-  int test_left (CORBA::Environment &ACE_TRY_ENV);
+  int test_left (TAO_ENV_SINGLE_ARG_DECL);
   // Tests the method accessible thru the
   // Left interface.
 
-  int test_bottom (CORBA::Environment &ACE_TRY_ENV);
+  int test_bottom (TAO_ENV_SINGLE_ARG_DECL);
   // Tests the method accessible thru the
   // Bottom interface.
 
@@ -72,7 +72,7 @@ private:
   // is no match (actually 1 is returned if there is
   // no match.
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL);
 private:
   CORBA::Object_var object_;
 };

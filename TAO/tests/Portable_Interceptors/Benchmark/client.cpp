@@ -49,8 +49,8 @@ parse_args (int argc, char *argv[])
 
 
 void
-run_test (Test_Interceptors::Secure_Vault_ptr server,
-          CORBA::Environment &ACE_TRY_ENV)
+run_test (Test_Interceptors::Secure_Vault_ptr server
+          TAO_ENV_ARG_DECL)
 {
   int i = 0;
   const char user[] = "root";
@@ -68,7 +68,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
       // Record current time.
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-      server->ready (ACE_TRY_ENV);
+      server->ready (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Grab timestamp again.
@@ -96,7 +96,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
           // Record current time.
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-          server->authenticate (user, ACE_TRY_ENV);
+          server->authenticate (user TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Grab timestamp again.
@@ -133,8 +133,8 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
       server->update_records (id,
-                              record,
-                              ACE_TRY_ENV);
+                              record
+                              TAO_ENV_ARG_PARAMETER);
 
       // Grab timestamp again.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -190,24 +190,24 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_Interceptors::Secure_Vault_var server =
-        Test_Interceptors::Secure_Vault::_narrow (object.in (),
-                                                  ACE_TRY_ENV);
+        Test_Interceptors::Secure_Vault::_narrow (object.in ()
+                                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -223,10 +223,10 @@ main (int argc, char *argv[])
       // This test is useful for  benchmarking the differences when
       // the same method is intercepted by different interceptors
       // wanting to achieve different functionality.
-      run_test (server.in (), ACE_TRY_ENV);
+      run_test (server.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      server->shutdown (ACE_TRY_ENV);
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

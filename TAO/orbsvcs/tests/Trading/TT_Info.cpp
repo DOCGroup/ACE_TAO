@@ -139,8 +139,8 @@ const char* TT_Info::QUERIES[][3] =
 
 void
 TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
-                          CORBA::Boolean print_dynamic,
-                          CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Boolean print_dynamic
+                          TAO_ENV_ARG_DECL)
 {
   TAO_Property_Evaluator prop_eval (prop_seq);
 
@@ -157,7 +157,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 
           if (print_dynamic || ! is_dynamic)
             {
-              value = prop_eval.property_value(k, ACE_TRY_ENV);
+              value = prop_eval.property_value(k TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               tc = value->type ();
@@ -177,7 +177,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 
       if (tc == 0)
         continue;
-      int check = tc->equal (TAO_Trader_Test::_tc_StringSeq, ACE_TRY_ENV);
+      int check = tc->equal (TAO_Trader_Test::_tc_StringSeq TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (check)
@@ -192,7 +192,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
         }
       else
         {
-          check = tc->equal (TAO_Trader_Test::_tc_ULongSeq, ACE_TRY_ENV);
+          check = tc->equal (TAO_Trader_Test::_tc_ULongSeq TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           if (check)

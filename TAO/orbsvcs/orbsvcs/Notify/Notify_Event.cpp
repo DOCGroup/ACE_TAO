@@ -244,22 +244,22 @@ TAO_Notify_Any::event_type (void) const
 }
 
 CORBA::Boolean
-TAO_Notify_Any::do_match (CosNotifyFilter::Filter_ptr filter,
-                          CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_Any::do_match (CosNotifyFilter::Filter_ptr filter
+                          TAO_ENV_ARG_DECL) const
 {
-  return filter->match (*this->data_, ACE_TRY_ENV);
+  return filter->match (*this->data_ TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Any::do_push (CosEventComm::PushConsumer_ptr consumer,
-                         CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_Any::do_push (CosEventComm::PushConsumer_ptr consumer
+                         TAO_ENV_ARG_DECL) const
 {
-  consumer->push (*this->data_, ACE_TRY_ENV);
+  consumer->push (*this->data_ TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer,
-                         CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer
+                         TAO_ENV_ARG_DECL) const
 {
   // translation pg. 28
   CosNotification::StructuredEvent event;
@@ -267,7 +267,7 @@ TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer,
   event.header.fixed_header.event_type.type_name = CORBA::string_dup ("%ANY");
   event.header.fixed_header.event_type.domain_name = CORBA::string_dup ("");
 
-  consumer->push_structured_event (event, ACE_TRY_ENV);
+  consumer->push_structured_event (event TAO_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
@@ -379,26 +379,26 @@ TAO_Notify_StructuredEvent::event_type (void) const
 }
 
 CORBA::Boolean
-TAO_Notify_StructuredEvent::do_match (CosNotifyFilter::Filter_ptr filter,
-                                      CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_StructuredEvent::do_match (CosNotifyFilter::Filter_ptr filter
+                                      TAO_ENV_ARG_DECL) const
 {
-  return filter->match_structured (*this->data_, ACE_TRY_ENV);
+  return filter->match_structured (*this->data_ TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_StructuredEvent::do_push (CosEventComm::PushConsumer_ptr consumer,
-                                     CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_StructuredEvent::do_push (CosEventComm::PushConsumer_ptr consumer
+                                     TAO_ENV_ARG_DECL) const
 {
   // translation pg. 28
   CORBA::Any any;
   any <<= *this->data_;
   // is the typecode set by this operation or do we need to set it explicity.
 
-  consumer->push (any, ACE_TRY_ENV);
+  consumer->push (any TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_StructuredEvent::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const
+TAO_Notify_StructuredEvent::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const
 {
-  consumer->push_structured_event (*this->data_, ACE_TRY_ENV);
+  consumer->push_structured_event (*this->data_ TAO_ENV_ARG_PARAMETER);
 }

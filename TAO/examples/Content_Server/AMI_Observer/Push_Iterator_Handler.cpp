@@ -25,22 +25,22 @@ Push_Iterator_Handler::~Push_Iterator_Handler (void)
 
 void
 Push_Iterator_Handler::register_callback
-  (const Web_Server::Metadata_Type &metadata,
-   CORBA::Environment &ACE_TRY_ENV)
+  (const Web_Server::Metadata_Type &metadata
+   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->callback_servant_->metadata (metadata);
 
   // This handler is no longer needed, so deactivate it.
-  this->deactivate (ACE_TRY_ENV);
+  this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Push_Iterator_Handler::run (int *request_count,
                             const char *pathname,
-                            Web_Server::Iterator_Factory_ptr factory,
-                            CORBA::Environment &ACE_TRY_ENV)
+                            Web_Server::Iterator_Factory_ptr factory
+                            TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
@@ -54,37 +54,37 @@ Push_Iterator_Handler::run (int *request_count,
 
   // Activate the Callback.
   this->callback_ =
-    this->callback_servant_->_this (ACE_TRY_ENV);
+    this->callback_servant_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Activate this Reply Handler.
   this->ami_handler_ =
-    this->_this (ACE_TRY_ENV);
+    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Register the client callback with the server asynchronously.
   factory->sendc_register_callback (this->ami_handler_.in (),
                                     pathname,
-                                    this->callback_.in (),
-                                    ACE_TRY_ENV);
+                                    this->callback_.in ()
+                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Push_Iterator_Handler::deactivate (CORBA::Environment &ACE_TRY_ENV)
+Push_Iterator_Handler::deactivate (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the POA used when activating the Reply Handler object.
-  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  PortableServer::POA_var poa = this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this,
-                        ACE_TRY_ENV);
+    poa->servant_to_id (this
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now deactivate the AMI_CallbackHandler object.
-  poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+  poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

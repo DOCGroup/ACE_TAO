@@ -19,12 +19,12 @@ ImR_Locator::ImR_Locator (ImplRepo_i *repo)
 }
 
 char *
-ImR_Locator::locate (const char *object_key,
-                     CORBA::Environment &ACE_TRY_ENV)
+ImR_Locator::locate (const char *object_key
+                     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
   ACE_CString key (object_key);
-  return this->repo_->find_ior (key, ACE_TRY_ENV);
+  return this->repo_->find_ior (key TAO_ENV_ARG_PARAMETER);
 }
 
 

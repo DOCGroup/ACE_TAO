@@ -65,10 +65,10 @@ Param_Test_Client<T>::run_sii_test (void)
   this->results_.iterations (opt->loop_count ());
 
   // Declare the Env
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   // Initialize parameters for the test.
-  int check = this->test_object_->init_parameters (this->param_test_,
-                                                   ACE_TRY_ENV);
+  int check = this->test_object_->init_parameters (this->param_test_
+                                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (check == -1)
@@ -97,8 +97,8 @@ Param_Test_Client<T>::run_sii_test (void)
           this->results_.start_timer ();
 
           // make the call
-          this->test_object_->run_sii_test (this->param_test_,
-                                            ACE_TRY_ENV);
+          this->test_object_->run_sii_test (this->param_test_
+                                            TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // stop the timer.
@@ -178,10 +178,10 @@ Param_Test_Client<T>::run_dii_test (void)
   this->results_.iterations (opt->loop_count ());
 
   // Environment variable
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   // initialize parameters for the test
-  int check = this->test_object_->init_parameters (this->param_test_,
-                                                   ACE_TRY_ENV);
+  int check = this->test_object_->init_parameters (this->param_test_
+                                                   TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (check == -1)
@@ -207,8 +207,8 @@ Param_Test_Client<T>::run_dii_test (void)
 
       ACE_TRY
         {
-          req = this->param_test_->_request (opname,
-                                             ACE_TRY_ENV);
+          req = this->param_test_->_request (opname
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (opt->debug ())
@@ -218,8 +218,8 @@ Param_Test_Client<T>::run_dii_test (void)
             }
 
           // Make the invocation, verify the result.
-          this->test_object_->dii_req_invoke (req.in (),
-                                              ACE_TRY_ENV);
+          this->test_object_->dii_req_invoke (req.in ()
+                                              TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

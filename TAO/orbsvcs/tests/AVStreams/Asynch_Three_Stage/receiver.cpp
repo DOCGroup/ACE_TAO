@@ -63,8 +63,8 @@ Receiver_Callback::handle_destroy (void)
 
   ACE_TRY_NEW_ENV
     {
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0,
-                                                  ACE_TRY_ENV);
+      TAO_AV_CORE::instance ()->orb ()->shutdown (0
+                                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -93,8 +93,8 @@ Receiver::~Receiver (void)
 
 int
 Receiver::init (int,
-                char **,
-                CORBA::Environment &ACE_TRY_ENV)
+                char **
+                TAO_ENV_ARG_DECL)
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -119,18 +119,18 @@ Receiver::init (int,
     this->mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->mmdevice_->_this (ACE_TRY_ENV);
+    this->mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->receiver_name_,
-                                            mmdevice.in (),
-                                            ACE_TRY_ENV);
+                                            mmdevice.in ()
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Connect to the sender.
-  this->connection_manager_.connect_to_sender (ACE_TRY_ENV);
+  this->connection_manager_.connect_to_sender (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -179,39 +179,39 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0,
-                         ACE_TRY_ENV);
+                         0
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA",
-                                           ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA"
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_TRY_ENV);
+        = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (ACE_TRY_ENV);
+      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in (),
-                                      ACE_TRY_ENV);
+                                      root_poa.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Receiver receiver;
@@ -237,20 +237,20 @@ main (int argc,
 
       result =
         receiver.init (argc,
-                       argv,
-                       ACE_TRY_ENV);
+                       argv
+                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result != 0)
         return result;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Hack for now....
       ACE_OS::sleep (1);
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -30,7 +30,7 @@ class Signal_Handler : public ACE_Event_Handler
   //   Useful to gracefully release the process
 
 public:
-  
+
   Signal_Handler (void);
 
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
@@ -61,7 +61,7 @@ public:
   /// Accessor methods for the flowname of the callback.
   ACE_CString &flowname (void);
   void flowname (const ACE_CString &flowname);
-  
+
 private:
   int frame_count_;
   /// Keeping a count of the incoming frames.
@@ -81,9 +81,9 @@ public:
   /// Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
-  
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,
-                                                      CORBA::Environment &);
+
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec
+                                                      TAO_ENV_ARG_DECL_NOT_USED);
   /// Called when a distributor tries to connect to the receiver
 
 private:
@@ -107,8 +107,8 @@ public:
   /// Destructor.
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment &);
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   /// Initialize data components.
 
   int parse_args (int argc,
@@ -117,11 +117,11 @@ public:
 
   ACE_CString output_file_name (void);
   /// Name of the output file.
-  
+
   ACE_CString sender_name (void);
   ACE_CString receiver_name (void);
 
-  void shut_down (CORBA::Environment &);
+  void shut_down (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
 protected:
   Connection_Manager connection_manager_;

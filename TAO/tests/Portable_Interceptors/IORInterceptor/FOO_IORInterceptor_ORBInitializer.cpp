@@ -21,7 +21,6 @@ FOO_IORInterceptor_ORBInitializer::post_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
 
   PortableInterceptor::IORInterceptor_ptr foo;
   ACE_NEW_THROW_EX (foo,
@@ -36,7 +35,7 @@ FOO_IORInterceptor_ORBInitializer::post_init (
   PortableInterceptor::IORInterceptor_var ior_interceptor =
     foo;
 
-  info->add_ior_interceptor (ior_interceptor.in (),
-                             ACE_TRY_ENV);
+  info->add_ior_interceptor (ior_interceptor.in ()
+                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

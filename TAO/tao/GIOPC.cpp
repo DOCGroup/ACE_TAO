@@ -360,7 +360,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, GIOP::IORAddressingInfo 
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (GIOP::_tc_IORAddressingInfo, ACE_TRY_ENV);
+      type->equivalent (GIOP::_tc_IORAddressingInfo TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -464,7 +464,7 @@ CORBA::Boolean operator>>= (
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (GIOP::_tc_TargetAddress, ACE_TRY_ENV);
+      type->equivalent (GIOP::_tc_TargetAddress TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

@@ -185,26 +185,17 @@ be_visitor_operation_interceptors_cs::
 
   // Here I still need to generate the other methods + private args.
   *os << "virtual Dynamic::ParameterList * arguments "
-      << "(" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
-      << "TAO_default_environment ()" << be_uidt << be_uidt_nl
-      << ")" << be_nl
+      << "(TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_nl;
 
   *os << "virtual Dynamic::ExceptionList * exceptions "
-      << "(" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
-      << "TAO_default_environment ()" << be_uidt << be_uidt_nl
-      << ")" << be_nl
+      << "(TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_nl;
 
   *os << "virtual CORBA::Any * result "
-      << "(" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV =" << be_idt_nl
-      << "TAO_default_environment ()" << be_uidt << be_uidt_nl
-      << ")" << be_nl
+      << "(TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));\n"
       << be_uidt;
 
@@ -583,7 +574,7 @@ be_visitor_operation_interceptors_cs::
         }
     }
 
-  *os << "::arguments (CORBA::Environment &ACE_TRY_ENV)" << be_idt_nl
+  *os << "::arguments (TAO_ENV_SINGLE_ARG_DECL)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))"<<  be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -591,7 +582,7 @@ be_visitor_operation_interceptors_cs::
     {
       *os << "// Generate the argument list on demand." << be_nl
           << "Dynamic::ParameterList *parameter_list ="  << be_idt_nl
-          << "TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);"
+          << "TAO_RequestInfo_Util::make_parameter_list (TAO_ENV_SINGLE_ARG_PARAMETER);"
           << be_uidt_nl
           << "ACE_CHECK_RETURN (0);" << be_nl
           << be_nl;
@@ -702,7 +693,7 @@ be_visitor_operation_interceptors_cs::
         }
     }
 
-  *os << "::exceptions (CORBA::Environment &ACE_TRY_ENV)"<< be_idt_nl
+  *os << "::exceptions (TAO_ENV_SINGLE_ARG_DECL)"<< be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -710,7 +701,7 @@ be_visitor_operation_interceptors_cs::
     {
       *os << "// Generate the exception list on demand." << be_nl
           << "Dynamic::ExceptionList *exception_list ="  << be_idt_nl
-          << "TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);"
+          << "TAO_RequestInfo_Util::make_exception_list (TAO_ENV_SINGLE_ARG_PARAMETER);"
           << be_uidt_nl
           << "ACE_CHECK_RETURN (0);" << be_nl
           << be_nl;
@@ -799,7 +790,7 @@ be_visitor_operation_interceptors_cs::
         }
     }
 
-  *os << "::result (CORBA::Environment &ACE_TRY_ENV)" << be_idt_nl
+  *os << "::result (TAO_ENV_SINGLE_ARG_DECL)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -814,7 +805,7 @@ be_visitor_operation_interceptors_cs::
           // Return an Any with tk_void TypeCode.
           *os << "CORBA::Boolean tk_void_any = 1;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
-              << "TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);"
+              << "TAO_RequestInfo_Util::make_any (tk_void_any TAO_ENV_ARG_PARAMETER);"
               << be_uidt_nl
               << "ACE_CHECK_RETURN (0);" << be_nl
               << be_nl
@@ -824,7 +815,7 @@ be_visitor_operation_interceptors_cs::
         {
           *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
-              << "TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);"
+              << "TAO_RequestInfo_Util::make_any (tk_void_any TAO_ENV_ARG_PARAMETER);"
               << be_uidt_nl
               << "ACE_CHECK_RETURN (0);" << be_nl
               << be_nl

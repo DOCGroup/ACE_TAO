@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -88,13 +88,13 @@ int be_visitor_interface_thru_poa_collocated_sh::visit_interface (be_interface *
 
   *os << "virtual CORBA::Boolean _is_a" << be_idt
       << "(" << be_idt_nl
-      << "const CORBA::Char *logical_type_id," << be_nl
-      << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
+      << "const CORBA::Char *logical_type_id" << be_nl
+      << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   *os << "virtual CORBA::Boolean _non_existent" << be_idt
       << "(" << be_idt_nl
-      << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
+      << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   if (this->visit_scope (node) == -1)

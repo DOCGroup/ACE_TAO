@@ -25,20 +25,20 @@ public:
   Oneway_Buffering_Admin (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::ULong request_count (CORBA::Environment &ACE_TRY_ENV)
+  virtual CORBA::ULong request_count (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ULong bytes_received_count (CORBA::Environment &ACE_TRY_ENV)
+  virtual CORBA::ULong bytes_received_count (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void request_received (CORBA::ULong payload_length,
-                                 CORBA::Environment &ACE_TRY_ENV)
+  virtual void request_received (CORBA::ULong payload_length
+                                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void flush (CORBA::Environment &ACE_TRY_ENV)
+  virtual void flush (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
