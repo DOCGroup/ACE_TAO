@@ -63,7 +63,7 @@ hash (str, len)
      83, 83, 83, 83, 83, 83, 83, 83,
 #endif /* ACE_MVS */
     };
-  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+  return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
 struct resword *

@@ -68,13 +68,13 @@ hash (const char *str, unsigned int len)
     {
       default:
       case 4:
-        hval += asso_values[str[3]];
+        hval += asso_values[(int) str[3]];
       case 3:
       case 2:
       case 1:
-        hval += asso_values[str[0]];
+        hval += asso_values[(int) str[0]];
     }
-  return hval + asso_values[str[len - 1]];
+  return hval + asso_values[(int) str[len - 1]];
 }
 
 inline

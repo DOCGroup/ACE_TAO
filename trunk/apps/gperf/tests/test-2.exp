@@ -67,21 +67,21 @@ hash (str, len)
     {
       default:
       case 8:
-        hval += asso_values[str[7]];
+        hval += asso_values[(int) str[7]];
       case 7:
-        hval += asso_values[str[6]];
+        hval += asso_values[(int) str[6]];
       case 6:
-        hval += asso_values[str[5]];
+        hval += asso_values[(int) str[5]];
       case 5:
-        hval += asso_values[str[4]];
+        hval += asso_values[(int) str[4]];
       case 4:
-        hval += asso_values[str[3]];
+        hval += asso_values[(int) str[3]];
       case 3:
-        hval += asso_values[str[2]];
+        hval += asso_values[(int) str[2]];
       case 2:
-        hval += asso_values[str[1]];
+        hval += asso_values[(int) str[1]];
       case 1:
-        hval += asso_values[str[0]];
+        hval += asso_values[(int) str[0]];
     }
   return hval;
 }
