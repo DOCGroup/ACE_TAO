@@ -1,25 +1,36 @@
+Sat Oct 24 14:51:29 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp (supplier_task):
+          wrapped shift of "byte_order" with CORBA::Any::from_boolean (),
+          because egcs 1.1b complained about ambiguous overload resolution.
+          Thanks to Carlos for this solution.
+
+        * orbsvcs/tests/EC_Custom_Marshal/run_tests.pl: specify full path
+          to executables.    That way, users don't need to have . in their
+          path.
+
 Fri Oct 23 18:45:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA: 
-	  
-	  ACE_wrappers/TAO/examples/POA/DSI/client.dsp
-	  ACE_wrappers/TAO/examples/POA/DSI/server.dsp
-	  ACE_wrappers/TAO/examples/POA/Default_Servant/client.dsp
-	  ACE_wrappers/TAO/examples/POA/Default_Servant/server.dsp:
+        * examples/POA:
 
-	  Updated project files with the new IDL compiler location and new
- 	  bin/DLL directory location.
+          ACE_wrappers/TAO/examples/POA/DSI/client.dsp
+          ACE_wrappers/TAO/examples/POA/DSI/server.dsp
+          ACE_wrappers/TAO/examples/POA/Default_Servant/client.dsp
+          ACE_wrappers/TAO/examples/POA/Default_Servant/server.dsp:
 
-	  ACE_wrappers/TAO/examples/POA/DSI/server.cpp:
+          Updated project files with the new IDL compiler location and new
+          bin/DLL directory location.
 
-	  Fixed signed/unsigned problem.
+          ACE_wrappers/TAO/examples/POA/DSI/server.cpp:
 
-	  Thanks to John Morey<jmorey@tbi.com> for reporting them.
+          Fixed signed/unsigned problem.
+
+          Thanks to John Morey<jmorey@tbi.com> for reporting them.
 
 Fri Oct 23 18:23:07 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Simple/echo/README (Options):
-	 Added explanation regarding ior.
+        * examples/Simple/echo/README (Options):
+         Added explanation regarding ior.
 
 Fri Oct 23 17:54:16 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -52,34 +63,34 @@ Fri Oct 23 15:54:13 1998  Jeff Parsons <jp4@cs.wustl.edu>
 Fri Oct 23 15:00:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEMIB/DOVEMIBx.dsp
- 	  orbsvcs/tests/Simulator/DOVEMIB/TestClient.dsp
- 	  orbsvcs/tests/Simulator/DOVEMIB/any_test_i.cpp: Modified custom
- 	  build step for .idl files to look for the TAO IDL compiler in
- 	  the $ACE_ROOT/bin directory, converted ostream output for which
- 	  compiler was complaining about an ambiguous << operator into
- 	  ACE_DEBUG output form.  Thanks to Brian Gilstrap
- 	  <gilstrap_b@ociweb.com> for pointing this out.
+          orbsvcs/tests/Simulator/DOVEMIB/TestClient.dsp
+          orbsvcs/tests/Simulator/DOVEMIB/any_test_i.cpp: Modified custom
+          build step for .idl files to look for the TAO IDL compiler in
+          the $ACE_ROOT/bin directory, converted ostream output for which
+          compiler was complaining about an ambiguous << operator into
+          ACE_DEBUG output form.  Thanks to Brian Gilstrap
+          <gilstrap_b@ociweb.com> for pointing this out.
 
 1998-10-23  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* examples/Simple/bank/README (Options): Explained the [-o IOR_file_name]
-	option for the server more clearly.
+        * examples/Simple/bank/README (Options): Explained the [-o IOR_file_name]
+        option for the server more clearly.
 
 Fri Oct 23 12:41:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Environment.cpp:
-	  When using native C++ exceptions the
-	  CORBA_Environment::default_environment() function clears the
-	  environment every time it is called.  This should fix some
-	  problems reported by Goran Lowkrantz
-	  <Goran.Lowkrantz@infologigruppen.se>
+        * tao/Environment.cpp:
+          When using native C++ exceptions the
+          CORBA_Environment::default_environment() function clears the
+          environment every time it is called.  This should fix some
+          problems reported by Goran Lowkrantz
+          <Goran.Lowkrantz@infologigruppen.se>
 
 Fri Oct 23 12:33:56 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
 
-	  Modified the generated code sightly to make sure that we check
-	  for exceptions. Thanks to Naga for pointing this out.
+          Modified the generated code sightly to make sure that we check
+          for exceptions. Thanks to Naga for pointing this out.
 
 Fri Oct 23 11:17:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
