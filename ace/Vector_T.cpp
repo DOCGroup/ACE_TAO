@@ -45,8 +45,8 @@ void ACE_Vector<T, DEFAULT_SIZE>::push_back (const T& elem)
 template <class T, const size_t DEFAULT_SIZE>
 void ACE_Vector<T, DEFAULT_SIZE>::dump (void) const
 {
-  for (size_t i; i < size(); ++i)
-    (*this)[i]->dump();
+  for (size_t i = 0; i < this->size (); ++i)
+    (*this)[i].dump ();
 }
 
 #if 0

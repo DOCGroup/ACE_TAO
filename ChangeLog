@@ -1,3 +1,12 @@
+Sat Jan 19 17:29:50 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
+
+	* ace/Vector_T.cpp (dump): Fixed problems with this method.  Thanks
+	  to Don Hinton for reporting this.
+
+	* tests/Vector_Test.cpp: Changed the typedef of DATA from int to
+	  size_t to avoid "type mismatch" compiler warnings.  Thanks to
+ 	  Don Hinton for reporting this.
+
 Sat Jan 19 22:30:26 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* apps/JAWS2/JAWS/Hash_Bucket_T.h: 
