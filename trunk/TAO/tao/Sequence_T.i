@@ -102,7 +102,7 @@ ACE_INLINE
 T &
 TAO_Bounded_Sequence<T, MAX>::operator[] (CORBA::ULong i)
 {
-  ACE_ASSERT (i < this->maximum_);
+  TAO_SEQUENCE_ASSERT (i, this->maximum_);
   T * tmp = ACE_reinterpret_cast (T *,this->buffer_);
   return tmp[i];
 }
@@ -112,7 +112,7 @@ ACE_INLINE
 const T &
 TAO_Bounded_Sequence<T, MAX>::operator[] (CORBA::ULong i) const
 {
-  ACE_ASSERT (i < this->maximum_);
+  TAO_SEQUENCE_ASSERT (i, this->maximum_);
   const T * tmp = ACE_reinterpret_cast (const T * ACE_CAST_CONST,this->buffer_);
   return tmp[i];
 }
@@ -310,7 +310,7 @@ TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::operator[] (
     CORBA::ULong slot
   ) const
 {
-  ACE_ASSERT (slot < this->maximum_);
+  TAO_SEQUENCE_ASSERT (slot, this->maximum_);
   T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST,
                                          this->buffer_);
   return
@@ -358,7 +358,7 @@ TAO_Bounded_Object_Sequence<T, T_var,T_life,T_cast,MAX>::operator[] (
     CORBA::ULong slot
   ) const
 {
-  ACE_ASSERT (slot < this->maximum_);
+  TAO_SEQUENCE_ASSERT (slot, this->maximum_);
   T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST,
                                          this->buffer_);
   return
@@ -392,7 +392,7 @@ ACE_INLINE
 TAO_Pseudo_Object_Manager<T,T_var>
 TAO_Unbounded_Pseudo_Sequence<T,T_var>::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (slot < this->maximum_);
+  TAO_SEQUENCE_ASSERT (slot, this->maximum_);
   T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
   return TAO_Pseudo_Object_Manager<T,T_var> (tmp + slot, this->release_);
 }
@@ -425,7 +425,7 @@ TAO_Bounded_Pseudo_Sequence<T,T_var,MAX>::operator[] (
     CORBA::ULong slot
   ) const
 {
-  ACE_ASSERT (slot < this->maximum_);
+  TAO_SEQUENCE_ASSERT (slot, this->maximum_);
   T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST,
                                          this->buffer_);
   return TAO_Pseudo_Object_Manager<T,T_var> (tmp + slot,
@@ -482,7 +482,7 @@ ACE_INLINE
 T &
 TAO_Unbounded_Array_Sequence<T,T_var>::operator[] (CORBA::ULong i)
 {
-  ACE_ASSERT (i < this->maximum_);
+  TAO_SEQUENCE_ASSERT (i, this->maximum_);
 
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
   return ((T *) this->buffer_)[i];
@@ -496,7 +496,7 @@ ACE_INLINE
 const T &
 TAO_Unbounded_Array_Sequence<T,T_var>::operator[] (CORBA::ULong i) const
 {
-  ACE_ASSERT (i < this->maximum_);
+  TAO_SEQUENCE_ASSERT (i, this->maximum_);
 
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
   return ((const T * ACE_CAST_CONST) this->buffer_)[i];
@@ -541,7 +541,7 @@ ACE_INLINE
 T &
 TAO_Bounded_Array_Sequence<T,T_var,MAX>::operator[] (CORBA::ULong i)
 {
-  ACE_ASSERT (i < this->maximum_);
+  TAO_SEQUENCE_ASSERT (i, this->maximum_);
 
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
   return ((T *) this->buffer_)[i];
@@ -555,7 +555,7 @@ ACE_INLINE
 const T &
 TAO_Bounded_Array_Sequence<T,T_var,MAX>::operator[] (CORBA::ULong i) const
 {
-  ACE_ASSERT (i < this->maximum_);
+  TAO_SEQUENCE_ASSERT (i, this->maximum_);
 
 #if defined (__SUNPRO_CC) && (__SUNPRO_CC < 0x500)
   return ((const T * ACE_CAST_CONST) this->buffer_)[i];

@@ -25,9 +25,8 @@
 
 #include "tao/Managed_Types.h"
 #include "ace/CORBA_macros.h"
-#include "ace/Log_Msg.h"        /* For "ACE_ASSERT" */
-#include "ace/Message_Block.h"
 
+class ACE_Message_Block;
 
 /**
  * @class TAO_Base_Sequence
@@ -99,6 +98,10 @@ protected:
   /// Assume ownership and set length to 0.
   TAO_Base_Sequence (CORBA::ULong maximum,
                      void *buffer);
+
+  void check_bounds(
+      char const * filename, unsigned long lineno,
+      CORBA::ULong tao_idx, CORBA::ULong tao_max) const;
 
 public:
 
@@ -649,6 +652,13 @@ TAO_Export int operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
                            const TAO_Unbounded_Sequence<CORBA::Octet> &r);
 
 // ****************************************************************
+
+/**
+ * @brief Safe assertions without including Log_Msg.h
+ */
+#define TAO_SEQUENCE_ASSERT(TAO_IDX,TAO_MAX) \
+  this->check_bounds(__FILE__, __LINE__, (TAO_IDX), (TAO_MAX))
+
 
 #if defined (__ACE_INLINE__)
 #include "tao/Sequence.i"

@@ -9,6 +9,7 @@
 #include "tao/CORBA_String.h"
 
 #include "ace/CORBA_macros.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any_Dual_Impl_T.inl"

@@ -26,6 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/corbafwd.h"
+#include "ace/Synch.h"
 
 
 class TAO_Service_Callbacks;

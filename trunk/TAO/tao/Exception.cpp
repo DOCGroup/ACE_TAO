@@ -12,6 +12,7 @@
 #include "ORB_Core.h"
 #include "Any_SystemException.h"
 
+#include "ace/Malloc.h"
 #include "ace/streams.h"
 
 
