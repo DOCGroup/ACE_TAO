@@ -1,4 +1,11 @@
-Wed May 26 14:03:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed May 26 14:56:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OBV/Typed_Events/Event_Types_impl.h: Disabled VC
+	  warning 4250.  Also added macros to prevent circular inclusion.
+
+	* examples/OBV/Typed_Events/Event_Types.dsw:
+	* examples/OBV/Typed_Events/client.dsp:
+	* examples/OBV/Typed_Events/server.dsp: New workspace/projects.
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
 	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed build options for
@@ -11,7 +18,7 @@ Wed May 26 14:05:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Wed May 26 13:56:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Messaging_Policy_i.h: Disable VC warning 4250 for class
+	* tao/Messaging_Policy_i.h: Disabled VC warning 4250 for class
 	  TAO_RelativeRoundtrigTimeoutPolicy_i.
 
 Wed May 26 11:54:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
