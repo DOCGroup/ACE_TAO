@@ -29,7 +29,7 @@
 // included before anything else. You can define ACE_HAS_VCL=1 in your
 // project settings to have this file included for you automatically.
 # if defined (ACE_HAS_VCL) && (ACE_HAS_VCL != 0)
-#  include <vcl.h>
+#  include /**/ <vcl.h>
 # endif 
 
 # include "ace/config-win32-common.h"
