@@ -4,7 +4,6 @@ project : taoserver, fault_tolerance {
     Fault_Detector_i.cpp
     Fault_Detector_Main.cpp
     FT_FaultDetectorFactory_i.cpp
-    PG_Property_Set_Helper.cpp
   }
 }
 

@@ -1,3 +1,42 @@
+Wed Jul 30 14:59:01 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        Milestone: FaultDetector passes unit test (run_test_notifier.pl)
+
+        * TAO/orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * TAO/orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * TAO/orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+
+        * TAO/tests/FT_App/FTAPP_Notifier_Main.cpp:
+        * TAO/tests/FT_App/FT_App.mpc:
+        * TAO/tests/FT_App/FT_Client.cpp:
+        * TAO/tests/FT_App/FT_Replica.cpp:
+        * TAO/tests/FT_App/FT_TestReplica.idl:
+        * TAO/tests/FT_App/FT_TestReplica_i.h:
+        * TAO/tests/FT_App/FT_TestReplica_i.cpp:
+        * TAO/tests/FT_App/StubFaultNotifier.h:
+        * TAO/tests/FT_App/StubFaultNotifier.cpp:
+        * TAO/tests/FT_App/run_test_basic.pl:
+        * TAO/tests/FT_App/run_test_notifier.pl:
+        * TAO/tests/FT_App/testscript:
+
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
+          Formerly named PG_Property_Set_Helper*
+
+        * TAO/orbsvcs/Fault_Detector/PG_Property_Set_Helper.h:
+        * TAO/orbsvcs/Fault_Detector/PG_Property_Set_Helper.cpp:
+          Rename and move to orbsvcs/orbsvcs/PG_Properties*
+
+        * TAO/tests/FT_App/run_test.pl:
+          Rename to run_test_basic.pl
+
+        These changes were made in the oci_haft branch.
+
 Wed Jul 30 12:55:25 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * bin/MakeProjectCreator/config/fault_tolerance.mpb:

@@ -43,6 +43,7 @@ module FT_TEST
     {
       NOT_YET,
       RIGHT_NOW,
+      WHILE_IDLE,
       DURING_GET,
       BEFORE_SET,
       AFTER_SET,

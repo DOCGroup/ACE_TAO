@@ -1,88 +1,23 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    Detector.h
+ *  @file    PG_Properties_Decoder.cpp
  *
  *  $Id$
  *
- *  This file implements classes to help manage the Property_Sets
+ *  This file implements classes to help manage the Properties
  *  defined in the Portable Object Group.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
 #include "ace/pre.h"
-#include "PG_Property_Set_Helper.h"
-
-/////////////////
-// Everything you need to know about properties
-//  typedef sequence<Property> Properties;
-//  struct Property {
-//      Name nam;
-//    Value val;
-//  };
-//  typedef CosNaming::Name Name;
-//  typedef any Value;
-//  typedef sequence <NameComponent> CosNaming::Name;
-//  struct NameComponent
-//  {
-//    Istring id;
-//    // This is the name that is used to identify object references.
-//
-//    Istring kind;
-//    // Stores any addtional info about the object reference.
-//  };
+#include "PG_Properties_Decoder.h"
 
 
-
-//////////
-// Encoder
-Portable_Group::Property_Set::Encoder::Encoder ()
-{
-}
-
-Portable_Group::Property_Set::Encoder::~Encoder ()
-{
-}
-
-
-void Portable_Group::Property_Set::Encoder::add (
-  const char * name,
-  const CORBA::Any & value)
-{
-  NamedValue nv(name, value);
-  values_.push_back(nv);
-}
-
-void Portable_Group::Property_Set::Encoder::encode (
-  PortableGroup::Properties_var & property_set) const
-{
-  size_t count = values_.size();
-  property_set->length(count);
-  for( size_t nItem = 0; nItem < count; ++nItem )
-  {
-    const NamedValue & nv = values_[nItem];
-    PortableGroup::Property & property = property_set[nItem];
-    CosNaming::Name & nsName = property.nam;
-    CORBA::Any & anyValue = property.val;
-    // assign the value
-    anyValue = (nv.second());
-
-    // assign the name
-    // TODO: This restricts the name to a single level with no "kind"
-    // TODO: remove this restriction (?)
-    nsName.length(1);
-    CosNaming::NameComponent & nc = nsName[0];
-
-    nc.id = CORBA::string_dup (nv.first().c_str());
-    // nc.kind defaults to empty.  Leave it that way (for now)
-
-  }
-}
-
-//////////
-// Decoder
-Portable_Group::Property_Set::Decoder::Decoder (const PortableGroup::Properties & property_set)
+//////////////////////
+// Properties_Decoder
+TAO_PG::Properties_Decoder::Properties_Decoder (const PortableGroup::Properties & property_set)
 {
   size_t count = property_set.length();
   for (size_t nItem = 0; nItem < count; ++nItem)
@@ -93,7 +28,7 @@ Portable_Group::Property_Set::Decoder::Decoder (const PortableGroup::Properties 
     // TODO: fix this
     const CosNaming::NameComponent & nc = nsName[0];
     ACE_CString name = nc.id;
-    if (0 != values_.bind(name, property.val))
+    if (0 != values_.bind(name, & property.val))
     {
       ACE_ERROR ((LM_ERROR,
         "%n\n%T: Property_set: bind failed.\n"
@@ -102,23 +37,27 @@ Portable_Group::Property_Set::Decoder::Decoder (const PortableGroup::Properties 
   }
 }
 
-Portable_Group::Property_Set::Decoder::~Decoder ()
+TAO_PG::Properties_Decoder::~Properties_Decoder ()
 {
 }
 
-int Portable_Group::Property_Set::Decoder::find (
+int TAO_PG::Properties_Decoder::find (
   const ACE_CString & key,
-  CORBA::Any & anyValue)const
+  PortableGroup::Value *& pValue)const
 {
   int found = 0;
-  if (0 == values_.find(key, anyValue))
+  if (0 == values_.find(key, pValue))
   {
     found = 1;
   }
   return found;
 }
 
-int Portable_Group::Property_Set::test_encode_decode ()
+//#define PG_PS_UNIT_TEST
+#ifdef PG_PS_UNIT_TEST
+#include "PG_Properties_Encoder.h"
+
+int TAO_PG::test_encode_decode ()
 {
   int result = 1;
   static const long testLong = 123456L;
@@ -133,8 +72,8 @@ int Portable_Group::Property_Set::test_encode_decode ()
   PortableGroup::Properties_var property_set = new PortableGroup::Properties;
   //scope encoder to be sure its gone before decoding
   {
-    Portable_Group::Property_Set::Encoder encoder;
-    CORBA::Any value;
+    TAO_PG::Encoder encoder;
+    PortableGroup::Value value;
     value <<= (CORBA::Long) testLong;
     encoder.add (testLongKey, value);
 
@@ -147,7 +86,7 @@ int Portable_Group::Property_Set::test_encode_decode ()
     encoder.encode(property_set);
   }
 
-  Portable_Group::Property_Set::Decoder decoder(property_set);
+  TAO_PG::Properties_Decoder decoder(property_set);
 
   CORBA::Long longResult = 0;
   if (find (decoder, testLongKey, longResult) )
@@ -218,13 +157,10 @@ int Portable_Group::Property_Set::test_encode_decode ()
 
   return result;
 }
+#endif // PG_PS_UNIT_TEST
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template ACE_Pair< ACE_CString, CORBA::Any>;
-  template ACE_Vector< NamedValue, 10 >;
-  template ACE_Hash_Map_Manager<ACE_CString, CORBA::Any, ACE_SYNCH_NULL_MUTEX>;
+  template ACE_Hash_Map_Manager<ACE_CString, PortableGroup::Value *, ACE_SYNCH_NULL_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Pair< ACE_CString, CORBA::Any>
-# pragma instantiate ACE_Vector< NamedValue, 10 >
-# pragma instantiate ACE_Hash_Map_Manager<ACE_CString, CORBA::Any, ACE_SYNCH_NULL_MUTEX>
+# pragma instantiate ACE_Hash_Map_Manager<ACE_CString, PortableGroup::Value *, ACE_SYNCH_NULL_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

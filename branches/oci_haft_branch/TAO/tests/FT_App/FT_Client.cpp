@@ -23,7 +23,6 @@ class FTClientMain
   // execution
   int run ();
 
-
   /////////////////
   // implementation
 private:
@@ -33,7 +32,7 @@ private:
     ServerVar & ft_server,  // in
     long & counter,         // inout
     int & more,             // out
-    std::string & command,  // inout
+    ACE_CString & command,  // inout
     int retry               // in
     );
 
@@ -110,6 +109,7 @@ void FTClientMain::commandUsage(ostream & out)
     << "    dN    die on condition:" << std::endl
     << "      " << FT_TEST::TestReplica::NOT_YET << " don't die" << std::endl
     << "      " << FT_TEST::TestReplica::RIGHT_NOW << " immediately" << std::endl
+    << "      " << FT_TEST::TestReplica::WHILE_IDLE << " while idle" << std::endl
     << "      " << FT_TEST::TestReplica::DURING_GET << " during next get" << std::endl
     << "      " << FT_TEST::TestReplica::BEFORE_SET << " before next set" << std::endl
     << "      " << FT_TEST::TestReplica::AFTER_SET << " after next set" << std::endl
@@ -134,6 +134,7 @@ void FTClientMain::commandUsage(ostream & out)
     << "     2 display counter value after every command (default)." << std::endl
     << "     3 display commands." << std::endl
     << "     4 display method calls." << std::endl
+    << "   zN   sleep N seconds." << std::endl
     << "   q    quit (end the client, not the replica(s).)" << std::endl
     << "   q1   quit (end the client, and shutdown the currently active replica.)" << std::endl
     << "   ?    help (this message)" << std::endl;
@@ -240,10 +241,10 @@ void FTClientMain::usage(ostream & out)const
 }
 
 int FTClientMain::pass (
-  ServerVar & ft_server, 
+  ServerVar & ft_server,
   long & counter,
   int & more,
-  std::string & command,
+  ACE_CString & command,
   int retry)
 {
   int result = 0;
@@ -255,7 +256,7 @@ int FTClientMain::pass (
 
   while(more && result == 0 &&  ! commandIn_->eof())
   {
-    if (! retry || command.empty() )
+    if (! retry || command.length () == 0 )
     {
       char buffer[1000];
       commandIn_->getline(buffer, sizeof(buffer)-1);
@@ -266,7 +267,7 @@ int FTClientMain::pass (
     if (command.length() >0)
     {
       char op = command[0];
-      std::string cdr = command.substr(1);
+      ACE_CString cdr = command.substr(1);
       char * junque;
       long operand = strtol(cdr.c_str(),&junque, 10);
 
@@ -314,7 +315,7 @@ int FTClientMain::pass (
           {
             std::cout << "FT Client: Error: Read " << value << " expecting " << operand << endl;
           }
-          echo = 0; 
+          echo = 0;
           break;
 
         }
@@ -360,7 +361,7 @@ int FTClientMain::pass (
           long attribute = ft_server->counter(ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           std::cout << "FT Client: Attribute: " << attribute << endl;
-          echo = 0; 
+          echo = 0;
           break;
         }
         case '!':
@@ -528,7 +529,7 @@ int FTClientMain::run ()
   long counter = ft_server->get(ACE_ENV_SINGLE_ARG_PARAMETER);
 
   // retry information
-  std::string command;
+  ACE_CString command;
   int retry = 0;
 
   ACE_TRY_CHECK;
@@ -560,7 +561,7 @@ int FTClientMain::run ()
         {
           std::cout << "FT Client: Recovering from fault." << std::endl;
           std::cout << "FT Client:   Activate " << fargPos_ << std::endl;
-          if (command.empty())
+          if (command.length () == 0)
           {
             std::cout << "FT Client:   No command to retry." << std::endl;
           }
@@ -622,3 +623,9 @@ main (int argc, char *argv[])
   }
   return result;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template Client<FT_TEST::TestReplica, FT_TEST::TestReplica_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate Client<FT_TEST::TestReplica, FT_TEST::TestReplica_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

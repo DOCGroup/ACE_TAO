@@ -8,12 +8,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "FT_TestReplicaS.h"
-#include "tao/PortableServer/ORB_Manager.h"
+//#include "tao/PortableServer/ORB_Manager.h"
 
 class FT_TestReplica_i : public virtual POA_FT_TEST::TestReplica
 {
 public:
-  FT_TestReplica_i (CORBA::ORB_var & orb);
+  FT_TestReplica_i (CORBA::ORB_var & orb, int identity = 0);
   virtual ~FT_TestReplica_i ();
 
   /**
@@ -30,6 +30,13 @@ public:
    * @returns c-style string containing "bare" usage options.
    */
   virtual const char * usage_options();
+
+  /**
+   * idle time activity.
+   * @param result [out] status code to return from process
+   * @returns 0 to continue; nonzero to quit
+   */
+  int idle(int &result);
 
 private:
   ///////////////////////////
@@ -92,6 +99,7 @@ private:
   FT_TEST::TestReplica::Bane death_pending_;
   CORBA::ORB_var orb_;
   int verbose_;
+  int identity_;
 };
 
 #endif /* FT_TESTREPLICA_I_H_  */

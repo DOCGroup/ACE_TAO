@@ -3,13 +3,16 @@
 
 #include "FT_TestReplica_i.h"
 #include "ace/Get_Opt.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 
 namespace {
 
   const char *ior_output_file = 0;
-
   const char * nsName = "FT_TEST";
+  int identity = 0;
+
+
   int
   write_IOR(const char * fileName, const char* ior)
   {
@@ -28,7 +31,7 @@ namespace {
   int
   parse_args (int argc, char *argv[])
   {
-    ACE_Get_Opt get_opts (argc, argv, "o:");
+    ACE_Get_Opt get_opts (argc, argv, "o:r:");
     int c;
 
     while ((c = get_opts ()) != -1)
@@ -37,7 +40,9 @@ namespace {
         case 'o':
           ior_output_file = get_opts.opt_arg ();
           break;
-
+        case 'r':
+          identity = ACE_OS::atoi(get_opts.opt_arg ());
+          break;
         case '?':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -74,7 +79,7 @@ int main (int argc, char * argv[] )
         ACE_CHECK_RETURN (-1);
 
         CORBA::ORB_var orb = orbManager.orb();
-        FT_TestReplica_i ftReplica(orb);
+        FT_TestReplica_i ftReplica(orb, identity);
 
         // Register with the ORB.
         CORBA::String_var ftReplicaIOR =
@@ -113,7 +118,7 @@ int main (int argc, char * argv[] )
         }
         if (result == 0)
         {
-          std::cout << "FT Replica: Ready. ";
+          std::cout << "FT Replica" << identity << ": Ready. ";
           if (ior_output_file)
           {
             std::cout << " file:" << ior_output_file;
@@ -125,16 +130,25 @@ int main (int argc, char * argv[] )
 
           std::cout << std::endl;
 
-          // Run the main event loop for the ORB.
-          result = orbManager.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          if (result == -1)
-          {
-            ACE_ERROR_RETURN (
-              (LM_ERROR, "FT_Replica_i::run"),
-              -1);
-          }
+          // Initial run to initialize the orb
+          ACE_Time_Value tv(1,0);
+          result = orbManager.run (tv
+            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          std::cout << "FT Replica: Terminated normally.";
+
+          // now run event loop
+          CORBA::ORB_ptr orb = orbManager.orb();
+          int quit = 0;
+          while (result == 0 && ! quit )
+          {
+            ACE_Time_Value work_tv(1,0);
+            orb->perform_work(work_tv
+              ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+            quit = ftReplica.idle(result);
+          }
+          orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
+          std::cout << "FT Replica" << identity << ": Terminated normally.";
           if (ior_output_file)
           {
             std::cout << " file:" << ior_output_file;
@@ -163,7 +177,7 @@ int main (int argc, char * argv[] )
     ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "server::main\t\n");
+        "FT_Replica::main\t\n");
       result = -1;
     }
     ACE_ENDTRY;

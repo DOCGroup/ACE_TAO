@@ -19,7 +19,10 @@
 
 #include "tao/PortableServer/ORB_Manager.h"
 
-#include "PG_Property_Set_Helper.h"
+#ifdef PG_PS_UNIT_TEST
+# include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
+# include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
+#endif //  PG_PS_UNIT_TEST
 
 int main (int argc, ACE_TCHAR * argv[] )
 {
@@ -43,18 +46,20 @@ int main (int argc, ACE_TCHAR * argv[] )
         ACE_CHECK_RETURN (-1);
 
 // property set helper test
-        if ( Portable_Group::Property_Set::test_encode_decode () )
+#ifdef PG_PS_UNIT_TEST
+        if ( Portable_Group::Properties::test_encode_decode () )
         {
           ACE_ERROR ((LM_ERROR,
             "%n\n%T: Passed property set self-test.\n "
             ));
         }
+#endif
 
         result = factory.self_register(orbManager);
         if (result == 0)
         {
           ACE_ERROR ((LM_ERROR,
-            "%n\n%T: Ready %s\n", factory.identity()
+            "%n\n%T: FaultDetectorFactory Ready %s\n", factory.identity()
             ));
 
           // Run the main event loop for the ORB.
@@ -89,7 +94,7 @@ int main (int argc, ACE_TCHAR * argv[] )
     ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "server::main\t\n");
+        "Fault Detector Factory::main\t\n");
       result = -1;
     }
     ACE_ENDTRY;
