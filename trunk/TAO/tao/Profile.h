@@ -18,15 +18,15 @@
 #define TAO_PROFILE_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Tagged_Components.h"
-#include "tao/PolicyC.h"
-#include "tao/GIOP_Message_State.h"
+#include "Tagged_Components.h"
+#include "PolicyC.h"
+#include "GIOP_Message_State.h"
 
 class TAO_MProfile;
 class TAO_Stub;
@@ -55,7 +55,7 @@ public:
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
 
-  const TAO_GIOP_Version& version (void) const;
+  const TAO_GIOP_Version &version (void) const;
   // Return a pointer to this profile's version.  This object
   // maintains ownership.
 
@@ -79,6 +79,10 @@ public:
   TAO_Tagged_Components& tagged_components (void);
   // Access the tagged components, notice that they they could be
   // empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
+
+  /// Add the given tagged component to the profile.
+  void add_tagged_component (const IOP::TaggedComponent &component,
+                             CORBA::Environment &ACE_TRY_ENV);
 
   virtual char object_key_delimiter (void) const = 0;
   // The object key delimiter.
@@ -149,14 +153,24 @@ public:
   // Gets the TAO_MProfile that holds the TAO_Profile instance.
 
 private:
+
   TAO_MProfile *forward_to_i (void);
   // this object keeps ownership of this object
+
+  /// Verify that the current ORB's configuration supports tagged
+  /// components in IORs.
+  void verify_orb_configuration (CORBA::Environment &ACE_TRY_ENV);
+
+  /// Verify that the given profile supports tagged components,
+  /// i.e. is not a GIOP 1.0 profile.
+  void verify_profile_version (CORBA::Environment &ACE_TRY_ENV);
 
   // Profiles should not be copied!
   ACE_UNIMPLEMENTED_FUNC (TAO_Profile (const TAO_Profile&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Profile&))
 
 protected:
+
   TAO_GIOP_Version version_;
   // IIOP version number.
 
@@ -181,6 +195,7 @@ protected:
 
 
 private:
+
   CORBA::ULong tag_;
   // IOP protocol tag.
 
@@ -241,7 +256,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Profile.i"
+# include "Profile.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

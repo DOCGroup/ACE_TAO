@@ -1,37 +1,36 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     ORBInitializer_Registry.h
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+// ===================================================================
+/**
+ *  @file   ORBInitializer_Registry.h
+ *
+ *  $Id$
+ *
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+// ===================================================================
 
 #ifndef TAO_ORB_INITIALIZER_REGISTRY_H
 #define TAO_ORB_INITIALIZER_REGISTRY_H
 
 #include "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "PortableInterceptorC.h"
-#include "tao/TAO_Singleton.h"
+#include "TAO_Singleton.h"
 #include "ace/Containers_T.h"
 
-/// Global list that contains all portable interceptor ORB
-/// initializers.
+/**
+ * @class TAO_ORBInitializer_Registry
+ *
+ * @brief Global list that contains all portable interceptor ORB
+ *        initializers.
+ */
 class TAO_Export TAO_ORBInitializer_Registry
 {
   friend class TAO_Singleton<TAO_ORBInitializer_Registry, ACE_SYNCH_MUTEX>;
@@ -45,31 +44,31 @@ class TAO_Export TAO_ORBInitializer_Registry
 
 protected:
 
+  /// Only allow this class to be instantiated as a singleton
+  /// instance, so declare the constructor as protected.
   TAO_ORBInitializer_Registry (void);
-  ///< Only allow this class to be instantiated as a singleton
-  ///< instance, so declare the constructor as protected.
 
+  /// Destructor.  Releases duplicated ORBInitializer references.
   ~TAO_ORBInitializer_Registry (void);
-  ///< Destructor.  Releases duplicated ORBInitializer references.
 
+  ///< Register an ORBInitializer with the underlying ORBInitializer
+  ///< array.
   void register_orb_initializer (
     PortableInterceptor::ORBInitializer_ptr init,
     CORBA::Environment &ACE_TRY_ENV);
-  ///< Register an ORBInitializer with the underlying ORBInitializer
-  ///< sequence.
 
+  /// Begin initialization of all registered ORBInitializers before
+  /// the ORB itself is initialized.
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info,
                  CORBA::Environment &ACE_TRY_ENV);
-  ///< Begin initialization of all registered ORBInitializers before
-  ///< the ORB itself is initialized.
 
+  /// Complete initialization of all registered ORBInitializers after
+  /// the ORB has been initialized.
   void post_init (PortableInterceptor::ORBInitInfo_ptr info,
                   CORBA::Environment &ACE_TRY_ENV);
-  ///< Complete initialization of all registered ORBInitializers after
-  ///< the ORB has been initialized.
 
+  /// Return a unique singleton instance.
   static TAO_ORBInitializer_Registry *instance (void);
-  // Return a unique instance
 
 private:
 
@@ -80,8 +79,8 @@ private:
 
 private:
 
+  /// Dynamic array containing registered ORBInitializers.
   ACE_Array_Base<PortableInterceptor::ORBInitializer_ptr> initializers_;
-  ///< Dynamic array containing registered ORBInitializers.
 
 };
 

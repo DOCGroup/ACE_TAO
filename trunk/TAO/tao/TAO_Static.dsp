@@ -143,6 +143,10 @@ SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cleanup_Func_Registry.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Client_Priority_Policy.h
 # End Source File
 # Begin Source File
@@ -380,6 +384,10 @@ SOURCE=.\ior_corbaname_export.h
 # Begin Source File
 
 SOURCE=.\IOR_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IORInfo.h
 # End Source File
 # Begin Source File
 
@@ -780,7 +788,7 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter "i,inl"
 # Begin Source File
 
 SOURCE=.\Acceptor_Filter.i
@@ -828,6 +836,10 @@ SOURCE=.\Cache_Entries.i
 # Begin Source File
 
 SOURCE=.\cdr.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cleanup_Func_Registry.inl
 # End Source File
 # Begin Source File
 
@@ -1391,6 +1403,10 @@ SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cleanup_Func_Registry.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Client_Priority_Policy.cpp
 # End Source File
 # Begin Source File
@@ -1604,6 +1620,10 @@ SOURCE=.\IOPS.cpp
 # Begin Source File
 
 SOURCE=.\IOR_Parser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IORInfo.cpp
 # End Source File
 # Begin Source File
 

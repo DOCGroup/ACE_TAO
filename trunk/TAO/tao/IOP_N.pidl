@@ -15,7 +15,7 @@
 #define local  
 #endif
 
-//#include <orb.idl> - removed by Kirthika
+#include <orb.idl>
 #include <IOP.pidl> // .idl in the spec
 
 module IOP_N {

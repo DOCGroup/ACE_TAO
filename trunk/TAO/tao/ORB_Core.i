@@ -355,6 +355,64 @@ TAO_ORB_Core::get_tss_resources (void)
   return ACE_TSS_GET (&this->tss_resources_,TAO_ORB_Core_TSS_Resources);
 }
 
+ACE_INLINE void *
+TAO_ORB_Core::get_tss_resource (size_t slot_id)
+{
+  TAO_ORB_Core_TSS_Resources *tss_resources =
+    this->get_tss_resources ();
+
+  if (slot_id >= tss_resources->ts_objects_.size ())
+    return 0;
+
+  return tss_resources->ts_objects_[slot_id];
+}
+
+ACE_INLINE int
+TAO_ORB_Core::set_tss_resource (size_t slot_id, void *ts_object)
+{
+  TAO_ORB_Core_TSS_Resources *tss_resources =
+    this->get_tss_resources ();
+
+  // The number of allocated slots is equal to the number of
+  // registered TSS cleanup functions, *not* the size of the array in
+  // the ORB core TSS resources.
+  if (slot_id >= this->tss_cleanup_funcs_.size ())
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
+  // If the TSS array isn't large enough, then increase its size.
+  // We're guaranteed not to exceed the number of allocated slots by
+  // the above check.
+  if (slot_id >= tss_resources->ts_objects_.size ()
+      && tss_resources->ts_objects_.size (slot_id + 1) != 0)
+    return -1;
+
+  tss_resources->ts_objects_[slot_id] = ts_object;
+
+  // Make sure the ORB core pointer is set in the ORB core's TSS
+  // resources so that the TSS cleanup functions stored in the ORB
+  // core can be invoked.
+  tss_resources->orb_core_ = this;
+
+  return 0;
+}
+
+ACE_INLINE int
+TAO_ORB_Core::add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup,
+                                    size_t &slot_id)
+{
+  return this->tss_cleanup_funcs_.register_cleanup_function (cleanup,
+                                                             slot_id);
+}
+
+TAO_Cleanup_Func_Registry *
+TAO_ORB_Core::tss_cleanup_funcs (void)
+{
+  return &(this->tss_cleanup_funcs_);
+}
+
 ACE_INLINE int
 TAO_ORB_Core::has_shutdown (void)
 {
@@ -603,16 +661,38 @@ TAO_ORB_Core::add_interceptor (
                                                       ACE_TRY_ENV);
 }
 
+ACE_INLINE void
+TAO_ORB_Core::add_interceptor (
+   PortableInterceptor::IORInterceptor_ptr interceptor,
+   CORBA_Environment &ACE_TRY_ENV)
+{
+  this->ior_interceptors_.add_interceptor (interceptor,
+					   ACE_TRY_ENV);
+}
+
+// ------
+
 ACE_INLINE TAO_ClientRequestInterceptor_List::TYPE &
 TAO_ORB_Core::client_request_interceptors (void)
 {
   return this->client_request_interceptors_.interceptors ();
 }
 
+// @@ It would be nice to move these to the PortableServer library,
+//    perhaps to the RootPOA.  However, there is no "RootPOA" class so
+//    there doesn't appear to be a way that only the RootPOA
+//    implementation has these server-side interceptor methods and
+//    attributes.  Leave them in the ORB Core for now.
 ACE_INLINE TAO_ServerRequestInterceptor_List::TYPE &
 TAO_ORB_Core::server_request_interceptors (void)
 {
   return this->server_request_interceptors_.interceptors ();
+}
+
+ACE_INLINE TAO_IORInterceptor_List::TYPE &
+TAO_ORB_Core::ior_interceptors (void)
+{
+  return this->ior_interceptors_.interceptors ();
 }
 #endif /* TAO_HAS_INTERCEPTORS */
 

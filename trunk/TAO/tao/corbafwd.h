@@ -321,9 +321,9 @@ class CORBA_WStringSeq;
 class CORBA_WStringSeq_var;
 class CORBA_WStringSeq_out;
 
-class OctetSeq;
-class OctetSeq_var;
-class OctetSeq_out;
+class CORBA_OctetSeq;
+class CORBA_OctetSeq_var;
+class CORBA_OctetSeq_out;
 
 class CORBA_Bounds;
 typedef CORBA_Bounds *CORBA_Bounds_ptr;
@@ -436,10 +436,13 @@ TAO_NAMESPACE CORBA
   typedef CORBA_WStringSeq_out WStringSeq_out;
 
   /// Octet sequence typedef
+  typedef CORBA_OctetSeq OctetSeq;
+  typedef CORBA_OctetSeq_var OctetSeq_var;
+  typedef CORBA_OctetSeq_out OctetSeq_out;
 
-  typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
-  typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
-  typedef TAO_Unbounded_Sequence<Octet> OctetSeq_out;
+//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
+//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
+//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_out;
 
   // = various CORBA defined classes.
   typedef CORBA_Any Any;

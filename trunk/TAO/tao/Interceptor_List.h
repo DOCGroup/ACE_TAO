@@ -1,161 +1,218 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     Interceptor_List.h
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+// ===================================================================
+/**
+ *  @file   Interceptor_List.h
+ *
+ *  $Id$
+ *
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+// ===================================================================
 
 #ifndef TAO_INTERCEPTOR_LIST_H
 #define TAO_INTERCEPTOR_LIST_H
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_INTERCEPTORS == 1)
 
-#include "tao/PortableInterceptorC.h"
+#include "PortableInterceptorC.h"
 #include "ace/Containers_T.h"
 
 
-/// Base class for the various portable interceptor lists used
-/// internally by TAO. 
+/**
+ * @class TAO_Interceptor_List
+ *
+ * @brief
+ * Base class for the various portable interceptor lists used
+ * internally by TAO.
+ */
 class TAO_Export TAO_Interceptor_List
 {
 public:
-  TAO_Interceptor_List (void);
-  ///< Constructor
 
+  /// Constructor
+  TAO_Interceptor_List (void);
+  
+  /// Destructor
   virtual ~TAO_Interceptor_List (void);
-  ///< Destructor.
 
 protected:
 
+  /// Register an in interceptor with interceptor list.
   size_t add_interceptor_i (
       PortableInterceptor::Interceptor_ptr interceptor,
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
-  ///< Register an in interceptor with interceptor list.
 
+  /// Return the length of the underlying interceptor sequence.
   virtual size_t length (void) = 0;
-  ///< Return the length of the underlying interceptor sequence.
 
+  /// Set the length of the underlying interceptor sequence.
   virtual void length (size_t) = 0;
-  ///< Set the length of the underlying interceptor sequence.
 
+  /// Return the interceptor in sequence element <index>.
   virtual PortableInterceptor::Interceptor_ptr interceptor (
    size_t index) = 0;
-  ///< Return the interceptor in sequence element <index>.
 
 };
 
+#if (TAO_HAS_INTERCEPTORS == 1)
+/**
+ * @class TAO_ClientRequestInterceptor_List
+ *
+ * @brief Encapsulation for a list of client request interceptors.
+ */
 class TAO_Export TAO_ClientRequestInterceptor_List
   : public TAO_Interceptor_List
 {
 public:
 
+  /// Define a trait for the underlying portable interceptor array.
   typedef
   ACE_Array_Base<PortableInterceptor::ClientRequestInterceptor_ptr> TYPE;
-  ///< Define a trait for the underlying portable interceptor array.
 
 public:
 
+  /// Constructor
   TAO_ClientRequestInterceptor_List (void);
-  ///< Constructor
 
+  /// Destructor
   ~TAO_ClientRequestInterceptor_List (void);
-  ///< ~Destructor
 
+  /// Register a client request interceptor.
   void add_interceptor (PortableInterceptor::ClientRequestInterceptor_ptr i,
                         CORBA::Environment &ACE_TRY_ENV);
-  ///< Register a client request interceptor.
 
+  /// Return reference to the underlying Portable Interceptor array.
   TYPE &interceptors (void);
-  ///< Return reference to the underlying Portable Interceptor array.
 
 protected:
 
+  /// Return the length of the underlying interceptor array.
   virtual size_t length (void);
-  ///< Return the length of the underlying interceptor array.
 
+  /// Set the length of the underlying interceptor array.
   virtual void length (size_t);
-  ///< Set the length of the underlying interceptor array.
 
+  /// Return the interceptor in element <index>.
   virtual PortableInterceptor::Interceptor_ptr interceptor (size_t);
-  ///< Return the interceptor in element <index>.
 
 private:
 
+  /// Dynamic array of registered client request interceptors.
   TYPE interceptors_;
-  ///< Dynamic array of registered client request interceptors.
 
 };
 
-/// Override the interceptor list type so the base class
-/// add_interceptor() method 
+
+/**
+ * @class TAO_ServerRequestInterceptor_List
+ *
+ * @brief Encapsulation for a list of server request interceptors.
+ */
 class TAO_Export TAO_ServerRequestInterceptor_List
   : public TAO_Interceptor_List
 {
 public:
 
+  /// Define a trait for the underlying portable interceptor array.
   typedef
   ACE_Array_Base<PortableInterceptor::ServerRequestInterceptor_ptr> TYPE;
-  ///< Define a trait for the underlying portable interceptor array.
 
 public:
 
+  /// Constructor
   TAO_ServerRequestInterceptor_List (void);
-  ///< Constructor
 
+  /// Destructor
   ~TAO_ServerRequestInterceptor_List (void);
-  ///< ~Destructor
 
+  /// Register a server request interceptor.
   void add_interceptor (PortableInterceptor::ServerRequestInterceptor_ptr i,
                         CORBA::Environment &ACE_TRY_ENV);
-  ///< Register a server request interceptor.
 
+  /// Return reference to the underlying Portable Interceptor array.
   TYPE &interceptors (void);
-  ///< Return reference to the underlying Portable Interceptor array.
 
 protected:
 
+  /// Return the length of the underlying interceptor array.
   virtual size_t length (void);
-  ///< Return the length of the underlying interceptor array.
 
+  /// Set the length of the underlying interceptor array.
   virtual void length (size_t);
-  ///< Set the length of the underlying interceptor array.
 
+  /// Return the interceptor in array element <index>.
   virtual PortableInterceptor::Interceptor_ptr interceptor (size_t);
-  ///< Return the interceptor in array element <index>.
 
 private:
 
+  /// Dynamic array of registered server request interceptors.
   TYPE interceptors_;
-  ///< Dynamic array of registered server request interceptors.
+
+};
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+
+/**
+ * @class TAO_IORInterceptor_List
+ *
+ * @brief Encapsulation for a list of IOR interceptors.
+ */
+class TAO_Export TAO_IORInterceptor_List
+  : public TAO_Interceptor_List
+{
+public:
+
+  /// Define a trait for the underlying portable interceptor array.
+  typedef
+  ACE_Array_Base<PortableInterceptor::IORInterceptor_ptr> TYPE;
+
+public:
+
+  /// Constructor
+  TAO_IORInterceptor_List (void);
+
+  /// Destructor
+  ~TAO_IORInterceptor_List (void);
+
+  /// Register an IOR interceptor.
+  void add_interceptor (PortableInterceptor::IORInterceptor_ptr i,
+                        CORBA::Environment &ACE_TRY_ENV);
+
+  /// Return reference to the underlying Portable Interceptor array.
+  TYPE &interceptors (void);
+
+protected:
+
+  /// Return the length of the underlying interceptor array.
+  virtual size_t length (void);
+
+  /// Set the length of the underlying interceptor array.
+  virtual void length (size_t);
+
+  /// Return the interceptor in array element <index>.
+  virtual PortableInterceptor::Interceptor_ptr interceptor (size_t);
+
+private:
+
+  /// Dynamic array of registered IOR interceptors.
+  TYPE interceptors_;
 
 };
 
 
 #if defined (__ACE_INLINE__)
-#include "tao/Interceptor_List.inl"
+#include "Interceptor_List.inl"
 #endif /* defined INLINE */
-
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/post.h"
 

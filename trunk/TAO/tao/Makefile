@@ -219,7 +219,9 @@ ORB_CORE_FILES = \
   PolicyFactory_Registry \
   Cache_Entries \
   Base_Connection_Property \
-  Connection_Cache_Manager
+  Connection_Cache_Manager \
+  Cleanup_Func_Registry \
+  IORInfo
 
 DYNAMIC_ANY_FILES =
 
