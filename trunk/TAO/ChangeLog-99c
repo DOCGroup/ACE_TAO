@@ -1,3 +1,7 @@
+Thu May 13 22:58:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/DSI/Database_i.cpp (invoke): Removed extra return.
+
 Thu May 13 22:46:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/OBV/Typed_Events/Event_Types_impl.h:
