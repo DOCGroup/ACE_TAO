@@ -1,17 +1,23 @@
+Sun Apr 05 10:04:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Makefile: don't regenerate files using TAO's IDL compiler.
+          Instead, always use what's in our CVS repository, or in the TAO
+          distribution.
+
 Sat Apr 04 21:25:43 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* TAO version 0.1.12, released Sat Apr 04 21:25:43 1998.
+        * TAO version 0.1.12, released Sat Apr 04 21:25:43 1998.
 
 Sat Apr  4 17:43:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/Operation_Table.cpp: Removed the call to hash_.close() since
- 	  the Hash_Map_Manager destructor handles this already.
+        * tao/Operation_Table.cpp: Removed the call to hash_.close() since
+          the Hash_Map_Manager destructor handles this already.
 
 Sat Apr  4 15:50:29 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence.cpp,
-	  TAO_IDL/be_include/be_visitor_sequence.h: Added a case to
-	  support sequence of exceptions.
+        * TAO_IDL/be/be_visitor_sequence.cpp,
+          TAO_IDL/be_include/be_visitor_sequence.h: Added a case to
+          support sequence of exceptions.
 
 Sat Apr 04 07:45:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -25,105 +31,105 @@ Sat Apr 04 07:45:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Apr  4 04:26:49 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface_fwd.cpp: We were not checking if
-	the node was imported. Due to this, code was getting generated for
-	forward declared interfaces from "#include"d IDL files.
+        * TAO_IDL/be/be_visitor_interface_fwd.cpp: We were not checking if
+        the node was imported. Due to this, code was getting generated for
+        forward declared interfaces from "#include"d IDL files.
 
-	* TAO_IDL/be/be_visitor_sequence.cpp: We were not calling
-	"nested_type_name" while generating the return type of the
-	operator [] in the sequence var class. As a result, a fully scoped
-	name was getting generated instead of a relative scoped name which
-	the MSVC++ compiler does not like.
+        * TAO_IDL/be/be_visitor_sequence.cpp: We were not calling
+        "nested_type_name" while generating the return type of the
+        operator [] in the sequence var class. As a result, a fully scoped
+        name was getting generated instead of a relative scoped name which
+        the MSVC++ compiler does not like.
 
-	* TAO_IDL/be/be_visitor_exception.cpp: For "typedefed" nodes, we
-	were using their base types to generate the code. This is fixed.
+        * TAO_IDL/be/be_visitor_exception.cpp: For "typedefed" nodes, we
+        were using their base types to generate the code. This is fixed.
 
-	In addition, some files from the above and others were modified to
-	correct some formatting problems in the generated code.
+        In addition, some files from the above and others were modified to
+        correct some formatting problems in the generated code.
 
 Sat Apr  4 00:24:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/client.cpp: Fixed a typo where
-	  "i" was being defined twice in the same block of code.
+        * tests/Cubit/TAO/MT_Cubit/client.cpp: Fixed a typo where
+          "i" was being defined twice in the same block of code.
 
 Fri Apr  3 18:40:49 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Minor changes for
- 	Chorus.  Cleanup code.
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Minor changes for
+        Chorus.  Cleanup code.
 
 Fri Apr  3 18:39:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* tests/POA/On_Demand_Activation/Makefile: Changed LSRC to SRC to
-	  match today's changes to ACE's rules.bin.GNU.
+        * tests/POA/On_Demand_Activation/Makefile: Changed LSRC to SRC to
+          match today's changes to ACE's rules.bin.GNU.
 
 Fri Apr  3 17:43:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h:
-	* tao/orbconf.h:
-	* tao/CDR.cpp:
-	  Added configuration macros to enable swap on write, and to
-	  disable swap on read.
-	  Also increased the default size of a CDR buffer.
+        * tao/CDR.h:
+        * tao/orbconf.h:
+        * tao/CDR.cpp:
+          Added configuration macros to enable swap on write, and to
+          disable swap on read.
+          Also increased the default size of a CDR buffer.
 
-	* tests/CDR/Makefile:
-	* tests/CDR/growth.cpp:
-	  Added another simple test of the CDR buffer, this one tries to
-	  measure performance.
+        * tests/CDR/Makefile:
+        * tests/CDR/growth.cpp:
+          Added another simple test of the CDR buffer, this one tries to
+          measure performance.
 
 Fri Apr  3 17:15:22 1998  Steve Huston  <shuston@riverace.com>
 
-	* TAO_IDL/Makefile: The sources that go into the compiler are
-	  listed in SRC, not LSRC.  This matches a change in ACE's
-	  include/makeinclude/rules.bin.GNU.
+        * TAO_IDL/Makefile: The sources that go into the compiler are
+          listed in SRC, not LSRC.  This matches a change in ACE's
+          include/makeinclude/rules.bin.GNU.
 
 Fri Apr  3 17:07:18 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp (FAKE_SVC_ENTRY):
-	* tao/orbconf.h: Made minor changes to have the fake service
- 	configurator receive its values through macros, instead of
- 	changing the ".cpp" file.  Seems cleaner this way.
+        * tao/TAO_Internal.cpp (FAKE_SVC_ENTRY):
+        * tao/orbconf.h: Made minor changes to have the fake service
+        configurator receive its values through macros, instead of
+        changing the ".cpp" file.  Seems cleaner this way.
 
 Fri Apr  3 15:35:39 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/client.h, client.cpp: All PropertySet
-	methods and the Iterator class methods tested.
+        * orbsvcs/tests/AVStreams/client.h, client.cpp: All PropertySet
+        methods and the Iterator class methods tested.
 
 Fri Apr  3 08:59:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.cpp:
-	  Null strings are transmitted as empty strings.
-	  Fixed
+        * tao/CDR.cpp:
+          Null strings are transmitted as empty strings.
+          Fixed
 
-	* tao/IIOP_ORB.cpp:
-	  Ensure that CDR buffer created from the IOR string is properly
-	  aligned.
+        * tao/IIOP_ORB.cpp:
+          Ensure that CDR buffer created from the IOR string is properly
+          aligned.
 
-	* tao/Server_Request.cpp:
-	  More checking for exceptions while decoding parameters and we
-	  print an error message if decoding fails.
+        * tao/Server_Request.cpp:
+          More checking for exceptions while decoding parameters and we
+          print an error message if decoding fails.
 
-	* tao/Typecode.cpp:
-	  Only the first byte of the encapsulation stores the byte order,
-	  the next three bytes are ignored because the <kind> is stored as
-	  a long.
+        * tao/Typecode.cpp:
+          Only the first byte of the encapsulation stores the byte order,
+          the next three bytes are ignored because the <kind> is stored as
+          a long.
 
-	* tao/decode.cpp:
-	  Removed dead code, improve error message when decoding object
-	  references and fix an off by one error in ObjRef::decode.
+        * tao/decode.cpp:
+          Removed dead code, improve error message when decoding object
+          references and fix an off by one error in ObjRef::decode.
 
-	* tao/encode.cpp:
-	  When encoding Object References an encapsulated stream is
-	  created in place, I debugged the computation of the length for
-	  that stream and left some debug messages commented out.
-	  The support for encoding null strings and wstrings as empty
-	  strings is in the CDR classes, no need to duplicate the effort
-	  here.
+        * tao/encode.cpp:
+          When encoding Object References an encapsulated stream is
+          created in place, I debugged the computation of the length for
+          that stream and left some debug messages commented out.
+          The support for encoding null strings and wstrings as empty
+          strings is in the CDR classes, no need to duplicate the effort
+          here.
 
-	* tao/Connect.cpp:
-	  Cosmetic changes.
+        * tao/Connect.cpp:
+          Cosmetic changes.
 
 Fri Apr 03 09:01:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
