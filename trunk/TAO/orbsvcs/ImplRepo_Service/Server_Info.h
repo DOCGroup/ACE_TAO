@@ -46,7 +46,7 @@ public:
   // = Destructors
 
   /// The only destructor there is.
-  ~Server_Info ();
+  ~Server_Info (void);
 
   /// Updates information that is relevant only when an instance
   /// of the server is running.

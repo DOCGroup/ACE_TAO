@@ -16,11 +16,13 @@
 #ifndef REPOSITORY_H
 #define REPOSITORY_H
 
-#include "XML_ContentHandler.h"
 #include "Server_Info.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Configuration.h"
+
+
+class XML_ContentHandler;
 
 
 /**
@@ -34,10 +36,10 @@ class Server_Repository
 {
 public:
   /// Default Constructor
-  Server_Repository ();
+  Server_Repository (void);
 
   /// Destructor
-  ~Server_Repository ();
+  ~Server_Repository (void);
 
   typedef ACE_Hash_Map_Entry<ACE_CString,
                              Server_Info *> HASH_IMR_ENTRY;
@@ -55,7 +57,7 @@ public:
                                    ACE_Null_Mutex> HASH_IMR_ITER;
 
   /// Initializes the Server Repository
-  int init ();
+  int init (void);
 
   /// Add a new server to the Repository
   int add (const ACE_CString POA_name,
@@ -101,14 +103,14 @@ public:
                     const ACE_CString logical_server_name,
                     const ACE_CString startup_command,
                     const ImplementationRepository::EnvironmentList
-                    environment_vars,
+                      environment_vars,
                     const ACE_CString working_dir,
                     const ImplementationRepository::ActivationMode activation);
   /// Returns a new iterator that travels over the repository.
-  HASH_IMR_ITER *new_iterator ();
+  HASH_IMR_ITER *new_iterator (void);
 
   /// Returns the number of entries in the repository.
-  size_t get_repository_size ();
+  size_t get_repository_size (void);
 
 private:
 
