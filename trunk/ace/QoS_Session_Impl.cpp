@@ -4,6 +4,7 @@
 #define ACE_BUILD_DLL
 
 #include "ace/SOCK.h"
+#include "ace/QoS_Manager.h"
 #include "ace/QoS_Session_Impl.h"
 
 #if !defined (__ACE_INLINE__)
@@ -156,21 +157,27 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
   this->dest_addr_ = dest_addr;
   this->protocol_id_ = protocol_id;
   
+  rapi_eventinfo_t RSVP_arg;      /*RSVP callback argument*/
+
   // Open a RAPI session. Note "this" is being passed as an argument to 
   // the callback function. The callback function uses this argument to 
   // update the QoS of this session based on the RSVP event it receives.
-  if ((this->session_id_ = rapi_session((sockaddr *) dest_addr.get_addr (), 
-                                       protocol_id,
-                                       0, 
-                                       rsvp_callback, 
-                                       (void *) this, 
-                                       &rsvp_error)) == NULL_SID)
+  
+  if ((this->session_id_ = rapi_session((struct sockaddr *) dest_addr.get_addr (), 
+                                        protocol_id,
+                                        0, 
+                                        rsvp_callback, 
+                                        //(void *) this, 
+                                        (void *) &RSVP_arg,
+                                        &rsvp_error)) == NULL_SID)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "rapi_session () call fails. Error\n"),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                "rapi_session () call succeeds\n"));
+                "rapi_session () call succeeds\n"
+                "Session ID = %d\n",
+                this->session_id_));
   
   return 0;
 }
@@ -184,15 +191,21 @@ ACE_RAPI_Session::close (void)
                        "Can't release RSVP session:\n\t%s\n",
                        rapi_errlist[rsvp_error]),
                       -1);
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                "rapi session with id %d released successfully.\n",
+               this->session_id_));
   return 0;
 }
 
 int 
 ACE_RAPI_Session::qos (ACE_SOCK *socket,
+                       ACE_QoS_Manager *qos_manager,
                        const ACE_QoS &ace_qos)
 {
   ACE_UNUSED_ARG (socket);
-
+  ACE_UNUSED_ARG (qos_manager);
+  
   // If sender : call sending_qos ()
   // If receiver : call receiving_qos ()
   // If both : call sending_qos () and receiving_qos ()
@@ -212,7 +225,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 {
   
   ACE_Flow_Spec sending_flowspec = ace_qos.sending_flowspec ();
-  rapi_tspec_t *t_spec = init_tspec_simplified (sending_flowspec);
+  rapi_tspec_t *t_spec = this->init_tspec_simplified (sending_flowspec);
   
   if (t_spec == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -249,8 +262,11 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
               sending_flowspec.ttl ()));
   
   // @@Hardcoded port. This should be changed later.
-  ACE_INET_Addr sender_addr (8001); 
-  
+  ACE_INET_Addr sender_addr (9090); 
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Making the rapi_sender () call\n"));
+
   // Set the Sender TSpec for this QoS session.
   if(rapi_sender(this->session_id_, 
                  0, 
@@ -309,7 +325,13 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
               flow_spec->specbody_qosx.xspec_M));
 
   // @@Hardcoded port. This should be changed later.
-  ACE_INET_Addr receiver_addr (8002); 
+  //  ACE_INET_Addr receiver_addr (8002); 
+
+  //  ACE_INET_Addr receiver_addr; 
+
+  sockaddr_in Receiver_host;
+
+  Receiver_host.sin_addr.s_addr = INADDR_ANY;
 
   // Set the Receiver FlowSpec for this QoS session.
   // @@The filter style is hardcoded to WildCard. This can be changed later.
@@ -318,7 +340,8 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
                    // Setting the RAPI_REQ_CONFIRM flag requests confirmation 
                    // of the resevation, by means of a confirmation upcall of
                    // type RAPI_RESV_CONFIRM.
-                   (sockaddr *)receiver_addr.get_addr (), 
+                   //                   (sockaddr *)receiver_addr.get_addr (), 
+                   (sockaddr *)&Receiver_host, 
                    RAPI_RSTYLE_WILDCARD,
                    // This applies the flowspec to all the senders. Given this, 
                    // @@I am passing the filter_spec to be null, hoping this will work.
@@ -333,6 +356,9 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "rapi_reserve () error:\n\tRESV Generation can't be started\n"),
                       -1);
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                "rapi_reserve () call succeeds \n"));
 
   return 0;
 }
@@ -373,7 +399,7 @@ ACE_RAPI_Session::init_tspec_simplified (const ACE_Flow_Spec &flow_spec)
   ctxp->xtspec_m  = flow_spec.minimum_policed_size (); // Minimum policed unit.
   
   // @@Hardcoded for the time being.
-  ctxp->xtspec_M  = 65535;                             // Maximum SDU size. 
+  ctxp->xtspec_M  = 1024;                             // Maximum SDU size. 
   
   t_spec->len = sizeof(rapi_hdr_t) + sizeof(qos_tspecx_t);
   t_spec->form = RAPI_TSPECTYPE_Simplified;
@@ -409,6 +435,8 @@ ACE_RAPI_Session::init_flowspec_simplified(const ACE_Flow_Spec &flow_spec)
       // Note there is no break !!
 
     case QOS_CNTR_LOAD:
+      ACE_DEBUG ((LM_DEBUG,
+                  "QOS_CONTROLLED_LOAD\n"));
       csxp->spec_type = flow_spec.service_type ();        // qos_service_type
       csxp->xspec_r = flow_spec.token_rate ();            // Token Bucket Average Rate (B/s)
       csxp->xspec_b = flow_spec.token_bucket_size ();     // Token Bucket Rate (B)
@@ -466,18 +494,24 @@ ACE_GQoS_Session::close (void)
 // Set the QoS for this GQoS session.  
 int 
 ACE_GQoS_Session::qos (ACE_SOCK *socket,
+                       ACE_QoS_Manager *qos_manager,
                        const ACE_QoS &ace_qos)
 {
   
-  // Confirm if the current session is one of the QoS sessions subscribed
-  // to by the given socket.
+  // Confirm if the current session is one of the QoS sessions
+  // subscribed to by the given socket.
 
-  if (socket->qos_session_set ().find (this) == -1)
+  //if (socket->qos_session_set ().find (this) == -1)
+
+  // @@Vishal : Need to relate the below to the socket (as above)
+  // instead of the QoS Manager.
+
+  if (qos_manager->qos_session_set ().find (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "This QoS session was not subscribed to"
                        " by the socket\n"),
                       -1);
-
+  
   // Set the QOS according to the supplied ACE_QoS. The I/O control
   // code used under the hood is SIO_SET_QOS.
 
