@@ -112,13 +112,11 @@ File_Module::init (const char * filename)
 {
   ACE_HANDLE handle = ACE_OS::open (filename,
                                     O_WRONLY|O_BINARY|O_CREAT,
-                                    0644);
+                                    ACE_DEFAULT_FILE_PERMS);
   if (handle == ACE_INVALID_HANDLE)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot open file <%s> %p\n", filename, ""),
-                        -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Cannot open file <%s> %p\n", filename, ""),
+                      -1);
   this->file_io_.set_handle (handle);
   return 0;
 }

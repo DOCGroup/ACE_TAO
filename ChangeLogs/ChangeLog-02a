@@ -1,3 +1,10 @@
+Mon Feb  5 16:19:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/RMCast/Send_File/Receiver.cpp (init): Replaced
+	  a hard-coded file permission of 0644 with
+ 	  ACE_DEFAULT_FILE_PERMS.  Thanks to Chris Kohlhoff
+ 	  <chris@kohlhoff.com> for reporting this.
+
 Mon Feb  5 13:00:17 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tests/Thread_Mutex_Test.cpp: (reported_notsup)
