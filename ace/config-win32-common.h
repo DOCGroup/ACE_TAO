@@ -41,6 +41,10 @@ typedef unsigned __int64 ACE_UINT64;
 #undef  ACE_HAS_ANSI_CASTS
 #endif /* ACE_HAS_ANSI_CASTS && ACE_HAS_ANSI_CASTS == 0 */
 
+#if _MSC_VER < 1000
+# define ACE_LACKS_PRAGMA_ONCE
+#endif /* _MSC_VER < 1000 */
+
 // Only MSVC 5.0 definitions
 #if (_MSC_VER >= 1100)
   #if !defined (ACE_HAS_WINCE)
@@ -344,14 +348,14 @@ typedef unsigned __int64 ACE_UINT64;
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
         #if !defined (_WINSOCK2API_)
-                // will also include windows.h, if not present 
-                #include /**/ <winsock2.h>  
+                // will also include windows.h, if not present
+                #include /**/ <winsock2.h>
         #endif /* _WINSOCK2API */
 
-        #if !defined _MSWSOCK_       
+        #if !defined _MSWSOCK_
                 #include /**/ <mswsock.h>
         #endif /* _MSWSOCK_ */
- 
+
         #if defined (_MSC_VER)
                 #pragma comment(lib, "ws2_32.lib")
                 #pragma comment(lib, "mswsock.lib")
@@ -360,8 +364,8 @@ typedef unsigned __int64 ACE_UINT64;
         #define ACE_WSOCK_VERSION 2, 0
 #else
         #if !defined (_WINSOCKAPI_)
-                // will also include windows.h, if not present 
-                #include /**/ <winsock.h>       
+                // will also include windows.h, if not present
+                #include /**/ <winsock.h>
         #endif /* _WINSOCKAPI */
 
         #if defined (_MSC_VER) && !defined (UNDER_CE)
