@@ -1,0 +1,6 @@
+client -fm -s -t -D -l 1024 -h tango.cs.wustl.edu $1
+#4096
+#32768 
+#16384
+#131072
+#262144 
