@@ -1,3 +1,8 @@
+Thu Apr 11 20:06:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/display_logfile.cpp: Spacing/line length
+          changes so it fits on the book pages.
+
 Thu Apr 11 18:29:27 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Makefile: New Makefile to build display_logfile.
