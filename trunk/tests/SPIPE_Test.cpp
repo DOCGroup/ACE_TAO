@@ -88,6 +88,7 @@ server (void *)
     }
   ACE_DEBUG ((LM_DEBUG, "End of connection. Closing handle\n"));
   new_stream.close ();
+  acceptor.close ();
   return 0;
 }
 #endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */

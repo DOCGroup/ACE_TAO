@@ -96,6 +96,7 @@ Supplier_Task::close (u_long)
 Supplier_Task::~Supplier_Task (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) ~Supplier_Task\n"));
+  this->pipe_.close ();
 }
 
 int 
