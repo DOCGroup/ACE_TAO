@@ -2200,10 +2200,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 
   template class TAO_Unbounded_Sequence<Messaging::PolicyValue>;
 
-#if defined(TAO_HAS_AMI_POLLER)
+#if defined(TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
   template class TAO_Object_Field_T<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
-  template class TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>;
   template class TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
+#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+
+#if defined(TAO_HAS_AMI_POLLER)
+  template class TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>;
   template class TAO_Object_Manager<Messaging::Poller,Messaging::Poller_var>;
 #endif /* TAO_HAS_AMI_POLLER */
 
@@ -2211,10 +2214,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 
 #pragma instantiate TAO_Unbounded_Sequence<Messaging::PolicyValue>
 
-#if defined(TAO_HAS_AMI_POLLER)
+#if defined(TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
 #  pragma instantiate TAO_Object_Field_T<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
-#  pragma instantiate TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>
 #  pragma instantiate TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
+#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+
+#if defined(TAO_HAS_AMI_POLLER)
+#  pragma instantiate TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>
 #  pragma instantiate TAO_Object_Manager<Messaging::Poller,Messaging::Poller_var>
 #endif /* TAO_HAS_AMI_POLLER */
 

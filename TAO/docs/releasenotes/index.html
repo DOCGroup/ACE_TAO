@@ -1293,9 +1293,11 @@ Points of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Arulanthu</a>
 <p>Status:
 <ul>
 Currently only the callback model of the Messaging Specification is implemented. 
+To activate the AMI for TAO and the TAO IDL
+compiler define <tt>TAO_HAS_CORBA_MESSAGING</tt> and <tt>TAO_HAS_AMI_CALLBACK</tt>
+in your config.h file.
 The TAO IDL compiler can generate the stubs and client-side skeletons
-using the -GC switch.
-</ul>
+using the -GC switch.</ul>
 <p> Future Work:
 <ul>
 <li>Support for exceptions</li>
