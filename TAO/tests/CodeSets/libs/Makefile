@@ -10,7 +10,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = IBM1047_ISO8859
+DIRS  = IBM1047_ISO8859 \
+	UCS4_UTF16
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

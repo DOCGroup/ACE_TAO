@@ -1,3 +1,21 @@
+Wed Dec  3 10:12:18 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/CodeSets/libs/Makefile:
+        * tests/CodeSets/UCS4_UTF16/CodeSets_libs_UCS4_UTF16.mpc:
+        * tests/CodeSets/UCS4_UTF16/Makefile:
+        * tests/CodeSets/UCS4_UTF16/WUCS4_UTF16.cpp:
+        * tests/CodeSets/UCS4_UTF16/WUCS4_UTF16.h:
+        * tests/CodeSets/UCS4_UTF16/WUCS4_UTF16_Factory.cpp:
+        * tests/CodeSets/UCS4_UTF16/WUCS4_UTF16_Factory.h:
+        * tests/CodeSets/UCS4_UTF16/WUCS4_UTF16_export.h:
+        * tests/CodeSets/simple/README:
+        * tests/CodeSets/simple/cs_test.conf:
+        * tests/CodeSets/simple/wcs_test.conf:
+
+          Added example codeset translator for wide characters. The new
+          translator converts from native UCS-4, 4-bytes per codepoint, to
+          a transmission codeset of UTF-16, aka unicode.
+
 Wed Dec  3 16:05:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/UNKNOWN_Exception/UNKNOWN_Exception_Client.bor:
