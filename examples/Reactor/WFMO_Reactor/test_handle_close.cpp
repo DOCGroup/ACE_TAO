@@ -64,6 +64,11 @@ public:
   {
   }
 
+  ~Handler (void)
+  {
+    this->reactor (0);
+  }
+
   ACE_HANDLE get_handle (void) const
   {
     return this->pipe_.read_handle ();
@@ -93,8 +98,8 @@ public:
     // Optionally cancel reads
     if (cancel_reads)
       {
-        int result = ACE_Reactor::instance ()->cancel_wakeup (this,
-                                                              ACE_Event_Handler::READ_MASK);
+        int result = this->reactor ()->cancel_wakeup (this,
+                                                      ACE_Event_Handler::READ_MASK);
         ACE_ASSERT (result != -1);
       }
 
@@ -119,6 +124,11 @@ public:
   {
   }
 
+  ~Different_Handler (void)
+  {
+    this->reactor (0);
+  }
+
   ACE_HANDLE get_handle (void) const
   {
     return this->pipe_.read_handle ();
@@ -138,8 +148,8 @@ public:
     ACE_DEBUG ((LM_DEBUG, "Different_Handler::handle_input\n"));
 
     // Remove for reading
-    int result = ACE_Reactor::instance ()->remove_handler (this,
-                                                           ACE_Event_Handler::READ_MASK);
+    int result = this->reactor ()->remove_handler (this,
+                                                   ACE_Event_Handler::READ_MASK);
     ACE_ASSERT (result == 0);
 
     return 0;
@@ -150,9 +160,9 @@ public:
     ACE_DEBUG ((LM_DEBUG, "Different_Handler::handle_output\n"));
 
     // Add for reading
-    int result = ACE_Reactor::instance ()->mask_ops (this,
-                                                     ACE_Event_Handler::READ_MASK,
-                                                     ACE_Reactor::ADD_MASK);
+    int result = this->reactor ()->mask_ops (this,
+                                             ACE_Event_Handler::READ_MASK,
+                                             ACE_Reactor::ADD_MASK);
     ACE_ASSERT (result != -1);
 
     ACE_Reactor_Mask old_masks =
@@ -163,9 +173,9 @@ public:
                 ACE_static_cast (ACE_Reactor_Mask, result));
 
     // Get new masks
-    result = ACE_Reactor::instance ()->mask_ops (this,
-                                                 ACE_Event_Handler::NULL_MASK,
-                                                 ACE_Reactor::GET_MASK);
+    result = this->reactor ()->mask_ops (this,
+                                         ACE_Event_Handler::NULL_MASK,
+                                         ACE_Reactor::GET_MASK);
     ACE_ASSERT (result != -1);
 
     ACE_Reactor_Mask current_masks =
@@ -178,8 +188,8 @@ public:
 
     // Remove for writing
     ACE_Reactor_Mask mask = ACE_Event_Handler::WRITE_MASK | ACE_Event_Handler::DONT_CALL;
-    result = ACE_Reactor::instance ()->remove_handler (this,
-                                                       mask);
+    result = this->reactor ()->remove_handler (this,
+                                               mask);
     ACE_ASSERT (result == 0);
 
     // Write to the pipe; this causes handle_input to get called.
@@ -197,26 +207,42 @@ protected:
 //
 // Selection of which reactor should get created
 //
-void
+ACE_Reactor *
 create_reactor (void)
 {
   ACE_Reactor_Impl *impl = 0;
+  int delete_implementation = 0;
 
   if (opt_wfmo_reactor)
     {
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-      ACE_NEW (impl,
-               ACE_WFMO_Reactor);
+      ACE_NEW_RETURN (impl,
+                      ACE_WFMO_Reactor,
+                      0);
+      delete_implementation = 1;
 #endif /* ACE_WIN32 */
     }
   else if (opt_select_reactor)
-    ACE_NEW (impl,
-             ACE_Select_Reactor);
+    {
+      ACE_NEW_RETURN (impl,
+                      ACE_Select_Reactor,
+                      0);
+      delete_implementation = 1;
+    }
+  else
+    {
+      impl =
+        ACE_Reactor::instance ()->implementation ();
+      delete_implementation = 0;
+    }
 
   ACE_Reactor *reactor = 0;
-  ACE_NEW (reactor,
-           ACE_Reactor (impl));
-  ACE_Reactor::instance (reactor);
+  ACE_NEW_RETURN (reactor,
+                  ACE_Reactor (impl,
+                               delete_implementation),
+                  0);
+
+  return reactor;
 }
 
 int
@@ -256,17 +282,8 @@ main (int argc, char *argv[])
   Handler handler (pipe1);
   Different_Handler different_handler (pipe2);
 
-  // Create reactor
-  create_reactor ();
-
   // Manage memory automagically.
-  auto_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
-  auto_ptr<ACE_Reactor_Impl> impl;
-
-  // If we are using other that the default implementation, we must
-  // clean up.
-  if (opt_select_reactor || opt_wfmo_reactor)
-    impl = auto_ptr<ACE_Reactor_Impl> (ACE_Reactor::instance ()->implementation ());
+  auto_ptr<ACE_Reactor> reactor (create_reactor ());
 
   // Register handlers
   ACE_Reactor_Mask handler_mask =
@@ -278,12 +295,12 @@ main (int argc, char *argv[])
     ACE_Event_Handler::WRITE_MASK |
     ACE_Event_Handler::EXCEPT_MASK;
 
-  result = ACE_Reactor::instance ()->register_handler (&handler,
-                                                       handler_mask);
+  result = reactor->register_handler (&handler,
+                                      handler_mask);
   ACE_ASSERT (result == 0);
 
-  result = ACE_Reactor::instance ()->register_handler (&different_handler,
-                                                       different_handler_mask);
+  result = reactor->register_handler (&different_handler,
+                                      different_handler_mask);
   ACE_ASSERT (result == 0);
 
   // Write to the pipe; this causes handle_input to get called.
@@ -298,7 +315,7 @@ main (int argc, char *argv[])
 
   // Run for three seconds
   ACE_Time_Value time (3);
-  ACE_Reactor::instance ()->run_event_loop (time);
+  reactor->run_event_loop (time);
 
   ACE_DEBUG ((LM_DEBUG, "\nClosing down the application\n\n"));
 
