@@ -48,14 +48,16 @@ namespace TAO
       {
         if (strat == TAO_CS_THRU_POA_STRATEGY)
           {
-            TAO_ServerRequest request (this->orb_core (),
+            TAO_ORB_Core * const orb_core = this->orb_core ();
+
+            TAO_ServerRequest request (orb_core,
                                        this->details_,
                                        this->effective_target ());
 
             TAO_Request_Dispatcher * const dispatcher =
-              this->orb_core ()->request_dispatcher ();
+              orb_core->request_dispatcher ();
 
-            dispatcher->dispatch (this->orb_core (),
+            dispatcher->dispatch (orb_core,
                                   request,
                                   this->forwarded_to_.out ());
                                   ACE_ENV_ARG_PARAMETER);
