@@ -37,7 +37,7 @@ while ($#ARGV >= $[) {
       die $usage;
     }
   } elsif ($ARGV[0] eq '-m') {
-    if ($ARGV[1] =~ /^\w+$/) {
+    if ($ARGV[1] =~ /^[\w@\.]+$/) {
       $mail_recipients = $ARGV[1];
       shift;
     } else {
