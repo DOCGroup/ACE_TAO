@@ -44,7 +44,7 @@ RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /D TAO_ORBSVCS_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D ACE_NO_INLINE /D TAO_ORBSVCS_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
@@ -69,7 +69,7 @@ RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D TAO_ORBSVCS_HAS_DLL=0 /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D TAO_ORBSVCS_HAS_DLL=0 /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
