@@ -192,7 +192,6 @@ private:
 
   Thread_Bounded_Packet_Relay_Driver &driver_;
   // The thread timer queue test driver.
-
 };
 
 class BPR_Handler_Base : public ACE_Event_Handler

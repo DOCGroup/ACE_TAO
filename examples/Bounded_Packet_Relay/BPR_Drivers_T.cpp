@@ -135,9 +135,8 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::start_transmission (u_long packet_count,
                          "failed to initialize output device object"), 
                         -1);
     }
-
   // Initialize the input device.
-  if (input_wrapper_->set_input_period (arrival_period) < 0)
+  else if (input_wrapper_->set_input_period (arrival_period) < 0)
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();  
@@ -145,7 +144,7 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::start_transmission (u_long packet_count,
                          "failed to initialize input device object"), 
                         -1);
     }
-  if (input_wrapper_->set_send_count (packet_count) < 0)
+  else if (input_wrapper_->set_send_count (packet_count) < 0)
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();  
@@ -153,9 +152,8 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::start_transmission (u_long packet_count,
                          "failed to initialize input device object"), 
                         -1);
     }
-
   // Activate the input device.
-  if (input_wrapper_->activate () < 0)
+  else if (input_wrapper_->activate () < 0)
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();  
@@ -210,20 +208,19 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::end_transmission (Transmission_Status statu
   // Reactivate the queue, and then clear it.
   queue_.activate ();
   while (! queue_.is_empty ())
-  {
-    ACE_Message_Block *msg;
-	queue_.dequeue_head (msg);
-	delete msg;
-  }
+    {
+      ACE_Message_Block *msg;
+      queue_.dequeue_head (msg);
+      delete msg;
+    }
 
-  // If all went well, set passed status, stamp end time,
-  // print a termination message, and return success.
+  // If all went well, set passed status, stamp end time, print a
+  // termination message, and return success.
   status_ = status;
   transmission_end_ = ACE_OS::gettimeofday ();  
   ACE_DEBUG ((LM_DEBUG,
               "\n\nTransmission %u ended with status: %s\n\n",
               transmission_number_, status_msg ()));
-
   return 0;
 }
 
@@ -276,7 +273,6 @@ Bounded_Packet_Relay<ACE_SYNCH_USE>::receive_input (void * arg)
                       -1);
   return 0;
 }
-
 
 // Returns string corresponding to current status.
 
@@ -491,7 +487,6 @@ Bounded_Packet_Relay_Driver<TQ>::read_input (char *buf, size_t bufsiz)
   // restarted when SIGINT or SIGALRM signals occur.
   return ACE_OS::read (ACE_STDIN, buf, bufsiz);
 }
-
 
 // Get count of packets to send in a transmission.
 
