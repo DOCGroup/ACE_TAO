@@ -1,3 +1,11 @@
+Mon Sep 04 10:25:27 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/TP_Reactor.cpp (dispatch_i): If a handle's bit is set via
+          select in any of the masks (wr, ex, rd) and subsequently the
+          handle is selected for dispatching, clear it in all masks to
+          prevent possible spinning on a handle that can't be dispatched
+          because its handler is suspended.
+
 Sat Sep  2 15:13:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/CDR_Stream.h:
