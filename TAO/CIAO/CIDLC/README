@@ -2,35 +2,23 @@
 $Id$
 
 The C++ source files in this directory are compiled into the
-code generators and driver for the CIAO CIDL compiler.
+code generators and driver for the CIAO CIDL compiler. CORBA 
+Compiler Framework (CCF) provides the front-end for the compiler.
 
-The CIDL compiler's front end is built from files in the
-$CIAO_ROOT/CCF directory.
+Pre-built binary executables of CIDL compiler are available at
 
-The CIAO CIDL compiler requires two libraries:
+http://www.dre.vanderbilt.edu/~boris/cidlc
 
-* the Boost library, which may be downloaded from:
+To build CIDL compiler you will need to compile CCF libraries
+first. Instructions for doing this can be found at
 
-  http://www.boost.org
+$(CIAO_ROOT)/CCF/Documentation/Build.html
 
-* the Utility library, which can be downloaded from:
+After you have CCF libraries compiled you can build CIDL compiler
+with makefiles on UNIX
 
-  ftp://ftp.kolpackov.net/pub/Utility/Utility-1.2.1.tar.bz2
+$ make -f Makefile.alt
 
-
-Once compiled and installed, you have to define two environment
-variables for them:
-
-BOOST_ROOT
-UTILITY_ROOT
-
-indicating where these libraries have been installed.
-
-Binary executables for the CIDL compiler are available at
-
-http://www.dre.vanderbilt.edu/CIAO/CIDL.html
-
-Versions are available at the above site for Linux and Windows.
+or by using VC 7.1 project on Windows.
 
 
--jeff
