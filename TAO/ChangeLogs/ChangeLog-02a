@@ -1,3 +1,8 @@
+Tue Mar  6 07:15:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MT_Client/simple-client.cpp: Fixed a typo that was giving
+	  annoying warnings in Debian boxes.
+
 Tue Mar  6 06:17:46 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Param_Test/client.cpp (run_sii_test): Make sure to
