@@ -1,0 +1,7 @@
+/* _*_C++_*_ */
+
+// $Id$
+interface Receiver
+{
+  void push_mmdevice (in Object audio_mmdevice,in string audio_file,in Object video_mmdevice,in string  video_file);  
+};
