@@ -294,6 +294,7 @@ public:
     ACE_UINT64 parametermode_seen_;
     ACE_UINT64 base_object_seen_;
     ACE_UINT64 valuefactory_seen_;
+    ACE_UINT64 valuebase_seen_;
 
     ACE_UINT64 seq_seen_;
     ACE_UINT64 iface_seq_seen_;
