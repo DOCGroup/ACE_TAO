@@ -921,7 +921,7 @@ CORBA_ORB::list_initial_services (CORBA::Environment &ACE_TRY_ENV)
 TAO_Stub *
 CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                const char *type_id,
-                               const CORBA::PolicyList& policy_list,
+                               CORBA::PolicyList *policy_list,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   this->check_shutdown (ACE_TRY_ENV);
@@ -929,7 +929,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   return this->orb_core_->create_stub_object (key,
                                               type_id,
-                                              policy_list, 
+                                              policy_list,
                                               ACE_TRY_ENV);
 }
 
@@ -938,7 +938,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 CORBA::Object_ptr
 CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
                           const char *type_id,
-                          const CORBA::PolicyList& policy_list,
+                          CORBA::PolicyList *policy_list,
                           TAO_ServantBase *servant,
                           CORBA::Boolean collocated,
                           CORBA::Environment &ACE_TRY_ENV)
@@ -946,7 +946,10 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  TAO_Stub *data = this->create_stub_object (key, type_id, policy_list, ACE_TRY_ENV);
+  TAO_Stub *data = this->create_stub_object (key,
+                                             type_id,
+                                             policy_list,
+                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_Stub_Auto_Ptr safe_data (data);

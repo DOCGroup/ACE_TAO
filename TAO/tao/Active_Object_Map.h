@@ -132,7 +132,8 @@ public:
   // <user_id> is actually <system_id>.
 
   int find_system_id_using_servant (PortableServer::Servant servant,
-                                    PortableServer::ObjectId_out system_id);
+                                    PortableServer::ObjectId_out system_id,
+                                    CORBA::Short &priority);
   // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
@@ -149,7 +150,8 @@ public:
 
   int find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
                                                 PortableServer::Servant &servant,
-                                                PortableServer::ObjectId_out system_id);
+                                                PortableServer::ObjectId_out system_id,
+                                                CORBA::Short &priority);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is identical to <system_id>.
 
@@ -277,7 +279,8 @@ public:
   // <user_id> is actually <system_id>.
 
   virtual int find_system_id_using_servant (PortableServer::Servant servant,
-                                            PortableServer::ObjectId_out system_id) = 0;
+                                            PortableServer::ObjectId_out system_id,
+                                            CORBA::Short &priority) = 0;
   // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
@@ -324,7 +327,8 @@ public:
   // <user_id> is actually <system_id>.
 
   virtual int find_system_id_using_servant (PortableServer::Servant servant,
-                                            PortableServer::ObjectId_out system_id);
+                                            PortableServer::ObjectId_out system_id,
+                                            CORBA::Short &priority);
   // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
@@ -363,7 +367,8 @@ public:
   // <user_id> is actually <system_id>.
 
   virtual int find_system_id_using_servant (PortableServer::Servant servant,
-                                            PortableServer::ObjectId_out system_id);
+                                            PortableServer::ObjectId_out system_id,
+                                            CORBA::Short &priority);
   // Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 

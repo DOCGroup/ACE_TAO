@@ -430,9 +430,8 @@ public:
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
-                                const CORBA::PolicyList& policy_list,
-                                CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
-                                );
+                                CORBA::PolicyList *policy_list,
+                                CORBA::Environment &ACE_TRY_ENV);
   // Makes sure that the ORB is open and then creates a TAO_Stub
   // based on the endpoint.
 

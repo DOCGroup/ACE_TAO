@@ -124,6 +124,36 @@ TAO_POA_Policies::request_processing (PortableServer::RequestProcessingPolicyVal
   this->request_processing_ = value;
 }
 
+ACE_INLINE TAO_POA_Policies::PriorityModel
+TAO_POA_Policies::priority_model (void) const
+{
+  return this->priority_model_;
+}
+
+ACE_INLINE void
+TAO_POA_Policies::priority_model (PriorityModel value)
+{
+  this->priority_model_ = value;
+}
+
+ACE_INLINE CORBA::Short
+TAO_POA_Policies::server_priority (void) const
+{
+  return this->server_priority_;
+}
+
+ACE_INLINE void
+TAO_POA_Policies::server_priority (CORBA::Short value)
+{
+  this->server_priority_ = value;
+}
+
+ACE_INLINE CORBA::PolicyList &
+TAO_POA_Policies::client_exposed_fixed_policies (void)
+{
+  return this->client_exposed_fixed_policies_;
+}
+
 ACE_INLINE CORBA::ULong
 TAO_Creation_Time::creation_time_length (void)
 {
@@ -396,12 +426,14 @@ TAO_POA::servant_to_id (PortableServer::Servant servant,
 
 ACE_INLINE PortableServer::ObjectId *
 TAO_POA::servant_to_system_id (PortableServer::Servant servant,
+                               CORBA::Short &priority,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
   return this->servant_to_system_id_i (servant,
+                                       priority,
                                        ACE_TRY_ENV);
 }
 
@@ -512,12 +544,6 @@ TAO_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & 
 }
 
 #endif /* TAO_HAS_RT_CORBA */
-
-ACE_INLINE const CORBA::PolicyList &
-TAO_POA::client_exposed_policies (void)
-{
-  return this->client_exposed_policies_;
-}
 
 //
 // Forwarding related.
