@@ -396,7 +396,9 @@ Key_List::reorder (void)
   for (ptr = head; ptr; ptr = ptr->next)
     ptr->occurrence = get_occurrence (ptr);
 
-  occurrence_sort = !(hash_sort = 0); // Pretty gross, eh?!
+  // Switch to sorting by occurrence.
+  hash_sort = 0;
+  occurrence_sort = 1;
 
   for (ptr = head = merge_sort (head); ptr->next; ptr = ptr->next)
     {
@@ -667,10 +669,10 @@ Key_List::output_switch (void)
 void
 Key_List::output_keylength_table (void)
 {
-  const int  max_column = 15;
-  int        index      = 0;
-  int        column     = 0;
-  char      *indent     = option[GLOBAL] ? "" : "  ";
+  const int max_column = 15;
+  int index = 0;
+  int column = 0;
+  char *indent = option[GLOBAL] ? "" : "  ";
   List_Node *temp;
 
   if (!option[DUP] && !option[SWITCH])
@@ -717,8 +719,15 @@ Key_List::output_keyword_table (void)
 
   if (0 < head->hash_value)
     printf ("      ");
-  for (int column = 1; index < head->hash_value; index++, column++)
-    printf ("%s\"\",%s %s", l_brace, r_brace, column % 9 ? "" : "\n      ");
+
+  int column;
+
+  for (column = 1; index < head->hash_value; column++)
+    {
+      printf ("%s\"\",%s %s", l_brace, r_brace, column % 9 ? "" : "\n      ");
+      index++;
+    }
+
   if (0 < head->hash_value && column % 10)
     printf ("\n");
 
@@ -1346,7 +1355,8 @@ Key_List::output (void)
 void
 Key_List::sort (void)
 {
-  hash_sort       = 1;
+  // By default, we sort via hashing.
+  hash_sort = 1;
   occurrence_sort = 0;
 
   head = merge_sort (head);
