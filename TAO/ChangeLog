@@ -1,3 +1,9 @@
+Mon Feb 17 15:37:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/RTCORBA/Persistent_IOR/client.bor: Linked the client with
+	  RTCORBA library to get the static constructors in so that they
+	  can do its job. 
+
 Mon Feb 17 15:26:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/RTCORBA/MT_Client_Protocol_Priority/client.conf: This file
