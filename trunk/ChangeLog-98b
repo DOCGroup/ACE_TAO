@@ -3,27 +3,27 @@ Tue May 12 13:45:45 1998  Chris Gill  <cdgill@cs.wustl.edu>
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp,h}:
           Fixed compile problem when using ACE_Scheduler
           instead of ACE_DynScheduler
-	
+
 Tue May 12 13:28:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h: 
-	  The ACE_INLINE_FOR_GNUC macro must be defined (as the null
-	  token) if ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTION is not
-	  defined.
+        * ace/OS.h:
+          The ACE_INLINE_FOR_GNUC macro must be defined (as the null
+          token) if ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTION is not
+          defined.
 
 Tue May 12 12:30:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/README:
-	* ace/config-g++-common.h (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS): 
-	  Added this new macro to get around a bug which only happens in
-	  GNUC 2.7.xx.  It mistakenly refers to the template definition as
-	  the place where a function is used.
+        * ace/README:
+        * ace/config-g++-common.h (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS):
+          Added this new macro to get around a bug which only happens in
+          GNUC 2.7.xx.  It mistakenly refers to the template definition as
+          the place where a function is used.
 
-	* ace/OS.h (ACE_INLINE_FOR_GNUC): Added the macro to fix the GNUC
-	  bug. 
-	
-	* ace/Thread_Manager.h: Added above macro to set_next and
-	  get_next. 
+        * ace/OS.h (ACE_INLINE_FOR_GNUC): Added the macro to fix the GNUC
+          bug.
+
+        * ace/Thread_Manager.h: Added above macro to set_next and
+          get_next.
 
 Tue May 12 12:11:36 1998  Bob Laferriere  <laferrie@gsao.med.ge.com>
 
@@ -50,21 +50,25 @@ Tue May 12 08:29:50 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Malloc.h: added comments to not add data members to
           ACE_Allocator or ACE_New_Allocator.
 
+        * bin/g++dep: changed PATH to pick up /project/doc/pkg/gnu/bin/g++,
+          and removed GNUG_INCLUDE.  Thanks to Ganesh Pai <gpai@voicetek.com>
+          for reporting problems with the old version on Linux.
+
 Tue May 12 02:59:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Misc/childbirth_time.cpp: Added ACE_OS::sleep
-	  (0) before all timing sections start.  This ensures we own a
-	  fresh time slice when the timing begin and reduce the chances of
-	  getting preempted
+        * performance-tests/Misc/childbirth_time.cpp: Added ACE_OS::sleep
+          (0) before all timing sections start.  This ensures we own a
+          fresh time slice when the timing begin and reduce the chances of
+          getting preempted
 
 Tue May 12 00:42:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/dsp2dsp.pl: This file clones a new MSVC 5.0 dsp file based
-	  on setting from another dsp file.  It is most useful in adding
-	  new project files into tests/.
+        * bin/dsp2dsp.pl: This file clones a new MSVC 5.0 dsp file based
+          on setting from another dsp file.  It is most useful in adding
+          new project files into tests/.
 
-	* tests/WinCE/*: New project files.  Updated the workspace.
-	  Please see CE-status for the current progress.
+        * tests/WinCE/*: New project files.  Updated the workspace.
+          Please see CE-status for the current progress.
 
         * tests/Buffer_Stream_Test.cpp:
         * tests/Conn_Test.cpp:
@@ -77,7 +81,7 @@ Tue May 12 00:42:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * tests/Thread_Mutex_Test.cpp: Made CE friendly.
 
         * tests/test_config.h: Moved some common definitions shared among
-	  CE and other platforms out.
+          CE and other platforms out.
 
         * ace/Acceptor.cpp:
         * ace/Acceptor.h:
@@ -90,9 +94,9 @@ Tue May 12 00:42:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * ace/Synch.i: CE stuff.
 
         * ace/config-WinCE.h: Defined ACE_DEFAULT_SERVER_HOST in UNICODE
-	  here to overwrite the default setting.
+          here to overwrite the default setting.
 
-	* ace/Synch.i (ACE_Lock): CE needs a default ctor here.
+        * ace/Synch.i (ACE_Lock): CE needs a default ctor here.
 
 Mon May 11 15:43:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
