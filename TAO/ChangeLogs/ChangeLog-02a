@@ -128,8 +128,8 @@ Mon Jan 28 12:15:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/OBV/Forward/server.dsp:
 
-	  Corrected TAO_IDL compiler path "Debug" configuration
-	  depencencies.
+	  Corrected TAO_IDL compiler path in "Debug" configuration
+	  dependencies.
 
 Mon Jan 28 11:50:27 2002  Ossama Othman  <ossama@uci.edu>
 
