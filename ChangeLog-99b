@@ -1,3 +1,10 @@
+Fri Nov 12 10:02:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-win32-common.h,
+  	* ace/config-win32.h: Fixed inconsistent use of <> and
+	  "" for ACE-specific #includes.  Thanks to Dave Delano
+ 	  <delanod@agcs.com> for reporting this.
+
 Fri Nov 12 08:25:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Log_Msg.cpp (open,log,dump): ensure that there

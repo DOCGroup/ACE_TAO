@@ -470,9 +470,9 @@ typedef unsigned __int64 ACE_UINT64;
 #endif /* ACE_HAS_WINSOCK2_GQOS */
 
 // Borland C++ compiler.
-#include /**/ <ace/config-win32-borland.h>
+#include /**/ "ace/config-win32-borland.h"
 
 // IBM VisualAge C++ compiler.
-#include /**/ <ace/config-win32-visualage.h>
+#include /**/ "ace/config-win32-visualage.h"
 
 #endif /* ACE_WIN32_COMMON_H */

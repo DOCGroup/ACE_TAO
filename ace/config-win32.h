@@ -210,6 +210,6 @@
 
 // ----------------------- platform specific defines --------------------
 
-#include <ace/config-win32-common.h>
+#include "ace/config-win32-common.h"
 
 #endif /* ACE_CONFIG_H */
