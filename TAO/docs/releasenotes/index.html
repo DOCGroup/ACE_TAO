@@ -283,6 +283,15 @@ Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and
       Task List:
 
       <ul>
+	<li>Insure that the Reactor_Performance_Test portion that
+	tests <code>connect_n</code> adequately tests for failures.  I
+	don't think it's doing that right now, so the newly-added code
+	doesn't address it.</li>
+	
+	<li>Insure that the interface for <code>connect_n</code> works
+	with the Cached Connector.  Perhaps Irfan can try this in the
+	Connect Test?</li>
+
 	<li>Fix <code>strsplit_r()</code> (waiting on response from
 	user having problems).</li>
 	
@@ -313,6 +322,6 @@ $Id$
 </pre>
 <!-- Created: Mon Oct 20 09:53:33 CDT 1997 -->
 <!-- hhmts start -->
-Last modified: Mon Oct 20 22:06:41 CDT 1997
+Last modified: Wed Oct 22 16:50:56 CDT 1997
 <!-- hhmts end -->
 </HTML>
