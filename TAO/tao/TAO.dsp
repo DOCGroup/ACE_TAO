@@ -104,6 +104,10 @@ SOURCE=.\cdr.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\client_factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\connect.cpp
 # End Source File
 # Begin Source File
@@ -128,15 +132,19 @@ SOURCE=.\deep_free.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\default_client.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\default_server.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\encode.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\except.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\factories.cpp
 # End Source File
 # Begin Source File
 
@@ -197,6 +205,10 @@ SOURCE=.\request.cpp
 # Begin Source File
 
 SOURCE=.\roa.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\server_factory.cpp
 # End Source File
 # Begin Source File
 
