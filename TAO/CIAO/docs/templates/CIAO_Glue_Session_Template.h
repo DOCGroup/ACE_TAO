@@ -24,6 +24,7 @@
 #include "[idl-name]EC.h"       // Source in the executor mapping
                                 // that component implementations use
 #include "ciao/Container_Base.h" //Source in the container interface definitions
+#include "tao/LocalObject.h"
 #include "ace/Active_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -85,7 +86,8 @@ namespace CIAO_GLUE
   //////////////////////////////////////////////////////////////////
   // Component specific context implementation
   class [SERVANT]_Export [component name]_Context :
-    public virtual CCM_[component name]_Context
+    public virtual CCM_[component name]_Context,
+    public virtual TAO_Local_RefCounted_Object
   {
   public:
     // We will allow the the servant glue code we generate to access

@@ -570,7 +570,7 @@ CIAO_GLUE_HUDisplay::RateGenHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
   return this->_ciao_create_helper (com
-                             ACE_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations for CCMHome interface

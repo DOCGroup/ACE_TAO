@@ -1,3 +1,25 @@
+Sun Mar 16 21:57:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.inl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.inl:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.inl: Added
+	  code to support SessionComponent::set_session_context operation
+	  and make sure the Context objects also inherit from
+	  TAO_Local_RefCounted_Object.
+
+	* examples/handcrafted/Hello/helloE.idl:
+	* examples/handcrafted/Hello/hello_executors.h:
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Changed to implement
+	  component specific context as a SessionContext, plus the
+	  aforementioned changes.
+
 Sun Mar 16 11:43:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/ConfigValues.html:
