@@ -11,7 +11,7 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::TdfT tdf)
 {
   this->attr_utc_time_.time = time;
-  this->attr_utc_time_.inacchi = inaccuracy / 2;
+  this->attr_utc_time_.inacchi = ACE_U64_TO_U32 (inaccuracy / 2);
   this->attr_utc_time_.inacclo = ACE_U64_TO_U32 (inaccuracy - (inaccuracy/2));
   this->attr_utc_time_.tdf = tdf;
 }
