@@ -1,3 +1,18 @@
+Wed Jul 25 23:37:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+ 
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Latency/Makefile:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+        * orbsvcs/orbsvcs/Makefile.av:
+ 
+          Correct link flags so that ACE_QoS is linked in when
+          rapi=1 is specified in platform_macros.GNU.
+
 Wed Jul 25 22:45:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Transport.cpp:
