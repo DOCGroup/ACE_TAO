@@ -1,3 +1,12 @@
+Wed May  7 17:51:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/iorinterceptor.mpb:
+        * bin/MakeProjectCreator/config/objreftemplate.mpb:
+        * bin/MakeProjectCreator/config/valuetype.mpb:
+
+          New base project files correponding to the new libraries
+          subsetted out of TAO.
+
 Wed May  7 18:32:45 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/FIFO_Test.cpp: Fix the version of main() that was actually
