@@ -513,7 +513,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-                                                    ACE_Time_Value *timeout)
+                                                      ACE_Time_Value *timeout)
 {
   int result = 0;
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
