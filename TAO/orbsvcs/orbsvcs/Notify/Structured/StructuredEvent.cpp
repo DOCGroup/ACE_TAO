@@ -8,6 +8,7 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_StructuredEvent, "$Id$")
 
+#include "../PropertySeq.h"
 #include "../Consumer.h"
 #include "tao/debug.h"
 

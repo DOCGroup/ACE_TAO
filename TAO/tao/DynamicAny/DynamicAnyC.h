@@ -22,7 +22,8 @@
 #ifndef _TAO_IDL_ORIG_DYNAMICANYC_H_
 #define _TAO_IDL_ORIG_DYNAMICANYC_H_
 
-#ifndef TAO_DYNAMICANY_SAFE_INCLUDE
+#if !defined(TAO_DYNAMICANY_SAFE_INCLUDE) && \
+    !defined(TAO_INSTANTIATING_TEMPLATES)
 #error "You should not include DynamicAnyC.h directly, use DynamicAny.h"
 #endif /* !TAO_DYNAMICANY_SAFE_INCLUDE */
 

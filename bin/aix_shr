@@ -15,7 +15,7 @@ for possible in "$TMPDIR" "$TEMP" "$TMP"; do
 done
 
 ## Send the output to a temporary file and save the return code
-$@ > "$usrtmp/$output" 2>&1
+$@ -DTAO_INSTANTIATING_TEMPLATES > "$usrtmp/$output" 2>&1
 status=$?
 
 ## Print the output to stdout, but filter duplicate symbol warnings from

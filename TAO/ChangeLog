@@ -1,3 +1,29 @@
+Thu Jan  2 13:33:01 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * tao/Condition.h:
+
+          Added #include to correct AIX build errors.
+
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/RTCORBA/RTCORBAC.h:
+
+          Added a second macro TAO_INSTANTIATING_TEMPLATES to the safety
+          check for these files to determine if the AIX compiler is
+          instantiating templates.  If it is instantiating, then we must
+          allow the compiler to #include these files.
+
 Thu Jan  2 10:33:29 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
 	* tao/PortableServer/ImplRepoC.h:
