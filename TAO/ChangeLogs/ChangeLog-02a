@@ -1,3 +1,75 @@
+Mon Nov 13 14:35:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i:
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/Synch_Reply_Dispatcher.h:
+
+	  Moved member and accessor function reply_status to base
+	  class, since it is common to all reply dispatcher concrete classes.
+
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/Asynch_Reply_Dispatcher.h:
+	* tao/Asynch_Reply_Dispatcher.i:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
+
+	  Added new base class TAO_Asynch_Reply_Dispatcher_Base
+	  to hold common code for TAO_Asynch_Reply_Dispatcher and 
+	  TAO_DII_Deferred_Reply_Dispatcher.
+
+	* tao/Invocation.cpp:
+	* tao/Invocation.h:
+	* tao/Invocation.i:
+	* tao/DynamicInterface/DII_Invocation.cpp:
+	* tao/DynamicInterface/DII_Invocation.h:
+	* tao/DynamicInterface/DII_Invocation.inl:
+	* tao/DynamicInterface/Request.cpp:
+
+	  Moved some code from the subclasses' start() method to that
+	  of the base class, which is called by all the start() methods.
+	  Also moved the invoke() method of 
+	  TAO_GIOP_Twoway_Invocation that was specific to DII
+	  requests out to the DynamicInterface library into a new class
+	  called TAO_GIOP_DII_Invocation.
+	  Also created new base class TAO_GIOP_Synch_Invocation,
+	  to be the parent of TAO_GIOP_Twoway_Invocation,
+	  TAO_GIOP_Oneway_Invocation, and
+	  TAO_GIOP_Locate_Request_Invocation. The invoke_i method
+	  of the first of these subclasses was moved to the base class, with
+	  minor changes, and the invoke() methods of the latter two subclasses
+	  were modified to use this relocated invoke_i().
+
+	* tao/Asynch_Invocation.cpp:
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.i:
+
+	  Created new base class TAO_GIOP_Asynch_Invocation to be
+	  the parent of TAO_GIOP_Twoway_Asynch_Invocation and
+	  TAO_GIOP_DII_Deferred_Invocation, and to hold code
+	  common to these latter two classes.
+
+	* tao/Dynamic_Adapter.cpp:
+	* tao/Dynamic_Adapter.h:
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+
+	  Removed method decode_exception, since the method in 
+	  TAO_GIOP_Twoway_Invocation from which it was called
+	  is now in the DynamicInterface library.
+
+	* tao/Synch_Reply_Dispatcher.i:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.inl:
+
+	  Removed these files from CVS.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/DynamicInterface/TAO_DynamicInterface.dsp:
+
+	  Removed the above two files from these projects.
+
 Mon Nov 13 11:19:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed a compile
