@@ -3,6 +3,7 @@ Sun Mar 22 14:04:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/tao.{dsp,dsw}: Updated Project files.
 
 	* tao/Exception.cpp: Conditionally include its inline file.
+	  Added codes for copy ctor and assignment operator.
 
 Sun Mar 22 13:05:15 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
