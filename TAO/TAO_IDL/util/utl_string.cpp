@@ -146,10 +146,21 @@ UTL_String::UTL_String (UTL_String *s)
 void
 UTL_String::canonicalize (void)
 {
-  long	i;
+  long i;
+  long j;
 
-  for (i = 0; i < len; i++)
-    c_str[i] = isalpha (p_str[i]) ? toupper (p_str[i]) : p_str[i];
+  for (i = 0, j = 0; i < len; i++, j++)
+    {
+      // Put Microsoft-style pathnames into a canonical form.
+      if (p_str[j] == '\\' && p_str[j + 1])
+        {
+          c_str[i] = '\\';
+          j++;
+        }
+      else
+        c_str[i] = isalpha (p_str[j]) ? toupper (p_str[j]) : p_str[j];
+    }
+
   c_str[i] = '\0';
 }
 
