@@ -191,6 +191,9 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
       usageAndExit($base, 'Invalid use of -f');
     }
   }
+  elsif ($arg eq '-h') {
+    usageAndExit($base);
+  }
   elsif ($arg eq '-P') {
     ++$i;
     $arg = $ARGV[$i];
@@ -212,7 +215,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
     }
   }
   elsif ($arg =~ /^\-/) {
-    usageAndExit($base, "Unknown option: $arg");
+    ## We will ignore unknown options
   }
   else {
     push(@files, $arg);

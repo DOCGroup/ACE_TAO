@@ -76,7 +76,7 @@ sub write_comps {
     print $fh "\t\@for file in \$(MFILES); do \\$crlf" .
               "\told=`pwd`; \\$crlf" .
               "\tcd `dirname \$\$file`; \\$crlf" .
-              "\t\$(MAKE) -f `basename \$\$file` \$(\@); \\$crlf" .
+              "\t\$(MAKE) PWD=`pwd` -f `basename \$\$file` \$(\@); \\$crlf" .
               "\tcd \$\$old; \\$crlf" .
               "\tdone$crlf";
   }
@@ -84,10 +84,12 @@ sub write_comps {
     ## Otherwise, just list the call to make without a for loop
     print $fh "\t\@";
     my($dname) = dirname($list[0]);
+    my($pwd) = '';
     if ($dname ne '.') {
       print $fh "cd $dname && ";
+      $pwd = "PWD=$dname";
     }
-    print $fh "\$(MAKE) -f " .
+    print $fh "\$(MAKE) $pwd -f " .
               ($dname eq '.' ? $list[0] : basename($list[0])) .
               " \$(\@);$crlf";
   }

@@ -51,7 +51,7 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return 'Makefile' . ($name eq '' ? '' : ".$name") . '.bor';
+  return "$name.bor";
 }
 
 

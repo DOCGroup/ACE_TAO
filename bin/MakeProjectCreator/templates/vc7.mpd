@@ -14,71 +14,75 @@
 <%foreach(configurations)%>
 		<Configuration
 			Name="<%configuration%>|<%platform%>"
-			OutputDirectory=".\<%if(type_is_dynamic)%><%libout%><%else%><%output_dir%><%endif%>"
-			IntermediateDirectory=".\<%intermediate_dir%>\<%noextension(project_file)%>"
+			OutputDirectory="<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%><%else%><%if(type_is_static)%><%libout%><%else%><%if(install)%><%install%><%else%><%output_dir%><%endif%><%endif%><%endif%>"
+			IntermediateDirectory="<%intermediate_dir%>/<%noextension(project_file)%>"
 			ConfigurationType="<%configuration_type("2")%>"
 			UseOfMFC="<%use_mfc("0")%>"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
-<%if(optimization)%>
-				Optimization="<%optimization%>"
+<%if(optimize)%>
+				Optimization="<%optimize%>"
+<%else%>
+				Optimization="0"
 <%endif%>
-<%if(!debug)%>
-				InlineFunctionExpansion="<%inline("2")%>"
+				AdditionalIncludeDirectories="<%foreach(includes)%><%include%><%fornotlast(",")%><%endfor%>"
+				PreprocessorDefinitions="<%if(type_is_dynamic)%><%foreach(dynamicflags)%><%dynamicflag%>;<%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%><%staticflag%>;<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%><%pch_define%>;<%endfor%><%endif%><%foreach(defines common_defines macros)%><%define%><%fornotlast(";")%><%endfor%>"
+				MinimalRebuild="<%MinimalRebuild("FALSE")%>"
+				ExceptionHandling="TRUE"
+<%if(debug)%>
+				BasicRuntimeChecks="<%BasicRuntimeChecks("3")%>"
 <%endif%>
-				AdditionalIncludeDirectories="<%foreach(includes)%><%include%><%fornotlast(",")%><%endfor%><%if(zzip)%>,$(ZZIP_ROOT)\include<%endif%>"
-				PreprocessorDefinitions="<%if(type_is_dynamic)%><%foreach(dynamicflags)%><%dynamicflag%>;<%endfor%><%endif%><%if(zzip)%><%foreach(zzip_defines)%><%zzip_define%>;<%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%><%libflag%>;<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%><%pch_define%>;<%endfor%><%endif%><%foreach(defines common_defines macros)%><%define%><%fornotlast(";")%><%endfor%>"
-<%if(!debug)%>
-				StringPooling="<%string_pooling("TRUE")%>"
+<%if(StringPooling)%>
+				StringPooling="<%StringPooling%>"
 <%endif%>
-				RuntimeLibrary="<%runtime_library%>"
-				EnableFunctionLevelLinking="TRUE"
+				RuntimeLibrary="<%if(debug)%><%runtime_library("3")%><%else%><%runtime_library("2")%><%endif%>"
+				BufferSecurityCheck="<%BufferSecurityCheck("TRUE")%>"
+				EnableFunctionLevelLinking="<%EnableFunctionLevelLinking("TRUE")%>"
+				TreatWChar_tAsBuiltInType="TRUE"
+				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="<%rtti("TRUE")%>"
 <%if(pch_header)%>
-				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="<%pch_header%>"
 <%if(pch_source)%>
-				PrecompiledHeaderFile=".\<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_source)%>.pch"
+				UsePrecompiledHeader="3"
+<%else%>
+				UsePrecompiledHeader="2"
 <%endif%>
+				PrecompiledHeaderThrough="<%pch_header%>"
 <%endif%>
-				AssemblerListingLocation=".\<%intermediate_dir%>\<%noextension(project_file)%>"
-				ObjectFile=".\<%intermediate_dir%>\<%noextension(project_file)%>\"
 				WarningLevel="<%warning_level("3")%>"
 				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="<%debug_format("3")%>"
-				CompileAs="0"/>
+				Detect64BitPortabilityProblems="<%Detect64BitPortabilityProblems("FALSE")%>"
+				DebugInformationFormat="<%debug_format("3")%>"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/MACHINE:<%machine("I386")%>"
 <%if(type_is_binary)%>
-				AdditionalDependencies="<%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%><%if(ssl)%><%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%><%endif%><%if(zzip)%><%foreach(zzip_libs)%> <%zzip_lib%>.lib<%endfor%><%endif%>"
+				AdditionalDependencies="<%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%>"
 <%endif%>
-				OutputFile="<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.exe<%endif%><%if(type_is_static)%><%libout%>\<%staticname%><%lib_modifier%>.lib<%endif%>"
+				OutputFile="$(OutDir)/<%if(type_is_dynamic)%><%sharedname%><%lib_modifier%>.dll<%else%><%if(type_is_static)%><%staticname%><%lib_modifier%>.lib<%else%><%exename%>.exe<%endif%><%endif%>"
 				Version="<%version("1.0")%>"
-				LinkIncremental="<%incremental("1")%>"
+				LinkIncremental="<%LinkIncremental("1")%>"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="<%foreach(libpaths)%><%libpath%><%fornotlast(";")%><%endfor%><%if(zzip)%>;$(ZZIP_ROOT)\lib<%endif%>"
-<%if(debug)%>
+				AdditionalLibraryDirectories="<%foreach(libpaths)%><%libpath%><%fornotlast(";")%><%endfor%>"
 				GenerateDebugInformation="TRUE"
-<%endif%>
-<%if(pdb)%>
-<%if(sharedname)%>
-				ProgramDatabaseFile="<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.pdb"
+<%if(type_is_dynamic)%>
+				ProgramDatabaseFile="$(OutDir)/<%sharedname%><%lib_modifier%>.pdb"
 <%else%>
-<%if(exename)%>
-				ProgramDatabaseFile="<%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.pdb"
+   <%if(type_is_binary)%>
+				ProgramDatabaseFile="$(OutDir)/<%exename%>.pdb"
+   <%endif%>
 <%endif%>
-<%endif%>
+				SubSystem="<%subsystem("1")%>"
+<%if(!debug)%>
+				OptimizeReferences="<%optref("2")%>"
+				EnableCOMDATFolding="<%opticf("2")%>"
 <%endif%>
 <%if(type_is_dynamic)%>
-				SubSystem="<%subsystem("2")%>"
-				ImportLibrary="<%libout%>\<%sharedname%><%lib_modifier%>.lib"/>
-<%else%>
-				SubSystem="<%subsystem("2")%>"/>
+				ImportLibrary="$(OutDir)/<%sharedname%><%lib_modifier%>.lib"
 <%endif%>
+			/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -155,21 +159,21 @@
 						Description="Invoking IDL Compiler on <%basename(idl_file)%> located in <%dirname(idl_file)%>"
 <%if(flag_overrides(idl_file, idlgendir))%>
 						CommandLine="PATH=%PATH%;<%idl_compiler_libs%>
-<%idl_compiler%> -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> <%idl_file%>"
+<%idl_compiler%> -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
 						Outputs="<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.h;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.i;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.cpp;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.h;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.i;<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.cpp"/>
 <%else%>
 <%if(idlgendir)%>
 						CommandLine="PATH=%PATH%;<%idl_compiler_libs%>
-<%idl_compiler%> -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> <%idl_file%>"
+<%idl_compiler%> -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
 						Outputs="<%idlgendir%>\<%basenoextension(idl_file)%>C.h;<%idlgendir%>\<%basenoextension(idl_file)%>C.i;<%idlgendir%>\<%basenoextension(idl_file)%>C.cpp;<%idlgendir%>\<%basenoextension(idl_file)%>S.h;<%idlgendir%>\<%basenoextension(idl_file)%>S.i;<%idlgendir%>\<%basenoextension(idl_file)%>S.cpp"/>
 <%else%>
 <%if(dirname_found)%>
 						CommandLine="PATH=%PATH%;<%idl_compiler_libs%>
-<%idl_compiler%> -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> <%idl_file%>"
+<%idl_compiler%> -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
 						Outputs="<%basenoextension(idl_file)%>C.h;<%basenoextension(idl_file)%>C.i;<%basenoextension(idl_file)%>C.cpp;<%basenoextension(idl_file)%>S.h;<%basenoextension(idl_file)%>S.i;<%basenoextension(idl_file)%>S.cpp"/>
 <%else%>
 						CommandLine="PATH=%PATH%;<%idl_compiler_libs%>
-<%idl_compiler%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> <%idl_file%>"
+<%idl_compiler%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> <%idl_file%>"
 						Outputs="<%noextension(idl_file)%>C.h;<%noextension(idl_file)%>C.i;<%noextension(idl_file)%>C.cpp;<%noextension(idl_file)%>S.h;<%noextension(idl_file)%>S.i;<%noextension(idl_file)%>S.cpp"/>
 <%endif%>
 <%endif%>

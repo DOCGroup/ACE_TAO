@@ -151,7 +151,7 @@ gnuplot <<_EOF_ >/dev/null 2>&1
     set timefmt '%Y/%m/%d-%H:%M'
     set xlabel 'Date (YYYYMMDD)'
     set ylabel 'Throughput (Requests/Second)'
-    set yrange [0:10000]
+    set yrange [0:35000]
     set terminal png small color
     set output "/dev/null"
     plot 'DII.txt' using 1:2 title 'DII' w l
@@ -168,11 +168,16 @@ _EOF_
 
 /bin/cp CORBA.png All.png $DEST/images/
 
+MOGRIFY=/usr/local/bin/mogrify
+if [ ! -x "$MOGRIFY" ]; then
+  MOGRIFY=/usr/X11R6/bin/mogrify
+fi
+
 (
   cd $DEST/images
   /bin/cp *.png thumbnails
   for i in *.png; do
-    /usr/bin/X11/mogrify -geometry '25%' thumbnails/$i
+    $MOGRIFY -geometry '25%' thumbnails/$i
   done
 )
 

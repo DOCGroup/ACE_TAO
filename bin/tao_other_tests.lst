@@ -69,7 +69,7 @@ TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/EC_MT_Mcast/run_test.pl:!ST !MINIMUM !STATIC
-TAO/orbsvcs/tests/ImplRepo/run_test.pl: SANDBOX
+TAO/orbsvcs/tests/ImplRepo/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: SANDBOX
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST
@@ -87,6 +87,8 @@ TAO/orbsvcs/tests/Notify/Structured_Filter/run_test.pl: !ST
 TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl: !ST
 TAO/orbsvcs/tests/Notify/Lanes/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/examples/Notify/Lanes/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/examples/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
 # BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
 # NO REDIRECTION TAO/examples/Simple/echo/run_test.pl < Echo.idl
@@ -105,4 +107,6 @@ TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Two_Objects/run_test.pl: !ST
 TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM
+TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS 
+TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 

@@ -52,71 +52,22 @@ sub fill_value {
   my($names) = $self->{$tag};
   my($dcomp) = $self->get_default_component_name();
 
-  if ($name eq 'gnu_source_files') {
+  if ($name eq 'vpath') {
     my(%vpath) = ();
-    $value = '';
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
-
       foreach my $key (sort keys %$comps) {
-        my($a)   = $$comps{$key};
-        my(@arr) = @$a;
-
-        $value .= "$crlf$crlf$key = \\";
-        for(my $i = 0; $i <= $#arr; $i++) {
-          my($item) = $arr[$i];
+        foreach my $item (@{$$comps{$key}}) {
           my($dname) = dirname($item);
-
-          $item =~ s/\.[^\.]+$//;
           if ($dname ne '.' && $dname !~ /^\.\.\//) {
             $vpath{$dname} = 1;
           }
-          $value .= "$crlf  $item" . ($i != $#arr ? " \\" : '');
         }
       }
     }
-    foreach my $name (keys %$names) {
-      my($fname) = '';
-      my($comps) = $$names{$name};
-      foreach my $key (sort keys %$comps) {
-        $fname = $key;
-        last;
-      }
-
-      if ($name ne $dcomp) {
-        $fname = $self->get_default_element_name();
-        $value .= "$crlf$crlf" . "ifndef $name$crlf" .
-                  "  $name = \\$crlf";
-        my(@keys) = sort keys %$comps;
-        for(my $i = 0; $i <= $#keys; $i++) {
-          my($key) = $keys[$i];
-          $value .= "    $key" . ($i != $#keys ? " \\" : '') . $crlf;
-        }
-        $value .= "endif # $name";
-
-        foreach my $key (@keys) {
-          $value .= "$crlf$crlf" . "ifneq (,\$(findstring $key, \$($name)))$crlf" .
-                    "  $fname += \$($key)$crlf" .
-                    "endif # $key";
-        }
-      }
-    }
-    my(@vkeys) = sort keys %vpath;
-    if ($#vkeys >= 0) {
-      $value .= "$crlf$crlf" . 'VPATH = .';
-      foreach my $key (@vkeys) {
-        $value .= ":$key";
-      }
-    }
-  }
-  elsif ($name eq 'build') {
-    foreach my $name (keys %$names) {
-      if ($name ne $dcomp) {
-        if (!defined $value) {
-          $value = 'BUILD +=';
-        }
-        $value .= " $name";
-      }
+    my($str) = join(':', keys %vpath);
+    if ($str ne '') {
+      $value = 'VPATH = .:' . $str . $crlf;
     }
   }
   elsif ($name eq 'comptarget') {

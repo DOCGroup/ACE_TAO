@@ -1,4 +1,6 @@
 project : rtsched, rtevent {
-  after   += RTSchedEvent
-  libs    += TAO_RTSchedEvent
+  after     += RTSchedEvent
+  libs      += TAO_RTSchedEvent
+  comps     += RTSchedEvent
+  tagchecks += RTSchedEvent
 }

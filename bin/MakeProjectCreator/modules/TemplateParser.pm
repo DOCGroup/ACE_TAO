@@ -37,6 +37,8 @@ my(%keywords) = ('if'              => 1,
                  'comment'         => 1,
                  'flag_overrides'  => 1,
                  'marker'          => 1,
+                 'uc'              => 1,
+                 'lc'              => 1,
                 );
 
 # ************************************************************
@@ -224,7 +226,7 @@ sub get_nested_value {
     my($post) = $2;
     my($base) = $self->get_value($pre);
     if (defined $base) {
-      $value = $self->{'prjc'}->get_custom_value($post, $base);
+      $value = $self->{'prjc'}->get_special_value($pre, $post, $base);
     }
   }
 
@@ -383,6 +385,8 @@ sub process_foreach {
         $$scope{'forlast'}    = 1;
         $$scope{'fornotlast'} = 0;
       }
+      $$scope{'forcount'} = $i + 1;
+
       ## We don't use adjust_value here because these names
       ## are generated from a foreach and should not be adjusted.
       $$scope{$name} = $value;
@@ -579,6 +583,11 @@ sub handle_foreach {
         $errorString = 'ERROR: The foreach variable can not be ' .
                        'named when dealing with custom types';
       }
+      elsif ($val =~ /^grouped_.*_file\->/ || $val =~ /^grouped_.*files$/) {
+        $status = 0;
+        $errorString = 'ERROR: The foreach variable can not be ' .
+                       'named when dealing with grouped files';
+      }
     }
 
     push(@{$self->{'sstack'}}, $name);
@@ -610,6 +619,28 @@ sub handle_special {
     if ($self->get_value($name)) {
       $self->append_current($val);
     }
+  }
+}
+
+
+sub handle_uc {
+  my($self) = shift;
+  my($name) = shift;
+
+  if (!$self->{'if_skip'}) {
+    my($val) = uc($self->get_value_with_default($name));
+    $self->append_current($val);
+  }
+}
+
+
+sub handle_lc {
+  my($self) = shift;
+  my($name) = shift;
+
+  if (!$self->{'if_skip'}) {
+    my($val) = lc($self->get_value_with_default($name));
+    $self->append_current($val);
   }
 }
 
@@ -724,7 +755,7 @@ sub split_name_value {
     }
   }
 
-  return $name, $val;
+  return lc($name), $val;
 }
 
 
@@ -770,6 +801,12 @@ sub process_name {
       }
       elsif ($name eq 'marker') {
         $self->handle_marker($val);
+      }
+      elsif ($name eq 'uc') {
+        $self->handle_uc($val);
+      }
+      elsif ($name eq 'lc') {
+        $self->handle_lc($val);
       }
       elsif ($name eq 'noextension') {
         $self->handle_noextension($val);
@@ -824,7 +861,7 @@ sub collect_data {
   foreach my $key (keys %{$prjc->{'valid_components'}}) {
     my(@list) = $prjc->get_component_list($key);
     if (defined $list[0]) {
-      $self->{'values'}->{$key} = "@list";
+      $self->{'values'}->{$key} = \@list;
     }
   }
 
@@ -850,7 +887,8 @@ sub is_only_keyword {
   my($line) = shift;
 
   ## Does the line contain only a keyword?
-  if ($line =~ /^<%(.*)%>$/) {
+  ## Checking for spaces allows nesting in the template.
+  if ($line =~ /^\s*<%(.*)%>$/) {
     my($part) = $1;
     if ($part !~ /%>/) {
       $part =~ s/\(.*//;

@@ -62,7 +62,7 @@ sub locate {
 sub obtainCVSROOT {
   my($self)  = shift;
   my($fh)    = new FileHandle();
-  my($croot) = $ENV{CVSROOT};
+  my($croot) = undef;
 
   if (open($fh, 'CVS/Root')) {
     while(<$fh>) {
@@ -108,6 +108,9 @@ sub obtainCVSROOT {
       }
     }
     close($fh);
+  }
+  else {
+    $croot = $ENV{CVSROOT};
   }
 
   return $croot;
