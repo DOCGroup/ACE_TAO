@@ -1,3 +1,26 @@
+Tue Aug 10 19:07:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/run_tests.sh:
+	* tests/run_tests.pl:
+	* tests/run_tests.lst:
+	  Move the list of tests to a separate file. This file is used to
+	  drive both a perl version of the script and the old shell
+	  version.
+	  The new perl version is able to terminate programs that hang,
+	  but still has problem with processes that fork children who then 
+	  hang for some reason. The perl script has to be ported to Win32
+	  too.
+
+	* bin/run_all_list.pm:
+	  Use the new tests/run_tests.pl script on Unix.
+
+	* bin/run_all.pl:
+	  Run all the test scripts in ACE and TAO, much like run_all_win32 
+	  but for unix systems.
+
+	* bin/auto_compile:
+	  Remember to remove the disable file in case of errors.
+
 Tue Aug 10 18:08:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/CDR_Stream.h:
