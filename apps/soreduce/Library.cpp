@@ -32,13 +32,13 @@ Makefile_Generator::~Makefile_Generator ()
 {
 }
 
-void 
+void
 Makefile_Generator::write_file (const ACE_CString& file)
 {
   makefile_ << " \\\n\t" << file << flush;
 }
 
-void 
+void
 Makefile_Generator::write_prolog (const ACE_CString& path)
 {
   ACE_CString fname (path + "/" + makefilename_);
@@ -47,11 +47,11 @@ Makefile_Generator::write_prolog (const ACE_CString& path)
   if (!makefile_)
     ACE_DEBUG ((LM_DEBUG,"makefile open failed\n"));
 
-  makefile_ 
+  makefile_
     << "#--------------------------------------------------------------------"
     << endl;
-  makefile_ 
-    << "# Generated makefile for producing a subset of the " 
+  makefile_
+    << "# Generated makefile for producing a subset of the "
     << libname_ << " library " << endl;
   makefile_
     << "#--------------------------------------------------------------------"
@@ -63,14 +63,14 @@ Makefile_Generator::write_prolog (const ACE_CString& path)
   makefile_ << "\nFILES  =" << flush;
 }
 
-void 
+void
 Makefile_Generator::write_epilog ()
 {
   makefile_ << "\n" << endl;
   this->write_libdeps();
-  makefile_ 
+  makefile_
     << "#--------------------------------------------------------" << endl;
-  makefile_ 
+  makefile_
     << "#             Include macros and targets" << endl;
   makefile_
     << "#--------------------------------------------------------" << endl;
@@ -78,54 +78,54 @@ Makefile_Generator::write_epilog ()
     << "include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU" << endl;
 
   this->write_initial_rules();
-  
+
   makefile_
     << "\nLSRC  = $(addsuffix .cpp,$(FILES))\n" << endl;
 
-  makefile_ 
+  makefile_
     << "include $(ACE_ROOT)/include/makeinclude/macros.GNU" << endl;
-  makefile_ 
+  makefile_
     << "include $(ACE_ROOT)/include/makeinclude/rules.common.GNU" << endl;
-  makefile_ 
+  makefile_
     << "include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU" << endl;
-  makefile_ 
+  makefile_
     << "include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU" << endl;
-  makefile_ 
+  makefile_
     << "include $(ACE_ROOT)/include/makeinclude/rules.local.GNU" << endl;
 
-  this->write_final_rules();  
+  this->write_final_rules();
 
   makefile_ << "\n" << endl;
 
-  makefile_ 
+  makefile_
     << "#-----------------------------------------------------------" << endl;
-  makefile_ 
+  makefile_
     << "#       Dependencies" << endl;
-  makefile_ 
+  makefile_
     << "#-----------------------------------------------------------" << endl;
-  makefile_ 
+  makefile_
     << "# DO NOT DELETE THIS LINE -- g++dep uses it." << endl;
-  makefile_ 
+  makefile_
     << "# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY." << endl;
-  makefile_ 
+  makefile_
     << "# IF YOU PUT ANYTHING HERE IT WILL GO AWAY" << endl;
 
   makefile_.close();
 }
 
-void 
+void
 Makefile_Generator::write_libdeps()
 {
   // nothing to do
 }
 
-void 
+void
 Makefile_Generator::write_initial_rules()
 {
   // nothing to do
 }
 
-void 
+void
 Makefile_Generator::write_final_rules()
 {
   // nothing to do
@@ -136,7 +136,7 @@ Make_ACE_Dep_Lib::Make_ACE_Dep_Lib (const ACE_CString& libname)
   : Makefile_Generator(libname)
 {}
 
-void 
+void
 Make_ACE_Dep_Lib::write_libdeps()
 {
   makefile_ << "ACE_SHLIBS = -lACE_subset" << endl;
@@ -157,13 +157,13 @@ Make_TAO_Lib::write_libdeps()
   makefile_ << "ACE_SHLIBS = -lACE_subset" << endl;
 }
 
-void 
+void
 Make_TAO_Lib::write_initial_rules()
 {
     makefile_ << "include $(TAO_ROOT)/rules.tao.GNU" << endl;
 }
 
-void 
+void
 Make_TAO_Lib::write_final_rules()
 {
   makefile_ << "include $(TAO_ROOT)/taoconfig.mk" << endl;
@@ -219,12 +219,12 @@ Library::set_path (const ACE_TCHAR *p)
 {
   char abspath[1000];
   memset (abspath,0,1000);
-  int abspathlen = readlink(p,abspath,999);
+  int abspathlen = ACE_OS::readlink(p,abspath,999);
   ACE_CString path (p);
   if (abspathlen > 0) {
     abspath[abspathlen] = 0;
     path = abspath;
-  } 
+  }
 
   int pathsep = path.rfind('/');
 
@@ -287,22 +287,22 @@ Library::resolve (Sig_List &undefs)
   if (num_modules_ < 1)
     return;
 
-  for (const Signature *uname = undefs.first(); 
-       undefs.hasmore(); 
+  for (const Signature *uname = undefs.first();
+       undefs.hasmore();
        uname = undefs.next()) {
     if (exported_.index_of(uname) != -1) {
       undefs.remove_current();
-    } 
+    }
     else
       for (int i = 0; i < num_modules_; i++)
-        if (modules_[i]->extref() == 0 && 
-            modules_[i]->exports().index_of(uname) != -1) 
+        if (modules_[i]->extref() == 0 &&
+            modules_[i]->exports().index_of(uname) != -1)
           {
             undefs.remove_current();
             exported_.add (modules_[i]->exports());
             for (const Signature *needed = modules_[i]->imports().first();
                  modules_[i]->imports().hasmore();
-                 needed = modules_[i]->imports().next()) 
+                 needed = modules_[i]->imports().next())
               if (exported_.index_of(needed) == -1)
                 undefs.add (needed->name());
             modules_[i]->add_extref();
@@ -312,10 +312,10 @@ Library::resolve (Sig_List &undefs)
   }
 }
 
-void 
+void
 Library::write_export_list (int show_ref_counts)
 {
-  if (num_modules_ < 1) 
+  if (num_modules_ < 1)
     return;
 
   ACE_CString excludedfilename = path_ + "/excluded_modules";
@@ -332,7 +332,7 @@ Library::write_export_list (int show_ref_counts)
       ACE_ERROR ((LM_ERROR, "%p\n", "mkdir"));
   }
 
-  ACE_DEBUG ((LM_DEBUG,"%s: %d out of %d modules required\n", 
+  ACE_DEBUG ((LM_DEBUG,"%s: %d out of %d modules required\n",
               name_.c_str(), num_extrefs_, num_modules_));
 
   makefile_->write_prolog(path_);
@@ -359,10 +359,10 @@ Library::write_export_list (int show_ref_counts)
       makefile_->write_file(modules_[i]->name().substring(0,modules_[i]->name().length()-2));
     } else {
       //      const char * modname = modules_[i]->name().c_str();
-      exclusions 
-        << modules_[i]->name().substring(0,modules_[i]->name().length()-2) 
+      exclusions
+        << modules_[i]->name().substring(0,modules_[i]->name().length()-2)
         << endl;
-    }  
+    }
 
   makefile_->write_epilog();
 }
