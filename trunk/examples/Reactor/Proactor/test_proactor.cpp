@@ -133,7 +133,7 @@ Receiver::open (ACE_HANDLE handle,
 
       // Fake the result so that we will get called back.
       ACE_Asynch_Read_Stream_Result_Impl *fake_result =
-        ACE_Proactor::instance ()->create_asynch_read_stream_result (*this,
+        ACE_Proactor::instance ()->create_asynch_read_stream_result (this->proxy (),
                                                                      this->handle_,
                                                                      duplicate,
                                                                      initial_read_size,
