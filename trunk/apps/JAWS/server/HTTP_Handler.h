@@ -134,6 +134,12 @@ private:
 
   JAWS_IO &io_;
   // IO class used by the handler
+
+  static const char *HTTP_HEADER;
+  static const char *HTTP_TRAILER;
+  static const int HTTP_HEADER_LENGTH;
+  static const int HTTP_TRAILER_LENGTH;
+  // Header and Trailer used in file transfer
 };
 
 class HTTP_Handler_Factory

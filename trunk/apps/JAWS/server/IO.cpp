@@ -97,7 +97,9 @@ JAWS_Synch_IO::receive_file (char *filename,
 void
 JAWS_Synch_IO::transmit_file (char *filename,
 			      const char *header, 
-			      int header_size)
+			      int header_size,
+			      const char *trailer, 
+			      int trailer_size)
 {
   JAWS_VFS_Node *vf = 0;
   VFS::instance ()->open (filename, vf);
@@ -111,17 +113,12 @@ JAWS_Synch_IO::transmit_file (char *filename,
       ACE_SOCK_Stream stream;
       stream.set_handle (this->handle_);
       
-      int bytes = stream.send_n (header, header_size);
-      if (bytes == header_size)
-	{
-	  int bytes = stream.send_n (vf->addr (), vf->size ());
-	  if (bytes == vf->size ())
-	    this->handler_->transmit_file_complete ();
-	  else
-	    result = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
-	}
+      if ((stream.send_n (header, header_size) == header_size) &&
+	  (stream.send_n (vf->addr (), vf->size ()) == vf->size ()) &&
+	  (stream.send_n (trailer, trailer_size) == trailer_size))
+	this->handler_->transmit_file_complete ();
       else
-	result = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
+	result = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;      
     }
   if (result != HTTP_Status_Code::STATUS_OK)    
     this->handler_->transmit_file_error (result);
@@ -258,7 +255,9 @@ JAWS_Asynch_IO::receive_file (char *filename,
 void
 JAWS_Asynch_IO::transmit_file (char *filename,
 			       const char *header, 
-			       int header_size)
+			       int header_size,
+			       const char *trailer, 
+			       int trailer_size)
 {
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
   JAWS_VFS_Node *vf;
@@ -272,8 +271,11 @@ JAWS_Asynch_IO::transmit_file (char *filename,
   if (result == HTTP_Status_Code::STATUS_OK)
     {
       ACE_Message_Block header_mb (header, header_size);
+      ACE_Message_Block trailer_mb (trailer, trailer_size);
       header_and_trailer = new ACE_Asynch_Transmit_File::Header_And_Trailer (&header_mb,
-									     header_size);
+									     header_size,
+									     &trailer_mb,
+									     trailer_size);
       ACE_Asynch_Transmit_File tf;
       if (tf.open (*this, this->handle_) == -1 ||
 	  tf.transmit_file (vf->get_handle (), // file handle 

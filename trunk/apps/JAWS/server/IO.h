@@ -30,7 +30,9 @@ public:
   virtual void read (ACE_Message_Block& mb, int size) = 0;
   virtual void transmit_file (char *filename,
 			      const char *header,
-			      int header_size) = 0;
+			      int header_size,
+			      const char *trailer,
+			      int trailer_size) = 0;
   virtual void receive_file (char *filename,
 			     void *initial_data,
 			     int initial_data_length,
@@ -51,7 +53,9 @@ public:
   void read (ACE_Message_Block& mb, int size);  
   void transmit_file (char *filename,
 		      const char *header,
-		      int header_size);
+		      int header_size,
+		      const char *trailer,
+		      int trailer_size);
   void receive_file (char *filename,
 		     void *initial_data,
 		     int initial_data_length,
@@ -74,7 +78,9 @@ public:
   void read (ACE_Message_Block& mb, int size);  
   void transmit_file (char *filename,
 		      const char *header,
-		      int header_size);
+		      int header_size,
+		      const char *trailer,
+		      int trailer_size);
   void receive_file (char *filename,
 		     void *initial_data,
 		     int initial_data_length,
