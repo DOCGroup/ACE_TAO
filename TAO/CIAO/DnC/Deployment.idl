@@ -163,7 +163,7 @@ module Deployment {
     string name;
     ::CORBA::StringSeq source;
     // @@Issue 5957@@ changed the following 
-    ArtifactDeploymentDescriptions artifact;
+    CORBA::ULongSeq artifact;
     Properties execParameter;
     Requirements deployRequirement;
   };
@@ -197,7 +197,7 @@ module Deployment {
     ::CORBA::StringSeq source;
     Properties configProperty;
     // @@Issue 5957, 6392@@ added the following
-    MonolithicDeploymentDescription implementation;
+    CORBA::ULongSeq implementation;
     InstanceResourceDeploymentDescriptions deployedResource;
     InstanceResourceDeploymentDescriptions deployedSharedResource;
   };
@@ -208,7 +208,7 @@ module Deployment {
     string portName;
     boolean provider;
     // following newly added
-    InstanceDeploymentDescription instance;
+    CORBA::ULongSeq instance;
   };
 
   typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
@@ -251,7 +251,7 @@ module Deployment {
   struct PlanSubcomponentPropertyReference {
     string propertyName;
     // @@Issue 5967@@
-    InstanceDeploymentDescription instance;
+    CORBA::ULongSeq instance;
   };
 
   typedef sequence < PlanSubcomponentPropertyReference > PlanSubcomponentPropertyReferences;
