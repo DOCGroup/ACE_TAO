@@ -1,3 +1,11 @@
+Tue Jul 13 15:04:35 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+          removed full paths from commands, because they're
+          prefixed with i386-nto-.
+
+        * ace/config-qnx-neutrino.h: updated to build with latest.
+
 Tue Jul 13 15:03:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Pipe.cpp (open): moved declaration of local variable
