@@ -1,3 +1,15 @@
+Sun Jul 29 10:50:45 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Svc_Conf_Lexer_Guard.cpp: 
+
+	  There is no longer any need to include "ace/Object_Manager.h"
+
+	* ace/Service_Config.cpp:
+
+	  Include "ace/Object_Manager.h" to pull in the definition of
+	  ACE_Static_Object_Lock.  Fixes a problem found in Sun builds and
+	  single-threaded builds.
+
 Sat Jul 28 23:03:24 2001  Ossama Othman  <ossama@uci.edu>
 
 	The following are changes that make the Service Configurator
