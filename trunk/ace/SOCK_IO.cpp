@@ -34,6 +34,8 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
   handle_set.reset ();
   handle_set.set_bit (this->get_handle ());
 
+  io_vec->iov_base = 0;
+
   // Check the status of the current socket.
   switch (ACE_OS::select (int (this->get_handle ()) + 1,
                           handle_set,
@@ -103,7 +105,9 @@ ACE_SOCK_IO::send (size_t n, ...) const
       iovp[i].iov_len = va_arg (argp, ssize_t);
     }
 
-  ssize_t result = ACE_OS::sendv (this->get_handle (), iovp, total_tuples);
+  ssize_t result = ACE_OS::sendv (this->get_handle (),
+                                  iovp,
+                                  total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -139,7 +143,9 @@ ACE_SOCK_IO::recv (size_t n, ...) const
       iovp[i].iov_len = va_arg (argp, ssize_t);
     }
 
-  ssize_t result = ACE_OS::recvv (this->get_handle (), iovp, total_tuples);
+  ssize_t result = ACE_OS::recvv (this->get_handle (), 
+                                  iovp, 
+                                  total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */

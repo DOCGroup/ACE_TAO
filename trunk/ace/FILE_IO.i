@@ -3,6 +3,37 @@
 
 // FILE_IO.i
 
+ASYS_INLINE ssize_t
+ACE_FILE_IO::sendv_n (const iovec iov[], size_t n) const
+{
+  ACE_TRACE ("ACE_FILE_IO::sendv_n");
+  return ACE::writev_n (this->get_handle (),
+                        iov,
+                        n);
+}
+
+// Recv an n byte message from the file.
+
+ASYS_INLINE ssize_t
+ACE_FILE_IO::recvv_n (iovec iov[], size_t n) const
+{
+  ACE_TRACE ("ACE_FILE_IO::recvv_n");
+  // @@ Carlos, can you please update this to call the
+  // new ACE::recvv_n() method that you write?
+  return ACE_OS::readv (this->get_handle (),
+                        iov,
+                        n);
+}
+
+// Send an <iovec> of size <n> to the file.
+
+ASYS_INLINE ssize_t
+ACE_FILE_IO::sendv (const iovec iov[], size_t n) const
+{
+  ACE_TRACE ("ACE_FILE_IO::sendv");
+  return ACE_OS::writev (this->get_handle (), iov, n);
+}
+
 // Send exactly N bytes from BUF to this file.  Keeping trying until
 // this many bytes are sent.
 
@@ -98,4 +129,5 @@ ACE_FILE_IO::recv (void *buf, size_t n,
   return ACE_OS::read (this->get_handle (), (char *) buf, n,
 		       overlapped);
 }
+
 #endif /* ACE_HAS_STREAM_PIPES */
