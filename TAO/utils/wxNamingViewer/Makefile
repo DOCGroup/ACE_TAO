@@ -52,7 +52,11 @@ ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
     CPPFLAGS += $(PLATFORM_WXWINDOWS_CPPFLAGS)
     LDFLAGS  += $(PLATFORM_WXWINDOWS_LDFLAGS)
     LDLIBS   += $(PLATFORM_WXWINDOWS_LIBS)
+  else
+    all: require_warning
   endif # wxWindows
+else
+  all: comp_warning
 endif # Naming
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -64,6 +68,13 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
+comp_warning:
+	@echo This project will not be built due to one of the following missing components:
+	@echo Naming
+
+require_warning:
+	@echo This project will not be built due to one of the following missing features:
+	@echo wxwindows
 
 #----------------------------------------------------------------------------
 #	Dependencies

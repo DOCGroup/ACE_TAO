@@ -11,6 +11,7 @@
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "wxNamingViewer.h"
 #include "wxSelectNSDialog.h"
+#include "ace/SString.h"
 
 #if defined(__WXGTK__) || defined(__WXMOTIF__)
 #include "mondrian.xpm"
@@ -127,7 +128,7 @@ void WxNamingViewerFrame::OnQuit( wxCommandEvent& WXUNUSED(event))
 
 void WxNamingViewerFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-  wxString msg( 
+  wxString msg(
       "wxNamingViewer Version 1.1\n"
       "Author: Charlie Frasch <cfrasch@atdesk.com>");
 
