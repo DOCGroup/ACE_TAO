@@ -1,3 +1,11 @@
+Tue May 21 16:10:11 2002 Ru Gunatilleke <ru@ociweb.com>
+
+	* examples/RTCORBA/Activity/README: Fixed the description on 
+	  supplying the service configurator file.
+
+	* examples/RTCORBA/Activity/svc.conf.server: Added -POACount 1 
+	  and -JobCount 2
+
 Tue May 21 15:53:07 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/File_IO/client.cpp (validate_connection): Fixed exception
