@@ -787,6 +787,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       sparam.sched_priority = priority > PTHREAD_MAX_PRIORITY ? PTHREAD_MAX_PRIORITY : priority;
 #elif defined (PTHREAD_MAX_PRIORITY) /* For MIT pthreads... */
       sparam.prio = priority > PTHREAD_MAX_PRIORITY ? PTHREAD_MAX_PRIORITY : priority;
+#else
+      sparam.sched_priority = priority;
 #endif /* ACE_HAS_DCETHREADS */
 
 #if !defined (ACE_HAS_FSU_PTHREADS)
