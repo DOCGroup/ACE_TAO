@@ -1,0 +1,28 @@
+// $Id$
+
+TAO Audio/Video Streaming service
+---------------------------------
+
+
+This is a prototype implementation of the CORBA "Control and
+Management of A/V streams" specification, that defines various
+interfaces for controlling multimedia streams.
+
+This directory contains the following files
+
+AVStreams_i.{h,cpp}:       Implementation of the A/V handshake specification, as well
+                           as base classes for the various interfaces defined in the spec. 
+
+Endpoint_Strategy.{h,cpp}: Implementation of various multimedia endpoint activation strategies.
+
+A complete distributed audio/video streaming application that
+illustrates the use of the various components defined above is
+available in the following directory:
+
+TAO/orbsvcs/tests/AVStreams/mpeg/source/
+
+
+Sumedh Mungee <sumedh@cs.wustl.edu>
+Nagarajan Surendran <naga@cs.wustl.edu>
+Alexander Arulanthu <alex@cs.wustl.edu>
+
