@@ -1,3 +1,19 @@
+Wed Mar  8 08:31:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+          Fixed problems with gateway re-connections.  After a consumer
+          changed its subscription no more events are received from the
+          remote supplier.
+          Thanks to  Harald Finster <finster@ave.ac.agit.de> for reporting
+          this bug.
+
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Gateway.cpp:
+        * orbsvcs/tests/Event/Basic/Gateway.dsp:
+          Add a new regression test to the event service.
+
 Wed Mar  8 08:59:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceC.cpp:
@@ -14,8 +30,8 @@ Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
 Tue Mar 07 15:42:41 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/interceptors.html: Fixed some html tag problems.  Thanks to
-	   Chanaka Liyanaarachchi <chanaka@ociweb.com> for reporting this.
+        * docs/interceptors.html: Fixed some html tag problems.  Thanks to
+           Chanaka Liyanaarachchi <chanaka@ociweb.com> for reporting this.
 
 Tue Mar 07 10:30:06 2000  bala  <bala@cs.wustl.edu>
 
@@ -23,34 +39,34 @@ Tue Mar 07 10:30:06 2000  bala  <bala@cs.wustl.edu>
 
 Tue Mar  7 09:33:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/deep_free.cpp:
-	  In TAO_Marshal_Union, the type of 'discrim_tc' was changed
-	  to a _var, but I neglected to change its form when used as
-	  an argument to discrim_tc.in ().
+        * tao/deep_free.cpp:
+          In TAO_Marshal_Union, the type of 'discrim_tc' was changed
+          to a _var, but I neglected to change its form when used as
+          an argument to discrim_tc.in ().
 
 Mon Mar  6 22:49:45 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
           removed ACE_CHECK_RETURN from the get_channel method to
-	  fix compile warning with kai3.3e
+          fix compile warning with kai3.3e
 
 Mon Mar  6 19:43:00 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
-	  fixed compile warning in create method.
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+          fixed compile warning in create method.
         * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
           fix for IRIX compile error: used ServantBase_var instead of auto_ptr
 
 Mon Mar  6 16:49:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/deep_free.cpp:
-	  Plugged a memory leak in TAO_Marshal_Union. When the
-	  typecode of the union's discriminator is fetched, a
-	  duplicate is returned, but the return value was not
-	  disposed of after use. Thanks to
-	  Lothar Werzinger <werzinger.lothar@krones.de> for
-	  sending in the IDL file and test code that revealed
-	  this bug.
+        * tao/deep_free.cpp:
+          Plugged a memory leak in TAO_Marshal_Union. When the
+          typecode of the union's discriminator is fetched, a
+          duplicate is returned, but the return value was not
+          disposed of after use. Thanks to
+          Lothar Werzinger <werzinger.lothar@krones.de> for
+          sending in the IDL file and test code that revealed
+          this bug.
 
 Sun Mar  5 18:36:34 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -70,220 +86,220 @@ Sun Mar  5 18:36:34 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sun Mar  5 16:36:25 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
-	  dereference via .in in method MyFactory.
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
-	  get_event_channel: translate any exception to ChannelNotFound.
-	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
-	  corrected spelling mistake.
-	* orbsvcs/orbsvcs/Notify/Notify_PushConsumer.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_PushSupplier.cpp:
-	  added missing ACE_THROW_SPEC
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+          dereference via .in in method MyFactory.
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+          get_event_channel: translate any exception to ChannelNotFound.
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+          corrected spelling mistake.
+        * orbsvcs/orbsvcs/Notify/Notify_PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_PushSupplier.cpp:
+          added missing ACE_THROW_SPEC
 
 Sun Mar  5 15:34:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/IORManipulation/IORTest.cpp (main): Added a work around
-	  for a compiler bug in IRIX CC.
+        * tests/IORManipulation/IORTest.cpp (main): Added a work around
+          for a compiler bug in IRIX CC.
 
 Sun Mar  5 12:45:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/MessagingC.h:
-	* tao/MessagingC.cpp:
-	  Removed Any operators for ExceptionHolder, which is a
-	  valuetype, not an interface.
+        * tao/MessagingC.h:
+        * tao/MessagingC.cpp:
+          Removed Any operators for ExceptionHolder, which is a
+          valuetype, not an interface.
 
-	* POAC.h:
-	  Added #if !defined (TAO_HAS_MINIMUM_CORBA) guards to
-	  declaration of Any operators for ForwardRequest. The
-	  operator bodies are already guarded.
+        * POAC.h:
+          Added #if !defined (TAO_HAS_MINIMUM_CORBA) guards to
+          declaration of Any operators for ForwardRequest. The
+          operator bodies are already guarded.
 
 Sat Mar  4 18:11:28 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* Modified the following files:
- 	* orbsvcs/Notify/Notify_Constraint_Interpreter.h:
-	* orbsvcs/Notify/Notify_FilterAdmin_i.{h,cpp}:
-	* orbsvcs/Notify/Notify_FilterFactory_i.h:
- 	* orbsvcs/Notify/Notify_Filter_i.{h,cpp}:
-	* orbsvcs/Notify/Notify_QoSAdmin_i.h :
-	  minor changes to header file inclusions.
-	* orbsvcs/Notify/Notify_ConsumerAdmin_i.{h,cpp}:
-	* orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
-	* orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
-	* orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
-	  Changed the design for looking up children objects from being
-	  ACE_Hash_Map_Manager based to the POA.Each Object factory in Notify
-	  creates a child POA to activate created objects in.This cleanly
-	  decouples object lookup functionality from the working of the
-	  Event Channel.The unique ID's generated for each object created is
-	  converted to Object Id's for activation and reference lookup.
- 	* orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
- 	* orbsvcs/Notify/Notify_ProxyPushSupplier_i.{h,cpp}:
-	* orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.{h,cpp}:
- 	* orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.{h,cpp}:
-	  Added 'push' implementations.
- 	* orbsvcs/Notify/Notify_StructuredPushConsumer.{h,cpp}:
- 	* orbsvcs/Notify/Notify_StructuredPushSupplier.{h,cpp}:
+        * Modified the following files:
+        * orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+        * orbsvcs/Notify/Notify_FilterAdmin_i.{h,cpp}:
+        * orbsvcs/Notify/Notify_FilterFactory_i.h:
+        * orbsvcs/Notify/Notify_Filter_i.{h,cpp}:
+        * orbsvcs/Notify/Notify_QoSAdmin_i.h :
+          minor changes to header file inclusions.
+        * orbsvcs/Notify/Notify_ConsumerAdmin_i.{h,cpp}:
+        * orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
+        * orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
+        * orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
+          Changed the design for looking up children objects from being
+          ACE_Hash_Map_Manager based to the POA.Each Object factory in Notify
+          creates a child POA to activate created objects in.This cleanly
+          decouples object lookup functionality from the working of the
+          Event Channel.The unique ID's generated for each object created is
+          converted to Object Id's for activation and reference lookup.
+        * orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
+        * orbsvcs/Notify/Notify_ProxyPushSupplier_i.{h,cpp}:
+        * orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.{h,cpp}:
+        * orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.{h,cpp}:
+          Added 'push' implementations.
+        * orbsvcs/Notify/Notify_StructuredPushConsumer.{h,cpp}:
+        * orbsvcs/Notify/Notify_StructuredPushSupplier.{h,cpp}:
           Removed <open> and close methods from helper classes.
         * orbsvcs/orbsvcs/Makefile:
-	  Added new files to Notify, updated dependencies.
+          Added new files to Notify, updated dependencies.
         * orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
-	  Changed to use the TAO_Notify_EventChannelFactory::create method.
-	* orbsvcs/examples/Notify/Filter.cpp:
-	  Changed to use the new TAO_Notify_StructuredPushConsumer methods.
+          Changed to use the TAO_Notify_EventChannelFactory::create method.
+        * orbsvcs/examples/Notify/Filter.cpp:
+          Changed to use the new TAO_Notify_StructuredPushConsumer methods.
 
-	  New files:
- 	* orbsvcs/Notify/Notify_Event_Manager.{h,cpp}:
-	  The <TAO_Notify_Event_Manager> class controls all aspects of event
-	  propogation from suppliers to consumers, provides methods to handle
-	  subscription and publication lists logic.It also contains the
-	  <recipient_map_> which is the central storage for subscription
-	  lists and is accessed to decide where events should go.
- 	* orbsvcs/Notify/Notify_ID_Pool_T.{h,cpp,i}:
-	  The <TAO_Notify_ID_Pool> template class generates Ids for all object
-	  factories in Notify.Id's can be returned to the pool for recyling.
- 	* orbsvcs/Notify/Notify_Listeners.h:
-	  Defines the <TAO_Notify_Event_Listener> and
-	  <TAO_Notify_Update_Listener> internal interfaces for Notify.
-	* orbsvcs/Notify/Notify_ProxyConsumer_T.{h,cpp}:
-	  Template Base classes for the Proxy Consumers.
- 	* orbsvcs/Notify/Notify_ProxySupplier_T.{h,cpp}:
-	  Template Base classes for the Proxy Suppliers.
- 	* orbsvcs/Notify/Notify_PushConsumer.{h,cpp}:
-	  Helper servant implementation for PushConsumers.
- 	* orbsvcs/Notify/Notify_PushSupplier.cpp.{h,cpp}:
-	  Helper servant implementation for PushSuppliers.
- 	* orbsvcs/Notify/Notify_Resource_Manager.{h,cpp}:
-	  All object creations are done here.
- 	* orbsvcs/Notify/Notify_Types.{h,cpp}:
+          New files:
+        * orbsvcs/Notify/Notify_Event_Manager.{h,cpp}:
+          The <TAO_Notify_Event_Manager> class controls all aspects of event
+          propogation from suppliers to consumers, provides methods to handle
+          subscription and publication lists logic.It also contains the
+          <recipient_map_> which is the central storage for subscription
+          lists and is accessed to decide where events should go.
+        * orbsvcs/Notify/Notify_ID_Pool_T.{h,cpp,i}:
+          The <TAO_Notify_ID_Pool> template class generates Ids for all object
+          factories in Notify.Id's can be returned to the pool for recyling.
+        * orbsvcs/Notify/Notify_Listeners.h:
+          Defines the <TAO_Notify_Event_Listener> and
+          <TAO_Notify_Update_Listener> internal interfaces for Notify.
+        * orbsvcs/Notify/Notify_ProxyConsumer_T.{h,cpp}:
+          Template Base classes for the Proxy Consumers.
+        * orbsvcs/Notify/Notify_ProxySupplier_T.{h,cpp}:
+          Template Base classes for the Proxy Suppliers.
+        * orbsvcs/Notify/Notify_PushConsumer.{h,cpp}:
+          Helper servant implementation for PushConsumers.
+        * orbsvcs/Notify/Notify_PushSupplier.cpp.{h,cpp}:
+          Helper servant implementation for PushSuppliers.
+        * orbsvcs/Notify/Notify_Resource_Manager.{h,cpp}:
+          All object creations are done here.
+        * orbsvcs/Notify/Notify_Types.{h,cpp}:
           Defines the <TAO_Notify_EventType> and Subscription and Publication
-	  list types.
-	* orbsvcs/examples/Notify/Subscribe/Subscribe{.h,.cpp}:
-	* orbsvcs/examples/Notify/Subscribe/main.cpp:
-	* orbsvcs/examples/Notify/Subscribe/Makefile:
+          list types.
+        * orbsvcs/examples/Notify/Subscribe/Subscribe{.h,.cpp}:
+        * orbsvcs/examples/Notify/Subscribe/main.cpp:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
           New example to show how to use subscription (under construction).
 
 Sat Mar  4 16:09:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/MessagingC.h:
-	* tao/MessagingC.i:
-	* tao/MessagingC.cpp:
-	* tao/POAC.h:
-	* tao/POAC.i:
-	* tao/POAC.cpp:
-	* tao/PolicyC.h:
-	* tao/PolicyC.i:
-	* tao/PolicyC.cpp:
-	  Replaced all Any insertion/extraction operators with the new
-	  versions that use compiled marshaling. Also added many missing
-	  Any and CDR stream insertion/extraction operators. This
-	  completes the job for all the generated files in TAO/tao.
+        * tao/MessagingC.h:
+        * tao/MessagingC.i:
+        * tao/MessagingC.cpp:
+        * tao/POAC.h:
+        * tao/POAC.i:
+        * tao/POAC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/PolicyC.cpp:
+          Replaced all Any insertion/extraction operators with the new
+          versions that use compiled marshaling. Also added many missing
+          Any and CDR stream insertion/extraction operators. This
+          completes the job for all the generated files in TAO/tao.
 
 Fri Mar  3 14:41:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Sequence.cpp (allocbuf):
-	* tao/Typecode.cpp: Removed the use of "naked new"
-	  operators.
+        * tao/Sequence.cpp (allocbuf):
+        * tao/Typecode.cpp: Removed the use of "naked new"
+          operators.
 
 Fri Mar  3 13:41:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Profile.cpp:
-	* tao/SHMIOP_Profile.cpp:
-	* tao/UIOP_Profile.cpp: Added error checking. The error checking
-	  was needed for the ACE_Inet_Addr::set () method that was getting
-	  called. This is for bug #474 reported by Chris Cleeland
-	  <cleeland_c@ociweb.com>.
+        * tao/IIOP_Profile.cpp:
+        * tao/SHMIOP_Profile.cpp:
+        * tao/UIOP_Profile.cpp: Added error checking. The error checking
+          was needed for the ACE_Inet_Addr::set () method that was getting
+          called. This is for bug #474 reported by Chris Cleeland
+          <cleeland_c@ociweb.com>.
 
 Fri Mar  3 11:15:06 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/SHMIOP_Profile.cpp (decode):
+        * tao/SHMIOP_Profile.cpp (decode):
 
-	  Corrected "IIOP" to be "SHMIOP" in debugging output.  Minor
-	  cosmetic changes.
+          Corrected "IIOP" to be "SHMIOP" in debugging output.  Minor
+          cosmetic changes.
 
 Fri Mar  3 11:01:32 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (my_factory): fixed a bug. The
-	constructor was not making a duplicate when assigning to a
-	_var. Thanks to Rob Ruff <rruff@scires.com> and Sandro Doro
-	<doro.s@flashnet.it> for reporting it.
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (my_factory): fixed a bug. The
+        constructor was not making a duplicate when assigning to a
+        _var. Thanks to Rob Ruff <rruff@scires.com> and Sandro Doro
+        <doro.s@flashnet.it> for reporting it.
 
 Fri Mar  3 01:06:49 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Fixed a missing link ~naga/av.html
-	  to ~schmidt/av.html. Thanks to Keith Nicewarner
-	  <knicewar@erg.sri.com> for reporting this.
+        * docs/releasenotes/index.html: Fixed a missing link ~naga/av.html
+          to ~schmidt/av.html. Thanks to Keith Nicewarner
+          <knicewar@erg.sri.com> for reporting this.
 
 Thu Mar  2 22:29:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	  Added TimeBaseC.h to project.
+        * tao/TAO.dsp:
+          Added TimeBaseC.h to project.
 
 Thu Mar  2 21:03:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/CONV_FRAMEC.h:
-	* tao/CONV_FRAMEC.cpp:
-	* tao/CurrentC.h:
-	* tao/CurrentC.cpp:
-	* tao/DomainC.h:
-	* tao/DomainC.cpp:
-	* tao/GIOPC.h:
-	* tao/GIOPC.cpp:
-	* tao/IOPC.h:
-	* tao/IOPC.cpp:
-	* tao/IORC.h:
-	* tao/IORC.cpp:
-	* tao.ImplRepoC.h:
-	* tao.ImplRepoC.cpp:
-	* tao/InterceptorC.h:
-	* tao/InterceptorC.i:
-	* tao/InterceptorC.cpp:
-	* tao/InterfaceC.h:
-	* tao/InterfaceC.cpp:
-	* tao/PolicyC.h:
-	* tao/PolicyC.cpp:
-	* tao/PollableC.h:
-	* tao/Pollable.cpp:
-	* tao/TAOC.h:
-	* tao/TAOC.cpp:
-	* tao/TimeBaseC.h:
-	* tao/TimeBaseC.cpp:
-	  Replaced the Any operators with new versions using
-	  compiled marshaling, and added the new CORBA 2.3
-	  overload for the extraction operator having an rhs of
-	  pointer to const. Also put back some CDR stream
-	  operators into Interceptor needed by the new Any
-	  operators.
+        * tao/CONV_FRAMEC.h:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CurrentC.h:
+        * tao/CurrentC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.cpp:
+        * tao/GIOPC.h:
+        * tao/GIOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOPC.cpp:
+        * tao/IORC.h:
+        * tao/IORC.cpp:
+        * tao.ImplRepoC.h:
+        * tao.ImplRepoC.cpp:
+        * tao/InterceptorC.h:
+        * tao/InterceptorC.i:
+        * tao/InterceptorC.cpp:
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.h:
+        * tao/Pollable.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.cpp:
+          Replaced the Any operators with new versions using
+          compiled marshaling, and added the new CORBA 2.3
+          overload for the extraction operator having an rhs of
+          pointer to const. Also put back some CDR stream
+          operators into Interceptor needed by the new Any
+          operators.
 
 Thu Mar  2 11:58:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
-	  In the extraction operator, removed an extra
-	  assignment of the rhs to 0.
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+          In the extraction operator, removed an extra
+          assignment of the rhs to 0.
 
 Thu Mar  2 09:24:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Object.h:
-	* tao/Object.i:
-	  Add a static _unchecked_narrow() method to CORBA::Object, it is
-	  useful when writing generic templates.  Thanks to Andreas
-	  Geisler <andreas.geisler@erls.siemens.de> for pointing this out.
+        * tao/Object.h:
+        * tao/Object.i:
+          Add a static _unchecked_narrow() method to CORBA::Object, it is
+          useful when writing generic templates.  Thanks to Andreas
+          Geisler <andreas.geisler@erls.siemens.de> for pointing this out.
 
 Thu Mar  2 09:09:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Exception.h:
-	* tao/Exception.cpp:
-	  The CORBA::UserException is abstract, the _raise() method cannot
-	  be defined for it.
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+          The CORBA::UserException is abstract, the _raise() method cannot
+          be defined for it.
 
-	* tao/POAC.i:
-	  The ForwardRequest exception is not present with minimum CORBA,
-	  yet i did not protect the CDR insertion and extraction operators
-	  for it with TAO_HAS_MINIMUM_CORBA == 0
+        * tao/POAC.i:
+          The ForwardRequest exception is not present with minimum CORBA,
+          yet i did not protect the CDR insertion and extraction operators
+          for it with TAO_HAS_MINIMUM_CORBA == 0
 
-	* TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
-	  For exceptions without any fields the operator>> declared on the
-	  header file and the one defined in the .i file were not
-	  matching.
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+          For exceptions without any fields the operator>> declared on the
+          header file and the one defined in the .i file were not
+          matching.
 
 Wed Mar  1 21:36:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
