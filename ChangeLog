@@ -1,3 +1,9 @@
+Sat Mar 13 18:25:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/OS/Process/process.cpp:
+          Fixed warnings in MinGW build. Thanks to Martin Corino
+          <mcorino@remedy.nl> for creating the patch.
+
 Sat Mar 13 18:06:57 2004  Olli Savia  <ops@iki.fi>
 
 	* include/makeinclude/platform_g++_common.GNU:
