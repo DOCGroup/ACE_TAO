@@ -36,7 +36,7 @@ Checkpoint_Client_i::run (const char *name,
 
       ACE_DEBUG ((LM_DEBUG, "Send some random events:\n"));
 
-      double temperature = random_number (29,34);
+      CORBA::Float temperature = random_number (29, 34);
       Temperature_var t_e (new Temperature_impl (temperature));
       t_e->origin_id_ (KITCHEN);
       t_e->do_print ();
@@ -110,10 +110,10 @@ Checkpoint_Client_i::~Checkpoint_Client_i (void)
 
 
 // A random number in the range of min to max.
-double random_number (double min, double max)
+CORBA::Float random_number (double min, double max)
 {
   double range = max - min;
-  return (min + (range * ACE_OS::rand () / (RAND_MAX + 1.0)));
+  return ACE_static_cast (CORBA::Float, (min + (range * ACE_OS::rand () / (RAND_MAX + 1.0))));
 }
 
 
