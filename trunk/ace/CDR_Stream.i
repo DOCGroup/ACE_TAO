@@ -56,8 +56,8 @@ ACE_CDR::swap_16 (const char *orig, char* target)
 ACE_INLINE void
 ACE_CDR::mb_align (ACE_Message_Block *mb)
 {
-  char *start = ptr_align_binary (mb->base (),
-                                  ACE_CDR::MAX_ALIGNMENT);
+  char *start = ACE_ptr_align_binary (mb->base (),
+                                      ACE_CDR::MAX_ALIGNMENT);
   mb->rd_ptr (start);
   mb->wr_ptr (start);
 
@@ -225,9 +225,20 @@ ACE_INLINE void
 ACE_OutputCDR::reset (void)
 {
   this->current_ = &this->start_;
+  this->current_is_writable_ = 1;
+  ACE_CDR::mb_align (&this->start_);
+  this->current_alignment_ = 0;
 
-  for (ACE_Message_Block *i = &this->start_; i; i = i->cont())
-    ACE_CDR::mb_align (i);
+  // It is tempting not to remove the memory, but we need to do so to
+  // release any potential user buffers chained in the continuation
+  // field.
+  ACE_Message_Block *cont = this->start_.cont ();
+  if (cont != 0)
+    {
+      ACE_Message_Block::release (cont);
+      this->start_.cont (0);
+    }
+
 }
 
 // Decode the CDR stream.
@@ -472,12 +483,17 @@ ACE_OutputCDR::adjust (size_t size,
                        size_t align,
                        char*& buf)
 {
-  buf = ptr_align_binary (this->current_->wr_ptr (),
-                          align);
+  size_t offset =
+    ACE_align_binary (this->current_alignment_, align)
+    - this->current_alignment_;
+
+  buf = this->current_->wr_ptr () + offset;
   char *end = buf + size;
 
-  if (end <= this->current_->end ())
+  if (this->current_is_writable_ 
+      && end <= this->current_->end ())
     {
+      this->current_alignment_ += offset + size;
       this->current_->wr_ptr (end);
       return 0;
     }
@@ -533,11 +549,17 @@ ACE_OutputCDR::do_byte_swap (void) const
   return this->do_byte_swap_;
 }
 
+ACE_INLINE size_t
+ACE_OutputCDR::current_alignment (void) const
+{
+  return this->current_alignment_;
+}
+
 ACE_INLINE int
 ACE_OutputCDR::align_write_ptr (size_t alignment)
 {
-  char *buf = ptr_align_binary (this->current_->wr_ptr (),
-                                alignment);
+  char *buf = ACE_ptr_align_binary (this->current_->wr_ptr (),
+                                    alignment);
 
   if (buf <= this->current_->end ())
     {
@@ -897,7 +919,7 @@ ACE_InputCDR::adjust (size_t size,
                       size_t align,
                       char*& buf)
 {
-  buf = ptr_align_binary (this->rd_ptr (), align);
+  buf = ACE_ptr_align_binary (this->rd_ptr (), align);
   char *end = buf + size;
   if (end <= this->end ())
     {
@@ -1352,8 +1374,8 @@ ACE_InputCDR::byte_order (void) const
 ACE_INLINE int
 ACE_InputCDR::align_read_ptr (size_t alignment)
 {
-  char *buf = ptr_align_binary (this->rd_ptr (),
-                                alignment);
+  char *buf = ACE_ptr_align_binary (this->rd_ptr (),
+                                    alignment);
 
   if (buf <= this->end ())
     {
