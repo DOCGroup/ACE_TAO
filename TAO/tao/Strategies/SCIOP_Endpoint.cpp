@@ -1,5 +1,6 @@
- #include "SCIOP_Endpoint.h"
+#include "SCIOP_Endpoint.h"
 #include "tao/debug.h"
+#include "ace/Synch_T.h"
 
 #if TAO_HAS_SCIOP == 1
 
