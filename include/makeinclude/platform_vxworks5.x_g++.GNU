@@ -76,4 +76,18 @@ LINK.c.override  = $(LD) $(LDFLAGS) $(LDLIBS) $(LIBS)
 
 LINK.cc          = override
 LINK.cc.override = $(LD)
-POSTLINK         = ; VX_CPU_FAMILY=$(TOOLENV) xsymDec < $@ > $@.sym
+
+#### The symbol table extractor is target-dependent.
+ifeq ($(CPU),I80486)
+  BINXSYM_NAME = xsymDec
+else
+ifeq ($(CPU),I80386)
+  BINXSYM_NAME = xsymDec
+else
+  BINXSYM_NAME = xsym
+endif # I80486
+endif # I80386
+
+#### To extract the symbol table from each executable, uncomment the POSTLINK
+#### definition below.
+## POSTLINK         = ; VX_CPU_FAMILY=$(TOOLENV) $(BINXSYM_NAME) < $@ > $@.sym
