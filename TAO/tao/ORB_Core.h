@@ -468,7 +468,7 @@ protected:
   PortableServer::POA_var root_poa_reference_;
   // Cached POA reference
 
-  TAO_ORB_Parameters *orb_params_;
+  TAO_ORB_Parameters orb_params_;
   // Parameters used by the ORB.
 
   char* orbid_;
