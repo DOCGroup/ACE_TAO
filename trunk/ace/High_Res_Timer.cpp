@@ -14,7 +14,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 // For Intel platforms, a scale factor is required for
 // ACE_OS::gethrtime.  We'll still set this to one to prevent division
 // by zero errors.
-#if defined (ACE_HAS_PENTIUM)
+#if defined (ACE_HAS_PENTIUM) && !defined (ACE_HAS_HI_RES_TIMER)
 
 # include "ace/Object_Manager.h"
 # include "ace/Synch.h"
@@ -82,7 +82,7 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
 ACE_UINT32
 ACE_High_Res_Timer::global_scale_factor ()
 {
-#if defined (ACE_HAS_PENTIUM) && \
+#if defined (ACE_HAS_PENTIUM) && !defined (ACE_HAS_HI_RES_TIMER) && \
     ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
      defined (ghs) || defined (__GNUG__))
   // Check if the global scale factor needs to be set, and do if so.
@@ -126,7 +126,8 @@ ACE_High_Res_Timer::global_scale_factor ()
             ACE_High_Res_Timer::calibrate ();
         }
     }
-#endif /* ACE_HAS_PENTIUM && ((WIN32 && ! WINCE) || ghs || __GNUG__) */
+#endif /* ACE_HAS_PENTIUM && ! ACE_HAS_HIGH_RES_TIMER &&
+          ((WIN32 && ! WINCE) || ghs || __GNUG__) */
 
   return global_scale_factor_;
 }
@@ -199,9 +200,18 @@ ACE_High_Res_Timer::dump (void) const
              total_.hi (), total_.lo (),
              start_incr_.hi (), start_incr_.lo ()));
 #else  /* ! ACE_LACKS_LONGLONG_T */
+#if defined (ACE_HAS_STHREADS)
+  // Solaris needs %llu for unsigned long long.  Other platforms
+  // might, also.  ACE_DEBUG doesn't handle %llu or %lu.
+  ACE_OS::fprintf (stderr,
+             ASYS_TEXT ("start_: %llu; end_: %llu; total_: %llu; "
+                        "start_incr_: %llu\n"),
+             start_, end_, total_, start_incr_);
+#else /* ! ACE_HAS_STHREADS */
   ACE_DEBUG ((LM_DEBUG,
              ASYS_TEXT ("start_: %u; end_: %u; total_: %u; start_incr_: %u\n"),
              start_, end_, total_, start_incr_));
+#endif /* ! ACE_HAS_STHREADS */
 #endif /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
