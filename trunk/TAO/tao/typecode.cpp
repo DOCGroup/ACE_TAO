@@ -1534,8 +1534,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
                   for (CORBA::ULong i = 0; i < mcount; i++)
                     {
                       if (!stream.get_string (this->private_state_->tc_member_name_list_ [i])
-                          || (!skip_typecode (stream)
-                              != CORBA::TypeCode::TRAVERSE_CONTINUE))
+                          || !skip_typecode (stream))
                         {
                           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
                           return 0;
