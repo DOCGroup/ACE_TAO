@@ -1,3 +1,9 @@
+Mon Apr 28 06:43:50 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+
+          Added a dependency on RTSched.
+
 Sun Apr 27 20:42:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Transport_Acceptor.h: Fixed a forward declaration that
@@ -24,7 +30,7 @@ Sun Apr 27 17:34:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/PortableServer/PortableServerC.cpp:
 	* tao/PortableServer/PortableServerC.i: Moved marshal_value ()
 	  method from the cpp file to the inlined file. This shodl fix
-	  BCB5 build problems. Thanks to Johnny for helping me with this. 
+	  BCB5 build problems. Thanks to Johnny for helping me with this.
 
 Sun Apr 27 11:31:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -46,7 +52,7 @@ Sun Apr 27 11:01:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Transport_Acceptor.cpp:
 	* tao/Transport_Acceptor.h: Removed totally unwanted
 	  includes. This was setting up totally screwed dependencies and
-	  increased footprint. 
+	  increased footprint.
 
 	* tao/IOP_CodecC.cpp:
 	* tao/IOP_CodecC.h:
@@ -95,12 +101,12 @@ Sat Apr 26 08:42:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Environment.cpp: Removed operator= for
 	  CORBA::Environment_var since they shoudl be taken care by the
-	  template classes. 
+	  template classes.
 
 Fri Apr 25 22:29:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp: Added explicit
-	  template instations for the base class sequences. 
+	  template instations for the base class sequences.
 
 Fri Apr 25 22:26:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -120,12 +126,12 @@ Fri Apr 25 22:26:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/PortableServer/ImplRepoC.cpp:
 	* tao/PortableServer/ImplRepoC.h:
 	* tao/PortableServer/PortableServerC.cpp
-	* tao/PortableServer/ImplRepoC.i: Regenerated ode and patched them. 
+	* tao/PortableServer/ImplRepoC.i: Regenerated ode and patched them.
 
 	* tao/PortableServer/diffs/Default_ORT.diff:
 	* tao/PortableServer/diffs/ImplRepo.diff:
 	* tao/diffs/Dynamic.diff:
-	* tao/diffs/OctetSeq.diff: Updated the diff files. 
+	* tao/diffs/OctetSeq.diff: Updated the diff files.
 
 	  With the above checkin a simple server and client should build
 	  without link errors when explicit template instantiations have
@@ -140,13 +146,13 @@ Fri Apr 25 17:04:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Fri Apr 25 15:21:58 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\RTCORBA\Thread_Pool.cpp: 
+	* tao\RTCORBA\Thread_Pool.cpp:
 
 	  In create_threadpool_helper(), finalize thread pool resource in
 	  case of thread creation errors.  This will fix a memory leak.
 
-	* tests\RTCORBA\Banded_Connections\client.cpp: 
-	* tests\RTCORBA\Banded_Connections\server.cpp: 
+	* tests\RTCORBA\Banded_Connections\client.cpp:
+	* tests\RTCORBA\Banded_Connections\server.cpp:
 
 	  Report meaningful message in case of thread creation errors.
 
@@ -165,7 +171,7 @@ Fri Apr 25 08:59:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/IFR_Client/IFR_ExtendedC.h:
 	* tao/IFR_Client/IFR_ExtendedC.i: Generated code for the IFR. This
 	  should compile fine if explicit template instantiations are
-	  used. 
+	  used.
 
 	  We still have a lots of link errors that needs fixing in TAO.
 
@@ -239,7 +245,7 @@ Thu Apr 24 22:01:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  - compilation issues arising in TAO and associated libraries
 	    from the explicit template instantiations section.
-	  - link errors while trying to link with TAO library. 
+	  - link errors while trying to link with TAO library.
 
 	  Applications linking to libraries other than TAO would still
 	  experience linking errors. They will be fixed along with the IDL
@@ -247,7 +253,7 @@ Thu Apr 24 22:01:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Thu Apr 24 19:39:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/PortableServer/POA: 
+	* tao/PortableServer/POA:
 
  	  The following changes are primarily to fix the problems caused
 	  by:	
@@ -277,12 +283,12 @@ Thu Apr 24 19:39:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  params required to call create_object_key() and key_to_object()
 	  are stored away in <key_to_object_params_>.
 	
-	* tao/PortableServer/ObjectReferenceTemplate.cpp: 
+	* tao/PortableServer/ObjectReferenceTemplate.cpp:
 
 	  In make_object(), invoke_key_to_object() no longer requires any
 	  parameters to be passed to it.
 
-	* tao/RTPortableServer/RT_POA.i: 
+	* tao/RTPortableServer/RT_POA.i:
 
 	  Fixed create_reference_with_priority() and
 	  create_reference_with_id_and_priority() to pass the priority
