@@ -5,8 +5,8 @@ use File::Find;
 use Cwd;
 
 if (!$ENV{ACE_ROOT}) {
-    warn "ACE_ROOT not defined, defaulting to ACE_ROOT=.";
-    $ACE_ROOT = ".";
+    $ACE_ROOT = getcwd ()."\\";
+    warn "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT";
 }
 else {
     $ACE_ROOT = $ENV{ACE_ROOT};
@@ -15,6 +15,7 @@ else {
 @directories = ($ACE_ROOT);
 
 $verbose = 0;
+$print_status = 0;
 $Ignore_errors = 0;              # By default, bail out if an error occurs.
 $Build_DLL = 0;
 $Build_LIB = 0;
@@ -34,9 +35,9 @@ sub Find_dsp (@)
     my @config_array = ();
 
     # wanted is only used for the File::Find
-    sub wanted 
+    sub wanted
     {
-        $array[++$#array] = $File::Find::name if ($File::Find::name =~ /\.dsp/i);
+        $array[++$#array] = $File::Find::name if ($File::Find::name =~ /\.dsp$/i);
     }
 
     # get_config grabs the configurations out of a dsp file.
@@ -44,16 +45,16 @@ sub Find_dsp (@)
     {
         my ($file) = @_;
         my @configs = ();
-  
+
         print "Looking at $file\n" if ($verbose);
-  
-        open (DSP, "<$file");
+
+        open (DSP, "< $file") || die $!;
 
         while (<DSP>)
         {
             push @configs, $1 if (/# Name \"([^\"]+)\"/);
         }
- 
+
         close (DSP);
         return @configs;
     }
@@ -64,7 +65,7 @@ sub Find_dsp (@)
 
     for ($i = 0; $i <= $#array; ++$i) {
         my $filename = "$array[$i]";
-        
+
         $filename =~ s@/./@/@g;
         $filename =~ s@/@\\@g;
         my @dsp_configs = get_config ($array[$i]);
@@ -102,6 +103,7 @@ sub Build ($$)
 # Only builds the core libraries.
 sub Build_Core ()
 {
+    print STDERR "Building Core of ACE/TAO\n" if ($print_status == 1);
     print "Building Core of ACE/TAO\n" if ($verbose == 1);
 
     print "Build \n" if ($verbose);
@@ -168,6 +170,7 @@ sub Build_All ()
 {
     my @configurations = Find_dsp (@directories);
 
+    print STDERR "First pass (libraries)\n" if ($print_status == 1);
     print "\nmsvc_auto_compile: First Pass (libraries)\n";
 
     foreach $c (@configurations) {
@@ -177,19 +180,22 @@ sub Build_All ()
             || ($Build_LIB && $Build_Debug && $c =~ /Win32 Static Debug/)
             || ($Build_LIB && $Build_Release && $c =~ /Win32 Static Release/))
         {
-            $Status = Build_Config ($c) 
+            my $Status = 0;
+            $Status = Build_Config ($c)
                 if (($c =~ /Library/) || ($c =~ /DLL/) || ($c =~ /LIB/));
-            return if $Status !=0 && !$Ignore_errors;
+            return if ($Status != 0 && !$Ignore_errors);
         }
     }
 
 
+    print STDERR "Second pass \n" if ($print_status == 1);
     print "\nmsvc_auto_compile: Second Pass\n";
 
+    $count = 0;
     foreach $c (@configurations) {
-        Build_Config ($c) 
-          if ($Build_All
-             || ($Build_DLL && $Build_Debug && $c =~ /Win32 Debug/)
+        print STDERR "Configuration ".$count++." of ".$#configurations."\n" if ($print_status == 1);
+        Build_Config ($c)
+          if (($Build_DLL && $Build_Debug && $c =~ /Win32 Debug/)
              || ($Build_DLL && $Build_Release && $c =~ /Win32 Release/)
              || ($Build_LIB && $Build_Debug && $c =~ /Win32 Static Debug/)
              || ($Build_LIB && $Build_Release && $c =~ /Win32 Static Release/));
@@ -202,14 +208,17 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
 {
     if ($ARGV[0] =~ '-k') {             # Ignore errors
         print "Ignore errors\n" if ( $verbose );
-        $Ignore_errors = 1; 
+        $Ignore_errors = 1;
     }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
         $verbose = 1;
     }
+    elsif ($ARGV[0] =~ '-s') {          # status messages
+        $print_status = 1;
+    }
     elsif ($ARGV[0] =~ '-core') {       # Build only the core of ace/tao
         print "Building Core only\n" if ( $verbose );
-	$build_core_only = 1;
+        $build_core_only = 1;
     }
     elsif ($ARGV[0] =~ '-dir') {        # Compile only a specific directory
         shift;
@@ -252,6 +261,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "Options\n";
         print "-k         = Ignore Errors\n";
         print "-v         = Script verbose Mode\n";
+        print "-s         = Print status messages to STDERR\n";
         print "-core      = Build the Core\n";
         print "-dir <dir> = Compile custom directories\n";
         print "-rebuild   = Rebuild All\n";
@@ -280,8 +290,10 @@ if (!$Build_Debug && !$Build_Release) {
 }
 
 print "msvc_auto_compile: Begin\n";
-
+print STDERR "Beginning Core Build\n" if ($print_status == 1);
 Build_Core if (!$use_custom_dir || $build_core_only);
+print STDERR "Beginning Full Build\n" if ($print_status == 1);
 Build_All if (!$build_core_only);
 
 print "msvc_auto_compile: End\n";
+print STDERR "End\n" if ($print_status == 1);
