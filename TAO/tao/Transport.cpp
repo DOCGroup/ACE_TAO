@@ -718,7 +718,7 @@ TAO_Transport::close_connection_shared (int purge,
 
       ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT, 0);
       this->orb_core_->leader_follower ().wait_for_event (eh,
-                                                            this,
+                                                          this,
                                                           &tv);
 
     }
@@ -2158,7 +2158,8 @@ TAO_Transport::notify_reactor (void)
   // TAO_Queued_Data. That would save us an allocation.
   TAO_Notify_Handler *nh =
     TAO_Notify_Handler::create_handler (
-        this->connection_handler_i (),
+        this,
+        eh->get_handle (),
         this->orb_core ()->transport_message_buffer_allocator ());
 
   if (TAO_debug_level > 0)
