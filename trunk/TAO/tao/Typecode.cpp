@@ -634,6 +634,7 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
     case CORBA::tk_wchar:
     case CORBA::tk_TypeCode:
     case CORBA::tk_Principal:
+    case CORBA::tk_any:
       // all these are simple typecodes and the comparison is based solely on
       // the kind_ field
       return CORBA::B_TRUE;
