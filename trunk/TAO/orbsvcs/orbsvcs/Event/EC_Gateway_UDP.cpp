@@ -212,7 +212,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       // ACE_DEBUG ((LM_DEBUG, "sending to (%d,%u)\n",
       // udp_addr.port, udp_addr.ipaddr));
 
-      ssize_t n = this->dgram_->send ((const iovec *) iov,
+      ssize_t n = this->dgram_->send ((const ACE_IO_Vector_Base *) iov,
                                       iovcnt,
                                       inet_addr);
       if (n == -1)

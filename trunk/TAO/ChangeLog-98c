@@ -31,8 +31,9 @@ Wed Sep 16 20:30:53 1998  Vishal Kachroo  <vishal@cs.wustl.edu>
 Wed Sep 16 18:47:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (push): Added a cast to
- 	  (const iovec *) so that aCC can correctly disambiguate the
- 	  send() call.  Thanks to John Mulhern for reporting this.
+ 	  (const ACE_IO_Vector_Base *) so that aCC can correctly
+ 	  disambiguate the send() call.  Thanks to John Mulhern for
+ 	  reporting this.
 
 Wed Sep 16 15:25:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
