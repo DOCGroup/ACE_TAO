@@ -31,7 +31,7 @@ typedef Timer_Queue_Test_Driver <ACE_Timer_Heap,
         REACTOR_TIMER_QUEUE_TEST_DRIVER;
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   REACTOR_TIMER_QUEUE_TEST_DRIVER *tqtd;
   ACE_NEW_RETURN (tqtd, Reactor_Timer_Queue_Test_Driver, -1);
