@@ -1,3 +1,22 @@
+Wed Feb 23 16:54:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Based_Pointer_Repository.cpp (ACE_Based_Pointer_Repository_Rep):
+          Moved typedefs for MAP_MANAGER, MAP_ITERATOR, MAP_ENTRY inside
+          the class definition so they don't conflict with other types of
+          the same name (Visual Age C++ sees all of them at once, even if
+          other compilers may never see those two definitions in the same
+          compilation unit ever).
+
+Wed Feb 23 14:48:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc: Platform-specifics further segmented out to make
+          Visual Age C++ builds work for both NT and AIX. Removed Multiplexor.h
+          and Multiplexor.cpp since those files are not used. Added
+          Based_Pointer_Repository.(cpp h).
+
+        * ace/OS.i (getpwnam_r): Add a condition for the Visual Age C++ on
+          AIX compiler - it can't correctly handle the ::getpwnam_r call.
+
 Wed Feb 23 14:45:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Message_Block.cpp:
