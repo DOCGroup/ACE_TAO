@@ -92,7 +92,7 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
     }
 
   // Genereate scope name.
-  *os << parent->compute_name ("AMI_", "_Handler");
+  *os << parent->compute_name ("AMI_", "Handler");
 
   // Generate the operation name.
   *os << "::";
@@ -110,8 +110,9 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   // Generate the argument list.
   *os << "TAO_InputCDR &_tao_in, " << be_nl
       << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV"<< be_uidt << be_uidt_nl
-      << ")" << be_nl;
+      << "CORBA::ULong reply_status," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV)"<< be_uidt << be_uidt_nl
+      << be_nl;
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
@@ -146,10 +147,10 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   os->indent();
 
   *os << "// Retrieve Reply Handler object." << be_nl;
-  *os << parent->compute_name ("AMI_", "_Handler") << "_var "
+  *os << parent->compute_name ("AMI_", "Handler") << "_var "
       << "_tao_reply_handler_object =" << be_idt_nl;
 
-  *os << parent->compute_name ("AMI_", "_Handler");
+  *os << parent->compute_name ("AMI_", "Handler");
   *os << "::_narrow(_tao_reply_handler, ACE_TRY_ENV);" << be_uidt_nl;
 
   *os << "ACE_CHECK;" << be_nl << be_nl
@@ -511,7 +512,7 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::
 
   os->indent ();
 
-  *os << be_nl << ");" << be_uidt_nl;
+  *os << ");" << be_uidt_nl;
 
   *os << "ACE_CHECK;" << be_nl;
 

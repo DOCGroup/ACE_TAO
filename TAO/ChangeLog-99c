@@ -1,3 +1,107 @@
+Mon Sep 20 11:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_interface/ami_exception_holder_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ci.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_ch.cpp,
+	  TAO_IDL/be_include/be_visitor_interface/ami_exception_holder_ch.h,
+	  TAO_IDL/be_include/be_visitor_interface/ami_exception_holder_ci.h,
+	  TAO_IDL/be_include/be_visitor_operation/ami_exception_holder_operation_ch.h:
+	  Added these files to support the code generation for exception holders.
+
+	* TAO_IDL/include/ast_interface.h,
+	  TAO_IDL/ast/ast_interface.cpp:
+	  Added a method to add operations on the fly.
+
+	* TAO_IDL/include/ast_operation.h,
+	  TAO_IDL/ast/ast_operation.cpp:
+	  Added a method to add exceptions on the fly.
+
+	* TAO_IDL/be/be_interface.cpp,
+	  TAO_IDL/be_include/be_interface.h:
+	  Introduced a new strategy for exception holders and 
+	  factored out the commonalities to ami handlers in
+	  a prefix-suffix strategy as a base class for both.
+
+	* TAO_IDL/be/be_visitor_factory.cpp,
+	  TAO_IDL/be_include/be_visitor_interface.h,
+	  TAO_IDL/be_include/be_visitor_operation.h,
+	  TAO_IDL/be/be_visitor_interface.cpp,
+	  TAO_IDL/be/be_visitor_operation.cpp,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp
+	  TAO_IDL/be/be_visitor_attribute/attribute.cpp: 
+	  Added support for the xx_excep method in the AMI
+	  Reply Handler class.
+
+	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/any_op_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp,
+	  TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+	  Added a strategy approach to generate code for 
+	  the exception holders but I am not content with
+	  the current approach. This will change soon.
+
+	* TAO_IDL/be/be_visitor_interface/interface.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_ci.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_arglist.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_cs.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ss.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp,
+	  TAO_IDL/be_include/be_codegen.h:
+	  Made extensions to support AMI exception handling.
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp,
+	  TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp,
+	  TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  Needed to change the suffix "_Handler" to "Handler"
+	  in order to comply with the Messaging specification.
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+	  Added support for the "CORBA::Environment".
+
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp:
+	  Changed the usage of the "name" operation on the
+	  be_valuetype to use "full_name" which has basically
+	  the same effect but is strategizable.
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+	  Did some changes because of the problem of NT
+	  with nested classes.
+
+	* TAO_IDL/include/utl_identifier.h,
+	  TAO_IDL/util/utl_identifier.cpp:
+	  Added support to be able to replace a string.
+
+	* TAO_IDL/util/utl_idlist.cpp:
+	  Added support for deep-copy on the idlist.
+
+	* tao/MessagingC.cpp
+	  tao/MessagingC.h
+	  tao/MessagingC.i: Fixed the generated code for 
+	  the Exceptionholder valuetype, because it was originally 
+	  generated with the Exceptionholder being a struct. There
+	  is still a lot to do. E.g. valuetype do not support 
+	  _vars for some parts, therefore we have memory leaks!
+ 
+	* tao/Invocation.h
+	  tao/Reply_Dispatcher.cpp: Added support for AMI
+	  exception handling.
+
+	* tests/AMI/ami_test.idl,
+	  tests/AMI/ami_test_i.cpp,
+	  tests/AMI/ami_test_i.h,
+	  tests/AMI/simple_client.cpp: Took out the attributes,
+	  because we do not support AMI exception handling
+	  for attributes yet.
+
 Mon Sep 20 08:39:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs/Options.html: Updated the documentation to describe the

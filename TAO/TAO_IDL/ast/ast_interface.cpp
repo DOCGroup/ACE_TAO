@@ -130,6 +130,11 @@ void AST_Interface::set_abstract_valuetype ()
   ACE_ASSERT (0);
 }
 
+
+void AST_Interface::add_operation_x (AST_Operation *op)
+{
+  fe_add_operation (op);
+}
 /*
  * Redefinition of inherited virtual operations
  */

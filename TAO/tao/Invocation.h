@@ -52,7 +52,7 @@ enum TAO_Invoke_Status
   TAO_INVOKE_RESTART,
   // The request must be restarted, a temporary failure has ocurred.
 
-  TAO_INVOKE_EXCEPTION
+  TAO_INVOKE_EXCEPTION,
   // An exception was raised.
 };
 

@@ -145,6 +145,12 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_TIE_SH);
       break;
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_ATTRIBUTE_CH:
+      ctx.state (TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_OPERATION_CH);
+      break;
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_ATTRIBUTE_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_OPERATION_CS);
+      break;
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -175,50 +181,154 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // Only if AMI callbacks are enabled.
   if (idl_global->ami_call_back () == I_TRUE)
     {
-      // Generate AMI <sendc_> method, for this operation, if you are
-      // doing client header.
-
-      switch (this->ctx_->state ())
+      if (this->ctx_->state () == TAO_CodeGen::TAO_ATTRIBUTE_CH ||
+          this->ctx_->state () == TAO_CodeGen::TAO_ATTRIBUTE_CS)
         {
-        case TAO_CodeGen::TAO_ATTRIBUTE_CH:
-          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CH);
-          break;
+          // Generate AMI <sendc_> method, for this operation, if you are
+          // doing client header.
 
-        case TAO_CodeGen::TAO_ATTRIBUTE_CS:
-          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CS);
-          break;
-
-        default:
-          break;
-        }
-
-      // Only if we set new states generate code.
-      if (ctx.state () == TAO_CodeGen::TAO_AMI_OPERATION_CH
-          || ctx.state () == TAO_CodeGen::TAO_AMI_OPERATION_CS)
-        {
-          // Grab the appropriate visitor.
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor)
+          switch (this->ctx_->state ())
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface::"
-                                 "visit_operation - "
-                                 "NUL visitor\n"),
-                                -1);
+            case TAO_CodeGen::TAO_ATTRIBUTE_CH:
+              ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CH);
+              break;
+
+            case TAO_CodeGen::TAO_ATTRIBUTE_CS:
+              ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CS);
+              break;
+
+            default:
+              return 0;
             }
 
-          // Visit the node using this visitor
-          if (op->accept (visitor) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface::"
-                                 "visit_operation - "
-                                 "failed to accept visitor\n"),
-                                -1);
-            }
-          delete visitor;
-      }
-    }
+            // Grab the appropriate visitor.
+            visitor = tao_cg->make_visitor (&ctx);
+            if (!visitor)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_visitor_interface::"
+                                   "visit_operation - "
+                                   "NUL visitor\n"),
+                                  -1);
+              }
+
+            // Visit the node using this visitor
+            if (op->accept (visitor) == -1)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_visitor_interface::"
+                                   "visit_operation - "
+                                   "failed to accept visitor\n"),
+                                  -1);
+              }
+            delete visitor;
+          }
+        else
+          {
+            // Rename the existing "fake" operation 
+            // to node, so that the following code things it is 
+            // original
+            be_operation *node = op;
+            switch (this->ctx_->state ())
+              {
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SH:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SS:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CH:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CS:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH:
+                {
+                  // Create new be_operation
+
+                  // Create the return type, which is "void"
+                  be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
+                                                                   new UTL_ScopedName
+                                                                     (new Identifier ("void", 1, 0, I_FALSE), 
+                                                                      0),
+                                                                   0);
+
+                  // Create the argument
+
+                  // Create the field type
+                  // Get the name of the interface
+                  // Get the scope name.
+                  be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+                  ACE_CString interface_name (parent
+                                                ->name ()
+                                                  ->last_component ()
+                                                    ->get_string ());
+                  // Add the pre- and suffix
+                  ACE_CString excep_holder_name ("AMI_");
+                  excep_holder_name += interface_name;
+                  excep_holder_name += "ExceptionHolder";
+                  UTL_ScopedName *field_name = (UTL_ScopedName *)parent->name ()->copy ();
+                  field_name->last_component ()->replace_string (excep_holder_name.rep ());
+                  be_interface *field_type= new be_interface (field_name,
+                                                             0,
+                                                             0,
+                                                             0);
+                  field_type->set_name (field_name);
+
+                  // Create the argument
+                  be_argument *arg = new be_argument (AST_Argument::dir_OUT,
+                                                      field_type, // is also a valuetype
+                                                      new UTL_ScopedName 
+                                                        (new Identifier
+                                                          ("excep_holder", 1, 0, I_FALSE),
+                                                        0),
+                                                      0);
+
+                  // Create the new name
+                  // Append _execp to the name of the operation
+                  ACE_CString original_op_name (node
+                                                  ->name ()
+                                                    ->last_component ()
+                                                      ->get_string ());
+                  ACE_CString new_op_name = original_op_name + ACE_CString ("_excep");
+
+                  UTL_ScopedName *op_name = (UTL_ScopedName *)node->name ()-> copy ();
+                  op_name->last_component ()->replace_string (new_op_name.rep ());
+
+                  // create the operation
+                  be_operation * op = new be_operation (rt, 
+                                                        AST_Operation::OP_noflags,
+                                                        op_name, 
+                                                        0);
+                  op->set_defined_in (node->defined_in ());
+                  op->add_argument_to_scope (arg);
+
+                  // Grab the appropriate visitor.
+                  visitor = tao_cg->make_visitor (&ctx);
+                  if (!visitor)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_visitor_attribute::"
+                                         "visit_attribute - "
+                                         "NUL visitor\n"),
+                                        -1);
+                    }
+
+                  // Visit the node using this visitor
+                  if (op->accept (visitor) == -1)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_visitor_attribute::"
+                                         "visit_attribute - "
+                                         "failed to accept visitor\n"),
+                                        -1);
+                    }
+                  delete visitor;
+                  delete op;
+                } // case {
+                break;
+              default:
+                return 0;
+            } // switch
+        } // else
+    } // if AMI
+
+
   if (op)
     {
       delete op;
@@ -318,6 +428,12 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_TIE_SH);
       break;
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_ATTRIBUTE_CH:
+      ctx.state (TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_OPERATION_CH);
+      break;
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_ATTRIBUTE_CS:
+      ctx.state (TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_OPERATION_CS);
+      break;
     default:
       // error
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -341,57 +457,159 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                         -1);
     }
   delete visitor;
-  //
+
+
+   //
   // AMI Call back code generation.
   //
 
   // Only if AMI callbacks are enabled.
   if (idl_global->ami_call_back () == I_TRUE)
     {
-      // Generate AMI <sendc_> method, for this operation, if you are
-      // doing client header.
-
-      switch (this->ctx_->state ())
+      if (this->ctx_->state () == TAO_CodeGen::TAO_ATTRIBUTE_CH ||
+          this->ctx_->state () == TAO_CodeGen::TAO_ATTRIBUTE_CS)
         {
-        case TAO_CodeGen::TAO_ATTRIBUTE_CH:
-          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CH);
-          break;
+          // Generate AMI <sendc_> method, for this operation, if you are
+          // doing client header.
 
-        case TAO_CodeGen::TAO_ATTRIBUTE_CS:
-          ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CS);
-          break;
-
-        default:
-          break;
-        }
-
-      // Only if we set new states generate code.
-      if (ctx.state () == TAO_CodeGen::TAO_AMI_OPERATION_CH
-          || ctx.state () == TAO_CodeGen::TAO_AMI_OPERATION_CS)
-        {
-          // Grab the appropriate visitor.
-          visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor)
+          switch (this->ctx_->state ())
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface::"
-                                 "visit_operation - "
-                                 "NUL visitor\n"),
-                                -1);
+            case TAO_CodeGen::TAO_ATTRIBUTE_CH:
+              ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CH);
+              break;
+
+            case TAO_CodeGen::TAO_ATTRIBUTE_CS:
+              ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_CS);
+              break;
+
+            default:
+              return 0;
             }
 
-          // Visit the node using this visitor
-          if (op->accept (visitor) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_interface::"
-                                 "visit_operation - "
-                                 "failed to accept visitor\n"),
-                                -1);
-            }
-          delete visitor;
-        }
-    }
+            // Grab the appropriate visitor.
+            visitor = tao_cg->make_visitor (&ctx);
+            if (!visitor)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_visitor_interface::"
+                                   "visit_operation - "
+                                   "NUL visitor\n"),
+                                  -1);
+              }
+
+            // Visit the node using this visitor
+            if (op->accept (visitor) == -1)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_visitor_interface::"
+                                   "visit_operation - "
+                                   "failed to accept visitor\n"),
+                                  -1);
+              }
+            delete visitor;
+          }
+        else
+          {
+            be_operation *node = op;
+            switch (this->ctx_->state ())
+              {
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SH:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SS:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CH:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CS:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
+              case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH:
+                {
+                  // Create new be_operation
+
+                  // Create the return type, which is "void"
+                  be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
+                                                                   new UTL_ScopedName
+                                                                     (new Identifier ("void", 1, 0, I_FALSE), 
+                                                                      0),
+                                                                   0);
+
+                  // Create the argument
+
+                  // Create the field type
+                  // Get the name of the interface
+                  // Get the scope name.
+                  be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+                  ACE_CString interface_name (parent
+                                                ->name ()
+                                                  ->last_component ()
+                                                    ->get_string ());
+                  // Add the pre- and suffix
+                  ACE_CString excep_holder_name ("AMI_");
+                  excep_holder_name += interface_name;
+                  excep_holder_name += "ExceptionHolder";
+                  UTL_ScopedName *field_name = (UTL_ScopedName *)parent->name ()->copy ();
+                  field_name->last_component ()->replace_string (excep_holder_name.rep ());
+                  be_interface *field_type= new be_interface (field_name,
+                                                             0,
+                                                             0,
+                                                             0);
+                  field_type->set_name (field_name);
+
+                  // Create the argument
+                  be_argument *arg = new be_argument (AST_Argument::dir_OUT,
+                                                      field_type, // is also a valuetype
+                                                      new UTL_ScopedName 
+                                                        (new Identifier
+                                                          ("excep_holder", 1, 0, I_FALSE),
+                                                        0),
+                                                      0);
+
+                  // Create the new name
+                  // Append _execp to the name of the operation
+                  ACE_CString original_op_name (node
+                                                  ->name ()
+                                                    ->last_component ()
+                                                      ->get_string ());
+                  ACE_CString new_op_name = original_op_name + ACE_CString ("_excep");
+
+                  UTL_ScopedName *op_name = (UTL_ScopedName *)node->name ()-> copy ();
+                  op_name->last_component ()->replace_string (new_op_name.rep ());
+
+                  // create the operation
+                  be_operation * op = new be_operation (rt, 
+                                                        AST_Operation::OP_noflags,
+                                                        op_name, 
+                                                        0);
+                  op->set_defined_in (node->defined_in ());
+                  op->add_argument_to_scope (arg);
+
+                  // Grab the appropriate visitor.
+                  visitor = tao_cg->make_visitor (&ctx);
+                  if (!visitor)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_visitor_attribute::"
+                                         "visit_attribute - "
+                                         "NUL visitor\n"),
+                                        -1);
+                    }
+
+                  // Visit the node using this visitor
+                  if (op->accept (visitor) == -1)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "(%N:%l) be_visitor_attribute::"
+                                         "visit_attribute - "
+                                         "failed to accept visitor\n"),
+                                        -1);
+                    }
+                  delete visitor;
+                  delete op;
+                } // case {
+                break;
+              default:
+                return 0;
+            } // switch
+        } // else
+    } // if AMI
+
   
   delete op;
   delete rt;

@@ -129,9 +129,6 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
 
   // First argument is a the return value of the operation.
 
-  // Indent.
-  os->indent ();
-
   // Get the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
   if (!bt)
@@ -218,19 +215,19 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
           }
       }
     }
-  *os << be_uidt_nl << ")" << be_uidt;
+  *os << ")" << be_nl;
 
   // Now generate the throw specs.
-  *os << be_idt_nl << "ACE_THROW_SPEC ((CORBA::SystemException))"
-      << be_uidt_nl;
+  *os << be_idt << "ACE_THROW_SPEC ((CORBA::SystemException))"
+      << be_uidt << be_uidt << be_uidt;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
-      *os << ";" << be_nl << be_nl;
+      *os << ";\n\n";
       break;
     default:
-      *os << be_nl;
+      *os << "\n";
     }
   return 0;
 }

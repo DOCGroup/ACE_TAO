@@ -52,7 +52,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
   if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DECL)
     {
       prefix = "AMI_";
-      postfix = "_Handler";
+      postfix = "Handler";
     }
 
   if (node->is_nested ())

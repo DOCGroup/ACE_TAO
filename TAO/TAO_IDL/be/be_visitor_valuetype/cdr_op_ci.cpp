@@ -69,12 +69,12 @@ be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
   os->indent ();
   *os << "ACE_INLINE CORBA::Boolean" << be_nl
       << "operator<< (TAO_OutputCDR &strm, const "
-      << node->name ()
+      << node->full_name ()
       << " *_tao_valuetype)" << be_nl
       << "{" << be_idt_nl;
   *os << "return CORBA_ValueBase::_tao_marshal (strm,"  << be_idt_nl
-      << "ACE_const_cast (" << node->name () << "*, _tao_valuetype)," << be_nl
-      << "(ptr_arith_t) &" << node->name() <<"::_downcast);"
+      << "ACE_const_cast (" << node->full_name () << "*, _tao_valuetype)," << be_nl
+      << "(ptr_arith_t) &" << node->full_name() <<"::_downcast);"
       << be_uidt<< be_uidt_nl
       << "}\n\n";
 
@@ -82,17 +82,17 @@ be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
   //this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
   *os << "ACE_INLINE CORBA::Boolean" << be_nl
       << "operator>> (TAO_InputCDR &strm, "
-      << node->name ()
+      << node->full_name ()
       << " *&_tao_valuetype)" << be_nl
       << "{" << be_idt_nl;
-  *os << "return " << node->name() << "::_tao_unmarshal (strm, _tao_valuetype);"
+  *os << "return " << node->full_name() << "::_tao_unmarshal (strm, _tao_valuetype);"
 #ifdef obv_marshal_old_version
   *os << "CORBA::ValueBase *ptr;" << be_nl
       << "int retval = CORBA_ValueBase::_tao_unmarshal (strm,"
-      << be_idt_nl << "ptr, (ptr_arith_t) &" << node->name() <<"::_downcast);"
+      << be_idt_nl << "ptr, (ptr_arith_t) &" << node->full_name() <<"::_downcast);"
       << be_uidt_nl
       << "if (retval) {" << be_idt_nl
-      << "_tao_valuetype = " << node->name() << "::_downcast (ptr);"
+      << "_tao_valuetype = " << node->full_name() << "::_downcast (ptr);"
       << be_nl << "if (_tao_valuetype) retval = 1;"
       << be_uidt_nl << "}" << be_idt_nl
       << "return retval;"
@@ -100,7 +100,8 @@ be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
       << be_uidt_nl
       << "}\n\n";
 
-  if (!node->is_abstract_valuetype ())
+  if (!node->is_abstract_valuetype ()
+    && idl_global->ami_call_back () == I_FALSE)
     { // functions that marshal state
       be_visitor_context* new_ctx  =
         new be_visitor_context (*this->ctx_);

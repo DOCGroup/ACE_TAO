@@ -94,7 +94,7 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
   // so the interface type strategy does not work here.
   // We have to go by foot.
   // Genereate scope name.
-  *os << parent->compute_name ("AMI_", "_Handler");
+  *os << parent->compute_name ("AMI_", "Handler");
 
   // Generate the operation name.
   *os << "::";

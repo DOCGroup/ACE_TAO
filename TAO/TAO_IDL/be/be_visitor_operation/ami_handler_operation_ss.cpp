@@ -154,8 +154,8 @@ be_visitor_operation_ami_handler_operation_ss::visit_operation (be_operation *no
 
   *os << "void *_tao_object_reference, " << be_nl
       << "void * /* context */, " << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt << be_uidt_nl
-      << ")" << be_nl;
+      << "CORBA::Environment &ACE_TRY_ENV)" << be_uidt << be_uidt_nl
+      << be_nl;
 
   // generate the actual code for the skeleton. However, if any of the argument
   // types is "native", we do not generate any skeleton
@@ -261,14 +261,13 @@ be_visitor_operation_ami_handler_operation_ss::visit_operation (be_operation *no
 
   // end the upcall
   os->indent ();
-  *os << be_uidt_nl << ");\n";
+  *os << be_uidt_nl << ");" << be_nl;
 
-  os->indent ();
-  *os << "ACE_CHECK;\n"
-      << "_tao_server_request.init_reply (ACE_TRY_ENV);\n";
+  *os << "ACE_CHECK;" << be_nl
+      << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl
+      << "ACE_CHECK;" << be_uidt_nl;
 
-  os->decr_indent ();
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
   return 0;
 }
 

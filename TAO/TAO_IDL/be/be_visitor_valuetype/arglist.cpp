@@ -63,6 +63,35 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
+  // generate the CORBA::Environment parameter for the alternative mapping
+  if (!idl_global->exception_support ())
+    {
+      // if the operation node has parameters, then we need to insert a comma
+      if (node->argument_count () > 0)
+        *os << ",\n";
+
+      os->indent ();
+      switch (this->ctx_->state ())
+        {
+        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
+        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
+          // last argument - is always CORBA::Environment
+          *os << "CORBA::Environment &ACE_TRY_ENV";
+          *os << " = " << be_idt_nl
+              << "TAO_default_environment ()"
+              << be_uidt;
+          break;
+//  case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
+//    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
+//    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
+//          // last argument - is always CORBA::Environment
+//          *os << "CORBA::Environment &ACE_TRY_ENV";
+//          break;
+        default:
+          *os << "CORBA::Environment &ACE_TRY_ENV";
+          break;
+        }
+    }
 
   // *os << be_uidt;
   // os->indent ();
