@@ -1,3 +1,14 @@
+Thu Aug 19 16:34:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/BoundsC.i: 
+	* tao/BoundsC.cpp:
+	* tao/BoundsC.h:
+	* tao/Makefile:
+	* tao/corbafwd.h:
+	* tao/corba.h:
+	* tao/Typecode_Constants.cpp: Added support for CORBA::Bounds
+	  which is a part of CORBA2.3 spec.
+
 Thu Aug 19 12:57:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Sequence_T.i:
