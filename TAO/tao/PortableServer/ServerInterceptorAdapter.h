@@ -21,7 +21,7 @@
 
 #include "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,6 +29,8 @@
 
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+#include "portableserver_export.h"
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/Interceptor_List.h"
