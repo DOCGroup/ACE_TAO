@@ -43,8 +43,8 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (void)
   this->pull_handler_.initialize (&this->monitor_map_, this);
 
   // @note "this->init()" is not called here (in the constructor)
-  //       since it may thrown in an exception.  Throwing an exception
-  //       in a constructor in an emulated exception environment is
+  //       since it may thrown an exception.  Throwing an exception in
+  //       a constructor in an emulated exception environment is
   //       problematic since native exception semantics cannot be
   //       reproduced in such a case.  As such, init() must be called
   //       by whatever code instantiates this LoadManager.
@@ -849,9 +849,6 @@ CORBA::Object_ptr
 TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid
                                  ACE_ENV_ARG_DECL)
 {
-  // Pass the cached loads to the balancing strategy so that the
-  // strategy may choose which member to forward requests to next.
-
   PortableGroup::ObjectGroup_var object_group =
     this->object_group_manager_.object_group (oid);
 
@@ -1046,7 +1043,7 @@ TAO_LB_LoadManager::init (
     CORBA::string_dup ("org.omg.CosLoadBalancing.CustomStrategy");
 }
 
-ACE_INLINE CosLoadBalancing::Strategy_ptr
+CosLoadBalancing::Strategy_ptr
 TAO_LB_LoadManager::built_in_strategy (const char * strategy)
 {
   ACE_ASSERT (strategy != 0);

@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_CosNaming.lib TAO_PortableGroup.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancing.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_CosNaming.lib TAO_PortableGroup.lib TAO_Messaging.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancing.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 Debug"
 
@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_CosNamingd.lib TAO_PortableGroupd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_CosNamingd.lib TAO_PortableGroupd.lib TAO_Messagingd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /profile
 
 !ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 MFC Debug"
@@ -112,7 +112,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT BASE LINK32 /profile
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServermfcd.lib TAO_CosNamingmfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib TAO_PortableServermfcd.lib TAO_CosNamingmfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /profile
 
 !ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 MFC Release"
@@ -140,7 +140,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancing.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServermfc.lib TAO_CosNamingmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServermfc.lib TAO_CosNamingmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
@@ -163,7 +163,39 @@ SOURCE=.\CosLoadBalancingS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_CPU_Monitor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LeastLoaded.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadAlert.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadAlert_Handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadAlertInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadAlertMap.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadListMap.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_LoadManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadMap.cpp
 # End Source File
 # Begin Source File
 
@@ -175,11 +207,23 @@ SOURCE=.\LoadBalancing\LB_MonitorMap.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_Pull_Handler.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\LoadBalancing\LB_Random.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_RoundRobin.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_ServerRequestInterceptor.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -203,11 +247,39 @@ SOURCE=.\LoadBalancing\LB_conf.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_CPU_Monitor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_LeastLoaded.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_LoadAlert.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadAlert_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadAlertInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadAlertMap.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadListMap.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_LoadManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadMap.h
 # End Source File
 # Begin Source File
 
@@ -219,11 +291,23 @@ SOURCE=.\LoadBalancing\LB_MonitorMap.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\LB_ORBInitializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\LB_Pull_Handler.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\LoadBalancing\LB_Random.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_RoundRobin.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_ServerRequestInterceptor.h
 # End Source File
 # Begin Source File
 
@@ -246,7 +330,7 @@ InputPath=.\CosLoadBalancing.idl
 InputName=CosLoadBalancing
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/Loadbalancing_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -GC -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/Loadbalancing_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -285,7 +369,7 @@ InputPath=.\CosLoadBalancing.idl
 InputName=CosLoadBalancing
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -GC -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -347,6 +431,10 @@ SOURCE=.\CosLoadBalancingS_T.i
 # Begin Source File
 
 SOURCE=.\LoadBalancing\LB_LeastLoaded.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_LoadAlert.inl
 # End Source File
 # End Group
 # Begin Group "Template Files"
