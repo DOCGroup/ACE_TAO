@@ -104,8 +104,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i ami_test_i.h \
- ami_testS.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ ami_test_i.h ami_testS.h \
  $(TAO_ROOT)/tao/PortableServer/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \

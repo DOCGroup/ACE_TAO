@@ -398,7 +398,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Connector_Registry.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.h \
+ SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -452,11 +452,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.i \
+ SSLIOP/SSLIOP_Export.h \
+ SecurityC.h \
+ Security/security_export.h \
+ SecurityC.i \
+ SSLIOPC.i \
  SSLIOP/SSLIOP_Connect.h \
  $(TAO_ROOT)/tao/GIOP_Message_Acceptors.h \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
@@ -667,7 +667,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  SSLIOP/SSLIOP_Export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.h \
+ SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -807,11 +807,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.i \
+ SSLIOP/SSLIOP_Export.h \
+ SecurityC.h \
+ Security/security_export.h \
+ SecurityC.i \
+ SSLIOPC.i \
  SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
@@ -994,7 +994,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
  SSLIOP/SSLIOP_Export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.h \
+ SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1134,11 +1134,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.i \
+ SSLIOP/SSLIOP_Export.h \
+ SecurityC.h \
+ Security/security_export.h \
+ SecurityC.i \
+ SSLIOPC.i \
  SSLIOP/SSLIOP_Endpoint.i SSLIOP/SSLIOP_Connect.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -1485,7 +1485,7 @@ realclean: clean
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.h \
+ SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1551,11 +1551,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.i \
+ SSLIOP/SSLIOP_Export.h \
+ SecurityC.h \
+ Security/security_export.h \
+ SecurityC.i \
+ SSLIOPC.i \
  SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
@@ -1897,7 +1897,7 @@ realclean: clean
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.h \
+ SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1961,11 +1961,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.i \
+ SSLIOP/SSLIOP_Export.h \
+ SecurityC.h \
+ Security/security_export.h \
+ SecurityC.i \
+ SSLIOPC.i \
  SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
@@ -2285,7 +2285,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Connector_Registry.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.h \
+ SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -2339,11 +2339,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.i \
+ SSLIOP/SSLIOP_Export.h \
+ SecurityC.h \
+ Security/security_export.h \
+ SecurityC.i \
+ SSLIOPC.i \
  SSLIOP/SSLIOP_Connect.h \
  $(TAO_ROOT)/tao/GIOP_Message_Acceptors.h \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
@@ -2793,7 +2793,7 @@ realclean: clean
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.h \
+ SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -3005,11 +3005,11 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOPC.i \
+ SSLIOP/SSLIOP_Export.h \
+ SecurityC.h \
+ Security/security_export.h \
+ SecurityC.i \
+ SSLIOPC.i \
  SSLIOP/ssl_endpoints.i
 
 .obj/SSLIOPS.o .obj/SSLIOPS.so .shobj/SSLIOPS.o .shobj/SSLIOPS.so: SSLIOPS.cpp SSLIOPS.h \
@@ -3124,7 +3124,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPS_T.h \
  $(TAO_ROOT)/tao/IOPS_T.i \
  $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i SecurityS.h \
+ $(TAO_ROOT)/tao/IOPS.i \
+ SecurityS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \

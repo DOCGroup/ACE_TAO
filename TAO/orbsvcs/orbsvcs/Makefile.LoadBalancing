@@ -82,8 +82,8 @@ realclean: clean
 .obj/LoadBalancer_i.o .obj/LoadBalancer_i.so .shobj/LoadBalancer_i.o .shobj/LoadBalancer_i.so: LoadBalancing/LoadBalancer_i.cpp \
  LoadBalancing/LoadBalancer_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
+ LoadBalancingS.h \
+ LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -388,8 +388,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
+ LoadBalancing/LoadBalancing_export.h \
+ LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -400,10 +400,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
+ LoadBalancingS_T.h \
+ LoadBalancingS_T.i \
+ LoadBalancingS_T.cpp \
+ LoadBalancingS.i \
  LoadBalancing/ReplicaProxy.h LoadBalancing/LoadBalancing_export.h \
  LoadBalancing/ReplicaProxy.i LoadBalancing/ReplicaLocator.h \
  LoadBalancing/LoadBalancing_Strategy.h LoadBalancing/LoadBalancer_i.i
@@ -411,8 +411,8 @@ realclean: clean
 .obj/LoadBalancing_Strategy.o .obj/LoadBalancing_Strategy.so .shobj/LoadBalancing_Strategy.o .shobj/LoadBalancing_Strategy.so: LoadBalancing/LoadBalancing_Strategy.cpp \
  LoadBalancing/LoadBalancing_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
+ LoadBalancingS.h \
+ LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -717,8 +717,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
+ LoadBalancing/LoadBalancing_export.h \
+ LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -729,18 +729,18 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
+ LoadBalancingS_T.h \
+ LoadBalancingS_T.i \
+ LoadBalancingS_T.cpp \
+ LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h \
  LoadBalancing/LoadBalancing_Strategy.i
 
 .obj/ReplicaLocator.o .obj/ReplicaLocator.so .shobj/ReplicaLocator.o .shobj/ReplicaLocator.so: LoadBalancing/ReplicaLocator.cpp \
  LoadBalancing/ReplicaLocator.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
+ LoadBalancingS.h \
+ LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1045,8 +1045,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
+ LoadBalancing/LoadBalancing_export.h \
+ LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -1057,10 +1057,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
+ LoadBalancingS_T.h \
+ LoadBalancingS_T.i \
+ LoadBalancingS_T.cpp \
+ LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h LoadBalancing/LoadBalancer_i.h \
  LoadBalancing/ReplicaProxy.h LoadBalancing/ReplicaProxy.i \
  LoadBalancing/LoadBalancing_Strategy.h LoadBalancing/LoadBalancer_i.i
@@ -1119,8 +1119,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
+ LoadBalancingS.h \
+ LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1374,8 +1374,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
+ LoadBalancing/LoadBalancing_export.h \
+ LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -1386,10 +1386,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
+ LoadBalancingS_T.h \
+ LoadBalancingS_T.i \
+ LoadBalancingS_T.cpp \
+ LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h LoadBalancing/ReplicaProxy.i \
  LoadBalancing/LoadBalancer_i.h LoadBalancing/ReplicaLocator.h \
  LoadBalancing/LoadBalancing_Strategy.h LoadBalancing/LoadBalancer_i.i
@@ -1398,8 +1398,8 @@ realclean: clean
  LoadBalancing/Round_Robin_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  LoadBalancing/LoadBalancing_Strategy.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
+ LoadBalancingS.h \
+ LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1704,8 +1704,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
+ LoadBalancing/LoadBalancing_export.h \
+ LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -1716,10 +1716,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
+ LoadBalancingS_T.h \
+ LoadBalancingS_T.i \
+ LoadBalancingS_T.cpp \
+ LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h LoadBalancing/ReplicaProxy.h \
  LoadBalancing/ReplicaProxy.i
 
@@ -1727,8 +1727,8 @@ realclean: clean
  LoadBalancing/Minimum_Dispersion.h \
  $(ACE_ROOT)/ace/pre.h \
  LoadBalancing/LoadBalancing_Strategy.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.h \
+ LoadBalancingS.h \
+ LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2033,8 +2033,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingC.i \
+ LoadBalancing/LoadBalancing_export.h \
+ LoadBalancingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -2045,15 +2045,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
+ LoadBalancingS_T.h \
+ LoadBalancingS_T.i \
+ LoadBalancingS_T.cpp \
+ LoadBalancingS.i \
  LoadBalancing/LoadBalancing_export.h LoadBalancing/ReplicaProxy.h \
  LoadBalancing/ReplicaProxy.i
 
 .obj/LoadBalancingS.o .obj/LoadBalancingS.so .shobj/LoadBalancingS.o .shobj/LoadBalancingS.so: LoadBalancingS.cpp LoadBalancingS.h \
- $(ACE_ROOT)/ace/pre.h LoadBalancingC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

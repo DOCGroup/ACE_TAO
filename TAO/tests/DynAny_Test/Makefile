@@ -1651,7 +1651,8 @@ realclean:	clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i data.h \
+ $(TAO_ROOT)/tao/BoundsC.i \
+ data.h \
  $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
  $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \

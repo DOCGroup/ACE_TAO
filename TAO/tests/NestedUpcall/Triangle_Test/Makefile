@@ -905,8 +905,8 @@ realclean: clean
  $(TAO_ROOT)/tao/StringSeq.h \
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i Object_A_i.h \
- Triangle_TestS.h Triangle_TestC.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ Object_A_i.h Triangle_TestS.h Triangle_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1229,8 +1229,8 @@ realclean: clean
  $(TAO_ROOT)/tao/StringSeq.h \
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i Object_B_i.h \
- Triangle_TestS.h Triangle_TestC.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ Object_B_i.h Triangle_TestS.h Triangle_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -2419,7 +2419,8 @@ realclean: clean
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Read_Buffer.i \
- initiator.h $(ACE_ROOT)/ace/Get_Opt.h \
+ initiator.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

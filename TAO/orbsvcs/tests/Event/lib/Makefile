@@ -415,8 +415,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(ACE_ROOT)/ace/Stats.h \
- $(ACE_ROOT)/ace/Stats.i Driver.i \
- Consumer.h Supplier.h \
+ $(ACE_ROOT)/ace/Stats.i \
+ Driver.i Consumer.h Supplier.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -804,7 +804,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(ACE_ROOT)/ace/Stats.h \
- $(ACE_ROOT)/ace/Stats.i Driver.i \
+ $(ACE_ROOT)/ace/Stats.i \
+ Driver.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i
@@ -1168,8 +1169,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(ACE_ROOT)/ace/Stats.h \
- $(ACE_ROOT)/ace/Stats.i Driver.i \
- $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Stats.i \
+ Driver.i $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \

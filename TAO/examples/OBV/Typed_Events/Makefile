@@ -1241,8 +1241,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  ../Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h Server_i.h \
- Event_TypesS.h Event_TypesC.h \
+ $(TAO_ROOT)/tao/debug.h \
+ Server_i.h Event_TypesS.h Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
