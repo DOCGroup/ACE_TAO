@@ -4442,6 +4442,8 @@ public:
   static char *mktemp (char *t);
   static char *getcwd (char *,
                        size_t);
+  static int rename (const char *old_name, 
+                     const char *new_name);
   static int unlink (const char *path);
   static char *tempnam (const char *dir,
                         const char *pfx);
@@ -4803,6 +4805,8 @@ public:
                           int mode,
                           int perms = 0,
                           LPSECURITY_ATTRIBUTES sa = 0);
+  static int rename (const wchar_t *oldname,
+                     const wchar_t *newname);
   static int unlink (const wchar_t *path);
 #if defined (ACE_HAS_WINCE)
   static wchar_t *dlerror (void);

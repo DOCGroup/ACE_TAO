@@ -1543,6 +1543,13 @@ ACE::bind_port (ACE_HANDLE handle,
 #endif /* ACE_HAS_SIN_LEN */
   sin.sin_addr.s_addr = ip_addr;
 
+#if defined (ACE_HAS_WILDCARD_BIND)
+  // The OS kernel should select a free port for us.
+  sin.sin_port = 0;
+  return ACE_OS::bind (handle, (sockaddr *) &sin, sizeof sin);
+#else
+  // We have to select the port explicitly.
+
   for (;;)
     {
       sin.sin_port = htons (upper_limit);
@@ -1572,6 +1579,7 @@ ACE::bind_port (ACE_HANDLE handle,
             }
         }
     }
+#endif /* ACE_HAS_WILDCARD_BIND */
 }
 
 // Make the current process a UNIX daemon.  This is based on Stevens
