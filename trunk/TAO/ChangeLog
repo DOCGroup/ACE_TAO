@@ -5,6 +5,7 @@ Sun Jan 30 19:57:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* examples/Content_Server/AMI_Observer/Callback_i.cpp:
 	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
 	* examples/Content_Server/SMI_Iterator/client.cpp:
+	* examples/Simple/time-date/Time_Date.cpp:
 	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 	* orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.cpp:
