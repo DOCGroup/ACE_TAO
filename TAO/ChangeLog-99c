@@ -1,3 +1,21 @@
+Tue Aug 17 10:53:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence_T.cpp:
+	  Fixed a couple of my typos that compiled under TAO
+	  but got caught when called from generated code.
+
+	* tao/Managed_Types.cpp:
+	  Added some comments.
+
+	* tao/Managed_Types.h:
+	* tao/Managed_Types.i:
+	  The copy constructor of  TAO_SeqElem_(W)String_Manager
+	  is called implicitly in the generated code for the [] operator
+	  for sequences of (w)string. This copy constructor is public
+	  for strings, and was private and unimplemented for wstrings.
+	  The TAO_SeqElem_WString_Manager copy constructor
+	  now matches its string counterpart.
+
 Tue Aug 17 01:20:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/CurrentC.cpp:
