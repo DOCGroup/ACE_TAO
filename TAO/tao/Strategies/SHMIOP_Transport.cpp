@@ -150,7 +150,7 @@ TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
 
   // As this used for transports where things are available in one
   // shot this looping should not create any problems.
-  for (size_t n = payload;
+  for (size_t n = missing_data;
        n != 0;
        n -= bytes)
     {
@@ -162,7 +162,7 @@ TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
       // bad layer in which this is being done ie. recv_n is
       // simulated. But...
       bytes = this->recv (incoming.wr_ptr (),
-                          missing_data,
+                          n,
                           max_wait_time);
 
       if (bytes == 0 ||
