@@ -1,3 +1,20 @@
+Mon Mar  5 19:32:56 2001  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array): 
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp (visit_enum): 
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp (visit_exception):
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp (visit_interface):
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp (visit_sequence):
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp (visit_structure):
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp (visit_union):
+
+	  Fixed generated code that it does an ACE_TRY_CHECK before
+	  checking the return value of the CORBA::TypeCode::equivalent()
+	  call.  This fixes a subtle problem where the return code could
+	  be potentially meaningless due to the fact that an emulated
+	  exception was thrown.  This change also makes the code match the
+	  semantics of native exceptions more closely.
+
 Mon Mar  5 19:14:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Callback/client.cpp:

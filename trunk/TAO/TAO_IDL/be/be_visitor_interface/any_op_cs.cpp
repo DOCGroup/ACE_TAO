@@ -80,13 +80,12 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "ACE_TRY_NEW_ENV" << be_nl
           << "{" << be_idt_nl
           << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
-          << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
-          << "if (!type->equivalent (" << node->tc_name ()
-          << ", ACE_TRY_ENV)) // not equal" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "ACE_TRY_CHECK;" << be_nl
+          << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl << be_nl
+          << "CORBA::Boolean result = type->equivalent (" << node->tc_name ()
+          << ", ACE_TRY_ENV);" << be_nl
+          << "ACE_TRY_CHECK;" << be_nl << be_nl
+          << "if (!result)" << be_idt_nl
+          << "return 0; // not equivalent" << be_uidt_nl << be_nl
           << "TAO_InputCDR stream (" << be_idt << be_idt_nl
           << "_tao_any._tao_get_cdr ()," << be_nl
           << "_tao_any._tao_byte_order ()" << be_uidt_nl
