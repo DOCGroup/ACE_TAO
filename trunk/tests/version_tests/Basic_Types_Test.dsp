@@ -13,33 +13,24 @@ CFG=Basic_Types_Test - Win32 static Unicode Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Basic_Types_Test.mak"\
- CFG="Basic_Types_Test - Win32 static Unicode Debug"
+!MESSAGE NMAKE /f "Basic_Types_Test.mak" CFG="Basic_Types_Test - Win32 static Unicode Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Basic_Types_Test - Win32 DLL Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Basic_Types_Test - Win32 DLL Unicode Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Basic_Types_Test - Win32 static Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Basic_Types_Test - Win32 static Unicode Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Basic_Types_Test - Win32 DLL Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Basic_Types_Test - Win32 DLL Unicode Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Basic_Types_Test - Win32 static Unicode Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Basic_Types_Test - Win32 static Release" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Basic_Types_Test - Win32 DLL Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic_Types_Test - Win32 DLL Unicode Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic_Types_Test - Win32 static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic_Types_Test - Win32 static Unicode Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic_Types_Test - Win32 DLL Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic_Types_Test - Win32 DLL Unicode Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic_Types_Test - Win32 static Unicode Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic_Types_Test - Win32 static Release" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 
@@ -107,7 +98,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D "_MBCS" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D "_MBCS" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -132,7 +123,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D "_MBCS" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "UNICODE" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D "_MBCS" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "UNICODE" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -207,7 +198,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "UNICODE" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "UNICODE" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -232,7 +223,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D "_MBCS" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
