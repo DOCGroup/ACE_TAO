@@ -3,8 +3,8 @@
 #include "Naming_Service.h"
 #include "ace/OS_main.h"
 
-#include <orbsvcs/Shutdown_Utilities.h>
-#include <tao/debug.h>
+#include "orbsvcs/Shutdown_Utilities.h"
+#include "tao/debug.h"
 
 class Naming_Svc_Shutdown : public Shutdown_Functor
 {

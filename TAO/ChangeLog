@@ -1,3 +1,11 @@
+Thu Oct 21 08:37:34 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Naming_Service/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+
+          Switched #includes from <> to "".
+
 Wed Oct 20 15:41:24 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
@@ -11,7 +19,7 @@ Wed Oct 20 14:25:59 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
 
           Windows paths often have embedded colons (':'), which causes
-          problems in the case of parsing the parameters for the -SSL* 
+          problems in the case of parsing the parameters for the -SSL*
           options on that platform.
 
 Wed Oct 20 13:55:13 2004  Chad Elliott  <elliott_c@ociweb.com>

@@ -1,7 +1,7 @@
 #include "Storable_Naming_Context.h"
 #include "Bindings_Iterator_T.h"
 
-#include <tao/debug.h>
+#include "tao/debug.h"
 
 // The following #pragma is needed to disable a warning that occurs
 // in MSVC 6 due to the overly long debugging symbols generated for
