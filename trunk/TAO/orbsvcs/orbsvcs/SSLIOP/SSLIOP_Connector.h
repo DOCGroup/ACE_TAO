@@ -36,7 +36,7 @@
 #include "tao/Resource_Factory.h"
 
 
-class TAO_Base_Connection_Property;
+class TAO_Base_Transport_Property;
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Connector : public TAO_IIOP_SSL_Connector
 {
@@ -57,7 +57,7 @@ public:
   // Pluggable.h
   virtual int open (TAO_ORB_Core *orb_core);
   virtual int close (void);
-  virtual int connect (TAO_Connection_Descriptor_Interface *desc,
+  virtual int connect (TAO_Transport_Descriptor_Interface *desc,
                        TAO_Transport *&transport,
                        ACE_Time_Value *max_wait_time,
                        CORBA::Environment &ACE_TRY_ENV);
