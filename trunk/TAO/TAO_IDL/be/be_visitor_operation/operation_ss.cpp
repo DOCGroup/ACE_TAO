@@ -131,7 +131,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   os->indent ();
   // declare an environment variable for user raised exceptions
-  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
+  //  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
   // get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl = ("
       << intf->full_skel_name () << " *)_tao_object_reference;\n";
@@ -219,10 +219,17 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   if (node->argument_count () > 0)
     *os << ",\n";
   os->indent ();
-  *os << "_tao_skel_environment";
+  //  *os << "_tao_skel_environment";
+  *os << "_tao_environment";
   // end the upcall
   *os << be_uidt_nl;
   *os << ");\n";
+
+  if (node->flags () != AST_Operation::OP_oneway)
+    {
+      os->indent ();
+      *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);\n";
+    }
 
   // do any post processing for the arguments
   ctx = *this->ctx_;
@@ -563,7 +570,7 @@ be_interpretive_visitor_operation_ss::gen_marshal_params (be_operation *node,
   os->indent ();
   *os << "_tao_server_request.marshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
-      << "_tao_skel_environment, " << be_nl
+    //      << "_tao_skel_environment, " << be_nl
       << "&";
   // check if we are an attribute node in disguise
   if (this->ctx_->attribute ())
@@ -636,9 +643,16 @@ be_compiled_visitor_operation_ss::gen_pre_skel_info (be_operation *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // instantiate a TAO_InputCDR variable
-  os->indent ();
-  *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();\n";
+  // now make sure that we have some in and inout parameters. Otherwise, there
+  // is nothing to be marshaled in
+  if (this->has_param_type (node, AST_Argument::dir_IN) ||
+      this->has_param_type (node, AST_Argument::dir_INOUT))
+    {
+      // instantiate a TAO_InputCDR variable
+      os->indent ();
+      *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();\n";
+    }
+
   return 0;
 }
 
@@ -709,8 +723,7 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
   // We will be here only if we are 2way
   // first initialize a reply message
   os->indent ();
-  *os << "_tao_server_request.init_reply (_tao_environment);" << be_nl;
-  *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);\n";
+  *os << "_tao_server_request.init_reply (_tao_environment);\n";
 
   // We still need the following check because we maybe 2way and yet have no
   // parameters and a void return type
@@ -720,6 +733,7 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
     {
       // grab the incoming stream
       os->indent ();
+      *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);" << be_nl;
       *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
       *os << "if (!(\n" << be_idt;
     }

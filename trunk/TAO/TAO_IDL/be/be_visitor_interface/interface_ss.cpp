@@ -161,29 +161,30 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "_is_a_calldata = " << be_nl;
   *os << "{\"_is_a\", 1, 2, " << node->flatname () << "_is_a_paramdata};"
       << be_nl;
-  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
+  //  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
   *os << node->full_skel_name () << "_ptr  _tao_impl = ("
       << node->full_skel_name () << "_ptr) _tao_object_reference;"
       << be_nl;
   *os << "CORBA::Boolean _tao_retval;" << be_nl;
-  *os << "char *_tao_value = 0;" << be_nl;
+  *os << "CORBA::String_var _tao_value;" << be_nl;
   *os << "_tao_server_request.demarshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
       << "&" << node->flatname () << "_is_a_calldata, " << be_nl
       << "&_tao_retval, " << be_nl
-      << "&_tao_value" << be_uidt_nl
+      << "&_tao_value.inout ()" << be_uidt_nl
       << ");" << be_nl;
-  *os << "if (_tao_environment.exception () != 0) return;" << be_nl;
-  *os << "_tao_retval = _tao_impl->_is_a (_tao_value, "
-      << "_tao_skel_environment);" << be_nl;
+  *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);" << be_nl;
+  *os << "_tao_retval = _tao_impl->_is_a (_tao_value.in (), "
+      << "_tao_environment);" << be_nl;
+  *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);" << be_nl;
   *os << "_tao_server_request.marshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
-      << "_tao_skel_environment," << be_nl
+    //      << "_tao_skel_environment," << be_nl
       << "&" << node->flatname () << "_is_a_calldata, " << be_nl
       << "&_tao_retval, " << be_nl
-      << "&_tao_value" << be_uidt_nl
-      << ");" << be_nl;
-  *os << "CORBA::string_free (_tao_value);" << be_uidt_nl;
+      << "&_tao_value.inout ()" << be_uidt_nl
+      << ");" << be_uidt_nl;
+  //  *os << "CORBA::string_free (_tao_value);" << be_uidt_nl;
   *os << "}\n\n";
 
 
@@ -231,11 +232,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "_non_existent_calldata = " << be_nl
       << "{\"_non_existent\", 1, 1, " << node->flatname ()
       << "_non_existent_paramdata};" << be_nl;
-  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
+  //  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
   *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
   *os << "_tao_server_request.marshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
-      << "_tao_skel_environment," << be_nl
+    //      << "_tao_skel_environment," << be_nl
       << "&" << node->flatname () << "_non_existent_calldata, " << be_nl
       << "&_tao_retval " << be_uidt_nl
       << ");" << be_uidt_nl;

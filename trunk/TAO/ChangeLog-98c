@@ -1,3 +1,42 @@
+Mon Oct  5 07:54:21 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+
+	  There was a bug in the generated code. Thanks to David Levine
+	  for sending me the bug report.
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	  TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+	  We no longer need the _tao_skel_environment variable in the
+	  skeletons. These modifications were necessary to maintain
+	  support for both the compiled as well as interpretive
+	  marshaling. The _is_a_skel now generates a proper
+	  TAO_CHECK_ENV_RETURN_VOID statement.
+
+	  Also made sure that unused local variables are not generated.
+
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp
+	  TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h:
+
+	  Added a new visitor for compiled marshaling for the generation
+	  of return type variable in the  server skeleton code.
+	
+	* TAO_IDL/be/be_visitor_factory.cpp:
+
+	  For compiled marshaling we now invoke a new visitor for the
+	  return val variable in the skeleton. The reason we do this is
+	  since the interpreted version uses an OBject_var.
+	
+	* tao/{CurrentS, POAS, PolicyS}.cpp:
+
+	  Since we no longer use the _tao_skel_environment, we had to make
+	  the necessary modifications.
+
+	* tao/Server_Request.{h, cpp}:
+
+	  The marshal method no longer takes in the _skel_env parameter
+
 Sun Oct  4 19:48:25 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp: 

@@ -43,7 +43,7 @@ void POA_CORBA::Current::_is_a_skel (
   };
   static const TAO_Call_Data_Skel CORBA_Current_is_a_calldata =
   {"_is_a", 1, 2, CORBA_Current_is_a_paramdata};
-  CORBA::Environment _tao_skel_environment;
+  //  CORBA::Environment _tao_skel_environment;
   POA_CORBA::Current_ptr  _tao_impl = (POA_CORBA::Current_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -54,10 +54,10 @@ void POA_CORBA::Current::_is_a_skel (
     &_tao_value
   );
   if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
   _tao_server_request.marshal (
     _tao_environment,
-    _tao_skel_environment,
+    //    _tao_skel_environment,
     &CORBA_Current_is_a_calldata,
     &_tao_retval,
     &_tao_value

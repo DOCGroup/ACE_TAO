@@ -522,7 +522,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS:
       return new be_visitor_operation_exceptlist_cs (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
-      return new be_visitor_operation_rettype_vardecl_ss (new_ctx);
+      return new be_compiled_visitor_operation_rettype_vardecl_ss (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_RETVAL_DEMARSHAL_SS:
       // this is a NO-OP
       return new be_visitor_decl (new_ctx);

@@ -14,6 +14,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 LDLIBS     =  -lorbsvcs -lTAO
+TAO_IDLFLAGS	+= -Gc
 
 SRC = 	Logging_Test.cpp \
 	Logging_Test_i.cpp

@@ -41,7 +41,7 @@ void POA_CORBA::Policy::_get_policy_type_skel (
     CORBA::Environment &_tao_orb_environment
 )
 {
-  CORBA::Environment _tao_skel_environment;
+  //  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel _get_CORBA_Policy_policy_type_paramdata [] =
   {
     {CORBA::_tc_PolicyType, 0, 0}
@@ -59,11 +59,11 @@ void POA_CORBA::Policy::_get_policy_type_skel (
   );
   if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->policy_type (
-    _tao_skel_environment
+    _tao_orb_environment
   );
   _tao_server_request.marshal (
     _tao_orb_environment,
-    _tao_skel_environment,
+    //    _tao_orb_environment,
     &_get_CORBA_Policy_policy_type_calldata,
     &_tao_retval
   );
@@ -76,7 +76,7 @@ void POA_CORBA::Policy::copy_skel (
     CORBA::Environment &_tao_orb_environment
 )
 {
-  CORBA::Environment _tao_skel_environment;
+  //  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel CORBA_Policy_copy_paramdata [] =
   {
     {CORBA::_tc_Policy, 0, 0}
@@ -94,11 +94,11 @@ void POA_CORBA::Policy::copy_skel (
   );
   if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->copy (
-    _tao_skel_environment
+    _tao_orb_environment
   );
   _tao_server_request.marshal (
     _tao_orb_environment,
-    _tao_skel_environment,
+    //    _tao_skel_environment,
     &CORBA_Policy_copy_calldata,
     &_tao_retval
   );
@@ -111,7 +111,7 @@ void POA_CORBA::Policy::destroy_skel (
     CORBA::Environment &_tao_orb_environment
 )
 {
-  CORBA::Environment _tao_skel_environment;
+  //  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel CORBA_Policy_destroy_paramdata [] =
   {
     {CORBA::_tc_void, 0, 0}
@@ -128,11 +128,11 @@ void POA_CORBA::Policy::destroy_skel (
   );
   if (_tao_orb_environment.exception ()) return;
   _tao_impl->destroy (
-    _tao_skel_environment
+    _tao_orb_environment
   );
   _tao_server_request.marshal (
     _tao_orb_environment,
-    _tao_skel_environment,
+    //    _tao_skel_environment,
     &CORBA_Policy_destroy_calldata,
     0
   );
@@ -145,7 +145,7 @@ void POA_CORBA::Policy::_is_a_skel (
     CORBA::Environment &_tao_orb_environment
   )
 {
-  CORBA::Environment _tao_skel_environment;
+  //  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel CORBA_Policy_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -163,10 +163,10 @@ void POA_CORBA::Policy::_is_a_skel (
     &_tao_value
   );
   if (_tao_orb_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_orb_environment);
   _tao_server_request.marshal (
     _tao_orb_environment,
-    _tao_skel_environment,
+    //    _tao_skel_environment,
     &CORBA_Policy_is_a_calldata,
     &_tao_retval,
     &_tao_value

@@ -376,7 +376,7 @@ IIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
 void
 IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
                              // ORB related exception reporting
-                             CORBA::Environment &skel_env,
+                             //                             CORBA::Environment &skel_env,
                              // skeleton related exception reporting
                              const TAO_Call_Data_Skel *info,
                              // call description
@@ -391,6 +391,7 @@ IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
 
   // check if we are inside with an exception. This may have happened
   // since the upcall could have set some exception
+#if 0 /* ASG */
   if (skel_env.exception ())
     {
       // We must increase the "refcnt" on the exception, because it is
@@ -404,15 +405,19 @@ IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
       CORBA::Any any (skel_env.exception ()->_type (), exception);
       this->set_exception (any, orb_env);
     }
+#endif
 
   // Setup a Reply message so that we can marshal all the outgoing parameters
   // into it. If an exception was set, then that gets marshaled into the reply
   // message and we don't do anything after that
   this->init_reply (orb_env);
 
+#if 0 /* ASG */
   // exception? nothing to do after this
   if (orb_env.exception () || skel_env.exception ())
     return;
+#endif
+  TAO_CHECK_ENV_RETURN_VOID (orb_env);
 
   CORBA::ULong i;
   const TAO_Param_Data_Skel *pdp;
