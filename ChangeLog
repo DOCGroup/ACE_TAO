@@ -1,3 +1,12 @@
+Thu Jun 14 16:20:57 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * ace/Stats.cpp:
+
+          Changed formula to convert ticks to seconds to use 
+          ACE_HR_SCALE_CONVERSION to account for the fact that 
+          Win32 has different scale factor units than every
+          other platform.
+
 Thu Jun 14 16:21:35 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/config-all.h (ACE_UNUSED_ARG):
