@@ -111,6 +111,7 @@ main (int argc, char **argv)
   char host[512];
   int port = 0;
 
+  // Create the profile lists
   for (int i=0;i<nfwds;i++) 
     {
       mpfiles [i] = new TAO_MProfile (npfiles);
@@ -142,13 +143,16 @@ main (int argc, char **argv)
   base_stub = stubobjs [0];
   stubobjs [nfwds] = 0; // marks end of list!
 
-  // forward OR
-
+  // *** The forwarding loop!
 roundtrip_continue_label:
   {
-    if (mystart () < 0) 
+    if (mystart () < 0) // call.start (...) in do_static_call
       {
         // connect failed
+	// in real life an exception is through of either
+	// INTERNAL  COMPLETED_NO or
+	// TRANSIENT COMPLETED_NO
+	// So this should be in a TAO_CATCH ... TAO_ENDTRY
 	printf("Connect Failed!\n");
         if (base_stub->profile_success_ && base_stub->forward_profiles_)
           {
@@ -168,14 +172,22 @@ roundtrip_continue_label:
       }
 
     // we are connected, try sending request
-    int result = myinvoke ();
+    // in real life invoke returns 
+    // TAO_GIOP_NO_EXCEPTION
+    // TAO_GIOP_USER_EXCEPTION
+    // TAO_GIOP_SYSTEM_EXCEPTION
+    // ** TAO_GIOP_LOCATION_FORWARD
+    // Exceptions
+    // CORBA::TRANSIENT (CORBA::COMPLETED_MAYBE)
+    // CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE)
+    int result = myinvoke (); // this is call.invoke (...)
 
     if (result == 0)
-      {
+      { // TAO_GIOP_NO_EXCEPTION
 	printf("Invocation succeeded.\n");
       }
     else if (result == -1)
-      {
+      { exception or TAO_GIOP_USER_EXCEPTION, TAO_GIOP_SYSTEM_EXCEPTION
 	printf ("Invocation Failed NO FWD!\n");
       }
     else
@@ -184,6 +196,9 @@ roundtrip_continue_label:
       }
     if (result != 0)
       {
+	// get the next profile.  If we were forwarded the new, forward
+	// profile list has already been added to the stub object so all
+	// we got to do here is get the next profile!
         if (base_stub->profile_success_ && base_stub->forward_profiles_)
 	  {
 	    printf("Resetting profiles!\n");
