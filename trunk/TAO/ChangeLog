@@ -1,3 +1,8 @@
+Fri Nov 29 08:01:56 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile: PortableGroup will not be compiled if
+	  AMI is disabled.
+
 Fri Nov 29 11:55:41 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
