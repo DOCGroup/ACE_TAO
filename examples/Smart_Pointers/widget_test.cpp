@@ -12,6 +12,8 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Unbounded_Queue.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 #include "Widget.h"
 #include "Widget_Factory.h"
 #include "Widget_Part.h"
@@ -73,4 +75,3 @@ template class ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<Widget_Part,
 #pragma instantiate ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex> >
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_Null_Mutex> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
