@@ -1,3 +1,14 @@
+Wed Apr 21 13:36:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/os_include/os_time.h: Reverted this change:
+	  Thu Apr 15 17:56:29 2004  Steve Huston  <shuston@riverace.com>
+	  and directly include <sys/time.h> instead. Although the Apr 15
+	  change fixed the g++ build on HP-UX, it revived a compile error
+	  for the aC++ build wherein the ACE_OS::sigaction() method would
+	  not compile, apparantly due to some confusion over partially-defined
+	  struct sigaction in some inlined situations. I have no idea why,
+	  but at this point, both the aC++ and g++ builds are quiet.
+
 Tue Apr 20 12:47:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_shm.h:

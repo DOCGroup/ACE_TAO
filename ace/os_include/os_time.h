@@ -29,7 +29,12 @@
 
 // To get the proper select() signature, this is required for HP-UX, and
 // maybe other platforms that offer both int and fdset forms of select().
-#include "ace/os_include/sys/os_time.h"
+// For HP-UX, sys/time.h must be included before time.h, or
+// _XOPEN_SOURCE_EXTENDED must be defined. It's not nice to require
+// the preprocessor macro, so we force our select() preference this way.
+#if !defined (ACE_LACKS_SYS_TIME_H)
+#  include /**/ <sys/time.h>
+#endif /* !ACE_LACKS_SYS_TIME_H */
 
 #if !defined (ACE_LACKS_TIME_H)
 #  include /**/ <time.h>
