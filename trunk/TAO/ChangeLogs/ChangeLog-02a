@@ -1,3 +1,16 @@
+Wed May 16 18:53:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Changed the size of the read buffer created for the
+          preprocessor from BUFSIZ (default 8k) + 1 to
+          ACE_Log_Record::MAXLOGMSGLEN (default 4k). This fixes
+          a crash that happens when the -E (preprocessor output
+          only) option is used with the IDL compiler on an IDL
+          file bigger than 4k on Redhat Linux 6.1. Thanks to
+          Russell Mora <rd.mora@econz.co.nz> for reporting the
+          problem and supplying the fix.
+
 Wed May 16 16:41:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/RT_ORB_Loader.cpp:
