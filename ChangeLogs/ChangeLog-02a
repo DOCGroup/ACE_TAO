@@ -1,3 +1,9 @@
+Fri Jul 13 22:48:56 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Asynch_BIO.cpp (methods_ACE):
+
+	  Removed excess element in aggregate initializer.
+
 Fri Jul 13 22:29:01 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Asynch_Stream.cpp (print_error):

@@ -14,7 +14,7 @@ ACE_RCSID (ACE_SSL,
 
 static BIO_METHOD methods_ACE =
   {
-    BIO_TYPE_ACE , // BIO_TYPE_PROXY_SERVER,
+    BIO_TYPE_ACE, // BIO_TYPE_PROXY_SERVER,
     "ACE_Asynch_BIO",
     ACE_Asynch_BIO_write,
     ACE_Asynch_BIO_read,
@@ -22,8 +22,7 @@ static BIO_METHOD methods_ACE =
     NULL, /* ACE_Asynch_BIO_gets, */
     ACE_Asynch_BIO_ctrl,
     ACE_Asynch_BIO_new,
-    ACE_Asynch_BIO_free,
-    NULL,
+    ACE_Asynch_BIO_free
   };
 
 BIO_METHOD *
