@@ -1,3 +1,79 @@
+Thu May 01 16:15:29 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\PortableServer\POA: 
+
+	  Object_Reactivation test pointed out the following bug: When
+	  waiting for the <servant_deactivation_condition>, the waiting
+	  thread gives up the POA lock.  This can potentially allow other
+	  threads to come in and make changes to the state of the POA.
+	  This includes, as in the case of the Object_Reactivation test,
+	  non-servant upcalls being in progress.  The waiting thread must
+	  reevaluate all conditions again from scratch after coming back
+	  from the wait() call.
+
+	  Therefore, I moved the while(1) loop from is_servant_in_map()
+	  and is_user_id_in_map() to activate_object() and
+	  activate_object_with_id().  This way all conditions are
+	  reevaluated after the wait completes, including the condition
+	  that no non-servant upcalls are in progress.
+
+	  Also in locate_servant_i(), similar changes were made.  In
+	  addition, if error occurred or a restart is required,
+	  etherealize the incarnated servant.
+
+	  In imr_notify_startup(), we can ignore the wait flag since this
+	  method is called from the POA constructor, there shouldn't be
+	  any waiting required.
+	
+	  Thanks to Simon McQueen <sm@prismtechnologies.com> for pointing
+	  out that Object_Reactivation was failing. In fact,
+	  Object_Reactivation was always doing the incorrect thing; it was
+	  the new assert statements in Object_Adapter.cpp that pointed
+	  them out.
+
+	* tao\PortableServer\Object_Adapter.cpp: 
+
+	  Renamed the existing prepare_for_upcall() to
+	  prepare_for_upcall_i().  The new prepare_for_upcall() calls
+	  prepare_for_upcall_i() and watches out for potential restarts.
+	  If we end up waiting on a condition variable, the POA state may
+	  have changed while we are waiting.  Therefore, we need to call
+	  prepare_for_upcall_i() again.  We also need to cleanup the state
+	  of the upcall object.  Therefore, invoke the upcall destructor
+	  before continuing.
+
+	* tao\RTPortableServer\RT_POA.i: 
+
+	  Changes similar to the POA class were required for
+	  RT_POA::activate_object_with_priority() and
+	  RT_POA::activate_object_with_id_and_priority().
+
+	* tao\RTPortableServer\RT_Collocation_Resolver.cpp: 
+
+	  is_collocated() calls POA::locate_servant_i().  However, it can
+	  ignore the <wait_occurred_restart_call> flag since there is no
+	  implicit activation, there is no chance of waiting on a
+	  condition variable.
+
+	* tests\POA\Single_Threaded_POA\Single_Threaded_POA.cpp: 
+	* tests\POA\Object_Reactivation\Object_Reactivation.cpp: 
+
+	  Removed unnecessary parameters to Task::activate() call.
+
+	* tests\POA\Object_Reactivation\Object_Reactivation.cpp: 
+
+	  Made debugging statements optional.
+
+	* examples\POA\DSI\server.dsp: 
+	* examples\POA\DSI\client.dsp: 
+	* examples\POA\DSI\Makefile: 
+
+	  No need to link with the messaging library.
+
+	* examples\TAO_Examples.dsw: 
+
+	  Added POA BiDir test.
+
 Thu May  1 15:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao_IFR_Client/IFR_BaseC.cpp:

@@ -65,12 +65,28 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
   this->validate_priority (priority ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  while (1)
+    {
+      int wait_occurred_restart_call = 0;      
 
-  return this->activate_object_i (servant,
-                                  priority
-                                  ACE_ENV_ARG_PARAMETER);
+      // Lock access for the duration of this transaction.
+      TAO_POA_GUARD_RETURN (0);
+      
+      PortableServer::ObjectId *result =
+        this->activate_object_i (servant,
+                                 priority,
+                                 wait_occurred_restart_call
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      // If we ended up waiting on a condition variable, the POA state
+      // may have changed while we are waiting.  Therefore, we need to
+      // restart this call.
+      if (wait_occurred_restart_call)
+        continue;
+      else
+        return result;
+    }
 }
 
 ACE_INLINE void
@@ -90,13 +106,28 @@ TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId
   this->validate_priority (priority ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD;
+  while (1)
+    {
+      int wait_occurred_restart_call = 0;      
+      
+      // Lock access for the duration of this transaction.
+      TAO_POA_GUARD;
+      
+      this->activate_object_with_id_i (oid,
+                                       servant,
+                                       priority,
+                                       wait_occurred_restart_call
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
-  this->activate_object_with_id_i (oid,
-                                   servant,
-                                   priority
-                                   ACE_ENV_ARG_PARAMETER);
+      // If we ended up waiting on a condition variable, the POA state
+      // may have changed while we are waiting.  Therefore, we need to
+      // restart this call.
+      if (wait_occurred_restart_call)
+        continue;
+      else
+        return;
+    }
 }
 
 ACE_INLINE void *

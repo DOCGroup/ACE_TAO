@@ -1298,6 +1298,44 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO::ObjectKey &ke
                                                         CORBA::Object_out forward_to
                                                         ACE_ENV_ARG_DECL)
 {
+  while (1)
+    {
+      int wait_occurred_restart_call = 0;
+
+      int result =
+        this->prepare_for_upcall_i (key,
+                                    operation,
+                                    forward_to,
+                                    wait_occurred_restart_call
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
+
+      if (result == TAO_Adapter::DS_FAILED &&
+          wait_occurred_restart_call)
+        {
+          // We ended up waiting on a condition variable, the POA
+          // state may have changed while we are waiting.  Therefore,
+          // we need to call prepare_for_upcall_i() again.  We also
+          // need to cleanup the state of the upcall object.
+          // Therefore, invoke the upcall destructor before
+          // continuing.
+          this->~Servant_Upcall ();
+          continue;
+        }
+      else
+        {
+          return result;
+        }
+    }
+}
+
+int
+TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall_i (const TAO::ObjectKey &key,
+                                                          const char *operation,
+                                                          CORBA::Object_out forward_to,
+                                                          int &wait_occurred_restart_call
+                                                          ACE_ENV_ARG_DECL)
+{
   // Acquire the object adapter lock first.
   int result = this->object_adapter_->lock ().acquire ();
   if (result == -1)
@@ -1345,9 +1383,15 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO::ObjectKey &ke
       this->servant_ = this->poa_->locate_servant_i (operation,
                                                      this->system_id_,
                                                      *this,
-                                                     this->current_context_
+                                                     this->current_context_,
+                                                     wait_occurred_restart_call
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      if (wait_occurred_restart_call)
+        {
+          return TAO_Adapter::DS_FAILED;
+        }
     }
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
