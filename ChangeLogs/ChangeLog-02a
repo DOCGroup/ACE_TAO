@@ -1,3 +1,11 @@
+Mon Jun 26 18:26:47 2000  Ossama Othman  <ossama@uci.edu>
+
+	* netsvcs/lib/Makefile.am (libnetsvcs_la_SOURCES, noinst_HEADERS):
+	* netsvcs/lib/Makefile.bor (OBJFILES):
+
+	  Removed Logging_Strategy.* from these make variables.  The
+	  Logging_Strategy files have been moved to ACE.
+
 Mon Jun 26 17:42:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/SSL/ACE_SSL.dsw:
