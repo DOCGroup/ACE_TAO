@@ -4,12 +4,12 @@
 project(PortableGroup) : orbsvcslib, core, naming, iormanip, messaging, minimum_corba {
   sharedname   = TAO_PortableGroup
   idlflags    += -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h
-  dynamicflags = TAO_PORTABLEGROUP_BUILD_DLL TAO_PORTABLEGROUP_SIMPLE_BUILD_DLL
+  dynamicflags = TAO_PORTABLEGROUP_BUILD_DLL
   tagchecks   += PortableGroup
-  after       += FTORB_Utils
 
   IDL_Files {
     miop.idl
+    PortableGroup_Simple_DS.idl
   }
 
   IDL_Files {
