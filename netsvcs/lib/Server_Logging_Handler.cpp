@@ -106,6 +106,7 @@ template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NUL
 #endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 
   #if defined (ACE_HAS_THREADS)
+  template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, u_long>;
   template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
   template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Static_Receiver>;
   template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Receiver>;
@@ -213,6 +214,7 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
 #endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 
   #if defined (ACE_HAS_THREADS)
+  #pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, u_long>
   #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, u_long>
   #pragma instantiate ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Static_Receiver>
   #pragma instantiate ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Receiver>

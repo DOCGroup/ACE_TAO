@@ -7,6 +7,7 @@
 #include "ace/Synch.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
+#include "ace/Atomic_Op.h"
 
 ACE_RCSID(Misc, test_reactors, "$Id$")
 
@@ -27,7 +28,7 @@ public:
 
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE fd,
-			    ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask);
 
 private:
   int handled_;
@@ -48,8 +49,8 @@ Test_Task::Test_Task (void)
 
   Test_Task::task_count_++;
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) TT+ Test_Task::task_count_ = %d\n",
-	      Test_Task::task_count_));
+              "(%t) TT+ Test_Task::task_count_ = %d\n",
+              Test_Task::task_count_));
 }
 
 Test_Task::~Test_Task (void)
@@ -57,8 +58,8 @@ Test_Task::~Test_Task (void)
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, reclock_);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) TT- Test_Task::task_count_ = %d\n",
-	      Test_Task::task_count_));
+              "(%t) TT- Test_Task::task_count_ = %d\n",
+              Test_Task::task_count_));
 }
 
 int
@@ -75,8 +76,8 @@ Test_Task::close (u_long)
 
   Test_Task::task_count_--;
   ACE_DEBUG ((LM_DEBUG,
-	      "(%t) close Test_Task::task_count_ = %d\n",
-	      Test_Task::task_count_));
+              "(%t) close Test_Task::task_count_ = %d\n",
+              Test_Task::task_count_));
   return 0;
 }
 
@@ -90,7 +91,7 @@ Test_Task::svc (void)
       // ACE_DEBUG ((LM_DEBUG, "(%t) calling notify %d\n", i));
 
       if (this->reactor ()->notify (this, ACE_Event_Handler::READ_MASK) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
 
       // ACE_DEBUG ((LM_DEBUG, "(%t) leaving notify %d\n", i));
     }
@@ -100,7 +101,7 @@ Test_Task::svc (void)
 
 int
 Test_Task::handle_close (ACE_HANDLE,
-			 ACE_Reactor_Mask)
+                         ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_close\n"));
   return 0;
@@ -117,8 +118,8 @@ Test_Task::handle_input (ACE_HANDLE)
     {
       done_count--;
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) handle_input, handled_ = %d, done_count = %d\n",
-		  this->handled_, done_count.value ()));
+                  "(%t) handle_input, handled_ = %d, done_count = %d\n",
+                  this->handled_, done_count.value ()));
     }
 
   ACE_OS::thr_yield ();
@@ -139,14 +140,14 @@ worker (void *args)
       //ACE_DEBUG ((LM_DEBUG, "(%t) calling handle_events\n"));
 
       switch (reactor->handle_events (timeout))
-	{
-	case -1:
-	  ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "reactor"), 0);
-	  /* NOTREACHED */
-	case 0:
-	  ACE_ERROR_RETURN ((LM_ERROR, "(%t) timeout\n"), 0);
-	  /* NOTREACHED */
-	}
+        {
+        case -1:
+          ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "reactor"), 0);
+          /* NOTREACHED */
+        case 0:
+          ACE_ERROR_RETURN ((LM_ERROR, "(%t) timeout\n"), 0);
+          /* NOTREACHED */
+        }
 
       // ACE_DEBUG ((LM_DEBUG, "(%t) done with handle_events\n"));
 
@@ -184,9 +185,11 @@ main (int, char *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
