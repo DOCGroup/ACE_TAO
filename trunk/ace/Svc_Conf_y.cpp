@@ -815,7 +815,7 @@ case 30:
 #line 193 "Svc_Conf.y"
 {
       u_int flags 
-	= ACE_Service_Type_::DELETE_THIS | (ace_yyvsp[-1].location_node_->dispose () == 0 ? 0 : ACE_Service_Type_::DELETE_OBJ);
+	= ACE_Service_Type::DELETE_THIS | (ace_yyvsp[-1].location_node_->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
       const void *sym = ace_yyvsp[-1].location_node_->symbol ();
 
       if (sym != 0)

@@ -42,7 +42,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/FIFO-Msg-client.o .shobj/FIFO-Msg-client.so: FIFO-Msg-client.cpp \
+.obj/FIFO-Msg-client.o .shobj/FIFO-Msg-client.: FIFO-Msg-client.cpp \
  $(ACE_ROOT)/ace/FIFO_Send_Msg.h \
  $(ACE_ROOT)/ace/FIFO_Send.h \
  $(ACE_ROOT)/ace/FIFO.h \
@@ -62,7 +62,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Send.i \
  $(ACE_ROOT)/ace/FIFO_Send_Msg.i
-.obj/FIFO-Msg-server.o .shobj/FIFO-Msg-server.so: FIFO-Msg-server.cpp \
+.obj/FIFO-Msg-server.o .shobj/FIFO-Msg-server.: FIFO-Msg-server.cpp \
  $(ACE_ROOT)/ace/FIFO_Recv_Msg.h \
  $(ACE_ROOT)/ace/FIFO_Recv.h \
  $(ACE_ROOT)/ace/FIFO.h \
@@ -82,7 +82,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Recv.i \
  $(ACE_ROOT)/ace/FIFO_Recv_Msg.i
-.obj/FIFO-client.o .shobj/FIFO-client.so: FIFO-client.cpp \
+.obj/FIFO-client.o .shobj/FIFO-client.: FIFO-client.cpp \
  $(ACE_ROOT)/ace/FIFO_Send.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -100,7 +100,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Send.i
-.obj/FIFO-server.o .shobj/FIFO-server.so: FIFO-server.cpp \
+.obj/FIFO-server.o .shobj/FIFO-server.: FIFO-server.cpp \
  $(ACE_ROOT)/ace/FIFO_Recv.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -118,7 +118,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Recv.i
-.obj/FIFO-test.o .shobj/FIFO-test.so: FIFO-test.cpp \
+.obj/FIFO-test.o .shobj/FIFO-test.: FIFO-test.cpp \
  $(ACE_ROOT)/ace/FIFO_Recv.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
