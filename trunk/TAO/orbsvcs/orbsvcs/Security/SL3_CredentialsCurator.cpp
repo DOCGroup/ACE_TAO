@@ -153,7 +153,7 @@ TAO::SL3::CredentialsCurator::default_creds_list (ACE_ENV_SINGLE_ARG_DECL)
        ++i)
     {
       creds_list[n++] =
-        SecurityLevel3::OwnCredentials::_duplicate ((*i).int_id_);
+        SecurityLevel3::OwnCredentials::_duplicate ((*i).int_id_.in());
     }
 
   return creds_list._retn ();
