@@ -3007,15 +3007,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           // The following code forces priority into range.
           if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
             sparam.sched_priority =
-              ACE_MIN (ACE_THR_PRI_FIFO_MAX, ACE_MAX (ACE_THR_PRI_FIFO_MIN, priority));
+              ACE_MIN (ACE_THR_PRI_FIFO_MAX,
+                       ACE_MAX (ACE_THR_PRI_FIFO_MIN, priority));
           else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
             sparam.sched_priority =
-              ACE_MIN (ACE_THR_PRI_RR_MAX, ACE_MAX (ACE_THR_PRI_RR_MIN, priority));
+              ACE_MIN (ACE_THR_PRI_RR_MAX,
+                       ACE_MAX (ACE_THR_PRI_RR_MIN, priority));
           else // Default policy, whether set or not
             sparam.sched_priority =
-              ACE_MIN (ACE_THR_PRI_OTHER_MAX, ACE_MAX (ACE_THR_PRI_OTHER_MIN, priority));
+              ACE_MIN (ACE_THR_PRI_OTHER_MAX,
+                       ACE_MAX (ACE_THR_PRI_OTHER_MIN, priority));
 #       elif defined (PRIORITY_MAX)
-          sparam.sched_priority = ACE_MIN (priority, PRIORITY_MAX);
+          sparam.sched_priority = ACE_MIN (priority,
+                                           (long) PRIORITY_MAX);
 #       else
           sparam.sched_priority = priority;
 #       endif /* ACE_HAS_IRIX62_THREADS */
