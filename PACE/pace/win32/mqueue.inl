@@ -49,7 +49,7 @@ pace_mq_notify (pace_mqd_t mqdes,
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
-ssize_t
+pace_ssize_t
 pace_mq_receive (pace_mqd_t mqdes,
                  char * msg_ptr,
                  size_t msg_len,

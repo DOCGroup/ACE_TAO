@@ -1,3 +1,16 @@
+Fri Aug 25 12:11:38 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* /pace/unistd.h:
+
+	  Change ssize_t to pace_ssize_t.
+	
+	* /pace/win32/unistd.h:
+	* /pace/win32/unistd.inl:
+	* /pace/win32/unistd.c:	
+	* /pace/win32/mqueue.inl:
+
+	  Changes related to type conflicts with ACE.
+
 Tue Aug 22 18:59:41 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* PACE/ChangeLog:

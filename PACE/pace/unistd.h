@@ -367,7 +367,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.4.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE ssize_t pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte);
+  PACE_INLINE pace_ssize_t pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -485,7 +485,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.4.2.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE ssize_t pace_write (PACE_HANDLE fildes, const void * buf, size_t nbyte);
+  PACE_INLINE pace_ssize_t pace_write (PACE_HANDLE fildes, const void * buf, size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
 #if defined (PACE_HAS_INLINE)
