@@ -1,3 +1,9 @@
+Tue Jun 19 16:20:52 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp:
+
+	  Just fixing a typo. Removed ACE_INLINE from skip_wchar ().
+	
 Tue Jun 19 16:08:34 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 	* ace/CDR_Stream.{i,cpp}:
