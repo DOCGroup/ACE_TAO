@@ -10,6 +10,8 @@
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/svc_export.h"
+
 extern int buffer;
 extern ACE_Svc_Export int synch_count;
 
