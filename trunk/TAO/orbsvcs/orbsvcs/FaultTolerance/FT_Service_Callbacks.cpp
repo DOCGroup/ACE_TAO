@@ -11,7 +11,6 @@
 #include "tao/Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include <iostream>
 
 #if !defined (__ACE_INLINE__)
 # include "FT_Service_Callbacks.i"
@@ -89,6 +88,7 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
   if ((this_comp.get_component (this_tc) == 1) &&
       (that_comp.get_component (that_tc) == 1))
     {
+
       TAO_InputCDR this_cdr (ACE_reinterpret_cast (const char*,
                                                    this_tc.component_data.get_buffer ()),
                              this_tc.component_data.length ());
@@ -100,12 +100,12 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
       CORBA::Boolean this_byte_order;
       CORBA::Boolean that_byte_order;
 
-      if ((this_cdr >> ACE_InputCDR::to_boolean (this_byte_order) == 0) ||
-          (that_cdr >> ACE_InputCDR::to_boolean (that_byte_order) == 0))
-         {
-           // return no equivalent
-           return 0;
-         }
+      if (this_cdr >> ACE_InputCDR::to_boolean (this_byte_order) == 0 ||
+          that_cdr >> ACE_InputCDR::to_boolean (that_byte_order) == 0)
+        {
+          // return no equivalent
+          return 0;
+        }
 
       this_cdr.reset_byte_order (ACE_static_cast (int, this_byte_order));
       that_cdr.reset_byte_order (ACE_static_cast (int, that_byte_order));
@@ -133,6 +133,7 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
     {
       return 1;
     }
+
   return 0;
 }
 
