@@ -12,10 +12,14 @@
 BIN     = SC_Client \
 	  SC_Server
 
-LSRC	= $(addsuffix .cpp,$(BIN)) \
-	  CCM_App.cpp
+FILES	= CCM_App
+SHLIB	= libCCM_App.$(SOEXT)
 
-BUILD   = $(VSHLIB) $(SHLIBA) $(VBIN)
+LSRC	= $(addsuffix .cpp,$(FILES))
+LOBJ	= $(addsuffix .o,$(FILES))
+SHOBJ	= $(addsuffix .so,$(FILES))
+
+BUILD   = $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
