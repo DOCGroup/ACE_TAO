@@ -1,157 +1,185 @@
+Tue Jul 24 18:16:13 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * tests/Exposed_Policies/Policy_Verifier.cpp (init):
+        * tests/Exposed_Policies/RT_Properties.cpp:
+
+          Changed handling of the default argument values. Added options
+          "-BaseObjectIOR" and "-OverriddenIOR" to enable waiting on the IOR
+          file instead of sleeping in the run_test.pl
+
+        * tests/Exposed_Policies/run_test.pl:
+
+          Fixed priorities to handle Tru64. Added the new options
+          mentioned above to specify the IOR.
+
+        * tests/Exposed_Policies/POA.cfg:
+        * tests/Exposed_Policies/Object.cfg:
+
+          Since the IOR files are passed from the command-line, remove
+          them from here.
+
+        * tests/Exposed_Policies/POA.cfg.tru64: *
+          tests/Exposed_Policies/Object.cfg.tru64:
+
+          Added new files with proper priority values for Tru64.
+
+          OCI folks, you want to change similarly for HP-UX.
+
+
 Tue Jul 24 11:12:25 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Acceptor.cpp (create_shared_profile,
-	  create_new_profile):
-	* tao/Strategies/DIOP_Acceptor.cpp
-	  (create_shared_profile, create_new_profile):
-	* tao/Strategies/SHMIOP_Acceptor.cpp (create_profile):
-	* tao/Strategies/UIOP_Acceptor.cpp (create_profile):
+        * tao/IIOP_Acceptor.cpp (create_shared_profile,
+          create_new_profile):
+        * tao/Strategies/DIOP_Acceptor.cpp
+          (create_shared_profile, create_new_profile):
+        * tao/Strategies/SHMIOP_Acceptor.cpp (create_profile):
+        * tao/Strategies/UIOP_Acceptor.cpp (create_profile):
 
-	  Do not add any tagged components to the profile if an IIOP 1.0
-	  endpoint/profile is being created.  Tagged components were
-	  introduced in IIOP 1.1.  The same convention is adopted for the
-	  other pluggable protocols distributed with TAO (UIOP, SHMIOP,
-	  and DIOP).  SSLIOP already does this check since it requires
-	  tagged components in order to convey security association
-	  information to the client.  These changes address
-	  interoperability issues.
+          Do not add any tagged components to the profile if an IIOP 1.0
+          endpoint/profile is being created.  Tagged components were
+          introduced in IIOP 1.1.  The same convention is adopted for the
+          other pluggable protocols distributed with TAO (UIOP, SHMIOP,
+          and DIOP).  SSLIOP already does this check since it requires
+          tagged components in order to convey security association
+          information to the client.  These changes address
+          interoperability issues.
 
 Tue Jul 24 12:33:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Reply/Client_Task.cpp (validate_connection): Some
-	  cosmetic changes.
+        * tests/Big_Reply/Client_Task.cpp (validate_connection): Some
+          cosmetic changes.
 
 Tue Jul 24 08:38:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test.idl:
 
-          Removed 'void' parameter from two operations. Thanks to 
-          Ugendreshwar Kudupudi <ugenderk@rediffmail.com> 
+          Removed 'void' parameter from two operations. Thanks to
+          Ugendreshwar Kudupudi <ugenderk@rediffmail.com>
           for reporting the bug.
 
 Mon Jul 23 22:31:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Reply/Client_Task.cpp: Added some debufg
-	  statments. Further fixed a small goof up. A method to
-	  validate connections was added but never called :(. Fixed that
-	  by calling validate_connection () before an actual call to the
-	  server object.
+        * tests/Big_Reply/Client_Task.cpp: Added some debufg
+          statments. Further fixed a small goof up. A method to
+          validate connections was added but never called :(. Fixed that
+          by calling validate_connection () before an actual call to the
+          server object.
 
 Mon Jul 23 22:24:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time-date/svc.conf: Removed the entry for
-	  TAO_RT_Protocol_Hooks. Looks like they have taken some other
-	  form after the RTCORBA subsetting effort. The test were failing
-	  in the daily builds but never came up on the scoreboard. 
+        * examples/Simple/time-date/svc.conf: Removed the entry for
+          TAO_RT_Protocol_Hooks. Looks like they have taken some other
+          form after the RTCORBA subsetting effort. The test were failing
+          in the daily builds but never came up on the scoreboard.
 
 Mon Jul 23 21:40:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp: Fixed a warning in Win32 builds.
+        * tao/GIOP_Message_Lite.cpp: Fixed a warning in Win32 builds.
 
 Mon Jul 23 1:44:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp: Added GIOP_Lite files to the builds.
+        * tao/TAO_Static.dsp: Added GIOP_Lite files to the builds.
 
 Mon Jul 23 11:44:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         Support for GIOP Lite and GIOP Fragments are being added in this
         checkin. Merged from the branch giop_lite_fragment.
 
-	* tao/Makefile:
-	* tao/Makefile.bor: Added GIOP Lite  files to the list of files.
+        * tao/Makefile:
+        * tao/Makefile.bor: Added GIOP Lite  files to the list of files.
 
 Sat Jul 14 16:42:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/DIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Transport.cpp: Added support for GIOP lite.
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.cpp: Added support for GIOP lite.
 
 Fri Jul 13 16:54:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Pluggable_Messaging.h:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/Transport.cpp:
-	* tao/Transport.h:
-	* tao/Transport.inl: Added support for GIOP fragments. The GIOP
-	  fragmentation supportseems to have some copying and allocation
-	  overhead. Need to look into this when it gets
-	  important. Further, the fragmentation support hasnt been
-	  tested at all as we have no way of testing it.
+        * tao/Pluggable_Messaging.h:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl: Added support for GIOP fragments. The GIOP
+          fragmentation supportseems to have some copying and allocation
+          overhead. Need to look into this when it gets
+          important. Further, the fragmentation support hasnt been
+          tested at all as we have no way of testing it.
 
-	* tao/IIOP_Transport.cpp: Enabled GIOP lite support
-	* tao/TAO.dsp: Added GIOP lite files back to the builds.
+        * tao/IIOP_Transport.cpp: Enabled GIOP lite support
+        * tao/TAO.dsp: Added GIOP lite files back to the builds.
 
-	* tao/Connection_Handler.h:
-	* tao/orbconf.h: Moved some of the #defines from
+        * tao/Connection_Handler.h:
+        * tao/orbconf.h: Moved some of the #defines from
           Connection_Handler.h to orbconf.h.
 
 Mon Jul  9 10:23:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Generator_Parser_12.cpp: The long talked about
-	  alignment for the LocateReply messages have been removed. We
-	  dont align the messages on an 8 byte boundary as described by
-	  the CORBA 2.4 spec. This is one of the urgent resolutions
-	  adopted by the OMG.
+        * tao/GIOP_Message_Generator_Parser_12.cpp: The long talked about
+          alignment for the LocateReply messages have been removed. We
+          dont align the messages on an 8 byte boundary as described by
+          the CORBA 2.4 spec. This is one of the urgent resolutions
+          adopted by the OMG.
 
 Mon Jul  9 09:40:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_Lite.cpp: Added support for GIOP lite. The
-	  implementation now  is similar to the regular GIOP.
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.cpp: Added support for GIOP lite. The
+          implementation now  is similar to the regular GIOP.
 
-	* tao/GIOP_Message_Base.cpp: Used the payload_size () in
-	  GIOP_Message_State  for claculating the payload. We were using
-	  the message_size () and then subtracting the length of the GIOP
-	  header in consolidate_node (). This looked cumbersome.
+        * tao/GIOP_Message_Base.cpp: Used the payload_size () in
+          GIOP_Message_State  for claculating the payload. We were using
+          the message_size () and then subtracting the length of the GIOP
+          header in consolidate_node (). This looked cumbersome.
 
 
 
 Mon Jul 23 07:46:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/orbconf.h: Enabled DIOP for minimum CORBA.
+        * tao/orbconf.h: Enabled DIOP for minimum CORBA.
 
 Sun Jul 22 21:53:23 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* $ACE_ROOT/auto_run_tests.lst: Disabled Exposed_Policies test for
-	  single threaded configurations and Linux.  This test requires
-	  multiple threads and support for multiple native priorities.
+        * $ACE_ROOT/auto_run_tests.lst: Disabled Exposed_Policies test for
+          single threaded configurations and Linux.  This test requires
+          multiple threads and support for multiple native priorities.
 
-	* tests/Exposed_Policies/Policy_Tester.cpp (Policy_Tester): Fixed
-	  several things:
+        * tests/Exposed_Policies/Policy_Tester.cpp (Policy_Tester): Fixed
+          several things:
 
-	  - No need for the Policy_Tester::~Policy_Tester to call
-	  shutdown().  This is already done by the servant.
+          - No need for the Policy_Tester::~Policy_Tester to call
+          shutdown().  This is already done by the servant.
 
-	  - No need for TRY/CATCH blocks in each function.  This
-	  unnecessarily stops any exceptions from propagating to higher
-	  layers.
+          - No need for TRY/CATCH blocks in each function.  This
+          unnecessarily stops any exceptions from propagating to higher
+          layers.
 
-	  - Fixed return values and added error checking.
+          - Fixed return values and added error checking.
 
-	  - No need to call destroy() on the POAs. ORB::shutdown is
-	  enough.
+          - No need to call destroy() on the POAs. ORB::shutdown is
+          enough.
 
-	  - Removed unnecessary default values from the function
-	  prototypes.
+          - Removed unnecessary default values from the function
+          prototypes.
 
-	* tests/Exposed_Policies/run_test.pl:
-	* tests/Exposed_Policies/POA.cfg:
-	* tests/Exposed_Policies/Object.cfg:
+        * tests/Exposed_Policies/run_test.pl:
+        * tests/Exposed_Policies/POA.cfg:
+        * tests/Exposed_Policies/Object.cfg:
 
-	  Updated config files so that the priorities would be ok for
-	  Win32.
+          Updated config files so that the priorities would be ok for
+          Win32.
 
-	* tests/Exposed_Policies/server.cpp: Improved error checking.
+        * tests/Exposed_Policies/server.cpp: Improved error checking.
 
-	* tests/Exposed_Policies/server.conf: Removed Thread Pool Reactor
-	  directive from the service config file.
+        * tests/Exposed_Policies/server.conf: Removed Thread Pool Reactor
+          directive from the service config file.
 
 Sun Jul 22 16:44:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Reply/Client_Task.cpp:
-	* tests/Big_Reply/Client_Task.h: Fixed a compile error in no
-	  exception builds.
+        * tests/Big_Reply/Client_Task.cpp:
+        * tests/Big_Reply/Client_Task.h: Fixed a compile error in no
+          exception builds.
 
 Sun Jul 22 13:36:21 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -164,67 +192,67 @@ Sun Jul 22 13:36:21 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Sun Jul 20 12:30:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* tao/Asynch_Invocation.cpp:
-	* tao/Asynch_Invocation.i:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Invocation.i:
 
-	  Changed the code which sets up a reply dispatcher for
-	  AMI calls to only set up one, if a non-nil reply handler
-	  got registerd. This change is related to my change on
-	  Fri Jul 20 08:10:00 2001. It assumes that the ORB
-	  will drop replies to which no reply dispatcher is registered.
+          Changed the code which sets up a reply dispatcher for
+          AMI calls to only set up one, if a non-nil reply handler
+          got registerd. This change is related to my change on
+          Fri Jul 20 08:10:00 2001. It assumes that the ORB
+          will drop replies to which no reply dispatcher is registered.
 
 Sun Jul 22 09:43:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Reply/Test.idl: Added a no-op ping () operation which
-	  is used to setup a connection properly.
+        * tests/Big_Reply/Test.idl: Added a no-op ping () operation which
+          is used to setup a connection properly.
 
-	* tests/Big_Reply/Client_Task.cpp:
-	* tests/Big_Reply/Client_Task.h: Called the ping () method before
-	  getting the replies.
+        * tests/Big_Reply/Client_Task.cpp:
+        * tests/Big_Reply/Client_Task.h: Called the ping () method before
+          getting the replies.
 
-	* tests/Big_Reply/Big_Reply_i.h:
-	* tests/Big_Reply/Big_Reply_i.cpp: Implementation for the ping ()
-	  method.
+        * tests/Big_Reply/Big_Reply_i.h:
+        * tests/Big_Reply/Big_Reply_i.cpp: Implementation for the ping ()
+          method.
 
 Sun Jul 22 09:27:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Oneway_Buffering/Test.idl: Changed the operation
-	  request_received () in Oneway_Buffering_Admin interface to a
-	  oneway. The reason for doing this has been well documented in
-	  bug #982.
+        * tests/Oneway_Buffering/Test.idl: Changed the operation
+          request_received () in Oneway_Buffering_Admin interface to a
+          oneway. The reason for doing this has been well documented in
+          bug #982.
 
 Fri Jul 20 23:58:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp: Fixed a subtle bug. The problem was when
-	  reading  a big message. We read part of the message into a stack
-	  allocated buffer. We then grow the buffer to read the rest of
-	  the message. This was working fine. But in the read after
-	  grwoing the  buffer, if we get an error we were just returning
-	  to the reactor. This was right. But we have to queue up the
-	  message before returning to the reactor incase we get a
-	  EWOULDBLOCK.
+        * tao/Transport.cpp: Fixed a subtle bug. The problem was when
+          reading  a big message. We read part of the message into a stack
+          allocated buffer. We then grow the buffer to read the rest of
+          the message. This was working fine. But in the read after
+          grwoing the  buffer, if we get an error we were just returning
+          to the reactor. This was right. But we have to queue up the
+          message before returning to the reactor incase we get a
+          EWOULDBLOCK.
 
 Fri Jul 20 12:58:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.h:
-	* tao/IIOP_Connection_Handler.cpp: Removed the resumption of the
-	  handler in the  handle_output () call. Looks like we dont win
-	  anything by resuming the handler at this level. We need to get
-	  back to this after 1.2 if it is required.
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp: Removed the resumption of the
+          handler in the  handle_output () call. Looks like we dont win
+          anything by resuming the handler at this level. We need to get
+          back to this after 1.2 if it is required.
 
-	* tao/Connection_Handler.h: Removed some of the #defines
-	* tao/orbconf.h: Moved the #defines here from
-	  Connection_handler.h.
+        * tao/Connection_Handler.h: Removed some of the #defines
+        * tao/orbconf.h: Moved the #defines here from
+          Connection_handler.h.
 
-	* tao/Strategies/DIOP_Connection_Handler.h:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.h:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Replicated
-	  IIOP changes to these protocols.
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Replicated
+          IIOP changes to these protocols.
 
 
 Fri Jul 20 09:25:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
@@ -241,84 +269,84 @@ Fri Jul 20 09:25:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Tue Jul 20 08:27:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.dsp: Fixed
-	  a typo in the  library names.
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.dsp: Fixed
+          a typo in the  library names.
 
 Fri Jul 20 08:10:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* tao/ORB_Core.cpp:
-	* tao/Leader_Follower.i:
-	* tao/Strategies/DIOP_Acceptor.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Leader_Follower.i:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
 
-	  Removed old, meanwhile unrelevant comments from me.
+          Removed old, meanwhile unrelevant comments from me.
 
-	* tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp:
 
-	  Added a check for a nil reply handler. In the case of a nil reply
-	  handler no response is dispatched. Thanks to Andreas Geisler
-	  <Andreas.Geisler@erl9.siemens.de> for pointing this out.
+          Added a check for a nil reply handler. In the case of a nil reply
+          handler no response is dispatched. Thanks to Andreas Geisler
+          <Andreas.Geisler@erl9.siemens.de> for pointing this out.
 
-	* tests/AMI/simple_client.cpp:
+        * tests/AMI/simple_client.cpp:
 
-	  Added a test case for the above change.
+          Added a test case for the above change.
 
-	* tests/AMI/client.cpp:
+        * tests/AMI/client.cpp:
 
-	  Did a cosmetic change.
+          Did a cosmetic change.
 
 Thu Jul 19 18:48:09 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB.h (run/work_pending/perform_work): Updated documentation
-	  wrt timeouts.  Thanks to Jean-Christophe Dubois <jcd@one.com>
-	  for suggesting this.
+        * tao/ORB.h (run/work_pending/perform_work): Updated documentation
+          wrt timeouts.  Thanks to Jean-Christophe Dubois <jcd@one.com>
+          for suggesting this.
 
 Thu Jul 19 10:37:55 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
   * docs/Options.html:
 
           Document the differences between the default and
-	  advanced resource factories.
+          advanced resource factories.
 
 Tue Jul 19 09:30:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp (make_queued_data): Created a data block for
-	  the size that is required instead of the size of the incoming
-	  data block. This should fix the lingering problems with
-	  Single_Read tests in our daily builds.
+        * tao/Transport.cpp (make_queued_data): Created a data block for
+          the size that is required instead of the size of the incoming
+          data block. This should fix the lingering problems with
+          Single_Read tests in our daily builds.
 
-	* tao/GIOP_Message_Base.cpp: Added some comments.
+        * tao/GIOP_Message_Base.cpp: Added some comments.
 
 Tue Jul 19 09:34:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.bor:
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.bor:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.bor:
-	  Fixed the Borland makefiles files to link in the strategies library.
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.bor:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.bor:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.bor:
+          Fixed the Borland makefiles files to link in the strategies library.
 
 Tue Jul 19 07:56:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.dsp:
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.dsp:
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.dsp:
-	  Fixed the dsp files to link in the strategies library.
+        * orbsvcs/tests/AVStreams/Component_Switching/sender.dsp:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.dsp:
+        * orbsvcs/tests/AVStreams/Component_Switching/distributer.dsp:
+          Fixed the dsp files to link in the strategies library.
 
 Tue Jul 19 12:49:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Sequence.i (replace):
-	* tao/Sequence.cpp: Set the read and write pointers properly for
-	  copied message blocks at the positions.
+        * tao/Sequence.i (replace):
+        * tao/Sequence.cpp: Set the read and write pointers properly for
+          copied message blocks at the positions.
 
 Tue Jul 19 12:27:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp (make_queued_data): Fixed a typo and added a
-	  new line for a DEBUG statement.
+        * tao/Transport.cpp (make_queued_data): Fixed a typo and added a
+          new line for a DEBUG statement.
 
 Tue Jul 18 11:25:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.h:
-	* tao/Transport.cpp: Refactored some code in to a new method
-	  called  get_queued_data ().
+        * tao/Transport.h:
+        * tao/Transport.cpp: Refactored some code in to a new method
+          called  get_queued_data ().
 
 Wed Jul 18 23:58:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -338,21 +366,21 @@ Wed Jul 18 23:58:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 Wed Jul 18 19:22:48 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Leader_Follower.i (set/reset_client_leader_thread): Fixed a
-	  subtle bug in the Leader Follower code: <client_leader_thread_>
-	  was marked 1 in set_client_leader_thread() and 0 in
-	  reset_client_leader_thread().  This was a problem when the
-	  client thread was made leader thread multiple times in nested
-	  upcall situations.  Changing the code to increment
-	  <client_leader_thread_> in set_client_leader_thread() and
-	  decrement in reset_client_leader_thread() gave us an accurate
-	  count of how many times the client was made the leader.
+        * tao/Leader_Follower.i (set/reset_client_leader_thread): Fixed a
+          subtle bug in the Leader Follower code: <client_leader_thread_>
+          was marked 1 in set_client_leader_thread() and 0 in
+          reset_client_leader_thread().  This was a problem when the
+          client thread was made leader thread multiple times in nested
+          upcall situations.  Changing the code to increment
+          <client_leader_thread_> in set_client_leader_thread() and
+          decrement in reset_client_leader_thread() gave us an accurate
+          count of how many times the client was made the leader.
 
-	* tao/Asynch_Reply_Dispatcher.cpp: Removed unnecessary include
-	  file "Leader_Followers.h".
+        * tao/Asynch_Reply_Dispatcher.cpp: Removed unnecessary include
+          file "Leader_Followers.h".
 
-	* tests/NestedUpcall/Simple/run_test.pl: Changed MT configuration
-	  to use parameters with which the test was previously failing.
+        * tests/NestedUpcall/Simple/run_test.pl: Changed MT configuration
+          to use parameters with which the test was previously failing.
 
 Wed Jul 18 17:44:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -365,10 +393,10 @@ Wed Jul 18 17:44:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Jul 18 09:11:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp: Made sure that the timeout values are passed
-	  to  the recv  () calls in the handle_input_i (). The
-	  thread-per-connection uses the timeout value. Thanks to Mike
-	  Pyle <mike.pyle@burning-glass.com> for influencing this change.
+        * tao/Transport.cpp: Made sure that the timeout values are passed
+          to  the recv  () calls in the handle_input_i (). The
+          thread-per-connection uses the timeout value. Thanks to Mike
+          Pyle <mike.pyle@burning-glass.com> for influencing this change.
 
 Wed Jul 18 08:55:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -380,21 +408,21 @@ Wed Jul 18 08:55:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Jul 18 07:58:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp (consolidate_message): Fixed a subtle that
-	  hardly showed up.  The problem stemmed from the fact we were
-	  trying to queue up messages if we had a partial read. The
-	  Message blocks were duplicated but not the underlying data
-	  blocks. Fixed them by doing a proper copying onto the message
-	  queue.
+        * tao/Transport.cpp (consolidate_message): Fixed a subtle that
+          hardly showed up.  The problem stemmed from the fact we were
+          trying to queue up messages if we had a partial read. The
+          Message blocks were duplicated but not the underlying data
+          blocks. Fixed them by doing a proper copying onto the message
+          queue.
 
-	* tao/Sequence.i:
-	* tao/Sequence.cpp: Used the self_flags () instead of flags () to
-	  check on the origin of the data block.
+        * tao/Sequence.i:
+        * tao/Sequence.cpp: Used the self_flags () instead of flags () to
+          check on the origin of the data block.
 
 Tue Jul 17 21:13:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/RTCORBA/Server_Protocol/run_test.pl: Updated and fixed
-	  run_test.pl and add new file server_uiop.conf.
+        * tests/RTCORBA/Server_Protocol/run_test.pl: Updated and fixed
+          run_test.pl and add new file server_uiop.conf.
 
 Tue Jul 17 16:24:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -406,22 +434,22 @@ Tue Jul 17 16:24:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Tue Jul 17 14:09:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Single_Read/client.cpp:
-	* tests/Single_Read/test_i.cpp: Added some debug statements. This
-	  test seems to be failing only in one of the Full builds. Not
-	  sure what could be the problem. The test runs to perfection but
-	  the srever doesn't shutdown. I havent been able to reproduce the
-	  error. These debug statements should give me sufficient clue to
-	  what is happening.
+        * tests/Single_Read/client.cpp:
+        * tests/Single_Read/test_i.cpp: Added some debug statements. This
+          test seems to be failing only in one of the Full builds. Not
+          sure what could be the problem. The test runs to perfection but
+          the srever doesn't shutdown. I havent been able to reproduce the
+          error. These debug statements should give me sufficient clue to
+          what is happening.
 
 Tue Jul 17 13:48:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/UIOP_Transport.cpp: Fixed a warning.
+        * tao/Strategies/UIOP_Transport.cpp: Fixed a warning.
 
 Tue Jul 17 13:44:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/POA/Demux/Makefile: Updated dependencies. This
-	  should fix the compile error with FORTE.
+        * performance-tests/POA/Demux/Makefile: Updated dependencies. This
+          should fix the compile error with FORTE.
 
 Tue Jul 17 11:54:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -432,32 +460,32 @@ Tue Jul 17 11:54:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul 16 22:24:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
-	* examples/PluggableUDP/tests/Basic/run_test.pl: Fixed the run
-	  test scripts to make sure that a DIOP endpoint is specified when
-	  the server is invoked. This would fix the errors seen in our
-	  builds.
+        * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+        * examples/PluggableUDP/tests/Basic/run_test.pl: Fixed the run
+          test scripts to make sure that a DIOP endpoint is specified when
+          the server is invoked. This would fix the errors seen in our
+          builds.
 
-	* examples/PluggableUDP/tests/Basicsvc.conf: Just removed the file
-	  from the repository. Looks like it was not needed and confused
-	  the client too much leading to SEGV's.
+        * examples/PluggableUDP/tests/Basicsvc.conf: Just removed the file
+          from the repository. Looks like it was not needed and confused
+          the client too much leading to SEGV's.
 
 Mon Jul 16 22:03:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed,
- 	  what looked like a subtle race condition. If a thread that calls
-	  handle_input () gets a -1 on read, we return -1 to the
-	  reactor. This makes the reactor close the handler and remove
-	  that from its internal map. If we resume the handler for such
-	  cases, before returning from handle_input (), looked like one
-	  more thread was woken up by the reactor to read from the
-	  handle. When this occurs on another thread, the first thread
-	  went about doing its task of closing the handle and removing the
-	  handler from its internal map. Bad things started happening.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed,
+          what looked like a subtle race condition. If a thread that calls
+          handle_input () gets a -1 on read, we return -1 to the
+          reactor. This makes the reactor close the handler and remove
+          that from its internal map. If we resume the handler for such
+          cases, before returning from handle_input (), looked like one
+          more thread was woken up by the reactor to read from the
+          handle. When this occurs on another thread, the first thread
+          went about doing its task of closing the handle and removing the
+          handler from its internal map. Bad things started happening.
 
 Mon Jul 16 17:23:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -467,18 +495,18 @@ Mon Jul 16 17:23:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul 16 14:25:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_State.cpp (read_ulong): Looks like some of the
-	  compilers  have problems when they try to dereference a pointer
-	  got out of reinterpret_cast'ing another pointer.  The problem
-	  showed up on solaris builds. The fix that has been applied is to
-	  make a local copy on the stack of the data that is needed before
-	  calling a reinterpret_cast on it.
+        * tao/GIOP_Message_State.cpp (read_ulong): Looks like some of the
+          compilers  have problems when they try to dereference a pointer
+          got out of reinterpret_cast'ing another pointer.  The problem
+          showed up on solaris builds. The fix that has been applied is to
+          make a local copy on the stack of the data that is needed before
+          calling a reinterpret_cast on it.
 
 Mon Jul 16 11:44:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Reply/server.cpp: The reply sent was too huge. The bug
-	  #957 started showing up. Reduced the size of the reply to
-	  approximately 4 MB.
+        * tests/Big_Reply/server.cpp: The reply sent was too huge. The bug
+          #957 started showing up. Reduced the size of the reply to
+          approximately 4 MB.
 
 Mon Jul 16 11:36:00 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -509,63 +537,63 @@ Mon Jul 16 9:17:43 2001  Christopher Kohlhoff <chris@kohlhoff.com>
 
 Mon Jul 16 07:49:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
- 	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
           These dsp files needed the strategies library in their release
-	  configuration.  Added them to fix Win32 builds. I thought I had
-	  made the changes during my last checkin.  Apparently I had not :(.
+          configuration.  Added them to fix Win32 builds. I thought I had
+          made the changes during my last checkin.  Apparently I had not :(.
 
 Mon Jul 16 07:34:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
-	  dependencies.
+        * docs/tutorials/Quoter/Event_Service/Makefile: Updated
+          dependencies.
 
 Sun Jul 15 9:59:24 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* tests/Param_Test/anyop.dsp (InputPath): Set the dependecy for
-	  the generated code to the IDL compiler. Missed out when
-	  generated this file.
+        * tests/Param_Test/anyop.dsp (InputPath): Set the dependecy for
+          the generated code to the IDL compiler. Missed out when
+          generated this file.
 
 Sun Jul 15 9:33:34 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* tao/Sequence.cpp:
-	* tao/Sequence.i: A fix at the places where
-	  ACE_Message_Block::duplicate () is called.  The duplicate ()
-	  call just allocated memory for a new Message block and then
-	  duplicated the exisiting data block -- which just increments the
-	  reference count of the data block. This could be bad for cases
-	  where the incoming message is on a data block on stack. By
-	  incrementing the reference count we get nothing for such
-	  cases. The fix that has been put in does the following
+        * tao/Sequence.cpp:
+        * tao/Sequence.i: A fix at the places where
+          ACE_Message_Block::duplicate () is called.  The duplicate ()
+          call just allocated memory for a new Message block and then
+          duplicated the exisiting data block -- which just increments the
+          reference count of the data block. This could be bad for cases
+          where the incoming message is on a data block on stack. By
+          incrementing the reference count we get nothing for such
+          cases. The fix that has been put in does the following
 
-	  - checks whether the data block is on stack, if so does a deep
-	    copy before calling duplicate on the message block.
-	  - if the data block is already on the heap just calls duplicate
-	    () on the message block.
+          - checks whether the data block is on stack, if so does a deep
+            copy before calling duplicate on the message block.
+          - if the data block is already on the heap just calls duplicate
+            () on the message block.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: Added a comment where
-	  duplicate () is used. But the code that uses duplicate () has
-	  been commented out .
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: Added a comment where
+          duplicate () is used. But the code that uses duplicate () has
+          been commented out .
 
 Sat Jul 14 20:18:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
-	  dependencies.
+        * docs/tutorials/Quoter/Event_Service/Makefile: Updated
+          dependencies.
 
 Sat Jul 14 18:59:48 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
           These dsp files needed the strategies library. Added them to fix
-	  Win32 builds.
+          Win32 builds.
 
 Sat Jul 14 17:44:28 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* tests/Param_Test/anyop.dsp (RSC): Looks like this has been
-	  broken for  a long time now. Fixed the dsp file so that we dont
-	  any errors during loading.
+        * tests/Param_Test/anyop.dsp (RSC): Looks like this has been
+          broken for  a long time now. Fixed the dsp file so that we dont
+          any errors during loading.
 
 Sat Jul 14 00:33:28 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
@@ -577,10 +605,10 @@ Sat Jul 14 00:33:28 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
 Fri Jul 13 16:07:04 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: Make sure
-	  that this->ior_multicast is non-NULL in ~ImplRepo_i() before
- 	  using it to lookup in the reactor.  Thanks to Victor Chernenko
- 	  <v_chernenko@hotmail.com> for reporting this.
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: Make sure
+          that this->ior_multicast is non-NULL in ~ImplRepo_i() before
+          using it to lookup in the reactor.  Thanks to Victor Chernenko
+          <v_chernenko@hotmail.com> for reporting this.
 
 Thu Jul 13 14:30:16 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
@@ -612,48 +640,48 @@ Fri Jul 13 10:48:03 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Jul 12 22:22:31 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Connector_Registry.cpp (create_profile):
+        * tao/Connector_Registry.cpp (create_profile):
 
-	  Print the hexadecimal value of the unknown profile tag in the
-	  debugging output rather than the decimal value.  The former is
-	  generally more useful.
+          Print the hexadecimal value of the unknown profile tag in the
+          debugging output rather than the decimal value.  The former is
+          generally more useful.
 
 Thu Jul 12 21:36:53 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile (MKLIST):
+        * orbsvcs/orbsvcs/Makefile (MKLIST):
 
-	  The AV Service needs the CosNaming and CosProperty libraries.
-	  Add their Makefiles to the build list if they aren't already
-	  there.
+          The AV Service needs the CosNaming and CosProperty libraries.
+          Add their Makefiles to the build list if they aren't already
+          there.
 
 Thu Jul 12 20:40:51 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 
-	  Corrected placement of an ACE_CHECK_RETURN statement.
+          Corrected placement of an ACE_CHECK_RETURN statement.
 
 Thu Jul 12 20:29:42 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Core.i (resolve_rt_orb, resolve_rt_current):
+        * tao/ORB_Core.i (resolve_rt_orb, resolve_rt_current):
 
-	  Fixed broken emulated exception code.  ACE_CHECK_RETURN should
-	  have been used instead of ACE_TRY_FLAG.
+          Fixed broken emulated exception code.  ACE_CHECK_RETURN should
+          have been used instead of ACE_TRY_FLAG.
 
 Thu Jul 12 20:21:36 2001  Ossama Othman  <ossama@uci.edu>
 
-	* docs/tutorials/Quoter/Makefile (DIRS):
-	* docs/tutorials/Quoter/Simple/Makefile (DIRS):
+        * docs/tutorials/Quoter/Makefile (DIRS):
+        * docs/tutorials/Quoter/Simple/Makefile (DIRS):
 
-	  Do not build certain directories if AMI is disabled or if
-	  Minimum CORBA is enabled.  Some tutorials require AMI, or
-	  features that are not available in the minimum CORBA
-	  configuration.
+          Do not build certain directories if AMI is disabled or if
+          Minimum CORBA is enabled.  Some tutorials require AMI, or
+          features that are not available in the minimum CORBA
+          configuration.
 
 Thu Jul 12 19:45:06 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/Naming_Service/NT_Naming_Server.cpp (ConsoleHandler):
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp (ConsoleHandler):
 
-	  Fixed unused argument warning.
+          Fixed unused argument warning.
 
 Thu Jul 12 17:30:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -733,51 +761,51 @@ Thu Jul 12 17:30:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Thu Jul 12 15:10:52 2001  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
 
-	  Open the temporary file with the O_EXCL flag to close a symbolic
-	  link attack vulnerability.
+          Open the temporary file with the O_EXCL flag to close a symbolic
+          link attack vulnerability.
 
 Thu Jul 12 13:31:25 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
+        * orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
 
-	  Corrected constructor signature to match the implementation.
+          Corrected constructor signature to match the implementation.
 
-	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp
-	  (create_policy):
+        * orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp
+          (create_policy):
 
-	  Support creation of the SecurityLevel2::EstablishTrustPolicy.
+          Support creation of the SecurityLevel2::EstablishTrustPolicy.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 
-	  Refactored IIOP-specific and SSLIOP-specific code into new
-	  iiop_connect() and ssliop_connect() methods, respectively.
+          Refactored IIOP-specific and SSLIOP-specific code into new
+          iiop_connect() and ssliop_connect() methods, respectively.
 
-	  (ssliop_connect):
+          (ssliop_connect):
 
-	  Added support for the SecurityLevel2::EstablishTrustPolicy.
+          Added support for the SecurityLevel2::EstablishTrustPolicy.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (object_addr):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (object_addr):
 
-	  Cache the SSLIOP-specific ACE_INET_Addr in the
-	  TAO_SSLIOP_Endpoint rather than initializing one each time an
-	  invocation is made.  This should improve SSLIOP performance.
+          Cache the SSLIOP-specific ACE_INET_Addr in the
+          TAO_SSLIOP_Endpoint rather than initializing one each time an
+          invocation is made.  This should improve SSLIOP performance.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
 
-	  Removed left over Security::Detect{Replay,Misordering} security
-	  association bits from the default security association value.
-	  They were actually unused, but removed them anwyay since SSLIOP
-	  doesn't support either.  No visible run-time change will occur.
+          Removed left over Security::Detect{Replay,Misordering} security
+          association bits from the default security association value.
+          They were actually unused, but removed them anwyay since SSLIOP
+          doesn't support either.  No visible run-time change will occur.
 
-	* orbsvcs/orbsvcs/Makefile.Security (FILES):
-	* orbsvcs/orbsvcs/Security.bor (OBJFILES):
-	* orbsvcs/orbsvcs/Security.dsp:
+        * orbsvcs/orbsvcs/Makefile.Security (FILES):
+        * orbsvcs/orbsvcs/Security.bor (OBJFILES):
+        * orbsvcs/orbsvcs/Security.dsp:
 
-	  Added EstablishTrustPolicy files to the list of sources.
+          Added EstablishTrustPolicy files to the list of sources.
 
 Thu Jul 12 15:10:46 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
@@ -805,35 +833,35 @@ Thu Jul 12 13:07:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Jul 12 07:11:39 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Strategies/advanced_resource.cpp (init):
+        * tao/Strategies/advanced_resource.cpp (init):
 
-	  Fixed broken code that initialized a stack allocated string
-	  array with a non-const size.  Use a CORBA::StringSeq instead.
+          Fixed broken code that initialized a stack allocated string
+          array with a non-const size.  Use a CORBA::StringSeq instead.
 
 Wed Jul 11 18:00:13 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Invocation_Endpoint_Selectors.cpp (select_endpoint):
+        * tao/Invocation_Endpoint_Selectors.cpp (select_endpoint):
 
-	  Applied patch from Wayne Erchak <werchak@stentor.com> that fixes
-	  problem where the endpoint list in a given profile was not
-	  iterated through during connection failures.  "Fail-over"
-	  semantics for a non-RTCORBA configured ORB once again work.
-	  [Bug 927]
+          Applied patch from Wayne Erchak <werchak@stentor.com> that fixes
+          problem where the endpoint list in a given profile was not
+          iterated through during connection failures.  "Fail-over"
+          semantics for a non-RTCORBA configured ORB once again work.
+          [Bug 927]
 
-	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
-	* orbsvcs/orbsvcs/Security/QOPPolicy.h:
+        * orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
+        * orbsvcs/orbsvcs/Security/QOPPolicy.h:
 
-	  Added Doxygen comments for the TAO_QOPPolicy and
-	  TAO_EstablishTrustPolicy classes.
+          Added Doxygen comments for the TAO_QOPPolicy and
+          TAO_EstablishTrustPolicy classes.
 
 Wed Jul 11 16:03:49 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
-	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.cpp:
+        * orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
+        * orbsvcs/orbsvcs/Security/EstablishTrustPolicy.cpp:
 
-	  Implementation of the SecurityLevel2::EstablishTrustPolicy.  It
-	  makes it possible to control whether or not client/target
-	  authentication is performed.
+          Implementation of the SecurityLevel2::EstablishTrustPolicy.  It
+          makes it possible to control whether or not client/target
+          authentication is performed.
 
 Wed Jul 11 16:03:58 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
@@ -989,59 +1017,59 @@ Wed Jul 11 09:25:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Wed Jul 11 02:19:59 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp: Remember the
-	  native priority of the invoking thread.  Once the invocation
-	  completes, restore the thread to the original native thread
-	  priority.
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp: Remember the
+          native priority of the invoking thread.  Once the invocation
+          completes, restore the thread to the original native thread
+          priority.
 
-	  Previously, when the priority was restored, it was done it terms
-	  of CORBA priority.  The problem with this approach was that in
-	  the conversion from native to CORBA and then back to native, we
-	  can lose precision and hence the native priority of the native
-	  thread may not be the same as its original native priority.
-	  Therefore, remembering the original native priority will
-	  alleviate this problem.
+          Previously, when the priority was restored, it was done it terms
+          of CORBA priority.  The problem with this approach was that in
+          the conversion from native to CORBA and then back to native, we
+          can lose precision and hence the native priority of the native
+          thread may not be the same as its original native priority.
+          Therefore, remembering the original native priority will
+          alleviate this problem.
 
-	* tao/Protocols_Hooks:
-	* tao/Default_Protocols_Hooks:
-	* tao/RT_Protocols_Hooks.cpp:
+        * tao/Protocols_Hooks:
+        * tao/Default_Protocols_Hooks:
+        * tao/RT_Protocols_Hooks.cpp:
 
-	  Expanded the priority interfaces on the Protocols_Hooks such
-	  that the user can obtain both the native and CORBA priorities.
-	  Also, the user can set both.
+          Expanded the priority interfaces on the Protocols_Hooks such
+          that the user can obtain both the native and CORBA priorities.
+          Also, the user can set both.
 
-	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
-	* tao/RTCORBA/RT_Current.cpp (the_priority):
-	* tao/Strategies/Reactor_Per_Priority.cpp (reactor):
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
+        * tao/RTCORBA/RT_Current.cpp (the_priority):
+        * tao/Strategies/Reactor_Per_Priority.cpp (reactor):
 
-	  Changed to use new priority interfaces.
+          Changed to use new priority interfaces.
 
 Tue Jul 10 22:37:48 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security/QOPPolicy.cpp (copy):
+        * orbsvcs/orbsvcs/Security/QOPPolicy.cpp (copy):
 
-	  Perform a deep copy, not a shallow copy.  The copy is supposed
-	  to be independent of the original.
+          Perform a deep copy, not a shallow copy.  The copy is supposed
+          to be independent of the original.
 
 Tue Jul 10 15:59:31 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.h:
 
-	  Include "PolicyC.h" to pull in some policy related exception
-	  definitions.  This fixed a problem with some minimum CORBA
-	  builds with native exception support enabled.  Thanks to
-	  Sangeetha Ramadurai <Sangeetha.Ramadurai@geind.ge.com> for
-	  reporting the problem and providing a fix.
+          Include "PolicyC.h" to pull in some policy related exception
+          definitions.  This fixed a problem with some minimum CORBA
+          builds with native exception support enabled.  Thanks to
+          Sangeetha Ramadurai <Sangeetha.Ramadurai@geind.ge.com> for
+          reporting the problem and providing a fix.
 
 Tue Jul 10 15:56:13 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/Pluggable_Messaging.h:
-	* tao/Pluggable_Messaging.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/Pluggable_Messaging.h:
+        * tao/Pluggable_Messaging.cpp:
 
-	  Fixed warning about virtual function override. Was caught by the
-	  Tru64 compiler.
+          Fixed warning about virtual function override. Was caught by the
+          Tru64 compiler.
 
 Tue Jul 10 13:09:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1070,31 +1098,31 @@ Tue Jul 10 11:51:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Jul 10 05:52:09 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/Profile.h,
-	* tao/Object.h: Fixed typos in comments.  Thanks to Johnny
-	  Willemsen for reporting this.
+        * tao/Profile.h,
+        * tao/Object.h: Fixed typos in comments.  Thanks to Johnny
+          Willemsen for reporting this.
 
-	* tao/Connector_Registry.h (TAO_Connector_Registry): Fixed a typo
-	  where svc.comf should have been svc.conf.  Thanks to Johnny
- 	  Willemsen for reporting this.
+        * tao/Connector_Registry.h (TAO_Connector_Registry): Fixed a typo
+          where svc.comf should have been svc.conf.  Thanks to Johnny
+          Willemsen for reporting this.
 
-	* tao/ORB.cpp: Added an addition expression to the #ifdef for the
-	  using std::set_unexpected declaration.  Thanks to Scott Plant
- 	  <splant@softhome.net> for reporting this.
+        * tao/ORB.cpp: Added an addition expression to the #ifdef for the
+          using std::set_unexpected declaration.  Thanks to Scott Plant
+          <splant@softhome.net> for reporting this.
 
 Tue Jul 10 00:45:00 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/RTCORBA/RT_ORB.cpp (TAO_RT_CORBA_Priority_Normalizer):
+        * tao/RTCORBA/RT_ORB.cpp (TAO_RT_CORBA_Priority_Normalizer):
 
-	  Fixed busted code that did not check if the resolved
- 	  PriorityMappingManager object reference was nil.  Since this
- 	  check was missing, a seg fault would occur when attempting to
- 	  invoke a method on that mapping manager.  Throw a
- 	  CORBA::INTERNAL() exception if the reference is nil.  This at
- 	  leasts lets us identify a problem without seg faulting.
+          Fixed busted code that did not check if the resolved
+          PriorityMappingManager object reference was nil.  Since this
+          check was missing, a seg fault would occur when attempting to
+          invoke a method on that mapping manager.  Throw a
+          CORBA::INTERNAL() exception if the reference is nil.  This at
+          leasts lets us identify a problem without seg faulting.
 
-	  Fixed broken code that did not use emulated exceptions properly.
-	  The ACE_TRY/CATCH block was missing.
+          Fixed broken code that did not use emulated exceptions properly.
+          The ACE_TRY/CATCH block was missing.
 
 Tue Jul 10 09:13:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -1104,53 +1132,53 @@ Tue Jul 10 09:13:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Jul 09 23:43:29 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/params.i (default_init_ref):
+        * tao/params.i (default_init_ref):
 
-	  Use CORBA::string_dup() to return a duplicate string instead of
-	  relying on ACE_CString::rep().  This allows us to portably take
-	  advantage of CORBA::String_var in TAO_ORB_Core::resolve_rir().
+          Use CORBA::string_dup() to return a duplicate string instead of
+          relying on ACE_CString::rep().  This allows us to portably take
+          advantage of CORBA::String_var in TAO_ORB_Core::resolve_rir().
 
-	* tao/ORB_Core.cpp (list_initial_references):
+        * tao/ORB_Core.cpp (list_initial_references):
 
-	  Corrected long standing bug where the stringified object
-	  reference was placed in the ObjectIdList instead of the ObjectId
-	  that represents it.
+          Corrected long standing bug where the stringified object
+          reference was placed in the ObjectIdList instead of the ObjectId
+          that represents it.
 
-	  Include the ObjectIds stored in the underlying table for
-	  the ORB::register_initial_reference() mechanism in the returned
-	  ObjectIdList.  This was a bug.
+          Include the ObjectIds stored in the underlying table for
+          the ORB::register_initial_reference() mechanism in the returned
+          ObjectIdList.  This was a bug.
 
-	  (TAO_ORB_Core, fini):
+          (TAO_ORB_Core, fini):
 
-	  The rt_priority_mapping_manager_ cached object reference member
-	  was unused.  Removed its initialization and finalization code.
+          The rt_priority_mapping_manager_ cached object reference member
+          was unused.  Removed its initialization and finalization code.
 
-	  (resolve_rir):
+          (resolve_rir):
 
-	  Improved exception-safety of this method by using a
-	  CORBA::String_var instead of relying solely on delete().
+          Improved exception-safety of this method by using a
+          CORBA::String_var instead of relying solely on delete().
 
-	* tao/ORB_Core.h (rt_priority_mapping_manager_):
+        * tao/ORB_Core.h (rt_priority_mapping_manager_):
 
-	  Removed this unused attribute.
+          Removed this unused attribute.
 
-	* tao/Object_Ref_Table.h (begin, end):
+        * tao/Object_Ref_Table.h (begin, end):
 
-	  Made iterator accessors public so that the ORB_Core can use
-	  them.
+          Made iterator accessors public so that the ORB_Core can use
+          them.
 
-	* tao/Object_Ref_Table.cpp:
+        * tao/Object_Ref_Table.cpp:
 
-	  Removed three unnecessary Hash Map related template
-	  instantiations.
+          Removed three unnecessary Hash Map related template
+          instantiations.
 
-	  (current_size):
+          (current_size):
 
-	  Return the current size of the underlying table.
+          Return the current size of the underlying table.
 
-	* tests/InterOp-Naming/README:
+        * tests/InterOp-Naming/README:
 
-	  Corrected format for corbaloc IORs.
+          Corrected format for corbaloc IORs.
 
 Mon Jul  9 17:39:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1160,18 +1188,18 @@ Mon Jul  9 17:39:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul  9 14:56:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/components.html (bgcolor): Fixed a typo.  Thanks to
-	  John Ashmun for reporting this.
+        * docs/components.html (bgcolor): Fixed a typo.  Thanks to
+          John Ashmun for reporting this.
 
 Mon Jul 09 10:56:30 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/DynamicInterface/Server_Request.h:
-	* tao/DynamicInterface/Server_Request.inl (_tao_server_request):
+        * tao/DynamicInterface/Server_Request.h:
+        * tao/DynamicInterface/Server_Request.inl (_tao_server_request):
 
-	  Added this accessor that returns a reference to the underlying
-	  TAO_ServerRequest object.  Thanks to James Megquier
-	  <jmegq@bbn.com> and Mouna Seri <seri@crhc.uiuc.edu> for
-	  suggesting addition of this accessor.
+          Added this accessor that returns a reference to the underlying
+          TAO_ServerRequest object.  Thanks to James Megquier
+          <jmegq@bbn.com> and Mouna Seri <seri@crhc.uiuc.edu> for
+          suggesting addition of this accessor.
 
 Mon Jul  9 11:16:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1210,136 +1238,136 @@ Mon Jul  9 15:27:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Jul 09 04:11:45 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security/QOPPolicy.h:
+        * orbsvcs/orbsvcs/Security/QOPPolicy.h:
 
-	  Added missing "ace/post.h" include.
+          Added missing "ace/post.h" include.
 
 Mon Jul 09 02:43:38 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
-	* orbsvcs/tests/Security/Secure_Invocation/client.cpp:
-	* orbsvcs/tests/Security/Secure_Invocation/client.dsp:
-	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile:
+        * orbsvcs/tests/Security/Secure_Invocation/client.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/client.dsp:
+        * orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
 
-	  Updated this test to take advantage of the newly added
-	  Security::QOPPolicy support.  The test is more self-contained
-	  now, i.e. it no longer depends so much on the "run_test.pl" Perl
-	  script to test all features.
+          Updated this test to take advantage of the newly added
+          Security::QOPPolicy support.  The test is more self-contained
+          now, i.e. it no longer depends so much on the "run_test.pl" Perl
+          script to test all features.
 
 Mon Jul 09 02:21:32 2001  Ossama Othman  <ossama@uci.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated Security Service release notes.
+          Updated Security Service release notes.
 
 Mon Jul 09 01:51:27 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Invocation.h:
-	* tao/Invocation.i:
+        * tao/Invocation.h:
+        * tao/Invocation.i:
 
-	  Added accessors to the transport and max_wait_time members.
+          Added accessors to the transport and max_wait_time members.
 
-	* tao/Invocation.cpp (perform_call):
+        * tao/Invocation.cpp (perform_call):
 
-	  Updated invocation of the connect() method to match the
-	  signature change described below.
+          Updated invocation of the connect() method to match the
+          signature change described below.
 
-	* tao/Connector_Registry.cpp:
-	* tao/Connector_Registry.h:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Connector.h:
-	* tao/Pluggable.h:
-	* tao/Strategies/DIOP_Connector.cpp:
-	* tao/Strategies/DIOP_Connector.h:
-	* tao/Strategies/SHMIOP_Connector.cpp:
-	* tao/Strategies/SHMIOP_Connector.h:
-	* tao/Strategies/UIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * tao/Connector_Registry.cpp:
+        * tao/Connector_Registry.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Connector.h:
+        * tao/Pluggable.h:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Connector.h:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.h:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
 
-	  Changed signature of connect() method to accept a pointer to a
-	  TAO_GIOP_Invocation object.  Some pluggable protocols
-	  (e.g. SSLIOP) may need access to some of the information in that
-	  object.
+          Changed signature of connect() method to accept a pointer to a
+          TAO_GIOP_Invocation object.  Some pluggable protocols
+          (e.g. SSLIOP) may need access to some of the information in that
+          object.
 
-	* orbsvcs/orbsvcs/Security.idl:
+        * orbsvcs/orbsvcs/Security.idl:
 
-	  Corrected spelling of Security::SecFeaturePolicy.  "Feature" not
-	  "Features".
+          Corrected spelling of Security::SecFeaturePolicy.  "Feature" not
+          "Features".
 
-	* orbsvcs/orbsvcs/Security/QOPPolicy.cpp:
-	* orbsvcs/orbsvcs/Security/QOPPolicy.h:
+        * orbsvcs/orbsvcs/Security/QOPPolicy.cpp:
+        * orbsvcs/orbsvcs/Security/QOPPolicy.h:
 
-	  Implementation of the Security::QOPPolicy policy.  This policy
-	  is used to set the desired invocation Quality-of-Protection
-	  (QoP).  It can be created using ORB::create_policy(), and used
-	  in conjunction with the standard policy manipulation CORBA
-	  features (e.g. PolicyManager, PolicyCurrent), meaning that this
-	  policy can be set on a per-ORB, per-thread or per-object basis.
+          Implementation of the Security::QOPPolicy policy.  This policy
+          is used to set the desired invocation Quality-of-Protection
+          (QoP).  It can be created using ORB::create_policy(), and used
+          in conjunction with the standard policy manipulation CORBA
+          features (e.g. PolicyManager, PolicyCurrent), meaning that this
+          policy can be set on a per-ORB, per-thread or per-object basis.
 
-	  This policy makes it possible to, for example, make both secure
-	  and insecure invocations within the same client process.
+          This policy makes it possible to, for example, make both secure
+          and insecure invocations within the same client process.
 
-	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp:
-	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.h:
+        * orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp:
+        * orbsvcs/orbsvcs/Security/Security_PolicyFactory.h:
 
-	  Security policy factory implementation that is registered with
-	  the ORB's policy factory registry.
+          Security policy factory implementation that is registered with
+          the ORB's policy factory registry.
 
-	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (post_init,
-	  register_policy_factories):
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (post_init,
+          register_policy_factories):
 
-	  Register the supported security policy factories with the ORB.
+          Register the supported security policy factories with the ORB.
 
-	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.h:
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.h:
 
-	  Added a shared security policy factory member to this
-	  ORBInitializer.  The factory is reentrant so there is no need
-	  create one for each ORB.  Just share one between all ORBs.
+          Added a shared security policy factory member to this
+          ORBInitializer.  The factory is reentrant so there is no need
+          create one for each ORB.  Just share one between all ORBs.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (connect):
 
-	  Moved code that obtained the TAO_IIOP_Endpoint from the
-	  TAO_SSLIOP_Endpoint from this method to the corresponding one in
-	  TAO_SSLIOP_Connector.  This cleans up the code a bit.  It
-	  shouldn't differ all that much from the
-	  IIOP_Connector::connect() implementation.
+          Moved code that obtained the TAO_IIOP_Endpoint from the
+          TAO_SSLIOP_Endpoint from this method to the corresponding one in
+          TAO_SSLIOP_Connector.  This cleans up the code a bit.  It
+          shouldn't differ all that much from the
+          IIOP_Connector::connect() implementation.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 
-	  Now that both secure and insecure invocations are supported
-	  within the same client process, an IIOP-only transport
-	  descriptor must be used instead of the one passed to this method
-	  since the latter is used for SSLIOP connections.  Doing so
-	  prevents an IIOP-only cached transport from being associated
-	  with an SSLIOP connection.
+          Now that both secure and insecure invocations are supported
+          within the same client process, an IIOP-only transport
+          descriptor must be used instead of the one passed to this method
+          since the latter is used for SSLIOP connections.  Doing so
+          prevents an IIOP-only cached transport from being associated
+          with an SSLIOP connection.
 
-	  This fixes a problem that was revealed when support for secure
-	  and insecure invocations within the same client process was
-	  added (i.e. via the Security::QOPPolicy support).  An insecure
-	  cached transport was matched against an SSLIOP connection.
+          This fixes a problem that was revealed when support for secure
+          and insecure invocations within the same client process was
+          added (i.e. via the Security::QOPPolicy support).  An insecure
+          cached transport was matched against an SSLIOP connection.
 
-	* tao/IIOP_Endpoint.i:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.i:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
 
-	  Cosmetic updates.
+          Cosmetic updates.
 
-	* tao/Exception.cpp:
+        * tao/Exception.cpp:
 
-	  Corrected "unknown description" message.
+          Corrected "unknown description" message.
 
-	* tao/Strategies/SHMIOP_Endpoint.h:
-	* tao/Strategies/UIOP_Endpoint.h:
+        * tao/Strategies/SHMIOP_Endpoint.h:
+        * tao/Strategies/UIOP_Endpoint.h:
 
-	  Doxygen-ated these headers.
+          Doxygen-ated these headers.
 
-	* orbsvcs/orbsvcs/Makefile.Security:
-	* orbsvcs/orbsvcs/Security.dsp:
-	* orbsvcs/orbsvcs/Security/Security.bor:
+        * orbsvcs/orbsvcs/Makefile.Security:
+        * orbsvcs/orbsvcs/Security.dsp:
+        * orbsvcs/orbsvcs/Security/Security.bor:
 
-	  Added new QOPPolicy and Security_PolicyFactory filenames to
-	  these Makefiles and project files.
+          Added new QOPPolicy and Security_PolicyFactory filenames to
+          these Makefiles and project files.
 
 Mon Jul  9 08:41:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -1351,15 +1379,15 @@ Mon Jul  9 08:41:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Sat Jul  7 19:44:55 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* tao/Incoming_Message_Queue.inl (get_queued_data):
+        * tao/Incoming_Message_Queue.inl (get_queued_data):
 
-	  Moved the definition to the beginning to fix warning. Was caught
-	  by Tru64 cxx compiler.
+          Moved the definition to the beginning to fix warning. Was caught
+          by Tru64 cxx compiler.
 
 Fri Jul  6 22:04:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/LongUpcalls/run_ami_test.pl: Made the perl script
-	  runnable.  It was giving weird errors in the builds.
+        * tests/LongUpcalls/run_ami_test.pl: Made the perl script
+          runnable.  It was giving weird errors in the builds.
 
 Fri Jul 06 21:53:26 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -1372,28 +1400,28 @@ Fri Jul 06 21:53:26 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Fri Jul  6 16:58:52 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/Notify_Service/Notify_Service.cpp (shutdown):
+        * orbsvcs/Notify_Service/Notify_Service.cpp (shutdown):
 
-	  Applied the same fix from Jody's patch described below to this
-	  method.
+          Applied the same fix from Jody's patch described below to this
+          method.
 
 Fri Jul  6 15:59:17 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/Notify_Service/Notify_Service.h (naming_):
-	* orbsvcs/Notify_Service/Notify_Service.cpp (init,
-	  resolve_naming_service):
+        * orbsvcs/Notify_Service/Notify_Service.h (naming_):
+        * orbsvcs/Notify_Service/Notify_Service.cpp (init,
+          resolve_naming_service):
 
-	  Integrated patch from Jody Hagins <jody@atdesk.com>.  Take
-	  advantage of the methods provided by the
-	  CosNaming::NamingContextExt interface so that the Notification
-	  Service does the right thing with an option such as
-	  "-Factory Foo.Bar/My_Event_Channel".
+          Integrated patch from Jody Hagins <jody@atdesk.com>.  Take
+          advantage of the methods provided by the
+          CosNaming::NamingContextExt interface so that the Notification
+          Service does the right thing with an option such as
+          "-Factory Foo.Bar/My_Event_Channel".
 
 Fri Jul  6 18:02:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp: Removed support for GIOP Lite for the time
-	  being. Just want to make sure that the interface and other stuff
-	  stabilises before we can squeeze this in.
+        * tao/TAO_Static.dsp: Removed support for GIOP Lite for the time
+          being. Just want to make sure that the interface and other stuff
+          stabilises before we can squeeze this in.
 
 Fri Jul  6 17:55:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1413,39 +1441,39 @@ Fri Jul  6 17:13:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/ORB_Core.cpp:
 
           Changed the string passed to
- 	  ACE_Dynamic_Service<TAO_Object_Loader>::instance from
- 	  "TypeCodeFactory" to "TypeCodeFactor_Loader" to match the string
- 	  in the ACE_STATIC_SVC_DEFINE macro in
- 	  TypeCodeFactory_Loader.cpp. Thanks to Francois Bernier
- 	  <fbernier@gel.ulaval.ca> for reporting the bug.
+          ACE_Dynamic_Service<TAO_Object_Loader>::instance from
+          "TypeCodeFactory" to "TypeCodeFactor_Loader" to match the string
+          in the ACE_STATIC_SVC_DEFINE macro in
+          TypeCodeFactory_Loader.cpp. Thanks to Francois Bernier
+          <fbernier@gel.ulaval.ca> for reporting the bug.
 
 Fri Jul  6 17:10:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/Transport.cpp: Added support for LocateRequest & LocateReply
-	  that. It should have been added before the code from my branch
-	  came to the main trunk, but somehow got missed.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Transport.cpp: Added support for LocateRequest & LocateReply
+          that. It should have been added before the code from my branch
+          came to the main trunk, but somehow got missed.
 
 Fri Jul  6 16:01:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp (process_queue_head):
-	* tao/GIOP_Message_State.cpp: Fixed a problem that has long been
-	  there. We have been unlucky that we did not get to this before.
+        * tao/Transport.cpp (process_queue_head):
+        * tao/GIOP_Message_State.cpp: Fixed a problem that has long been
+          there. We have been unlucky that we did not get to this before.
 
 Fri Jul 06 14:58:09 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	To build "CosEvent - Win32 MFC Release":
+        To build "CosEvent - Win32 MFC Release":
 
-	* TAOACE.dsw: Make RTEvent a dependent of CosEvent.
+        * TAOACE.dsw: Make RTEvent a dependent of CosEvent.
 
-	* orbsvcs/orbsvcs/RTEvent.dsp: Set up IDL custom build rules for
-	  MFC configs.
+        * orbsvcs/orbsvcs/RTEvent.dsp: Set up IDL custom build rules for
+          MFC configs.
 
-	* orbsvcs/orbsvcs/CosEvent.dsp: Changed the name for release
-	  version libarary to XXXmfc.lib.
+        * orbsvcs/orbsvcs/CosEvent.dsp: Changed the name for release
+          version libarary to XXXmfc.lib.
 
-	  Thanks to Kristopher Johnson <kristopher.johnson@transcore.com>
-	  for providing the fix.  [Bug 898]
+          Thanks to Kristopher Johnson <kristopher.johnson@transcore.com>
+          for providing the fix.  [Bug 898]
 
 Fri Jul  6 13:33:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1458,14 +1486,14 @@ Fri Jul  6 13:33:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Jul  6 13:23:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/Asynch_Reply_Dispatcher.cpp: Removed the initialization of a
-	  buffer  from the constructor. Looks like I used to do it in some
-	  life of mine and I dont which one it was. :( SunCC 4.2 doesnt
-	  like that.
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp: Removed the initialization of a
+          buffer  from the constructor. Looks like I used to do it in some
+          life of mine and I dont which one it was. :( SunCC 4.2 doesnt
+          like that.
 
-	* tao/Resume_Handle.cpp: Added a #include of the reactor to fix
-	  compile errors in Sun CC4.2.
+        * tao/Resume_Handle.cpp: Added a #include of the reactor to fix
+          compile errors in Sun CC4.2.
 
 Fri Jul  6 13:19:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -1474,17 +1502,17 @@ Fri Jul  6 13:19:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp:
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ch.cpp:
           Added generation of 'TAO_EXPORT_MACRO' to class declaration.
-	  Thanks to Craig Rodrigues and Christopher Kohlhoff for helping to
-	  track this stuff down.
+          Thanks to Craig Rodrigues and Christopher Kohlhoff for helping to
+          track this stuff down.
 
          * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
           Changed generation of 'TAO_EXPORT_NESTED_MACRO' to 'TAO_EXPORT_MACRO'.
 
 Fri Jul  6 12:38:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp: Fixed a bug with thread-per-connection
-	  model. We dont need to send notify () to the reactor as there is
-	  no reactor.
+        * tao/Transport.cpp: Fixed a bug with thread-per-connection
+          model. We dont need to send notify () to the reactor as there is
+          no reactor.
 
 Fri Jul  6 11:27:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -1495,15 +1523,15 @@ Fri Jul  6 11:27:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Fri Jul  6 08:27:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Incoming_Message_Queue.h:
-	* tao/Resume_Handle.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h: Fixed fuzz errors.
+        * tao/Incoming_Message_Queue.h:
+        * tao/Resume_Handle.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h: Fixed fuzz errors.
 
 Fri Jul  6 08:14:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: Generated
-	  dependencies again.
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile: Generated
+          dependencies again.
 
 Fri Jul  6 07:43:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1520,739 +1548,739 @@ Fri Jul  6 07:38:55 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri Jul  6 07:38:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP.bor:
-	* orbsvcs/orbsvcs/SSLIOP.dsp: Added the new file
-	  IIOP_SSL_Transport.cpp  to the above files.
+        * orbsvcs/orbsvcs/SSLIOP.bor:
+        * orbsvcs/orbsvcs/SSLIOP.dsp: Added the new file
+          IIOP_SSL_Transport.cpp  to the above files.
 
 Fri Jul  6 07:12:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.av: Generated dependencies again. Looks
-	  like the last dependency generation did not do a good job. This
-	  should fix all the compile errors seen in the builds.
+        * orbsvcs/orbsvcs/Makefile.av: Generated dependencies again. Looks
+          like the last dependency generation did not do a good job. This
+          should fix all the compile errors seen in the builds.
 
 Fri Jul  6 06:56:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile.bor:
-	* tao/Strategies/Makefile.bor: Fixed the makefiles. Thanks to
-	  Johnny Willemsen for alerting me on this.
+        * tao/Makefile.bor:
+        * tao/Strategies/Makefile.bor: Fixed the makefiles. Thanks to
+          Johnny Willemsen for alerting me on this.
 
 Thu Jul  6 01:06:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/DIOP_Connection_Handler.h: Fixed a link error
-	  on Win32 builds.
+        * tao/Strategies/DIOP_Connection_Handler.h: Fixed a link error
+          on Win32 builds.
 
 Fri Jul  6 00:39:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/*/Makefile: Updated dependencies.
+        * orbsvcs/*/Makefile: Updated dependencies.
 
 Fri Jul  6 00:38:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/*/Makefile: Updated dependencies.
+        * examples/*/Makefile: Updated dependencies.
 
 Fri Jul  6 00:34:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/*/Makefile: Updated dependencies.
+        * performance-tests/*/Makefile: Updated dependencies.
 
 Fri Jul  6 00:27:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/*/Makefile: Updated dependencies.
+        * tests/*/Makefile: Updated dependencies.
 
 Thu Jul  6 00:16:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp:
-	* tao/Strategies/TAO_Strategies.dsp:
-	* tao/Strategies/TAO_Strategies_Static.dsp: Added the new files
-	  and removed old ones.
+        * tao/TAO_Static.dsp:
+        * tao/Strategies/TAO_Strategies.dsp:
+        * tao/Strategies/TAO_Strategies_Static.dsp: Added the new files
+          and removed old ones.
 
 Thu Jul  5 23:57:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/*/Makefile: Updated dependencies.
+        * tao/Makefile:
+        * tao/*/Makefile: Updated dependencies.
 
 Thu Jul  5 23:49:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP: Added IIOP_SSL_Transport to it.
+        * orbsvcs/orbsvcs/Makefile.SSLIOP: Added IIOP_SSL_Transport to it.
 
 Thu Jul  5 23:44:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/GIOP_Message_NonReactive_Base.h:
-	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp:
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.h:
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp:
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.inl:
-	* tao/GIOP_Message_Reactive_Handler.h:
-	* tao/GIOP_Message_Reactive_Handler.cpp:
-	* tao/GIOP_Message_Reactive_Handler.inl: Removed them from the
-	  main trunk. They are no longer needed.
+        * tao/Strategies/GIOP_Message_NonReactive_Base.h:
+        * tao/Strategies/GIOP_Message_NonReactive_Base.cpp:
+        * tao/Strategies/GIOP_Message_NonReactive_Handler.h:
+        * tao/Strategies/GIOP_Message_NonReactive_Handler.cpp:
+        * tao/Strategies/GIOP_Message_NonReactive_Handler.inl:
+        * tao/GIOP_Message_Reactive_Handler.h:
+        * tao/GIOP_Message_Reactive_Handler.cpp:
+        * tao/GIOP_Message_Reactive_Handler.inl: Removed them from the
+          main trunk. They are no longer needed.
 
 Thu Jul  5 23:42:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_State.i: Removed from the main trunk. Replaced
-	  that with GIOP_Message_State.inl.
+        * tao/GIOP_Message_State.i: Removed from the main trunk. Replaced
+          that with GIOP_Message_State.inl.
 
 Thu Jul  5 23:30:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	  The long awaited fix for bug 575 is finally in!! This has been
-	  merged  from bug_575_stage_2. The ChangeLog entries start here,
+          The long awaited fix for bug 575 is finally in!! This has been
+          merged  from bug_575_stage_2. The ChangeLog entries start here,
 
 Thu Jul  5 23:00:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Fixed some more
-	  compilation errors in g++.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Fixed some more
+          compilation errors in g++.
 
 Thu Jul  5 22:35:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp: Fixed compile
-	  errors in g++. The new IIOP_SSL_Transport classes now does the
-	  functionality of the IIOP_SSL_Connection_Handler classes. The
-	  connection handler classes exist now only to create the
-	  transport.
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp: Fixed compile
+          errors in g++. The new IIOP_SSL_Transport classes now does the
+          functionality of the IIOP_SSL_Connection_Handler classes. The
+          connection handler classes exist now only to create the
+          transport.
 
 Thu Jul  5 21:44:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp: New files for the
-	  SSLIOP.
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp: New files for the
+          SSLIOP.
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Moved
-	  the handle_input () from the connection handler to transport.
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Moved
+          the handle_input () from the connection handler to transport.
 
-	* tao/Strategies/DIOP_*:  Fixed it for the new setup. We now make
-	  a buffer of dgram size and use that to read messages.
+        * tao/Strategies/DIOP_*:  Fixed it for the new setup. We now make
+          a buffer of dgram size and use that to read messages.
 
 Thu Jul  5 14:44:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	Merged with the main trunk and moved it to a new branch by name
-	bug_575_stage_2.
+        Merged with the main trunk and moved it to a new branch by name
+        bug_575_stage_2.
 
 Wed Jul  4 18:53:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (recv_i): Added the
-	  error checking.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (recv_i): Added the
+          error checking.
 
-	* tao/Pluggable_Messaging.h: Made reset () as a pure virtual
-	  function.
+        * tao/Pluggable_Messaging.h: Made reset () as a pure virtual
+          function.
 
-	* tao/Strategies/UIOP_Transport.cpp: Removed the close_connection
-	  () call on TMS.
+        * tao/Strategies/UIOP_Transport.cpp: Removed the close_connection
+          () call on TMS.
 
-	* tao/LIST_OF_TODO: Updated..
+        * tao/LIST_OF_TODO: Updated..
 
 Wed Jul  4 18:45:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_State.inl (reset):
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Message_State.cpp:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.inl:
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Pluggable_Messaging.h:
-	* tao/Pluggable_Messaging.cpp: Added documentation.
+        * tao/GIOP_Message_State.inl (reset):
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.inl:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Pluggable_Messaging.h:
+        * tao/Pluggable_Messaging.cpp: Added documentation.
 
-	* tao/Transport.h:
-	* tao/Transport.cpp: Fixed a minor bug. In consolidate_message ()
-	  we were not checking the queue before processing the message on
-	  hand. Now we check the queue and process the head of the queue
-	  if it is not empty. In the process we add the message on hand in
-	  the queue.
+        * tao/Transport.h:
+        * tao/Transport.cpp: Fixed a minor bug. In consolidate_message ()
+          we were not checking the queue before processing the message on
+          hand. Now we check the queue and process the head of the queue
+          if it is not empty. In the process we add the message on hand in
+          the queue.
 
 Wed Jul  4 16:21:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp: Removed the connection_closed () from
-	  the recv_i () call.
+        * tao/IIOP_Transport.cpp: Removed the connection_closed () from
+          the recv_i () call.
 
-	* tao/Transport.h:
-	* tao/Transport.cpp: Added a number of comments and cleaned up the
-	  code for readability.
+        * tao/Transport.h:
+        * tao/Transport.cpp: Added a number of comments and cleaned up the
+          code for readability.
 
-	* tao/LIST_OF_TODO: Updated the list.
+        * tao/LIST_OF_TODO: Updated the list.
 
 Wed Jul  4 09:20:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.h (TAO_Transport): Added some documentation for
-	  the incoming_data_path.
+        * tao/Transport.h (TAO_Transport): Added some documentation for
+          the incoming_data_path.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:  Fixed the
-	  SSLIOP for the changes. Havent compiled this yet.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:  Fixed the
+          SSLIOP for the changes. Havent compiled this yet.
 
 Tue Jul  3 17:09:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Transport.cpp: Fixed a bug in
-	  consolidate_message (). The IDL_Cubit tests work fine with the
-	  SHMIOP & UIOP transports.
+        * tao/Strategies/SHMIOP_Transport.cpp: Fixed a bug in
+          consolidate_message (). The IDL_Cubit tests work fine with the
+          SHMIOP & UIOP transports.
 
 Tue Jul  3 16:29:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Transport.cpp: Fixed warnings and errors
-	  in g++.
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Transport.cpp: Fixed warnings and errors
+          in g++.
 
-	* tao/Strategies/UIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Transport.h:
-	* tao/Strategies/UIOP_Connection_Handler.h:
-	* tao/Strategies/UIOP_Connection_Handler.cpp: Fixed warnungs and
-	  errors in g++.
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.cpp: Fixed warnungs and
+          errors in g++.
 
-	* tao/IIOP_Connection_Handler.cpp: Used fetch_handle () to get the
-	  handle instead of the handle passed as an argument of the
-	  handle_input () call.
+        * tao/IIOP_Connection_Handler.cpp: Used fetch_handle () to get the
+          handle instead of the handle passed as an argument of the
+          handle_input () call.
 
-	* tao/Connection_Handler.h: Added a new #define and changed
-	  TAO_CONNECTION_HANDLER_BUF_SIZE as
-	  TAO_CONNECTION_HANDLER_STACK_BUF_SIZE.
+        * tao/Connection_Handler.h: Added a new #define and changed
+          TAO_CONNECTION_HANDLER_BUF_SIZE as
+          TAO_CONNECTION_HANDLER_STACK_BUF_SIZE.
 
 
 Tue Jul 03 15:45:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Transport.h:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Fixed the protocol
-	  to work  with the latest changes.
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp: Fixed the protocol
+          to work  with the latest changes.
 
-	* tao/Strategies/TAO_Strategies.dsp: Removed the
-	  GIOP_NonReactive_* files.
+        * tao/Strategies/TAO_Strategies.dsp: Removed the
+          GIOP_NonReactive_* files.
 
-	* tao/Resume_Handle.cpp: Fixed a bug in resume_handle (). If we
-	  have a null ORB_Core we just dont resume the handle.
+        * tao/Resume_Handle.cpp: Fixed a bug in resume_handle (). If we
+          have a null ORB_Core we just dont resume the handle.
 
 Mon Jul 02 23:16:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp:
-	* tao/IIOP_Transport.h: Removed some functions which would no
-	  longer be used.
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Transport.h: Removed some functions which would no
+          longer be used.
 
-	* tao/Transport.h: Added some documentation for the incoming data
-	  path.
+        * tao/Transport.h: Added some documentation for the incoming data
+          path.
 
-	* tao/Strategies/UIOP_Transport.h:
-	* tao/Strategies/UIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp: Brought them up in
-	  sync with IIOP.
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp: Brought them up in
+          sync with IIOP.
 
 Mon Jul 02 20:28:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	This checkin fixes many problems with multiple calls being read in
-	a single read.
+        This checkin fixes many problems with multiple calls being read in
+        a single read.
 
-	* tao/GIOP_Message_Base.cpp: Changed the way we calculate the
-	  remaining length that needs to be copied if the last read had
-	  left with a very small piece of message ie. less than 12 bytes
-	  in the queue.
+        * tao/GIOP_Message_Base.cpp: Changed the way we calculate the
+          remaining length that needs to be copied if the last read had
+          left with a very small piece of message ie. less than 12 bytes
+          in the queue.
 
-	* tao/GIOP_Message_State.cpp: Fixed a check condition before we go
-	  ahead to parse the header.
+        * tao/GIOP_Message_State.cpp: Fixed a check condition before we go
+          ahead to parse the header.
 
-	* tao/Incoming_Message_Queue.h:
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Incoming_Message_Queue.inl: Added a method set_flags
-	  (). Further the condition for resuming the handler has been
-	  relaxed. Clients of this class can decide not to resume handlers
-	  at all. This comes in handy at times. Also added a operator=
-	  method.
+        * tao/Incoming_Message_Queue.h:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.inl: Added a method set_flags
+          (). Further the condition for resuming the handler has been
+          relaxed. Clients of this class can decide not to resume handlers
+          at all. This comes in handy at times. Also added a operator=
+          method.
 
-	* tao/Transport.cpp:
-	* tao/Transport.h: One of the bigger problems have been
-	  solved. The way we now multiple oneways is like this
+        * tao/Transport.cpp:
+        * tao/Transport.h: One of the bigger problems have been
+          solved. The way we now multiple oneways is like this
 
-	  - The leader thread uses the transport and reads more messages
-	  - It splits up the messages in to pieces and queues them up.
-	  - It just takes one message and processes (the head of the
-	    queue). The changes above makes sure that only one of the
-	    message is processed.
-	  - Before processing if it finds one more message it sends a
-	    notify () to the reactor. An important point is that it does
-	    this without resuming the handler.
-	  - The notify call processes one more message. Before processing
-	    if it finds one more complete message it just sends another
-	    notify to the reactor.
-	  - The thread that reads the last complete message from the queue
-	    resumes the handler before processing the message.
+          - The leader thread uses the transport and reads more messages
+          - It splits up the messages in to pieces and queues them up.
+          - It just takes one message and processes (the head of the
+            queue). The changes above makes sure that only one of the
+            message is processed.
+          - Before processing if it finds one more message it sends a
+            notify () to the reactor. An important point is that it does
+            this without resuming the handler.
+          - The notify call processes one more message. Before processing
+            if it finds one more complete message it just sends another
+            notify to the reactor.
+          - The thread that reads the last complete message from the queue
+            resumes the handler before processing the message.
 
-	  By the above process we dont starve any thread and at the
-	  same time ensures concurrency within the ORB.
+          By the above process we dont starve any thread and at the
+          same time ensures concurrency within the ORB.
 
-	* tao/LIST_OF_TODO: Updated..
+        * tao/LIST_OF_TODO: Updated..
 
 Sun Jul 01 18:35:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Asynch_Reply_Dispatcher.h:
-	* tao/Asynch_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:  Applied the same
-	  optimization that was done in the last checkin. The last checkin
-	  works fine. It is no more a suspect.
+        * tao/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:  Applied the same
+          optimization that was done in the last checkin. The last checkin
+          works fine. It is no more a suspect.
 
 Sun Jul 01 18:05:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp: Fixed small problems in getting
-	  message types.
+        * tao/GIOP_Message_Base.cpp: Fixed small problems in getting
+          message types.
 
-	* tao/Synch_Reply_Dispatcher.h:
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/Pluggable_Messaging_Utils.cpp: Suspect optimisations added
-	  to create datablocks on stack.
+        * tao/Synch_Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/Pluggable_Messaging_Utils.cpp: Suspect optimisations added
+          to create datablocks on stack.
 
-	* tao/LIST_OF_TODO: Updated list..
+        * tao/LIST_OF_TODO: Updated list..
 
 Sun Jul 01 09:05:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport_Mux_Strategy.h:
-	* tao/Muxed_TMS.h:
-	* tao/Muxed_TMS.cpp:
-	* tao/Exclusive_TMS.cpp:
-	* tao/Exclusive_TMS.h: Removed commented out code. They have been
-	  commented out for sometime that we dont need them anymore.
+        * tao/Transport_Mux_Strategy.h:
+        * tao/Muxed_TMS.h:
+        * tao/Muxed_TMS.cpp:
+        * tao/Exclusive_TMS.cpp:
+        * tao/Exclusive_TMS.h: Removed commented out code. They have been
+          commented out for sometime that we dont need them anymore.
 
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Incoming_Message_Queue.inl:
-	* tao/Incoming_Message_Queue.h: Added lots of comments. Changed
-	  the name of the method copy_message () to copy_tail () and
-	  missing_data () to missing_data_tail (). Added a new static
-	  method TAO_Queued_Data::release () that releases a node.
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.inl:
+        * tao/Incoming_Message_Queue.h: Added lots of comments. Changed
+          the name of the method copy_message () to copy_tail () and
+          missing_data () to missing_data_tail (). Added a new static
+          method TAO_Queued_Data::release () that releases a node.
 
-	* tao/Transport.cpp: Accomodated the changes to the
-	  Incoming_Message_Queue to the Transport class.
+        * tao/Transport.cpp: Accomodated the changes to the
+          Incoming_Message_Queue to the Transport class.
 
-	* tao/LIST_OF_TODO: Updated ..
+        * tao/LIST_OF_TODO: Updated ..
 
 Sat Jun 30 13:00:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.h: Fixed a subtle bug while allocating
-	  memory for the datablock in the queue. Memory was allocated only
-	  for the exact number of bytes without thinking about the
-	  alignment. Increased the number of bytes allocated.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h: Fixed a subtle bug while allocating
+          memory for the datablock in the queue. Memory was allocated only
+          for the exact number of bytes without thinking about the
+          alignment. Increased the number of bytes allocated.
 
-	  Created the outgoing CDR streams on the stack with memory drawn
-	  from the TSS. We cannot share the buffers like the way it has
-	  been done so far.
+          Created the outgoing CDR streams on the stack with memory drawn
+          from the TSS. We cannot share the buffers like the way it has
+          been done so far.
 
-	* tao/IIOP_Transport.cpp: Increased the debug_level for a debug
-	  statement.
+        * tao/IIOP_Transport.cpp: Increased the debug_level for a debug
+          statement.
 
-	* This checkin fixes the AMI problems that have been seen so far.
+        * This checkin fixes the AMI problems that have been seen so far.
 
-	* tao/LIST_OF_TODO: Updated the list.
+        * tao/LIST_OF_TODO: Updated the list.
 
 Fri Jun 29 18:30:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/GIOP_Message_Base.cpp: Fixed a bug in calculating the number
-	  of bytes that  needs to be copied into queue.
+          of bytes that  needs to be copied into queue.
 
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Incoming_Message_Queue.h: Changed the signature of copy
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.h: Changed the signature of copy
           (). It returns the number of bytes copied instead of a void.
 
-	* tao/Transport.cpp (parse_consolidate_messages):
-	* tao/Transport.h: Added a new method parse_consolidate_messages
-	  () to the class. It does some common functaionalities like
-	  parsing the messages & consolidating the messages.
+        * tao/Transport.cpp (parse_consolidate_messages):
+        * tao/Transport.h: Added a new method parse_consolidate_messages
+          () to the class. It does some common functaionalities like
+          parsing the messages & consolidating the messages.
 
 Thu Jun 28 18:30:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Resume_Handle.cpp: Added a check for resumable_handlers
-	  before actually resuming the handle.
+        * tao/Resume_Handle.cpp: Added a check for resumable_handlers
+          before actually resuming the handle.
 
 Thu Jun 28 18:25:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp (process_queue_head):
-	* tao/Transport.h: Added a new method that would take the message
-	  from the head of the incoming queue and send it for processing.
+        * tao/Transport.cpp (process_queue_head):
+        * tao/Transport.h: Added a new method that would take the message
+          from the head of the incoming queue and send it for processing.
 
-	* tao/GIOP_Message_Base.cpp: Minor formatting.
+        * tao/GIOP_Message_Base.cpp: Minor formatting.
 
 Thu Jun 28 17:16:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.h:
-	* tao/Pluggable_Messaging.h: Removed all the arguments that had an
-	  TAO_ORB_Core as one of the arguments. GIOP classes hold a copy
-	  of the pointer to the ORB_Core and so it is no
-	  necessary. Removed the following methods
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/Pluggable_Messaging.h: Removed all the arguments that had an
+          TAO_ORB_Core as one of the arguments. GIOP classes hold a copy
+          of the pointer to the ORB_Core and so it is no
+          necessary. Removed the following methods
 
-	  - is_message_complete ()
-	  - message_type ()
+          - is_message_complete ()
+          - message_type ()
 
-	  The message_type () method is now local to the GIOP classes and
-	  it returns the Pluggable Message type from the
-	  GIOP_Message_State. This method is now used to fill the node
-	  with the right information type about the message.
+          The message_type () method is now local to the GIOP classes and
+          it returns the Pluggable Message type from the
+          GIOP_Message_State. This method is now used to fill the node
+          with the right information type about the message.
 
-	* tao/Transport.cpp: Used the information from the node of the
-	  queue to determine the type of message before processing it.
+        * tao/Transport.cpp: Used the information from the node of the
+          queue to determine the type of message before processing it.
 
 Thu Jun 28 15:12:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.i: Moved the get_queued_data () from the
-	  .i  file to the .cpp file.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.i: Moved the get_queued_data () from the
+          .i  file to the .cpp file.
 
-	* tao/Incoming_Message_Queue.h: #include'd a file.
-	* tao/Makefile: Added new files.
-	* tao/Resume_Handle.inl: Added the ACE_INLINE macros to the
-	  methods defined in this file.
+        * tao/Incoming_Message_Queue.h: #include'd a file.
+        * tao/Makefile: Added new files.
+        * tao/Resume_Handle.inl: Added the ACE_INLINE macros to the
+          methods defined in this file.
 
 Thu Jun 28 09:30:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.i:
-	* tao/GIOP_Message_Base.cpp: Made lots of changes to deal with the
-	  following
+        * tao/Transport.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.i:
+        * tao/GIOP_Message_Base.cpp: Made lots of changes to deal with the
+          following
 
-	  - to parse & queue up messages if we have read multiple messages.
-	  - to consolidate messages if we had read half of a message
-	  - to process a consolidated message.
+          - to parse & queue up messages if we have read multiple messages.
+          - to consolidate messages if we had read half of a message
+          - to process a consolidated message.
 
-	 We now use the node of the Incoming Message Queue to share data
-	 between the Transport layer and the GIOP layer.
+         We now use the node of the Incoming Message Queue to share data
+         between the Transport layer and the GIOP layer.
 
-	* tao/Incoming_Message_Queue.h:
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Incoming_Message_Queue.inl: Made the TAO_Queued_Data as a
-	  seperate class. This helped using the node of the queue to be
-	  shared between the GIOP layer. Removed many of the useless
-	  methods like wr_ptr (), is_message_complete (), add_message ()
-	  etc. We have the following methods that are more meaningful
+        * tao/Incoming_Message_Queue.h:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.inl: Made the TAO_Queued_Data as a
+          seperate class. This helped using the node of the queue to be
+          shared between the GIOP layer. Removed many of the useless
+          methods like wr_ptr (), is_message_complete (), add_message ()
+          etc. We have the following methods that are more meaningful
 
-	  - is_tail_complete ()
-	  - is_message_complete ()
-	  - dequeue_head ()
-	  - dequeue_tail ()
-	  - enqueue_tail ()
+          - is_tail_complete ()
+          - is_message_complete ()
+          - dequeue_head ()
+          - dequeue_tail ()
+          - enqueue_tail ()
 
-	 Added a static method get_queued_data () to create a node in the
-	 Message Queue.
+         Added a static method get_queued_data () to create a node in the
+         Message Queue.
 
-	 Added the protocol version information to the Queued Data.  We
-	 also need the message type and that has also been added.
+         Added the protocol version information to the Queued Data.  We
+         also need the message type and that has also been added.
 
-	* tao/Resume_Handle.h:
-	* tao/Resume_Handle.cpp:
-	* tao/Resume_Handle.inl: This is a utility class that is used to
-	  resume handlers. This works more or less similar to our
-	  ACE_GUARD macros, but uses a flag to keep track whether the
-	  handle has been resumed.
+        * tao/Resume_Handle.h:
+        * tao/Resume_Handle.cpp:
+        * tao/Resume_Handle.inl: This is a utility class that is used to
+          resume handlers. This works more or less similar to our
+          ACE_GUARD macros, but uses a flag to keep track whether the
+          handle has been resumed.
 
-	* tao/IIOP_Connection_Handler.cpp: Installed the Resume_Handle in
-	  handle_input () methods.
+        * tao/IIOP_Connection_Handler.cpp: Installed the Resume_Handle in
+          handle_input () methods.
 
-	* tao/Pluggable_Messaging.h: Removed the method  byte_order () and
-	  added the methods consolidate_node (), get_message_data () and
-	  extract_next_message ().
+        * tao/Pluggable_Messaging.h: Removed the method  byte_order () and
+          added the methods consolidate_node (), get_message_data () and
+          extract_next_message ().
 
-	* tao/Wait_On_Read.cpp:
-	* tao/Connection_Handler.cpp: Changes to keep in sync with the
-	  changes to the signature of handle_input_i () in Transport
-	  class.
+        * tao/Wait_On_Read.cpp:
+        * tao/Connection_Handler.cpp: Changes to keep in sync with the
+          changes to the signature of handle_input_i () in Transport
+          class.
 
-	* tao/LIST_OF_TODO: Updated the list of TODO's.
+        * tao/LIST_OF_TODO: Updated the list of TODO's.
 
 Mon Jun 25 19:21:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.i:
-	* tao/GIOP_Message_State.inl:
-	* tao/IIOP_Transport.cpp:
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Incoming_Message_Queue.h:
-	* tao/Incoming_Message_Queue.inl:
-	* tao/Pluggable_Messaging.h:
-	* tao/Transport.cpp:
-	* tao/Transport.h:  An inconsistent checkin only to transfer the
-	  files to the box at home.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.i:
+        * tao/GIOP_Message_State.inl:
+        * tao/IIOP_Transport.cpp:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.h:
+        * tao/Incoming_Message_Queue.inl:
+        * tao/Pluggable_Messaging.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:  An inconsistent checkin only to transfer the
+          files to the box at home.
 
 Mon Jun 25 12:10:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Incoming_Message_Queue.{h,cpp,inl}:
-	* tao/LIST_OF_TODO:
-	* tao/GIOP_Message_State.inl: Added these to my branch.
+        * tao/Incoming_Message_Queue.{h,cpp,inl}:
+        * tao/LIST_OF_TODO:
+        * tao/GIOP_Message_State.inl: Added these to my branch.
 
 Mon Jun 25 07:54:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/* : Merged the files from the main branch.
+        * tao/* : Merged the files from the main branch.
 
 Mon Jun 25 07:45:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Created this file.
+        * Created this file.
 
 Fri Jun 22 17:00:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/LIST_OF_TODO: Updated the list of TODO's.
+        * tao/LIST_OF_TODO: Updated the list of TODO's.
 
 Mon Jun 18 13:31:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Asynch_Reply_Dispatcher.cpp (dispatch_reply):
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/Transport.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Fixed warnings in
-	  g++ builds.
+        * tao/Asynch_Reply_Dispatcher.cpp (dispatch_reply):
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Transport.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Fixed warnings in
+          g++ builds.
 
 Sat Jun 17 17:46:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	This set of changes comes with complete revamping of the previous
-	design. The flaws with the previous design were as follows
-	(1) We were unnecessarily penalising large data blocks. We were
-	    trying to read a particular size of data till the data was
-	    completely removed from the socket. This was totally
-	    ridiculous because we were doing more reads than required.
+        This set of changes comes with complete revamping of the previous
+        design. The flaws with the previous design were as follows
+        (1) We were unnecessarily penalising large data blocks. We were
+            trying to read a particular size of data till the data was
+            completely removed from the socket. This was totally
+            ridiculous because we were doing more reads than required.
 
-	(2) The message block that was constructed on the stack with a
-	    buffer from stack never did what we wanted. It was allocating
-	    a data block on the heap and was thus spoiling whatever
-	    optimization that we had tried putting in.
+        (2) The message block that was constructed on the stack with a
+            buffer from stack never did what we wanted. It was allocating
+            a data block on the heap and was thus spoiling whatever
+            optimization that we had tried putting in.
 
-	(3) The incoming message Queue is now managed by the TAO_Transport
-	    object instead of the GIOP classes.
+        (3) The incoming message Queue is now managed by the TAO_Transport
+            object instead of the GIOP classes.
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.h: Removed the references to the incoming
-	  message queue. Implemention for two methods missing_data () and
-	  byte_order (). Added an extra argument to the methods
-	  process_request_message () and process_reply_message (). Used
-	  the incoming message block to create a input CDR with the
-	  DONT_DELETE flag so that the data block is not deleted after
-	  request processing.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h: Removed the references to the incoming
+          message queue. Implemention for two methods missing_data () and
+          byte_order (). Added an extra argument to the methods
+          process_request_message () and process_reply_message (). Used
+          the incoming message block to create a input CDR with the
+          DONT_DELETE flag so that the data block is not deleted after
+          request processing.
 
-	* tao/GIOP_Message_State.cpp: Removed the inclusion of
-	  Transport.h.
+        * tao/GIOP_Message_State.cpp: Removed the inclusion of
+          Transport.h.
 
-	* tao/Incoming_Message_Queue.h:
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Incoming_Message_Queue.inl: Added an argument to the
-	  add_message (). Further the implementation of add_message () has
-	  changed a bit. It now adds only a new message to the queue. It
-	  doesn't modify a half filled queue. The TAO_Transport object
-	  does that job. So declared the TAO_Transport as the friend class
-	  of the Incoming_Message_Queue.
+        * tao/Incoming_Message_Queue.h:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.inl: Added an argument to the
+          add_message (). Further the implementation of add_message () has
+          changed a bit. It now adds only a new message to the queue. It
+          doesn't modify a half filled queue. The TAO_Transport object
+          does that job. So declared the TAO_Transport as the friend class
+          of the Incoming_Message_Queue.
 
-	  Changed the name of the methods complete_message () as
-	  is_complete_message (). Removed the methods current_message ()&
-	  current_byte_order ().
+          Changed the name of the methods complete_message () as
+          is_complete_message (). Removed the methods current_message ()&
+          current_byte_order ().
 
-	  Added a new method copy_message () which copies messages into
-	  the half empty nodes.
+          Added a new method copy_message () which copies messages into
+          the half empty nodes.
 
-	  Added a method wr_ptr () to access the write pointer of the tail
-	  node that has halfempty message.
+          Added a method wr_ptr () to access the write pointer of the tail
+          node that has halfempty message.
 
-	* tao/Transport.cpp:
-	* tao/Transport.h: The Incoming Message Queue is now managed by
-	  this class. Added the following methods
-	  - missing_data ()
-	  - parse_incoming_messages ()
-	  - check_message_integrity ()
-	  - consolidate_message ()
-	  - conslodate_message_queue ()
+        * tao/Transport.cpp:
+        * tao/Transport.h: The Incoming Message Queue is now managed by
+          this class. Added the following methods
+          - missing_data ()
+          - parse_incoming_messages ()
+          - check_message_integrity ()
+          - consolidate_message ()
+          - conslodate_message_queue ()
 
-	* tao/Pluggable_Messaging.h: Added two new virtual functions
-	  missing_data () and byte_order ().
+        * tao/Pluggable_Messaging.h: Added two new virtual functions
+          missing_data () and byte_order ().
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i: Added an accessor for the locking_strategy used
-	  for the CDR blocks.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i: Added an accessor for the locking_strategy used
+          for the CDR blocks.
 
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/Asynch_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Changed the
-	  exchange_data_block () to clone_from () which is a new method in
-	  ACE_InputCDR.
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Changed the
+          exchange_data_block () to clone_from () which is a new method in
+          ACE_InputCDR.
 
-	* tao/LIST_OF_TODO: Updated the list
+        * tao/LIST_OF_TODO: Updated the list
 
 Sat Jun 16 15:49:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	* tao/Asynch_Reply_Dispatcher.cpp:
-	* tao/CDR.cpp:
-	* tao/CDR.h:
-	* tao/CDR.i:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/IIOP_Profile.cpp:
-	* tao/Invocation.cpp:
-	* tao/ORB.cpp:
-	* tao/Pluggable_Messaging_Utils.cpp:
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/TAO_Server_Request.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Integrated some
-	  of the changes from the main trunk in this branch.
+        * tao/Any.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/CDR.cpp:
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/Invocation.cpp:
+        * tao/ORB.cpp:
+        * tao/Pluggable_Messaging_Utils.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Integrated some
+          of the changes from the main trunk in this branch.
 
 Wed Jun 13 17:55:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Incoming_Message_Queue.inl: Fixed a bad way to use the tail
-	  of the circular linked list. This is now replaced by the size of
-	  the linked list. This fixes quite a few errors.
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.inl: Fixed a bad way to use the tail
+          of the circular linked list. This is now replaced by the size of
+          the linked list. This fixes quite a few errors.
 
-	* tao/Transport.cpp: On read () if we get errno == EWOULDBLOCK we
-	  were closing the connection prematurely. This is not right. We
-	  should only return a 0 to the reactor, so that it can call us
-	  back when there is data in the socket.
+        * tao/Transport.cpp: On read () if we get errno == EWOULDBLOCK we
+          were closing the connection prematurely. This is not right. We
+          should only return a 0 to the reactor, so that it can call us
+          back when there is data in the socket.
 
 Wed Jun 13 10:45:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp (process_reply_message): Fixed the
-	  reply parsing and generation of the CDR stream that is passed on
-	  to the higher layers of the ORB.
+        * tao/GIOP_Message_Base.cpp (process_reply_message): Fixed the
+          reply parsing and generation of the CDR stream that is passed on
+          to the higher layers of the ORB.
 
 Wed Jun 13 07:25:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile: Added new files.
-	* tao/Exclusive_TMS.cpp: Removed some commented code.
+        * tao/Makefile: Added new files.
+        * tao/Exclusive_TMS.cpp: Removed some commented code.
 
 Tue Jun  12 18:42:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Message_State.inl: The message_size () now returns the
-	  payload size + the GIOP header length. Added a new method
-	  payload_size () that returns the payload size alone.
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.inl: The message_size () now returns the
+          payload size + the GIOP header length. Added a new method
+          payload_size () that returns the payload size alone.
 
-	* tao/GIOP_Message_Base.cpp: Fixed a warning with g++ builds.
+        * tao/GIOP_Message_Base.cpp: Fixed a warning with g++ builds.
 
-	* tao/Connection_Handler.h:
-	* tao/Connection_Handler.cpp: The svc_i () method now calls
-	  handle_input_i () on the transport instead of the method in the
-	  same class. The handle_input_i () in the TAO_Connection_Handler
-	  class has been removed as it is no longer used.
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp: The svc_i () method now calls
+          handle_input_i () on the transport instead of the method in the
+          same class. The handle_input_i () in the TAO_Connection_Handler
+          class has been removed as it is no longer used.
 
-	* tao/IIOP_Connection_Handler.h:
-	* tao/IIOP_Connection_Handler.cpp: Removed the implementation of
-	  handle_input_i ().
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp: Removed the implementation of
+          handle_input_i ().
 
-	* tao/Incoming_Message_Queue.cpp: When trying to make a new data
-	  block we dont add the size of GIOP header. The message_size ()
-	  now returns with that value.
+        * tao/Incoming_Message_Queue.cpp: When trying to make a new data
+          block we dont add the size of GIOP header. The message_size ()
+          now returns with that value.
 
-	* tao/Incoming_Message_Queue.inl: Fixed a link error in g++
-	  builds.
+        * tao/Incoming_Message_Queue.inl: Fixed a link error in g++
+          builds.
 
 Tue Jun  12 17:42:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	First set of checkins for big two ways.
+        First set of checkins for big two ways.
 
-	* tao/Connection_Handler.h: Added #define for the default
-	  buffer size . Not sure yet whether this is the right place for
-	  it.
+        * tao/Connection_Handler.h: Added #define for the default
+          buffer size . Not sure yet whether this is the right place for
+          it.
 
-	* tao/Incoming_Message_Queue.h:
-	* tao/Incoming_Message_Queue.cpp:
-	* tao/Incoming_Message_Queue.inl: Queue up the incoming
-	  messages. We form a circular linked list of messages that are
-	  bigger than a particular buffer size. During processing we take
-	  messages of the queue to pass it onto the higher layers of the
-	  ORB.
+        * tao/Incoming_Message_Queue.h:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.inl: Queue up the incoming
+          messages. We form a circular linked list of messages that are
+          bigger than a particular buffer size. During processing we take
+          messages of the queue to pass it onto the higher layers of the
+          ORB.
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.h: Added support for big two way
-	  requests. If the message has only been partially read we add the
-	  message in the queue and then go for the next read. During
-	  processing we check if the queue has messages before processing
-	  the message on hand.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h: Added support for big two way
+          requests. If the message has only been partially read we add the
+          message in the queue and then go for the next read. During
+          processing we check if the queue has messages before processing
+          the message on hand.
 
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Message_State.cpp:
-	* tao/GIOP_Message_State.inl: Added accessor methods.
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.inl: Added accessor methods.
 
-	* tao/Transport.cpp: Added support for bigger two ways. If we
-	  receive a two way bigger than a particular size we read and
-	  queue the message and do a further read to retrieve the rest of
-	  the message.
+        * tao/Transport.cpp: Added support for bigger two ways. If we
+          receive a two way bigger than a particular size we read and
+          queue the message and do a further read to retrieve the rest of
+          the message.
 
-	* tao/TAO.dsp: Added new files.
-	* tao/default_resource.cpp: For single threaded configuration we
-	  have been creating a locked data block and that seems to defy
-	  logic. We now should create a lock free datablock for single
-	  threaded configurations.
+        * tao/TAO.dsp: Added new files.
+        * tao/default_resource.cpp: For single threaded configuration we
+          have been creating a locked data block and that seems to defy
+          logic. We now should create a lock free datablock for single
+          threaded configurations.
 
 Sat Jun  2 12:02:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/* : Merged with the main trunk.
+        * tao/* : Merged with the main trunk.
 
 Fri Jun  1 17:22:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_State.cpp (parse_message_header_i):
-	* tao/Connection_Handler.cpp:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/Makefile:
-	* tao/Transport.cpp: Fixed warnings and errors in Linux g++.
+        * tao/GIOP_Message_State.cpp (parse_message_header_i):
+        * tao/Connection_Handler.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Makefile:
+        * tao/Transport.cpp: Fixed warnings and errors in Linux g++.
 
 Thu Jun 01 13:39:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp:
-	* tao/Transport.h:  Added the following methods -- handle_input_i
-	  (), process_parsed_message (). The handle_input_i () creates a
-	  buffer on the stack. It uses the buffer to read the
-	  messages. Any errors in read () or dealt here directly. The read
-	  message is then parsed and processed by the GIOP classes. Moved
-	  most of the code for processing here as they seem to be common
-	  between different transport protocols. Once we have received a
-	  full message, we just resume the handler and go ahead with
-	  processing the message.
+        * tao/Transport.cpp:
+        * tao/Transport.h:  Added the following methods -- handle_input_i
+          (), process_parsed_message (). The handle_input_i () creates a
+          buffer on the stack. It uses the buffer to read the
+          messages. Any errors in read () or dealt here directly. The read
+          message is then parsed and processed by the GIOP classes. Moved
+          most of the code for processing here as they seem to be common
+          between different transport protocols. Once we have received a
+          full message, we just resume the handler and go ahead with
+          processing the message.
 
-	* tao/IIOP_Connection_Handler.cpp (handle_input ()): Calls
-	  handle_input_i () on the transport.
+        * tao/IIOP_Connection_Handler.cpp (handle_input ()): Calls
+          handle_input_i () on the transport.
 
-	* tao/Connection_Handler.h:
-	* tao/Connection_Handler.cpp:  The svc_i () calls the
-	  handle_input_i () on the transport instead of the same call on
-	  the connection handler. This way we should be able to share the
-	  same code among different protocol objects.
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp:  The svc_i () calls the
+          handle_input_i () on the transport instead of the same call on
+          the connection handler. This way we should be able to share the
+          same code among different protocol objects.
 
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Message_State.cpp: Much of the message parsing and
-	  state information is stored here.
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.cpp: Much of the message parsing and
+          state information is stored here.
 
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/Pluggable_Messaging.h: made some changes to suit the
-	  above. But more changes could come in, to suit different
-	  protocols. We may want to change the interfaces in
-	  Pluggable_Messaging to give a much cleaner interface to the
-	  world.
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Pluggable_Messaging.h: made some changes to suit the
+          above. But more changes could come in, to suit different
+          protocols. We may want to change the interfaces in
+          Pluggable_Messaging to give a much cleaner interface to the
+          world.
 
-	* tao/Wait_On_Read.cpp: Used the handle_input_i () on the
-	  transport for processing the incoming data.
+        * tao/Wait_On_Read.cpp: Used the handle_input_i () on the
+          transport for processing the incoming data.
 
-	* tao/TAO.dsp:
-	* tao/PortableServer/TAO_PortableServer.dsp: Added new files and
-	  removed files from GIOP_Lite in the first round.
+        * tao/TAO.dsp:
+        * tao/PortableServer/TAO_PortableServer.dsp: Added new files and
+          removed files from GIOP_Lite in the first round.
 
-	* tao/GIOP_Message_Reactive_Handler.cpp:
-	* tao/GIOP_Message_Reactive_Handler.h: Looks like these files
-	  would be removed during the final merge.
+        * tao/GIOP_Message_Reactive_Handler.cpp:
+        * tao/GIOP_Message_Reactive_Handler.h: Looks like these files
+          would be removed during the final merge.
 
-	The above checkins works for simple two way calls. The
-	BiDirectional_NestedUpcall test works with the TP_Reactor. This
-	works on Win32.
+        The above checkins works for simple two way calls. The
+        BiDirectional_NestedUpcall test works with the TP_Reactor. This
+        works on Win32.
 
 
 Thu May 24 12:19:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.h: Added some design forces for the input data
-	  path.
+        * tao/Transport.h: Added some design forces for the input data
+          path.
 
-	End of ChangeLog entries from branch bug_575_stage_2.
+        End of ChangeLog entries from branch bug_575_stage_2.
 
 Thu Jul  5 22:04:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/LongUpcalls/run_ami_test.pl: Adding a new perl script to
-	  this test. This is supposed to fail in the daily builds as this
-	  needs bug fix 575.
+        * tests/LongUpcalls/run_ami_test.pl: Adding a new perl script to
+          this test. This is supposed to fail in the daily builds as this
+          needs bug fix 575.
 
 Thu Jul  5 21:16:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -2293,7 +2321,7 @@ Thu Jul  5 04:53:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 Wed Jul  4 09:53:01 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/Strategies/TAO_Strategies_Static.dsp:
+        * tao/Strategies/TAO_Strategies_Static.dsp:
 
           Updated static build with DIOP files.
 
@@ -2333,18 +2361,18 @@ Wed Jul  4 14:05:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Jul  3 20:09:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/Strategies/TAO_Strategies.dsp:
+        * tao/Strategies/TAO_Strategies.dsp:
 
-	  Added DIOP source files to project.
+          Added DIOP source files to project.
 
 Tue Jul  3 20:09:58 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/Basic/Makefile:
-	* examples/PluggableUDP/tests/Performance/Makefile:
-	* examples/PluggableUDP/tests/SimplePerformance/Makefile:
-	* tao/Strategies/Makefile:
+        * examples/PluggableUDP/tests/Basic/Makefile:
+        * examples/PluggableUDP/tests/Performance/Makefile:
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile:
+        * tao/Strategies/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Jul  3 18:25:41 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -2500,9 +2528,9 @@ Mon Jul  2 19:32:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul  2 17:06:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Initialization of the transport_cache ()
-	  should preceed the preconnects (). Thanks to Irfan for pointing
-	  this out.
+        * tao/ORB_Core.cpp: Initialization of the transport_cache ()
+          should preceed the preconnects (). Thanks to Irfan for pointing
+          this out.
 
 Mon Jul  2 15:53:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -2523,11 +2551,11 @@ Mon Jul  2 15:53:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul  2 14:29:49 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
 
-	  Removed duplicate ACE and TAO library includes.  Should fix KCC
-	  linker warnings.
+          Removed duplicate ACE and TAO library includes.  Should fix KCC
+          linker warnings.
 
 Mon Jul 2  14:50:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -2550,9 +2578,9 @@ Mon Jul  2 13:37:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jul  2 13:18:14 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* Moved all the ChangeLog-* files into the new ChangeLogs
-	  directory.  Thanks to Holger P . Krekel <krekel@merlinux.de> for
- 	  this suggestion.
+        * Moved all the ChangeLog-* files into the new ChangeLogs
+          directory.  Thanks to Holger P . Krekel <krekel@merlinux.de> for
+          this suggestion.
 
 Mon Jul  2 10:57:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 

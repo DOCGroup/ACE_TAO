@@ -34,13 +34,7 @@ RT_Properties::read_from (const char *file_name,
   unsigned int i = 0;
   while (fscanf (fp, "%s", string_field) != EOF )
     {
-      if (ACE_OS_String::strcmp (string_field, "IOR_Source") == 0)
-        {
-          fscanf (fp, "%s", string_field);
-          rt_properties->ior_source (string_field);
-        }
-
-      else if (ACE_OS_String::strcmp (string_field, "Priority") == 0)
+      if (ACE_OS_String::strcmp (string_field, "Priority") == 0)
         {
           fscanf (fp, "%d", &int_field);
           rt_properties->priority (int_field);
@@ -105,4 +99,3 @@ RT_Properties::ior_source (void)
 {
   return this->ior_source_;
 }
-
