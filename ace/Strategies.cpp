@@ -62,12 +62,4 @@ ACE_ReactorEx_Notification_Strategy::notify (ACE_Event_Handler *eh,
   return this->reactorex_->notify (eh, mask);
 }
 
-ACE_Upcall_Strategy::ACE_Upcall_Strategy (void)
-{
-}
-
-ACE_Upcall_Strategy::~ACE_Upcall_Strategy (void)
-{
-}
-
 #endif /* ACE_STRATEGIES_C */
