@@ -53,6 +53,8 @@ TAO/orbsvcs/orbsvcs/CosLifeCycle
 TAO/orbsvcs/orbsvcs/CosTime
 TAO/orbsvcs/orbsvcs/CosNotification
 TAO/orbsvcs/orbsvcs/CosNotification_Skel
+TAO/orbsvcs/orbsvcs/CosNotification_Serv
+TAO/orbsvcs/orbsvcs/CosNotification_Persist
 TAO/orbsvcs/orbsvcs/DsLogAdmin
 TAO/orbsvcs/orbsvcs/DsEventLogAdmin
 TAO/orbsvcs/orbsvcs/DsNotifyLogAdmin
@@ -66,7 +68,15 @@ TAO/orbsvcs/orbsvcs/CosLoadBalancing
 TAO/orbsvcs/orbsvcs/IFRService
 TAO/orbsvcs/orbsvcs/RTCORBAEvent
 TAO/orbsvcs/orbsvcs/RT_Notification
+TAO/orbsvcs/orbsvcs/Security
 TAO/orbsvcs/Naming_Service/Naming_Service
+TAO/orbsvcs/ImplRepo_Service/ImR_Activator_IDL
+TAO/orbsvcs/ImplRepo_Service/ImR_Locator_IDL
+TAO/orbsvcs/ImplRepo_Service/ImR_Activator
+TAO/orbsvcs/ImplRepo_Service/ImR_Activator_Service
+TAO/orbsvcs/ImplRepo_Service/ImR_Locator
+TAO/orbsvcs/ImplRepo_Service/ImR_Locator_Service
+TAO/orbsvcs/ImplRepo_Service/tao_imr
 TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Lib
 TAO/orbsvcs/orbsvcs/FTRT_ClientORB
 TAO/orbsvcs/tests/Event/lib/Event_Test_Lib

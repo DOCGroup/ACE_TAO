@@ -1,3 +1,11 @@
+Wed Nov 24 13:32:32 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/msvc_static_order.lst:
+
+          Added the remaining CosNotification libraries, Security library
+          and the ImplRepo_Service projects to ensure that things are built
+          in the correct order.
+
 Wed Nov 24 12:24:57 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/notification_serv.mpb:
