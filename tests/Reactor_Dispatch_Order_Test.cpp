@@ -107,7 +107,7 @@ Handler::handle_input (ACE_HANDLE fd)
                buffer,
                sizeof buffer);
 
-  ACE_ASSERT (result == ACE_OS::strlen (message));
+  ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
   buffer[result] = '\0';
 
   ACE_DEBUG ((LM_DEBUG,
@@ -132,7 +132,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
                  ACE_OS::strlen (message));
-  ACE_ASSERT (result == ACE_OS::strlen (message));
+  ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
 
   // This should trigger a call to <handle_timeout>.
   long retn =
@@ -151,7 +151,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Dispatch_Order_Test"));
 

@@ -1,3 +1,7 @@
+Wed Mar 27 16:32:55 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Reactor_Dispatch_Order_Test.cpp: Minor compilation fixes.
+
 Wed Mar 27 15:10:27 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Reactor_Dispatch_Order_Test: Added a new test to check the
