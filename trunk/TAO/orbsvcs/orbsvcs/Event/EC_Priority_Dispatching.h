@@ -35,7 +35,7 @@
 
 class TAO_EC_Dispatching_Task;
 
-class TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
+class TAO_ORBSVCS_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispatching
 {
   // = TITLE
   //   Dispatching strategy that minimizes priority inversion.
