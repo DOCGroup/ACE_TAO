@@ -294,6 +294,9 @@ typedef unsigned __int64 ACE_UINT64;
 // Compiler/platform has thread-specific storage
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
+// Win32 doesn't have fcntl
+#define ACE_LACKS_FCNTL
+
 // must have _MT defined to include multithreading
 // features from win32 headers
 # if !defined(_MT)
