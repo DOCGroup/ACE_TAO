@@ -79,6 +79,12 @@ public:
   // passed on to the appropriate states.
 
 protected:
+
+#if 0
+  // It would be really cool to have something like this. But, as they
+  // are along the critical path such fancy stuff results in reduced
+  // performance. But let it me here till we get to a time where in we
+  // are forced to use these methods
   const size_t header_len (void);
   // This will give the size of the header for different versions of
   // GIOP. 
@@ -104,6 +110,7 @@ protected:
   // versions of GIOP
   // @@The above  methods may not be required. But we have it for a
   // later date use wherein things can changes in GIOP
+#endif /*if 0*/
 
   int  send_error (TAO_Transport *transport);
   // Send error messages
@@ -146,7 +153,7 @@ private:
   // Close a connection, first sending GIOP::CloseConnection.
 };
 
-const size_t TAO_GIOP_HEADER_LEN = 12;
+const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
 const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
 const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
 const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;

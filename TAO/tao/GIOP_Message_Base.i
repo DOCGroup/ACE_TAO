@@ -4,10 +4,11 @@
 //
 // GIOP_Message_Base
 //
+# if 0
 ACE_INLINE const size_t
 TAO_GIOP_Message_Base::header_len (void)
 {
-  return TAO_GIOP_HEADER_LEN;
+  return TAO_GIOP_MESSAGE_HEADER_LEN;
 }
 
 ACE_INLINE const size_t
@@ -39,6 +40,8 @@ TAO_GIOP_Message_Base::message_type_offset (void)
 {
   return TAO_GIOP_MESSAGE_TYPE_OFFSET;
 }
+
+#endif /*if 0*/
 
 
 ACE_INLINE int
@@ -88,7 +91,7 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
   if (this->minor_version () == 0 &&
       this->major_version () == 1)
     {
-      state->byte_order = buf[this->flags_offset ()];
+      state->byte_order = buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET];
       if (TAO_debug_level > 2
           && state->byte_order != 0 && state->byte_order != 1)
         {
@@ -102,17 +105,17 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
   else
     {
       state->byte_order     =
-        (CORBA::Octet) (buf[this->flags_offset ()]& 0x01);
+        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x01);
       state->more_fragments =
-        (CORBA::Octet) (buf[this->flags_offset ()]& 0x02);
+        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
 
       if (TAO_debug_level > 2
-          && (buf[this->flags_offset ()] & ~0x3) != 0)
+          && (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("TAO (%P|%t) invalid flags for <%d>")
                       ASYS_TEXT (" for version <%d %d> \n"),
-                      buf[this->flags_offset ()],
+                      buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
                       this->major_version (),
                       this->minor_version ()));
           return -1;
@@ -120,13 +123,13 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
     }
 
   // Get the message type
-  state->message_type = buf[this->message_type_offset ()];
+  state->message_type = buf[TAO_GIOP_MESSAGE_TYPE_OFFSET];
 
   // Reset our input CDR stream
   state->cdr.reset_byte_order (state->byte_order);
 
 
-  state->cdr.skip_bytes (this->message_size_offset ());
+  state->cdr.skip_bytes (TAO_GIOP_MESSAGE_SIZE_OFFSET);
   state->cdr.read_ulong (state->message_size);
 
   if (TAO_debug_level > 2)
