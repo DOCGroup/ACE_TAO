@@ -1,3 +1,21 @@
+Tue Aug  5 05:11:25 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+          Added #inlcude Null_Mutex.h.
+
+        * orbsvcs/examples/Notify/Filter/Filter.h:
+        * orbsvcs/examples/Notify/Lanes/Consumer.h:
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.h:
+        * orbsvcs/examples/Notify/Lanes/Supplier.h:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.h:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.h:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.h:
+        * orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.cpp:
+          Added #include SString.h.
+
 Mon Aug  4 23:15:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFRService/Container_i.cpp:
