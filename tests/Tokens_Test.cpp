@@ -36,7 +36,7 @@
 
 ACE_RCSID(tests, Tokens_Test, "$Id$")
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TOKENS_LIBRARY)
 
 typedef ACE_Token_Invariant_Manager TOKEN_INVARIANTS;
 
@@ -65,7 +65,8 @@ run_thread (void *vp)
   collection.insert (*(tp->token1_));
   collection.insert (*(tp->token2_));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) new thread.\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) new thread.\n")));
   thread_start->wait ();
 
   int count = 50;
@@ -75,7 +76,8 @@ run_thread (void *vp)
         {
           if (ACE_OS::last_error () == EDEADLK)
             {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("deadlock detected in acquire")));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("deadlock detected in acquire")));
               continue;
             }
           ACE_ERROR ((LM_ERROR,
@@ -87,7 +89,9 @@ run_thread (void *vp)
       ACE_ASSERT ((TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1) ||
                   (TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1));
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) %s acquired.\n"), collection.name ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) %s acquired.\n"),
+                  collection.name ()));
 
       TOKEN_INVARIANTS::instance ()->releasing (tp->token1_);
       TOKEN_INVARIANTS::instance ()->releasing (tp->token2_);
@@ -96,10 +100,12 @@ run_thread (void *vp)
         {
           if (ACE_OS::last_error () == EDEADLK)
             {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("deadlock detected")));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("deadlock detected")));
               goto deadlock;
             }
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p renew failed\n"),
+          ACE_ERROR ((LM_E
+                      RROR, ACE_TEXT ("(%t) %p renew failed\n"),
                       ACE_TEXT ("run_thread")));
           return (void *) -1;
         }
@@ -107,7 +113,9 @@ run_thread (void *vp)
       ACE_ASSERT (TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1 ||
                   TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1);
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) %s renewed.\n"), collection.name ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) %s renewed.\n"),
+                  collection.name ()));
 
     deadlock:
 
@@ -116,15 +124,20 @@ run_thread (void *vp)
 
       if (collection.release () == -1)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p release failed\n"),ACE_TEXT ("run_thread")));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p release failed\n"),
+                      ACE_TEXT ("run_thread")));
           return (void *) -1;
         }
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) %s released.\n"), collection.name ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) %s released.\n"),
+                  collection.name ()));
     }
 
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) thread finished.\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) thread finished.\n")));
 
   return 0;
 }
@@ -156,24 +169,36 @@ run_test (ACE_Token_Proxy *A,
   ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-                 (void *) &tp1, THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn 1 failed")), -1);
+                 (void *) &tp1,
+                  THR_BOUND) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("spawn 1 failed")),
+                      -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-                 (void *) &tp2, THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn 2 failed")), -1);
+                 (void *) &tp2,
+                  THR_BOUND) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("spawn 2 failed")),
+                      -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-                 (void *) &tp3, THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn 3 failed")), -1);
+                 (void *) &tp3,
+                  THR_BOUND) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("spawn 3 failed")), -1);
 
   // Wait for all threads to exit.
   mgr->wait ();
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test finished.\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Test finished.\n")));
   return 0;
 }
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS && ACE_HAS_TOKENS_LIBRARY */
 
 int
 main (int, ACE_TCHAR *[])
@@ -182,11 +207,21 @@ main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   ACE_Token_Proxy *A = 0, *B = 0, *R = 0, *W = 0;
 
-  ACE_NEW_RETURN (A, ACE_Local_Mutex (ACE_TEXT ("L Mutex A"), 0, 0), -1);
-  ACE_NEW_RETURN (B, ACE_Local_Mutex (ACE_TEXT ("L Mutex B"), 0, 0), -1);
-  ACE_NEW_RETURN (R, ACE_Local_RLock (ACE_TEXT ("L Reader Lock"), 0, 0), -1);
-  ACE_NEW_RETURN (W, ACE_Local_WLock (ACE_TEXT ("L Writer Lock"), 0, 0), -1);
-  ACE_NEW_RETURN (thread_start, ACE_Barrier (3), -1);
+  ACE_NEW_RETURN (A,
+                  ACE_Local_Mutex (ACE_TEXT ("L Mutex A"), 0, 0),
+                  -1);
+  ACE_NEW_RETURN (B,
+                  ACE_Local_Mutex (ACE_TEXT ("L Mutex B"), 0, 0), 
+                  -1);
+  ACE_NEW_RETURN (R,
+                  ACE_Local_RLock (ACE_TEXT ("L Reader Lock"), 0, 0), 
+                  -1);
+  ACE_NEW_RETURN (W,
+                  ACE_Local_WLock (ACE_TEXT ("L Writer Lock"), 0, 0), 
+                  -1);
+  ACE_NEW_RETURN (thread_start,
+                  ACE_Barrier (3), 
+                  -1);
 
   run_test (A, B, R, W);
 
@@ -201,16 +236,20 @@ main (int, ACE_TCHAR *[])
   ACE_Process_Options options;
   options.command_line (cl);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forking Token Service.\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Forking Token Service.\n")));
 
   // Start up the token server for the remote test.
   ACE_Process new_process;
   if (new_process.spawn (options) == -1)
-    ACE_ERROR ((LM_DEBUG, ACE_TEXT ("%n; %p (%s), will not run remote test.\n"),
-               ACE_TEXT ("Server fork failed"), cl));
+    ACE_ERROR ((LM_DEBUG,
+                ACE_TEXT ("%n; %p (%s), will not run remote test.\n"),
+                ACE_TEXT ("Server fork failed"),
+                cl));
   else
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server forked with pid = %d.\n"),
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Server forked with pid = %d.\n"),
                   new_process.getpid ()));
 
       // Wait for the server to start.
@@ -218,7 +257,8 @@ main (int, ACE_TCHAR *[])
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Using Token Server on %s at port %d.\n"),
-                  server_host, server_port));
+                  server_host,
+                  server_port));
       ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port,
                                                            server_host));
 
@@ -227,10 +267,18 @@ main (int, ACE_TCHAR *[])
       delete R;
       delete W;
 
-      ACE_NEW_RETURN (A, ACE_Remote_Mutex (ACE_TEXT ("R Mutex A"), 0, 1), -1);
-      ACE_NEW_RETURN (B, ACE_Remote_Mutex (ACE_TEXT ("R Mutex B"), 0, 1), -1);
-      ACE_NEW_RETURN (R, ACE_Remote_RLock (ACE_TEXT ("R Reader Lock"), 0, 1), -1);
-      ACE_NEW_RETURN (W, ACE_Remote_WLock (ACE_TEXT ("R Writer Lock"), 0, 1), -1);
+      ACE_NEW_RETURN (A,
+                      ACE_Remote_Mutex (ACE_TEXT ("R Mutex A"), 0, 1), 
+                      -1);
+      ACE_NEW_RETURN (B,
+                      ACE_Remote_Mutex (ACE_TEXT ("R Mutex B"), 0, 1),
+                      -1);
+      ACE_NEW_RETURN (R,
+                      ACE_Remote_RLock (ACE_TEXT ("R Reader Lock"), 0, 1), 
+                      -1);
+      ACE_NEW_RETURN (W,
+                      ACE_Remote_WLock (ACE_TEXT ("R Writer Lock"), 0, 1), 
+                      -1);
 
       run_test (A, B, R, W);
 
@@ -239,7 +287,9 @@ main (int, ACE_TCHAR *[])
 
       // Kill the token server.
       if (new_process.terminate () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Kill failed.\n")), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Kill failed.\n")), 
+                          -1);
     }
 
   delete thread_start;
@@ -249,7 +299,11 @@ main (int, ACE_TCHAR *[])
   delete R;
   delete W;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) main thread exiting.\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) main thread exiting.\n")));
+#elif defined (ACE_HAS_TOKENS_LIBRARY)
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("ACE must be compiled with -DACE_HAS_TOKENS_LIBRARY to run this test\n")));
 #else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("threads not supported on this platform\n")));

@@ -8,6 +8,8 @@
 #include "ace/Remote_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 ACE_RCSID(ace, Remote_Tokens, "$Id$")
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -432,3 +434,5 @@ template class ACE_Singleton <ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX>;
 #pragma instantiate ACE_TSS <ACE_SOCK_Stream>
 #pragma instantiate ACE_Singleton <ACE_TSS_Connection, ACE_TSS_CONNECTION_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_HAS_TOKENS_LIBRARY */

@@ -1,4 +1,3 @@
-// Token_Collection.cpp
 // $Id$
 
 #include "ace/Token_Collection.h"
@@ -6,6 +5,8 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Collection.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 ACE_RCSID(ace, Token_Collection, "$Id$")
 
@@ -300,3 +301,5 @@ template class ACE_Map_Entry<ACE_Token_Name, ACE_Token_Proxy *>;
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_Token_Proxy *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_HAS_TOKENS_LIBRARY */

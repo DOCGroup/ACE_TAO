@@ -1,3 +1,22 @@
+Sun Feb 18 09:59:18 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+        * ace/Object_Manager.cpp: Added a check for ACE_HAS_TOKENS_LIBRARY
+	  so we can skip initializing certain things if that macro is
+ 	  undefined.
+  
+	* ace/Token_Collection.*:
+	* ace/Token_Invariants.*: 
+	* ace/Token_Manager.*:
+	* ace/Local_Tokens.*: 
+  	* ace/Remote_Tokens.*: 
+	* ace/Token_Request_Reply.*:
+	  Only compile these files if ACE_HAS_TOKENS_LIBRARY is enabled
+	  since this functionality does not appear to be widely used and
+	  yet it takes up space.
+
+	* tests/Tokens_Test.cpp (main): Only run this test if 
+	  ACE_HAS_TOKENS_LIBRARY is defined.
+
 Sat Feb 17 17:23:46 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/SOCK_Dgram_Mcast.cpp:
