@@ -16,6 +16,10 @@ Tue Apr 15 11:07:36 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  implementations out of CIAO_Server library into Daemon
 	  implemenation.
 
+	  Removed HomeRegistrar related files from the projects of the
+	  CIAO_Server library.  They need to be moved a a proper place in
+	  the near future.
+
 	* docs/todo.html:  Document other refactoring needed in the
 	  CCM_Core libraries.
 
