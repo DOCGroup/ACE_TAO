@@ -2967,7 +2967,7 @@ TAO_POA::encode_sequence_to_string (CORBA::String &str,
 
 void
 TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
-                                    CORBA::String str)
+                                    const char *str)
 {
   if (str == 0)
     {
@@ -2976,8 +2976,8 @@ TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
     }
 
   u_int length = ACE_OS::strlen (str);
-  char *eos = str + length;
-  char *cp = str;
+  const char *eos = str + length;
+  const char *cp = str;
 
   // Set the length of the sequence to be as long as
   // we'll possibly need...we'll reset it to the actual
