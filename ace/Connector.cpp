@@ -393,17 +393,27 @@ template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::connect_n (size_t n,
 				       SH *sh[],
 				       PR_AD remote_addrs[],
+                                       char failed_svc_handlers[],
 				       const ACE_Synch_Options &synch_options)
 {
   size_t i;
-
+  
   for (i = 0; i < n; i++)
-    if (this->connect (sh[i], remote_addrs[i], synch_options) == -1
-	&& !(synch_options[ACE_Synch_Options::USE_REACTOR]
-	     && errno == EWOULDBLOCK))
-      return -1;
-
-  return i;
+    {
+      if (this->connect (sh[i], remote_addrs[i], synch_options) == -1
+          && !(synch_options[ACE_Synch_Options::USE_REACTOR]
+               && errno == EWOULDBLOCK))
+        {
+          if (failed_svc_handlers != 0)
+            // Mark this entry as having failed.
+            failed_svc_handlers[i] = 1;
+        }
+        else if (failed_svc_handlers != 0)
+          // Mark this entry as having succeeded.
+          failed_svc_handlers[i] = 0;
+    }
+  
+  return 0;
 }
 
 // Cancel a <svc_handler> that was started asynchronously.
