@@ -79,7 +79,7 @@ ifneq (,$(findstring  Time, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosTime
 endif
 ifneq (,$(findstring  LoadBalancing, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.LoadBalancing
+  MKLIST += Makefile.CosNaming Makefile.PortableGroup Makefile.LoadBalancing
 endif
 ifneq (,$(findstring  Concurrency, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosConcurrency
