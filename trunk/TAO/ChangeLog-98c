@@ -3373,7 +3373,7 @@ Thu May 14 16:39:15 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
         * TAO_IDL/be/be_visitor_constant.cpp: We were not checking of the
         constant was imported or not. In addition, inside the stub
         generation code, we were incorrectly checking if the header was
-        generated or not. Thanks to Andrew Harbick"
+        generated or not. Thanks to Andrew Harbick
         <aharbick@opentext.com> for providing the bug report that led to
         this fix.
 
@@ -3503,7 +3503,7 @@ Wed May 13 00:05:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
         * tao/ORB.i (orb_free_resources): This should return
           !CORBA_ORB::orb_init_count_ instead of simply
           CORBA_ORB::orb_init_count_.  Thanks to Pavel Motuzenko
-          (p_motuzenko@hotmail.com) for pointing these two problems out.
+          <p_motuzenko@hotmail.com> for pointing these two problems out.
 
         * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
           Fixed the initialization of naming_context_name_.
@@ -4736,7 +4736,7 @@ Wed Apr 15 22:29:29 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_predefined_type.cpp: Added cases for LongLong,
         ULongLOng, and LongDouble which were missing. Thanks to Sam Hauer
-        (shauer@nmo.gtegsc.com).
+        <shauer@nmo.gtegsc.com>.
 
 Wed Apr 15 20:20:58 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
@@ -6469,7 +6469,7 @@ Tue Mar 17 11:26:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_sequence.cpp:
           Fixed return value for operator[] in sequences of basic types,
           the _out and _var classes generated non-nested types. Thanks to
-          Frak. J. Hodum <fhdum@std.saic.com> for reporting this problem.
+          Frank. J. Hodum <fhdum@std.saic.com> for reporting this problem.
 
 Tue Mar 17 10:25:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
