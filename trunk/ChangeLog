@@ -1,3 +1,15 @@
+Thu Aug 26 11:53:26 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Time_Value.h: Added extern "C++" around the ACE_Time_Value class
+	  declaration for WinCE. This is a total hack that I hate, but I have
+	  not been able to find any other way around it. The same code
+	  worked before the great ACE_OS reorg, but I don't know what tickled
+	  it to start misbehaving. Without the hack, eVC complains that
+	  the operators are C functions and so can't return a class.
+
+	* ace/Dev_Poll_Reactor.{cpp h}: Inserted /**/ in #include directives
+	  to silence MSVC warnings that the files are missing dependencies.
+
 Thu Aug 26 11:39:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ACEXML/common/XML_Types.h: Add #include "ace/Basic_Types.h" to
