@@ -63,7 +63,7 @@ public:
 	       int reuse_addr = 0,
  	       int flags = 0,
 	       int perms = 0,
-	       int protcol_family = PF_INET, 
+	       int protocol_family = PF_INET, 
 	       int protocol = 0); 
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
