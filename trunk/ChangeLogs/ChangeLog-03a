@@ -1,3 +1,8 @@
+Mon Dec  9 18:54:09 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Get_Opt.{h,i} Added a new argc() accessor.  Thanks to
+	  Volker Boerchers <vboerchers@tecon.de> for contributing this.
+
 Mon Dec  9 17:58:31 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Multicast_Test.cpp: Added missing template instantiation for
@@ -32,7 +37,6 @@ Mon Dec  9 07:41:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tests/OS_Test.cpp:
 	* ace/OS_String.cpp (strsncpy): Fixed a cut and paste error. 
-	
 
 Mon Dec  9 00:09:55 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
