@@ -1366,6 +1366,13 @@ typedef int ACE_thread_key_t;
 #undef sigfillset
 #endif /* linux && __OPTIMIZE__ */
 
+// sigwait is yet another macro on Digital UNIX 4.0,
+// just causing trouble when introducing member functions with the same name.
+// Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for this fix.
+#if defined (DIGITAL_UNIX)
+#undef sigwait
+#endif
+
 #if defined (ACE_HAS_BROKEN_SENDMSG)
 typedef struct msghdr ACE_SENDMSG_TYPE;
 #else
