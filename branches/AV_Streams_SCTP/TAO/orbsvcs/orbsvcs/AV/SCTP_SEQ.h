@@ -227,28 +227,6 @@ protected:
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
 };
 
-
-/**
- * @class TAO_AV_SCTP_SEQ_Connection_Setup
- * @brief This class is a helper for the TAO_AV_SCTP_SEQ_Acceptor and
- * TAO_AV_SCTP_SEQ_Connector.  It basically just reduces duplicate code.  It takes
- * the address of the peer in the connection, whether or not it is a multicast
- * connection, and whether it is a connector or acceptor; and creates the local
- * address and flow handler associated with the connection.
- */
-class TAO_AV_Export TAO_AV_SCTP_SEQ_Connection_Setup
-{
-public:
-  /// Indicates whether this setup is for a Connector or an Acceptor
-  enum ConnectionType {CONNECTOR, ACCEPTOR};
-
-  static int setup (TAO_AV_Flow_Handler *&flow_handler,
-                    ACE_INET_Addr *inet_addr,
-                    ACE_INET_Addr *&local_addr,
-                    int is_multicast,
-                    ConnectionType ct);
-};
-
 /**
  * @class TAO_AV_SCTP_SEQ_Object
  * @brief TAO_AV_Protocol_Object for the User Datagram Protocol (SCTP_SEQ)
