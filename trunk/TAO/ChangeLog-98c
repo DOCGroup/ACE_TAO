@@ -1,3 +1,11 @@
+Fri Dec 04 19:35:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Typecode.cpp (typecode_param): Moved declaration of loop
+	  counter up to avoid skipping declaration warning from MSVC.
+
+	* tao/try_macros.h (TAO_TRY_THROW[_EX]): Removed extra spaces in
+	  definitions for native exceptions.
+
 Fri Dec  4 16:51:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/exceptions.html: Added guidelines on throwing exceptions
