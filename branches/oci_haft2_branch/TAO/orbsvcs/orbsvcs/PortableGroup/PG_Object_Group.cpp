@@ -63,7 +63,7 @@ TAO::PG_Object_Group::PG_Object_Group (
   CORBA::Object_ptr empty_group,
   const PortableGroup::TagGroupTaggedComponent & tagged_component,
   const char * type_id,
-  PortableGroup::Criteria the_criteria,
+  const PortableGroup::Criteria & the_criteria,
   TAO_PG::Properties_Decoder * type_properties)
     : internals_()
     , orb_ (CORBA::ORB::_duplicate (orb))
@@ -87,7 +87,7 @@ TAO::PG_Object_Group * TAO::PG_Object_Group::create (
   CORBA::ORB_ptr orb,
   CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
   const char * type_id,
-  PortableGroup::Criteria the_criteria,
+  const PortableGroup::Criteria & the_criteria,
   TAO_PG::Properties_Decoder * type_properties
   ACE_ENV_ARG_DECL)
 {
@@ -100,7 +100,7 @@ TAO::PG_Object_Group * TAO::PG_Object_Group::create (
   ACE_CHECK_RETURN (0);
   iorm = TAO_IOP::TAO_IOR_Manipulation::_narrow (
     iorm_obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (0);
   if (CORBA::is_nil (iorm.in ()))
   {
     if (TAO_debug_level > 3)

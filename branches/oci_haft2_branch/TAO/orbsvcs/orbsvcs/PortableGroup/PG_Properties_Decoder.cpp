@@ -8,6 +8,9 @@
  *  This file implements classes to help manage the Properties
  *  defined in the Portable Object Group.
  *
+ *  Note: this started as a simple helper class to make decoding sets of properties
+ *  easier, but expanded to provide more general support for managing sets of properties.
+ *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
@@ -22,20 +25,23 @@ TAO_PG::Properties_Decoder::Properties_Decoder()
 }
 
 
-TAO_PG::Properties_Decoder::Properties_Decoder (const PortableGroup::Properties & property_set)
+TAO_PG::Properties_Decoder::Properties_Decoder (
+  const PortableGroup::Properties & property_set
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (0)
 {
-  this->decode (property_set);
-  // @@ do something about the no-memory exception
+  this->decode (property_set ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_PG::Properties_Decoder::Properties_Decoder (
     const PortableGroup::Properties & property_set,
-    Properties_Decoder * defaults)
+    Properties_Decoder * defaults
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (defaults)
 {
-  this->decode (property_set);
-  // @@ do something about the no-memory exception
+  this->decode (property_set ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -44,8 +50,6 @@ TAO_PG::Properties_Decoder::Properties_Decoder (
   : defaults_ (defaults)
 {
 }
-
-
 
 TAO_PG::Properties_Decoder::~Properties_Decoder ()
 {
@@ -54,8 +58,9 @@ TAO_PG::Properties_Decoder::~Properties_Decoder ()
 
 void TAO_PG::Properties_Decoder::decode (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
-
 {
+  InternalGuard guard(this->internals_);
+
   size_t count = property_set.length ();
   for (size_t nItem = 0; nItem < count; ++nItem)
   {
@@ -68,7 +73,7 @@ void TAO_PG::Properties_Decoder::decode (const PortableGroup::Properties & prope
 
     const PortableGroup::Value * value_copy;
     ACE_NEW_THROW_EX (value_copy, PortableGroup::Value (property.val), CORBA::NO_MEMORY ());
-    const PortableGroup::Value * replaced_value;
+    const PortableGroup::Value * replaced_value = 0;
     if (0 == this->values_.rebind (name, value_copy, replaced_value))
     {
       if (0 != replaced_value)
@@ -92,6 +97,7 @@ void TAO_PG::Properties_Decoder::decode (const PortableGroup::Properties & prope
 
 void TAO_PG::Properties_Decoder::clear ()
 {
+  InternalGuard guard(this->internals_);
   for (ValueMapIterator it = this->values_.begin ();
         it != this->values_.end ();
         ++it)
@@ -112,6 +118,7 @@ void TAO_PG::Properties_Decoder::clear ()
 void TAO_PG::Properties_Decoder::remove (const PortableGroup::Properties & property_set)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  InternalGuard guard(this->internals_);
   size_t count = property_set.length ();
   for (size_t nItem = 0; nItem < count; ++nItem)
   {
@@ -168,6 +175,7 @@ void TAO_PG::Properties_Decoder::export_properties(PortableGroup::Properties & p
 
 void TAO_PG::Properties_Decoder::merge_properties (ValueMap & merged_values) const
 {
+  InternalGuard guard(ACE_const_cast (TAO_PG::Properties_Decoder *, this)->internals_);
   if (0 != this->defaults_)
   {
     this->defaults_->merge_properties (merged_values);
@@ -188,6 +196,7 @@ int TAO_PG::Properties_Decoder::find (
   const ACE_CString & key,
   const PortableGroup::Value *& pValue) const
 {
+  InternalGuard guard(ACE_const_cast (TAO_PG::Properties_Decoder *, this)->internals_);
   int found = (0 == this->values_.find (key, pValue));
   if (! found)
   {
