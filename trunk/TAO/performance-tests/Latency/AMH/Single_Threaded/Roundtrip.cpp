@@ -25,7 +25,7 @@ Roundtrip::test_method (
 void
 Roundtrip::shutdown (
        Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-       TAO_ENV_SINGLE_ARG_DECL)
+       TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->shutdown ();

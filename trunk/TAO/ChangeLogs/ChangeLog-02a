@@ -1,3 +1,14 @@
+Fri Jan 25 14:25:11 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* performance-tests/AMH_Single_Threaded_Latency/Roundtrip.h: 
+	* performance-tests/AMH_Single_Threaded_Latency/Roundtrip.cpp:
+	  Changed TAO_ENV_SINGLE_ARG_DECL to TAO_ENV_ARG_DECL.  I had
+	  copied the code as is from the Single_threaded_Latency test and
+	  since for AMH_skeletons we add an extra rh paramater, the 'void
+	  shutdown (void)' method now had an argument (comapred to none
+	  before).  This was causing a problem on builds that used
+	  emulated exceptions.
+
 Fri Jan 25 14:10:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/AV/RTCP.cpp (handle_stop):
