@@ -1,10 +1,12 @@
-// Implementation of the logger object.
 // $Id$
 
+// Implementation of the logger object.
 
-#include "ace/OS.h"
 #include <iostream.h>
+#include "ace/OS.h"
 #include "logger_i.h"
+
+ACE_RCSID(Logger, logger_i, "$Id$")
 
 // Select non-verbose logging by default.
 

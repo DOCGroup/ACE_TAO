@@ -4,6 +4,8 @@
 
 #include "JAWS/Waiter.h"
 
+ACE_RCSID(JAWS, Waiter, "$Id$")
+
 JAWS_Waiter::JAWS_Waiter (void)
   : iter_ (*this)
 {

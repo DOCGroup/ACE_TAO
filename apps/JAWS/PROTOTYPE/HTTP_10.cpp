@@ -4,6 +4,8 @@
 
 #include "JAWS/JAWS.h"
 
+ACE_RCSID(PROTOTYPE, HTTP_10, "$Id$")
+
 JAWS_HTTP_10_Headers::JAWS_HTTP_10_Headers (void)
   : iter_ (*this)
 {

@@ -2,6 +2,8 @@
 
 #include "JAWS/Assoc_Array.h"
 
+ACE_RCSID(JAWS, Assoc_Array, "$Id$")
+
 template <class KEY, class DATA>
 JAWS_Assoc_Array<KEY,DATA>::JAWS_Assoc_Array (int maxsize)
   : k_array_ (0),

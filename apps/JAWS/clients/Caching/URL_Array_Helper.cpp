@@ -1,10 +1,13 @@
-// URL_Array_Helper.cpp
 // $Id$
+
+// URL_Array_Helper.cpp
 
 #if !defined (ACE_URL_ARRAY_HELPER_C)
 #define ACE_URL_ARRAY_HELPER_C
 
 #include "URL_Array_Helper.h"
+
+ACE_RCSID(Caching, URL_Array_Helper, "$Id$")
 
 // Some helper functions for encoding/decoding
 

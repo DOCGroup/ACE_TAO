@@ -20,6 +20,8 @@
 
 #include "Peer.h"
 
+ACE_RCSID(Peer, peerd, "$Id$")
+
 int
 main (int argc, char *argv[])
 {

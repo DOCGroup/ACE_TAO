@@ -1,7 +1,9 @@
-#include "Input_Handler.h"
 // $Id$
 
+#include "Input_Handler.h"
 #include "Notification_Receiver_Handler.h"
+
+ACE_RCSID(Consumer, Input_Handler, "$Id$")
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 

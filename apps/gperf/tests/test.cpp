@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <string.h>
 
+ACE_RCSID(tests, test, "$Id$")
+
 static const int MAX_LEN = 80;
 
 char *in_word_set (const char *str, int len);

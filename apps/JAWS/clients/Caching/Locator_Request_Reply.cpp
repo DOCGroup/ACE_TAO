@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 // $Id$
 
 #if !defined (ACE_LOCATOR_REQUEST_REPLY_C)
@@ -11,10 +9,12 @@
 #include "Locator_Request_Reply.i"
 #endif
 
+#include "ace/Auto_Ptr.h"
 #include "URL_Properties.h"
 #include "URL_Array_Helper.h"
 #include "URL_Locator.h"
-#include "ace/Auto_Ptr.h"
+
+ACE_RCSID(Caching, Locator_Request_Reply, "$Id$")
 
 int
 ACE_URL_Locator_Request::url_query (const int how,

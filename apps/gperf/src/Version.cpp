@@ -21,4 +21,8 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
+#include "ace/ACE.h"
+
+ACE_RCSID(src, Version, "$Id$")
+
 char *version_string = "2.6 (GNU C++ version)";

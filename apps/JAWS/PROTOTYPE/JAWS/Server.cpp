@@ -14,6 +14,8 @@
 #include "JAWS/IO_Acceptor.h"
 #include "JAWS/Pipeline_Tasks.h"
 
+ACE_RCSID(JAWS, Server, "$Id$")
+
 JAWS_Server::JAWS_Server (void)
   : port_ (5432),
     concurrency_ (0),

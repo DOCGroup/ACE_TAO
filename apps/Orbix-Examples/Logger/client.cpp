@@ -1,12 +1,13 @@
-// A client for the distributed logger example.  This program reads
 // $Id$
 
+// A client for the distributed logger example.  This program reads
 // from either stdin or from a redirected file and sends all the
 // contents to the logging server.  It also computes how long it takes
 // to send this stuff. 
 
-
 #include "Logger.h"
+
+ACE_RCSID(Logger, client, "$Id$")
 
 // maximum message size
 static size_t max_message_size = BUFSIZ;

@@ -9,6 +9,8 @@
 #include "HTTP_Helpers.h"
 #include "IO.h"
 
+ACE_RCSID(server, HTTP_Handler, "$Id$")
+
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
 			    HTTP_Handler_Factory &factory)
   : factory_ (factory),

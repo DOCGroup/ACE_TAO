@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 // Supplier driver for the Orbix Publish/Subscribe example.
@@ -10,6 +9,8 @@
 
 #include "Notifier_Handler.h"
 #include "Input_Handler.h"
+
+ACE_RCSID(Supplier, supplier, "$Id$")
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 

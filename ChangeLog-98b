@@ -1,3 +1,36 @@
+Fri Jul 31 18:33:39 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp: 
+	* apps/Gateway/Gateway/Config_Files.cpp: 
+	* apps/Gateway/Gateway/Connection_Handler.cpp: 
+	* apps/Gateway/Gateway/Connection_Handler_Acceptor.cpp: 
+	* apps/Gateway/Gateway/Connection_Handler_Connector.cpp: 
+	* apps/Gateway/Gateway/Event_Channel.cpp: 
+	* apps/Gateway/Gateway/Event_Forwarding_Discriminator.cpp: 
+	* apps/Gateway/Gateway/File_Parser.cpp: 
+	* apps/Gateway/Gateway/Gateway.cpp: 
+	* apps/Gateway/Gateway/Options.cpp: 
+	* apps/Gateway/Gateway/gatewayd.cpp: 
+	* apps/Gateway/Peer/Options.cpp: 
+	* apps/Gateway/Peer/Peer.cpp: 
+	* apps/Gateway/Peer/peerd.cpp: 
+	* apps/Orbix-Examples/Event_Comm/Consumer/Input_Handler.cpp: 
+	* apps/Orbix-Examples/Event_Comm/Consumer/Notification_Receiver_Handler.cpp: 
+	* apps/Orbix-Examples/Event_Comm/Consumer/consumer.cpp: 
+	* apps/Orbix-Examples/Event_Comm/Supplier/Input_Handler.cpp: 
+	* apps/Orbix-Examples/Event_Comm/Supplier/Notifier_Handler.cpp: 
+	* apps/Orbix-Examples/Event_Comm/Supplier/supplier.cpp: 
+	* apps/Orbix-Examples/Event_Comm/libsrc/Event_CommC.cpp: 
+	* apps/Orbix-Examples/Event_Comm/libsrc/Event_CommS.cpp: 
+	* apps/Orbix-Examples/Event_Comm/libsrc/Notification_Receiver_i.cpp: 
+	* apps/Orbix-Examples/Event_Comm/libsrc/Notifier_i.cpp: 
+	* apps/Orbix-Examples/Logger/Logger.cpp: 
+	* apps/Orbix-Examples/Logger/client.cpp: 
+	* apps/Orbix-Examples/Logger/loggerS.cpp: 
+	* apps/Orbix-Examples/Logger/logger_i.cpp: 
+	* apps/Orbix-Examples/Logger/server.cpp: 
+	Added ACE_RCSID to these files.
+
 Fri Jul 31 17:50:01 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: 

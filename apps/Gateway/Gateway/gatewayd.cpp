@@ -21,6 +21,8 @@
 #include "ace/Service_Config.h"
 #include "Gateway.h"
 
+ACE_RCSID(Gateway, gatewayd, "$Id$")
+
 int
 main (int argc, char *argv[])
 {

@@ -3,8 +3,10 @@
 #if !defined (ACE_ID_GENERATOR_C)
 #define ACE_ID_GENERATOR_C
 
-#include "ID_Generator.h"
 #include "ace/Object_Manager.h"
+#include "ID_Generator.h"
+
+ACE_RCSID(Caching, ID_Generator, "$Id$")
 
 time_t ACE_ID_Generator::last_time_ = 0;
 
