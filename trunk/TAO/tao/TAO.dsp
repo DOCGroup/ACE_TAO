@@ -146,6 +146,10 @@ SOURCE=.\encode.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Environment.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Exception.cpp
 # End Source File
 # Begin Source File
