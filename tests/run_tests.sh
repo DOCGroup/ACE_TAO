@@ -31,6 +31,7 @@ if [ $# -eq 1 ]; then
   else
     #### Only support Chorus/MVME, for now.
     echo $0: host $1 does not appear to be Chorus/MVME:  not supported.
+    exit 1
   fi
 elif [ $# -ne 0 ]; then
   echo $usage
