@@ -23,6 +23,9 @@
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// For linkers that cant grok long names.
+#define ACE_Cleanup_Strategy ACLE
+
 template <class KEY, class VALUE, class CONTAINER>
 class ACE_Cleanup_Strategy
 {
@@ -41,6 +44,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
+#define ACE_Recyclable_Handler_Cleanup_Strategy ARHCLE
 
 template <class KEY, class VALUE, class CONTAINER>
 class ACE_Recyclable_Handler_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
@@ -62,6 +66,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
+#define ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy ARRHCLE
 
 template <class KEY, class VALUE, class CONTAINER>
 class ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>
@@ -105,6 +110,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
+#define ACE_Null_Cleanup_Strategy ANCLE
 
 template <class KEY, class VALUE, class CONTAINER>
 class ACE_Null_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>

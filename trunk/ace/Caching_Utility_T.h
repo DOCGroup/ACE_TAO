@@ -25,6 +25,9 @@
 
 #include "ace/Cleanup_Strategies_T.h"
 
+// For linkers that cant grok long names.
+#define ACE_Pair_Caching_Utility APUTIL
+
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 class ACE_Pair_Caching_Utility
 {
@@ -75,6 +78,7 @@ protected:
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+#define ACE_Recyclable_Handler_Caching_Utility ARHUTIL
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 class ACE_Recyclable_Handler_Caching_Utility
@@ -127,6 +131,7 @@ protected:
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
+#define ACE_Refcounted_Recyclable_Handler_Caching_Utility ARRHUTIL
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 class ACE_Refcounted_Recyclable_Handler_Caching_Utility
@@ -239,7 +244,7 @@ protected:
 };
 
 ///////////////////////////////////////////////////////////////////////////
-
+#define ACE_Null_Caching_Utility ANUTIL
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 class ACE_Null_Caching_Utility
 {
