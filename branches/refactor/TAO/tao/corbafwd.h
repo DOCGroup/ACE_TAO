@@ -245,8 +245,6 @@ namespace CORBA
 
   class Current;
   typedef Current *Current_ptr;
-  class Current_var;
-  class Current_out;
 
   class TypeCodeFactory;
   typedef TypeCodeFactory *TypeCodeFactory_ptr;

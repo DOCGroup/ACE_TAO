@@ -86,7 +86,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void IIOP::ListenPoint::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -94,126 +94,81 @@ void IIOP::ListenPoint::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_IIOP_LISTENPOINTLIST_CS_)
-#define __TAO_UNBOUNDED_SEQUENCE_IIOP_LISTENPOINTLIST_CS_
-
-void
-IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_allocate_buffer (CORBA::ULong length)
-{
-  IIOP::ListenPoint* tmp = 0;
-  tmp = _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (length);
-  
-  if (this->buffer_ != 0)
-    {
-      IIOP::ListenPoint *old =
-        ACE_reinterpret_cast (IIOP::ListenPoint *, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          tmp[i] = old[i];
-        }
-      
-      if (this->release_)
-        {
-          _TAO_Unbounded_Sequence_IIOP_ListenPointList::freebuf (old);
-        }
-    }
-  
-  this->buffer_ = tmp;
-}
-
-void
-IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_deallocate_buffer (void)
-{
-  if (this->buffer_ == 0 || this->release_ == 0)
-    {
-      return;
-    }
-  
-  IIOP::ListenPoint *tmp =
-    ACE_reinterpret_cast (IIOP::ListenPoint *, this->buffer_);
-  _TAO_Unbounded_Sequence_IIOP_ListenPointList::freebuf (tmp);
-  this->buffer_ = 0;
-} 
-
-IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::~_TAO_Unbounded_Sequence_IIOP_ListenPointList (void)
-{
-  this->_deallocate_buffer ();
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_IIOP_LISTENPOINTLIST_CS_)
-#define _IIOP_LISTENPOINTLIST_CS_
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
 
-// *************************************************************
-// IIOP::ListenPointList
-// *************************************************************
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-IIOP::ListenPointList::ListenPointList (void)
-{}
+template class
+  TAO_Var_Var_T<
+      ListenPoint
+    >;
 
-IIOP::ListenPointList::ListenPointList (CORBA::ULong max)
-  : 
+template class
+  TAO_Out_T<
+      ListenPoint,
+      ListenPoint_var
+    >;
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_IIOP_ListenPointList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<IIOP::ListenPoint>
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
-{}
+# pragma instantiate \
+  TAO_Var_Var_T< \
+      ListenPoint \
+    >
 
-IIOP::ListenPointList::ListenPointList (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    IIOP::ListenPoint *buffer,
-    CORBA::Boolean release
-  )
-  : 
+# pragma instantiate \
+  TAO_Out_T< \
+      ListenPoint, \
+      ListenPoint_var \
+    >
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_IIOP_ListenPointList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<IIOP::ListenPoint>
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
-{}
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
-IIOP::ListenPointList::ListenPointList (const ListenPointList &seq)
-  : 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_IIOP_ListenPointList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<IIOP::ListenPoint>
+template class
+  TAO_Unbounded_Sequence<
+      IIOP::ListenPoint
+    >;
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
-{}
+template class
+  TAO_VarSeq_Var_T<
+      ListenPointList,
+      IIOP::ListenPoint
+    >;
 
-IIOP::ListenPointList::~ListenPointList (void) // dtor
-{}
+template class
+  TAO_Seq_Out_T<
+      ListenPointList,
+      ListenPointList_var,
+      IIOP::ListenPoint
+    >;
 
-void IIOP::ListenPointList::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ListenPointList *tmp = ACE_static_cast (ListenPointList*, _tao_void_pointer);
-  delete tmp;
-}
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#endif /* end #if !defined */
+# pragma instantiate \
+  TAO_Unbounded_Sequence< \
+      IIOP::ListenPoint \
+    >
+
+# pragma instantiate \
+  TAO_VarSeq_Var_T< \
+      ListenPointList, \
+      IIOP::ListenPoint \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      ListenPointList, \
+      ListenPointList_var, \
+      IIOP::ListenPoint \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -396,13 +351,44 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void IIOP::BiDirIIOPServiceContext::_tao_any_destructor (void *_tao_void_pointer)
 {
   BiDirIIOPServiceContext *tmp = ACE_static_cast (BiDirIIOPServiceContext*, _tao_void_pointer);
   delete tmp;
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_Var_Var_T<
+      BiDirIIOPServiceContext
+    >;
+
+template class
+  TAO_Out_T<
+      BiDirIIOPServiceContext,
+      BiDirIIOPServiceContext_var
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_Var_Var_T< \
+      BiDirIIOPServiceContext \
+    >
+
+# pragma instantiate \
+  TAO_Out_T< \
+      BiDirIIOPServiceContext, \
+      BiDirIIOPServiceContext_var \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
@@ -527,6 +513,13 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IIOP::ListenPointList>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IIOP::ListenPointList>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
 
@@ -593,7 +586,7 @@ CORBA::Boolean operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:98
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
