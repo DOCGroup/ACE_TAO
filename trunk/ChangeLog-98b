@@ -8,6 +8,9 @@ Sun Aug 30 07:44:54 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * netsvcs/lib/Name_Handler.h: added #include of ace/Singleton.h.
 
+        * tests/run_tests.vxworks: commented out Dynamic_Priority_Test.
+          It now causes VxWorks to go to never-never land.
+
 Sun Aug 30 00:14:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Service_Object.cpp (fini): Make sure to check the
