@@ -1,3 +1,19 @@
+Tue Jul  3 11:27:03 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+
+          Removed the #if defined (ACE_HAS_USING_KEYWORD)
+          guards from the top and bottom of the *S_T.{h,i}
+          files and added their generation on a TIE class by
+          TIE class basis, conditionally, if the original
+          interface is defined inside a module. TIE class
+          code will compile for interfaces declared at global
+          scope, even on platforms that do not support 
+          namespaces. This enhancement was requested by
+          Marco Kranawetter <Marco.Kranawetter@icn.siemens.de>.
+
 Tue Jul  3 09:55:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynUnion_i.cpp:
