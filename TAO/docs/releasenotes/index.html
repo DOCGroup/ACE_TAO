@@ -422,35 +422,83 @@ be treated as a filename.</li>
 
 </ul>
 
-<p><br>Known bugs/unimplemented constructs:
-<ul>
-</ul>
-Future work:
+<h4>Future work:</h4>
 <ul>
 
-<p>Goal is to measure the code size of the interpretive stubs generated
-by TAO IDL compiler <i>vs</i> code size of compiled stubs. Then compare
-the performance of each. We want to prove the thesis that TAO IDL compiler
-generated interpretive stubs have a small code size, yet are comparable
-in performance (or slightly less) than compiled stubs. Hence, it will be
-useful for small distributed equipment such as handsets, PDAs, etc.
-<p>In doing the above, improvements to the IIOP protocol engine in terms
-of size/performance/determinism will be made.
 <li>
-Tweak the IDL compiler to generate code that's more easily integrated back
-into the ORB Core, e.g., POA, etc. This will depend largely on our ability
-to generalize the changes necessary to generated code.</li>
+Implement the complete <A HREF="../ReleaseNotes/OBV.html">Object-by-Value</A> 
+specification. Originally implemented solely for use in holding exceptions
+raised in <A HREF="../../../PDFs/ami1.pdf">asynchronous</A> invocations, 
+work is now ongoing to extend TAO's OBV implementation until it includes
+the complete CORBA value type specification. Some of the items yet to be 
+implemented include:<p>
+
+<ul>
+<li>
+Type codes for value types.<p>
+
+<li>
+CORBA::Any insertion and extraction operators for value types.<p>
+
+<li>
+Value types as members of a constructed type (struct, union or sequence).<p>
+
+<li>
+Boxed value types.<p>
+</ul>
+
+For a complete description of value type semantics, see chapter 5 in the 
+CORBA specification.<p>
+
+<li>
+Support for forward declaration of IDL structs and unions. This feature
+appeared in CORBA 2.4, as a way to improve the semantics for recursive
+types in IDL. In IDL, a recursive struct or union is one that has a member
+which is an IDL sequence of the struct or union itself, or contains such a
+sequence. Without forward declaration of structs or unions, the only way to
+accomplish this was by use of so-called anonymous sequences, that is, 
+sequences that are simply declared where they are used and not given a 
+name in a previous typedef declaration. The use of forward declared structs
+and unions to create recursive types makes the use of anonymous sequences
+unnecessary, and their use is now deprecated by the OMG. Note that, unlike
+IDL interfaces and value types, forward declared structs and unions must be
+defined in the same IDL file. For more information about recursive, 
+anonymous, constructed and template types in IDL, see section 3.10 in the
+CORBA specification.<p>
+
+<li>
+Support for CORBA Components in the TAO IDL compiler. As the implementation
+of CORBA Components in TAO progresses, the extensions to IDL that go with 
+CORBA Components must be integrated into the IDL compiler. The CORBA 
+Components specification is a separate OMG document from the CORBA 
+specification, and a very large document in its own right. Implementation of
+CORBA Components in TAO is a long-term ongoing project. Note that, unlike
+the other items in the list, this item does not represent a CORBA
+compliance issue, since CORBA applicatons can always be used either with
+or without components.<p>
 
 <li>
 The generated sequence classes should not be generated per sequence, but
 per type and parent scope. Which means, that the overhead of having the
 source code generated serveral times should be reduced. To do this, an
-extra pass over the internal representation of the IDL file has to be done.</li>
+extra pass over the internal representation of the IDL file has to be done.<p>
 
 <li>
-Unix's native wchar_t type is not compatible with Unicode. CORBA wide string
-implementations are required to support Unicode, but are not restricted to
-it, so the IDL compiler should ultimately support Unix's wchar_t as well.
+Updated and portable support for wide characters and wide strings. The original
+implementation supports Unicode only. At the time, the CORBA specification required
+wide characters, whether standalone or in a wide string, to be marshaled
+as 16-bit quantities. This is the same size as the native wchar_t type on
+Win32 platforms. However, the wchar_t type on UNIX and related platforms 
+is 32 bits in size. In addition, the General Inter-ORB Protocol (GIOP) version 1.2
+has changed the CDR transfer syntax for wide characters. In the new version,
+a wide character is marshaled as a single byte indicating the size of the
+wide character representation, followed by the specified nunber of bytes. The
+IDL compiler's handling of wide characters needs to be updated, both to 
+handle the GIOP 1.2 CDR transfer syntax, and to be portable under previous
+versions of GIOP. For more information about GIOP CDR transfer syntax, see
+section 15.3 in the CORBA specification. and for information about the 
+marshaling of IDL character types specifically, see section 15.3.1.6.<p>
+
 </ul>
 
 
