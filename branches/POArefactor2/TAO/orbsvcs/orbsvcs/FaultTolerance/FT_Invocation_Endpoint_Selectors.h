@@ -88,10 +88,6 @@ protected:
 
 };
 
-#if defined (__ACE_INLINE__)
-# include "FT_Invocation_Endpoint_Selectors.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif  /* FT_TAO_INVOCATION_ENDPOINT_SELECTOR_H */
