@@ -1,3 +1,13 @@
+Tue Jan  6 19:48:45 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* TAO/tests/Cubit/TAO/MT_Cubit/README: Updated README to explain
+	the latest generalization of the MT_Cubit tests.
+
+Tue Jan  6 17:25:57 1998  Nanbor Wang  <nw1@lindy.cs.wustl.edu>
+
+	* MT_Cubit.dsw, client.dsp, server.dsp:
+	Update workspace and project files to reflect the change in directory structure.
+
 Mon Jan 05 23:54:13 1998    <coryan@MILONGA>
 
 	* Added project files for a static orbsvcs library.
