@@ -1,12 +1,19 @@
+Thu May 17 15:45:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Single_Threaded_Latency/default.conf:
+        * performance-tests/Single_Threaded_Latency/default_configuration.pl:
+          Add script and configuration file to measure the performance of
+          the ORB with the default configuration.
+
 Thu May 17 12:33:56 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Security/SecurityLevel1/ca.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/client_key.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/client_cert.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/server_key.pem: 
-	* orbsvcs/tests/Security/SecurityLevel1/server_cert.pem:
-	  The certificates are expired. So, regenerated 
-	  them.
+        * orbsvcs/tests/Security/SecurityLevel1/ca.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/client_key.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/client_cert.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/server_key.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/server_cert.pem:
+          The certificates are expired. So, regenerated
+          them.
 
 Thu May 17 15:30:28 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -20,55 +27,55 @@ Thu May 17 15:30:28 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu May 17 12:19:24 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CDR.h: 
-	* tao/CDR.cpp: 
-	  Modified the contructor of TAO_OutputCDR to go with the change
-	  in ACE_OutputCDR so that message blocks are allocated from TSS.
-	  This change and related changes fix bug147.
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+          Modified the contructor of TAO_OutputCDR to go with the change
+          in ACE_OutputCDR so that message blocks are allocated from TSS.
+          This change and related changes fix bug147.
 
-	Added new methods for Resource Retrieval in the following files:
+        Added new methods for Resource Retrieval in the following files:
 
-	* tao/Resource_Factory.h (TAO_Resource_Factory): 
-	* tao/Resource_Factory.cpp: 
-	* tao/default_resource.cpp: 
-	* tao/default_resource.h: 
-	  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
+        * tao/Resource_Factory.h (TAO_Resource_Factory):
+        * tao/Resource_Factory.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+          virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
           virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
 
-	* tao/Strategies/advanced_resource.h : 
-	* tao/Strategies/advanced_resource.cpp (create_purging_strategy): 
-	  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
+        * tao/Strategies/advanced_resource.h :
+        * tao/Strategies/advanced_resource.cpp (create_purging_strategy):
+          virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
 
-	* tao/ORB_Core.h: 
-	* tao/ORB_Core.cpp: 
-	  ACE_Allocator *output_cdr_msgblock_allocator ()
-	  ACE_Allocator *input_cdr_msgblock_allocator ()
-	  ACE_Allocator *input_cdr_msgblock_allocator_i ()
-		
-	  and new private variables:
-	  ACE_Allocator *message_block_msgblock_allocator_ and 
-	  ACE_Allocator *input_cdr_msgblock_allocator_;
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+          ACE_Allocator *output_cdr_msgblock_allocator ()
+          ACE_Allocator *input_cdr_msgblock_allocator ()
+          ACE_Allocator *input_cdr_msgblock_allocator_i ()
 
-	* tao/ORB.cpp: 
-	* tao/TAO_Server_Request.cpp: 
-	* tao/Typecode.cpp : 
-	* tao/Invocation.cpp: 
-	* tao/IIOP_Profile.cpp (encode_endpoints): 
-	* tao/GIOP_Message_Lite.cpp: 
-	* tao/GIOP_Message_Base.cpp (process_request): 
-	* tao/Exception.cpp : 
-	* tao/Strategies/UIOP_Profile.cpp (create_tagged_profile): 
-	* tao/Strategies/SHMIOP_Profile.cpp (create_tagged_profile): 
-	  Modified the instantiation of TAO_OutputCDR to go with the
-	  changed one.
+          and new private variables:
+          ACE_Allocator *message_block_msgblock_allocator_ and
+          ACE_Allocator *input_cdr_msgblock_allocator_;
 
-	* tao/GIOP_Message_Base.h: 
-	* tao/GIOP_Message_Lite.h (TAO_GIOP_Message_Lite): 
-          Added a new private variable: ACE_Allocator *cdr_msgblock_alloc_ 
+        * tao/ORB.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Typecode.cpp :
+        * tao/Invocation.cpp:
+        * tao/IIOP_Profile.cpp (encode_endpoints):
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Base.cpp (process_request):
+        * tao/Exception.cpp :
+        * tao/Strategies/UIOP_Profile.cpp (create_tagged_profile):
+        * tao/Strategies/SHMIOP_Profile.cpp (create_tagged_profile):
+          Modified the instantiation of TAO_OutputCDR to go with the
+          changed one.
 
-	* tao/Makefile: 
-	* tao/*/Makefile:
-	  Updated dependencies.
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Lite.h (TAO_GIOP_Message_Lite):
+          Added a new private variable: ACE_Allocator *cdr_msgblock_alloc_
+
+        * tao/Makefile:
+        * tao/*/Makefile:
+          Updated dependencies.
 
 Thu May 17 11:03:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -78,24 +85,24 @@ Thu May 17 11:03:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
         * examples/PluggableUDP/tests/Performance/server.dsp:
         * examples/PluggableUDP/tests/SimplePerformance/client.dsp:
         * examples/PluggableUDP/tests/SimplePerformance/server.dsp:
-          Changes that should have been in 
+          Changes that should have been in
           Thu May 17 11:03:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>.
 
 Thu May 17 12:12:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Connection_Purging_Strategy.cpp:
-	* tao/Connection_Purging_Strategy.h:
-	* tao/Connection_Purging_Strategy.inl:
-	* tao/LRU_Connection_Purging_Strategy.h: Left @@Chad comments
-	  after a quick review. 
+        * tao/Connection_Purging_Strategy.cpp:
+        * tao/Connection_Purging_Strategy.h:
+        * tao/Connection_Purging_Strategy.inl:
+        * tao/LRU_Connection_Purging_Strategy.h: Left @@Chad comments
+          after a quick review.
 
 Thu May 17 12:10:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp: Added a
-	  check for the case when we get an errno of EAGAIN. 
-	
-	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp: Cosmetic
-	  changes. 
+        * tao/Strategies/GIOP_Message_NonReactive_Handler.cpp: Added a
+          check for the case when we get an errno of EAGAIN.
+
+        * tao/Strategies/GIOP_Message_NonReactive_Base.cpp: Cosmetic
+          changes.
 
 Thu May 17 11:03:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -111,10 +118,10 @@ Thu May 17 11:03:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Thu May 17 08:56:59 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/RT_Protocols_Hooks.cpp: Moved explicit template instantiation
-	  code inside the proper guard. This should fix the some
-	  compilation errors that were occuring when TAO_HAS_RT_CORBA was
-	  not set. 
+        * tao/RT_Protocols_Hooks.cpp: Moved explicit template instantiation
+          code inside the proper guard. This should fix the some
+          compilation errors that were occuring when TAO_HAS_RT_CORBA was
+          not set.
 
 Thu May 17 08:53:33 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -214,7 +221,7 @@ Thu May 17 08:53:33 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu May 17 07:34:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Leader_Follower.cpp: Fixed a fuzz error.
+        * tao/Leader_Follower.cpp: Fixed a fuzz error.
 
 Thu May 17 13:42:12 2001  Johnny Willemsen
 
@@ -272,23 +279,23 @@ Thu May 17 03:15:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Wed May 16 21:28:22 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  Make sure the TAO_Singleton_Manager is initialized in the
-	  ORB_init() method that doesn't accept a CORBA::Environment()
-	  argument.  This fixes a memory leak that occured due to the
-	  inability of a TAO_TSS_Singleton to be registered with the
-	  TAO_Singleton_Manager since the TAO_Singleton_Manager wasn't
-	  fully initialized.  Thanks to Mogens Hansen
-	  <mogens_h@dk-online.dk> for providing the fix.
+          Make sure the TAO_Singleton_Manager is initialized in the
+          ORB_init() method that doesn't accept a CORBA::Environment()
+          argument.  This fixes a memory leak that occured due to the
+          inability of a TAO_TSS_Singleton to be registered with the
+          TAO_Singleton_Manager since the TAO_Singleton_Manager wasn't
+          fully initialized.  Thanks to Mogens Hansen
+          <mogens_h@dk-online.dk> for providing the fix.
 
 Wed May 16 20:59:15 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Singleton_Manager.cpp (instance):
+        * tao/TAO_Singleton_Manager.cpp (instance):
 
-	  Cleaned up this method so that it returns the pointer just set
-	  by the allocation rather than the one that was set indirectly.
-	  It wasn't obvious what was happening otherwise.
+          Cleaned up this method so that it returns the pointer just set
+          by the allocation rather than the one that was set indirectly.
+          It wasn't obvious what was happening otherwise.
 
 Wed May 16 20:58:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -316,9 +323,9 @@ Wed May 16 20:08:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Wed May 16 19:28:17 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant): 
-	  Generalize this code so that it works on BCB.  Thanks to
- 	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant):
+          Generalize this code so that it works on BCB.  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
 
 Wed May 16 18:53:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
