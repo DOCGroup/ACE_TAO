@@ -1,3 +1,28 @@
+Mon Dec  6 11:06:43 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* m4/acinclude.m4 (ACE_TRY_COMPILE):
+
+	  Make choice of compiler flags to use dependent on the current
+	  autoconf test language.  This fixes a problem with C++ compiler
+	  flags potentially passed as C flags to libtool.
+
+	  (ACE_USE_TEMP_FILE):
+
+	  Added checks for existing files that should be directories and
+	  vice versa.
+
+	  If the file passed as argument is in a directory and the
+	  directory doesn't exist then create the directory.  In order to
+	  be as general as possible a script fragment was implemented with
+	  the same functionality equivalent as "mkdir -p" because "mkdir
+	  -p" may not be portable.
+
+	* m4/threads.m4 (ACE_SEARCH_THREAD_FLAGS):
+
+	  Make choice of compiler flags to use dependent on the current
+	  autoconf test language.  This fixes a problem with C++ compiler
+	  flags potentially passed as C flags to libtool.
+
 Mon Dec 06 08:25:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU: added more
@@ -31,8 +56,9 @@ Mon Dec  6 07:55:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
             while ((result = this->handle_input ()) > 0)
               continue;
 
-          causes server thread to leave its execution loop, because handle_input()
-          always returns 0 or -1.  This should be replaced with
+          causes server thread to leave its execution loop, because
+	  handle_input() always returns 0 or -1.  This should be replaced
+	  with
 
             while ((result = this->handle_input ()) == 0)
 
