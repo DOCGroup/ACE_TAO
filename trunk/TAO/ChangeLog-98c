@@ -1,29 +1,33 @@
 Mon Oct 12 11:30:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp: 
-	  Removed some template instantiations that were not used anymore.
-	  Moved the template instantiations related to memory pool from
-	  Event_Channel.cpp into Memory_Pools.cpp
-	  Added a comparison operator for the TAO_EC_Event class, this is
-	  needed to complete the instantiation of ACE_Array<TAO_EC_Event>.
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
+          Removed some template instantiations that were not used anymore.
+          Moved the template instantiations related to memory pool from
+          Event_Channel.cpp into Memory_Pools.cpp
+          Added a comparison operator for the TAO_EC_Event class, this is
+          needed to complete the instantiation of ACE_Array<TAO_EC_Event>.
 
-	* orbsvcs/orbsvcs/Event/Event_Manip.h: 
-	  The constructor was private, making some g++ variants very
-	  angry.
+        * orbsvcs/orbsvcs/Event/Event_Manip.h:
+          The constructor was private, making some g++ variants very
+          angry.
 
 Mon Oct 12 10:31:35 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i: Removed the need to allocate
- 	  HASH_MAP dynamically.  This helps improve performance and also
- 	  eliminates another point of failure in the constructor.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i: Removed the need to allocate
+          HASH_MAP dynamically.  This helps improve performance and also
+          eliminates another point of failure in the constructor.
 
 Mon Oct 12 09:52:46 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext ctor):
           reordered initializers to match declaration order.
+
+        * performance-tests/Cubit/TAO/MT_Cubit/run_tests.pl:
+          put ./ in front of executable names.  That way, users
+          don't need to have . in their path.
 
 Sun Oct 11 23:18:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
