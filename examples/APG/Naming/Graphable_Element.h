@@ -23,7 +23,7 @@ public:
   // Listing 1
 
   // Listing 2 code/ch21
-  inline int when (void)
+  inline int when (void) const
   {
     return this->when_;
   }
@@ -35,7 +35,7 @@ public:
   // Listing 2
 
   // Listing 3 code/ch21
-  inline bool operator< (Graphable_Element &other)
+  inline bool operator< (const Graphable_Element &other) const
   {
     return this->when () < other.when ();
   }
