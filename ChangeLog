@@ -1,3 +1,22 @@
+Mon Dec 29 17:09:29 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/TLI.cpp: Add #include "ace/OS_TLI.h" to see the ACE_OS::t_*
+	  methods and LOCALNAME/REMOTENAME. In get_option() and set_option(),
+	  decide on use of auto_ptr vs. ACE_Auto_Array_Ptr based on the XPG
+	  level currently being used. XPG5 changed the buf member from
+	  char* to void*.
+
+	* ace/config-aix-4.x.h: Removed ACE_HAS_TIUSER_H and ACE_HAS_TLI;
+	  added ACE_HAS_XTI. Go with the more advanced capabilities.
+
+	* include/makeinclude/platform_aix_ibm.GNU: Set the default value
+	  for 'inline' based on 'debug' - if debug is on, inline off, and
+	  vice-versa.
+
+	* include/makeinclude/wrapper_macros.GNU: Corrected the "inline ?="
+	  line to set the default to 1 (instead of blank). This enables
+	  inlining unless platform_macros.GNU sets it explicitly.
+
 Mon Dec 29 14:48:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_other_tests.lst:
@@ -85,9 +104,9 @@ Sun Dec 28 10:44:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.cpp:
           On Tru64 getchar() is a macro which expands to fgetc. fgetc exists
-          in the global and in the ACE_OS namespace, so on Tru64 use ::getchar()
-          which then expands to ::fgetc(). This looks to work on the Tru64 box
-          I am testing on.
+          in the global and in the ACE_OS namespace, so on Tru64 use
+	  ::getchar() which then expands to ::fgetc(). This looks to work on
+	  the Tru64 box I am testing on.
 
 Sat Dec 27 12:55:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

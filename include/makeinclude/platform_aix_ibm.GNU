@@ -18,6 +18,13 @@ endif
 ifeq (,$(optimize))
   optimize = 0
 endif
+ifeq (,$(inline))
+ifeq (1,$(debug))
+  inline = 0
+else
+  inline = 1
+endif
+endif
 ifeq (,$(rtti))
   rtti = 0
 endif
