@@ -1,3 +1,9 @@
+Sun Jun 21 14:36:26 1998  Seth Benjamin Widoff  <sbw1@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/*.*:
+	Trading Service now compiles without warnings or link errors on
+	Windows NT (MSVC++).
+
 Sun Jun 21 08:39:38 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tests/Param_Test/tests.cpp: Removed a bunch of warnings related
