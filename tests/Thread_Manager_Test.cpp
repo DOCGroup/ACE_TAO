@@ -223,9 +223,9 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Got %d tasks - correct\n"), num_tasks));
-      if ((task_list[0] == &t1 || task_list[0] == &t2) &&
-          (task_list[1] == &t1 || task_list[0] == &t2) &&
-          task_list[0] != task_list[1])
+      if (((task_list[0] == &t1 && task_list[1] == &t2) 
+           || (task_list[1] == &t1 && task_list[0] == &t2)) 
+          && task_list[0] != task_list[1])
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The Task IDs are correct\n")));
       else
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("But Task ID values are wrong!\n")));

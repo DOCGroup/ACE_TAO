@@ -1,3 +1,14 @@
+Fri Jan  4 08:31:49 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Thread_Manager_Test.cpp (test_task_record_keeping): Fixed
+	  a typo in an expression on line 226.  Thanks to Harvinder
+ 	  Sawhney <harvindersawhney@yahoo.com> for reporting this.
+
+Fri Jan  4 05:51:22 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Future.{h,cpp}: Made the get() and ready() methods const.
+	  Thanks to Ran Kohavi <ran@kashya.con> for reporting this.
+
 Fri Jan  4 15:06:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/String_Base.h (operator=): Add <CHAR> to ACE_String_Base
