@@ -1,3 +1,11 @@
+Thu Jan  8 19:00:49 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.{h,cpp,inl}:
+	  Moved the inline files from the header to a new .inl file and include
+	  that file in the header and implementation file. Also use ACE_INLINE
+	  instead of the c++ inline. Reordered the methods to solve Tru64
+	  warnings.
+
 Thu Jan  8 18:37:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Simple/time-date/Alt_Resource_Factory.h:

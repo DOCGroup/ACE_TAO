@@ -9,9 +9,15 @@
 
 #include "ace/config-all.h"
 
-#if !defined (TAO_FT_ORB_UTILS_HAS_DLL)
-#  define TAO_FT_ORB_UTILS_HAS_DLL 1
-#endif /* ! TAO_FT_ORB_UTILS_HAS_DLL */
+#if defined (TAO_AS_STATIC_LIBS)
+#  if !defined (TAO_FT_ORB_UTILS_HAS_DLL)
+#    define TAO_FT_ORB_UTILS_HAS_DLL 0
+#  endif /* ! TAO_FT_ORB_UTILS_HAS_DLL */
+#else
+#  if !defined (TAO_FT_ORB_UTILS_HAS_DLL)
+#    define TAO_FT_ORB_UTILS_HAS_DLL 1
+#  endif /* ! TAO_FT_ORB_UTILS_HAS_DLL */
+#endif
 
 #if defined (TAO_FT_ORB_UTILS_HAS_DLL) && (TAO_FT_ORB_UTILS_HAS_DLL == 1)
 #  if defined (TAO_FT_ORB_UTILS_BUILD_DLL)
