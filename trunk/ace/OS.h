@@ -158,6 +158,10 @@
 #   define ACE_DEFAULT_TIMEOUT 5
 # endif /* ACE_DEFAULT_TIMEOUT */
 
+# if !defined (ACE_DEFAULT_BACKLOG)
+#   define ACE_DEFAULT_BACKLOG 5
+# endif /* ACE_DEFAULT_BACKLOG */
+
 # if !defined (ACE_DEFAULT_THREADS)
 #   define ACE_DEFAULT_THREADS 1
 # endif /* ACE_DEFAULT_THREADS */

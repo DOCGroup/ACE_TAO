@@ -1,3 +1,14 @@
+Tue Apr 20 18:25:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/{SOCK,TLI,LSOCK,Asynch}_Acceptor.h: Replaced the use of the
+ 	  hard-coded backlog value of 5 with ACE_DEFAULT_BACKLOG.  Thanks
+ 	  to Irfan for motivating this.
+
+        * ace/OS.h: Added a new (overriddable) macro called
+ 	  ACE_DEFAULT_BACKLOG that's used to control the default number of
+ 	  connections that can be accepted by an OS.  The default value is
+ 	  5.
+
 Tue Apr 20 18:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/Map_T.i

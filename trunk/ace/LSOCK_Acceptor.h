@@ -44,14 +44,14 @@ public:
   ACE_LSOCK_Acceptor (const ACE_Addr &local_sap,
                       int reuse_addr = 0,
                       int protocol_family = PF_UNIX,
-                      int backlog = 5,
+                      int backlog = ACE_DEFAULT_BACKLOG,
                       int protocol = 0);
   // Initiate a passive mode socket.
 
   int open (const ACE_Addr &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNIX,
-            int backlog = 5,
+            int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
   // Initiate a passive mode socket.
 

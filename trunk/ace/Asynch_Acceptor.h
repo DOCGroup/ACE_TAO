@@ -52,7 +52,7 @@ public:
   virtual int open (const ACE_INET_Addr &address,
                     size_t bytes_to_read = 0,
                     int pass_addresses = 0,
-                    int backlog = 5,
+                    int backlog = ACE_DEFAULT_BACKLOG,
                     int reuse_addr = 1,
                     ACE_Proactor *proactor = 0,
                     int validate_new_connection = 0,
