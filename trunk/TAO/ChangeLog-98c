@@ -1,14 +1,22 @@
+Sun Mar 22 02:58:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/corba.h:
+	* tao/CORBA_Cls.{h,i,cpp}: Rename CORBA.{h,i,cpp} to
+	  CORBA_Cls.{h,i,cpp} because NT doesn't like the coexistance of
+	  corba.h and CORBA.h.
+
 Sun Mar 22 02:39:54 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
 	* tao/CORBA.cpp (ORB_init): made change to check for the return
  	value when initializing the ORB Core instance.  Also, changed the
  	TAO_Marshal::initialize() to be called before the initialization
  	of standard exceptions, where we need the marshal factory for CDR
- 	streams.	
+ 	streams.
 	* tao/ORB_Core.cpp (TAO_ORB_Core::init): made change to check for
  	the return value when initializing service configurator.
 	* tao/ORB_Core.cpp (TAO_Resource_Factory::parse_args): changes to
- 	correctly parse the options for "-ORBresources" and "-ORBpoa"	
+ 	correctly parse the options for "-ORBresources" and "-ORBpoa"
 
 Sun Mar 22 01:52:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -77,30 +85,30 @@ Sat Mar 21 20:34:39 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 	* tao/connect.cpp (open): fixed a bug due to wrong parens
  	location.
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:	
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:	
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:	
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: added option to
  	disable use of the name service.  hacked the code for platforms
  	that don't support floating point math.  Added Quantify start/stop
  	primitives around CORBA calls.
 
 Sat Mar 21 17:55:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
-	
+
 	* orbsvcs/test/Simulator/NavWeap.idl: removed typo
 
 	* orbsvcs/test/Simulator/DOVEBrowser: New Demo using Java Beans
 	  as visualization components added. This will replace the old
 	  demo under orbsvcs/test/Simulator/Sim_Display. See the readme
-	  file under orbsvcs/test/Simulator for further details.  
-	
+	  file under orbsvcs/test/Simulator for further details.
+
 Fri Mar 20 23:25:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/tests/Trading_Service/Makefile:
 	* orbsvcs/tests/Trading_Service/export_tests.cpp:
 	* orbsvcs/tests/Trading_Service/import_tests.cpp:
 	* orbsvcs/tests/Trading_Service/Offer_Exporter.{h,cpp}:
-	* orbsvcs/tests/Trading_Service/Offer_Importer.{h,cpp}:	
+	* orbsvcs/tests/Trading_Service/Offer_Importer.{h,cpp}:
 	* orbsvcs/tests/Trading_Service/Service_Type_Exporter.{h,cpp}:
 	* orbsvcs/tests/Trading_Service/TT_Info.{h,cpp}:
 	* orbsvcs/tests/Trading_Service/TTest.idl:
@@ -111,8 +119,8 @@ Fri Mar 20 23:25:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	* orbsvcs/Trading_Service/Makefile:
 	The trader now responds to resolve_intial_references multicast
 	requests with the IOR of its Lookup interface, as per the
-	specification. 
-	
+	specification.
+
 Fri Mar 20 21:48:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.1.9, released Fri Mar 20 21:48:47 1998.
@@ -122,7 +130,7 @@ Fri Mar 20 19:46:43 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* tao/sequence_T: Added the full complement of get_buffer(),
  	  replace(), and release() calls to TAO's sequences.
 
-	* docs/releasenotes/index.html (href): Reformatted the DOVE 
+	* docs/releasenotes/index.html (href): Reformatted the DOVE
 	  demo section of the release notes a bit.
 
 Thu Mar 20 17:05:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
@@ -134,14 +142,14 @@ Fri Mar 20 16:21:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Generic_Servant/MyFooServant.h: No need to include
  	  generic_servant_export.h.
-	
+
 	* tests/POA/Generic_Servant/Makefile: Added flags to the idl
  	  compiler so that the server library can be made as a dynamic
  	  library.
 
 Thu Mar 20 16:12:42 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-        * $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier: 
+        * $TAO_ROOT/orbsvcs/tests/Simulator/Event_Supplier:
 	  New Project and Workspace files for NT
 
 Fri Mar 20 11:53:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
