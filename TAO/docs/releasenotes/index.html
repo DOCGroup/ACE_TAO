@@ -526,29 +526,22 @@ DOVE is described in detail on the following site:
 We focus on the following goals at the moment:
 <UL>
 <LI>
-Have a DOVE Browser running using Java Beans as vizualization components
+Have a DOVE Browser running using Java Beans as vizualization components.
 <LI>
 Have the Event Channel as DOVE Agent running with an Event Consumer
 in the DOVE Browser.
 <LI>
-Having a MIB which dumps all events transfered on the Event Channel
+Having a DOVE Management Information Base (MIB), which dumps all 
+events transfered on the Event Channel
 into a file on persistent storage for later reuse. 
 </LI>
 </UL>
 <P>
-Two demos are available right now: 
-<UL>
-<LI>
-One using a fixed set of visualization components and the 
-Event Channel as DOVE Agent.
-<LI>
-A new demo using independent visualization components (Java Beans)
+The DOVE Browser uses independent visualization components (Java Beans)
 and the Event Channel as DOVE Agent. Connections can be established
 between monitored metrics and the visualization components.
-</LI>
-</UL>
 <P>
-In the concept of the new demo we have three major components: 
+We have three major components: 
 Observables (monitored metrics), Observers (a Java Bean
 for displaying the metric) and a DataHandler (for demultiplexing the 
 monitored metrics to the appropriate Observables).
@@ -574,10 +567,16 @@ of the demo.
 <A HREF="http://students.cec.wustl.edu/~mk1/dove.html">Object Diagrams</A>
 are available about this new concept.
 <P>
+<P>
+Event Service events are used as communication between DOVE Applications
+and the DOVE Browser. The DOVE MIB analyses the event data field of all events
+and stores this information into a file. The event data filed is of
+type CORBA::Any and the DOVE MIB has no notion of what is conveyed in 
+this field. So the DOVE MIB has to discover the content via the 
+embedded type code information.
+
 Future work includes:
 <UL>
-<LI>
-Inserting a factory pattern and a loading mechanism for JavaBeans.
 <LI>
 Enhancing MIB functionality
 </LI>
