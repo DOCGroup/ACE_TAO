@@ -1,7 +1,10 @@
 // -*- MPC -*-
+//
 // $Id$
 
-project(CosLoadManager): namingexe, portableserver, core, iormanip, loadbalancing {
+
+project(LoadManager): namingexe, portableserver, core, iormanip, loadbalancing {
+  exename  = LoadManager
   requires += ami interceptors
   Source_Files {
     LoadManager.cpp
@@ -9,8 +12,9 @@ project(CosLoadManager): namingexe, portableserver, core, iormanip, loadbalancin
   }
 }
 
-project(CosLoadMonitor): namingexe, portableserver, core, loadbalancing {
+project(LoadMonitor): namingexe, portableserver, core, loadbalancing {
   requires += ami interceptors
+  exename  = LoadMonitor
   Source_Files {
     LoadMonitor.cpp
     Push_Handler.cpp
