@@ -1,3 +1,15 @@
+Fri Aug 16 11:36:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/Makefile (BIN):
+
+	  Only set this make variable if the CosLoadBalancing orbsvcs
+	  component was enabled.  Fixes minimum CORBA builds.
+
+	* orbsvcs/LoadBalancer/Makefile.LoadManager:
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+
+	  No need to include `rules.tao.GNU'.
+
 Fri Aug 16 10:59:51 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
@@ -26,7 +38,7 @@ Fri Aug 16 09:43:03 2002  Ossama Othman  <ossama@uci.edu>
 	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
 
 	  Removed unused "monitor_ior_file" variable.  Fixes a
-	  compile-time warning. 
+	  compile-time warning.
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
 
@@ -69,7 +81,7 @@ Thu Aug 15 10:45:00 2002  Ossama Othman  <ossama@uci.edu>
 	  (add_member):
 
 	  Added some comments to some potentially confusing code.
-	
+
 	  (member_already_present):
 
 	  Compare ObjectGroupIds instead of object group hash map entry
