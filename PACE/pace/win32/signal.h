@@ -35,7 +35,7 @@ extern "C" {
   } pace_sigset_t;
 #endif /* PACE_SIGSET_T */
 
-  typedef struct sigaction pace_s_sigaction;
+  typedef struct sigaction pace_sigaction_s;
 
 #ifndef PACE_SIGINFO_T
 #define PACE_SIGINFO_T
