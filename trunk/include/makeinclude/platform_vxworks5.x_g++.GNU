@@ -2,8 +2,10 @@
 # VxWorks 5.2-5.3.1 with GNU g++ 2.7.2
 
 #### Notes:
-#### 1) This file assumes that the WIND_BASE and WIND_HOST_TYPE environment
-####    variables are set.
+#### 1) This file requires that the WIND_BASE and WIND_HOST_TYPE environment
+####    variables be set.  If the target CPU is not a PPC604, then your CPU
+####    environment variable must be set.  On Windows hosts, you'll also need
+####    to set PERL_PATH if perl is not on your path.
 ####
 #### 2) If you have problems with munch output not being compilable
 ####    because it contains identifiers with ".", e.g., ".cpp", in them:
@@ -19,7 +21,7 @@ shared_libs =
 static_libs = 1
 
 
-#### BEGIN CPU-specific settings
+#### BEGIN target CPU-specific settings
 
 #### This is kind of messy so that it can support multiple
 #### targets.  You'll need to set CPU to a supported CPU
@@ -51,16 +53,33 @@ ifeq ($(CPU),I80486)
 endif # I80486
 endif # PPC604
 
-#### END CPU-specific settings
+#### END target CPU-specific settings
+
+ifeq (,$(WIND_BASE))
+  default:
+        @ERROR: you must set your WIND_BASE environment variable
+endif # WIND_BASE
+
+ifeq (,$(WIND_HOST_TYPE))
+  default:
+        @ERROR: you must set your WIND_HOST_TYPE environment variable
+endif # WIND_HOST_TYPE
 
 
 TARGET_DIR      = $(WIND_BASE)/target
-HOST_DIR        = $(WIND_BASE)/host/sun4-solaris2
+HOST_DIR        = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
 BIN_DIR         = $(HOST_DIR)/bin
 
+#### Set up Win32 vs. Unix host specific macros.
+ifeq ($(WIND_HOST_TYPE),x86-win32)
+  CXX      = cc$(TOOLENV)
+else  # ! x86-win32
+  CXX      = g++$(TOOLENV)
+  PIPE_OPT = -pipe
+endif # ! x86-win32
+
 CC              = cc$(TOOLENV)
-CXX             = g++$(TOOLENV)
-CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -pipe -Wall
+CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -Wall
 #### Note: -f-no-implicit-templates doesn't seem to work well with
 ####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
 ####       member functions don't get instantiated.  Wind River knows
@@ -68,7 +87,8 @@ CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvo
 CCFLAGS         += $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS         += -g
 INCLDIRS        += -I$(WIND_BASE)/target/h
-LD              = $(ACE_ROOT)/bin/ace_ld -c "$(COMPILE.c) -traditional" \
+LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld -c \
+                  "$(COMPILE.c) -traditional" \
                   -m "munch" -n "nm$(TOOLENV)" ld$(TOOLENV)
 LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
