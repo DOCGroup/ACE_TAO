@@ -6906,9 +6906,9 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IllegalState;
     virtual const char *name (void) const = 0;     // get method
     
     virtual void value (CORBA::Any&) = 0;    // set
-    virtual const CORBA::Any *value (void) const = 0;     // get method
+    virtual const CORBA::Any &value (void) const = 0;     // get method
     
-    virtual CORBA::Any *value (void) = 0;     // get method
+    virtual CORBA::Any &value (void) = 0;     // get method
     
     
   protected:
@@ -16349,9 +16349,9 @@ TAO_NAMESPACE  OBV_Components
     virtual const char *name (void) const;     // get method
     
     virtual void value (CORBA::Any&);    // set
-    virtual const CORBA::Any *value (void) const;     // get method
+    virtual const CORBA::Any &value (void) const;     // get method
     
-    virtual CORBA::Any *value (void);     // get method
+    virtual CORBA::Any &value (void);     // get method
     
     
   protected:

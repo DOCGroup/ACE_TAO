@@ -50831,18 +50831,16 @@ OBV_Components::ConfigValue::value (CORBA::Any &val) // set
   this->_pd_value = val;
 }
 // retrieve the member
-const CORBA::Any *
+const CORBA::Any &
 OBV_Components::ConfigValue::value (void) const
 {
-  // @@ Shouldn't we return a duplicate here?
-  return &this->_pd_value;
+  return this->_pd_value;
 }
 // retrieve the member
-CORBA::Any *
+CORBA::Any &
 OBV_Components::ConfigValue::value (void)
 {
-  // @@ Shouldn't we return a duplicate here?
-  return &this->_pd_value;
+  return this->_pd_value;
 }
 
 CORBA::Boolean 
