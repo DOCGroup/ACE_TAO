@@ -42,13 +42,21 @@ My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
     this->open (addr);
 }
 
+
+My_Accept_Handler::~My_Accept_Handler ()
+{
+  this->peer_acceptor_.close ();     // Prevent handle leaks
+}
+
+
 int
 My_Accept_Handler::open (ACE_INET_Addr &addr)
 {
 
-  if (peer_acceptor_.open (addr, 1) == -1)
+  if (this->peer_acceptor_.open (addr, 1) == -1)
   {
-     ACE_ERROR ((LM_ERROR, "My_Accept_Handler open %p\n"));
+     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                 ACE_TEXT ("My_Accept_Handler open")));
      ACE_OS::exit (1);
   }
 
@@ -59,22 +67,27 @@ My_Accept_Handler::open (ACE_INET_Addr &addr)
 ACE_HANDLE
 My_Accept_Handler::get_handle () const
 {
-  return peer_acceptor_.get_handle ();
+  return this->peer_acceptor_.get_handle ();
 }
 
 int
 My_Accept_Handler::handle_input (ACE_HANDLE)
 {
 
-  if ( peer_acceptor_.accept(stream_, NULL) == -1) {
-    ACE_ERROR((LM_ERROR, "peer_acceptor.accept %p\n"));
+  if (this->peer_acceptor_.accept(this->stream_, NULL) == -1) {
+    ACE_ERROR((LM_ERROR, ACE_TEXT ("%p\n"),
+               ACE_TEXT ("peer_acceptor.accept")));
     ACE_OS::exit(1);
   }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("My_Accept_Handler::handle_input \n")));
 
-  stream_.close ();
+  // Close the opened stream, else it'll leak a handle. Don't close
+  // the acceptor here, though, because get_handle() needs it to
+  // correctly allow removal from the reactor later. It gets closed
+  // in the destructor.
+  this->stream_.close ();
 
   return 0;
 }
@@ -121,8 +134,9 @@ client (void *arg)
   int connected_port = server_addr.get_port_number ();
 
   if (connected_port > max_connected_port)
-
     max_connected_port = connected_port;
+
+  cli_stream.close ();
 
   return 0;
 }
@@ -150,11 +164,10 @@ main (int argc, ACE_TCHAR *argv[])
                                          eh,
                                          ACE_Event_Handler::ACCEPT_MASK) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Failed to register event handler %p\n")));
-
-          ACE_OS::exit (1);
-
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("Failed to register event handler")),
+                            1);
         }
 
       ACE_DEBUG ((LM_DEBUG, "Registered event handler at %d\n", idx));
@@ -169,9 +182,10 @@ main (int argc, ACE_TCHAR *argv[])
            ACE_reinterpret_cast (void *, &addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
 
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed")));
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("thread create failed")),
+                          1);
 
       ACE_Thread_Manager::instance ()->wait ();
 
@@ -184,8 +198,9 @@ main (int argc, ACE_TCHAR *argv[])
 
       if (ACE_Reactor::instance()->handle_events (tv) == -1 )
         {
-          ACE_ERROR ((LM_ERROR, "Reactor::handle_events returned with error\n"));
-          ACE_OS::exit (1);
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("Reactor::handle_events")),
+                            1);
         }
 
       // see if I can register a reactor at this port.
@@ -196,9 +211,10 @@ main (int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, "Test Fail, listening port %d\n",
-                      eh->port()));
-          ACE_OS::exit (1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Test Fail, listening port %d\n"),
+                             eh->port()),
+                            1);
         }
 
       ACE_Reactor::instance()->remove_handler (
@@ -222,10 +238,17 @@ main (int argc, ACE_TCHAR *argv[])
 
   if ((max_listened_port  == ACE_MAX_DEFAULT_PORT) &&
       (max_connected_port == ACE_MAX_DEFAULT_PORT))
-    ACE_DEBUG ((LM_DEBUG, "Valid ACE_MAX_DEFAULT_PORT value \n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Valid ACE_MAX_DEFAULT_PORT value: %d\n"),
+                  max_listened_port));
+    }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "Invalid ACE_MAX_DEFAULT_PORT or %d port may be busy\n", ACE_MAX_DEFAULT_PORT));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Invalid ACE_MAX_DEFAULT_PORT ")
+                  ACE_TEXT ("or %d port may be busy; got to %d\n"),
+                  ACE_MAX_DEFAULT_PORT, max_listened_port));
 
     }
 

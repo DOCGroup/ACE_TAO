@@ -1,3 +1,12 @@
+Wed Jul 25 16:29:48 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/Max_Default_Port_Test.cpp: ACE-ified the code and fixed
+          a number of ACE_DEBUG %p directives without a corresponding
+          string. Also, closed a 2 handle-per-try handle leak, which
+          may have affected test results on some platforms.
+        * tests/Max_Default_Port_Test.h: Added a destructor to the
+          test class - it's used to close the acceptor handle down.
+
 Wed Jul 25 15:21:22 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/OS.h:
