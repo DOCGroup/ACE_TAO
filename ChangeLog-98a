@@ -1,3 +1,9 @@
+Sun Jan  4 10:11:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Peer/Makefile: Tweaked the Makefile rules to fix
+ 	  some minor problems.  Thanks to David Levine for showing the
+ 	  way...
+
 Sun Jan 04 09:51:59 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Options.{h,cpp}: Removed macros to export
