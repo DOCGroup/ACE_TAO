@@ -355,6 +355,9 @@ int
 TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
                                              TAO_Queued_Data *&qd)
 {
+  //ACE_DEBUG ((LM_DEBUG,
+  //          "TAO (%P|%t) Extracting extra messages... \n"));
+
   TAO_GIOP_Message_State state (this->orb_core_,
                                 this);
 
@@ -381,6 +384,9 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
 
   size_t copying_len = state.message_size ();
 
+  //  ACE_DEBUG ((LM_DEBUG,
+  //          "TAO (%P|%t) ... queueing messages.. \n"));
+
   qd = this->make_queued_data (copying_len);
 
   if (copying_len > incoming.length ())
@@ -388,7 +394,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
       qd->missing_data_ =
         copying_len - incoming.length ();
 
-      copying_len -= incoming.length ();
+      copying_len = incoming.length ();
     }
 
   qd->msg_block_->copy (incoming.rd_ptr (),

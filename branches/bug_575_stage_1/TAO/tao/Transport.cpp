@@ -125,7 +125,7 @@ TAO_Transport::~TAO_Transport (void)
 }
 
 int
-TAO_Transport::handle_output ()
+TAO_Transport::handle_output (void)
 {
   if (TAO_debug_level > 4)
     {
@@ -827,46 +827,88 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
                 max_wait_time);
 
 
-  if (n <= 0)
-    return n;
 
+  if (n <= 0)
+    {
+      // Even if we have read failure just try to see if we have a
+      // message on the head of the queue and try to process that...
+      this->process_queue_head (rh);
+
+      if (this->incoming_message_queue_.queue_length () == 0)
+        return n;
+
+      return 0;
+    }
+
+  /*  if (TAO_debug_level > 2)
+      {*/
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) Read [%d] bytes \n",
+                  n));
+      // }
 
   // Set the write pointer in the stack buffer
   message_block.wr_ptr (n);
 
-  if (this->parse_incoming_messages (message_block) == -1)
+  int retval = this->parse_consolidate_messages (message_block,
+                                                 rh,
+                                                 max_wait_time);
+
+  if (retval <= 0)
+    {
+      if (retval == -1 && TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport::handle_input_i [%d] "
+                      "Error while parsing and consolidating \n",
+                      n));
+        }
+      return retval;
+    }
+
+  // Make a node of the message block..
+  TAO_Queued_Data qd;
+  qd.msg_block_ = &message_block;
+
+  // Extract the data for the node..
+  this->messaging_object ()->get_message_data (&qd);
+
+  // Process the message
+  return this->process_parsed_messages (&qd,
+                                        rh);
+}
+
+int
+TAO_Transport::parse_consolidate_messages (ACE_Message_Block &block,
+                                           TAO_Resume_Handle &rh,
+                                           ACE_Time_Value *max_wait_time)
+{
+  // Parse the incoming message for validity. The check needs to be
+  // performed by the messaging objects.
+  if (this->parse_incoming_messages (block) == -1)
     return -1;
 
   // Check whether we have a complete message for processing
-  ssize_t missing_data =
-    this->missing_data (message_block);
+  ssize_t missing_data = this->missing_data (block);
 
   if (missing_data < 0)
     {
-      return this->consolidate_extra_messages (message_block,
+      // If we have read too many messages..
+      return this->consolidate_extra_messages (block,
                                                rh);
     }
   else if (missing_data > 0)
     {
-      return this->consolidate_message (message_block,
+      // If we have missing data then try doing a read or try queueing
+      // them.
+      return this->consolidate_message (block,
                                         missing_data,
                                         rh,
                                         max_wait_time);
     }
 
-
-  TAO_Queued_Data qd;
-  qd.msg_block_ = &message_block;
-  qd.missing_data_ = missing_data;
-
-  this->messaging_object ()->get_message_data (&qd);
-
-  // @@Bala:
-  return this->process_parsed_messages (&qd,
-                                        rh);
+  return 1;
 }
-
-
 
 int
 TAO_Transport::parse_incoming_messages (ACE_Message_Block &message_block)
@@ -990,17 +1032,39 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
   // If the queue did not have a complete message put this piece of
   // message in the queue. We kow it did not have a complete
   // message. That is why we are here.
-  this->incoming_message_queue_.copy_message (incoming);
+  size_t n = this->incoming_message_queue_.copy_message (incoming);
+
+  // Update the missing data...
   missing_data = this->incoming_message_queue_.missing_data ();
 
+  // Move the read pointer of the <incoming> message block to the end
+  // of the copied message  and process the remaining portion...
+  incoming.rd_ptr (n);
 
-  // @@todo: What will happen if we have a part of the next message in
-  // the incoming message block? If that is a one-way call we handle
-  // it differently. We will be in soup if the next message is a
-  // two-way call. We need to process that too.... Can we call
-  // process_messages () with rd_ptr () of teh incoming_message (),
-  // moved?
+  // If we have some more information left in the message block..
+  if (incoming.length ())
+    {
+      // We may have to parse & consolidate. This part of the message
+      // doesn't seem to be part of the last message in the queue (as
+      // the copy () hasn't taken away this message).
+      int retval = this->parse_consolidate_messages (incoming,
+                                                     rh,
+                                                     max_wait_time);
 
+      // If there is an error return
+      if (retval == -1)
+        {
+          if (TAO_debug_level)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Error while consolidating... \n",
+                          "TAO (%P|%t) - .. part of the read message \n"));
+            }
+          return retval;
+        }
+    }
+
+  // If we still have some missing data..
   if (missing_data > 0)
     {
       // Get the last message from the Queue
@@ -1010,6 +1074,8 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
       ACE_Message_Block *mb =
         qd->msg_block_;
 
+      // Try to do a read again. If we have some luck it would be
+      // great..
       ssize_t n = this->recv (mb->wr_ptr (),
                               missing_data,
                               max_wait_time);
@@ -1028,6 +1094,7 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
       this->incoming_message_queue_.enqueue_tail (qd);
     }
 
+  // Process a message in the head of the queue if we have one..
   return this->process_queue_head (rh);
 }
 
@@ -1037,6 +1104,8 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
                                            &incoming,
                                            TAO_Resume_Handle &rh)
 {
+  //ACE_DEBUG ((LM_DEBUG,
+  //          "TAO (%P|%t) Consolidating multiple messages.. \n"));
   // Take a message from the tail..
   TAO_Queued_Data *tail =
     this->incoming_message_queue_.dequeue_tail ();
@@ -1051,6 +1120,10 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
     }
 
   int retval = 1;
+
+  //ACE_DEBUG ((LM_DEBUG,
+  //          "TAO (%P|%t) Extracting multiple messages.. \n"));
+
   while (retval == 1)
     {
       TAO_Queued_Data *q_data = 0;
@@ -1209,6 +1282,13 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
 int
 TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
 {
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::process_queue_head \n",
+                  this->id ()));
+    }
+
   // See if the message in the head of the queue is complete...
   if (this->incoming_message_queue_.is_head_complete () == 1)
     {
@@ -1237,6 +1317,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
             }
 
           // Send a notification to the reactor...
+          // @@ What do we do if the notify to the reactor fails??
           reactor->notify (eh,
                            ACE_Event_Handler::READ_MASK);
         }
@@ -1250,9 +1331,11 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
 
       // Delete the Queued_Data..
       delete qd;
+
+      return 0;
     }
 
-  return 0;
+  return -1;
 }
 
 

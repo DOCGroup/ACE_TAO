@@ -568,7 +568,13 @@ protected:
    */
   virtual void transition_handler_state_i (void) = 0;
 
+
   /// @@ Bala: Documentation
+
+  int parse_consolidate_messages (ACE_Message_Block &bl,
+                                  TAO_Resume_Handle &rh,
+                                  ACE_Time_Value *time);
+
   int parse_incoming_messages (ACE_Message_Block &message_block);
 
   size_t missing_data (ACE_Message_Block &message_block);

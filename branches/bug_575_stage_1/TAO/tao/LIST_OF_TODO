@@ -9,11 +9,10 @@
 - AMI tests
 - run purify quantify
 - DSI_Gateway tests
-- Remove the ORB_Core from the signature of a number of methods of
-  GIOP_Message_Base  class
 - Go through the code again & again...
 - Put tms_->close_connection () wherever we get -1 as a retval..
 - Looks for a memory leak when we delete a node..
 - Change the Output CDR to be on stack..
 - Dont we want a cached transport on the server side...
 - BIG_REPLY test, needs to be trimmed down a bit...
+- Look at purge_pending_notifications ()..
