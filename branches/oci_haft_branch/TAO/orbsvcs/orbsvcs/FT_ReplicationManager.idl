@@ -1,0 +1,97 @@
+/* -*- IDL -*- */
+//=============================================================================
+/**
+ *  @file    FT_ReplicationManager.idl
+ *
+ *  $Id$
+ *
+ *  This file is part of Fault Tolerant CORBA.
+ *  This was original part of the OMG FT.idl file
+ *
+ *  @author Curt Hibbs <hibbs_c@ociweb.com>
+ */
+//=============================================================================
+
+#ifndef _FT_REPLICATION_MANAGER_IDL_
+#define _FT_REPLICATION_MANAGER_IDL_
+
+#include "orbsvcs/PortableGroup.idl"
+#include "orbsvcs/FT_CORBA.idl"
+#include "orbsvcs/FT_Replica.idl"
+#include "orbsvcs/FT_Notifier.idl"
+
+#pragma prefix "omg.org"
+
+module FT
+{
+    exception InterfaceNotFound {};
+
+  ///////////////////////////////////////////////////
+  // names for properties used in Fault Tolerant CORBA
+
+  /// FT::ReplicationStyle
+  const string FT_REPLICATION_STYLE = "org.omg.ft.ReplicationStyle";
+
+  /// FT::MembershipStyle (defined in PortableGroups)
+//const string FT_MEMBERSHIP_STYLE = "MembershipStyle";
+
+  /// FT::ConsistencyStyle
+  const string FT_CONSISTENCY_STYLE = "org.omg.ft.ConsistencyStyle";
+
+  /// FT::MembershipStyle
+  const string FT_MEMBERSHIP_STYLE = "org.omg.PortableGroup.MembershipStyle";
+  const MembershipStyleValue MEMB_APP_CTRL = PortableGroup::MEMB_APP_CTRL;
+  const MembershipStyleValue MEMB_INF_CTRL = PortableGroup::MEMB_INF_CTRL;
+
+  /// FT::FaultMonitoringStyle
+  const string FT_FAULT_MONITORING_STYLE = "org.omg.ft.FaultMonitoringStyle";
+
+  /// FT::FaultMonitoringGranularity
+  const string FT_FAULT_MONITORING_GRANULARITY = "org.omg.ft.FaultMonitoringGranularity";
+
+  /// FT::InitialNumberReplicas
+  const string FT_INITIAL_NUMBER_REPLICAS = "org.omg.PortableGroup.InitialNumberReplicas";
+
+  /// FT::MinimumNumberReplicas
+  const string FT_MINIMUM_NUMBER_REPLICAS = "org.omg.PortableGroup.MinimumNumberReplicas";
+
+  /// FT::FaultMonitoringIntervalAndTimeou
+  const string FT_FAULT_MONITORING_INTERVAL_AND_TIMEOUT = "org.omg.ft.FaultMonitoringIntervalAndTimeout";
+
+  /// FT::CheckpointInterval
+  const string FT_CHECKPOINT_INTERVAL = "org.omg.ft.CheckpointInterval";
+
+  /// FT::Factories
+  const string FT_FACTORIES = "org.omg.PortableGroup.Factories";
+
+  // end of property names from FT CORBA specification
+  ///////////////////////////////////////////////////
+
+  // Specification of ReplicationManager Interface
+  interface ReplicationManager : PropertyManager,
+                                 FTObjectGroupManager,
+                                 GenericFactory {
+
+    /**
+    * Registers the Fault Notifier with the Replication Manager.
+    * @param fault_notifier where to send the fault information.
+    */
+    void register_fault_notifier(in FaultNotifier fault_notifier);
+  
+    /**
+    * Returns the reference of the Fault Notifier.
+    * @returns the reference of the Fault Notifier.
+    */
+    FaultNotifier get_fault_notifier()
+      raises (InterfaceNotFound);
+
+   /**
+   * Creates and returns a dummy IOGR for unit testing
+   */
+  ObjectGroup create_test_iogr ();
+ 
+  };
+};
+
+
+#endif // _FT_REPLICATION_MANAGER_IDL_

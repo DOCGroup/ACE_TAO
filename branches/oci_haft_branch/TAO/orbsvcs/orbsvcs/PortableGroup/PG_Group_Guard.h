@@ -54,7 +54,7 @@ public:
   TAO_PG_Group_Guard (TAO_PG_GenericFactory & generic_factory,
                       TAO_PG_Factory_Set & factory_set,
                       TAO_PG_ObjectGroupManager & group_manager,
-                      const PortableServer::ObjectId & oid);
+                      const PortableGroup::ObjectGroupId group_id);
 
   /// Destructor.
   ~TAO_PG_Group_Guard (void);
@@ -76,10 +76,10 @@ private:
   /// object group map.
   TAO_PG_ObjectGroupManager & group_manager_;
 
-  /// Reference to the ObjectId that is the map key necessary to
+  /// Reference to the ObjectGroupId that is the map key necessary to
   /// unbind the corresponding object group map entry from the map
   /// upon destruction.
-  const PortableServer::ObjectId & oid_;
+  const PortableGroup::ObjectGroupId group_id_;
 
   /// Flag that dictates whether or not the destructor will perform
   /// cleanup.

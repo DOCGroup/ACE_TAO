@@ -1,0 +1,9 @@
+project : taoserver, fault_tolerance, iormanip, ftorb {
+  exename  = FT_ReplicationManager
+  Source_Files {
+    FT_ReplicationManager.cpp
+    FT_ReplicationManager_Main.cpp
+    FT_Property_Validator.cpp
+  }
+}
+

@@ -15,8 +15,28 @@ TAO_PG_PropertyManager::TAO_PG_PropertyManager (
     default_properties_ (),
     type_properties_ (),
     lock_ (),
-    property_validator_ ()
+    property_validator_ (0)
 {
+}
+
+
+void 
+TAO_PG_PropertyManager::init ( 
+  TAO_PG_Default_Property_Validator * property_validator )
+{
+  if (property_validator)
+  {
+    property_validator_ = property_validator;
+  }
+  else
+  {
+    ACE_NEW_THROW_EX (
+        property_validator_,
+        TAO_PG_Default_Property_Validator,
+        CORBA::NO_MEMORY ()
+    );
+    ACE_CHECK;
+  }
 }
 
 
@@ -45,7 +65,7 @@ TAO_PG_PropertyManager::set_default_properties (
                                                    property.val));
     }
 
-  this->property_validator_.validate_property (props
+  this->property_validator_->validate_property (props
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -105,7 +125,7 @@ TAO_PG_PropertyManager::set_type_properties (
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
-  this->property_validator_.validate_property (overrides
+  this->property_validator_->validate_property (overrides
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -117,11 +137,16 @@ TAO_PG_PropertyManager::set_type_properties (
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   Type_Prop_Table::ENTRY * entry;
-  if (this->type_properties_.find (type_id, entry) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
-
-  PortableGroup::Properties & props = entry->int_id_;
-  props = overrides;
+  if (this->type_properties_.find (type_id, entry) == 0) 
+  {
+    PortableGroup::Properties & props = entry->int_id_;
+    props = overrides;
+  }
+  else
+  {
+    if (this->type_properties_.bind (type_id, overrides) != 0)
+      ACE_THROW (CORBA::UNKNOWN ());
+  }
 }
 
 
@@ -202,41 +227,28 @@ TAO_PG_PropertyManager::remove_type_properties (
 
 void
 TAO_PG_PropertyManager::set_properties_dynamically (
-    PortableGroup::ObjectGroup_ptr /* object_group */,
-    const PortableGroup::Properties & /* overrides */
+    PortableGroup::ObjectGroup_ptr object_group,
+    const PortableGroup::Properties & overrides
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
-#if 0
-  // First verify that the "InitialNumberMembers" property is not in
-  // the Properties sequence.  According to the spec, it is not
-  // allowed to be set as part of the default properties.
-  PortableGroup::Name factories;
-  factories.length (1);
-  factories[0].id =
-    CORBA::string_dup ("org.omg.PortableGroup.InitialNumberMembers");
 
-  CORBA::ULong len = props.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
-    {
-      PortableGroup::Property property = props[i];
-
-      if (property.nam == factories)
-        ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                   property.val));
-    }
-
-  this->property_validator_.validate_property (overrides
+  this->property_validator_->validate_property (overrides
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // @todo Set the properties in the object group map entry.
-#endif  /* 0 */
+  ACE_GUARD (TAO_SYNCH_MUTEX, property_map_guard, this->lock_);
 
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  PortableGroup::Properties * dynamic_properties =
+    this->object_group_manager_.get_dynamic_properties (object_group
+                                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Now override the dynamic (object group) properties with the new values
+  TAO_PG::override_properties (overrides, *dynamic_properties);
 }
 
 

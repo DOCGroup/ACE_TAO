@@ -50,7 +50,7 @@ public:
   TAO_PG_ObjectGroupManager (void);
 
   /// Destructor.
-  ~TAO_PG_ObjectGroupManager (void);
+  virtual ~TAO_PG_ObjectGroupManager (void);
 
   /**
    * @name PortableGroup::ObjectGroupManager methods
@@ -159,30 +159,35 @@ public:
                      PortableGroup::MemberAlreadyPresent,
                      PortableGroup::NoFactory));
 
-  /// Create object group hash map entry that represents an actual
-  /// ObjectGroup.
+  /// Create object an empty object.
   /**
    * @note This method is used mainly by the
    *       GenericFactory::create_object() method.
    */
   PortableGroup::ObjectGroup_ptr create_object_group (
-    CORBA::ULong group_id,
-    const PortableServer::ObjectId &oid,
+    PortableGroup::ObjectGroupId group_id,
     const char * type_id,
     const PortableGroup::Criteria & the_criteria
     ACE_ENV_ARG_DECL);
 
-  /// Destroy the object group corresponding to the given ObjectId.
+  /// Destroy the object group corresponding to the given ObjectGroupId.
   /**
    * @note This method is used mainly by the
    *       GenericFactory::delete_object() method.
    */
-  void destroy_object_group (const PortableServer::ObjectId & oid
+  void destroy_object_group (const PortableGroup::ObjectGroupId group_id
                              ACE_ENV_ARG_DECL);
 
   /// Return the properties set when the object group was created, and
   /// the dynamic properties that may have overridden them.
   PortableGroup::Properties * get_properties (
+      PortableGroup::ObjectGroup_ptr object_group
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectGroupNotFound));
+
+  /// Return the dynamic properties for the given group.
+  PortableGroup::Properties * get_dynamic_properties (
       PortableGroup::ObjectGroup_ptr object_group
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,

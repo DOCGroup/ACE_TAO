@@ -1,3 +1,47 @@
+Wed Sep 18 11:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+
+        * orbsvcs\FT_ReplicationManager\FT_Property_Validator.cpp
+        * orbsvcs\FT_ReplicationManager\FT_Property_Validator.h
+        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.cpp
+        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.h
+        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.mpc
+        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager_Main.cpp
+        * orbsvcs\FT_ReplicationManager\README
+        * orbsvcs\orbsvcs\FT_ReplicationManager.idl
+             These files were added as part of the initial check in
+             of Replication Manager implementation.
+
+        * orbsvcs\orbsvcs\FT_CORBA.idl
+        * orbsvcs\orbsvcs\FaultTolerance.mpc
+        * orbsvcs\orbsvcs\PortableGroup\PG_Default_Property_Validator.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_Default_Property_Validator.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_Factory_Set.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_Group_Guard.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_Group_Guard.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroup_Map.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroup_Map.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_PropertyManager.cpp
+        * orbsvcs\orbsvcs\PortableGroup\PG_PropertyManager.h
+        * orbsvcs\orbsvcs\PortableGroup\PG_Property_Utils.cpp
+             These files were modified as part of the initial check in
+             of Replication Manager implementation.
+
+        * orbsvcs\tests\FT_App\FT_App.mpc
+        * orbsvcs\tests\FT_App\FT_Client.cpp
+        * orbsvcs\tests\FT_App\FT_UnitTests.cpp
+        * orbsvcs\tests\FT_App\FT_UnitTests.h
+             These files were added to implement testing of the
+             Replication Manager implementation.
+
+
+        These changes were made in the oci_haft branch.
+
+
+
 Wed Sep  3 13:35:32 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:

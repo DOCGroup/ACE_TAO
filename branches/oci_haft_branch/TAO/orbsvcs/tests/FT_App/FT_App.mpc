@@ -1,4 +1,4 @@
-project(*Server): taoserver, fault_tolerance{
+project(*Server): taoserver, fault_tolerance {
   exename = ft_replica
   Source_Files {
     FT_TestReplica_i.cpp
@@ -10,16 +10,16 @@ project(*Server): taoserver, fault_tolerance{
   }
 }
 
-project(*Client): taoclient, fault_tolerance {
+project(*Client): taoclient, fault_tolerance, orbsvcsexe, iormanip, ftorb  {
   exename = ft_client
   Source_Files {
     FT_Client.cpp
+    FT_UnitTests.cpp
   }
 }
 
 project(*Notifier): taoclient, fault_tolerance {
   exename = ft_notifier
-
   Source_Files {
     FTAPP_Notifier_Main.cpp
     StubFaultNotifier.cpp
