@@ -40,6 +40,7 @@ call %0 %dopure% MM_Shared_Memory_Test
 call %0 %dopure% MT_SOCK_Test
 call %0 %dopure% Naming_Test
 call %0 %dopure% Notify_Performance_Test
+call %0 %dopure% OrdMultiSet_Test
 call %0 %dopure% Pipe_Test
 call %0 %dopure% Priority_Buffer_Test
 call %0 %dopure% Priority_Reactor_Test
