@@ -79,6 +79,7 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 tests
 
 RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
+                ACE_wrappers/ACE-INSTALL \
                 ACE_wrappers/man
 
 RELEASE_LIB_FILES = \
@@ -92,8 +93,9 @@ RELEASE_LIB_FILES = \
 #### If creating the "official" ACE release:
 #### 1) Check that the workspace is up-to-date, and bail out if not.
 #### 2) Update the timestamp in the VERSION file.
-#### 3) Update ace/Version.h
-#### 4) Add a ChangeLog entry to the ChangeLog plain file.
+#### 3) Update ace/Version.h.
+#### 4) Add a ChangeLog entry.
+#### 5) Tag the release.
 #### Detect if we are creating the "official" release by looking at the PWD.
 #### To disable this feature, add "TIMESTAMP=" to the make command line.
 #### NOTE: if the version number in the VERSION file contains three components,
@@ -103,14 +105,14 @@ RELEASE_LIB_FILES = \
 ####       4.2, it will not be modified because it is assumed to be for a
 ####       final release.
 ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
-  TIMESTAMP = (CHANGELOG='ChangeLog'; export CHANGELOG; \
-              if [ -z "$$CHANGELOG" ]; then \
-                echo unable to find latest ChangeLog file; exit 1; fi; \
-              DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
+  TIMESTAMP = (DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
               UPTODATE=`cvs -nq update $(CONTROLLED_FILES) | \
                 egrep -v '/tests/log/' | perl -pi -e 's%/ACE_wrappers%%g; \
                 s/$$/\\\n  /g'`; \
               if [ "$$UPTODATE" ]; then /pkg/gnu/bin/echo -e ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit 1; fi; \
+              OLD_ACE_VERSION_TAG=ACE-`perl -ne  'if (/ACE version/) \
+                { s/[^0-9]+(\d+)\.(\d+)\.(\d+).+/\1_\2_\3/; print }' VERSION`;\
+              export OLD_ACE_VERSION_TAG; \
               ACE_VERSION=`perl -pi -e \
                 'BEGIN { $$date=$$ENV{"DATE"} } \
                  s/(ACE version \d+\.\d+\.)(\d+)/sprintf("$$1%d",$$2+1)/e; \
@@ -127,7 +129,7 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                         $$message_printed = 0;} \
                  while (<>) { \
                    if ( ! $$message_printed++ ) { print "$$message\n"; } \
-                   print; } ' $$CHANGELOG; \
+                   print; } ' ChangeLog; \
               echo $$ACE_VERSION | perl -ne ' \
                ($$version = $$_) =~ s/ACE version ([\d\.]+).*\n/$$1/; \
                  ($$major, $$minor, $$beta) = split /\./, $$version; \
@@ -140,9 +142,9 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                        "\#define ACE_VERSION " . \
                          "\"$${major}.$${minor}.$${beta}\\0\"\n";' > \
                 ace/Version.h; \
-              cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG ace/Version.h; \
-              chmod 644 VERSION $$CHANGELOG ace/Version.h; \
-              VERSION_TAG=ACE_`perl -ne  'if (/ACE version/) \
+              cvs commit -m"$$ACE_VERSION" VERSION ChangeLog ace/Version.h; \
+              chmod 644 VERSION ChangeLog ace/Version.h; \
+              VERSION_TAG=ACE-`perl -ne  'if (/ACE version/) \
                 { s/[^0-9]+(\d+)\.(\d+)\.(\d+).+/\1_\2_\3/; print }' VERSION`;\
               export VERSION_TAG; \
               cvs -q tag $$VERSION_TAG $(CONTROLLED_FILES) > /dev/null) &&
@@ -159,13 +161,13 @@ FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' \
 
 cleanrelease: ACE-INSTALL
 	@$(TIMESTAMP) (make realclean; cd ..; \
-         find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
+         find $(RELEASE_FILES) $(FILTER) | \
            cpio -o -H tar | gzip -9 > ACE.tar.gz; \
          chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
 release: ACE-INSTALL
 	@$(TIMESTAMP) (cd ..; \
-         find $(RELEASE_FILES) ACE_wrappers/ACE-INSTALL $(FILTER) | \
+         find $(RELEASE_FILES) $(FILTER) | \
            cpio -o -H tar | gzip -9 > ACE.tar.gz; \
          find $(RELEASE_LIB_FILES) $(FILTER) | \
            cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
