@@ -1,3 +1,12 @@
+Wed Nov 19 13:43:33 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* Merged the purify testing into run_tests.  Just use 
+	  
+	  "run_tests purify ..."
+
+	  to purify instead of running the tests.  If you thought this
+	  batch file looked bad before....
+
 Wed Nov 19 12:17:50 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/{OS,stdcpp}.h (ACE_CONFIG_H): Added this macro to protect
