@@ -1,3 +1,9 @@
+Fri Sep 28 10:17:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Smart_Proxies/SmartProxies_Static.dsp:
+
+          Fixed a setting in the release configuration.
+
 Fri Sep 28 06:17:27 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Improved the installation instructions for BCB 4/5.
