@@ -200,7 +200,8 @@ ACE_Service_Manager::list_services (void)
   return 0;
 }
 
-// Trigger a remote reconfiguration of the Service Configurator.
+// Trigger a reconfiguration of the Service Configurator via its
+// svc.conf file.
 
 int
 ACE_Service_Manager::reconfigure_services (void)
@@ -239,10 +240,14 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
   *p = '\0';
 
   if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("help")) == 0)
+    // Return a list of the configured services.
     this->list_services ();
   else if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("reconfigure") )== 0)
+    // Trigger a reconfiguration by re-reading the local <svc.conf> file.
     this->reconfigure_services ();
   else
+    // Just process a single request passed in via the socket
+    // remotely.
     ACE_Service_Config::process_directive (request);
 
   // Additional management services may be handled here...

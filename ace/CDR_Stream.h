@@ -19,7 +19,6 @@
  * Those assumptions are pretty good these days, with Crays beign
  * the only known exception.
  *
- *
  *  @author TAO version by
  *  @author Aniruddha Gokhale <gokhale@cs.wustl.edu>
  *  @author Carlos O'Ryan<coryan@cs.wustl.edu>
@@ -30,7 +29,6 @@
  *  @author Jim Rogers <jrogers@viasoft.com>
  */
 //=============================================================================
-
 
 #ifndef ACE_CDR_STREAM_H
 #define ACE_CDR_STREAM_H
@@ -263,12 +261,16 @@ public:
   /// Return the <current_> message block in chain.
   const ACE_Message_Block *current (void) const;
 
-  /// Access the underlying buffer (read only).
+  /** 
+   * Access the underlying buffer (read only).    NOTE: This
+   * method only returns a pointer to the first block in the
+   * chain.
+   */
   const char *buffer (void) const;
 
   /**
    * Return the start and size of the internal buffer.  NOTE: This
-   * methods only return information about the first block in the
+   * method only returns information about the first block in the
    * chain.
    */
   size_t length (void) const;
