@@ -1,3 +1,38 @@
+Tue Apr 11 09:02:33 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/corbafwd.h (TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+	  TAO_ORB_CORE_INIT_LOCATION_CODE):
+
+	  Added these new exception location codes.  They are used in the
+	  TAO_Acceptor_Registry::open() and TAO_ORB_Core::init() methods,
+	  respectively.
+
+	* tao/Exception.cpp (_info):
+
+	  Added information entries for the newly added
+	  TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE and
+	  TAO_ORB_CORE_INIT_LOCATION_CODE exception location codes.
+
+	  Corrected typo: "EENOTSUP" should be "ENOTSUP."
+
+	* tao/Acceptor_Registry.cpp (open):
+
+	  Updated all exceptions to utilize new
+	  TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE location code to
+	  improve exception messages.
+
+	* tao/ORB_Core.cpp (init):
+
+	  Updated all exceptions to utilize new
+	  TAO_ORB_CORE_INIT_LOCATION_CODE location code to improve
+	  exception messages.
+
+	* tao/IIOP_Profile.cpp (decode):
+	* tao/SHMIOP_Profile.cpp (decode):
+	* tao/UIOP_Profile.cpp (decode):
+
+	  Cleaned up error message.
+
 Tue Apr 11 08:05:37 2000  Chad Elliott <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Trading/export_test.cpp
