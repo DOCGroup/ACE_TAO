@@ -121,7 +121,7 @@ ACE_Condition<MUTEX>::broadcast (void)
 
 #endif /* ACE_HAS_THREADS */
 
-#if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+#if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
 template <class TYPE> ACE_INLINE
 ACE_TSS<TYPE>::ACE_TSS (TYPE *)
 {
@@ -145,4 +145,4 @@ ACE_TSS<TYPE>::ts_get (void) const
   return (TYPE *) &this->type_;
 }
 
-#endif /* defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) */
+#endif /* ! (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))) */

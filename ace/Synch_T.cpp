@@ -227,17 +227,17 @@ template <class TYPE> void
 ACE_TSS<TYPE>::dump (void) const
 {
 // ACE_TRACE ("ACE_TSS<TYPE>::dump");
-#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->keylock_.dump ();
   ACE_DEBUG ((LM_DEBUG, "key_ = %d\n", this->key_));
   ACE_DEBUG ((LM_DEBUG, "\nonce_ = %d", this->once_));
   ACE_DEBUG ((LM_DEBUG, "\n"));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) */
+#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 }
 
-#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
 #if defined (ACE_HAS_THR_C_DEST)
 extern "C" void ACE_TSS_C_cleanup(void *); // defined in Synch.cpp
 #endif /* ACE_HAS_THR_C_DEST */
@@ -779,5 +779,5 @@ ACE_TSS_Read_Guard<ACE_LOCK>::dump (void) const
   ACE_TSS_Guard<ACE_LOCK>::dump ();
 }
 
-#endif /* defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) */
+#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 #endif /* ACE_SYNCH_T_C */

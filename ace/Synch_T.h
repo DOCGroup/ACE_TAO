@@ -255,7 +255,7 @@ protected:
   // Actually implements the code that retrieves the object from
   // thread-specific storage. 
 
-#if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+#if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   TYPE type_;
   // This implementation only works for non-threading systems...
 #else
@@ -270,7 +270,7 @@ protected:
 
   static void cleanup (void *ptr);
   // "Destructor" that deletes internal TYPE * when thread exits.
-#endif /* defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) */
+#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
   // = Disallow copying...
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS<TYPE> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_TSS (const ACE_TSS<TYPE> &))
@@ -462,7 +462,7 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
-#if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+#if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
 
 #define ACE_TSS_Guard ACE_Guard
 #define ACE_TSS_Write_GUARD ACE_Write_Guard
@@ -601,7 +601,7 @@ public:
   // ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 };
-#endif /* !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)) */
+#endif /* !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))) */
 
 #if defined (ACE_HAS_THREADS) /* ACE platform supports some form of threading. */
 
