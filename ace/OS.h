@@ -1,7 +1,5 @@
 /* -*- C++ -*- */
-
 // $Id$
-
 
 // ============================================================================
 //
@@ -491,14 +489,14 @@ typedef int key_t;
 
 //    #include <prepc.h>    /* pREPC+ ANSI C Standard Library calls */
 
-    /*  #include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */ 
+    /*  #include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */
     /*                         are not supported by pSOSim                 */
-	 /*                                                                     */
-    /*  #include <phile.h>     pHILE+ file system calls are not supported  */ 
-    /*                         by pSOSim *so*, for the time being, we make */ 
-    /*                         use of UNIX file system headers and then    */ 
-    /*                         when we have time, we wrap UNIX file system */ 
-    /*                         calls w/ pHILE+ wrappers, and modify ACE to */ 
+    /*                                                                     */
+    /*  #include <phile.h>     pHILE+ file system calls are not supported  */
+    /*                         by pSOSim *so*, for the time being, we make */
+    /*                         use of UNIX file system headers and then    */
+    /*                         when we have time, we wrap UNIX file system */
+    /*                         calls w/ pHILE+ wrappers, and modify ACE to */
     /*                         use the wrappers under pSOSim               */
 
     /* put includes for necessary UNIX file system calls here */
@@ -509,13 +507,13 @@ typedef int key_t;
 
     // remap missing error numbers for system functions
     #define EPERM        1        /* Not super-user                        */
-    #define ENOENT	    2        /* No such file or directory             */
+    #define ENOENT       2        /* No such file or directory             */
     #define ESRCH        3        /* No such process                       */
     #define EINTR        4        /* interrupted system call               */
     #define EBADF        9        /* Bad file number                       */
     #define EAGAIN       11       /* Resource temporarily unavailable      */
-    #define EWOULDBLOCK	 EAGAIN   /* Blocking resource request would block */
-    #define ENOMEM       12		 /* Not enough core			               */
+    #define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
+    #define ENOMEM       12       /* Not enough core                                   */
     #define EACCES       13       /* Permission denied                     */
     #define EEXIST       17       /* File exists                           */
     #define ENOSPC       28       /* No space left on device               */
@@ -527,20 +525,20 @@ typedef int key_t;
     #define ENETUNREACH  128      /* Network is unreachable                */
     #define EISCONN      133      /* Socket is already connected           */
     #define ESHUTDOWN    143      /* Can't send after socket shutdown      */
-    #define ECONNREFUSED 146	    /* Connection refused                    */
+    #define ECONNREFUSED 146      /* Connection refused                    */
     #define EINPROGRESS  150      /* operation now in progress             */
-    #define ERRMAX		 151      /* Last error number                     */
+    #define ERRMAX       151      /* Last error number                     */
 
     #define TCP_
     #if ! defined (BUFSIZ)
       #define BUFSIZ 1024
     #endif  /* ! defined (BUFSIZ) */
-  
+
 
   #else
 
-    #include <rpc.h>       /* pRPC+ Remote Procedure Call Library calls */ 
-    #include <phile.h>     /* pHILE+ file system calls                  */ 
+    #include <rpc.h>       /* pRPC+ Remote Procedure Call Library calls */
+    #include <phile.h>     /* pHILE+ file system calls                  */
 
 
   #endif /* defined (ACE_PSOSIM) */
@@ -773,7 +771,7 @@ public:
     // max number of ticks supported in a single system call
 
 private:
-  
+
   // constants for prying info out of the pSOS time encoding
   static const u_long year_mask;
   static const u_long month_mask;
@@ -1520,15 +1518,15 @@ struct cancel_state
 };
 
 #if defined (ACE_LACKS_SYS_TYPES_H)
-  typedef unsigned char	u_char;
-  typedef unsigned short	u_short;
-  typedef unsigned int	u_int;
-  typedef unsigned long	u_long;
+  typedef unsigned char u_char;
+  typedef unsigned short        u_short;
+  typedef unsigned int  u_int;
+  typedef unsigned long u_long;
 
-  typedef unsigned char	uchar_t;
-  typedef unsigned short	ushort_t;
-  typedef unsigned int	uint_t;
-  typedef unsigned long	ulong_t;
+  typedef unsigned char uchar_t;
+  typedef unsigned short        ushort_t;
+  typedef unsigned int  uint_t;
+  typedef unsigned long ulong_t;
 #else
   #include /**/ <sys/types.h>
 #endif  /* ACE_LACKS_SYS_TYPES_H */
@@ -1809,7 +1807,7 @@ typedef long pid_t;
 typedef char *ACE_thread_t;
 typedef int ACE_hthread_t;
 
- 
+
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
 // use unsigned int, so the ACE TSS emulation is compatible with them.)
@@ -1817,9 +1815,9 @@ typedef u_int ACE_thread_key_t;
 
 /* CDG - TBD - revisit these: compare pthreads and pSOS threads */
 #  define THR_CANCEL_DISABLE      0  /* thread can never be cancelled */
-#  define THR_CANCEL_ENABLE       0	 /* thread can be cancelled */
-#  define THR_CANCEL_DEFERRED     0	 /* cancellation deferred to cancellation point */
-#  define THR_CANCEL_ASYNCHRONOUS 0	 /* cancellation occurs immediately */
+#  define THR_CANCEL_ENABLE       0      /* thread can be cancelled */
+#  define THR_CANCEL_DEFERRED     0      /* cancellation deferred to cancellation point */
+#  define THR_CANCEL_ASYNCHRONOUS 0      /* cancellation occurs immediately */
 
 #  define THR_BOUND               0
 #  define THR_NEW_LWP             0
@@ -2928,17 +2926,13 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 extern int t_errno;
 #endif /* ACE_LACKS_T_ERRNO */
 
-// sigwait is yet another macro on Digital UNIX 4.0, just causing
-// trouble when introducing member functions with the same name.
-// Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for
-// this fix.
-# undef sigwait
-
-#if defined (DIGITAL_UNIX) && __DECCXX_VER >= 60090006
+#if defined (DIGITAL_UNIX)
+// Digital Unix 4.0 needs this declaration.  With it, ::sigwait ()
+// works with cxx -pthread.
 extern "C" int __P_C(sigwait) __((const sigset_t *set, int *sig));
 #elif !defined (ACE_HAS_SIGWAIT)
 extern "C" int sigwait (sigset_t *set);
-#endif /* ! ACE_HAS_SIGWAIT */
+#endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
 
 #if defined (ACE_HAS_SELECT_H)
 #include /**/ <sys/select.h>
@@ -4998,7 +4992,7 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #if defined (ACE_PSOSIM)
 // PSOSIM root lacks the standard argc, argv command line parameters,
 // create dummy argc and argv in the "real" main  and pass to "user" main.
-// NOTE: ACE_MAIN must be defined to give the return type as well as the 
+// NOTE: ACE_MAIN must be defined to give the return type as well as the
 // name of the entry point.
 #define main \
 ace_main_i (int, char *[]);                /* forward declaration */ \
@@ -5023,7 +5017,7 @@ ace_main_i
 #elif defined (ACE_PSOS)
 // PSOS root lacks the standard argc, argv command line parameters,
 // create dummy argc and argv in the "real" main  and pass to "user" main.
-// Ignore return value from user main as well.  NOTE: ACE_MAIN must be 
+// Ignore return value from user main as well.  NOTE: ACE_MAIN must be
 // defined to give the return type as well as the name of the entry point
 #define main \
 ace_main_i (int, char *[]);               /* forward declaration */ \
@@ -5047,7 +5041,7 @@ ACE_MAIN (int argc, char *argv[])   /* user's entry point, e.g., "main" */ \
 } \
 int \
 ace_main_i
-#endif	 /* ACE_PSOSIM */
+#endif   /* ACE_PSOSIM */
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (UNICODE)
