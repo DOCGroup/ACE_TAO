@@ -379,13 +379,154 @@ catior (CORBA::String str,
   return 1;
 }
 
+
+static CORBA::Boolean
+catpoop (CORBA::String string,
+        CORBA::Environment &env)
+{
+//:\ntlj3corba:NS:NC_2::IR:CosNaming_NamingContext
+
+	// :\ hostname
+	// : server_name
+	// : marker
+	// : IR_host
+	// : IR_server
+	// : interface_marker
+
+
+  CORBA::Boolean  b = CORBA::B_FALSE;
+  if (!string || !*string)
+	  return 0;
+
+  if (string [0] == ':'
+      && string [1] == '\\')
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nPerhaps we've found some POOP\n"));
+  string+=2;
+
+  //  read the hostname
+  CORBA::String  hostname;
+  char *cp = ACE_OS::strchr (string, ':');
+
+  if (cp == 0)
+    {
+      env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  
+  hostname = CORBA::string_alloc (1 + cp - string);
+
+  for (cp = hostname;
+       *string != ':';
+       *cp++ = *string++)
+    continue;
+  
+  *cp = 0;
+  string++;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Host Name:\t%s\n",
+              hostname));
+  CORBA::string_free(hostname);
+
+
+  //  read the server name
+  CORBA::String  server_name;
+  cp = ACE_OS::strchr(string, ':');
+
+  server_name = CORBA::string_alloc (1 + cp - string);
+
+  for (cp = server_name;
+       *string != ':';
+       *cp++ = *string++)
+    continue;
+  
+  *cp = 0;
+  string++;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Server Name:\t%s\n",
+              server_name));
+  CORBA::string_free(server_name);
+
+
+  //  read the Orbix specific marker
+  CORBA::String  marker;
+  cp = ACE_OS::strchr(string, ':');
+
+  marker = CORBA::string_alloc (1 + cp - string);
+
+  for (cp = marker;
+       *string != ':';
+       *cp++ = *string++)
+    continue;
+  
+  *cp = 0;
+  string++;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Marker:\t\t%s\n",
+              marker));
+  CORBA::string_free(marker);
+
+
+  // read the IR_host
+  CORBA::String  IR_host;
+  cp = ACE_OS::strchr(string, ':');
+
+  IR_host = CORBA::string_alloc (1 + cp - string);
+
+  for (cp = IR_host;
+       *string != ':';
+       *cp++ = *string++)
+    continue;
+  
+  *cp = 0;
+  string++;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "IR Host:\t\t%s\n",
+              IR_host));
+  CORBA::string_free(IR_host);
+
+
+  // read the IR_server
+  CORBA::String  IR_server;
+  cp = ACE_OS::strchr(string, ':');
+
+  IR_server = CORBA::string_alloc (1 + cp - string);
+
+  for (cp = IR_server;
+       *string != ':';
+       *cp++ = *string++)
+    continue;
+  
+  *cp = 0;
+  string++;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "IR Server:\t\t%s\n",
+              IR_server));
+  CORBA::string_free(IR_server);
+
+  // read the interface_marker
+  ACE_DEBUG ((LM_DEBUG,
+              "Interface Marker:\t%s\n",
+              string));
+
+
+	return  1;
+}
+
+
+
 int
 main (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "f:n:");
 
   CORBA::Environment env;
-  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO");
+  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO", env);
 
   CORBA::Boolean  b;
 
@@ -429,11 +570,9 @@ main (int argc, char *argv[])
                 aString += ch;
               }
 
-            aString += '\0';
-
             ACE_DEBUG ((LM_DEBUG,
                         "\nhere is the IOR\n%s\n\n",
-                        aString.fast_rep ()));
+                        aString.rep()));
 
             CORBA::String str;
             if (aString.find ("IOR:") == 0)
@@ -455,7 +594,7 @@ main (int argc, char *argv[])
             else if (aString.find ("iiop:") == 0)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "decoding an IIOP IOR\n"));
+                            "decoding an IIOP URL IOR\n"));
 
                 ACE_CString prefix = "IIOP:";
                 short prefixLength = prefix.length ();
@@ -463,10 +602,18 @@ main (int argc, char *argv[])
                 ACE_CString subString =
                   aString.substring (prefixLength,
                                      aString.length () - prefixLength);
-                subString[subString.length () - 1] = '\0';
+                //subString[subString.length () - 1] = '\0';
                 str = subString.rep ();
 				b = catiiop(str, env);
               }
+			else if(aString.find(":IR:"))
+			{
+				ACE_DEBUG ((LM_DEBUG,
+					        "decoding an POOP IOR\n"));
+
+				str = aString.rep();
+				b = catpoop(str, env);
+			}
             else
               ACE_ERROR_RETURN ((LM_DEBUG,
                                  "Don't know how to decode this IOR\n"),
