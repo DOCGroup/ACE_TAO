@@ -209,7 +209,7 @@ CORBA::Exception *ImplementationRepository::AlreadyRegistered::_alloc (void)
 CORBA::Exception *
 ImplementationRepository::AlreadyRegistered::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::ImplementationRepository::AlreadyRegistered (*this),
@@ -359,7 +359,7 @@ CORBA::Exception *ImplementationRepository::CannotActivate::_alloc (void)
 CORBA::Exception *
 ImplementationRepository::CannotActivate::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::ImplementationRepository::CannotActivate (*this),
@@ -526,7 +526,7 @@ CORBA::Exception *ImplementationRepository::NotFound::_alloc (void)
 CORBA::Exception *
 ImplementationRepository::NotFound::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::ImplementationRepository::NotFound (*this),
@@ -975,7 +975,7 @@ ImplementationRepository::ServerInformationIterator::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -1677,7 +1677,7 @@ ImplementationRepository::Administration::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -2090,7 +2090,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -1,26 +1,26 @@
---- orig/ServantManagerC.h	2004-11-17 09:22:04.832827200 +0100
-+++ ServantManagerC.h	2004-11-17 09:22:13.154793600 +0100
+--- orig/ServantManagerC.h	2005-02-18 11:19:47.010422400 +0100
++++ ServantManagerC.h	2005-02-18 11:19:49.063374400 +0100
 @@ -70,6 +70,8 @@
  // TAO_IDL - Generated from 
- // be\be_visitor_root/root_ch.cpp:63
+ // be\be_visitor_root/root_ch.cpp:62
  
 +#if (TAO_HAS_MINIMUM_POA == 0)
 +
  namespace TAO
  {
    class Collocation_Proxy_Broker;
-@@ -282,6 +284,8 @@
- TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ForwardRequest &);
- TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ForwardRequest &);
+@@ -212,6 +214,8 @@
+ TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantManager_ptr *); // non-copying
+ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ServantManager_ptr &);
  
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  // TAO_IDL - Generated from
- // be\be_codegen.cpp:958
+ // be\be_codegen.cpp:961
  
---- orig/ServantManagerC.cpp	2004-11-17 09:22:04.832827200 +0100
-+++ ServantManagerC.cpp	2004-11-17 09:22:13.224894400 +0100
-@@ -51,6 +51,7 @@
+--- orig/ServantManagerC.cpp	2005-02-18 11:19:47.010422400 +0100
++++ ServantManagerC.cpp	2005-02-18 11:19:49.083403200 +0100
+@@ -49,6 +49,7 @@
  {
  }
  
@@ -28,24 +28,24 @@
  
  // TAO_IDL - Generated from
  // be\be_visitor_interface/interface_cs.cpp:60
-@@ -469,3 +470,5 @@
+@@ -227,3 +228,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ServantManagerA.cpp	2004-11-17 09:22:04.852856000 +0100
-+++ ServantManagerA.cpp	2004-11-17 09:22:13.284980800 +0100
-@@ -30,6 +30,8 @@
+--- orig/ServantManagerA.cpp	2005-02-18 11:19:47.010422400 +0100
++++ ServantManagerA.cpp	2005-02-18 11:19:49.093417600 +0100
+@@ -31,6 +31,8 @@
+ #include "tao/Any.h"
  #include "tao/Any_Impl_T.h"
- #include "tao/Any_Dual_Impl_T.h"
  
 +#if (TAO_HAS_MINIMUM_POA == 0)
 +
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:295
  
-@@ -249,3 +251,5 @@
+@@ -155,3 +157,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

@@ -1,6 +1,7 @@
 Fri Feb 18 10:11:12 UTC 2005 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ciao/Servant_Activator.h:
+        * ciao/Servant_Activator.h:
           Added missing includes because of POA refactoring
 
 Thu Feb 17 14:04:12 UTC 2005 Johnny Willemsen  <jwillemsen@remedy.nl>

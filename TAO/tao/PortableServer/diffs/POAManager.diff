@@ -1,6 +1,6 @@
---- orig/POAManagerC.h	2004-11-17 09:22:01.508046400 +0100
-+++ POAManagerC.h	2004-11-17 09:22:11.702705600 +0100
-@@ -221,6 +221,8 @@
+--- orig/POAManagerC.h	2005-02-18 11:19:45.388089600 +0100
++++ POAManagerC.h	2005-02-18 11:19:48.662798400 +0100
+@@ -223,6 +223,8 @@
      // TAO_IDL - Generated from
      // be\be_visitor_operation/operation_ch.cpp:46
      
@@ -9,7 +9,7 @@
      virtual void hold_requests (
          ::CORBA::Boolean wait_for_completion
          ACE_ENV_ARG_DECL_WITH_DEFAULTS
-@@ -255,6 +257,8 @@
+@@ -257,6 +259,8 @@
          ::PortableServer::POAManager::AdapterInactive
        )) = 0;
      

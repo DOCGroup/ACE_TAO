@@ -89,7 +89,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POArefactor3\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -1190,7 +1190,7 @@ POA_ImplementationRepository::ServerObject::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1683
+// be\be_visitor_root/root.cpp:1563
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
