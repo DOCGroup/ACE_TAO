@@ -1,3 +1,26 @@
+Mon May 11 17:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* ace/ace_dll.dsp
+          orbsvcs/orbsvcs/RtecScheduler.idl
+          orbsvcs/orbsvcs/orbsvcs.dsp
+          orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp,h}
+          orbsvcs/orbsvcs/Sched/DynSched.{cpp,h}
+          orbsvcs/orbsvcs/Sched/Scheduler.h
+          orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp,h}
+
+          Integrated strategized scheduler with off-line scheduling
+	  interface in Config_Scheduler.{cpp,h}.  To use the
+	  strategized scheduler, define the following symbols
+	  in ace/config.h (you can substitute RMS, etc for MUF,
+	  and can choose a different value for the minimum critical
+	  priority - more on this in the release notes, once the
+	  dynamic portion is integrated):
+
+          #define TAO_USES_STRATEGY_SCHEDULER
+          #define TAO_USES_MUF_SCHEDULING
+          #define TAO_MIN_CRITICAL_PRIORITY 0
+
+	
 Mon May 11 15:43:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.{i,cpp}: Moved CE's impelmentation of ACE_OS::fprintf to
