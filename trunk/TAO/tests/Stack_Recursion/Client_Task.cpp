@@ -61,12 +61,7 @@ Client_Task::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_TRY
         {
-          Test::Payload_var pl =
-            new Test::Payload;
-          Test::Payload_out k (pl.out ());
-          this->sender_->get_data (1,
-                                   k
-                                   ACE_ENV_ARG_PARAMETER);
+          this->sender_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
         }
