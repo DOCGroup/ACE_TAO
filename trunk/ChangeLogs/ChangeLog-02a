@@ -1,3 +1,9 @@
+Sun Feb 18 17:16:41 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/Tokens_Test.cpp (main): Reordered the #ifdefs for the
+	  ACE_HAS_TOKENS_LIBRARY stuff.  Thanks to Kitty for reporting
+ 	  this.
+
 Sun Feb 18 16:28:45 2001  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.h: Changed order of method declarations to (hopefully)
