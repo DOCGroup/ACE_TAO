@@ -138,4 +138,8 @@ LIBS	    += $(ACELIB) -ltli_r -ldl
 # OCCFLAGS is not used by default.  To used it, set optimize=1
 # either in this file or on the command line.
 #OCCFLAGS    += -qarch=ppc -qtune=604
-OCCFLAGS    += -qlibansi -O2 -qarch=com 
+
+# -O2 is too much for Visual Age C++ 5.0.  It ends up calling
+# the wrong methods in some cases (orbsvcs/tests/EC_Throughput).
+# Chad Elliott 7/24/2001
+OCCFLAGS    += -qlibansi -O -qarch=com 
