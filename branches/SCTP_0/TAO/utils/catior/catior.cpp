@@ -13,6 +13,8 @@
 //
 // = AUTHORS
 //      Jeff Hopper <jrhopper@cts.com>
+//      SCIOP Modifications by:
+//      Jason Cohen, Lockheed Martin ATL <jcohen@atl.lmco.com>
 //
 // ============================================================================
 
@@ -20,7 +22,6 @@
 #include "ace/streams.h"
 #include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
-#include "tao/Strategies/UIOP_Profile.h"
 
 
 static CORBA::Boolean
@@ -117,6 +118,9 @@ catiiop (char* string
 
 static CORBA::Boolean
 cat_iiop_profile (TAO_InputCDR& cdr);
+
+static CORBA::Boolean
+cat_sciop_profile (TAO_InputCDR& cdr);
 
 static CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& cdr);
@@ -253,6 +257,12 @@ catior (char* str
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_iiop_profile (stream);
+            ACE_DEBUG ((LM_DEBUG, "%}"));
+          }
+        else if (tag == TAO_TAG_SCIOP_PROFILE)
+          {
+            ACE_DEBUG ((LM_DEBUG, "%{"));
+            continue_decoding = cat_sciop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
         else if (tag == TAO_TAG_UIOP_PROFILE)
@@ -781,6 +791,97 @@ cat_uiop_profile (TAO_InputCDR& stream)
   if (cat_object_key (str) == 0)
     return 0;
 
+  if (cat_tagged_components (str) == 0)
+    return 0;
+
+  return 1;
+}
+
+static CORBA::Boolean
+cat_sciop_profile (TAO_InputCDR& stream)
+{
+  // OK, we've got an SCIOP profile.
+
+  CORBA::ULong encap_len;
+  if (stream.read_ulong (encap_len) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "cannot read encap length\n"));
+      return 0;
+    }
+
+  // Create the decoding stream from the encapsulation in the
+  // buffer, and skip the encapsulation.
+  TAO_InputCDR str (stream, encap_len);
+
+  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+    return 0;
+
+  // Read and verify major, minor versions, ignoring IIOP
+  // profiles whose versions we don't understand.
+  //
+  // XXX this doesn't actually go back and skip the whole
+  // encapsulation...
+  CORBA::Octet iiop_version_major, iiop_version_minor;
+  if (! (str.read_octet (iiop_version_major)
+         && iiop_version_major == 1
+         && str.read_octet (iiop_version_minor)
+         && iiop_version_minor <= 0))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%I detected new v%d.%d SCIOP profile that catior cannot decode",
+                  iiop_version_major,
+                  iiop_version_minor));
+      return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "SCIOP Version:\t%d.%d\n",
+              iiop_version_major,
+              iiop_version_minor));
+
+  // Get host and port.
+  CORBA::UShort port_number;
+  CORBA::UShort max_streams;
+  char* hostname;
+  CORBA::ULong addresses;
+
+  str >> addresses;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%I Addresses:\t%d\n",
+              addresses));
+
+  for (unsigned int i=0; i< addresses; i++) {
+    if ((str >> hostname) == 0)
+      {
+	ACE_DEBUG ((LM_DEBUG,
+		    "%I problem decoding hostname\n"));
+	return 1;
+      }
+    ACE_DEBUG ((LM_DEBUG,
+		"%I Host Name:\t%s\n",
+		hostname));
+    CORBA::string_free (hostname);
+  }
+
+
+  str >> port_number;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%I Port Number:\t%d\n",
+              port_number));
+
+  str >> max_streams;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%I Max Streams:\t%d\n",
+              max_streams));
+
+  if (cat_object_key (str) == 0)
+    return 0;
+
+  // Unlike IIOP (1.0), SCIOP always has tagged_components.
   if (cat_tagged_components (str) == 0)
     return 0;
 
