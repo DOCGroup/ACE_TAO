@@ -17,6 +17,62 @@ Thu Jun 24 17:29:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Fixed problems with exception handling, thanks to Paul Calabrese
 	  <calabrese_p@ociweb.com> for pointing this out.
 
+Thu Jun 24 17:26:53 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* orbsvcs/Makefile
+	* orbsvcs/orbsvcs/Makefile
+	* orbsvcs/tests/Makefile
+	  Removed all references to the Logging service or Logging tests  
+	
+	* examples/Makefile
+	  Added entry for the new Logging example directory
+
+	* orbsvcs/Logging_Service/Logging_Service.cpp
+	* orbsvcs/Logging_Service/Logging_Service_i.cpp,h
+	* orbsvcs/Logging_Service/Makefile
+	* orbsvcs/Logging_Service/Makefile.am
+	* orbsvcs/orbsvcs/Logger.idl
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp,h
+	* orbsvcs/orbsvcs/Log/Makefile.am
+	* orbsvcs/tests/Logger/Logger.dsw
+	* orbsvcs/tests/Logger/Logging_Test.cpp
+	* orbsvcs/tests/Logger/Logging_Test_i.cpp,h
+	* orbsvcs/tests/Logger/Makefile
+	* orbsvcs/tests/Logger/README
+	* orbsvcs/tests/Logger/client.cpp,h
+	* orbsvcs/tests/Logger/client.dsp
+	* orbsvcs/tests/Logger/client_i.cpp,h
+	* orbsvcs/tests/Logger/run_test.pl
+	* orbsvcs/tests/Logger/server.cpp
+	* orbsvcs/tests/Logger/server.dsp
+	* orbsvcs/tests/Logger/server_i.cpp,h
+	  Removed all these files. They were the Logging_Service and all
+	  related tests. 
+	* orbsvcs/orbsvcs/Log
+	* orbsvcs/Logging_Service
+	* orbsvcs/tests/Logger
+	  Removed these directories
+
+	* examples/Logging
+	  Added this directory to hold the moved logging service
+
+	* examples/Logging/Logger.idl	
+	* examples/Logging/Logger_i.cpp,h
+	* examples/Logging/Logging_Service.cpp
+	* examples/Logging/Logging_Service_i.cpp,h
+	* examples/Logging/Logging_Test.cpp
+	* examples/Logging/Logging_Test_i.cpp,h
+	* examples/Logging/Makefile
+	* examples/Logging/README
+	* examples/Logging/run_test.pl
+	  These files are the modified versions of the original
+	  Logging_Service and Logger test files. I've removed the old
+	  TAO_THROW macros and added a POA_Manager activation. Also, I've
+	  adjusted the README and Makefiles accordingly. 
+ 	
+	I fear that this may break things, but I've tried to keep it safe
+	and I've tested my changes. Let us hope.
+	
 Thu Jun 24 17:22:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/MT_Client/orb_creation.cpp:

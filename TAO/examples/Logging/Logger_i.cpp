@@ -1,7 +1,7 @@
 // $Id$
 
-#include "orbsvcs/LoggerC.h"
-#include "orbsvcs/Log/Logger_i.h"
+#include "LoggerC.h"
+#include "Logger_i.h"
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Record.h"
@@ -18,7 +18,7 @@ Logger_Factory_i::~Logger_Factory_i (void)
 
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name,
-                               CORBA::Environment &TAO_IN_ENV)
+                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Logger_i *result;
@@ -61,7 +61,7 @@ Logger_Factory_i::make_logger (const char *name,
   // registration attempt.
   // @@ Matt, this code doesn't seem right.  Can you please check with
   // Irfan and Carlos about whether this is the right thing to do?
-  return result->_this (TAO_IN_ENV);
+  return result->_this (ACE_TRY_ENV);
 }
 
 Logger_i::Logger_i (const char *name)
@@ -111,27 +111,27 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 
 void
 Logger_i::log (const Logger::Log_Record &log_rec,
-               CORBA::Environment &TAO_IN_ENV)
+               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->logv (log_rec, verbosity_level_, TAO_IN_ENV);
+  this->logv (log_rec, verbosity_level_, ACE_TRY_ENV);
 }
 
 void
 Logger_i::log2 (const Logger::Log_Record &log_rec,
-               CORBA::Environment &TAO_IN_ENV)
+               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->logv (log_rec, verbosity_level_, TAO_IN_ENV);
+  this->logv (log_rec, verbosity_level_, ACE_TRY_ENV);
 }
 
 void
 Logger_i::logv2 (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity,
-               CORBA::Environment &TAO_IN_ENV)
+               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->logv (log_rec, verbosity, TAO_IN_ENV);
+  this->logv (log_rec, verbosity, ACE_TRY_ENV);
 }
 
 void
