@@ -36,7 +36,7 @@ SERVER_OBJS = \
   Server_Request_Interceptor.o \
   $(IDL_SRC:.cpp=.o)
 
-TAO_IDLFLAGS += -Ge 1
+TAO_IDLFLAGS += -Ge 1 -DCORBA3
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
