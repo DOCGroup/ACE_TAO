@@ -1,3 +1,30 @@
+Fri Oct 30 11:53:16 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.6.h: removed ACE_HAS_POSIX_SEM #define because
+          it caused a seg fault in Reactor_Notify_Test on
+          g++ 2.7.2.3/Solaris86 (with -D_POSIX_C_SOURCE=199506L
+          -D_POSIX_PTHREAD_SEMANTICS -D__EXTENSIONS__).  The seg fault is
+          at the end of the test:
+
+          #0  0xdfd5a809 in realfree ()
+          #1  0xdfd5ad16 in cleanfree ()
+          #2  0xdfd5a43a in _malloc_unlocked ()
+          #3  0xdfd5a2e9 in malloc ()
+          #4  0xdfd61a25 in _strdup ()
+          #5  0xdfeffcd5 in ACE_Log_Msg::log (this=0x8052ec0,
+              format_str=0x804f0af "(%P|%t) Ending %s test at %D\n",
+              log_priority=<error type>,
+              argp=0x80476ac "\nÅ\004\bÅ‘Å¿ÅˇÅﬂ\177\023\004\bÅ‘v\004\bÅßÅπ\004\b\001")
+              at /export/home/conga/levine/ACE_wrappers/ace/OS.i:1399
+          #6  0xdfeffbfa in ACE_Log_Msg::log (this=0x8052ec0,
+              log_priority=<error type>,
+              format_str=0x804f0ac "d\n") at Log_Msg.cpp:601
+          #7  0x804c935 in main () at Reactor_Notify_Test.cpp:297
+
+          It's hard to imagine how ACE_HAS_POSIX_SEM could cause that.
+          But, it's perfectly repeatable.  And, we can live without
+          ACE_HAS_POSIX_SEM.
+
 Fri Oct 30 09:23:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SString.h: Cleaned up the ACE_SString comments to be more
@@ -6,12 +33,12 @@ Fri Oct 30 09:23:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Thu Oct 29 22:19:19 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/ACE-FMM.html: 
+	* docs/ACE-FMM.html:
 	  Updated from Bob's latest version.  Thanks Bob!
 
 Thu Oct 29 21:13:41 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/016/Condition_i.cpp: 
+	* docs/tutorials/016/Condition_i.cpp:
 	  Fixed messed-up the signature on
 	    Condition::operator Condition::value_t(void)
 
