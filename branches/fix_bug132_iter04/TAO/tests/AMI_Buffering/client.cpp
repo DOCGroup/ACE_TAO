@@ -423,7 +423,7 @@ run_message_count (CORBA::ORB_ptr orb,
 
   Test::AMI_AMI_BufferingHandler_var reply_handler =
     reply_handler_impl->_this (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -538,7 +538,7 @@ run_timeout (CORBA::ORB_ptr orb,
 
   Test::AMI_AMI_BufferingHandler_var reply_handler =
     reply_handler_impl->_this (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -654,7 +654,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
 
   Test::AMI_AMI_BufferingHandler_var reply_handler =
     reply_handler_impl->_this (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -777,7 +777,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
 
   Test::AMI_AMI_BufferingHandler_var reply_handler =
     reply_handler_impl->_this (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CORBA::ULong bytes_sent = 0;
   for (int i = 0; i != iterations; ++i)

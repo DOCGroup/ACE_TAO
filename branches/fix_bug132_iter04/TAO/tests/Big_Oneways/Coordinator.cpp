@@ -45,7 +45,7 @@ Coordinator::create_session_list (Test::Session_Control_ptr session_control,
                               message_count,
                               this->peer_count_,
                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
     }
 }
 
