@@ -1,3 +1,10 @@
+Tue Oct 24 12:05:42 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * ace/OS_String.inl:
+
+          Removed an extra } after an #endif that was producing
+          warnings on OSF.
+
 Tue Oct 24 09:27:04 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/Test_and_Set.cpp: 

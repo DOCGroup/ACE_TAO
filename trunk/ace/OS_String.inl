@@ -154,7 +154,7 @@ ACE_OS_String::strchr (char *s, int c)
   return ACE_OS_String::strchr_emulation (s, c);
 #else  /* ! ACE_HAS_WINCE */
   return ::strchr (s, c);
-#endif /* ACE_HAS_PACE */}
+#endif /* ACE_HAS_PACE */
 }
 
 #if defined (ACE_HAS_WCHAR)
