@@ -343,6 +343,11 @@ TAO_Naming_Context::to_name (const char *sn,
 
   for (const char *k = sn; *k != '\0';)
     {
+      if (count > ncomp)
+        {
+          ACE_THROW_RETURN (CosNaming::NamingContext::InvalidName(), 0);
+        }
+
       char *id = CORBA::string_alloc (len);
       char *kind = CORBA::string_alloc (len);
 
