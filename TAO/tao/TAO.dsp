@@ -2304,6 +2304,25 @@ SOURCE=.\Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Priority_Mapping_Manager.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3814,6 +3833,10 @@ SOURCE=.\Priority_Mapping.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Priority_Mapping_Manager.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Profile.h
 # End Source File
 # Begin Source File
@@ -4307,6 +4330,10 @@ SOURCE=.\Pool_Per_Endpoint.i
 # Begin Source File
 
 SOURCE=.\Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 
