@@ -294,6 +294,10 @@ public:
   void crunch (void);
   // Normalizes data in the top-level <Message_Block> to align with the base.
 
+  void reset (void);
+  // Resets the Message Block data to contain nothing, i.e., sets the
+  // read and write pointers to align with the base.
+
   char *base (void) const;
   // Get message data.
 
