@@ -1,3 +1,8 @@
+Mon Jan 21 07:45:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+	* ace/Framework_Component.cpp:
+          Fixed fuzz error
+
 Mon Jan 21 00:13:42 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * ace/streams.h:
@@ -15,7 +20,7 @@ Sun Jan 20 21:42:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sun Jan 20 12:38:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Framework_Component_Test.dsp: New dsp file for the test. 
+	* tests/Framework_Component_Test.dsp: New dsp file for the test.
 	* tests/tests.dsw: Added the above test to the workspace.
 
 Sun Jan 20 12:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -24,15 +29,15 @@ Sun Jan 20 12:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  default constructor (in ACE_UNIMPLEMENTED_FUNC definition). The
 	  other private constructor with a default argument tends towards
 	  a default constructor and VC++ signals a multiple definition
-	  error. Not sure how g++ didnt signal this one. 
-	
-	* ace/Framework_Component_T.h: #include'd Framework_Component.h 
-	* ace/Framework_Component_T.cpp: Added a #ifndef around the file. 
+	  error. Not sure how g++ didnt signal this one.
+
+	* ace/Framework_Component_T.h: #include'd Framework_Component.h
+	* ace/Framework_Component_T.cpp: Added a #ifndef around the file.
 
 	* ace/ace_dll.dsp:
 	* ace/ace_lib.dsp: Added the Framwork_Component* files to the
-	  project file. 
-	
+	  project file.
+
 Sun Jan 20 10:40:28 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Vector_Test.dsp:
