@@ -545,6 +545,11 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Object_var Object_var;
   typedef CORBA_Object_out Object_out;
 
+  class LocalObject;
+  typedef LocalObject *LocalObject_ptr;
+  class LocalObject_var;
+  class LocalObject_out;
+
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
   typedef CORBA_Principal_var Principal_var;
@@ -712,7 +717,7 @@ TAO_NAMESPACE CORBA
     tk_value_box          = 30,
     tk_native             = 31,
     tk_abstract_interface = 32,
-    tk_component          = 33, 
+    tk_component          = 33,
     tk_home               = 34,
 
     // This symbol is not defined by CORBA 2.0.  It's used to speed up

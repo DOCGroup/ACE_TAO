@@ -43,13 +43,13 @@ be_valuetype::be_valuetype (void)
 }
 
 // constructor used to build the AST
-be_valuetype::be_valuetype (UTL_ScopedName *n, 
-                            AST_Interface **ih, 
+be_valuetype::be_valuetype (UTL_ScopedName *n,
+                            AST_Interface **ih,
                             long nih,
-                            UTL_StrList *p, 
+                            UTL_StrList *p,
                             idl_bool set_abstract)
-  : be_interface (n, ih, nih, 0, 0, p),
-    AST_Interface (n, ih, nih, 0, 0, p),
+  : be_interface (n, ih, nih, 0, 0, p, 0, 0),
+    AST_Interface (n, ih, nih, 0, 0, p, 0, 0),
     AST_Decl (AST_Decl::NT_interface, n, p), // it's like an interface
     UTL_Scope (AST_Decl::NT_interface),
     full_obv_skel_name_ (0),
@@ -68,7 +68,7 @@ be_valuetype::~be_valuetype (void)
 }
 
 void
-be_valuetype::redefine (AST_Interface *from, 
+be_valuetype::redefine (AST_Interface *from,
                         UTL_StrList *p)
 {
   this->AST_Interface::redefine (from, p);
@@ -105,7 +105,7 @@ be_valuetype::set_abstract_valuetype ()
 void
 be_valuetype::compute_fullobvskelname (void)
 {
-  this->compute_full_skel_name ("OBV_", 
+  this->compute_full_skel_name ("OBV_",
                                 this->full_obv_skel_name_);
 }
 
@@ -130,12 +130,12 @@ be_valuetype::gen_var_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // names
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (namebuf, 
-                   "%s_var", 
+  ACE_OS::sprintf (namebuf,
+                   "%s_var",
                    this->local_name ());
 
   // retrieve a singleton instance of the code generator
@@ -157,7 +157,7 @@ be_valuetype::gen_var_defn (char *)
   // default constr
   *ch << namebuf << " (void); // default constructor" << nl;
   *ch << namebuf << " (" << this->local_name () << "*);" << nl;
-  *ch << namebuf << " (const " << this->local_name () 
+  *ch << namebuf << " (const " << this->local_name ()
       << "*); // (TAO extension)" << nl;
 
   // copy constructor
@@ -169,7 +169,7 @@ be_valuetype::gen_var_defn (char *)
   *ch << nl;
 
   // assignment operator from a pointer
-  *ch << namebuf << " &operator= (" << this->local_name () 
+  *ch << namebuf << " &operator= (" << this->local_name ()
       << "*);" << nl;
 
   // assignment from _var
@@ -182,7 +182,7 @@ be_valuetype::gen_var_defn (char *)
   *ch << nl;
 
   // other extra types (cast operators, [] operator, and others)
-  *ch << "operator const " << this->local_name () 
+  *ch << "operator const " << this->local_name ()
       << "* () const;" << nl;
   *ch << "operator " << this->local_name () << "* ();" << nl;
 
@@ -214,7 +214,7 @@ be_valuetype::gen_var_defn (char *)
 // implementation of the _var class. All of these get generated in the inline
 // file
 int
-be_valuetype::gen_var_impl (char *, 
+be_valuetype::gen_var_impl (char *,
                             char *)
 {
   TAO_OutStream *ci; // output stream
@@ -222,20 +222,20 @@ be_valuetype::gen_var_impl (char *,
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _var names
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (fname, 
-                   "%s_var", 
+  ACE_OS::sprintf (fname,
+                   "%s_var",
                    this->full_name ());
 
-  ACE_OS::memset (lname, 
-                  '\0', 
+  ACE_OS::memset (lname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (lname, 
-                   "%s_var", 
+  ACE_OS::sprintf (lname,
+                   "%s_var",
                    this->local_name ());
 
   // retrieve a singleton instance of the code generator
@@ -273,7 +273,7 @@ be_valuetype::gen_var_impl (char *,
   // which reclaims amguity between T(T*) and T(const T_var &)
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const " 
+  *ci << fname << "::" << lname << " (const "
       << this->name () << "* p)" << nl;
   *ci << "  : ptr_ (ACE_const_cast(" << this->name () << "*, p))" << nl;
   *ci << "{}\n\n";
@@ -347,7 +347,7 @@ be_valuetype::gen_var_impl (char *,
   // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << this->name () 
+  *ci << fname << "::operator const " << this->name ()
       << "* () const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -357,7 +357,7 @@ be_valuetype::gen_var_impl (char *,
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << this->name () 
+  *ci << fname << "::operator " << this->name ()
       << "* () // cast " << nl;  // %! &()?
   *ci << "{\n";
   ci->incr_indent ();
@@ -428,12 +428,12 @@ be_valuetype::gen_out_defn (char *)
   TAO_NL  nl;        // end line
   char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (namebuf, 
-                   "%s_out", 
+  ACE_OS::sprintf (namebuf,
+                   "%s_out",
                    this->local_name ());
 
   // retrieve a singleton instance of the code generator
@@ -463,9 +463,9 @@ be_valuetype::gen_out_defn (char *)
   // assignment operator from a pointer &, cast operator, ptr fn, operator
   // -> and any other extra operators
   // only interface allows assignment from var &
-  *ch << namebuf << " &operator= (const " << this->local_name () 
+  *ch << namebuf << " &operator= (const " << this->local_name ()
       << "_var &);" << nl;
-  *ch << namebuf << " &operator= (" << this->local_name () 
+  *ch << namebuf << " &operator= (" << this->local_name ()
       << "*);" << nl;
   // cast
   *ch << "operator " << this->local_name () << "* &();" << nl;
@@ -493,20 +493,20 @@ be_valuetype::gen_out_impl (char *, char *)
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (fname, 
-                   "%s_out", 
+  ACE_OS::sprintf (fname,
+                   "%s_out",
                    this->full_name ());
 
-  ACE_OS::memset (lname, 
-                  '\0', 
+  ACE_OS::memset (lname,
+                  '\0',
                   NAMEBUFSIZE);
 
-  ACE_OS::sprintf (lname, 
-                   "%s_out", 
+  ACE_OS::sprintf (lname,
+                   "%s_out",
                    this->local_name ());
 
   // retrieve a singleton instance of the code generator
@@ -528,7 +528,7 @@ be_valuetype::gen_out_impl (char *, char *)
       // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << this->name () 
+  *ci << fname << "::" << lname << " (" << this->name ()
       << "* &p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";

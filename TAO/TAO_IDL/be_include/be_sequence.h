@@ -61,7 +61,10 @@ public:
   be_sequence (void);
   // default constructor
 
-  be_sequence (AST_Expression *v, AST_Type *bt);
+  be_sequence (AST_Expression *v,
+               AST_Type *bt,
+               idl_bool local,
+               idl_bool abstract);
   // constructor
 
   virtual int create_name (be_typedef *node=0);

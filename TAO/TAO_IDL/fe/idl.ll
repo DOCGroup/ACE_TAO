@@ -156,6 +156,7 @@ boolean		return IDL_BOOLEAN;
 octet		return IDL_OCTET;
 void		return IDL_VOID;
 native          return IDL_NATIVE;
+local           return IDL_LOCAL;
 abstract        return scan_obv_token (IDL_ABSTRACT);
 custom          return scan_obv_token (IDL_CUSTOM);
 init            return scan_obv_token (IDL_INIT);

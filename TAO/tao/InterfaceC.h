@@ -151,14 +151,14 @@ class TAO_Export CORBA_IRObject : public virtual ACE_CORBA_1 (Object)
 class TAO_CORBA_IRObject_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_CORBA_IRObject_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_CORBA_IRObject_Default_Proxy_Factory (void);
-  
+
   virtual CORBA_IRObject_ptr create_proxy (
       CORBA_IRObject_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -166,23 +166,23 @@ public:
 class TAO_CORBA_IRObject_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_CORBA_IRObject_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   CORBA_IRObject_ptr create_proxy (
       CORBA_IRObject_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -205,7 +205,7 @@ protected:
     ~TAO_CORBA_IRObject_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR::DefinitionKind def_kind (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -213,7 +213,7 @@ protected:
     ));
 
   virtual void destroy (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -231,14 +231,14 @@ private:
     IR_Contained_var (IR_Contained_ptr);
     IR_Contained_var (const IR_Contained_var &); // copy constructor
     ~IR_Contained_var (void); // destructor
-    
+
     IR_Contained_var &operator= (IR_Contained_ptr);
     IR_Contained_var &operator= (const IR_Contained_var &);
     IR_Contained_ptr operator-> (void) const;
-    
+
     operator const IR_Contained_ptr &() const;
     operator IR_Contained_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     IR_Contained_ptr in (void) const;
     IR_Contained_ptr &inout (void);
     IR_Contained_ptr &out (void);
@@ -261,7 +261,7 @@ private:
     operator IR_Contained_ptr &();
     IR_Contained_ptr &ptr (void);
     IR_Contained_ptr operator-> (void);
-    
+
   private:
     IR_Contained_ptr &ptr_;
   };
@@ -273,14 +273,14 @@ private:
     IR_Repository_var (IR_Repository_ptr);
     IR_Repository_var (const IR_Repository_var &); // copy constructor
     ~IR_Repository_var (void); // destructor
-    
+
     IR_Repository_var &operator= (IR_Repository_ptr);
     IR_Repository_var &operator= (const IR_Repository_var &);
     IR_Repository_ptr operator-> (void) const;
-    
+
     operator const IR_Repository_ptr &() const;
     operator IR_Repository_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     IR_Repository_ptr in (void) const;
     IR_Repository_ptr &inout (void);
     IR_Repository_ptr &out (void);
@@ -303,7 +303,7 @@ private:
     operator IR_Repository_ptr &();
     IR_Repository_ptr &ptr (void);
     IR_Repository_ptr operator-> (void);
-    
+
   private:
     IR_Repository_ptr &ptr_;
   };
@@ -315,14 +315,14 @@ private:
     IR_Container_var (IR_Container_ptr);
     IR_Container_var (const IR_Container_var &); // copy constructor
     ~IR_Container_var (void); // destructor
-    
+
     IR_Container_var &operator= (IR_Container_ptr);
     IR_Container_var &operator= (const IR_Container_var &);
     IR_Container_ptr operator-> (void) const;
-    
+
     operator const IR_Container_ptr &() const;
     operator IR_Container_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     IR_Container_ptr in (void) const;
     IR_Container_ptr &inout (void);
     IR_Container_ptr &out (void);
@@ -345,7 +345,7 @@ private:
     operator IR_Container_ptr &();
     IR_Container_ptr &ptr (void);
     IR_Container_ptr operator-> (void);
-    
+
   private:
     IR_Container_ptr &ptr_;
   };
@@ -362,12 +362,12 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
     static IR_Contained_ptr _duplicate (IR_Contained_ptr obj);
     static IR_Contained_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env = 
+        CORBA::Environment &env =
           TAO_default_environment ()
       );
     static IR_Contained_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env = 
+        CORBA::Environment &env =
           TAO_default_environment ()
       );
     static IR_Contained_ptr _nil (void)
@@ -378,7 +378,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
     static void _tao_any_destructor (void*);
 
     virtual char * id (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -387,7 +387,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
 
     virtual void id (
         const char * id,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -395,7 +395,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
       ));
 
     virtual char * name (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -404,7 +404,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
 
     virtual void name (
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -412,7 +412,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
       ));
 
     virtual char * version (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -421,7 +421,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
 
     virtual void version (
         const char * version,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -429,7 +429,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
       ));
 
     virtual IR_Container_ptr defined_in (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -437,7 +437,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
       ));
 
     virtual char * absolute_name (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -445,7 +445,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
       ));
 
     virtual IR_Repository_ptr containing_repository (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -454,7 +454,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
 
     struct Description;
     class Description_var;
-    
+
     struct TAO_Export Description
     {
 
@@ -475,18 +475,18 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
       Description_var (Description *);
       Description_var (const Description_var &); // copy constructor
       ~Description_var (void); // destructor
-      
+
       Description_var &operator= (Description *);
       Description_var &operator= (const Description_var &);
       Description *operator-> (void);
       const Description *operator-> (void) const;
-      
+
       operator const Description &() const;
       operator Description &();
       operator Description &() const;
       operator Description *&(); // variable-size types only
-      
-      // in, inout, out, _retn 
+
+      // in, inout, out, _retn
       const Description &in (void) const;
       Description &inout (void);
       Description *&out (void);
@@ -508,7 +508,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
       operator Description *&();
       Description *&ptr (void);
       Description *operator-> (void);
-      
+
     private:
       Description *&ptr_;
       // assignment from T_var not allowed
@@ -518,7 +518,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
     static CORBA::TypeCode_ptr _tc_Description;
 
     virtual IR_Contained::Description * describe (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -529,7 +529,7 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
         IR_Container_ptr new_container,
         const char * new_name,
         const char * new_version,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -537,16 +537,16 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
       ));
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id, 
-        CORBA::Environment &env = 
+        const CORBA::Char *type_id,
+        CORBA::Environment &env =
           TAO_default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     IR_Contained (void);
-    IR_Contained (TAO_Stub *objref, 
-        TAO_ServantBase *_tao_servant = 0, 
+    IR_Contained (TAO_Stub *objref,
+        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~IR_Contained (void);
@@ -558,14 +558,14 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
 class TAO_IR_Contained_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_Contained_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_Contained_Default_Proxy_Factory (void);
-  
+
   virtual IR_Contained_ptr create_proxy (
       IR_Contained_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -573,23 +573,23 @@ public:
 class TAO_IR_Contained_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_Contained_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_Contained_ptr create_proxy (
       IR_Contained_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -612,7 +612,7 @@ protected:
     ~TAO_IR_Contained_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual char * id (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -621,7 +621,7 @@ protected:
 
   virtual void id (
       const char * id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -629,7 +629,7 @@ protected:
     ));
 
   virtual char * name (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -638,7 +638,7 @@ protected:
 
   virtual void name (
       const char * name,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -646,7 +646,7 @@ protected:
     ));
 
   virtual char * version (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -655,7 +655,7 @@ protected:
 
   virtual void version (
       const char * version,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -663,7 +663,7 @@ protected:
     ));
 
   virtual IR_Container_ptr defined_in (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -671,7 +671,7 @@ protected:
     ));
 
   virtual char * absolute_name (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -679,7 +679,7 @@ protected:
     ));
 
   virtual IR_Repository_ptr containing_repository (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -687,7 +687,7 @@ protected:
     ));
 
   virtual IR_Contained::Description * describe (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -698,7 +698,7 @@ protected:
       IR_Container_ptr new_container,
       const char * new_name,
       const char * new_version,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -716,14 +716,14 @@ public:
   IR_ModuleDef_var (IR_ModuleDef_ptr);
   IR_ModuleDef_var (const IR_ModuleDef_var &); // copy constructor
   ~IR_ModuleDef_var (void); // destructor
-  
+
   IR_ModuleDef_var &operator= (IR_ModuleDef_ptr);
   IR_ModuleDef_var &operator= (const IR_ModuleDef_var &);
   IR_ModuleDef_ptr operator-> (void) const;
-  
+
   operator const IR_ModuleDef_ptr &() const;
   operator IR_ModuleDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ModuleDef_ptr in (void) const;
   IR_ModuleDef_ptr &inout (void);
   IR_ModuleDef_ptr &out (void);
@@ -746,7 +746,7 @@ public:
   operator IR_ModuleDef_ptr &();
   IR_ModuleDef_ptr &ptr (void);
   IR_ModuleDef_ptr operator-> (void);
-  
+
 private:
   IR_ModuleDef_ptr &ptr_;
 };
@@ -758,14 +758,14 @@ public:
   IR_ConstantDef_var (IR_ConstantDef_ptr);
   IR_ConstantDef_var (const IR_ConstantDef_var &); // copy constructor
   ~IR_ConstantDef_var (void); // destructor
-  
+
   IR_ConstantDef_var &operator= (IR_ConstantDef_ptr);
   IR_ConstantDef_var &operator= (const IR_ConstantDef_var &);
   IR_ConstantDef_ptr operator-> (void) const;
-  
+
   operator const IR_ConstantDef_ptr &() const;
   operator IR_ConstantDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ConstantDef_ptr in (void) const;
   IR_ConstantDef_ptr &inout (void);
   IR_ConstantDef_ptr &out (void);
@@ -788,7 +788,7 @@ public:
   operator IR_ConstantDef_ptr &();
   IR_ConstantDef_ptr &ptr (void);
   IR_ConstantDef_ptr operator-> (void);
-  
+
 private:
   IR_ConstantDef_ptr &ptr_;
 };
@@ -800,14 +800,14 @@ public:
   IR_IDLType_var (IR_IDLType_ptr);
   IR_IDLType_var (const IR_IDLType_var &); // copy constructor
   ~IR_IDLType_var (void); // destructor
-  
+
   IR_IDLType_var &operator= (IR_IDLType_ptr);
   IR_IDLType_var &operator= (const IR_IDLType_var &);
   IR_IDLType_ptr operator-> (void) const;
-  
+
   operator const IR_IDLType_ptr &() const;
   operator IR_IDLType_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_IDLType_ptr in (void) const;
   IR_IDLType_ptr &inout (void);
   IR_IDLType_ptr &out (void);
@@ -830,7 +830,7 @@ public:
   operator IR_IDLType_ptr &();
   IR_IDLType_ptr &ptr (void);
   IR_IDLType_ptr operator-> (void);
-  
+
 private:
   IR_IDLType_ptr &ptr_;
 };
@@ -842,14 +842,14 @@ public:
   IR_StructDef_var (IR_StructDef_ptr);
   IR_StructDef_var (const IR_StructDef_var &); // copy constructor
   ~IR_StructDef_var (void); // destructor
-  
+
   IR_StructDef_var &operator= (IR_StructDef_ptr);
   IR_StructDef_var &operator= (const IR_StructDef_var &);
   IR_StructDef_ptr operator-> (void) const;
-  
+
   operator const IR_StructDef_ptr &() const;
   operator IR_StructDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_StructDef_ptr in (void) const;
   IR_StructDef_ptr &inout (void);
   IR_StructDef_ptr &out (void);
@@ -872,7 +872,7 @@ public:
   operator IR_StructDef_ptr &();
   IR_StructDef_ptr &ptr (void);
   IR_StructDef_ptr operator-> (void);
-  
+
 private:
   IR_StructDef_ptr &ptr_;
 };
@@ -884,14 +884,14 @@ public:
   IR_UnionDef_var (IR_UnionDef_ptr);
   IR_UnionDef_var (const IR_UnionDef_var &); // copy constructor
   ~IR_UnionDef_var (void); // destructor
-  
+
   IR_UnionDef_var &operator= (IR_UnionDef_ptr);
   IR_UnionDef_var &operator= (const IR_UnionDef_var &);
   IR_UnionDef_ptr operator-> (void) const;
-  
+
   operator const IR_UnionDef_ptr &() const;
   operator IR_UnionDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_UnionDef_ptr in (void) const;
   IR_UnionDef_ptr &inout (void);
   IR_UnionDef_ptr &out (void);
@@ -914,7 +914,7 @@ public:
   operator IR_UnionDef_ptr &();
   IR_UnionDef_ptr &ptr (void);
   IR_UnionDef_ptr operator-> (void);
-  
+
 private:
   IR_UnionDef_ptr &ptr_;
 };
@@ -926,14 +926,14 @@ public:
   IR_EnumDef_var (IR_EnumDef_ptr);
   IR_EnumDef_var (const IR_EnumDef_var &); // copy constructor
   ~IR_EnumDef_var (void); // destructor
-  
+
   IR_EnumDef_var &operator= (IR_EnumDef_ptr);
   IR_EnumDef_var &operator= (const IR_EnumDef_var &);
   IR_EnumDef_ptr operator-> (void) const;
-  
+
   operator const IR_EnumDef_ptr &() const;
   operator IR_EnumDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_EnumDef_ptr in (void) const;
   IR_EnumDef_ptr &inout (void);
   IR_EnumDef_ptr &out (void);
@@ -956,7 +956,7 @@ public:
   operator IR_EnumDef_ptr &();
   IR_EnumDef_ptr &ptr (void);
   IR_EnumDef_ptr operator-> (void);
-  
+
 private:
   IR_EnumDef_ptr &ptr_;
 };
@@ -968,14 +968,14 @@ public:
   IR_AliasDef_var (IR_AliasDef_ptr);
   IR_AliasDef_var (const IR_AliasDef_var &); // copy constructor
   ~IR_AliasDef_var (void); // destructor
-  
+
   IR_AliasDef_var &operator= (IR_AliasDef_ptr);
   IR_AliasDef_var &operator= (const IR_AliasDef_var &);
   IR_AliasDef_ptr operator-> (void) const;
-  
+
   operator const IR_AliasDef_ptr &() const;
   operator IR_AliasDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_AliasDef_ptr in (void) const;
   IR_AliasDef_ptr &inout (void);
   IR_AliasDef_ptr &out (void);
@@ -998,7 +998,7 @@ public:
   operator IR_AliasDef_ptr &();
   IR_AliasDef_ptr &ptr (void);
   IR_AliasDef_ptr operator-> (void);
-  
+
 private:
   IR_AliasDef_ptr &ptr_;
 };
@@ -1010,14 +1010,14 @@ public:
   IR_InterfaceDef_var (IR_InterfaceDef_ptr);
   IR_InterfaceDef_var (const IR_InterfaceDef_var &); // copy constructor
   ~IR_InterfaceDef_var (void); // destructor
-  
+
   IR_InterfaceDef_var &operator= (IR_InterfaceDef_ptr);
   IR_InterfaceDef_var &operator= (const IR_InterfaceDef_var &);
   IR_InterfaceDef_ptr operator-> (void) const;
-  
+
   operator const IR_InterfaceDef_ptr &() const;
   operator IR_InterfaceDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_InterfaceDef_ptr in (void) const;
   IR_InterfaceDef_ptr &inout (void);
   IR_InterfaceDef_ptr &out (void);
@@ -1040,7 +1040,7 @@ public:
   operator IR_InterfaceDef_ptr &();
   IR_InterfaceDef_ptr &ptr (void);
   IR_InterfaceDef_ptr operator-> (void);
-  
+
 private:
   IR_InterfaceDef_ptr &ptr_;
 };
@@ -1052,14 +1052,14 @@ public:
   IR_ExceptionDef_var (IR_ExceptionDef_ptr);
   IR_ExceptionDef_var (const IR_ExceptionDef_var &); // copy constructor
   ~IR_ExceptionDef_var (void); // destructor
-  
+
   IR_ExceptionDef_var &operator= (IR_ExceptionDef_ptr);
   IR_ExceptionDef_var &operator= (const IR_ExceptionDef_var &);
   IR_ExceptionDef_ptr operator-> (void) const;
-  
+
   operator const IR_ExceptionDef_ptr &() const;
   operator IR_ExceptionDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ExceptionDef_ptr in (void) const;
   IR_ExceptionDef_ptr &inout (void);
   IR_ExceptionDef_ptr &out (void);
@@ -1082,7 +1082,7 @@ public:
   operator IR_ExceptionDef_ptr &();
   IR_ExceptionDef_ptr &ptr (void);
   IR_ExceptionDef_ptr operator-> (void);
-  
+
 private:
   IR_ExceptionDef_ptr &ptr_;
 };
@@ -1094,14 +1094,14 @@ public:
   IR_NativeDef_var (IR_NativeDef_ptr);
   IR_NativeDef_var (const IR_NativeDef_var &); // copy constructor
   ~IR_NativeDef_var (void); // destructor
-  
+
   IR_NativeDef_var &operator= (IR_NativeDef_ptr);
   IR_NativeDef_var &operator= (const IR_NativeDef_var &);
   IR_NativeDef_ptr operator-> (void) const;
-  
+
   operator const IR_NativeDef_ptr &() const;
   operator IR_NativeDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_NativeDef_ptr in (void) const;
   IR_NativeDef_ptr &inout (void);
   IR_NativeDef_ptr &out (void);
@@ -1124,18 +1124,18 @@ public:
   operator IR_NativeDef_ptr &();
   IR_NativeDef_ptr &ptr (void);
   IR_NativeDef_ptr operator-> (void);
-  
+
 private:
   IR_NativeDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum,
@@ -1157,33 +1157,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_InterfaceDefSeq
 // *************************************************************
 
-class TAO_Export IR_InterfaceDefSeq : public 
+class TAO_Export IR_InterfaceDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_InterfaceDef,IR_InterfaceDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_InterfaceDefSeq (void); // default ctor
   IR_InterfaceDefSeq (CORBA::ULong max); // uses max size
   IR_InterfaceDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_InterfaceDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_InterfaceDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_InterfaceDefSeq (const IR_InterfaceDefSeq &); // copy ctor
@@ -1207,19 +1207,19 @@ public:
   IR_InterfaceDefSeq_var (IR_InterfaceDefSeq *);
   IR_InterfaceDefSeq_var (const IR_InterfaceDefSeq_var &); // copy constructor
   ~IR_InterfaceDefSeq_var (void); // destructor
-  
+
   IR_InterfaceDefSeq_var &operator= (IR_InterfaceDefSeq *);
   IR_InterfaceDefSeq_var &operator= (const IR_InterfaceDefSeq_var &);
   IR_InterfaceDefSeq *operator-> (void);
   const IR_InterfaceDefSeq *operator-> (void) const;
-  
+
   operator const IR_InterfaceDefSeq &() const;
   operator IR_InterfaceDefSeq &();
   operator IR_InterfaceDefSeq &() const;
   operator IR_InterfaceDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_InterfaceDef, IR_InterfaceDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_InterfaceDefSeq &in (void) const;
   IR_InterfaceDefSeq &inout (void);
   IR_InterfaceDefSeq *&out (void);
@@ -1243,7 +1243,7 @@ public:
   IR_InterfaceDefSeq *&ptr (void);
   IR_InterfaceDefSeq *operator-> (void);
   TAO_Object_Manager<IR_InterfaceDef, IR_InterfaceDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_InterfaceDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -1257,14 +1257,14 @@ public:
   IR_ValueDef_var (IR_ValueDef_ptr);
   IR_ValueDef_var (const IR_ValueDef_var &); // copy constructor
   ~IR_ValueDef_var (void); // destructor
-  
+
   IR_ValueDef_var &operator= (IR_ValueDef_ptr);
   IR_ValueDef_var &operator= (const IR_ValueDef_var &);
   IR_ValueDef_ptr operator-> (void) const;
-  
+
   operator const IR_ValueDef_ptr &() const;
   operator IR_ValueDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ValueDef_ptr in (void) const;
   IR_ValueDef_ptr &inout (void);
   IR_ValueDef_ptr &out (void);
@@ -1287,18 +1287,18 @@ public:
   operator IR_ValueDef_ptr &();
   IR_ValueDef_ptr &ptr (void);
   IR_ValueDef_ptr operator-> (void);
-  
+
 private:
   IR_ValueDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum,
@@ -1320,33 +1320,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ValueDefSeq
 // *************************************************************
 
-class TAO_Export IR_ValueDefSeq : public 
+class TAO_Export IR_ValueDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_ValueDef,IR_ValueDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ValueDefSeq (void); // default ctor
   IR_ValueDefSeq (CORBA::ULong max); // uses max size
   IR_ValueDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_ValueDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_ValueDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_ValueDefSeq (const IR_ValueDefSeq &); // copy ctor
@@ -1370,19 +1370,19 @@ public:
   IR_ValueDefSeq_var (IR_ValueDefSeq *);
   IR_ValueDefSeq_var (const IR_ValueDefSeq_var &); // copy constructor
   ~IR_ValueDefSeq_var (void); // destructor
-  
+
   IR_ValueDefSeq_var &operator= (IR_ValueDefSeq *);
   IR_ValueDefSeq_var &operator= (const IR_ValueDefSeq_var &);
   IR_ValueDefSeq *operator-> (void);
   const IR_ValueDefSeq *operator-> (void) const;
-  
+
   operator const IR_ValueDefSeq &() const;
   operator IR_ValueDefSeq &();
   operator IR_ValueDefSeq &() const;
   operator IR_ValueDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_ValueDef, IR_ValueDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ValueDefSeq &in (void) const;
   IR_ValueDefSeq &inout (void);
   IR_ValueDefSeq *&out (void);
@@ -1405,7 +1405,7 @@ public:
   IR_ValueDefSeq *&ptr (void);
   IR_ValueDefSeq *operator-> (void);
   TAO_Object_Manager<IR_ValueDef, IR_ValueDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ValueDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -1419,14 +1419,14 @@ public:
   IR_ValueBoxDef_var (IR_ValueBoxDef_ptr);
   IR_ValueBoxDef_var (const IR_ValueBoxDef_var &); // copy constructor
   ~IR_ValueBoxDef_var (void); // destructor
-  
+
   IR_ValueBoxDef_var &operator= (IR_ValueBoxDef_ptr);
   IR_ValueBoxDef_var &operator= (const IR_ValueBoxDef_var &);
   IR_ValueBoxDef_ptr operator-> (void) const;
-  
+
   operator const IR_ValueBoxDef_ptr &() const;
   operator IR_ValueBoxDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ValueBoxDef_ptr in (void) const;
   IR_ValueBoxDef_ptr &inout (void);
   IR_ValueBoxDef_ptr &out (void);
@@ -1449,7 +1449,7 @@ public:
   operator IR_ValueBoxDef_ptr &();
   IR_ValueBoxDef_ptr &ptr (void);
   IR_ValueBoxDef_ptr operator-> (void);
-  
+
 private:
   IR_ValueBoxDef_ptr &ptr_;
 };
@@ -1461,14 +1461,14 @@ public:
   IR_ComponentDef_var (IR_ComponentDef_ptr);
   IR_ComponentDef_var (const IR_ComponentDef_var &); // copy constructor
   ~IR_ComponentDef_var (void); // destructor
-  
+
   IR_ComponentDef_var &operator= (IR_ComponentDef_ptr);
   IR_ComponentDef_var &operator= (const IR_ComponentDef_var &);
   IR_ComponentDef_ptr operator-> (void) const;
-  
+
   operator const IR_ComponentDef_ptr &() const;
   operator IR_ComponentDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ComponentDef_ptr in (void) const;
   IR_ComponentDef_ptr &inout (void);
   IR_ComponentDef_ptr &out (void);
@@ -1491,18 +1491,18 @@ public:
   operator IR_ComponentDef_ptr &();
   IR_ComponentDef_ptr &ptr (void);
   IR_ComponentDef_ptr operator-> (void);
-  
+
 private:
   IR_ComponentDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum,
@@ -1524,33 +1524,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ComponentDefSeq
 // *************************************************************
 
-class TAO_Export IR_ComponentDefSeq : public 
+class TAO_Export IR_ComponentDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_ComponentDef,IR_ComponentDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ComponentDefSeq (void); // default ctor
   IR_ComponentDefSeq (CORBA::ULong max); // uses max size
   IR_ComponentDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_ComponentDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_ComponentDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_ComponentDefSeq (const IR_ComponentDefSeq &); // copy ctor
@@ -1574,19 +1574,19 @@ public:
   IR_ComponentDefSeq_var (IR_ComponentDefSeq *);
   IR_ComponentDefSeq_var (const IR_ComponentDefSeq_var &); // copy constructor
   ~IR_ComponentDefSeq_var (void); // destructor
-  
+
   IR_ComponentDefSeq_var &operator= (IR_ComponentDefSeq *);
   IR_ComponentDefSeq_var &operator= (const IR_ComponentDefSeq_var &);
   IR_ComponentDefSeq *operator-> (void);
   const IR_ComponentDefSeq *operator-> (void) const;
-  
+
   operator const IR_ComponentDefSeq &() const;
   operator IR_ComponentDefSeq &();
   operator IR_ComponentDefSeq &() const;
   operator IR_ComponentDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_ComponentDef, IR_ComponentDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ComponentDefSeq &in (void) const;
   IR_ComponentDefSeq &inout (void);
   IR_ComponentDefSeq *&out (void);
@@ -1609,7 +1609,7 @@ public:
   IR_ComponentDefSeq *&ptr (void);
   IR_ComponentDefSeq *operator-> (void);
   TAO_Object_Manager<IR_ComponentDef, IR_ComponentDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ComponentDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -1623,14 +1623,14 @@ public:
   IR_ProvidesDef_var (IR_ProvidesDef_ptr);
   IR_ProvidesDef_var (const IR_ProvidesDef_var &); // copy constructor
   ~IR_ProvidesDef_var (void); // destructor
-  
+
   IR_ProvidesDef_var &operator= (IR_ProvidesDef_ptr);
   IR_ProvidesDef_var &operator= (const IR_ProvidesDef_var &);
   IR_ProvidesDef_ptr operator-> (void) const;
-  
+
   operator const IR_ProvidesDef_ptr &() const;
   operator IR_ProvidesDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ProvidesDef_ptr in (void) const;
   IR_ProvidesDef_ptr &inout (void);
   IR_ProvidesDef_ptr &out (void);
@@ -1653,18 +1653,18 @@ public:
   operator IR_ProvidesDef_ptr &();
   IR_ProvidesDef_ptr &ptr (void);
   IR_ProvidesDef_ptr operator-> (void);
-  
+
 private:
   IR_ProvidesDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum,
@@ -1686,33 +1686,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ProvidesDefSeq
 // *************************************************************
 
-class TAO_Export IR_ProvidesDefSeq : public 
+class TAO_Export IR_ProvidesDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_ProvidesDef,IR_ProvidesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ProvidesDefSeq (void); // default ctor
   IR_ProvidesDefSeq (CORBA::ULong max); // uses max size
   IR_ProvidesDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_ProvidesDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_ProvidesDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_ProvidesDefSeq (const IR_ProvidesDefSeq &); // copy ctor
@@ -1736,19 +1736,19 @@ public:
   IR_ProvidesDefSeq_var (IR_ProvidesDefSeq *);
   IR_ProvidesDefSeq_var (const IR_ProvidesDefSeq_var &); // copy constructor
   ~IR_ProvidesDefSeq_var (void); // destructor
-  
+
   IR_ProvidesDefSeq_var &operator= (IR_ProvidesDefSeq *);
   IR_ProvidesDefSeq_var &operator= (const IR_ProvidesDefSeq_var &);
   IR_ProvidesDefSeq *operator-> (void);
   const IR_ProvidesDefSeq *operator-> (void) const;
-  
+
   operator const IR_ProvidesDefSeq &() const;
   operator IR_ProvidesDefSeq &();
   operator IR_ProvidesDefSeq &() const;
   operator IR_ProvidesDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_ProvidesDef, IR_ProvidesDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ProvidesDefSeq &in (void) const;
   IR_ProvidesDefSeq &inout (void);
   IR_ProvidesDefSeq *&out (void);
@@ -1771,7 +1771,7 @@ public:
   IR_ProvidesDefSeq *&ptr (void);
   IR_ProvidesDefSeq *operator-> (void);
   TAO_Object_Manager<IR_ProvidesDef, IR_ProvidesDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ProvidesDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -1785,14 +1785,14 @@ public:
   IR_UsesDef_var (IR_UsesDef_ptr);
   IR_UsesDef_var (const IR_UsesDef_var &); // copy constructor
   ~IR_UsesDef_var (void); // destructor
-  
+
   IR_UsesDef_var &operator= (IR_UsesDef_ptr);
   IR_UsesDef_var &operator= (const IR_UsesDef_var &);
   IR_UsesDef_ptr operator-> (void) const;
-  
+
   operator const IR_UsesDef_ptr &() const;
   operator IR_UsesDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_UsesDef_ptr in (void) const;
   IR_UsesDef_ptr &inout (void);
   IR_UsesDef_ptr &out (void);
@@ -1815,18 +1815,18 @@ public:
   operator IR_UsesDef_ptr &();
   IR_UsesDef_ptr &ptr (void);
   IR_UsesDef_ptr operator-> (void);
-  
+
 private:
   IR_UsesDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum,
@@ -1848,33 +1848,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_UsesDefSeq
 // *************************************************************
 
-class TAO_Export IR_UsesDefSeq : public 
+class TAO_Export IR_UsesDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_UsesDef,IR_UsesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_UsesDefSeq (void); // default ctor
   IR_UsesDefSeq (CORBA::ULong max); // uses max size
   IR_UsesDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_UsesDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_UsesDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_UsesDefSeq (const IR_UsesDefSeq &); // copy ctor
@@ -1898,19 +1898,19 @@ public:
   IR_UsesDefSeq_var (IR_UsesDefSeq *);
   IR_UsesDefSeq_var (const IR_UsesDefSeq_var &); // copy constructor
   ~IR_UsesDefSeq_var (void); // destructor
-  
+
   IR_UsesDefSeq_var &operator= (IR_UsesDefSeq *);
   IR_UsesDefSeq_var &operator= (const IR_UsesDefSeq_var &);
   IR_UsesDefSeq *operator-> (void);
   const IR_UsesDefSeq *operator-> (void) const;
-  
+
   operator const IR_UsesDefSeq &() const;
   operator IR_UsesDefSeq &();
   operator IR_UsesDefSeq &() const;
   operator IR_UsesDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_UsesDef, IR_UsesDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_UsesDefSeq &in (void) const;
   IR_UsesDefSeq &inout (void);
   IR_UsesDefSeq *&out (void);
@@ -1933,7 +1933,7 @@ public:
   IR_UsesDefSeq *&ptr (void);
   IR_UsesDefSeq *operator-> (void);
   TAO_Object_Manager<IR_UsesDef, IR_UsesDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_UsesDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -1947,14 +1947,14 @@ public:
   IR_HomeDef_var (IR_HomeDef_ptr);
   IR_HomeDef_var (const IR_HomeDef_var &); // copy constructor
   ~IR_HomeDef_var (void); // destructor
-  
+
   IR_HomeDef_var &operator= (IR_HomeDef_ptr);
   IR_HomeDef_var &operator= (const IR_HomeDef_var &);
   IR_HomeDef_ptr operator-> (void) const;
-  
+
   operator const IR_HomeDef_ptr &() const;
   operator IR_HomeDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_HomeDef_ptr in (void) const;
   IR_HomeDef_ptr &inout (void);
   IR_HomeDef_ptr &out (void);
@@ -1977,18 +1977,18 @@ public:
   operator IR_HomeDef_ptr &();
   IR_HomeDef_ptr &ptr (void);
   IR_HomeDef_ptr operator-> (void);
-  
+
 private:
   IR_HomeDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum,
@@ -2010,33 +2010,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_HomeDefSeq
 // *************************************************************
 
-class TAO_Export IR_HomeDefSeq : public 
+class TAO_Export IR_HomeDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_HomeDef,IR_HomeDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_HomeDefSeq (void); // default ctor
   IR_HomeDefSeq (CORBA::ULong max); // uses max size
   IR_HomeDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_HomeDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_HomeDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_HomeDefSeq (const IR_HomeDefSeq &); // copy ctor
@@ -2060,19 +2060,19 @@ public:
   IR_HomeDefSeq_var (IR_HomeDefSeq *);
   IR_HomeDefSeq_var (const IR_HomeDefSeq_var &); // copy constructor
   ~IR_HomeDefSeq_var (void); // destructor
-  
+
   IR_HomeDefSeq_var &operator= (IR_HomeDefSeq *);
   IR_HomeDefSeq_var &operator= (const IR_HomeDefSeq_var &);
   IR_HomeDefSeq *operator-> (void);
   const IR_HomeDefSeq *operator-> (void) const;
-  
+
   operator const IR_HomeDefSeq &() const;
   operator IR_HomeDefSeq &();
   operator IR_HomeDefSeq &() const;
   operator IR_HomeDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_HomeDef, IR_HomeDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_HomeDefSeq &in (void) const;
   IR_HomeDefSeq &inout (void);
   IR_HomeDefSeq *&out (void);
@@ -2095,7 +2095,7 @@ public:
   IR_HomeDefSeq *&ptr (void);
   IR_HomeDefSeq *operator-> (void);
   TAO_Object_Manager<IR_HomeDef, IR_HomeDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_HomeDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -2109,14 +2109,14 @@ public:
   IR_EventDef_var (IR_EventDef_ptr);
   IR_EventDef_var (const IR_EventDef_var &); // copy constructor
   ~IR_EventDef_var (void); // destructor
-  
+
   IR_EventDef_var &operator= (IR_EventDef_ptr);
   IR_EventDef_var &operator= (const IR_EventDef_var &);
   IR_EventDef_ptr operator-> (void) const;
-  
+
   operator const IR_EventDef_ptr &() const;
   operator IR_EventDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_EventDef_ptr in (void) const;
   IR_EventDef_ptr &inout (void);
   IR_EventDef_ptr &out (void);
@@ -2139,7 +2139,7 @@ public:
   operator IR_EventDef_ptr &();
   IR_EventDef_ptr &ptr (void);
   IR_EventDef_ptr operator-> (void);
-  
+
 private:
   IR_EventDef_ptr &ptr_;
 };
@@ -2151,14 +2151,14 @@ public:
   IR_EmitsDef_var (IR_EmitsDef_ptr);
   IR_EmitsDef_var (const IR_EmitsDef_var &); // copy constructor
   ~IR_EmitsDef_var (void); // destructor
-  
+
   IR_EmitsDef_var &operator= (IR_EmitsDef_ptr);
   IR_EmitsDef_var &operator= (const IR_EmitsDef_var &);
   IR_EmitsDef_ptr operator-> (void) const;
-  
+
   operator const IR_EmitsDef_ptr &() const;
   operator IR_EmitsDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_EmitsDef_ptr in (void) const;
   IR_EmitsDef_ptr &inout (void);
   IR_EmitsDef_ptr &out (void);
@@ -2181,18 +2181,18 @@ public:
   operator IR_EmitsDef_ptr &();
   IR_EmitsDef_ptr &ptr (void);
   IR_EmitsDef_ptr operator-> (void);
-  
+
 private:
   IR_EmitsDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum,
@@ -2214,33 +2214,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_EmitsDefSeq
 // *************************************************************
 
-class TAO_Export IR_EmitsDefSeq : public 
+class TAO_Export IR_EmitsDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_EmitsDef,IR_EmitsDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_EmitsDefSeq (void); // default ctor
   IR_EmitsDefSeq (CORBA::ULong max); // uses max size
   IR_EmitsDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_EmitsDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_EmitsDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_EmitsDefSeq (const IR_EmitsDefSeq &); // copy ctor
@@ -2264,19 +2264,19 @@ public:
   IR_EmitsDefSeq_var (IR_EmitsDefSeq *);
   IR_EmitsDefSeq_var (const IR_EmitsDefSeq_var &); // copy constructor
   ~IR_EmitsDefSeq_var (void); // destructor
-  
+
   IR_EmitsDefSeq_var &operator= (IR_EmitsDefSeq *);
   IR_EmitsDefSeq_var &operator= (const IR_EmitsDefSeq_var &);
   IR_EmitsDefSeq *operator-> (void);
   const IR_EmitsDefSeq *operator-> (void) const;
-  
+
   operator const IR_EmitsDefSeq &() const;
   operator IR_EmitsDefSeq &();
   operator IR_EmitsDefSeq &() const;
   operator IR_EmitsDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_EmitsDef, IR_EmitsDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_EmitsDefSeq &in (void) const;
   IR_EmitsDefSeq &inout (void);
   IR_EmitsDefSeq *&out (void);
@@ -2299,7 +2299,7 @@ public:
   IR_EmitsDefSeq *&ptr (void);
   IR_EmitsDefSeq *operator-> (void);
   TAO_Object_Manager<IR_EmitsDef, IR_EmitsDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_EmitsDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -2313,14 +2313,14 @@ public:
   IR_PublishesDef_var (IR_PublishesDef_ptr);
   IR_PublishesDef_var (const IR_PublishesDef_var &); // copy constructor
   ~IR_PublishesDef_var (void); // destructor
-  
+
   IR_PublishesDef_var &operator= (IR_PublishesDef_ptr);
   IR_PublishesDef_var &operator= (const IR_PublishesDef_var &);
   IR_PublishesDef_ptr operator-> (void) const;
-  
+
   operator const IR_PublishesDef_ptr &() const;
   operator IR_PublishesDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_PublishesDef_ptr in (void) const;
   IR_PublishesDef_ptr &inout (void);
   IR_PublishesDef_ptr &out (void);
@@ -2343,18 +2343,18 @@ public:
   operator IR_PublishesDef_ptr &();
   IR_PublishesDef_ptr &ptr (void);
   IR_PublishesDef_ptr operator-> (void);
-  
+
 private:
   IR_PublishesDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum,
@@ -2376,33 +2376,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_PublishesDefSeq
 // *************************************************************
 
-class TAO_Export IR_PublishesDefSeq : public 
+class TAO_Export IR_PublishesDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_PublishesDef,IR_PublishesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_PublishesDefSeq (void); // default ctor
   IR_PublishesDefSeq (CORBA::ULong max); // uses max size
   IR_PublishesDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_PublishesDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_PublishesDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_PublishesDefSeq (const IR_PublishesDefSeq &); // copy ctor
@@ -2426,19 +2426,19 @@ public:
   IR_PublishesDefSeq_var (IR_PublishesDefSeq *);
   IR_PublishesDefSeq_var (const IR_PublishesDefSeq_var &); // copy constructor
   ~IR_PublishesDefSeq_var (void); // destructor
-  
+
   IR_PublishesDefSeq_var &operator= (IR_PublishesDefSeq *);
   IR_PublishesDefSeq_var &operator= (const IR_PublishesDefSeq_var &);
   IR_PublishesDefSeq *operator-> (void);
   const IR_PublishesDefSeq *operator-> (void) const;
-  
+
   operator const IR_PublishesDefSeq &() const;
   operator IR_PublishesDefSeq &();
   operator IR_PublishesDefSeq &() const;
   operator IR_PublishesDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_PublishesDef, IR_PublishesDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_PublishesDefSeq &in (void) const;
   IR_PublishesDefSeq &inout (void);
   IR_PublishesDefSeq *&out (void);
@@ -2461,7 +2461,7 @@ public:
   IR_PublishesDefSeq *&ptr (void);
   IR_PublishesDefSeq *operator-> (void);
   TAO_Object_Manager<IR_PublishesDef, IR_PublishesDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_PublishesDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -2475,14 +2475,14 @@ public:
   IR_ConsumesDef_var (IR_ConsumesDef_ptr);
   IR_ConsumesDef_var (const IR_ConsumesDef_var &); // copy constructor
   ~IR_ConsumesDef_var (void); // destructor
-  
+
   IR_ConsumesDef_var &operator= (IR_ConsumesDef_ptr);
   IR_ConsumesDef_var &operator= (const IR_ConsumesDef_var &);
   IR_ConsumesDef_ptr operator-> (void) const;
-  
+
   operator const IR_ConsumesDef_ptr &() const;
   operator IR_ConsumesDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ConsumesDef_ptr in (void) const;
   IR_ConsumesDef_ptr &inout (void);
   IR_ConsumesDef_ptr &out (void);
@@ -2505,18 +2505,18 @@ public:
   operator IR_ConsumesDef_ptr &();
   IR_ConsumesDef_ptr &ptr (void);
   IR_ConsumesDef_ptr operator-> (void);
-  
+
 private:
   IR_ConsumesDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum,
@@ -2538,33 +2538,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ConsumesDefSeq
 // *************************************************************
 
-class TAO_Export IR_ConsumesDefSeq : public 
+class TAO_Export IR_ConsumesDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_ConsumesDef,IR_ConsumesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ConsumesDefSeq (void); // default ctor
   IR_ConsumesDefSeq (CORBA::ULong max); // uses max size
   IR_ConsumesDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_ConsumesDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_ConsumesDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_ConsumesDefSeq (const IR_ConsumesDefSeq &); // copy ctor
@@ -2588,19 +2588,19 @@ public:
   IR_ConsumesDefSeq_var (IR_ConsumesDefSeq *);
   IR_ConsumesDefSeq_var (const IR_ConsumesDefSeq_var &); // copy constructor
   ~IR_ConsumesDefSeq_var (void); // destructor
-  
+
   IR_ConsumesDefSeq_var &operator= (IR_ConsumesDefSeq *);
   IR_ConsumesDefSeq_var &operator= (const IR_ConsumesDefSeq_var &);
   IR_ConsumesDefSeq *operator-> (void);
   const IR_ConsumesDefSeq *operator-> (void) const;
-  
+
   operator const IR_ConsumesDefSeq &() const;
   operator IR_ConsumesDefSeq &();
   operator IR_ConsumesDefSeq &() const;
   operator IR_ConsumesDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_ConsumesDef, IR_ConsumesDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ConsumesDefSeq &in (void) const;
   IR_ConsumesDefSeq &inout (void);
   IR_ConsumesDefSeq *&out (void);
@@ -2623,7 +2623,7 @@ public:
   IR_ConsumesDefSeq *&ptr (void);
   IR_ConsumesDefSeq *operator-> (void);
   TAO_Object_Manager<IR_ConsumesDef, IR_ConsumesDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ConsumesDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -2637,14 +2637,14 @@ public:
   IR_FactoryDef_var (IR_FactoryDef_ptr);
   IR_FactoryDef_var (const IR_FactoryDef_var &); // copy constructor
   ~IR_FactoryDef_var (void); // destructor
-  
+
   IR_FactoryDef_var &operator= (IR_FactoryDef_ptr);
   IR_FactoryDef_var &operator= (const IR_FactoryDef_var &);
   IR_FactoryDef_ptr operator-> (void) const;
-  
+
   operator const IR_FactoryDef_ptr &() const;
   operator IR_FactoryDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_FactoryDef_ptr in (void) const;
   IR_FactoryDef_ptr &inout (void);
   IR_FactoryDef_ptr &out (void);
@@ -2667,18 +2667,18 @@ public:
   operator IR_FactoryDef_ptr &();
   IR_FactoryDef_ptr &ptr (void);
   IR_FactoryDef_ptr operator-> (void);
-  
+
 private:
   IR_FactoryDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum,
@@ -2700,33 +2700,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_FactoryDefSeq
 // *************************************************************
 
-class TAO_Export IR_FactoryDefSeq : public 
+class TAO_Export IR_FactoryDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_FactoryDef,IR_FactoryDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_FactoryDefSeq (void); // default ctor
   IR_FactoryDefSeq (CORBA::ULong max); // uses max size
   IR_FactoryDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_FactoryDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_FactoryDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_FactoryDefSeq (const IR_FactoryDefSeq &); // copy ctor
@@ -2750,19 +2750,19 @@ public:
   IR_FactoryDefSeq_var (IR_FactoryDefSeq *);
   IR_FactoryDefSeq_var (const IR_FactoryDefSeq_var &); // copy constructor
   ~IR_FactoryDefSeq_var (void); // destructor
-  
+
   IR_FactoryDefSeq_var &operator= (IR_FactoryDefSeq *);
   IR_FactoryDefSeq_var &operator= (const IR_FactoryDefSeq_var &);
   IR_FactoryDefSeq *operator-> (void);
   const IR_FactoryDefSeq *operator-> (void) const;
-  
+
   operator const IR_FactoryDefSeq &() const;
   operator IR_FactoryDefSeq &();
   operator IR_FactoryDefSeq &() const;
   operator IR_FactoryDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_FactoryDef, IR_FactoryDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_FactoryDefSeq &in (void) const;
   IR_FactoryDefSeq &inout (void);
   IR_FactoryDefSeq *&out (void);
@@ -2785,7 +2785,7 @@ public:
   IR_FactoryDefSeq *&ptr (void);
   IR_FactoryDefSeq *operator-> (void);
   TAO_Object_Manager<IR_FactoryDef, IR_FactoryDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_FactoryDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -2799,14 +2799,14 @@ public:
   IR_FinderDef_var (IR_FinderDef_ptr);
   IR_FinderDef_var (const IR_FinderDef_var &); // copy constructor
   ~IR_FinderDef_var (void); // destructor
-  
+
   IR_FinderDef_var &operator= (IR_FinderDef_ptr);
   IR_FinderDef_var &operator= (const IR_FinderDef_var &);
   IR_FinderDef_ptr operator-> (void) const;
-  
+
   operator const IR_FinderDef_ptr &() const;
   operator IR_FinderDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_FinderDef_ptr in (void) const;
   IR_FinderDef_ptr &inout (void);
   IR_FinderDef_ptr &out (void);
@@ -2829,18 +2829,18 @@ public:
   operator IR_FinderDef_ptr &();
   IR_FinderDef_ptr &ptr (void);
   IR_FinderDef_ptr operator-> (void);
-  
+
 private:
   IR_FinderDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum,
@@ -2862,33 +2862,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_FinderDefSeq
 // *************************************************************
 
-class TAO_Export IR_FinderDefSeq : public 
+class TAO_Export IR_FinderDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_FinderDef,IR_FinderDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_FinderDefSeq (void); // default ctor
   IR_FinderDefSeq (CORBA::ULong max); // uses max size
   IR_FinderDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_FinderDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_FinderDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_FinderDefSeq (const IR_FinderDefSeq &); // copy ctor
@@ -2912,19 +2912,19 @@ public:
   IR_FinderDefSeq_var (IR_FinderDefSeq *);
   IR_FinderDefSeq_var (const IR_FinderDefSeq_var &); // copy constructor
   ~IR_FinderDefSeq_var (void); // destructor
-  
+
   IR_FinderDefSeq_var &operator= (IR_FinderDefSeq *);
   IR_FinderDefSeq_var &operator= (const IR_FinderDefSeq_var &);
   IR_FinderDefSeq *operator-> (void);
   const IR_FinderDefSeq *operator-> (void) const;
-  
+
   operator const IR_FinderDefSeq &() const;
   operator IR_FinderDefSeq &();
   operator IR_FinderDefSeq &() const;
   operator IR_FinderDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_FinderDef, IR_FinderDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_FinderDefSeq &in (void) const;
   IR_FinderDefSeq &inout (void);
   IR_FinderDefSeq *&out (void);
@@ -2947,7 +2947,7 @@ public:
   IR_FinderDefSeq *&ptr (void);
   IR_FinderDefSeq *operator-> (void);
   TAO_Object_Manager<IR_FinderDef, IR_FinderDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_FinderDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -2961,14 +2961,14 @@ public:
   IR_PrimaryKeyDef_var (IR_PrimaryKeyDef_ptr);
   IR_PrimaryKeyDef_var (const IR_PrimaryKeyDef_var &); // copy constructor
   ~IR_PrimaryKeyDef_var (void); // destructor
-  
+
   IR_PrimaryKeyDef_var &operator= (IR_PrimaryKeyDef_ptr);
   IR_PrimaryKeyDef_var &operator= (const IR_PrimaryKeyDef_var &);
   IR_PrimaryKeyDef_ptr operator-> (void) const;
-  
+
   operator const IR_PrimaryKeyDef_ptr &() const;
   operator IR_PrimaryKeyDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_PrimaryKeyDef_ptr in (void) const;
   IR_PrimaryKeyDef_ptr &inout (void);
   IR_PrimaryKeyDef_ptr &out (void);
@@ -2991,18 +2991,18 @@ public:
   operator IR_PrimaryKeyDef_ptr &();
   IR_PrimaryKeyDef_ptr &ptr (void);
   IR_PrimaryKeyDef_ptr operator-> (void);
-  
+
 private:
   IR_PrimaryKeyDef_ptr &ptr_;
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_ContainedSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_ContainedSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum,
@@ -3024,33 +3024,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ContainedSeq
 // *************************************************************
 
-class TAO_Export IR_ContainedSeq : public 
+class TAO_Export IR_ContainedSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ContainedSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_Contained,IR_Contained_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ContainedSeq (void); // default ctor
   IR_ContainedSeq (CORBA::ULong max); // uses max size
   IR_ContainedSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_Contained_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_Contained_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_ContainedSeq (const IR_ContainedSeq &); // copy ctor
@@ -3074,19 +3074,19 @@ public:
   IR_ContainedSeq_var (IR_ContainedSeq *);
   IR_ContainedSeq_var (const IR_ContainedSeq_var &); // copy constructor
   ~IR_ContainedSeq_var (void); // destructor
-  
+
   IR_ContainedSeq_var &operator= (IR_ContainedSeq *);
   IR_ContainedSeq_var &operator= (const IR_ContainedSeq_var &);
   IR_ContainedSeq *operator-> (void);
   const IR_ContainedSeq *operator-> (void) const;
-  
+
   operator const IR_ContainedSeq &() const;
   operator IR_ContainedSeq &();
   operator IR_ContainedSeq &() const;
   operator IR_ContainedSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_Contained, IR_Contained_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ContainedSeq &in (void) const;
   IR_ContainedSeq &inout (void);
   IR_ContainedSeq *&out (void);
@@ -3109,7 +3109,7 @@ public:
   IR_ContainedSeq *&ptr (void);
   IR_ContainedSeq *operator-> (void);
   TAO_Object_Manager<IR_Contained, IR_Contained_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ContainedSeq *&ptr_;
   // assignment from T_var not allowed
@@ -3137,18 +3137,18 @@ public:
   IR_StructMember_var (IR_StructMember *);
   IR_StructMember_var (const IR_StructMember_var &); // copy constructor
   ~IR_StructMember_var (void); // destructor
-  
+
   IR_StructMember_var &operator= (IR_StructMember *);
   IR_StructMember_var &operator= (const IR_StructMember_var &);
   IR_StructMember *operator-> (void);
   const IR_StructMember *operator-> (void) const;
-  
+
   operator const IR_StructMember &() const;
   operator IR_StructMember &();
   operator IR_StructMember &() const;
   operator IR_StructMember *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_StructMember &in (void) const;
   IR_StructMember &inout (void);
   IR_StructMember *&out (void);
@@ -3170,7 +3170,7 @@ public:
   operator IR_StructMember *&();
   IR_StructMember *&ptr (void);
   IR_StructMember *operator-> (void);
-  
+
 private:
   IR_StructMember *&ptr_;
   // assignment from T_var not allowed
@@ -3178,14 +3178,14 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_StructMemberSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_StructMemberSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_StructMember *data,
@@ -3202,7 +3202,7 @@ private:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_StructMember *get_buffer (CORBA::Boolean orphan = 0);
     const IR_StructMember *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -3211,26 +3211,26 @@ private:
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_StructMemberSeq
 // *************************************************************
 
-class TAO_Export IR_StructMemberSeq : public 
+class TAO_Export IR_StructMemberSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_StructMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_StructMember>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_StructMemberSeq (void); // default ctor
   IR_StructMemberSeq (CORBA::ULong max); // uses max size
   IR_StructMemberSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_StructMember *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_StructMember *buffer,
     CORBA::Boolean release=0
   );
   IR_StructMemberSeq (const IR_StructMemberSeq &); // copy ctor
@@ -3254,19 +3254,19 @@ public:
   IR_StructMemberSeq_var (IR_StructMemberSeq *);
   IR_StructMemberSeq_var (const IR_StructMemberSeq_var &); // copy constructor
   ~IR_StructMemberSeq_var (void); // destructor
-  
+
   IR_StructMemberSeq_var &operator= (IR_StructMemberSeq *);
   IR_StructMemberSeq_var &operator= (const IR_StructMemberSeq_var &);
   IR_StructMemberSeq *operator-> (void);
   const IR_StructMemberSeq *operator-> (void) const;
-  
+
   operator const IR_StructMemberSeq &() const;
   operator IR_StructMemberSeq &();
   operator IR_StructMemberSeq &() const;
   operator IR_StructMemberSeq *&(); // variable-size base types only
-  
+
   IR_StructMember &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_StructMemberSeq &in (void) const;
   IR_StructMemberSeq &inout (void);
   IR_StructMemberSeq *&out (void);
@@ -3289,7 +3289,7 @@ public:
   IR_StructMemberSeq *&ptr (void);
   IR_StructMemberSeq *operator-> (void);
   IR_StructMember &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_StructMemberSeq *&ptr_;
   // assignment from T_var not allowed
@@ -3316,18 +3316,18 @@ public:
   IR_Initializer_var (IR_Initializer *);
   IR_Initializer_var (const IR_Initializer_var &); // copy constructor
   ~IR_Initializer_var (void); // destructor
-  
+
   IR_Initializer_var &operator= (IR_Initializer *);
   IR_Initializer_var &operator= (const IR_Initializer_var &);
   IR_Initializer *operator-> (void);
   const IR_Initializer *operator-> (void) const;
-  
+
   operator const IR_Initializer &() const;
   operator IR_Initializer &();
   operator IR_Initializer &() const;
   operator IR_Initializer *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_Initializer &in (void) const;
   IR_Initializer &inout (void);
   IR_Initializer *&out (void);
@@ -3349,7 +3349,7 @@ public:
   operator IR_Initializer *&();
   IR_Initializer *&ptr (void);
   IR_Initializer *operator-> (void);
-  
+
 private:
   IR_Initializer *&ptr_;
   // assignment from T_var not allowed
@@ -3357,14 +3357,14 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_InitializerSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_InitializerSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_Initializer *data,
@@ -3381,7 +3381,7 @@ private:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_Initializer *get_buffer (CORBA::Boolean orphan = 0);
     const IR_Initializer *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -3390,26 +3390,26 @@ private:
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_InitializerSeq
 // *************************************************************
 
-class TAO_Export IR_InitializerSeq : public 
+class TAO_Export IR_InitializerSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_InitializerSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_Initializer>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_InitializerSeq (void); // default ctor
   IR_InitializerSeq (CORBA::ULong max); // uses max size
   IR_InitializerSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_Initializer *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_Initializer *buffer,
     CORBA::Boolean release=0
   );
   IR_InitializerSeq (const IR_InitializerSeq &); // copy ctor
@@ -3433,19 +3433,19 @@ public:
   IR_InitializerSeq_var (IR_InitializerSeq *);
   IR_InitializerSeq_var (const IR_InitializerSeq_var &); // copy constructor
   ~IR_InitializerSeq_var (void); // destructor
-  
+
   IR_InitializerSeq_var &operator= (IR_InitializerSeq *);
   IR_InitializerSeq_var &operator= (const IR_InitializerSeq_var &);
   IR_InitializerSeq *operator-> (void);
   const IR_InitializerSeq *operator-> (void) const;
-  
+
   operator const IR_InitializerSeq &() const;
   operator IR_InitializerSeq &();
   operator IR_InitializerSeq &() const;
   operator IR_InitializerSeq *&(); // variable-size base types only
-  
+
   IR_Initializer &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_InitializerSeq &in (void) const;
   IR_InitializerSeq &inout (void);
   IR_InitializerSeq *&out (void);
@@ -3468,7 +3468,7 @@ public:
   IR_InitializerSeq *&ptr (void);
   IR_InitializerSeq *operator-> (void);
   IR_Initializer &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_InitializerSeq *&ptr_;
   // assignment from T_var not allowed
@@ -3497,18 +3497,18 @@ public:
   IR_UnionMember_var (IR_UnionMember *);
   IR_UnionMember_var (const IR_UnionMember_var &); // copy constructor
   ~IR_UnionMember_var (void); // destructor
-  
+
   IR_UnionMember_var &operator= (IR_UnionMember *);
   IR_UnionMember_var &operator= (const IR_UnionMember_var &);
   IR_UnionMember *operator-> (void);
   const IR_UnionMember *operator-> (void) const;
-  
+
   operator const IR_UnionMember &() const;
   operator IR_UnionMember &();
   operator IR_UnionMember &() const;
   operator IR_UnionMember *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_UnionMember &in (void) const;
   IR_UnionMember &inout (void);
   IR_UnionMember *&out (void);
@@ -3530,7 +3530,7 @@ public:
   operator IR_UnionMember *&();
   IR_UnionMember *&ptr (void);
   IR_UnionMember *operator-> (void);
-  
+
 private:
   IR_UnionMember *&ptr_;
   // assignment from T_var not allowed
@@ -3538,14 +3538,14 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_UnionMemberSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_UnionMemberSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_UnionMember *data,
@@ -3562,7 +3562,7 @@ private:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_UnionMember *get_buffer (CORBA::Boolean orphan = 0);
     const IR_UnionMember *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -3571,26 +3571,26 @@ private:
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_UnionMemberSeq
 // *************************************************************
 
-class TAO_Export IR_UnionMemberSeq : public 
+class TAO_Export IR_UnionMemberSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_UnionMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_UnionMember>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_UnionMemberSeq (void); // default ctor
   IR_UnionMemberSeq (CORBA::ULong max); // uses max size
   IR_UnionMemberSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_UnionMember *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_UnionMember *buffer,
     CORBA::Boolean release=0
   );
   IR_UnionMemberSeq (const IR_UnionMemberSeq &); // copy ctor
@@ -3614,19 +3614,19 @@ public:
   IR_UnionMemberSeq_var (IR_UnionMemberSeq *);
   IR_UnionMemberSeq_var (const IR_UnionMemberSeq_var &); // copy constructor
   ~IR_UnionMemberSeq_var (void); // destructor
-  
+
   IR_UnionMemberSeq_var &operator= (IR_UnionMemberSeq *);
   IR_UnionMemberSeq_var &operator= (const IR_UnionMemberSeq_var &);
   IR_UnionMemberSeq *operator-> (void);
   const IR_UnionMemberSeq *operator-> (void) const;
-  
+
   operator const IR_UnionMemberSeq &() const;
   operator IR_UnionMemberSeq &();
   operator IR_UnionMemberSeq &() const;
   operator IR_UnionMemberSeq *&(); // variable-size base types only
-  
+
   IR_UnionMember &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_UnionMemberSeq &in (void) const;
   IR_UnionMemberSeq &inout (void);
   IR_UnionMemberSeq *&out (void);
@@ -3649,7 +3649,7 @@ public:
   IR_UnionMemberSeq *&ptr (void);
   IR_UnionMemberSeq *operator-> (void);
   IR_UnionMember &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_UnionMemberSeq *&ptr_;
   // assignment from T_var not allowed
@@ -3660,20 +3660,20 @@ private:
 // IR_EnumMemberSeq
 // *************************************************************
 
-class TAO_Export IR_EnumMemberSeq : public 
+class TAO_Export IR_EnumMemberSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_EnumMemberSeq (void); // default ctor
   IR_EnumMemberSeq (CORBA::ULong max); // uses max size
   IR_EnumMemberSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    char * *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    char * *buffer,
     CORBA::Boolean release=0
   );
   IR_EnumMemberSeq (const IR_EnumMemberSeq &); // copy ctor
@@ -3697,19 +3697,19 @@ public:
   IR_EnumMemberSeq_var (IR_EnumMemberSeq *);
   IR_EnumMemberSeq_var (const IR_EnumMemberSeq_var &); // copy constructor
   ~IR_EnumMemberSeq_var (void); // destructor
-  
+
   IR_EnumMemberSeq_var &operator= (IR_EnumMemberSeq *);
   IR_EnumMemberSeq_var &operator= (const IR_EnumMemberSeq_var &);
   IR_EnumMemberSeq *operator-> (void);
   const IR_EnumMemberSeq *operator-> (void) const;
-  
+
   operator const IR_EnumMemberSeq &() const;
   operator IR_EnumMemberSeq &();
   operator IR_EnumMemberSeq &() const;
   operator IR_EnumMemberSeq *&(); // variable-size base types only
-  
+
   TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_EnumMemberSeq &in (void) const;
   IR_EnumMemberSeq &inout (void);
   IR_EnumMemberSeq *&out (void);
@@ -3732,7 +3732,7 @@ public:
   IR_EnumMemberSeq *&ptr (void);
   IR_EnumMemberSeq *operator-> (void);
   TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-  
+
 private:
   IR_EnumMemberSeq *&ptr_;
   // assignment from T_var not allowed
@@ -3751,12 +3751,12 @@ public:
   static IR_Container_ptr _duplicate (IR_Container_ptr obj);
   static IR_Container_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_Container_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_Container_ptr _nil (void)
@@ -3768,7 +3768,7 @@ public:
 
   virtual IR_Contained_ptr lookup (
       const char * search_name,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3778,7 +3778,7 @@ public:
   virtual IR_ContainedSeq * contents (
       IR::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3790,7 +3790,7 @@ public:
       CORBA::Long levels_to_search,
       IR::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3799,7 +3799,7 @@ public:
 
   struct Description;
   class Description_var;
-  
+
   struct TAO_Export Description
   {
 
@@ -3821,18 +3821,18 @@ public:
     Description_var (Description *);
     Description_var (const Description_var &); // copy constructor
     ~Description_var (void); // destructor
-    
+
     Description_var &operator= (Description *);
     Description_var &operator= (const Description_var &);
     Description *operator-> (void);
     const Description *operator-> (void) const;
-    
+
     operator const Description &() const;
     operator Description &();
     operator Description &() const;
     operator Description *&(); // variable-size types only
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const Description &in (void) const;
     Description &inout (void);
     Description *&out (void);
@@ -3854,7 +3854,7 @@ public:
     operator Description *&();
     Description *&ptr (void);
     Description *operator-> (void);
-    
+
   private:
     Description *&ptr_;
     // assignment from T_var not allowed
@@ -3865,14 +3865,14 @@ public:
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    
+
     class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq : public TAO_Unbounded_Base_Sequence
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq (void); // Default constructor.
-      _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq (CORBA::ULong maximum); 
+      _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq (CORBA::ULong maximum);
       _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq (CORBA::ULong maximum,
         CORBA::ULong length,
         Description *data,
@@ -3889,7 +3889,7 @@ public:
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      
+
       Description *get_buffer (CORBA::Boolean orphan = 0);
       const Description *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -3898,28 +3898,28 @@ public:
         CORBA::Boolean release);
     };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
   class DescriptionSeq_var;
-  
+
   // *************************************************************
   // DescriptionSeq
   // *************************************************************
-  
-  class TAO_Export DescriptionSeq : public 
+
+  class TAO_Export DescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<Description>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     DescriptionSeq (void); // default ctor
     DescriptionSeq (CORBA::ULong max); // uses max size
     DescriptionSeq (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      Description *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      Description *buffer,
       CORBA::Boolean release=0
     );
     DescriptionSeq (const DescriptionSeq &); // copy ctor
@@ -3943,19 +3943,19 @@ public:
   DescriptionSeq_var (DescriptionSeq *);
   DescriptionSeq_var (const DescriptionSeq_var &); // copy constructor
   ~DescriptionSeq_var (void); // destructor
-  
+
   DescriptionSeq_var &operator= (DescriptionSeq *);
   DescriptionSeq_var &operator= (const DescriptionSeq_var &);
   DescriptionSeq *operator-> (void);
   const DescriptionSeq *operator-> (void) const;
-  
+
   operator const DescriptionSeq &() const;
   operator DescriptionSeq &();
   operator DescriptionSeq &() const;
   operator DescriptionSeq *&(); // variable-size base types only
-  
+
   Description &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const DescriptionSeq &in (void) const;
   DescriptionSeq &inout (void);
   DescriptionSeq *&out (void);
@@ -3978,7 +3978,7 @@ public:
   DescriptionSeq *&ptr (void);
   DescriptionSeq *operator-> (void);
   Description &operator[] (CORBA::ULong index);
-  
+
 private:
   DescriptionSeq *&ptr_;
   // assignment from T_var not allowed
@@ -3991,7 +3991,7 @@ virtual IR_Container::DescriptionSeq * describe_contents (
     IR::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited,
     CORBA::Long max_returned_objs,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4002,7 +4002,7 @@ virtual IR_ModuleDef_ptr create_module (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4015,7 +4015,7 @@ virtual IR_ConstantDef_ptr create_constant (
     const char * version,
     IR_IDLType_ptr type,
     const CORBA::Any & value,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4027,7 +4027,7 @@ virtual IR_StructDef_ptr create_struct (
     const char * name,
     const char * version,
     const IR_StructMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4040,7 +4040,7 @@ virtual IR_UnionDef_ptr create_union (
     const char * version,
     IR_IDLType_ptr discriminator_type,
     const IR_UnionMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4052,7 +4052,7 @@ virtual IR_EnumDef_ptr create_enum (
     const char * name,
     const char * version,
     const IR_EnumMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4064,7 +4064,7 @@ virtual IR_AliasDef_ptr create_alias (
     const char * name,
     const char * version,
     IR_IDLType_ptr original_type,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4077,7 +4077,7 @@ virtual IR_InterfaceDef_ptr create_interface (
     const char * version,
     const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4095,7 +4095,7 @@ virtual IR_ValueDef_ptr create_value (
     const IR_ValueDefSeq & abstract_base_values,
     const IR_InterfaceDefSeq & supported_interfaces,
     const IR_InitializerSeq & initializers,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4107,7 +4107,7 @@ virtual IR_ValueBoxDef_ptr create_value_box (
     const char * name,
     const char * version,
     IR_IDLType_ptr original_type_def,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4119,7 +4119,7 @@ virtual IR_ExceptionDef_ptr create_exception (
     const char * name,
     const char * version,
     const IR_StructMemberSeq & members,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4130,7 +4130,7 @@ virtual IR_NativeDef_ptr create_native (
     const char * id,
     const char * name,
     const char * version,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   )
   ACE_THROW_SPEC ((
@@ -4138,16 +4138,16 @@ virtual IR_NativeDef_ptr create_native (
   ));
 
 virtual CORBA::Boolean _is_a (
-    const CORBA::Char *type_id, 
-    CORBA::Environment &env = 
+    const CORBA::Char *type_id,
+    CORBA::Environment &env =
       TAO_default_environment ()
   );
 virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_Container (void);
-  IR_Container (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_Container (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_Container (void);
@@ -4159,14 +4159,14 @@ private:
 class TAO_IR_Container_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_Container_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_Container_Default_Proxy_Factory (void);
-  
+
   virtual IR_Container_ptr create_proxy (
       IR_Container_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -4174,23 +4174,23 @@ public:
 class TAO_IR_Container_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_Container_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_Container_ptr create_proxy (
       IR_Container_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -4214,7 +4214,7 @@ protected:
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_Contained_ptr lookup (
       const char * search_name,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4224,7 +4224,7 @@ protected:
   virtual IR_ContainedSeq * contents (
       IR::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4236,7 +4236,7 @@ protected:
       CORBA::Long levels_to_search,
       IR::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4247,7 +4247,7 @@ protected:
       IR::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited,
       CORBA::Long max_returned_objs,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4258,7 +4258,7 @@ protected:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4271,7 +4271,7 @@ protected:
       const char * version,
       IR_IDLType_ptr type,
       const CORBA::Any & value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4283,7 +4283,7 @@ protected:
       const char * name,
       const char * version,
       const IR_StructMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4296,7 +4296,7 @@ protected:
       const char * version,
       IR_IDLType_ptr discriminator_type,
       const IR_UnionMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4308,7 +4308,7 @@ protected:
       const char * name,
       const char * version,
       const IR_EnumMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4320,7 +4320,7 @@ protected:
       const char * name,
       const char * version,
       IR_IDLType_ptr original_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4333,7 +4333,7 @@ protected:
       const char * version,
       const IR_InterfaceDefSeq & base_interfaces,
       CORBA::Boolean is_abstract,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4351,7 +4351,7 @@ protected:
       const IR_ValueDefSeq & abstract_base_values,
       const IR_InterfaceDefSeq & supported_interfaces,
       const IR_InitializerSeq & initializers,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4363,7 +4363,7 @@ protected:
       const char * name,
       const char * version,
       IR_IDLType_ptr original_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4375,7 +4375,7 @@ protected:
       const char * name,
       const char * version,
       const IR_StructMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4386,7 +4386,7 @@ protected:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4409,12 +4409,12 @@ public:
   static IR_IDLType_ptr _duplicate (IR_IDLType_ptr obj);
   static IR_IDLType_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_IDLType_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_IDLType_ptr _nil (void)
@@ -4425,7 +4425,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4433,16 +4433,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_IDLType (void);
-  IR_IDLType (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_IDLType (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_IDLType (void);
@@ -4454,14 +4454,14 @@ private:
 class TAO_IR_IDLType_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_IDLType_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_IDLType_Default_Proxy_Factory (void);
-  
+
   virtual IR_IDLType_ptr create_proxy (
       IR_IDLType_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -4469,23 +4469,23 @@ public:
 class TAO_IR_IDLType_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_IDLType_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_IDLType_ptr create_proxy (
       IR_IDLType_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -4508,7 +4508,7 @@ protected:
     ~TAO_IR_IDLType_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4526,14 +4526,14 @@ public:
   IR_PrimitiveDef_var (IR_PrimitiveDef_ptr);
   IR_PrimitiveDef_var (const IR_PrimitiveDef_var &); // copy constructor
   ~IR_PrimitiveDef_var (void); // destructor
-  
+
   IR_PrimitiveDef_var &operator= (IR_PrimitiveDef_ptr);
   IR_PrimitiveDef_var &operator= (const IR_PrimitiveDef_var &);
   IR_PrimitiveDef_ptr operator-> (void) const;
-  
+
   operator const IR_PrimitiveDef_ptr &() const;
   operator IR_PrimitiveDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_PrimitiveDef_ptr in (void) const;
   IR_PrimitiveDef_ptr &inout (void);
   IR_PrimitiveDef_ptr &out (void);
@@ -4556,7 +4556,7 @@ public:
   operator IR_PrimitiveDef_ptr &();
   IR_PrimitiveDef_ptr &ptr (void);
   IR_PrimitiveDef_ptr operator-> (void);
-  
+
 private:
   IR_PrimitiveDef_ptr &ptr_;
 };
@@ -4568,14 +4568,14 @@ public:
   IR_StringDef_var (IR_StringDef_ptr);
   IR_StringDef_var (const IR_StringDef_var &); // copy constructor
   ~IR_StringDef_var (void); // destructor
-  
+
   IR_StringDef_var &operator= (IR_StringDef_ptr);
   IR_StringDef_var &operator= (const IR_StringDef_var &);
   IR_StringDef_ptr operator-> (void) const;
-  
+
   operator const IR_StringDef_ptr &() const;
   operator IR_StringDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_StringDef_ptr in (void) const;
   IR_StringDef_ptr &inout (void);
   IR_StringDef_ptr &out (void);
@@ -4598,7 +4598,7 @@ public:
   operator IR_StringDef_ptr &();
   IR_StringDef_ptr &ptr (void);
   IR_StringDef_ptr operator-> (void);
-  
+
 private:
   IR_StringDef_ptr &ptr_;
 };
@@ -4610,14 +4610,14 @@ public:
   IR_SequenceDef_var (IR_SequenceDef_ptr);
   IR_SequenceDef_var (const IR_SequenceDef_var &); // copy constructor
   ~IR_SequenceDef_var (void); // destructor
-  
+
   IR_SequenceDef_var &operator= (IR_SequenceDef_ptr);
   IR_SequenceDef_var &operator= (const IR_SequenceDef_var &);
   IR_SequenceDef_ptr operator-> (void) const;
-  
+
   operator const IR_SequenceDef_ptr &() const;
   operator IR_SequenceDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_SequenceDef_ptr in (void) const;
   IR_SequenceDef_ptr &inout (void);
   IR_SequenceDef_ptr &out (void);
@@ -4640,7 +4640,7 @@ public:
   operator IR_SequenceDef_ptr &();
   IR_SequenceDef_ptr &ptr (void);
   IR_SequenceDef_ptr operator-> (void);
-  
+
 private:
   IR_SequenceDef_ptr &ptr_;
 };
@@ -4652,14 +4652,14 @@ public:
   IR_ArrayDef_var (IR_ArrayDef_ptr);
   IR_ArrayDef_var (const IR_ArrayDef_var &); // copy constructor
   ~IR_ArrayDef_var (void); // destructor
-  
+
   IR_ArrayDef_var &operator= (IR_ArrayDef_ptr);
   IR_ArrayDef_var &operator= (const IR_ArrayDef_var &);
   IR_ArrayDef_ptr operator-> (void) const;
-  
+
   operator const IR_ArrayDef_ptr &() const;
   operator IR_ArrayDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ArrayDef_ptr in (void) const;
   IR_ArrayDef_ptr &inout (void);
   IR_ArrayDef_ptr &out (void);
@@ -4682,7 +4682,7 @@ public:
   operator IR_ArrayDef_ptr &();
   IR_ArrayDef_ptr &ptr (void);
   IR_ArrayDef_ptr operator-> (void);
-  
+
 private:
   IR_ArrayDef_ptr &ptr_;
 };
@@ -4694,14 +4694,14 @@ public:
   IR_WstringDef_var (IR_WstringDef_ptr);
   IR_WstringDef_var (const IR_WstringDef_var &); // copy constructor
   ~IR_WstringDef_var (void); // destructor
-  
+
   IR_WstringDef_var &operator= (IR_WstringDef_ptr);
   IR_WstringDef_var &operator= (const IR_WstringDef_var &);
   IR_WstringDef_ptr operator-> (void) const;
-  
+
   operator const IR_WstringDef_ptr &() const;
   operator IR_WstringDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_WstringDef_ptr in (void) const;
   IR_WstringDef_ptr &inout (void);
   IR_WstringDef_ptr &out (void);
@@ -4724,7 +4724,7 @@ public:
   operator IR_WstringDef_ptr &();
   IR_WstringDef_ptr &ptr (void);
   IR_WstringDef_ptr operator-> (void);
-  
+
 private:
   IR_WstringDef_ptr &ptr_;
 };
@@ -4736,14 +4736,14 @@ public:
   IR_FixedDef_var (IR_FixedDef_ptr);
   IR_FixedDef_var (const IR_FixedDef_var &); // copy constructor
   ~IR_FixedDef_var (void); // destructor
-  
+
   IR_FixedDef_var &operator= (IR_FixedDef_ptr);
   IR_FixedDef_var &operator= (const IR_FixedDef_var &);
   IR_FixedDef_ptr operator-> (void) const;
-  
+
   operator const IR_FixedDef_ptr &() const;
   operator IR_FixedDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_FixedDef_ptr in (void) const;
   IR_FixedDef_ptr &inout (void);
   IR_FixedDef_ptr &out (void);
@@ -4766,7 +4766,7 @@ public:
   operator IR_FixedDef_ptr &();
   IR_FixedDef_ptr &ptr (void);
   IR_FixedDef_ptr operator-> (void);
-  
+
 private:
   IR_FixedDef_ptr &ptr_;
 };
@@ -4783,12 +4783,12 @@ public:
   static IR_Repository_ptr _duplicate (IR_Repository_ptr obj);
   static IR_Repository_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_Repository_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_Repository_ptr _nil (void)
@@ -4800,7 +4800,7 @@ public:
 
   virtual IR_Contained_ptr lookup_id (
       const char * search_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4809,7 +4809,7 @@ public:
 
   virtual CORBA::TypeCode_ptr get_canonical_typecode (
       CORBA::TypeCode_ptr tc,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4818,7 +4818,7 @@ public:
 
   virtual IR_PrimitiveDef_ptr get_primitive (
       IR::PrimitiveKind kind,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4827,7 +4827,7 @@ public:
 
   virtual IR_StringDef_ptr create_string (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4836,7 +4836,7 @@ public:
 
   virtual IR_WstringDef_ptr create_wstring (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4846,7 +4846,7 @@ public:
   virtual IR_SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
       IR_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4856,7 +4856,7 @@ public:
   virtual IR_ArrayDef_ptr create_array (
       CORBA::ULong length,
       IR_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4866,7 +4866,7 @@ public:
   virtual IR_FixedDef_ptr create_fixed (
       CORBA::UShort digits,
       CORBA::Short scale,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4874,16 +4874,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_Repository (void);
-  IR_Repository (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_Repository (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_Repository (void);
@@ -4895,14 +4895,14 @@ private:
 class TAO_IR_Repository_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_Repository_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_Repository_Default_Proxy_Factory (void);
-  
+
   virtual IR_Repository_ptr create_proxy (
       IR_Repository_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -4910,23 +4910,23 @@ public:
 class TAO_IR_Repository_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_Repository_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_Repository_ptr create_proxy (
       IR_Repository_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -4950,7 +4950,7 @@ protected:
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_Contained_ptr lookup_id (
       const char * search_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4959,7 +4959,7 @@ protected:
 
   virtual CORBA::TypeCode_ptr get_canonical_typecode (
       CORBA::TypeCode_ptr tc,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4968,7 +4968,7 @@ protected:
 
   virtual IR_PrimitiveDef_ptr get_primitive (
       IR::PrimitiveKind kind,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4977,7 +4977,7 @@ protected:
 
   virtual IR_StringDef_ptr create_string (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4986,7 +4986,7 @@ protected:
 
   virtual IR_WstringDef_ptr create_wstring (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -4996,7 +4996,7 @@ protected:
   virtual IR_SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
       IR_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5006,7 +5006,7 @@ protected:
   virtual IR_ArrayDef_ptr create_array (
       CORBA::ULong length,
       IR_IDLType_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5016,7 +5016,7 @@ protected:
   virtual IR_FixedDef_ptr create_fixed (
       CORBA::UShort digits,
       CORBA::Short scale,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5034,14 +5034,14 @@ public:
   IR_ComponentRepository_var (IR_ComponentRepository_ptr);
   IR_ComponentRepository_var (const IR_ComponentRepository_var &); // copy constructor
   ~IR_ComponentRepository_var (void); // destructor
-  
+
   IR_ComponentRepository_var &operator= (IR_ComponentRepository_ptr);
   IR_ComponentRepository_var &operator= (const IR_ComponentRepository_var &);
   IR_ComponentRepository_ptr operator-> (void) const;
-  
+
   operator const IR_ComponentRepository_ptr &() const;
   operator IR_ComponentRepository_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_ComponentRepository_ptr in (void) const;
   IR_ComponentRepository_ptr &inout (void);
   IR_ComponentRepository_ptr &out (void);
@@ -5064,7 +5064,7 @@ public:
   operator IR_ComponentRepository_ptr &();
   IR_ComponentRepository_ptr &ptr (void);
   IR_ComponentRepository_ptr operator-> (void);
-  
+
 private:
   IR_ComponentRepository_ptr &ptr_;
 };
@@ -5081,12 +5081,12 @@ public:
   static IR_ComponentRepository_ptr _duplicate (IR_ComponentRepository_ptr obj);
   static IR_ComponentRepository_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ComponentRepository_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ComponentRepository_ptr _nil (void)
@@ -5102,7 +5102,7 @@ public:
       const char * version,
       IR_ComponentDef_ptr base_component,
       const IR_InterfaceDefSeq & supports_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5116,7 +5116,7 @@ public:
       IR_HomeDef_ptr base_home,
       IR_ComponentDef_ptr managed_component,
       IR_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5124,16 +5124,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ComponentRepository (void);
-  IR_ComponentRepository (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ComponentRepository (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ComponentRepository (void);
@@ -5145,14 +5145,14 @@ private:
 class TAO_IR_ComponentRepository_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ComponentRepository_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ComponentRepository_Default_Proxy_Factory (void);
-  
+
   virtual IR_ComponentRepository_ptr create_proxy (
       IR_ComponentRepository_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -5160,23 +5160,23 @@ public:
 class TAO_IR_ComponentRepository_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ComponentRepository_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ComponentRepository_ptr create_proxy (
       IR_ComponentRepository_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -5204,7 +5204,7 @@ protected:
       const char * version,
       IR_ComponentDef_ptr base_component,
       const IR_InterfaceDefSeq & supports_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5218,7 +5218,7 @@ protected:
       IR_HomeDef_ptr base_home,
       IR_ComponentDef_ptr managed_component,
       IR_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5241,12 +5241,12 @@ public:
   static IR_ModuleDef_ptr _duplicate (IR_ModuleDef_ptr obj);
   static IR_ModuleDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ModuleDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ModuleDef_ptr _nil (void)
@@ -5257,16 +5257,16 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ModuleDef (void);
-  IR_ModuleDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ModuleDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ModuleDef (void);
@@ -5278,14 +5278,14 @@ private:
 class TAO_IR_ModuleDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ModuleDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ModuleDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ModuleDef_ptr create_proxy (
       IR_ModuleDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -5293,23 +5293,23 @@ public:
 class TAO_IR_ModuleDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ModuleDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ModuleDef_ptr create_proxy (
       IR_ModuleDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -5357,18 +5357,18 @@ public:
   IR_ModuleDescription_var (IR_ModuleDescription *);
   IR_ModuleDescription_var (const IR_ModuleDescription_var &); // copy constructor
   ~IR_ModuleDescription_var (void); // destructor
-  
+
   IR_ModuleDescription_var &operator= (IR_ModuleDescription *);
   IR_ModuleDescription_var &operator= (const IR_ModuleDescription_var &);
   IR_ModuleDescription *operator-> (void);
   const IR_ModuleDescription *operator-> (void) const;
-  
+
   operator const IR_ModuleDescription &() const;
   operator IR_ModuleDescription &();
   operator IR_ModuleDescription &() const;
   operator IR_ModuleDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_ModuleDescription &in (void) const;
   IR_ModuleDescription &inout (void);
   IR_ModuleDescription *&out (void);
@@ -5390,7 +5390,7 @@ public:
   operator IR_ModuleDescription *&();
   IR_ModuleDescription *&ptr (void);
   IR_ModuleDescription *operator-> (void);
-  
+
 private:
   IR_ModuleDescription *&ptr_;
   // assignment from T_var not allowed
@@ -5409,12 +5409,12 @@ public:
   static IR_ConstantDef_ptr _duplicate (IR_ConstantDef_ptr obj);
   static IR_ConstantDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ConstantDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ConstantDef_ptr _nil (void)
@@ -5425,7 +5425,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5433,7 +5433,7 @@ public:
     ));
 
   virtual IR_IDLType_ptr type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5442,7 +5442,7 @@ public:
 
   virtual void type_def (
       IR_IDLType_ptr type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5450,7 +5450,7 @@ public:
     ));
 
   virtual CORBA::Any * value (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5459,7 +5459,7 @@ public:
 
   virtual void value (
       const CORBA::Any & value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5467,16 +5467,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ConstantDef (void);
-  IR_ConstantDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ConstantDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ConstantDef (void);
@@ -5488,14 +5488,14 @@ private:
 class TAO_IR_ConstantDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ConstantDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ConstantDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ConstantDef_ptr create_proxy (
       IR_ConstantDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -5503,23 +5503,23 @@ public:
 class TAO_IR_ConstantDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ConstantDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ConstantDef_ptr create_proxy (
       IR_ConstantDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -5542,7 +5542,7 @@ protected:
     ~TAO_IR_ConstantDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5550,7 +5550,7 @@ protected:
     ));
 
   virtual IR_IDLType_ptr type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5559,7 +5559,7 @@ protected:
 
   virtual void type_def (
       IR_IDLType_ptr type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5567,7 +5567,7 @@ protected:
     ));
 
   virtual CORBA::Any * value (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5576,7 +5576,7 @@ protected:
 
   virtual void value (
       const CORBA::Any & value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5611,18 +5611,18 @@ public:
   IR_ConstantDescription_var (IR_ConstantDescription *);
   IR_ConstantDescription_var (const IR_ConstantDescription_var &); // copy constructor
   ~IR_ConstantDescription_var (void); // destructor
-  
+
   IR_ConstantDescription_var &operator= (IR_ConstantDescription *);
   IR_ConstantDescription_var &operator= (const IR_ConstantDescription_var &);
   IR_ConstantDescription *operator-> (void);
   const IR_ConstantDescription *operator-> (void) const;
-  
+
   operator const IR_ConstantDescription &() const;
   operator IR_ConstantDescription &();
   operator IR_ConstantDescription &() const;
   operator IR_ConstantDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_ConstantDescription &in (void) const;
   IR_ConstantDescription &inout (void);
   IR_ConstantDescription *&out (void);
@@ -5644,7 +5644,7 @@ public:
   operator IR_ConstantDescription *&();
   IR_ConstantDescription *&ptr (void);
   IR_ConstantDescription *operator-> (void);
-  
+
 private:
   IR_ConstantDescription *&ptr_;
   // assignment from T_var not allowed
@@ -5658,14 +5658,14 @@ public:
   IR_TypedefDef_var (IR_TypedefDef_ptr);
   IR_TypedefDef_var (const IR_TypedefDef_var &); // copy constructor
   ~IR_TypedefDef_var (void); // destructor
-  
+
   IR_TypedefDef_var &operator= (IR_TypedefDef_ptr);
   IR_TypedefDef_var &operator= (const IR_TypedefDef_var &);
   IR_TypedefDef_ptr operator-> (void) const;
-  
+
   operator const IR_TypedefDef_ptr &() const;
   operator IR_TypedefDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_TypedefDef_ptr in (void) const;
   IR_TypedefDef_ptr &inout (void);
   IR_TypedefDef_ptr &out (void);
@@ -5688,7 +5688,7 @@ public:
   operator IR_TypedefDef_ptr &();
   IR_TypedefDef_ptr &ptr (void);
   IR_TypedefDef_ptr operator-> (void);
-  
+
 private:
   IR_TypedefDef_ptr &ptr_;
 };
@@ -5705,12 +5705,12 @@ public:
   static IR_TypedefDef_ptr _duplicate (IR_TypedefDef_ptr obj);
   static IR_TypedefDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_TypedefDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_TypedefDef_ptr _nil (void)
@@ -5721,16 +5721,16 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_TypedefDef (void);
-  IR_TypedefDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_TypedefDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_TypedefDef (void);
@@ -5742,14 +5742,14 @@ private:
 class TAO_IR_TypedefDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_TypedefDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_TypedefDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_TypedefDef_ptr create_proxy (
       IR_TypedefDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -5757,23 +5757,23 @@ public:
 class TAO_IR_TypedefDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_TypedefDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_TypedefDef_ptr create_proxy (
       IR_TypedefDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -5822,18 +5822,18 @@ public:
   IR_TypeDescription_var (IR_TypeDescription *);
   IR_TypeDescription_var (const IR_TypeDescription_var &); // copy constructor
   ~IR_TypeDescription_var (void); // destructor
-  
+
   IR_TypeDescription_var &operator= (IR_TypeDescription *);
   IR_TypeDescription_var &operator= (const IR_TypeDescription_var &);
   IR_TypeDescription *operator-> (void);
   const IR_TypeDescription *operator-> (void) const;
-  
+
   operator const IR_TypeDescription &() const;
   operator IR_TypeDescription &();
   operator IR_TypeDescription &() const;
   operator IR_TypeDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_TypeDescription &in (void) const;
   IR_TypeDescription &inout (void);
   IR_TypeDescription *&out (void);
@@ -5855,7 +5855,7 @@ public:
   operator IR_TypeDescription *&();
   IR_TypeDescription *&ptr (void);
   IR_TypeDescription *operator-> (void);
-  
+
 private:
   IR_TypeDescription *&ptr_;
   // assignment from T_var not allowed
@@ -5874,12 +5874,12 @@ public:
   static IR_StructDef_ptr _duplicate (IR_StructDef_ptr obj);
   static IR_StructDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_StructDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_StructDef_ptr _nil (void)
@@ -5890,7 +5890,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_StructMemberSeq * members (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5899,7 +5899,7 @@ public:
 
   virtual void members (
       const IR_StructMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5907,16 +5907,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_StructDef (void);
-  IR_StructDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_StructDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_StructDef (void);
@@ -5928,14 +5928,14 @@ private:
 class TAO_IR_StructDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_StructDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_StructDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_StructDef_ptr create_proxy (
       IR_StructDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -5943,23 +5943,23 @@ public:
 class TAO_IR_StructDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_StructDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_StructDef_ptr create_proxy (
       IR_StructDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -5982,7 +5982,7 @@ protected:
     ~TAO_IR_StructDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_StructMemberSeq * members (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -5991,7 +5991,7 @@ protected:
 
   virtual void members (
       const IR_StructMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6014,12 +6014,12 @@ public:
   static IR_UnionDef_ptr _duplicate (IR_UnionDef_ptr obj);
   static IR_UnionDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_UnionDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_UnionDef_ptr _nil (void)
@@ -6030,7 +6030,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::TypeCode_ptr discriminator_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6038,7 +6038,7 @@ public:
     ));
 
   virtual IR_IDLType_ptr discriminator_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6047,7 +6047,7 @@ public:
 
   virtual void discriminator_type_def (
       IR_IDLType_ptr discriminator_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6055,7 +6055,7 @@ public:
     ));
 
   virtual IR_UnionMemberSeq * members (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6064,7 +6064,7 @@ public:
 
   virtual void members (
       const IR_UnionMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6072,16 +6072,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_UnionDef (void);
-  IR_UnionDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_UnionDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_UnionDef (void);
@@ -6093,14 +6093,14 @@ private:
 class TAO_IR_UnionDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_UnionDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_UnionDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_UnionDef_ptr create_proxy (
       IR_UnionDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -6108,23 +6108,23 @@ public:
 class TAO_IR_UnionDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_UnionDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_UnionDef_ptr create_proxy (
       IR_UnionDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -6147,7 +6147,7 @@ protected:
     ~TAO_IR_UnionDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::TypeCode_ptr discriminator_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6155,7 +6155,7 @@ protected:
     ));
 
   virtual IR_IDLType_ptr discriminator_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6164,7 +6164,7 @@ protected:
 
   virtual void discriminator_type_def (
       IR_IDLType_ptr discriminator_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6172,7 +6172,7 @@ protected:
     ));
 
   virtual IR_UnionMemberSeq * members (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6181,7 +6181,7 @@ protected:
 
   virtual void members (
       const IR_UnionMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6204,12 +6204,12 @@ public:
   static IR_EnumDef_ptr _duplicate (IR_EnumDef_ptr obj);
   static IR_EnumDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_EnumDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_EnumDef_ptr _nil (void)
@@ -6220,7 +6220,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_EnumMemberSeq * members (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6229,7 +6229,7 @@ public:
 
   virtual void members (
       const IR_EnumMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6237,16 +6237,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_EnumDef (void);
-  IR_EnumDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_EnumDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_EnumDef (void);
@@ -6258,14 +6258,14 @@ private:
 class TAO_IR_EnumDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_EnumDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_EnumDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_EnumDef_ptr create_proxy (
       IR_EnumDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -6273,23 +6273,23 @@ public:
 class TAO_IR_EnumDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_EnumDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_EnumDef_ptr create_proxy (
       IR_EnumDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -6312,7 +6312,7 @@ protected:
     ~TAO_IR_EnumDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_EnumMemberSeq * members (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6321,7 +6321,7 @@ protected:
 
   virtual void members (
       const IR_EnumMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6344,12 +6344,12 @@ public:
   static IR_AliasDef_ptr _duplicate (IR_AliasDef_ptr obj);
   static IR_AliasDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_AliasDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_AliasDef_ptr _nil (void)
@@ -6360,7 +6360,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_IDLType_ptr original_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6369,7 +6369,7 @@ public:
 
   virtual void original_type_def (
       IR_IDLType_ptr original_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6377,16 +6377,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_AliasDef (void);
-  IR_AliasDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_AliasDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_AliasDef (void);
@@ -6398,14 +6398,14 @@ private:
 class TAO_IR_AliasDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_AliasDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_AliasDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_AliasDef_ptr create_proxy (
       IR_AliasDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -6413,23 +6413,23 @@ public:
 class TAO_IR_AliasDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_AliasDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_AliasDef_ptr create_proxy (
       IR_AliasDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -6452,7 +6452,7 @@ protected:
     ~TAO_IR_AliasDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_IDLType_ptr original_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6461,7 +6461,7 @@ protected:
 
   virtual void original_type_def (
       IR_IDLType_ptr original_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6484,12 +6484,12 @@ public:
   static IR_NativeDef_ptr _duplicate (IR_NativeDef_ptr obj);
   static IR_NativeDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_NativeDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_NativeDef_ptr _nil (void)
@@ -6500,16 +6500,16 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_NativeDef (void);
-  IR_NativeDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_NativeDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_NativeDef (void);
@@ -6521,14 +6521,14 @@ private:
 class TAO_IR_NativeDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_NativeDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_NativeDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_NativeDef_ptr create_proxy (
       IR_NativeDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -6536,23 +6536,23 @@ public:
 class TAO_IR_NativeDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_NativeDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_NativeDef_ptr create_proxy (
       IR_NativeDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -6590,12 +6590,12 @@ public:
   static IR_PrimitiveDef_ptr _duplicate (IR_PrimitiveDef_ptr obj);
   static IR_PrimitiveDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_PrimitiveDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_PrimitiveDef_ptr _nil (void)
@@ -6606,7 +6606,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR::PrimitiveKind kind (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6614,16 +6614,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_PrimitiveDef (void);
-  IR_PrimitiveDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_PrimitiveDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_PrimitiveDef (void);
@@ -6635,14 +6635,14 @@ private:
 class TAO_IR_PrimitiveDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_PrimitiveDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_PrimitiveDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_PrimitiveDef_ptr create_proxy (
       IR_PrimitiveDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -6650,23 +6650,23 @@ public:
 class TAO_IR_PrimitiveDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_PrimitiveDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_PrimitiveDef_ptr create_proxy (
       IR_PrimitiveDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -6689,7 +6689,7 @@ protected:
     ~TAO_IR_PrimitiveDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR::PrimitiveKind kind (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6712,12 +6712,12 @@ public:
   static IR_StringDef_ptr _duplicate (IR_StringDef_ptr obj);
   static IR_StringDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_StringDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_StringDef_ptr _nil (void)
@@ -6728,7 +6728,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::ULong bound (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6737,7 +6737,7 @@ public:
 
   virtual void bound (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6745,16 +6745,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_StringDef (void);
-  IR_StringDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_StringDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_StringDef (void);
@@ -6766,14 +6766,14 @@ private:
 class TAO_IR_StringDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_StringDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_StringDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_StringDef_ptr create_proxy (
       IR_StringDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -6781,23 +6781,23 @@ public:
 class TAO_IR_StringDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_StringDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_StringDef_ptr create_proxy (
       IR_StringDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -6820,7 +6820,7 @@ protected:
     ~TAO_IR_StringDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::ULong bound (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6829,7 +6829,7 @@ protected:
 
   virtual void bound (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6852,12 +6852,12 @@ public:
   static IR_WstringDef_ptr _duplicate (IR_WstringDef_ptr obj);
   static IR_WstringDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_WstringDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_WstringDef_ptr _nil (void)
@@ -6868,7 +6868,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::ULong bound (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6877,7 +6877,7 @@ public:
 
   virtual void bound (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6885,16 +6885,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_WstringDef (void);
-  IR_WstringDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_WstringDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_WstringDef (void);
@@ -6906,14 +6906,14 @@ private:
 class TAO_IR_WstringDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_WstringDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_WstringDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_WstringDef_ptr create_proxy (
       IR_WstringDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -6921,23 +6921,23 @@ public:
 class TAO_IR_WstringDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_WstringDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_WstringDef_ptr create_proxy (
       IR_WstringDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -6960,7 +6960,7 @@ protected:
     ~TAO_IR_WstringDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::ULong bound (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6969,7 +6969,7 @@ protected:
 
   virtual void bound (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -6992,12 +6992,12 @@ public:
   static IR_FixedDef_ptr _duplicate (IR_FixedDef_ptr obj);
   static IR_FixedDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_FixedDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_FixedDef_ptr _nil (void)
@@ -7008,7 +7008,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::UShort digits (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7017,7 +7017,7 @@ public:
 
   virtual void digits (
       CORBA::UShort digits,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7025,7 +7025,7 @@ public:
     ));
 
   virtual CORBA::Short scale (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7034,7 +7034,7 @@ public:
 
   virtual void scale (
       CORBA::Short scale,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7042,16 +7042,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_FixedDef (void);
-  IR_FixedDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_FixedDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_FixedDef (void);
@@ -7063,14 +7063,14 @@ private:
 class TAO_IR_FixedDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_FixedDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_FixedDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_FixedDef_ptr create_proxy (
       IR_FixedDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -7078,23 +7078,23 @@ public:
 class TAO_IR_FixedDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_FixedDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_FixedDef_ptr create_proxy (
       IR_FixedDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -7117,7 +7117,7 @@ protected:
     ~TAO_IR_FixedDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::UShort digits (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7126,7 +7126,7 @@ protected:
 
   virtual void digits (
       CORBA::UShort digits,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7134,7 +7134,7 @@ protected:
     ));
 
   virtual CORBA::Short scale (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7143,7 +7143,7 @@ protected:
 
   virtual void scale (
       CORBA::Short scale,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7166,12 +7166,12 @@ public:
   static IR_SequenceDef_ptr _duplicate (IR_SequenceDef_ptr obj);
   static IR_SequenceDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_SequenceDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_SequenceDef_ptr _nil (void)
@@ -7182,7 +7182,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::ULong bound (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7191,7 +7191,7 @@ public:
 
   virtual void bound (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7199,7 +7199,7 @@ public:
     ));
 
   virtual CORBA::TypeCode_ptr element_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7207,7 +7207,7 @@ public:
     ));
 
   virtual IR_IDLType_ptr element_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7216,7 +7216,7 @@ public:
 
   virtual void element_type_def (
       IR_IDLType_ptr element_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7224,16 +7224,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_SequenceDef (void);
-  IR_SequenceDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_SequenceDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_SequenceDef (void);
@@ -7245,14 +7245,14 @@ private:
 class TAO_IR_SequenceDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_SequenceDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_SequenceDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_SequenceDef_ptr create_proxy (
       IR_SequenceDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -7260,23 +7260,23 @@ public:
 class TAO_IR_SequenceDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_SequenceDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_SequenceDef_ptr create_proxy (
       IR_SequenceDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -7299,7 +7299,7 @@ protected:
     ~TAO_IR_SequenceDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::ULong bound (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7308,7 +7308,7 @@ protected:
 
   virtual void bound (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7316,7 +7316,7 @@ protected:
     ));
 
   virtual CORBA::TypeCode_ptr element_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7324,7 +7324,7 @@ protected:
     ));
 
   virtual IR_IDLType_ptr element_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7333,7 +7333,7 @@ protected:
 
   virtual void element_type_def (
       IR_IDLType_ptr element_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7356,12 +7356,12 @@ public:
   static IR_ArrayDef_ptr _duplicate (IR_ArrayDef_ptr obj);
   static IR_ArrayDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ArrayDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ArrayDef_ptr _nil (void)
@@ -7372,7 +7372,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::ULong length (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7381,7 +7381,7 @@ public:
 
   virtual void length (
       CORBA::ULong length,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7389,7 +7389,7 @@ public:
     ));
 
   virtual CORBA::TypeCode_ptr element_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7397,7 +7397,7 @@ public:
     ));
 
   virtual IR_IDLType_ptr element_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7406,7 +7406,7 @@ public:
 
   virtual void element_type_def (
       IR_IDLType_ptr element_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7414,16 +7414,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ArrayDef (void);
-  IR_ArrayDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ArrayDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ArrayDef (void);
@@ -7435,14 +7435,14 @@ private:
 class TAO_IR_ArrayDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ArrayDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ArrayDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ArrayDef_ptr create_proxy (
       IR_ArrayDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -7450,23 +7450,23 @@ public:
 class TAO_IR_ArrayDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ArrayDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ArrayDef_ptr create_proxy (
       IR_ArrayDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -7489,7 +7489,7 @@ protected:
     ~TAO_IR_ArrayDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::ULong length (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7498,7 +7498,7 @@ protected:
 
   virtual void length (
       CORBA::ULong length,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7506,7 +7506,7 @@ protected:
     ));
 
   virtual CORBA::TypeCode_ptr element_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7514,7 +7514,7 @@ protected:
     ));
 
   virtual IR_IDLType_ptr element_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7523,7 +7523,7 @@ protected:
 
   virtual void element_type_def (
       IR_IDLType_ptr element_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7546,12 +7546,12 @@ public:
   static IR_ExceptionDef_ptr _duplicate (IR_ExceptionDef_ptr obj);
   static IR_ExceptionDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ExceptionDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ExceptionDef_ptr _nil (void)
@@ -7562,7 +7562,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7570,7 +7570,7 @@ public:
     ));
 
   virtual IR_StructMemberSeq * members (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7579,7 +7579,7 @@ public:
 
   virtual void members (
       const IR_StructMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7587,16 +7587,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ExceptionDef (void);
-  IR_ExceptionDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ExceptionDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ExceptionDef (void);
@@ -7608,14 +7608,14 @@ private:
 class TAO_IR_ExceptionDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ExceptionDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ExceptionDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ExceptionDef_ptr create_proxy (
       IR_ExceptionDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -7623,23 +7623,23 @@ public:
 class TAO_IR_ExceptionDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ExceptionDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ExceptionDef_ptr create_proxy (
       IR_ExceptionDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -7662,7 +7662,7 @@ protected:
     ~TAO_IR_ExceptionDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7670,7 +7670,7 @@ protected:
     ));
 
   virtual IR_StructMemberSeq * members (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7679,7 +7679,7 @@ protected:
 
   virtual void members (
       const IR_StructMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -7713,18 +7713,18 @@ public:
   IR_ExceptionDescription_var (IR_ExceptionDescription *);
   IR_ExceptionDescription_var (const IR_ExceptionDescription_var &); // copy constructor
   ~IR_ExceptionDescription_var (void); // destructor
-  
+
   IR_ExceptionDescription_var &operator= (IR_ExceptionDescription *);
   IR_ExceptionDescription_var &operator= (const IR_ExceptionDescription_var &);
   IR_ExceptionDescription *operator-> (void);
   const IR_ExceptionDescription *operator-> (void) const;
-  
+
   operator const IR_ExceptionDescription &() const;
   operator IR_ExceptionDescription &();
   operator IR_ExceptionDescription &() const;
   operator IR_ExceptionDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_ExceptionDescription &in (void) const;
   IR_ExceptionDescription &inout (void);
   IR_ExceptionDescription *&out (void);
@@ -7746,7 +7746,7 @@ public:
   operator IR_ExceptionDescription *&();
   IR_ExceptionDescription *&ptr (void);
   IR_ExceptionDescription *operator-> (void);
-  
+
 private:
   IR_ExceptionDescription *&ptr_;
   // assignment from T_var not allowed
@@ -7754,12 +7754,12 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (void);
     _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum,
@@ -7781,33 +7781,33 @@ private:
     virtual void _downcast (
         void* target,
         CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
+        CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual CORBA_Object* _upcast (void *src) const;
-    
+
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ExceptionDefSeq
 // *************************************************************
 
-class TAO_Export IR_ExceptionDefSeq : public 
+class TAO_Export IR_ExceptionDefSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Object_Sequence<IR_ExceptionDef,IR_ExceptionDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ExceptionDefSeq (void); // default ctor
   IR_ExceptionDefSeq (CORBA::ULong max); // uses max size
   IR_ExceptionDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_ExceptionDef_ptr *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_ExceptionDef_ptr *buffer,
     CORBA::Boolean release=0
   );
   IR_ExceptionDefSeq (const IR_ExceptionDefSeq &); // copy ctor
@@ -7831,19 +7831,19 @@ public:
   IR_ExceptionDefSeq_var (IR_ExceptionDefSeq *);
   IR_ExceptionDefSeq_var (const IR_ExceptionDefSeq_var &); // copy constructor
   ~IR_ExceptionDefSeq_var (void); // destructor
-  
+
   IR_ExceptionDefSeq_var &operator= (IR_ExceptionDefSeq *);
   IR_ExceptionDefSeq_var &operator= (const IR_ExceptionDefSeq_var &);
   IR_ExceptionDefSeq *operator-> (void);
   const IR_ExceptionDefSeq *operator-> (void) const;
-  
+
   operator const IR_ExceptionDefSeq &() const;
   operator IR_ExceptionDefSeq &();
   operator IR_ExceptionDefSeq &() const;
   operator IR_ExceptionDefSeq *&(); // variable-size base types only
-  
+
   TAO_Object_Manager<IR_ExceptionDef, IR_ExceptionDef_var> operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ExceptionDefSeq &in (void) const;
   IR_ExceptionDefSeq &inout (void);
   IR_ExceptionDefSeq *&out (void);
@@ -7866,7 +7866,7 @@ public:
   IR_ExceptionDefSeq *&ptr (void);
   IR_ExceptionDefSeq *operator-> (void);
   TAO_Object_Manager<IR_ExceptionDef, IR_ExceptionDef_var> operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ExceptionDefSeq *&ptr_;
   // assignment from T_var not allowed
@@ -7874,14 +7874,14 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_ExceptionDescription *data,
@@ -7898,7 +7898,7 @@ private:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_ExceptionDescription *get_buffer (CORBA::Boolean orphan = 0);
     const IR_ExceptionDescription *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -7907,26 +7907,26 @@ private:
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ExcDescriptionSeq
 // *************************************************************
 
-class TAO_Export IR_ExcDescriptionSeq : public 
+class TAO_Export IR_ExcDescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_ExceptionDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ExcDescriptionSeq (void); // default ctor
   IR_ExcDescriptionSeq (CORBA::ULong max); // uses max size
   IR_ExcDescriptionSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_ExceptionDescription *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_ExceptionDescription *buffer,
     CORBA::Boolean release=0
   );
   IR_ExcDescriptionSeq (const IR_ExcDescriptionSeq &); // copy ctor
@@ -7950,19 +7950,19 @@ public:
   IR_ExcDescriptionSeq_var (IR_ExcDescriptionSeq *);
   IR_ExcDescriptionSeq_var (const IR_ExcDescriptionSeq_var &); // copy constructor
   ~IR_ExcDescriptionSeq_var (void); // destructor
-  
+
   IR_ExcDescriptionSeq_var &operator= (IR_ExcDescriptionSeq *);
   IR_ExcDescriptionSeq_var &operator= (const IR_ExcDescriptionSeq_var &);
   IR_ExcDescriptionSeq *operator-> (void);
   const IR_ExcDescriptionSeq *operator-> (void) const;
-  
+
   operator const IR_ExcDescriptionSeq &() const;
   operator IR_ExcDescriptionSeq &();
   operator IR_ExcDescriptionSeq &() const;
   operator IR_ExcDescriptionSeq *&(); // variable-size base types only
-  
+
   IR_ExceptionDescription &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ExcDescriptionSeq &in (void) const;
   IR_ExcDescriptionSeq &inout (void);
   IR_ExcDescriptionSeq *&out (void);
@@ -7985,7 +7985,7 @@ public:
   IR_ExcDescriptionSeq *&ptr (void);
   IR_ExcDescriptionSeq *operator-> (void);
   IR_ExceptionDescription &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ExcDescriptionSeq *&ptr_;
   // assignment from T_var not allowed
@@ -7999,14 +7999,14 @@ public:
   IR_AttributeDef_var (IR_AttributeDef_ptr);
   IR_AttributeDef_var (const IR_AttributeDef_var &); // copy constructor
   ~IR_AttributeDef_var (void); // destructor
-  
+
   IR_AttributeDef_var &operator= (IR_AttributeDef_ptr);
   IR_AttributeDef_var &operator= (const IR_AttributeDef_var &);
   IR_AttributeDef_ptr operator-> (void) const;
-  
+
   operator const IR_AttributeDef_ptr &() const;
   operator IR_AttributeDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_AttributeDef_ptr in (void) const;
   IR_AttributeDef_ptr &inout (void);
   IR_AttributeDef_ptr &out (void);
@@ -8029,7 +8029,7 @@ public:
   operator IR_AttributeDef_ptr &();
   IR_AttributeDef_ptr &ptr (void);
   IR_AttributeDef_ptr operator-> (void);
-  
+
 private:
   IR_AttributeDef_ptr &ptr_;
 };
@@ -8046,12 +8046,12 @@ public:
   static IR_AttributeDef_ptr _duplicate (IR_AttributeDef_ptr obj);
   static IR_AttributeDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_AttributeDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_AttributeDef_ptr _nil (void)
@@ -8062,7 +8062,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8070,7 +8070,7 @@ public:
     ));
 
   virtual IR_IDLType_ptr type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8079,7 +8079,7 @@ public:
 
   virtual void type_def (
       IR_IDLType_ptr type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8087,7 +8087,7 @@ public:
     ));
 
   virtual IR::AttributeMode mode (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8096,7 +8096,7 @@ public:
 
   virtual void mode (
       IR::AttributeMode mode,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8104,16 +8104,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_AttributeDef (void);
-  IR_AttributeDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_AttributeDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_AttributeDef (void);
@@ -8125,14 +8125,14 @@ private:
 class TAO_IR_AttributeDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_AttributeDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_AttributeDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_AttributeDef_ptr create_proxy (
       IR_AttributeDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -8140,23 +8140,23 @@ public:
 class TAO_IR_AttributeDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_AttributeDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_AttributeDef_ptr create_proxy (
       IR_AttributeDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -8179,7 +8179,7 @@ protected:
     ~TAO_IR_AttributeDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8187,7 +8187,7 @@ protected:
     ));
 
   virtual IR_IDLType_ptr type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8196,7 +8196,7 @@ protected:
 
   virtual void type_def (
       IR_IDLType_ptr type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8204,7 +8204,7 @@ protected:
     ));
 
   virtual IR::AttributeMode mode (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8213,7 +8213,7 @@ protected:
 
   virtual void mode (
       IR::AttributeMode mode,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8250,18 +8250,18 @@ public:
   IR_AttributeDescription_var (IR_AttributeDescription *);
   IR_AttributeDescription_var (const IR_AttributeDescription_var &); // copy constructor
   ~IR_AttributeDescription_var (void); // destructor
-  
+
   IR_AttributeDescription_var &operator= (IR_AttributeDescription *);
   IR_AttributeDescription_var &operator= (const IR_AttributeDescription_var &);
   IR_AttributeDescription *operator-> (void);
   const IR_AttributeDescription *operator-> (void) const;
-  
+
   operator const IR_AttributeDescription &() const;
   operator IR_AttributeDescription &();
   operator IR_AttributeDescription &() const;
   operator IR_AttributeDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_AttributeDescription &in (void) const;
   IR_AttributeDescription &inout (void);
   IR_AttributeDescription *&out (void);
@@ -8283,7 +8283,7 @@ public:
   operator IR_AttributeDescription *&();
   IR_AttributeDescription *&ptr (void);
   IR_AttributeDescription *operator-> (void);
-  
+
 private:
   IR_AttributeDescription *&ptr_;
   // assignment from T_var not allowed
@@ -8312,18 +8312,18 @@ public:
   IR_ParameterDescription_var (IR_ParameterDescription *);
   IR_ParameterDescription_var (const IR_ParameterDescription_var &); // copy constructor
   ~IR_ParameterDescription_var (void); // destructor
-  
+
   IR_ParameterDescription_var &operator= (IR_ParameterDescription *);
   IR_ParameterDescription_var &operator= (const IR_ParameterDescription_var &);
   IR_ParameterDescription *operator-> (void);
   const IR_ParameterDescription *operator-> (void) const;
-  
+
   operator const IR_ParameterDescription &() const;
   operator IR_ParameterDescription &();
   operator IR_ParameterDescription &() const;
   operator IR_ParameterDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_ParameterDescription &in (void) const;
   IR_ParameterDescription &inout (void);
   IR_ParameterDescription *&out (void);
@@ -8345,7 +8345,7 @@ public:
   operator IR_ParameterDescription *&();
   IR_ParameterDescription *&ptr (void);
   IR_ParameterDescription *operator-> (void);
-  
+
 private:
   IR_ParameterDescription *&ptr_;
   // assignment from T_var not allowed
@@ -8353,14 +8353,14 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_ParDescriptionSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_ParDescriptionSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_ParameterDescription *data,
@@ -8377,7 +8377,7 @@ private:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_ParameterDescription *get_buffer (CORBA::Boolean orphan = 0);
     const IR_ParameterDescription *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -8386,26 +8386,26 @@ private:
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ParDescriptionSeq
 // *************************************************************
 
-class TAO_Export IR_ParDescriptionSeq : public 
+class TAO_Export IR_ParDescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_ParDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_ParameterDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ParDescriptionSeq (void); // default ctor
   IR_ParDescriptionSeq (CORBA::ULong max); // uses max size
   IR_ParDescriptionSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_ParameterDescription *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_ParameterDescription *buffer,
     CORBA::Boolean release=0
   );
   IR_ParDescriptionSeq (const IR_ParDescriptionSeq &); // copy ctor
@@ -8429,19 +8429,19 @@ public:
   IR_ParDescriptionSeq_var (IR_ParDescriptionSeq *);
   IR_ParDescriptionSeq_var (const IR_ParDescriptionSeq_var &); // copy constructor
   ~IR_ParDescriptionSeq_var (void); // destructor
-  
+
   IR_ParDescriptionSeq_var &operator= (IR_ParDescriptionSeq *);
   IR_ParDescriptionSeq_var &operator= (const IR_ParDescriptionSeq_var &);
   IR_ParDescriptionSeq *operator-> (void);
   const IR_ParDescriptionSeq *operator-> (void) const;
-  
+
   operator const IR_ParDescriptionSeq &() const;
   operator IR_ParDescriptionSeq &();
   operator IR_ParDescriptionSeq &() const;
   operator IR_ParDescriptionSeq *&(); // variable-size base types only
-  
+
   IR_ParameterDescription &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ParDescriptionSeq &in (void) const;
   IR_ParDescriptionSeq &inout (void);
   IR_ParDescriptionSeq *&out (void);
@@ -8464,7 +8464,7 @@ public:
   IR_ParDescriptionSeq *&ptr (void);
   IR_ParDescriptionSeq *operator-> (void);
   IR_ParameterDescription &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ParDescriptionSeq *&ptr_;
   // assignment from T_var not allowed
@@ -8475,20 +8475,20 @@ private:
 // IR_ContextIdSeq
 // *************************************************************
 
-class TAO_Export IR_ContextIdSeq : public 
+class TAO_Export IR_ContextIdSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ContextIdSeq (void); // default ctor
   IR_ContextIdSeq (CORBA::ULong max); // uses max size
   IR_ContextIdSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    char * *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    char * *buffer,
     CORBA::Boolean release=0
   );
   IR_ContextIdSeq (const IR_ContextIdSeq &); // copy ctor
@@ -8512,19 +8512,19 @@ public:
   IR_ContextIdSeq_var (IR_ContextIdSeq *);
   IR_ContextIdSeq_var (const IR_ContextIdSeq_var &); // copy constructor
   ~IR_ContextIdSeq_var (void); // destructor
-  
+
   IR_ContextIdSeq_var &operator= (IR_ContextIdSeq *);
   IR_ContextIdSeq_var &operator= (const IR_ContextIdSeq_var &);
   IR_ContextIdSeq *operator-> (void);
   const IR_ContextIdSeq *operator-> (void) const;
-  
+
   operator const IR_ContextIdSeq &() const;
   operator IR_ContextIdSeq &();
   operator IR_ContextIdSeq &() const;
   operator IR_ContextIdSeq *&(); // variable-size base types only
-  
+
   TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ContextIdSeq &in (void) const;
   IR_ContextIdSeq &inout (void);
   IR_ContextIdSeq *&out (void);
@@ -8547,7 +8547,7 @@ public:
   IR_ContextIdSeq *&ptr (void);
   IR_ContextIdSeq *operator-> (void);
   TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ContextIdSeq *&ptr_;
   // assignment from T_var not allowed
@@ -8561,14 +8561,14 @@ public:
   IR_OperationDef_var (IR_OperationDef_ptr);
   IR_OperationDef_var (const IR_OperationDef_var &); // copy constructor
   ~IR_OperationDef_var (void); // destructor
-  
+
   IR_OperationDef_var &operator= (IR_OperationDef_ptr);
   IR_OperationDef_var &operator= (const IR_OperationDef_var &);
   IR_OperationDef_ptr operator-> (void) const;
-  
+
   operator const IR_OperationDef_ptr &() const;
   operator IR_OperationDef_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   IR_OperationDef_ptr in (void) const;
   IR_OperationDef_ptr &inout (void);
   IR_OperationDef_ptr &out (void);
@@ -8591,7 +8591,7 @@ public:
   operator IR_OperationDef_ptr &();
   IR_OperationDef_ptr &ptr (void);
   IR_OperationDef_ptr operator-> (void);
-  
+
 private:
   IR_OperationDef_ptr &ptr_;
 };
@@ -8608,12 +8608,12 @@ public:
   static IR_OperationDef_ptr _duplicate (IR_OperationDef_ptr obj);
   static IR_OperationDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_OperationDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_OperationDef_ptr _nil (void)
@@ -8624,7 +8624,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::TypeCode_ptr result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8632,7 +8632,7 @@ public:
     ));
 
   virtual IR_IDLType_ptr result_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8641,7 +8641,7 @@ public:
 
   virtual void result_def (
       IR_IDLType_ptr result_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8649,7 +8649,7 @@ public:
     ));
 
   virtual IR_ParDescriptionSeq * params (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8658,7 +8658,7 @@ public:
 
   virtual void params (
       const IR_ParDescriptionSeq & params,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8666,7 +8666,7 @@ public:
     ));
 
   virtual IR::OperationMode mode (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8675,7 +8675,7 @@ public:
 
   virtual void mode (
       IR::OperationMode mode,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8683,7 +8683,7 @@ public:
     ));
 
   virtual IR_ContextIdSeq * contexts (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8692,7 +8692,7 @@ public:
 
   virtual void contexts (
       const IR_ContextIdSeq & contexts,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8700,7 +8700,7 @@ public:
     ));
 
   virtual IR_ExceptionDefSeq * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8709,7 +8709,7 @@ public:
 
   virtual void exceptions (
       const IR_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8717,16 +8717,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_OperationDef (void);
-  IR_OperationDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_OperationDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_OperationDef (void);
@@ -8738,14 +8738,14 @@ private:
 class TAO_IR_OperationDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_OperationDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_OperationDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_OperationDef_ptr create_proxy (
       IR_OperationDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -8753,23 +8753,23 @@ public:
 class TAO_IR_OperationDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_OperationDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_OperationDef_ptr create_proxy (
       IR_OperationDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -8792,7 +8792,7 @@ protected:
     ~TAO_IR_OperationDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::TypeCode_ptr result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8800,7 +8800,7 @@ protected:
     ));
 
   virtual IR_IDLType_ptr result_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8809,7 +8809,7 @@ protected:
 
   virtual void result_def (
       IR_IDLType_ptr result_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8817,7 +8817,7 @@ protected:
     ));
 
   virtual IR_ParDescriptionSeq * params (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8826,7 +8826,7 @@ protected:
 
   virtual void params (
       const IR_ParDescriptionSeq & params,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8834,7 +8834,7 @@ protected:
     ));
 
   virtual IR::OperationMode mode (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8843,7 +8843,7 @@ protected:
 
   virtual void mode (
       IR::OperationMode mode,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8851,7 +8851,7 @@ protected:
     ));
 
   virtual IR_ContextIdSeq * contexts (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8860,7 +8860,7 @@ protected:
 
   virtual void contexts (
       const IR_ContextIdSeq & contexts,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8868,7 +8868,7 @@ protected:
     ));
 
   virtual IR_ExceptionDefSeq * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8877,7 +8877,7 @@ protected:
 
   virtual void exceptions (
       const IR_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -8915,18 +8915,18 @@ public:
   IR_OperationDescription_var (IR_OperationDescription *);
   IR_OperationDescription_var (const IR_OperationDescription_var &); // copy constructor
   ~IR_OperationDescription_var (void); // destructor
-  
+
   IR_OperationDescription_var &operator= (IR_OperationDescription *);
   IR_OperationDescription_var &operator= (const IR_OperationDescription_var &);
   IR_OperationDescription *operator-> (void);
   const IR_OperationDescription *operator-> (void) const;
-  
+
   operator const IR_OperationDescription &() const;
   operator IR_OperationDescription &();
   operator IR_OperationDescription &() const;
   operator IR_OperationDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_OperationDescription &in (void) const;
   IR_OperationDescription &inout (void);
   IR_OperationDescription *&out (void);
@@ -8948,7 +8948,7 @@ public:
   operator IR_OperationDescription *&();
   IR_OperationDescription *&ptr (void);
   IR_OperationDescription *operator-> (void);
-  
+
 private:
   IR_OperationDescription *&ptr_;
   // assignment from T_var not allowed
@@ -8959,20 +8959,20 @@ private:
 // IR_RepositoryIdSeq
 // *************************************************************
 
-class TAO_Export IR_RepositoryIdSeq : public 
+class TAO_Export IR_RepositoryIdSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_RepositoryIdSeq (void); // default ctor
   IR_RepositoryIdSeq (CORBA::ULong max); // uses max size
   IR_RepositoryIdSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    char * *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    char * *buffer,
     CORBA::Boolean release=0
   );
   IR_RepositoryIdSeq (const IR_RepositoryIdSeq &); // copy ctor
@@ -8996,19 +8996,19 @@ public:
   IR_RepositoryIdSeq_var (IR_RepositoryIdSeq *);
   IR_RepositoryIdSeq_var (const IR_RepositoryIdSeq_var &); // copy constructor
   ~IR_RepositoryIdSeq_var (void); // destructor
-  
+
   IR_RepositoryIdSeq_var &operator= (IR_RepositoryIdSeq *);
   IR_RepositoryIdSeq_var &operator= (const IR_RepositoryIdSeq_var &);
   IR_RepositoryIdSeq *operator-> (void);
   const IR_RepositoryIdSeq *operator-> (void) const;
-  
+
   operator const IR_RepositoryIdSeq &() const;
   operator IR_RepositoryIdSeq &();
   operator IR_RepositoryIdSeq &() const;
   operator IR_RepositoryIdSeq *&(); // variable-size base types only
-  
+
   TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_RepositoryIdSeq &in (void) const;
   IR_RepositoryIdSeq &inout (void);
   IR_RepositoryIdSeq *&out (void);
@@ -9031,7 +9031,7 @@ public:
   IR_RepositoryIdSeq *&ptr (void);
   IR_RepositoryIdSeq *operator-> (void);
   TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-  
+
 private:
   IR_RepositoryIdSeq *&ptr_;
   // assignment from T_var not allowed
@@ -9039,14 +9039,14 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_OpDescriptionSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_OpDescriptionSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_OperationDescription *data,
@@ -9063,7 +9063,7 @@ private:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_OperationDescription *get_buffer (CORBA::Boolean orphan = 0);
     const IR_OperationDescription *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -9072,26 +9072,26 @@ private:
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_OpDescriptionSeq
 // *************************************************************
 
-class TAO_Export IR_OpDescriptionSeq : public 
+class TAO_Export IR_OpDescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_OpDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_OperationDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_OpDescriptionSeq (void); // default ctor
   IR_OpDescriptionSeq (CORBA::ULong max); // uses max size
   IR_OpDescriptionSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_OperationDescription *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_OperationDescription *buffer,
     CORBA::Boolean release=0
   );
   IR_OpDescriptionSeq (const IR_OpDescriptionSeq &); // copy ctor
@@ -9115,19 +9115,19 @@ public:
   IR_OpDescriptionSeq_var (IR_OpDescriptionSeq *);
   IR_OpDescriptionSeq_var (const IR_OpDescriptionSeq_var &); // copy constructor
   ~IR_OpDescriptionSeq_var (void); // destructor
-  
+
   IR_OpDescriptionSeq_var &operator= (IR_OpDescriptionSeq *);
   IR_OpDescriptionSeq_var &operator= (const IR_OpDescriptionSeq_var &);
   IR_OpDescriptionSeq *operator-> (void);
   const IR_OpDescriptionSeq *operator-> (void) const;
-  
+
   operator const IR_OpDescriptionSeq &() const;
   operator IR_OpDescriptionSeq &();
   operator IR_OpDescriptionSeq &() const;
   operator IR_OpDescriptionSeq *&(); // variable-size base types only
-  
+
   IR_OperationDescription &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_OpDescriptionSeq &in (void) const;
   IR_OpDescriptionSeq &inout (void);
   IR_OpDescriptionSeq *&out (void);
@@ -9150,7 +9150,7 @@ public:
   IR_OpDescriptionSeq *&ptr (void);
   IR_OpDescriptionSeq *operator-> (void);
   IR_OperationDescription &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_OpDescriptionSeq *&ptr_;
   // assignment from T_var not allowed
@@ -9158,14 +9158,14 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_AttributeDescription *data,
@@ -9182,7 +9182,7 @@ private:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_AttributeDescription *get_buffer (CORBA::Boolean orphan = 0);
     const IR_AttributeDescription *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -9191,26 +9191,26 @@ private:
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_AttrDescriptionSeq
 // *************************************************************
 
-class TAO_Export IR_AttrDescriptionSeq : public 
+class TAO_Export IR_AttrDescriptionSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_AttributeDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_AttrDescriptionSeq (void); // default ctor
   IR_AttrDescriptionSeq (CORBA::ULong max); // uses max size
   IR_AttrDescriptionSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_AttributeDescription *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_AttributeDescription *buffer,
     CORBA::Boolean release=0
   );
   IR_AttrDescriptionSeq (const IR_AttrDescriptionSeq &); // copy ctor
@@ -9234,19 +9234,19 @@ public:
   IR_AttrDescriptionSeq_var (IR_AttrDescriptionSeq *);
   IR_AttrDescriptionSeq_var (const IR_AttrDescriptionSeq_var &); // copy constructor
   ~IR_AttrDescriptionSeq_var (void); // destructor
-  
+
   IR_AttrDescriptionSeq_var &operator= (IR_AttrDescriptionSeq *);
   IR_AttrDescriptionSeq_var &operator= (const IR_AttrDescriptionSeq_var &);
   IR_AttrDescriptionSeq *operator-> (void);
   const IR_AttrDescriptionSeq *operator-> (void) const;
-  
+
   operator const IR_AttrDescriptionSeq &() const;
   operator IR_AttrDescriptionSeq &();
   operator IR_AttrDescriptionSeq &() const;
   operator IR_AttrDescriptionSeq *&(); // variable-size base types only
-  
+
   IR_AttributeDescription &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_AttrDescriptionSeq &in (void) const;
   IR_AttrDescriptionSeq &inout (void);
   IR_AttrDescriptionSeq *&out (void);
@@ -9269,7 +9269,7 @@ public:
   IR_AttrDescriptionSeq *&ptr (void);
   IR_AttrDescriptionSeq *operator-> (void);
   IR_AttributeDescription &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_AttrDescriptionSeq *&ptr_;
   // assignment from T_var not allowed
@@ -9288,12 +9288,12 @@ public:
   static IR_InterfaceDef_ptr _duplicate (IR_InterfaceDef_ptr obj);
   static IR_InterfaceDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_InterfaceDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_InterfaceDef_ptr _nil (void)
@@ -9304,7 +9304,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_InterfaceDefSeq * base_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9313,7 +9313,7 @@ public:
 
   virtual void base_interfaces (
       const IR_InterfaceDefSeq & base_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9321,7 +9321,7 @@ public:
     ));
 
   virtual CORBA::Boolean is_abstract (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9330,7 +9330,7 @@ public:
 
   virtual void is_abstract (
       CORBA::Boolean is_abstract,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9338,7 +9338,7 @@ public:
     ));
 
   virtual CORBA::Boolean is_local (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9347,7 +9347,7 @@ public:
 
   virtual void is_local (
       CORBA::Boolean is_local,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9356,7 +9356,7 @@ public:
 
   virtual CORBA::Boolean is_a (
       const char * interface_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9371,7 +9371,7 @@ public:
       IR::AttributeMode mode,
       const IR_ExceptionDefSeq & get_exceptions,
       const IR_ExceptionDefSeq & put_exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9387,7 +9387,7 @@ public:
       const IR_ParDescriptionSeq & params,
       const IR_ExceptionDefSeq & exceptions,
       const IR_ContextIdSeq & contexts,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9395,16 +9395,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_InterfaceDef (void);
-  IR_InterfaceDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_InterfaceDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_InterfaceDef (void);
@@ -9416,14 +9416,14 @@ private:
 class TAO_IR_InterfaceDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_InterfaceDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_InterfaceDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_InterfaceDef_ptr create_proxy (
       IR_InterfaceDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -9431,23 +9431,23 @@ public:
 class TAO_IR_InterfaceDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_InterfaceDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_InterfaceDef_ptr create_proxy (
       IR_InterfaceDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -9470,7 +9470,7 @@ protected:
     ~TAO_IR_InterfaceDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_InterfaceDefSeq * base_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9479,7 +9479,7 @@ protected:
 
   virtual void base_interfaces (
       const IR_InterfaceDefSeq & base_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9487,7 +9487,7 @@ protected:
     ));
 
   virtual CORBA::Boolean is_abstract (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9496,7 +9496,7 @@ protected:
 
   virtual void is_abstract (
       CORBA::Boolean is_abstract,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9504,7 +9504,7 @@ protected:
     ));
 
   virtual CORBA::Boolean is_local (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9513,7 +9513,7 @@ protected:
 
   virtual void is_local (
       CORBA::Boolean is_local,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9522,7 +9522,7 @@ protected:
 
   virtual CORBA::Boolean is_a (
       const char * interface_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9537,7 +9537,7 @@ protected:
       IR::AttributeMode mode,
       const IR_ExceptionDefSeq & get_exceptions,
       const IR_ExceptionDefSeq & put_exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9553,7 +9553,7 @@ protected:
       const IR_ParDescriptionSeq & params,
       const IR_ExceptionDefSeq & exceptions,
       const IR_ContextIdSeq & contexts,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9592,18 +9592,18 @@ public:
   IR_InterfaceDescription_var (IR_InterfaceDescription *);
   IR_InterfaceDescription_var (const IR_InterfaceDescription_var &); // copy constructor
   ~IR_InterfaceDescription_var (void); // destructor
-  
+
   IR_InterfaceDescription_var &operator= (IR_InterfaceDescription *);
   IR_InterfaceDescription_var &operator= (const IR_InterfaceDescription_var &);
   IR_InterfaceDescription *operator-> (void);
   const IR_InterfaceDescription *operator-> (void) const;
-  
+
   operator const IR_InterfaceDescription &() const;
   operator IR_InterfaceDescription &();
   operator IR_InterfaceDescription &() const;
   operator IR_InterfaceDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_InterfaceDescription &in (void) const;
   IR_InterfaceDescription &inout (void);
   IR_InterfaceDescription *&out (void);
@@ -9625,7 +9625,7 @@ public:
   operator IR_InterfaceDescription *&();
   IR_InterfaceDescription *&ptr (void);
   IR_InterfaceDescription *operator-> (void);
-  
+
 private:
   IR_InterfaceDescription *&ptr_;
   // assignment from T_var not allowed
@@ -9657,18 +9657,18 @@ public:
   IR_ValueMember_var (IR_ValueMember *);
   IR_ValueMember_var (const IR_ValueMember_var &); // copy constructor
   ~IR_ValueMember_var (void); // destructor
-  
+
   IR_ValueMember_var &operator= (IR_ValueMember *);
   IR_ValueMember_var &operator= (const IR_ValueMember_var &);
   IR_ValueMember *operator-> (void);
   const IR_ValueMember *operator-> (void) const;
-  
+
   operator const IR_ValueMember &() const;
   operator IR_ValueMember &();
   operator IR_ValueMember &() const;
   operator IR_ValueMember *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_ValueMember &in (void) const;
   IR_ValueMember &inout (void);
   IR_ValueMember *&out (void);
@@ -9690,7 +9690,7 @@ public:
   operator IR_ValueMember *&();
   IR_ValueMember *&ptr (void);
   IR_ValueMember *operator-> (void);
-  
+
 private:
   IR_ValueMember *&ptr_;
   // assignment from T_var not allowed
@@ -9698,14 +9698,14 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_ValueMemberSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_ValueMemberSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_ValueMember *data,
@@ -9722,7 +9722,7 @@ private:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_ValueMember *get_buffer (CORBA::Boolean orphan = 0);
     const IR_ValueMember *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -9731,26 +9731,26 @@ private:
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ValueMemberSeq
 // *************************************************************
 
-class TAO_Export IR_ValueMemberSeq : public 
+class TAO_Export IR_ValueMemberSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_ValueMemberSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_ValueMember>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ValueMemberSeq (void); // default ctor
   IR_ValueMemberSeq (CORBA::ULong max); // uses max size
   IR_ValueMemberSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_ValueMember *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_ValueMember *buffer,
     CORBA::Boolean release=0
   );
   IR_ValueMemberSeq (const IR_ValueMemberSeq &); // copy ctor
@@ -9774,19 +9774,19 @@ public:
   IR_ValueMemberSeq_var (IR_ValueMemberSeq *);
   IR_ValueMemberSeq_var (const IR_ValueMemberSeq_var &); // copy constructor
   ~IR_ValueMemberSeq_var (void); // destructor
-  
+
   IR_ValueMemberSeq_var &operator= (IR_ValueMemberSeq *);
   IR_ValueMemberSeq_var &operator= (const IR_ValueMemberSeq_var &);
   IR_ValueMemberSeq *operator-> (void);
   const IR_ValueMemberSeq *operator-> (void) const;
-  
+
   operator const IR_ValueMemberSeq &() const;
   operator IR_ValueMemberSeq &();
   operator IR_ValueMemberSeq &() const;
   operator IR_ValueMemberSeq *&(); // variable-size base types only
-  
+
   IR_ValueMember &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ValueMemberSeq &in (void) const;
   IR_ValueMemberSeq &inout (void);
   IR_ValueMemberSeq *&out (void);
@@ -9809,7 +9809,7 @@ public:
   IR_ValueMemberSeq *&ptr (void);
   IR_ValueMemberSeq *operator-> (void);
   IR_ValueMember &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ValueMemberSeq *&ptr_;
   // assignment from T_var not allowed
@@ -9823,14 +9823,14 @@ public:
   IR_ValueMemberDef_var (IR_ValueMemberDef_ptr);
   IR_ValueMemberDef_var (const IR_ValueMemberDef_var &); // copy constructor
   ~IR_ValueMemberDef_var (void); // destructor
-  
+
   IR_ValueMemberDef_var &operator= (IR_ValueMemberDef *);
   IR_ValueMemberDef_var &operator= (const IR_ValueMemberDef_var &);
   IR_ValueMemberDef *operator-> (void) const;
-  
+
   operator const IR_ValueMemberDef_ptr &() const;
-  operator IR_ValueMemberDef_ptr &();  
-  // in, inout, out, _retn 
+  operator IR_ValueMemberDef_ptr &();
+  // in, inout, out, _retn
   IR_ValueMemberDef_ptr in (void) const;
   IR_ValueMemberDef_ptr &inout (void);
   IR_ValueMemberDef_ptr &out (void);
@@ -9853,7 +9853,7 @@ public:
   operator IR_ValueMemberDef_ptr &();
   IR_ValueMemberDef_ptr &ptr (void);
   IR_ValueMemberDef_ptr operator-> (void);
-  
+
 private:
   IR_ValueMemberDef_ptr &ptr_;
 };
@@ -9870,12 +9870,12 @@ public:
   static IR_ValueMemberDef_ptr _duplicate (IR_ValueMemberDef_ptr obj);
   static IR_ValueMemberDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ValueMemberDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ValueMemberDef_ptr _nil (void)
@@ -9886,7 +9886,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9894,7 +9894,7 @@ public:
     ));
 
   virtual IR_IDLType_ptr type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9903,7 +9903,7 @@ public:
 
   virtual void type_def (
       IR_IDLType_ptr type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9911,7 +9911,7 @@ public:
     ));
 
   virtual CORBA::Visibility access (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9920,7 +9920,7 @@ public:
 
   virtual void access (
       CORBA::Visibility access,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -9928,16 +9928,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ValueMemberDef (void);
-  IR_ValueMemberDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ValueMemberDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ValueMemberDef (void);
@@ -9949,14 +9949,14 @@ private:
 class TAO_IR_ValueMemberDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ValueMemberDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ValueMemberDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ValueMemberDef_ptr create_proxy (
       IR_ValueMemberDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -9964,23 +9964,23 @@ public:
 class TAO_IR_ValueMemberDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ValueMemberDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ValueMemberDef_ptr create_proxy (
       IR_ValueMemberDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -10003,7 +10003,7 @@ protected:
     ~TAO_IR_ValueMemberDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10011,7 +10011,7 @@ protected:
     ));
 
   virtual IR_IDLType_ptr type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10020,7 +10020,7 @@ protected:
 
   virtual void type_def (
       IR_IDLType_ptr type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10028,7 +10028,7 @@ protected:
     ));
 
   virtual CORBA::Visibility access (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10037,7 +10037,7 @@ protected:
 
   virtual void access (
       CORBA::Visibility access,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10060,12 +10060,12 @@ public:
   static IR_ValueDef_ptr _duplicate (IR_ValueDef_ptr obj);
   static IR_ValueDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ValueDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ValueDef_ptr _nil (void)
@@ -10076,7 +10076,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_InterfaceDefSeq * supported_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10085,7 +10085,7 @@ public:
 
   virtual void supported_interfaces (
       const IR_InterfaceDefSeq & supported_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10093,7 +10093,7 @@ public:
     ));
 
   virtual IR_InitializerSeq * initializers (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10102,7 +10102,7 @@ public:
 
   virtual void initializers (
       const IR_InitializerSeq & initializers,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10110,7 +10110,7 @@ public:
     ));
 
   virtual IR_ValueDef_ptr base_value (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10119,7 +10119,7 @@ public:
 
   virtual void base_value (
       IR_ValueDef_ptr base_value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10127,7 +10127,7 @@ public:
     ));
 
   virtual IR_ValueDefSeq * abstract_base_values (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10136,7 +10136,7 @@ public:
 
   virtual void abstract_base_values (
       const IR_ValueDefSeq & abstract_base_values,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10144,7 +10144,7 @@ public:
     ));
 
   virtual CORBA::Boolean is_abstract (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10153,7 +10153,7 @@ public:
 
   virtual void is_abstract (
       CORBA::Boolean is_abstract,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10161,7 +10161,7 @@ public:
     ));
 
   virtual CORBA::Boolean is_custom (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10170,7 +10170,7 @@ public:
 
   virtual void is_custom (
       CORBA::Boolean is_custom,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10178,7 +10178,7 @@ public:
     ));
 
   virtual CORBA::Boolean is_truncatable (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10187,7 +10187,7 @@ public:
 
   virtual void is_truncatable (
       CORBA::Boolean is_truncatable,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10196,7 +10196,7 @@ public:
 
   virtual CORBA::Boolean is_a (
       const char * id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10209,7 +10209,7 @@ public:
       const char * version,
       IR_IDLType_ptr type,
       CORBA::Visibility access,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10224,7 +10224,7 @@ public:
       IR::AttributeMode mode,
       const IR_ExceptionDefSeq & get_exceptions,
       const IR_ExceptionDefSeq & put_exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10240,7 +10240,7 @@ public:
       const IR_ParDescriptionSeq & params,
       const IR_ExceptionDefSeq & exceptions,
       const IR_ContextIdSeq & contexts,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10248,16 +10248,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ValueDef (void);
-  IR_ValueDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ValueDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ValueDef (void);
@@ -10269,14 +10269,14 @@ private:
 class TAO_IR_ValueDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ValueDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ValueDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ValueDef_ptr create_proxy (
       IR_ValueDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -10284,23 +10284,23 @@ public:
 class TAO_IR_ValueDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ValueDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ValueDef_ptr create_proxy (
       IR_ValueDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -10323,7 +10323,7 @@ protected:
     ~TAO_IR_ValueDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_InterfaceDefSeq * supported_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10332,7 +10332,7 @@ protected:
 
   virtual void supported_interfaces (
       const IR_InterfaceDefSeq & supported_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10340,7 +10340,7 @@ protected:
     ));
 
   virtual IR_InitializerSeq * initializers (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10349,7 +10349,7 @@ protected:
 
   virtual void initializers (
       const IR_InitializerSeq & initializers,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10357,7 +10357,7 @@ protected:
     ));
 
   virtual IR_ValueDef_ptr base_value (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10366,7 +10366,7 @@ protected:
 
   virtual void base_value (
       IR_ValueDef_ptr base_value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10374,7 +10374,7 @@ protected:
     ));
 
   virtual IR_ValueDefSeq * abstract_base_values (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10383,7 +10383,7 @@ protected:
 
   virtual void abstract_base_values (
       const IR_ValueDefSeq & abstract_base_values,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10391,7 +10391,7 @@ protected:
     ));
 
   virtual CORBA::Boolean is_abstract (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10400,7 +10400,7 @@ protected:
 
   virtual void is_abstract (
       CORBA::Boolean is_abstract,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10408,7 +10408,7 @@ protected:
     ));
 
   virtual CORBA::Boolean is_custom (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10417,7 +10417,7 @@ protected:
 
   virtual void is_custom (
       CORBA::Boolean is_custom,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10425,7 +10425,7 @@ protected:
     ));
 
   virtual CORBA::Boolean is_truncatable (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10434,7 +10434,7 @@ protected:
 
   virtual void is_truncatable (
       CORBA::Boolean is_truncatable,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10443,7 +10443,7 @@ protected:
 
   virtual CORBA::Boolean is_a (
       const char * id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10456,7 +10456,7 @@ protected:
       const char * version,
       IR_IDLType_ptr type,
       CORBA::Visibility access,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10471,7 +10471,7 @@ protected:
       IR::AttributeMode mode,
       const IR_ExceptionDefSeq & get_exceptions,
       const IR_ExceptionDefSeq & put_exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10487,7 +10487,7 @@ protected:
       const IR_ParDescriptionSeq & params,
       const IR_ExceptionDefSeq & exceptions,
       const IR_ContextIdSeq & contexts,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10531,18 +10531,18 @@ public:
   IR_ValueDescription_var (IR_ValueDescription *);
   IR_ValueDescription_var (const IR_ValueDescription_var &); // copy constructor
   ~IR_ValueDescription_var (void); // destructor
-  
+
   IR_ValueDescription_var &operator= (IR_ValueDescription *);
   IR_ValueDescription_var &operator= (const IR_ValueDescription_var &);
   IR_ValueDescription *operator-> (void);
   const IR_ValueDescription *operator-> (void) const;
-  
+
   operator const IR_ValueDescription &() const;
   operator IR_ValueDescription &();
   operator IR_ValueDescription &() const;
   operator IR_ValueDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_ValueDescription &in (void) const;
   IR_ValueDescription &inout (void);
   IR_ValueDescription *&out (void);
@@ -10564,7 +10564,7 @@ public:
   operator IR_ValueDescription *&();
   IR_ValueDescription *&ptr (void);
   IR_ValueDescription *operator-> (void);
-  
+
 private:
   IR_ValueDescription *&ptr_;
   // assignment from T_var not allowed
@@ -10583,12 +10583,12 @@ public:
   static IR_ValueBoxDef_ptr _duplicate (IR_ValueBoxDef_ptr obj);
   static IR_ValueBoxDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ValueBoxDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ValueBoxDef_ptr _nil (void)
@@ -10599,7 +10599,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_IDLType_ptr original_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10608,7 +10608,7 @@ public:
 
   virtual void original_type_def (
       IR_IDLType_ptr original_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10616,16 +10616,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ValueBoxDef (void);
-  IR_ValueBoxDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ValueBoxDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ValueBoxDef (void);
@@ -10637,14 +10637,14 @@ private:
 class TAO_IR_ValueBoxDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ValueBoxDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ValueBoxDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ValueBoxDef_ptr create_proxy (
       IR_ValueBoxDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -10652,23 +10652,23 @@ public:
 class TAO_IR_ValueBoxDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ValueBoxDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ValueBoxDef_ptr create_proxy (
       IR_ValueBoxDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -10691,7 +10691,7 @@ protected:
     ~TAO_IR_ValueBoxDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_IDLType_ptr original_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10700,7 +10700,7 @@ protected:
 
   virtual void original_type_def (
       IR_IDLType_ptr original_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10723,12 +10723,12 @@ public:
   static IR_ProvidesDef_ptr _duplicate (IR_ProvidesDef_ptr obj);
   static IR_ProvidesDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ProvidesDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ProvidesDef_ptr _nil (void)
@@ -10739,7 +10739,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_InterfaceDef_ptr interface_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10747,16 +10747,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ProvidesDef (void);
-  IR_ProvidesDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ProvidesDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ProvidesDef (void);
@@ -10768,14 +10768,14 @@ private:
 class TAO_IR_ProvidesDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ProvidesDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ProvidesDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ProvidesDef_ptr create_proxy (
       IR_ProvidesDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -10783,23 +10783,23 @@ public:
 class TAO_IR_ProvidesDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ProvidesDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ProvidesDef_ptr create_proxy (
       IR_ProvidesDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -10822,7 +10822,7 @@ protected:
     ~TAO_IR_ProvidesDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_InterfaceDef_ptr interface_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10856,18 +10856,18 @@ public:
   IR_ProvidesDescription_var (IR_ProvidesDescription *);
   IR_ProvidesDescription_var (const IR_ProvidesDescription_var &); // copy constructor
   ~IR_ProvidesDescription_var (void); // destructor
-  
+
   IR_ProvidesDescription_var &operator= (IR_ProvidesDescription *);
   IR_ProvidesDescription_var &operator= (const IR_ProvidesDescription_var &);
   IR_ProvidesDescription *operator-> (void);
   const IR_ProvidesDescription *operator-> (void) const;
-  
+
   operator const IR_ProvidesDescription &() const;
   operator IR_ProvidesDescription &();
   operator IR_ProvidesDescription &() const;
   operator IR_ProvidesDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_ProvidesDescription &in (void) const;
   IR_ProvidesDescription &inout (void);
   IR_ProvidesDescription *&out (void);
@@ -10889,7 +10889,7 @@ public:
   operator IR_ProvidesDescription *&();
   IR_ProvidesDescription *&ptr (void);
   IR_ProvidesDescription *operator-> (void);
-  
+
 private:
   IR_ProvidesDescription *&ptr_;
   // assignment from T_var not allowed
@@ -10908,12 +10908,12 @@ public:
   static IR_UsesDef_ptr _duplicate (IR_UsesDef_ptr obj);
   static IR_UsesDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_UsesDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_UsesDef_ptr _nil (void)
@@ -10924,7 +10924,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_InterfaceDef_ptr interface_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10932,7 +10932,7 @@ public:
     ));
 
   virtual CORBA::Boolean is_multiple (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -10940,16 +10940,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_UsesDef (void);
-  IR_UsesDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_UsesDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_UsesDef (void);
@@ -10961,14 +10961,14 @@ private:
 class TAO_IR_UsesDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_UsesDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_UsesDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_UsesDef_ptr create_proxy (
       IR_UsesDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -10976,23 +10976,23 @@ public:
 class TAO_IR_UsesDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_UsesDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_UsesDef_ptr create_proxy (
       IR_UsesDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -11015,7 +11015,7 @@ protected:
     ~TAO_IR_UsesDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_InterfaceDef_ptr interface_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11023,7 +11023,7 @@ protected:
     ));
 
   virtual CORBA::Boolean is_multiple (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11058,18 +11058,18 @@ public:
   IR_UsesDescription_var (IR_UsesDescription *);
   IR_UsesDescription_var (const IR_UsesDescription_var &); // copy constructor
   ~IR_UsesDescription_var (void); // destructor
-  
+
   IR_UsesDescription_var &operator= (IR_UsesDescription *);
   IR_UsesDescription_var &operator= (const IR_UsesDescription_var &);
   IR_UsesDescription *operator-> (void);
   const IR_UsesDescription *operator-> (void) const;
-  
+
   operator const IR_UsesDescription &() const;
   operator IR_UsesDescription &();
   operator IR_UsesDescription &() const;
   operator IR_UsesDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_UsesDescription &in (void) const;
   IR_UsesDescription &inout (void);
   IR_UsesDescription *&out (void);
@@ -11091,7 +11091,7 @@ public:
   operator IR_UsesDescription *&();
   IR_UsesDescription *&ptr (void);
   IR_UsesDescription *operator-> (void);
-  
+
 private:
   IR_UsesDescription *&ptr_;
   // assignment from T_var not allowed
@@ -11102,14 +11102,14 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IR_UsesDescription;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_ProvidesDescSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_ProvidesDescSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_ProvidesDescription *data,
@@ -11126,7 +11126,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IR_UsesDescription;
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_ProvidesDescription *get_buffer (CORBA::Boolean orphan = 0);
     const IR_ProvidesDescription *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -11135,26 +11135,26 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IR_UsesDescription;
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_ProvidesDescSeq
 // *************************************************************
 
-class TAO_Export IR_ProvidesDescSeq : public 
+class TAO_Export IR_ProvidesDescSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_ProvidesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_ProvidesDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_ProvidesDescSeq (void); // default ctor
   IR_ProvidesDescSeq (CORBA::ULong max); // uses max size
   IR_ProvidesDescSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_ProvidesDescription *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_ProvidesDescription *buffer,
     CORBA::Boolean release=0
   );
   IR_ProvidesDescSeq (const IR_ProvidesDescSeq &); // copy ctor
@@ -11178,19 +11178,19 @@ public:
   IR_ProvidesDescSeq_var (IR_ProvidesDescSeq *);
   IR_ProvidesDescSeq_var (const IR_ProvidesDescSeq_var &); // copy constructor
   ~IR_ProvidesDescSeq_var (void); // destructor
-  
+
   IR_ProvidesDescSeq_var &operator= (IR_ProvidesDescSeq *);
   IR_ProvidesDescSeq_var &operator= (const IR_ProvidesDescSeq_var &);
   IR_ProvidesDescSeq *operator-> (void);
   const IR_ProvidesDescSeq *operator-> (void) const;
-  
+
   operator const IR_ProvidesDescSeq &() const;
   operator IR_ProvidesDescSeq &();
   operator IR_ProvidesDescSeq &() const;
   operator IR_ProvidesDescSeq *&(); // variable-size base types only
-  
+
   IR_ProvidesDescription &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_ProvidesDescSeq &in (void) const;
   IR_ProvidesDescSeq &inout (void);
   IR_ProvidesDescSeq *&out (void);
@@ -11213,7 +11213,7 @@ public:
   IR_ProvidesDescSeq *&ptr (void);
   IR_ProvidesDescSeq *operator-> (void);
   IR_ProvidesDescription &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_ProvidesDescSeq *&ptr_;
   // assignment from T_var not allowed
@@ -11221,14 +11221,14 @@ private:
 };
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
   class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_UsesDescSeq : public TAO_Unbounded_Base_Sequence
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_IR_UsesDescSeq (void); // Default constructor.
-    _TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum,
       CORBA::ULong length,
       IR_UsesDescription *data,
@@ -11245,7 +11245,7 @@ private:
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     IR_UsesDescription *get_buffer (CORBA::Boolean orphan = 0);
     const IR_UsesDescription *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -11254,26 +11254,26 @@ private:
       CORBA::Boolean release);
   };
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 // *************************************************************
 // IR_UsesDescSeq
 // *************************************************************
 
-class TAO_Export IR_UsesDescSeq : public 
+class TAO_Export IR_UsesDescSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_IR_UsesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IR_UsesDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   IR_UsesDescSeq (void); // default ctor
   IR_UsesDescSeq (CORBA::ULong max); // uses max size
   IR_UsesDescSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    IR_UsesDescription *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IR_UsesDescription *buffer,
     CORBA::Boolean release=0
   );
   IR_UsesDescSeq (const IR_UsesDescSeq &); // copy ctor
@@ -11297,19 +11297,19 @@ public:
   IR_UsesDescSeq_var (IR_UsesDescSeq *);
   IR_UsesDescSeq_var (const IR_UsesDescSeq_var &); // copy constructor
   ~IR_UsesDescSeq_var (void); // destructor
-  
+
   IR_UsesDescSeq_var &operator= (IR_UsesDescSeq *);
   IR_UsesDescSeq_var &operator= (const IR_UsesDescSeq_var &);
   IR_UsesDescSeq *operator-> (void);
   const IR_UsesDescSeq *operator-> (void) const;
-  
+
   operator const IR_UsesDescSeq &() const;
   operator IR_UsesDescSeq &();
   operator IR_UsesDescSeq &() const;
   operator IR_UsesDescSeq *&(); // variable-size base types only
-  
+
   IR_UsesDescription &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const IR_UsesDescSeq &in (void) const;
   IR_UsesDescSeq &inout (void);
   IR_UsesDescSeq *&out (void);
@@ -11332,7 +11332,7 @@ public:
   IR_UsesDescSeq *&ptr (void);
   IR_UsesDescSeq *operator-> (void);
   IR_UsesDescription &operator[] (CORBA::ULong index);
-  
+
 private:
   IR_UsesDescSeq *&ptr_;
   // assignment from T_var not allowed
@@ -11351,12 +11351,12 @@ public:
   static IR_EventDef_ptr _duplicate (IR_EventDef_ptr obj);
   static IR_EventDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_EventDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_EventDef_ptr _nil (void)
@@ -11368,7 +11368,7 @@ public:
 
   virtual CORBA::Boolean is_a (
       const char * event_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11376,7 +11376,7 @@ public:
     ));
 
   virtual IR_ValueDef_ptr event (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11384,16 +11384,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_EventDef (void);
-  IR_EventDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_EventDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_EventDef (void);
@@ -11405,14 +11405,14 @@ private:
 class TAO_IR_EventDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_EventDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_EventDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_EventDef_ptr create_proxy (
       IR_EventDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -11420,23 +11420,23 @@ public:
 class TAO_IR_EventDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_EventDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_EventDef_ptr create_proxy (
       IR_EventDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -11460,7 +11460,7 @@ protected:
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::Boolean is_a (
       const char * event_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11468,7 +11468,7 @@ protected:
     ));
 
   virtual IR_ValueDef_ptr event (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11502,18 +11502,18 @@ public:
   IR_EventDescription_var (IR_EventDescription *);
   IR_EventDescription_var (const IR_EventDescription_var &); // copy constructor
   ~IR_EventDescription_var (void); // destructor
-  
+
   IR_EventDescription_var &operator= (IR_EventDescription *);
   IR_EventDescription_var &operator= (const IR_EventDescription_var &);
   IR_EventDescription *operator-> (void);
   const IR_EventDescription *operator-> (void) const;
-  
+
   operator const IR_EventDescription &() const;
   operator IR_EventDescription &();
   operator IR_EventDescription &() const;
   operator IR_EventDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_EventDescription &in (void) const;
   IR_EventDescription &inout (void);
   IR_EventDescription *&out (void);
@@ -11535,7 +11535,7 @@ public:
   operator IR_EventDescription *&();
   IR_EventDescription *&ptr (void);
   IR_EventDescription *operator-> (void);
-  
+
 private:
   IR_EventDescription *&ptr_;
   // assignment from T_var not allowed
@@ -11554,12 +11554,12 @@ public:
   static IR_EmitsDef_ptr _duplicate (IR_EmitsDef_ptr obj);
   static IR_EmitsDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_EmitsDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_EmitsDef_ptr _nil (void)
@@ -11570,16 +11570,16 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_EmitsDef (void);
-  IR_EmitsDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_EmitsDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_EmitsDef (void);
@@ -11591,14 +11591,14 @@ private:
 class TAO_IR_EmitsDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_EmitsDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_EmitsDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_EmitsDef_ptr create_proxy (
       IR_EmitsDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -11606,23 +11606,23 @@ public:
 class TAO_IR_EmitsDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_EmitsDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_EmitsDef_ptr create_proxy (
       IR_EmitsDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -11660,12 +11660,12 @@ public:
   static IR_PublishesDef_ptr _duplicate (IR_PublishesDef_ptr obj);
   static IR_PublishesDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_PublishesDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_PublishesDef_ptr _nil (void)
@@ -11676,16 +11676,16 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_PublishesDef (void);
-  IR_PublishesDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_PublishesDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_PublishesDef (void);
@@ -11697,14 +11697,14 @@ private:
 class TAO_IR_PublishesDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_PublishesDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_PublishesDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_PublishesDef_ptr create_proxy (
       IR_PublishesDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -11712,23 +11712,23 @@ public:
 class TAO_IR_PublishesDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_PublishesDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_PublishesDef_ptr create_proxy (
       IR_PublishesDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -11766,12 +11766,12 @@ public:
   static IR_ConsumesDef_ptr _duplicate (IR_ConsumesDef_ptr obj);
   static IR_ConsumesDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ConsumesDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ConsumesDef_ptr _nil (void)
@@ -11782,16 +11782,16 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ConsumesDef (void);
-  IR_ConsumesDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ConsumesDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ConsumesDef (void);
@@ -11803,14 +11803,14 @@ private:
 class TAO_IR_ConsumesDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ConsumesDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ConsumesDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ConsumesDef_ptr create_proxy (
       IR_ConsumesDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -11818,23 +11818,23 @@ public:
 class TAO_IR_ConsumesDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ConsumesDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ConsumesDef_ptr create_proxy (
       IR_ConsumesDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -11872,12 +11872,12 @@ public:
   static IR_ComponentDef_ptr _duplicate (IR_ComponentDef_ptr obj);
   static IR_ComponentDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ComponentDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_ComponentDef_ptr _nil (void)
@@ -11888,7 +11888,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_InterfaceDefSeq * supported_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11897,7 +11897,7 @@ public:
 
   virtual void supported_interfaces (
       const IR_InterfaceDefSeq & supported_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11905,7 +11905,7 @@ public:
     ));
 
   virtual IR_ComponentDef_ptr base_component (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11913,7 +11913,7 @@ public:
     ));
 
   virtual IR_ProvidesDefSeq * provides_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11921,7 +11921,7 @@ public:
     ));
 
   virtual IR_UsesDefSeq * uses_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11929,7 +11929,7 @@ public:
     ));
 
   virtual IR_EmitsDefSeq * emits_events (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11937,7 +11937,7 @@ public:
     ));
 
   virtual IR_PublishesDefSeq * publishes_events (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11945,7 +11945,7 @@ public:
     ));
 
   virtual IR_ConsumesDefSeq * consumes_events (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11953,7 +11953,7 @@ public:
     ));
 
   virtual CORBA::Boolean is_basic (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11965,7 +11965,7 @@ public:
       const char * name,
       const char * version,
       IR_InterfaceDef_ptr interface_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11978,7 +11978,7 @@ public:
       const char * version,
       IR_InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -11990,7 +11990,7 @@ public:
       const char * name,
       const char * version,
       IR_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12002,7 +12002,7 @@ public:
       const char * name,
       const char * version,
       IR_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12014,7 +12014,7 @@ public:
       const char * name,
       const char * version,
       IR_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12022,16 +12022,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_ComponentDef (void);
-  IR_ComponentDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_ComponentDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ComponentDef (void);
@@ -12043,14 +12043,14 @@ private:
 class TAO_IR_ComponentDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_ComponentDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_ComponentDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_ComponentDef_ptr create_proxy (
       IR_ComponentDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -12058,23 +12058,23 @@ public:
 class TAO_IR_ComponentDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_ComponentDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_ComponentDef_ptr create_proxy (
       IR_ComponentDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -12097,7 +12097,7 @@ protected:
     ~TAO_IR_ComponentDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_InterfaceDefSeq * supported_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12106,7 +12106,7 @@ protected:
 
   virtual void supported_interfaces (
       const IR_InterfaceDefSeq & supported_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12114,7 +12114,7 @@ protected:
     ));
 
   virtual IR_ComponentDef_ptr base_component (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12122,7 +12122,7 @@ protected:
     ));
 
   virtual IR_ProvidesDefSeq * provides_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12130,7 +12130,7 @@ protected:
     ));
 
   virtual IR_UsesDefSeq * uses_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12138,7 +12138,7 @@ protected:
     ));
 
   virtual IR_EmitsDefSeq * emits_events (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12146,7 +12146,7 @@ protected:
     ));
 
   virtual IR_PublishesDefSeq * publishes_events (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12154,7 +12154,7 @@ protected:
     ));
 
   virtual IR_ConsumesDefSeq * consumes_events (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12162,7 +12162,7 @@ protected:
     ));
 
   virtual CORBA::Boolean is_basic (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12174,7 +12174,7 @@ protected:
       const char * name,
       const char * version,
       IR_InterfaceDef_ptr interface_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12187,7 +12187,7 @@ protected:
       const char * version,
       IR_InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12199,7 +12199,7 @@ protected:
       const char * name,
       const char * version,
       IR_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12211,7 +12211,7 @@ protected:
       const char * name,
       const char * version,
       IR_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12223,7 +12223,7 @@ protected:
       const char * name,
       const char * version,
       IR_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12265,18 +12265,18 @@ public:
   IR_ComponentDescription_var (IR_ComponentDescription *);
   IR_ComponentDescription_var (const IR_ComponentDescription_var &); // copy constructor
   ~IR_ComponentDescription_var (void); // destructor
-  
+
   IR_ComponentDescription_var &operator= (IR_ComponentDescription *);
   IR_ComponentDescription_var &operator= (const IR_ComponentDescription_var &);
   IR_ComponentDescription *operator-> (void);
   const IR_ComponentDescription *operator-> (void) const;
-  
+
   operator const IR_ComponentDescription &() const;
   operator IR_ComponentDescription &();
   operator IR_ComponentDescription &() const;
   operator IR_ComponentDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_ComponentDescription &in (void) const;
   IR_ComponentDescription &inout (void);
   IR_ComponentDescription *&out (void);
@@ -12298,7 +12298,7 @@ public:
   operator IR_ComponentDescription *&();
   IR_ComponentDescription *&ptr (void);
   IR_ComponentDescription *operator-> (void);
-  
+
 private:
   IR_ComponentDescription *&ptr_;
   // assignment from T_var not allowed
@@ -12317,12 +12317,12 @@ public:
   static IR_PrimaryKeyDef_ptr _duplicate (IR_PrimaryKeyDef_ptr obj);
   static IR_PrimaryKeyDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_PrimaryKeyDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_PrimaryKeyDef_ptr _nil (void)
@@ -12334,7 +12334,7 @@ public:
 
   virtual CORBA::Boolean is_a (
       const char * primary_key_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12342,7 +12342,7 @@ public:
     ));
 
   virtual IR_ValueDef_ptr primary_key (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12350,16 +12350,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_PrimaryKeyDef (void);
-  IR_PrimaryKeyDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_PrimaryKeyDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_PrimaryKeyDef (void);
@@ -12371,14 +12371,14 @@ private:
 class TAO_IR_PrimaryKeyDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_PrimaryKeyDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_PrimaryKeyDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_PrimaryKeyDef_ptr create_proxy (
       IR_PrimaryKeyDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -12386,23 +12386,23 @@ public:
 class TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_PrimaryKeyDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_PrimaryKeyDef_ptr create_proxy (
       IR_PrimaryKeyDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -12426,7 +12426,7 @@ protected:
     virtual TAO_Stub *_stubobj (void) const;
       virtual CORBA::Boolean is_a (
       const char * primary_key_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12434,7 +12434,7 @@ protected:
     ));
 
   virtual IR_ValueDef_ptr primary_key (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12468,18 +12468,18 @@ public:
   IR_PrimaryKeyDescription_var (IR_PrimaryKeyDescription *);
   IR_PrimaryKeyDescription_var (const IR_PrimaryKeyDescription_var &); // copy constructor
   ~IR_PrimaryKeyDescription_var (void); // destructor
-  
+
   IR_PrimaryKeyDescription_var &operator= (IR_PrimaryKeyDescription *);
   IR_PrimaryKeyDescription_var &operator= (const IR_PrimaryKeyDescription_var &);
   IR_PrimaryKeyDescription *operator-> (void);
   const IR_PrimaryKeyDescription *operator-> (void) const;
-  
+
   operator const IR_PrimaryKeyDescription &() const;
   operator IR_PrimaryKeyDescription &();
   operator IR_PrimaryKeyDescription &() const;
   operator IR_PrimaryKeyDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_PrimaryKeyDescription &in (void) const;
   IR_PrimaryKeyDescription &inout (void);
   IR_PrimaryKeyDescription *&out (void);
@@ -12501,7 +12501,7 @@ public:
   operator IR_PrimaryKeyDescription *&();
   IR_PrimaryKeyDescription *&ptr (void);
   IR_PrimaryKeyDescription *operator-> (void);
-  
+
 private:
   IR_PrimaryKeyDescription *&ptr_;
   // assignment from T_var not allowed
@@ -12520,12 +12520,12 @@ public:
   static IR_FactoryDef_ptr _duplicate (IR_FactoryDef_ptr obj);
   static IR_FactoryDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_FactoryDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_FactoryDef_ptr _nil (void)
@@ -12536,16 +12536,16 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_FactoryDef (void);
-  IR_FactoryDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_FactoryDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_FactoryDef (void);
@@ -12557,14 +12557,14 @@ private:
 class TAO_IR_FactoryDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_FactoryDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_FactoryDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_FactoryDef_ptr create_proxy (
       IR_FactoryDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -12572,23 +12572,23 @@ public:
 class TAO_IR_FactoryDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_FactoryDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_FactoryDef_ptr create_proxy (
       IR_FactoryDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -12626,12 +12626,12 @@ public:
   static IR_FinderDef_ptr _duplicate (IR_FinderDef_ptr obj);
   static IR_FinderDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_FinderDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_FinderDef_ptr _nil (void)
@@ -12642,16 +12642,16 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_FinderDef (void);
-  IR_FinderDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_FinderDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_FinderDef (void);
@@ -12663,14 +12663,14 @@ private:
 class TAO_IR_FinderDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_FinderDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_FinderDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_FinderDef_ptr create_proxy (
       IR_FinderDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -12678,23 +12678,23 @@ public:
 class TAO_IR_FinderDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_FinderDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_FinderDef_ptr create_proxy (
       IR_FinderDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -12732,12 +12732,12 @@ public:
   static IR_HomeDef_ptr _duplicate (IR_HomeDef_ptr obj);
   static IR_HomeDef_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_HomeDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   static IR_HomeDef_ptr _nil (void)
@@ -12748,7 +12748,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual IR_HomeDef_ptr base_home (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12756,7 +12756,7 @@ public:
     ));
 
   virtual IR_ComponentDef_ptr managed_component (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12764,7 +12764,7 @@ public:
     ));
 
   virtual IR_PrimaryKeyDef_ptr primary_key (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12772,7 +12772,7 @@ public:
     ));
 
   virtual IR_FactoryDefSeq * factories (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12780,7 +12780,7 @@ public:
     ));
 
   virtual IR_FinderDefSeq * finders (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12788,7 +12788,7 @@ public:
     ));
 
   virtual CORBA::Boolean is_basic (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12800,7 +12800,7 @@ public:
       const char * name,
       const char * version,
       IR_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12813,7 +12813,7 @@ public:
       const char * version,
       const IR_ParDescriptionSeq & params,
       const IR_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12826,7 +12826,7 @@ public:
       const char * version,
       const IR_ParDescriptionSeq & params,
       const IR_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12834,16 +12834,16 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &env = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   IR_HomeDef (void);
-  IR_HomeDef (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  IR_HomeDef (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_HomeDef (void);
@@ -12855,14 +12855,14 @@ private:
 class TAO_IR_HomeDef_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_IR_HomeDef_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_IR_HomeDef_Default_Proxy_Factory (void);
-  
+
   virtual IR_HomeDef_ptr create_proxy (
       IR_HomeDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -12870,23 +12870,23 @@ public:
 class TAO_IR_HomeDef_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_IR_HomeDef_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   IR_HomeDef_ptr create_proxy (
       IR_HomeDef_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -12909,7 +12909,7 @@ protected:
     ~TAO_IR_HomeDef_Smart_Proxy_Base (void);
     virtual TAO_Stub *_stubobj (void) const;
       virtual IR_HomeDef_ptr base_home (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12917,7 +12917,7 @@ protected:
     ));
 
   virtual IR_ComponentDef_ptr managed_component (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12925,7 +12925,7 @@ protected:
     ));
 
   virtual IR_PrimaryKeyDef_ptr primary_key (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12933,7 +12933,7 @@ protected:
     ));
 
   virtual IR_FactoryDefSeq * factories (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12941,7 +12941,7 @@ protected:
     ));
 
   virtual IR_FinderDefSeq * finders (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12949,7 +12949,7 @@ protected:
     ));
 
   virtual CORBA::Boolean is_basic (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12961,7 +12961,7 @@ protected:
       const char * name,
       const char * version,
       IR_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12974,7 +12974,7 @@ protected:
       const char * version,
       const IR_ParDescriptionSeq & params,
       const IR_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -12987,7 +12987,7 @@ protected:
       const char * version,
       const IR_ParDescriptionSeq & params,
       const IR_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13028,18 +13028,18 @@ public:
   IR_HomeDescription_var (IR_HomeDescription *);
   IR_HomeDescription_var (const IR_HomeDescription_var &); // copy constructor
   ~IR_HomeDescription_var (void); // destructor
-  
+
   IR_HomeDescription_var &operator= (IR_HomeDescription *);
   IR_HomeDescription_var &operator= (const IR_HomeDescription_var &);
   IR_HomeDescription *operator-> (void);
   const IR_HomeDescription *operator-> (void) const;
-  
+
   operator const IR_HomeDescription &() const;
   operator IR_HomeDescription &();
   operator IR_HomeDescription &() const;
   operator IR_HomeDescription *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const IR_HomeDescription &in (void) const;
   IR_HomeDescription &inout (void);
   IR_HomeDescription *&out (void);
@@ -13061,7 +13061,7 @@ public:
   operator IR_HomeDescription *&();
   IR_HomeDescription *&ptr (void);
   IR_HomeDescription *operator-> (void);
-  
+
 private:
   IR_HomeDescription *&ptr_;
   // assignment from T_var not allowed
@@ -13075,14 +13075,14 @@ private:
     CORBA_TypeCodeFactory_var (CORBA_TypeCodeFactory_ptr);
     CORBA_TypeCodeFactory_var (const CORBA_TypeCodeFactory_var &); // copy constructor
     ~CORBA_TypeCodeFactory_var (void); // destructor
-    
+
     CORBA_TypeCodeFactory_var &operator= (CORBA_TypeCodeFactory_ptr);
     CORBA_TypeCodeFactory_var &operator= (const CORBA_TypeCodeFactory_var &);
     CORBA_TypeCodeFactory_ptr operator-> (void) const;
-    
+
     operator const CORBA_TypeCodeFactory_ptr &() const;
     operator CORBA_TypeCodeFactory_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     CORBA_TypeCodeFactory_ptr in (void) const;
     CORBA_TypeCodeFactory_ptr &inout (void);
     CORBA_TypeCodeFactory_ptr &out (void);
@@ -13105,7 +13105,7 @@ private:
     operator CORBA_TypeCodeFactory_ptr &();
     CORBA_TypeCodeFactory_ptr &ptr (void);
     CORBA_TypeCodeFactory_ptr operator-> (void);
-    
+
   private:
     CORBA_TypeCodeFactory_ptr &ptr_;
   };
@@ -13122,12 +13122,12 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
     static CORBA_TypeCodeFactory_ptr _duplicate (CORBA_TypeCodeFactory_ptr obj);
     static CORBA_TypeCodeFactory_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env = 
+        CORBA::Environment &env =
           TAO_default_environment ()
       );
     static CORBA_TypeCodeFactory_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env = 
+        CORBA::Environment &env =
           TAO_default_environment ()
       );
     static CORBA_TypeCodeFactory_ptr _nil (void)
@@ -13141,7 +13141,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
         const char * id,
         const char * name,
         const IR_StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13153,7 +13153,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
         const char * name,
         CORBA::TypeCode_ptr discriminator_type,
         const IR_UnionMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13164,7 +13164,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
         const char * id,
         const char * name,
         const IR_EnumMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13175,7 +13175,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
         const char * id,
         const char * name,
         CORBA::TypeCode_ptr original_type,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13186,7 +13186,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
         const char * id,
         const char * name,
         const IR_StructMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13196,7 +13196,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
     virtual CORBA::TypeCode_ptr create_interface_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13205,7 +13205,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
 
     virtual CORBA::TypeCode_ptr create_string_tc (
         CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13214,7 +13214,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
 
     virtual CORBA::TypeCode_ptr create_wstring_tc (
         CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13224,7 +13224,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
     virtual CORBA::TypeCode_ptr create_fixed_tc (
         CORBA::UShort digits,
         CORBA::UShort scale,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13234,7 +13234,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
     virtual CORBA::TypeCode_ptr create_sequence_tc (
         CORBA::ULong bound,
         CORBA::TypeCode_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13244,7 +13244,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
     virtual CORBA::TypeCode_ptr create_array_tc (
         CORBA::ULong length,
         CORBA::TypeCode_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13257,7 +13257,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
         const IR_ValueMemberSeq & members,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13268,7 +13268,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
         const char * id,
         const char * name,
         CORBA::TypeCode_ptr boxed_type,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13278,7 +13278,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
     virtual CORBA::TypeCode_ptr create_native_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13287,7 +13287,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
 
     virtual CORBA::TypeCode_ptr create_recursive_tc (
         const char * id,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13297,7 +13297,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
     virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13307,7 +13307,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
     virtual CORBA::TypeCode_ptr create_component_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13317,7 +13317,7 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
     virtual CORBA::TypeCode_ptr create_home_tc (
         const char * id,
         const char * name,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -13325,16 +13325,16 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
       ));
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id, 
-        CORBA::Environment &env = 
+        const CORBA::Char *type_id,
+        CORBA::Environment &env =
           TAO_default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     CORBA_TypeCodeFactory (void);
-    CORBA_TypeCodeFactory (TAO_Stub *objref, 
-        TAO_ServantBase *_tao_servant = 0, 
+    CORBA_TypeCodeFactory (TAO_Stub *objref,
+        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~CORBA_TypeCodeFactory (void);
@@ -13346,14 +13346,14 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
 class TAO_CORBA_TypeCodeFactory_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_CORBA_TypeCodeFactory_Default_Proxy_Factory (int register_proxy_factory = 1);
-  
+
   virtual ~TAO_CORBA_TypeCodeFactory_Default_Proxy_Factory (void);
-  
+
   virtual CORBA_TypeCodeFactory_ptr create_proxy (
       CORBA_TypeCodeFactory_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 };
@@ -13361,23 +13361,23 @@ public:
 class TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class ACE_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
-  
+
   int register_proxy_factory (
       TAO_CORBA_TypeCodeFactory_Default_Proxy_Factory *df,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   int unregister_proxy_factory (
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
-  
+
   CORBA_TypeCodeFactory_ptr create_proxy (
       CORBA_TypeCodeFactory_ptr proxy,
-      CORBA::Environment &env = 
+      CORBA::Environment &env =
         TAO_default_environment ()
     );
 
@@ -13403,7 +13403,7 @@ protected:
       const char * id,
       const char * name,
       const IR_StructMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13415,7 +13415,7 @@ protected:
       const char * name,
       CORBA::TypeCode_ptr discriminator_type,
       const IR_UnionMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13426,7 +13426,7 @@ protected:
       const char * id,
       const char * name,
       const IR_EnumMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13437,7 +13437,7 @@ protected:
       const char * id,
       const char * name,
       CORBA::TypeCode_ptr original_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13448,7 +13448,7 @@ protected:
       const char * id,
       const char * name,
       const IR_StructMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13458,7 +13458,7 @@ protected:
   virtual CORBA::TypeCode_ptr create_interface_tc (
       const char * id,
       const char * name,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13467,7 +13467,7 @@ protected:
 
   virtual CORBA::TypeCode_ptr create_string_tc (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13476,7 +13476,7 @@ protected:
 
   virtual CORBA::TypeCode_ptr create_wstring_tc (
       CORBA::ULong bound,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13486,7 +13486,7 @@ protected:
   virtual CORBA::TypeCode_ptr create_fixed_tc (
       CORBA::UShort digits,
       CORBA::UShort scale,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13496,7 +13496,7 @@ protected:
   virtual CORBA::TypeCode_ptr create_sequence_tc (
       CORBA::ULong bound,
       CORBA::TypeCode_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13506,7 +13506,7 @@ protected:
   virtual CORBA::TypeCode_ptr create_array_tc (
       CORBA::ULong length,
       CORBA::TypeCode_ptr element_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13519,7 +13519,7 @@ protected:
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
       const IR_ValueMemberSeq & members,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13530,7 +13530,7 @@ protected:
       const char * id,
       const char * name,
       CORBA::TypeCode_ptr boxed_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13540,7 +13540,7 @@ protected:
   virtual CORBA::TypeCode_ptr create_native_tc (
       const char * id,
       const char * name,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13549,7 +13549,7 @@ protected:
 
   virtual CORBA::TypeCode_ptr create_recursive_tc (
       const char * id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13559,7 +13559,7 @@ protected:
   virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
       const char * id,
       const char * name,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13569,7 +13569,7 @@ protected:
   virtual CORBA::TypeCode_ptr create_component_tc (
       const char * id,
       const char * name,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -13579,7 +13579,7 @@ protected:
   virtual CORBA::TypeCode_ptr create_home_tc (
       const char * id,
       const char * name,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -14031,7 +14031,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::TypeCodeFactor
 
 #ifndef __ACE_INLINE__
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::DefinitionKind &); // 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::DefinitionKind &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::DefinitionKind &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Contained_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Contained_ptr &);
@@ -14304,7 +14304,7 @@ TAO_Export CORBA::Boolean operator>> (
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_IDLType_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_IDLType_ptr &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::PrimitiveKind &); // 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::PrimitiveKind &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::PrimitiveKind &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_Repository_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_Repository_ptr &);
@@ -14378,15 +14378,15 @@ TAO_Export CORBA::Boolean operator>> (
 
 #endif /* _TAO_CDR_OP_IR_ExcDescriptionSeq_H_ */
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::AttributeMode &); // 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::AttributeMode &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::AttributeMode &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeDef_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AttributeDef_ptr &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_AttributeDescription &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_AttributeDescription &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::OperationMode &); // 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::OperationMode &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::OperationMode &);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::ParameterMode &); // 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::ParameterMode &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::ParameterMode &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR_ParameterDescription &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR_ParameterDescription &);

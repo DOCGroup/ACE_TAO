@@ -322,10 +322,6 @@ SOURCE=.\InterceptorC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterceptorS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.cpp
 # End Source File
 # Begin Source File
@@ -367,6 +363,10 @@ SOURCE=.\Leader_Follower.cpp
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocalObject.cpp
 # End Source File
 # Begin Source File
 
@@ -910,10 +910,6 @@ SOURCE=.\InterceptorC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterceptorS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
@@ -951,6 +947,10 @@ SOURCE=.\Leader_Follower.h
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocalObject.h
 # End Source File
 # Begin Source File
 
@@ -1427,6 +1427,10 @@ SOURCE=.\Leader_Follower.i
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocalObject.i
 # End Source File
 # Begin Source File
 

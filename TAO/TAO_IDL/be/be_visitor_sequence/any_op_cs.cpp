@@ -45,7 +45,9 @@ be_visitor_sequence_any_op_cs::~be_visitor_sequence_any_op_cs (void)
 int
 be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 {
-  if (node->cli_stub_any_op_gen () || node->imported ())
+  if (node->cli_stub_any_op_gen () ||
+      node->imported () ||
+      node->is_local ())
     return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();

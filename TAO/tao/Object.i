@@ -2,6 +2,17 @@
 
 // ****************************************************************
 
+ACE_INLINE
+CORBA_Object::CORBA_Object (int)
+  : servant_ (0),
+    is_collocated_ (0),
+    is_local_ (1),
+    protocol_proxy_ (0),
+    refcount_ (1),
+    refcount_lock_ ()
+{
+}
+
 ACE_INLINE CORBA::ULong
 CORBA_Object::_incr_refcnt (void)
 {
@@ -27,8 +38,14 @@ ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_duplicate (CORBA_Object_ptr obj)
 {
   if (obj)
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
+}
+
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::Object_ptr obj)
+{
+  return obj == 0;
 }
 
 // Null pointers represent nil objects.
@@ -40,15 +57,25 @@ CORBA_Object::_nil (void)
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
+CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
 {
-  return CORBA_Object::_duplicate (obj);
+  if (CORBA::is_nil (obj))
+    return CORBA::Object::_nil ();
+
+  if (obj->is_local_)
+    return
+      ACE_reinterpret_cast (CORBA::Object_ptr,
+                            obj->_tao_QueryInterface
+                            (ACE_reinterpret_cast (ptr_arith_t,
+                                                   &CORBA::Object::_narrow)));
+  else
+    return CORBA::Object::_duplicate (obj);
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
+CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&ACE_TRY_ENV)
 {
-  return CORBA_Object::_duplicate (obj);
+  return CORBA_Object::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
 ACE_INLINE TAO_Stub *
@@ -57,20 +84,15 @@ CORBA_Object::_stubobj (void) const
   return this->protocol_proxy_;
 }
 
+
 // ************************************************************
 // These are in CORBA namespace
-
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
-{
-  return obj == 0;
-}
 
 ACE_INLINE void
 CORBA::release (CORBA_Object_ptr obj)
 {
   if (obj)
-    obj->_decr_refcnt ();
+    obj->_remove_ref ();
 }
 
 // DII hook to objref

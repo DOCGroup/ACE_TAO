@@ -94,25 +94,38 @@ public:
                             UTL_StrList *p);
 
   virtual AST_Module    *create_module(UTL_Scope *s,
-                                       UTL_ScopedName *n, 
+                                       UTL_ScopedName *n,
                                        UTL_StrList *p);
   virtual AST_Interface *create_interface(UTL_ScopedName *n,
                                           AST_Interface **ih,
                                           long nih,
                                           AST_Interface **ih_flat,
                                           long nih_flat,
-                                          UTL_StrList *p);
+                                          UTL_StrList *p,
+                                          idl_bool local,
+                                          idl_bool abstract);
   virtual AST_InterfaceFwd *create_interface_fwd(UTL_ScopedName *n,
-                                                 UTL_StrList *p);
+                                                 UTL_StrList *p,
+                                                 idl_bool local,
+                                                 idl_bool abstract);
   virtual AST_Interface *create_valuetype(UTL_ScopedName *n,
                                           AST_Interface **ih,
                                           long nih,
                                           UTL_StrList *p);
   virtual AST_InterfaceFwd *create_valuetype_fwd(UTL_ScopedName *n,
                                                  UTL_StrList *p);
-  virtual AST_Exception *create_exception(UTL_ScopedName *n, UTL_StrList *p);
-  virtual AST_Structure *create_structure(UTL_ScopedName *n, UTL_StrList *p);
-  virtual AST_Enum      *create_enum(UTL_ScopedName *n, UTL_StrList *p);
+  virtual AST_Exception *create_exception(UTL_ScopedName *n,
+                                          UTL_StrList *p,
+                                          idl_bool local,
+                                          idl_bool abstract);
+  virtual AST_Structure *create_structure(UTL_ScopedName *n,
+                                          UTL_StrList *p,
+                                          idl_bool local,
+                                          idl_bool abstract);
+  virtual AST_Enum      *create_enum(UTL_ScopedName *n,
+                                     UTL_StrList *p,
+                                     idl_bool local,
+                                     idl_bool abstract);
   virtual AST_Operation *create_operation(AST_Type *rt,
                                           AST_Operation::Flags fl,
                                           UTL_ScopedName *n,
@@ -131,7 +144,9 @@ public:
                                           UTL_StrList *p);
   virtual AST_Union     *create_union(AST_ConcreteType *dt,
                                       UTL_ScopedName *n,
-                                      UTL_StrList *p);
+                                      UTL_StrList *p,
+                                      idl_bool local,
+                                      idl_bool abstract);
   virtual AST_UnionBranch *create_union_branch(UTL_LabelList *ll,
                                                AST_Type *ft,
                                                UTL_ScopedName *n,
@@ -165,12 +180,17 @@ public:
   virtual AST_Array     *create_array(UTL_ScopedName *n,
                                       unsigned long ndims,
                                       UTL_ExprList *dims);
-  virtual AST_Sequence  *create_sequence(AST_Expression *v, AST_Type *bt);
+  virtual AST_Sequence  *create_sequence(AST_Expression *v,
+                                         AST_Type *bt,
+                                         idl_bool local,
+                                         idl_bool abstract);
   virtual AST_String    *create_string(AST_Expression *v);
   virtual AST_String    *create_wstring(AST_Expression *v);
   virtual AST_Typedef   *create_typedef(AST_Type *bt,
                                         UTL_ScopedName *n,
-                                        UTL_StrList *p);
+                                        UTL_StrList *p,
+                                        idl_bool local,
+                                        idl_bool abstract);
   // Create a node representing a native
   virtual AST_Native    *create_native (UTL_ScopedName *n,
                                         UTL_StrList *p);

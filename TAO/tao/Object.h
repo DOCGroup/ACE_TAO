@@ -51,6 +51,7 @@ public:
   static CORBA_Object_ptr _nil (void);
   // return a NUL object
 
+  ACE_INLINE_FOR_GNUC
   static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
                                    CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
@@ -81,7 +82,10 @@ public:
   // return the associated servant (if one exists)
 
   virtual CORBA::Boolean _is_collocated (void) const;
-  // are we collocated with the servant?
+  // Is this object collocated with the servant?
+
+  virtual CORBA::Boolean _is_local (void) const;
+  // Is this a local object?
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -199,20 +203,24 @@ public:
   // If there's no in-use profile, then the program will
   // probably crash.  This method does not create a new copy.
 
+  virtual void * _tao_QueryInterface (ptr_arith_t type);
+  // Downcasting this object pointer to some other derived class.
+  // This QueryInterface stuff only work for local object.
+
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Object_ptr _ptr_type;
   typedef CORBA_Object_var _var_type;
 #endif /* __GNUC__ */
   // Useful for template programming.
 
-  // = TAO extensions
-
   // = Reference count managment.
-  CORBA::ULong _incr_refcnt (void);
+  virtual void _add_ref (void);
   // Increment the reference count.
 
-  CORBA::ULong _decr_refcnt (void);
+  virtual void _remove_ref (void);
   // Decrement the reference count.
+
+  // = TAO extensions
 
   CORBA_Object (TAO_Stub *p = 0,
                 TAO_ServantBase *servant = 0,
@@ -227,12 +235,25 @@ public:
   // the object
 
 protected:
+  CORBA_Object (int dummy);
+  // Initializing a local object.
+
+  // = Internal Reference count managment.
+  CORBA::ULong _incr_refcnt (void);
+  // Increment the reference count.
+
+  CORBA::ULong _decr_refcnt (void);
+  // Decrement the reference count.
+
   TAO_ServantBase *servant_;
   // Servant pointer.  It is 0 except for collocated objects.
 
   CORBA::Boolean is_collocated_;
   // Flag to indicate collocation.  It is 0 except for collocated
   // objects.
+
+  CORBA::Boolean is_local_;
+  // Specify whether this is a local object or not.
 
 private:
   TAO_Stub *protocol_proxy_;

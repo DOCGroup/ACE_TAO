@@ -43,7 +43,10 @@ public:
   be_enum (void);
   // default constructor
 
-  be_enum (UTL_ScopedName *n, UTL_StrList *p);
+  be_enum (UTL_ScopedName *n,
+           UTL_StrList *p,
+           idl_bool local,
+           idl_bool abstract);
   // constructor
 
   virtual int member_count (void);

@@ -96,9 +96,12 @@ AST_Interface::AST_Interface(UTL_ScopedName *n,
                              long nih,
                              AST_Interface **ih_flat,
                              long nih_flat,
-                             UTL_StrList *p)
+                             UTL_StrList *p,
+                             idl_bool local,
+                             idl_bool abstract)
   : AST_Decl (AST_Decl::NT_interface, n, p),
     UTL_Scope (AST_Decl::NT_interface),
+    COMMON_Base (local, abstract),
     pd_inherits (ih),
     pd_n_inherits (nih),
     pd_inherits_flat (ih_flat),
@@ -117,11 +120,6 @@ AST_Interface::~AST_Interface (void)
 /*
  * Public operations
  */
-
-idl_bool AST_Interface::is_abstract_interface (void)
-{
-  return 0;
-}
 
 
 idl_bool AST_Interface::is_valuetype (void)
@@ -144,10 +142,10 @@ void AST_Interface::set_abstract_valuetype (void)
 void AST_Interface::be_replace_operation (AST_Decl *old_op,
                                           AST_Decl *new_op)
 {
-  replace_scope (old_op, 
+  replace_scope (old_op,
                  new_op);
 
-  replace_referenced (old_op, 
+  replace_referenced (old_op,
                       new_op);
 }
 
@@ -170,39 +168,39 @@ AST_Constant *AST_Interface::fe_add_constant (AST_Constant *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined ()) 
+  if (!is_defined ())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
     }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined(d)) 
+      if (!can_be_redefined(d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced  (d, t->local_name ())) 
+      if (referenced  (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor(d)) 
+      if (t->has_ancestor(d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -214,8 +212,8 @@ AST_Constant *AST_Interface::fe_add_constant (AST_Constant *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -231,39 +229,39 @@ AST_Exception *AST_Interface::fe_add_exception (AST_Exception *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined ()) 
+  if (!is_defined ())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
     }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined(d)) 
+      if (!can_be_redefined(d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -275,8 +273,8 @@ AST_Exception *AST_Interface::fe_add_exception (AST_Exception *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -292,39 +290,39 @@ AST_Attribute *AST_Interface::fe_add_attribute (AST_Attribute *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined()) 
+  if (!is_defined())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
     }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor(d)) 
+      if (t->has_ancestor(d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -336,8 +334,8 @@ AST_Attribute *AST_Interface::fe_add_attribute (AST_Attribute *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -355,29 +353,29 @@ AST_Field *AST_Interface::fe_add_field (AST_Field *t)
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add(t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add(t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -389,8 +387,8 @@ AST_Field *AST_Interface::fe_add_field (AST_Field *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -412,39 +410,39 @@ AST_Operation *AST_Interface::fe_add_operation(AST_Operation *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined ()) 
+  if (!is_defined ())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
     }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined(d)) 
+      if (!can_be_redefined(d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -456,8 +454,8 @@ AST_Operation *AST_Interface::fe_add_operation(AST_Operation *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -473,39 +471,39 @@ AST_Structure *AST_Interface::fe_add_structure (AST_Structure *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined ()) 
+  if (!is_defined ())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
     }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined(d)) 
+      if (!can_be_redefined(d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
                                       this,
                                        d);
           return NULL;
         }
 
-      if (t->has_ancestor (d)) 
-        { 
-          idl_global->err ()->redefinition_in_scope (t, 
+      if (t->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -517,8 +515,8 @@ AST_Structure *AST_Interface::fe_add_structure (AST_Structure *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -534,39 +532,39 @@ AST_Enum *AST_Interface::fe_add_enum (AST_Enum *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined ()) 
+  if (!is_defined ())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
   }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -578,8 +576,8 @@ AST_Enum *AST_Interface::fe_add_enum (AST_Enum *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -595,39 +593,39 @@ AST_Union *AST_Interface::fe_add_union (AST_Union *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined ()) 
+  if (!is_defined ())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
     }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined(d)) 
+      if (!can_be_redefined(d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -639,7 +637,7 @@ AST_Union *AST_Interface::fe_add_union (AST_Union *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
+  add_to_referenced (t,
                      I_FALSE,
                      t->local_name ());
 
@@ -659,39 +657,39 @@ AST_EnumVal *AST_Interface::fe_add_enum_val (AST_EnumVal *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined ()) 
+  if (!is_defined ())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
     }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined(d)) 
+      if (!can_be_redefined(d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor(d)) 
+      if (t->has_ancestor(d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -703,8 +701,8 @@ AST_EnumVal *AST_Interface::fe_add_enum_val (AST_EnumVal *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -720,39 +718,39 @@ AST_Typedef *AST_Interface::fe_add_typedef(AST_Typedef *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined ()) 
+  if (!is_defined ())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
     }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (referenced (d, t->local_name ())) 
+      if (referenced (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -764,8 +762,8 @@ AST_Typedef *AST_Interface::fe_add_typedef(AST_Typedef *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -781,39 +779,39 @@ AST_Native *AST_Interface::fe_add_native (AST_Native *t)
   /*
    * Can't add to interface which was not yet defined
    */
-  if (!is_defined ()) 
+  if (!is_defined ())
     {
-      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED, 
-                                  this, 
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
                                   t);
       return NULL;
     }
   /*
    * Already defined and cannot be redefined? Or already used?
    */
-  if ((d = lookup_for_add (t, I_FALSE)) != NULL) 
+  if ((d = lookup_for_add (t, I_FALSE)) != NULL)
     {
-      if (!can_be_redefined (d)) 
+      if (!can_be_redefined (d))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,
                                        this,
                                         d);
           return NULL;
         }
 
-      if (referenced  (d, t->local_name ())) 
+      if (referenced  (d, t->local_name ()))
         {
-          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE, 
-                                      t, 
-                                      this, 
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
                                       d);
           return NULL;
         }
 
-      if (t->has_ancestor (d)) 
+      if (t->has_ancestor (d))
         {
-          idl_global->err ()->redefinition_in_scope (t, 
+          idl_global->err ()->redefinition_in_scope (t,
                                                      d);
           return NULL;
         }
@@ -825,8 +823,8 @@ AST_Native *AST_Interface::fe_add_native (AST_Native *t)
   /*
    * Add it to set of locally referenced symbols
    */
-  add_to_referenced (t, 
-                     I_FALSE, 
+  add_to_referenced (t,
+                     I_FALSE,
                      t->local_name ());
 
   return t;
@@ -849,19 +847,21 @@ AST_Interface::dump (ostream &o)
     }
   else
     {
-      if (this->is_abstract_interface ())
+      if (this->is_abstract ())
         o << "abstract ";
+      else if (this->is_local ())
+        o << "local ";
       o << "interface ";
     }
 
   local_name ()->dump (o);
   o << " ";
 
-  if (pd_n_inherits > 0) 
+  if (pd_n_inherits > 0)
     {
       o << ": ";
 
-      for (i = 0; i < pd_n_inherits; i++) 
+      for (i = 0; i < pd_n_inherits; i++)
         {
           pd_inherits[i]->local_name( )->dump (o);
 
@@ -877,7 +877,7 @@ AST_Interface::dump (ostream &o)
 }
 
 void
-AST_Interface::fwd_redefinition_helper (AST_Interface *&i, 
+AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                                         UTL_Scope *s,
                                         UTL_StrList *p)
 {
@@ -887,29 +887,29 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 
   AST_Interface *fd = NULL;
 
-  if (i != NULL && d != NULL) 
+  if (i != NULL && d != NULL)
     {
       // See if we're defining a forward declared interface.
-      if (d->node_type () == AST_Decl::NT_interface) 
+      if (d->node_type () == AST_Decl::NT_interface)
         {
           // Narrow to an interface
           fd = AST_Interface::narrow_from_decl (d);
 
           // Successful?
-          if (fd == NULL) 
+          if (fd == NULL)
             {
               // Should we give an error here? ... no, look in fe_add_interface
             }
 
           // If it is a forward declared interface..
-          else if (!fd->is_defined ()) 
+          else if (!fd->is_defined ())
             {
               // Check if redefining in same scope. If a module is reopened,
               // a new pointer in created, and the first term below will be true.
               // In that case, the scoped names must be compared.
-              if (fd->defined_in () != s 
-                  && !AST_Interface::compare_names (fd, 
-                                                    i)) 
+              if (fd->defined_in () != s
+                  && !AST_Interface::compare_names (fd,
+                                                    i))
                 {
                   idl_global->err ()->error2 (UTL_Error::EIDL_SCOPE_CONFLICT,
                                               i,
@@ -917,24 +917,27 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                 }
 
               // All OK, do the redefinition
-              else 
+              else
                 {
-#                 ifdef IDL_HAS_VALUETYPE
 
                   // only redefinition of the same kind
-                  if ((i->is_valuetype () != fd->is_valuetype ()) 
-                      || (i->is_abstract_valuetype () != fd->is_abstract_valuetype ()) 
-                      || (i->is_abstract_interface () != fd->is_abstract_interface ()))
+                  if ((i->is_local () != fd->is_local ())
+#                 ifdef IDL_HAS_VALUETYPE
+                      ||(i->is_valuetype () != fd->is_valuetype ())
+                      || (i->is_abstract_valuetype () != fd->is_abstract_valuetype ())
+                      || (i->is_abstract () != fd->is_abstract ())
+#                 endif /* IDL_HAS_VALUETYPE */
+                      )
+
                     {
-                      idl_global->err ()->error2 (UTL_Error::EIDL_REDEF, 
-                                                  i, 
+                      idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
+                                                  i,
                                                   fd);
                       return;
                     }
 
-#                 endif /* IDL_HAS_VALUETYPE */
 
-                  fd->redefine (i, 
+                  fd->redefine (i,
                                 p);
 
                   // Use full definition node
@@ -952,7 +955,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
  */
 
 void
-AST_Interface::redefine (AST_Interface *from, 
+AST_Interface::redefine (AST_Interface *from,
                          UTL_StrList *p)
 {
   this->set_inherits (from->inherits ());
@@ -1017,7 +1020,7 @@ AST_Interface::set_n_inherits_flat (long i)
   pd_n_inherits_flat = i;
 }
 
-// Get the scoped names and, if they are the same 
+// Get the scoped names and, if they are the same
 // length, iterate over them, comparing each term.
 idl_bool
 AST_Interface::compare_names (AST_Interface *that,
@@ -1036,9 +1039,9 @@ AST_Interface::compare_names (AST_Interface *that,
   Identifier *that_id = 0;
   Identifier *other_id = 0;
 
-  UTL_IdListActiveIterator *that_iter = 
+  UTL_IdListActiveIterator *that_iter =
     new UTL_IdListActiveIterator (that_name);
-  UTL_IdListActiveIterator *other_iter = 
+  UTL_IdListActiveIterator *other_iter =
     new UTL_IdListActiveIterator (other_name);
 
   for (int i = 0; i < that_length; i++)
@@ -1070,7 +1073,7 @@ AST_Interface::inherited_name_clash ()
 
   // Compare our members with those of each parent.
 
-  UTL_ScopeActiveIterator *my_members = 
+  UTL_ScopeActiveIterator *my_members =
     new UTL_ScopeActiveIterator (DeclAsScope (this),
                                  UTL_Scope::IK_decls);
 
@@ -1093,7 +1096,7 @@ AST_Interface::inherited_name_clash ()
               // All other member types but these may be redefined in
               // the child.
               if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
-                { 
+                {
                   Identifier *pid = parent1_member->local_name ();
 
                   if (id->compare (pid) == I_TRUE)
@@ -1113,7 +1116,7 @@ AST_Interface::inherited_name_clash ()
                             );
                         }
                       else
-                        {   
+                        {
                           idl_global->err ()->warning2 (
                               UTL_Error::EIDL_NAME_CASE_WARNING,
                               my_member,
@@ -1137,7 +1140,7 @@ AST_Interface::inherited_name_clash ()
   // Now compare members of each parent with each other.
 
   for (int i = 0; i < this->pd_n_inherits_flat - 1; i++)
-    {      
+    {
       UTL_ScopeActiveIterator *parent1_members =
         new UTL_ScopeActiveIterator (DeclAsScope (pd_inherits_flat[i]),
                                      UTL_Scope::IK_decls);
@@ -1150,7 +1153,7 @@ AST_Interface::inherited_name_clash ()
           // Only these member types may cause a clash with other
           // parents' member of the same type.
           if (nt1 == AST_Decl::NT_op || nt1 == AST_Decl::NT_attr)
-            { 
+            {
               Identifier *pid1 = parent1_member->local_name ();
 
               for (int j = i + 1; j < this->pd_n_inherits_flat; j++)
@@ -1164,13 +1167,13 @@ AST_Interface::inherited_name_clash ()
                   while (!(parent2_members->is_done ()))
                     {
                       parent2_member = parent2_members->item ();
-                      AST_Decl::NodeType nt2 = 
+                      AST_Decl::NodeType nt2 =
                         parent2_member->node_type ();
 
                       // Only these member types may cause a clash
                       // with other parents' member of the same type.
                       if (nt2 == AST_Decl::NT_op || nt2 == AST_Decl::NT_attr)
-                        { 
+                        {
                           Identifier *pid2 = parent2_member->local_name ();
 
                           if (pid1->compare (pid2) == I_TRUE)
@@ -1183,7 +1186,7 @@ AST_Interface::inherited_name_clash ()
                                                     );
                             }
                           else if (pid1->case_compare_quiet (pid2) == I_TRUE)
-                            {                          
+                            {
                               if (idl_global->case_diff_error ())
                                 {
                                   idl_global->err ()->error3 (

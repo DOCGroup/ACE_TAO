@@ -1354,25 +1354,6 @@ SOURCE=.\InterceptorC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterceptorS.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1564,6 +1545,25 @@ SOURCE=.\Leader_Follower.cpp
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocalObject.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3329,10 +3329,6 @@ SOURCE=.\InterceptorC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterceptorS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
@@ -3370,6 +3366,10 @@ SOURCE=.\Leader_Follower.h
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocalObject.h
 # End Source File
 # Begin Source File
 
@@ -3854,6 +3854,10 @@ SOURCE=.\Leader_Follower.i
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocalObject.i
 # End Source File
 # Begin Source File
 

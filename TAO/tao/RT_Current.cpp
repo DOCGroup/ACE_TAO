@@ -22,7 +22,7 @@ TAO_RT_Current_ptr
 TAO_RT_Current::_duplicate (TAO_RT_Current_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
 
   return obj;
 }

@@ -62,7 +62,7 @@ TAO_IOP::TAO_IOR_Manipulation_ptr
 TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOP::TAO_IOR_Manipulation_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 

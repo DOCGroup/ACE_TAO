@@ -33,7 +33,7 @@
 
 module PortableInterceptor
 {
-  interface Cookie
+  local interface Cookie
     {
       // Cookie's are used to pass information among interceptors
       // within a invocation or an upcall.
@@ -47,7 +47,7 @@ module PortableInterceptor
   //
   // @@ Cookies will no longer be available.
 
-  interface Interceptor
+  local interface Interceptor
     {
       // Base interface for Interceptors.
       //
@@ -55,7 +55,7 @@ module PortableInterceptor
       readonly attribute string name;
     };
 
-  interface ServerRequestInterceptor : Interceptor
+  local interface ServerRequestInterceptor : Interceptor
     {
       // Server side request interceptor definition.
       //
@@ -66,7 +66,7 @@ module PortableInterceptor
                       in CORBA::Object objref,
                       in string operation_name,
                       inout IOP::ServiceContextList sc,
-                      inout NVList arguments,
+                      inout CORBA::NVList arguments,
                       inout Cookies ck);
       // Interception pointer before invoking the servant method.
       // Currently, we don't pass NVList into the interceptor because
@@ -90,7 +90,7 @@ module PortableInterceptor
                        in CORBA::Object objref,
                        in string operation_name,
                        inout IOP::ServiceContextList sc,
-                       inout NVList arguments,
+                       inout CORBA::NVList arguments,
                        inout Cookies ck);
       // Interception pointer after invoking the servant method.
       // Currently, we don't pass NVList into the interceptor because
@@ -123,7 +123,7 @@ module PortableInterceptor
       // <PortableInterceptor::ServerRequestInfo> interface.
     };
 
-  interface ClientRequestInterceptor : Interceptor
+  local interface ClientRequestInterceptor : Interceptor
     {
       // Client side interceptor.
       //
@@ -134,7 +134,7 @@ module PortableInterceptor
                       in CORBA::Object objref,
                       in string operation_name,
                       inout IOP::ServiceContextList sc,
-                      inout NVList arguments,
+                      inout CORBA::NVList arguments,
                       inout Cookies ck);
       // Before remote invocation.
       // Currently, we don't pass NVList into the interceptor because
@@ -155,7 +155,7 @@ module PortableInterceptor
                        in CORBA::Object objref,
                        in string operation_name,
                        inout IOP::ServiceContextList sc,
-                       inout NVList arguments,
+                       inout CORBA::NVList arguments,
                        inout Cookies ck);
       // After returned from remote invocation.
       // Currently, we don't pass NVList into the interceptor because
