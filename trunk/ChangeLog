@@ -1,3 +1,22 @@
+Fri Mar 28 10:18:48 2003  Steve Huston  <shuston@riverace.com>
+
+	* bin/PerlACE/Process_Win32.pm: For WinCE, when generating the
+	  Pocket Controller script, put a 60-second sleep between running the
+	  test and grabbing the log file. The script doesn't wait for the
+	  program to exit before continuing. Will take this up with SOTI,
+	  makers of Pocket Controller.
+
+	* ace/Configuration.cpp (ACE_Configuration_Win32Registry::remove_section):
+	  In the non-recursive case, try to delete the key; previously only
+	  tried to delete the key if recursive.
+
+	* tests/Config_Test.cpp: When reporting failed file import, list why
+	  (%p), not the failed return status (-1). Also fixed many ACE_DEBUG
+	  and ACE_ERROR strings by enclosing in ACE_TEXT.
+
+	* tests/Conn_Test.cpp: When displaying a hostname, properly adjust
+	  to the charset width in use.
+
 Thu Mar 27 14:20:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* THANKS: Added Jia Wan to the hall of fame.

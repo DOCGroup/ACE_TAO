@@ -5,6 +5,7 @@ package PerlACE::Process;
 use strict;
 use Win32::Process;
 use File::Basename;
+use Cwd;
 
 ###############################################################################
 
@@ -24,6 +25,11 @@ my $STILL_ACTIVE = 259;
 # ** Notice that when ACE_RUN_PURIFY_CMD is define, PerlACE::Process
 #    reports the return status of *purify*, not the process being purified.
 #
+# Also hack in the ability to run the test on a WinCE device using the
+# ACE_WINCE_TEST_CONTROLLER environment variable. If set, it specifies a
+# controlling program to use for setting up and executing the test.
+# Further setup can be specialized depending on the value of the variable.
+
 sub new
 {
     my $proto = shift;
@@ -45,6 +51,7 @@ sub new
             $PerlACE::Process::WAIT_DELAY_FACTOR = 1;
         }
     }
+    $self->{WINCE_CTL} = $ENV{"ACE_WINCE_TEST_CONTROLLER"};
 
     bless ($self, $class);
     return $self;
@@ -186,6 +193,45 @@ sub Spawn ()
             "$PurifyOptions ".
             "$orig_cmdline" ;
     }
+    elsif (defined $self->{WINCE_CTL}) {
+        $executable = $self->Executable ();
+        $cmdline = $self->CommandLine ();
+
+        # Generate a script to delete the log files for this program on the
+        # remote device, copy the test down to the device, run it, then
+        # copy the log file(s) back to the log directory.
+        unless (open (SCRIPT, ">start_test.cmd")) {
+            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
+                         "> failed to create start_test.cmd\n";
+            return -1;
+        }
+        my $testname = basename($executable,'.EXE');
+        my $here = getcwd();
+        $here =~ s/\//\\/g;
+        $executable =~ s/^\.//;      # Chop leading .
+        $executable = $here . $executable;   # Fully qualified name
+        # Take off the test name from the start of the command line.
+        # The command name is preprended in the script below.
+        my @tokens = split(' ', $cmdline);
+        @tokens = splice(@tokens,1);
+        $cmdline = join(' ', @tokens);
+#        print SCRIPT "del 1:\\log\\$testname*.txt\n";
+        print SCRIPT "copy $executable 1:\\Windows\n";
+        print SCRIPT "$testname $cmdline\n";
+        if ($testname eq 'Cached_Conn_Test' || $testname eq 'Cached_Accept_Conn_Test') {
+            print SCRIPT "sleep 400\n";
+        }
+        else {
+            print SCRIPT "sleep 60\n";
+        }
+        print SCRIPT "copy 1:\\log\\$testname*.txt $here\\log\n";
+        print SCRIPT "del 1:\\Windows\\$testname.exe\n";
+        print SCRIPT "reset /s\n";
+        close SCRIPT;
+
+        $executable = $ENV{"ComSpec"};
+        $cmdline = "cmd /C start /B /WAIT pocketcontroller -m NAME=start_test.cmd"
+    }
     else {
         $executable = $self->Executable ();
         $cmdline = $self->CommandLine ();
@@ -306,6 +352,24 @@ sub TimedWait ($)
 
     my $status = 0;
     Win32::Process::GetExitCode ($self->{PROCESS}, $status);
+
+    # If this was a WinCE test, the log file was copied back to the log
+    # directory but is named .txt, not .log. Rename it so the log analyzer
+    # can find it.
+    if (defined $self->{WINCE_CTL}) {
+        my $log_name_txt;
+        $log_name_txt = dirname($self->{EXECUTABLE})."\\log\\";
+        $log_name_txt .= basename($self->{EXECUTABLE},'.EXE').".txt";
+        if (-e $log_name_txt) {
+            my $log_name = $log_name_txt;
+            $log_name =~ s/\.txt$/.log/i;
+            rename($log_name_txt, $log_name);
+        }
+        # The device was soft-reset at the end of the test. Wait a few seconds
+        # for it to come back up.
+        sleep (10);
+    }
+
     return $status;
 }
 

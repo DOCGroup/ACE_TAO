@@ -567,6 +567,7 @@ server (void *arg)
 
   ACCEPTOR *acceptor = (ACCEPTOR *) arg;
   ACE_INET_Addr cli_addr;
+  ACE_TCHAR peer_host[MAXHOSTNAMELEN];
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
@@ -610,9 +611,12 @@ server (void *arg)
                                ACE_TEXT ("accept failed, shutting down")),
                               0);
         }
+      // Use this rather than get_host_name() to properly adjust to the
+      // charset width in use.
+      cli_addr.get_host_name (peer_host, MAXHOSTNAMELEN);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) client %s connected from %d\n"),
-                  cli_addr.get_host_name (),
+                  peer_host,
                   cli_addr.get_port_number ()));
 
       svc_handler->recv_data ();
