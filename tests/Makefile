@@ -159,7 +159,7 @@ ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
   endif # rmcast
 endif # ACE_HAS_GNUG_PRE_2_8
 
-ifneq ($(ssl),0)
+ifeq ($(ssl),1)
   DIRS += SSL
 endif # ssl
 
