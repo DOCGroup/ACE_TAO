@@ -1,3 +1,32 @@
+Wed May 16 13:53:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+
+          Added is_defined() check before outputting a
+          redefinition error on an interface. If the interface
+          was forward declared in a previous opening of the
+          module, the check is needed so the IDL compiler will
+          know that the interface has not yet been defined.
+          Thanks to Vsevolod Novikov <novikov@ci.nnov.ru> for
+          pointing out the problem and sending in an example
+          IDL file.
+
+        * TAO_IDL/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be_visitor_union/union_cs.cpp:
+
+          Changed the void *x parameter in _tao_any_destructor
+          to void *_tao_void_pointer. This will reduce the likelihood
+          of a name clash. The IDL file mentioned above contained
+          an interface named 'x', which uncovered the problem.
+
+        * TAO_IDL/be_visitor_valuetype/field_ch.cpp:
+
+          Removed an unused local variable in visit_typedef().
+
 Wed May 16 11:49:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/AMI_Latency/client.cpp:
