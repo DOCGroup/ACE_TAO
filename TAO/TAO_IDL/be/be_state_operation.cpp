@@ -321,6 +321,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           {
           case TAO_CodeGen::TAO_OPERATION_RETURN_TYPE_CS:
             {
+#if 0
               if (bt->node_type () == AST_Decl::NT_typedef)
                 {
                   *os << bt->name ();
@@ -329,10 +330,13 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
                 {
                   *os << "char *";
                 }
+#endif
+              *os << "char *";
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS:
             {
+#if 0
               if (bt->node_type () == AST_Decl::NT_typedef)
                 {
                   *os << bt->name () << " retval = 0;" << nl;
@@ -341,6 +345,8 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
                 {
                   *os << "char *retval = 0;" << nl;
                 }
+#endif
+              *os << "char *retval = 0;" << nl;
             }
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_EXCEPTION_CS:
@@ -355,6 +361,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS:
             {
+#if 0
               if (bt->node_type () == AST_Decl::NT_typedef)
                 {
                   *os << bt->name () << " *retval = new " << bt->name () << ";" << nl;
@@ -363,6 +370,8 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
                 {
                   *os << "char **retval = new char*;" << nl;
                 }
+#endif
+              *os << "char **retval = new char*;" << nl;
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
@@ -378,6 +387,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_OPERATION_CH:
             {
+#if 0
               if (bt->node_type () == AST_Decl::NT_typedef)
                 {
                   // to keep MSVC++ happy
@@ -387,6 +397,8 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
                 {
                   *os << "char *";
                 }
+#endif
+              *os << "char *";
             }
             break;
           default:

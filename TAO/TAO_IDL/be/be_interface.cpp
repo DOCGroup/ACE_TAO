@@ -494,10 +494,12 @@ be_interface::gen_client_stubs (void)
   *cs << "return " << this->name () << "::_nil ();\n";
   cs->decr_indent ();
   *cs << nl;
+#if 0 // also the cause of all evil
   *cs << "obj->Release (); " <<
     "// need this since QueryIntf bumped our refcount" << nl;
-  *cs << "new_obj = new " << this->name () << " (istub); " <<
-    "// construct obj ref using the stub object" << nl;
+#endif
+  *cs << "new_obj = new " << this->name () << " (istub); "
+      << "// construct obj ref using the stub object" << nl;
   *cs << "return new_obj;\n";
   cs->decr_indent ();
   *cs << "} // end of if" << nl;
@@ -1876,17 +1878,103 @@ be_interface::gen_skel_helper (be_interface *derived,
   return 0;
 }
 
-int be_interface::write_as_return (TAO_OutStream *stream,
-				   be_type *type)
+// return the relative skeleton name (needed due to NT compiler insanity)
+char *
+be_interface::relative_skel_name (const char *skelname)
 {
-  *stream << type->name () << "_ptr";
-  return 0;
+  // some compilers do not like generating a fully scoped name for a type that
+  // was defined in the same enclosing scope in which it was defined. For such,
+  // we emit a macro defined in the ACE library.
+  //
+
+  // The tricky part here is that it is not enough to check if the
+  // typename we are using was defined in the current scope. But we
+  // need to ensure that it was not defined in any of our ancestor
+  // scopes as well. If that is the case, then we can generate a fully
+  // scoped name for that type, else we use the ACE_NESTED_CLASS macro
+
+  // thus we need some sort of relative name to be generated
+
+  static char macro [NAMEBUFSIZE];
+  be_decl *def_scope = 0;  // our defining scope
+  char // hold the fully scoped name
+    def_name [NAMEBUFSIZE],
+    use_name [NAMEBUFSIZE];
+  char // these point to the curr and next component in the scope
+    *def_curr = def_name,
+    *def_next,
+    *use_curr = use_name,
+    *use_next;
+
+  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (def_name, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (use_name, '\0', NAMEBUFSIZE);
+
+  // traverse every component of the def_scope and use_scope beginning at the
+  // root and proceeding towards the leaf trying to see if the components
+  // match. Continue until there is a match and keep accumulating the path
+  // traversed. This forms the first argument to the ACE_NESTED_CLASS
+  // macro. Whenever there is no match, the remaining components of the
+  // def_scope form the second argument
+
+  ACE_OS::strcpy (def_name, this->full_skel_name ());
+  ACE_OS::strcpy (use_name, skelname);
+
+  while (def_curr && use_curr)
+    {
+      // find the first occurrence of a :: and advance the next pointers accordingly
+      def_next = ACE_OS::strstr (def_curr, "::");
+      use_next = ACE_OS::strstr (use_curr, "::");
+
+      if (def_next)
+        *def_next = 0;
+
+      if (use_next)
+        *use_next = 0;
+
+      if (!ACE_OS::strcmp (def_curr, use_curr))
+        {
+          // they have same prefix, append to arg1
+          def_curr = (def_next ? (def_next+2) : 0); // skip the ::
+          use_curr = (use_next ? (use_next+2) : 0); // skip the ::
+        }
+      else
+        {
+          // we had overwritten a ':' by a '\0' for string comparison. We
+          // revert back because we want the rest of the relative name to be
+          // used
+          if (def_next)
+            *def_next = ':';
+
+          if (use_next)
+            *use_next = ':';
+
+          // no match. This is the end of the first argument. Get out
+          // of the loop as no more comparisons are necessary
+          break;
+        }
+    }
+
+  // start the 2nd argument of the macro
+
+  // copy the remaining def_name (if any left)
+  if (def_curr)
+    ACE_OS::strcat (macro, def_curr);
+
+  return macro;
 }
 
 int
 be_interface::accept (be_visitor *visitor)
 {
   return visitor->visit_interface (this);
+}
+
+int be_interface::write_as_return (TAO_OutStream *stream,
+				   be_type *type)
+{
+  *stream << type->name () << "_ptr";
+  return 0;
 }
 
 // Narrowing
