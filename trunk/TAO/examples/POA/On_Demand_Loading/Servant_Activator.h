@@ -36,7 +36,7 @@
 class MyFooServantActivator : public POA_PortableServer::ServantActivator
 {
   //= TITLE
-  //   Servant Activator for the directory service servant.
+  //   Servant Activator for the MyFoo servant.
   //
   //= DESCRIPTION
   //   This class associates an unassociated servant with an object in
@@ -82,18 +82,18 @@ private:
   PortableServer::Servant activate_servant (const char *str,
                                             PortableServer::POA_ptr poa,
                                             long value);
-  // @@ Kirthika, can you please change library to DLL globally?
-  // Gets the servant on activation by loading the appropriate library
+  // @@ *done*Kirthika, can you please change dll to DLL globally?
+  // Gets the servant on activation by loading the appropriate dll
   // and getting the servant object.
   // @@ Kirthika, can you please explain what the various arguments mean?!
 
   void deactivate_servant (PortableServer::Servant servant,
                            const PortableServer::ObjectId &oid);
-  // The servant is killed and care is taken to close the library
+  // The servant is killed and care is taken to close the dll
   // loaded.
 
   void parse_string (const char* s);
-  // Parse the string to obtain the library name and the symbol which
+  // Parse the string to obtain the dll name and the symbol which
   // will get us the servant pointer.
 
   
@@ -101,7 +101,7 @@ private:
   // A reference to the ORB.
 
   CORBA::String_var dllname_;
-  // The name of the library containing the servant.
+  // The name of the dll containing the servant.
 
   CORBA::String_var create_symbol_;
   // The symbol which on getting invoked will give us the servant

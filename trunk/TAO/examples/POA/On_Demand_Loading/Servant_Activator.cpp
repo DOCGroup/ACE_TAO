@@ -80,9 +80,9 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &oid,
     this->deactivate_servant (servant, oid);
 }
 
-// This method loads the dynamically linked library which is the
+// This method loads the dynamically linked dll which is the
 // servant and returns the servant object which is then used for other
-// operations in the library.
+// operations in the dll.
 
 PortableServer::Servant
 MyFooServantActivator::activate_servant (const char *str,
@@ -120,7 +120,7 @@ MyFooServantActivator::activate_servant (const char *str,
                        "Bind failed"),
                       0);
    
-  // Now that the library name is available we open the library.
+  // Now that the dll name is available we open the dll.
   result = dll_->open (dllname_);
   if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -167,14 +167,14 @@ MyFooServantActivator::deactivate_servant (PortableServer::Servant servant,
     
 }
 
-// The objectID is in a format of library:factory_function which has
+// The objectID is in a format of dll:factory_function which has
 // to be parsed and separated into tokens to be used.
 
 void
 MyFooServantActivator::parse_string (const char *s)
 {
-  // The format of the object library:factory_function.  This string
-  // is parsed to obtain the library name and the function name which
+  // The format of the object dll:factory_function.  This string
+  // is parsed to obtain the dll name and the function name which
   // will create trhe servant and return it to us.
 
   // @@ Kirthika, make sure that you first figure out how big the
@@ -207,13 +207,13 @@ MyFooServantActivator::parse_string (const char *s)
   this->create_symbol_ = CORBA::string_dup (func);
 
   ACE_DEBUG ((LM_DEBUG,
-              "the servant library:%s\n the factory_function:%s\n ",
+              "the servant dll:%s\n the factory_function:%s\n ",
               this->dllname_.in (),
               this->create_symbol_.in ()));
 }
 
-// This method returns an ObjectId when given an library name and the
-// factory method to be invoked in the library.  The format of the
+// This method returns an ObjectId when given an dll name and the
+// factory method to be invoked in the dll.  The format of the
 // ObjectId is libname:factory_function.
 
 PortableServer::ObjectId_var
