@@ -1,3 +1,11 @@
+Sat Jan  3 11:02:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Makefile:
+
+	  Removed ASG for the timebeing from the daily builds. I want to
+	  seperate the chaff from wheat and the noise form this is making
+	  things hard. Will let Steve know about this. 
+
 Sat Jan  3 16:14:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/templates/bor.mpd:
@@ -2404,7 +2412,7 @@ Wed Nov 26 12:10:22 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           2) %I should not use memset to set spaces in wide string
           3) recent modifications to remove dependencies on ACE_TRACE
              prevent %I from indenting
-          Thanks to Duane Binder for these fixes.
+          Thanks to Duane Binder for these fixes. Fixes [BUGID 1660]
 
 Wed Nov 26 12:15:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
