@@ -303,8 +303,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
             if (ACE_OS::strcasecmp (name, "dynamic") == 0)
               this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_DYNAMIC_HASH;
-            else if (ACE_OS::strcasecmp (name, "user") == 0)
-              this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_USER_DEFINED;
+            else if (ACE_OS::strcasecmp (name, "linear") == 0)
+              this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_LINEAR;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
