@@ -24,7 +24,9 @@ module AVStreams
 
   typedef sequence<string> protocolSpec;
 
-  typedef sequence<octet> key;
+  // @@ sequence<octet> is broken for tao_idl ?
+  typedef string key;
+  // typedef sequence<octet> key;
 
   // protocol names registered by OMG.
   // e.g., TCP, UDP, AAL5, IPX, RTP
