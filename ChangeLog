@@ -1,3 +1,15 @@
+Fri May  7 14:25:07 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Log_Msg.cpp:
+
+	  Don't bother checking if errno is less than sys_nerr on glibc
+	  platforms.  strerror() can handle values greater than sys_nerr
+	  gracefully.  Fixes "`sys_nerr' is deprecated; use `strerror' or
+	  `strerror_r' instead" link-time warnings.
+
+	  Replaced deprecated ACE cast macro usage with ANSI C++ cast
+	  counterparts.
+
 Fri May  7 09:38:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Mutex.h:

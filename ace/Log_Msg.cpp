@@ -77,8 +77,8 @@ ACE_thread_key_t *log_msg_tss_key (void)
 // would be in an unnamed namespace, but it's a macro instead.
 // count is a size_t, len is an int and assumed to be non-negative.
 #define ACE_UPDATE_COUNT(COUNT, LEN) \
-   do { if (ACE_static_cast (size_t, LEN) > COUNT) COUNT = 0; \
-     else COUNT -= ACE_static_cast (size_t, LEN); \
+   do { if (static_cast<size_t> (LEN) > COUNT) COUNT = 0; \
+     else COUNT -= static_cast<size_t> (LEN); \
    } while (0)
 
 /// Instance count for Log_Msg - used to know when dynamically
@@ -261,8 +261,7 @@ ACE_Log_Msg::exists (void)
   // Get the tss_log_msg from thread-specific storage.
   return key_created_
     && ACE_Thread::getspecific (*(log_msg_tss_key ()),
-                                ACE_reinterpret_cast (void **,
-                                                      &tss_log_msg)) != -1
+                                reinterpret_cast<void **> (&tss_log_msg)) != -1
     && tss_log_msg;
 # else
 #   error "Platform must support thread-specific storage if threads are used."
@@ -283,9 +282,9 @@ ACE_Log_Msg::instance (void)
   if (key_created_ == 0)
     {
       ACE_thread_mutex_t *lock =
-        ACE_reinterpret_cast (ACE_thread_mutex_t *,
-                              ACE_OS_Object_Manager::preallocated_object
-                              [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
+        reinterpret_cast<ACE_thread_mutex_t *> (
+          ACE_OS_Object_Manager::preallocated_object
+            [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
 
       if (1 == ACE_OS_Object_Manager::starting_up())
         //This function is called before ACE_OS_Object_Manager is
@@ -954,7 +953,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #if defined (__FreeBSD__) || defined(__QNX__) || defined(__APPLE__)
    extern const int sys_nerr;
 #else
+   // sys_nerr is deprecated on some platforms.
+#  if !defined (__GLIBC__)
    extern int sys_nerr;
+#  endif  /* !__GLIBC__ */
 #endif /* !__FreeBSD__ && !__QNX__ && !__APPLE__ */
 #endif /* ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
   typedef void (*PTF)(...);
@@ -1221,8 +1223,13 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     errno = ACE::map_errno (this->errnum ());
 #if !defined (ACE_HAS_WINCE)     /* CE doesn't do strerror() */
-                    if (errno >= 0 && errno < sys_nerr)
-                      {
+                    if (errno >= 0
+#  if !defined (__GLIBC__)   /* sys_nerr is deprecated on some
+                               platforms. */
+                        && errno < sys_nerr
+#  endif  /* !__GLIBC__ */
+                        )
+                      {                      
                         ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
                         if (can_check)
                           this_len = ACE_OS::snprintf
@@ -1331,7 +1338,13 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'm': // Format the string assocated with the errno value.
                   {
                     errno = ACE::map_errno (this->errnum ());
-                    if (errno >= 0 && errno < sys_nerr)
+                    if (errno >= 0
+
+#  if !defined (__GLIBC__)   /* sys_nerr is deprecated on some
+                               platforms. */
+                        && errno < sys_nerr
+#  endif  /* !__GLIBC__ */
+                        )
                       {
                         ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
                         if (can_check)
@@ -1449,16 +1462,15 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     wp = 4;
 #endif /* ACE_HAS_TRACE */
                   wp *= this->trace_depth_;
-                  if (ACE_static_cast (size_t, wp) > bspace)
-                    wp = ACE_static_cast (int, bspace);
-
+                  if (static_cast<size_t> (wp) > bspace)
+                    wp = static_cast<int> (bspace);
                   for (tmp_indent = wp;
                        tmp_indent;
                        tmp_indent--)
                     *bp++ = ' ';
 
                   *bp = '\0';
-                  bspace -= ACE_static_cast (size_t, wp);
+                  bspace -= static_cast<size_t> (wp);
                   skip_nul_locate = 1;
                   break;
 
@@ -1566,11 +1578,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format,
-                       ACE_static_cast(unsigned, ACE_Thread::self ()));
+                       static_cast<unsigned> (ACE_Thread::self ()));
                   else
-                    this_len = ACE_OS::sprintf
-                      (bp, format, ACE_static_cast(unsigned,
-                                                   ACE_Thread::self ()));
+                    this_len =
+                      ACE_OS::sprintf (bp,
+                                       format,
+                                       static_cast <unsigned> (ACE_Thread::self ()));
 #elif defined (ACE_AIX_VERS) && (ACE_AIX_VERS <= 402)
                   // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
                   // a little ugly to send that through a %u format.  So,
@@ -1802,8 +1815,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                     if (wchar_t_str == 0)
                       {
-                        wchar_t_str = ACE_reinterpret_cast(wchar_t*,
-                                                           wchar_str);
+                        wchar_t_str = reinterpret_cast<wchar_t*> (wchar_str);
                       }
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
@@ -2103,8 +2115,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
         log_record.print (ACE_Log_Msg::local_host_,
                           ACE_Log_Msg::flags_,
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-                          ACE_static_cast (FILE *,
-                                           this->msg_ostream ())
+                          static_cast<FILE *> (this->msg_ostream ())
 #else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
                           *this->msg_ostream ()
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
@@ -2589,8 +2600,7 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
   if (thr_desc != 0)
     // This downcast is safe.  We do it to avoid having to #include
     // ace/Thread_Manager.h.
-    new_log->thr_desc (ACE_static_cast (ACE_Thread_Descriptor *,
-                                        thr_desc));
+    new_log->thr_desc (static_cast<ACE_Thread_Descriptor *> (thr_desc));
   // Block the thread from proceeding until
   // thread manager has thread descriptor ready.
 
