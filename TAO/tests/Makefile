@@ -17,6 +17,7 @@ DIRS  = CDR \
         BiDirectional \
 	BiDirectional_NestedUpcall \
 	Bug_1269_Regression \
+	Bug_1693_Test \
 	Bug_1270_Regression \
 	Bug_1020_Regression \
 	Bug_1361_Regression \
