@@ -214,3 +214,31 @@ CORBA::Environment::print_exception (const char *info,
     ACE_DEBUG ((LM_ERROR,
                 "TAO: (%P|%t) no exception\n"));
 }
+
+// *********************************************************
+
+CORBA_Environment_var &
+CORBA_Environment_var::operator= (CORBA_Environment_ptr p)
+{
+  if (this->ptr_ != p)
+  {
+    if (this->ptr_ != 0)
+    delete (this->ptr_);
+
+    this->ptr_ = p;
+  }
+  return *this;
+}
+
+CORBA_Environment_var &
+CORBA_Environment_var::operator= (const CORBA_Environment_var &r)
+{
+  if (this->ptr_ != 0)
+    delete this->ptr_;
+
+  this->ptr_ = new CORBA::Environment (*r.ptr_);
+  return *this;
+}
+
+
+
