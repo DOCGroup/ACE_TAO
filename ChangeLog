@@ -1,3 +1,8 @@
+Thu Apr 10 08:12:22 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_borland.GNU:
+          Improved this file for Kylix support.
+
 Thu Apr 10 07:47:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.cpp:
