@@ -1,3 +1,10 @@
+Mon Sep 27 19:29:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	  Fixed string_to_object() it was not working when the IOR was
+	  *really* big. Thanks to Dennis D Noll
+	  <Dennis.Noll@MW.Boeing.com> for reporting this problem.
+
 Mon Sep 27 15:48:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface_strategy.cpp:
