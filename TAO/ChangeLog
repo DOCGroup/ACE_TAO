@@ -1,3 +1,19 @@
+Wed Dec  8 17:11:57 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        
+          Cosmetic change to source code.
+          
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Fixed a situation where a variable holding the number of 
+          members in a scope's 'referenced' list could be mistakenly
+          incremented, leading to access of a garbage member of the
+          list later on. This situation occurred when checking the
+          list in preparation to add the implied-IDL valuetype
+          exception holder of an interface which was forward
+          declared in a previously opened module.
+
 Wed Dec  8 20:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicC.{h,cpp,i,inl}:

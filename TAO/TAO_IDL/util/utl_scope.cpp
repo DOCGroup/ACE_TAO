@@ -1947,8 +1947,11 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
               break;
             }
         }
-
-      ++this->pd_referenced_used;
+      
+      if (this->pd_referenced_used > 0)
+        {
+          ++this->pd_referenced_used;
+        }
     }
 
   // Now, if recursive is specified and "this" is not a common ancestor
