@@ -1,3 +1,9 @@
+Tue Apr 16 23:32:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added Asynch_Connector.{h cpp} and
+          Asynch_Pseudo_Task.{h cpp}.
+
 Tue Apr 16 16:39:07 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/POSIX_Asynch_IO.cpp (set_handle, handle_close):

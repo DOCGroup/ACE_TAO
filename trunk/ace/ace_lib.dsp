@@ -42,8 +42,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MT /W3 /GX /O1 /I "../" /I "../PACE" /D ACE_OS_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
@@ -69,8 +69,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MTd /W3 /GX /Z7 /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
@@ -96,8 +96,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /Zi /O1 /I "../" /I "../PACE" /D "_WINDOWS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -122,8 +122,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_WINDOWS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -177,11 +177,19 @@ SOURCE=.\Argv_Type_Converter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Connector.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_IO.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_IO_Impl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Pseudo_Task.cpp
 # End Source File
 # Begin Source File
 
@@ -1109,11 +1117,19 @@ SOURCE=.\Asynch_Acceptor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Connector.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_IO.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_IO_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Pseudo_Task.h
 # End Source File
 # Begin Source File
 
