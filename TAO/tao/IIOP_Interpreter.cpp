@@ -174,7 +174,7 @@ declare_entry (CORBA::WChar, tk_wchar);
 declare_entry (CORBA::WString, tk_wstring);
 
 void
-TAO_IIOP_Interpreter::init_table (void)
+TAO_IIOP_Interpreter::init (void)
 {
   setup_entry (CORBA::Short, tk_short);
   setup_entry (CORBA::Long, tk_long);

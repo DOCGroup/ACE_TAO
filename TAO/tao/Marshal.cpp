@@ -30,7 +30,7 @@
 TAO_Marshal_Factory* TAO_Marshal::DEFAULT_MARSHAL_FACTORY = 0;
 
 void
-TAO_Marshal::initialize (void)
+TAO_Marshal::init (void)
 {
   DEFAULT_MARSHAL_FACTORY = TAO_MARSHAL_FACTORY::instance();
 }
