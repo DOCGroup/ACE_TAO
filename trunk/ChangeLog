@@ -1,3 +1,9 @@
+Mon May 10 19:17:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Added define ACE_LACKS_THREAD_PROCESS_SCOPING, Cygwin lacks
+          this and with this define set the Bound_Ptr test works.
+
 Mon May 10 14:42:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Active_Objects/AO.cpp:
