@@ -1,3 +1,10 @@
+Wed Jul 29 16:05:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/Process_Unix.pm: 
+	  Use SIGTERM instead of SIGHUP to kill a process, it is the Right
+	  Thing and SIGHUP will not work in some cases because it is usual
+	  to catch this signal.
+
 Wed Jul 29 14:04:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Asynch_Acceptor.cpp (open): Added

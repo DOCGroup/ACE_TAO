@@ -39,7 +39,7 @@ sub Create
 sub Kill
 {
   my $self = shift;
-  kill (1, $self->[0]);
+  kill ($SIG{'TERM'}, $self->[0]);
 }
 
 sub Wait
