@@ -1743,7 +1743,7 @@ nobase_include_HEADERS += \
   RTPortableServer/RT_Policy_Validator.h \
   RTPortableServer/RT_Servant_Dispatcher.h \
   RTPortableServer/rtportableserver_export.h \
-  RTPortableServer/RTPortableServerC.i \
+  RTPortableServer/RTPortableServerC.inl \
   RTPortableServer/RT_Acceptor_Filters.i \
   RTPortableServer/RT_Collocation_Resolver.i \
   RTPortableServer/RT_POA.i \
