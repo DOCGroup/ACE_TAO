@@ -1,3 +1,8 @@
+Fri Apr 16 19:02:07 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a few warnings in g++
+	  and also added TAO_McastConfigIf and TAO_Negotiator class declarations.
+
 Fri Apr 16 16:39:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Connect: Added a new connection handling strategy that
