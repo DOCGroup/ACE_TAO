@@ -90,7 +90,10 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << "  return 1;" << be_nl
       << "TAO_CHECK_ENV;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_CATCHANY {}" << be_nl
+      << "TAO_CATCHANY" << be_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_nl
       << "TAO_ENDTRY;" << be_uidt_nl
       << "}\n\n";
 
