@@ -1,3 +1,16 @@
+Wed Jan 24 08:56:16 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+          The changed to document the ACE_SVC_* macros were accidentally
+          lost, fixed.
+
+        * ace/Service_Config.cpp:
+          New debug message when processing an explicit directive, useful
+          to find out when and why TAO invokes
+          ACE_Service_Config::process_directive() directly.
+          As with all other debug messages in this file it only shows up
+          if ACE::debug() returns non-zero.
+
 Wed Jan 24 01:44:47 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/Configuration.cpp (expand_path): Fixed a bug with assignment to
