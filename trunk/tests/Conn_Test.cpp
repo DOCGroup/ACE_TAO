@@ -638,7 +638,20 @@ spawn_threads (ACCEPTOR *acceptor,
                 ASYS_TEXT ("client thread create failed")));
 
   // Wait for the threads to exit.
-  ACE_Thread_Manager::instance ()->wait ();
+  // But, wait for a limited time because sometimes the test hangs on Irix.
+  const ACE_Time_Value max_wait (200 /* seconds */);
+  const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
+  if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
+    {
+      if (errno == ETIME)
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("maximum wait time of %d msec exceeded\n"),
+                               max_wait.msec ()));
+      else
+        ACE_OS::perror ("wait");
+
+      status = -1;
+    }
 
 #if defined (VXWORKS)
   for (i = 0; i < n_servers; ++i)
