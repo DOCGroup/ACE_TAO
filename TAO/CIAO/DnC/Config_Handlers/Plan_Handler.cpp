@@ -91,13 +91,13 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("connection")))
             {
-              this->process_con_element (node, this->doc_,
+              this->process_pcd_element (node, this->doc_,
                                          this->iter_,
                                          plan);
             }
           else if (node_name == XStr (ACE_TEXT ("externalProperty")))
             {
-              this->process_exp_element (node, this->doc_,
+              this->process_ppm_element (node, this->doc_,
                                          this->iter_,
                                          plan);
             }
@@ -115,7 +115,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("dependsOn")))
             {
-              this->process_depends_element (node, this->doc_,
+              this->process_id_element (node, this->doc_,
                                              this->iter_,
                                              plan);
             }
@@ -153,7 +153,7 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_depends_element
+    void Plan_Handler::process_id_element
        (DOMNode* node, DOMDocument*,
         DOMNodeIterator* iter,
         Deployment::DeploymentPlan& plan)
@@ -192,7 +192,7 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_con_element
+    void Plan_Handler::process_pcd_element
        (DOMNode* node, DOMDocument* doc,
         DOMNodeIterator* iter,
         Deployment::DeploymentPlan& plan)
@@ -205,19 +205,19 @@ namespace CIAO
           plan.connection.length (i + 1);
           if (length == 1)
             {
-              this->process_con (doc, iter,
+              this->process_pcd (doc, iter,
                                  plan.connection[i]);
             }
           else if (length > 1)
             {
-              this->process_attributes_for_con
+              this->process_attributes_for_pcd
                    (named_node_map, doc, iter, i,
                     plan.connection[i]);
             }
         }
     }
 
-    void Plan_Handler::process_exp_element
+    void Plan_Handler::process_ppm_element
        (DOMNode* node, DOMDocument* doc,
         DOMNodeIterator* iter,
         Deployment::DeploymentPlan& plan)
@@ -230,12 +230,12 @@ namespace CIAO
           plan.externalProperty.length (i + 1);
           if (length == 1)
             {
-              this->process_exp (doc, iter,
+              this->process_ppm (doc, iter,
                                  plan.externalProperty[i]);
             }
           else if (length > 1)
             {
-              this->process_attributes_for_exp
+              this->process_attributes_for_ppm
                    (named_node_map, doc, iter, i,
                     plan.externalProperty[i]);
             }
@@ -1629,10 +1629,10 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_exp 
+    void Plan_Handler::process_ppm 
        (DOMDocument* doc,
         DOMNodeIterator* iter,
-        Deployment::PlanPropertyMapping& exp)
+        Deployment::PlanPropertyMapping& ppm)
     {
       for (DOMNode* node = iter->nextNode();
            node != 0;
@@ -1643,19 +1643,19 @@ namespace CIAO
             {
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_exp_name (text->getNodeValue(), exp);
+              this->process_ppm_name (text->getNodeValue(), ppm);
             }
           else if (node_name == XStr (ACE_TEXT ("source")))
             {
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_exp_source (text->getNodeValue(), exp);
+              this->process_ppm_source (text->getNodeValue(), ppm);
             }
           else if (node_name == XStr (ACE_TEXT ("externalName")))
             {
               node = this->iter_->nextNode();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_exp_ext_name (text->getNodeValue(), exp);
+              this->process_ppm_ext_name (text->getNodeValue(), ppm);
             }
           else if (node_name == XStr (ACE_TEXT ("delegatesTo")))
             {
@@ -1664,18 +1664,18 @@ namespace CIAO
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
                   CORBA::ULong i
-                    (exp.delegatesTo.length ());
-                  exp.delegatesTo.length (i + 1);
+                    (ppm.delegatesTo.length ());
+                  ppm.delegatesTo.length (i + 1);
                   if (length == 1)
                     {
                       this->process_pspr (doc, iter,
-                                          exp.delegatesTo[i]);
+                                          ppm.delegatesTo[i]);
                     }
                   else if (length > 1)
                     {
                       this->process_attributes_for_pspr
                        (named_node_map, doc,
-                        iter, i, exp.delegatesTo[i]);
+                        iter, i, ppm.delegatesTo[i]);
                     }
                 }
             }
@@ -1825,36 +1825,36 @@ namespace CIAO
       return;
     }
 
-    void Plan_Handler::process_exp_name
+    void Plan_Handler::process_ppm_name
        (const XMLCh* name,
-        Deployment::PlanPropertyMapping& exp)
+        Deployment::PlanPropertyMapping& ppm)
     {
       if (name)
         {
-          exp.name = XMLString::transcode (name);
+          ppm.name = XMLString::transcode (name);
         }
     }
 
-    void Plan_Handler::process_exp_ext_name
+    void Plan_Handler::process_ppm_ext_name
        (const XMLCh* ext_name,
-        Deployment::PlanPropertyMapping& exp)
+        Deployment::PlanPropertyMapping& ppm)
     {
       if (ext_name)
         {
-          exp.externalName = XMLString::transcode (ext_name);
+          ppm.externalName = XMLString::transcode (ext_name);
         }
     }
 
-    void Plan_Handler::process_exp_source
+    void Plan_Handler::process_ppm_source
        (const XMLCh* source,
-        Deployment::PlanPropertyMapping& exp)
+        Deployment::PlanPropertyMapping& ppm)
     {
       if (source)
         {
-          CORBA::ULong i (exp.source.length ());
-          exp.source.length (i + 1);
+          CORBA::ULong i (ppm.source.length ());
+          ppm.source.length (i + 1);
 
-          exp.source[i] = XMLString::transcode (source);
+          ppm.source[i] = XMLString::transcode (source);
         }
     }
 
@@ -1881,12 +1881,12 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_attributes_for_exp
+    void Plan_Handler::process_attributes_for_ppm
        (DOMNamedNodeMap* named_node_map,
         DOMDocument* doc,
         DOMNodeIterator* iter,
         int value,
-        Deployment::PlanPropertyMapping& plan_exp)
+        Deployment::PlanPropertyMapping& plan_ppm)
     {
       int length = named_node_map->getLength ();
 
@@ -1901,8 +1901,8 @@ namespace CIAO
           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
             {
               id_map_.bind (aceattrnodevalue, value);
-              this->process_exp (doc, iter,
-                                 plan_exp);
+              this->process_ppm (doc, iter,
+                                 plan_ppm);
             }
           else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
             {
@@ -1943,8 +1943,8 @@ namespace CIAO
                                                0,
                                                true);
               href_iter->nextNode ();
-              this->process_exp (href_doc, href_iter,
-                                 plan_exp);
+              this->process_ppm (href_doc, href_iter,
+                                 plan_ppm);
             }
         }
       return;
@@ -2090,7 +2090,7 @@ namespace CIAO
         }
     }
 
-    void Plan_Handler::process_con 
+    void Plan_Handler::process_pcd 
        (DOMDocument* doc,
         DOMNodeIterator* iter,
         Deployment::PlanConnectionDescription& pcd)
@@ -2187,7 +2187,7 @@ namespace CIAO
         }  
     }
 
-    void Plan_Handler::process_attributes_for_con
+    void Plan_Handler::process_attributes_for_pcd
        (DOMNamedNodeMap* named_node_map,
         DOMDocument* doc,
         DOMNodeIterator* iter,
@@ -2207,7 +2207,7 @@ namespace CIAO
           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
             {
               id_map_.bind (aceattrnodevalue, value);
-              this->process_con (doc, iter,
+              this->process_pcd (doc, iter,
                                  plan_con);
             }
           else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
@@ -2249,7 +2249,7 @@ namespace CIAO
                                                0,
                                                true);
               href_iter->nextNode ();
-              this->process_con (href_doc, href_iter,
+              this->process_pcd (href_doc, href_iter,
                                  plan_con);
             }
         }

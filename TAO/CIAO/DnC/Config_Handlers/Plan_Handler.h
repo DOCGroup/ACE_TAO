@@ -106,13 +106,13 @@ namespace CIAO
                                 Deployment::DeploymentPlan& plan);
 
       /// process PlanConnectionDescription element
-      void process_con_element (DOMNode* node,
+      void process_pcd_element (DOMNode* node,
                                 DOMDocument* doc,
                                 DOMNodeIterator* iter,
                                 Deployment::DeploymentPlan& plan);
 
       /// process PlanPropertyMapping element
-      void process_exp_element (DOMNode* node,
+      void process_ppm_element (DOMNode* node,
                                 DOMDocument* doc,
                                 DOMNodeIterator* iter,
                                 Deployment::DeploymentPlan& plan);
@@ -135,8 +135,8 @@ namespace CIAO
                                      DOMNodeIterator* iter,
                                      Deployment::DeploymentPlan& plan);
 
-      /// process dependsOn element
-      void process_depends_element (DOMNode* node,
+      /// process ID element
+      void process_id_element (DOMNode* node,
                                     DOMDocument* doc,
                                     DOMNodeIterator* iter,
                                     Deployment::DeploymentPlan& plan);
@@ -162,14 +162,14 @@ namespace CIAO
                         Deployment::ArtifactDeploymentDescription& add);
 
       /// process con
-      void process_con (DOMDocument* doc,
+      void process_pcd (DOMDocument* doc,
                         DOMNodeIterator* iter,
                         Deployment::PlanConnectionDescription& con);
 
       /// process external property
-      void process_exp (DOMDocument* doc,
+      void process_ppm (DOMDocument* doc,
                         DOMNodeIterator* iter,
-                        Deployment::PlanPropertyMapping& exp);
+                        Deployment::PlanPropertyMapping& ppm);
 
       /// process idd
       void process_idd (DOMDocument* doc,
@@ -217,18 +217,18 @@ namespace CIAO
                                        Deployment::InstanceResourceDeploymentDescription& irdd);
 
       /// process the con element with HREF attribute
-      void process_attributes_for_con (DOMNamedNodeMap* named_node_map,
+      void process_attributes_for_pcd (DOMNamedNodeMap* named_node_map,
                                        DOMDocument* doc,
                                        DOMNodeIterator* iter,
                                        int value,
                                        Deployment::PlanConnectionDescription& con);
 
-      /// process the exp element with HREF attribute
-      void process_attributes_for_exp (DOMNamedNodeMap* named_node_map,
+      /// process the ppm element with HREF attribute
+      void process_attributes_for_ppm (DOMNamedNodeMap* named_node_map,
                                        DOMDocument* doc,
                                        DOMNodeIterator* iter,
                                        int value,
-                                       Deployment::PlanPropertyMapping& exp);
+                                       Deployment::PlanPropertyMapping& ppm);
 
       /// process the idd element with HREF attribute
       void process_attributes_for_idd (DOMNamedNodeMap* named_node_map,
@@ -308,13 +308,13 @@ namespace CIAO
       void process_idd_name (const XMLCh* name,
                              Deployment::InstanceDeploymentDescription& idd);
 
-      /// process the exp name
-      void process_exp_name (const XMLCh* name,
-                             Deployment::PlanPropertyMapping& exp);
+      /// process the ppm  name
+      void process_ppm_name (const XMLCh* name,
+                             Deployment::PlanPropertyMapping& ppm);
 
-      /// process the exp external name
-      void process_exp_ext_name (const XMLCh* name,
-                             Deployment::PlanPropertyMapping& exp);
+      /// process the ppm external name
+      void process_ppm_ext_name (const XMLCh* name,
+                             Deployment::PlanPropertyMapping& ppm);
 
       /// process the idd node
       void process_idd_node (const XMLCh* node,
@@ -340,9 +340,9 @@ namespace CIAO
       void process_mdd_source (const XMLCh* source,
                              Deployment::MonolithicDeploymentDescription& mdd);
 
-      /// process the exp source
-      void process_exp_source (const XMLCh* source,
-                             Deployment::PlanPropertyMapping& exp);
+      /// process the ppm source
+      void process_ppm_source (const XMLCh* source,
+                             Deployment::PlanPropertyMapping& ppm);
 
       /// process the pcd source
       void process_pcd_source (const XMLCh* source,
