@@ -100,8 +100,8 @@ public:
   static void reset (void);
   static int get (void);
   static int iterations (void);
-  static int max_keysig_size (void);
-  static void keysig_size (int);
+  static u_int max_keysig_size (void);
+  static void keysig_size (u_int);
   static int jump (void);
   static int initial_value (void);
   static int total_switches (void);
@@ -118,7 +118,7 @@ private:
   static int total_switches_;
   // Number of switch statements to generate.
 
-  static int total_keysig_size_;
+  static u_int total_keysig_size_;
   // Total number of distinct key_positions.
 
   static int size_;
