@@ -28,9 +28,6 @@ else
   login=`whoami`
 fi
 
-#### Get the user id.
-uid=`id | sed 's/uid=\([0-9]\{1,\}\).*/\1/'`
-
 #### Set TAO_ROOT, if it wasn't set.
 if [ ! "$TAO_ROOT" ]; then
   if [ "$ACE_ROOT" ]; then
@@ -46,6 +43,11 @@ trap "/bin/rm -f /tmp/pids$login" 0 1 2 3 15
 
 echo // Killing the old services
 
+if [ -s /tmp/nameservicepid_$login ]; then
+  kill `cat /tmp/nameservicepid_$login`
+  /bin/rm /tmp/nameserviceior_$login /tmp/nameservicepid_$login
+fi
+
 ps $ps_opts | grep Service | grep $login | grep -v grep | cut -c10-17 > /tmp/pids$login
 
 if [ -s /tmp/pids$login ]; then
@@ -60,24 +62,23 @@ fi
 
 echo // Initializing the log file
 
-if [ -r /tmp/logfile_$login ]; then
-  rm /tmp/logfile_$login
-fi
-
 echo // Logfile for the script "ss" which startes Name, Scheduling and Event Service  > /tmp/logfile_$login
 
-nameserviceport=`expr 20023 + $uid`
-schedulerserviceport=`expr 60023 + $uid`
-eventserviceport=`expr 100023 + $uid`
+nameserviceport=0
+schedulerserviceport=0
+eventserviceport=0
 
 cd $TAO_ROOT/orbsvcs/Naming_Service
-echo $ ./Naming_Service -ORBport $nameserviceport >> /tmp/logfile_$login
-./Naming_Service -ORBport $nameserviceport >> /tmp/logfile_$login 2>&1  &
+echo $ ./Naming_Service -ORBport $nameserviceport \
+       -o /tmp/nameserviceior_$login \
+       -p /tmp/nameservicepid_$login >> /tmp/logfile_$login
+./Naming_Service -ORBport $nameserviceport \
+       -o /tmp/nameserviceior_$login \
+       -p /tmp/nameservicepid_$login >> /tmp/logfile_$login 2>&1  &
 
 sleep 1
 
-IOR=`perl -ne 'if (s/NameService IOR is <(.*)>/$1/) { print; last; }' \
-      /tmp/logfile_$login`
+IOR=`cat /tmp/nameserviceior_$login`
 
 echo // The IOR of the Naming Service: $IOR
 
