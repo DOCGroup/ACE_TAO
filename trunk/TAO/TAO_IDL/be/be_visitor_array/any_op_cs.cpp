@@ -83,17 +83,16 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "TAO_CHECK_ENV;" << be_nl
       << "if (_tao_any.any_owns_data ())" << be_nl
       << "{" << be_idt_nl
-      << node->name () << "_slice *&_tao_elem_ptr = _tao_elem.out ();" << be_nl
-      << "_tao_elem_ptr = " << node->name () << "_alloc ();" << be_nl
-      << "if (!_tao_elem_ptr) return 0;" << be_nl
+      << "_tao_elem.out () = " << node->name () << "_alloc ();" << be_nl
+      << "if (!_tao_elem.in ()) return 0;" << be_nl
       << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
       << be_nl
       << "if (stream.decode (" << node->tc_name ()
-      << ", _tao_elem_ptr, 0, TAO_TRY_ENV)" << be_nl
+      << ", _tao_elem.inout (), 0, TAO_TRY_ENV)" << be_nl
       << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
       << "{" << be_idt_nl
       << "((CORBA::Any *)&_tao_any)->replace ("
-      << node->tc_name () << ", _tao_elem_ptr, 1, TAO_TRY_ENV);" << be_nl
+      << node->tc_name () << ", _tao_elem.inout (), 1, TAO_TRY_ENV);" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
       << "TAO_CHECK_ENV;" << be_uidt_nl
@@ -110,8 +109,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << node->name () << "_free (_tao_elem._retn ());" << be_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_nl
-      << "return 0;" << be_uidt_nl
+      << "TAO_ENDTRY;" << be_uidt_nl
       << "}\n\n";
 
   node->cli_stub_any_op_gen (1);

@@ -91,8 +91,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << "TAO_CHECK_ENV;" << be_uidt_nl
       << "}" << be_nl
       << "TAO_CATCHANY {}" << be_nl
-      << "TAO_ENDTRY;" << be_nl
-      << "return 0;" << be_uidt_nl
+      << "TAO_ENDTRY;" << be_uidt_nl
       << "}\n\n";
 
   node->cli_stub_any_op_gen (1);

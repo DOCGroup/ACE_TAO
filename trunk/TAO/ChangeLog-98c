@@ -1,3 +1,42 @@
+Wed Oct 21 12:32:37 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_enum/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_exception/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_structure/any_op_cs.cpp
+          TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+
+	  Added the TAO_TRY macros to the generated code for the <<= and
+	  >>= operators. In addition, David Levine had reported warnings
+	  because of the presence of an unnecessary, unreachable return
+	  statement. This has been fixed.
+
+	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp
+          TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp
+          TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp
+          TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp
+          TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp
+          TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp
+          TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+
+	  For IDL types defining a scope (e.g., structure, intrfaces), we
+	  were generating the inline CDR operators that used the CDR
+	  operators for their children before defining them. This was
+	  resulting in lots of compile errors. We now make sure that the
+	  CDR operators for the children are available before their use in
+	  the parent.
+
+	* tao/IIOP_Interpreter.cpp (calc_key_union_attributes): There was
+	  an error in the calculation of the padded size of the
+	  discriminant. We were not taking inot account the size of the
+	  Base_Union. Thanks to Kirk Ellett (kellett@mdc.com) for sending
+	  me the bug report and a sample code that illustrated this
+	  problem. His example used a sequence of unions in which one of
+	  the member was double (size 8, alignment 8) that finally
+	  pinpointed this error to me.
+
 Wed Oct 21 07:22:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_args.cpp (DRV_parse_args): initialized
