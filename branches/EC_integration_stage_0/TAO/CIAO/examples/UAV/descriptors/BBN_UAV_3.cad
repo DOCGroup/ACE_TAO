@@ -81,7 +81,6 @@
           <componentinstantiation id="a_Engagement">
         </componentinstantiation>
       </homeplacement>
-     <destination>EngagementBattleHost</destination>
            
       <homeplacement id="a_Battle">
         <componentfileref idref="com-Battle"/>
@@ -98,7 +97,6 @@
           <componentinstantiation id="a_UCAV_GS">
         </componentinstantiation>
       </homeplacement>
-     <destination>UCAVGSHost</destination>
                 
       <homeplacement id="a_UCAVHome">
         <componentfileref idref="com-UCAV"/>
