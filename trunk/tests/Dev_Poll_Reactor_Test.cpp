@@ -29,6 +29,7 @@ ACE_RCSID (tests,
 
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
+#include "ace/OS_NS_signal.h"
 #include "ace/Reactor.h"
 #include "ace/Dev_Poll_Reactor.h"
 
@@ -153,13 +154,10 @@ Client::handle_timeout (const ACE_Time_Value &, const void *)
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%P|%t) Expected client timeout occured at: %T\n")));
 
-  int status = this->handle_output (this->get_handle ());
-  if (status != 0)
-    return status;
-
   this->call_count_++;
 
-  if (this->call_count_ > 10)
+  int status = this->handle_output (this->get_handle ());
+  if (status == -1 || this->call_count_ > 10)
     {
       if (this->reactor ()->end_reactor_event_loop () == 0)
         ACE_DEBUG ((LM_INFO,
@@ -502,6 +500,13 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dev_Poll_Reactor_Test"));
+
+  // Make sure we ignore SIGPIPE
+  sigset_t sigsetNew[1];
+  sigset_t sigsetOld[1];
+  ACE_OS::sigemptyset (sigsetNew);
+  ACE_OS::sigaddset (sigsetNew, SIGPIPE);
+  ACE_OS::sigprocmask (SIG_BLOCK, sigsetNew, sigsetOld);
 
   ACE_Dev_Poll_Reactor dp_reactor;
   ACE_Reactor reactor (&dp_reactor);

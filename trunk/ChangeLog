@@ -1,3 +1,49 @@
+Fri Feb 11 18:11:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Dev_Poll_Reactor.{h inl cpp}:
+	  Comment out the check for epoll's proper Linux kernel version
+	  based on linux/version.h. It's not always accurate. For example,
+	  on Fedora Core 2 it says 2.4.20, yet the actual kernel is 2.6.5
+	  and epoll_ctl works fine (apparantly).
+
+	  Removed the original reference counting scheme based on the
+	  handler repository and implemented the ACE_Event_Handler-based
+	  scheme used by the other reactors. Kept the
+	  ACE_Dev_Poll_Handler_Guard class, though, as it is very nice.
+	  Just changed some contents and added a release() method to make it
+	  easier to work with the notify case since the refcount is incremented
+	  when the handler is queued for notify and decremented after the
+	  later upcall is done.
+
+	  (wakeup_all_threads): Removed the #if 0 block around the notify()
+	  call. This works fine (and is necessary) for epoll-capable systems.
+
+	  (handle_events_i, dispatch): Moved the signal-dispatched detection
+	  to handle_events_i() from dispatch() and allowed a dispatched signal
+	  to count as a dispatched event instead of always causing a
+	  -1/EINTR return.
+
+	  (dispatch_io_events): Increment io_handlers_dispatched before
+	  doing the upcall. Previously, it wouldn't get incremented if the
+	  handler returned -1.
+
+	* ace/Reactor.cpp: Added the ability to specify ACE_Dev_Poll_Reactor
+	  as the default reactor implementation by specifying
+	  ACE_USE_DEV_POLL_REACTOR_FOR_REACTOR_IMPL in the config file.
+
+	* tests/Dev_Poll_Reactor_Test.cpp: Ignore SIGPIPE, else if the
+	  receiving side closes its handle first, the sending side will crash
+	  on SIGPIPE. Make the Client shut down its reactor if handle_output()
+	  fails. Else, the timer will never fire again and the test will hang.
+
+	* tests/MT_Reactor_Upcall_Test.cpp:
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+	* tests/MT_Reference_Counted_Notify_Test.cpp: Added test for
+	  ACE_Dev_Poll_Reactor using -d (defaults to 1) but only runs it
+	  if ACE_HAS_EVENT_POLL is set.
+	  For MT_Reference_Counted_Notify_Test, added checks to see that
+	  the reference count actually gets incremented for the upcall.
+
 Fri Feb 11 13:55:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
