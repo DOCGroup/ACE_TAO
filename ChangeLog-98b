@@ -1,3 +1,13 @@
+Fri Aug 14 11:41:23 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i (ACE_OS::dlclose): On HP-UX 10.x and 32-bit 11.00, do
+	  not actually call shl_unload if the library's ref count is more than
+	  1.  If shl_unload is called, it unloads the library, regardless of
+	  the reference count.  This has the affect of never unloading a
+	  library that's been loaded more than once, until the OS unloads it
+	  at process run-down.  Better than invalidating references to it,
+	  though.  The wonder of wrappers at work for you...
+
 Fri Aug 14 10:01:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.h (ACE_UINT64_DBLCAST_ADAPTER): with
