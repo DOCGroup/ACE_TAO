@@ -936,6 +936,7 @@ Bill Tonseth <tonseth@shamra.mv.com>
 Torsten Pfuetzenreuter <torsten_pf@geocities.com>
 John M. Mills <jmills@tga.com> 
 David McWeeny <davemcw@tr.comm.mot.com>
+Florian Lackerbauer <florian.lackerbauer@mchp.siemens.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
