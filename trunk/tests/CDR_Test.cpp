@@ -37,6 +37,7 @@ struct CDR_Test_Types
   ACE_CDR::Short s;
   ACE_CDR::Long l;
   const ACE_CDR::Char *str;
+  const ACE_CDR::WChar *wstr;
   ACE_CDR::Double d;
 
   int test_put (ACE_OutputCDR& cdr);
@@ -55,6 +56,7 @@ CDR_Test_Types::CDR_Test_Types (void)
     s (2),
     l (4),
     str ("abc"),
+    wstr (0),
     d (8)
 {
   for (int i = 0;
@@ -76,6 +78,8 @@ short_stream (void)
   ACE_CDR::Char ch = 'A';
   ACE_CDR::Char wchtmp[] = {"\xF3"};
   ACE_CDR::WChar wch = *wchtmp;
+  ACE_CDR::WChar wchar2[] = {'\x00'};    // empty wide string
+  ACE_CDR::WChar *wstr = wchar2;
   ACE_CString str ("Test String");
   ACE_CDR::Short s = -123;
   ACE_CDR::UShort us =  123;
@@ -95,6 +99,7 @@ short_stream (void)
   ACE_OutputCDR::from_wchar fwc (wch);
   os << fwc;
   os << str;
+  os << wstr;
   os << s;
   os << us;
   os << l;
@@ -135,6 +140,7 @@ short_stream (void)
   // Basic types for input
   ACE_CDR::Char ch1 = '\0';
   ACE_CDR::WChar wch1 = '\x00';
+  ACE_CDR::WChar *wstr1 = 0;
   ACE_CString str1;
   ACE_CDR::Short s1 = 0;
   ACE_CDR::UShort us1 = 0;
@@ -157,6 +163,7 @@ short_stream (void)
   ACE_InputCDR::to_wchar twc (wch1);
   is >> twc;
   is >> str1;
+  is >> wstr1;
   is >> s1;
   is >> us1;
   is >> l1;
@@ -185,6 +192,13 @@ short_stream (void)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("string transfer error")),
                       1);
+
+  if (ACE_OS::wscmp(wstr1, wstr))
+     ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("wide string transfer error")),
+                       1);
+
 
   if (s1 != s)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -290,6 +304,12 @@ CDR_Test_Types::test_put (ACE_OutputCDR &cdr)
                            i),
                           1);
 
+      if (cdr.write_wstring (this->wstr) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("write_wstring[%d] failed\n"),
+                           i),
+                          1);
+
     }
 
   return 0;
@@ -366,6 +386,20 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                            ACE_TEXT ("string[%d] differs\n"),
                            i),
                           1);
+
+      ACE_CDR::WChar *wstr1;
+      if (cdr.read_wstring (wstr1) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("read_wstring2[%d] failed\n"),
+                            i),
+                           1);
+      // zero length
+      ACE_Auto_Basic_Array_Ptr<ACE_CDR::WChar> auto_xwstr (wstr1);
+       if (ACE_OS::wslen(auto_xwstr.get () ))
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("wstring[%d] differs\n"),
+                             i),
+                            1);
     }
   return 0;
 }
