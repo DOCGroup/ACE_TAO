@@ -1,3 +1,10 @@
+Tue Jul 1 00:27:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Current.cpp: 
+	 
+	  Fixed compile errors in Debian SingleThreaded and RH73 GCC32
+	  NoInterceptorsNoExceptions builds.
+	
 Mon Jun 30 16:31:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/Request_Interceptor.h:		
