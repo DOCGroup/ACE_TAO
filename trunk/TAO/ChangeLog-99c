@@ -1,3 +1,17 @@
+Mon Apr 26 10:44:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	  Added helper method to register the default factory with the
+	  service configurator. This is needed on NT where the
+	  export/import madness does no allow us to use the static service
+	  declaration from outside the DLL.
+
+ 	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  Added the new Event Channel files.
+
 Mon Apr 26 09:16:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:

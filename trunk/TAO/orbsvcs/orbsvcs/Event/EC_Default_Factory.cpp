@@ -25,6 +25,13 @@ TAO_EC_Default_Factory::~TAO_EC_Default_Factory (void)
 }
 
 int
+TAO_EC_Default_Factory::init_svcs (void)
+{
+  return ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_TAO_EC_Default_Factory);
+}
+
+int
 TAO_EC_Default_Factory::init (int argc, char* argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);

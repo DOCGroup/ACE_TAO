@@ -54,6 +54,10 @@ public:
   virtual ~TAO_EC_Default_Factory (void);
   // destructor...
 
+  static int init_svcs (void);
+  // Helper function to register the default factory into the service
+  // configurator.
+
   // = The Service_Object entry points
   virtual int init (int argc, char* argv[]);
   virtual int fini (void);

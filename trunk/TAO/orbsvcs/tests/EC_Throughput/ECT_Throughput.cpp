@@ -23,8 +23,7 @@ ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
 int
 main (int argc, char *argv [])
 {
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_EC_Default_Factory);
+  TAO_EC_Default_Factory::init_svcs ();
 
   ECT_Throughput driver;
   return driver.run (argc, argv);
