@@ -2475,8 +2475,12 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
                   || !ACE_OS::strcmp (str.in (), "p_attr")
                   || !ACE_OS::strcmp (str.in (), "gp_attr"));
 
-      IR_Container_var cr = contents[i]->defined_in ();
-      IR_Contained_var cd = IR_Contained::_narrow (cr.in ());
+      IR_Container_var cr = contents[i]->defined_in (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      IR_Contained_var cd = IR_Contained::_narrow (cr.in (),
+                                                   ACE_TRY_ENV);
+      ACE_CHECK;
 
       str = cd->name (ACE_TRY_ENV);
       ACE_CHECK;
