@@ -30,6 +30,7 @@
 #include "Client_Strategy_Factory.h"
 #include "Adapter_Factory.h"
 #include "Adapter.h"
+#include "GUIResource_Factory.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 # include "ClientRequestInfo.h"

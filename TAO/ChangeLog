@@ -1,3 +1,8 @@
+Sun Jan 23 11:41:55 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* tao/ORB_Core.cpp (Module):
+	Added necessary include directive lost during merge.
+
 Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* tests/Xt_Stopwatch/timer.h:
