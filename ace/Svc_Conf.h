@@ -58,9 +58,6 @@ typedef union
 const int ACE_SERVICE_DIRECTIVE_STACK_DEPTH = 8;
 #endif  /* ACE_SERVICE_DIRECTIVE_STACK_DEPTH */
 
-void ace_yyrestart (FILE *);
-// Restart input file parsing
-
 /// Create and push a new lexer buffer on to the buffer stack for use
 /// when scanning the given file.
 void ace_yy_push_buffer (FILE *file);
@@ -72,9 +69,6 @@ void ace_yy_push_buffer (const ACE_TCHAR *directive);
 /// Pop the current lexer buffer off of the buffer stack and
 /// deallocate it.
 void ace_yy_pop_buffer (void);
-
-void ace_yy_delete_parse_buffer (void);
-// Delete the lexer's parse buffer
 
 int ace_yyparse (void);
 // Performs the parsing
@@ -93,10 +87,6 @@ extern int ace_yylineno;
 
 extern int ace_yyerrno;
 // Keeps track of the number of errors encountered so far
-
-extern const ACE_TCHAR *ace_yydirective;
-// Used to parse service configurator directives from a string rather
-// than from a svc.conf file.
 
 extern ACE_TCHAR *ace_yytext;
 // Holds the lexeme for the current token
