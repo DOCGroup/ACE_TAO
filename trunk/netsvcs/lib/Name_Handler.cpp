@@ -7,17 +7,6 @@
 #include "Name_Handler.h"
 #include "ace/Singleton.h"
 
-// This helper class adds the correct default constructor to the
-// ACE_Naming_Context class so that we can use it in ACE_Singleton.
-class Naming_Context : public ACE_Naming_Context
-{
-public:
-  Naming_Context (void)
-    : ACE_Naming_Context (ACE_Naming_Context::NET_LOCAL) {}
-};
-
-typedef ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX> NAMING_CONTEXT;
-
 // Simple macro that does bitwise AND -- useful in table lookup
 #define ACE_TABLE_MAP(INDEX, MASK) (INDEX & MASK)
 
