@@ -111,7 +111,7 @@ MPC_Make:
 	cd $(ACE_ROOT)
 
 reverseclean:
-	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)
+	@$(ACE_ROOT)/bin/reverse_clean $(MAKE) $(DIRS)
 
 #### NOTE:  The following comments describe how to create kits.
 ####        It's intended for use by ACE+TAO developers and
