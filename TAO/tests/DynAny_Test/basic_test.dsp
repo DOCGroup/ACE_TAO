@@ -1,25 +1,25 @@
-# Microsoft Developer Studio Project File - Name="basic_test" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="DynAny Basics" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=basic_test - Win32 Debug
+CFG=DynAny Basics - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
-!MESSAGE NMAKE /f "basic_test.mak".
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "DynAny Basics.mak".
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
-!MESSAGE NMAKE /f "basic_test.mak" CFG="basic_test - Win32 Debug"
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "DynAny Basics.mak" CFG="DynAny Basics - Win32 Debug"
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
-!MESSAGE "basic_test - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "basic_test - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
+!MESSAGE "DynAny Basics - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "DynAny Basics - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -28,7 +28,7 @@ CFG=basic_test - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "basic_test - Win32 Release"
+!IF  "$(CFG)" == "DynAny Basics - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -52,7 +52,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
-!ELSEIF  "$(CFG)" == "basic_test - Win32 Debug"
+!ELSEIF  "$(CFG)" == "DynAny Basics - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -76,12 +76,12 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
-# Name "basic_test - Win32 Release"
-# Name "basic_test - Win32 Debug"
+# Name "DynAny Basics - Win32 Release"
+# Name "DynAny Basics - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
@@ -185,9 +185,9 @@ SOURCE=.\test_wrapper.h
 
 SOURCE=.\da_tests.idl
 
-!IF  "$(CFG)" == "basic_test - Win32 Release"
+!IF  "$(CFG)" == "DynAny Basics - Win32 Release"
 
-USERDEP__DA_TE="..\..\..\bin\tao_idl.exe"	
+USERDEP__DA_TE="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\da_tests.idl
 InputName=da_tests
@@ -223,9 +223,9 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "basic_test - Win32 Debug"
+!ELSEIF  "$(CFG)" == "DynAny Basics - Win32 Debug"
 
-USERDEP__DA_TE="..\..\..\bin\tao_idl.exe"	
+USERDEP__DA_TE="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\da_tests.idl
 InputName=da_tests
@@ -261,7 +261,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group

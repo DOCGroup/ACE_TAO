@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "basic_test"=.\basic_test\basic_test.dsp - Package Owner=<4>
+Project: "basic_test"=.\basic_test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -26,4 +26,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-

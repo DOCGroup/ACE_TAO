@@ -1,27 +1,27 @@
-# Microsoft Developer Studio Project File - Name="Multithreaded Client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="MT_Client Client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Multithreaded Client - Win32 Debug
+CFG=MT_Client Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "client.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="Multithreaded Client - Win32 Debug"
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "client.mak" CFG="MT_Client Client - Win32 Debug"
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
-!MESSAGE "Multithreaded Client - Win32 Release" (based on\
+!MESSAGE
+!MESSAGE "MT_Client Client - Win32 Release" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "Multithreaded Client - Win32 Debug" (based on\
+!MESSAGE "MT_Client Client - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP Scc_ProjName ""
@@ -29,7 +29,7 @@ CFG=Multithreaded Client - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Multithreaded Client - Win32 Release"
+!IF  "$(CFG)" == "MT_Client Client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -52,7 +52,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 tao.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
-!ELSEIF  "$(CFG)" == "Multithreaded Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "MT_Client Client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -75,12 +75,12 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 taod.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
-# Name "Multithreaded Client - Win32 Release"
-# Name "Multithreaded Client - Win32 Debug"
+# Name "MT_Client Client - Win32 Release"
+# Name "MT_Client Client - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
@@ -108,10 +108,10 @@ SOURCE=.\testS.cpp
 
 SOURCE=.\test.idl
 
-!IF  "$(CFG)" == "Multithreaded Client - Win32 Release"
+!IF  "$(CFG)" == "MT_Client Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
@@ -147,9 +147,9 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Multithreaded Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "MT_Client Client - Win32 Debug"
 
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
@@ -185,7 +185,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
