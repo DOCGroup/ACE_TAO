@@ -129,7 +129,10 @@ namespace TAO
       virtual
       PortableServer::ObjectId *
       servant_to_id (PortableServer::Servant servant
-                          ACE_ENV_ARG_DECL) = 0;
+                          ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantNotActive,
+                   PortableServer::POA::WrongPolicy)) = 0;
 
       virtual
       CORBA::Object_ptr
@@ -230,7 +233,10 @@ namespace TAO
       virtual
       PortableServer::ObjectId *
       servant_to_id (PortableServer::Servant servant
-                          ACE_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantNotActive,
+                   PortableServer::POA::WrongPolicy));
 
       virtual
       CORBA::Object_ptr
@@ -333,7 +339,10 @@ namespace TAO
       virtual
       PortableServer::ObjectId *
       servant_to_id (PortableServer::Servant servant
-                          ACE_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantNotActive,
+                   PortableServer::POA::WrongPolicy));
 
       virtual
       CORBA::Object_ptr
