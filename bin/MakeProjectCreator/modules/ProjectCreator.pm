@@ -60,6 +60,7 @@ my(%validNames) = ('exename'         => 1,
                    'tagchecks'       => 1,
                    'include_dir'     => 1,
                    'core'            => 1,
+                   'idlgendir'       => 1,
                   );
 
 ## Deal with these components in a special way
@@ -119,7 +120,7 @@ sub new {
 
   ## Match up assignments with the valid components
   my(%ma) = ('source_files' => [ 'includes' ],
-             'idl_files' => [ 'idlflags' ],
+             'idl_files'    => [ 'idlgendir', 'idlflags' ],
             );
   $self->{'matching_assignments'} = \%ma;
   $self->{'valid_components'}     = \%vc;
@@ -460,7 +461,7 @@ sub process_assignment {
     $value =~ s/\s+$//;
 
     if ($self->convert_slashes()) {
-      $value =~ s/\//\\/g;
+      $value = $self->slash_to_backslash($value);
     }
   }
 
@@ -1170,7 +1171,7 @@ sub get_component_list {
 
   if ($self->convert_slashes()) {
     for(my $i = 0; $i <= $#list; $i++) {
-      $list[$i] =~ s/\//\\/g;
+      $list[$i] = $self->slash_to_backslash($list[$i]);
     }
   }
 

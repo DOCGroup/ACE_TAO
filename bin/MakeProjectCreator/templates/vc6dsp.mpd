@@ -182,51 +182,40 @@ SOURCE=.\<%idl_file%>
 InputPath=.\<%idl_file%>
 InputName=<%basenoextension(idl_file)%>
 InputDir=<%dirname(idl_file)%>
-
-<%if(dirname_found)%>
-BuildCmds= \
-	cd $(InputDir) \
-	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> <%basename(idl_file)%>
-
-"$(InputDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputDir)\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputDir)\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputDir)\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputDir)\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
+<%if(flag_overrides(idl_file, idlgendir))%>
+OutDir=<%flag_overrides(idl_file, idlgendir)%>
 <%else%>
-BuildCmds= \
-	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> $(InputPath)
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
+<%if(idlgendir)%>
+OutDir=<%idlgendir%>
+<%else%>
+<%if(dirname_found)%>
+OutDir=$(InputDir)
+<%else%>
+OutDir=.
 <%endif%>
+<%endif%>
+<%endif%>
+
+BuildCmds= \
+	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> -o $(OutDir) <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> $(InputPath)
+
+"$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(OutDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 
 # End Custom Build
 

@@ -58,7 +58,7 @@ sub write_comps {
     my($name, $deps) = @$pi;
 
     ## Convert all /'s to \
-    $project =~ s/\//\\/g;
+    $project = $self->slash_to_backslash($project);
 
     print $fh "###############################################################################$crlf" .
               "$crlf" .

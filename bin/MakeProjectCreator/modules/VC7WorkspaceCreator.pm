@@ -62,8 +62,7 @@ sub write_comps {
     my($name, $deps, $pguid) = @$pi;
 
     ## Convert all /'s to \
-    my($cpy) = $project;
-    $cpy =~ s/\//\\/g;
+    my($cpy) = $self->slash_to_backslash($project);
     print $fh "Project(\"{$guid}\") = \"$name\", \"$cpy\", \"{$pguid}\"$crlf" .
               "EndProject$crlf";
   }

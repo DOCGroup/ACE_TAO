@@ -59,7 +59,7 @@ sub write_comps {
 
   foreach my $project (@list) {
     ## Convert all /'s to \
-    $project =~ s/\//\\/g;
+    $project = $self->slash_to_backslash($project);
 
     print $fh "..\\$project$crlf";
     if ($gen->exe_target()) {
