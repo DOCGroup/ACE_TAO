@@ -130,7 +130,7 @@ namespace
     virtual void
     post (Type&)
     {
-      os << ";" << endl << endl;
+      os << ";" << endl;
     }
 
     virtual void
@@ -250,7 +250,7 @@ namespace
       os << endl
          << a.name () << " (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual void" << endl
          << a.name () << " (" << endl;
@@ -259,7 +259,7 @@ namespace
 
       os << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
     }
 
   private:
@@ -290,7 +290,7 @@ namespace
       os << endl
          << a.name () << " (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
     }
 
   private:
@@ -1170,7 +1170,7 @@ namespace
         Traversal::ProviderData::belongs (p, belongs_);
 
         os << "_var" << endl
-           << "provide_" << p.name () << "_;" << endl;
+           << "provide_" << p.name () << "_;" << endl << endl;
       }
 
       virtual void
@@ -1325,7 +1325,8 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "// Operations for Navigation interface." << endl << endl;
+      os << endl
+         << "// Operations for Navigation interface." << endl << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
          << "provide_facet (" << endl
@@ -1566,8 +1567,7 @@ namespace
         component_emitter.traverse (t);
       }
           
-      os << endl
-         << "private:" << endl << endl
+      os << "private:" << endl << endl
          << "void populate_port_tables (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl;
