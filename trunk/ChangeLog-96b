@@ -1,5 +1,42 @@
 Sun Nov 17 13:00:02 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace: Added Thilo Kielmann's <kielmann@informatik.uni-siegen.de>
+ 	  patches for OSF/1 4.0a.
+
+	* ace/OS: Revised the implementation of ACE_OS::asctime_r() and
+ 	  ACE_OS::ctime_r() to simplify common cases.  However, this may
+ 	  have broken some code on OSF/1 4.0a.  Can someone please check
+ 	  this?
+
+	* tests/SPIPE_Test.cpp: Conditionally compiled this file so that
+ 	  we only build the SPIPE test if (1) we're running on Win32 or
+	  (2) ACE_HAS_STREAM_PIPES.  Thanks to David Levine for this
+ 	  suggestion.
+
+	* ace/OS.i (ctime_r): Fixed a typo that was caused by a misplaced
+ 	  #endif.  Thanks to Eshel Liran <liran@macs.biu.ac.il> for
+ 	  reporting this.
+
+	* ace/Time_Value: Disabled ACE_TRACE within these method in order
+ 	  to prevent infinite recursion.
+
+	* ace/Log_Record: Originally, when verbose mode was enabled you
+ 	  can get the date and time down to the seconds.  However, it is
+ 	  useful for performance testings to have milliseconds displayed
+ 	  in the log.  To accomplish this, I changed ACE_Log_Msg and
+ 	  ACE_Log_Record to they also keep track of and print the microsec
+ 	  time, as well.  Thanks to Luca for suggesting this.
+ 
+	* ace/Map_Manager.cpp: updated all the ACE_Map_Manager methods so
+ 	  their read and write Guards use the ACE_*_GUARD macros.
+
+	* ace/Malloc_T.cpp: Updated all the ACE_Malloc methods so their
+ 	  read and write Guards use the ACE_*_GUARD macros.
+
+	* ace/OS.cpp (svc_run): Added an ACE_DEBUG announcing that an
+ 	  exception has propagated beyond the outermost svc_run()
+ 	  function.  Thanks to Luca for this suggestion.
+
 	* tests/test_config.h: VxWorks passes in a NULL argv (arrghhh...).
 	  Therefore, to work around this in the ./tests directory, I changed
 	  the ACE_START_TEST macro to take a NAME parameter, and then I
@@ -106,6 +143,33 @@ Wed Nov 13 01:22:16 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  manager with the ACE_Service_Config::thr_mgr() singleton.
   	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
  	  pointing this out.
+
+Tue Nov 12 02:33:56 1996    <harrison@samba.cs.wustl.edu>
+
+	* config.h (ACE_HAS_STL): Added ACE_HAS_STL flag.  For now, it's
+	  only to deal with the iostream vs iostream.h include problems.
+
+	* Made a whole bunch of changes in order to support compilation
+	  with Microsoft's broken STL and broken compiler for the broken
+	  C++ language.  Do I sound bitter?!  Die.
+
+	* ace/OS.h: Removed the inclusion of iostream.h.  Can't mix old
+	  iostreams with new STL iostreams.
+
+	* Log_Record.h: Added conditional inclusion of iostream and
+	  iostream.h to deal with STL.  So far, I haven't run into any
+	  problems related to changing semantics.  We'll see.
+
+	* For some totally evil reason, MSVC++ will not allow any use of
+	  the "allocator" symbol.  It's an STL thing.  As a result, I've
+ 	  had to change all of the following files to rename allocator() to
+ 	  alloc(): Local_Name_Space_T.cpp, Map_Manager.cpp,
+ 	  Message_Block.cpp, Read_Buffer.cpp, SString.cpp.
+	
+	* Service_Config.{h,cpp}:  We have to change the allocator()
+	  accessors to alloc().  This is will break some things.  If
+	  necessary, we can conditionally compile in the old accessors
+	  for platforms that are not using STL and MSVC++.  
 
 Tue Nov 12 19:43:12 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
