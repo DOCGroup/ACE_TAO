@@ -109,6 +109,7 @@ TAO_IIOP_Transport::recv_i (char *buf,
       TAO_debug_level > 4 &&
       errno != ETIME)
     {
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv_i, "),
                   ACE_TEXT ("read failure - %m"),
@@ -242,10 +243,14 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
 
   if (n == -1)
     {
+      // Dont try to be smart and request for %p in the debug
+      // statement.  If the event handler is destroyed the transport
+      // would return -1 with errno set to ENOENT. %p then would dump
+      // a core. %m would then be softer on this.
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send_message, ")
-                    ACE_TEXT (" write failure - %p\n"),
+                    ACE_TEXT (" write failure - %m\n"),
                     this->id ()));
       return -1;
     }
