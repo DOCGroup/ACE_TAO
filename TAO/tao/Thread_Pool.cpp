@@ -476,7 +476,7 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool,
 
   // Return current counter and perform post-increment.
   return this->thread_pool_id_counter_++;
-};
+}
 
 void
 TAO_Thread_Pool_Manager::destroy_threadpool_i (RTCORBA::ThreadpoolId thread_pool_id,

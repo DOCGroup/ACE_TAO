@@ -1,3 +1,7 @@
+Tue Apr 17 07:26:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Thread_Pool.cpp: Fixed a warning in TRU64 builds.
+
 Tue Apr 17 07:23:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/POA/Default_Servant/*.bor
