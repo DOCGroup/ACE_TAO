@@ -1,3 +1,9 @@
+Thu Jun 19 12:14:31 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * bin/tao_other_tests.lst
+
+          Added the latency tests for sequences of various data types.
+
 Thu Jun 19 11:36:14 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
@@ -143,6 +149,7 @@ Wed Jun 18 17:20:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           Noseworthy <j.russell.noseworthy@objectsciences.com> for
           providing these patches.
 
+>>>>>>> 4.5220
 Wed Jun 18 15:59:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
