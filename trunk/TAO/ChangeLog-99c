@@ -1,9 +1,15 @@
+Sat Jul 31 20:01:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+	* orbsvcs/Naming_Service/Naming_Service.dsp: Fixed trailing
+	  newline problems.
+
 Sat Jul 31 17:42:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Timeprobe.h:
 	  New macros TAO_ENABLE_TIMEPROBES, TAO_MT_TIMEPROBES and
 	  TAO_TSS_TIMEPROBES, they match the definitions for their ACE
-	  counterparts, but can be used in the config.h file to enable the 
+	  counterparts, but can be used in the config.h file to enable the
 	  TAO timeprobes without enabling the ACE timeprobes.
 
 Sat Jul 31 14:39:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
