@@ -1,3 +1,8 @@
+Tue Dec 23 17:55:19 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/Makefile.am: Added ACE_Test_SOURCES so automake doesn't
+	  set this up needing ACE_Test.c.
+
 Tue Dec 23 16:52:56 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
@@ -31,7 +36,7 @@ Tue Dec 23 20:19:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * *.{mpc,mwc}:
           Added $Id to MPC files to fix fuzz errors.
 
-Tue Dec 22 12:31:16 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Dec 23 12:31:16 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* Kokyu/Dispatcher_Impl.h:
 	  Added export macro, so that the destructor is exported. This fixes
