@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "LIB\Release\LoadBalancing"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D TAO_LOADBALANCING_HAS_DLL=0 /D "NDEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D ACE_OS_HAS_DLL=0 /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -65,7 +65,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "LIB\Debug\LoadBalancing"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D TAO_LOADBALANCING_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -212,10 +212,6 @@ SOURCE=.\LoadBalancing\ReplicaProxy.i
 # PROP Default_Filter "h"
 # Begin Source File
 
-SOURCE=.\LoadBalancing\ReplicaLocator.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\LoadBalancing\LoadBalancer_i.h
 # End Source File
 # Begin Source File
@@ -244,6 +240,10 @@ SOURCE=.\LoadBalancing\Minimum_Dispersion.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LoadBalancing\ReplicaLocator.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LoadBalancing\ReplicaProxy.h
 # End Source File
 # Begin Source File
@@ -254,10 +254,6 @@ SOURCE=.\LoadBalancing\Round_Robin_Strategy.h
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp"
-# Begin Source File
-
-SOURCE=.\LoadBalancing\ReplicaLocator.cpp
-# End Source File
 # Begin Source File
 
 SOURCE=.\LoadBalancing\LoadBalancer_i.cpp
@@ -277,6 +273,10 @@ SOURCE=.\LoadBalancingS.cpp
 # Begin Source File
 
 SOURCE=.\LoadBalancing\Minimum_Dispersion.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\ReplicaLocator.cpp
 # End Source File
 # Begin Source File
 
