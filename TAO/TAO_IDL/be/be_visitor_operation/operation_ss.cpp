@@ -434,7 +434,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl << be_nl
       << "                            ACE_ENV_ARG_PARAMETER);" << be_nl
       << "ACE_CHECK;" << be_nl;
-                             
+
 
   *os << be_nl << be_nl
       << "// In case _tao_servant_upcall is not used in this function"
