@@ -1,3 +1,11 @@
+Mon Nov 10 21:30:04 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* INET_Addr.cpp: In the ACE_INET_Addr::get_host_name (char
+	hostname[], size_t len) method, an unnecessary local variable
+	called "name" was being used and the actual parameter "hostname"
+	was never getting updated. The local variable is now removed and
+	we use the actual parameter everywhere.
+
 Mon Nov 10 20:44:43 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* etc/ACE-guidelines.html: Added a section for ACE Design Rules,
