@@ -353,12 +353,19 @@ ACE_Service_Object_Type::fini (void) const
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Message_Queue<ACE_SYNCH>;
 template class ACE_Module<ACE_SYNCH>;
 template class ACE_Stream<ACE_SYNCH>;
-template class ACE_Task<ACE_SYNCH>;
-template class ACE_Message_Queue<ACE_SYNCH>;
-template class ACE_TSS<ACE_Task_Exit>;
-template class ACE_Thru_Task<ACE_SYNCH>;
 template class ACE_Stream_Head<ACE_SYNCH>;
 template class ACE_Stream_Tail<ACE_SYNCH>;
+template class ACE_Task<ACE_SYNCH>;
+template class ACE_Thru_Task<ACE_SYNCH>;
+
+// Even with threads, these ACE_NULL_SYNCH specializations are necessary.
+#if defined (ACE_HAS_THREADS)
+  template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+  template class ACE_Module<ACE_NULL_SYNCH>;
+  template class ACE_Task<ACE_NULL_SYNCH>;
+  template class ACE_Thru_Task<ACE_NULL_SYNCH>;
+#endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
