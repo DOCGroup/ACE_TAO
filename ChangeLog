@@ -1,3 +1,10 @@
+Wed Sep 29 14:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+          Removed setting of ACE_HAS_BROKEN_NESTED_TEMPLATES. This is used
+          in CIAO and it seems not be needed anymore with vc7 and newer
+
 Wed Sep 29 09:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_win32_dmc.GNU:
