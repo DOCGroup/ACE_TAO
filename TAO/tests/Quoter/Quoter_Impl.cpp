@@ -19,16 +19,41 @@
 
 // Constructor.  Create all the quoter factories.
 
-Quoter_Factory_Impl::Quoter_Factory_Impl (size_t num)
+Quoter_Factory_Impl::Quoter_Factory_Impl (size_t num, PortableServer::POA_ptr poa_ptr)
   : my_quoters_ (0),
     quoter_num_ (num),
     next_quoter_ (0)
     
 {
-  ACE_NEW(this->my_quoters_, Quoter_Impl *[num]);
+  { 
+    CORBA::Environment env;
+    ACE_NEW(this->my_quoters_, Quoter_Impl *[num]);
   
-  for (size_t i = 0; i < num; i++)
-    ACE_NEW(this->my_quoters_[i], Quoter_Impl("x"));
+    for (size_t i = 0; i < num; i++)
+    {
+      ACE_NEW(this->my_quoters_[i], Quoter_Impl("x",  // name
+                                                0,    // don't use the LifeCycle_Service
+                                                poa_ptr)); // a reference to the poa */
+
+
+      poa_ptr->activate_object (this->my_quoters_[i], env);
+      if (env.exception () != 0)
+      {
+        env.print_exception ("POA::activate");
+      }
+ 
+      // Stringify the object reference and print it out.
+      CORBA::String_var quoter_ior =
+        TAO_ORB_Core_instance()->orb()->object_to_string (this->my_quoters_[i]->_this(env), env);
+  
+      if (env.exception () != 0)
+      {
+        env.print_exception ("CORBA::ORB::object_to_string");
+      }
+      ACE_DEBUG ((LM_DEBUG, "Quoter[0] IOR: %s \n",quoter_ior));
+    }
+  }
+
 }
 
 
@@ -38,6 +63,7 @@ Quoter_Factory_Impl::~Quoter_Factory_Impl (void)
 {
   for (size_t i = 0; i < this->quoter_num_; i++)
     delete this->my_quoters_[i];
+  delete [] this->my_quoters_;
 }
 
 
@@ -62,9 +88,9 @@ Quoter_Factory_Impl::create_quoter (const char *name,
 
 Quoter_Impl::Quoter_Impl (const char *name, 
 			  const unsigned char use_LifeCycle_Service, 
-			  PortableServer::POA_ptr poa)
+			  PortableServer::POA_ptr poa_ptr)
   : use_LifeCycle_Service_ (use_LifeCycle_Service),
-    poa_ (poa)
+    poa_var_ (PortableServer::POA::_duplicate (poa_ptr))
 {
   ACE_UNUSED_ARG (name);
 }
@@ -104,18 +130,18 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       CosLifeCycle::Key factoryKey (2);  // max = 2
       
       if (this->use_LifeCycle_Service_ == 1)
-	{
-	  // use the LifeCycle Service
-	  factoryKey.length(1);
-	  factoryKey[0].id = CORBA::string_dup ("Life_Cycle_Service");
-	}
+	    {
+	      // use the LifeCycle Service
+	      factoryKey.length(1);
+	      factoryKey[0].id = CORBA::string_dup ("Life_Cycle_Service");
+	    }
       else
-	{
-	  // use a Generic Factory
-	  factoryKey.length(2);
-	  factoryKey[0].id = CORBA::string_dup ("IDL_Quoter");
-	  factoryKey[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
-	}
+    	{
+	      // use a Generic Factory
+	      factoryKey.length(2);
+	      factoryKey[0].id = CORBA::string_dup ("IDL_Quoter");
+	      factoryKey[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
+	    }
       
       // Find an appropriate factory over there.
       CosLifeCycle::Factories_ptr factories_ptr =
@@ -124,13 +150,13 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       // Only a NoFactory exception might have occured, so if it
       // occured, then go immediately back.
       if (_env_there.exception() != 0)
-	{
-	  // _env_there contains already the exception.            
-	  ACE_ERROR ((LM_ERROR,
-		      "Quoter::copy: Exception occured while trying to find a factory.\n"));
+    	{
+	      // _env_there contains already the exception.            
+	      ACE_ERROR ((LM_ERROR,
+		                "Quoter::copy: Exception occured while trying to find a factory.\n"));
 	  
-	  return CosLifeCycle::LifeCycleObject::_nil();
-	}
+	      return CosLifeCycle::LifeCycleObject::_nil();
+	    }
       
       // Now it is known that there is at least one factory.
       Stock::Quoter_var quoter_var;
@@ -235,7 +261,7 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
 	}
 
       // We need to have access to the POA
-      if (CORBA::is_nil (poa_))
+      if (CORBA::is_nil (this->poa_var_.in()))
 	{
 	  ACE_ERROR ((LM_ERROR,
 		      "Quoter_Impl::move: No access to the POA. Cannot move.\n"));
@@ -266,14 +292,14 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
       // Set the POA, so that the requests will be forwarded to the new location
       
       // new location
-      CORBA::Object_var forward_to_var = (CORBA::Object_ptr) lifeCycleObject_var.in();
+      CORBA::Object_var forward_to_var = CORBA::Object::_duplicate ((CORBA::Object_ptr) lifeCycleObject_var.in());
       
       if (!CORBA::is_nil (forward_to_var.in ()))
 	{
-	  PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this, TAO_TRY_ENV);
+	  PortableServer::ObjectId_var oid = this->poa_var_->servant_to_id (this, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  
-	  PortableServer::Servant servant = this->poa_->_servant ();
+	  PortableServer::Servant servant = this->poa_var_->_servant ();
 
 	  if (servant == 0)
 	    {
