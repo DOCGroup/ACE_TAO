@@ -9,10 +9,8 @@
 #include <stdlib.h> //for atol
 #include <sstream>  //for istringstream
 
-// TODO Indicate error if missing test_config_t field, empty cdata for leaf elements
-
 Test_Handler::Test_Handler (ACEXML_Char* fileName)
-  : configs_(0),
+  : configs_(new TestConfig::Test_Config_Set(0)),
     fileName_(ACE::strnew (fileName)),
     didtype_(0), //false
     didperiod_(0),
@@ -27,24 +25,28 @@ Test_Handler::~Test_Handler (void)
 {
   delete[] this->fileName_;
 
-  for(size_t i=0; i<configs_.size(); ++i) {
-    delete configs_[i];
+  const TestConfig::Test_Config_Set &cfgs = *this->configs_;
+
+  for(size_t i=0; i<cfgs.size(); ++i) {
+    delete cfgs[i];
   }
 }
 
-const TestConfig::Test_Config_Set &
+const TestConfig::TCFG_SET_WPTR
 Test_Handler::get_configs (void) const
 {
-  return this->configs_;
+  return TestConfig::TCFG_SET_WPTR(this->configs_);
 }
 
 
 void
 Test_Handler::characters (const ACEXML_Char * cdata,
-                                  int ,
-                                  int ACEXML_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
+                          int ,
+                          int
+                          ACEXML_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  const TestConfig::Test_Config_Set &cfgs = *this->configs_;
   TestConfig::test_config_t *curcfg = 0; //current test_config_t is last in set
   std::istringstream iss(cdata);
 
@@ -52,7 +54,7 @@ Test_Handler::characters (const ACEXML_Char * cdata,
     {
     case TYPE:
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TYPE Characters: %s\n"),cdata));
-      curcfg = this->configs_[this->configs_.size()-1];
+      curcfg = cfgs[cfgs.size()-1];
       if (curcfg == 0)
         {
           ACEXML_THROW(ACEXML_SAXException(ACE_TEXT ("No existing test_config_t")));
@@ -65,7 +67,7 @@ Test_Handler::characters (const ACEXML_Char * cdata,
       break;
     case PERIOD:
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("PERIOD Characters: %s\n"),cdata));
-      curcfg = this->configs_[this->configs_.size()-1];
+      curcfg = cfgs[cfgs.size()-1];
       if (curcfg == 0)
         {
           ACEXML_THROW(ACEXML_SAXException(ACE_TEXT ("No existing test_config_t")));
@@ -78,7 +80,7 @@ Test_Handler::characters (const ACEXML_Char * cdata,
       break;
     case NUM_ENTITIES:
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("NUM_ENTITIES Characters: %s\n"),cdata));
-      curcfg = this->configs_[this->configs_.size()-1];
+      curcfg = cfgs[cfgs.size()-1];
       if (curcfg == 0)
         {
           ACEXML_THROW(ACEXML_SAXException(ACE_TEXT ("No existing test_config_t")));
@@ -108,10 +110,11 @@ Test_Handler::endDocument (ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // Print out test_config_t's:
+  const TestConfig::Test_Config_Set &cfgs = *this->configs_;
   char *cfg_format = "{%10d, %10d, %10d, %10d, %10d }";
 
-  for (size_t i=0; i<this->configs_.size(); ++i) {
-    TestConfig::test_config_t *cfg = this->configs_[i];
+  for (size_t i=0; i<cfgs.size(); ++i) {
+    TestConfig::test_config_t *cfg = cfgs[i];
 
     if (i!=0)
       {
@@ -236,6 +239,8 @@ Test_Handler::startElement (const ACEXML_Char *uri,
   ACE_UNUSED_ARG(uri);
   ACE_UNUSED_ARG(name);
 
+  const TestConfig::Test_Config_Set &cfgs = *this->configs_;
+
   element newscope;
   if (ACE_OS_String::strcmp (qName, ACE_TEXT ("type")) == 0)
     {
@@ -257,7 +262,7 @@ Test_Handler::startElement (const ACEXML_Char *uri,
           if (val != 0)
             {
               TestConfig::test_config_t *curcfg = 0; //current test_config_t is last in set
-              curcfg = this->configs_[this->configs_.size()-1];
+              curcfg = cfgs[cfgs.size()-1];
               if (curcfg == 0)
                 {
                   ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("No existing test_config_t")));
@@ -309,7 +314,7 @@ Test_Handler::startElement (const ACEXML_Char *uri,
           if (val != 0)
             {
               TestConfig::test_config_t *curcfg = 0; //current test_config_t is last in set
-              curcfg = this->configs_[this->configs_.size()-1];
+              curcfg = cfgs[cfgs.size()-1];
               if (curcfg == 0)
                 {
                   ACEXML_THROW (ACEXML_SAXException (ACE_TEXT("No existing test_config_t")));
@@ -363,9 +368,10 @@ Test_Handler::startElement (const ACEXML_Char *uri,
       //create test_config_t for filling in by the sub-elements of this element
       TestConfig::test_config_t *newcfg = 0;
       ACE_NEW(newcfg,TestConfig::test_config_t());
-      size_t cfgsize = this->configs_.size();
-      this->configs_.size(cfgsize+1);
-      this->configs_[cfgsize] = newcfg;
+      TestConfig::Test_Config_Set &cfgs = *this->configs_;
+      size_t cfgsize = cfgs.size();
+      cfgs.size(cfgsize+1);
+      cfgs[cfgsize] = newcfg;
       this->didtype_ = 0; //false
       this->didperiod_ = 0; //false
       this->didcrit_ = 0; //false

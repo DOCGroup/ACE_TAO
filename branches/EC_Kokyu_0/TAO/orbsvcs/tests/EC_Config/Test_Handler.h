@@ -14,10 +14,10 @@
 #ifndef TEST_HANDLER_H
 #define TEST_HANDLER_H
 
+#include "TestConfig.h"
+
 #include "ACEXML/common/ContentHandler.h"
 #include "ACEXML/common/ErrorHandler.h"
-
-#include "TestConfig.h"
 
 #include <stack>
 
@@ -52,7 +52,7 @@ public:
    * test_config_t's. The Handler retains ownership of the
    * (dynamically allocated) test_config_t's in the set.
    */
-  const TestConfig::Test_Config_Set &get_configs (void) const;
+  const TestConfig::TCFG_SET_WPTR get_configs (void) const;
 
   // Methods inherited from ACEXML_ContentHandler.
 
@@ -165,7 +165,7 @@ public:
         ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
 private:
-  TestConfig::Test_Config_Set configs_;
+  TestConfig::TCFG_SET_SPTR configs_;
 
   ACEXML_Char* fileName_;
   ACEXML_Locator* locator_;
