@@ -58,9 +58,6 @@ public:
   CORBA::ExceptionList_ptr exceptions (void);
   // Return the exceptions resulting from this request.
 
-  // The next 3 are not yet inplemented - they just
-  // throw CORBA_NO_IMPLEMENT.
-
   CORBA::Context_ptr ctx (void) const;
   // Accessor for the Context member.
 

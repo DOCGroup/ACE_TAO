@@ -69,9 +69,7 @@ CORBA_Request::exceptions (void)
 ACE_INLINE CORBA::ContextList_ptr
 CORBA_Request::contexts (void)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  return this->contexts_;
 }
 
 // Return the <Environment> for this request.
@@ -141,17 +139,13 @@ CORBA_Request::return_value (void )
 ACE_INLINE CORBA::Context_ptr
 CORBA_Request::ctx (void) const
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  return this->ctx_;
 }
 
 ACE_INLINE void
 CORBA_Request::ctx (CORBA::Context_ptr ctx)
 {
-  if (ctx)
-    ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                    CORBA::COMPLETED_NO));
+  ACE_UNUSED_ARG (ctx);
 }
 
 // *************************************************************
