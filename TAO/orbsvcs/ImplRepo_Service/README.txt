@@ -90,7 +90,7 @@ object. By this, the IOR that is generated will actually point to the
 ImplRepo_Service rather than ImR_Activator. So, the IOR which is visible to
 the client will show that the IOR actually points to the ImplRepo_Service.
 
-   When a client sends a request to the ImplRepoService, the request
+   When a client sends a request to the ImplRepo_Service, the request
 will come to ImplRepo_Service which will send the request to the actual
 ImR_Activator.
 
@@ -275,8 +275,8 @@ the following:
 <ol>
   <li>Register name and startup commands with the ImR using <b>tao_ImR<br>
     </b><em>Example:<code>  </code> </em><code> tao_ImR -ORBInitRef
-    ImplRepo_Service=file://locator.ior add plane -c &quot;airplane_server -i
-    -ORBInitRef ImplRepo_Service=file://locator.ior&quot;<br></code>
+    ImplRepoService=file://locator.ior add plane -c &quot;airplane_server -i
+    -ORBInitRef ImplRepoService=file://locator.ior&quot;<br></code>
     <br>
     Note that the name used to register the server is the name of the POA
     which the objects are created in. So in this example, the airplane_server
@@ -288,11 +288,11 @@ the following:
   <li>The ImR will start the server if it is not already running<br>
   <li>At any time when the server is not currently in use by a client, it can be
       shut down using <strong>tao_ImR<br></strong><em>Example:</em><code> tao_ImR
-      -ORBInitRef ImplRepo_Service=file://locator.ior shutdown plane<br>
+      -ORBInitRef ImplRepoService=file://locator.ior shutdown plane<br>
     </code>
   <li>After the server isn't needed anymore, it can be removed from the ImR database
       using <strong>tao_ImR<br></strong><em>Example:<code> </em>tao_ImR -ORBInitRef
-      ImplRepo_Service=file://locator.ior remove plane</code>
+      ImplRepoService=file://locator.ior remove plane</code>
 </ol>
 
 @subsection serverresponsibilities So what does the server need to do?

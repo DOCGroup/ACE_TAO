@@ -820,7 +820,7 @@ ImR_Locator_i::server_is_running (const char *server,
 
   hostname = ACE_OS::strtok (ACE_const_cast (char *,
                                              hostname.c_str ()),
-                             ".");
+                             "/");
 
   // name of the activator that will do this activation.
   ImplementationRepository::Administration_var admin_ref =
