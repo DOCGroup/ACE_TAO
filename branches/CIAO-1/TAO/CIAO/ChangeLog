@@ -1,3 +1,10 @@
+Fri Jan 10 12:03:00 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* tools/CCIDL:
+	* tools/CIDLC:
+	* tools/CIDLC/README: Renamed CCIDL to CIDLC. Added some
+	explanations about naming convention choosen for CIDL compiler.
+
 Thu Jan 09 00:57:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/templates/cidl_template.cidl: Added an example CIDL file.
