@@ -53,10 +53,10 @@ public:
 };
 
 // Forward decl.
-template <class EXT_ID, class INT_ID, class LOCK>
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Iterator;
 
-template <class EXT_ID, class INT_ID, class LOCK>
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Manager 
   // = TITLE
   //     Define a map abstraction that associates <EXT_ID>s with
@@ -71,10 +71,10 @@ class ACE_Hash_Map_Manager
   //     allocate memory The user can make this a persistant class by
   //     providing an ACE_Allocator with a persistable memory pool
 {
-  friend class ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>;
+  friend class ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 public:
   typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> ENTRY;
-  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK> ITERATOR;
+  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> ITERATOR;
 
   // = Initialization and termination methods.
 
@@ -234,7 +234,7 @@ private:
   // Cleanup sentinel when it is through.
 };
 
-template <class EXT_ID, class INT_ID, class LOCK>
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Iterator
   // = TITLE
   //     Iterator for the ACE_Hash_Map_Manager.
@@ -243,7 +243,7 @@ class ACE_Hash_Map_Iterator
 {
 public:
   // = Initialization method.
-  ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK> &mm);
+  ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm);
 
   // = Iteration methods.
 
@@ -265,7 +265,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK> &map_man_;
+  ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &map_man_;
   // Map we are iterating over.
 
   size_t index_;

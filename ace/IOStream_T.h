@@ -22,6 +22,7 @@
 #if !defined (ACE_IOSTREAM_T_H)
 #define ACE_IOSTREAM_T_H
 
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
 #include "ace/IOStream.h"
 #include "ace/stdcpp.h" // for iomanip[.h]
 
@@ -220,5 +221,5 @@ protected:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("IOStream_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
+#endif /* ACE_LACKS_ACE_IOSTREAM */
 #endif /* ACE_IOSTREAM_T_H */

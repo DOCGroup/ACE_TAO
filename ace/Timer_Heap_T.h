@@ -22,11 +22,11 @@
 #include "ace/Containers.h"
 
 // Forward declaration
-template <class TYPE, class FUNCTOR, class LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Heap_T;
 
-template <class TYPE, class FUNCTOR, class LOCK>
-class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> 
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
+class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> 
   // = TITLE
   //     Iterates over an <ACE_Timer_Hash_T>.
   //
@@ -36,7 +36,7 @@ class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTO
   //     in the order of timeout values.  
 {
 public:
-  ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK> &);
+  ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &);
   // Constructor.
 
   virtual void first (void);
@@ -52,15 +52,15 @@ public:
   // Returns the node at the current position in the sequence
 
 protected:
-  ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK> &timer_heap_;
+  ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &timer_heap_;
   // Pointer to the <ACE_Timer_Heap> that we are iterating over.
 
   size_t position_;
   // Position in the array where the iterator is at
 };
 
-template <class TYPE, class FUNCTOR, class LOCK>
-class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
+class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
   // = TITLE 
   //      Provides a very fast and predictable timer implementation.
   //
@@ -76,10 +76,10 @@ class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>
   //      systems.
 {
 public:
-  typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, LOCK> HEAP_ITERATOR;
-  friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, LOCK>;
+  typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> HEAP_ITERATOR;
+  friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>;
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> INHERITED;
 
   // = Initialization and termination methods.
   ACE_Timer_Heap_T (size_t size,
@@ -143,7 +143,7 @@ public:
   // 0 then the <functor> will be invoked.  Returns 1 if cancellation
   // succeeded and 0 if the <timer_id> wasn't found.
 
-  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &iter (void);
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
   ACE_Timer_Node_T <TYPE> *remove_first (void);
@@ -248,8 +248,8 @@ private:
   // Used to delete the allocated memory when required.
 
   // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Heap_T (const ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Heap_T (const ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
