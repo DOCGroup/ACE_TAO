@@ -17,13 +17,26 @@
 ACE_RCSID(EC_Examples, Supplier, "$Id$")
 
 Supplier::Supplier (RtecEventComm::EventSourceID id)
-:id_ (id)
+  :id_ (id)
 {
 }
 
-void Supplier::set_consumer_proxy(const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy)
+void
+Supplier::set_consumer_proxy(const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy)
 {
   consumer_proxy_ = RtecEventChannelAdmin::ProxyPushConsumer::_duplicate(consumer_proxy);
+}
+
+void
+Supplier::rt_info(const RtecScheduler::handle_t supplier_rt_info)
+{
+  rt_info_ = supplier_rt_info;
+}
+
+RtecScheduler::handle_t
+Supplier::rt_info(void) const
+{
+  return rt_info_;
 }
 
 void

@@ -18,6 +18,7 @@
 #define CONSUMER_H
 
 #include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecSchedulerC.h"
 #include "Supplier.h"
 #include "ace/Time_Value.h"
 
@@ -58,11 +59,15 @@ public:
 
   void setWorkTime(ACE_Time_Value& worktime);
 
+  void rt_info(RtecScheduler::handle_t consumer_rt_info);
+  RtecScheduler::handle_t rt_info(void) const;
+
 private:
   int deadline_missed_;
   ACE_Time_Value worktime_;
 
   Supplier *fwddest_;
+  RtecScheduler::handle_t rt_info_;
 };
 
 #endif /* CONSUMER_H */

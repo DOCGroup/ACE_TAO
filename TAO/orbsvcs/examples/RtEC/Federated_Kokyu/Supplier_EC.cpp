@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Thread.h"
+#include "ace/Vector_T.h"
 
 #include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
@@ -38,28 +39,184 @@ inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
 
 class Supplier_EC : public Kokyu_EC
 {
-  Supplier supplier_impl1;
-  Supplier supplier_impl2_1;
-  Supplier supplier_impl2_2;
-  Timeout_Consumer timeout_consumer_impl1;
-  Timeout_Consumer timeout_consumer_impl2_1;
-  Timeout_Consumer timeout_consumer_impl2_2;
-  Consumer consumer_impl1;
-  Consumer consumer_impl2_1;
   TAO_EC_Gateway_Sched gateway;
+  ACE_Vector<Supplier*> suppliers_;
+  ACE_Vector<Timeout_Consumer*> timeout_consumers_;
+  ACE_Vector<Consumer*> consumers_;
 public:
   Supplier_EC()
-    :
-    supplier_impl1(1)
-    , supplier_impl2_1(2)
-    , supplier_impl2_2(3)
-    , timeout_consumer_impl1(&supplier_impl1)
-    , timeout_consumer_impl2_1(&supplier_impl2_1)
-    , timeout_consumer_impl2_2(&supplier_impl2_2)
-    , consumer_impl1() //worktime will be set later
-    , consumer_impl2_1(&supplier_impl2_2) //worktime will be set later
+    : suppliers_()
+    , timeout_consumers_()
+    , consumers_()
   {
   }
+
+  void add_supplier_with_timeout(
+                                 Supplier * supplier_impl,
+                                 const char * supp_entry_point,
+                                 RtecEventComm::EventType supp_type,
+                                 Timeout_Consumer * timeout_consumer_impl,
+                                 const char * timeout_entry_point,
+                                 ACE_Time_Value period,
+                                 RtecScheduler::Criticality_t crit,
+                                 RtecScheduler::Importance_t imp
+                                 ACE_ENV_ARG_DECL
+                                 )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ))
+  {
+    add_supplier(supplier_impl,supp_entry_point,supp_type ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    RtecEventChannelAdmin::ProxyPushSupplier_var timeout_supplier_proxy;
+    RtecEventComm::PushConsumer_var safe_timeout_consumer;
+
+    safe_timeout_consumer= timeout_consumer_impl->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    RtEventChannelAdmin::SchedInfo info;
+    info.criticality = crit;
+    info.period = time_val_to_period (period);
+    info.importance = imp;
+    info.threads = 0;
+    info.info_type = RtecScheduler::OPERATION;
+
+    RtecScheduler::handle_t supplier_timeout_consumer_rt_info =
+      this->register_consumer(timeout_entry_point,
+                              info,
+                              ACE_ES_EVENT_INTERVAL_TIMEOUT,
+                              safe_timeout_consumer.in(),
+                              timeout_supplier_proxy.out()
+                              ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    //don't need to save supplier_timeout_consumer_rt_info because only used to set dependency here:
+
+    this->add_dependency (supplier_timeout_consumer_rt_info,
+                          supplier_impl->rt_info(),
+                          1,
+                          RtecBase::TWO_WAY_CALL
+                          ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    this->timeout_consumers_.push_back(timeout_consumer_impl);
+  } //add_supplier_with_timeout()
+
+  void add_supplier(
+                    Supplier * supplier_impl,
+                    const char * entry_point,
+                    RtecEventComm::EventType type
+                    ACE_ENV_ARG_DECL
+                    )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ))
+  {
+    RtecEventComm::EventSourceID supplier_id = supplier_impl->get_id();
+
+    RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy;
+    RtecEventComm::PushSupplier_var supplier;
+
+    supplier = supplier_impl->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    RtecScheduler::handle_t supplier_rt_info =
+      this->register_supplier(entry_point,
+                              supplier_id,
+                              type,
+                              supplier.in(),
+                              consumer_proxy.out()
+                              ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    supplier_impl->set_consumer_proxy(consumer_proxy.in());
+    supplier_impl->rt_info(supplier_rt_info);
+
+    this->suppliers_.push_back(supplier_impl);
+  } //add_supplier()
+
+  void add_consumer_with_supplier(
+                                  Consumer * consumer_impl,
+                                  const char * cons_entry_point,
+                                  ACE_Time_Value cons_period,
+                                  RtecEventComm::EventType cons_type,
+                                  RtecScheduler::Criticality_t cons_crit,
+                                  RtecScheduler::Importance_t cons_imp,
+                                  Supplier * supplier_impl,
+                                  const char * supp_entry_point,
+                                  RtecEventComm::EventType supp_type
+                                  ACE_ENV_ARG_DECL
+                                  )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ))
+  {
+    add_consumer(consumer_impl,cons_entry_point,cons_period,cons_type,cons_crit,cons_imp ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    add_supplier(supplier_impl,supp_entry_point,supp_type ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    this->add_dependency (consumer_impl->rt_info(),
+                          supplier_impl->rt_info(),
+                          1,
+                          RtecBase::TWO_WAY_CALL
+                          ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  } //add_consumer_with_supplier()
+
+  void add_consumer(
+                    Consumer * consumer_impl,
+                    const char * entry_point,
+                    ACE_Time_Value period,
+                    RtecEventComm::EventType cons_type,
+                    RtecScheduler::Criticality_t crit,
+                    RtecScheduler::Importance_t imp
+                    ACE_ENV_ARG_DECL
+                    )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ))
+  {
+      RtecEventChannelAdmin::ProxyPushSupplier_var  proxy_supplier;
+
+      //Specifying criticality is crucial since it propagates from
+      //consumer to supplier.
+      RtEventChannelAdmin::SchedInfo info;
+      info.criticality = crit;
+      info.period = time_val_to_period (period);
+      info.importance = imp;
+      info.threads = 0;
+      info.info_type = RtecScheduler::OPERATION;
+
+      RtecEventComm::PushConsumer_var consumer =
+        consumer_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      RtecScheduler::handle_t consumer_rt_info =
+        this->register_consumer(entry_point,
+                                info,
+                                cons_type,
+                                consumer.in(),
+                                proxy_supplier.out()
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      consumer_impl->rt_info(consumer_rt_info);
+
+      this->consumers_.push_back(consumer_impl);
+  } //add_consumer()
 
   void init_gateway(CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
@@ -129,200 +286,76 @@ public:
         , RtecScheduler::SYNCHRONIZATION_FAILURE
       ))
   {
-      RtecEventComm::EventSourceID supplier_id1 = supplier_impl1.get_id();
-      RtecEventComm::EventSourceID supplier_id2_1 = supplier_impl2_1.get_id();
-      RtecEventComm::EventSourceID supplier_id2_2 = supplier_impl2_2.get_id();
+    Supplier *supplier_impl1;
+    Timeout_Consumer *timeout_consumer_impl1;
+    ACE_NEW(supplier_impl1,
+            Supplier(1));
+    ACE_NEW(timeout_consumer_impl1,
+            Timeout_Consumer(supplier_impl1));
+    ACE_Time_Value tv(4,0);
+    add_supplier_with_timeout(supplier_impl1,"supplier1",ACE_ES_EVENT_UNDEFINED,
+                              timeout_consumer_impl1,"supplier1_timeout_consumer",
+                              tv,RtecScheduler::VERY_LOW_CRITICALITY,RtecScheduler::VERY_LOW_IMPORTANCE
+                              ACE_ENV_ARG_PARAMETER
+                              );
 
-      RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy1;
-      RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy2_1;
-      RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy2_2;
-      RtecEventComm::PushSupplier_var supplier1;
-      RtecEventComm::PushSupplier_var supplier2_1, supplier2_2;
+    Supplier *supplier_impl2_1;
+    Timeout_Consumer *timeout_consumer_impl2_1;
+    ACE_NEW(supplier_impl2_1,
+            Supplier(2));
+    ACE_NEW(timeout_consumer_impl2_1,
+            Timeout_Consumer(supplier_impl2_1));
+    tv.set (6, 0); //Period
+    add_supplier_with_timeout(supplier_impl2_1,"supplier2_1",ACE_ES_EVENT_UNDEFINED+1,
+                              timeout_consumer_impl2_1,"supplier2_1_timeout_consumer",
+                              tv,RtecScheduler::VERY_HIGH_CRITICALITY,RtecScheduler::VERY_HIGH_IMPORTANCE
+                              ACE_ENV_ARG_PARAMETER
+                              );
 
-      supplier1 = supplier_impl1._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      supplier2_1 = supplier_impl2_1._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      supplier2_2 = supplier_impl2_2._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+    Consumer * consumer_impl1;
+    ACE_NEW(consumer_impl1,
+            Consumer);
 
-      RtecScheduler::handle_t supplier1_rt_info =
-        this->register_supplier("supplier1",
-                                supplier_id1,
-                                ACE_ES_EVENT_UNDEFINED,
-                                supplier1.in(),
-                                consumer_proxy1.out()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+    tv.set(2,0);
+    consumer_impl1->setWorkTime(tv);
+    //consumer's rate will get propagated from the supplier.
+    //so no need to specify a period here.
+    tv.set(0,0); //Period
+    add_consumer(consumer_impl1,
+                 "consumer1",
+                 tv,
+                 ACE_ES_EVENT_UNDEFINED,
+                 RtecScheduler::VERY_LOW_CRITICALITY,
+                 RtecScheduler::VERY_LOW_IMPORTANCE
+                 ACE_ENV_ARG_PARAMETER
+                 );
 
-      RtecScheduler::handle_t supplier2_1_rt_info =
-        this->register_supplier("supplier2_1",
-                                supplier_id2_1,
-                                ACE_ES_EVENT_UNDEFINED+1,
-                                supplier2_1.in(),
-                                consumer_proxy2_1.out()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+    Supplier *supplier_impl2_2;
+    ACE_NEW(supplier_impl2_2,
+            Supplier(3));
+    Consumer * consumer_impl2_1;
+    ACE_NEW(consumer_impl2_1,
+            Consumer(supplier_impl2_2));
 
-      RtecScheduler::handle_t supplier2_2_rt_info =
-        this->register_supplier("supplier2_2",
-                                supplier_id2_2,
-                                ACE_ES_EVENT_UNDEFINED+2,
-                                supplier2_2.in(),
-                                consumer_proxy2_2.out()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+    tv.set(6,0);
+    consumer_impl2_1->setWorkTime(tv);
+    //consumer's rate will get propagated from the supplier.
+    //so no need to specify a period here.
+    tv.set(0,0); //Period
+    add_consumer_with_supplier(consumer_impl2_1,
+                               "consumer2_1",
+                               tv,
+                               ACE_ES_EVENT_UNDEFINED+1,
+                               RtecScheduler::VERY_LOW_CRITICALITY,
+                               RtecScheduler::VERY_LOW_IMPORTANCE,
+                               supplier_impl2_2,
+                               "supplier2_2",
+                               ACE_ES_EVENT_UNDEFINED+2
+                               ACE_ENV_ARG_PARAMETER
+                               );
 
-      //ACE_UNUSED_ARG(supplier2_2_rt_info);
-
-      supplier_impl1.set_consumer_proxy(consumer_proxy1.in());
-      supplier_impl2_1.set_consumer_proxy(consumer_proxy2_1.in());
-      supplier_impl2_2.set_consumer_proxy(consumer_proxy2_2.in());
-
-      ACE_DEBUG ((LM_DEBUG, "suppliers connected\n"));
-
-      //Timer Registration part
-      //Timeout consumers for the suppliers.
-
-      RtecEventChannelAdmin::ProxyPushSupplier_var timeout_supplier_proxy1;
-      RtecEventChannelAdmin::ProxyPushSupplier_var timeout_supplier_proxy2_1;
-      RtecEventComm::PushConsumer_var safe_timeout_consumer1;
-      RtecEventComm::PushConsumer_var safe_timeout_consumer2_1;
-
-      safe_timeout_consumer1= timeout_consumer_impl1._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      safe_timeout_consumer2_1= timeout_consumer_impl2_1._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      //TODO: Setup timeouts to test EDF
-      ACE_Time_Value tv(4,0); //Period
-
-      RtEventChannelAdmin::SchedInfo info;
-      info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
-      info.period = time_val_to_period (tv);
-      info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-      info.threads = 0;
-      info.info_type = RtecScheduler::OPERATION;
-
-      RtecScheduler::handle_t supplier1_timeout_consumer_rt_info =
-        this->register_consumer("supplier1_timeout_consumer",
-                                   info,
-                                   ACE_ES_EVENT_INTERVAL_TIMEOUT,
-                                   safe_timeout_consumer1.in(),
-                                   timeout_supplier_proxy1.out()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      tv.set (6, 0); //Period
-      info.criticality = RtecScheduler::VERY_HIGH_CRITICALITY;
-      info.period = time_val_to_period (tv);
-      info.importance = RtecScheduler::VERY_HIGH_IMPORTANCE;
-
-      RtecScheduler::handle_t supplier2_1_timeout_consumer_rt_info =
-        this->register_consumer("supplier2_1_timeout_consumer",
-                                info,
-                                ACE_ES_EVENT_INTERVAL_TIMEOUT,
-                                safe_timeout_consumer2_1.in(),
-                                timeout_supplier_proxy2_1.out()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "timeout consumers connected\n"));
-
-      // *************************************************************
-      // Create a consumer, intialize its RT_Info structures, and
-      // connnect to the event channel....
-
-      tv.set(2,0);
-      consumer_impl1.setWorkTime(tv);
-      RtecEventChannelAdmin::ProxyPushSupplier_var  proxy_supplier1;
-
-      tv.set(6,0);
-      consumer_impl2_1.setWorkTime(tv);
-      RtecEventChannelAdmin::ProxyPushSupplier_var  proxy_supplier2_1;
-
-      //consumer's rate will get propagated from the supplier.
-      //so no need to specify a period here. Specifying
-      //criticality is crucial since it propagates from
-      //consumer to supplier.
-      tv.set(0,0); //Period
-      TimeBase::TimeT tmp;
-      ORBSVCS_Time::Time_Value_to_TimeT (tmp, tv);
-
-      info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
-      info.period = time_val_to_period (tv);
-      info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-      info.threads = 0;
-      info.info_type = RtecScheduler::OPERATION;
-
-      RtecEventComm::PushConsumer_var consumer1 =
-        consumer_impl1._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      RtecScheduler::handle_t consumer1_rt_info =
-        this->register_consumer("consumer1",
-                                info,
-                                ACE_ES_EVENT_UNDEFINED,
-                                consumer1.in(),
-                                proxy_supplier1.out()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_UNUSED_ARG(consumer1_rt_info);
-
-      tv.set(0,0); //Period
-      ORBSVCS_Time::Time_Value_to_TimeT (tmp, tv);
-
-      info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
-      info.period = time_val_to_period (tv);
-      info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-      info.threads = 0;
-      info.info_type = RtecScheduler::OPERATION;
-
-      RtecEventComm::PushConsumer_var consumer2_1 =
-        consumer_impl2_1._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      RtecScheduler::handle_t consumer2_1_rt_info =
-        this->register_consumer("consumer2_1",
-                                info,
-                                ACE_ES_EVENT_UNDEFINED+1,
-                                consumer2_1.in(),
-                                proxy_supplier2_1.out()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      //ACE_UNUSED_ARG(consumer2_1_rt_info);
-
-      ACE_DEBUG ((LM_DEBUG, "consumers connected\n"));
-
-      // ****************************************************************
-      //Registering dependency between timeout consumers and our suppliers
-      //with the scheduler
-
-      this->add_dependency (supplier1_timeout_consumer_rt_info,
-                                 supplier1_rt_info,
-                                 1,
-                                 RtecBase::TWO_WAY_CALL
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      this->add_dependency (supplier2_1_timeout_consumer_rt_info,
-                                 supplier2_1_rt_info,
-                                 1,
-                                 RtecBase::TWO_WAY_CALL
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      //TODO: Why does supplier2_2 need this to have dependencies fulfilled?
-      this->add_dependency (consumer2_1_rt_info,
-                                 supplier2_2_rt_info,
-                                 1,
-                                 RtecBase::TWO_WAY_CALL
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+    Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
   }
 };
 
@@ -422,7 +455,7 @@ main (int argc, char* argv[])
 #else
       EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
 #endif //ACE_HAS_DSUI
-      ACE_Time_Value ticker (300);
+      ACE_Time_Value ticker (120);
       orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
 
 
