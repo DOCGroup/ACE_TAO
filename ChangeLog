@@ -1,3 +1,10 @@
+Wed Mar 26 16:48:54 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* tests/Unbounded_Set_Test.cpp:
+	
+	Corrected signature of main program and inserted an ACE_START_TEST/
+	ACE_END_TEST.  Thanks to Johnny Willemsen for suggesting this.
+
 Wed Mar 26 11:33:15 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* ace/Unbounded_Set.cpp (ACE_Unbounded_Set<T>::delete_nodes):
