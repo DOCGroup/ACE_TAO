@@ -92,9 +92,12 @@ namespace TAO
                             ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
+        // Send it as a oneway request. It will make all the required
+        // paraphernalia within the ORB to fire, like buffering if
+        // send blocks etc.
         s =
           this->send_message (cdr,
-                              TAO_Transport::TAO_TWOWAY_REQUEST,
+                              TAO_Transport::TAO_ONEWAY_REQUEST,
                               max_wait_time
                               ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
