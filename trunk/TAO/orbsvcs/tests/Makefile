@@ -4,6 +4,10 @@
 #
 #----------------------------------------------------------------------------
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
@@ -46,10 +50,6 @@ DIRS += Concurrency \
   tests_svc_loader \
   Security \
   Miop
-
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
