@@ -21,6 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// MEM_SAP requries position independent pointers to work
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
 #include "ace/Process_Mutex.h"
 
 /**
@@ -34,12 +37,7 @@ class ACE_Export ACE_MEM_SAP
 public:
   // = Initialization and termination methods.
 
-  /// I'll just hardcode this for mmap for now.
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> MALLOC_TYPE;
-#else
-  typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block> MALLOC_TYPE;
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
   typedef ACE_MMAP_Memory_Pool_Options MALLOC_OPTIONS;
 
   /// Destructor.
@@ -104,6 +102,8 @@ protected:
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_SAP.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #include "ace/post.h"
 #endif /* ACE_SOCK_IO_H */
