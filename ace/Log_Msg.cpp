@@ -417,7 +417,9 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   // this block.
   if (instance_count == 0)
     {
-#     if defined (ACE_HAS_TSS_EMULATION) || !defined (ACE_MT_SAFE) || ACE_MT_SAFE == 0
+#     if defined (ACE_HAS_TSS_EMULATION)
+        ACE_Log_Msg_Manager::close ();
+#     elif !defined (ACE_MT_SAFE) || ACE_MT_SAFE == 0
         // Destroy the static message queue instance.
         ACE_Log_Msg_message_queue->close ();
         delete ACE_Log_Msg_message_queue;
