@@ -85,11 +85,6 @@ Echo_Client_Request_Interceptor::send_request (
               operation.in (),
               ior.in ()));
 
-  // No svccontextx for _is_a call.
-  if (ACE_OS::strcmp (operation.in (),
-                      "_is_a") == 0)
-    return;
-
   send_request_count++;
 
   ACE_TRY_NEW_ENV
@@ -227,11 +222,6 @@ Echo_Client_Request_Interceptor::receive_reply (
               this->myname_,
               operation.in (),
               ior.in ()));
-
-  // No svccontextx for _is_a call.
-  if (ACE_OS::strcmp (operation.in (),
-                      "_is_a") == 0)
-    return;
 
   // Check that the reply service context was received as
   // expected.
@@ -457,8 +447,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
   // Same goes for the shutdown call
-  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0 ||
-      ACE_OS_String::strcmp ("shutdown", operation.in ()) == 0)
+  if (ACE_OS_String::strcmp ("shutdown", operation.in ()) == 0)
     return;
 
   IOP::ServiceId id = ::service_id;
@@ -530,10 +519,6 @@ Echo_Server_Request_Interceptor::send_reply (
               this->myname_,
               operation.in ()));
 
-  if (ACE_OS::strcmp (operation.in (),
-                      "_is_a") == 0)
-    return;
-                             
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (::service_id ACE_ENV_ARG_PARAMETER);
