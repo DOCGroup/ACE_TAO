@@ -23,13 +23,6 @@ ACEXML_EC_Property::set (const ACEXML_String& property,
           ACE_OS::strcasecmp (val, "mt") == 0)
         {
           this->ec_dispatching_ = value;
-          if (this->ec_dispatching_threads_ <= 0)
-            {
-              ACE_ERROR ((LM_ERROR, "Invalid configuration ECDispatching = mt "
-                      "and ECDispatchingThreads = %ld\n",
-                      this->ec_dispatching_threads_));
-              return -1;
-            }
           return 0;
         }
     }
@@ -44,7 +37,7 @@ ACEXML_EC_Property::set (const ACEXML_String& property,
         }
     }
   else if (ACE_OS::strcasecmp (prop, "ECSupplierFiltering") == 0 ||
-           ACE_OS::strcasecmp (prop, "ECSupplierFilter"))
+           ACE_OS::strcasecmp (prop, "ECSupplierFilter") == 0)
     {
       if (ACE_OS::strcasecmp (val, "null") == 0 ||
           ACE_OS::strcasecmp (val, "per-supplier") == 0)
@@ -138,12 +131,8 @@ ACEXML_EC_Property::set (const ACEXML_String& property,
           return 0;
         }
     }
-  else
-    {
-      ACE_ERROR ((LM_ERROR, "Invalid property %s = %s\n", prop, val));
-      return -1;
-    }
-  return 0;
+  ACE_ERROR ((LM_ERROR, "Invalid property %s = %s\n", prop, val));
+  return -1;
 }
 
 int
@@ -178,20 +167,22 @@ ACEXML_EC_Property::set (const ACEXML_String& property, const long value)
   if (ACE_OS::strcasecmp (prop, "ECConsumerControlPeriod") == 0)
     {
       this->ec_consumer_control_period_ = value;
-      if (this->ec_consumer_control_period_ <= 0)
+      if (this->ec_consumer_control_period_ != 0 &&
+          this->ec_consumer_control_period_ < 1000)
         {
           ACE_ERROR ((LM_ERROR, "Invalid configuration ECConsumerControlPeriod"
-                      " = %ld\n"));
+                      " = %d\n", this->ec_consumer_control_period_));
           return -1;
         }
     }
   else if (ACE_OS::strcasecmp (prop, "ECSupplierControlPeriod") == 0)
     {
       this->ec_supplier_control_period_ = value;
-      if (this->ec_supplier_control_period_ <= 0)
+      if (this->ec_supplier_control_period_ != 0 &&
+          this->ec_supplier_control_period_ < 1000)
         {
           ACE_ERROR ((LM_ERROR, "Invalid configuration ECSupplierControlPeriod"
-                      " = %ld\n"));
+                      " = %d\n", this->ec_supplier_control_period_));
           return -1;
         }
     }
@@ -200,8 +191,8 @@ ACEXML_EC_Property::set (const ACEXML_String& property, const long value)
       this->ec_dispatching_threads_ = value;
       if (this->ec_dispatching_threads_ <= 0)
         {
-          ACE_ERROR ((LM_ERROR, "Invalid configuration ECDispatching = mt "
-                      "and ECDispatchingThreads = %ld\n",
+          ACE_ERROR ((LM_ERROR, "Invalid value ECDispatchingThreads = %d "
+                      "when ECDispatching = mt\n",
                       this->ec_dispatching_threads_));
           return -1;
         }
@@ -302,7 +293,7 @@ ACEXML_EC_Property::dump() const
   if (this->ec_dispatching_threads_ > 0)
     {
       argv += " -ECDispatchingThreads ";
-      pos += ACE_OS::sprintf (temp, "%ld", this->ec_consumer_control_period_);
+      pos += ACE_OS::sprintf (temp, "%ld", this->ec_dispatching_threads_);
       temp[pos] = 0;
       argv += temp;
     }

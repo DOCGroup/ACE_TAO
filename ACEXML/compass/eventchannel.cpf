@@ -6,6 +6,9 @@
     <simple name="ECDispatching" type="string">
       <value>mt</value>
     </simple>
+    <simple name="ECDispatchingThreads" type="long">
+      <value>4</value>
+    </simple>
     <simple name="ECFiltering" type="string">
       <value>basic</value>
     </simple>

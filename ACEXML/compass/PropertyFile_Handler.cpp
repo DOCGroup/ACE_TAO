@@ -11,6 +11,8 @@
 
 static const ACEXML_Char empty_string[] = {0};
 
+extern int errno;
+
 ACEXML_PropertyFile_Handler::ACEXML_PropertyFile_Handler (const ACEXML_Char* filename)
   : fileName_(ACE::strnew (filename)), locator_ (0), property_ (0)
 {
@@ -90,12 +92,20 @@ ACEXML_PropertyFile_Handler::endElement (const ACEXML_Char *,
         }
       else if (this->atttype_ == "long")
         {
-          int save_errno = errno;
+          errno = 0;
           long value = ACE_OS::strtol (this->value_.c_str(), 0, 10);
-          if (errno != save_errno ||
-              this->property_->set (this->attname_, value) != 0)
+          if (errno != 0)
             {
-              ACE_ERROR ((LM_ERROR, "Property %s = %ld invalid: %m\n",
+              ACE_ERROR ((LM_ERROR, "Property %s = %d invalid: %m\n",
+                          this->attname_.c_str(), value));
+              ACEXML_SAXParseException* exception = 0;
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException ("Invalid Property"));
+              ACEXML_ENV_RAISE (exception);
+            }
+          else if (this->property_->set (this->attname_, value) != 0)
+            {
+              ACE_ERROR ((LM_ERROR, "Property %s = %d invalid\n",
                           this->attname_.c_str(), value));
               ACEXML_SAXParseException* exception = 0;
               ACE_NEW_NORETURN (exception,

@@ -3,10 +3,11 @@
 <softpkg name="EventChannelPkg" version="0.1">
  <pkgtype>CORBA Component</pkgtype>
  <title>EventChannel</title>
- <author> <company>DOC group </company>
-          <webpage href="http://www.cs.wustl.edu/~doc"/>
+ <author>
+    <company>DOC group </company>
+    <webpage href="http://www.cs.wustl.edu/~doc"/>
  </author>
- <description>A simple Event Channel test </description>
+ <description>Simple Event Channel</description>
   <dependency type="DSO" >
     <localfile name="libTAO.so"/>
   </dependency>
@@ -15,7 +16,9 @@
     <processor name="x86" />
     <compiler name="gcc" />
     <programminglanguage name="C++" />
-    <propertyfile> <fileinarchive name="eventchannel.cpf"/></propertyfile>
+    <propertyfile>
+      <fileinarchive name="eventchannel.cpf"/>
+    </propertyfile>
     <code type="DSO" >
       <fileinarchive name="libService.so"/>
       <entrypoint>createEventChannel</entrypoint>

@@ -12,13 +12,23 @@
 #include "ace/DLL.h"
 #include "ace/SString.h"
 
-static ACE_ARGV myargv;
+struct ThrCreate
+{
+  const ACE_TCHAR* name;
+  int argc;
+  ACE_TCHAR** argv;
+};
+
 
 void*
 create_dll (void* name)
 {
   typedef int (*dll_func) (int, char**);
-  const ACE_TCHAR* dllname = ACE_reinterpret_cast (const ACE_TCHAR*, name);
+  ThrCreate* thr = ACE_reinterpret_cast (ThrCreate*, name);
+  const ACE_TCHAR* dllname = thr->name;
+  const int argc = thr->argc;
+  ACE_TCHAR** argv = thr->argv;
+
   if (dllname == 0)
     {
       ACE_ERROR ((LM_ERROR, "Trying to create a dll with null name"));
@@ -46,7 +56,7 @@ create_dll (void* name)
                   dll.error ()));
       return (void*)-1;
     }
-  return (void*)factory (myargv.argc(), myargv.argv());
+  return (void*)factory (argc, argv);
 }
 
 static void
@@ -56,6 +66,14 @@ usage (const ACE_TCHAR* program)
               ACE_TEXT ("Usage: %s [-l <filename>]\n")
               ACE_TEXT ("  -l: Install components from <filename>\n"),
               program));
+}
+
+static int
+error_cleanup (const ACE_TCHAR* dir)
+{
+  if (rmdir (dir) < 0)
+    ACE_ERROR ((LM_ERROR, "Unable to cleanup safe temp directory : %m\n"));
+  return -1;
 }
 
 int
@@ -73,8 +91,7 @@ ACE_TMAIN (int argc, char* argv[])
             filename = get_opt.opt_arg ();
             break;
           default:
-            usage(argv[0]);
-            return -1;
+            break;
         }
     }
   if (filename == 0)
@@ -82,6 +99,8 @@ ACE_TMAIN (int argc, char* argv[])
       usage(argv[0]);
       return -1;
     }
+  ACE_ARGV myargv;
+
   const ACEXML_Char meta_inf[] = {'m', 'e', 't', 'a', '-', 'i', 'n', 'f', 0};
   ACEXML_Char* path = 0;
   size_t pos = ACE_OS::strlen (filename);
@@ -157,7 +176,7 @@ ACE_TMAIN (int argc, char* argv[])
     {
       ACE_ERROR ((LM_ERROR, "Unable to set up environment for the Component"
                   "location: %m\n"));
-      return -1;
+      return error_cleanup (temp);
     }
   ACEXML_String temp_dir (pwd);
   temp_dir += "/";
@@ -174,10 +193,12 @@ ACE_TMAIN (int argc, char* argv[])
     {
       ACE_ERROR ((LM_ERROR, "Unable to set up environment for the Component"
                   "location: %m\n"));
-      return -1;
+      return error_cleanup (temp);
     }
 
   ACE_Thread_Manager* thr_mgr = ACE_Thread_Manager::instance();
+
+  ThrCreate param;
 
   const ACEXML_SoftPkg::Implementations& impls = pkg->get_impls();
   ACEXML_SoftPkg::Implementation** entry = 0;
@@ -191,7 +212,7 @@ ACE_TMAIN (int argc, char* argv[])
         {
           ACE_ERROR ((LM_ERROR, "Unable to create stream for the Component"
                       "location %s\n", dll_path.c_str()));
-          return -1;
+          return error_cleanup (temp);
         }
       ACEXML_String dsoname (temp);
       dsoname += "/" + impl->code_.file_;
@@ -201,13 +222,13 @@ ACE_TMAIN (int argc, char* argv[])
         {
           ACE_ERROR ((LM_ERROR, "Unable to create local copy %s : %m\n",
                       dsoname.c_str()));
-          return -1;
+          return error_cleanup (temp);
         }
       else if (ACE_OS::unlink (dsoname.c_str()) < 0)
         {
           ACE_ERROR ((LM_ERROR, "Unable to unlink local copy %s : %m\n",
                       dsoname.c_str()));
-          return -1;
+          return error_cleanup (temp);
         }
       ACEXML_Char buf[65535];
       int bytes = 0;
@@ -217,7 +238,7 @@ ACE_TMAIN (int argc, char* argv[])
             {
               ACE_ERROR ((LM_ERROR, "Unable to create dll %s: %m\n",
                           dsoname.c_str()));
-              return -1;
+              return error_cleanup (temp);
             }
         }
       ACE_OS::close (dso);
@@ -232,7 +253,7 @@ ACE_TMAIN (int argc, char* argv[])
             {
               ACE_ERROR ((LM_ERROR, "Failed to create input stream from %s\n",
                           path.c_str()));
-              return -1;
+              return error_cleanup (temp);
             }
           ACEXML_PropertyFile_Handler* pHandler = 0;
           ACE_NEW_RETURN (pHandler,
@@ -254,7 +275,8 @@ ACE_TMAIN (int argc, char* argv[])
           ACEXML_CATCH (ACEXML_SAXException, ex)
             {
               ex.print();
-              ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Parser Exception....\n")));
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Parser Exception....\n")));
+              return error_cleanup (temp);
             }
           ACEXML_ENDTRY;
           const ACEXML_Property* prop = pHandler->get_property();
@@ -264,10 +286,18 @@ ACE_TMAIN (int argc, char* argv[])
           ACE_NEW_RETURN (pArgv, ACE_ARGV (list), -1);
         }
       if (pArgv)
-        myargv.add (pArgv->argv());
+        {
+          myargv.add (pArgv->argv());
+          param.argv = myargv.argv();
+          param.argc = myargv.argc();
+        }
       else
-        myargv.add (argv);
-      if (thr_mgr->spawn (create_dll,(void*)impl->id_.c_str()) == -1)
+        {
+          param.argc = argc;
+          param.argv = argv;
+        }
+      param.name = impl->id_.c_str();
+      if (thr_mgr->spawn (create_dll,(void*)&param) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Unable to spawn dll %s\n"),
@@ -278,7 +308,7 @@ ACE_TMAIN (int argc, char* argv[])
   thr_mgr->wait();
   if (rmdir (temp) < 0)
     {
-      ACE_ERROR ((LM_ERROR, "Unable to cleanup safe temp directory : %m\n"));
+      ACE_ERROR ((LM_ERROR, "Unable to cleanup temporary directory : %m\n"));
       return -1;
     }
   return 0;

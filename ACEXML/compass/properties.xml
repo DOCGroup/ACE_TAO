@@ -2,32 +2,39 @@
 <!DOCTYPE properties SYSTEM "properties.dtd">
 <properties>
   <struct name="ECProperties" type="EC_Properties">
-    <description>Configuration for a Simple Event Channel</description>
+    <description>Simple Event Channel</description>
     <simple name="ECDispactching" type="string">
       <value>reactive</value>
     </simple>
     <simple name="ECFiltering" type="string">
       <value>basic</value>
     </simple>
-    <simple name="ECSupplierFiltering" type="string">
+    <simple name="ECSupplierFiltering"
+            type="string">
       <value>per-supplier</value>
     </simple>
-   <simple name="ECProxyConsumerLock" type="string">
+   <simple name="ECProxyConsumerLock"
+           type="string">
       <value>thread</value>
     </simple>
-    <simple name="ECProxySupplierLock" type="string">
+    <simple name="ECProxySupplierLock"
+            type="string">
       <value>thread</value>
     </simple>
-    <simple name="ECConsumerControl" type="string">
+    <simple name="ECConsumerControl"
+            type="string">
       <value>reactive</value>
     </simple>
-    <simple name="ECSupplierControl" type="string">
+    <simple name="ECSupplierControl"
+            type="string">
       <value>reactive</value>
     </simple>
-    <simple name="ECConsumerControlPeriod" type="long">
+    <simple name="ECConsumerControlPeriod"
+            type="long">
       <value>50000</value>
     </simple>
-    <simple name="ECSupplierControlPeriod" type="long">
+    <simple name="ECSupplierControlPeriod"
+            type="long">
       <value>50000</value>
     </simple>
   </struct>
