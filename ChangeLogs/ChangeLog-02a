@@ -1,3 +1,8 @@
+Thu Sep 20 18:15:49 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/Config_Test.cpp: Added some more tests to verify correct
+          string value reset and enumerate values/sections.
+
 Thu Sep 20 12:29:09 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/ACE_SSL_LIB.dsp:
