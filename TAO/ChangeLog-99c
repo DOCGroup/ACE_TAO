@@ -1,113 +1,120 @@
+Wed Jul 14 21:49:52 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+          added #define _MATH_H_WRAPPER with exceptions and g++.
+          We #define exception when #including math.h, and so
+          does egcs.  The _MATH_H_WRAPPER #define disables egcs'.
+
 Wed Jul 14 21:44:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Object.cpp (_is_a): Should return 0 instead of
-	  CORBA::Object::_nil when prepare_for_upcall failed.  Thanks to
-	  Carlos for pointing this out.
+        * tao/Object.cpp (_is_a): Should return 0 instead of
+          CORBA::Object::_nil when prepare_for_upcall failed.  Thanks to
+          Carlos for pointing this out.
 
 Wed Jul 14 21:35:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (invoke): This function
-	  also uses ORB::key_to_object.  Thanks to EGCS for pointing this
-	  out. 
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (invoke): This function
+          also uses ORB::key_to_object.  Thanks to EGCS for pointing this
+          out.
 
 Wed Jul 14 21:21:35 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/README:
+        * performance-tests/Cubit/TAO/IDL_Cubit/README:
 
-	  Updated with descriptions of options that support the newly
-	  added enable/disable test feature.
+          Updated with descriptions of options that support the newly
+          added enable/disable test feature.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
 
-	  Added ability to specify which tests should be run and which
-	  ones shouldn't be run.  This modification helps with isolating
-	  certain test timeprobes.
+          Added ability to specify which tests should be run and which
+          ones shouldn't be run.  This modification helps with isolating
+          certain test timeprobes.
 
 Wed Jul 14 21:18:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
-	  In code generation for the foo_copy() method, modified code to
-	  check for more than one level of typedef when determining if 
-	  the element type is a typedef of another array type.
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+          In code generation for the foo_copy() method, modified code to
+          check for more than one level of typedef when determining if
+          the element type is a typedef of another array type.
 
 Wed Jul 14 18:07:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/POA.cpp (create_reference_i,create_reference_with_id_i):
-	  (servant_to_reference,id_to_reference_i): All these methods
-	  should generate collocated object reference.  Thanks to Francois
-	  Bernier <fbernier@gel.ulaval.ca> for reporting the bug.
+        * tao/POA.cpp (create_reference_i,create_reference_with_id_i):
+          (servant_to_reference,id_to_reference_i): All these methods
+          should generate collocated object reference.  Thanks to Francois
+          Bernier <fbernier@gel.ulaval.ca> for reporting the bug.
 
-	* tao/ORB.{h,cpp} (key_to_object): The function now takes two
-	  extra arguments <servant> and <collocated> to create collocated
-	  object reference.  Actually, this seems to be the only use case
-	  for key_to_object.
+        * tao/ORB.{h,cpp} (key_to_object): The function now takes two
+          extra arguments <servant> and <collocated> to create collocated
+          object reference.  Actually, this seems to be the only use case
+          for key_to_object.
 
-	* tao/Object.cpp (_is_a): Fixed the collocation resolving scheme
-	  so that thru_poa collocated calls don't go remote and collocated
-	  _is_a calls obey the collocated strategy use by the servants.
+        * tao/Object.cpp (_is_a): Fixed the collocation resolving scheme
+          so that thru_poa collocated calls don't go remote and collocated
+          _is_a calls obey the collocated strategy use by the servants.
 
-	  Thanks to Irfan for helping this change.
+          Thanks to Irfan for helping this change.
 
 Wed Jul 14 17:23:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	  Added a 'f' at the end of a printed floating point literal, to
-	  avoid the MSVC warning, since it reads decimal constants as
-	  doubles.
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Added a 'f' at the end of a printed floating point literal, to
+          avoid the MSVC warning, since it reads decimal constants as
+          doubles.
 
 Wed Jul 14 17:03:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_scope.cpp:
-	  Cosmetic changes.
+        * TAO_IDL/be/be_visitor_scope.cpp:
+          Cosmetic changes.
 
-	* TAO_IDL/be/be_visitor_structure/cdr_op_ci.cpp:
-	  Fixed be_visitor_structure_cdr_op_ci::post_process() to skip the
-	  generation of "&&\n" if the node argument is an enum value,
-	  since the just-completed visit to that node generated no code.
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ci.cpp:
+          Fixed be_visitor_structure_cdr_op_ci::post_process() to skip the
+          generation of "&&\n" if the node argument is an enum value,
+          since the just-completed visit to that node generated no code.
 
 Wed Jul 14 16:23:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Reply_Dispatcher.cpp:
-	  Use new CDR_Stream methods to efficiently steal the contents
-	  from one CDR stream into another (without any extra memory
-	  allocations).
+        * tao/Reply_Dispatcher.cpp:
+          Use new CDR_Stream methods to efficiently steal the contents
+          from one CDR stream into another (without any extra memory
+          allocations).
 
-	* tao/Stub.cpp:
-	  Removed unnecesary lock, updated comments in
-	  relative_rountrip_timeout() with respect to locking because it
-	  is a bit suttle.
+        * tao/Stub.cpp:
+          Removed unnecesary lock, updated comments in
+          relative_rountrip_timeout() with respect to locking because it
+          is a bit suttle.
 
 Wed Jul 14 15:35:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB.cpp: set_unexpected() is declared in unexpect.h on MVS.
-	  Thanks to Jim Rogers <jrogers@viasoft.com> for sending the
-	  patches for this.
+        * tao/ORB.cpp: set_unexpected() is declared in unexpect.h on MVS.
+          Thanks to Jim Rogers <jrogers@viasoft.com> for sending the
+          patches for this.
 
 Wed Jul 14 13:19:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Client_Strategy_Factory.cpp:
-	* tao/Client_Strategy_Factory.h:
-	* tao/Resource_Factory.cpp:
-	* tao/Server_Strategy_Factory.cpp:
-	* tao/Server_Strategy_Factory.h:
-	* tao/default_client.cpp:
-	* tao/default_client.h:
-	* tao/default_server.cpp:
-	* tao/default_server.h:
-	  Moved the connector_lock() creation from the server strategy
-	  factory to the client strategy factory. Thanks to Phil Mesnier
-	  <mesnier_p@ociweb.com> for reporting this problem. This fixes
-	  [BUGID:17]
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Client_Strategy_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/Server_Strategy_Factory.cpp:
+        * tao/Server_Strategy_Factory.h:
+        * tao/default_client.cpp:
+        * tao/default_client.h:
+        * tao/default_server.cpp:
+        * tao/default_server.h:
+          Moved the connector_lock() creation from the server strategy
+          factory to the client strategy factory. Thanks to Phil Mesnier
+          <mesnier_p@ociweb.com> for reporting this problem. This fixes
+          [BUGID:17]
 
-	* docs/Options.html:
-	* docs/configurations.html:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
-	* tests/Collocation/svc.conf:
-	  Updated the documentation and the svc.conf files that were using
-	  that option.
+        * docs/Options.html:
+        * docs/configurations.html:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+        * tests/Collocation/svc.conf:
+          Updated the documentation and the svc.conf files that were using
+          that option.
 
 Wed Jul 14 12:43:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
