@@ -157,7 +157,7 @@ Video_Control_Play_State::handle_input (ACE_HANDLE h)
       ACE_Reactor::instance ()->end_event_loop ();
       return 1;
     }
-  play_send ();// simulating the for loop in vs.cpp
+  VIDEO_SINGLETON::instance ()->play_send ();// simulating the for loop in vs.cpp
   return 0;
 }
 
