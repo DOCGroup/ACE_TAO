@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*client) : aceexe, rpc {
+  source_files {
+    client.cpp
+    ping_clnt.c
+  }
+}
+
+project(*server) : aceexe, rpc {
+  exename = server
+  source_files {
+    server.c
+    ping_svc.c
+  }
+}

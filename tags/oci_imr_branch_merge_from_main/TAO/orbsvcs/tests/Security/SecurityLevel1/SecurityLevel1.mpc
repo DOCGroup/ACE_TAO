@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*security server): taoexe, portableserver, orbsvcsexe, ssl, security {
+  Source_Files {
+    SLevel1_Test_i.cpp
+    server.cpp
+  }
+}
+
+project(*security client): taoexe, orbsvcsexe, ssl, security {
+  Source_Files {
+    SLevel1_TestC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,50 @@
+
+/**
+ * @file Event_Forwarder.idl
+ *
+ * @brief
+ *
+ * $Id$
+ *
+ * @author Pradeep Gore <pradeep@oomworks.com>
+ */
+
+#ifndef _EVENT_FORWARDER_IDL_
+#define _EVENT_FORWARDER_IDL_
+
+#include "CosNotification.idl"
+#include "CosNotifyChannelAdmin.idl"
+
+#pragma prefix ""
+
+/**
+ * @namespace Event_Forwarder
+ *
+ * @brief
+ */
+module Event_Forwarder
+{
+  interface StructuredProxyPushSupplier : CosNotifyChannelAdmin::StructuredProxyPushSupplier
+  {
+    void forward_structured (in CosNotification::StructuredEvent event);
+
+    void forward_structured_no_filtering (in CosNotification::StructuredEvent event);
+
+    void forward_any (in any event);
+
+    void forward_any_no_filtering (in any event);
+  };
+
+  interface ProxyPushSupplier : CosNotifyChannelAdmin::ProxyPushSupplier
+  {
+    void forward_structured (in CosNotification::StructuredEvent event);
+
+    void forward_structured_no_filtering (in CosNotification::StructuredEvent event);
+
+    void forward_any (in any event);
+
+    void forward_any_no_filtering (in any event);
+  };
+};
+
+#endif /* _EVENT_FORWARDER_IDL_ */

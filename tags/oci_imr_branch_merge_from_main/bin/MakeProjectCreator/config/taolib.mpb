@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : acelib, taoversion, tao_output, taodefaults {
+  after += TAO
+  libs  += TAO
+}
