@@ -60,6 +60,7 @@ comparator (const dirent **d1, const dirent **d2)
   return ACE_OS_String::strcmp ((*d1)->d_name, (*d2)->d_name);
 }
 
+#if 0
 static int
 dirent_selector_test (void)
 {
@@ -135,6 +136,8 @@ dirent_test (void)
     }
   return 0;
 }
+
+#endif /*if 0*/
 
 static int
 dirent_count (const ACE_TCHAR *dir_path,
