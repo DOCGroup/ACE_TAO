@@ -1,3 +1,8 @@
+Tue Oct 14 16:57:54 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* ExecutorMappingGenerator.cpp:
+	* RepositoryIdGenerator.cpp: some minor clean-up's.
+
 Tue Oct 14 16:41:41 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
         * CCF/IDL2/LexicalAnalyzer.cpp:
@@ -46,7 +51,7 @@ Tue Oct 14 16:41:41 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
         * CCF/IDL3/Traversal/Component.hpp:
         * CCF/IDL3/Traversal/EventType.hpp:
         * CCF/IDL3/Traversal/Home.hpp:
-        * CCF/IDL3/Traversal/Operation.hpp: 
+        * CCF/IDL3/Traversal/Operation.hpp:
 	* CCF/CIDL/SyntaxTree/Composition.hpp:
         * CCF/CIDL/SyntaxTree/HomeExecutor.hpp:
         * CCF/CIDL/Traversal/Composition.hpp:
@@ -57,8 +62,8 @@ Tue Oct 14 16:41:41 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
         * CCF/CompilerElements/Preprocessor.hpp:
         * Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
         * Example/CIDL/LocalExecutorMapping/cidlc.cpp:
-        * Example/CIDL/LocalExecutorMapping/test-0.idl: some minor 
-	clean-up's.
+        * Example/CIDL/LocalExecutorMapping/test-0.idl: some minor
+	  clean-up's.
 
 	* Documentation/TODO: added a few more items.
 
