@@ -1,3 +1,8 @@
+Wed Aug 19 19:20:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp: 
+	  Fixed the declarations for <<= and >>= operators.
+
 Wed Aug 19 19:18:11 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp]: Added Naming_Utils code 
