@@ -1,3 +1,10 @@
+Thu Mar 20 17:51:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* bin/MakeProjectCreator/templates/em3vcp.mpd: Only output a linker
+	  /entry option if building a DLL. Let binary programs pick up the
+	  correct entrypoint from the subsystem type. It defaults to windowsce,
+	  requiring WinMainCRTStartup.
+
 Thu Mar 20 14:11:01 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Codecs.cpp (encode, decode):
