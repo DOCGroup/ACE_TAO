@@ -1,6 +1,7 @@
 Thu Mar 13 17:35:48 2003  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv1/Logging_Handler.cpp (recv_log_record): Use
+	* examples/C++NPv1/Logging_Handler.cpp (recv_log_record):
+	* examples/C++NPv2/Logging_Handler.cpp (recv_log_record): Use
 	  ACE_CDR::grow(), not ACE_Message_Block::size(), to resize the
 	  CDR-receiving block. This maintains alignment across the resize.
 	  Thanks to Don Hinton for this fix.
