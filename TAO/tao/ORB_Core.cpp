@@ -1620,6 +1620,9 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
   //    when we use collocation!
   const TAO_MProfile &mprofile = stub->base_profiles ();
 
+  // @@ We should thow CORBA::NO_MEMORY in platforms with exceptions,
+  // but we are stuck in platforms without exceptions!
+  CORBA::Object_ptr x;
   {
     // @@ Ossama: maybe we need another lock for the table, to
     //    reduce contention on the Static_Object_Lock below, if so
@@ -1642,15 +1645,14 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
             TAO_Adapter_Registry *ar =
               other_core->adapter_registry ();
 
-            return ar->create_collocated_object (stub,
-                                                 mprofile);
+             x = ar->create_collocated_object (stub,
+                                               mprofile);
+
+             if (x != 0)
+               return x;
           }
       }
   }
-
-  // @@ We should thow CORBA::NO_MEMORY in platforms with exceptions,
-  // but we are stuck in platforms without exceptions!
-  CORBA::Object_ptr x;
 
   // The constructor sets the proxy broker as the
   // Remote one.
