@@ -11,6 +11,8 @@
 #ifndef _TAO_IDL_INTERFACEC_H_
 #define _TAO_IDL_INTERFACEC_H_
 
+#ifdef TAO_HAS_INTERFACE_REPOSITORY
+
 #include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -8534,4 +8536,5 @@ operator>> (TAO_InputCDR &, CORBA::ValueBoxDef_ptr &);
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
 
+#endif /*TAO_HAS_INTERFACE_REPOSITORY */
 #endif /* ifndef */
