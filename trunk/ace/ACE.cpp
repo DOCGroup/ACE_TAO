@@ -123,7 +123,10 @@ ACE::compiler_beta_version (void)
 int
 ACE::terminate_process (pid_t pid)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_PHARLAP)
+  ACE_UNUSED_ARG (pid);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
   // Create a handle for the given process id.
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_TERMINATE,
@@ -623,13 +626,14 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 {
   ACE_TRACE ("ACE::ldfind");
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && \
+    !defined (ACE_HAS_PHARLAP)
   ASYS_TCHAR expanded_filename[MAXPATHLEN];
   if (::ExpandEnvironmentStringsA (filename,
                                    expanded_filename,
                                    sizeof expanded_filename))
     filename = expanded_filename;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
 
   ASYS_TCHAR tempcopy[MAXPATHLEN + 1];
   ASYS_TCHAR searchpathname[MAXPATHLEN + 1];
@@ -1833,7 +1837,7 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
           && (errno == EWOULDBLOCK
               && (timeout->sec () > 0 || timeout->usec () > 0)))
         // This expression checks if we were polling.
-        errno = ETIME;
+        errno = ETIMEDOUT;
 
       return handle;
     }
@@ -1895,7 +1899,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
               && timeout->usec () == 0)
             errno = EWOULDBLOCK;
           else
-            errno = ETIME;
+            errno = ETIMEDOUT;
           return -1;
           /* NOTREACHED */
         case 1:
@@ -2655,6 +2659,8 @@ const ASYS_TCHAR *
 ACE::sock_error (int error)
 {
 #if defined (ACE_WIN32)
+  static ASYS_TCHAR unknown_msg[64];
+
   switch (error)
     {
     case WSAVERNOTSUPPORTED:
@@ -2746,7 +2752,8 @@ ACE::sock_error (int error)
       return ASYS_TEXT ("address not available");
       /* NOTREACHED */
     default:
-      return ASYS_TEXT ("unknown error");
+      ACE_OS::sprintf (unknown_msg, ASYS_TEXT ("unknown error: %d"), error);
+      return unknown_msg;
       /* NOTREACHED */
     }
 #else
@@ -3157,6 +3164,71 @@ ACE::get_ip_interfaces (size_t &count,
 
 #else /* Winsock 2 && MSVC 5 or later */
 
+  // PharLap ETS has kernel routines to rummage through the device configs
+  // and extract the interface info. Sort of a pain in the butt, but better
+  // than trying to figure out where it moved to in the registry... :-|
+#  if defined (ACE_HAS_PHARLAP)
+#    if !defined (ACE_HAS_PHARLAP_RT)
+  ACE_NOTSUP_RETURN (-1);
+#    endif /* ACE_HAS_PHARLAP_RT */
+
+  // Locate all of the IP devices in the system, saving a DEVHANDLE for
+  // each. Then allocate the ACE_INET_Addrs needed and fetch all the IP
+  // addresses.
+  // To locate the devices, try the available device name roots and increment
+  // the device number until the kernel says there are no more of that type.
+  const size_t ACE_MAX_ETS_DEVICES = 64;  /* Arbitrary, but should be enough */
+  DEVHANDLE    ip_dev[ACE_MAX_ETS_DEVICES];
+  EK_TCPIPCFG *devp;
+  size_t       i, j;
+  char         dev_name[16];
+
+  count = 0;
+  for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
+    {
+      ACE_OS::sprintf (dev_name, "ether%d", i);    /* Ethernet */
+      if ((ip_dev[count] = EtsTCPGetDeviceHandle (dev_name)) == NULL)
+        break;
+    }
+  for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
+    {
+      ACE_OS::sprintf (dev_name, "sl%d", i);      /* SLIP */
+      if ((ip_dev[count] = EtsTCPGetDeviceHandle (dev_name)) == NULL)
+        break;
+    }
+  for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
+    {
+      ACE_OS::sprintf (dev_name, "ppp%d", i);     /* PPP */
+      if ((ip_dev[count] = EtsTCPGetDeviceHandle (dev_name)) == NULL)
+        break;
+    }
+
+  if (count > 0)
+    addrs = new ACE_INET_Addr[count];
+  else
+    addrs = 0;
+
+  for (i = 0, j = 0; i < count; i++)
+    {
+      if ((devp = EtsTCPGetDeviceCfg (ip_dev[i])) != NULL)
+        {
+          addrs[j].set (0, devp->nwIPAddress, 0);  /* Already in net order */
+          j++;
+        }
+      // There's no call to close the DEVHANDLE.
+    }
+
+  count = j;
+  if (count == 0 && addrs != 0)
+    {
+      delete [] addrs;
+      addrs = 0;
+    }
+
+  return 0;
+
+#  else /* ACE_HAS_PHARLAP */
+
   const TCHAR *SVCS_KEY1 =
     ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
   const TCHAR *LINKAGE_KEY1 =
@@ -3230,6 +3302,7 @@ ACE::get_ip_interfaces (size_t &count,
         }
     }
   return 0;
+#  endif /* ACE_HAS_PHARLAP */
 # endif /* Winsock 2 && MSVC 5 or later */
 
 #elif defined (__unix) || defined (__Lynx__) || defined (_AIX)
