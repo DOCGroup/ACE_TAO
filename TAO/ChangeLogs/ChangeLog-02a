@@ -4,9 +4,10 @@ Mon Apr 22 15:20:50 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
 	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
 
-	  Clean up termination: - do not call orb->shutdown() in a CORBA method
-	                        - change orb->run() to work_pending()/perform_work() 
-	                        - put the orb->shutdown() after the perform_work()
+	  Clean up termination: 
+	  - do not call orb->shutdown() in a CORBA method
+	  - change orb->run() to work_pending()/perform_work() 
+	  - put the orb->shutdown() after the perform_work()
 
 Mon Apr 22 09:00:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -15,16 +16,18 @@ Mon Apr 22 09:00:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Apr 21 10:07:25 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* TAO_IDL/tao_idl_static.dsp: Add user32.lib and advapi32.lib to link line.
+	* TAO_IDL/tao_idl_static.dsp: Add user32.lib and advapi32.lib to
+	  link line. 
 
 Sat Apr 20 21:12:10 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: Instantiate ACE_Node<ACE_INET_Addr>
-	template.
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: Instantiate
+	  ACE_Node<ACE_INET_Addr> template.
 
 Sat Apr 20 18:51:41 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/IFR_Service/IFR_Service.h: Use _DECL_WITH_DEFAULTS macros.
+	* orbsvcs/IFR_Service/IFR_Service.h: Use _DECL_WITH_DEFAULTS
+	  macros. 
 
 Fri Apr 19 18:13:40 2002  Ossama Othman  <ossama@uci.edu>
 
