@@ -30,7 +30,21 @@ public:
 
   ~TAO_Bind_Dispatcher_Guard (void);
 
-  int& status(void);
+  /// Returns 0 if succesful and non-zero otherwise.
+  int unbind_dispatcher (void);
+
+  /// State information
+  enum
+    {
+      /// Unbind the dispatcher
+      UNBIND = 0,
+      /// Do not unbind dispatcher
+      NO_UNBIND
+    };
+
+  /// Set and get status
+  int status (void) const;
+  void status (int status);
 
 private:
   int                         status_;

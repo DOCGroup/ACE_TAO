@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Condition.h"
+
 // Forward Declarations.
 class TAO_GIOP_Message_State;
 class TAO_GIOP_Message_Version;
@@ -68,13 +70,6 @@ public:
    */
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
 
-  /// Get the reply status.
-  CORBA::ULong reply_status (void) const;
-
-  // @@ Commented for the time being -  Bala
-  // virtual TAO_GIOP_Message_State *message_state (void) = 0;
-  // Get the Message State into which the reply has been read.
-
   /**
    * The used for the pending reply has been closed.
    * No reply is expected.
@@ -85,9 +80,70 @@ public:
    */
   virtual void connection_closed (void) = 0;
 
+  /// Get the reply status.
+  CORBA::ULong reply_status (void) const;
+
+  /// Following methods are useful only when the invocation has a
+  /// timeout.
+  /**
+   * MT invocations with timeouts are a different beast in
+   * itself. They need some special attention. Things get nasty when
+   * the leader thread collects the reply and at the same time the
+   * follower timesout waiting for the reply. There is a semantic
+   * problem here. Does the follower throw an exception back as a
+   * CORBA::TIMEOUT or just make one last check to see whether anyone
+   * (leader) has collected the reply. Some of these extra methods
+   * here help the invocation threads to make a decision one way or
+   * another. The code is designed to be on the positive side ie. the
+   * follower will collect the reply if a leader has collected its
+   * reply already, instead of throwing an exception.  Its a decision
+   * that can be argued for hours.
+   *
+   * The following methods should be no-ops if timeouts arent set.
+   */
+  enum
+    {
+      TIMEOUT = 0,
+      NO_TIMEOUT
+    };
+
+  /// Set whether the dispatcher should be prepared for a timeout. The
+  /// set operation is not synchronized.
+  void has_timeout (CORBA::Boolean t);
+
+  /// Methods used to change the state to indicate that whether
+  /// dispatching is started or not!
+  void start_dispatch (void);
+  void end_dispatch (void);
+
+  /// Wait on the condition variable for the dispatch to end. If no
+  /// threads are dispatching will just return immediately.
+  int wait_for_dispatch_completion (void);
+
 protected:
   /// Reply or LocateReply status.
   CORBA::ULong reply_status_;
+
+  /// Mutex and Synch condition for timeouts..
+  TAO_SYNCH_MUTEX mutex_;
+  TAO_Condition<TAO_SYNCH_MUTEX> condition_;
+
+  /// Flag to indicate whether the invocation for which this
+  /// dispatcher is used, has a timeout or not.
+  CORBA::Boolean timeout_;
+
+  /// Variable to indicate whether dispatching is happening in this
+  /// reply dispatcher.
+  /**
+   * Point to note is that, the value of the flag is not of much
+   * importance for the normal case, but only for the  case when
+   * timeouts are set.
+   */
+  CORBA::Boolean dispatching_;
+
+  /// Any threads waiting for end of dispatch?
+  CORBA::Boolean threads_waiting_;
+
 };
 
 #if defined (__ACE_INLINE__)

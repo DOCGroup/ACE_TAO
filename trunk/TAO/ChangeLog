@@ -1,3 +1,59 @@
+Sun Dec 22 11:26:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	Fix for Bug 1276. Please see 
+
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1276 for more
+        details on this bug. The gist of the fix is this
+
+	  - If a follower thread timesout, it first tries to unbind the
+	    dispatcher from the table
+	 
+	  - If unbinding is succesfull it throws a TIMEOUT exception to
+	    the client. 
+
+	  - If unbinding is unsuccesful, it waits on a condition variable
+	    in the reply dispatcher
+
+	  - Once the reply is available it dispatches the reply. 
+
+	  - This helps avoid the race conditions that are documented in
+	    1276. 
+
+	None of the above code should be executed when timeouts are not
+        enabled in the ORB ie. for the default path.
+	
+	* tao/Bind_Dispatcher_Guard.cpp:
+	* tao/Bind_Dispatcher_Guard.h:
+	* tao/Bind_Dispatcher_Guard.i: Added method unbind_dispatcher ()
+	  which unbinds the dispatcher from the Transport_Mux_Strategy and
+	  status (), which allows to set the status of the dispatcher
+	  guard. 
+
+	* tao/Transport_Mux_Strategy.h
+	* tao/Exclusive_TMS.cpp:
+	* tao/Exclusive_TMS.h:
+	* tao/Muxed_TMS.cpp:
+	* tao/Muxed_TMS.h: Changed the signature of the method
+	  unbind_dispatcher (). It now returns an int. Further, we mark
+	  the Reply_Dispatcher as busy when the dispatching thread is
+	  ready to call Reply_Dispatcher::dispatch_reply ().
+
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i: Added a mutex and a condition variable
+	  for the follower to wait on when a leader thread is within the
+	  Reply_Dispatcher. Methods to wait on the CV and to mark the 
+	  reply_dispatcher as being used and free have been added. These
+	  methods are essentially no-ops if timeouts are not set.
+	
+	* tao/Invocation.cpp: 
+	* tao/Invocation.h: If the invocation thread gets a timeout, it
+	  first unbinds its reply dispatcher from the Mux_Strategy. If the
+	  unbind fails (this means that another thread has aleardy
+	  collected the reply from the transport) , it waits on the
+	  reply_dispatcher to collect the reply instead of just throwing a
+	  TIMEOUT exception.
+	
 Fri Dec 20 13:47:33 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Big_Request/Makefile:

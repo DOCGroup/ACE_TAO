@@ -62,14 +62,16 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   return 0;
 }
 
-void
+int
 TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
   if (!this->has_request_ || this->request_id_ != request_id)
-    return;
+    return -1;
   this->has_request_ = 0;
   this->request_id_ = 0;
   this->rd_ = 0;
+
+  return 0;
 }
 
 int
@@ -93,9 +95,17 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   this->request_id_ = 0; // @@ What is a good value???
   this->rd_ = 0;
 
+  // Starting dispatch
+  (void) rd->start_dispatch ();
+
   // Dispatch the reply.
   // Returns 1 on success, -1 on failure.
-  return rd->dispatch_reply (params);
+  int retval =
+    rd->dispatch_reply (params);
+
+  (void) rd->end_dispatch ();
+
+  return retval;
 }
 
 int

@@ -43,6 +43,7 @@ class TAO_Transport_Descriptor_Interface;
 class TAO_Endpoint;
 class TAO_Profile;
 class TAO_Invocation_Endpoint_Selector;
+class TAO_Bind_Dispatcher_Guard;
 
 enum TAO_Invoke_Status
 {
@@ -368,6 +369,16 @@ protected:
 
   /// Reply dispatcher for the current synchronous invocation.
   TAO_Synch_Reply_Dispatcher rd_;
+
+private:
+  /// Helper method for validating the error. Returns 0 to if
+  /// processing can be continued  or returns -1 to indicate a real
+  /// error with the invocation. Useful mostly for validating timeouts
+  /// that we got back from LF.
+  int validate_error (TAO_Bind_Dispatcher_Guard &
+                      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 };
 
 // ****************************************************************
