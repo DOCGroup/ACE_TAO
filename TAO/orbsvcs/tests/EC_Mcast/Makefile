@@ -15,9 +15,9 @@ BIN2 = EC_Mcast
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
+ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
-endif # Event2
+endif # RTEvent
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

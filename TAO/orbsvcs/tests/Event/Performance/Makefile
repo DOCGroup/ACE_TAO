@@ -21,7 +21,7 @@ BIN2 =  Throughput \
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
-endif # Event2
+endif # RTEvent
 
 PSRC=$(addsuffix .cpp,$(BIN))
 LDLIBS = -lECTests -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
