@@ -57,12 +57,6 @@ ACE_Sched_Params::priority_max(ACE_SCHED_FIFO,ACE_SCOPE_THREAD)
 ACE_THR_PRI_FIFO_DEF + 25
 #endif /* ! __Lynx__ */
 
-// Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-#define SCHED_PARAMS_FIFO \
-ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,\
-                                        SCHED_PRIORITY,\
-                                        ACE_SCOPE_PROCESS))
-
 #if defined (CHORUS)
 #define PCCTIMER_INIT {int pTime;/*Initialize the PCC timer chip */pccTimerInit ();\
 if (pccTimer (PCC2_TIMER1_START, &pTime) != K_OK)\
