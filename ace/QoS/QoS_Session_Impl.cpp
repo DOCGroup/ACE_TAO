@@ -53,8 +53,19 @@ rsvp_callback (rapi_sid_t sid,
 
   ACE_QoS_Session *qos_session = (ACE_QoS_Session *) args;
 
+  if(!flow_spec_list){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N|%l) Null flow_spec_list\n"),
+                         -1);
+   }
+
   // Extended Legacy format.
   qos_flowspecx_t *csxp = &flow_spec_list->specbody_qosx;
+  if(!csxp){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N|%l) Null csxp\n"),
+                         -1);
+   }
 
   ACE_QoS ace_qos = qos_session->qos ();
   ACE_Flow_Spec sending_flow = ace_qos.sending_flowspec ();
