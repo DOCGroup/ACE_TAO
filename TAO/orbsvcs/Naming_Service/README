@@ -303,23 +303,24 @@ Troubleshooting
 
 Q1. Error Message: "subscribe: no such device"
 
-A1. On starting, the error message "subscribe: no such device" is a rather cryp
-tic message saying that basically either you don't support multicasting or ther
-e is no route for multicasting on one of your network interfaces( e.g. eth0 ).
+A1. On starting, the error message "subscribe: no such device" is a
+rather cryptic message saying that basically either you don't support
+multicasting or there is no route for multicasting on one of your
+network interfaces( e.g. eth0 ).
 
 ---------------------------------------
 (Step 1)
-Check to see if you have mutlicasting enabled. In the case of Linux you will ne
-ed to check the configuration of your kernel. RedHat users have multicasting en
-abled by default. Once you are sure that you have multicast enabled then move t
-o the next step. Alternative is to start Naming_Service with multicast disabled
-.
+Check to see if you have mutlicasting enabled. In the case of Linux
+you will need to check the configuration of your kernel. RedHat users
+have multicasting enabled by default. Once you are sure that you have
+multicast enabled then move to the next step. Alternative is to start
+Naming_Service with multicast disabled.
 
 
 ---------------------------------------
 (Step 2)
-Check to see if you have the route for multicasting. Linux users can do this by
- running:
+Check to see if you have the route for multicasting. Linux users can
+do this by running:
 
 	/sbin/route
 
@@ -335,10 +336,10 @@ If you don't see the line for multicast routing:
 
 224.0.0.0       *               240.0.0.0       U     0      0        0 eth0
 
-You will need to add in the next step. If you do see that line and the probelm 
-is still there then contact the tao-users list by using email. Please remember 
-to use the problem form. It helps developers to have a more educated guess at t
-he exact problem you are having.
+You will need to add in the next step. If you do see that line and the
+problem is still there then contact the tao-users list by using
+email. Please remember to use the problem form. It helps developers to
+have a more educated guess at the exact problem you are having.
 
 
 ---------------------------------------
@@ -350,15 +351,15 @@ You can do this manually in a script that start the Naming service:
 
 	/sbin/route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
 
-Alternatively for RedHat users you can add this into a file "/etc/sysconfig/sta
-tic-routes". As of Redhat 7, you might have to create this file, you can make a
-n entry:
+Alternatively for RedHat users you can add this into a file
+"/etc/sysconfig/static-routes". As of Redhat 7, you might have to
+create this file, you can make an entry:
 
 	eth0 net 240.0.0.0 netmask 240.0.0.0
 
-On startup when the network interfaces that will be supporting multicast routin
-g are started the route will be added. In my case it adds multicasting routing 
-to eth0 (the first NIC).
+On startup when the network interfaces that will be supporting
+multicast routing are started the route will be added. In my case it
+adds multicasting routing to eth0 (the first NIC).
 
 ----------------------------------------
 (Step 4)
