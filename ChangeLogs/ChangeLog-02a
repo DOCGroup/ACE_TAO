@@ -1,3 +1,16 @@
+Thu Nov  1 10:27:21 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Select_Reactor_Base.h (open):
+	* ace/Select_Reactor_T.h (ACE_Select_Reactor_T, open):
+
+	  Added a note about the "size" of the Select_Reactor on Unix
+	  platforms. On Unix platforms, the size parameter should be as
+	  large as the maximum number of file descriptors allowed for a
+	  given process.  This is necessary since a file descriptor is
+	  used to directly index the array of event handlers maintained by
+	  the Reactor's handler repository.  Direct indexing is used for
+	  efficiency reasons.
+
 Wed Oct 31 16:45:07 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h (llseek):

@@ -119,6 +119,14 @@ public:
                         int mask_signals = 1);
 
   /// Initialize <ACE_Select_Reactor> with size <size>.
+  /**
+   * @note On Unix platforms, the size parameter should be as large as
+   *       the maximum number of file descriptors allowed for a given
+   *       process.  This is necessary since a file descriptor is used
+   *       to directly index the array of event handlers maintained by
+   *       the Reactor's handler repository.  Direct indexing is used
+   *       for efficiency reasons.
+   */
   ACE_Select_Reactor_T (size_t size,
                         int restart = 0,
                         ACE_Sig_Handler * = 0,
@@ -135,6 +143,14 @@ public:
    * <timer_queue> are non-0 they are used as the signal handler and
    * timer queue, respectively.  If <disable_notify_pipe> is non-0 the
    * notification pipe is not created, thereby saving two I/O handles.
+   *
+   * @note On Unix platforms, the maximum_number_of_handles parameter
+   *       should be as large as the maximum number of file
+   *       descriptors allowed for a given process.  This is necessary
+   *       since a file descriptor is used to directly index the array
+   *       of event handlers maintained by the Reactor's handler
+   *       repository.  Direct indexing is used for efficiency
+   *       reasons.
    */
   virtual int open (size_t max_number_of_handles = DEFAULT_SIZE,
                     int restart = 0,
@@ -375,11 +391,11 @@ public:
    * @see reset_timer_interval()
    *
    * @param event_handler  event handler to schedule on reactor
-   * @param arg   argument passed to the handle_timeout() method of  event_handler  
+   * @param arg   argument passed to the handle_timeout() method of  event_handler
    * @param delta  time interval after which the timer will expire
    * @param interval  time interval after which the timer will be automatically rescheduled
    * @return -1 on failure, a timer_id value on success
-   */                          
+   */
   virtual long schedule_timer (ACE_Event_Handler *,
                                const void *arg,
                                const ACE_Time_Value &delay,
