@@ -63,6 +63,7 @@ TAO_OutStream::open (const char *fname, TAO_OutStream::STREAM_TYPE st)
           this->st_ = st;
           // put the copyright notice
           ACE_OS::fprintf (fp_, "%s\n", copyright);
+	  ACE_OS::fflush (fp_);
           return 0;
         }
       else
@@ -128,6 +129,7 @@ TAO_OutStream::indent (void)
       for (i=0; i < this->indent_level_; i++)
         {
           ACE_OS::fprintf (this->fp_, "  ");
+	  ACE_OS::fflush (fp_);
         }
     }
   return 0;
@@ -141,6 +143,7 @@ TAO_OutStream::print (const char *format, ...)
   va_list ap;
   va_start (ap, format);
   ACE_OSCALL (::vfprintf (this->fp_, format, ap), int, -1, result);
+  ACE_OS::fflush (fp_);
   va_end (ap);
   return result;
 }
@@ -149,6 +152,7 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const char *str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str);
+  ACE_OS::fflush (fp_);
   return *this;
 }
 
@@ -156,6 +160,7 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const long num)
 {
   ACE_OS::fprintf (this->fp_, "%ld", num);
+  ACE_OS::fflush (fp_);
   return *this;
 }
 

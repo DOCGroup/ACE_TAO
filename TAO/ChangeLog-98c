@@ -1,3 +1,21 @@
+Thu Oct 30 22:50:44 1997    <coryan@MILONGA>
+
+	* tao/corba.h: 
+	  Added a definition for ACE_NESTED_CLASS, maybe it is defined in
+	  some place else, but I couldn't find it.
+
+	* TAO_IDL/be/be_interface.cpp: 
+	  Fixed the definition for skeleton destructors.
+
+	* TAO_IDL/be/be_helper.cpp: 
+	  Added a lot of redundant ACE_OS::fflush() calls. Apparently we
+	  have two FILE* or file descriptors over the same file, bt the
+	  fflush hides the problem.
+
+	* TAO_IDL/be/be_decl.cpp: 
+	  Fixed inconsistency between operator-> declaration and
+	  definition for _out classes.
+
 Thu Oct 30 14:06:54 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* TAO_IDL/fe/Makefile: 

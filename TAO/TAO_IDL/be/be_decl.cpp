@@ -1415,6 +1415,7 @@ be_decl::gen_out_defn (void)
           // required
           // bt->gen_type ();
           // XXXASG
+	      
           *ch << " &operator[] (CORBA::ULong index);" << nl;
         }
     }
@@ -1756,7 +1757,7 @@ be_decl::gen_out_impl (void)
 
         // operator ->
         ci->indent ();
-        *ci << "ACE_INLINE " << this->name () << " *&" << nl;
+        *ci << "ACE_INLINE " << this->name () << " *" << nl;
         *ci << fname << "::operator-> (void)" << nl;
         *ci << "{\n";
         ci->incr_indent ();
