@@ -3,6 +3,9 @@ Tue Nov 11 10:07:04 1997  David L. Levine  <levine@cs.wustl.edu>
         * tests/Cubit/TAO/DII_Cubit/Makefile: added missing $ before (VAR)
           in VBIN definition.
 
+        * tao/orbconf.h: added __i386 to TAO_WORDS_BIGENDIAN check,
+          because that's what g++/VxWorks uses.
+
 Tue Nov 11 04:22:44 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.28, released Tue Nov 11 04:22:44 1997.
@@ -17,24 +20,24 @@ Tue Nov 11 01:16:07 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Nov 11 00:36:39 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* orbsvcs/bin/Logger/ior_multicast.h: 
-	* orbsvcs/bin/Logger/ior_multicast.cpp: 
-	* orbsvcs/bin/Logger/clnt.cpp: 
-	* orbsvcs/bin/Logger/clnt.cpp: 
-	* orbsvcs/bin/Logger/svr.cpp: 
-	* orbsvcs/bin/Logger/Makefile: 
+	* orbsvcs/bin/Logger/ior_multicast.h:
+	* orbsvcs/bin/Logger/ior_multicast.cpp:
+	* orbsvcs/bin/Logger/clnt.cpp:
+	* orbsvcs/bin/Logger/clnt.cpp:
+	* orbsvcs/bin/Logger/svr.cpp:
+	* orbsvcs/bin/Logger/Makefile:
 	Added multicast resolution of the logger service example.
 
 Tue Nov 11 00:36:39 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* tao/orbobj.cpp (resolve_name_service): changed macro for default
- 	multicast port.  
+ 	multicast port.
 	- Added support for multicast mechanism to resolve the name
  	service.
 
 	* tao/orbconf.h: Added some definitions for TAO's default
  	multicast and reply port, and the default timeout value.
-	
+
 Tue Nov 11 00:00:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/IDL_Cubit/Makefile: removed MUNCHED because
