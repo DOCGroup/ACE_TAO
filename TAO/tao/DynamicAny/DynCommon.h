@@ -593,6 +593,13 @@ private:
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
       ));
+
+  CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc,
+                                              CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

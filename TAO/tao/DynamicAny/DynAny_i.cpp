@@ -452,7 +452,12 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
       }
     case CORBA::tk_string:
       {
-        CORBA::ULong bound = this->type_->length (ACE_TRY_ENV);
+        CORBA::TypeCode_var unaliased_tc =
+          TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                          ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+
+        CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
         ACE_CHECK_RETURN (0);
 
         CORBA::Char * rhs_v;
@@ -465,7 +470,12 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
       }
     case CORBA::tk_wstring:
       {
-        CORBA::ULong bound = this->type_->length (ACE_TRY_ENV);
+        CORBA::TypeCode_var unaliased_tc =
+          TAO_DynAnyFactory::strip_alias (this->type_.in (),
+                                          ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+
+        CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
         ACE_CHECK_RETURN (0);
 
         CORBA::WChar * rhs_v;
