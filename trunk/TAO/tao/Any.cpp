@@ -1796,7 +1796,7 @@ CORBA_Any::operator>>= (to_object obj) const
                                    TAO_ORB_Core_instance ());
 
               CORBA::TypeCode::traverse_status status =
-                stream.decode (CORBA::_tc_Object,
+                stream.decode (this->type_,
                                &obj.ref_,
                                0,
                                ACE_TRY_ENV);
