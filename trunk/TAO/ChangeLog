@@ -1,3 +1,10 @@
+Thu May 22 11:35:51 2003  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.h:
+	  Made Changes to reference count the servant so that it lasts as
+	  long as the POA needs it.
+
 Thu May 22 13:02:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ObjectKey_Table.cpp (unbind_i): Beefed up error checking.
