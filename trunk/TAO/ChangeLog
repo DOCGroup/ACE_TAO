@@ -1,3 +1,9 @@
+Sun Dec  7 09:49:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+          Added TAO_Export to the ARDB_Refcount_Functor class to fix link
+          errors with MSVC6
+
 Sun Dec  7 00:53:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTEvent:
@@ -11,7 +17,7 @@ Sun Dec  7 000:46:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_traits.cpp:
 
           Added #ifdef guard to declaration of Array_Traits<> specializations,
-          similar to the ones already generated for Array_Traits<> 
+          similar to the ones already generated for Array_Traits<>
           specialization implementations in the *C.i file. These guards are
           composed from the flat name of the unaliased array element type
           and the dimension(s), eliminating redefinition errors that can
@@ -36,18 +42,18 @@ Sat Dec  6 23:42:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	This checkin is a fix for the various race conditions in Asynch
         Invocation reported by Cyrille Chepelov. The various race
-        conditions were 
+        conditions were
 
-	  - Race between threads trying to dispatch replies and timeouts 
+	  - Race between threads trying to dispatch replies and timeouts
 	  - Race between threads propogating timeouts and propogating
-	    replies. 
+	    replies.
 
 	The crux of the changes involved adding refcounts to the
         Asynch_Reply_Dispatcher and Asynch_Timeout_Handler. To handle
         these cleanly I have made some supplementary change like moving
         Auto_Functor to the TAO library from Utils library, since it is
         more useful for a bunch of things.
-	
+
 	* tao/Asynch_Reply_Dispatcher_Base.cpp
 	* tao/Asynch_Reply_Dispatcher_Base.h:
 	* tao/Asynch_Reply_Dispatcher_Base.i:
@@ -57,13 +63,13 @@ Sat Dec  6 23:42:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Muxed_TMS.cpp:
 
-	  Fixed a duplicate debug statement in dispatch_reply (). 
+	  Fixed a duplicate debug statement in dispatch_reply ().
 
 	* tao/Messaging/Asynch_Invocation.cpp:
 	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
 
 	  Use Auto_Functor instead of auto_ptr <> since the reply
-	  dispatcher cannot be deleted, but can only be refcounted. 
+	  dispatcher cannot be deleted, but can only be refcounted.
 
 	* tao/Messaging/Asynch_Reply_Dispatcher.cpp::
 	* tao/Messaging/Asynch_Reply_Dispatcher.h:
@@ -73,24 +79,24 @@ Sat Dec  6 23:42:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  handler. The calls close_connection (), dispatch_reply () and
 	  reply_timed_out () doesn't call delete this, but decrements the
 	  refcount.
-	
+
         * tao/Messaging/Asynch_Timeout_Handler.cpp:
 
 	  Enable refcounting of the timeout handler. This object holds a
 	  refcounted reply dispatcher object. Will decrement the refcount
-	  of the reply dispatcher when the object is destroyed. 
-	
+	  of the reply dispatcher when the object is destroyed.
+
 	* tao/Makefile.tao:
 	* tao/Auto_Functor.{h,cpp,inl}:
 	  Moved the autofunctor class form the Utils library to the TAO
-	  library. 
-	  
+	  library.
+
 	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
 	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
 	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
 
 	  Replicated the changes made in the Asynch classes to DII
-	  classes. 
+	  classes.
 
 	* tao/Utils/Implicit_Deactivator.h:
 	* tao/Utils/ORB_Destroyer.h:
@@ -110,8 +116,8 @@ Sat Dec  6 13:26:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* examples/Advanced/README_DOCGROUP:
 
 	  A README file that explains why we cannot support the following
-	  examples anymore. 
-	
+	  examples anymore.
+
 	* examples/Advanced/ch_12/Advanced_ch_12.mpc:
 	* examples/Advanced/ch_18/Advanced_ch_18.mpc:
 	* examples/Advanced/ch_21/Advanced_ch_21.mpc:
@@ -125,7 +131,7 @@ Sat Dec  6 13:26:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  don't think the doc_group will have any time in the near future
 	  to get these examples compiling reliably with older and new
 	  generation of compilers. If someone can give patches we will, as
-	  usual, integrate them. 
+	  usual, integrate them.
 
 Sat Dec  6 12:37:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -133,11 +139,11 @@ Sat Dec  6 12:37:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h:
 	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
-	  
+
 	  Changed the names of enum declarations "NONE" in these
 	  files. This was causing a clash with VxWORKS systems
-	  headers. Thanks to Thomas Lockhart for providing the patches. 
-	  
+	  headers. Thanks to Thomas Lockhart for providing the patches.
+
 Sat Dec  6 18:25:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Latency/DII/client.dsp:
