@@ -1,289 +1,294 @@
+Sat Jun 26 08:58:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Sequence_T.{i,cpp}: replaced a bunch of CORBA::ULong
+          template parameters with size_t.
+
 Fri Jun 25 21:53:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/performance-tests/Pluggable/server.cpp:
-	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
-	  Changed ACE_CHECK_RETURN to ACE_NOTREACHED when
-	  it comes after ACE_ENDTRY in a non-void function.
+        * TAO/performance-tests/Pluggable/server.cpp:
+        * TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
+          Changed ACE_CHECK_RETURN to ACE_NOTREACHED when
+          it comes after ACE_ENDTRY in a non-void function.
 
 Fri Jun 25 21:27:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynAny_i.cpp:
-	  Made full use of exception macros everywhere 
-	  ACE_TRY_ENV was used, made other enhancements
-	  and cosmetic changes.
+        * tao/DynAny_i.cpp:
+          Made full use of exception macros everywhere
+          ACE_TRY_ENV was used, made other enhancements
+          and cosmetic changes.
 
 Fri Jun 25 20:59:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/any.cpp:
-	* TAO/tests/Param_Test/bd_long_seq.cpp:
-	* TAO/tests/Param_Test/bd_short_seq.cpp:
-	* TAO/tests/Param_Test/bd_str_seq.cpp:
-	* TAO/tests/Param_Test/bd_string.cpp:
-	* TAO/tests/Param_Test/bd_long_seq.cpp:
-	* TAO/tests/Param_Test/bd_struct_seq.cpp:
-	* TAO/tests/Param_Test/complex_any.cpp:
-	* TAO/tests/Param_Test/except.cpp:
-	* TAO/tests/Param_Test/fixed_array.cpp:
-	* TAO/tests/Param_Test/fixed_struct.cpp:
-	* TAO/tests/Param_Test/nested_struct.cpp:
-	* TAO/tests/Param_Test/objref.cpp:
-	* TAO/tests/Param_Test/nested_struct.cpp:
-	* TAO/tests/Param_Test/big_union.cpp:
-	* TAO/tests/Param_Test/ub_string.cpp:
-	* TAO/tests/Param_Test/objref_struct.cpp:
-	* TAO/tests/Param_Test/short.cpp:
-	* TAO/tests/Param_Test/ulonglong.cpp:
-	* TAO/tests/Param_Test/typecode.cpp:
-	* TAO/tests/Param_Test/ub_any_seq.cpp:
-	* TAO/tests/Param_Test/ub_long_seq.cpp:
-	* TAO/tests/Param_Test/ub_objref_seq.cpp:
-	* TAO/tests/Param_Test/ub_short_seq.cpp:
-	* TAO/tests/Param_Test/ub_str_seq.cpp:
-	* TAO/tests/Param_Test/var_struct.cpp:
-	* TAO/tests/Param_Test/var_array.cpp:
-	* TAO/tests/Param_Test/recursive_struct.cpp:
-	  Changed ACE_CHECK_RETURN to ACE_NOTREACHED when
-	  it comes after ACE_ENDTRY in a non-void function.
-	  We'll see if this make everybody happy.
+        * TAO/tests/Param_Test/any.cpp:
+        * TAO/tests/Param_Test/bd_long_seq.cpp:
+        * TAO/tests/Param_Test/bd_short_seq.cpp:
+        * TAO/tests/Param_Test/bd_str_seq.cpp:
+        * TAO/tests/Param_Test/bd_string.cpp:
+        * TAO/tests/Param_Test/bd_long_seq.cpp:
+        * TAO/tests/Param_Test/bd_struct_seq.cpp:
+        * TAO/tests/Param_Test/complex_any.cpp:
+        * TAO/tests/Param_Test/except.cpp:
+        * TAO/tests/Param_Test/fixed_array.cpp:
+        * TAO/tests/Param_Test/fixed_struct.cpp:
+        * TAO/tests/Param_Test/nested_struct.cpp:
+        * TAO/tests/Param_Test/objref.cpp:
+        * TAO/tests/Param_Test/nested_struct.cpp:
+        * TAO/tests/Param_Test/big_union.cpp:
+        * TAO/tests/Param_Test/ub_string.cpp:
+        * TAO/tests/Param_Test/objref_struct.cpp:
+        * TAO/tests/Param_Test/short.cpp:
+        * TAO/tests/Param_Test/ulonglong.cpp:
+        * TAO/tests/Param_Test/typecode.cpp:
+        * TAO/tests/Param_Test/ub_any_seq.cpp:
+        * TAO/tests/Param_Test/ub_long_seq.cpp:
+        * TAO/tests/Param_Test/ub_objref_seq.cpp:
+        * TAO/tests/Param_Test/ub_short_seq.cpp:
+        * TAO/tests/Param_Test/ub_str_seq.cpp:
+        * TAO/tests/Param_Test/var_struct.cpp:
+        * TAO/tests/Param_Test/var_array.cpp:
+        * TAO/tests/Param_Test/recursive_struct.cpp:
+          Changed ACE_CHECK_RETURN to ACE_NOTREACHED when
+          it comes after ACE_ENDTRY in a non-void function.
+          We'll see if this make everybody happy.
 
 Fri Jun 25 20:31:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	  Added some ACE_NOTREACHED macros. These were in
-	  response to some warnings about ACE_CHECK_RETURN (...)
-	  after ACE_ENDTRY in non-void functions. We'll see if
-	  this make all the compilers happy.
+        * tao/Any.cpp:
+          Added some ACE_NOTREACHED macros. These were in
+          response to some warnings about ACE_CHECK_RETURN (...)
+          after ACE_ENDTRY in non-void functions. We'll see if
+          this make all the compilers happy.
 
 Fri Jun 25 18:09:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/any.cpp:
-	* TAO/tests/Param_Test/bd_long_seq.cpp:
-	* TAO/tests/Param_Test/bd_short_seq.cpp:
-	* TAO/tests/Param_Test/bd_str_seq.cpp:
-	* TAO/tests/Param_Test/bd_string.cpp:
-	* TAO/tests/Param_Test/bd_long_seq.cpp:
-	* TAO/tests/Param_Test/bd_struct_seq.cpp:
-	* TAO/tests/Param_Test/complex_any.cpp:
-	* TAO/tests/Param_Test/except.cpp:
-	* TAO/tests/Param_Test/fixed_array.cpp:
-	* TAO/tests/Param_Test/fixed_struct.cpp:
-	* TAO/tests/Param_Test/nested_struct.cpp:
-	* TAO/tests/Param_Test/objref.cpp:
-	* TAO/tests?Param_Test/ub_struct_seq.cpp:
-	  Added ACE_TRY block to add_args(). This 
-	  was not causing a warning, but there 
-	  were many unchecked calls using ACE_TRY_ENV.
+        * TAO/tests/Param_Test/any.cpp:
+        * TAO/tests/Param_Test/bd_long_seq.cpp:
+        * TAO/tests/Param_Test/bd_short_seq.cpp:
+        * TAO/tests/Param_Test/bd_str_seq.cpp:
+        * TAO/tests/Param_Test/bd_string.cpp:
+        * TAO/tests/Param_Test/bd_long_seq.cpp:
+        * TAO/tests/Param_Test/bd_struct_seq.cpp:
+        * TAO/tests/Param_Test/complex_any.cpp:
+        * TAO/tests/Param_Test/except.cpp:
+        * TAO/tests/Param_Test/fixed_array.cpp:
+        * TAO/tests/Param_Test/fixed_struct.cpp:
+        * TAO/tests/Param_Test/nested_struct.cpp:
+        * TAO/tests/Param_Test/objref.cpp:
+        * TAO/tests?Param_Test/ub_struct_seq.cpp:
+          Added ACE_TRY block to add_args(). This
+          was not causing a warning, but there
+          were many unchecked calls using ACE_TRY_ENV.
 
 Fri Jun 25 17:28:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/default_resource.cpp (get_reactor): Made sure the reactor
-	  get cleaned up if any error occured (ACE_LOG_MSG->errnum () !=
-	  0) during initialization.
+        * tao/default_resource.cpp (get_reactor): Made sure the reactor
+          get cleaned up if any error occured (ACE_LOG_MSG->errnum () !=
+          0) during initialization.
 
-	* tao/ORB_Core.cpp (init): Return -1 if we failed to initialize
-	  the reactor.
+        * tao/ORB_Core.cpp (init): Return -1 if we failed to initialize
+          the reactor.
 
-	  Thanks to Irfan for helping this out and Oleg Orlov
-	  <orlov@diasoft.ru> for reporting the problem.
+          Thanks to Irfan for helping this out and Oleg Orlov
+          <orlov@diasoft.ru> for reporting the problem.
 
 Fri Jun 25 16:30:41 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/POA/DSI/Database_i.cpp (find_entry): Fixed a
-	  mistaken exception -- it should be Not_Found rather than
- 	  Unknown_Key.  Thanks to Steve Huston for reporting this.  Also
- 	  tidied up the code and added proper exception checking for
- 	  memory allocation failures.
+        * examples/POA/DSI/Database_i.cpp (find_entry): Fixed a
+          mistaken exception -- it should be Not_Found rather than
+          Unknown_Key.  Thanks to Steve Huston for reporting this.  Also
+          tidied up the code and added proper exception checking for
+          memory allocation failures.
 
-	* tao/Sequence_T: Removed all uses of CORBA::ULong as parameters
-	  to a template and replaced them with size_t since this is
- 	  breaking the AIX C++ compiler.  Thanks to Steve Huston for
- 	  reporting this.
+        * tao/Sequence_T: Removed all uses of CORBA::ULong as parameters
+          to a template and replaced them with size_t since this is
+          breaking the AIX C++ compiler.  Thanks to Steve Huston for
+          reporting this.
 
 Fri Jun 25 17:01:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/NestedUpcall/Triangle_Test/initiator.cpp:
-	  Fixed silly typos in my last commit.
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+          Fixed silly typos in my last commit.
 
 Fri Jun 25 16:43:47 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/NestedUpcall/Reactor/NestedUpCalls_i.h: Removed old file.
 
-	* examples/POA/DSI/Database_i.cpp (find_entry):
-	* examples/POA/Default_Servant/File_i.cpp (destroy):
+        * examples/POA/DSI/Database_i.cpp (find_entry):
+        * examples/POA/Default_Servant/File_i.cpp (destroy):
 
-	  Fixed the throwing of an exception that is not in the throw
- 	  spec.
+          Fixed the throwing of an exception that is not in the throw
+          spec.
 
 Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp: Changed TAO_TRY
-	  macros to ACE_TRY macros
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp: Changed TAO_TRY
+          macros to ACE_TRY macros
 
 Fri Jun 25 16:03:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
-	* TAO/performance-tests/Pluggable/PP_Test_Client.h:
-	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
-	* TAO/performance-tests/Pluggable/server.cpp:
-	* TAO/tests/DynAny_Test/data.cpp:
-	* TAO/tests/Param_Test/nested_struct.cpp:
-	* TAO/tests/Param_Test/big_union.cpp:
-	* TAO/tests/Param_Test/objref.cpp:
-	* TAO/tests/Param_Test/ub_string.cpp:
-	* TAO/tests/Param_Test/objref_struct.cpp:
-	* TAO/tests/Param_Test/short.cpp:
-	* TAO/tests/Param_Test/ulonglong.cpp:
-	* TAO/tests/Param_Test/typecode.cpp:
-	* TAO/tests/Param_Test/ub_any_seq.cpp:
-	* TAO/tests/Param_Test/ub_long_seq.cpp:
-	* TAO/tests/Param_Test/ub_objref_seq.cpp:
-	* TAO/tests/Param_Test/ub_short_seq.cpp:
-	* TAO/tests/Param_Test/ub_str_seq.cpp:
-	* TAO/tests/Param_Test/fixed_array.cpp:
-	* TAO/tests/Param_Test/fixed_struct.cpp:
-	* TAO/tests/Param_Test/var_struct.cpp:
-	* TAO/tests/Param_Test/var_array.cpp:
-	* TAO/tests/Param_Test/recursive_struct.cpp:
-	* TAO/tests/Param_Test/bd_long_seq.cpp:
-	* TAO/tests/Param_Test/bd_short_seq.cpp:
-	* TAO/tests/Param_Test/bd_str_seq.cpp:
-	* TAO/tests/Param_Test/bd_string.cpp:
-	* TAO/tests/Param_Test/bd_struct_seq.cpp:
-	* TAO/tests/Param_Test/ub_struct_seq.cpp:
-	  Fixed exception warnings, ACE_TRY macro stuff
-	  and made some cosmetic changes.
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * TAO/performance-tests/Pluggable/PP_Test_Client.h:
+        * TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
+        * TAO/performance-tests/Pluggable/server.cpp:
+        * TAO/tests/DynAny_Test/data.cpp:
+        * TAO/tests/Param_Test/nested_struct.cpp:
+        * TAO/tests/Param_Test/big_union.cpp:
+        * TAO/tests/Param_Test/objref.cpp:
+        * TAO/tests/Param_Test/ub_string.cpp:
+        * TAO/tests/Param_Test/objref_struct.cpp:
+        * TAO/tests/Param_Test/short.cpp:
+        * TAO/tests/Param_Test/ulonglong.cpp:
+        * TAO/tests/Param_Test/typecode.cpp:
+        * TAO/tests/Param_Test/ub_any_seq.cpp:
+        * TAO/tests/Param_Test/ub_long_seq.cpp:
+        * TAO/tests/Param_Test/ub_objref_seq.cpp:
+        * TAO/tests/Param_Test/ub_short_seq.cpp:
+        * TAO/tests/Param_Test/ub_str_seq.cpp:
+        * TAO/tests/Param_Test/fixed_array.cpp:
+        * TAO/tests/Param_Test/fixed_struct.cpp:
+        * TAO/tests/Param_Test/var_struct.cpp:
+        * TAO/tests/Param_Test/var_array.cpp:
+        * TAO/tests/Param_Test/recursive_struct.cpp:
+        * TAO/tests/Param_Test/bd_long_seq.cpp:
+        * TAO/tests/Param_Test/bd_short_seq.cpp:
+        * TAO/tests/Param_Test/bd_str_seq.cpp:
+        * TAO/tests/Param_Test/bd_string.cpp:
+        * TAO/tests/Param_Test/bd_struct_seq.cpp:
+        * TAO/tests/Param_Test/ub_struct_seq.cpp:
+          Fixed exception warnings, ACE_TRY macro stuff
+          and made some cosmetic changes.
 
 Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Environment.h:
-	* tao/Environment.i: Added two methods _duplicate () and _nil ()
-	  to the class Environment so that they will conformant with v2.2.
+        * tao/Environment.h:
+        * tao/Environment.i: Added two methods _duplicate () and _nil ()
+          to the class Environment so that they will conformant with v2.2.
 
 Fri Jun 25 14:28:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CurrentC.cpp:
-	  Simplified exit path to avoid this problems.
+        * tao/CurrentC.cpp:
+          Simplified exit path to avoid this problems.
 
-	* tao/append.cpp:
-	  Added .in() calls for some T_var objects.
+        * tao/append.cpp:
+          Added .in() calls for some T_var objects.
 
-	* tao/skip.cpp:
-	  Added .in() calls for some T_var objects.
-	  My last change broken the default case for unions.
+        * tao/skip.cpp:
+          Added .in() calls for some T_var objects.
+          My last change broken the default case for unions.
 
 Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Exception.cpp :
-	* tao/Exception.h :Added default constructors for
-	  CORBA_UserException & CORBA_SystemException. These have been
-	  implemented as no-op's. In v2.3 of the CORBA spec, these two
-	  classes are going to be abstract data types. But for the present
-	  we want to keep vsOrb happy about these classes.
+        * tao/Exception.cpp :
+        * tao/Exception.h :Added default constructors for
+          CORBA_UserException & CORBA_SystemException. These have been
+          implemented as no-op's. In v2.3 of the CORBA spec, these two
+          classes are going to be abstract data types. But for the present
+          we want to keep vsOrb happy about these classes.
 
 Fri Jun 25 14:19:48 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
-	* orbsvcs/tests/AVStreams/sfp/server.cpp (main):
-	* orbsvcs/tests/AVStreams/sfp/client.cpp (main):
-	* orbsvcs/tests/AVStreams/sfp/common.h:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B):
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (remove_fep):
-	  Fixed SunCC 5.0 warnings thanks to Carlos O' Ryan.
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+        * orbsvcs/tests/AVStreams/sfp/server.cpp (main):
+        * orbsvcs/tests/AVStreams/sfp/client.cpp (main):
+        * orbsvcs/tests/AVStreams/sfp/common.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (create_B):
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (remove_fep):
+          Fixed SunCC 5.0 warnings thanks to Carlos O' Ryan.
 
 Fri Jun 25 14:06:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
-	* orbsvcs/orbsvcs/Event/ReactorTask.cpp:
-	* orbsvcs/tests/EC_Basic/EC_Basic.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	* tests/CDR/basic_types.cpp:
-	* tests/CDR/tc.cpp:
-	* tests/NestedUpcall/MT_Client_Test/client.cpp:
-	* tests/NestedUpcall/MT_Client_Test/local_server.cpp:
-	* tests/NestedUpcall/MT_Client_Test/server.cpp:
-	* tests/NestedUpcall/Reactor/reactor_i.cpp:
-	* tests/NestedUpcall/Triangle_Test/Initiator_i.cpp:
-	* tests/NestedUpcall/Triangle_Test/Object_A_i.cpp:
-	* tests/NestedUpcall/Triangle_Test/Object_B_i.cpp:
-	* tests/NestedUpcall/Triangle_Test/initiator.cpp:
-	* tests/NestedUpcall/Triangle_Test/server_A.cpp:
-	* tests/NestedUpcall/Triangle_Test/server_B.cpp:
-	* utils/catior/catior.cpp:
-	  More exception handling fixes, changed these files to use the
-	  new exception handling macros.
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Event/ReactorTask.cpp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event/Basic/Reconnect.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+        * tests/CDR/basic_types.cpp:
+        * tests/CDR/tc.cpp:
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+        * tests/NestedUpcall/MT_Client_Test/server.cpp:
+        * tests/NestedUpcall/Reactor/reactor_i.cpp:
+        * tests/NestedUpcall/Triangle_Test/Initiator_i.cpp:
+        * tests/NestedUpcall/Triangle_Test/Object_A_i.cpp:
+        * tests/NestedUpcall/Triangle_Test/Object_B_i.cpp:
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_A.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_B.cpp:
+        * utils/catior/catior.cpp:
+          More exception handling fixes, changed these files to use the
+          new exception handling macros.
 
 Fri Jun 25 13:53:23 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* examples/Logging/Makefile
-	  Oy. Added " -Ge 1" flag to guarantee that the IDL generated
-	  skeletons are the same regardless of platform (DU wasn't
-	  happy). Thanks to Mad Dog Carlos!
+        * examples/Logging/Makefile
+          Oy. Added " -Ge 1" flag to guarantee that the IDL generated
+          skeletons are the same regardless of platform (DU wasn't
+          happy). Thanks to Mad Dog Carlos!
 
 Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Context.i:
-	* tao/Context.cpp:
-	* tao/Context.h:
-	* tao/Exception.i:
-	* tao/Exception.h:
-	* tao/Exception.cpp: Added _duplicate () methods to pseudo objects
-	  ContextList & ExceptionList with the signature 'static T
-	  *_duplicate (T *) ' to make them compliant with the 2.2
-	  spec. This was found when we were trying to run the 'api' module
-	  of the vsOrb test suite.
+        * tao/Context.i:
+        * tao/Context.cpp:
+        * tao/Context.h:
+        * tao/Exception.i:
+        * tao/Exception.h:
+        * tao/Exception.cpp: Added _duplicate () methods to pseudo objects
+          ContextList & ExceptionList with the signature 'static T
+          *_duplicate (T *) ' to make them compliant with the 2.2
+          spec. This was found when we were trying to run the 'api' module
+          of the vsOrb test suite.
 
 Fri Jun 25 12:38:43 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* examples/Logging/Logger_i.cpp,h
-	  Added default argument values for ACE_TRY_ENV to reflect tao_idl
-	  generated code. Also removed a vestigal method (verbosity ())
-	  which was never declared in IDL (since its name would have
-	  clashed with the orhte verbosity method). Hopefully DU will be
-	  pleased now, since this messed up its compile.
+        * examples/Logging/Logger_i.cpp,h
+          Added default argument values for ACE_TRY_ENV to reflect tao_idl
+          generated code. Also removed a vestigal method (verbosity ())
+          which was never declared in IDL (since its name would have
+          clashed with the orhte verbosity method). Hopefully DU will be
+          pleased now, since this messed up its compile.
 
 Fri Jun 25 11:45:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
-	  Fixed function pointer casting problem.
+        * examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
+          Fixed function pointer casting problem.
 
-	* examples/POA/DSI/server.cpp
-	* examples/POA/Default_Servant/server.cpp
-	* examples/POA/Loader/Server_Manager.cpp
-	* examples/POA/NewPOA/NewPOA.cpp
-	* examples/POA/On_Demand_Activation/server.cpp
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp
+        * examples/POA/DSI/server.cpp
+        * examples/POA/Default_Servant/server.cpp
+        * examples/POA/Loader/Server_Manager.cpp
+        * examples/POA/NewPOA/NewPOA.cpp
+        * examples/POA/On_Demand_Activation/server.cpp
+        * examples/POA/On_Demand_Loading/Server_Manager.cpp
 
-	  Fixed simple exception handling related problems.
+          Fixed simple exception handling related problems.
 
 Fri Jun 25 10:01:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	  Added an ACE_CHECK to the type() set method.
-	  Also fixed some DU warnings.
+        * tao/Any.cpp:
+          Added an ACE_CHECK to the type() set method.
+          Also fixed some DU warnings.
 
-	* tao/CurrentC.cpp:
-	* tao/DynAny_i.cpp:
-	* tao/DynSequence_i.cpp:
-	* tao/DynStruct_i.cpp:
-	  Fixed some DU warnings.
+        * tao/CurrentC.cpp:
+        * tao/DynAny_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+          Fixed some DU warnings.
 
-	* tao/DynAnyS.cpp:
-	  Fixed ACE_CHECK related stuff.
+        * tao/DynAnyS.cpp:
+          Fixed ACE_CHECK related stuff.
 
 Fri Jun 25 07:31:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -433,9 +438,9 @@ Thu Jun 24 19:41:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Jun 24 18:27:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.h:
-	* tao/Any.i:
-	* tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
         * tao/CDR_Interpreter.h:
         * tao/CDR_Interpreter.cpp:
         * tao/DynAny_i.h:
