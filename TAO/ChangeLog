@@ -1,3 +1,15 @@
+Wed Nov  5 00:28:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
+        * orbsvcs/tests/Bug_1393_Regression/client.cpp:
+        * orbsvcs/tests/Bug_1395_Regression/server.cpp:
+        * orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+        * tests/ICMG_Any_Bug/server.cpp:
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.cpp:
+          Added #includes needed due to subsetting.
+
 Tue Nov  4 15:57:09 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IIOP_Transport.cpp (get_listen_point):
