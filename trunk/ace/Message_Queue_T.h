@@ -175,9 +175,22 @@ public:
 
   // = Queue statistic methods.
   virtual size_t message_bytes (void);
-  // Number of total bytes on the queue.
+  // Number of total bytes on the queue, i.e., sum of the message
+  // block sizes.
+  virtual size_t message_length (void);
+  // Number of total length on the queue, i.e., sum of the message
+  // block lengths.
   virtual size_t message_count (void);
   // Number of total messages on the queue.
+
+  // = Manual changes to these stats (used when queued message blocks
+  // change size or lengths).
+  virtual void message_bytes (size_t new_size);
+  // New value of the number of total bytes on the queue, i.e., sum of
+  // the message block sizes.
+  virtual void message_length (size_t new_length);
+  // New value of the number of total length on the queue, i.e., sum
+  // of the message block lengths.
 
   // = Flow control methods.
 
@@ -306,6 +319,9 @@ protected:
 
   size_t cur_bytes_;
   // Current number of bytes in the queue.
+
+  size_t cur_length_;
+  // Current length of messages in the queue.
 
   size_t cur_count_;
   // Current number of messages in the queue.

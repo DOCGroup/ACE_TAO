@@ -100,6 +100,22 @@ ACE_Message_Block::length (void) const
   return this->wr_ptr_ - this->rd_ptr_;
 }
 
+ACE_INLINE size_t
+ACE_Message_Block::total_length (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::total_length");
+
+  size_t length = 0;
+  for (const ACE_Message_Block *i = this;
+       i != 0;
+       i = i->cont ())
+    {
+      length += i->length ();
+    }
+
+  return length;
+}
+
 // Sets the length of the "active" portion of the message.  This is
 // defined as the offset from RD_PTR to WR_PTR.
 
@@ -223,8 +239,8 @@ ACE_Message_Block::base (void) const
 
 ACE_INLINE void
 ACE_Message_Block::base (char *msg_data,
-			 size_t msg_length,
-			 Message_Flags msg_flags)
+                         size_t msg_length,
+                         Message_Flags msg_flags)
 {
   ACE_TRACE ("ACE_Message_Block::base");
   this->rd_ptr_ = 0;

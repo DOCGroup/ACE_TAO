@@ -7983,8 +7983,10 @@ private:
   // Print a console message with the file and line number of the
   // unsupported function.
 #   define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; ACE_OS::fprintf (stderr, ACE_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return FAILVALUE; } while (0)
+#   define ACE_NOTSUP do { errno = ENOTSUP; ACE_OS::fprintf (stderr, ACE_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return; } while (0)
 # else /* ! ACE_HAS_VERBOSE_NOTSUP */
 #   define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP ; return FAILVALUE; } while (0)
+#   define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 # endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
 # if defined (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)

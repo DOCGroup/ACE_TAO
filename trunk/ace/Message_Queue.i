@@ -39,8 +39,6 @@ ACE_INLINE size_t
 ACE_Message_Queue_Vx::high_water_mark (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::high_water_mark");
-  // Don't need to guard, because this is fixed.
-
   ACE_NOTSUP_RETURN ((size_t) -1);
 }
 
@@ -48,8 +46,7 @@ ACE_INLINE void
 ACE_Message_Queue_Vx::high_water_mark (size_t)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::high_water_mark");
-  // Don't need to guard, because this is fixed.
-  errno = ENOTSUP;
+  ACE_NOTSUP;
 }
 
 ACE_INLINE size_t
@@ -65,12 +62,8 @@ ACE_INLINE void
 ACE_Message_Queue_Vx::low_water_mark (size_t)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::low_water_mark");
-  // Don't need to guard, because this is fixed.
-
-  errno = ENOTSUP;
+  ACE_NOTSUP;
 }
-
-// Return the current number of bytes in the queue.
 
 ACE_INLINE size_t
 ACE_Message_Queue_Vx::message_bytes (void)
@@ -79,7 +72,12 @@ ACE_Message_Queue_Vx::message_bytes (void)
   ACE_NOTSUP_RETURN ((size_t) -1);
 }
 
-// Return the current number of messages in the queue.
+ACE_INLINE size_t
+ACE_Message_Queue_Vx::message_length (void)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_NOTSUP_RETURN ((size_t) -1);
+}
 
 ACE_INLINE size_t
 ACE_Message_Queue_Vx::message_count (void)
@@ -88,6 +86,20 @@ ACE_Message_Queue_Vx::message_count (void)
   // Don't need to guard, because this is a system call.
 
   return ::msgQNumMsgs (msgq ());
+}
+
+ACE_INLINE void
+ACE_Message_Queue_Vx::message_bytes (size_t)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes");
+  ACE_NOTSUP;
+}
+
+ACE_INLINE void
+ACE_Message_Queue_Vx::message_length (size_t)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_NOTSUP;
 }
 
 #endif /* VXWORKS */
@@ -134,11 +146,37 @@ ACE_Message_Queue_NT::message_bytes (void)
 }
 
 ACE_INLINE size_t
+ACE_Message_Queue_NT::message_length (void)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  // Accessing to size_t must be atomic.
+  return this->cur_length_;
+}
+
+ACE_INLINE size_t
 ACE_Message_Queue_NT::message_count (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::message_count");
   // Accessing to size_t must be atomic.
   return this->cur_count_;
+}
+
+ACE_INLINE void
+ACE_Message_Queue_NT::message_bytes (size_t new_value)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes");
+  ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_);
+
+  this->cur_bytes_ = new_value;
+}
+
+ACE_INLINE void
+ACE_Message_Queue_NT::message_length (size_t new_value)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_);
+
+  this->cur_length_ = new_value;
 }
 
 ACE_INLINE size_t
