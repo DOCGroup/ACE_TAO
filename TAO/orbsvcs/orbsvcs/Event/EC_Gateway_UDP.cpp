@@ -493,6 +493,13 @@ TAO_ECG_UDP_Request_Entry::TAO_ECG_UDP_Request_Entry (void)
 {
 }
 
+// @@ todo:This code is commented out. So no problem. But when this
+// code is enabled we need to make sure that
+// ACE_Message_Block::duplicate () should be called only if the data
+// block in it is NOT from stack. Else we need to copy the datablock
+// and then duplicate () it. See $TAO_ROOT/tao/Sequence.{cpp,i} on how
+// this is done.
+
 TAO_ECG_UDP_Request_Entry::
 TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry& rhs)
   :  byte_order_ (rhs.byte_order_),

@@ -654,8 +654,30 @@ TAO_Unbounded_Sequence (CORBA::ULong length,
                                   length,
                                   mb->rd_ptr (),
                                   0)
-  ,  mb_ (ACE_Message_Block::duplicate (mb))
+  ,  mb_ (0)
 {
+  // Get the message block flags.
+  ACE_Message_Block::Message_Flags flg = mb->flags ();
+
+  // If the DONT_DELETE flag is disabled just a duplicate would
+  // help. If the DONT_DELETE flag is enabled a deep copy is needed as
+  // the contents would be on stack. Just incrementing the ref count
+  // on the stack based data block would only crash the program when
+  // the stack unwinds
+  if (ACE_BIT_DISABLED (flg,
+                        ACE_Message_Block::DONT_DELETE))
+    {
+      this->mb_ = ACE_Message_Block::duplicate (mb);
+    }
+  else
+    {
+      // As we are in CORBA mode, all the data blocks would be aligned
+      // on an 8 byte boundary
+      ACE_Message_Block msgb (*mb,
+                              ACE_CDR::MAX_ALIGNMENT);
+
+      this->mb_ = ACE_Message_Block::duplicate (&msgb);
+    }
 }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
