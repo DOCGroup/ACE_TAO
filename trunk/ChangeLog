@@ -1,3 +1,13 @@
+Tue Jun 19 08:03:38 200  Chanaka Liyanaarachchi <chanaka@ociweb.com>
+
+        * ace/OS.h:
+
+         Changed the value of ACE_MAX_DEFAULT_PORT to 65535. This had
+         been set to 0 (zero) previously to avoid a problem on NT4.0 SP3.
+	 The problem was that beyond ports 65279, a bind call would
+	 succeed but the handle returned would be junk. This problem does 
+	 not seem to exist on NT4.0 SP6, and Windows 2000.
+		
 Tue Jun 19 07:20:56 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/INET_Addr.cpp:
