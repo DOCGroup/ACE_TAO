@@ -10,9 +10,9 @@
 ACE_RCSID(RT_Notify, TAO_NS_Properties, "$Id$")
 
 TAO_NS_Properties::TAO_NS_Properties (void)
-  :updates_ (1), update_period_ (0, 10000)
+  :updates_ (1), update_period_ (0, TAO_NS_DEFAULT_UPDATES_PERIOD)
 {
-  if (TAO_debug_level > 0)
+  if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG, "in TAO_Properties ctos %x\n", this));
 }
 

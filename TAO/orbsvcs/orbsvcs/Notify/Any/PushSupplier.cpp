@@ -18,11 +18,20 @@ TAO_NS_PushSupplier::~TAO_NS_PushSupplier ()
 }
 
 void
-TAO_NS_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
+TAO_NS_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->push_supplier_ = CosEventComm::PushSupplier::_duplicate (push_supplier);
 
-  this->subscribe_ = CosNotifyComm::NotifySubscribe::_narrow (push_supplier ACE_ENV_ARG_PARAMETER);
+  ACE_TRY
+    {
+      this->subscribe_ = CosNotifyComm::NotifySubscribe::_narrow (push_supplier ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // _narrow failed which probably means the interface is CosEventComm type.
+    }
+  ACE_ENDTRY;
 }
 
 void

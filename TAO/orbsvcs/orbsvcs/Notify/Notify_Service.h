@@ -94,6 +94,8 @@ static TAO_NS_Cos_Notification_Service_Initializer TAO_NS_Cos_Notification_Servi
 ACE_STATIC_SVC_DECLARE (TAO_NS_Notify_Service)
 ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_Notify_Service)
 
+ACE_STATIC_SVC_DECLARE (TAO_Notify_Default_EMO_Factory_OLD)
+
 #if defined (__ACE_INLINE__)
 #include "Notify_Service.inl"
 #endif /* __ACE_INLINE__ */

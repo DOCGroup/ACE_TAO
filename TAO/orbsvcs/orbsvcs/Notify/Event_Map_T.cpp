@@ -112,7 +112,6 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_NS_EventTyp
       ACE_CHECK_RETURN (-1);
 
       ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
-      return --event_type_count_;
 
       if (entry->count () == 0)
         {
@@ -124,6 +123,8 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_NS_EventTyp
           /// Strategy 2: remove_bunch_after_threshold
           /// Strategy 3: use cached allocator and 1
         }
+
+      return --event_type_count_;
     }
 
   return -1;

@@ -37,6 +37,7 @@ ACE_RCSID(RT_Notify, TAO_NS_Builder, "$Id$")
 #include "Sequence/SequenceProxyPushConsumer.h"
 #include "Sequence/SequenceProxyPushSupplier.h"
 #include "Dispatch_Observer_T.h"
+#include "ETCL_FilterFactory.h"
 
 TAO_NS_Builder::TAO_NS_Builder (void)
 {
@@ -54,9 +55,14 @@ TAO_NS_Builder::build_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
   TAO_NS_FilterFactory* ff = ACE_Dynamic_Service<TAO_NS_FilterFactory>::instance ("TAO_NS_FilterFactory");
 
   if (ff == 0)
-    return CosNotifyFilter::FilterFactory::_nil ();
-  else
-    return ff->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+    {
+      ACE_NEW_THROW_EX (ff,
+                        TAO_NS_ETCL_FilterFactory (),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
+    }
+
+  return ff->create (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr

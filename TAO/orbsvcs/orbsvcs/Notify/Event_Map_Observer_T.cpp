@@ -28,10 +28,10 @@ TAO_NS_Update_Added_Worker<PROXY>::TAO_NS_Update_Added_Worker (const TAO_NS_Even
 template <class PROXY> void
 TAO_NS_Update_Added_Worker<PROXY>::work (PROXY* proxy ACE_ENV_ARG_DECL)
 {
-  proxy->type_added (this->event_type_);
-
   if (proxy->updates_off () == 0)
     {
+      proxy->type_added (this->event_type_);
+
       this->dispatch_observer_->enqueue (proxy->peer () ACE_ENV_ARG_PARAMETER); // Tell the observer that this peer has a update pending.
     }
 }
@@ -50,6 +50,7 @@ TAO_NS_Update_Removed_Worker<PROXY>::work (PROXY* proxy ACE_ENV_ARG_DECL)
   if (proxy->updates_off () == 0)
     {
       proxy->type_removed (this->event_type_);
+
       this->dispatch_observer_->enqueue (proxy->peer () ACE_ENV_ARG_PARAMETER); // Tell the observer that this peer has a update pending.
     }
 }

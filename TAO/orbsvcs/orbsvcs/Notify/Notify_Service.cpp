@@ -7,6 +7,7 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
@@ -70,6 +71,56 @@ TAO_NS_Notify_Service::init (int argc, char *argv[])
 
               TAO_NS_PROPERTIES::instance()->default_event_channel_qos_properties (ec_qos);
             }
+        }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTDispatching")) == 0)
+        {
+          // If Dispatching Threads are initalized, the option is implicit.
+          arg_shifter.consume_arg ();
+        }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTSourceEval")) == 0)
+        {
+          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-SourceThreads"))))
+        {
+          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          arg_shifter.consume_arg ();
+        }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTLookup")) == 0)
+        {
+          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-LookupThreads"))))
+        {
+          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          arg_shifter.consume_arg ();
+        }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTListenerEval")) == 0)
+        {
+          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ListenerThreads"))))
+        {
+          // Users interested in this arcane feature should look to the upcomming RT-Notification for a better solution.
+          arg_shifter.consume_arg ();
+        }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AsynchUpdates")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          TAO_NS_PROPERTIES::instance()->updates (1);
+
+          ACE_Time_Value update_period (0, TAO_NS_DEFAULT_UPDATES_PERIOD);
+
+          TAO_NS_PROPERTIES::instance()->update_period (update_period);
+        }
+      else if (ACE_OS::strcasecmp (current_arg, ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
+        {
+          // Not supported any more.
+          arg_shifter.consume_arg ();
         }
     }
 
@@ -225,12 +276,23 @@ TAO_NS_Notify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_D
   // NOP.
 }
 
+
 /*********************************************************************************************************************/
 
 TAO_NS_Cos_Notification_Service_Initializer::TAO_NS_Cos_Notification_Service_Initializer (void)
 {
   ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_NS_Notify_Service);
+  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_Notify_Default_EMO_Factory_OLD);
 }
+
+/*********************************************************************************************************************/
+
+ACE_STATIC_SVC_DEFINE (TAO_Notify_Default_EMO_Factory_OLD,
+                       ACE_TEXT (TAO_NOTIFY_DEF_EMO_FACTORY_NAME),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_NS_Notify_Service),
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
 
 /*********************************************************************************************************************/
 
@@ -241,3 +303,5 @@ ACE_STATIC_SVC_DEFINE (TAO_NS_Notify_Service,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Notify, TAO_NS_Notify_Service)
+
+/*********************************************************************************************************************/

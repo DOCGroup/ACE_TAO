@@ -16,6 +16,7 @@ ACE_RCSID(RT_Notify, TAO_NS_Proxy, "$Id$")
 #include "Notify_Service.h"
 
 TAO_NS_Proxy::TAO_NS_Proxy (void)
+  :updates_off_ (0)
 {
   // Set initial proxy mode to broadcast.
   this->subscribed_types_.insert (TAO_NS_EventType::special ());
