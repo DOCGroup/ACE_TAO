@@ -210,7 +210,10 @@ void CAD_Handler::process_spe (DOMNodeIterator* iter,
       else if
         (process_reference(node, node_name, "instance",
                            spe.instanceRef,
-                           this->index_, this->idref_map_));
+                           this->index_, this->idref_map_))
+        {
+          this->index_ = this->index_ + 1;
+        }
       else
         {
           iter->previousNode();
@@ -234,7 +237,10 @@ void CAD_Handler::process_spr (DOMNodeIterator* iter,
       else if
         (process_reference(node, node_name, "instance",
                            spr.instanceRef,
-                           this->index_, this->idref_map_));
+                           this->index_, this->idref_map_))
+        {
+          this->index_ = this->index_ + 1;
+        }
       else
         {
           iter->previousNode();
