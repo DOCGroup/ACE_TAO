@@ -8,7 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use strict;
 
-my $usage="$0 [-l log directory] [-m mail recipient(s)] [-p purify output]\n";
+my $usage = "$0 [-l log directory] [-m mail recipient(s)] " .
+            "[-p purify output] [-u URL prefix]\n";
 
 ####
 #### Configuration parameters.
@@ -27,9 +28,10 @@ $ENV{'LD_LIBRARY_PATH'} = '/opt/SUNWspro_5.0/dt/lib:/usr/openwin/lib:/usr/lib:/p
 $ENV{'TMPDIR'} = '/tmp';
 $ENV{'USER'} = $ENV{'LOGNAME'};
 
-my $log_directory = '/project/danzontmp/levine/build-logs';
+my $log_directory = '/project/danzontmp/levine/build-logs/';
 my $mail_recipients = '';
 my $purify = '';
+my $urlprefix = '';
 
 ####
 #### Process command line args.
@@ -57,6 +59,14 @@ while ($#ARGV >= $[) {
       shift;
     } else {
       print STDERR "$0:  must provide argument for -p option\n";
+      die $usage;
+    }
+  } elsif ($ARGV[0] eq '-u') {
+    if ($ARGV[1] !~ /^-/) {
+      $urlprefix = $ARGV[1];
+      shift;
+    } else {
+      print STDERR "$0:  must provide argument for -u option\n";
       die $usage;
     }
   } elsif ($ARGV[0] eq '-?') {
@@ -136,9 +146,22 @@ if ($#output == -1) {
     select MAIL;
   }
 
-  print "This is an automatically generated message.\n\n";
-  print "Log files are in $log_directory.\n\n";
+  print "This is an automatically generated message.\n\n"
+    if "$mail_recipients";
+  print "Log files are in $log_directory\n";
 
+  if ("$urlprefix") {
+    #### Print URL for each log file, using $urlprefix.
+    print "They are also available at:\n";
+
+    my @logs = split /\s+/, $log_files;
+    foreach my $log (@logs) {
+      $log =~ s%^\./%%;  #### Remove leading ./
+      print "  $urlprefix$log\n";
+    }
+  }
+
+  print "\n";
   print @output;
 
   if ("$mail_recipients") {

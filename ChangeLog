@@ -1,8 +1,14 @@
+Sat Mar 18 20:51:06 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: added -u option, to provide a
+          URL prefix.  If enabled, it will print the URL of
+          each log file, prepending the URL prefix.
+
 Sat Mar 18 18:37:19 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Added inclusion of pre.h and post.h.  It got left out
-	  by the script.  Thanks to Christopher Kohlhoff
-	  <chris@kohlhoff.com> for noticing this.
+        * ace/OS.h: Added inclusion of pre.h and post.h.  It got left out
+          by the script.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for noticing this.
 
 Sat Mar 18 05:42:06 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
