@@ -1,0 +1,8 @@
+# $Id$
+#
+# See svc.conf in the same directory for more information.
+# You must build TAO with TAO_USES_STATIC_SERVICE defined
+# to use this file.
+static TAO_Resource_Factory "-ORBresources tss"
+static TAO_Default_Client_Strategy_Factory ""
+static TAO_Default_Server_Strategy_Factory "-ORBconcurrency thread-per-connection -ORBdemuxstrategy dynamic -ORBtablesize 128"
