@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Kokyu_Dispatching.h
  *
@@ -71,7 +72,7 @@ public:
                             ACE_ENV_ARG_DECL);
 
 private:
-  void TAO_EC_Kokyu_Dispatching::setup_lanes (void);
+  void setup_lanes (void);
 
   /// The dispatcher
   Kokyu::Dispatcher_Auto_Ptr dispatcher_;

@@ -1,3 +1,26 @@
+Sat Aug 23 12:03:18 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h (setup_lanes):
+
+	  Removed unnecessary scope qualifier from this method
+	  declaration.  Fixes a warning.
+
+	* examples/Logging/Logger_i.h:
+
+	  Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
+	  declaration.
+
+	* orbsvcs/examples/Notify/Lanes/Supplier.h:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier.h:
+
+	  Include "ace/Condition_Thread_Mutex.h" to pull in
+	  ACE_Condition_Thread_Mutex class declaration.
+
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+
+	  Include "ace/Barrier.h" to pull in ACE_Barrier class
+	  declaration.
+
 Sat Aug 23 11:41:33 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
@@ -42,7 +65,8 @@ Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
         * orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.mpc
         
           Fixes to mpc files to avoid duplicate names, and to use 
-        inheritance to get base project info instead of hard-coding libs.
+          inheritance to get base project info instead of hard-coding
+	  libs.
 
         * orbsvcs/CosEvent_Service/CosEvent_Service.cpp
         * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp
@@ -98,13 +122,14 @@ Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.i
         
-          Added support for typed events to CosEvent. This was submitted by
-        Jonathan Astle <JNASTLE@qinetiq.com>. I modified the code to use mpc, and
-        added a new feature. Set ec_typed_event=0 to disable use of typed events. This
-        works by setting a macro which Jon used throughout the new code. There are actually
-        now two CosEvent projects in CosEvent.mpc. One uses the avoids keyword and the other
-        the requires keyword. This could be used as a pattern for similar situations.
-
+          Added support for typed events to CosEvent. This was submitted
+	  by Jonathan Astle <JNASTLE@qinetiq.com>. I modified the code to
+	  use mpc, and added a new feature. Set ec_typed_event=0 to
+	  disable use of typed events. This works by setting a macro which
+	  Jon used throughout the new code. There are actually now two
+	  CosEvent projects in CosEvent.mpc. One uses the avoids keyword
+	  and the other the requires keyword. This could be used as a
+	  pattern for similar situations.
 
 Fri Aug 22 15:58:41 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -146,7 +171,8 @@ Thu Aug 21 17:01:13 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao_other_tests.lst:
 
-	  Disabled running of RTScheduling tests when interceptors are disabled.
+	  Disabled running of RTScheduling tests when interceptors are
+	  disabled.
 
 	* tao_orb_tests.lst:
 
