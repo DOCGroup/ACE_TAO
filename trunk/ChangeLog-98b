@@ -1,3 +1,10 @@
+Sat Aug  8 09:37:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/INET_Addr.cpp: 
+	  Reverted the operator== optimization, it turns out that the
+	  definition of struct in_addr is not portable after all. Maybe
+	  there is a set of macros to make it portable?
+
 Fri Aug  7 23:18:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-sunos5.5.h: 
