@@ -71,6 +71,7 @@ CORBA_ORB::~CORBA_ORB (void)
   // assert (refcount_ == 0);
 }
 
+// Set up listening endpoints.
 int
 CORBA_ORB::open (void)
 {

@@ -62,6 +62,15 @@ Supports several concurrency models out of the box: Reactive, Thread-per-Connect
 and ORB-per-thread. The ORB-per-thread design is optimized for real-time
 I/O subsystems.</LI>
 </UL>
+      Recently Completed Work:
+      <BLOCKQUOTE>
+	<LI>Remove BOA and ROA names from the ORB.</LI>
+
+	<LI>Change CORBA_ORB::open() to return an error status
+	(first cut at this already there--needs to be checked
+	out).</LI>
+      </BLOCKQUOTE>
+
       Ongoing Work:
       <BLOCKQUOTE>
 	<LI>Verify ACE_ & TAO on Linux.</LI>
@@ -117,14 +126,9 @@ I/O subsystems.</LI>
 	<code>CORBA_ORB::run()</code> should return and no longer
 	service requests.</li>
 
-	<LI>Remove BOA and ROA&nbsp;names from the ORB.</LI>
-
 	<LI>Rename following files:&nbsp;Orb_Core.*&nbsp;->orb_core.*
 	&amp;&nbsp;orbobj.* -> corba_orb.*.</LI>
 
-	<LI>Change set_up_for_listening() to return an error status
-	(first cut at this already there--needs to be checked
-	out).</LI>
       </BLOCKQUOTE>
 
       Future work:
