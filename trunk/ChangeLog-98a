@@ -1,3 +1,9 @@
+Mon Feb 23 12:26:06 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (sched_params): removed ACE_ADAPT_RETVAL from PTHREADS
+          ::sched_setscheduler () call, because it returns the old scheduling
+          policy, not 0, on success.
+
 Mon Feb 23 11:27:10 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.4.30, released Mon Feb 23 11:27:10 1998.
