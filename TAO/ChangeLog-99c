@@ -1,9 +1,14 @@
+Wed Apr  7 12:54:49 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.{h,cpp}:
+	Updated the files to use the new exceptions macros.
+
 Wed Apr  7 12:40:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/PolicyC.cpp:
 	  Fixed syntax error, Sun/CC is *way* too lax.
 
-	* tao/POA.cpp: 
+	* tao/POA.cpp:
 	  Fixed duplicate template instantiations.
 
 Wed Apr  7 12:03:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -55,7 +60,7 @@ Wed Apr  7 12:03:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/TimeBaseS_T.cpp:
 	* tao/TimeBaseS_T.h:
 	* tao/TimeBaseS_T.i:
-	  Started work on the Messaging spec policy framework. I added new 
+	  Started work on the Messaging spec policy framework. I added new
 	  modules (such as Messaging, TimeBase and IOP) and extended
 	  others to include more features (such as Policy).
 	  Right now the modules are not compiled by default, I want to
@@ -114,7 +119,7 @@ Wed Apr  7 12:03:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Wed Apr  7 11:27:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_expression.cpp: 
+	* TAO_IDL/ast/ast_expression.cpp:
 	  Fixed the problems with LL_MAX and friends, use the ACE_*_MAX
 	  constants instead.
 
