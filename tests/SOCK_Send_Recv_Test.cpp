@@ -282,10 +282,22 @@ server (void *arg)
           break;
       total_recv += got;
     }
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Test 3 received %d bytes\n"),
-              total_recv));
+                total_recv));
+
   if (total_recv == Test3_Total_Size)
-    ACE_ASSERT (got == 0 && errno == 0);
+    {
+      if (got != 0 || errno != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) Test 3 final recv status %d, expected 0\n"),
+                got));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("expected errno == 0, instead")));
+          Test_Result = 1;    // Fail
+        }
+    }
   else
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Test 3 expected %d %p\n"),
