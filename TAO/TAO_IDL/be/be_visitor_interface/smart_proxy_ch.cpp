@@ -112,7 +112,10 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "{" << be_nl
       << "public:" << be_idt_nl
       << "TAO_"<< node->flat_name () << "_Smart_Proxy_Base ("
-      << node->full_name () << "_ptr proxy);" << be_uidt_nl;
+      << node->full_name () << "_ptr proxy);" << be_nl
+    // Just to keep Old g++ complier (version: 2.7.2.3) happy its necessary 
+    // to declare and define the destructor explicitly.
+      << "~TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);"<<be_uidt_nl;
   
   // generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
