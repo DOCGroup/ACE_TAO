@@ -3,12 +3,12 @@ Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/Synch_T.{h,i}: Further simplified the new ACE_Guard constructor.
 	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing
  	  this.
-  
+
 Mon Mar  5 19:20:45 2001  Fuzz Master D <brunsch@uci.edu>
 
         * bin/fuzz.pl:
 
-          As Ossama pointed out, the ACE_CHECK test was seeing 
+          As Ossama pointed out, the ACE_CHECK test was seeing
           problems in the tao_idl files since it has uses of ACE_TRY_ENV
           inside quotes.  Made sure not to detect problems in this case.
 
@@ -491,7 +491,7 @@ Fri Mar 02 19:36:22 2001  Steve Huston  <shuston@riverace.com>
         * ace/OS.i (ACE_OS::send): (only non-Win32), if call fails and
           errno is EAGAIN, change it to EWOULDBLOCK. Improve portability
           for platforms where EAGAIN and EWOULDBLOCK are different values
-          and both used, like HP-UX.  Thanks to Mike Snowy
+          and both used, like HP-UX.  Thanks to Michael Grove
           <snowymike@aol.com> for reporting this problem.
 
         * ace/ACE.i (send_i): Call ACE_OS::send, not ACE_OS::write, on HP-UX.
