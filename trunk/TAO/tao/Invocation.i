@@ -99,6 +99,7 @@ TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
 {
 }
 
+ACE_INLINE
 TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation (void)
 {
 }
