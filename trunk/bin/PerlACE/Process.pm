@@ -11,7 +11,7 @@ $PerlACE::Process::ExeSubDir = './';
 my @new_argv = ();
 
 for(my $i = 0; $i <= $#ARGV; ++$i) {
-    if ($ARGV[$i] eq '-ExeSubDir') {  
+    if ($ARGV[$i] eq '-ExeSubDir') {
         if (defined $ARGV[$i + 1]) {
             $PerlACE::Process::ExeSubDir = $ARGV[++$i].'/';
         }
@@ -25,6 +25,8 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
     }
 }
 @ARGV = @new_argv;
+
+$PerlACE::Process::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
 
 if ($OSNAME eq "MSWin32") {
 	require PerlACE::Process_Win32;

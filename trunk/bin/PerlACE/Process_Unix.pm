@@ -71,6 +71,15 @@ sub new
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
 
+    if (!defined $PerlACE::Process::WAIT_DELAY_FACTOR) {
+#         if (defined $self->{PURIFY_CMD}) {
+#             $self->{WAIT_DELAY_FACTOR} = 10;
+#         }
+#         else {
+            $PerlACE::Process::WAIT_DELAY_FACTOR = 1;
+#        }
+    }
+
     bless ($self, $class);
     return $self;
 }
@@ -323,6 +332,8 @@ sub TimedWait ($)
 {
     my $self = shift;
     my $timeout = shift;
+
+    $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
 
     while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
