@@ -1,3 +1,14 @@
+Tue Jul  3 14:53:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/orbsvcs/AV/AV_Core.h
+        * orbsvcs/orbsvcs/AV/RTCP.h
+        * orbsvcs/orbsvcs/AV/RTP.h
+        * orbsvcs/orbsvcs/AV/Transport.h
+        * orbsvcs/orbsvcs/AV/UDP.h
+
+          Fix some includes, add TAO_AV_Export in more class
+          declarations.
+
 Tue Jul  3 11:27:03 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:

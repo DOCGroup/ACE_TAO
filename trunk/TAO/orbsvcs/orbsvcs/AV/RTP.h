@@ -50,7 +50,8 @@
 #define TAO_AV_RTP_H
 #include "ace/pre.h"
 
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/AV_export.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 
 #define RTP_PT_BVC              22      /* Berkeley video codec */
 
@@ -141,7 +142,7 @@ class TAO_AV_RTP_State;
  * @class TAO_AV_RTP
  * @brief Encapsulate the Real Time Protocol (RTP) header format.
  */
-class TAO_AV_RTP
+class TAO_AV_Export TAO_AV_RTP
 {
 public:
   /* Basic RTP header */
@@ -249,7 +250,7 @@ public:
  * @class TAO_AV_Protocol_Object
  * @brief TAO_AV_Protocol_object for the RTP protocol
  */
-class TAO_AV_RTP_Object : public TAO_AV_Protocol_Object
+class TAO_AV_Export TAO_AV_RTP_Object : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_RTP_Object (TAO_AV_Callback *callback,

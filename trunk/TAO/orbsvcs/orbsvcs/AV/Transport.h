@@ -100,7 +100,7 @@ private:
  * @class TAO_AV_Flow_Handler
  * @brief
  */
-class TAO_AV_Flow_Handler
+class TAO_AV_Export TAO_AV_Flow_Handler
 {
 public:
   /// Constructor.
