@@ -131,6 +131,20 @@ Sat Sep 04 19:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
           tests/AMI/run_test.pl:
           Made some fine tuning.
 
+Sat Sep  4 19:24:40 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/ami_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
+
+	  Fixed "unhandled enumeration in switch statement" warnings by
+	  adding a no-op default case to each switch statement.
+
+	* TAO_IDL/Makefile:
+
+	  Removed -Wno-switch warning surpression flag from g++ compile
+	  flags.  It is no longer needed, and we shouldn't have been using
+	  it.
+
 Sat Sep  4 18:47:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
