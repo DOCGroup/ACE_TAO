@@ -31,6 +31,9 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-lynxos.h: removed ACE_HAS_UALARM, because LynxOS
           apparently doesn't.
 
+        * include/makeinclude/platform_lynxos.GNU: added -Winline and
+          removed -fno-strict-prototypes.
+
 Tue Dec 02 00:18:04 1997    <irfan@TWOSTEP>
 
         * ace/Memory_Pool.cpp (handle_signal): If guess_on_fault_ is true,
