@@ -11,8 +11,10 @@
 ACE_RCSID(tao, Queued_Message, "$Id$")
 
 TAO_Queued_Message::TAO_Queued_Message (ACE_Message_Block *contents,
+                                        int own_contents,
                                         TAO_Message_Sent_Callback *callback)
   : contents_ (contents)
+  , own_contents_ (own_contents)
   , callback_ (callback)
   , next_ (0)
   , prev_ (0)
@@ -21,12 +23,15 @@ TAO_Queued_Message::TAO_Queued_Message (ACE_Message_Block *contents,
 
 TAO_Queued_Message::~TAO_Queued_Message (void)
 {
-  ACE_Message_Block *i = this->contents_;
-  while (i != 0)
+  if (this->own_contents_)
     {
-      ACE_Message_Block *cont = i->cont (); i->cont (0);
-      ACE_Message_Block::release (i);
-      i = cont;
+      ACE_Message_Block *i = this->contents_;
+      while (i != 0)
+        {
+          ACE_Message_Block *cont = i->cont (); i->cont (0);
+          ACE_Message_Block::release (i);
+          i = cont;
+        }
     }
 }
 
@@ -34,7 +39,16 @@ void
 TAO_Queued_Message::connection_closed (void)
 {
   if (this->callback_ != 0)
-    this->callback_->connection_closed ();
+    {
+      if (this->done ())
+        {
+          this->callback_->connection_closed ();
+        }
+      else
+        {
+          this->callback_->send_failed ();
+        }
+    }
 }
 
 void
@@ -46,7 +60,7 @@ TAO_Queued_Message::destroy (void)
 void
 TAO_Queued_Message::bytes_transferred (size_t byte_count)
 {
-  while (byte_count > 0 && !this->done ())
+  while (!this->done () && byte_count > 0)
     {
       size_t l = this->contents_->length ();
       if (byte_count < l)
@@ -56,7 +70,11 @@ TAO_Queued_Message::bytes_transferred (size_t byte_count)
         }
       ACE_Message_Block *cont = this->contents_->cont ();
       byte_count -= l;
-      ACE_Message_Block::release (this->contents_);
+      if (this->own_contents_)
+        {
+          this->contents_->cont (0);
+          ACE_Message_Block::release (this->contents_);
+        }
       this->contents_ = cont;
     }
 }

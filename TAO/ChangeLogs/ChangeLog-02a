@@ -1,3 +1,28 @@
+Wed Feb 14 10:02:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+          Add flag to control message block ownership, used to minimize
+          memory allocations.
+
+        * tao/Transport.cpp:
+          Use the ownership flags for the Queued_Message.
+
+        * tests/Makefile:
+        * tests/Queued_Message_Test/Makefile:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          Add new unit test for the TAO_Queued_Message class.
+
+        * tao/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+          Update dependencies
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          The ACE_SSL_SOCK_Stream does not support sendv()
+
 Mon Feb 12 15:44:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Makefile:
