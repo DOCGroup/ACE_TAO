@@ -1,3 +1,9 @@
+Mon Nov 13 11:19:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed a compiler
+	  error. Thanks to Christopher Kohloff for reporting this. For
+	  some strange reasons this was missed by the SunCC5 compiler. 
+
 Mon Nov 13 10:20:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
