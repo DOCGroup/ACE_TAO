@@ -1,4 +1,5 @@
 project(SSLIOP) : orbsvcslib {
+  ssl        = 1
   depends   += Security PortableServer ssl
   sharedname = TAO_SSLIOP
   libs       = TAO_Security TAO_PortableServer TAO ACE_SSL

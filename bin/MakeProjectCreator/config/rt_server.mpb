@@ -1,0 +1,4 @@
+project : server {
+  depends += RTPortableServer RTCORBA
+  libs    += TAO_RTCORBA TAO_RTPortableServer
+}

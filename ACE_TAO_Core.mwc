@@ -1,0 +1,23 @@
+workspace(ACE_TAO_Core) {
+  ace/ace.mpc
+  ace/SSL
+  apps/gperf/src
+  TAO/TAO_IDL
+  TAO/tao
+  TAO/orbsvcs/orbsvcs
+  TAO/orbsvcs/Naming_Service
+  TAO/orbsvcs/Scheduling_Service
+  TAO/orbsvcs/Event_Service
+  TAO/orbsvcs/Dump_Schedule
+  TAO/orbsvcs/Notify_Service
+  TAO/orbsvcs/Time_Service
+  TAO/orbsvcs/CosEvent_Service
+  TAO/orbsvcs/Concurrency_Service
+  TAO/orbsvcs/ImplRepo_Service
+  TAO/orbsvcs/LifeCycle_Service
+  TAO/orbsvcs/Logging_Service
+  TAO/orbsvcs/Trading_Service
+  TAO/orbsvcs/LoadBalancer
+  TAO/orbsvcs/IFR_Service
+  TAO/orbsvcs/TAO_Service
+}
