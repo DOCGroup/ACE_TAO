@@ -54,10 +54,12 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
    ACE_Reactor *reactor,
-   int flags)
+   int flags,
+   int use_select)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
   this->flags_ = flags;
+  this->use_select_ = use_select;
 
   // Must supply a valid Reactor to Acceptor::open()...
 
@@ -94,12 +96,11 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor
   (const ACE_PEER_ACCEPTOR_ADDR &addr,
    ACE_Reactor *reactor,
    int flags,
-   use_select)
-    : use_select_ (use_select)
+   int use_select)
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor");
 
-  if (this->open (addr, reactor, flags) == -1)
+  if (this->open (addr, reactor, flags, use_select) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Acceptor::ACE_Acceptor")));

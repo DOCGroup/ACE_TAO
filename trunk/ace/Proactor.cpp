@@ -150,19 +150,24 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
 
   if (this->proactor_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall, no completion port to post timeout to?!@\n"),
+		       ASYS_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
+                       ASYS_TEXT (" no completion port to post timeout to?!@\n")),
 		      -1);
 
   // Create the Asynch_Timer.
-  ACE_Proactor::Asynch_Timer *asynch_timer
-    = new ACE_Proactor::Asynch_Timer (*handler,
-				      act,
-				      time);
+  ACE_Proactor::Asynch_Timer *asynch_timer;
+  ACE_NEW_RETURN (asynch_timer,
+                  ACE_Proactor::Asynch_Timer (*handler,
+                                              act,
+                                              time),
+                  -1);
+                                              
   // Post a completion.
   if (this->proactor_->post_completion (asynch_timer) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failure in dealing with timers: PostQueuedCompletionStatus failed\n"), -1);
-
+                       ASYS_TEXT ("Failure in dealing with timers: ")
+                       ASYS_TEXT ("PostQueuedCompletionStatus failed\n"),
+                       -1);
   return 0;
 }
 
@@ -200,7 +205,8 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "ACE_Proactor_Handle_Timeout_Upcall is only suppose to be used with ONE (and only one) Proactor\n"),
+		       ASYS_TEXT ("ACE_Proactor_Handle_Timeout_Upcall is only suppose")
+                       ASYS_TEXT (" to be used with ONE (and only one) Proactor\n")),
 		      -1);
 }
 
@@ -212,6 +218,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
 #if defined (_POSIX_RTSIG_MAX)
   aiocb_list_max_size_ (_POSIX_RTSIG_MAX),
 #else /* _POSIX_RTSIG_MAX */
+  // @@ Alex, please fix this to NOT use magic numbers...
   aiocb_list_max_size_ (8),
 #endif /* AIO_LISTIO_MAX */
   aiocb_list_cur_size_ (0),
@@ -226,11 +233,13 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
    used_with_reactor_event_loop_ (used_with_reactor_event_loop)
 {
 #if defined (ACE_HAS_AIO_CALLS)
-  // Init the array.
+  // Initialize the array.
+
   for (size_t ai = 0;
        ai < this->aiocb_list_max_size_;
        ai++)
     aiocb_list_[ai] = 0;
+
   ACE_UNUSED_ARG (tq);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -614,7 +623,6 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%p):aio_suspend"),
                         -1);
-
   // Check which aio has finished.
   size_t ai;
   ssize_t nbytes = 0;
@@ -625,7 +633,9 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
       // Analyze error and return values.
       if (aio_error (aiocb_list_[ai]) != EINPROGRESS)
         {
-          if ((nbytes = aio_return (aiocb_list_[ai])) == -1)
+          nbytes = aio_return (aiocb_list_[ai]);
+
+          if (nbytes == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%p):AIO failed"),
                               -1);
@@ -648,12 +658,12 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
   // Bytes transfered is what the aio_return gives back.
   size_t bytes_transferred = nbytes;
 
-  //@@
+  // @@
   void *completion_key = 0;
 
   // Retrive the result pointer.
-  ACE_Asynch_Result *asynch_result =
-    (ACE_Asynch_Result *) aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
+  ACE_Asynch_Result *asynch_result = (ACE_Asynch_Result *)
+    aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
 
   // Invalidate entry in the aiocb list.
   delete this->aiocb_list_[ai];
@@ -689,7 +699,10 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
 	  return 0;
 	}
       else
-	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("GetQueuedCompletionStatus")), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("GetQueuedCompletionStatus")),
+                          -1);
     }
   else
     {

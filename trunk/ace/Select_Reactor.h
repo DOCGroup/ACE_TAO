@@ -118,7 +118,7 @@ public:
   void select_reactor (ACE_Select_Reactor &);
   // Set/Get methods
 
-  void dump (void) const;
+  virtual void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -224,7 +224,7 @@ public:
   // dispatch the <ACE_Event_Handlers> that are passed in via the
   // notify pipe before breaking out of its <recv> loop.
 
-  void dump (void) const;
+  virtual void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -669,6 +669,22 @@ public:
   // <Select_Reactor>.  If <timeout> == 0, the caller will block until
   // action is possible, else will wait until the relative time
   // specified in *<timeout> elapses).
+
+  virtual void max_notify_iterations (int);
+  // Set the maximum number of times that the
+  // <ACE_Select_Reactor_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify pipe before breaking out of its <recv> loop.  By default,
+  // this is set to -1, which means "iterate until the pipe is empty."
+  // Setting this to a value like "1 or 2" will increase "fairness"
+  // (and thus prevent starvation) at the expense of slightly higher
+  // dispatching overhead.
+
+  virtual int max_notify_iterations (void);
+  // Get the maximum number of times that the
+  // <ACE_Select_Reactor_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify pipe before breaking out of its <recv> loop.
 
   virtual void requeue_position (int);
   // Set position that the main ACE_Select_Reactor thread is requeued in the

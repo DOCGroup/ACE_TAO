@@ -65,7 +65,8 @@ public:
 
   int open (const ACE_PEER_ACCEPTOR_ADDR &, 
 	    ACE_Reactor * = ACE_Reactor::instance (),
-	    int flags = 0);
+	    int flags = 0,
+            int use_select = 1);
   // Initialize and register <this> with the Reactor and listen for
   // connection requests at the designated <local_addr>.  <flags>
   // indicates how <SVC_HANDLER>'s should be initialized prior to
