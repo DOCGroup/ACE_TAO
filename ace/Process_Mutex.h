@@ -171,7 +171,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-#if defined (_ACE_USE_SV_SEM)
   /// If the user does not provide a name we generate a unique name in
   /// this buffer.
   ACE_TCHAR name_[ACE_UNIQUE_NAME_LEN];
@@ -179,6 +178,7 @@ private:
   /// Create and return the unique name.
   const ACE_TCHAR *unique_name (void);
 
+#if defined (_ACE_USE_SV_SEM)
   /// We need this to get the right semantics...
   ACE_SV_Semaphore_Complex lock_;
 #else

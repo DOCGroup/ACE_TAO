@@ -22,7 +22,6 @@ ACE_Process_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if defined (_ACE_USE_SV_SEM)
 const ACE_TCHAR *
 ACE_Process_Mutex::unique_name (void)
 {
@@ -32,13 +31,12 @@ ACE_Process_Mutex::unique_name (void)
   ACE::unique_name (this, this->name_, ACE_UNIQUE_NAME_LEN);
   return this->name_;
 }
-#endif /* _ACE_USE_SV_SEM */
 
 ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg)
 #if defined (_ACE_USE_SV_SEM)
   : lock_ (name ? ACE_TEXT_CHAR_TO_TCHAR (name) :this->unique_name ())
 #else
-  : lock_ (USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
+  : lock_ (USYNC_PROCESS, name ? ACE_TEXT_CHAR_TO_TCHAR (name) : this->unique_name (), (ACE_mutexattr_t *) arg)
 #endif /* _ACE_USE_SV_SEM */
 {
 #if defined (_ACE_USE_SV_SEM)
@@ -51,7 +49,7 @@ ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name, void *arg)
 #if defined (_ACE_USE_SV_SEM)
   : lock_ (name ? ACE_TEXT_WCHAR_TO_TCHAR (name): this->unique_name ())
 #else
-  : lock_ (USYNC_PROCESS, ACE_TEXT_WCHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
+  : lock_ (USYNC_PROCESS, name ? ACE_TEXT_WCHAR_TO_TCHAR (name) : this->unique_name (), (ACE_mutexattr_t *) arg)
 #endif /* _ACE_USE_SV_SEM */
 {
 #if defined (_ACE_USE_SV_SEM)
