@@ -14,11 +14,11 @@
 <hr><p>
 <H3>ACE+TAO Subsetting</H3>
 
-We are currently subsetting ACE+TAO to make them more flexible and to
-reduce their footprint for embedded systems.  This document describes
-what we've done thus far, what we're planning to do next, and how to
-leverage our efforts to minimize the size of your ACE+TAO
-applications. <P>
+We are involved in ongoing activities to subset ACE+TAO to make them
+more flexible and to reduce their memory footprint for embedded
+systems.  This document describes what we've done thus far, what we're
+planning to do next, and how to leverage our efforts to minimize the
+size of your ACE+TAO applications. <P>
 
 <HR><P>
 <font size=+2><strong>Contents</strong></font>
@@ -30,8 +30,8 @@ applications. <P>
   <li><a href="#ACE Library Size Breakdown">ACE Library Size Breakdown</a>
   <li><a href="#Building ACE Subsets">Building ACE Subsets</a>
   <li><a href="#ACE_OS Adaptation Layer">ACE_OS Adaptation Layer</a>
-  <li><a href="#PACE">POSIX ACE (PACE)</a>
   <li><a href="#minimumTAO">Minimum TAO</a>
+  <li><a href="../apps/soreduce/README">The Shared Library Reduction (<CODE>soreduce</CODE>) tool</a>
   <li><a href="#Status">ACE+TAO Subsetting Work in Progress</a>
 </ol><p>
 
@@ -891,28 +891,6 @@ the <code>ACE_OS</code> member functions, ACE's
 <a href="../ace/OS.h"><code>ace/OS.h</code></a>.  See ACE's
 <a href="../tests/Basic_Types_Test.cpp">Basic_Types_Test.cpp</a>
 for an example of usage.<p>
-
-<P><HR><P>
-<a name="PACE">
-The <A
-HREF="http://www.cs.wustl.edu/~luther/PACE/">POSIX ACE</A> (PACE)
-project is an OS abstraction layer designed for lightweight and/or
-verified systems.  When complete, it will offer these benefits: <P>
-    
-<OL>
-<LI> A strict POSIX.1-like, low-level interface. Its interface is
-    ``POSIX compatible'' by that we mean as close to POSIX.1
-    as it can be, given that PACE is not an operating system. 
-    To avoid name conflicts with OS APIs, all low-level
-    PACE function names have the <CODE>pace_</CODE> prefix. <P>
-        
-<LI> The low-level interface is a C file, so that it can be used in
-    both C and C++ programs.  <P>
-    
-<LI> The low-level interface is partitioned into multiple files, one
-    per POSIX.1 section, which will help linkers reduce the footprint for
-    statically linked applications. 
-</OL><P>
 
 <a name="minimumTAO"><!--#include virtual="minimumTAO.html" --></a>
 
