@@ -30,7 +30,8 @@
 be_interface::be_interface (void)
   : full_skel_name_ (0),
     skel_count_ (0),
-    full_coll_name_ (0)
+    full_coll_name_ (0),
+    local_coll_name_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
@@ -43,7 +44,8 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
     UTL_Scope (AST_Decl::NT_interface),
     full_skel_name_ (0),
     skel_count_ (0),
-    full_coll_name_ (0)
+    full_coll_name_ (0),
+    local_coll_name_ (0)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
@@ -60,6 +62,11 @@ be_interface::~be_interface (void)
       delete[] this->full_coll_name_;
       this->full_coll_name_ = 0;
     }
+  if (this->local_coll_name_ != 0)
+    {
+      delete[] this->local_coll_name_;
+      this->local_coll_name_ = 0;
+    }
 }
 
 // compute stringified fully qualified collocated class name.
@@ -69,11 +76,12 @@ be_interface::compute_coll_name (void)
   if (this->full_coll_name_ != 0)
     return;
 
-  const char collocated[] = "_tao_collocated";
+  const char collocated[] = "_tao_collocated_";
   const char poa[] = "POA_";
-  // Reserve enough room for the "POA_" prefix, the "_tao_collocated"
-  // class name and the "::"
+  // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
+  // prefix and the local name and the (optional) "::"
   int namelen = sizeof (collocated) + sizeof (poa);
+  
   UTL_IdListActiveIterator *i;
   ACE_NEW (i, UTL_IdListActiveIterator (this->name ()));
   while (!i->is_done ())
@@ -95,23 +103,44 @@ be_interface::compute_coll_name (void)
   while (!i->is_done ())
     {
       const char* item = i->item ()->get_string ();
+
+      // Increase right away, so we can test for the final component
+      // in the loop.
+      i->next ();
       
       // We add the POA_ preffix only if the first component is not
       // the global scope...
       if (ACE_OS::strcmp (item, "") != 0)
 	{
-	  if (!poa_added)
+	  if (!i->is_done ())
 	    {
-	      ACE_OS::strcat (this->full_coll_name_, poa);
-	      poa_added = 1;
+	      // We only add the POA_ preffix if there are more than
+	      // two components in the name, in other words, if the
+	      // class is inside some scope.
+	      if (!poa_added)
+		{
+		  ACE_OS::strcat (this->full_coll_name_, poa);
+		  poa_added = 1;
+		}
+	      ACE_OS::strcat (this->full_coll_name_, item);
+	      ACE_OS::strcat (this->full_coll_name_, "::");
 	    }
-	  ACE_OS::strcat (this->full_coll_name_, item);
-	  ACE_OS::strcat (this->full_coll_name_, "::");
+	  else
+	    {
+	      ACE_OS::strcat (this->full_coll_name_, collocated);
+	      ACE_OS::strcat (this->full_coll_name_, item);
+	    }
 	}
-      i->next ();
     }
   delete i;
-  ACE_OS::strcat (this->full_coll_name_, collocated);
+
+  // Compute the local name for the collocated class.
+  int localen = sizeof (collocated);
+  localen += ACE_OS::strlen (this->local_name ()->get_string ());
+  ACE_NEW (this->local_coll_name_, char[localen]);
+  ACE_OS::strcpy(this->local_coll_name_, collocated);
+  ACE_OS::strcat(this->local_coll_name_,
+		 this->local_name ()->get_string ());
 }
 
 const char*
@@ -121,6 +150,15 @@ be_interface::full_coll_name (void) const
     ACE_const_cast(be_interface*, this)->compute_coll_name ();
 
   return this->full_coll_name_;
+}
+
+const char*
+be_interface::local_coll_name (void) const
+{
+  if (this->local_coll_name_ == 0)
+    ACE_const_cast(be_interface*, this)->compute_coll_name ();
+
+  return this->local_coll_name_;
 }
 
 // compute stringified fully scoped skel name
@@ -705,14 +743,13 @@ int be_interface::gen_server_header (void)
   *sh << "virtual const char* _interface_repository_id"
       << " (void) const;\n";
 
-  be_visitor_collocated_sh visitor;
-  this->accept (&visitor);
-
-  *sh << "\n";
-
   sh->decr_indent ();
 
   *sh << "};\n\n";
+
+  be_visitor_collocated_sh visitor;
+  this->accept (&visitor);
+  *sh << "\n";
 
   cg->pop ();
   return 0;

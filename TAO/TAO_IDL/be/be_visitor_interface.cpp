@@ -26,7 +26,7 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
   os->gen_ifdef_macro (node->flatname (), "_collocated");
 
   os->indent ();
-  *os << "class _tao_collocated\n";
+  *os << "class " << node->local_coll_name ();
   os->incr_indent ();
   *os << ": public virtual " << node->name ();
 
@@ -46,7 +46,7 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
   *os << "public:\n";
   os->incr_indent ();
 
-  *os << "_tao_collocated (";
+  *os << node->local_coll_name () << " (";
 
   AST_Decl *d = ScopeAsDecl (node->defined_in ());
   if (d->node_type () == AST_Decl::NT_root)
@@ -60,7 +60,13 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
       << " servant);\n";
 
   os->indent ();
-  *os << node->full_skel_name ()
+  if (d->node_type () == AST_Decl::NT_root)
+    {
+      // The skeleton name is the outermost, we need to printout the
+      // POA_ prefix that goes with it.
+      *os << "POA_";
+    }
+  *os << node->local_name ()
       << "_ptr _get_servant (void) const;\n";
 
   if (node->nmembers () > 0)
@@ -94,7 +100,13 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
 
   *os << "\nprivate:\n";
   os->incr_indent ();
-  *os << node->full_skel_name () << "_ptr servant_;\n";
+  if (d->node_type () == AST_Decl::NT_root)
+    {
+      // The skeleton name is the outermost, we need to printout the
+      // POA_ prefix that goes with it.
+      *os << "POA_";
+    }
+  *os << node->local_name () << "_ptr servant_;\n";
   os->decr_indent ();
   *os << "};\n\n";
 
@@ -158,21 +170,36 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   this->current_interface_ = node;
 
   *ss << this->current_interface_->full_coll_name () << "::"
-      << "_tao_collocated (" << node->full_skel_name () << "_ptr "
+      << this->current_interface_->local_coll_name () << " ("
+      << node->full_skel_name () << "_ptr "
       << " servant)\n";
   ss->incr_indent ();
-  *ss << ": servant_ (servant)";
-
+  *ss << ": ";
   if (this->current_interface_->n_inherits () > 0)
     {
       for (int i = 0; i < node->n_inherits (); ++i)
 	{
-	  *ss << "," << nl;
 	  be_interface* parent =
 	    be_interface::narrow_from_decl (this->current_interface_->inherits()[i]);
-	  *ss << "  " << parent->full_coll_name () << " (servant)";
+#if defined (ACE_WIN32)
+	  // @@ TODO MSVC++ compiler has some kind of issue (read
+	  // *bug*) wrt nested classes in constructors, if the fully
+	  // qualified name is used it gets all confused. Quite to my
+	  // dismay the work around is to use a non-qualified name for
+	  // the base class!
+	  // I wish I never have to know why the symbol table for
+	  // MSVC++ can get so confused ;-) (coryan)
+	  *ss << "  " << parent->local_coll_name () << " (servant),"
+	      << nl;
+#else
+	  *ss << "  " << parent->full_coll_name () << " (servant),"
+	      << nl;
+#endif /* ACE_WIN32 */
 	}
     }
+
+  *ss << "  servant_ (servant)";
+
   *ss << "\n";
   ss->decr_indent ();
   *ss << "{\n";

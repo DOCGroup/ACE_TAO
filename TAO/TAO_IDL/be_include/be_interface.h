@@ -99,6 +99,9 @@ public:
   const char *full_coll_name (void) const;
   // retrieve the fully qualified collocated class name
 
+  const char *local_coll_name (void) const;
+  // retrieve the fully qualified collocated class name
+
   virtual int gen_typecode (void);
   // generate the typecode
 
@@ -162,6 +165,7 @@ private:
   int skel_count_; // number of static skeletons in the operation table
 
   char *full_coll_name_;
+  char *local_coll_name_;
 };
 
 #endif  // if !defined
