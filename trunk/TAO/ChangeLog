@@ -1,3 +1,13 @@
+Thu Nov 14 14:04:27 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/AV.dsp:
+
+          Added missing dependency to project.
+
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp:
+
+          Added missing link paths to release version.
+
 Thu Nov 14 10:55:01 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/AMI/Server_Interceptor.cpp
