@@ -71,6 +71,25 @@ TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 }
 
 
+void
+TAO_GIOP_Message_Base::init (CORBA::Octet major,
+                             CORBA::Octet minor)
+{
+  // Set the state
+  this->set_state (major,
+                   minor);
+}
+
+
+void
+TAO_GIOP_Message_Base::reset (int rest_flag)
+{
+  // Reset the message state
+  this->message_state_->reset (reset_flag);
+
+  //What else???
+}
+
 int
 TAO_GIOP_Message_Base::generate_request_header (
     TAO_Operation_Details &op,
@@ -363,14 +382,7 @@ TAO_GIOP_Message_Base::message_type (void)
   return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
 }
 
-void
-TAO_GIOP_Message_Base::init (CORBA::Octet major,
-                             CORBA::Octet minor)
-{
-  // Set the state
-  this->set_state (major,
-                   minor);
-}
+
 
 
 int

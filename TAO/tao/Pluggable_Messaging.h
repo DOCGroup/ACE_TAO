@@ -111,6 +111,9 @@ public:
                      CORBA::Octet minor) = 0;
   // Do any initialisations that may be needed.
 
+  virtual void reset (int reset_flag = 1) = 0;
+  // Reset teh messaging object
+
   virtual int process_request_message (TAO_Transport *transport,
                                        TAO_ORB_Core *orb_core) = 0;
   // Parse the request message, make an upcall and send the reply back

@@ -47,6 +47,13 @@ public:
   /// Dtor
   virtual ~TAO_GIOP_Message_Base (void);
 
+  /// Initialize the underlying state object based on the <major> and
+  /// <minor> revision numbers
+  virtual void init (CORBA::Octet major,
+                     CORBA::Octet minor);
+
+  /// Reset the messaging the object
+  virtual void reset (int reset_flag = 1);
 
   /// Write the RequestHeader in to the <cdr> stream. The underlying
   /// implementation of the mesaging should do the right thing.
@@ -91,10 +98,7 @@ public:
   /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
   virtual TAO_Pluggable_Message_Type message_type (void);
 
-  /// Initialize the underlying state object based on the <major> and
-  /// <minor> revision numbers
-  virtual void init (CORBA::Octet major,
-                     CORBA::Octet minor);
+
 
   /// Process the request message that we have received on the
   /// connection
