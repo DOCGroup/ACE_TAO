@@ -1,3 +1,21 @@
+Sat Jan  3 22:25:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Gateway: Changed the name of the ACE_Event_Channel
+ 	  class to Event_Channel since this class wasn't a part of the ACE
+ 	  library.
+
+	* apps/Gateway/Gateway/Event_Channel.h: Updated the inheritance
+ 	  relationship for Event_Channel so that it inherits from
+ 	  ACE_Event_Handler rather than ACE_Task.  ACE_Task was
+ 	  overkill...
+
+	* apps/Gateway/Gateway: Removed the supplier_id from all the
+ 	  files.  We didn't use this anyway and it was just confusing.
+  	  Also, renamed Proxy_* to Connection_* to underscore the fact
+ 	  that the Supplier_Handler and Consumer_Handler work atop
+ 	  *connections*.  The previous naming scheme was too abstract for
+ 	  its own good.
+	  
 Sat Jan 03 14:16:40 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Map_Manager.cpp (ACE_Map[_Reverse]_Iterator): Fixed the
