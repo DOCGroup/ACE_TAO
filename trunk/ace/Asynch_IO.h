@@ -27,7 +27,8 @@
 
 #include "ace/OS.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
+    (defined (ACE_HAS_AIO_CALLS))
 
 // Forward declarations
 class ACE_Proactor;
@@ -35,7 +36,7 @@ class ACE_Handler;
 class ACE_Message_Block;
 class ACE_INET_Addr;
 
-class ACE_Export ACE_Asynch_Result : public OVERLAPPED
+class ACE_Export ACE_Asynch_Result : protected ACE_OVERLAPPED
 {
   // = TITLE
   //     An abstract class which adds information to the OVERLAPPED
@@ -724,7 +725,7 @@ public:
     void trailer_bytes (u_long bytes);
     // Size of the trailer data.
 
-    LPTRANSMIT_FILE_BUFFERS transmit_buffers (void);
+    ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers (void);
     // Conversion routine.
 
   protected:
@@ -740,7 +741,7 @@ public:
     u_long trailer_bytes_;
     // Size of trailer data.
 
-    TRANSMIT_FILE_BUFFERS transmit_buffers_;
+    ACE_TRANSMIT_FILE_BUFFERS transmit_buffers_;
     // Target data structure.
   };
 };
@@ -801,7 +802,6 @@ public:
   // Get the I/O handle used by this <handler>. This method will be
   // called by the ACE_Asynch_* classes when an ACE_INVALID_HANDLE is
   // passed to <open>.
-
 protected:
   ACE_Proactor *proactor_;
   // The proactor associated with this handler.
@@ -853,5 +853,5 @@ public:
 #include "ace/Asynch_IO.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
 #endif /* ACE_ASYNCH_IO_H */

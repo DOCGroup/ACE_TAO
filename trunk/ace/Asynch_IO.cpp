@@ -4,13 +4,14 @@
 #define ACE_BUILD_DLL
 #include "ace/Asynch_IO.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) \
+    || (defined (ACE_HAS_AIO_CALLS))
 // This only works on Win32 platforms
 
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/Service_Config.h"
-#include "ace/Inet_Addr.h"
+#include "ace/INET_Addr.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Asynch_IO.i"
@@ -28,7 +29,7 @@ ACE_Asynch_Result::ACE_Asynch_Result (ACE_Handler &handler,
     completion_key_ (0),
     error_ (0)
 {
-  // Set the OVERLAPPED structure
+  // Set the ACE_OVERLAPPED structure
   this->Internal = 0;
   this->InternalHigh = 0;
   this->Offset = offset;
@@ -40,19 +41,19 @@ ACE_Asynch_Result::~ACE_Asynch_Result (void)
 {
 }
 
-u_long 
+u_long
 ACE_Asynch_Result::bytes_transferred (void) const
 {
   return this->bytes_transferred_;
 }
- 
+
 const void *
 ACE_Asynch_Result::act (void) const
 {
   return this->act_;
 }
 
-int 
+int
 ACE_Asynch_Result::success (void) const
 {
   return this->success_;
@@ -64,25 +65,25 @@ ACE_Asynch_Result::completion_key (void) const
   return this->completion_key_;
 }
 
-u_long 
+u_long
 ACE_Asynch_Result::error (void) const
 {
   return this->error_;
 }
 
-u_long 
+u_long
 ACE_Asynch_Result::offset (void) const
 {
   return this->Offset;
 }
 
-u_long 
+u_long
 ACE_Asynch_Result::offset_high (void) const
 {
   return this->OffsetHigh;
 }
 
-ACE_HANDLE 
+ACE_HANDLE
 ACE_Asynch_Result::event (void) const
 {
   return this->hEvent;
@@ -96,7 +97,7 @@ ACE_Asynch_Operation::ACE_Asynch_Operation (void)
 {
 }
 
-int 
+int
 ACE_Asynch_Operation::open (ACE_Handler &handler,
 			    ACE_HANDLE handle,
 			    const void *completion_key,
@@ -106,12 +107,15 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
   this->handler_ = &handler;
   this->handle_ = handle;
 
+  // @@
+  ACE_UNUSED_ARG (completion_key);
+
   // Grab the handle from the <handler> if <handle> is invalid
   if (this->handle_ == ACE_INVALID_HANDLE)
     this->handle_ = this->handler_->handle ();
-  if (this->handle_ == ACE_INVALID_HANDLE)  
+  if (this->handle_ == ACE_INVALID_HANDLE)
     return -1;
-  
+
   // If no proactor was passed
   if (this->proactor_ == 0)
     {
@@ -122,8 +126,13 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
 	this->proactor_ = ACE_Proactor::instance();
     }
 
+#if !defined (ACE_HAS_AIO_CALLS)
   // Register with the <proactor>
   return this->proactor_->register_handle (this->handle_, completion_key);
+#else /* ACE_HAS_AIO_CALLS */
+  // AIO stuff is present. So no registering business.
+  return 1;
+#endif /* ACE_HAS_AIO_CALLS */
 }
 
 int
@@ -145,28 +154,65 @@ ACE_Asynch_Read_Stream::ACE_Asynch_Read_Stream (void)
 {
 }
 
-int 
+int
 ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 			      u_long bytes_to_read,
 			      const void *act)
 {
   // Create the Asynch_Result
   Result *result = 0;
-  ACE_NEW_RETURN (result, 
+  ACE_NEW_RETURN (result,
 		  Result (*this->handler_,
 			  this->handle_,
 			  message_block,
 			  bytes_to_read,
 			  act,
-			  this->proactor_->get_handle ()), 
+			  this->proactor_->get_handle ()),
 		  -1);
 
   return this->shared_read (result);
 }
 
-int 
+int
 ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
 {
+#if defined (ACE_HAS_AIO_CALLS)
+  // Make a new AIOCB and issue aio_read, if queueing is possible
+  // store this with the Proactor, so that that can be used for
+  // aio_return6 and aio_error.
+  aiocb *aiocb_ptr;
+  ACE_NEW_RETURN (aiocb_ptr, aiocb, -1);
+
+  // Setup AIOCB.
+  // @@ Priority always 0?
+  // @@ Signal no, always?
+  aiocb_ptr->aio_fildes = result->handle ();
+  aiocb_ptr->aio_offset = result->Offset;
+  aiocb_ptr->aio_buf = result->message_block ().wr_ptr ();
+  aiocb_ptr->aio_nbytes = result->bytes_to_read ();
+  aiocb_ptr->aio_reqprio = 0;
+  aiocb_ptr->aio_sigevent.sigev_notify = SIGEV_NONE;
+  //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
+  aiocb_ptr->aio_sigevent.sigev_value.sival_ptr =
+    (void *) aiocb_ptr;
+
+  // Fire off the aio write.
+  if (aio_read (aiocb_ptr) < 0)
+    // Queuing failed.
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Queueing faile for aio_read"),
+                      -1);
+
+  // Success. Store the aiocb_ptr with Proactor.
+  if (this->proactor_->insert_to_aiocb_list (aiocb_ptr, result) < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Fatal error : aio_read queuing suceeded, no place at aiocb_list"),
+                      -1);
+
+  // Aio successfully issued and ptr stored.
+  return 1;
+
+#else /* ACE_HAS_AIO_CALLS */
   u_long bytes_read;
 
   // Initiate the read
@@ -197,6 +243,7 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
 
       ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ReadFile")), -1);
     }
+#endif /* ACE_HAS_AIO_CALLS */
 }
 
 // ************************************************************
@@ -208,13 +255,13 @@ ACE_Asynch_Read_Stream::Result::Result (ACE_Handler &handler,
 					const void* act,
 					ACE_HANDLE event)
   : ACE_Asynch_Result (handler, act, event),
-    handle_ (handle),
+    bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
-    bytes_to_read_ (bytes_to_read)
+    handle_ (handle)
 {
 }
 
-u_long 
+u_long
 ACE_Asynch_Read_Stream::Result::bytes_to_read (void) const
 {
   return this->bytes_to_read_;
@@ -226,14 +273,14 @@ ACE_Asynch_Read_Stream::Result::message_block (void) const
   return this->message_block_;
 }
 
-ACE_HANDLE 
+ACE_HANDLE
 ACE_Asynch_Read_Stream::Result::handle (void) const
 {
   return this->handle_;
 }
 
-void 
-ACE_Asynch_Read_Stream::Result::complete (u_long bytes_transferred,
+void
+ACE_Asynch_Read_Stream::Result::complete(u_long bytes_transferred,
 					  int success,
 					  const void *completion_key,
 					  u_long error)
@@ -257,27 +304,31 @@ ACE_Asynch_Write_Stream::ACE_Asynch_Write_Stream (void)
 {
 }
 
-int 
+int
 ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
 				u_long bytes_to_write,
 				const void *act)
 {
   Result *result = 0;
-  ACE_NEW_RETURN (result, 
+  ACE_NEW_RETURN (result,
 		  Result (*this->handler_,
 			  this->handle_,
 			  message_block,
 			  bytes_to_write,
 			  act,
-			  this->proactor_->get_handle ()), 
+			  this->proactor_->get_handle ()),
 		  -1);
-  
+
   return this->shared_write (result);
 }
-  
-int 
+
+int
 ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
 {
+#if defined (ACE_HAS_AIO_CALLS)
+  ACE_UNUSED_ARG (result);
+  return 0;
+#else /* ACE_HAS_AIO_CALLS */
   u_long bytes_written;
 
   // Initiate the write
@@ -308,6 +359,7 @@ ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
 
       ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("WriteFile")), -1);
     }
+#endif /* ACE_HAS_AIO_CALLS */
 }
 
 // ************************************************************
@@ -319,13 +371,13 @@ ACE_Asynch_Write_Stream::Result::Result (ACE_Handler &handler,
 					 const void* act,
 					 ACE_HANDLE event)
   : ACE_Asynch_Result (handler, act, event),
-    handle_ (handle),
+    bytes_to_write_ (bytes_to_write),
     message_block_ (message_block),
-    bytes_to_write_ (bytes_to_write)
+    handle_ (handle)
 {
 }
 
-u_long 
+u_long
 ACE_Asynch_Write_Stream::Result::bytes_to_write (void) const
 {
   return this->bytes_to_write_;
@@ -337,13 +389,13 @@ ACE_Asynch_Write_Stream::Result::message_block (void) const
   return this->message_block_;
 }
 
-ACE_HANDLE 
+ACE_HANDLE
 ACE_Asynch_Write_Stream::Result::handle (void) const
 {
   return this->handle_;
 }
 
-void 
+void
 ACE_Asynch_Write_Stream::Result::complete (u_long bytes_transferred,
 					   int success,
 					   const void *completion_key,
@@ -364,7 +416,7 @@ ACE_Asynch_Write_Stream::Result::complete (u_long bytes_transferred,
 
 // ************************************************************
 
-int 
+int
 ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
 			    u_long bytes_to_read,
 			    u_long offset,
@@ -372,7 +424,7 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
 			    const void *act)
 {
   Result *result = 0;
-  ACE_NEW_RETURN (result, 
+  ACE_NEW_RETURN (result,
 		  Result (*this->handler_,
 			  this->handle_,
 			  message_block,
@@ -380,9 +432,9 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
 			  act,
 			  offset,
 			  offset_high,
-			  this->proactor_->get_handle ()), 
+			  this->proactor_->get_handle ()),
 		  -1);
-  
+
   return this->shared_read (result);
 }
 
@@ -402,13 +454,15 @@ ACE_Asynch_Read_File::Result::Result (ACE_Handler &handler,
   this->OffsetHigh = offset_high;
 }
 
-void 
+void
 ACE_Asynch_Read_File::Result::complete (u_long bytes_transferred,
 					int success,
 					const void *completion_key,
 					u_long error)
-{  
-  // Copy the data which was returned by GetQueuedCompletionStatus
+{
+  ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Read_File::Result::complete\n"));
+
+  // Copy the data which was returned by GetQueuedCompletionStatus.
   this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
   this->completion_key_ = completion_key;
@@ -417,13 +471,13 @@ ACE_Asynch_Read_File::Result::complete (u_long bytes_transferred,
   // Appropriately move the pointers in the message block.
   this->message_block_.wr_ptr (bytes_transferred);
 
-  // Callback: notify <handler> of completion
+  // Callback: notify <handler> of completion.
   this->handler_.handle_read_file (*this);
 }
 
 // ************************************************************
 
-int 
+int
 ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
 			      u_long bytes_to_write,
 			      u_long offset,
@@ -431,7 +485,7 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
 			      const void *act)
 {
   Result *result = 0;
-  ACE_NEW_RETURN (result, 
+  ACE_NEW_RETURN (result,
 		  Result (*this->handler_,
 			  this->handle_,
 			  message_block,
@@ -439,9 +493,9 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
 			  act,
 			  offset,
 			  offset_high,
-			  this->proactor_->get_handle ()), 
+			  this->proactor_->get_handle ()),
 		  -1);
-  
+
   return this->shared_write (result);
 }
 
@@ -461,12 +515,12 @@ ACE_Asynch_Write_File::Result::Result (ACE_Handler &handler,
   this->OffsetHigh = offset_high;
 }
 
-void 
+void
 ACE_Asynch_Write_File::Result::complete (u_long bytes_transferred,
 					 int success,
 					 const void *completion_key,
 					 u_long error)
-{  
+{
   // Copy the data which was returned by GetQueuedCompletionStatus
   this->bytes_transferred_ = bytes_transferred;
   this->success_ = success;
@@ -485,13 +539,20 @@ ACE_Asynch_Write_File::Result::complete (u_long bytes_transferred,
 ACE_Asynch_Accept::ACE_Asynch_Accept (void)
 {
 }
-  
-int 
+
+int
 ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 			   u_long bytes_to_read,
 			   ACE_HANDLE accept_handle,
 			   const void *act)
 {
+#if defined (ACE_HAS_AIO_CALLS)
+  ACE_UNUSED_ARG (message_block);
+  ACE_UNUSED_ARG (bytes_to_read);
+  ACE_UNUSED_ARG (accept_handle);
+  ACE_UNUSED_ARG (act);
+  return 0;
+#else /* ACE_HAS_AIO_CALLS */
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   // Sanity check: make sure that enough space has been allocated by the caller.
   size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
@@ -501,7 +562,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
   size_t space_needed = bytes_to_read + 2 * address_size;
   if (available_space < space_needed)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Buffer too small\n")), -1);
-    
+
   int close_accept_handle = 0;
   // If the <accept_handle> is invalid, we will create a new socket
   if (accept_handle == ACE_INVALID_HANDLE)
@@ -512,21 +573,21 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
       if (accept_handle == ACE_INVALID_HANDLE)
 	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::socket")), -1);
       else
-	// Remember to close the socket down if failures occur. 
+	// Remember to close the socket down if failures occur.
 	close_accept_handle = 1;
     }
 
   Result *result = 0;
-  ACE_NEW_RETURN (result, 
+  ACE_NEW_RETURN (result,
 		  Result (*this->handler_,
 			  this->handle_,
 			  accept_handle,
 			  message_block,
 			  bytes_to_read,
 			  act,
-			  this->proactor_->get_handle ()), 
+			  this->proactor_->get_handle ()),
 		  -1);
-  
+
   u_long bytes_read;
 
   // Initiate the accept
@@ -564,14 +625,15 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 
       ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ReadFile")), -1);
     }
-#else
+#else /* ACE_HAS_WINNT4 ... */
   ACE_NOTSUP_RETURN (-1);
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
+#endif /* ACE_HAS_AIO_CALLS */
 }
-  
+
 // ************************************************************
 
-u_long 
+u_long
 ACE_Asynch_Accept::Result::bytes_to_read (void) const
 {
   return this->bytes_to_read_;
@@ -583,18 +645,18 @@ ACE_Asynch_Accept::Result::message_block (void) const
   return this->message_block_;
 }
 
-ACE_HANDLE 
+ACE_HANDLE
 ACE_Asynch_Accept::Result::listen_handle (void) const
 {
   return this->listen_handle_;
 }
- 
-ACE_HANDLE 
+
+ACE_HANDLE
 ACE_Asynch_Accept::Result::accept_handle (void) const
 {
   return this->accept_handle_;
 }
-    
+
 ACE_Asynch_Accept::Result::Result (ACE_Handler &handler,
 				   ACE_HANDLE listen_handle,
 				   ACE_HANDLE accept_handle,
@@ -603,14 +665,14 @@ ACE_Asynch_Accept::Result::Result (ACE_Handler &handler,
 				   const void* act,
 				   ACE_HANDLE event)
   : ACE_Asynch_Result (handler, act, event),
-    listen_handle_ (listen_handle),
-    accept_handle_ (accept_handle),
+    bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
-    bytes_to_read_ (bytes_to_read)
+    listen_handle_ (listen_handle),
+    accept_handle_ (accept_handle)
 {
-}    
-    
-void 
+}
+
+void
 ACE_Asynch_Accept::Result::complete (u_long bytes_transferred,
 				     int success,
 				     const void *completion_key,
@@ -628,26 +690,38 @@ ACE_Asynch_Accept::Result::complete (u_long bytes_transferred,
   // Callback: notify <handler> of completion
   this->handler_.handle_accept (*this);
 }
-    
+
 // ************************************************************
 
 ACE_Asynch_Transmit_File::ACE_Asynch_Transmit_File (void)
 {
 }
-  
-int 
+
+int
 ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 					 Header_And_Trailer *header_and_trailer,
-					 u_long bytes_to_write,					 
+					 u_long bytes_to_write,
 					 u_long offset,
 					 u_long offset_high,
 					 u_long bytes_per_send,
 					 u_long flags,
 					 const void *act)
 {
+#if defined (ACE_HAS_AIO_CALLS)
+  ACE_UNUSED_ARG (file);
+  ACE_UNUSED_ARG (header_and_trailer);
+  ACE_UNUSED_ARG (bytes_to_write);
+  ACE_UNUSED_ARG (offset);
+  ACE_UNUSED_ARG (offset_high);
+  ACE_UNUSED_ARG (bytes_per_send);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (act);
+
+  return 0;
+#else /* ACE_HAS_AIO_CALLS */
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   Result *result = 0;
-  ACE_NEW_RETURN (result, 
+  ACE_NEW_RETURN (result,
 		  Result (*this->handler_,
 			  this->handle_,
 			  file,
@@ -660,11 +734,11 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 			  act,
 			  this->proactor_->get_handle ()),
 		  -1);
-  
-  LPTRANSMIT_FILE_BUFFERS transmit_buffers = 0;
+
+  ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers = 0;
   if (result->header_and_trailer () != 0)
     transmit_buffers = result->header_and_trailer ()->transmit_buffers ();
-  
+
   // Initiate the transmit file
   int initiate_result = ::TransmitFile ((SOCKET) result->socket (),
 					result->file (),
@@ -694,12 +768,13 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
       delete result;
 
       ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("TransmitFile")), -1);
-    }  
-#else
+    }
+#else /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
   ACE_NOTSUP_RETURN (-1);
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
+#endif /* ACE_HAS_AIO_CALLS */
 }
-  
+
 // ************************************************************
 
 ACE_HANDLE
@@ -708,7 +783,7 @@ ACE_Asynch_Transmit_File::Result::socket (void) const
   return this->socket_;
 }
 
-ACE_HANDLE 
+ACE_HANDLE
 ACE_Asynch_Transmit_File::Result::file (void) const
 {
   return this->file_;
@@ -719,25 +794,25 @@ ACE_Asynch_Transmit_File::Result::header_and_trailer (void) const
 {
   return this->header_and_trailer_;
 }
- 
-u_long 
+
+u_long
 ACE_Asynch_Transmit_File::Result::bytes_to_write (void) const
 {
   return this->bytes_to_write_;
 }
 
-u_long 
+u_long
 ACE_Asynch_Transmit_File::Result::bytes_per_send (void) const
 {
   return this->bytes_per_send_;
 }
 
-u_long 
+u_long
 ACE_Asynch_Transmit_File::Result::flags (void) const
 {
   return this->flags_;
 }
-    
+
 ACE_Asynch_Transmit_File::Result::Result (ACE_Handler &handler,
 					  ACE_HANDLE socket,
 					  ACE_HANDLE file,
@@ -759,7 +834,7 @@ ACE_Asynch_Transmit_File::Result::Result (ACE_Handler &handler,
 {
 }
 
-void 
+void
 ACE_Asynch_Transmit_File::Result::complete (u_long bytes_transferred,
 					    int success,
 					    const void *completion_key,
@@ -780,16 +855,16 @@ ACE_Asynch_Transmit_File::Result::complete (u_long bytes_transferred,
     ACE_Message_Block *header = this->header_and_trailer_->header ();
     if (header != 0)
     header->rd_ptr (this->header_and_trailer_->header_bytes ());
-			
+
     ACE_Message_Block *trailer = this->header_and_trailer_->trailer ();
     if (trailer != 0)
-    trailer->rd_ptr (this->header_and_trailer_->trailer_bytes ());		       
+    trailer->rd_ptr (this->header_and_trailer_->trailer_bytes ());
     }
-    */  
+    */
 
   // Callback: notify <handler> of completion
-  this->handler_.handle_transmit_file (*this);  
-}    
+  this->handler_.handle_transmit_file (*this);
+}
 
 // ************************************************************
 
@@ -822,19 +897,19 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::header (void) const
   return this->header_;
 }
 
-void 
+void
 ACE_Asynch_Transmit_File::Header_And_Trailer::header (ACE_Message_Block *message_block)
 {
   this->header_ = message_block;
 }
 
-u_long 
+u_long
 ACE_Asynch_Transmit_File::Header_And_Trailer::header_bytes (void) const
 {
   return this->header_bytes_;
 }
- 
-void 
+
+void
 ACE_Asynch_Transmit_File::Header_And_Trailer::header_bytes (u_long bytes)
 {
   this->header_bytes_ = bytes;
@@ -846,34 +921,35 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::trailer (void) const
   return this->trailer_;
 }
 
-void 
+void
 ACE_Asynch_Transmit_File::Header_And_Trailer::trailer (ACE_Message_Block *message_block)
 {
   this->trailer_ = message_block;
 }
 
-u_long 
+u_long
 ACE_Asynch_Transmit_File::Header_And_Trailer::trailer_bytes (void) const
 {
   return this->trailer_bytes_;
 }
 
-void 
+void
 ACE_Asynch_Transmit_File::Header_And_Trailer::trailer_bytes (u_long bytes)
 {
   this->trailer_bytes_ = bytes;
 }
 
-LPTRANSMIT_FILE_BUFFERS 
-ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
+#if 0
+ACE_LPTRANSMIT_FILE_BUFFERS
+ACE_Asynch_Transmit_Fie::Header_And_Trailer::transmit_buffers (void)
 {
   // If both are zero, return zero
   if (this->header_ == 0 && this->trailer_ == 0)
     return 0;
-  else 
+  else
     {
       // Something is valid
-      
+
       // If header is valid, set the fields
       if (this->header_ != 0)
 	{
@@ -884,7 +960,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 	{
 	  this->transmit_buffers_.Head = 0;
 	  this->transmit_buffers_.HeadLength = 0;
-	}	
+	}
 
       // If trailer is valid, set the fields
       if (this->trailer_ != 0)
@@ -896,12 +972,13 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 	{
 	  this->transmit_buffers_.Tail = 0;
 	  this->transmit_buffers_.TailLength = 0;
-	}	
+	}
 
       // Return the transmit buffers
       return &this->transmit_buffers_;
     }
 }
+#endif /* 0 */
 
 // ************************************************************
 
@@ -925,19 +1002,19 @@ ACE_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   ACE_UNUSED_ARG (result);
 }
 
-void 
+void
 ACE_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 {
   ACE_UNUSED_ARG (result);
 }
 
-void 
+void
 ACE_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
   ACE_UNUSED_ARG (result);
 }
 
-void 
+void
 ACE_Handler::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
 {
   ACE_UNUSED_ARG (result);
@@ -949,14 +1026,14 @@ ACE_Handler::handle_read_file (const ACE_Asynch_Read_File::Result &result)
   ACE_UNUSED_ARG (result);
 }
 
-void 
+void
 ACE_Handler::handle_write_file (const ACE_Asynch_Write_File::Result &result)
 {
   ACE_UNUSED_ARG (result);
 }
 
 /*
-void 
+void
 ACE_Handler::handle_notify (const ACE_Asynch_Notify::Result &result)
 {
   ACE_UNUSED_ARG (result);
@@ -977,7 +1054,7 @@ ACE_Handler::proactor (void)
   return this->proactor_;
 }
 
-void 
+void
 ACE_Handler::proactor (ACE_Proactor *p)
 {
   this->proactor_ = p;
@@ -999,27 +1076,27 @@ ACE_Service_Handler::~ACE_Service_Handler (void)
 {
 }
 
-void 
+void
 ACE_Service_Handler::addresses (const ACE_INET_Addr &remote_address,
 				const ACE_INET_Addr &local_address)
 {
-  // Default behavior is to print out the addresses. 
+  // Default behavior is to print out the addresses.
   ASYS_TCHAR local_address_buf[BUFSIZ], remote_address_buf[BUFSIZ];
   if (local_address.addr_to_string (local_address_buf, sizeof local_address_buf) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("can't obtain local_address's address string")));
-  
+
   if (remote_address.addr_to_string (remote_address_buf, sizeof remote_address_buf) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("can't obtain remote_address's address string")));
-  
+
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("On fd %d\n"), this->handle ()));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("local address %s\n"), local_address_buf));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("remote address %s\n"), remote_address_buf));  
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("remote address %s\n"), remote_address_buf));
 }
 
 void
 ACE_Service_Handler::open (ACE_HANDLE,
                            ACE_Message_Block &)
 {
-}                           
+}
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
