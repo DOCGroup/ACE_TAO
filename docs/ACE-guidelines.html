@@ -1088,6 +1088,10 @@ Foo::bar ()
 
   <li>Always use <code>$(RM)</code> instead of <code>rm</code> or
       <code>rm -f</code> in Makefiles.<p>
+
+  <li>Be sure to specify the <code>THR_BOUND</code> thread creation
+    flag for time-critical threads.  This ensures that the thread competes
+    for resources globally on Solaris.  It is harmless on other platforms.<p>
 </ul>
 
 
