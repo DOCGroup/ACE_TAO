@@ -1,3 +1,25 @@
+Mon Jul 19 17:40:15 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace/WFMO_Reactor.cpp (bind_i): 
+
+	  Adam Rymarczuk noted that crashes occurred while adding handles
+	  to the Reactor when the pending additions exceeded what the
+	  to_be_added set could hold.  Even though logically speaking
+	  there was space available because there were several deletions
+	  pending, we are out of room in the to_be_added set because the
+	  Reactor event loop hasn't run in a while (the to_be_added and
+	  to_be_deleted sets are not processed until some thread runs the
+	  event loop).
+
+	  The solution to fix the out-of-bounds write is to add the check:
+
+		this->handles_to_be_added_ < this->max_size_
+	 
+	  to the bind_i() method.  
+
+	  Thanks to Adam Rymarczuk <adam.rymarczuk@suntradingllc.com> for
+	  reporting this problem.  This closes bug 1878.
+
 Mon Jul 19 09:25:58 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Proactor.cpp (timeout):
