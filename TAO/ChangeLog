@@ -1,3 +1,12 @@
+Mon Mar  3 13:02:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+
+          Fixed the lhs of a constant assignment for octets and
+          enums to use the typedef name, if there is one. Thanks 
+          to George Varsamis <gv@prismtechnologies.com> for
+          reporting the problem.
+
 Sun  Mar 2 15:10:02 3003 Pradeep Gore <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Admin.h:
