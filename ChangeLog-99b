@@ -1,3 +1,18 @@
+Mon Aug 09 10:21:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU (INCLDIRS):
+          removed "-I.".  It's not necessary, because the preprocessor
+          will first look for headers in the current directory, when
+          appropriate.  It causes trouble, for example, on NT for
+          VxWorks with Green Hills.  Instead of including the system's
+          Signal.h, ACE's signal.h gets #included with "-I.".  Thanks
+          to Dale Wood <dale_wood@Mitel.com> for helping to track
+          this down. [Bug 35]
+
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU: no longer
+          need to override INCLDIRS, now that it doesn't contain "-I.".
+          [Bug 35]
+
 Mon Aug 09 10:09:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h,streams.h: moved ACE_OSTREAM_TYPE #define from
