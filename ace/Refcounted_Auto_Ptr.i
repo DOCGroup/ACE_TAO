@@ -8,7 +8,8 @@
 template <class X, class ACE_LOCK> inline int
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::null (void) const
 {
-   ACE_GUARD_RETURN (ACE_LOCK, guard, const_cast<ACE_LOCK&>(this->lock_), 0);
+  ACE_GUARD_RETURN (ACE_LOCK, guard,
+                    ACE_const_cast (ACE_LOCK&, this->lock_), 0);
 
   return this->ptr_.get() == 0;
 }
