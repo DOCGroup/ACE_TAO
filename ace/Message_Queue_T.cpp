@@ -40,8 +40,8 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&entry)
       entry = this->curr_;
       return 1;
     }
-  else
-    return 0;
+
+  return 0;
 }
 
 template <ACE_SYNCH_DECL> int
@@ -86,8 +86,8 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&ent
       entry = this->curr_;
       return 1;
     }
-  else
-    return 0;
+
+  return 0;
 }
 
 template <ACE_SYNCH_DECL> int
@@ -623,11 +623,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
 
   if (queue_count == -1)
     return -1;
-  else
-    {
-      this->notify ();
-      return queue_count;
-    }
+
+  this->notify ();
+  return queue_count;
 }
 
 // Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
@@ -654,11 +652,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
 
   if (queue_count == -1)
     return -1;
-  else
-    {
-      this->notify ();
-      return queue_count;
-    }
+
+  this->notify ();
+  return queue_count;
 }
 
 template <ACE_SYNCH_DECL> int
@@ -692,11 +688,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
 
   if (queue_count == -1)
     return -1;
-  else
-    {
-      this->notify ();
-      return queue_count;
-    }
+
+  this->notify ();
+  return queue_count;
 }
 
 // Remove an item from the front of the queue.  If timeout == 0 block

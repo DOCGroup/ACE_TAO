@@ -47,8 +47,8 @@ ACE_Task_Base::suspend (void)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   if (this->thr_count_ > 0)
     return this->thr_mgr_->suspend_task (this);
-  else
-    return 0;
+
+  return 0;
 }
 
 // Resume a suspended task.
@@ -59,8 +59,8 @@ ACE_Task_Base::resume (void)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   if (this->thr_count_ > 0)
     return this->thr_mgr_->resume_task (this);
-  else
-    return 0;
+
+  return 0;
 }
 
 int
@@ -139,12 +139,12 @@ ACE_Task_Base::activate (long flags,
       this->thr_count_ -= n_threads;
       return -1;
     }
-  else
-    {
-      if (this->grp_id_ == -1)
-        this->grp_id_ = grp_spawned;
-      return 0;
-    }
+
+  if (this->grp_id_ == -1)
+    this->grp_id_ = grp_spawned;
+
+  return 0;
+
 #else
   {
     // Keep the compiler from complaining.

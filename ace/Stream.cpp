@@ -368,8 +368,8 @@ ACE_Stream<ACE_SYNCH_USE>::open (void *a,
                               this->stream_tail_,
                               this->stream_head_) == -1)
     return -1;
-  else
-    return 0;
+
+  return 0;
 }
 
 template <ACE_SYNCH_DECL> int

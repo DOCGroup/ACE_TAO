@@ -228,17 +228,17 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (const ACE_WString &nam
   ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
   ACE_NS_String ns_name (name);
   ACE_NS_Internal ns_internal;
-  if (this->name_space_map_->unbind (ns_name, ns_internal, this->allocator_) != 0)
+  if (this->name_space_map_->unbind (ns_name,
+                                     ns_internal,
+                                     this->allocator_) != 0)
     return -1;
-  else
-    {
-      // Free up the memory we allocated in shared_bind().  Note that
-      // this assumes that the "value" pointer comes first and that
-      // the value, name and type are contiguously allocated (see
-      // shared_bind() for details)
-      this->allocator_->free ((void *) (ns_internal.value ()).fast_rep ());
-      return 0;
-    }
+
+  // Free up the memory we allocated in shared_bind().  Note that this
+  // assumes that the "value" pointer comes first and that the value,
+  // name and type are contiguously allocated (see shared_bind() for
+  // details)
+  this->allocator_->free ((void *) (ns_internal.value ()).fast_rep ());
+  return 0;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
@@ -299,31 +299,29 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_WString &na
                                    ns_internal,
                                    this->allocator_) != 0)
     return -1;
-  else
-    {
-      // Calls conversion operator and then calls the ACE_WString
-      // assignment operator to get a fresh copy.  (*#*(@#&!*@!!*@&(
-      // HP compiler causes us to add an extra copy explicitly !! :)
-      nbc_string = ns_internal.value ();
-      value = nbc_string;
 
-      // Gets type and then the actual reprsentation which is a
-      // ACE_USHORT16
-      const char *temp = ns_internal.type ();
+  // Calls conversion operator and then calls the ACE_WString
+  // assignment operator to get a fresh copy.  (*#*(@#&!*@!!*@&( HP
+  // compiler causes us to add an extra copy explicitly !! :)
+  nbc_string = ns_internal.value ();
+  value = nbc_string;
 
-      size_t len = ACE_OS::strlen (ns_internal.type ());
-      // Makes a copy here. Caller needs to call delete to free up
-      // memory.
-      char *new_type;
-      ACE_NEW_RETURN (new_type,
-                      char [len + 1],
-                      -1);
+  // Gets type and then the actual reprsentation which is a
+  // ACE_USHORT16
+  const char *temp = ns_internal.type ();
 
-      ACE_OS::strncpy (new_type, temp, len);
-      new_type[len] = '\0';  // Null terminate the string
-      type = new_type;
-      return 0;
-    }
+  size_t len = ACE_OS::strlen (ns_internal.type ());
+  // Makes a copy here. Caller needs to call delete to free up
+  // memory.
+  char *new_type;
+  ACE_NEW_RETURN (new_type,
+                  char [len + 1],
+                  -1);
+
+  ACE_OS::strncpy (new_type, temp, len);
+  new_type[len] = '\0';  // Null terminate the string
+  type = new_type;
+  return 0;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
