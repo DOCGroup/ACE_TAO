@@ -34,19 +34,19 @@ struct CDR;
 // classes are really to be defined inside the TypeCode class
 
 //extern CORBA::TypeCode_ptr CORBA::_tc_Bounds;
-class CORBA_Bounds : public CORBA::UserException 
+class CORBA_Bounds : public CORBA_UserException 
 {
 public:
   CORBA_Bounds (void)
-    : CORBA::UserException (CORBA::_tc_Bounds) {}
+    : CORBA_UserException (CORBA::_tc_Bounds) {}
 };
 
 //extern CORBA::TypeCode_ptr CORBA::_tc_BadKind;
-class CORBA_BadKind : public CORBA::UserException 
+class CORBA_BadKind : public CORBA_UserException 
 {
 public:
   CORBA_BadKind (void) 
-    : CORBA::UserException (CORBA::_tc_BadKind) {}
+    : CORBA_UserException (CORBA::_tc_BadKind) {}
 };
 
 // A TypeCode describes data.  This one's as thin a wrapper around CDR
