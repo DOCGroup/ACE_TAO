@@ -12,58 +12,57 @@ $(TAO_ROOT)/docs/Options.html
 
 The InterOp_test :
 
-With minor changes to the Makefile the test can be run with any of the
-TAO simple examples $(TAO_ROOT)/examples/Simple/* . Here the test is 
-run with the bank example. The test calls resolve_initial_references 
-on argv[1].
+The test server adds the argument specified with the -i option and the
+IOR of the INS_i servant to the IOR table. The test client calls 
+resolve_initial_references on argv[1].
 
 TEST 1: Single Profile iioplocs using -ORBInitRef
 
-Simple/bank> server -i bank -n  
-					// -i Adds the bank:IOR mapping to
+InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
+					// -i Adds the ins:IOR mapping to
 					// the ORB table.
 					// -n Use the Naming Service.
 
-InterOp-Naming> InterOp_test arbit_service \
-		-ORBInitRef "arbit_service=iioploc:1.0//<host-name>:<port>/bank"
+InterOp-Naming> INS_test_client arbit_service \
+                -ORBInitRef "arbit_service=iioploc://1.0@<host-name>:<port>/ins"
 
 
 TEST 2: Multiple Profile iioplocs using -ORBInitRef
 
-Simple/bank> server -i bank -n
+InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
 
-					// -i Adds the bank:IOR mapping to
+					// -i Adds the ins:IOR mapping to
 					// the ORB table.
 					// -n Use the Naming Service.
 
-InterOp-Naming> InterOp_test arbit_service \
-		-ORBInitRef "arbit_service=iioploc:1.0//<host-name>:<port>/bank,
-					   1.0//<host-name2>:<port2>/key,
+InterOp-Naming> INS_test_client arbit_service \
+		-ORBInitRef "arbit_service=iioploc://1.0@<host-name>:<port>/ins,
+					   1.0@<host-name2>:<port2>/key,
 					   ...
-					   1.0//<host-namen>:<portN>/key"
+					   1.0@<host-namen>:<portN>/key"
 
 TEST 3: Single Profile iioploc using -ORBDefautlInitRef
 
-Simple/bank> server -i bank -n
+InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
 
-					// -i Adds the bank:IOR mapping to
+					// -i Adds the ins:IOR mapping to
 					// the ORB table.
 					// -n Use the Naming Service.
 
-InterOp-Naming> InterOp_test bank \
-		-ORBDefaultInitRef "iioploc:1.0//<host-name>:<port>"
+InterOp-Naming> INS_test_client ins \
+		-ORBDefaultInitRef "iioploc://1.0@<host-name>:<port>"
 
 TEST 4: Multiple Profile iioploc using -ORBDefaultInitRef
 
-Simple/bank> server -i bank -n
+InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
 
-					// -i Adds the bank:IOR mapping to
+					// -i Adds the ins:IOR mapping to
 					// the ORB table.
 					// -n Use the Naming Service.
 
-InterOp-Naming> InterOp_test bank \
-		-ORBDefaultInitRef "iioploc:1.0//<host-name>:<port>,
-					    1.0//<host-name2>:<port2>,
+InterOp-Naming> INS_test_client \
+		-ORBDefaultInitRef "iioploc://1.0@<host-name>:<port>,
+					    1.0@<host-name2>:<port2>,
 					    ...
-					    1.0//<host-namen>:<portN>"
+					    1.0@<host-namen>:<portN>"
 
