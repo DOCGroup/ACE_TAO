@@ -1,3 +1,9 @@
+Tue Oct 28 13:33:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/IORInterceptor/TAO_IORInterceptor.dsp;
+
+          Added link to Valuetype library.
+
 Tue Oct 28 13:21:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ORB.cpp:
