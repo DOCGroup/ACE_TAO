@@ -27,7 +27,10 @@ void MID_Handler::process_MonolithicImplementationDescription
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+        (ACE_TEXT ("Deployment:MonolithicImplementationDescription")))
+        {
+        }
       else if
         (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
                                                        node_name, "execParameter", mid.execParameter,

@@ -78,54 +78,6 @@ public:
   /// Process the component package description
   void process_ImplementationArtifactDescription (::Deployment::ImplementationArtifactDescription &iad);
 
-protected:
-
-  /// Process the label attribute
-  void process_label (const XMLCh* label, ::Deployment::ImplementationArtifactDescription &iad);
-
-  /// Process the UUID attribute
-  void process_UUID (const XMLCh* UUID, ::Deployment::ImplementationArtifactDescription &iad);
-
-  /// Process the location attribute
-  void process_location (const XMLCh* location, ::Deployment::ImplementationArtifactDescription &iad);
- 
-  /// process exec parameter element
-  void process_exec_parameter_element (DOMNode* node,
-                                       DOMDocument* doc, DOMNodeIterator* iter,
-                                       Deployment::ImplementationArtifactDescription& iad);
-
-  /// process info property element
-  void process_info_property_element (DOMNode* node,
-                                      DOMDocument* doc, DOMNodeIterator* iter,
-                                      Deployment::ImplementationArtifactDescription& iad);
-
-  /// process attributes for property element
-  void process_attributes_for_property (DOMNamedNodeMap* named_node_map,
-                                        DOMDocument* doc,
-                                        DOMNodeIterator* iter,
-                                        int value,
-                                        Deployment::Property& ccd_property);
-
-  /// parse a document
-  DOMDocument* create_document (const char *url);
-
-  /// process attributes for deploy requirement
-  void process_attributes_for_deploy_requirement (DOMNamedNodeMap* nm,
-                                                  DOMDocument* doc,
-                                                  DOMNodeIterator* iter,
-                                                  int value,
-                                                  Deployment::Requirement& req);
-
-  /// process attributes for NIA
-  void process_attributes_for_nia (DOMNamedNodeMap* nm,
-                                   DOMDocument* doc,
-                                   DOMNodeIterator* iter,
-                                   int value,
-                                   Deployment::NamedImplementationArtifact& nia);
-
-  /// process IDREFS
-  void process_refs (DOMNamedNodeMap* named_node_map);
-
 };
 
 END_DEPLOYMENT_NAMESPACE

@@ -28,11 +28,8 @@ void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration
     {
       XStr node_name (node->getNodeName());
 
-      if (false)
-        {
-        }
-      else if (node_name == XStr 
-                (ACE_TEXT ("Deployment:PackageConfiguration")))
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:PackageConfiguration")))
         {
         }
       else if (process_string(this->iter_, node_name, "label", pc.label))
