@@ -1,3 +1,10 @@
+Mon Dec  3 11:43:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/LongUpcalls/run_test.pl:
+	* tests/LongUpcalls/run_ami_test.pl:
+	  No need to keep two separate drivers now that both all tests run
+	  correctly.
+
 Sun Dec  2 12:38:25 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/Naming_Service/NT_Naming_Service.h:
@@ -5,7 +12,7 @@ Sun Dec  2 12:38:25 2001  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
 	  Disable compilation under non-Win32 platforms, that makes this
 	  program more friendly towards samwise.
-	
+
 Sun Dec  2 10:46:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Callback_Quoter/Consumer.dsp:
@@ -27,9 +34,9 @@ Wed Nov 28 18:33:35 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	  Thanks to Patrick N <pn@milhouse.co.uk> for motivating this.
 
 Sat Dec 01 09:37:26 2001  Balachandran  <bala@cs.wustl.edu>
-  
+
         * TAO version 1.2.1 released.
-  
+
 Wed Nov 28 13:40:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/SmartProxies/SmartProxies.dsp:
@@ -56,18 +63,18 @@ Fri Nov 23 13:45:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Added check for locality of base type in the 'local' arg in the
           call to the base class constructor of COMMON_Base. This was done
-          in the indirect call to COMMON_Base through the base class 
+          in the indirect call to COMMON_Base through the base class
           AST_TypeDef but that is_local_ memeber was not the one that the
           call to the virtual function is_local() was finding. This resulted
           in the 'local' value not getting propagated when a struct contained
           a (typedef'd) sequence of a local struct. As a result of this, CDR
-          operators were getting generated that wouldn't compile. Thanks to 
+          operators were getting generated that wouldn't compile. Thanks to
           Praphul Menon <praphulm@yahoo.com> for sending in the example IDL
           file that uncovered this bug.
 
 Fri Nov 23 10:34:39 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp (main): 
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp (main):
 	  Missed one of the transformations from "OBJECT" to
  	  "OBJECT_LEVEL".  Thanks to Craig for reporting this.
 
@@ -80,9 +87,9 @@ Thu Nov 22 04:01:13 2001  Craig Rodrigues  <crodrigu@bbn.com>
 	  UDP multicast to Protocol enum.
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Added handling for new Protocol
 	  enum values.
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i: Improved parsing of flow 
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.i: Improved parsing of flow
 	  protocol names in flow specificiation.
-	* orbsvcs/orbsvcs/AV/Protocol_Factory.h: Added ref_count to flow 
+	* orbsvcs/orbsvcs/AV/Protocol_Factory.h: Added ref_count to flow
 	  protocol factory.
 	* orbsvcs/orbsvcs/AV/Transport.h: Added ref_count to transport protocol
 	  factory.
@@ -106,7 +113,7 @@ Wed Nov 21 16:50:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	New tests suplied by Yamuna Krishnamurthy <yamuna@cs.wustl.edu>:
 	* orbsvcs/tests/AVStreams/Bidirectional_Flows: Test bidirectional
-	  flows in the AV service. 
+	  flows in the AV service.
 	* orbsvcs/tests/AVStreams/Multiple_Flows:  Test multiple flows in
 	  the AV Service.
 
@@ -120,12 +127,12 @@ Wed Nov 21 12:42:36 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
 	  Removed the duplicate template declarations in this file.
-	
+
 Wed Nov 21 13:35:50 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	Fixes supplied by Yamuna Krishnamurthy <yamuna@cs.wustl.edu>:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	  TAO_StreamEndpoint::modify_QoS() now calls 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	  TAO_StreamEndpoint::modify_QoS() now calls
 	  TAO_StreamEndpoint::change_qos().  TAO_Basic_StreamCtrl::modify_QoS()
 	  functionality moved to TAO_StreamCtrl::modify_QoS().
 	  TAO_StreamCtrl::modify_QoS() now operates on all flows if an empty
@@ -133,7 +140,7 @@ Wed Nov 21 13:35:50 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Wed Nov 21 07:01:04 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp (main): 
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp (main):
 	  Added "_LEVEL" to the enumerated literals to avoid clashes with
  	  SunC++ 4.2.  Thanks to Steve Osselton
  	  <steve@prismtechnologies.com> for reporting the bug and
@@ -143,7 +150,7 @@ Fri Nov 16 10:39:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* docs: Moved minimumTAO.html from $TAO_ROOT/docs/ to
  	  $ACE_ROOT/docs.
-	
+
 Tue Nov 20 11:58:39 2001  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in:
@@ -190,7 +197,7 @@ Mon Nov 19 20:19:48 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
  	  needed to keep a collection of sockets.  Furthermore, we need to
  	  track on what socket each multicast group is subscribed, so a
  	  map from multicast groups to sockets is also maintained.
-	
+
 	  Using this new map we can optimize the algorithm used to remove
  	  multicast group subscriptions, previous versions of this class
  	  simply closed the socket, but that has been reported as too
@@ -203,7 +210,7 @@ Mon Nov 19 20:19:48 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	  Moved the class TAO_ECG_Mcast_EH to its own file. 
+	  Moved the class TAO_ECG_Mcast_EH to its own file.
 	  (See ECG_Mcast_EH.h)
 
 	* orbsvcs/tests/EC_Mcast/EC_Mcast.h:
