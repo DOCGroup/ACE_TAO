@@ -9,10 +9,8 @@ ACE_RCSID (ace,
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 
-# if defined (ACE_HAS_EVENT_POLL)
-#  include "ace/OS_NS_unistd.h"
-#  include "ace/OS_NS_fcntl.h"
-# endif
+# include "ace/OS_NS_unistd.h"
+# include "ace/OS_NS_fcntl.h"
 
 # if defined (ACE_HAS_EVENT_POLL) && defined (linux)
 #  include /**/ <sys/epoll.h>
