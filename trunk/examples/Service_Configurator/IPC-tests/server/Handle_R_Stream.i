@@ -91,8 +91,7 @@ Handle_R_Stream::handle_input (int)
   // association for the newly created handle. This is because the
   // newly created handle will inherit the properties of the listen
   // handle, including its event associations.
-  if (dynamic_cast <ACE_WFMO_Reactor *> (ACE_Reactor::instance ()->implementation ()))
-    reset_new_handle = 1;
+  reset_new_handle = ACE_Reactor::instance ()->reset_new_handle ();
 #endif /* ACE_WIN32 */
   
   if (this->accept (this->new_remote_stream, // stream

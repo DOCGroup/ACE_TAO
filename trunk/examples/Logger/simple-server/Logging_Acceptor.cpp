@@ -64,8 +64,7 @@ Logging_Acceptor::handle_input (ACE_HANDLE)
   // association for the newly created handle. This is because the
   // newly created handle will inherit the properties of the listen
   // handle, including its event associations.
-  if (dynamic_cast <ACE_WFMO_Reactor *> (this->reactor ()->implementation ()))
-    reset_new_handle = 1;
+  reset_new_handle = this->reactor ()->reset_new_handle ();
 #endif /* ACE_WIN32 */
   
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
