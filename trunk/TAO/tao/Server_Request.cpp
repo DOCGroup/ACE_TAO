@@ -552,12 +552,12 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 	        void* value = ACE_const_cast(void*,this->retval_->value ());
 	        if (this->retval_->any_owns_data ())
             {
-              TAO_InputCDR cdr ((ACE_Message_Block *)value);
-              (void) this->outgoing_->append (tc.in (), &cdr, env);
+	            (void) this->outgoing_->encode (tc.in (), value, 0, env);
             }
           else
 	          {
-	            (void) this->outgoing_->encode (tc.in (), value, 0, env);
+              TAO_InputCDR cdr ((ACE_Message_Block *)value);
+              (void) this->outgoing_->append (tc.in (), &cdr, env);
 	          }
         }
 
@@ -577,12 +577,12 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
               void* value = ACE_const_cast(void*,any->value ());
               if (any->any_owns_data ())
                 {
-                  TAO_InputCDR cdr ((ACE_Message_Block *)value);
-                  (void) this->outgoing_->append (tc.in (), &cdr, env);
+                  (void) this->outgoing_->encode (tc.in (), value, 0, env);
                 }
               else
                 {
-                  (void) this->outgoing_->encode (tc.in (), value, 0, env);
+                  TAO_InputCDR cdr ((ACE_Message_Block *)value);
+                  (void) this->outgoing_->append (tc.in (), &cdr, env);
                 }
             }
         }
