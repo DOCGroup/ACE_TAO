@@ -130,7 +130,7 @@ $(INSMAN)/mann/% :
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F) -> $(@D)" ; \
-			ln -s -f $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
+			$(RM) $(@); ln -s $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
 		fi ; \
 	fi
 ifdef MVSLIB
@@ -140,7 +140,7 @@ ifdef MVSLIB
 			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
 		else \
 			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
-			ln -s -f $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
+			$(RM) $(@); ln -s -f $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
 endif
