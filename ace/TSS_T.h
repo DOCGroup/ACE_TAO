@@ -35,7 +35,6 @@
 #   define ACE_TSS_GET(I, T) (I)
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATIOND) */
 
-#if defined (ACE_HAS_THREADS)
 #include "ace/Thread_Mutex.h"
 
 /**
@@ -183,8 +182,6 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("TSS_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-#endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TSS_T_H */
