@@ -1,3 +1,29 @@
+Sat Sep 18 18:24:40 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Object.cpp (_get_interface):
+
+	  Added a missing return statement.
+
+	* tao/ORB_Core.cpp (set_iiop_endpoint):
+
+	  Fixed potential segmentation fault that would have occurred if
+	  an ACE_ERROR message was printed because there was no matching
+	  argument for the ACE_Log_Msg "%p" format specifier in an
+	  ACE_ERROR_RETURN case.
+
+	  Moved default IIOP port code to this method since the code is
+	  appropriate only for IIOP.  Things are cleaner this way, in my
+	  opinion.
+
+	* tao/ORB_Core.cpp (create_stub_object):
+
+	  Added an error check during TAO_MProfile creation.  Protected
+	  type ID with a String_var.
+
+	* tao/ORB.i:
+
+	  Minor style updates.  No code changes.
+
 Sat Sep 18 17:15:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/Makefile.bor: Updated this file to include new files.
@@ -15,7 +41,7 @@ Sat Sep 18 18:21:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Sat Sep 18 17:57:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao.decode.cpp:
+	* tao/decode.cpp:
 	* tao/deep_free.cpp:
 	* tao/encode.cpp:
 	  There was a missing set of parentheses for TAO_Marshal_Struct
@@ -69,8 +95,8 @@ Sat Sep 18 14:15:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Object.cpp:
 
-	  Updated some Interface Repository related code, and enable it if 
-	  TAO_HAS_INTERFACE_REPOSITORY is defined.
+	  Updated some Interface Repository related code, and enabled it
+	  if TAO_HAS_INTERFACE_REPOSITORY is defined.
 
 	  Replaced instances of raw C++ new() with appropriate ACE macro,
 	  such as ACE_NEW_THROW_EX() and ACE_NEW_RETURN().
