@@ -63,23 +63,24 @@ REPOSITORY_TEST_OBJS =  ../../../ImplRepo_Service/$(VDIR)/Repository.o \
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+BIN2 = airplane_server \
+       airplane_client \
+       nestea_server \
+       nestea_client \
+       Repository_Test
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
-  BIN += airplane_server \
-         airplane_client \
-         nestea_server \
-         nestea_client \
-         Repository_Test
+  BIN = $(BIN2)
 endif # ImplRepo
 
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
