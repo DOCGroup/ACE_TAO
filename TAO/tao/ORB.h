@@ -662,7 +662,7 @@ private:
                                              CORBA::Environment& ACE_TRY_ENV);
   // Resolve the Implementation Repository object reference.
 
-  int multicast_query (char *buf,
+  int multicast_query (char* &buf,
                        const char *service_name,
                        u_short port,
                        ACE_Time_Value *timeout);
