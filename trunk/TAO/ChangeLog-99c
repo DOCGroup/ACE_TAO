@@ -1,3 +1,27 @@
+Thu Aug 05 14:57:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Collocation/Coll_Test_Skels.dsp:
+	* tests/Collocation/skel_export.h:
+	  Replaced these two files with Diamond.dsp and diamond_export.h.
+
+	* tests/Collocation/Diamond.dsp:
+	* tests/Collocation/diamond_export.h: The new Diamond library
+	  contains not only the skeletons but also the implementations for
+	  Diamond objects.
+
+	* tests/Collocation/Diamond_i.h: Added Diamond_Export to all
+	  classes.
+
+	* tests/Collocation/Coll_Test_Stubs.dsp: Updated the IDL custom
+	  build settings.
+
+	* tests/Collocation/Collocation.dsp: Removed Diamond.idl from the
+	  project.  It no longer depends on it.  Change the use of skel
+	  library to Diamond library.
+
+	* tests/Collocation/Collocation.dsw:
+	* tests/Collocation/README: Adapt the above changes.
+
 Thu Aug 05 14:38:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_interface.cpp (be_interface_type_strategy):
