@@ -153,7 +153,7 @@ PIC             =
 
 
 #### Tornado II uses egcs
-ifeq (egcs,$(findstring egcs, $(shell, $(CC) --version)))
+ifeq (egcs,$(findstring egcs,$(shell $(CC) --version)))
   ACE_HAS_GNUG_PRE_2_8 := 0
   CFLAGS += -DACE_VXWORKS=0x540
   ifndef exceptions
