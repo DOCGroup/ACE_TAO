@@ -266,13 +266,12 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
               "(%P|%t) system exception, ID '%s'\n",
               _id ()));
 
-  int is_tao_exception = 
-    ((this->minor () & 0xFFFFF0000) == TAO_DEFAULT_MINOR_CODE);
+  CORBA::ULong VMCID = this->minor () & 0xFFFFF000;
 
-  if (is_tao_exception)
+  if (VMCID == TAO_DEFAULT_MINOR_CODE)
     {
       const char *location;
-      switch (minor () & 0x00000FF0) {
+      switch (this->minor () & 0x00000FF0) {
       case TAO_INVOCATION_CONNECT_MINOR_CODE :
         location = "invocation connect failed";
         break;
@@ -293,7 +292,7 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
       }
 
       const char *errno_indication;
-      switch (minor () & 0x0000000F) {
+      switch (this->minor () & 0x0000000F) {
       case TAO_ETIMEDOUT_MINOR_CODE :
         errno_indication = "ETIMEOUT";
         break;
@@ -306,12 +305,12 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
       default :
         errno_indication = "unknown errno";
       }
-  
+
       ACE_DEBUG ((LM_ERROR,
                   "(%P|%t) TAO exception, "
                   "minor code = %x (%s; %s), "
                   "completed = %s\n",
-                  minor (), location, errno_indication,
+                  this->minor (), location, errno_indication,
                   (completed () == CORBA::COMPLETED_YES) ? "YES" :
                   (completed () == CORBA::COMPLETED_NO) ? "NO" :
                   (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
@@ -322,7 +321,7 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
       ACE_DEBUG ((LM_ERROR,
                   "(%P|%t) non-TAO exception, "
                   "minor code = %x, completed = %s\n",
-                  minor (),
+                  this->minor (),
                   (completed () == CORBA::COMPLETED_YES) ? "YES" :
                   (completed () == CORBA::COMPLETED_NO) ? "NO" :
                   (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
