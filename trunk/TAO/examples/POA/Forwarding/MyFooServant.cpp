@@ -42,16 +42,18 @@ MyFirstFooServant::MyFirstFooServant (CORBA::ORB_ptr orb_ptr,
 
   // Register handle.  Note that NULL_MASK is used to keep the
   // ACE_Reactor from calling us back on the ACE_DEV_NULL descriptor.
+  ACE_Reactor_Mask mask = ACE_Event_Handler::NULL_MASK;
   int result = this->orb_->orb_core ()->reactor ()->
-    register_handler (this->handle_, this, ACE_Event_Handler::NULL_MASK);
+    register_handler (this->handle_, this, mask);
   ACE_ASSERT (result == 0);
 }
 
 // Destructor
 MyFirstFooServant::~MyFirstFooServant (void)
 {
+  ACE_Reactor_Mask mask = ACE_Event_Handler::NULL_MASK;
   int result = this->orb_->orb_core ()->reactor ()->
-    remove_handler (this->handle_, ACE_Event_Handler::NULL_MASK);
+    remove_handler (this->handle_, mask);
   ACE_ASSERT (result == 0);
 }
 

@@ -1,4 +1,10 @@
-Thu Jun 17 13:15:47 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu Jun 17 13:40:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Forwarding/MyFooServant.cpp (MyFirstFooServant):
+	  Since we are using the NULL_MASK (whose value is zero), some
+	  compilers cannot figure out which
+	  register_handler/remove_handler I wanted to use.  Fixed by
+	  creating a separate variable for the mask and feeding it in.
 
 	* TAO_IDL/fe/fe_lookup.cpp (lookup): Changed {"",} to {"",0} to
 	  keep the HP compiler happy.
