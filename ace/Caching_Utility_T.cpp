@@ -10,6 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Cleanup_Strategies_T.h"
+#include "ace/Strategies.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Caching_Utility_T.i"
@@ -53,6 +54,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
                               key_to_remove,
                               value_to_remove) == -1)
         return -1;
+
     }
 
   return 0;
@@ -106,7 +108,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
        iter != end;
        ++iter)
     {
-      if ((*iter).int_id_.first ()->state () == ACE_Recyclable::IDLE_AND_PURGABLE))
+      if ((*iter).ext_id_.state () == ACE_Recyclable::IDLE_AND_PURGABLE)
         {
           if (min > (*iter).int_id_.second ())
             {
