@@ -64,7 +64,9 @@
     <H4>Performance optimizations</H4>
 
     <OL>
-      <LI>Use active demuxing in the POA
+      <LI>Use active demuxing in the POA to locate servants in
+          constant time, as well as active demuxing
+          in the skeletons to locate operations in constant time.
       <P></LI>
 
       <LI>Optimize twoways by delaying memory allocation for the
@@ -88,7 +90,7 @@
 	the data block and the rest of it to contain the actual buffer
       <P></LI>
 
-      <LI><P>Parameterized support for location forwarding, some
+      <LI><P>Parameterize support for location forwarding since some
 	  applications don't need this feature.
 	</P>
       </LI>
@@ -105,7 +107,7 @@
 	  Yet some operations could be critical and require code as
 	  efficient as possible;
 	  a <CODE>#pragma</CODE> can be added to give users
-          fine-grained control over code generation. 
+          fine-grained control over code generation.
 	</P>
       </LI>
 
