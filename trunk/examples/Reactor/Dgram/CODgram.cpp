@@ -8,43 +8,67 @@
 #include "ace/SOCK_CODgram.h"
 #include "ace/INET_Addr.h"
 
+// Port used to receive for dgrams.
 static u_short port1;
 
-class AAL_CP : public ACE_Event_Handler, public ACE_SOCK_CODgram
+class Dgram_Endpoint : public ACE_Event_Handler
 {
 public:
-  AAL_CP (const ACE_INET_Addr &remote_addr,
+  Dgram_Endpoint (const ACE_INET_Addr &remote_addr,
           const ACE_INET_Addr &local_addr);
 
+  // = Hook methods inherited from the <ACE_Event_Handler>.
   virtual ACE_HANDLE get_handle (void) const;
-
   virtual int handle_input (ACE_HANDLE handle);
-
   virtual int handle_timeout (const ACE_Time_Value & tv,
                               const void *arg = 0);
+
+  virtual int handle_close (ACE_HANDLE handle,
+			    ACE_Reactor_Mask close_mask);
+
+  int send (const char *buf, size_t len);
+  // Send the <buf> to the peer.
+
+private:
+  ACE_SOCK_CODgram endpoint_;
+  // Wrapper for sending/receiving dgrams.
 };
 
-AAL_CP::AAL_CP (const ACE_INET_Addr &remote_addr,
-                const ACE_INET_Addr &local_addr)
-  : ACE_SOCK_CODgram (remote_addr, local_addr)
+int
+Dgram_Endpoint::send (const char *buf, size_t len)
+{
+  return this->endpoint_.send (buf, len);
+}
+
+int
+Dgram_Endpoint::handle_close (ACE_HANDLE handle,
+                              ACE_Reactor_Mask)
+{
+  this->endpoint_.close ();
+  return 0;
+}
+
+Dgram_Endpoint::Dgram_Endpoint (const ACE_INET_Addr &remote_addr,
+                                const ACE_INET_Addr &local_addr)
+  : endpoint_ (remote_addr, local_addr)
 {
 }
 
 ACE_HANDLE
-AAL_CP::get_handle (void) const
+Dgram_Endpoint::get_handle (void) const
 {
-  return ACE_SOCK_CODgram::get_handle ();
+  return this->endpoint_.get_handle ();
 }
 
 int
-AAL_CP::handle_input (ACE_HANDLE)
+Dgram_Endpoint::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) activity occurred on handle %d!\n",
-              ACE_SOCK_CODgram::get_handle ()));
+              this->endpoint_.get_handle ()));
 
-  ssize_t n = ACE_SOCK_CODgram::recv (buf, sizeof buf);
+  ssize_t n = this->endpoint_.recv (buf, sizeof buf);
 
   if (n == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "handle_input"));
@@ -55,9 +79,10 @@ AAL_CP::handle_input (ACE_HANDLE)
 }
 
 int
-AAL_CP::handle_timeout (const ACE_Time_Value &, const void *)
+Dgram_Endpoint::handle_timeout (const ACE_Time_Value &,
+                                const void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) timed out for aa1\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) timed out for endpoint\n"));
   return 0;
 }
 
@@ -70,11 +95,11 @@ run_test (u_short localport,
                              remotehost);
   ACE_INET_Addr local_addr (localport);
 
-  AAL_CP aal (remote_addr, local_addr);
+  Dgram_Endpoint endpoint (remote_addr, local_addr);
 
   // Read data from other side.
   if (ACE_Reactor::instance ()->register_handler
-      (&aal, ACE_Event_Handler::READ_MASK) == -1)
+      (&endpoint, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::register_handler"),
                       -1);
@@ -89,7 +114,7 @@ run_test (u_short localport,
 
       for (size_t i = 0; i < 20; i++)
         {
-          aal.send (buf, len);
+          endpoint.send (buf, len);
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) .\n"));
           ACE_OS::sleep (1);
         }
@@ -109,14 +134,14 @@ run_test (u_short localport,
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) return from handle events\n"));
 
-      aal.send (buf, len);
+      endpoint.send (buf, len);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) .\n"));
     }
 
   if (ACE_Reactor::instance ()->remove_handler
-      (&aal, ACE_Event_Handler::READ_MASK) == -1)
+      (&endpoint, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::remove_handler"),
                       -1);
