@@ -1,5 +1,9 @@
 #include "LB_CPU_Monitor.h"
 
+#ifdef sun
+#  include <sys/loadavg.h>
+#endif  /* sun */
+
 
 ACE_RCSID (LoadBalancing,
            LB_CPU_Monitor,
