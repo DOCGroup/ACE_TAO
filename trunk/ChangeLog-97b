@@ -1,3 +1,11 @@
+Wed Nov 12 19:13:05 1997    <irfan@TWOSTEP>
+
+	* ace/Svc_Handler: Changed hand written tss singleton to
+ 	  ACE_TSS_Singleton.  Lot of (unnecessary) code disappeared.
+  	  Thanks to David Levine for suggesting this.
+
+	* ace/Object_Manager: Removed ACE_SVC_HANDLER_LOCK.
+
 Wed Nov 12 16:29:15 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
         * platform_netbsd.GNU: added /usr/lib/c++rtO.o to SOBUILD to
