@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/DEV_Addr.h"
-
 /**
  * @class ACE_DEV_IO
  *
