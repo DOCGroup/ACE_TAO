@@ -243,7 +243,7 @@ main (int argc, char* argv[])
 #endif //ACE_HAS_DSUI
 
       rt.activate(); //need thread creation flags? or priority?
-      ACE_Time_Value stop_time(300,0);
+      ACE_Time_Value stop_time(305,0);
       orb->run (stop_time ACE_ENV_ARG_PARAMETER);
       //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -261,11 +261,6 @@ main (int argc, char* argv[])
       // deactivate all the objects with the POA, etc.) but this is
       // just a simple demo so we are going to be lazy.
 
-      ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC (%P|%t) Shutting down\n"));
-      orb->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      orb->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

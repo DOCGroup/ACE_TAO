@@ -13,7 +13,6 @@
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Event/EC_Event_Limit.h"
 #include "tao/ORB_Core.h"
 
 #include "Kokyu_EC.h"
@@ -251,7 +250,7 @@ main (int argc, char* argv[])
 #ifdef ACE_HAS_DSUI
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
       //DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",ACE_OS::gettimeofday().msec()));
+      ACE_DEBUG((LM_DEBUG,"Consumer_EC (%P|%t) WORKER_ACTIVATED at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
 
       //@BT
@@ -263,16 +262,17 @@ main (int argc, char* argv[])
 #endif //ACE_HAS_DSUI
 
       rt.activate(); //need thread creation flags? or priority?
-      ACE_Time_Value stop_time(300,0);
+      ACE_Time_Value stop_time(310,0);
       orb->run (stop_time ACE_ENV_ARG_PARAMETER);
       //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-
+#ifdef ACE_HAS_DSUI
       //@BT
       //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
+      ACE_DEBUG((LM_DEBUG,"Consumer_EC (%P|%t) STOP at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+#endif //ACE_HAS_DSUI
 
       // ****************************************************************
 
@@ -283,7 +283,7 @@ main (int argc, char* argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_EC - Service");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_EC");
       return 1;
     }
   ACE_ENDTRY;
