@@ -1,3 +1,10 @@
+Fri Jul  7 16:23:57 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/errno.h:
+	* pace/posix/errno.h
+
+	  Altered to fit in current
+
 Fri Jul  7 16:04:30 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/platform:
