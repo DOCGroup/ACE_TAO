@@ -1,3 +1,9 @@
+Tue Oct 10 14:15:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Makefile.bor (DIRS): Updated the list of subdirectories
+	  to build for Borland compilers.  Thanks to Johnny Willemsen
+	  <meco.nl> for reporting this.
+
 Tue Oct 10 14:05:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Fault_Tolerance_Service.h:
