@@ -32,9 +32,9 @@ public:
   // = Initialization and termination methods.
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-  typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> MALLOC;
+  typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> MALLOC_TYPE;
 #else
-  typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block> MALLOC;
+  typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block> MALLOC_TYPE;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
   typedef ACE_MMAP_Memory_Pool_Options MALLOC_OPTIONS;
   // I'll just hardcode this for mmap for now.
@@ -85,7 +85,7 @@ protected:
   // Close down the share memory pool.  If <remove> != 0, then the mmap file
   // will also get removed.
 
-  MALLOC *shm_malloc_;
+  MALLOC_TYPE *shm_malloc_;
   // Data exchange channel.
 
   ACE_MEM_SAP (void);

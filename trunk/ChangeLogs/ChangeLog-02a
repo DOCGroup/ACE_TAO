@@ -1,3 +1,12 @@
+Mon Feb 21 15:43:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_SAP.h:
+	* ace/MEM_SAP.cpp (create_shm_malloc): Renamed the typedef
+	  <MALLOC> to <MALLOC_TYPE> to avoid name clashing problem on GHS
+	  cross compilers.  Thanks to Bill Tovrea
+	  <gwtovrea@west.raytheon.com> for reporting this and the help in
+	  tracking this down.
+
 Mon Feb 21 12:51:52 2000  Ossama Othman  <ossama@uci.edu>
 
 	* Makefile (RELEASE_TAG_FILES):
@@ -31,7 +40,7 @@ Sun Feb 20 11:33:09 2000  Ossama Othman  <ossama@uci.edu>
 
 	  Added Todd Gruhn <tgruhn2@mail.com> to the list of
 	  contributors.
-	
+
 	* ace/config-netbsd.h:
 
 	  Defined ACE_HAS_DIRENT, and undefined ACE_LACKS_SIGSET.  Thanks
@@ -40,7 +49,7 @@ Sun Feb 20 11:33:09 2000  Ossama Othman  <ossama@uci.edu>
 
 Sat Feb 19 17:53:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* bin/make_release (create_kit): 
+	* bin/make_release (create_kit):
 
 	  Another attempt to fix MD5 checksum generation at release time:
 	  The problem was that an attempt to get the MD5 checksum for a
@@ -112,7 +121,7 @@ Fri Feb 18 10:25:45 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Thu Feb 17 18:32:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* OS.h:
-	  Removed the ACE_GLOBAL_COLONS macro I added yesterday. 
+	  Removed the ACE_GLOBAL_COLONS macro I added yesterday.
 	  Found another way to generate code with the IDL compiler
 	  that doesn't need it.
 
