@@ -65,7 +65,7 @@ Client::Client (const char *server,
 /* Open a connection to the server.  This hides the use of
   ACE_SOCK_Connector from our caller.  Since our caller probably
   doesn't care *how* we connect, this is a good thing.  */
-int 
+int
 Client::open (const char *server,
               u_short port)
 {
@@ -86,7 +86,7 @@ Client::open (const char *server,
 
 /* The first of our put operators sends a simple string object to the
   peer.  */
-Client & 
+Client &
 Client::operator<< (ACE_SString &str)
 {
   /* We have to be able to allow: server << foo << bar << stuff;
@@ -125,7 +125,7 @@ more efficient to implement this with the body of the
 operator<<(ACE_SString&) method and then express that method in terms
 of this one.  There's always more than one way to do things!  */
 
-Client & 
+Client &
 Client::operator<< (char *str)
 {
   ACE_SString newStr (str);
@@ -146,7 +146,7 @@ Client::operator<< (char *str)
 
   Do the same thing we did with char* and convert it to ACE_SString
   where we already have a << operator defined.  */
-Client & 
+Client &
 Client::operator<< (int n)
 {
   /* Create a character buffer large enough for the largest number.
@@ -170,7 +170,7 @@ Client::operator<< (int n)
 
 /* Now we pull it all together.  Like Tutorial 3, we'll allow command
   line options.  */
-int 
+int
 main (int argc, char *argv[])
 {
   const char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
@@ -179,7 +179,7 @@ main (int argc, char *argv[])
 
   /* Use the basic constructor since the other isn't really very safe.  */
   Client peer;
-  
+
   /* Open the server connection.  Notice how this is simpler than
     Tutorial 3 since we only have to provide a host name and port
     value.  */
@@ -189,7 +189,7 @@ main (int argc, char *argv[])
                        "%p\n",
                        "open"),
                       -1);
-  
+
   for (int i = 0; i < max_iterations; i++)
     {
       /* Tell the server which iteration we're on.  No more mucking

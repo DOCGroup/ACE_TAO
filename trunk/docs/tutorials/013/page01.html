@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -24,11 +25,11 @@ method takes work units from the message queue for processing.  As
 each unit is taken from the queue, the process() method is invoked to
 do some work.  The twist is that after processing the message, we
 enqueue it into another thread pool to do more work.  This continues
-through a chain of thread pools until the last where the unit's fini() 
+through a chain of thread pools until the last where the unit's fini()
 method is called for finishing up any outstanding work.
 <P>
 The chain of thread pools is uni-directional using a singly-linked
-list of Task derivatives.  Each pool has the same number of tasks in 
+list of Task derivatives.  Each pool has the same number of tasks in
 order to keep things simple.
 <P>
 Kirthika's abstract:
@@ -44,12 +45,12 @@ traverses over the whole list. As a safety measure for destroying the
 block after it goes through the whole list, an effective and simple
 Memory Leak Detector has been implemented. It is a counter which
 increments when the object where it resides is created and decrements on
-its deletion. 
+its deletion.
 <P>
 Another optimisation from the previous tutorials on Message Queues, is
 the bundling of the Data block within the Message Block. The Data block
 provides reference counting, so duplication of data is avoided. It is
-deleted only when its reference count drops to zero. Now updating 
+deleted only when its reference count drops to zero. Now updating
 this count between threads call for synchronisation and in comes the
 ACE_Mutex, a lock which takes care that the counting is thread-safe.
 <P>

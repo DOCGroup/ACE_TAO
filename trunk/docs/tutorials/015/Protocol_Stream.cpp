@@ -23,7 +23,7 @@ typedef ACE_Thru_Task<ACE_MT_SYNCH> Thru_Task;
 
 /* An ACE_Stream is a collection of ACE_Modules.  You can think of it
    as a doubly-linked list if you like.  Each Module contains two
-   ACE_Task derivatives.  One of these tasks is used when sending data 
+   ACE_Task derivatives.  One of these tasks is used when sending data
    "upstream", the other is used for "downstream" operation.  In some
    cases, you'll only need to move data in one direction.  To provide
    a placeholder for the other direction, ACE_Thru_Task can be used.
@@ -33,7 +33,7 @@ typedef ACE_Thru_Task<ACE_MT_SYNCH> Thru_Task;
 
 /* Do-nothing constructor and destructor
  */
-  
+
 Protocol_Stream::Protocol_Stream (void)
 {
 }
@@ -47,7 +47,7 @@ Protocol_Stream::~Protocol_Stream (void)
    at the tail (eg -- most downstream) end of things when you're
    done.
  */
-int 
+int
 Protocol_Stream::open (ACE_SOCK_Stream &peer,
                        Protocol_Task *reader)
 {
@@ -99,7 +99,7 @@ Protocol_Stream::open (ACE_SOCK_Stream &peer,
 /* Add the necessary protocol objects to the stream.  The way we're
    pushing things on we will encrypt the data before compressing it.
 */
-int 
+int
 Protocol_Stream::open (void)
 {
 #if defined (ENABLE_COMPRESSION)
@@ -111,7 +111,7 @@ Protocol_Stream::open (void)
                        "stream().push(comprssor)"),
                       -1);
 #endif /* ENABLE_COMPRESSION */
-    
+
 #if defined (ENABLE_ENCRYPTION)
   if (stream ().push (new Module ("crypt",
                                   new Crypt (),
@@ -125,14 +125,14 @@ Protocol_Stream::open (void)
 }
 
 // Closing the Protocol_Stream is as simple as closing the ACE_Stream.
-int 
+int
 Protocol_Stream::close (void)
 {
   return stream ().close ();
 }
 
 // Simply pass the data directly to the ACE_Stream.
-int 
+int
 Protocol_Stream::put (ACE_Message_Block *&message,
                       ACE_Time_Value *timeout)
 {
@@ -144,7 +144,7 @@ Protocol_Stream::put (ACE_Message_Block *&message,
    upstream.  Servers will typically use this method in a
    handle_input() method to tell the stream to get a client's request.  */
 
-int 
+int
 Protocol_Stream::get(void)
 {
   // If there is no Recv module, we're in big trouble!
@@ -180,7 +180,7 @@ Protocol_Stream::get(void)
    most often used by client applications.  Servers will generaly
    insert a reader that will prevent the data from getting all the way
    upstream to the head.  */
-int 
+int
 Protocol_Stream::get (ACE_Message_Block *&response,
                       ACE_Time_Value *timeout )
 {
@@ -189,7 +189,7 @@ Protocol_Stream::get (ACE_Message_Block *&response,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Cannot get data into the stream.\n"),
                       -1);
-    
+
   return stream ().head ()->reader ()->getq (response,
                                              timeout);
 }

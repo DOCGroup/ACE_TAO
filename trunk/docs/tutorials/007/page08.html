@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -15,7 +16,11 @@
 
 <P>Finally, <A HREF="thread_pool.cpp">thread_pool.cpp</A>
 where we have the Thread_Pool object implementation.
-
+<P>
+Remember back in <A HREF="../006/page01.html">Tutorial 6</A> when I
+      was talking about <i>THR_NEW_LWP</i>?  Look closely and you'll
+      see it here.  It's bitwise OR'd with <i>THR_DETACHED</i> just to
+      keep things interesting.
 <P>
 <HR WIDTH="100%">
 <PRE>
@@ -37,16 +42,16 @@ where we have the Thread_Pool object implementation.
    activate() method.  By hiding activate() in this way, the users of
    Thread_Pool don't have to worry about the thread configuration
    flags.  */</font>
-int 
+int
 <font color=#008888>Thread_Pool::open</font> (int pool_size)
 {
-  return this->activate (THR_NEW_LWP, pool_size);
+  return this->activate (THR_NEW_LWP|THR_DETACHED, pool_size);
 }
 
 <font color=red>/* Closing the thread pool can be a tricky exercise.  I've decided to
    take an easy approach and simply enqueue a secret message for each
    thread we have active.  */</font>
-int 
+int
 <font color=#008888>Thread_Pool::close</font> (u_long flags)
 {
   ACE_UNUSED_ARG(flags);
@@ -73,7 +78,7 @@ int
 <font color=red>/* When an object wants to do work in the pool, it should call the
    enqueue() method.  We introduce the ACE_Message_Block here but,
    unfortunately, we seriously misuse it.  */</font>
-int 
+int
 <font color=#008888>Thread_Pool::enqueue</font> (ACE_Event_Handler *handler)
 {
   <font color=red>/* An ACE_Message_Block is a chunk of data.  You put them into an
@@ -186,7 +191,7 @@ protected:
 <font color=red>/* Now we come to the svc() method.  As I said, this is being executed
    in each thread of the Thread_Pool.  Here, we pull messages off of
    our built-in ACE_Message_Queue and cause them to do work.  */</font>
-int 
+int
 <font color=#008888>Thread_Pool::svc</font> (void)
 {
   <font color=red>/* The getq() method takes a reference to a pointer.  So... we need
@@ -235,9 +240,9 @@ int
             work.  If you're careful you can get away with casting
             pointers around.)  */</font>
           void *v_data = (void *) c_data;
-	
+
           ACE_Event_Handler *handler = (ACE_Event_Handler *) v_data;
-	
+
           <font color=red>/* Now that we finally have an event handler pointer, invoke
             it's handle_input() method.  Since we don't know it's
             handle, we just give it a default.  That's OK because we

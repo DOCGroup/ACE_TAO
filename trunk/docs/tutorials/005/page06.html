@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -41,7 +42,7 @@ BIN    = server
 	# Few applications will have a single source file.  We use the FILES
 	# macro to build up a list of additional files to compile.  Notice
 	# that we leave off the extension just as with BIN
-FILES  = 
+FILES  =
 FILES += client_handler
 
 	# The BUILD macro is used by the ACE makefiles.  Basically, it tells
@@ -107,7 +108,7 @@ Indent : #
 	<font color=blue># include</font> just like the makefile components above.
 	#
 	# NOTE:  The 'depend' target expects to have GCC available.
-	# You can do the same thing with other compilers  but the ACE 
+	# You can do the same thing with other compilers  but the ACE
 	# makefiles and utilities are only wired up to work with GCC.
 Depend : depend
 	perl ../fix.Makefile
@@ -122,13 +123,13 @@ HTML : #
 
 SHAR : #
 	[ ! -f combine.shar ] || exit 1
-	shar -T hdr bodies *.pre > combine.shar && rm -f hdr bodies *.pre *.pst
+	shar -T hdr bodies *.pre > combine.shar && $(RM) hdr bodies *.pre *.pst
 
 UNSHAR : #
 	sh combine.shar
 
 CLEAN : realclean
-	rm -f hdr bodies *.pre *.pst .depend
+	$(RM) hdr bodies *.pre *.pst .depend
 
 #----------------------------------------------------------------------------
 #	Dependencies

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -15,14 +16,14 @@
 The Barrier class used by the test task is a simple wrapper around
 ACE_Barrier.  One of the things about ACE_Barrier is that you have to
 tell it how many threads it will be managing.  Since that number
-usually isn't known when you create your Task derivative, you have to 
+usually isn't known when you create your Task derivative, you have to
 dynamically allocate the ACE_Barrier.  My Barrier wrapper takes care
 of that for you and even provides for a clean way to delete the
 ACE_Barrier instance if you want to save a few bytes.
 <P>
 An interesting extension of this Barrier class would be to wrap it up
-in a smart pointer.  You could then have the Barrier destructor invoke 
-wait() as a now-protected method.  The result would allow you to treat 
+in a smart pointer.  You could then have the Barrier destructor invoke
+wait() as a now-protected method.  The result would allow you to treat
 the Barrier object almost as a "synchronization guard".
 <HR>
 <PRE>
@@ -90,7 +91,7 @@ protected:
   <font color=red>// An internal method that constructs the barrier_ as needed.</font>
   int make_barrier (int wait);
 };
-    
+
 <font color=blue>#endif</font> <font color=red>/* BARRIER_H */</font>
 </PRE>
 <P><HR WIDTH="100%">

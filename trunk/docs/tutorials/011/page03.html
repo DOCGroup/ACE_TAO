@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -50,7 +51,7 @@ public:
 
 protected:
   ACE_Barrier barrier_;
-  
+
   size_t n_threads_;
 };
 
@@ -84,15 +85,15 @@ protected:
   message->release ();
 }
 
-int 
+int
 <font color=#008888>Task::open</font> (void *)
 {
-  return this->activate (THR_NEW_LWP,
+    return this->activate (THR_NEW_LWP,
                         this->n_threads_);
 
 }
 
-int 
+int
 <font color=#008888>Task::close</font> (u_long flags)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -101,7 +102,7 @@ int
   return <font color=#008888>inherited::close</font> (flags);
 }
 
-int 
+int
 <font color=#008888>Task::svc</font> (void)
 {
   this->barrier_.wait ();
@@ -130,7 +131,7 @@ int
 
       const char *cp = message->rd_ptr ();
       <font color=red>// Don't forget to skip the NULL we inserted</font>
-      message->rd_ptr (<font color=#008888>ACE_OS::strlen</font> (cp) + 1);  
+      message->rd_ptr (<font color=#008888>ACE_OS::strlen</font> (cp) + 1);
 
       ACE_DEBUG ((LM_DEBUG,
                   "<font color=green>(%P|%t) Block 0x%x contains (%s)\n</font>",
@@ -180,5 +181,8 @@ Notice how we had to create a temporary Data object to copy the stuff out
 of the message block?  Again, if there were non-trivial ctor/dtors involved
 then this wouldn't work at all.
 <P>
+Again, like <A HREF="../010/page01.html">Tutorial 10</A> we've skipped
+<i>THR_DETACHED</i> because we <i>wait()</i> for the threads to exit
+      elsewhere.
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>

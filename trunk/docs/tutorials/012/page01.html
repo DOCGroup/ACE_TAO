@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -15,13 +16,13 @@
 <HR WIDTH="100%">
 <P>
 Last time around we put an object into a message queue by using the
-copy() method to create a duplicate of the object.  That's probably OK 
+copy() method to create a duplicate of the object.  That's probably OK
 for simple objects that aren't very large.  However, if you have an
 object that contains pointers or tons of data then that approach is
 going to cause problems.
 <P>
-What we'll do in this tutorial is specialize the ACE_Message_Block 
-object so that it can carry our data more efficiently.  As you'll see, 
+What we'll do in this tutorial is specialize the ACE_Message_Block
+object so that it can carry our data more efficiently.  As you'll see,
 this isn't very difficult at all.
 <P>
 Kirthika's abstract:

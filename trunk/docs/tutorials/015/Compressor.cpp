@@ -31,7 +31,7 @@ int Compressor::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
     ACE_Message_Block * compressed = new ACE_Message_Block( message->size() );
 
         // Perform a bogus compression algorithm.  'CD' just tells me
-        // that this is compressed data and when we "decompress" we'll 
+        // that this is compressed data and when we "decompress" we'll
         // look for this signature to validate the data received.
     ACE_OS::sprintf( compressed->wr_ptr(), "CD:%s", message->rd_ptr() );
     compressed->wr_ptr( strlen(compressed->wr_ptr())+1 );
@@ -45,7 +45,7 @@ int Compressor::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
     return( 0 );
 }
 
-/* And here's the decompression side.  We've written Xmit/Recv so that 
+/* And here's the decompression side.  We've written Xmit/Recv so that
    we're guaranteed to get an entire block of compressed data.  If
    we'd used recv() in the Recv object then we might have gotten a
    partial block and that may not decompress very nicely.
@@ -57,7 +57,7 @@ int Compressor::recv(ACE_Message_Block *message, ACE_Time_Value *timeout)
         // Room for the decompressed data.  In the real world you
         // would probably want to send the original (uncompressed)
         // data size in the message.  You can predict the maximum
-        // possible decompression size but it's cheap and easy just to 
+        // possible decompression size but it's cheap and easy just to
         // send that along.  Look again at how I do exacly that
         // between Xmit and Recv.
     ACE_Message_Block * decompressed = new ACE_Message_Block( message->size() );
@@ -75,8 +75,8 @@ int Compressor::recv(ACE_Message_Block *message, ACE_Time_Value *timeout)
 
         // Skip past the signature before going any further.
     message->rd_ptr( 3 );
-    
-        // Perform a bogus decompression algorithm.  This is where you 
+
+        // Perform a bogus decompression algorithm.  This is where you
         // would feed to libz or your favorite decompressor.  (It's
         // costly but you could invoke popen() on gzip!)
     ACE_OS::sprintf( decompressed->wr_ptr(), "%s", message->rd_ptr() );

@@ -16,7 +16,7 @@ main (int, char *[])
                     100);
 }
 #else // ACE_LACKS_SYSV_SHMEM
-int 
+int
 main (int, char *argv[])
 {
   /*
@@ -34,14 +34,14 @@ main (int, char *argv[])
     uniquely identifies the segment and allows other apps to
     attach to the same segment. Execute 'ipcs -m' before and
     after starting this app to see that the segment is created.
-    (I can't for the life of me correlate the SHM_KEY value back 
+    (I can't for the life of me correlate the SHM_KEY value back
     to the key/id reported by ipcs though.)
     */
   ACE_Shared_Memory_SV shm_server (SHM_KEY, SHMSZ,
                                    ACE_Shared_Memory_SV::ACE_CREATE);
 
   /*
-    The constructor created the segment for us but we still need 
+    The constructor created the segment for us but we still need
     to map the segment into our address space.  (Note that you
     can pass a value to malloc() but it will be silently
     igored.)  The void* (cast to char*) that is returned will
@@ -50,7 +50,7 @@ main (int, char *argv[])
   char *shm = (char *) shm_server.malloc ();
 
   /*
-    Since we're asking to create the segment, we will fail if it 
+    Since we're asking to create the segment, we will fail if it
     already exists.  We could fall back and simply attach to it
     like the client but I'd rather not assume it was a previous
     instance of this app that left the segment around.
@@ -58,7 +58,7 @@ main (int, char *argv[])
   if (shm == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n\t(%P|%t) Cannot create shared memory segment.\n"
-                       "\tUse 'ipcs' to see if it already exists\n", 
+                       "\tUse 'ipcs' to see if it already exists\n",
                        argv[0]),
                       100);
 
@@ -78,7 +78,7 @@ main (int, char *argv[])
               shm ));
 
   /*
-    At this point, our application can use the pointer just like 
+    At this point, our application can use the pointer just like
     any other given to us by new or malloc.  For our purposes,
     we'll copy in the alpabet as a null-terminated string.
     */
@@ -89,7 +89,7 @@ main (int, char *argv[])
 
   /*
     Using a simple not-too-busy loop, we'll wait for the client
-    (or anyone else) to change the first byte in the shared area 
+    (or anyone else) to change the first byte in the shared area
     to a '*' character.  This is where you would rather use
     semaphores or some similar "resource light" approach.
     */
@@ -112,7 +112,7 @@ main (int, char *argv[])
     the segment but leave it around for other apps, use the
     close() method instead.
 
-    The free() method may be tempting but it doesn't actually do 
+    The free() method may be tempting but it doesn't actually do
     anything.  If your app is *really* done with the shared
     memory then use either close() or remove().
     */

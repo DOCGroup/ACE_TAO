@@ -40,7 +40,7 @@ int Crypt::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
     return( 0 );
 }
 
-/* The upstream movement requires that we decrypt what the peer has 
+/* The upstream movement requires that we decrypt what the peer has
    given us.
 */
 int Crypt::recv(ACE_Message_Block *message, ACE_Time_Value *timeout)
@@ -62,7 +62,7 @@ int Crypt::recv(ACE_Message_Block *message, ACE_Time_Value *timeout)
         // Don't forget to skip past the signature before decrypting
         // or things will be quite exciting!
     message->rd_ptr( 3 );
-    
+
         // Perform a bogus decryption algorithm
     ACE_OS::sprintf( decrypted->wr_ptr(), "%s", message->rd_ptr() );
     decrypted->wr_ptr( strlen(decrypted->wr_ptr())+1 );

@@ -4,7 +4,7 @@
 #include "work.h"
 
 /*
-   Initialize the state to zero 
+   Initialize the state to zero
  */
 Unit_Of_Work::Unit_Of_Work (void)
         : state_ (0)
@@ -18,7 +18,7 @@ Unit_Of_Work::~Unit_Of_Work (void)
 }
 
 /*
-   Display our instance value 
+   Display our instance value
  */
 void Unit_Of_Work::who_am_i (void)
 {
@@ -26,7 +26,7 @@ void Unit_Of_Work::who_am_i (void)
 }
 
 /*
-   Dispay our type name 
+   Dispay our type name
  */
 void Unit_Of_Work::what_am_i (void)
 {
@@ -34,7 +34,7 @@ void Unit_Of_Work::what_am_i (void)
 }
 
 /*
-   Return failure.  You should always derive from Unit_Of_Work... 
+   Return failure.  You should always derive from Unit_Of_Work...
  */
 int Unit_Of_Work::process (void)
 {
@@ -42,7 +42,7 @@ int Unit_Of_Work::process (void)
 }
 
 /*
-   ditto 
+   ditto
  */
 int Unit_Of_Work::fini (void)
 {
@@ -50,7 +50,7 @@ int Unit_Of_Work::fini (void)
 }
 
 /*
-   Default constructor has no "message number" 
+   Default constructor has no "message number"
  */
 Work::Work (void)
         :message_ (-1)
@@ -60,7 +60,7 @@ Work::Work (void)
 
 /*
    The useful constructor remembers which message it is and will tell you if
-   you ask. 
+   you ask.
  */
 Work::Work (int message)
         : message_ (message)
@@ -74,7 +74,7 @@ Work::~Work (void)
 }
 
 /*
-   This objects type name is different from the baseclass 
+   This objects type name is different from the baseclass
  */
 void Work::what_am_i (void)
 {
@@ -83,7 +83,7 @@ void Work::what_am_i (void)
 
 /*
    A very simple state machine that just walks through three stages. If it is
-   called more than that, it will tell you not to bother. 
+   called more than that, it will tell you not to bother.
  */
 int Work::process (void)
 {
@@ -108,8 +108,8 @@ int Work::process (void)
 
 /*
    If you don't have enough subtasks in the chain then the state machine won't
-   progress to the end.  The fini() hook will allow us to  recover from that by 
-   executing the remaining states in the final task of the chain. 
+   progress to the end.  The fini() hook will allow us to  recover from that by
+   executing the remaining states in the final task of the chain.
  */
 int Work::fini (void)
 {

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -53,7 +54,7 @@ I finally had enough code to move it out of the header.
 
    Notice how we delegate most of the open() work to the open() method
    of our baseclass.  */</font>
-int 
+int
 <font color=#008888>Client_Acceptor::open</font> (const ACE_INET_Addr &addr,
                        ACE_Reactor *reactor,
                        int pool_size)
@@ -66,7 +67,7 @@ int
 
 <font color=red>/* Here again we find that we have to manage the thread pool.  Like
    open() we also delegate the other work to our baseclass.  */</font>
-int 
+int
 <font color=#008888>Client_Acceptor::close</font> (void)
 {
   if (this->concurrency() == thread_pool_ && thread_pool_is_private ())

@@ -63,8 +63,8 @@ public:
     Client_Handler to decide how to act.  If 'true' then the handler
     will behave in a thread-per-connection manner.  */
   int thread_per_connection (void)
-  { 
-    return this->thread_per_connection_; 
+  {
+    return this->thread_per_connection_;
   }
 
 protected:

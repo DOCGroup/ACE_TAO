@@ -10,8 +10,8 @@
    force our client into using the run() method instead.
 
    The naming convention *_T is fairly typical for ACE.  The _T suffix
-   on the object name (and it's source files) indicates that this is a 
-   templated class.  Generally, there is a non-templated class defined 
+   on the object name (and it's source files) indicates that this is a
+   templated class.  Generally, there is a non-templated class defined
    also such as foobar.h that would be included instead of foobar_T.h.
  */
 
@@ -27,7 +27,7 @@ public:
   // the task's threads.  We then add a number of messages to the
   // queue for svc() to process.
   int run (void);
-    
+
 protected:
 
   // Activate a few threads
@@ -62,9 +62,9 @@ protected:
   mutex_t mutex_;
 };
 
-/* Although different compilers differ in their details, almost all of 
+/* Although different compilers differ in their details, almost all of
    them require that you provide the definition of the templated
-   object along with the declaration.  With any luck, this will change 
+   object along with the declaration.  With any luck, this will change
    someday & we'll have smaller object files.  Until then, the lines
    below will take care of you.
  */

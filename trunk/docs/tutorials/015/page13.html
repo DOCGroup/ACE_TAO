@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -15,7 +16,7 @@
 The Protocol_Task implementation takes care of the open(), close(),
 put() and svc() methods so that derivatives can concentrate on the
 send() and recv() methods.  After a while you find that most
-ACE_Task<> derivatives look very similar in the four basic methods and 
+ACE_Task<> derivatives look very similar in the four basic methods and
 only need one or two additional to do any real work.
 <HR>
 <PRE>
@@ -35,7 +36,7 @@ only need one or two additional to do any real work.
     ;
 }
 
-int <font color=#008888>Protocol_Task::open</font>(void *arg) 
+int <font color=#008888>Protocol_Task::open</font>(void *arg)
 {
   ACE_UNUSED_ARG(arg);
 
@@ -62,7 +63,7 @@ int <font color=#008888>Protocol_Task::svc</font>(void)
 }
 
 <font color=red>/* There's nothing really magic about process().  We just decide if
-   we're moving data upstream or downstream and invoke the appropriate 
+   we're moving data upstream or downstream and invoke the appropriate
    virtual function to handle it.
 */</font>
 int <font color=#008888>Protocol_Task::process</font>(ACE_Message_Block * message, ACE_Time_Value *timeout)
@@ -71,16 +72,16 @@ int <font color=#008888>Protocol_Task::process</font>(ACE_Message_Block * messag
     {
         return this->send(message,timeout);
     }
-    
+
     return this->recv(message,timeout);
 }
 
 <font color=red>/* We must insist that derivatives provide a meaningful overload for
-   these methods.  It's fairly common for ACE object methods to return 
+   these methods.  It's fairly common for ACE object methods to return
    an error when an overload is expected but the method cannot be
    safely made pure virtual.
  */</font>
- 
+
 int <font color=#008888>Protocol_Task::send</font>(ACE_Message_Block *message,
                         ACE_Time_Value *timeout)
 {

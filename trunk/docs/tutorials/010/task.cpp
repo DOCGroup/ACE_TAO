@@ -32,7 +32,7 @@ Task::~Task (void)
 
 /* Open the object to do work.  Next, we activate the Task into the
   number of requested threads.  */
-int 
+int
 Task::open (void *unused)
 {
   ACE_UNUSED_ARG (unused);
@@ -43,7 +43,7 @@ Task::open (void *unused)
 
 /* Tell the user we're closing and invoke the baseclass' close() to
   take care of things.  */
-int 
+int
 Task::close (u_long flags)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -54,7 +54,7 @@ Task::close (u_long flags)
 
 /* Our svc() method waits for work on the queue and then processes
   that work.  */
-int 
+int
 Task::svc (void)
 {
   /* This will cause all of the threads to wait on this line until all
@@ -102,7 +102,7 @@ Task::svc (void)
         useful here since we won't be reading any more from the block
         but it's a good habit to get into.  */
       message->rd_ptr (ACE_OS::strlen (cp));
-    
+
       /* Display the block's address and data to the user.  */
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Block 0x%x contains (%s)\n",

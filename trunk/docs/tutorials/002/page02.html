@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -23,7 +24,7 @@ going to simplify the acceptor a great deal.
 <P>
 Kirthika's Abstract:
 <UL>
-This is a server example made simpler due to the use of off-the-shelf 
+This is a server example made simpler due to the use of off-the-shelf
 components and classes from ACE.
 <P>
 Here, the Logging_Acceptor is an ACE_Acceptor class which is associated
@@ -47,10 +48,10 @@ underlying data stream passed to it.
 <P>
 A timer is scheduled in the reactor which does nothing but simply
 display how it could be used to provide periodic processing when
-needed. The ACE_TimeValue is used to set the time period. 
+needed. The ACE_TimeValue is used to set the time period.
 <P>
 Also, optimisations have been  made in the form of a separate function
-for 
+for
 destroying the objects used.
 <P>
 Thus a simpler server has now been built which successfully
@@ -85,7 +86,7 @@ typedef ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR> Logging_Acceptor;
 <font color=red>/* One of the new things will be a signal handler so that we can exit
   the application somewhat cleanly.  The 'finished' flag is used
   instead of the previous infninite loop and the 'handler' will set
-  that flag in respose to SIGINT (CTRL-C). 
+  that flag in respose to SIGINT (CTRL-C).
   The invocation of <font color=#008888>ACE_Reactor::notify</font>() will cause the
   handle_events() to return so that we can see the new value of 'finished'.
 */</font>

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -41,7 +42,7 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 <font color=red>/* Our goal here is to develop a client that can send a datagram to a
    server running on a known host.  We'll use a command-line argument
    to specify the hostname instead of hard-coding it.  */</font>
-int 
+int
 main (int argc,char *argv[])
 {
   <font color=red>/* All datagrams must have a point of origin.  Since we intend to
@@ -57,7 +58,7 @@ main (int argc,char *argv[])
 
   <font color=red>/* And here is our datagram object.  */</font>
   ACE_SOCK_Dgram dgram;
-	
+
   <font color=red>/* Notice that this looks a lot like the server application.
     There's no difference in creating server datagrams an client
     datagrams.  You can even use a zero-constructed address for your
@@ -129,7 +130,7 @@ main (int argc,char *argv[])
               "<font color=green>(%P|%t) The server can be found at:  (%s:%d)\n</font>",
               remote.get_host_name(),
               PORT));
-  
+
   return 0;
 }
 </PRE>

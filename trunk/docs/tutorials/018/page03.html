@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -18,7 +19,7 @@ we've created one of our own.
 <P>
 In a lot of ways, you can think of templates as the sophisticated
 cousin of the old C-style pre-processor macros.  With templates,
-however, you get better type-checking and much easier debugging.  There 
+however, you get better type-checking and much easier debugging.  There
 are certainly other benefits but these are my favorites.
 <P>
 Our template's MUTEX parameter is used to set the mutex type
@@ -28,9 +29,9 @@ message queue.
 <P>
 Note at the bottom how we have to include the <i>cpp</i> file
 associated with us.  Most compilers have to see the definition of
-templated classes along with their declaration.  You might be tempted, 
+templated classes along with their declaration.  You might be tempted,
 therefore, to just put the definitions in the header file.  Resist
-that temptation because templates are one of the fastest growing areas 
+that temptation because templates are one of the fastest growing areas
 of compilers.  Including the definition like we do here leads to long
 compile times and overly-large binaries.  With luck, the compilers
 will get smarter in the future and we won't need definition
@@ -50,8 +51,8 @@ yourself a lot of time!
    force our client into using the run() method instead.
 
    The naming convention *_T is fairly typical for ACE.  The _T suffix
-   on the object name (and it's source files) indicates that this is a 
-   templated class.  Generally, there is a non-templated class defined 
+   on the object name (and it's source files) indicates that this is a
+   templated class.  Generally, there is a non-templated class defined
    also such as foobar.h that would be included instead of foobar_T.h.
  */</font>
 
@@ -67,7 +68,7 @@ public:
   <font color=red>// the task's threads.  We then add a number of messages to the</font>
   <font color=red>// queue for svc() to process.</font>
   int run (void);
-    
+
 protected:
 
   <font color=red>// Activate a few threads</font>
@@ -102,9 +103,9 @@ protected:
   mutex_t mutex_;
 };
 
-<font color=red>/* Although different compilers differ in their details, almost all of 
+<font color=red>/* Although different compilers differ in their details, almost all of
    them require that you provide the definition of the templated
-   object along with the declaration.  With any luck, this will change 
+   object along with the declaration.  With any luck, this will change
    someday & we'll have smaller object files.  Until then, the lines
    below will take care of you.
  */</font>

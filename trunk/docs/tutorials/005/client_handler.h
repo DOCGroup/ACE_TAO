@@ -65,7 +65,7 @@ public:
     side-effect, the reactor will also invoke remove_handler() for the
     object on the mask that caused the -1 return.  This means that we
     don't have to do that ourselves!  */
-  int handle_close (ACE_HANDLE handle, 
+  int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask mask);
 
 protected:

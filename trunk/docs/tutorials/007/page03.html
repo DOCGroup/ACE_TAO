@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -112,7 +113,7 @@ public:
 
   <font color=red>/* What is our concurrency strategy?  */</font>
   int concurrency (void)
-  { 
+  {
     return this->concurrency_;
   }
 
@@ -122,7 +123,7 @@ public:
     globally accessible thread pool.  ACE_Singleton&lt;> is a way to
     achieve that.  */</font>
   Thread_Pool *thread_pool (void)
-  { 
+  {
     return &this->the_thread_pool_;
   }
 
@@ -130,8 +131,8 @@ public:
     are times when we need to know if the thread pool we're using is
     ours or if we're just borrowing it from somebody else.  */</font>
   int thread_pool_is_private (void)
-  { 
-    return &the_thread_pool_ == &private_thread_pool_; 
+  {
+    return &the_thread_pool_ == &private_thread_pool_;
   }
 
 protected:

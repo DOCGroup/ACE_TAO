@@ -119,16 +119,16 @@ protected:
     for information.  It is generally a good idea to do that through
     an accesor rather than using the member variable directly.  */
   Client_Acceptor *client_acceptor (void)
-  { 
-    return this->client_acceptor_; 
+  {
+    return this->client_acceptor_;
   }
 
   /* And since you shouldn't access a member variable directly,
     neither should you set (mutate) it.  Although it might seem silly
     to do it this way, you'll thank yourself for it later.  */
   void client_acceptor (Client_Acceptor *_client_acceptor)
-  { 
-    this->client_acceptor_ = _client_acceptor; 
+  {
+    this->client_acceptor_ = _client_acceptor;
   }
 
   /* The concurrency() accessor tells us the current concurrency

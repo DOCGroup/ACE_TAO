@@ -16,16 +16,16 @@ Thread_Pool::Thread_Pool (void)
    activate() method.  By hiding activate() in this way, the users of
    Thread_Pool don't have to worry about the thread configuration
    flags.  */
-int 
+int
 Thread_Pool::open (int pool_size)
 {
-  return this->activate (THR_NEW_LWP, pool_size);
+  return this->activate (THR_NEW_LWP|THR_DETACHED, pool_size);
 }
 
 /* Closing the thread pool can be a tricky exercise.  I've decided to
    take an easy approach and simply enqueue a secret message for each
    thread we have active.  */
-int 
+int
 Thread_Pool::close (u_long flags)
 {
   ACE_UNUSED_ARG(flags);
@@ -52,7 +52,7 @@ Thread_Pool::close (u_long flags)
 /* When an object wants to do work in the pool, it should call the
    enqueue() method.  We introduce the ACE_Message_Block here but,
    unfortunately, we seriously misuse it.  */
-int 
+int
 Thread_Pool::enqueue (ACE_Event_Handler *handler)
 {
   /* An ACE_Message_Block is a chunk of data.  You put them into an
@@ -165,7 +165,7 @@ protected:
 /* Now we come to the svc() method.  As I said, this is being executed
    in each thread of the Thread_Pool.  Here, we pull messages off of
    our built-in ACE_Message_Queue and cause them to do work.  */
-int 
+int
 Thread_Pool::svc (void)
 {
   /* The getq() method takes a reference to a pointer.  So... we need
@@ -214,9 +214,9 @@ Thread_Pool::svc (void)
             work.  If you're careful you can get away with casting
             pointers around.)  */
           void *v_data = (void *) c_data;
-	
+
           ACE_Event_Handler *handler = (ACE_Event_Handler *) v_data;
-	
+
           /* Now that we finally have an event handler pointer, invoke
             it's handle_input() method.  Since we don't know it's
             handle, we just give it a default.  That's OK because we

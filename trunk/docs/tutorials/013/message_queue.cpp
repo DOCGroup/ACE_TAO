@@ -10,7 +10,7 @@ int run_test (int iterations, int threads, int subtasks)
 {
         // Create a task with some subtasks.  Each Task is a thread
         // pool of 'threads' size.  If a task has a subtask, it will
-        // forward the unit of work to the subtask when finished.  See 
+        // forward the unit of work to the subtask when finished.  See
         // task.{h|cpp} for more details.
     Task *task = new Task (subtasks);
 
@@ -84,5 +84,5 @@ template class ACE_Atomic_Op < ACE_Mutex, int >;
 #pragma instantiate ACE_Lock_Adapter<ACE_Mutex>;
 #pragma instantiate ACE_Atomic_Op<ACE_Mutex, int>;
 #endif /*
-         ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION 
+         ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
        */

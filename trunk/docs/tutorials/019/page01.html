@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -25,13 +26,13 @@
     <p>
       Along the way, we'll have to come up with some sort of
       coordination betweent the processes.  That is the most
-      difficult part of a shared memory system.  In the tutorial we're 
+      difficult part of a shared memory system.  In the tutorial we're
       just going to take a simplistic approach (eg -- busy loop) but
       real-world applications will need to take a serious look at
       process-level synch mechanisms such as ACE_*_Semaphore.
     <P>
       Caveat:  I've barely begun to use shared memory
-      myself.  This tutorial and the next are very simple-minded and 
+      myself.  This tutorial and the next are very simple-minded and
       primitive.  Anyone who wants to provide more realistic
       replacements is encouraged to drop me a note
       (<A HREF="mailto:jcej@lads.com">jcej@lads.com</A>).
@@ -49,9 +50,9 @@ and using it on demand.
 The server has a string of alphabets from a-z which are converted to
 uppercase
 by the client proving that the same memory locations are being shared
-between 
+between
 the two processes. The syncronisation between the server and client is
-done 
+done
 using the ACE_OS::sleep () instead of a semaphore/mutexes with the aim
 of keeping our first dive into shared memory usage simple and easy to
 fathom.

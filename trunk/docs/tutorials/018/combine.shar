@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-02-24 17:02 EST by <jcej@chiroptera.tragus.org>.
-# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/018'.
+# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/018'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -66,7 +66,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh30135; then
+if mkdir _sh05205; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -436,5 +436,5 @@ SHAR_EOF
     $echo 'page07.pre:' 'original size' '478,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh30135
+rm -fr _sh05205
 exit 0

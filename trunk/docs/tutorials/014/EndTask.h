@@ -34,7 +34,7 @@ class EndTask : public Task
 public:
   typedef Task inherited;
 
-  EndTask (const char *nameOfTask): inherited (nameOfTask, 0) 
+  EndTask (const char *nameOfTask): inherited (nameOfTask, 0)
   {
     // when we get open()'d, it with 0 threads since there is actually
     // no processing to do.
@@ -63,12 +63,12 @@ public:
     return 0;
   }
 
-  virtual ~EndTask(void) 
+  virtual ~EndTask(void)
   {
   }
 
   virtual int put (ACE_Message_Block *message,
-                   ACE_Time_Value *timeout) 
+                   ACE_Time_Value *timeout)
   {
     ACE_DEBUG ((LM_INFO,
                 "(%P|%t) Line: %d, File: %s\n",

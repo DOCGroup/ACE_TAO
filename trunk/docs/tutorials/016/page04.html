@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -38,7 +39,7 @@ public:
 
      <font color=red>// Open the Task with enough threads to make a useful test.</font>
     int open(void);
-    
+
 protected:
      <font color=red>// Each thread will do work on the Condition.</font>
     int svc(void);
@@ -77,13 +78,16 @@ protected:
 int <font color=#008888>Test::open</font>(void)
 {
     seed_ = <font color=#008888>ACE_OS::gettimeofday</font>().usec();
-    
+
     <font color=#008888>ACE_OS::srand</font>( seed_ );
-            
+
+        <font color=red>// This is not a place where we want to use THR_DETACHED.</font>
+        <font color=red>// We're going to be waiting for our threads and if we detach</font>
+        <font color=red>// them, we'll loose track and horrible things will happen.</font>
     return this->activate(THR_NEW_LWP, max_threads_);
 }
 
-<font color=red>/* Each thread will modify the condition variable in some way and then 
+<font color=red>/* Each thread will modify the condition variable in some way and then
    wait for the condition to be satisfied.  The derived classes
    overload modify() and test() to implement a specific test of the
    Condition class.
@@ -94,19 +98,19 @@ int <font color=#008888>Test::svc</font>(void)
         <font color=red>// cause test() in other threads to delay a bit.</font>
     int stime = <font color=#008888>ACE_OS::rand_r</font>( seed_ ) % 5;
     <font color=#008888>ACE_OS::sleep</font>(abs(stime)+2);
-    
+
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t|%T)\<font color=#008888>tTest::svc</font>() befor modify, condition_ is:  %d\n</font>", (int)condition_ ));
 
      <font color=red>// Change the condition variable's value</font>
     modify();
-    
+
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t|%T)\<font color=#008888>tTest::svc</font>() after modify, condition_ is:  %d\n</font>", (int)condition_ ));
 
      <font color=red>// Test for the condition we want</font>
     test();
-            
+
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t|%T)\<font color=#008888>tTest::svc</font>() leaving.\n</font>" ));
-    
+
     return(0);
 }
 
@@ -245,7 +249,7 @@ public:
         }
 };
 
-<font color=red>/* In main() we just instantiate each of the four test objects that we 
+<font color=red>/* In main() we just instantiate each of the four test objects that we
    created.  After open()ing each, we wait() for it's threads to exit.
  */</font>
 int main(int, char **)
@@ -253,19 +257,19 @@ int main(int, char **)
     Test_ne test_ne(5);
     test_ne.open();
     test_ne.wait();
-    
+
     Test_ge test_ge(5);
     test_ge.open();
     test_ge.wait();
-    
+
     Test_le test_le(5);
     test_le.open();
     test_le.wait();
-    
+
     Test_fo test_fo(5);
     test_fo.open();
     test_fo.wait();
-    
+
     return(0);
 }
 </PRE>

@@ -7,7 +7,7 @@
 #include "data.h"
 
 
-static int 
+static int
 run_test (int iterations,
           int threads)
 
@@ -70,7 +70,7 @@ run_test (int iterations,
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   int iterations = argc > 1 ? atoi (argv[1]) : 4;

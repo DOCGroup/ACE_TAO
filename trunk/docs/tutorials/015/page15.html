@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -17,7 +18,7 @@ combine it with the Recv task we simply lift the recv() method from
 that object and drop it into this one.
 <P>
 Note that close() must decide if it's being called when the stream is
-shutdown or when it's svc() method exits.  Since we tell the baseclass 
+shutdown or when it's svc() method exits.  Since we tell the baseclass
 not to use any threads it's a safe bet that flags will always be
 non-zero.  Still, it's good practice to plan for the future by
 checking the value.
@@ -77,7 +78,7 @@ int <font color=#008888>Xmit::close</font>(u_long flags)
 int <font color=#008888>Xmit::send</font>(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
     int rval;
-    
+
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) <font color=#008888>Xmit::send</font>() sending (%s)(%d)\n</font>", message->rd_ptr(), message->length() ));
 
      <font color=red>/* Since we're going to be sending data that may have been
@@ -85,7 +86,7 @@ int <font color=#008888>Xmit::send</font>(ACE_Message_Block *message, ACE_Time_V
         receiver to get an entire "<font color=green>block</font>" instead of having a
         partial read.
 
-        For that reason, we'll send the length of the message block 
+        For that reason, we'll send the length of the message block
         (in clear-text) to the peer so that it can then recv_n()
         the entire block contents in one read operation.
      */</font>
@@ -102,7 +103,7 @@ int <font color=#008888>Xmit::send</font>(ACE_Message_Block *message, ACE_Time_V
     }
 
      <font color=red>/* Now we send the actual data.  If you're worried about
-        network efficiency then you may choose to create one buffer 
+        network efficiency then you may choose to create one buffer
         containing msize and the message data and send it all at
         once.
      */</font>

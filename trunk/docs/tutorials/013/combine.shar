@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-31 11:54 EST by <jcej@chiroptera.tragus.org>.
-# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/013'.
+# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/013'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    386 -rw-rw-r-- hdr
 #     89 -rw-rw-r-- bodies
-#   2415 -rw-rw-r-- page01.pre
+#   2416 -rw-rw-r-- page01.pre
 #    432 -rw-rw-r-- page02.pre
 #   1426 -rw-rw-r-- page03.pre
 #   1049 -rw-rw-r-- page04.pre
@@ -71,7 +71,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh30349; then
+if mkdir _sh05033; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -203,12 +203,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-52884c61973afc64e96c907493ebc216  page01.pre
+2448d57199e11bc55ce9cb9cb3ada738  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 2415 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '2415,' 'current size' "$shar_count!"
+    test 2416 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2416,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -657,5 +657,5 @@ SHAR_EOF
     $echo 'page07.pst:' 'original size' '371,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh30349
+rm -fr _sh05033
 exit 0

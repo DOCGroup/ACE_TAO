@@ -33,7 +33,7 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
    though we're not going to use the parameters, we still have to
    specify them.  */
 
-int 
+int
 main (int argc, char *argv[])
 {
   /* In our earlier servers, we used a global pointer to get to the
@@ -75,7 +75,7 @@ main (int argc, char *argv[])
   /* Like ACE_ERROR_RETURN, the ACE_DEBUG macro gets used quite a bit.
     It's a handy way to generate uniform debug output from your
     program.  */
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) starting up server daemon\n"));
 
   /* This will loop "forever" invoking the handle_events() method of
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) shutting down server daemon\n"));
- 
+
   return 0;
 }
 

@@ -21,7 +21,7 @@ public:
   // From here on I'll use value_t instead of 'int' to make any
   // future upgrades easier.
   typedef int value_t;
-    
+
   // Initialize the condition variable
   Condition (value_t value = 0);
   ~Condition (void);
@@ -106,7 +106,7 @@ public:
      Just be sure that _compare(value_) will return non-zero when you
      consider the condition to be met.  */
   int operator== (Compare & compare);
-                    
+
 private:
   // Prevent copy construction and assignment.
   Condition (const Condition &condition);

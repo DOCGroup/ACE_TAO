@@ -8,7 +8,7 @@
 /* Use the typical TCP/IP port address for receiving datagrams.  */
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-int 
+int
 main (int, char**)
 {
   /* This is where we'll listen for datagrams coming from the clients.

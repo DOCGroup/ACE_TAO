@@ -4,7 +4,7 @@
 #include "shmem.h"
 
 #if defined(ACE_LACKS_SYSV_SHMEM)
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -12,7 +12,7 @@ main (int, char *[])
                     100);
 }
 #else // ACE_LACKS_SYSV_SHMEM
-int 
+int
 main (int, char *[])
 {
   /*
@@ -26,9 +26,9 @@ main (int, char *[])
   char *shm = (char *) shm_client.malloc ();
 
   /*
-    If the segment identified by SHM_KEY didn't exist then we'll 
+    If the segment identified by SHM_KEY didn't exist then we'll
     get back a 0 from malloc().  You should do this check even
-    if you include the CREATE flag 'cause you never know when it 
+    if you include the CREATE flag 'cause you never know when it
     might fail.
     */
   if (shm == 0)
@@ -52,7 +52,7 @@ main (int, char *[])
       putchar (*s);
       *s = toupper(*s);
     }
-    
+
   putchar ('\n');
 
   /*

@@ -14,7 +14,7 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
    "signature".  If none is given, we'll use the one here instead.  */
 static const char *default_signature = "Hello World!";
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_INET_Addr local (PORT);

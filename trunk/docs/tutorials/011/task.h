@@ -26,7 +26,7 @@ public:
 
 protected:
   ACE_Barrier barrier_;
-  
+
   size_t n_threads_;
 };
 

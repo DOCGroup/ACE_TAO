@@ -60,7 +60,7 @@ class EndTask : public Task
 public:
   typedef Task inherited;
 
-  EndTask (const char *nameOfTask): inherited (nameOfTask, 0) 
+  EndTask (const char *nameOfTask): inherited (nameOfTask, 0)
   {
     <font color=red>// when we get open()'d, it with 0 threads since there is actually</font>
     <font color=red>// no processing to do.</font>
@@ -89,12 +89,12 @@ public:
     return 0;
   }
 
-  virtual ~EndTask(void) 
+  virtual ~EndTask(void)
   {
   }
 
   virtual int put (ACE_Message_Block *message,
-                   ACE_Time_Value *timeout) 
+                   ACE_Time_Value *timeout)
   {
     ACE_DEBUG ((LM_INFO,
                 "<font color=green>(%P|%t) Line: %d, File: %s\n</font>",

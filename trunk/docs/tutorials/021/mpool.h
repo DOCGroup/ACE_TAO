@@ -34,7 +34,7 @@ protected:
 
   // The name we gave to the pool
   char *name_;
-    
+
   pool_t *pool_;
 };
 
@@ -57,7 +57,7 @@ public:
 
   // The name assigned to the memory pool by the server is needed
   // by the client.  Without it, the pool cannot be found.
-  // Likewise, the name the server will bind() to the region of the 
+  // Likewise, the name the server will bind() to the region of the
   // pool must be available to the client.
   static const char *PoolName;
   static const char *RegionName;

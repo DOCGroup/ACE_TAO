@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -13,11 +14,11 @@
 <P>
 <HR WIDTH="100%">
 And so finally we come to the Protocol_Stream.  That, after all, is
-the focus of the entire tutorial but it took us half of the day to get 
+the focus of the entire tutorial but it took us half of the day to get
 here!
 <P>
 The Protocol_Stream uses an ACE_Stream to move an ACE_Message_Block
-through a series of tasks.  Each task in the stream is responsible for 
+through a series of tasks.  Each task in the stream is responsible for
 performing some operation on the data in the message block.  That is
 the nature of a protocol stream (or "stack" if you prefer).  In this
 stream, the data is compressed and encrypted* on its way between

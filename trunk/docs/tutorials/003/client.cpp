@@ -11,7 +11,7 @@ static u_short SERVER_PORT = ACE_DEFAULT_SERVER_PORT;
 static const char *const SERVER_HOST = ACE_DEFAULT_SERVER_HOST;
 static const int MAX_ITERATIONS = 4;
 
-int 
+int
 main (int argc, char *argv[])
 {
   /* Accept the users's choice of hosts or use the default.  Then do
@@ -47,7 +47,7 @@ main (int argc, char *argv[])
                        "%p\n",
                        "open"),
                       -1);
-  
+
   /* Just for grins, we'll send the server several messages.  */
   for (int i = 0; i < max_iterations; i++)
     {

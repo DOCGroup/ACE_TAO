@@ -28,21 +28,17 @@ Task::~Task(void)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s Task::~Task() -- once per Task\n", d_nameOfTask));
 }
 
-int Task::open(void *arg) 
+int Task::open(void *arg)
 {
   ACE_UNUSED_ARG(arg);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s Task::open() -- once per Task\n", d_nameOfTask));
-  
+
   // call ACE_Task::activate() to spawn the threads using
   // our Task::svc() as the function to be run.
 
-  // FMM -- Frequently Made Mistake --
-  //  
-  // If you specify the flag THR_DETACHED when activating the
-  // Task, you will get an assert() violation during close(),
-  // since the Task waits for all of its threads to rejoin.
-  // 
+  // No need to use THR_DETACHED here, we're going to wait()
+  // for the threads to exit later.  No leaks.
 
   return this->activate(THR_NEW_LWP, d_numberOfThreads);
 }
@@ -55,7 +51,7 @@ int Task::put(ACE_Message_Block *message,
   // directly to our putq() method, so that Messages put() to us
   // will appear in the Message_Queue that is checked by the
   // service threads.
-  
+
   return this->putq(message, timeout);
 }
 
@@ -81,24 +77,24 @@ int Task::close(u_long flags)
 
     ACE_Message_Block *hangupBlock = new ACE_Message_Block();
 
-    // And make it of the type MB_HANGUP.  
+    // And make it of the type MB_HANGUP.
 
     hangupBlock->msg_type(ACE_Message_Block::MB_HANGUP);
 
-    // We then send this Block into the Message_Queue to be seen by the 
+    // We then send this Block into the Message_Queue to be seen by the
     // service threads.
 
     // Once again we duplicate() the Block as send it off...
-    
+
     if (this->putq(hangupBlock->duplicate()) == -1) {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Task::close() putq"), -1);
     }
-    
+
     // ..and we're free to release() our copy of it.
 
     hangupBlock->release();
 
-    // Now, all we have to do is wait() for the service threads to all 
+    // Now, all we have to do is wait() for the service threads to all
     // exit.  This is where using THR_DETACHED in the activate() method
     // will come back to haunt you.
 
@@ -148,7 +144,7 @@ int Task::svc(void)
     }
 
     if (messageBlock->msg_type() == ACE_Message_Block::MB_HANGUP) {
-      
+
       // If the Message_Block is of type MB_HANGUP, then we're being asked
       // to shut down nicely.
 
@@ -169,7 +165,7 @@ int Task::svc(void)
       break;
     }
 
-    // If we're here, then we've received a Message_Block that was 
+    // If we're here, then we've received a Message_Block that was
     // not informing us to quit, so we're assuming it's a valid
     // meaningful Block.
 
@@ -186,13 +182,13 @@ int Task::svc(void)
 
     ACE_OS::sleep (ACE_Time_Value (0, 250));
 
-    // Since we're part of a Stream, we duplicate the Block, and 
+    // Since we're part of a Stream, we duplicate the Block, and
     // send it on to the next Task.
 
     if (put_next(messageBlock->duplicate()) == -1) {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Task::svc() put_next"), -1);
     }
-    
+
     // And then we release our copy of it.
 
     messageBlock->release();

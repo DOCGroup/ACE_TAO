@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -53,7 +54,7 @@ int run_test (int iterations, int threads)
   for (int i = 0; i &lt; iterations; ++i)
   {
     <font color=red>/*
-       Construct a Work object that we'll put into the Queue.  Give it 
+       Construct a Work object that we'll put into the Queue.  Give it
        the iteration number so that it can identify itself in the output.
      */</font>
     Work * data = new Work(i);
@@ -65,7 +66,7 @@ int run_test (int iterations, int threads)
     Message_Block *message = new Message_Block (128, data);
 
     <font color=red>/*
-       As before, put a text message into the block. 
+       As before, put a text message into the block.
      */</font>
     <font color=#008888>ACE_OS::sprintf</font> (message->wr_ptr (), "<font color=green>This is message %d.</font>", i);
     message->wr_ptr (strlen (message->rd_ptr ())+1);

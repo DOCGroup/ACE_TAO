@@ -92,7 +92,7 @@ public:
 
   /* What is our concurrency strategy?  */
   int concurrency (void)
-  { 
+  {
     return this->concurrency_;
   }
 
@@ -102,7 +102,7 @@ public:
     globally accessible thread pool.  ACE_Singleton<> is a way to
     achieve that.  */
   Thread_Pool *thread_pool (void)
-  { 
+  {
     return &this->the_thread_pool_;
   }
 
@@ -110,8 +110,8 @@ public:
     are times when we need to know if the thread pool we're using is
     ours or if we're just borrowing it from somebody else.  */
   int thread_pool_is_private (void)
-  { 
-    return &the_thread_pool_ == &private_thread_pool_; 
+  {
+    return &the_thread_pool_ == &private_thread_pool_;
   }
 
 protected:

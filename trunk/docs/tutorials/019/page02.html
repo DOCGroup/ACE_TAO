@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -16,7 +17,7 @@ We'll first take a look at the server side.  As usual with
 co-operating applications, you need the server up and running first.
 In the case of shared memory applications, the server will create the
 shared memory segment.  In this example, it will also remove the
-segment when done.  It is important to realize though that the segment 
+segment when done.  It is important to realize though that the segment
 can be created external to your application and can persist beyond
 it's lifetime.  In fact, you can use shared memory to create a layer
 of persistence between application instances (at least, until the
@@ -41,7 +42,7 @@ main (int, char *[])
                     100);
 }
 #else <font color=red>// ACE_LACKS_SYSV_SHMEM</font>
-int 
+int
 main (int, char *argv[])
 {
   <font color=red>/*
@@ -59,14 +60,14 @@ main (int, char *argv[])
     uniquely identifies the segment and allows other apps to
     attach to the same segment. Execute 'ipcs -m' before and
     after starting this app to see that the segment is created.
-    (I can't for the life of me correlate the SHM_KEY value back 
+    (I can't for the life of me correlate the SHM_KEY value back
     to the key/id reported by ipcs though.)
     */</font>
   ACE_Shared_Memory_SV shm_server (SHM_KEY, SHMSZ,
                                    <font color=#008888>ACE_Shared_Memory_SV::ACE_CREATE</font>);
 
   <font color=red>/*
-    The constructor created the segment for us but we still need 
+    The constructor created the segment for us but we still need
     to map the segment into our address space.  (Note that you
     can pass a value to malloc() but it will be silently
     igored.)  The void* (cast to char*) that is returned will
@@ -75,7 +76,7 @@ main (int, char *argv[])
   char *shm = (char *) shm_server.malloc ();
 
   <font color=red>/*
-    Since we're asking to create the segment, we will fail if it 
+    Since we're asking to create the segment, we will fail if it
     already exists.  We could fall back and simply attach to it
     like the client but I'd rather not assume it was a previous
     instance of this app that left the segment around.
@@ -83,7 +84,7 @@ main (int, char *argv[])
   if (shm == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "<font color=green>%p\n\t(%P|%t) Cannot create shared memory segment.\n</font>"
-                       "<font color=green>\tUse 'ipcs' to see if it already exists\n</font>", 
+                       "<font color=green>\tUse 'ipcs' to see if it already exists\n</font>",
                        argv[0]),
                       100);
 
@@ -103,7 +104,7 @@ main (int, char *argv[])
               shm ));
 
   <font color=red>/*
-    At this point, our application can use the pointer just like 
+    At this point, our application can use the pointer just like
     any other given to us by new or malloc.  For our purposes,
     we'll copy in the alpabet as a null-terminated string.
     */</font>
@@ -114,7 +115,7 @@ main (int, char *argv[])
 
   <font color=red>/*
     Using a simple not-too-busy loop, we'll wait for the client
-    (or anyone else) to change the first byte in the shared area 
+    (or anyone else) to change the first byte in the shared area
     to a '*' character.  This is where you would rather use
     semaphores or some similar "<font color=green>resource light</font>" approach.
     */</font>
@@ -137,7 +138,7 @@ main (int, char *argv[])
     the segment but leave it around for other apps, use the
     close() method instead.
 
-    The free() method may be tempting but it doesn't actually do 
+    The free() method may be tempting but it doesn't actually do
     anything.  If your app is *really* done with the shared
     memory then use either close() or remove().
     */</font>

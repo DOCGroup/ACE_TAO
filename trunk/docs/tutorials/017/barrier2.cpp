@@ -47,16 +47,16 @@ Test::Test(int _threads)
 {
 }
 
-/* As usual, our open() will create one or more threads where we'll do 
+/* As usual, our open() will create one or more threads where we'll do
    the interesting work.
-*/  
+*/
 int Test::open(void * _unused)
 {
     ACE_UNUSED_ARG(_unused);
 
         // One thing about the barrier:  You have to tell it how many
         // threads it will be synching.  The threads() mutator on my
-        // Barrier class lets you do that and hides the implementation 
+        // Barrier class lets you do that and hides the implementation
         // details at the same time.
     barrier_.threads(threads_);
 
@@ -97,7 +97,7 @@ int Test::svc(void)
     int delay;
 
         // We'll arbitrarily choose the first activated thread to be
-        // the controller.  After it sleeps a few seconds, it will add 
+        // the controller.  After it sleeps a few seconds, it will add
         // five threads.
     if( me == 1 )
     {
@@ -121,7 +121,7 @@ int Test::svc(void)
     }
 
         // This for() loop represents an "infinite" work loop in an
-        // application. The theory is that the threads are dividing up 
+        // application. The theory is that the threads are dividing up
         // some work but need to "recalibrate" if more threads are
         // added.  I'll just do five iterations so that the test
         // doesn't run forever.
@@ -133,8 +133,8 @@ int Test::svc(void)
         ACE_OS::sleep(abs(delay)+1);
 
         ACE_DEBUG(( LM_INFO, "(%P|%t|%T)\tThread %.2d of %.2d iteration %.2d\n", me, threads_, i ));
- 
-            // If the local threads_ variable doesn't match the number 
+
+            // If the local threads_ variable doesn't match the number
             // in the barrier, then the controller must have changed
             // the thread count.  We'll wait() for everyone and then
             // recalibrate ourselves before continuing.

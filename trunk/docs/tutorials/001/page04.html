@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <TITLE>ACE Tutorial 001</TITLE>
@@ -65,7 +66,7 @@ public:
 
     if (reactor->register_handler (this,
                                    <font color=#008888>ACE_Event_Handler::READ_MASK</font>) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "<font color=green>(%P|%t) can't register with reactor\n</font>"),
                         -1);
     return 0;
@@ -110,7 +111,7 @@ protected:
   virtual int handle_input (ACE_HANDLE)
   {
     <font color=red>/*
-      Create and initialize a small receive buffer.  The extra byte is 
+      Create and initialize a small receive buffer.  The extra byte is
       there to allow us to have a null-terminated string when it's over.
      */</font>
     char buf[BUFSIZ + 1];

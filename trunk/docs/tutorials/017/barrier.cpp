@@ -43,20 +43,22 @@ Test::Test(int _threads)
 {
 }
 
-/* As usual, our open() will create one or more threads where we'll do 
+/* As usual, our open() will create one or more threads where we'll do
    the interesting work.
-*/  
+*/
 int Test::open(void * _unused)
 {
     ACE_UNUSED_ARG(_unused);
 
         // One thing about the barrier:  You have to tell it how many
         // threads it will be synching.  The threads() mutator on my
-        // Barrier class lets you do that and hides the implementation 
+        // Barrier class lets you do that and hides the implementation
         // details at the same time.
     barrier_.threads(threads_);
 
-        // Activate the tasks as usual...
+        // Activate the tasks as usual...  Like the other cases where
+        // we're joining (or waiting for) our threads, we can't use
+        // THR_DETACHED.
     return this->activate(THR_NEW_LWP, threads_);
 }
 
@@ -78,14 +80,14 @@ int Test::svc(void)
     ACE_DEBUG ((LM_INFO, "(%P|%t|%T)\tTest::svc() Entry\n"));
 
         // Initialize the random number generator.  We'll use this to
-        // create sleep() times in each thread.  This will help us see 
+        // create sleep() times in each thread.  This will help us see
         // if the barrier synch is working.
     ACE_Time_Value now(ACE_OS::gettimeofday());
     ACE_RANDR_TYPE seed = now.usec();
     ACE_OS::srand(seed);
     int delay;
 
-        // After saying hello above, sleep for a random amount of time 
+        // After saying hello above, sleep for a random amount of time
         // from 1 to 6 seconds.  That will cause the next message
         // "Entering wait()" to be staggered on the output as each
         // thread's sleep() returns.
@@ -105,7 +107,7 @@ int Test::svc(void)
         return 0;
     }
 
-        // When all threads have reached wait() they will give us this 
+        // When all threads have reached wait() they will give us this
         // message.  If you execute this, you should see all of the
         // "Everybody together" messages at about the same time.
     ACE_DEBUG ((LM_INFO, "(%P|%t|%T)\tTest::svc() Everybody together?\n"));
@@ -118,7 +120,7 @@ int Test::svc(void)
     ACE_DEBUG ((LM_INFO, "(%P|%t|%T)\tTest::svc() Entering done()\n"));
 
         // This time we call done() instead of wait().  done()
-        // actually invokes wait() but before returning here, it will 
+        // actually invokes wait() but before returning here, it will
         // clean up a few resources.  The goal is to prevent carrying
         // around objects you don't need.
     if( barrier_.done() == -1 )
@@ -134,7 +136,7 @@ int Test::svc(void)
         // A final sleep()
     delay = ACE_OS::rand_r(seed)%5;
     ACE_OS::sleep(abs(delay)+1);
-    
+
         // These should be randomly spaced like all of the other
         // post-sleep messages.
     ACE_DEBUG ((LM_INFO, "(%P|%t|%T)\tTest::svc() Chaos and anarchy for all!\n"));
@@ -159,6 +161,6 @@ int main(int, char**)
     test.open();
         // and wait for them to complete also.
     test.wait();
-    
+
     return(0);
 }

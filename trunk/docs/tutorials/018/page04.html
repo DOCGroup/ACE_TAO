@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -12,7 +13,7 @@
 
 <P>
 <HR WIDTH="100%">
-Our Test implementation looks much like the other ACE_Task derivatives 
+Our Test implementation looks much like the other ACE_Task derivatives
 we've used in the past.  The most obvious change is the addition of
 the run() method.  run() will activate the threads and put a few
 messages into the queue.  We could have done that in main() but it
@@ -43,7 +44,7 @@ resources that the threads might clobber.
 
 <font color=red>/* Construction time...
    Initialize the baseclass, the name and the barrier.  Since the
-   client will probably invoke run() next, we go ahead an announce our 
+   client will probably invoke run() next, we go ahead an announce our
    creation to make the output more readable.
  */</font>
 template &lt;class MUTEX>
@@ -59,7 +60,7 @@ Test_T&lt;MUTEX>::Test_T (const char *name)
 
 <font color=red>/* Activate the threads and create some test data...
  */</font>
-template &lt;class MUTEX> int 
+template &lt;class MUTEX> int
 Test_T&lt;MUTEX>::run (void)
 {
   <font color=red>// Try to activate the set of threads that will test the mutex</font>
@@ -99,7 +100,7 @@ Test_T&lt;MUTEX>::run (void)
 
 <font color=red>/* Send a message to the thread pool
  */</font>
-template &lt;class MUTEX> int 
+template &lt;class MUTEX> int
 Test_T&lt;MUTEX>::send (ACE_Message_Block *message)
 {
   <font color=red>// If no message was provided, create a hangup message.</font>
@@ -129,7 +130,7 @@ Test_T&lt;MUTEX>::send (ACE_Message_Block *message)
 
 <font color=red>/* A farily typical open().  Just activate the set of threads and return.
  */</font>
-template &lt;class MUTEX> int 
+template &lt;class MUTEX> int
 Test_T&lt;MUTEX>::open (void *arg)
 {
   ACE_UNUSED_ARG(arg);
@@ -137,10 +138,10 @@ Test_T&lt;MUTEX>::open (void *arg)
                          TEST_THREAD_COUNT);
 }
 
-<font color=red>/* svc() is also fairly typical.  The new part is the use of the guard 
+<font color=red>/* svc() is also fairly typical.  The new part is the use of the guard
    to simulate protection of shared resources.
  */</font>
-template &lt;class MUTEX> int 
+template &lt;class MUTEX> int
 Test_T&lt;MUTEX>::svc (void)
 {
   <font color=red>// Keep a simple thread identifier.  We could always use the</font>
@@ -213,7 +214,7 @@ Test_T&lt;MUTEX>::svc (void)
   <font color=red>// this then wait() will never exit since all of the other threads</font>
   <font color=red>// are still blocked on getq().</font>
   this->send ();
-    
+
   return 0;
 };
 

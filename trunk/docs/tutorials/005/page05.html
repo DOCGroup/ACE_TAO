@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -66,7 +67,7 @@ rest of the application all together.
    should return int so that it can tell the caller there was a
    problem.  Even as void you could at least throw an exception which
    you would never want to do in a destructor.  */</font>
-void 
+void
 <font color=#008888>Client_Handler::destroy</font> (void)
 {
   <font color=red>/* Tell the reactor to forget all about us.  Notice that we use the
@@ -87,7 +88,7 @@ void
    Client_Acceptor when a new client connection has been accepted.
    The Client_Acceptor instance pointer is cast to a void* and given
    to us here.  We'll use that to avoid some global data...  */</font>
-int 
+int
 <font color=#008888>Client_Handler::open</font> (void *_acceptor)
 {
   <font color=red>/* Convert the void* to a Client_Acceptor*.  You should probably use
@@ -157,7 +158,7 @@ int
    As I mentioned, the _handle parameter isn't useful to us but it
    narrows the list of methods the reactor has to worry about and the
    list of possible virtual functions we would have to override.  */</font>
-int 
+int
 <font color=#008888>Client_Handler::handle_input</font> (ACE_HANDLE handle)
 {
   <font color=red>/* Some compilers don't like it when you fail to use a parameter.
@@ -183,7 +184,7 @@ int
    framework will take care of removing us (due to the -1), so we
    don't need to use the destroy() method.  Instead, we just delete
    ourselves directly.  */</font>
-int 
+int
 <font color=#008888>Client_Handler::handle_close</font> (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask)
 {
@@ -201,7 +202,7 @@ int
    appliation, you will probably have a bit more in main() to deal
    with command line options but after that point, all of the action
    takes place here.  */</font>
-int 
+int
 <font color=#008888>Client_Handler::process</font> (char *rdbuf,
                          int rdbuf_len)
 {
