@@ -232,7 +232,8 @@ protected:
  * IDL sequences of strings must automatically duplicate and
  * release their members based on some global <release> flag.
  */
-class TAO_Export TAO_Unbounded_String_Sequence : public TAO_Unbounded_Base_Sequence
+class TAO_Export TAO_Unbounded_String_Sequence 
+  : public TAO_Unbounded_Base_Sequence
 {
 
   // = SPEC
@@ -273,17 +274,17 @@ public:
    * allows the length and contents of a bounded or unbounded sequence
    * to be set. For unbounded sequences, it also allows the initial
    * value of the maximum length to be set. For this constructor,
-   * ownership of the contents vector is determined by the release
+   * ownership of the content's vector is determined by the release
    * parameter---FALSE means the caller owns the storage, while TRUE
    * means that the sequence assumes ownership of the storage.
-   * If release is TRUE, the contents vector must have been allocated
+   * If release is TRUE, the content's vector must have been allocated
    * using the sequence allocbuf function, and the sequence will pass
    * it to freebuf when finished with it.
    */
   TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
                                  CORBA::ULong length,
-                                 char **data,
-                                 CORBA::Boolean release=0);
+                                 char* *data,
+                                 CORBA::Boolean release = 0);
 
   /**
    * The copy constructor performs a deep copy from the existing
@@ -321,7 +322,9 @@ public:
    * reallocation is performed. After reallocation, the release flag
    * is always set to TRUE.
    */
-  TAO_Unbounded_String_Sequence &operator= (const TAO_Unbounded_String_Sequence &);
+  TAO_Unbounded_String_Sequence &operator= (
+      const TAO_Unbounded_String_Sequence &
+    );
 
   /// read-write accessor
   TAO_SeqElem_String_Manager operator[] (CORBA::ULong slot) const;
@@ -357,6 +360,12 @@ public:
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
+
+  // Parameters work the same as in constructor of the same signature.
+  void replace (CORBA::ULong maximum,
+                CORBA::ULong length,
+                char* *data,
+                CORBA::Boolean release = 0);
 };
 
 // ****************************************************************
@@ -369,7 +378,8 @@ public:
  * IDL sequences of wstrings must automatically duplicate and
  * release their members based on some global <release> flag.
  */
-class TAO_Export TAO_Unbounded_WString_Sequence : public TAO_Unbounded_Base_Sequence
+class TAO_Export TAO_Unbounded_WString_Sequence 
+  : public TAO_Unbounded_Base_Sequence
 {
 
   // = SPEC
@@ -419,8 +429,8 @@ public:
    */
   TAO_Unbounded_WString_Sequence (CORBA::ULong maximum,
                                   CORBA::ULong length,
-                                  CORBA::WChar **data,
-                                  CORBA::Boolean release=0);
+                                  CORBA::WChar* *data,
+                                  CORBA::Boolean release = 0);
 
   /**
    * The copy constructor performs a deep copy from the existing
@@ -458,7 +468,9 @@ public:
    * reallocation is performed. After reallocation, the release flag
    * is always set to TRUE.
    */
-  TAO_Unbounded_WString_Sequence &operator= (const TAO_Unbounded_WString_Sequence &);
+  TAO_Unbounded_WString_Sequence &operator= (
+      const TAO_Unbounded_WString_Sequence &
+    );
 
   /// read-write accessor
   TAO_SeqElem_WString_Manager operator[] (CORBA::ULong slot) const;
@@ -494,6 +506,12 @@ public:
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
+
+  // Parameters work the same as in constructor of the same signature.
+  void replace (CORBA::ULong maximum,
+                CORBA::ULong length,
+                CORBA::WChar* *data,
+                CORBA::Boolean release = 0);
 };
 
 // ****************************************************************
@@ -518,7 +536,8 @@ ACE_TEMPLATE_SPECIALIZATION
  * Specializing the TAO_Unbounded_Sequence<T> parametric
  * class, is an excellent way to achieve this optimizations.
  */
-class TAO_Export TAO_Unbounded_Sequence<CORBA::Octet> : public TAO_Unbounded_Base_Sequence
+class TAO_Export TAO_Unbounded_Sequence<CORBA::Octet> 
+  : public TAO_Unbounded_Base_Sequence
 {
 public:
   /// For efficient marshalling and demarshalling.
@@ -544,7 +563,9 @@ public:
    * operations.
    */
   TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<CORBA::Octet> &);
-  TAO_Unbounded_Sequence<CORBA::Octet>& operator= (const TAO_Unbounded_Sequence<CORBA::Octet> &);
+  TAO_Unbounded_Sequence<CORBA::Octet>& operator= (
+      const TAO_Unbounded_Sequence<CORBA::Octet> &
+    );
 
   /**
    * See the general description in "Sequence_T.h"

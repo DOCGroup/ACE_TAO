@@ -153,7 +153,9 @@ public:
   TAO_Bounded_Sequence (const TAO_Bounded_Sequence<T,MAX> &);
 
   /// Assignment operator.
-  TAO_Bounded_Sequence<T,MAX> &operator= (const TAO_Bounded_Sequence<T,MAX> &);
+  TAO_Bounded_Sequence<T,MAX> &operator= (
+      const TAO_Bounded_Sequence<T,MAX> &
+    );
 
   /// Dtor.
   ~TAO_Bounded_Sequence (void);
@@ -173,8 +175,8 @@ public:
   /// Free the sequence.
   static void freebuf (T *);
 
-  /// allocate a buffer of the requested length. The buffer is allocated for the
-  /// right type
+  /// allocate a buffer of the requested length. The buffer is allocated for
+  /// the right type
   virtual void _allocate_buffer (CORBA::ULong length);
 
   /// deallocate the buffer
@@ -1248,6 +1250,11 @@ public:
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
+
+  // Parameters work the same as in constructor of the same signature.
+  void replace (CORBA::ULong length,
+                char* *value,
+                CORBA::Boolean release = 0);
 };
 
 // *************************************************************
@@ -1351,6 +1358,11 @@ public:
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
+
+  // Parameters work the same as in constructor of the same signature.
+  void replace (CORBA::ULong length,
+                CORBA::WChar* *value,
+                CORBA::Boolean release = 0);
 };
 
 // *************************************************************
