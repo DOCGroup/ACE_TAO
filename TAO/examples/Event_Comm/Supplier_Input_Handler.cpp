@@ -16,7 +16,6 @@ Supplier_Input_Handler::~Supplier_Input_Handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Supplier_Input_Handler::~Supplier_Input_Handler\n"));
-  this->close ();
 }
 
 int
@@ -28,7 +27,7 @@ Supplier_Input_Handler::close (void)
   // Make sure to cleanup the STDIN handler.
    if (ACE_Event_Handler::remove_stdin_handler
       (
-       ACE_Reactor::instance (),
+       TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
      ACE_ERROR ((LM_ERROR,
                  "%p\n",
@@ -45,7 +44,7 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
 
   if (ACE_Event_Handler::register_stdin_handler
       (this,
-       ACE_Reactor::instance (),
+       TAO_ORB_Core_instance ()->reactor (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
@@ -68,11 +67,10 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
   if (ACE_OS::fgets (buf,
 		     sizeof buf - 1,
                      stdin) == 0)
-    {
-      ACE_OS::strcpy (buf,
-		      "quit");
+    {      
       ACE_DEBUG ((LM_DEBUG,
                   "shutting down Supplier_Input_Handler\n"));
+      return 0; 
     }
   else
     {
@@ -88,14 +86,16 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
 		  buf));
     }
 
-  Event_Comm::Notifier *notifier = this->notifier_->notifier ();
-  ACE_ASSERT (notifier != 0);
+  
 
   if (ACE_OS::strncmp (buf, "quit", 4) == 0)
     // Tell the main event loop to shutdown.
-    ACE_Reactor::end_event_loop ();
+    this->notifier_->shutdown ();
   else
     {
+      Event_Comm::Notifier *notifier = this->notifier_->notifier ();
+      ACE_ASSERT (notifier != 0);
+      
       // Use the notifier to notify Consumers.
       TAO_TRY
         {

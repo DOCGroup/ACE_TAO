@@ -43,7 +43,7 @@ public:
  virtual ~Consumer_Handler (void);
   // Destructor.
 
-  int init (int argc, char *argv[], ConsumerShutdown *consumershutdown);
+  int init (int argc, char *argv[], ShutdownCallback *_shutdowncallback);
   // Initializes the ORB, gets the Notifier reference from the Naming
   // Service, and starts the servant for the Consumer object.
 
@@ -61,6 +61,7 @@ public:
   Event_Comm::Notifier *notifier (void);
 
   ACE_Reactor *reactor (void);
+  // returns the ORB's reactor.
 
 private:
   int get_notifier (void);
@@ -83,7 +84,7 @@ private:
   CORBA::ORB_var orb_;
   // Remember our orb.
 
-  ConsumerShutdown* consumershutdown;
+  ShutdownCallback* shutdowncallback;
   // The Shutdown callback used to shutdown the consumer application.
 };
 
