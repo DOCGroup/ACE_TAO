@@ -63,6 +63,10 @@ class Prime_Scheduler : public ACE_Task_Base
   //     This class also plays the role of the Proxy and the Servant
   //     in the Active Object pattern.  Naturally, these roles could
   //     be split apart from the Prime_Scheduler.
+
+  friend class Method_Request_work;
+  friend class Method_Request_name;
+  friend class Method_Request_end;
 public:
   // = Initialization and termination methods.
   Prime_Scheduler (const ASYS_TCHAR *,
