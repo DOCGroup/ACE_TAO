@@ -32,6 +32,8 @@
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
     (defined (ACE_HAS_AIO_CALLS))
 
+#include "ace/Task.h"
+
 // Forward declarations
 class ACE_Proactor;
 class ACE_Handler;
@@ -541,6 +543,11 @@ public:
     friend class ACE_Asynch_Accept;
     // The factory has special privileges.
 
+#if defined (ACE_HAS_AIO_CALLS)
+    friend class ACE_Asynch_Accept_Handler;
+    // The helper factory has oprivilages too.
+#endif /* ACE_HAS_AIO_CALLS */
+
     u_long bytes_to_read (void) const;
     // The number of bytes which were requested at the start of the
     // asynchronous accept.
@@ -588,6 +595,35 @@ public:
     // I/O handle for the new connection.
   };
 };
+
+#if defined (ACE_HAS_AIO_CALLS)
+class ACE_Export ACE_Asynch_Accept_Handler : public ACE_Task <ACE_NULL_SYNCH>
+{
+  // = TITLE
+  //     For the POSIX implementation, this class takes care of doing
+  //     Asynch_Accept. 
+  // 
+  // = DESCRIPTION
+  //      
+public:
+  ACE_Asynch_Accept_Handler (ACE_Asynch_Accept::Result *result);
+  // Constructor.
+  
+  ~ACE_Asynch_Accept_Handler (void);
+  // Destructor.
+  
+protected:
+  virtual int svc (void);
+  // Run by a daemon thread to handle deferred processing. This method
+  // will be doing the accept actually.
+  
+  ACE_Asynch_Accept::Result *result_;
+  // The result pointer given by <ACE_Asynch_Transmit> class. 
+  
+  int shutting_down_;
+  // Flag used to indicate when we are shutting down. 
+};
+#endif /* ACE_HAS_AIO_CALLS*/
 
 class ACE_Export ACE_Asynch_Transmit_File : public ACE_Asynch_Operation
 {
