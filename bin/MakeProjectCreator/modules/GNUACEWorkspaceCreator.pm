@@ -91,6 +91,8 @@ sub write_comps {
 
   ## If there is more than one project, use a for loop
   if ($#list > 0) {
+    my(@dirs)  = ();
+    my(%added) = ();
     print $fh "ifeq (\$(KEEP_GOING),1)$crlf" .
               "\t\@for file in \$(MFILES); do \\$crlf" .
               "\t\$(MAKE) -f `basename \$\$file` -C `dirname \$\$file` \$(\@); \\$crlf" .
@@ -98,12 +100,35 @@ sub write_comps {
               "else$crlf";
     foreach my $project (@list) {
       print $fh "\t\@\$(MAKE) -f " . basename($project) . ' -C ' . dirname($project) . " \$(\@);$crlf";
+      my($dname) = dirname($project);
+      if ($dname ne '.' && !defined $added{$dname}) {
+        push(@dirs, $dname);
+        $added{$dname} = 1;
+      }
     }
     print $fh "endif$crlf";
+
+    ## Print out the reverseclean target
+    if (defined $dirs[0]) {
+      print $fh $crlf .
+                'DIRS = \\' . $crlf;
+      for(my $i = 0; $i <= $#dirs; ++$i) {
+        print $fh "  $dirs[$i]" . ($i != $#dirs ? ' \\' : '') . $crlf;
+      }
+      print $fh $crlf .
+                "reverseclean:$crlf" .
+                "\t\@\$(ACE_ROOT)/bin/reverse_clean \$(DIRS)$crlf";
+    }
   }
   else {
     ## Otherwise, just list the call to make without a for loop
-    print $fh "\t\@\$(MAKE) -f " . basename($list[0]) . ' -C ' . dirname($list[0]) . " \$(\@);$crlf";
+    my($dir)  = dirname($list[0]);
+    my($base) = basename($list[0]);
+    print $fh "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .
+              "\$(\@);$crlf$crlf" .
+              "reverseclean:$crlf" .
+              "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .
+              "realclean$crlf";
   }
 }
 
