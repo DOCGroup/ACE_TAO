@@ -96,6 +96,7 @@ inline char *__yytext()
 %}
 
 %array
+%option never-interactive
 
 %%
 

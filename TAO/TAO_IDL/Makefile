@@ -196,13 +196,13 @@ fe/lex.yy.cpp:	fe/idl.ll
 .PHONY: lex.yy.cpp.target
 
 lex.yy.cpp.target:
-		$(LEX) -t -I fe/idl.ll | \
+		$(LEX) -t fe/idl.ll | \
 		sed -e "s/yy/tao_yy/g" \
 		    -e "s/YY/TAO_YY/g" \
 		    -e "s@#include <unistd\.h>@#include \"ace/OS.h\"@" \
 		    -e "s@#include <@#include /**/ <@" \
 		    -e "s@ECHO@TAO_YY_ECHO@" \
-		    -e 's/\$$Header$$/$$Id$$/' > fe/lex.yy.cpp
+		    -e 's/\$$Hea''der.*\$$/$$Id$$/' > fe/lex.yy.cpp
 
 tags:
 	rm -f TAGS
