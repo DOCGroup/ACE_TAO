@@ -742,10 +742,10 @@ Mon Sep 25 11:09:20 2000  Ossama Othman  <ossama@uci.edu>
           obviates the need for this attribute.
 
           Changed "mcast_discovery_endpoint_" attribute from an
-          ACE_CString to a CORBA::String_var.  This get around an access
+          ACE_CString to a CORBA::String_var.  This gets around an access
           violation that was occuring when allocating space for a string
-          inside the ACE_CString assignment operator.  A fix for thThe
-          reason for the access violation itself will be committed soon.
+          inside the ACE_CString assignment operator.  A fix for the
+          cause of the access violation itself will be committed soon.
           [Bug 665]
 
         * tao/corbafwd.cpp (string_dup, wstring_dup):
