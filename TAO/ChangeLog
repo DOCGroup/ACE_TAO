@@ -40,7 +40,7 @@ Mon Mar 24 17:36:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/PortableServer/POA.cpp:
 
 	  Added missing .in() to an ObjectReferenceTemplate_var
-	  argument. Thanks to Johnny Willemsen 
+	  argument. Thanks to Johnny Willemsen
 	  <jwillemsen@remedy.nl> for tracking this down.
 
         * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.dsp:
@@ -55,7 +55,7 @@ Mon Mar 24 13:12:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  to change states from
 	  TAO_Connection_Handler::close_connection_eh () and
 	  TAO_Transport::close_connection_shared (). The lock within
-	  state_changed () is not sufficient to prevent the race. 
+	  state_changed () is not sufficient to prevent the race.
 
 Mon Mar 24 13:07:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -70,14 +70,16 @@ Sun Mar 23 12:30:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Services.h:
         * tao/Services.i:
 
-	  Removed these files from the respository, since they are replaced by the
-	  corresponding ServicesC.* file. Apparently during a recent branch merge
-	  the removal of the above files was overlooked or otherwise derailed.
+	  Removed these files from the respository, since they are
+	  replaced by the corresponding ServicesC.* file. Apparently
+	  during a recent branch merge the removal of the above files was
+	  overlooked or otherwise derailed.
 
 	* tao/Makefile.bor:
 
-	  Updated the Borland makefile to reflect the change above. Thanks to 
-	  Johnny Willemsen <jwillemsen@remedy.nl> for reporting the problem.
+	  Updated the Borland makefile to reflect the change above. Thanks
+	  to Johnny Willemsen <jwillemsen@remedy.nl> for reporting the
+	  problem.
 
 Sat Mar 22 19:52:58 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
