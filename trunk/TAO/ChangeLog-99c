@@ -1,3 +1,10 @@
+Thu Apr 15 13:22:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/ORB_Core.h:
+	* tao/TAO.dsp: 
+	  Fixed some problems with compilation under NT.
+
 Thu Apr 15 10:44:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
