@@ -2,7 +2,7 @@
 #include "PG_GenericFactory.h"
 #include "PG_conf.h"
 #include "PG_Operators.h"
-#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
+#include "PG_Utils.h"
 
 #include "tao/debug.h"
 
@@ -487,11 +487,9 @@ TAO_PG_ObjectGroupManager::create_object_group (
                                           type_id
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-  
-  { int _TODO_replace_this_with_commemted_out_version_; } 
-  FT::TagFTGroupTaggedComponent tag_component;
-  //  PortableGroup::TagGroupTaggedComponent tag_component;
-  TAO_FT_IOGR_Property prop (tag_component);
+
+  //  { int _TODO_replace_this_with_commemted_out_version_; }
+  PortableGroup::TagGroupTaggedComponent tag_component;
 
   tag_component.component_version.major = (CORBA::Octet) 1;
   tag_component.component_version.minor = (CORBA::Octet) 0;
@@ -500,10 +498,9 @@ TAO_PG_ObjectGroupManager::create_object_group (
   tag_component.object_group_ref_version = 0;
 
   // Set the property
-  iorm_->set_property (&prop, 
-                        object_group.in ()
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  TAO::PG_Utils::set_tagged_component (object_group.in (),
+                                       tag_component);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   ACE_NEW_THROW_EX (group_entry,
@@ -527,17 +524,18 @@ TAO_PG_ObjectGroupManager::create_object_group (
 
   CORBA::ULong len = the_criteria.length ();
   group_entry->properties.length (len);
+
   for (CORBA::ULong i = 0; i < len; ++i)
     group_entry->properties[i] = the_criteria[i];
 
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      guard,
-                      this->lock_,
-                      0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    guard,
+                    this->lock_,
+                    0);
 
-    if (this->object_group_map_.bind (group_id, group_entry) != 0)
-      ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
-                        PortableGroup::ObjectGroup::_nil ());
+  if (this->object_group_map_.bind (group_id, group_entry) != 0)
+    ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
+                      PortableGroup::ObjectGroup::_nil ());
 
   (void) safe_group_entry.release ();
 
@@ -585,17 +583,16 @@ TAO_PG_ObjectGroupManager::object_group (const PortableServer::ObjectId & oid)
                     PortableGroup::ObjectGroup::_nil ());
 
 {
-//TODO -- need to fix this code. The LoadBalancer uses this.
-//        Need to implement some sort of objectId-to-ObjectGroup nmap.
-  int _todo_fix_temporarily_disabled_code_;
-}
+  //TODO -- need to fix this code. The LoadBalancer uses this.
+  //        Need to implement some sort of objectId-to-ObjectGroup nmap.
+  // int _todo_fix_temporarily_disabled_code_;
 #if 0
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.find (group_id, group_entry) == 0)
     return
       PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
   else
-#endif 0
+#endif
     return PortableGroup::ObjectGroup::_nil ();
 }
 
@@ -712,16 +709,11 @@ TAO_PG_ObjectGroupManager::get_group_entry (
   if (CORBA::is_nil (this->poa_.in ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  { int _TODO_replace_this_with_commemted_out_version_; } 
-  FT::TagFTGroupTaggedComponent tc;
+  //   { int _TODO_replace_this_with_commemted_out_version_; }
   // extract the group_id from the object group reference
-  //PortableGroup::TagGroupTaggedComponent tc;
-  TAO_FT_IOGR_Property tmp_prop;
-
-  tmp_prop.get_tagged_component (object_group,
-                                 tc
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  PortableGroup::TagGroupTaggedComponent tc;
+  TAO::PG_Utils::get_tagged_component (object_group,
+                                       tc);
 
   PortableGroup::ObjectGroupId group_id = tc.object_group_id;
 

@@ -34,7 +34,7 @@ TAO_PG::override_properties (
     return;
 
   const CORBA::ULong old_length = properties.length ();
-  const CORBA::ULong new_length = old_length;
+  //   const CORBA::ULong new_length = old_length;
 
   // @@ Slow O(n^2) operation.  Note that it may be slower than O(n^2)
   //    if the length of the property sequence must be increased

@@ -25,11 +25,10 @@
 #include "PG_ObjectGroup_Map.h"
 #include "PG_Location_Map.h"
 
+
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServerC.h"
-#include "orbsvcs/FT_CORBA_ORBC.h"
-#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-
+#include "tao/IORManipulation/IORManip_Loader.h"
 
 /// Forward declarations
 class TAO_PG_GenericFactory;
