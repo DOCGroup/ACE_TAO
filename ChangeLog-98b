@@ -1,3 +1,16 @@
+Tue Jul 14 14:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* ace/Select_Reactor.cpp: Changed the handling
+	  of the state_changed flag. Now, it is set to "changed" (=1)
+	  after each run of the event loop. This fixed a nested
+	  upcalls bug, which was caused by overwriting this
+	  flag each time entering the event loop. So that,
+	  when poping one level of the handle_events call
+	  stack information was lost about changes. Now, we
+	  assume that information has changed and 
+	  propagate this knowlegde down in the call
+	  stack. No performance overhead is caused by that.
+
 Tue Jul 14 12:02:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/C-inserver.cpp: 
