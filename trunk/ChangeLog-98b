@@ -9,6 +9,8 @@ Thu Nov 19 10:28:11 1998  David L. Levine  <levine@cs.wustl.edu>
           errors in equations due to removing the grouping.  g++ 2.7.2.3
           noticed this on the latest context_switch_time.cpp.
 
+        * ace/Svc_Handler.cpp (cleanup_hint): fixed ACE_TRACE string.
+
 Thu Nov 19 00:18:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/OS.i (strnstr): Added a check to see if the substring is
