@@ -116,8 +116,6 @@
   { fprintf(stderr, "VS: %d.VIDEO_SINGLETON::instance ()->nextGroup(%d) out of range (%d).\n", VIDEO_SINGLETON::instance ()->cmd, (pnextGroup), VIDEO_SINGLETON::instance ()->numG); \
     return 0; } }
 
-#include <sys/types.h>
-#include <sys/socket.h>
 #include "ace/Singleton.h"
 #include "include/common.h"
 #include "mpeg_shared/routine.h"

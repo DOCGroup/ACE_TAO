@@ -39,7 +39,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS +=  -lmpeg_shared -lmpeg_mib -lmpeg_client -lXm  -lXext -lXt -lSM -lICE  -lX11  -lsocket -lnsl -ldl
-CPPFLAGS += -i -I../mpeg_client/ -DSH_MEM -DNDEBUG -DSunOS -DSTAT -I/project/doc/pkg/X11/include -L../mpeg_client/ -L/project/doc/pkg/X11/lib
+CPPFLAGS += -i -DSH_MEM -DNDEBUG -DSTAT -I/project/doc/pkg/X11/include -L/project/doc/pkg/X11/lib
 
 clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
@@ -51,8 +51,6 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 .obj/vcr.o .obj/vcr.so .shobj/vcr.o .shobj/vcr.so: vcr.cpp \
- $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/video.h \
- $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/proto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -69,8 +67,10 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/video.h \
+ \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/newproto.h \
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/global.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/dither.h

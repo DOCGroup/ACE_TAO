@@ -5,7 +5,7 @@
 #define AV_VIDEO_CONTROL_H
 
 
-#include "Video_ControlS.h"
+#include "mpeg_shared/Video_ControlS.h"
 
 class Video_Control_i
   : public virtual POA_Video_Control
