@@ -108,7 +108,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
     {
       ACE_CString iop = (*endpoint);
 
-      // IOP://address1,address2//
+      // IOP://address1,address2
       //    ^ slot
       int slot = iop.find ("://", 0);
       if (slot == iop.npos)
