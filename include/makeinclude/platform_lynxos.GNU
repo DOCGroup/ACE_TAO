@@ -1,7 +1,7 @@
 # $Id$
 #
-# LynxOS with g++.  Defaults to LynxOS Version 3.0.0.  For Version 2.5.0,
-# for example, add "VERSION=2.5.0" to your make invocation.
+# LynxOS with g++.  Defaults to LynxOS Version 3.0.0.  For Version 3.1.0,
+# for example, add "VERSION=3.1.0" to your make invocation.
 
 #### NOTE:  It's best to create a file that includes this one, instead
 #### of symlinking it.  That way, you can easily override the default
@@ -36,28 +36,44 @@ ifneq ($(shell uname -s),LynxOS)
     LYNXTARGET = x86
   endif # LYNXTARGET
 
+  ifeq (,$(OBJSFORMAT))
+    ifeq (x86,$(LYNXTARGET))
+      OBJSFORMAT = coff
+    else  # ! x86
+      OBJSFORMAT = xcoff
+    endif # ! x86
+  endif # OBJSFORMAT
+
   ifeq (,$(HOST_OS))
-    ifeq (2.5.0,$(VERSION))
-      HOST_OS = sunos
-    else
-      ifeq ($(LYNXTARGET),x86)
-        HOST_OS = sunos-coff
-      else
-      ifeq ($(LYNXTARGET),ppc)
-        HOST_OS = sunos-xcoff
-      endif # ppc
-      endif # x86
-    endif # VERSION
+    HOST_OS = sunos
   endif # HOST_OS
 
-  ifeq (,$(findstring /usr/lynx/$(VERSION)/$(LYNXTARGET),$(PATH)))
-    ifeq ($(VERSION),3.0.0)
-      PATH:=\
-/usr/lynx/$(VERSION)/$(LYNXTARGET)/cdk/$(HOST_OS)-$(LYNXTARGET)/bin:/usr/lynx/$(VERSION)/$(LYNXTARGET)/cdk/$(HOST_OS)-$(LYNXTARGET)/usr/bin:$(PATH)
-    else  # > 3.0.0
-      PATH:=\
-/usr/lynx/$(VERSION)/cdk/$(HOST_OS)-$(LYNXTARGET)/bin:/usr/lynx/$(VERSION)/cdk/$(HOST_OS)-$(LYNXTARGET)/usr/bin:$(PATH)
-    endif # > 3.0.0
+  ifeq (,$(HOST_OS_REVISION))
+    #### Added for 3.1.0
+    HOST_OS_REVISION = `uname -r`
+  endif # HOST_OS_REVISION
+
+  ifeq (,$(HOST_OS_TYPE))
+    #### Added for 3.1.0
+    HOST_OS_TYPE = solaris
+  endif # HOST_OS_TYPE
+
+  ifeq (,$(ENV_PREFIX))
+    ifeq (2.5.0,$(VERSION))
+      ENV_PREFIX = /usr/lynx/$(VERSION)/$(LYNXTARGET)
+    else # ! 2.5.0
+    ifeq (3.0.,$(findstring 3.0.,$(VERSION)))
+      ENV_PREFIX = /usr/lynx/$(VERSION)/$(LYNXTARGET)
+    else  # >= 3.1.0
+      ENV_PREFIX = /usr/lynx/$(VERSION)
+    endif # >= 3.1.0
+    endif # ! 2.5.0
+  endif # ENV_PREFIX
+
+  ifeq (,$(findstring $(ENV_PREFIX),$(PATH)))
+    PATH:=\
+$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin\
+:$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/usr/bin:$(PATH)
   endif # PATH
 endif # ! LynxOS
 
@@ -66,7 +82,6 @@ ifeq (2.5.0,$(VERSION))
   #       warning: internal compiler error: debugging info corrupted
   optimize = 0
   ACE_HAS_GNUG_PRE_2_8 = 1
-  CFLAGS += -mthreads
 else
   optimize = 1
 
@@ -75,17 +90,15 @@ else
   ACE_HAS_GNUG_PRE_2_8 = 0
 endif # VERSION
 
-ifeq (3.0.0,$(VERSION))
+ifeq (2.5.0,$(VERSION))
   CFLAGS += -mthreads
-endif # 3.0.0
-
-ifeq (3.0.1,$(VERSION))
+else  # ! 2.5.0
+ifeq (3.0.,$(findstring 3.0.,$(VERSION)))
   CFLAGS += -mthreads
-endif # 3.0.1
-
-ifeq (3.1.0,$(VERSION))
-  CFLAGS += -I/usr/lynx/$(VERSION)/usr/include
-endif # 3.1.0
+else  # >= 3.1.0
+  CFLAGS += -I$(ENV_PREFIX)/usr/include
+endif # >= 3.1.0
+endif # ! 2.5.0
 
 CC              = gcc
 CXX             = g++
@@ -109,6 +122,6 @@ RANLIB          = @true
 PRELIB          = @true
 
 # To save much disk space, strip all executables.  Comment the
-# following line out if you want to debug.  Or, added "POSTLINK="
+# following line out if you want to debug.  Or, add "POSTLINK="
 # to your make invocation.
 POSTLINK        = ; strip $@
