@@ -177,7 +177,7 @@ GIOP::send_message (
 		    buflen, stream.length);
 	    return CORBA_B_FALSE;
 	}
-	writelen = ACE_OS::send (connection, (char _FAR *) buf, buflen);
+	writelen = ACE::send (connection, (char _FAR *) buf, buflen);
 
 #ifdef	DEBUG
 	dmsg_filter (6, "wrote %d bytes to connection %d",
@@ -264,7 +264,7 @@ GIOP::close_connection (
     // that this won't block (long) since we never set SO_LINGER
     //
     dump_msg ("send", (const unsigned char *) close_message, GIOP_HDR_LEN);
-    (void) ACE_OS::send (fd, close_message, GIOP_HDR_LEN);
+    (void) ACE::send (fd, close_message, GIOP_HDR_LEN);
     (void) ACE_OS::shutdown (fd, 2);
     (void) ACE_OS::closesocket (fd);
     dmsg1 ("shut down socket %d", fd);
@@ -289,7 +289,7 @@ static inline void
 send_error (ACE_HANDLE &fd)
 {
     dump_msg ("send", (const unsigned char *) error_message, GIOP_HDR_LEN);
-    (void) ACE_OS::send (fd, error_message, GIOP_HDR_LEN);
+    (void) ACE::send (fd, error_message, GIOP_HDR_LEN);
     (void) ACE_OS::shutdown (fd, 2);
     (void) ACE_OS::closesocket (fd);
     dmsg1 ("aborted socket %d", fd);
