@@ -13,6 +13,7 @@ INFO	= README \
 	  VERSION
 
 DIRS	= ace \
+          etc \
 	  netsvcs \
 	  tests \
           apps \
@@ -23,6 +24,7 @@ CLONE	= Makefile \
 	  ace \
 	  apps \
 	  bin \
+	  etc \
 	  examples \
 	  include \
 	  netsvcs \
@@ -70,6 +72,7 @@ RELEASE_FILES = ACE_wrappers/ACE-INSTALL.html \
 		ACE_wrappers/ace \
 		ACE_wrappers/apps \
 		ACE_wrappers/bin \
+		ACE_wrappers/etc \
 		ACE_wrappers/examples \
 		ACE_wrappers/include \
 		ACE_wrappers/man \
