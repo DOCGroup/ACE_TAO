@@ -84,7 +84,7 @@ ACE_Remote_Name_Space::resolve (const ACE_WString &name,
 
   ACE_WString temp (reply.value (), reply.value_len () / sizeof (ACE_USHORT16));
   value = temp;
-  ACE_NEW_RETURN (type, char[reply.type_len ()], -1);
+  ACE_NEW_RETURN (type, char[reply.type_len ()+1], -1);
   ACE_OS::strcpy (type, reply.type ());
 
   return 0;
