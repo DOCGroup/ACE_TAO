@@ -1,3 +1,131 @@
+Sun Nov  3 15:59:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LB_ORT.idl:
+
+	  Updated to CORBA 3.0 conventions.  Use the CORBA 3.0
+	  "typeprefix" keyword instead of "#pragma prefix".
+
+Sun Nov  3 15:59:57 2002  Ossama Othman  <ossama@uci.edu>
+
+	The following fix some problems with the infrastructure-controlled
+	membership support in TAO's PortableGroup library:
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h
+	  (TAO_PG_Factory_Node):
+
+	  Replaced GenericFactory object reference attribute with a
+	  FactoryInfo attribute.  The latter is necessary to correctly
+	  implement infrastructure-controlled membership
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+	  (delete_member):
+
+	  New method used to implement the
+	  ObjectGroupManager::remove_member() method when the object group
+	  in question is under infrastructure control.  The
+	  ObjectGroupManager will call back on the GenericFactory.
+
+	  (check_minimum_number_members):
+
+	  New method that creates new members if the object group in
+	  question is under infrastructure control.  Enough new members
+	  will be created to satisfy the MinimumNumberMembers property of
+	  the object group (assuming there are enough unused
+	  application-supplied GenericFactorys).
+
+	  (create_member):
+
+	  New method used to create a single member via the
+	  infrastructure.  This method is only used internally by the
+	  infrastructure.  It should not be confused with the
+	  ObjectGroupManager::create_member() method.
+
+	  (populate_object_group):
+
+	  Removed FactoryCreationId and ObjectId parameters.  They are no
+	  longer used by this method.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+
+	  No need to include `PG_Group_Guard.h'.  That file has been
+	  removed.
+
+	  (TAO_PG_GenericFactory):
+
+	  Pass the "this" pointer to the ObjectGroupManager
+	  implementation.  The ObjectGroupManager will potentially call
+	  back on the GenericFactory in the infrastructure-controlled
+	  membership case.
+
+	  (create_object):
+
+	  Reorganized this method so that the TAO_PG_Group_Guard class is
+	  no longer needed.  In particular, the FactoryCreationId is
+
+	  The object group's factory set is now bound to the factory map
+	  in this method instead of the populate_object_group() method.
+	  This allowed the latter method to be cleaned up.
+
+	  (delete_object_i):
+
+	  Updated to access FactoryInfo field in the TAO_PG_Factory_Node
+	  structure that replaced the old GenericFactory object reference
+	  field.
+
+	  (populate_object_group):
+
+	  Fixed problem where only the number of factories equal to the
+	  initial number of members were bound to the factory map.  All
+	  factories should be bound to the map, but only
+	  InitialNumberMembers factories should be invoked.
+
+	  Refactored member creation code to the new create_member()
+	  method since the same code is also used by the new
+	  check_minimum_number_members() method.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.cpp:
+
+	  Remove these files.  The "guard" implementation contained in
+	  these files is no longer necessary due to improvements in the
+	  TAO_PG_GenericFactory::create_object() method.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+	  (_tao_add_member):
+
+	  TAO-specific object group member addition method intended for
+	  use by TAO's GenericFactory implementation.  It merely calls the
+	  new protected add_member_i() method in a way that prevents that
+	  method from performing remote member type checking via the
+	  CORBA::Object::_is_a() call.  TAO's GenericFactory
+	  implementation already performs member type checking in the
+	  infrastructure-controlled case.  This is an optimization to
+	  prevent redundant remote type checks.
+
+	  (add_member):
+
+	  Refactored object group member addition code to the new
+	  protected add_member_i() method.  It calls the add_member_i()
+	  method in a way that allows member type checking to occur.
+
+	  (add_member_i):
+
+	  New protected underlying and non-locking implementation of the 
+	  add_member() and _tao_add_member() methods.
+
+	  (member_count):
+
+	  New accessor method that returns the number of members currently
+	  in a given object group.  Used by the new
+	  TAO_PG_GenericFactory::check_minimum_number_members() method.
+
+	  (generic_factory):
+
+	  Mutator method used to set the cached pointer to the
+	  TAO_PG_GenericFactory object which the TAO_PG_ObjectGroupManager
+	  will call back on.
+
 Sun Nov  3 11:04:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: Fixed a compile errors

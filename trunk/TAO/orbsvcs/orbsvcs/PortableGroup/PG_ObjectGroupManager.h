@@ -29,6 +29,10 @@
 #include "tao/PortableServer/PortableServerC.h"
 
 
+/// Forward declarations
+class TAO_PG_GenericFactory;
+
+
 /**
  * @class TAO_PG_ObjectGroupManager
  *
@@ -131,6 +135,24 @@ public:
 
   //@}
 
+  /// TAO-specific member addition method.
+  /**
+   * This method is meant to be invoked by TAO's GenericFactory
+   * implementation.  It is designed to allow only certain exceptions
+   * to be propagated to the caller, and to prevent redundant remote
+   * RepositoryId checking.
+   */
+  PortableGroup::ObjectGroup_ptr _tao_add_member (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::Location & the_location,
+      CORBA::Object_ptr member,
+      const char * type_id,
+      const CORBA::Boolean propagate_member_already_present
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::MemberAlreadyPresent,
+                     PortableGroup::NoFactory));
+
   /// Create object group hash map entry that represents an actual
   /// ObjectGroup.
   /**
@@ -172,11 +194,38 @@ public:
   PortableGroup::ObjectGroup_ptr object_group (
     const PortableServer::ObjectId & oid);
 
+  /// Return the number of members in the given object group.
+  CORBA::ULong member_count (PortableGroup::ObjectGroup_ptr group
+                             ACE_ENV_ARG_DECL);
+
   /// Set the POA to use when converting object group references to
   /// ObjectIds.
   void poa (PortableServer::POA_ptr p);
 
+  /// Set the pointer to the GenericFactory associated with this
+  /// ObjectGroupManager.
+  /**
+   * The TAO_PG_GenericFactory will only be used when
+   * ObjectGroupManager::remove_member() is explicitly called so that
+   * the infrastructure may be given an opportunity to clean up any
+   * object group members it may have created.
+   */
+  void generic_factory (TAO_PG_GenericFactory * generic_factory);
+
 protected:
+
+  /// Underlying and non-locking implementation of the add_member()
+  /// and _tao_add_member() methods in this class.
+  PortableGroup::ObjectGroup_ptr add_member_i (
+    PortableGroup::ObjectGroup_ptr object_group,
+    const PortableGroup::Location & the_location,
+    CORBA::Object_ptr member,
+    const CORBA::Boolean check_type_id
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::ObjectGroupNotFound,
+                   PortableGroup::MemberAlreadyPresent,
+                   PortableGroup::ObjectNotAdded));
 
   /// Obtain the ObjectGroup hash map entry corresponding to the given
   /// ObjectGroup reference.
@@ -220,6 +269,10 @@ private:
   /// Map that contains list of all members at a given location, in
   /// addition to the load monitor at that location.
   TAO_PG_Location_Map location_map_;
+
+  /// Pointer to the TAO_PG_GenericFactory class responsible for
+  /// object group creation/destruction.
+  TAO_PG_GenericFactory * generic_factory_;
 
   /// Lock used to synchronize access to the underlying tables.
   TAO_SYNCH_MUTEX lock_;
