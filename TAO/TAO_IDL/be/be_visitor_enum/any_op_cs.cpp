@@ -24,6 +24,9 @@
 
 #include "be_visitor_enum.h"
 
+ACE_RCSID(be_visitor_enum, any_op_cs, "$Id$")
+
+
 // ***************************************************************************
 // Enum visitor for generating Any operator declarations in the client
 // stubs file

@@ -24,6 +24,9 @@
 
 #include "be_visitor_interface.h"
 
+ACE_RCSID(be_visitor_interface, interface, "$Id$")
+
+
 // ******************************************************
 // Generic Interface visitor
 // ******************************************************

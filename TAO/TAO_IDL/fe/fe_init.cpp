@@ -84,6 +84,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"fe_private.h"
 
+ACE_RCSID(fe, fe_init, "$Id$")
+
 /*
  * Create a scoped name
  */

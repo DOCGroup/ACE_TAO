@@ -31,3 +31,6 @@
 #include "be_visitor_structure/structure_ch.cpp"
 #include "be_visitor_structure/structure_ci.cpp"
 #include "be_visitor_structure/structure_cs.cpp"
+
+ACE_RCSID(be, be_visitor_structure, "$Id$")
+

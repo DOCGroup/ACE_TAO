@@ -24,6 +24,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, rettype, "$Id$")
+
 
 // ****************************************************************************
 // Operation visitor for return types. This generates the mapping for a return

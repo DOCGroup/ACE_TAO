@@ -24,6 +24,9 @@
 
 #include "be_visitor_attribute.h"
 
+ACE_RCSID(be_visitor_attribute, attribute, "$Id$")
+
+
 // Attribute gets mapped to one or possibly two operations based on whether
 // it is readonly or not. The two operations "get" and "set" the value of the
 // attribute.

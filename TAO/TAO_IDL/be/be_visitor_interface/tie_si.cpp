@@ -25,6 +25,8 @@
 
 #include "be_visitor_interface.h"
 
+ACE_RCSID(be_visitor_interface, tie_si, "$Id$")
+
 
 // ************************************************************************
 // Interface visitor for server inline

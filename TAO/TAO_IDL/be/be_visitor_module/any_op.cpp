@@ -25,6 +25,8 @@
 
 #include "be_visitor_module.h"
 
+ACE_RCSID(be_visitor_module, any_op, "$Id$")
+
 
 // ***************************************************************************
 // Module visitor for generating Any operator declarations in the client header

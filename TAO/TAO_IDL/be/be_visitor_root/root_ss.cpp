@@ -24,6 +24,8 @@
 
 #include "be_visitor_root.h"
 
+ACE_RCSID(be_visitor_root, root_ss, "$Id$")
+
 
 // ******************************************************
 // Root visitor for server skeletons

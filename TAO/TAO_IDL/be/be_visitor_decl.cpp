@@ -25,6 +25,9 @@
 
 #include "be_visitor_decl.h"
 
+ACE_RCSID(be, be_visitor_decl, "$Id$")
+
+
 // Root visitor for client header
 be_visitor_decl::be_visitor_decl (be_visitor_context *ctx)
   : ctx_ (ctx)

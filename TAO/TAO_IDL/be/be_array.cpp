@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -22,6 +22,8 @@
 #include        "idl.h"
 #include        "idl_extern.h"
 #include        "be.h"
+
+ACE_RCSID(be, be_array, "$Id$")
 
 /*
  * BE_Array

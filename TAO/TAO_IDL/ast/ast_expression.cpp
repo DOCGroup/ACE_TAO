@@ -75,6 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	<limits.h>
 #include	<float.h>
 
+ACE_RCSID(ast, ast_expression, "$Id$")
+
 #undef	MAXCHAR
 #define MAXCHAR	128
 

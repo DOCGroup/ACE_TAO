@@ -77,6 +77,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/inc_user_config.h"
 
+ACE_RCSID(be, be_generator, "$Id$")
+
 /*
  * Constructor
  */

@@ -24,6 +24,8 @@
 
 #include "be_visitor_sequence.h"
 
+ACE_RCSID(be_visitor_sequence, sequence_ci, "$Id$")
+
 
 // ***********************************************************
 // sequence visitor for inline generation

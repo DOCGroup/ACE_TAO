@@ -72,6 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"drv_private.h"
 #include 	"drv_link.h"
 
+ACE_RCSID(driver, drv_init, "$Id$")
+
 void
 DRV_init()
 {

@@ -23,6 +23,9 @@
 #include "be.h"
 #include "be_visitor_argument.h"
 
+ACE_RCSID(be_visitor_argument, vardecl_ss, "$Id$")
+
+
 // ************************************************************************
 // Visitor to generate code for argument variable declaration
 // ************************************************************************

@@ -78,6 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"utl_indenter.h"
 #include	"utl_string.h"
 
+ACE_RCSID(fe, fe_extern, "$Id$")
+
 /*
  * yacc parser interface
  */

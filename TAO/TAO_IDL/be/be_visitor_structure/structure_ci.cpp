@@ -24,6 +24,8 @@
 
 #include "be_visitor_structure.h"
 
+ACE_RCSID(be_visitor_structure, structure_ci, "$Id$")
+
 
 // ******************************************************
 // for client inline

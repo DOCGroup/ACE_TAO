@@ -70,6 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl_extern.h"
 #include	"be.h"
 
+ACE_RCSID(be, be_init, "$Id$")
+
 /*
  * Initialize the BE. The protocol requires only that this routine
  * return an instance of AST_Generator (or a subclass thereof).

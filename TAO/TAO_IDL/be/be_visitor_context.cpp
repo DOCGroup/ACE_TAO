@@ -22,6 +22,9 @@
 #include	"idl_extern.h"
 #include	"be.h"
 
+ACE_RCSID(be, be_visitor_context, "$Id$")
+
+
 // constructor
 be_visitor_context::be_visitor_context (void)
   : state_ (TAO_CodeGen::TAO_UNKNOWN),

@@ -1,6 +1,5 @@
-//
 // $Id$
-//
+
 /*
 
 COPYRIGHT
@@ -77,6 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Process_Manager.h"
 #include "ace/Env_Value_T.h"
+
+ACE_RCSID(driver, drv_preproc, "$Id$")
 
 #undef  MAX_ARGLIST
 #define MAX_ARGLIST     128

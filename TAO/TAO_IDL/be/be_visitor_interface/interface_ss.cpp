@@ -24,6 +24,8 @@
 
 #include "be_visitor_interface.h"
 
+ACE_RCSID(be_visitor_interface, interface_ss, "$Id$")
+
 
 // ************************************************************
 // Interface visitor for server skeletons

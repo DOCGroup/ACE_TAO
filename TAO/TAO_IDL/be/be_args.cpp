@@ -70,6 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl_extern.h"
 #include	"be.h"
 
+ACE_RCSID(be, be_args, "$Id$")
+
 /*
  * Prepare an argument for a BE
  *

@@ -24,6 +24,8 @@
 
 #include "be_visitor_union.h"
 
+ACE_RCSID(be_visitor_union, union_ch, "$Id$")
+
 
 // ******************************************************
 // for client header

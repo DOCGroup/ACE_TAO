@@ -20,6 +20,10 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+#include	"be_state.h"
+
+ACE_RCSID(be, be_state_attribute, "$Id$")
+
 
 // constructor
 be_state_attribute::be_state_attribute (void)

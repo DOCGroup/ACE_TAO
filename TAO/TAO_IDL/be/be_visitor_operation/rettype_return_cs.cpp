@@ -24,6 +24,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, rettype_return_cs, "$Id$")
+
 
 // ************************************************************
 //    be_visitor_operation_rettype_return_cs

@@ -24,6 +24,8 @@
 
 #include "be_visitor_exception.h"
 
+ACE_RCSID(be_visitor_exception, exception, "$Id$")
+
 
 // generic struct visitor
 be_visitor_exception::be_visitor_exception (be_visitor_context *ctx)

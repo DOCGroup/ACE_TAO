@@ -24,6 +24,8 @@
 
 #include "be_visitor_module.h"
 
+ACE_RCSID(be_visitor_module, module_sh, "$Id$")
+
 
 // ************************************************************
 // Module visitor for server header

@@ -60,6 +60,8 @@
 #include	<utl_list.hh>
 #include	<idl_bool.hh>
 
+ACE_RCSID(utl_tmpl, utl_list, "$Id$")
+
 /*
  * Constructor(s)
  */

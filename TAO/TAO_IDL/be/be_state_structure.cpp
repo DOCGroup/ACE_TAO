@@ -19,6 +19,10 @@
 #include        "idl.h"
 #include        "idl_extern.h"
 #include        "be.h"
+#include	"be_state.h"
+
+ACE_RCSID(be, be_state_structure, "$Id$")
+
 
 be_state_struct::be_state_struct (void)
 {

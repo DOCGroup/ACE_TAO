@@ -24,6 +24,8 @@
 
 #include "be_visitor_structure.h"
 
+ACE_RCSID(be_visitor_structure, structure, "$Id$")
+
 
 // generic struct visitor
 be_visitor_structure::be_visitor_structure (be_visitor_context *ctx)

@@ -24,6 +24,8 @@
 
 #include "be_visitor_field.h"
 
+ACE_RCSID(be_visitor_field, field_ci, "$Id$")
+
 
 // **********************************************
 //  visitor for field in the client inline file.
