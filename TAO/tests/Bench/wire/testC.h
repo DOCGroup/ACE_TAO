@@ -42,13 +42,13 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO 
+#  define TAO_EXPORT_NESTED_MACRO
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -126,30 +126,30 @@ public:
   typedef foo_ptr _ptr_type;
   typedef foo_var _var_type;
   static int _tao_class_id;
-  
+
   // The static operations.
   static foo_ptr _duplicate (foo_ptr obj);
-  
+
   static foo_ptr _narrow (
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   static foo_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   static foo_ptr _nil (void)
     {
       return (foo_ptr)0;
     }
-  
+
   static void _tao_any_destructor (void *);
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-  
+
   virtual char * all_str (
       const char * inarg,
       char *& inoutarg,
@@ -159,17 +159,26 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
+
+  virtual void push (
+                     const char * inarg
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS
+                     )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-  
+
   virtual CORBA::Boolean _is_a (
       const char *type_id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
-  
+
   virtual void *_tao_QueryInterface (ptrdiff_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
   virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 private:
@@ -177,22 +186,22 @@ private:
 
 protected:
   foo (int collocated = 0);
-  
+
   // These methods travese the inheritance tree and set the
   // parents piece of the given class in the right mode.
   virtual void foo_setup_collocation (int collocated);
-  
+
   foo (IOP::IOR *ior,
     TAO_ORB_Core *orb_core = 0);
-    
+
   foo (
-      TAO_Stub *objref, 
+      TAO_Stub *objref,
       CORBA::Boolean _tao_collocated = 0,
       TAO_Abstract_ServantBase *servant = 0,
       TAO_ORB_Core *orb_core = 0
     );
   virtual ~foo (void);
-  
+
   friend class _TAO_foo_Remote_Proxy_Impl;
   friend class _TAO_foo_ThruPOA_Proxy_Impl;
   friend class _TAO_foo_Direct_Proxy_Impl;
@@ -219,10 +228,10 @@ class  _TAO_foo_Proxy_Impl
 {
 public:
   virtual ~_TAO_foo_Proxy_Impl (void) {}
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/base_proxy_impl_ch.cpp:24
-  
+
   virtual char * all_str (
       CORBA::Object *_collocated_tao_target_,
       const char * inarg,
@@ -234,6 +243,14 @@ public:
       CORBA::SystemException
     )) = 0;
 
+  virtual void push (
+      CORBA::Object * /*_collocated_tao_target_*/,
+      const char * /* inarg */
+      ACE_ENV_ARG_DECL_NOT_USED
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) {};
 protected:
   _TAO_foo_Proxy_Impl (void);
 };
@@ -256,17 +273,26 @@ class  _TAO_foo_Remote_Proxy_Impl
 {
 public:
   _TAO_foo_Remote_Proxy_Impl (void);
-  
+
   virtual ~_TAO_foo_Remote_Proxy_Impl (void) {}
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
-  
+
   virtual char * all_str (
       CORBA::Object *_collocated_tao_target_,
       const char * inarg,
       char *& inoutarg,
       CORBA::String_out outarg
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual void push (
+      CORBA::Object *_collocated_tao_target_,
+      const char * inarg
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -279,12 +305,12 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 // The Proxy Brokers are used by each interface to get
-// the right proxy for performing a call. In the new 
+// the right proxy for performing a call. In the new
 // collocation scheme, the proxy to be used can vary on
 // a call by call basis.
 
 ///////////////////////////////////////////////////////////////////////
-//                 Base Proxy Broker Declaration 
+//                 Base Proxy Broker Declaration
 //
 
 // TAO_IDL - Generated from
@@ -298,19 +324,19 @@ public:
       foo *object
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) = 0;
-  
+
 protected:
   _TAO_foo_Proxy_Broker (void);
-  
+
 };
 
 //
-//              End Base Proxy Broker Declaration 
+//              End Base Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
 
 ///////////////////////////////////////////////////////////////////////
-//                 Remote Proxy Broker Declaration 
+//                 Remote Proxy Broker Declaration
 //
 
 // TAO_IDL - Generated from
@@ -319,16 +345,16 @@ protected:
 class  _TAO_foo_Remote_Proxy_Broker
   : public virtual _TAO_foo_Proxy_Broker
 {
-public: 
+public:
   _TAO_foo_Remote_Proxy_Broker (void);
-  
+
   virtual ~_TAO_foo_Remote_Proxy_Broker (void);
-  
+
   virtual _TAO_foo_Proxy_Impl &select_proxy (
       foo *object
       ACE_ENV_ARG_DECL
     );
-  
+
 private:
   _TAO_foo_Remote_Proxy_Impl remote_proxy_impl_;
 
@@ -340,7 +366,7 @@ public:
 };
 
 //
-//              End Remote Proxy Broker Declaration 
+//              End Remote Proxy Broker Declaration
 ///////////////////////////////////////////////////////////////////////
 
 #endif /* end #if !defined */
@@ -355,7 +381,7 @@ extern  ::CORBA::TypeCode_ptr  _tc_foo;
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:76
 
-extern 
+extern
 _TAO_foo_Proxy_Broker *
 (*_TAO_foo_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
@@ -400,4 +426,3 @@ _TAO_foo_Proxy_Broker *
 #endif /* __BORLANDC__ */
 
 #endif /* ifndef */
-
