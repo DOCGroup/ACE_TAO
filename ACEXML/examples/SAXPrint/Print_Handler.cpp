@@ -247,7 +247,7 @@ ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DE
 }
 
 void
-ACEXML_Print_Handler::warning (ACEXML_SAXParseException & ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Print_Handler::warning (ACEXML_SAXParseException & ex ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
