@@ -1,3 +1,15 @@
+Wed Jul 22 19:20:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Proactor.h (ACE_Proactor): Since <completion_strategy> is a
+ 	  valid constructor parameter for all platforms,
+ 	  POSIX_COMPLETION_STRATEGY should be defined for all platforms.
+
+	* ace/Proactor.cpp (ACE_Proactor): Only use the
+ 	  completion_strategy when ACE_HAS_AIO_CALLS is defined.
+
+	* ace/Asynch_IO.cpp (ACE_Asynch_Result): Only delete
+ 	  this->aiocb_ptr_ when ACE_HAS_AIO_CALLS is defined.
+
 Wed Jul 22 17:58:27 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/OS.h: Updated the comments.

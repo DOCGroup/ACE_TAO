@@ -822,32 +822,44 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
   // parent thread.  Stuff inherited here must already exist
   // in the "parent" orbcore.
 
+  this->reactor (p->reactor ());
+  // We'll use the spawning thread's reactor.
+
+  this->thr_mgr (p->thr_mgr ());
+  // We should use the same thread_manager.
+
+  this->connector (p->connector ());
+  // We'll use the spawning thread's connector.
+
   this->orb (p->orb ());
   // We'll use the spawning thread's ORB.
 
   this->root_poa (p->root_poa ());
   // And its root_poa.
 
-  this->orb_params_ = p->orb_params ();
-  // We also need its ORB_Params.
-
   this->oa_params_ = p->oa_params ();
   // And, of course, the POA params.
 
-  this->thr_mgr (p->thr_mgr ());
-  // We should use the same thread_manager.
+  this->orb_params_ = p->orb_params ();
+  // We also need its ORB_Params.
+
+  this->addr_ = &p->addr ();
+  // Grab the address of the endpoint on which we're listening for
+  // connections and requests.
+
+  this->acceptor (p->acceptor ());
+  // Also grab the acceptor passively listening for connection
+  // requests.
+
+  this->using_collocation (p->using_collocation ());
+  // Use the same collocation settings
 
   this->resource_factory_ = p->resource_factory ();
   this->client_factory_ = p->client_factory ();
   this->server_factory_ = p->server_factory ();
   // Inherit the factories.  Notice that they will not be destroyed by
-  // this orb_core because *_facotry_from_service_config_'s all default
-  // to FALSE.
-
-  this->using_collocation (p->using_collocation ());
-
-  // @@ We shouldn't share the same reactor with the spawning thread.
-  //    But what about connector and acceptor????
+  // this orb_core because *_factory_from_service_config_'s all
+  // default to FALSE.
 
   return 0;
 }

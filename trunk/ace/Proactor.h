@@ -145,7 +145,6 @@ public:
                                      ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_Wheel_Iterator;
 
-#if defined (ACE_HAS_AIO_CALLS)
   enum POSIX_COMPLETION_STRATEGY
   {
     // Use the real time signals and do <sigtimedwait> on the
@@ -157,7 +156,6 @@ public:
   };
   // For Posix4-Compliat-Unix systems how the completion of the
   // asynchronous calls should be got from the OS.
-#endif /* ACE_HAS_AIO_CALLS */
 
   ACE_Proactor (size_t number_of_threads = 0,
 		Timer_Queue *tq = 0,

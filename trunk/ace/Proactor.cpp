@@ -227,8 +227,10 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
   timer_queue_ (0),
   delete_timer_queue_ (0),
   timer_handler_ (0),
-  used_with_reactor_event_loop_ (used_with_reactor_event_loop),
-  posix_completion_strategy_ (completion_strategy)
+  used_with_reactor_event_loop_ (used_with_reactor_event_loop)
+#if defined (ACE_HAS_AIO_CALLS)
+  , posix_completion_strategy_ (completion_strategy)
+#endif /* ACE_HAS_AIO_CALLS */
 {
 #if defined (ACE_HAS_AIO_CALLS)
   // Initialize the array.
@@ -277,6 +279,9 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
     }
   
 #else /* ACE_HAS_AIO_CALLS */
+
+  ACE_UNUSED_ARG (completion_strategy);
+
   // Create the completion port.
   this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,
 						     this->completion_port_,
