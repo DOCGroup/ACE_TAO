@@ -114,8 +114,8 @@ Dispatcher_Task::svc (void)
                       "EC (%P|%t) getq error in Dispatching Queue\n"));
       //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
       //between event released (enqueued) and dispatched
-
-      //ACE_DEBUG ((LM_DEBUG, "(%t) : next command got from queue\n"));
+      ACE_Time_Value tv = ACE_OS::gettimeofday();
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : next command got from queue at %u\n",tv.msec()));
 
       Dispatch_Queue_Item *qitem =
         ACE_dynamic_cast(Dispatch_Queue_Item*, mb);
@@ -131,9 +131,14 @@ Dispatcher_Task::svc (void)
       ACE_ASSERT(command != 0);
       //@BT INSTRUMENT with event ID: EVENT_START_DISPATCHING Measure
       //time to actually dispatch event
+      tv = ACE_OS::gettimeofday();
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : beginning event dispatch at %u\n",tv.msec()));
+
       int result = command->execute ();
       //@BT INSTRUMENT with event ID: EVENT_FINISHED_DISPATCHING
       //Measure time to actually dispatch event
+      tv = ACE_OS::gettimeofday();
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : end event dispatch at %u\n",tv.msec()));
 
       if (command->can_be_deleted ())
         command->destroy ();
@@ -188,6 +193,8 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
       this->deferrer_.dispatch(qitem);
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED Measure delay
       //between original dispatch and dispatch because of RG
+      ACE_Time_Value tv = ACE_OS::gettimeofday();
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event deferred at %u\n",tv.msec()));
     }
   else
     {
