@@ -138,6 +138,10 @@ public:
   // Set <tv> to the number of microseconds elapsed between all
   // calls to start_incr and stop_incr.
 
+  void elapsed_time_incr (ACE_hrtime_t &nanoseconds) const;
+  // Set <nsec> to the number of nanoseconds elapsed between all
+  // calls to start_incr and stop_incr.
+
 #if !defined (ACE_HAS_WINCE)
   // @@ These two functions are currently not supported on Windows CE.
   //    However, we should probably use the handle and ACE_Log_Msg to
