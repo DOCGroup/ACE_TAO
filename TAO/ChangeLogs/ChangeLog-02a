@@ -1,3 +1,8 @@
+Wed May 29 13:11:44 2002 Johnny Willemsen  <jwillemsen@remedy.nl?
+
+	* tao/PortableServer/IORInfo.h:
+	  Updated brief description so that doxygen generated page is correct
+
 Tue May 28 20:24:16 CDT 2002 Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Collection.cpp:
@@ -6,7 +11,7 @@ Tue May 28 20:24:16 CDT 2002 Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_Event.h:
 	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
-	  
+
 	  Fix for bug: http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1134
 	  Proxy Suppliers are subscribed for all events (special) by default.
 
