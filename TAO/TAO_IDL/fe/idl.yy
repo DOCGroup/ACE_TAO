@@ -385,7 +385,7 @@ interface :
                                        $1->inherits (),
                                        $1->n_inherits (),
                                        $1->inherits_flat (),
-                                       $1->n_inherits_flat,
+                                       $1->n_inherits_flat (),
                                        p
                                      );
             AST_Interface::fwd_redefinition_helper (i,s,p);

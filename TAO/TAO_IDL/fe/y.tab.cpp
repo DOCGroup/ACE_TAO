@@ -1439,7 +1439,7 @@ case 25:
                                        tao_yyvsp[0].ihval->inherits (),
                                        tao_yyvsp[0].ihval->n_inherits (),
                                        tao_yyvsp[0].ihval->inherits_flat (),
-                                       tao_yyvsp[0].ihval->n_inherits_flat,
+                                       tao_yyvsp[0].ihval->n_inherits_flat (),
                                        p
                                      );
             AST_Interface::fwd_redefinition_helper (i,s,p);
