@@ -1,36 +1,43 @@
+Wed Aug 18 13:09:36 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Makefile: don't add libDLL_Test.$(SOEXT) to BUILD
+          on VxWorks.  Thanks to Walter Welzel <Walter.Welzel@med.siemens.de>
+          for reporting that it did get build for VxWorks with
+          shared libs enabled, but not successfully (or usefully).
+
 Wed Aug 18 10:36:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Updated all references to MSVC 4.x.  We no
-	  longer support the compiler.  Thanks to Welzel Walter
-	  <Walter.Welzel@med.siemens.de> for pointing this out.
+        * ACE-INSTALL.html: Updated all references to MSVC 4.x.  We no
+          longer support the compiler.  Thanks to Welzel Walter
+          <Walter.Welzel@med.siemens.de> for pointing this out.
 
 Wed Aug 18 10:42:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Timer_List_T.cpp (reset_interval): Added a constcast to
-	  make SunC++ 4.2 happy.  Thanks to Andy for reporting this.
+        * ace/Timer_List_T.cpp (reset_interval): Added a constcast to
+          make SunC++ 4.2 happy.  Thanks to Andy for reporting this.
 
-	* ace/WFMO_Reactor.i (reset_timer_interval): The return type
-	  was incorrect...  Thanks to Andy and Jeff for reporting this.
+        * ace/WFMO_Reactor.i (reset_timer_interval): The return type
+          was incorrect...  Thanks to Andy and Jeff for reporting this.
 
 Wed Aug 18 09:47:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/run_tests.pl:
-	  The disabled tests were executed anyway, thanks to David for
-	  pointing this out.
+        * tests/run_tests.pl:
+          The disabled tests were executed anyway, thanks to David for
+          pointing this out.
 
 Wed Aug 18 09:34:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/FlReactor.cpp:
-	* ace/XtReactor.cpp:
-	  Fixed typos in the code, this is only used in a few platforms,
-	  that's why it didn't show up before.
+        * ace/FlReactor.cpp:
+        * ace/XtReactor.cpp:
+          Fixed typos in the code, this is only used in a few platforms,
+          that's why it didn't show up before.
 
 Tue Aug 17 20:02:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Reactor_Timer_Test.cpp: Enhanced this test to exercise
-	  the new reset_timer_interval() feature that Darrell added.  It
- 	  appears to work quite well.  Also, make the test easier to
- 	  understand by adding more structure.
+        * tests/Reactor_Timer_Test.cpp: Enhanced this test to exercise
+          the new reset_timer_interval() feature that Darrell added.  It
+          appears to work quite well.  Also, make the test easier to
+          understand by adding more structure.
 
         * ace/WFMO_Reactor.h,
         * ace/WFMO_Reactor.cpp,
@@ -43,11 +50,11 @@ Tue Aug 17 20:02:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * ace/Select_Reactor_T.h,
         * ace/Select_Reactor_T.cpp,
         * ace/Reactor_Impl.h,
-	* ace/Reactor.h,
-  	* ace/Reactor.cpp:
-	  Exposed the new reset_interval() method Darrell added to all the
- 	  Timer mechanisms via a method in each of these Reactor's called
- 	  reset_timer_interval().
+        * ace/Reactor.h,
+        * ace/Reactor.cpp:
+          Exposed the new reset_interval() method Darrell added to all the
+          Timer mechanisms via a method in each of these Reactor's called
+          reset_timer_interval().
 
         * ace/Timer_Hash_T.h:
         * ace/Timer_Heap_T.h:
@@ -59,17 +66,17 @@ Tue Aug 17 20:02:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * ace/Timer_List_T.cpp:
         * ace/Timer_Wheel_T.cpp:
           Changed the return values of <reset_interval> to be (1)
- 	  consistent (i.e., to return a value through all paths in the
- 	  method) and (2) to return -1 on failure and 0 on success.
-	  Also replaced a number of C-style casts with
-	  ACE_reinterpret_casts.
+          consistent (i.e., to return a value through all paths in the
+          method) and (2) to return -1 on failure and 0 on success.
+          Also replaced a number of C-style casts with
+          ACE_reinterpret_casts.
 
 Tue Aug 17 20:51:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.cpp:
-	  The TP Reactor also experiences a performance hit if signal
-	  masking is enabled.  Therefore, we can now make this optional.
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp:
+          The TP Reactor also experiences a performance hit if signal
+          masking is enabled.  Therefore, we can now make this optional.
 
 Tue Aug 17 19:10:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -93,107 +100,107 @@ Tue Aug 17 19:10:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Tue Aug 17 18:43:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/OS.i:
-	  Added wscmp and wsncmp functions to go with the existing
-	  wslen and wscpy functions. These all use WChar*, so arg
-	  size is independent of platform. These are to be used for
-	  all manipulations of CORBA::WString. The two that were
-	  added were needed for wstring tests in Param_Test. WChar*
-	  versions of the other string manipulation functions will
-	  be added as needed.
+        * ace/OS.h:
+        * ace/OS.i:
+          Added wscmp and wsncmp functions to go with the existing
+          wslen and wscpy functions. These all use WChar*, so arg
+          size is independent of platform. These are to be used for
+          all manipulations of CORBA::WString. The two that were
+          added were needed for wstring tests in Param_Test. WChar*
+          versions of the other string manipulation functions will
+          be added as needed.
 
 Tue Aug 17 17:49:33 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-sunos5.5.h: If (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
-	  are enabled then #undef ACE_HAS_PROC_FS and ACE_HAS_PRUSAGE_T to
- 	  work around problems with Solaris 7.  Thanks to Sridhara Rao
- 	  Dasu <dasu@slac.stanford.edu> for reporting this.
+        * ace/config-sunos5.5.h: If (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
+          are enabled then #undef ACE_HAS_PROC_FS and ACE_HAS_PRUSAGE_T to
+          work around problems with Solaris 7.  Thanks to Sridhara Rao
+          Dasu <dasu@slac.stanford.edu> for reporting this.
 
-	* ace/OS.i: Updated the readdir_r() conditional compilation so that
-	  it'll work when _FILE_OFFSET_BITS == 64.  Thanks to Sridhara Rao
- 	  Dasu <dasu@slac.stanford.edu> for reporting this.
+        * ace/OS.i: Updated the readdir_r() conditional compilation so that
+          it'll work when _FILE_OFFSET_BITS == 64.  Thanks to Sridhara Rao
+          Dasu <dasu@slac.stanford.edu> for reporting this.
 
 Tue Aug 17 17:17:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/OS.i:
-	* ace/OS.cpp:
-	  Added new data type to handle condition variable attributes
- 	  (ACE_condattr_t).  New methods to manipulate that data type
- 	  (ACE_OS::cond_attr_init and destroy) Add new method to create a
- 	  condition variable from a pre-initialized attribute.
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS.cpp:
+          Added new data type to handle condition variable attributes
+          (ACE_condattr_t).  New methods to manipulate that data type
+          (ACE_OS::cond_attr_init and destroy) Add new method to create a
+          condition variable from a pre-initialized attribute.
 
-	* ace/Synch.h:
-	* ace/Synch.i:
-	* ace/Synch.cpp:
-	  Added new wrapper for the ACE_condattr_t structure.
+        * ace/Synch.h:
+        * ace/Synch.i:
+        * ace/Synch.cpp:
+          Added new wrapper for the ACE_condattr_t structure.
 
-	* ace/Token.h:
-	* ace/Token.cpp:
-	  Use ACE_Condition_Attributes to minimize the number of memory
-	  allocations and locks in the critical path of the TP_Reactor.
+        * ace/Token.h:
+        * ace/Token.cpp:
+          Use ACE_Condition_Attributes to minimize the number of memory
+          allocations and locks in the critical path of the TP_Reactor.
 
 Tue Aug 17 15:55:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/TCP/TCP.{dsw,dsp}:
-	* performance-tests/TCP/Makefile:
-	* performance-tests/TCP/tcp_test.cpp: Added the new test modified
-	  by Carlos and a bit further by me.  The test measures TCP
-	  performance of a platform.  We can also use it to test the
-	  performance of various reactors.
+        * performance-tests/TCP/TCP.{dsw,dsp}:
+        * performance-tests/TCP/Makefile:
+        * performance-tests/TCP/tcp_test.cpp: Added the new test modified
+          by Carlos and a bit further by me.  The test measures TCP
+          performance of a platform.  We can also use it to test the
+          performance of various reactors.
 
 Tue Aug 17 14:52:40 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/config-win32.h: Added ACE_CC_COMPILER definition for MSVC.
-	  ACE_CC_COMPILER is a string containing the compiler program.
+        * ace/config-win32.h: Added ACE_CC_COMPILER definition for MSVC.
+          ACE_CC_COMPILER is a string containing the compiler program.
 
 Tue Aug 17 13:48:27 CDT 1999  Loren Rittle  <rittle@rsch.comm.mot.com>
 
-	* bin/update-ace+tao.sh: Use authoritative name list instead of
-	  ad hoc list to update file.
+        * bin/update-ace+tao.sh: Use authoritative name list instead of
+          ad hoc list to update file.
 
 Tue Aug 17 06:33:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task.h: Clarified the comment regarding
-	  open() and close() on ACE_Task_Base.  Thanks to Jeff Franks
- 	  <Jeffrey_Franks@i-o.com> for suggesting this.
+        * ace/Task.h: Clarified the comment regarding
+          open() and close() on ACE_Task_Base.  Thanks to Jeff Franks
+          <Jeffrey_Franks@i-o.com> for suggesting this.
 
 Tue Aug 17 11:56:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Select_Reactor_T.h:
-	* ace/Select_Reactor_T.cpp:
-	  Added option in the constructor to disable the signal handling
-	  features in the select reactor. This eliminates a couple of
-	  kernel level locks that are not needed in all applications.
+        * ace/Select_Reactor_T.h:
+        * ace/Select_Reactor_T.cpp:
+          Added option in the constructor to disable the signal handling
+          features in the select reactor. This eliminates a couple of
+          kernel level locks that are not needed in all applications.
 
-	* ace/Stats.h:
-	* ace/Stats.cpp:
-	  Now we keep track of the iteration where the minimum and maximum
-	  latencies were achieved.
+        * ace/Stats.h:
+        * ace/Stats.cpp:
+          Now we keep track of the iteration where the minimum and maximum
+          latencies were achieved.
 
 Tue Aug 17 06:33:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* bin: Added a new shell script called update-ace+tao.sh
-	  that updates the ACE/TAO source tree to the latest
- 	  numeric-assigned version.  Thanks to Loren Rittle
- 	  <rittle@comm.mot.com> for contributing this.
+        * bin: Added a new shell script called update-ace+tao.sh
+          that updates the ACE/TAO source tree to the latest
+          numeric-assigned version.  Thanks to Loren Rittle
+          <rittle@comm.mot.com> for contributing this.
 
 Mon Aug 16 20:09:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp:
-	  Added new method to transfer the contents of one CDR stream into
-	  another. This is used in the implementation of the ORB to
-	  minimize the number of data copies, memory allocations and
-	  locks.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          Added new method to transfer the contents of one CDR stream into
+          another. This is used in the implementation of the ORB to
+          minimize the number of data copies, memory allocations and
+          locks.
 
-	* ace/Message_Block.h:
-	* ace/Message_Block.i:
-	  Added new method to replace the Data_Block, this method returns
-	  the old one, letting the user decide how to deallocated the Data
-	  block, possibly transfering it to another Message_Block.
+        * ace/Message_Block.h:
+        * ace/Message_Block.i:
+          Added new method to replace the Data_Block, this method returns
+          the old one, letting the user decide how to deallocated the Data
+          block, possibly transfering it to another Message_Block.
 
 Mon Aug 16 15:58:12 1999  Steve Huston  <shuston@riverace.com>
 
@@ -206,37 +213,37 @@ Mon Aug 16 15:58:12 1999  Steve Huston  <shuston@riverace.com>
 
 Mon Aug 16 11:59:18 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Constructed and passed a
-	  complete sockaddr_in to the ACE_OS::join_leaf () call. This was
-	  just being passed sockaddr_in.sin_addr.s_addr.
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe): Constructed and passed a
+          complete sockaddr_in to the ACE_OS::join_leaf () call. This was
+          just being passed sockaddr_in.sin_addr.s_addr.
 
 Sat Aug 14 18:01:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/run_tests.pl:
-	  Fixed some output messages that were going to stdout.
+        * tests/run_tests.pl:
+          Fixed some output messages that were going to stdout.
 
 Sat Aug 14 15:20:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp (subscribe): It looks like there
-	  was a bug where we were passing an s_addr to ACE_OS::join_leaf()
- 	  rather than a sockaddr *.  Fixing this also cleaned up some code
- 	  that was #ifdef'd for UNICOS.  Thanks to Vishal for reporting
- 	  this.
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe): It looks like there
+          was a bug where we were passing an s_addr to ACE_OS::join_leaf()
+          rather than a sockaddr *.  Fixing this also cleaned up some code
+          that was #ifdef'd for UNICOS.  Thanks to Vishal for reporting
+          this.
 
-	* ace/Process.h: Added a virtual to ~ACE_Process so that it
-	  can be used for subclassing more readily.  Thanks to Zoran
- 	  Ivanovic <zorani@pathcom.com> for suggesting this.
+        * ace/Process.h: Added a virtual to ~ACE_Process so that it
+          can be used for subclassing more readily.  Thanks to Zoran
+          Ivanovic <zorani@pathcom.com> for suggesting this.
 
 Sat Aug 14 14:11:25 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
-	* ace/Remote_Tokens.cpp (tryacquire): Fixed so that it uses
-	  ACE_Token_Request::TRY_ACQUIRE instead of RELEASE.
+        * ace/Remote_Tokens.cpp (tryacquire): Fixed so that it uses
+          ACE_Token_Request::TRY_ACQUIRE instead of RELEASE.
 
 Fri Aug 13 18:55:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Handle_Set.h (ACE_Handle_Set): Clarified the meaning of the
-	  nbits_ array.  Thanks to Hao Ruan <hruan@lucent.com> for
- 	  motivating this.
+        * ace/Handle_Set.h (ACE_Handle_Set): Clarified the meaning of the
+          nbits_ array.  Thanks to Hao Ruan <hruan@lucent.com> for
+          motivating this.
 
 Fri Aug 13 21:18:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -3593,59 +3600,59 @@ Wed Jul  7 09:05:32 1999  Steve Huston  <shuston@riverace.com>
 
 Wed Jul 07 08:35:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Threads/future1.cpp
- 	* examples/Threads/future2.cpp
- 	* tests/Future_Set_Test.cpp
- 	* tests/Future_Test.cpp
+        * examples/Threads/future1.cpp
+        * examples/Threads/future2.cpp
+        * tests/Future_Set_Test.cpp
+        * tests/Future_Test.cpp
 
- 	  Fixed some template instantiations.
+          Fixed some template instantiations.
 
 Wed Jul  7 03:27:16 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
- 	* examples/Shared_Malloc: Added a new file called
- 	  test_position_independent_malloc.cpp that exercises the new
-  	  "position-independent" features of the ACE_Malloc< class.
+        * examples/Shared_Malloc: Added a new file called
+          test_position_independent_malloc.cpp that exercises the new
+          "position-independent" features of the ACE_Malloc< class.
 
- 	* ace/Malloc_T.cpp: All the ACE_Malloc constructors were calling
- 	  open() without checking the results.  Now, if failure occurs we
-  	  print a message.  In addition, we weren't checking in
-  	  shared_malloc() to make sure that we'd been properly initialized
-  	  by the constructor.  Now, if we aren't initialized correctly we
-  	  return 0.  Thanks to Dietrich Quehl
-  	  <Dietrich.Quehl@med.siemens.de> for reporting these problems.
+        * ace/Malloc_T.cpp: All the ACE_Malloc constructors were calling
+          open() without checking the results.  Now, if failure occurs we
+          print a message.  In addition, we weren't checking in
+          shared_malloc() to make sure that we'd been properly initialized
+          by the constructor.  Now, if we aren't initialized correctly we
+          return 0.  Thanks to Dietrich Quehl
+          <Dietrich.Quehl@med.siemens.de> for reporting these problems.
 
- 	* ace/Memory_Pool: Added a new feature to ACE_Shared_Memory_Pool
- 	  and ACE_Shared_Memory_Pool_Options that makes it possible to
-  	  tailor the size of System V shared memory segments without
-  	  breaking any existing ACE code.  Thanks to Serge Kolgan
-  	  <skolgan@cisco.com> for contributing this enhancement.
+        * ace/Memory_Pool: Added a new feature to ACE_Shared_Memory_Pool
+          and ACE_Shared_Memory_Pool_Options that makes it possible to
+          tailor the size of System V shared memory segments without
+          breaking any existing ACE code.  Thanks to Serge Kolgan
+          <skolgan@cisco.com> for contributing this enhancement.
 
- 	* ace/Makefile.bor (OBJFILES): Updated this file to include
- 	  the new Based_Pointer_Repository.obj entry.
+        * ace/Makefile.bor (OBJFILES): Updated this file to include
+          the new Based_Pointer_Repository.obj entry.
 
- 	* ace/Makefile: Reran make depend.
+        * ace/Makefile: Reran make depend.
 
- 	* ace/Makefile: Added the Based_Pointer_Repository.{h,cpp} and
- 	  Based_Pointer_T.{h,cpp} files to the Makefile.
+        * ace/Makefile: Added the Based_Pointer_Repository.{h,cpp} and
+          Based_Pointer_T.{h,cpp} files to the Makefile.
 
- 	* ace/Malloc.h: Added the first support for the new "Based Pointer
-  	  Malloc" feature that's described below.
+        * ace/Malloc.h: Added the first support for the new "Based Pointer
+          Malloc" feature that's described below.
 
          * ace: Added the Based_Pointer_Repository.{h,cpp} and
- 	  Based_Pointer_T.{h,cpp} files to the release.  These classes
-  	  make it possible to transparently use "pointers" in shared
-  	  memory without having to ensure that the base addresses of all
-  	  the pointers are mapped into separate processes at the same
-  	  absolute memory base address.  Thanks to Dietrich Quehl
-  	  <Dietrich.Quehl@med.siemens.de> for contributing this software.
+          Based_Pointer_T.{h,cpp} files to the release.  These classes
+          make it possible to transparently use "pointers" in shared
+          memory without having to ensure that the base addresses of all
+          the pointers are mapped into separate processes at the same
+          absolute memory base address.  Thanks to Dietrich Quehl
+          <Dietrich.Quehl@med.siemens.de> for contributing this software.
 
 Wed Jul 07 01:28:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
- 	* ace/ace_dll.dsp:
- 	* ace/ace_lib.dsp: Added the Based_Pointer_Repository.{h,cpp} and
- 	  Based_Pointer_T.{h,cpp} files to the project files.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added the Based_Pointer_Repository.{h,cpp} and
+          Based_Pointer_T.{h,cpp} files to the project files.
 
- 	* ace/Based_Pointer_Repository.cpp: Added define ACE_BUILD_DLL.
+        * ace/Based_Pointer_Repository.cpp: Added define ACE_BUILD_DLL.
 
 Tue Jul 06 22:47:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -3658,16 +3665,16 @@ Tue Jul 06 22:47:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
          * ace/OS.i (thr_kill, thr_setprio, sema_destroy, sema_wait, chdir,
            unlink, sema_post, thr_continue, thr_getprio, thr_suspend,
-  	   ioctl): on VxWorks only, removed ACE_ADAPT_RETVAL wrapper from
-  	   system call, because it returns OK/ERROR (except for ioctl,
-  	   which returns driver number/ERROR).  Thanks to Elias Sreih
-  	   <sealstd1@nortelnetworks.com> for reporting this.
+           ioctl): on VxWorks only, removed ACE_ADAPT_RETVAL wrapper from
+           system call, because it returns OK/ERROR (except for ioctl,
+           which returns driver number/ERROR).  Thanks to Elias Sreih
+           <sealstd1@nortelnetworks.com> for reporting this.
 
          * tests/SOCK_Send_Recv_Test.cpp (server): added 5 second
            sleep so that the code agrees with the comments :-) It now
-  	   passes on LynxOS.  Thanks to Steve Huston for the fix.  Also,
-  	   changed an exit () call to ACE_OS::exit (), and changed a few
-  	   C-style casts to ANSI-style casts.
+           passes on LynxOS.  Thanks to Steve Huston for the fix.  Also,
+           changed an exit () call to ACE_OS::exit (), and changed a few
+           C-style casts to ANSI-style casts.
 
 Tue Jul  6 19:20:16 1999  Steve Huston  <shuston@riverace.com>
 
@@ -3675,20 +3682,20 @@ Tue Jul  6 19:20:16 1999  Steve Huston  <shuston@riverace.com>
            implementation directive.
 
          * tests/Cache_Map_Manager_Test.cpp: Changed typedefs for KEY and
- 	  VALUE from size_t to ACE_UINT32 to they always pick up the
-  	  specializations for ACE_Hash, etc. On HP-UX and AIX, size_t is
-  	  not the same as ACE_UINT32, and this caused build errors.
+          VALUE from size_t to ACE_UINT32 to they always pick up the
+          specializations for ACE_Hash, etc. On HP-UX and AIX, size_t is
+          not the same as ACE_UINT32, and this caused build errors.
 
          * tests/Conn_Test.cpp: Restrict range of the test on PharLap ETS,
- 	  else it runs out of resources with default configuration.
+          else it runs out of resources with default configuration.
 
 Tue Jul  6 18:21:37 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
          * ace/Token_Request_Reply.{h,i,cpp}: Added
- 	  ACE_TOKEN_REQUEST_HEADER_SIZE for the fixed-length portion of
-  	  ACE_Token_Request's Transfer struct, changing length
-  	  calculations accordingly.  Added two bytes to the buffer to
-  	  accomodate '\0' values after the token name and client ID.
+          ACE_TOKEN_REQUEST_HEADER_SIZE for the fixed-length portion of
+          ACE_Token_Request's Transfer struct, changing length
+          calculations accordingly.  Added two bytes to the buffer to
+          accomodate '\0' values after the token name and client ID.
 
          * ace/Remote_Tokens.cpp: Changed the check for failure when
            receiving a reply in request_reply.
