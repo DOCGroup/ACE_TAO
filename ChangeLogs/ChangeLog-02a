@@ -1,3 +1,18 @@
+Thu Sep 13 13:38:41 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/High_Res_Timer.cpp (elapsed_time (ACE_hrtime_t&nanoseconds),
+          elapsed_time_incr (ACE_hrtime_t&nanoseconds): Instead of using
+          "nanoseconds >>= 10", use "nanoseconds = nanoseconds >> 10" to
+          work around a Borland C++Builder bug. Thanks very much to
+          Johnny Willemsen, Christopher Kohlhoff, and Alain Decamps
+          for solving this problem.
+
+Thu Sep 13 13:33:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_Test.cpp: Added #include "ace/Log_Msg.h".
+          This was probably to get AIX to build clean, but it's been a
+          while.
+
 Thu Sep 13 12:04:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Werner Buchert to the hall of fame.
