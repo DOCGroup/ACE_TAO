@@ -1,3 +1,26 @@
+Sun Dec 22 09:18:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+       	* ace/Connector.cpp:
+	* ace/Connector.h: Added a lock to the ACE_Connector class to
+	  make the following atomic
+	  
+	  . Registration of AST with the handler_map_
+	  . Registration of the ACE_Connector with the Reactor
+	  . and the registration of timers with the Reactor's timer
+	    queue. 
+
+	  If they are not atomic, it throws open race conditions such as
+	  the ones documented in BUG 1405. This is not complete fix for
+	  BUG 1405, since it taxes applications using only one thread with a
+	  lock. This is a short-term fix to prevent the race condition
+	  from occuring. 
+
+	  Other relevant changes include 
+	  
+	  . the AST is now refcounted
+	  . the AST cannot be deleted directly. The lifetime of the AST
+	    can only be manipulated using the refcount on the AST.
+
 Sat Dec 21 18:27:42 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_dll.vcp:

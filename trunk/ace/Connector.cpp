@@ -156,9 +156,15 @@ ACE_Svc_Tuple<SVC_HANDLER>::ACE_Svc_Tuple (
   : svc_handler_ (sh),
     handle_ (handle),
     arg_ (arg),
-    cancellation_id_ (id)
+    cancellation_id_ (id),
+    refcount_ (1)
 {
   ACE_TRACE ("ACE_Svc_Tuple<SVC_HANDLER>::ACE_Svc_Tuple");
+}
+
+template <class SVC_HANDLER>
+ACE_Svc_Tuple<SVC_HANDLER>::~ACE_Svc_Tuple (void)
+{
 }
 
 template <class SVC_HANDLER> SVC_HANDLER *
@@ -210,6 +216,27 @@ ACE_Svc_Tuple<SVC_HANDLER>::cancellation_id (long id)
   this->cancellation_id_ = id;
 }
 
+template <class SVC_HANDLER> long
+ACE_Svc_Tuple<SVC_HANDLER>:: incr_refcount (void)
+{
+  ACE_TRACE ("ACE_Svc_Tuple<SVC_HANDLER>::incr_refcount");
+  return ++this->refcount_;
+}
+
+template <class SVC_HANDLER> long
+ACE_Svc_Tuple<SVC_HANDLER>:: decr_refcount (void)
+{
+  ACE_TRACE ("ACE_Svc_Tuple<SVC_HANDLER>::decr_refcount");
+  if (--this->refcount_ > 0)
+    return this->refcount_;
+
+  ACE_ASSERT (this->refcount_ == 0);
+
+  delete this;
+
+  return 0;
+}
+
 template <class SVC_HANDLER> void
 ACE_Svc_Tuple<SVC_HANDLER>::dump (void) const
 {
@@ -233,10 +260,15 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_timeout (
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_timeout");
   AST *ast = 0;
+  int retval = 0;
 
   if (this->cleanup_AST (((AST *) arg)->handle (),
                          ast) == -1)
-    return -1;
+    {
+      // Matches the creation time refcount for AST, which is 1
+      this->decr_ast_refcount ((AST *) arg);
+      return -1;
+    }
   else
     {
       ACE_ASSERT (((AST *) arg) == ast);
@@ -252,7 +284,8 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_timeout (
       if (sh->handle_timeout (tv, ast->arg ()) == -1)
         sh->handle_close (sh->get_handle (), ACE_Event_Handler::TIMER_MASK);
 
-      delete ast;
+      // Matches the creation time refcount for AST, which is 1
+      this->decr_ast_refcount (ast);
       return 0;
     }
 }
@@ -264,31 +297,44 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cleanup_AST (
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cleanup_AST");
 
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                            ace_mon,
+                            this->mutex_,
+                            -1));
+
   // Locate the ACE_Svc_Handler corresponding to the socket
   // descriptor.
-  if (this->handler_map_.find (handle, ast) == -1)
+  if (this->handler_map_.unbind (handle, ast) == -1)
     {
       // Error, entry not found in map.
       errno = ENOENT;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("ACE (%P|%t) - Connector<>::cleanup_AST")
-                         ACE_LIB_TEXT ("%p %d not found in map\n"),
-                         ACE_LIB_TEXT ("find"),
-                         handle),
-                        -1);
+      return -1;
     }
+
+  // Matches incr_refcount () in create_AST () after registering
+  // with the map.
+  ast->decr_refcount ();
 
   // Try to remove from ACE_Timer_Queue but if it's not there we
   // ignore the error.
-  this->reactor ()->cancel_timer (ast->cancellation_id ());
+  if (this->reactor ()->cancel_timer (ast->cancellation_id ()))
+    {
+      // Matches incr_refcount () in create_AST () after registering
+      // the timer
+      ast->decr_refcount ();
+    }
+
+
+  ACE_Reactor_Mask m =
+    ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
 
   // Remove ACE_HANDLE from ACE_Reactor.
-  this->reactor ()->remove_handler
-    (handle, ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL);
-
-  // Remove ACE_HANDLE from the map.
-  this->handler_map_.unbind (handle);
-
+  if (this->reactor ()->remove_handler (handle, m) == 0)
+    {
+      // Matches incr_refcount () in create_AST () after registering
+      // with the Reactor.
+      ast->decr_refcount ();
+    }
   return 0;
 }
 
@@ -305,8 +351,11 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_input (ACE_HANDLE h)
     {
       ACE_ASSERT (ast != 0);
       ast->svc_handler ()->close (0);
-      delete ast;
+
+      // Matches the creation time refcount for AST, which is 1
+      this->decr_ast_refcount (ast);
     }
+
   return 0; // Already removed from the ACE_Reactor.
 }
 
@@ -323,8 +372,9 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_output (ACE_HANDLE hand
   AST *ast = 0;
 
   if (this->cleanup_AST (handle, ast) == -1)
-    return 0;
-
+    {
+      return 0;
+    }
   ACE_ASSERT (ast != 0);   // This shouldn't happen!
 
   // Try to find out if the reactor uses event associations for the
@@ -357,7 +407,8 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_output (ACE_HANDLE hand
 #endif /* ACE_WIN32 */
        ast->svc_handler ()->close (0);
     }
-  delete ast;
+  // Matches the creation time refcount for AST, which is 1
+  this->decr_ast_refcount (ast);
   return 0;
 }
 
@@ -556,8 +607,10 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cancel (SVC_HANDLER *sh)
     if (me->int_id_->svc_handler () == sh)
       {
         AST *ast = 0;
-        (void) this->cleanup_AST (me->ext_id_, ast);
-        delete ast;
+
+        if (this->cleanup_AST (me->ext_id_, ast) != -1)
+          this->decr_ast_refcount (ast);
+
         return 0;
       }
 
@@ -573,9 +626,16 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::create_AST (
   const ACE_Synch_Options &synch_options)
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::create_AST");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                            ace_mon,
+                            this->mutex_,
+                            -1));
+
   ACE_HANDLE handle = sh->get_handle ();
   AST *ast;
 
+  // AST is created with a refcount
   ACE_NEW_RETURN (ast,
                   AST (sh,
                        handle,
@@ -588,33 +648,48 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::create_AST (
   // Bind ACE_Svc_Tuple with the ACE_HANDLE we're trying to connect.
   if (this->handler_map_.bind (handle, ast) == -1)
     goto fail1;
-  else if (this->reactor ()->register_handler (handle,
-                                               this,
-                                               mask) == -1)
-    goto fail2;
-  // If we're starting connection under timer control then we need to
-  // schedule a timeout with the ACE_Reactor.
-  else
-    {
-      ACE_Time_Value *tv =
-        ACE_const_cast (ACE_Time_Value *,
-                        synch_options.time_value ());
-      if (tv != 0)
-        {
-          int cancellation_id =
-            this->reactor ()->schedule_timer
-              (this,
-               (const void *) ast,
-               *tv);
-          if (cancellation_id == -1)
-            goto fail3;
 
-          ast->cancellation_id (cancellation_id);
-          return 0;
-        }
-      else
-        return 0; // Ok, everything worked just fine...
-    }
+  // Increment the refcount of the AST to indicate registration with
+  // the map.
+  ast->incr_refcount ();
+
+  if (this->reactor ()->register_handler (handle,
+                                          this,
+                                          mask) == -1)
+    goto fail2;
+
+  // Increment the refcount of the AST. This increment is for access
+  // from the Reactor. Though we register <this> with the Reactor,
+  // every dispatch from the Reactor actually looks for <ast> and
+  // hence the refcount increment.
+  (void) ast->incr_refcount ();
+
+  {
+    // If we're starting connection under timer control then we need to
+    // schedule a timeout with the ACE_Reactor.
+    ACE_Time_Value *tv =
+      ACE_const_cast (ACE_Time_Value *,
+                      synch_options.time_value ());
+    if (tv != 0)
+      {
+        int cancellation_id =
+          this->reactor ()->schedule_timer
+          (this,
+           (const void *) ast,
+           *tv);
+        if (cancellation_id == -1)
+          goto fail3;
+
+        // Increment the refcount of the AST. This increment is for access
+        // from the timer queue. The same argument used for Rector
+        // registration holds true here too.
+        (void) ast->incr_refcount ();
+
+        ast->cancellation_id (cancellation_id);
+        return 0;
+      }
+  }
+  return 0; // Ok, everything worked just fine...
 
   // Undo previous actions using the ol' "goto label and fallthru"
   // trick...
@@ -630,7 +705,7 @@ fail1:
   // Close the svc_handler
   sh->close (0);
 
-  delete ast;
+  ast->decr_refcount ();
   return -1;
 }
 
@@ -680,10 +755,12 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_close (ACE_HANDLE, ACE_
             {
               ACE_ASSERT (ast != 0);
               ast->svc_handler ()->close (0);
+
+              // Zap the ast.
+              this->decr_ast_refcount (ast);
             }
 
-          // Zap the ast.
-          delete ast;
+
         }
     }
 
@@ -753,6 +830,33 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::~ACE_Connector (void)
   this->handle_close ();
 }
 
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> long
+ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::incr_ast_refcount (
+    ACE_Svc_Tuple<SVC_HANDLER> *ast)
+{
+  ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::incr_ast_refcount");
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                            ace_mon,
+                            this->mutex_,
+                            -1));
+
+  return ast->incr_refcount ();
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> long
+ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::decr_ast_refcount (
+    ACE_Svc_Tuple<SVC_HANDLER> *ast)
+{
+  ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::decr_ast_refcount");
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                            ace_mon,
+                            this->mutex_,
+                            -1));
+
+  return ast->decr_refcount ();
+}
+
+/***********************************************************/
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
 ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open (ACE_Reactor *r, int flags)
 {
