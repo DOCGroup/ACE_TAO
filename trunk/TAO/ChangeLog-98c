@@ -1,3 +1,9 @@
+Tue Sep  1 19:06:44 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp : Fixed "strdup + delete"
+	bug!!! Replaced the strdup's with ACE_OS::strnew. Thanks to Darrel
+	for pointing this out. 
+
 Tue Sep  1 16:29:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Exception.h: 
