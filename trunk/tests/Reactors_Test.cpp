@@ -144,8 +144,9 @@ Test_Task::handle_input (ACE_HANDLE)
 static void *
 worker (void *args)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;
+
+  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
 
   ACE_Reactor *reactor = (ACE_Reactor *) args;
 

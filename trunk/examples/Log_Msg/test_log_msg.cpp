@@ -1,8 +1,7 @@
 // Test the Log_Msg abstraction.
 // $Id$
 
-
-
+#include "ace/OS.h"
 
 static void
 cleanup (void)
