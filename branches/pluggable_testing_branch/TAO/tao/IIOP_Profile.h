@@ -108,10 +108,6 @@ public:
   ~TAO_IIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
-  CORBA::ULong tag (void) const;
-  // The tag, each concrete class will have a specific tag value.  for
-  // example we are TAO_IOP_TAG_INTERNET_IOP.
-
   int parse (TAO_InputCDR& cdr,
              CORBA::Boolean& continue_decoding,
              CORBA::Environment &env);
@@ -211,9 +207,6 @@ private:
 
   CORBA::UShort port_;
   // TCP port number
-
-  CORBA::ULong tag_;
-  // The tag.
 
   TAO_opaque body_;
   // Marshaled profile (CDR).

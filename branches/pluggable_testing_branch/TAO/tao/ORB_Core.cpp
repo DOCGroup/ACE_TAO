@@ -36,19 +36,23 @@ CORBA::default_environment ()
 TAO_ORB_Core::TAO_ORB_Core (void)
   : thr_mgr_ (0),
     connector_registry_ (0),
+    acceptor_registry_ (0),
+    protocol_factories_ (0),
     root_poa_ (0),
     orb_params_ (0),
-    acceptor_ (0),
     resource_factory_ (0),
     resource_factory_from_service_config_ (0),
+    // @@ This is not needed since the default resource factory, fredk
+    //    is staticaly added to the service configurator.
     client_factory_ (0),
     client_factory_from_service_config_ (0),
+    // @@ This is not needed since the default client factory, fredk
+    //    is staticaly added to the service configurator.
     server_factory_ (0),
     server_factory_from_service_config_ (0),
+    // @@ This is not needed since the default server factory, fredk
+    //    is staticaly added to the service configurator.
     opt_for_collocation_ (1),
-#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-    arl_same_port_connect_ (0),
-#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
     preconnections_ (0)
 {
 }
@@ -98,7 +102,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // arguments and stash it for use initializing other components such
   // as the ACE_Service_Config or the RootPOA.
   //
-  // Prepare a copy of the argument vector.
+  // Prepare a copy of the argument vector for the service configurator.
 
   char **svc_config_argv;
 
@@ -113,14 +117,19 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     argv0 = argv[0];
   svc_config_argv[svc_config_argc++] = CORBA::string_dup (argv0);
 
+  // @@ This should be an IIOP default, more generally each
+  //    loaded protocol should have it's own default defined by the
+  //    implemention.  This is currently defined to be a zero, fredk
   ACE_Env_Value<int> defport ("TAO_DEFAULT_SERVER_PORT",
                               TAO_DEFAULT_SERVER_PORT);
   ACE_CString host;
   CORBA::UShort port = defport;
+
+  // @@ GIOPLite should be an alternative ORB Messaging protocols, fredk
+  int giop_lite = 0;
+
   CORBA::Boolean use_ior = 1;
   int cdr_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF;
-
-  int giop_lite = 0;
 
   // The following things should be changed to use the ACE_Env_Value<>
   // template sometime.
@@ -143,22 +152,28 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // List of comma separated prefixes from ORBDefaultInitRef.
   ACE_CString default_init_ref;
 
-  // Name Service port #.
+  // Name Service port use for Multicast
   u_short ns_port = 0;
 
   // Trading Service IOR string.
   ACE_CString ts_ior;
 
-  // Trading Service port #.
+  // Trading Service port used for Multicast
   u_short ts_port = 0;
 
   // Buffer sizes for kernel socket buffers
+  // @@ should be a default defined for each protocol implementation?
+  //    since we may have protocols loaded which use shared memory of
+  //    some form, fredk
   size_t rcv_sock_size = 0;
   size_t snd_sock_size = 0;
 
   char *preconnections = 0;
 
   // Use dotted decimal addresses
+  // @@ This option will be treated as a suggestion to each loaded protocol to
+  // @@ use a character representation for the numeric address, otherwise
+  // @@ use a logical name. fredk
 #if defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
   int dotted_decimal_addresses = 1;
 #else
@@ -193,6 +208,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else if (ACE_OS::strcmp (current_arg, "-ORBdotteddecimaladdresses") == 0)
         {
           // Use dotted decimal addresses
+          // @@ this should be renamed.  See above comment. fredk
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
@@ -220,6 +236,18 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBhost") == 0)
         {
+          // @@ Again, there may be multiple interfaces, multiple protocols
+          //    and thus many "hostnames".  Perhaps this should be on a
+          //    per protocol bases.  Especially since a IP name will have
+          //    no meaning for say ATM or UNIX domain or Bus based I/O
+          // @@ Rather than specify a hostname and port number for the
+          //    server, one or more endpoints should be specified.  An 
+          //    endpoint will have the following format:
+          //    IOP:[major.minor]//address1,address2,...,addressn/
+          //    so for IIOP this would be:
+          //    iiop://myhost_ether:5050,myhost_atm:6060/
+          //    fredk.
+
           // Specify the name of the host (i.e., interface) on which
           // the server should listen.
           arg_shifter.consume_arg ();
@@ -244,6 +272,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else if (ACE_OS::strcmp (current_arg, "-ORBnameserviceport") == 0)
         {
           // Specify the port number for the NameService.
+          // Unrelated to ORB Protocols, this is used for multicast.
 
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -276,6 +305,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBport") == 0)
         {
+          // @@ See comment for host option.  fredk
+
           // Specify the port number/name on which we should listen
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -288,6 +319,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBrcvsock") == 0)
         {
+          // @@ All protocol implementation may not use sockets, so
+          //    this can either be a generic I/O Buffer size or
+          //    Buffer info can be a per protocol specification, fredk
+
           arg_shifter.consume_arg ();
           // Specify the size of the socket's receive buffer
 
@@ -299,6 +334,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBsndsock") == 0)
         {
+          // @@ All protocol implementation may not use sockets, so
+          //    this can either be a generic I/O Buffer size or
+          //    Buffer info can be a per protocol specification, fredk
+
           arg_shifter.consume_arg ();
           // Specify the size of the socket's send buffer
           if (arg_shifter.is_parameter_next ())
@@ -358,6 +397,15 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else if (ACE_OS::strcmp (current_arg, "-ORBpreconnect") == 0)
         {
           arg_shifter.consume_arg ();
+          // @@ This needs to be updated to deal with multiple protocols!
+          // For example,  specify -ORBpreconnect once for each protocol
+          //   -ORBpreconnect iiop://tango:10015,watusi:10016/
+          //   -ORBpreconnect busX_iop://board1:0x07450000,board2,0x08450000/
+          // Or chain all possible endpoint designations together 
+          //   -ORBpreconnect iiop://tango:10015,watusi:10016/,
+          //              busX_iop://board1:0x07450000,board2,0x08450000/
+          // fredk
+          // 
           // Get a string which describes the host/port of connections
           // we want to cache up-front, thus reducing the latency of
           // the first call.  It is specified as a comma-separated
@@ -400,20 +448,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                arg_shifter.consume_arg ();
              }
          }
-#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-      else if (ACE_OS::strcmp (current_arg, "-ORBarlsameportconnect") == 0)
-        {
-          arg_shifter.consume_arg ();
-          if (arg_shifter.is_parameter_next ())
-            {
-              if (ACE_OS::strcasecmp (arg_shifter.get_current (), "yes") == 0)
-                this->arl_same_port_connect_ = 1;
-              arg_shifter.consume_arg ();
-            }
-        }
-#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
       else if (ACE_OS::strcmp (current_arg, "-ORBgioplite") == 0)
         {
+          // @@ This will have to change since gioplite will be considered
+          //    as an alternate ORB messaging protocols.
           arg_shifter.consume_arg ();
           giop_lite = 1;
         }
@@ -447,13 +485,23 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         arg_shifter.ignore_arg ();
     }
 
-  // Set the endpoint
-  ACE_INET_Addr rendezvous;
-  if (this->set_endpoint (dotted_decimal_addresses,
-                          port,
-                          host,
-                          rendezvous) == -1)
-    return -1;
+#if defined (DEBUG)
+  // Make it a little easier to debug programs using this code.
+  {
+    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
+
+    char *value = ACE_OS::getenv ("TAO_ORB_DEBUG");
+
+    if (value != 0)
+      {
+        TAO_debug_level = ACE_OS::atoi (value);
+        if (TAO_debug_level <= 0)
+          TAO_debug_level = 1;
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_debug_level == %d", TAO_debug_level));
+      }
+  }
+#endif  /* DEBUG */
 
 #if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
   // There's really no way to deal with this in a portable manner, so
@@ -468,6 +516,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 #endif /* SIGPIPE */
 
   // Initialize the Service Configurator -check for return values.
+  // Load the resource factory, connector registry, acceptor registry
+  // and protocols.  Will need to call the open () method on 
+  // the registries!
   int result = TAO_Internal::open_services (svc_config_argc,
                                             svc_config_argv);
   // Make sure to free up all the dynamically allocated memory.  If we
@@ -498,16 +549,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   this->reactor (trf->get_reactor ());
   this->thr_mgr (trf->get_thr_mgr ());
-
-  // Init the connector registry ... this initializes the registry
-  // pointer in the ORB core.  The actual registry is either in TSS or global
-  // memory.
-  this->connector_registry (trf->get_connector_registry ());
-  // @@ Make sure the IIOP_Connector is registered with the connector registry.
-  this->connector_registry ()->add_connector (trf->get_connector ());
-
-  // @@ Init acceptor ... This needs altering for Pluggable Protocols! fredk
-  this->acceptor (trf->get_acceptor ());
 
   TAO_Server_Strategy_Factory *ssf = this->server_factory ();
 
@@ -543,8 +584,18 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // deferred until after the service config entries had been
   // determined.
 
-  this->orb_params ()->addr (rendezvous);
-  this->orb_params ()->host (host);
+  // @@ Set the endpoint string to iiop://host:port/
+  //    Add a string to hold the endpoint desgination for this ORB
+  //    for now it will be IIOP://host:port/  fredk
+  ACE_CString iiop_endpoint;
+  if (this->set_iiop_endpoint (dotted_decimal_addresses,
+                               port,
+                               host,
+                               iiop_endpoint) == -1)
+    return -1;
+
+  // Add the endpoint
+  this->orb_params ()->endpoints (iiop_endpoint);
 
   // Set the init_ref.
   this->orb_params ()->init_ref (init_ref);
@@ -569,8 +620,34 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   this->orb_params ()->use_lite_protocol (giop_lite);
 
-  // tell the registry to open all registered interfaces! fredk
-  if (this->connector_registry ()->open (trf, this->reactor ()) != 0)
+  this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
+
+  // ** Set up the pluggable protocol infrastructure.  First get a 
+  // pointer to the protocol factories set, then obtain pointers to 
+  // all factories loaded by the service configurator.
+  // Load all protocol factories!
+  if (trf->init_protocol_factories () == -1)
+    return -1;
+  
+  // init the ORB core's pointer
+  this->protocol_factories (trf->get_protocol_factories ());
+
+  // Now that we have a complete list of available protocols and their
+  // related factory objects, initial;ize the registries!
+
+  // Init the connector registry ... this initializes the registry
+  // pointer in the ORB core.  The actual registry is either in TSS or global
+  // memory.
+  this->connector_registry (trf->get_connector_registry ());
+
+  // tell the registry to open all registered interfaces
+  if (this->connector_registry ()->open (this) != 0)
+    return -1;
+
+  // Init acceptor_registry_ 
+  this->acceptor_registry (trf->get_acceptor_registry ());
+
+  if (this->acceptor_registry ()->open (this) == -1)
     return -1;
 
   // Have registry parse the preconnects
@@ -582,65 +659,52 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
 
 int
-TAO_ORB_Core::set_endpoint (int dotted_decimal_addresses,
-                            CORBA::UShort port,
-                            ACE_CString &host,
-                            ACE_INET_Addr &rendezvous)
+TAO_ORB_Core::set_iiop_endpoint ( int dotted_decimal_addresses,
+                                  CORBA::UShort port,
+                                  ACE_CString &host,
+                                  ACE_CString &endpoint)
 {
   // No host specified; find it
   if (host.length () == 0)
     {
-      char buffer[MAXHOSTNAMELEN + 1];
-      if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
+      ASYS_TCHAR name[MAXHOSTNAMELEN + 1];
+      if (ACE_OS::hostname (name, MAXHOSTNAMELEN + 1) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Failed to look up local host name.\n"),
+                       -1);
+        }
+      host.set (name, 1);
+    }
+
+  // @@ For compatibility (ug) with how things were done before,
+  //    get the local host name in the correct format.  This will be
+  //    stored away in the ORB!  fredk
+  ACE_INET_Addr rendezvous;
+  rendezvous.set (port, host.c_str ());
+
+  char buffer[MAXHOSTNAMELEN + 1];
+
+  if (rendezvous.addr_to_string (buffer, 
+                                 MAXHOSTNAMELEN, 
+                                 dotted_decimal_addresses) == -1)
+    {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) failed to resolve local host %p.\n"),
+                           "(%P|%t) failed in addr_to_string () %p.\n"),
                           -1);
-      else
-        host = buffer;
     }
 
-  // Set the host and port parameters in the address
-  if (rendezvous.set (port, host.c_str ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) failed to resolve host %s, %p.\n",
-                       host.c_str (),
-                       "reason"),
-                      -1);
-
-  // Set up the hostname so that we can put it into object later on.
-  // This extra step is necessary since the user specified hostname
-  // usually gets expanded to a complete hostname by the conversion.
-  // Example: tango -> tango.cs.wustl.edu
-  if (dotted_decimal_addresses)
-    {
-      const char *temphost = rendezvous.get_host_addr ();
-      if (temphost == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) failed in get_host_addr () %p.\n"),
-                            -1);
-        }
-      else
-        {
-          host = temphost;
-        }
-    }
-  else
-    {
-      char buffer[MAXHOSTNAMELEN + 1];
-      if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) failed in get_host_name () %p.\n"),
-                            -1);
-        }
-      else
-        {
-          host = buffer;
-        }
-    }
+  // endpoint == iiop://host:port/
+  endpoint.set ("iiop://", 1);
+  endpoint += buffer;
+  endpoint += ACE_CString("/");
+ 
+  // @@ more ugliness .... fredk
+  this->orb_params ()->addr (rendezvous);
+  this->orb_params ()->host (host);
 
   return 0;
+
 }
 
 int
@@ -651,12 +715,18 @@ TAO_ORB_Core::fini (void)
 
   TAO_Internal::close_services ();
 
+  // @@ This is not needed since the default resource factory
+  //    is staticaly added to the service configurator, fredk
   if (!this->resource_factory_from_service_config_)
     delete resource_factory_;
 
+  // @@ This is not needed since the default client factory
+  //    is staticaly added to the service configurator, fredk
   if (!this->client_factory_from_service_config_)
     delete client_factory_;
 
+  // @@ This is not needed since the default server factory
+  //    is staticaly added to the service configurator, fredk
   if (!this->server_factory_from_service_config_)
     delete server_factory_;
 
@@ -673,9 +743,12 @@ TAO_ORB_Core::resource_factory (void)
       // Look in the service repository for an instance.
       this->resource_factory_ =
         ACE_Dynamic_Service<TAO_Resource_Factory>::instance ("Resource_Factory");
+      // @@ Not needed!
       this->resource_factory_from_service_config_ = 1;
     }
 
+  //@@ None of this stuff is needed since the default resource factory
+  //   is statically adde to the Service Configurator!
   if (this->resource_factory_ == 0)
     {
       // Still don't have one, so let's allocate the default.  This
@@ -691,6 +764,7 @@ TAO_ORB_Core::resource_factory (void)
                       TAO_Default_Resource_Factory,
                       0);
 
+      // @@ Not needed.
       this->resource_factory_from_service_config_ = 0;
       default_factory->resource_source (TAO_Default_Resource_Factory::TAO_GLOBAL);
       this->resource_factory_ = default_factory;
@@ -710,10 +784,12 @@ TAO_ORB_Core::client_factory (void)
       // Look in the service repository for an instance.
       this->client_factory_ =
         ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance ("Client_Strategy_Factory");
-      this->client_factory_from_service_config_ =
-        1;
+      // @@ Not needed!
+      this->client_factory_from_service_config_ = 1;
     }
 
+  //@@ None of this stuff is needed since the default client factory
+  //   is statically added to the Service Configurator, fredk
   if (this->client_factory_ == 0)
     {
       // Still don't have one, so let's allocate the default.  This
@@ -745,9 +821,12 @@ TAO_ORB_Core::server_factory (void)
       this->server_factory_ =
         ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance
           ("Server_Strategy_Factory");
+      // @@ Not needed!
       this->server_factory_from_service_config_ = 1;
     }
 
+  //@@ None of this stuff is needed since the default server factory
+  //   is statically adde to the Service Configurator, fredk
   // If the <server_factory_> isn't found it's usually because the ORB
   // hasn't been intialized correctly...
   if (this->server_factory_ == 0)
@@ -763,6 +842,7 @@ TAO_ORB_Core::server_factory (void)
                       TAO_Default_Server_Strategy_Factory,
                       0);
 
+      // @@ Not needed!
       this->server_factory_from_service_config_ = 0;
       // At this point we need to register this with the
       // <Service_Repository> to get it cleaned up properly.  But, for
@@ -812,14 +892,6 @@ TAO_ORB_Core::root_poa_reference (CORBA::Environment &TAO_IN_ENV,
   return PortableServer::POA::_duplicate (this->root_poa_reference_.in ());
 }
 
-#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-CORBA::Boolean
-TAO_ORB_Core::arl_same_port_connect (void)
-{
-  return this->arl_same_port_connect_;
-}
-#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
-
 int
 TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
 {
@@ -845,7 +917,7 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
   this->orb_params_ = p->orb_params ();
   // We also need its ORB_Params.
 
-  this->acceptor (p->acceptor ());
+  this->acceptor_registry (p->acceptor_registry ());
   // Also grab the acceptor passively listening for connection
   // requests.
 
@@ -1228,17 +1300,6 @@ template class ACE_Env_Value<u_int>;
 template class ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
 
-template class ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_Object_Adapter *>;
-template class ACE_Hash<ACE_INET_Addr>;
-template class ACE_Equal_To<ACE_INET_Addr>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Iterator<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>;
-
 template class ACE_Guard<TAO_Collocation_Table_Lock>;
 template class ACE_Read_Guard<TAO_Collocation_Table_Lock>;
 template class ACE_Write_Guard<TAO_Collocation_Table_Lock>;
@@ -1258,17 +1319,6 @@ template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
 
 #pragma instantiate ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_ORB_Core_TSS_Resources>
-
-#pragma instantiate ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_Object_Adapter *>
-#pragma instantiate ACE_Hash<ACE_INET_Addr>
-#pragma instantiate ACE_Equal_To<ACE_INET_Addr>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr, TAO_Object_Adapter *, TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_Object_Adapter *, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, TAO_Collocation_Table_Lock>
 
 #pragma instantiate ACE_Guard<TAO_Collocation_Table_Lock>
 #pragma instantiate ACE_Read_Guard<TAO_Collocation_Table_Lock>

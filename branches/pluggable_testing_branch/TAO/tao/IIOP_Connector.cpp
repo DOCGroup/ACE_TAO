@@ -20,14 +20,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 
-CORBA::ULong
-TAO_IIOP_Connector::tag (void)
-{
-  return this->tag_;
-}
-
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
-  : tag_(TAO_IOP_TAG_INTERNET_IOP),
+  : TAO_Connector (TAO_IOP_TAG_INTERNET_IOP),
     base_connector_ ()
 {
 }
@@ -44,35 +38,6 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
 
   if (iiop_profile == 0)
     return -1;
-
-// Establish the connection and get back a <Client_Connection_Handler>.
-// @@ We do not have the ORB core
-// #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-//   if (this->orb_core_->arl_same_port_connect ())
-//     {
-//       ACE_INET_Addr local_addr (this->orb_core_->orb_params ()->addr ());
-//       local_addr.set_port_number (server_addr_p->get_port_number ());
-//
-//       // Set the local port number to use.
-//       if (con->connect (iiop_profile->hint (),
-//                         iiop_profile->object_addr (),
-//                         0,
-//                         local_addr,
-//                         1) == -1);
-//       {
-//         // Give users a clue to the problem.
-//       ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
-//                    "%s failed (%p)\n",
-//                    __FILE__,
-//                    __LINE__,
-//                    iiop_profile->addr_to_string (),
-//                    "errno"));
-//
-//        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (), env);
-//        }
-//    }
-//  else
-//#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
   const ACE_INET_Addr &oa = iiop_profile->object_addr ();
 
@@ -106,16 +71,10 @@ int
 TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
                           ACE_Reactor *reactor)
 {
-  // @@ Fred: why not just
-  //
-  // return this->base_connector_.open (....); ????
-  //
-  if (this->base_connector_.open (reactor,
-                                  trf->get_null_creation_strategy (),
-                                  trf->get_cached_connect_strategy (),
-                                  trf->get_null_activation_strategy ()) != 0)
-    return -1;
-  return 0;
+  return this->base_connector_.open (reactor,
+                                     trf->get_null_creation_strategy (),
+                                     trf->get_cached_connect_strategy (),
+                                     trf->get_null_activation_strategy ());
 }
 
 int
@@ -252,6 +211,57 @@ TAO_IIOP_Connector::preconnect (char *preconnections)
 #endif /* 0 */
   return successes;
 }
+
+int
+TAO_IIOP_Connector::make_profile (const char *endpoint,
+                                  TAO_Profile *&profile,
+                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  // The endpoint should be of the form:
+  //
+  //    N.n//host:port/object_key
+  //
+  // or:
+  //
+  //    //host:port/object_key 
+
+  ACE_NEW_RETURN (profile,
+                  TAO_IIOP_Profile (endpoint, ACE_TRY_ENV),
+                  -1);
+
+  return 0;  // Success
+}
+
+
+int
+TAO_IIOP_Connector::check_prefix (const char *endpoint)
+{
+  // Parse the given URL style IOR and create an mprofile from it.
+
+  // Check for a valid string
+  if (!endpoint || !*endpoint)
+    return 1;  // Failure
+
+  const char protocol[] = "iiop";
+  // This is valid for any protocol beginning with `iiop'.
+
+
+  // Check for the proper prefix in the IOR.  If the proper prefix isn't
+  // in the IOR then it is not an IOR we can use.
+  if (ACE_OS::strncasecmp (endpoint,
+                           protocol,
+                           ACE_OS::strlen (protocol)) == 0)
+    {
+      return 0;  // Success
+    }
+  else
+    {
+      return 1;
+      // Failure: not an IIOP IOR
+      // DO NOT throw an exception here.
+    }
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

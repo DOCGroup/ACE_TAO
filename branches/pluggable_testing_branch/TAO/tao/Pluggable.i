@@ -1,8 +1,9 @@
 // $Id$
 
 ACE_INLINE
-TAO_Profile::TAO_Profile (void)
-  :  forward_to_ (0)
+TAO_Profile::TAO_Profile (CORBA::ULong tag)
+  :  tag_ (tag),
+     forward_to_ (0)
 {
 }
 

@@ -74,6 +74,25 @@ TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
   this->use_dotted_decimal_addresses_ = x;
 }
 
+ACE_INLINE const ACE_CString &
+TAO_ORB_Parameters::endpoints (void)
+{
+  return this->endpoints_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::endpoints (ACE_CString &endpoints)
+{
+  this->endpoints_ = endpoints;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::add_endpoint (ACE_CString &endpoint)
+{
+  this->endpoints_ += ";";
+  this->endpoints_ += endpoint;
+}
+
 ACE_INLINE void
 TAO_ORB_Parameters::addr (const ACE_INET_Addr &addr)
 {

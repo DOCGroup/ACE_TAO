@@ -25,10 +25,30 @@
 
 #include "ace/Connector.h"
 #include "ace/LSOCK_Connector.h"
-#include "tao/Pluggable.h"
-#include "tao/Connect.h"
 
-typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler,
+#include "tao/Pluggable.h"
+#include "tao/UIOP_Connect.h"
+
+
+// ****************************************************************
+
+#include "tao/Resource_Factory.h"  // @@ Needed for some temporary hacks
+
+typedef ACE_Cached_Connect_Strategy<TAO_UIOP_Client_Connection_Handler,
+                                    ACE_LSOCK_CONNECTOR,
+                                    TAO_Cached_Connector_Lock>
+        TAO_UIOP_CACHED_CONNECT_STRATEGY;
+
+typedef ACE_NOOP_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
+        TAO_UIOP_NULL_CREATION_STRATEGY;
+
+typedef ACE_NOOP_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>
+        TAO_UIOP_NULL_ACTIVATION_STRATEGY;
+
+// ****************************************************************
+
+
+typedef ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler,
                                ACE_LSOCK_CONNECTOR> TAO_UIOP_BASE_CONNECTOR;
 
 class TAO_Export TAO_UIOP_Connector : public TAO_Connector
@@ -54,23 +74,29 @@ public:
   int preconnect (char *preconnections);
   // Initial set of connections to be established.
 
-  CORBA::ULong tag (void);
-  // The tag identifying the specific ORB transport layer protocol.
-  // For example TAO_IOP_TAG_INTERNET_IOP = 0.  The tag is used in the
-  // IOR to identify the type of profile included. IOR -> {{tag0,
-  // profile0} {tag1, profile1} ...}  GIOP.h defines typedef
-  // CORBA::ULong TAO_IOP_Profile_ID;
-
   int connect (TAO_Profile *profile,
                TAO_Transport *&transport);
   // Connect will be called from TAO_GIOP_Invocation::start
 
-private:
-  CORBA::ULong tag_;
-  // UIOP tag.
+protected:
+  virtual int make_profile (const char *endpoint,
+                            TAO_Profile *&,
+                            CORBA::Environment &ACE_TRY_ENV);
+  // Create a profile with a given endpoint.
 
-  TAO_UIOP_BASE_CONNECTOR  base_connector_;
+  virtual int check_prefix (const char *endpoint);
+  // Check that the prefix of the provided endpoint is valid for use
+  // with a given pluggable protocol.
+
+private:
+  TAO_UIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for UIOP.
+
+  static TAO_UIOP_CACHED_CONNECT_STRATEGY UIOP_Cached_Connect_Strategy_;
+  static TAO_UIOP_NULL_CREATION_STRATEGY UIOP_Null_Creation_Strategy_;
+  static TAO_UIOP_NULL_ACTIVATION_STRATEGY UIOP_Null_Activation_Strategy_;
+  // @@ Need to provide our own strategies until the Resource_Factory is
+  //    updated for pluggable protocols.
 };
 
 # endif  /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

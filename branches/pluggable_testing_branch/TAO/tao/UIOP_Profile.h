@@ -27,8 +27,9 @@
 #include "ace/UNIX_Addr.h"
 #include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
+#include "tao/UIOP_Connect.h"
 
-class TAO_Client_Connection_Handler;
+//class TAO_UIOP_Client_Connection_Handler;
 
 // TAO UIOP_Profile concrete Profile definitions
 class TAO_Export TAO_UIOP_Profile : public TAO_Profile
@@ -104,10 +105,6 @@ public:
   ~TAO_UIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
-  CORBA::ULong tag (void) const;
-  // The tag, each concrete class will have a specific tag value.  for
-  // example we are TAO_IOP_TAG_INTERNET_IOP.
-
   int parse (TAO_InputCDR& cdr,
              CORBA::Boolean& continue_decoding,
              CORBA::Environment &env);
@@ -157,8 +154,9 @@ public:
   // Return a pointer to the rendezvous point string.  This object maintains
   // ownership of this string.
 
-  const char *rendezvous_point (const char *h);
-  // Copy the string h into rendezvous_point_ and return the resulting pointer.
+  const char *rendezvous_point (const char *r);
+  // Copy the string r into rendezvous_point_ and return the
+  // resulting pointer.
   // This object maintains ownership of this string.
 
   const TAO_IOP_Version *version (void);
@@ -169,7 +167,7 @@ public:
   // First set the version then return a pointer to it.  This object
   // maintains ownership.
 
-  TAO_Client_Connection_Handler *&hint (void);
+  TAO_UIOP_Client_Connection_Handler *&hint (void);
   // This is a hint for which connection handler to use.
 
   void reset_hint (void);
@@ -178,7 +176,7 @@ public:
   TAO_Profile *_nil (void);
   // Return a null object pointer.
 
-  void operator= (const TAO_UIOP_Profile &src);
+  TAO_UIOP_Profile & operator= (const TAO_UIOP_Profile &src);
   // Assignment operator
 
   virtual CORBA::ULong _incr_refcnt (void);
@@ -200,9 +198,6 @@ private:
   char *rendezvous_point_;
   // String representing the rendezvous point.
 
-  CORBA::ULong tag_;
-  // The tag.
-
   TAO_opaque body_;
   // Marshaled profile (CDR).
 
@@ -216,7 +211,7 @@ private:
   // Cached instance of <ACE_UNIX_Addr> for use in making
   // invocations, etc.
 
-  TAO_Client_Connection_Handler *hint_;
+  TAO_UIOP_Client_Connection_Handler *hint_;
   // Pointer to a connection handler which we successfully used
   // already.
 

@@ -174,6 +174,20 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
               this->cdr_allocator_source_ = TAO_TSS;
           }
       }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBprotocolfactory") == 0)
+      {
+        TAO_ProtocolFactorySet *pset = this->get_protocol_factories ();
+        curarg++;
+        if (curarg < argc)
+          {
+            TAO_Protocol_Item *item = new TAO_Protocol_Item (argv[curarg]);
+            if (pset->insert (item) == -1)
+              {
+                ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) Unable to add protocol factories for %s: %p\n", argv[curarg]));
+              }
+          }
+      }
 
   // Don't allow a global ORB and a tss POA.
   if ( (local_resource_source == TAO_GLOBAL) &&
@@ -200,6 +214,35 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
   return 0;
 }
 
+int
+TAO_Default_Resource_Factory::init_protocol_factories (void)
+{
+  TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
+  TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
+
+  for ( ; factory != end ; factory++)
+    {
+      const ACE_CString name = (*factory)->protocol_name ();
+      (*factory)->factory (
+        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
+      if ((*factory)->factory () == 0)
+        {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                "(%P|%t) Unable to load protocol %s\n",
+                                name.c_str ()),
+                                -1);
+
+        }
+    }
+  return 0;
+}
+
+TAO_ProtocolFactorySet *
+TAO_Default_Resource_Factory::get_protocol_factories (void)
+{
+  return &protocol_factories_;
+}
+
 #define IMPLEMENT_GET_METHOD(methodname,rtype,membername)\
 rtype TAO_Default_Resource_Factory::methodname(void)\
 {\
@@ -214,9 +257,8 @@ rtype TAO_Default_Resource_Factory::methodname(void)\
 }
 
 IMPLEMENT_GET_METHOD(get_thr_mgr, ACE_Thread_Manager *, tm_)
-IMPLEMENT_GET_METHOD(get_acceptor, TAO_Acceptor *, a_)
+IMPLEMENT_GET_METHOD(get_acceptor_registry, TAO_Acceptor_Registry *, ar_)
 IMPLEMENT_GET_METHOD(get_connector_registry, TAO_Connector_Registry *, cr_)
-IMPLEMENT_GET_METHOD(get_connector, TAO_Connector *, c_)
 IMPLEMENT_GET_METHOD(get_null_creation_strategy, TAO_NULL_CREATION_STRATEGY *, null_creation_strategy_)
 IMPLEMENT_GET_METHOD(get_null_activation_strategy, TAO_NULL_ACTIVATION_STRATEGY *, null_activation_strategy_)
 
@@ -554,9 +596,21 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
 
   delete this->object_adapter_;
 
-  this->c_.close ();
-
   delete this->r_;
+}
+
+// ****************************************************************
+
+TAO_Default_Reactor::TAO_Default_Reactor (int nolock)
+  : ACE_Reactor ((nolock ?
+                  (ACE_Reactor_Impl*) new TAO_NULL_LOCK_REACTOR :
+                  (ACE_Reactor_Impl*) new TAO_REACTOR),
+                 1)
+{
+}
+
+TAO_Default_Reactor::~TAO_Default_Reactor (void)
+{
 }
 
 // ****************************************************************

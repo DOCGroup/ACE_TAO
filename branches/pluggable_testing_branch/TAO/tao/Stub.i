@@ -270,3 +270,77 @@ TAO_Stub::orb_core (void) const
 {
   return this->orb_core_;
 }
+
+// Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
+ACE_INLINE
+TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub *p)
+  : p_ (p)
+{
+  ACE_TRACE ("TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr");
+}
+
+ACE_INLINE
+TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &rhs)
+  : p_ (rhs.release ())
+{
+  ACE_TRACE ("TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr");
+}
+
+ACE_INLINE TAO_Stub_Auto_Ptr &
+TAO_Stub_Auto_Ptr::operator= (TAO_Stub_Auto_Ptr &rhs)
+{
+  ACE_TRACE ("TAO_Stub_Auto_Ptr::operator=");
+  if (this != &rhs)
+    {
+      this->reset (rhs.release ());
+    }
+  return *this;
+}
+
+ACE_INLINE
+TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr (void)
+{
+  ACE_TRACE ("TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr");
+  this->get ()->_decr_refcnt ();
+}
+
+// Accessor methods to the underlying Stub Object
+
+ACE_INLINE TAO_Stub &
+TAO_Stub_Auto_Ptr::operator *() const
+{
+  ACE_TRACE ("TAO_Stub_Auto_Ptr::operator *()");
+  return *this->get ();
+}
+
+ACE_INLINE TAO_Stub *
+TAO_Stub_Auto_Ptr::get (void) const
+{
+  ACE_TRACE ("TAO_Stub_Auto_Ptr::get");
+  return this->p_;
+}
+
+ACE_INLINE TAO_Stub *
+TAO_Stub_Auto_Ptr::release (void)
+{
+  ACE_TRACE ("TAO_Stub_Auto_Ptr::release");
+  TAO_Stub *old = this->p_;
+  this->p_ = 0;
+  return old;
+}
+
+ACE_INLINE void
+TAO_Stub_Auto_Ptr::reset (TAO_Stub *p)
+{
+  ACE_TRACE ("TAO_Stub_Auto_Ptr::reset");
+  if (this->get () != p)
+    this->get ()->_decr_refcnt ();
+  this->p_ = p;
+}
+
+ACE_INLINE TAO_Stub *
+TAO_Stub_Auto_Ptr::operator-> () const
+{
+  ACE_TRACE ("auto_ptr::operator->");
+  return this->get ();
+}

@@ -62,7 +62,7 @@ public:
   // profiles!
 
   int set (CORBA::ULong sz);
-  // @@ Fred, what does this method do?
+  // Inits MProfile to hold sz TAO_Profiles.
 
   int set (const TAO_MProfile &mprofile);
   // Inits this to the values of mprofile.  NOTE: We use
@@ -127,6 +127,8 @@ public:
 
   CORBA::ULong hash (CORBA::ULong max,
                      CORBA::Environment &env);
+  // use all registered profiles.  The hash() method is called on each
+  // profile and the results are averaged together.
   // @@ FRED: The list should be locked for this!
 
 protected:

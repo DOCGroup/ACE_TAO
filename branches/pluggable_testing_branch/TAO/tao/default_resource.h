@@ -62,12 +62,8 @@ public:
   // This no-op activation strategy prevents the cached connector from
   // calling the service handler's <open> method multiple times.
 
-  TAO_IIOP_Acceptor a_;
-  // The Acceptor
-
-  TAO_IIOP_Connector c_;
-  // The Connector, HACK to create the first connector which happens
-  // to be IIOP.
+  TAO_Acceptor_Registry ar_;
+  // The Acceptor Registry!
 
   TAO_Connector_Registry cr_;
   // The Connector Registry!
@@ -156,12 +152,11 @@ public:
   // = Resource Retrieval
   virtual ACE_Reactor *get_reactor (void);
   virtual ACE_Thread_Manager *get_thr_mgr (void);
-  virtual TAO_Connector *get_connector (void);
+  virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
   virtual TAO_CACHED_CONNECT_STRATEGY *get_cached_connect_strategy (void);
   virtual TAO_NULL_CREATION_STRATEGY *get_null_creation_strategy (void);
   virtual TAO_NULL_ACTIVATION_STRATEGY *get_null_activation_strategy (void);
-  virtual TAO_Acceptor *get_acceptor (void);
   virtual TAO_POA *get_root_poa (void);
   virtual TAO_Object_Adapter *object_adapter (void);
   virtual TAO_GLOBAL_Collocation_Table *get_global_collocation_table (void);
@@ -170,6 +165,9 @@ public:
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
   virtual ACE_Data_Block *create_input_cdr_data_block (size_t size);
+
+  virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
+  virtual int init_protocol_factories (void);
 
 protected:
   ACE_Reactor_Impl *allocate_reactor_impl (void) const;
@@ -199,6 +197,9 @@ protected:
   // factory the user may be interested in global allocators for the
   // CDR streams, for instance to keep the buffers around after the
   // upcall and/or pass them to another thread.
+
+  TAO_ProtocolFactorySet protocol_factories_;
+  // list of loaded protocol factories.
 
   // = Typedefs for the singleton types used to store our orb core
   // information.

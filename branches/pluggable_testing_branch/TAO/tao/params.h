@@ -54,9 +54,16 @@ public:
   ~TAO_ORB_Parameters (void);
   // Destructor.
 
+  const ACE_CString &endpoints (void);
+  void endpoints (ACE_CString &endpoints);
+  void add_endpoint (ACE_CString &endpoint);
+  // specifies the endpoints on which this server is willing to
+  // listen for requests.
+
   const ACE_INET_Addr &addr (void) const;
   void addr (const ACE_INET_Addr &addr);
   // Set/Get the address on which we're listening.
+  // @@ this is depricated!! fredk
 
   const char *host (void) const;
   void host (const ACE_CString &host);
@@ -133,11 +140,17 @@ public:
   // Set/Get the Init Reference of an arbitrary ObjectID.
 
 private:
+  ACE_CString endpoints_;
+  // list of endpoints this server is willing to accept requests
+  // on.
+
   ACE_INET_Addr addr_;
   // host + port number we are listening on
+  // @@ depricated! fredk
 
   ACE_CString host_;
   // host name
+  // @@ depricated! fredk
 
   ACE_CString name_service_ior_;
   // The IOR of our configured Naming Service.
