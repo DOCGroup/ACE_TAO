@@ -1,5 +1,8 @@
 Mon Feb 23 21:30:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * TAO_IDL/Makefile: added the g++ options that were picked up
+          from be/Makefile.
+
         * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):
           declare local "i" outside of for loop because it is reused
           in a few loops.
