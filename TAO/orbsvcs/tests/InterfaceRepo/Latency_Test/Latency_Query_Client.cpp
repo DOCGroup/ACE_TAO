@@ -11,7 +11,7 @@ ACE_RCSID (Latency_Test,
            Latency_Query_Client, 
            "$Id$")
 
-const CORBA::ULong DEFAULT_NUMCALLS = 250;
+const CORBA::ULong DEFAULT_NUMCALLS = 20000;
 
 Latency_Query_Client::Latency_Query_Client (void)
   : debug_ (0),
