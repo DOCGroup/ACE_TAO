@@ -185,7 +185,7 @@ Wed Jun 05 10:36:28 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Jun 05 10:30:43 2002  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.cpp
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
 	  (~TAO_PG_GenericFactory):
 
 	  Added missing ACE_DECLARE_NEW_CORBA_ENV;
