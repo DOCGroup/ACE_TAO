@@ -132,7 +132,7 @@ string_emulation_test (void)
   {
     // ========================================================================
     // Test memchr
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing memchr")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing memchr\n")));
 
     const char *memchr1 = "abcdefghijklmnopqrstuvwxyz";
 
@@ -144,7 +144,7 @@ string_emulation_test (void)
   
     // ========================================================================
     // Test strchr
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strchr")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strchr\n")));
 
     const char *strchr1 = "abcdefghijkabcdefghijk";
 
@@ -154,7 +154,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strrchr
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strrchr")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strrchr\n")));
 
     const char *strrchr1 = "abcdefghijkabcdefghijk";
 
@@ -164,7 +164,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strcspn
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcspn")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcspn\n")));
 
     const char *strcspn1 = "abcdefghijkabcdefghijk";
 
@@ -173,7 +173,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strcasecmp
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcasecmp")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcasecmp\n")));
 
     const char *strcasecmp1 = "stringf";
     const char *strcasecmp2 = "stringfe";  // An extra character
@@ -189,7 +189,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strtok_r
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok_r")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok_r\n")));
 
     char *strtok_r1 = "A string of tokens";
 
@@ -212,7 +212,7 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS_String::strtok_r (strtok_r1, " ", &strtok_r1) == 0);
 
     // Test itoa
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing itoa")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing itoa\n")));
 
     char itoa1[33];
 
@@ -230,7 +230,7 @@ string_emulation_test (void)
   {
     // ========================================================================
     // Test itoa (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing itoa (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing itoa (wchar_t version)\n")));
 
     wchar_t itow1[33];
 
@@ -246,7 +246,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strcmp (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcmp (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcmp (wchar_t version)\n")));
 
     const wchar_t *strcmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strcmp2 = ACE_TEXT_WIDE ("stringfe");  
@@ -262,7 +262,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strcpy (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcpy (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcpy (wchar_t version)\n")));
 
     const wchar_t *strcpy1 = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyz");
     wchar_t strcpy2[27];
@@ -274,7 +274,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strcat (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcat (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcat (wchar_t version)\n")));
 
     const wchar_t *strcat1 = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyz");
     wchar_t strcat2[27] = ACE_TEXT_WIDE ("abcdefghijkl");
@@ -287,7 +287,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strncat (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncat (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncat (wchar_t version)\n")));
 
     const wchar_t *strncat1 = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyz");
     wchar_t strncat2[27] = ACE_TEXT_WIDE ("abcdefghijkl");
@@ -300,7 +300,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strspn (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strspn (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strspn (wchar_t version)\n")));
 
     const wchar_t *strspn1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -311,7 +311,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strchr (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strchr (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strchr (wchar_t version)\n")));
 
     const wchar_t *strchr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -323,7 +323,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strstr (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strstr (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strstr (wchar_t version)\n")));
 
     const wchar_t *strstr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -337,7 +337,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strlen (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strlen (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strlen (wchar_t version)\n")));
 
     const wchar_t *strlen1 = ACE_TEXT_WIDE ("");
     const wchar_t *strlen2 = ACE_TEXT_WIDE ("12345");
@@ -347,7 +347,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strpbrk (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strpbrk (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strpbrk (wchar_t version)\n")));
 
     const wchar_t *strpbrk1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -358,9 +358,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strrchr (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strrchr (wchar_t version)")));
-
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strrchr")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strrchr (wchar_t version)\n")));
 
     const wchar_t *strrchr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -373,7 +371,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strcasecmp (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcasecmp (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcasecmp (wchar_t version)\n")));
 
     const wchar_t *strcasecmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strcasecmp2 = ACE_TEXT_WIDE ("stringfe");
@@ -389,7 +387,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strncasecmp (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncasecmp (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncasecmp (wchar_t version)\n")));
 
     const wchar_t *strncasecmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strncasecmp2 = ACE_TEXT_WIDE ("stringfe");
@@ -410,7 +408,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strncmp (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncmp (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncmp (wchar_t version)\n")));
 
     const wchar_t *strncmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strncmp2 = ACE_TEXT_WIDE ("stringfe");
@@ -426,7 +424,7 @@ string_emulation_test (void)
 
     // ========================================================================
     // Test strncpy (wchar_t version)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncpy (wchar_t version)")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncpy (wchar_t version)\n")));
 
     wchar_t *strncpy1 = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyzabc");
     wchar_t strncpy2[27];
