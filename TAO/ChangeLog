@@ -1,3 +1,13 @@
+Wed Apr 21 12:11:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1495_Regression:
+          Added this new test. This test is written by Will Otte
+          <wotte@dre.vanderbilt.edu>. This tests when a forward location
+          from a remote servant to a collocated servant is done, also
+          the collocated path for the invocation to the collocated
+          servant is taken. This test will fail at this moment but
+          when I commit my changes it will run without problems.
+
 Wed Apr 21 09:02:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Domain.pidl:
