@@ -10,7 +10,7 @@
 
 BS_Server::BS_Server (const char *packet)
 {
-  char *buf_ptr = packet + MAXUSERIDNAMELEN;
+  const char *buf_ptr = packet + MAXUSERIDNAMELEN;
 
   this->count_ = atoi (packet);
   this->buffer_ = buf_ptr;
