@@ -220,6 +220,8 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
 		    0,       // locking strategy
 		    ACE_Message_Block::DONT_DELETE, // flags
 		    0, // priority
+                    ACE_Time_Value::zero, // execution time
+                    ACE_Time_Value::zero, // absolute time of deadline
 		    0) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -236,6 +238,8 @@ ACE_Message_Block::ACE_Message_Block (void)
 		    0,       // locking strategy
 		    ACE_Message_Block::DONT_DELETE, // flags
 		    0, // priority
+                    ACE_Time_Value::zero, // execution time
+                    ACE_Time_Value::zero, // absolute time of deadline
 		    0) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -246,7 +250,9 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 				      const char *msg_data,
 				      ACE_Allocator *allocator_strategy,
 				      ACE_Lock *locking_strategy,
-				      u_long priority)
+				      u_long priority,
+                                      const ACE_Time_Value & execution_time,
+                                      const ACE_Time_Value & deadline_time)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -258,6 +264,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 		    locking_strategy,
 		    msg_data ? ACE_Message_Block::DONT_DELETE : 0,
 		    priority,
+                    execution_time,
+                    deadline_time,
 		    0) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -269,7 +277,9 @@ ACE_Message_Block::init (size_t size,
 			 const char *msg_data,
 			 ACE_Allocator *allocator_strategy,
 			 ACE_Lock *locking_strategy,
-			 u_long priority)
+			 u_long priority,
+                         const ACE_Time_Value & execution_time,
+                         const ACE_Time_Value & deadline_time)
 {
   ACE_TRACE ("ACE_Message_Block::init");
 
@@ -281,6 +291,8 @@ ACE_Message_Block::init (size_t size,
 		       locking_strategy,
 		       msg_data ? ACE_Message_Block::DONT_DELETE : 0,
 		       priority,
+                       execution_time,
+                       deadline_time,
 		       0); // data block
 }
 
@@ -299,6 +311,8 @@ ACE_Message_Block::init (const char *data,
 		       0,       // locking strategy
 		       ACE_Message_Block::DONT_DELETE,  // flags
 		       0,  // priority
+                       ACE_Time_Value::zero, // execution time
+                       ACE_Time_Value::zero, // absolute time of deadline
 		       0); // data block
 }
 
@@ -310,6 +324,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 				      ACE_Lock *locking_strategy,
 				      Message_Flags flags,
 				      u_long priority,
+                                      const ACE_Time_Value & execution_time,
+                                      const ACE_Time_Value & deadline_time,
 				      ACE_Data_Block *db)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
@@ -322,6 +338,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 		    locking_strategy,
 		    flags,
 		    priority,
+                    execution_time,
+                    deadline_time,
 		    db) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -338,6 +356,8 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
 		    0,         // locking strategy
 		    0,         // flags
 		    0,         // priority
+                    ACE_Time_Value::zero, // execution time
+                    ACE_Time_Value::zero, // absolute time of deadline
 		    data_block) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -351,11 +371,15 @@ ACE_Message_Block::init_i (size_t size,
 			   ACE_Lock *locking_strategy,
 			   Message_Flags flags,
 			   u_long priority,
+                           const ACE_Time_Value & execution_time,
+                           const ACE_Time_Value & deadline_time,
 			   ACE_Data_Block *db)
 {
   ACE_TRACE ("ACE_Message_Block::init_i");
 
   this->priority_ = priority;
+  this->execution_time_ = execution_time;
+  this->deadline_time_ = deadline_time;
   this->cont_ = msg_cont;
   this->next_ = 0;
   this->prev_ = 0;
@@ -591,6 +615,8 @@ ACE_Message_Block::duplicate (void) const
 				     0, // locking strategy
 				     0, // flags
 				     this->priority_, // priority
+                                     this->execution_time_, // execution time
+                                     this->deadline_time_, // absolute time to deadline
 				     // Get a pointer to a
 				     // "duplicated" <ACE_Data_Block>
 				     // (will simply increment the
@@ -683,6 +709,8 @@ ACE_Message_Block::clone (Message_Flags mask) const
 			   0, // locking strategy
 			   0, // flags
 			   this->priority_, // priority
+                           this->execution_time_, // execution time
+                           this->deadline_time_, // absolute time to deadline
 			   db); // data_block
   if (nb == 0)
     {
