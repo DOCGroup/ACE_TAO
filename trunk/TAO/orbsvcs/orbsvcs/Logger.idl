@@ -1,23 +1,23 @@
 // $Id$
 
-//
-// Simplified logger and Logger factory interfaces for 
-// testing of the Name Service implementation.
-
-
-interface Logger;
+interface Logger
+{
+  // = TITLE
+  //   Used to log messages to a logging server.
+  //
+  // = DESCRIPTION
+  //   @@ This interface is very simple-minded and can certainly be
+  //   improved, e.g., by passing over more interesting logging
+  //   records similar to what we do in <ACE_Log_Msg>.
+  oneway void log (in string message);
+  // Transmit a Log_Record to the logging server.
+};
 
 interface Logger_Factory
 {
+  // = TITLE
+  //   Create a <Logger> of type <name>.
+
   Logger make_logger (in string name);
-};
-
-
-
-
-interface Logger
-{
-  // Transmit a Log_Record to the logging server.
-  oneway void log (in string message);
 };
 
