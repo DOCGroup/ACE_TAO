@@ -1,3 +1,9 @@
+Fri Aug 17 19:26:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+       * orbsvcs/orbsvcs/Property/CosPropertyService_i.h
+
+         Add default values for CORBA::Environment variables. 
+
 Fri Aug 17 13:01:36 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h (TAO_SSLIOP_Endpoint):
