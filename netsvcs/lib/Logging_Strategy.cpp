@@ -38,8 +38,9 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
   char *temp;
 
   this->flags_ = 0;
+  this->wipeout_logfile_ = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, "f:s:", 0);
+  ACE_Get_Opt get_opt (argc, argv, "f:s:w", 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -56,6 +57,11 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
           ACE_OS::free ((void *) this->filename_);
 	  this->filename_ = ACE_OS::strdup (get_opt.optarg);
 	  break;
+        case 'w':
+          // Cause the logfile to be wiped out, both on startup and on
+          // reconfigure.
+          this->wipeout_logfile_ = 1;
+          break;
 	default:
 	  break;
 	}
@@ -98,10 +104,21 @@ ACE_Logging_Strategy::init (int argc, char *argv[])
       if (ACE_BIT_ENABLED (this->flags_, 
                            ACE_Log_Msg::OSTREAM))
 	{
-	  // Create a new ofstream to direct output to the file
-	  ofstream *output_file =
-            new ofstream (this->filename_);
-	  ACE_Log_Msg::instance()->msg_ostream (output_file);
+          ofstream *output_file = 0;
+          // Create a new ofstream to direct output to the file.
+          if (wipeout_logfile_)
+            ACE_NEW_RETURN (output_file,
+                            ofstream (this->filename_),
+                            -1);
+          else
+            ACE_NEW_RETURN (output_file,
+                            ofstream (this->filename_,
+                                      ios::app | ios::out),
+                            -1);
+
+          // Set the <output_file> that'll be used by the rest of the
+          // code.
+          ACE_Log_Msg::instance()->msg_ostream (output_file);
 	}
       // Now set the flags for Log_Msg
       ACE_Log_Msg::instance()->set_flags (this->flags_);
