@@ -1,10 +1,17 @@
+Fri Oct 29 21:37:31 1999  Erik Johannes <ejohannes@oresis.com>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/cubit.idl,
+          Cubit_Client.{h,cpp},cubit_i.{h,cpp}: added tests
+          of anys.  One has a long in an any, the other has
+          a struct in an any.
+
 Fri Oct 29 19:36:33 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV.dsp:
         * orbsvcs/tests/AVStreams/benchmark/av_benchmark_child.dsp:
         * orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp:
         * orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp:
-          Changed the output library for the AV service to 
+          Changed the output library for the AV service to
           TAO_AV*.dll.  Thanks to Paulo Breda Vieira <breda@inesca.pt>
           for pointing out that the benchmark files were not set
           up correctly.
@@ -18,26 +25,26 @@ Fri Oct 29 19:36:33 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Fri Oct 29 19:44:39 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init):
-	  Added option:
+        * tao/ORB_Core.cpp (init):
+          Added option:
 
-	  -ORBLogFile <file> to allow redirection of ACE_DEBUG
-	  and ACE_ERROR statements.
+          -ORBLogFile <file> to allow redirection of ACE_DEBUG
+          and ACE_ERROR statements.
 
 Fri Oct 29 12:58:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/Options.html:
-	  Added documentation for two resource factory options
-	  -ORBPriorityMapping and -ORBSchedPolicy.
+        * docs/Options.html:
+          Added documentation for two resource factory options
+          -ORBPriorityMapping and -ORBSchedPolicy.
 
 Fri Oct 29 12:04:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode.h:
-	* tao/Typecode.i:
-	  Removed the 'const' from the TypeCode_ptr argument in
-	  equal() and equivalent(). As Carlos points out, they
-	  are not needed, and may be misinterpreted by some
-	  compilers.
+        * tao/Typecode.h:
+        * tao/Typecode.i:
+          Removed the 'const' from the TypeCode_ptr argument in
+          equal() and equivalent(). As Carlos points out, they
+          are not needed, and may be misinterpreted by some
+          compilers.
 
 Fri Oct 29 10:11:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
