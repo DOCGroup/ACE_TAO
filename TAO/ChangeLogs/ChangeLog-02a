@@ -11,6 +11,7 @@ Mon Mar 27 20:37:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  minimum CORBA is defined). Changing the Any operators
 	  for IDL-defined exceptions, and modifying the rest of
 	  the exception >>= operators in TAO will follow shortly.
+	  Thanks to Carlos for suggesting the >>= fix.
 
 Mon Mar 27 19:27:00 2000  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
