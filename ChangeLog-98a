@@ -1,3 +1,8 @@
+Tue Apr 14 22:06:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_{dll,lib}.dsp: Removed Service_Main.cpp from the
+ 	  projects.  We don't really need them in ACE DLL.
+
 Tue Apr 14 20:30:53 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.i (mutex_init, cond_init): Added sections to properly
