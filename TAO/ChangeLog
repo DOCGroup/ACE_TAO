@@ -1,3 +1,8 @@
+Fri Jan 16 09:41:53 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+	  Fixed compile problem in Tru64 build.
+
 Fri Jan 16 09:13:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
