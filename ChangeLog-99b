@@ -1,23 +1,27 @@
+Wed Mar 17 13:36:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: return non-zero exit status on failure.
+
 Wed Mar 17 12:47:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (open_i): Also delete the parse buffer
-	  before exiting the function for it is no longer needed.  We
-	  still need to deallocate the buffer at close method to prevent
-	  the case when uses manipulate Service_Config directly using
-	  process_directives.
+        * ace/Service_Config.cpp (open_i): Also delete the parse buffer
+          before exiting the function for it is no longer needed.  We
+          still need to deallocate the buffer at close method to prevent
+          the case when uses manipulate Service_Config directly using
+          process_directives.
 
 Wed Mar 17 12:33:35 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.i: Reenabed ACE_OS::rename() and we'll see which
- 	  platforms need to have ACE_LACKS_RENAME.  Thanks to Susan
- 	  Liebeskind <shl@cc.gatech.edu> for reporting this.
+        * ace/OS.i: Reenabed ACE_OS::rename() and we'll see which
+          platforms need to have ACE_LACKS_RENAME.  Thanks to Susan
+          Liebeskind <shl@cc.gatech.edu> for reporting this.
 
 Wed Mar 17 10:46:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Message_Block.i (space): Moved ACE_Message_Block::space()
- 	  after inline declarations of ACE_Message_Block::end() and
- 	  ACE_Message_Block::wr_ptr() to prevent "used before it was
- 	  declared inline" warnings on end() and wr_ptr().
+        * ace/Message_Block.i (space): Moved ACE_Message_Block::space()
+          after inline declarations of ACE_Message_Block::end() and
+          ACE_Message_Block::wr_ptr() to prevent "used before it was
+          declared inline" warnings on end() and wr_ptr().
 
 Wed Mar 17 10:24:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
