@@ -107,7 +107,7 @@ TAO_ORB_Core::poa_current (TAO_POA_Current *new_current)
 // to work better.
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-# if defined (__ACE_INLINE__)
+# if defined (__ACE_INLINE__) || (!defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && !defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA))
     ACE_INLINE size_t
     ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
     {
