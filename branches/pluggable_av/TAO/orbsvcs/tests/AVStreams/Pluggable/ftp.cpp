@@ -144,6 +144,8 @@ FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
+  
+  return 0;
 }
 
 
@@ -165,6 +167,7 @@ Endpoint_Reactive_Strategy::make_stream_endpoint (FTP_Client_StreamEndPoint *&en
   return 0;
 }
 
+int
 Client::parse_args (int argc,
                     char **argv)
 {
