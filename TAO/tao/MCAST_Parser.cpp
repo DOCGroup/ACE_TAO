@@ -375,21 +375,11 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
 
   int pos_colon3 = mcast_name_cstring.find (':', 0);
 
-  if (pos_colon3 == 0)
-    {
-      // The default NIC to be eth0.
-	  const char *default_nic = "eth0";
-	  this->mcast_nic_ = CORBA::string_alloc (ACE_OS::strlen (default_nic));
-      this->mcast_nic_ = default_nic;
-    }
-  else
-    {
-      this->mcast_nic_ = CORBA::string_alloc (pos_colon3);
-      this->mcast_nic_ =
-        mcast_name_cstring.substring (0,
-                                      pos_colon3).c_str ();
-    }
-
+  this->mcast_nic_ = CORBA::string_alloc (pos_colon3);
+  this->mcast_nic_ =
+    mcast_name_cstring.substring (0,
+                                  pos_colon3).c_str ();
+ 
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon3 + 1,
                                   mcast_name_cstring.length() - pos_colon3);
