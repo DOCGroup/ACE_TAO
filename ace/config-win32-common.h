@@ -203,7 +203,7 @@
 #endif /* UNICODE */
 
 #ifdef _DEBUG
-	#include <crtdbg.h>
+	#include /**/ <crtdbg.h>
 #endif
 
 // We are build ACE and want to use MFC (multithreaded)
@@ -270,7 +270,7 @@
 	#if !defined (_WINSOCK2API_)
 
 		#include /**/ <winsock2.h>		/* will also include windows.h, if not present */
-		#include <mswsock.h>
+		#include /**/ <mswsock.h>
 		#if defined (_MSC_VER)
 			#pragma comment(lib, "ws2_32.lib")
 		#endif /* _MSC_VER */
