@@ -1,10 +1,10 @@
 // -*- C++ -*-
-//
-// $Id$
 
 #include "HashReplicaFactory.h"
 
-ACE_RCSID (LB_test, HashReplicaFactory, "$Id$")
+ACE_RCSID (LB_test,
+           HashReplicaFactory,
+           "$Id$")
 
 CORBA::Object_ptr
 HashReplicaFactory::create_object (
@@ -12,7 +12,7 @@ HashReplicaFactory::create_object (
     const TAO_LoadBalancing::Criteria &the_criteria,
     TAO_LoadBalancing::GenericFactory::FactoryCreationId_out
       factory_creation_id,
-    ACE_TRY_ENV)
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::NoFactory,
                    TAO_LoadBalancing::ObjectNotCreated,

@@ -4,6 +4,11 @@
 
 #include "LoadBalancingI.h"
 
+ACE_RCSID (LoadBalancing,
+           LoadBalancingI,
+           "$Id$")
+
+
 // Implementation skeleton constructor
 TAO_LoadBalancing_ReplicationManager_i::TAO_LoadBalancing_ReplicationManager_i
 (void)
@@ -22,14 +27,16 @@ TAO_LoadBalancing_ReplicationManager_i::~TAO_LoadBalancing_ReplicationManager_i 
 
 void
 TAO_LoadBalancing_ReplicationManager_i::register_load_notifier (
-    TAO_LoadBalancing::LoadNotifier_ptr /* load_notifier */)
+    TAO_LoadBalancing::LoadNotifier_ptr /* load_notifier */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 
 TAO_LoadBalancing::LoadNotifier_ptr
-TAO_LoadBalancing_ReplicationManager_i::get_load_notifier (void)
+TAO_LoadBalancing_ReplicationManager_i::get_load_notifier (
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
     TAO_LoadBalancing::InterfaceNotFound))
 {
@@ -38,7 +45,8 @@ TAO_LoadBalancing_ReplicationManager_i::get_load_notifier (void)
 
 void
 TAO_LoadBalancing_ReplicationManager_i::set_default_properties (
-    const TAO_LoadBalancing::Properties & /* props */)
+    const TAO_LoadBalancing::Properties & /* props */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::InvalidProperty,
                    TAO_LoadBalancing::UnsupportedProperty))
@@ -47,7 +55,8 @@ TAO_LoadBalancing_ReplicationManager_i::set_default_properties (
 }
 
 TAO_LoadBalancing::Properties *
-TAO_LoadBalancing_ReplicationManager_i::get_default_properties (void)
+TAO_LoadBalancing_ReplicationManager_i::get_default_properties (
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
@@ -55,7 +64,8 @@ TAO_LoadBalancing_ReplicationManager_i::get_default_properties (void)
 
 void
 TAO_LoadBalancing_ReplicationManager_i::remove_default_properties (
-    const TAO_LoadBalancing::Properties & /* props */)
+    const TAO_LoadBalancing::Properties & /* props */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::InvalidProperty,
                    TAO_LoadBalancing::UnsupportedProperty))
@@ -66,7 +76,8 @@ TAO_LoadBalancing_ReplicationManager_i::remove_default_properties (
 void
 TAO_LoadBalancing_ReplicationManager_i::set_type_properties (
     const char * /* type_id */,
-    const TAO_LoadBalancing::Properties & /* overrides */)
+    const TAO_LoadBalancing::Properties & /* overrides */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::InvalidProperty,
                    TAO_LoadBalancing::UnsupportedProperty))
@@ -76,7 +87,8 @@ TAO_LoadBalancing_ReplicationManager_i::set_type_properties (
 
 TAO_LoadBalancing::Properties *
 TAO_LoadBalancing_ReplicationManager_i::get_type_properties (
-    const char * /* type_id */)
+    const char * /* type_id */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
@@ -85,7 +97,8 @@ TAO_LoadBalancing_ReplicationManager_i::get_type_properties (
 void
 TAO_LoadBalancing_ReplicationManager_i::remove_type_properties (
     const char * /* type_id */,
-    const TAO_LoadBalancing::Properties & /* props */)
+    const TAO_LoadBalancing::Properties & /* props */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::InvalidProperty,
                    TAO_LoadBalancing::UnsupportedProperty))
@@ -96,7 +109,8 @@ TAO_LoadBalancing_ReplicationManager_i::remove_type_properties (
 void
 TAO_LoadBalancing_ReplicationManager_i::set_properties_dynamically (
     TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const TAO_LoadBalancing::Properties & /* overrides */)
+    const TAO_LoadBalancing::Properties & /* overrides */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound,
                    TAO_LoadBalancing::InvalidProperty,
@@ -107,7 +121,8 @@ TAO_LoadBalancing_ReplicationManager_i::set_properties_dynamically (
 
 TAO_LoadBalancing::Properties *
 TAO_LoadBalancing_ReplicationManager_i::get_properties (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */)
+    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound))
 {
@@ -119,7 +134,8 @@ TAO_LoadBalancing_ReplicationManager_i::create_member (
     TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
     const TAO_LoadBalancing::Location & /* the_location */,
     const char * /* type_id */,
-    const TAO_LoadBalancing::Criteria & /* the_criteria */)
+    const TAO_LoadBalancing::Criteria & /* the_criteria */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound,
                    TAO_LoadBalancing::MemberAlreadyPresent,
@@ -135,7 +151,8 @@ TAO_LoadBalancing::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::add_member (
     TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
     const TAO_LoadBalancing::Location & /* the_location */,
-    CORBA::Object_ptr /* member */)
+    CORBA::Object_ptr /* member */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound,
                    TAO_LoadBalancing::MemberAlreadyPresent,
@@ -147,7 +164,8 @@ TAO_LoadBalancing_ReplicationManager_i::add_member (
 TAO_LoadBalancing::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::remove_member (
     TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const TAO_LoadBalancing::Location & /* the_location */)
+    const TAO_LoadBalancing::Location & /* the_location */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound,
                    TAO_LoadBalancing::MemberNotFound))
@@ -158,7 +176,8 @@ TAO_LoadBalancing_ReplicationManager_i::remove_member (
 TAO_LoadBalancing::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::set_primary_member (
     TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const TAO_LoadBalancing::Location & /* the_location */)
+    const TAO_LoadBalancing::Location & /* the_location */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound,
                    TAO_LoadBalancing::MemberNotFound,
@@ -170,7 +189,8 @@ TAO_LoadBalancing_ReplicationManager_i::set_primary_member (
 
 TAO_LoadBalancing::Locations *
 TAO_LoadBalancing_ReplicationManager_i::locations_of_members (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */)
+    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound))
 {
@@ -179,7 +199,8 @@ TAO_LoadBalancing_ReplicationManager_i::locations_of_members (
 
 TAO_LoadBalancing::ObjectGroupId
 TAO_LoadBalancing_ReplicationManager_i::get_object_group_id (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */)
+    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound))
 {
@@ -188,7 +209,8 @@ TAO_LoadBalancing_ReplicationManager_i::get_object_group_id (
 
 TAO_LoadBalancing::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::get_object_group_ref (
-    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */)
+    TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound))
 {
@@ -198,7 +220,8 @@ TAO_LoadBalancing_ReplicationManager_i::get_object_group_ref (
 CORBA::Object_ptr
 TAO_LoadBalancing_ReplicationManager_i::get_member_ref (
     TAO_LoadBalancing::ObjectGroup_ptr /* object_group */,
-    const TAO_LoadBalancing::Location & loc)
+    const TAO_LoadBalancing::Location & loc,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectGroupNotFound,
                    TAO_LoadBalancing::MemberNotFound))
@@ -251,7 +274,7 @@ TAO_LoadBalancing_ReplicationManager_i::create_object (
         }
 
       // Obtain the FactoryInfos from the_criteria.  This method also
-      // ensure that GenericFactories at different locations are used.
+      // ensures that GenericFactories at different locations are used.
       else if (this->get_factory_infos (type_id,
                                         the_criteria[i],
                                         factory_infos) == 0)
@@ -323,7 +346,7 @@ TAO_LoadBalancing_ReplicationManager_i::create_object_i (
       //    FactoryInfo with a "Location" member that matches
       //    the location at which to create the desired
       //    replica.
-      // @@ It is also used to ensure the only one replica of
+      // @@ It is also used to ensure that only one replica of
       //    a given type is created at a given location.
 
 
@@ -392,8 +415,16 @@ TAO_LoadBalancing_ReplicationManager_i::create_object_i (
       replica_entry->factory_creation_id = replica_factory_creation_id;
 
       if (object_group_entry.replica_map.bind (replica_entry) != 0)
-        ACE_THROW_RETURN (TAO_LoadBalancer::ObjectNotCreated (),
-                          CORBA::Object::_nil ());
+        {
+          // An Object of incorrect type was created.  Delete it, and
+          // throw a NoFactory exception.
+          factory->delete_object (replica_factory_creation_id,
+                                  ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+          ACE_THROW_RETURN (TAO_LoadBalancer::ObjectNotCreated (),
+                            CORBA::Object::_nil ());
+        }
 
       // No longer need to protect the allocated Replica_Map.
       safe_replica_entry.release ();
@@ -443,7 +474,9 @@ TAO_LoadBalancing_ReplicationManager_i::get_factory_infos ()
 
 void
 TAO_LoadBalancing_ReplicationManager_i::delete_object (
-    const TAO_LoadBalancing::GenericFactory::FactoryCreationId & factory_creation_id)
+    const TAO_LoadBalancing::GenericFactory::FactoryCreationId &
+      factory_creation_id,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_LoadBalancing::ObjectNotFound))
 {
@@ -578,7 +611,7 @@ TAO_LoadBalancing_ReplicationManager_i::operator= (
   TAO_LoadBalancing::FactoryInfo &lhs,
   const TAO_LoadBalancing::FactoryInfo &rhs)
 {
-  lhs.facgtory =
+  lhs.factory =
     TAO_LoadBalancing::GenericFactory::_duplicate (rhs.factory);
 
   lhs.the_location = rhs.the_location;

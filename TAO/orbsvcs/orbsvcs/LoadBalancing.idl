@@ -1,18 +1,15 @@
-// -*- C++ -*-
-// $Id$
+// -*- IDL -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_LoadBalancing
-//
-// = FILENAME
-//    LoadBalancing.idl
-//
-// = AUTHOR
-//    Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    LoadBalancing.idl
+ *
+ *  $Id$
+ *
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_LOADBALANCING_IDL
 #define TAO_LOADBALANCING_IDL
@@ -20,24 +17,35 @@
 #include "CosNaming.idl"
 #include "orb.idl"
 
-module TAO_LoadBalancing
+#pragma prefix "tao.lb"
+
+/**
+ * @class LoadBalancing
+ *
+ * @brief This module defines the interfaces and data types used in
+ * TAO's Load Balancing service. 
+ * @par
+ * TAO's Load Balancer manages distribution of requests to replicas of
+ * a given Object in an effort to ensure that the  applications/hosts
+ * pointed to by the Object reference are as equally loaded as
+ * possible, i.e. load balanced.
+ * @par
+ * The definition of 'load' is application specific, for example, some
+ * applications may choose to load balance access to multiple
+ * dedicated lines, or separate network interfaces, as well as more
+ * traditional load balancing metrics, such as CPU or power load.
+ */
+module LoadBalancing
 {
-  // = TITLE
-  //   This module defines the interfaces and data types used in TAO's
-  //   Load Balancing service.
+  /// Types used for obtaining and/or reporting loads
+  typedef unsigned long LoadId;
+  struct Load {
+    LoadId identifier;
+    float value;
+  };
+  typedef sequence<Load> LoadList;
 
-  // = DESCRIPTION
-  //     TAO's Load Balancer manages distribution of requests to
-  //     replicas of a given Object in an effort to ensure that the
-  //     applications/hosts pointed to by the Object reference are as
-  //     equally loaded as possible, i.e. load balanced.
-  //     The definition of 'load' is application specific, for
-  //     example, some applications may choose to load balance access
-  //     to multiple dedicated lines, or separate network interfaces,
-  //     as well as more traditional load balancing metrics, such as
-  //     CPU or power load.
-
-  // Specification of Common Types and Exceptions for ReplicationManager
+  /// Specification of Common Types and Exceptions for ReplicationManager
   interface GenericFactory;
   interface LoadNotifier;
 
@@ -94,8 +102,8 @@ module TAO_LoadBalancing
     Criteria unmet_criteria;
   };
 
-  // Specification of PropertyManager Interface
-  // which ReplicationManager Inherits
+  /// Specification of PropertyManager Interface which
+  /// ReplicationManager Inherits
   interface PropertyManager {
     void set_default_properties (in Properties props)
       raises (InvalidProperty,
@@ -129,8 +137,8 @@ module TAO_LoadBalancing
       raises (ObjectGroupNotFound);
   };
 
-  // Specification of ObjectGroupManager Interface
-  // which ReplicationManager Inherits
+  /// Specification of ObjectGroupManager Interface which
+  /// ReplicationManager Inherits 
   interface ObjectGroupManager {
     ObjectGroup create_member (in ObjectGroup object_group,
                                in Location the_location,
@@ -178,8 +186,8 @@ module TAO_LoadBalancing
               MemberNotFound);
   };
 
-  // Specification of GenericFactory Interface
-  // which ReplicationManager Inherits and Application Objects Implement
+  /// Specification of GenericFactory Interface which
+  /// ReplicationManager Inherits and Application Objects Implement
   interface GenericFactory {
     typedef any FactoryCreationId;
 
@@ -196,7 +204,7 @@ module TAO_LoadBalancing
       raises (ObjectNotFound);
   };
 
-  // Specification of ReplicationManager Interface
+  /// Specification of ReplicationManager Interface
   interface ReplicationManager : PropertyManager, ObjectGroupManager,
     GenericFactory {
     void register_load_notifier (in LoadNotifier load_notifier);
@@ -206,4 +214,6 @@ module TAO_LoadBalancing
   };
 };
 
-#endif /* TAO_LOADBALANCER_IDL */
+#pragma prefix ""
+
+#endif /* TAO_LOADBALANCING_IDL */

@@ -6,4 +6,6 @@
 #include "LB_Hash.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_LoadBalancing, LB_Hash, "$Id$")
+ACE_RCSID (TAO_LoadBalancing,
+           LB_Hash,
+           "$Id$")

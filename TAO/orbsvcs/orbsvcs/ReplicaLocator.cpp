@@ -34,9 +34,7 @@ TAO_LB_ReplicaLocator::preinvoke (
 
   // Throw a ForwardRequest exception to force the client to redirect its
   // requests to the Replica chosen by the LoadBalancer.
-  ACE_THROW_RETURN (PortableServer::ForwardRequest (
-                      CORBA::Object::_duplicate (replica)),
-                    0);
+  ACE_THROW_RETURN (PortableServer::ForwardRequest (replica), 0);
 }
 
 void

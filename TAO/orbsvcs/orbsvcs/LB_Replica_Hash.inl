@@ -19,7 +19,7 @@ TAO_LB_Location_Hash::operator() (
   size_t location_length = location.length ();
 
   for (size_t i = 0; i < location_length; ++i)
-    hash += (ACE::hash_pjw (location[i].id)
+    hash += (ACE::hash_pjw (location[i].id) +
              ACE::hash_pjw (location[i].kind));
 
   return hash;
