@@ -812,7 +812,7 @@ TAO_ORB_Core_Auto_Ptr::reset (TAO_ORB_Core *p)
 ACE_INLINE TAO_ORB_Core *
 TAO_ORB_Core_Auto_Ptr::operator-> () const
 {
-  ACE_TRACE ("auto_ptr::operator->");
+  ACE_TRACE ("TAO_ORB_Core_Auto_Ptr::operator->");
   return this->get ();
 }
 

@@ -1,3 +1,30 @@
+Sat Mar  3 16:31:31 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/TAO-metrics.html:
+        * docs/TAO-tutorials.html:
+        * docs/components.html:
+        * docs/events_tutorial.html:
+        * docs/poa_migration.html:
+        * docs/reactivator.html:
+        * docs/releasenotes.html:
+        * docs/releasenotes/OBV.html:
+        * docs/tutorials/Quoter/index.html:
+        * docs/tutorials/Quoter/On_Demand_Activation/index.html:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+        * docs/tutorials/Quoter/Simple/Persistent/index.html:
+
+          Changed references to 
+          http://www.cs.wustl.edu/~schmidt/ACE_wrappers/* to
+          relative paths instead (Fixes fuzz errors).
+
+        * tao/ORB_Core.i:
+        * tao/Stub.i:
+        * tao/default_resource.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+
+          Fixed bad ACE_TRACE's.  (Fixes more fuzz errors)
+
 Sat Mar  3 16:31:07 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Acceptor.{cpp,i,h}:

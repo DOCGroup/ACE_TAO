@@ -59,7 +59,7 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
 int
 TAO_Default_Resource_Factory::init (int argc, char **argv)
 {
-  ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
+  ACE_TRACE ("TAO_Default_Resource_Factory::init");
 
   this->parser_names_count_ = 0;
 
