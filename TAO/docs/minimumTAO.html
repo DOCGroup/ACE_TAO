@@ -38,14 +38,29 @@ href = "../../docs/ACE-subsets.html"> components </a> that are
 required by TAO. Secondly, we <a href = "../TAO-INSTALL.html">
 configure </a> TAO to only support the components specified by the
 <em> minimumCORBA </em> specification.  The following two tables show
-the footprint reduction achieved.
+the footprint reduction achieved.  Note that the IDL Compiler column
+refers to the code required to collaborate between the IDL compiler
+and the ORB, and not to the code for the IDL compiler itself.
 
 <p>
 <hr>
 <p>
 
 <I> Note: All measurement are for ACE 4.6.29 and TAO 0.3.13 using
-egcs-2.91.60 on SunOS5.7 <p> </I>
+egcs-2.91.60 on SunOS5.7 <br>
+
+Make options used were:
+
+<code> debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0 </code> <br>
+
+The above make options translate into:
+
+(a) No debugging,
+(b) Optimization is set to -O2,
+(c) Static ACE and TAO libraries, and
+(d) Use of RCS Ids is turned off. <br>
+
+<p> </I>
 
 <p>
 <hr>
@@ -71,21 +86,21 @@ egcs-2.91.60 on SunOS5.7 <p> </I>
     <th>Other
   <tr>
     <th rowspan=2>ACE (all components)
-    <th>Size, bytes
-    <td align=center>577623
-    <td align=center>11507
-    <td align=center>116234
-    <td align=center>13997
-    <td align=center>59707
-    <td align=center>39632
-    <td align=center>770
-    <td align=center>13703
-    <td align=center>40218
-    <td align=center>101519
-    <td align=center>19439
-    <td align=center>20847
-    <td align=center>75542
-    <td align=center>64508
+    <th>Size, Kbytes
+    <td align=center>577.6
+    <td align=center>11.5
+    <td align=center>116.2
+    <td align=center>14.0
+    <td align=center>60.0
+    <td align=center>40.0
+    <td align=center>0.7
+    <td align=center>13.7
+    <td align=center>40.2
+    <td align=center>101.5
+    <td align=center>19.4
+    <td align=center>20.9
+    <td align=center>75.5
+    <td align=center>64.5
   <tr>
     <th>Percentage of<br>total size
     <td align=center>100
@@ -104,21 +119,21 @@ egcs-2.91.60 on SunOS5.7 <p> </I>
     <td align=center>11
   <tr>
     <th rowspan=2>ACE (TAO components)
-    <th>Size, bytes
-    <td align=center>437413
-    <td align=center>11507
-    <td align=center>115998
-    <td align=center>14033
-    <td align=center>59707
-    <td align=center>39632
-    <td align=center>770
-    <td align=center>13703
-    <td align=center>40218
-    <td align=center>101559
-    <td align=center>19439
-    <td align=center>20847
-    <td align=center>0
-    <td align=center>0
+    <th>Size, Kbytes
+    <td align=center>437.4
+    <td align=center>11.5
+    <td align=center>116.2
+    <td align=center>14.0
+    <td align=center>60.0
+    <td align=center>40.0
+    <td align=center>0.7
+    <td align=center>13.7
+    <td align=center>40.2
+    <td align=center>101.5
+    <td align=center>19.4
+    <td align=center>20.9
+    <td align=center>0.0
+    <td align=center>0.0
   <tr>
     <th>Percentage of<br>total size
     <td align=center>100
@@ -173,14 +188,14 @@ egcs-2.91.60 on SunOS5.7 <p> </I>
   <tr>
     <th rowspan=2>Complete TAO
     <th>Size, bytes
-    <td align=center>861985
-    <td align=center>281896
-    <td align=center>14610
-    <td align=center>7919
-    <td align=center>68687
-    <td align=center>10488
-    <td align=center>347080
-    <td align=center>131305
+    <td align=center>862.0
+    <td align=center>281.9
+    <td align=center>14.6
+    <td align=center>7.9
+    <td align=center>68.7
+    <td align=center>10.5
+    <td align=center>347.1
+    <td align=center>131.3
   <tr>
     <th>Percentage of<br>total size
     <td align=center>100
@@ -194,14 +209,14 @@ egcs-2.91.60 on SunOS5.7 <p> </I>
   <tr>
     <th rowspan=2>Minimum  TAO
     <th>Size, bytes
-    <td align=center>639456
-    <td align=center>207216
-    <td align=center>14674
-    <td align=center>7975
-    <td align=center>68775
-    <td align=center>10512
-    <td align=center>330304
-    <td align=center>0
+    <td align=center>639.5
+    <td align=center>207.2
+    <td align=center>14.6
+    <td align=center>7.9
+    <td align=center>68.7
+    <td align=center>10.5
+    <td align=center>330.3
+    <td align=center>0.0
   <tr>
     <th>Percentage of<br>total size
     <td align=center>100
@@ -221,7 +236,7 @@ egcs-2.91.60 on SunOS5.7 <p> </I>
     <td align=center>0
     <td align=center>0
     <td align=center>0
-    <td align=center>4.8
+    <td align=center>48
     <td align=center>100
 </table></center><p>
 
