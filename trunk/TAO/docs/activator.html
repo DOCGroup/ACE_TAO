@@ -1,0 +1,131 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>TAO Activation Service</title>
+</head>
+
+<body>
+
+<h1>The Activation Service</h1>
+
+<h2>Background</h2>
+
+<h3>What are we trying to achieve?</h3>
+
+<p>We are adding support for persistant ids (based on the PA spec) so that servers can
+come and go and persistant ids still work.</p>
+
+<h3>What are the contraints?</h3>
+
+<ul>
+  <li>We need to be able to reproduce the IOR that was registered.&nbsp; The client will retry
+    the original IOR, and that should work.&nbsp; The server must be recreated with the same
+    host, port, and POA.</li>
+  <li>The Activation Service must keep track of all processes it has activated, in order to
+    know when to reactivate a server or not.</li>
+  <li>It is only available for correct policies.&nbsp; A policy with real-time constraints
+    will not have it by default.</li>
+</ul>
+
+<h3>What are the alternatives?</h3>
+
+<p>Other ORB vendors use alternative techniques for naming persistant objects.&nbsp; That
+would require new naming techniques for objects.&nbsp; This also requires the use of the
+activation service when the service is already running.</p>
+
+<p>Another alternative is to use the naming service to return a IOR for the activation
+service when the persistant object is looked up.&nbsp; Then through Location Forwarding
+the correct IOR is given to the client.&nbsp; This requires the IOR to actually be an
+activation id.&nbsp; This mehtod can be done through existing schemes, since the Name
+Service is already available and Location Forwarding will be soon.</p>
+
+<h3>What are the design constraints?</h3>
+
+<p>The ORB is dependent on the Activation service</p>
+
+<h2>Implementation</h2>
+
+<h3>IDL code</h3>
+
+<p>Here is a preliminary design of the </p>
+
+<pre>module TAO
+{
+	// ....
+	interface Activator
+	{
+		boolean activate (Object obj);
+		void add (Object obj,
+		          ExecutableName name);
+		void remove (Object obj);
+		void add_with_options (Object obj,
+		                       String executable,
+		                       Sequence&lt;String&gt; options);
+
+		// The extended adds take in options that can be the following:
+		//
+		//  NONE: Use no information from the IOR
+		//  HOST: Use the host information taken from the IOR (-ORBhost)
+		//  PORT: Use the port information taken from the IOR (-ORBport)
+		//  HOST+PORT: Use both the host and port information
+		//
+		void extended_add (Object obj,
+		                   ExecutableName name,
+		                   HostPortOptions options);
+		void extended add_with_options (Object obj,
+		                                String executable,
+		                                Sequence&lt;String&gt; executable_options,
+		                                HostPortOptions options);
+	}
+}</pre>
+
+<h3>How to use the Activation Service</h3>
+
+<h4>resolve_initial_reference ()</h4>
+
+<p>Just like the name service.</p>
+
+<h4>helper application</h4>
+
+<p>A command-line utility where one can specify the stringified object reference folowed
+by the executable string and an optional host and port. </p>
+
+<p>It will then start up, locate the activator (found by the command line, or the
+environment, and then through a default ior).&nbsp; After finding the activation service,
+it will then call add () with the object reference.&nbsp; Other operations that can be
+specified are add, remove, and add_again ().</p>
+
+<h2>How this all works</h2>
+
+<ul>
+  <li>Client has an Object Reference</li>
+  <li>Then calls the Object Reference.&nbsp; If it has a list of references, then it will try
+    all of the references</li>
+  <li>If all of the references fail, then starting at the first reference to do the following</li>
+  <li>The ORB examines the Object Reference</li>
+  <li>If it is a transient address, then the call fails.</li>
+  <li>Otherwise, if multicast is available:<ul>
+      <li>multicast to a preconfigured group</li>
+      <li>send the ior</li>
+      <li>wait until response or a timeout (which is determined from the api, the command line,
+        the environment, or the default value, in that order)</li>
+    </ul>
+  </li>
+  <li>If no multicast<ul>
+      <li>extract the host from the ior</li>
+      <li>find the port from the api, command line, environment, or a default (TAO_DEFAULT_PORT)
+        in that order</li>
+      <li>manufacture a activation service ior</li>
+    </ul>
+  </li>
+  <li>Now with the activation ior, connect to the activation service</li>
+  <li>call activate () with the object ior</li>
+  <li>activation service sends back a yes/no response.&nbsp; </li>
+  <li>If &quot;yes&quot;, retry the object reference again</li>
+  <li>If no, then fail</li>
+</ul>
+
+<p>&nbsp;</p>
+</body>
+</html>
