@@ -562,7 +562,7 @@ Video_Global::PLAYliveVideo (PLAYpara * para)
   int first_frame;
   int frame = para->nextFrame;
   int nfds = (this->serviceSocket > this->videoSocket ? this->serviceSocket : this->videoSocket) + 1;
-  struct fd_set read_mask;
+  fd_set read_mask;
   struct timeval tval = {0, 0};
   double ratio;
   int result;
@@ -1676,20 +1676,34 @@ Video_Global::init_play (Video_Control::PLAYpara para,
   // Assign the passed play 
   this->play_para = para ;
 #ifdef NeedByteOrderConversion
-  this->play_para.sn = ntohl (this->play_para.sn);
-  this->play_para.nextFrame = ntohl (this->play_para.nextFrame);
-  this->play_para.usecPerFrame = ntohl (this->play_para.usecPerFrame);
-  this->play_para.framesPerSecond = ntohl (this->play_para.framesPerSecond);
-  this->play_para.frameRateLimit1000 = ntohl (this->play_para.frameRateLimit1000);
-  this->play_para.collectStat = ntohl (this->play_para.collectStat);
-  this->play_para.sendPatternGops = ntohl (this->play_para.sendPatternGops);
-  this->play_para.VStimeAdvance = ntohl (this->play_para.VStimeAdvance);
+//   this->play_para.sn = ntohl (this->play_para.sn);
+//   this->play_para.nextFrame = ntohl (this->play_para.nextFrame);
+//   this->play_para.usecPerFrame = ntohl (this->play_para.usecPerFrame);
+//   this->play_para.framesPerSecond = ntohl (this->play_para.framesPerSecond);
+//   this->play_para.frameRateLimit1000 = ntohl (this->play_para.frameRateLimit1000);
+//   this->play_para.collectStat = ntohl (this->play_para.collectStat);
+//   this->play_para.sendPatternGops = ntohl (this->play_para.sendPatternGops);
+//   this->play_para.VStimeAdvance = ntohl (this->play_para.VStimeAdvance);
+
+  this->play_para.sn = ntohl (play_para.sn);
+  this->play_para.nextFrame = ntohl (para.nextFrame);
+  this->play_para.usecPerFrame = ntohl (para.usecPerFrame);
+  this->play_para.framesPerSecond = ntohl (para.framesPerSecond);
+  this->play_para.frameRateLimit1000 = ntohl (para.frameRateLimit1000);
+  this->play_para.collectStat = ntohl (para.collectStat);
+  this->play_para.sendPatternGops = ntohl (para.sendPatternGops);
+  this->play_para.VStimeAdvance = ntohl (para.VStimeAdvance);
 #endif
 
-  this->frameRateLimit = this->play_para.frameRateLimit1000 / 1000.0;
-  this->cmdsn = this->play_para.sn;
-  this->currentUPF = this->play_para.usecPerFrame;
-  this->VStimeAdvance = this->play_para.VStimeAdvance;
+//   this->frameRateLimit = this->play_para.frameRateLimit1000 / 1000.0;
+//   this->cmdsn = this->play_para.sn;
+//   this->currentUPF = this->play_para.usecPerFrame;
+//   this->VStimeAdvance = this->play_para.VStimeAdvance;
+
+  this->frameRateLimit = para.frameRateLimit1000 / 1000.0;
+  this->cmdsn = para.sn;
+  this->currentUPF = para.usecPerFrame;
+  this->VStimeAdvance = play_para.VStimeAdvance;
 
   vts = get_usec ();
   //  cerr << "vts is " << vts << endl;
@@ -1715,8 +1729,8 @@ Video_Global::init_play (Video_Control::PLAYpara para,
   if (this->play_para.collectStat)
     memset (this->framesSent, 0, (this->numF + 7)>>3);
 #endif
-  CheckFrameRange (this->play_para.nextFrame);
-  Video_Timer_Global::timerFrame = this->play_para.nextFrame;
+  CheckFrameRange (para.nextFrame);
+  Video_Timer_Global::timerFrame = para.nextFrame;
   Video_Timer_Global::timerGroup = FrameToGroup (&Video_Timer_Global::timerFrame);
   Video_Timer_Global::timerHeader = this->gopTable[Video_Timer_Global::timerGroup].systemHeader;
   //  memcpy (this->sendPattern, this->play_para.sendPattern, PATTERN_SIZE);
@@ -1914,14 +1928,14 @@ failure:
     this->cmd = CmdFAIL;
     sprintf (errmsg, "VS failed to alloc internal buf (type %d)", failureType);
     CmdWrite ((char *)&this->cmd, 1);
-    msg = failureType == 1 ? "not a complete MPEG stream" :
-      failureType == 2 ? "can't open MPEG file" :
-      failureType == 3 ? "MPEG file is not seekable" :
-      failureType == 4 ? "not an MPEG stream" :
+    msg = failureType == 1 ? (char *)"not a complete MPEG stream" :
+      failureType == 2 ? (char *)"can't open MPEG file" :
+      failureType == 3 ? (char *)"MPEG file is not seekable" :
+      failureType == 4 ? (char *)"not an MPEG stream" :
       failureType == 5 ?
-      "too many frames in MPEG file, need change MAX_FRAMES and recompile VS" :
-      failureType == 100 ? "failed to connect to live video source" :
-      failureType == 101 ? "live MPEG2 not supported" :
+      (char *)"too many frames in MPEG file, need change MAX_FRAMES and recompile VS" :
+      failureType == 100 ? (char *)"failed to connect to live video source" :
+      failureType == 101 ? (char *)"live MPEG2 not supported" :
       errmsg;
     write_string (this->serviceSocket, msg);
     exit (0);
@@ -2411,8 +2425,8 @@ Audio_Global::INITaudio(void)
     cmd = CmdFAIL;
     CmdWrite((char *)&cmd, 1);
     write_string(serviceSocket,
-                 failureType == 0 ? "Failed to open audio file for read." :
-                 "Failed to connect to live audio source.");
+                 failureType == 0 ? (char *)"Failed to open audio file for read." :
+                 (char *)"Failed to connect to live audio source.");
     return(1);
   }
 }
@@ -2914,7 +2928,7 @@ Audio_Global::on_exit_routine(void)
   /*
   fprintf(stderr, "An AS session terminated\n");
   */
-  if (getpeername(serviceSocket,
+  if (ACE_OS::getpeername(serviceSocket,
                   (struct sockaddr *)&peeraddr_in, &size) == 0 &&
       peeraddr_in.sin_family == AF_INET) {
     if (strncmp(inet_ntoa(peeraddr_in.sin_addr), "129.95.50", 9)) {
@@ -2922,7 +2936,7 @@ Audio_Global::on_exit_routine(void)
       time_t val =ACE_OS::time (NULL);
       char * buf = ACE_OS::ctime (&start_time);
 
-      hp = gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
+      hp = ACE_OS::gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
       buf[strlen(buf)-1] = 0;
       printf("%s: %s %3dm%02ds %dB %s\n",
              buf,
