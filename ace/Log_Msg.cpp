@@ -25,6 +25,7 @@
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Msg_IPC.h"
 #include "ace/Log_Msg_NT_Event_Log.h"
+#include "ace/Log_Msg_UNIX_Syslog.h"
 
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
@@ -37,6 +38,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
   ACE_thread_key_t ACE_Log_Msg::log_msg_tss_key_;
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
+
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_NT_Event_Log
+#elif !defined (ACE_LACKS_UNIX_SYSLOG)
+#  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_UNIX_Syslog
+#else
+#  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_IPC
+#endif /* ! ACE_WIN32 */
 
 // This is only needed here because we can't afford to call
 // ACE_LOG_MSG->instance() from within ACE_Log_Msg::instance() or else
@@ -120,22 +129,15 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
     {
       ACE_NO_HEAP_CHECK;
 
-#if defined (WIN32) && !defined (ACE_HAS_WINCE)
       // Allocate the ACE_Log_Msg_Backend instance.
       if (ACE_BIT_ENABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG))
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
-                        ACE_Log_Msg_NT_Event_Log,
+                        ACE_LOG_MSG_SYSLOG_BACKEND,
                         -1);
       else
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
                         ACE_Log_Msg_IPC,
                         -1);
-#else /* WIN32 && !ACE_HAS_WINCE */
-      // Allocate the ACE_Log_Msg IPC instance.
-      ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
-                      ACE_Log_Msg_IPC,
-                      -1);
-#endif /* WIN32 && !ACE_HAS_WINCE */
     }
 
   return 0;

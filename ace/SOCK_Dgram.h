@@ -142,7 +142,7 @@ public:
    * until action is possible, else will wait until the relative time
    * specified in *<timeout> elapses).  If <send> times out a -1 is
    * returned with <errno == ETIME>.  If it succeeds the number of
-   * bytes received is returned.
+   * bytes sent is returned.
    */
   ssize_t send (const void *buf,
                 size_t n,
