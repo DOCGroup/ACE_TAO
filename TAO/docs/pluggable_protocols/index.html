@@ -57,7 +57,7 @@ applications.  This document explains how to develop pluggable
 protocols using TAO's pluggable protocols framework.  Here are some
 links that describe TAO's pluggable protocols framework, though not
 how to implement one: <BLOCKQUOTE> <A
-HREF="../releasenotes/index.html#pp">http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#pp</A><BR>
+HREF="../releasenotes/index.html#pp">../releasenotes/index.html#pp</A><BR>
 
 <A HREF="http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz">http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz</A><BR>
 <A
@@ -374,7 +374,7 @@ object, hiding the transport- and strategy-specific details of the acceptor.
 
 <P>
 TAO's <TT>Acceptor</TT> interface, shown below, is declared in the  file
-<TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+<TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
 All <TT>Acceptor</TT> implementations must inherit from the <TT>TAO_Acceptor</TT>
 abstract base class.
 
@@ -969,7 +969,7 @@ object and to the <TT>Transport</TT> objects that were created.
 </H3>
 
 <P>
-TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
 All <TT>Connector</TT> implementations must inherit from the <TT>TAO_Connector</TT>
 abstract base class.
 
@@ -1373,7 +1373,7 @@ definitions.
 All protocol-specific <TT>Profile</TT> implementations should inherit from the
 <TT>TAO_Profile</TT> abstract base class. The <TT>TAO_Profile</TT> interface
 is declared in the file
-<TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Profile.h">tao/Profile.h&gt;</A></TT>.
+<TT>&lt;<A HREF="../../tao/Profile.h">tao/Profile.h&gt;</A></TT>.
 Its interface follows. Only the methods that must be implemented are shown:
 
 
@@ -1714,7 +1714,7 @@ an <TT>Acceptor</TT> on the server-side, and a <TT>Connector</TT> on the client-
 <P>
 All <TT>Protocol_Factory</TT> implementations should be derived from the <TT>TAO_Protocol_Factory</TT>
 abstract base class defined in
-<TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Protocol_Factory.h">tao/Protocol_Factory.h</A>&gt;</TT>.
+<TT>&lt;<A HREF="../../tao/Protocol_Factory.h">tao/Protocol_Factory.h</A>&gt;</TT>.
 The <TT>TAO_Protocol_Factory</TT> interface is shown below:
 
 <P>
@@ -2199,7 +2199,7 @@ class.
 
 <P>
 All TAO pluggable protocol <TT>Transport</TT> classes must inherit from the
-<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
 The <TT>TAO_Transport</TT> interface is shown below. Again, only the methods
 that should be implemented for a given pluggable protocol are shown:
 
@@ -2520,16 +2520,16 @@ subclass.
 TAO pluggable transport protocol <TT>Connection_Handler</TT>s should
 be derived from the <TT>ACE_Svc_Handler</TT> class declared in
 &lt;<A
-      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Svc_Handler.h"><TT>ace/Svc_Handler.h</TT></A>&gt;.  TAO's existing pluggable transport protocol
+      HREF="../../../ace/Svc_Handler.h"><TT>ace/Svc_Handler.h</TT></A>&gt;.  TAO's existing pluggable transport protocol
 implementations define three classes, a base class derived from an
 <TT>ACE_Svc_Handler</TT> specific to that protocol, and a client-side
 and a server-side class derived from that base class.  Generally, it
 is a good idea to base new <TT>Connection_Handler</TT> implementations
 on TAO's existing ones.  The interfaces for the existing
 <TT>Connection_Handler</TT>s are defined in
-&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/IIOP_Connect.h"><TT>tao/IIOP_Connect.h</TT></A>&gt;
+&lt;<A HREF="../../tao/IIOP_Connect.h"><TT>tao/IIOP_Connect.h</TT></A>&gt;
 and
-&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/UIOP_Connect.h"><TT>tao/UIOP_Connect.h</TT></A>&gt;.
+&lt;<A HREF="../../tao/UIOP_Connect.h"><TT>tao/UIOP_Connect.h</TT></A>&gt;.
 
 <P>
 <HR>
@@ -2710,14 +2710,14 @@ See (TBD) ftp site for this Rose diagram.
 The new classes created were.
 <BR>
 <BLOCKQUOTE>
-TAO_SCRAMNet_Profile  (Derived from TAO_Profile in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Profile.h">Profile.h</A>)<BR>
-TAO_SCRAMNet_Acceptor (Derived from TAO_Acceptor in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">Pluggable.h</A>) <BR>
-TAO_SCRAMNet_Connector  (Derived from TAO_Connector in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">Pluggable.h</A>)<BR>
-TAO_SCRAMNet_Transport  (Derived from TAO_Transport in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">Pluggable.h</A>)
+TAO_SCRAMNet_Profile  (Derived from TAO_Profile in <A HREF="../../tao/Profile.h">Profile.h</A>)<BR>
+TAO_SCRAMNet_Acceptor (Derived from TAO_Acceptor in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>) <BR>
+TAO_SCRAMNet_Connector  (Derived from TAO_Connector in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)<BR>
+TAO_SCRAMNet_Transport  (Derived from TAO_Transport in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)
 	<BLOCKQUOTE>TAO_SCRAMNet_Server_Transport<BR>
 	TAO_SCRAMNet_Client_Transport</BLOCKQUOTE>
-TAO_SCRAMNet_Protocol_Factory (Derived from TAO_Protocol Factory in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Protocol_Factory.h">Protocol_Factory.h</A>)<BR>
-TAO_SCRAMNet_Handler_Base (as in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/IIOP_Connect.h">IIOP_Connect.h</A>)
+TAO_SCRAMNet_Protocol_Factory (Derived from TAO_Protocol Factory in <A HREF="../../tao/Protocol_Factory.h">Protocol_Factory.h</A>)<BR>
+TAO_SCRAMNet_Handler_Base (as in <A HREF="../../tao/IIOP_Connect.h">IIOP_Connect.h</A>)
 	<BLOCKQUOTE>TAO_SCRAMNet_Client_Connection_Handler<BR>
 	TAO_SCRAMNet_Server_Connection_Handler</BLOCKQUOTE></BLOCKQUOTE>
 <BLOCKQUOTE>ACE_SCRAMNet_Addr<BR>
