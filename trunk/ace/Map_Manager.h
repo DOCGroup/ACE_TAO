@@ -48,6 +48,10 @@ struct ACE_Map_Entry
 template <class EXT_ID, class INT_ID, class LOCK>
 class ACE_Map_Iterator;
 
+// Forward decl.
+template <class EXT_ID, class INT_ID, class LOCK>
+class ACE_Map_Reverse_Iterator;
+
 template <class EXT_ID, class INT_ID, class LOCK>
 class ACE_Map_Manager
   // = TITLE
@@ -62,7 +66,14 @@ class ACE_Map_Manager
   //     ACE_Allocator with a persistable memory pool
 {
 friend class ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>;
+friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>;
 public:
+
+  typedef ACE_Map_Entry<EXT_ID, INT_ID> ENTRY;
+  typedef ACE_Map_Iterator<EXT_ID, INT_ID, LOCK> ITERATOR;
+  typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK> REVERSE_ITERATOR;
+  // Traits 
+
   enum {DEFAULT_SIZE = ACE_DEFAULT_MAP_SIZE};
 
   // = Initialization and termination methods.
@@ -218,11 +229,44 @@ class ACE_Map_Iterator
   //     Iterator for the ACE_Map_Manager.
   //
   // = DESCRIPTION
-  //     Allows deletions while iteration is occurring.
 {
 public:
   // = Initialization method.
   ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, LOCK> &mm);
+
+  // = Iteration methods.
+
+  int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry);
+  // Pass back the <entry> that hasn't been seen in the Set.
+  // Returns 0 when all items have been seen, else 1.
+
+  int advance (void);
+  // Move forward by one element in the set.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_Map_Manager <EXT_ID, INT_ID, LOCK> &map_man_;
+  // Map we are iterating over.
+
+  ssize_t next_;
+  // Keeps track of how far we've advanced...
+};
+
+template <class EXT_ID, class INT_ID, class LOCK>
+class ACE_Map_Reverse_Iterator
+  // = TITLE
+  //     Reverse Iterator for the ACE_Map_Manager.
+  //
+  // = DESCRIPTION
+{
+public:
+  // = Initialization method.
+  ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, LOCK> &mm);
 
   // = Iteration methods.
 
