@@ -26,7 +26,7 @@ module Test
     void sync ();
 
     /// Shutdown the server
-    oneway void shutdown ();
+    void shutdown ();
   };
 
   /// Clients use this interface to query the number of oneway
@@ -50,6 +50,6 @@ module Test
     /**
      * This method is used to simplify the test shutdown process
      */
-    oneway void shutdown ();
+    void shutdown ();
   };
 };
