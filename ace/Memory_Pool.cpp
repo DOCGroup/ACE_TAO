@@ -406,7 +406,7 @@ ACE_Shared_Memory_Pool::dump (void) const
 
 int 
 ACE_Shared_Memory_Pool::in_use (off_t &offset, 
-				int &counter)
+				size_t &counter)
 {
   offset = 0;
   SHM_TABLE *st = (SHM_TABLE *) this->base_addr_;
@@ -431,7 +431,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 						   off_t &offset)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::update");
-  int counter;
+  size_t counter;
   SHM_TABLE *st = (SHM_TABLE *) this->base_addr_;
 
   if (this->in_use (offset, counter) == -1)
@@ -478,7 +478,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   if (siginfo != 0)
     {
       // ACE_DEBUG ((LM_DEBUG, "(%P|%t) si_signo = %d, si_code = %d, addr = %u\n", siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
-      int counter;
+      size_t counter;
       if (this->in_use (offset, counter) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "in_use"));
       else if (!(siginfo->si_code == SEGV_MAPERR
@@ -549,7 +549,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 {  
   ACE_TRACE ("ACE_Shared_Memory_Pool::init_acquire");
 
-  int counter;
+  size_t counter;
   off_t shm_table_offset = ACE::round_to_pagesize (sizeof (SHM_TABLE));
   rounded_bytes = this->round_up (nbytes);
 
@@ -618,7 +618,7 @@ ACE_Shared_Memory_Pool::release (void)
   int result = 0;
   SHM_TABLE *st = (SHM_TABLE *) this->base_addr_;
 
-  for (int counter = 0; 
+  for (size_t counter = 0; 
        counter < this->max_segments_ && st[counter].used_ == 1;
        counter++)
     if (ACE_OS::shmctl (st[counter].shmid_, IPC_RMID, NULL) == -1)

@@ -98,8 +98,11 @@ public:
   static void yield (void);
   // Yield the thread to another.
 
-  static void self (ACE_hthread_t &t_id);
-  // Return the unique kernel ID of the thread.
+  static void self (ACE_hthread_t &t_handle);
+  // Return the unique kernel handle of the thread.  Note that on
+  // Win32 this is actually a pseudohandle, which cannot be shared
+  // with other processes or waited on by threads.  To locate the real
+  // handle, please use the <ACE_Thread_Manager::thr_self> method.
 
   static ACE_thread_t self (void);
   // Return the unique ID of the thread.

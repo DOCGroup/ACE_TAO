@@ -37,7 +37,7 @@ main (int, char *[])
     {
       char *buffer;
       ACE_NEW_RETURN (buffer, char[BUFSIZ], -1);
-      sprintf (buffer, "%d", i);
+      ::sprintf (buffer, "%d", i);
 
       ACE_Message_Block *entry;
 
@@ -50,45 +50,41 @@ main (int, char *[])
   ACE_DEBUG ((LM_DEBUG, "\nForward Iterations\n"));
   {
     ITERATOR iterator (queue);  
+
     for (ACE_Message_Block *entry = 0;
 	 iterator.next (entry) != 0;
 	 iterator.advance ())
-      {
-	ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
-      }  
+      ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
   }
 
   ACE_DEBUG ((LM_DEBUG, "\nReverse Iterations\n"));
   {
     REVERSE_ITERATOR iterator (queue);
+
     for (ACE_Message_Block *entry = 0;
 	 iterator.next (entry) != 0;
 	 iterator.advance ())
-      {
-	ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
-      }  
+      ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
   }
 
   ACE_DEBUG ((LM_DEBUG, "\nForward Iterations\n"));
   {
     QUEUE::ITERATOR iterator (queue);
+
     for (ACE_Message_Block *entry = 0;
 	 iterator.next (entry) != 0;
 	 iterator.advance ())
-      {
-	ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
-      }  
+      ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
   }
   
   ACE_DEBUG ((LM_DEBUG, "\nReverse Iterations\n"));
   {
     QUEUE::REVERSE_ITERATOR iterator (queue);
+
     for (ACE_Message_Block *entry = 0;
 	 iterator.next (entry) != 0;
 	 iterator.advance ())
-      {
-	ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
-      }  
+      ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
   }
 
   ACE_END_TEST;

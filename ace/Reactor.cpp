@@ -1279,6 +1279,9 @@ ACE_Reactor::detach (ACE_HANDLE handle,
                  this->ex_handle_mask_, 
                  ACE_Reactor::CLR_MASK);
 
+  // Reinitialize the Reactor pointer to 0.
+  // eh->reactor (0);
+
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
     eh->handle_close (handle, mask);
 
@@ -1287,8 +1290,6 @@ ACE_Reactor::detach (ACE_HANDLE handle,
                              this->rd_handle_mask_,
                              this->wr_handle_mask_, 
                              this->ex_handle_mask_);
-  // Reinitialize the Reactor pointer to 0.
-  eh->reactor (0);
   return 0;
 }
 

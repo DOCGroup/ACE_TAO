@@ -30,6 +30,11 @@ class ACE_Reactor;
 class ACE_Proactor;
 class ACE_ReactorEx;
 
+extern "C"
+{
+typedef ACE_Service_Object *(*ACE_SERVICE_ALLOCATOR)(void);
+}
+
 struct ACE_Static_Svc_Descriptor
 {
   char *name_;
@@ -38,7 +43,7 @@ struct ACE_Static_Svc_Descriptor
   int type_;
   // Type of service.
 
-  ACE_Service_Object *(*alloc_)(void);
+  ACE_SERVICE_ALLOCATOR alloc_;
   // Factory function that allocates the service.
   
   u_int flags_;

@@ -665,8 +665,8 @@ ACE_Service_Config::run_reactor_event_loop (ACE_Time_Value &tv)
       int result = ACE_Service_Config::reactor ()->handle_events (tv);
       if (ACE_Service_Config::reconfig_occurred_)
 	ACE_Service_Config::reconfigure ();
-      else if (result == -1)
-	return -1;
+      else if (result <= 0)
+	return result;
     }
 
   /* NOTREACHED */
@@ -799,8 +799,8 @@ ACE_Service_Config::run_proactor_event_loop (ACE_Time_Value &tv)
       int result = ACE_Service_Config::proactor ()->handle_events (tv);
       if (ACE_Service_Config::reconfig_occurred_)
 	ACE_Service_Config::reconfigure ();
-      else if (result == -1)
-	return -1;
+      else if (result <= 0)
+	return result;
     }
 
   /* NOTREACHED */
@@ -857,8 +857,8 @@ ACE_Service_Config::run_reactorEx_event_loop (ACE_Time_Value &tv)
       int result = ACE_Service_Config::reactorEx ()->handle_events (tv);
       if (ACE_Service_Config::reconfig_occurred_)
 	ACE_Service_Config::reconfigure ();
-      else if (result == -1)
-	return -1;
+      else if (result <= 0)
+	return result;
     }
 
   /* NOTREACHED */

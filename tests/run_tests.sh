@@ -69,17 +69,18 @@ run SPIPE_Test			# uses SPIPE_Acceptor/Connector, Thread_Manager
 run UPIPE_SAP_Test		# uses UPIPE, Thread, Thread_Manager
 
 run Barrier_Test		# uses Service_Config, Barrier
-run Buffer_Stream_Test		# uses Service_Config, Module (Stream,Task, MQ)
-run Priority_Buffer_Test	# uses Service_Config, MQ
+run Buffer_Stream_Test		# uses Service_Config, Module (Stream,Task, Message_Queue)
+run Priority_Buffer_Test	# uses Service_Config, Message_Queue
 run Recursive_Mutex_Test	# uses Service_Config, Recursive_Thread_Mutex
 
 run Time_Service_Test		# uses libnet_svcs
 run Tokens_Test
 
-run Map_Manager_Test
-run Message_Queue_Test
-run Pipe_Test
-run Process_Mutex_Test
+run Map_Manager_Test            # uses Map Manager + Forward and Reverse Map Iterators.
+run Message_Queue_Test          # uses Message_Queue + Forward and Reverse Message Queue Iterators.
+run Pipe_Test                   # uses Pipe 
+run Process_Mutex_Test          # uses Process_Mutex
+run Service_Config_Test         # uses Service_Config
 
 echo "Tests complete..."
 

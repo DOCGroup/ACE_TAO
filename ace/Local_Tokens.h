@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -68,6 +67,7 @@ public:
 #endif /* ACE_HAS_THREADS */
 };
 
+// Forward decl.
 class ACE_Token_Proxy;
 
 // 3..
@@ -337,8 +337,7 @@ public:
 
   // = Accessor methods.
 
-  typedef ACE_Unbounded_Stack<ACE_TPQ_Entry *>
-    OWNER_STACK;
+  typedef ACE_Unbounded_Stack<ACE_TPQ_Entry *> OWNER_STACK;
   // Stack of owners.
 
   virtual int owners (OWNER_STACK &o, const char *id) = 0;

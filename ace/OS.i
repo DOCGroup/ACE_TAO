@@ -2554,7 +2554,6 @@ ACE_OS::inet_addr (const char *name)
 {
 // ACE_TRACE ("ACE_OS::inet_addr");
 #if defined (VXWORKS)
-
   u_long retval = 0;
   u_int segment;
 
@@ -2573,9 +2572,7 @@ ACE_OS::inet_addr (const char *name)
 	  retval |= segment;
 
 	  if (*name == '.')
-	    {
-	      ++name;
-	    }
+	    ++name;
 	}
     }
   return (long) htonl (retval);
@@ -2586,6 +2583,19 @@ ACE_OS::inet_addr (const char *name)
 #else
   return ::inet_addr (name);
 #endif /* ACE_HAS_NONCONST_GETBY */
+}
+
+ACE_INLINE int 
+ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
+{
+  long ip_addr = ACE_OS::inet_addr (host_name);
+  if (ip_addr == htonl (-1)
+      // Broadcast addresses are weird...
+      && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
+    return 0;
+  else if (addr != 0)
+    ACE_OS::memcpy ((void *) addr, (void *) &ip_addr, sizeof ip_addr);
+  return 1;
 }
 
 ACE_INLINE char *

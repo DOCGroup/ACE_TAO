@@ -107,52 +107,116 @@ ACE::strenvdup (const char *str)
     return ACE_OS::strdup (str);
 }
 
+/*
+
+Examples:
+Source               NT                       UNIX
+===============================================================
+netsvc               netsvc.dll               libnetsvc.so
+		     (PATH will be evaluated) (LD_LIBRARY_PATH evaluated)
+
+libnetsvc.dll        libnetsvc.dll            libnetsvc.dll + warning
+netsvc.so            netsvc.so + warning      libnetsvc.so 
+
+..\../libs/netsvc    ..\..\libs\netsvc.dll     ../../libs/libnetsvc.so
+		     (absolute path used)         (absolute path used)
+
+*/
+
 int
 ACE::ldfind (const char *filename, 
-	     char *pathname, 
+ 	     char *pathname, 
 	     size_t maxlen)
 {
   ACE_TRACE ("ACE::ldfind");
   
+  char tempcopy[MAXPATHLEN];
+  char searchpathname[MAXPATHLEN];
+  char tempfilename[MAXPATHLEN];
   char searchfilename[MAXPATHLEN];
 
-  // Determine, whether the default-suffix for shared libraries needs
-  // to be appended.
+  // Create a working copy of filename to mess with
+  if (ACE_OS::strlen (filename) + 1 > sizeof tempcopy)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  else
+    ACE_OS::strcpy (tempcopy, filename);
 
-  if (ACE_OS::strstr (filename, ACE_DLL_SUFFIX) != 0)
-    // Use the filename as provided since it has a suffix.
-    ACE_OS::strncpy (searchfilename, filename, sizeof searchfilename);
+  // Insert canonical directory separators
+  char *separator_ptr;
+
+  for (separator_ptr = tempcopy; *separator_ptr != '\0'; separator_ptr++)
+    if (*separator_ptr == '\\' 
+	|| *separator_ptr == ACE_DIRECTORY_SEPARATOR_CHAR)
+      *separator_ptr = '/';
+
+  separator_ptr = ACE_OS::strrchr (tempcopy, '/');
+  // Separate filename from pathname
+
+  if (separator_ptr != NULL)
+    {
+      ACE_OS::strcpy (tempfilename, separator_ptr + 1);
+      separator_ptr[1] = '\0';
+      ACE_OS::strcpy (searchpathname, tempcopy);
+    } 
   else 
     {
-      if (ACE_OS::strlen (filename) 
-	  + ACE_OS::strlen (ACE_DLL_SUFFIX) 
-	  + 1 >= sizeof searchfilename) 
-	{
-	  errno = ENOMEM;
-	  return -1;
-	} 
-      else 
-	::sprintf (searchfilename, "%s%s", filename, ACE_DLL_SUFFIX);
+      searchpathname[0] = '\0';
+      ACE_OS::strcpy (tempfilename, tempcopy);
     }
 
-  if (ACE_OS::strcmp (searchfilename 
-		      + ACE_OS::strlen (searchfilename) - ACE_OS::strlen (ACE_DLL_SUFFIX), 
+  // Determine, how the filename needs to be decorated.
+
+  int got_prefix = 0;
+  int got_suffix = 0;
+
+  if (ACE_OS::strchr (tempfilename, '.') != NULL)
+    got_suffix = -1;
+
+  if (ACE_OS::strlen(ACE_DLL_PREFIX) == 0
+      || (ACE_OS::strncmp(tempfilename, ACE_DLL_PREFIX, 
+			  ACE_OS::strlen(ACE_DLL_PREFIX) == 0)))
+    got_prefix = -1;
+
+  // Create the properly decorated filename
+  if (ACE_OS::strlen (tempfilename) + 
+      (got_prefix) ? 0 : ACE_OS::strlen(ACE_DLL_PREFIX) + 
+      (got_suffix) ? 0 : ACE_OS::strlen (ACE_DLL_SUFFIX) >= sizeof searchfilename) 
+    {
+      errno = ENOMEM;
+      return -1;
+    } 
+  else 
+    ::sprintf (searchfilename, "%s%s%s", 
+	       (got_prefix) ? "" : ACE_DLL_PREFIX,
+	       tempfilename, 
+	       (got_suffix) ? "" : ACE_DLL_SUFFIX);
+
+  if (ACE_OS::strcmp (searchfilename + ACE_OS::strlen (searchfilename) - ACE_OS::strlen (ACE_DLL_SUFFIX), 
 		      ACE_DLL_SUFFIX))
     ACE_ERROR ((LM_NOTICE, 
 		"CAUTION: improper name for a shared library on this patform: %s\n", 
 		searchfilename));
   
-  if (ACE_OS::strchr (searchfilename, ACE_DIRECTORY_SEPARATOR_CHAR) != 0)
+  if (ACE_OS::strlen (searchpathname) > 0)
     {
       // Use absolute pathname.
-      if (ACE_OS::strlen (searchfilename) >= maxlen) 
+      if (ACE_OS::strlen (searchfilename) + ACE_OS::strlen (searchpathname) >= maxlen) 
 	{
 	  errno = ENOMEM;
 	  return -1;
 	} 
       else 
 	{
-	  ACE_OS::strncpy (pathname, searchfilename, maxlen);
+
+	  // Revert to native path name separators
+	  for (separator_ptr = searchpathname; *separator_ptr != '\0'; separator_ptr++)
+	    if (*separator_ptr == '/') 
+	      *separator_ptr = ACE_DIRECTORY_SEPARATOR_CHAR;
+
+	  ::sprintf (pathname, "%s%s", searchpathname, searchfilename);
 	  return 0;
 	}
     }
@@ -171,7 +235,8 @@ ACE::ldfind (const char *filename,
 
 	  while (path_entry != 0)
 	    {
-	      if (ACE_OS::strlen (path_entry) + 1 + ACE_OS::strlen (searchfilename) >= maxlen)
+	      if (ACE_OS::strlen (path_entry) + 1 + ACE_OS::strlen
+		  (searchfilename) >= maxlen)
 		{
 		  errno = ENOMEM;
 		  result = -1;
@@ -184,7 +249,8 @@ ACE::ldfind (const char *filename,
 
 	      if (ACE_OS::access (pathname, R_OK) == 0)
 		break;
-	      path_entry = ACE_OS::strtok (0, ACE_LD_SEARCH_PATH_SEPARATOR_STR);
+	      path_entry = ACE_OS::strtok (0,
+					   ACE_LD_SEARCH_PATH_SEPARATOR_STR);
 	    }
 
 	  ACE_OS::free ((void *) ld_path);
@@ -713,23 +779,36 @@ ACE::bind_port (ACE_HANDLE handle)
 // code from APUE.
 
 int
-ACE::daemonize (void)
+ACE::daemonize (const char pathname[])
 {
   ACE_TRACE ("ACE::daemonize");
 #if !defined (ACE_WIN32)
-  pid_t pid;
+  pid_t pid = ACE_OS::fork ();
 
-  if ((pid = ACE_OS::fork ()) == -1)
+  if (pid == -1)
     return -1;
   else if (pid != 0)
-    ACE_OS::exit (0);			/* parent exits */
+    ACE_OS::exit (0); // Parent exits.
 
-  /* child continues */
-  ACE_OS::setsid (); /* become session leader */
+  // 1st child continues.
+  ACE_OS::setsid (); // Become session leader.
 
-  ACE_OS::chdir ("/");		/* change working directory */
+  ACE_OS::signal (SIGHUP, SIG_IGN);
 
-  ACE_OS::umask (0);			/* clear our file mode creation mask */
+  pid = ACE_OS::fork ();
+
+  if (pid != 0)
+    ACE_OS::exit (0); // First child terminates.
+
+  // Second child continues.
+
+  ACE_OS::chdir (pathname); // change working directory.
+
+  ACE_OS::umask (0); // clear our file mode creation mask.
+
+  // Close down the files.
+  for (int i = ACE::max_handles () - 1; i >= 0; i--)
+    ACE_OS::close (i);
   return 0;
 #else
   ACE_NOTSUP_RETURN (-1);
@@ -872,6 +951,7 @@ ACE::send (ACE_HANDLE handle,
 	   const ACE_Time_Value *tv)
 {
   if (tv == 0)
+    // Use the blocking send.
     return ACE::send (handle, buf, n, flags);
   else
     {

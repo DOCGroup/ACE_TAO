@@ -207,7 +207,7 @@ protected:
   key_t base_shm_key_;
   // Base shared memory key for the segment.
 
-  virtual int in_use (off_t &offset, int &counter);
+  virtual int in_use (off_t &offset, size_t &counter);
   // Determine how much memory is currently in use.
 
   ACE_Sig_Handler signal_handler_;
