@@ -1,3 +1,12 @@
+Thu Mar 09 17:35:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (log): Related to Tue Mar 7 and Wed Mar 8; change the
+          static cast to a C-style cast and put in comments explaining that
+          depending on the underlying type of thread ID, sometimes a static
+          cast is needed, and sometimes a reinterpret cast, so we dropped
+          back and punted to a C-style cast. Thanks to Loren Rittle and
+          Bala for working this stuff out.
+
 Thu Mar 09 17:01:23 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Naming_Context.cpp (ACE_Name_Options ctor): When allocating
