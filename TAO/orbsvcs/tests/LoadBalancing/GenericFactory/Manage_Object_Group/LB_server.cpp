@@ -226,7 +226,7 @@ LB_server::remove_basic_member (void)
 
       location[0].id = CORBA::string_dup ("MyLocation 1");
 
-      char *loc = "MyLocation 1";
+      const char *loc = "MyLocation 1";
 
       this->lm_->remove_member (this->basic_object_group_.in (),
                                 location
@@ -256,7 +256,7 @@ LB_server::remove_simple_member (void)
 
       location[0].id = CORBA::string_dup ("MyLocation 1");
 
-      char *loc = "MyLocation 1";
+      const char *loc = "MyLocation 1";
 
       this->lm_->remove_member (this->simple_object_group_.in (),
                                 location
