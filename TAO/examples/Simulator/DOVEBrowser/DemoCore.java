@@ -28,13 +28,17 @@ public class DemoCore extends Frame {
   private int countVisComp_ = 0;
   private GridBagLayout gridbag_;
   private GridBagConstraints constraints_;
+  private boolean use_queueing_ = false;
 
   DemoCore (String nameServiceIOR, 
 	    String nameServicePort,
             String[] args, 
+            boolean use_queueing,
 	    java.applet.Applet applet) {
     super ();
     
+    use_queueing = use_queueing;
+
     setSize (600,400);
     setBounds (new Rectangle (50,50,800,500));
     setVisible (true);
@@ -48,8 +52,12 @@ public class DemoCore extends Frame {
 
     // Instantiate the DataHandler and the PushConsumer
     dataHandler_ = new NavWeapDataHandler ();
-    pushConsumerFactory_ = new PushConsumerFactory (dataHandler_, nameServiceIOR, 
-                                                    nameServicePort, args, applet);
+    pushConsumerFactory_ = new PushConsumerFactory (dataHandler_, 
+                                                    nameServiceIOR, 
+                                                    nameServicePort,
+                                                    args,
+                                                    use_queueing_,
+                                                    applet);
 
     // List of Visualization Components
     vis_comp_list_ = new java.util.Vector();
