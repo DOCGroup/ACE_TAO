@@ -1119,14 +1119,22 @@ ACE_INLINE void
 ACE_OS::srand (u_int seed)
 {
   ACE_TRACE ("ACE_OS::srand");
+#if defined (ACE_HAS_PACE)
+  return pace_srand (seed);
+#else
   ::srand (seed);
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE int
 ACE_OS::rand (void)
 {
   ACE_TRACE ("ACE_OS::rand");
+#if defined (ACE_HAS_PACE)
+  return pace_rand ();
+#else
   ACE_OSCALL_RETURN (::rand (), int, -1);
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE int
@@ -1349,12 +1357,14 @@ ACE_OS::_exit (int status)
 ACE_INLINE void
 ACE_OS::abort (void)
 {
-#if !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_PACE)
+  pace_abort ();
+#elif !defined (ACE_HAS_WINCE)
   ::abort ();
 #else
   // @@ CE doesn't support abort?
   exit (1);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_HAS_PACE */
 }
 
 #if !defined (ACE_HAS_WINCE)
@@ -6119,7 +6129,9 @@ ACE_INLINE size_t
 ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 {
   ACE_TRACE ("ACE_OS::fwrite");
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_PACE)
+  return pace_fwrite (ptr, size, nitems, fp);
+#elif defined (ACE_HAS_WINCE)
   DWORD len = 0;
   size_t tlen = size * nitems;
 
@@ -6140,7 +6152,7 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
   ACE_OSCALL_RETURN (::fwrite ((const char *) ptr, size, nitems, fp), int, 0);
 #else
   ACE_OSCALL_RETURN (::fwrite (ptr, size, nitems, fp), int, 0);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE int
@@ -6749,7 +6761,9 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
   if (signum == 0)
     return 0;
   else
-#if defined (ACE_PSOS) && !defined (ACE_PSOS_TM) && !defined (ACE_PSOS_DIAB_MIPS) && !defined (ACE_PSOS_DIAB_PPC)
+#if defined (ACE_HAS_PACE)
+    return pace_signal (signum, func);
+#elif defined (ACE_PSOS) && !defined (ACE_PSOS_TM) && !defined (ACE_PSOS_DIAB_MIPS) && !defined (ACE_PSOS_DIAB_PPC)
     return (ACE_SignalHandler) ::signal (signum, (void (*)(void)) func);
 #elif defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
     return 0;
@@ -6769,7 +6783,7 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
     ACE_UNUSED_ARG (signum);
     ACE_UNUSED_ARG (func);
     ACE_NOTSUP_RETURN (0);     // Should return SIG_ERR but it is not defined on WinCE.
-#endif /* ! ACE_HAS_WINCE */
+#endif /*  ACE_HAS_PACE */
 }
 
 ACE_INLINE int
@@ -9027,7 +9041,9 @@ ACE_OS::timezone (void)
 ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)
 {
-#if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+#if defined (ACE_HAS_PACE)
+  return pace_difftime (t1, t0);
+#elif defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   // simulate difftime ; just subtracting ; ACE_PSOS case
   return ((double)t1) - ((double)t0);
 #else
@@ -9036,7 +9052,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 # else
   return ::difftime (t1, t0);
 # endif /* ACE_DIFFTIME  && ! ACE_PSOS_HAS_TIME */
-#endif /* ACE_PSOS */
+#endif /* ACE_HAS_PACE */
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
 
@@ -9044,7 +9060,9 @@ ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime (const time_t *t)
 {
   ACE_TRACE ("ACE_OS::ctime");
-#if defined (ACE_HAS_BROKEN_CTIME)
+#if defined (ACE_HAS_PACE)
+  return pace_ctime (t);
+#elif defined (ACE_HAS_BROKEN_CTIME)
   ACE_OSCALL_RETURN (::asctime (::localtime (t)), char *, 0);
 #elif defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   return "ctime-return";
@@ -9055,7 +9073,7 @@ ACE_OS::ctime (const time_t *t)
   ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
 #else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
-# endif    /* ACE_HAS_BROKEN_CTIME) */
+# endif    /* ACE_HAS_PACE */
 }
 
 #if !defined (ACE_HAS_WINCE)  /* CE version in OS.cpp */
@@ -9109,7 +9127,9 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 ACE_INLINE struct tm *
 ACE_OS::localtime (const time_t *t)
 {
-#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
+#if defined (ACE_HAS_PACE)
+  return pace_localtime (t);
+#elif !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   ACE_TRACE ("ACE_OS::localtime");
   ACE_OSCALL_RETURN (::localtime (t), struct tm *, 0);
 #else
@@ -9117,20 +9137,22 @@ ACE_OS::localtime (const time_t *t)
   //    does WinCE really support?
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
-#endif /* ! ACE_HAS_WINCE */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE struct tm *
 ACE_OS::gmtime (const time_t *t)
 {
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
+#if defined (ACE_HAS_PACE)
+  return pace_gmtime (t);
+#elif !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   ACE_TRACE ("ACE_OS::localtime");
   ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
 #else
   // @@ WinCE doesn't have gmtime also.
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
-#endif /* ! ACE_HAS_WINCE */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE struct tm *
@@ -9165,14 +9187,16 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 ACE_INLINE char *
 ACE_OS::asctime (const struct tm *t)
 {
-#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
+#if defined (ACE_HAS_PACE)
+  return pace_asctime (t);
+#elif !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   ACE_TRACE ("ACE_OS::asctime");
   ACE_OSCALL_RETURN (::asctime (t), char *, 0);
 #else
   // @@ WinCE doesn't have gmtime also.
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
-#endif /* ! ACE_HAS_WINCE */
+#endif /*  ACE_HAS_PACE */
 }
 
 ACE_INLINE char *
@@ -9218,7 +9242,9 @@ ACE_INLINE size_t
 ACE_OS::strftime (char *s, size_t maxsize, const char *format,
                   const struct tm *timeptr)
 {
-#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
+#if defined (ACE_HAS_PACE)
+  return pace_strftime (s, maxsize, format, timeptr);
+#elif !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   return ::strftime (s, maxsize, format, timeptr);
 #else
   ACE_UNUSED_ARG (s);
@@ -9226,7 +9252,7 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
   ACE_UNUSED_ARG (format);
   ACE_UNUSED_ARG (timeptr);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE int
@@ -11243,7 +11269,9 @@ ACE_OS::bsearch (const void *key,
                  size_t size,
                  ACE_COMPARE_FUNC compar)
 {
-#if !defined (ACE_LACKS_BSEARCH)
+#if defined (ACE_HAS_PACE)
+  return pace_bsearch (key, base, nel, size, compar);
+#elif !defined (ACE_LACKS_BSEARCH)
   return ::bsearch (key, base, nel, size, compar);
 #else
   ACE_UNUSED_ARG (key);
@@ -11252,7 +11280,7 @@ ACE_OS::bsearch (const void *key,
   ACE_UNUSED_ARG (size);
   ACE_UNUSED_ARG (compar);
   ACE_NOTSUP_RETURN (NULL);
-#endif /* ACE_LACKS_BSEARCH */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE void
@@ -11261,14 +11289,16 @@ ACE_OS::qsort (void *base,
                size_t width,
                ACE_COMPARE_FUNC compar)
 {
-#if !defined (ACE_LACKS_QSORT)
+#if defined (ACE_HAS_PACE)
+  return pace_qsort (base, nel, width, compar);
+#elif !defined (ACE_LACKS_QSORT)
   ::qsort (base, nel, width, compar);
 #else
   ACE_UNUSED_ARG (base);
   ACE_UNUSED_ARG (nel);
   ACE_UNUSED_ARG (width);
   ACE_UNUSED_ARG (compar);
-#endif /* ACE_LACKS_QSORT */
+#endif /* ACE_HAS_PACE */
 }
 
 ACE_INLINE int
