@@ -17,12 +17,12 @@ endif # static_libs_only
 ifndef inline
   CFLAGS += -DPACE_HAS_INLINE
 else
-  ifeq (0,$(inline))
-    LIBS += -L$(PACE_ROOT)/pace -lPACE
-  else
+  ifneq (0,$(inline))
     CFLAGS += -DPACE_HAS_INLINE
   endif # inline
 endif # ! inline
+
+LIBS += -L$(PACE_ROOT)/pace -lPACE
 
 #----------------------------------------------------------------------------
 #       Local macros
