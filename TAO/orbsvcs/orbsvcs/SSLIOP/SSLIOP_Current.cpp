@@ -193,128 +193,13 @@ tao_TAO_SSLIOP_Current_upcast (
   return *tmp;
 }
 
-// *************************************************************
-// Operations for class TAO::SSLIOP::Current_var
-// *************************************************************
 
-TAO::SSLIOP::Current_var::Current_var (void) // default constructor
-  : ptr_ (TAO::SSLIOP::Current::_nil ())
-{
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-::TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Current_var::ptr (void) const
-{
-  return this->ptr_;
-}
+template class TAO_Pseudo_Var_T<TAO::SSLIOP::Current>;
 
-TAO::SSLIOP::Current_var::Current_var (
-  const ::TAO::SSLIOP::Current_var &p)
-  : TAO_Base_var (),
-    ptr_ (TAO::SSLIOP::Current::_duplicate (p.ptr ()))
-{
-}
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-TAO::SSLIOP::Current_var::~Current_var (void)
-{
-  CORBA::release (this->ptr_);
-}
+# pragma instantiate TAO_Pseudo_Var_T<TAO::SSLIOP::Current>
 
-TAO::SSLIOP::Current_var &
-TAO::SSLIOP::Current_var::operator= (TAO::SSLIOP::Current_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-TAO::SSLIOP::Current_var &
-TAO::SSLIOP::Current_var::operator= (const ::TAO::SSLIOP::Current_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::TAO::SSLIOP::Current::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-TAO::SSLIOP::Current_var::operator const ::TAO::SSLIOP::Current_ptr &() const
-{
-  return this->ptr_;
-}
-
-TAO::SSLIOP::Current_var::operator ::TAO::SSLIOP::Current_ptr &()
-{
-  return this->ptr_;
-}
-
-::TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Current_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Current_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::TAO::SSLIOP::Current_ptr &
-TAO::SSLIOP::Current_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::TAO::SSLIOP::Current_ptr &
-TAO::SSLIOP::Current_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::TAO::SSLIOP::Current::_nil ();
-  return this->ptr_;
-}
-
-::TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Current_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::TAO::SSLIOP::Current_ptr val = this->ptr_;
-  this->ptr_ = ::TAO::SSLIOP::Current::_nil ();
-  return val;
-}
-
-::TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Current_var::tao_duplicate (TAO::SSLIOP::Current_ptr p)
-{
-  return ::TAO::SSLIOP::Current::_duplicate (p);
-}
-
-void
-TAO::SSLIOP::Current_var::tao_release (TAO::SSLIOP::Current_ptr p)
-{
-  CORBA::release (p);
-}
-
-::TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Current_var::tao_nil (void)
-{
-  return ::TAO::SSLIOP::Current::_nil ();
-}
-
-::TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Current_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::TAO::SSLIOP::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-TAO::SSLIOP::Current_var::tao_upcast (void *src)
-{
-  TAO::SSLIOP::Current **tmp =
-    static_cast<TAO::SSLIOP::Current **> (src);
-  return *tmp;
-}
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -41,8 +41,8 @@ namespace TAO
   namespace SSLIOP
   {
     class Current;
-    class Current_var;
     typedef Current * Current_ptr;
+    typedef TAO_Pseudo_Var_T<Current> Current_var;
 
     /**
      * @class Current
@@ -112,23 +112,11 @@ namespace TAO
        * compiler for all IDL interfaces.
        */
       //@{
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-      typedef Current_ptr _ptr_type;
-      typedef Current_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-      static int _tao_class_id;
-
       // The static operations.
       static Current_ptr _duplicate (Current_ptr obj);
 
       static Current_ptr _narrow (CORBA::Object_ptr obj
                                   ACE_ENV_ARG_DECL);
-
-
-      static Current_ptr _unchecked_narrow (CORBA::Object_ptr obj
-                                            ACE_ENV_ARG_DECL);
-
 
       static Current_ptr _nil (void)
       {
@@ -169,42 +157,6 @@ namespace TAO
 
     };
 
-    class Current_var : public TAO_Base_var
-    {
-    public:
-      Current_var (void); // default constructor
-      Current_var (Current_ptr p) : ptr_ (p) {}
-      Current_var (const Current_var &); // copy constructor
-      ~Current_var (void); // destructor
-
-      Current_var &operator= (Current_ptr);
-      Current_var &operator= (const Current_var &);
-      Current_ptr operator-> (void) const;
-
-      operator const Current_ptr &() const;
-      operator Current_ptr &();
-      // in, inout, out, _retn
-      Current_ptr in (void) const;
-      Current_ptr &inout (void);
-      Current_ptr &out (void);
-      Current_ptr _retn (void);
-      Current_ptr ptr (void) const;
-
-      // Hooks used by template sequence and object manager classes
-      // for non-defined forward declared interfaces.
-      static Current_ptr tao_duplicate (Current_ptr);
-      static void tao_release (Current_ptr);
-      static Current_ptr tao_nil (void);
-      static Current_ptr tao_narrow (CORBA::Object *
-                                                ACE_ENV_ARG_DECL);
-      static CORBA::Object * tao_upcast (void *);
-
-    private:
-      Current_ptr ptr_;
-      // Unimplemented - prevents widening assignment.
-      Current_var (const TAO_Base_var &rhs);
-      Current_var &operator= (const TAO_Base_var &rhs);
-    };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

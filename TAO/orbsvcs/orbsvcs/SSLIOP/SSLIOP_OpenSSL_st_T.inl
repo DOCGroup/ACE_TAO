@@ -39,30 +39,26 @@ TAO::SSLIOP::release (T * st)
 
 template <typename T> ACE_INLINE
 TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var (void)
-  : TAO_Base_var (),
-    st_ (0)
+  : st_ (0)
 {
 }
 
 template <typename T> ACE_INLINE
 TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var (T * st)
-  : TAO_Base_var (),
-    st_ (st)
+  : st_ (st)
 {
 }
 
 template <typename T> ACE_INLINE
 TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var (
   TAO::SSLIOP::OpenSSL_st_var<T> const & st)
-  : TAO_Base_var (),
-    st_ (TAO::SSLIOP::_duplicate (st.ptr ()))
+  : st_ (TAO::SSLIOP::_duplicate (st.ptr ()))
 {
 }
 
 template <typename T> ACE_INLINE
 TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var (T const & st)
-  : TAO_Base_var (),
-    st_ (TAO::SSLIOP::copy (st))
+  : st_ (TAO::SSLIOP::copy (st))
 {
 }
 

@@ -21,8 +21,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/varbase.h"
-
 
 namespace TAO
 {
@@ -87,7 +85,7 @@ namespace TAO
      * internally by the SSLIOP pluggable transport.
      */
     template <typename T>
-    class OpenSSL_st_var : private TAO_Base_var
+    class OpenSSL_st_var
     {
     public:
 
@@ -128,12 +126,6 @@ namespace TAO
       T*& out (void);
       T*  _retn (void);
       T*  ptr (void) const;
-
-    private:
-
-      // Unimplemented - prevents widening assignment.
-      OpenSSL_st_var (const TAO_Base_var &rhs);
-      OpenSSL_st_var &operator= (const TAO_Base_var &rhs);
 
     private:
 
