@@ -308,10 +308,10 @@ public:
   virtual void _release (void) = 0;
 };
 
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA_Object*);
 
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA_Object*&);
 
 #if defined (__ACE_INLINE__)

@@ -733,7 +733,7 @@ private:
 
 // ****************************************************************
 
-extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
+TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"

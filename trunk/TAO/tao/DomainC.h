@@ -284,16 +284,16 @@ private:
 };
 
 // Any operators for interface CORBA_ConstructionPolicy
-void TAO_Export operator<<= (CORBA::Any &,
+TAO_Export void operator<<= (CORBA::Any &,
                              CORBA_ConstructionPolicy_ptr);
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &,
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA_ConstructionPolicy *&);
 
 #ifndef __ACE_INLINE__
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &,
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
                                       const CORBA_ConstructionPolicy_ptr );
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
                                       CORBA_ConstructionPolicy_ptr &);
 
 #endif /* __ACE_INLINE__ */
@@ -304,28 +304,28 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
 
 
 // Any operators for interface CORBA_DomainManager
-void TAO_Export operator<<= (CORBA::Any &,
+TAO_Export void operator<<= (CORBA::Any &,
                              CORBA_DomainManager_ptr);
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &,
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA_DomainManager *&);
 
 // Any operators for interface CORBA_DomainManagerList
-void TAO_Export operator<<= (CORBA::Any &,
+TAO_Export void operator<<= (CORBA::Any &,
                              const CORBA_DomainManagerList &); // copying version
-void TAO_Export operator<<= (CORBA::Any &,
+TAO_Export void operator<<= (CORBA::Any &,
                              CORBA_DomainManagerList*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &,
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA_DomainManagerList *&);
 
 #ifndef __ACE_INLINE__
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &,
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
                                       const CORBA_DomainManager_ptr );
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
                                       CORBA_DomainManager_ptr &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &,
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
                                       const CORBA_DomainManagerList &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
                                       CORBA_DomainManagerList &);
 #endif /* __ACE_INLINE__ */
 

@@ -574,85 +574,85 @@ TAO_NAMESPACE  IOP
 }
 TAO_NAMESPACE_CLOSE // module IOP
 
-void TAO_Export operator<<= (CORBA::Any &, const IOP::TaggedProfile &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, IOP::TaggedProfile*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, IOP::TaggedProfile *&);
-void TAO_Export operator<<= (CORBA::Any &, const IOP::IOR &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, IOP::IOR*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, IOP::IOR *&);
-void TAO_Export operator<<= (CORBA::Any &, const IOP::TaggedComponent &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, IOP::TaggedComponent*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, IOP::TaggedComponent *&);
-void TAO_Export operator<<= (CORBA::Any &, const IOP::MultipleComponentProfile &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, IOP::MultipleComponentProfile*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, IOP::MultipleComponentProfile *&);
-void TAO_Export operator<<= (CORBA::Any &, const IOP::ServiceContext &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, IOP::ServiceContext*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, IOP::ServiceContext *&);
-void TAO_Export operator<<= (CORBA::Any &, const IOP::ServiceContextList &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, IOP::ServiceContextList*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, IOP::ServiceContextList *&);
+TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedProfile &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedProfile*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedProfile *&);
+TAO_Export void operator<<= (CORBA::Any &, const IOP::IOR &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, IOP::IOR*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::IOR *&);
+TAO_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponent &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, IOP::TaggedComponent*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::TaggedComponent *&);
+TAO_Export void operator<<= (CORBA::Any &, const IOP::MultipleComponentProfile &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, IOP::MultipleComponentProfile*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::MultipleComponentProfile *&);
+TAO_Export void operator<<= (CORBA::Any &, const IOP::ServiceContext &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, IOP::ServiceContext*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::ServiceContext *&);
+TAO_Export void operator<<= (CORBA::Any &, const IOP::ServiceContextList &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, IOP::ServiceContextList*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::ServiceContextList *&);
 
 #ifndef __ACE_INLINE__
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const IOP::TaggedProfile &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, IOP::TaggedProfile &);
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::TaggedProfile &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::TaggedProfile &);
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IOP::TaggedProfile::_tao_seq_Octet &
   );
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IOP::TaggedProfile::_tao_seq_Octet &
   );
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const IOP::IOR &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, IOP::IOR &);
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::IOR &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::IOR &);
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IOP::IOR::_tao_seq_TaggedProfile &
   );
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IOP::IOR::_tao_seq_TaggedProfile &
   );
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const IOP::TaggedComponent &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, IOP::TaggedComponent &);
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::TaggedComponent &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::TaggedComponent &);
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IOP::TaggedComponent::_tao_seq_Octet &
   );
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IOP::TaggedComponent::_tao_seq_Octet &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IOP::MultipleComponentProfile &
   );
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IOP::MultipleComponentProfile &
   );
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const IOP::ServiceContext &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, IOP::ServiceContext &);
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IOP::ServiceContext &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::ServiceContext &);
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IOP::ServiceContext::_tao_seq_Octet &
   );
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IOP::ServiceContext::_tao_seq_Octet &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const IOP::ServiceContextList &
   );
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     IOP::ServiceContextList &
   );
