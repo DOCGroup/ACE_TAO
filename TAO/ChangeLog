@@ -1,3 +1,16 @@
+Tue Dec  7 21:55:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+
+	  Added command line options for writing factory IOR to a file;
+	  writing proces ID to a file; whether, and if so, what name to
+	  use to register with the Naming Service.
+
 Tue Dec  7 18:16:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
@@ -16,7 +29,7 @@ Tue Dec  7 18:16:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
         * orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
         * orbsvcs/tests/InterfaceRepo/Persistence_Test/test.cpp:
-        
+
           Changes to IFR test code and to associated perl scripts to both
           fix bugs in test executions and minimize output for successful
           test executions. These changes are in preparation for adding
@@ -32,7 +45,7 @@ Tue Dec  7 18:10:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
         * orbsvcs/IFR_Service/IFR_Server.cpp:
         * orbsvcs/IFR_Service/IFR_Service.cpp:
-        
+
           Fixes to the Contained::move() method implementation,
           and changes to eliminate the output of the IFR's IOR
           upon startup - for automatic execution of IFR tests,
@@ -87,7 +100,7 @@ Tue Dec  7 16:39:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_global.cpp:
         * orbsvcs/IFR_Service/be_init.cpp:
-        
+
           Created a flag in the IDL front end global data class,
           set by the tao_ifr backend, to be used as an additional
           check to decide whether to generate the AST nodes
@@ -97,20 +110,20 @@ Tue Dec  7 16:39:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Dec  7 16:35:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
-        
+
           Fixed perl script to look for the tao_ifr executable in
           ACE_ROOT/bin.
 
 Tue Dec  7 15:36:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/asts/ast_root.cpp:
-        
+
           Reverted the quickfix below in
-          
+
           Tue Dec  7 14:57:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           Fixed error in populating the scope member that holds pointers
           to the nodes referenced in the scope. In many cases the
           referenced nodes were getting added twice for each call.
@@ -118,7 +131,7 @@ Tue Dec  7 15:36:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Dec  7 14:57:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_root.cpp:
-        
+
           Reverted a previous change to the cleanup in global scope
           between processing of multiple IDL files. This is a quick
           fix to get the IDL importer (tao_picml) working for a
