@@ -19,7 +19,7 @@
 
 #include "clnt.h"
 #include "CosNaming_i.h"
-#include "../../Logger/loggerC.h"
+#include "loggerC.h"
 
 // constructor
 
@@ -89,7 +89,7 @@ CosNaming_Client::run (void)
   n[0].id = CORBA::string_dup ("logger");
 
   l_obj = this->CosNaming_->resolve (n, this->env_);
-  logger = Logger::_narrow (l_obj);
+  logger = Logger::_narrow (l_obj, this->env_);
   logger->log ("I am logging using a reference obtained from the Naming Service!!!", this->env_);
 
   if (this->exit_later_)
@@ -160,7 +160,7 @@ CosNaming_Client::init (int argc, char **argv)
   // <CosNaming_Factory> pointer.  However, we do it so that we can
   // explicitly test the _narrow function.
 
-  this->CosNaming_ = CosNaming::NamingContext::_narrow (this->objref_);
+  this->CosNaming_ = CosNaming::NamingContext::_narrow (this->objref_, this->env_);
 
   if (this->CosNaming_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

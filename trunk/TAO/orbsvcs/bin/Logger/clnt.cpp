@@ -218,7 +218,7 @@ Logger_Client::init (int argc, char **argv)
 
   // Narrow the CORBA::Object reference to the stub object, checking
   // the type along the way using _is_a.
-  this->factory_ = Logger_Factory::_narrow (this->objref_);
+  this->factory_ = Logger_Factory::_narrow (this->objref_, this->env_);
 
   if (this->factory_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
