@@ -20,11 +20,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Transport.h"
 #include "tao/Reply_Dispatcher.h"
+#include "tao/IOP_IORC.h"
 
 class TAO_Pluggable_Reply_Params;
 class TAO_ORB_Core ;
+class ACE_Time_Value;
+class TAO_Transport;
 
 /// Base class for TAO_Asynch_Reply_Dispatcher and
 /// TAO_DII_Deferred_Reply_Dispatcher
