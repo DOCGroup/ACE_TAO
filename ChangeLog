@@ -1,3 +1,15 @@
+Tue Jun 24 12:07:06 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Convert custom defined values to relative paths if possible.  If
+          it isn't possible, continue to use environment variables.
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Push the relative() method into the ProjectCreator, where it
+          should have been in the first place.
+
 Tue Jun 24 15:38:49 UTC 2003  Don Hinton  <dhinton@dresystems.h>
 
         * ace/Filecache.cpp:
@@ -72,9 +84,9 @@ Mon Jun 23 12:46:05 2003  Rich Seibel <seibel_r@ociweb.com>
 
 Sun Jun 22 11:23:52 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* THANKS: Added our 1700th contributor to ACE+TAO.  It's amazing
-	  how many people have contributed to these open-source projects
- 	  since 1992!
+        * THANKS: Added our 1700th contributor to ACE+TAO.  It's amazing
+          how many people have contributed to these open-source projects
+          since 1992!
 
 Mon Jun 23 11:51:13 2003  Chad Elliott  <elliott_c@ociweb.com>
 
