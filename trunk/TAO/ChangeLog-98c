@@ -1,3 +1,9 @@
+Fri Mar 06 11:38:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html: Shrinked the table widths to 80% so we can
+ 	  see everything without scrolling.  Thanks to Darrell for the
+ 	  HTML tip.
+
 Fri Mar 06 09:36:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/object.i (CORBA_Object): reordered initializers to match
