@@ -1,3 +1,8 @@
+Tue May 18 14:28:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/LSOCK.cpp:
+          Added missing include ace/OS_NS_sys_socket.h
+
 Tue May 18 09:22:35 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/mpc.pl:
