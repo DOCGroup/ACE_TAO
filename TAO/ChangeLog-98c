@@ -1,3 +1,11 @@
+Fri Apr 24 10:15:37 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tests/Quoter/Generic_Factory.{h,cpp,dsp}: server for a 
+	  Generic Factory conforming to the LifeCycle Service
+
+	* tests/Quoter/Generic_Factory_Impl.{h,cpp}: Implementation
+	  of a LifeCycle Service conforming Generic Factory
+
 Fri Apr 24 10:08:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/NVList.cpp: added ACE_Node<CORBA::NamedValue_ptr> template
