@@ -36,49 +36,51 @@ CORBA_Any::replace (CORBA::TypeCode_ptr type,
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Short s)
 {
-  replace (CORBA::_tc_short, new CORBA::Short (s), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_short, new CORBA::Short (s), CORBA::B_TRUE);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::UShort s)
 {
-  replace (CORBA::_tc_ushort, new CORBA::UShort (s), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_ushort, new CORBA::UShort (s), CORBA::B_TRUE);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Long l)
 {
-  replace (CORBA::_tc_long, new CORBA::Long (l), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_long, new CORBA::Long (l), CORBA::B_TRUE);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::ULong l)
 {
-  replace (CORBA::_tc_ulong, new CORBA::ULong (l), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_ulong, new CORBA::ULong (l), CORBA::B_TRUE);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Float f)
 {
-  replace (CORBA::_tc_float, new CORBA::Float (f), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_float, new CORBA::Float (f), CORBA::B_TRUE);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (CORBA::Double d)
 {
-  replace (CORBA::_tc_double, new CORBA::Double (d), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_double, new CORBA::Double (d), CORBA::B_TRUE);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (const CORBA_Any& a)
 {
-  replace (CORBA::_tc_any, new CORBA_Any (a), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_any, new CORBA_Any (a), CORBA::B_TRUE);
 }
 
+// this is a copying version for unbounded strings
 ACE_INLINE void
 CORBA_Any::operator<<= (const char* s)
 {
-  replace (CORBA::_tc_string, CORBA::string_dup (s), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_string, new char* (CORBA::string_dup (s)),
+                 CORBA::B_TRUE);
 }
 
 // implementing the special types
@@ -128,67 +130,46 @@ CORBA_Any::from_string::from_string (char *s, CORBA::ULong b, CORBA::Boolean noc
 
 ACE_INLINE
 CORBA_Any::to_string::to_string (char *&s, CORBA::ULong b)
-  : ref_ (s),
+  : val_ (s),
     bound_ (b)
+{
+}
+
+ACE_INLINE
+CORBA_Any::to_object::to_object (CORBA::Object_ptr &obj)
+  : ref_ (obj)
 {
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (from_boolean b)
 {
-  replace (CORBA::_tc_boolean, new CORBA::Boolean (b.val_), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_boolean, new CORBA::Boolean (b.val_), CORBA::B_TRUE);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (from_octet o)
 {
-  replace (CORBA::_tc_octet, new CORBA::Octet (o.val_), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_octet, new CORBA::Octet (o.val_), CORBA::B_TRUE);
 }
 
 ACE_INLINE void
 CORBA_Any::operator<<= (from_char c)
 {
-  replace (CORBA::_tc_char, new CORBA::Char (c.val_), CORBA::B_TRUE);
+  this->replace (CORBA::_tc_char, new CORBA::Char (c.val_), CORBA::B_TRUE);
 }
-
-ACE_INLINE void
-CORBA_Any::operator<<= (from_string s)
-{
-  if (s.nocopy_)
-    replace (CORBA::_tc_string,  s.val_, CORBA::B_TRUE);
-  else
-    replace (CORBA::_tc_string, CORBA::string_dup (s.val_), CORBA::B_TRUE);
-}
-
-// extraction: these are safe and hence we have to check that the typecode of
-// the Any is equal to the one we are trying to extract into
-
-ACE_INLINE CORBA::Boolean
-CORBA_Any::operator>>= (CORBA::Short &s) const
-{
-  CORBA::Environment env;
-
-  if (type_->equal (CORBA::_tc_short, env))
-    {
-      s = *(CORBA::Short *) value_;
-      return CORBA::B_TRUE;
-    }
-  else
-    return CORBA::B_FALSE;
-}
-
 
 // ----------------------------------------------------------------------
 // CORBA_Any_var type
 // ----------------------------------------------------------------------
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_Any_var::CORBA_Any_var (void)
   : ptr_ (0)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_Any_var::CORBA_Any_var (CORBA_Any *p)
   : ptr_ (p)
 {
@@ -200,7 +181,7 @@ CORBA_Any_var::CORBA_Any_var (const CORBA_Any_var& r)
 {
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_Any_var::~CORBA_Any_var (void)
 {
   delete this->ptr_;
@@ -265,7 +246,7 @@ CORBA_Any_out::CORBA_Any_out (CORBA_Any *&s)
 
 ACE_INLINE
 CORBA_Any_out::CORBA_Any_out (CORBA_Any_var &s)
-  : ptr_ (s.out ()) 
+  : ptr_ (s.out ())
 {
 }
 
@@ -307,4 +288,3 @@ CORBA_Any_out::ptr (void)
 {
   return this->ptr_;
 }
-
