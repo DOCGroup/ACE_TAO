@@ -37,11 +37,12 @@ PushSupplierWrapper::PushSupplierWrapper
 (CosEventComm::PushSupplier_ptr supplier)
   : supplier_ (CosEventComm::PushSupplier::_duplicate (supplier))
 {
+  // No-Op.
 }
 
 PushSupplierWrapper::~PushSupplierWrapper ()
 {
-  CORBA::release (supplier_);
+  CORBA::release (this->supplier_);
 }
 
 void
@@ -49,7 +50,7 @@ PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
 {
   this->supplier_->disconnect_push_supplier (TAO_TRY_ENV);
 
- // Deactivate the supplier proxy
+  // Deactivate the supplier proxy
   PortableServer::POA_var poa =
     this->_default_POA (TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
@@ -71,7 +72,7 @@ PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
 ProxyPushConsumer_i::ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
                                           RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc)
   : qos_ (qos),
-    ppc_ (ppc),
+    ppc_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (ppc)),
     wrapper_ (0)
 {
   // No-Op.
@@ -79,7 +80,7 @@ ProxyPushConsumer_i::ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQ
 
 ProxyPushConsumer_i::~ProxyPushConsumer_i (void)
 {
-  // No-Op.
+  CORBA::release (this->ppc_);
 }
 
 void
@@ -102,8 +103,6 @@ ProxyPushConsumer_i::push (const CORBA::Any &data,
 
   ACE_hrtime_t t = ACE_OS::gethrtime ();
 
-  // @@ Pradeep, now that we've got the Time Service in TAO, do we
-  // need to use this ORBSVCS_Time stuff?
   ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time,
                                  t);
   e.header.ec_recv_time = ORBSVCS_Time::zero;
@@ -127,7 +126,7 @@ ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV)
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this, 
+    poa->servant_to_id (this,
                         TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 
@@ -143,18 +142,17 @@ ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_
                                             CORBA::Environment &TAO_TRY_ENV)
 {
   if (this->connected ())
-    TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (), TAO_TRY_ENV);
+    TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (),
+                   TAO_TRY_ENV);
 
-  // @@ Pradeep, please make sure to use ACE_NEW and ACE_NEW_RETURN in
-  // situations like this to check for new failures.
-  this->wrapper_ = new PushSupplierWrapper (push_supplier);
+  ACE_NEW (this->wrapper_, PushSupplierWrapper (push_supplier));
 
   this->ppc_->connect_push_supplier (this->wrapper_->_this (TAO_TRY_ENV),
                                      this->qos_,
                                      TAO_TRY_ENV);
 }
 
-int 
+int
 ProxyPushConsumer_i::connected (void)
 {
   return this->wrapper_ == 0 ? 0 : 1;

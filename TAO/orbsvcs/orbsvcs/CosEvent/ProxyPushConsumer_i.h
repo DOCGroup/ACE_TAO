@@ -68,9 +68,7 @@ private:
   // The Rtec ProxyPushConsumer specified by the user of this class.
 
   PushSupplierWrapper *wrapper_;
-  // The Rtec PushSupplier wrapper used by the Rtec proxyPushConsumer.
+  // The Rtec PushSupplier wrapper used by the Rtec ProxyPushConsumer.
 };
 
-// @@ Pradeep, please don't use // here, but use /* ... */ instead.
-// Please fix all uses of this in your code since it's not portable.
-#endif // _PROXYPUSHCONSUMER_H
+#endif /* _PROXYPUSHCONSUMER_H */

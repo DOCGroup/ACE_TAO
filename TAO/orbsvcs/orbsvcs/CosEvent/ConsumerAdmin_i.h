@@ -56,11 +56,9 @@ private:
   RtecEventChannelAdmin::ConsumerQOS qos_;
   // The ConsumerQOS specified by the user of this class.
 
-  RtecEventChannelAdmin::ConsumerAdmin_var rtec_consumeradmin_;
+  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin_;
   // The RtecEventChannelAdmin::ConsumerAdmin specified by the user of
   // this class.
 };
 
-// @@ Pradeep, please don't use // here, but use /* ... */ instead.
-// Please fix all uses of this in your code since it's not portable.
-#endif //_CONSUMERADMIN_I_H
+#endif /* _CONSUMERADMIN_I_H */

@@ -75,12 +75,12 @@ private:
   // SupplierAdmin servant object.
 
   CosEventChannelAdmin::ConsumerAdmin_ptr consumeradmin_;
-  // @@ Pradeep, please add comments here
+  // The reference to the ConsumerAdmin interface returned after activating
+  // the servant in the ORB.
 
   CosEventChannelAdmin::SupplierAdmin_ptr supplieradmin_;
-  // @@ Pradeep, please add comments here
+  // The reference to the SupplierAdmin interface returned after activating
+  // the servant in the ORB.
 };
 
-// @@ Pradeep, please don't use // here, but use /* ... */ instead.
-// Please fix all uses of this in your code since it's not portable.
-#endif //_EVENTCHANNEL_I_H
+#endif /* _EVENTCHANNEL_I_H */

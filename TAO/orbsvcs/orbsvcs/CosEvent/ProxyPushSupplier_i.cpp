@@ -26,10 +26,10 @@ public:
 
   virtual void push (const RtecEventComm::EventSet & data,
                      CORBA::Environment &TAO_TRY_ENV);
-  // @@ Pradeep, please add comments.
+  // This method is called by the RTEvent Channel to supply data.
 
   virtual void disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV);
-  // @@ Pradeep, please add comments.
+  // Disconnects the consumer from the event channel.
 
 private:
   CosEventComm::PushConsumer_ptr consumer_;
@@ -40,6 +40,7 @@ PushConsumerWrapper::PushConsumerWrapper
 (CosEventComm::PushConsumer_ptr consumer)
     : consumer_ (CosEventComm::PushConsumer::_duplicate (consumer))
 {
+  // No-Op.
 }
 
 PushConsumerWrapper::~PushConsumerWrapper ()
@@ -84,19 +85,19 @@ ProxyPushSupplier_i::ProxyPushSupplier_i
 (const RtecEventChannelAdmin::ConsumerQOS &qos,
 RtecEventChannelAdmin::ProxyPushSupplier_ptr pps)
   : qos_ (qos),
-    pps_ (pps)
+    pps_ (RtecEventChannelAdmin::ProxyPushSupplier::_duplicate (pps))
 {
+  // No-Op.
 }
 
 ProxyPushSupplier_i::~ProxyPushSupplier_i (void)
 {
+  CORBA::release (this->pps_);
 }
 
 void
 ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
 {
-  // @@ Maybe we should do a "delete this" here? And consider POA
-  // deactivation...
   this->pps_->disconnect_push_supplier (TAO_TRY_ENV);
 
   // Deactivate the supplier proxy
@@ -121,13 +122,23 @@ ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
 void ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer,
                                                  CORBA::Environment &TAO_TRY_ENV)
 {
-  // Implements the RtecEventConsumer interface
-  PushConsumerWrapper *wrapper =
-    // @@ Pradeep, please always use ACE_NEW_RETURN or ACE_NEW to
-    // allocate memory dynamically.
-    new PushConsumerWrapper (push_consumer);
+  if (this->connected ())
+    TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (),
+                   TAO_TRY_ENV);
 
-  this->pps_->connect_push_consumer (wrapper->_this (TAO_TRY_ENV),
+  if (push_consumer == CosEventComm::PushConsumer::_nil())
+    TAO_THROW_ENV (CORBA::BAD_PARAM (CORBA::COMPLETED_NO),
+                   TAO_TRY_ENV);
+
+  ACE_NEW (this->wrapper_,  PushConsumerWrapper (push_consumer));
+
+  this->pps_->connect_push_consumer (this->wrapper_->_this (TAO_TRY_ENV),
                                      this->qos_,
                                      TAO_TRY_ENV);
+}
+
+int
+ProxyPushSupplier_i::connected (void)
+{
+  return this->wrapper_ == 0 ? 0 : 1;
 }
