@@ -295,8 +295,8 @@ CORBA_ORB::run (ACE_Time_Value *tv)
     {
       if (TAO_ORB_Core_instance ()->unset_leader_wake_up_follower () == -1)
 	      ACE_ERROR_RETURN ((LM_ERROR,
-			                     "(%P|%t) ORB::run: Failed to add a follower thread\n"),
-			                    -1);
+                                 "(%P|%t) ORB::run: Failed to add a follower thread\n"),
+                                -1);
       return 0;
       // nothing went wrong
     }
@@ -500,12 +500,12 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   if (response.open (ACE_Addr::sap_any) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "open failed.\n"),
-                      return_value);
+                      0);
 
   if (response.get_local_addr (response_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "get_local_addr failed.\n"),
-                      return_value);
+                      0);
   struct
   {
     u_short reply_port;
@@ -536,7 +536,9 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
 		n_bytes));
 
   // Wait for response until TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
-  ACE_Time_Value tv (timeout == 0 ? TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT : *timeout);
+  ACE_Time_Value tv (timeout == 0 
+                     ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
+                     : *timeout);
 
   // receive response message
   char buf[ACE_MAX_DGRAM_SIZE];
