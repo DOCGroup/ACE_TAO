@@ -279,7 +279,7 @@ oneway		return IDL_ONEWAY;
                                   IDL_STRING_LITERAL);
 		  return IDL_STRING_LITERAL;
 	      	}
-L\"([^\\\"]*|\\u([0-9a-fA-F]{1,4}))*\"	{
+(L\"([^\\\"]*|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+	{
 		  /* Skip the bookends */
 		  char *tmp = ACE_OS::strdup (ace_yytext);
 		  tmp[strlen (tmp) - 1] = '\0';
