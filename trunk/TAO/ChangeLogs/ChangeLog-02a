@@ -1,3 +1,8 @@
+Fri Apr 27 22:15:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/POA/Etherealization/Etherealization.cpp: Fixed a couple of
+	  compiler warnings.
+
 Fri Apr 27 14:34:59 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Exception.cpp (_tao_get_omg_exception_description):
