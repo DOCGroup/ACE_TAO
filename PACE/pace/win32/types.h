@@ -1,5 +1,4 @@
-/* -*- C -*-
- * $Id$
+/* $Id$ -*- C -*-
 
  * ============================================================================
  *
@@ -19,19 +18,16 @@
 #ifndef PACE_SYS_TYPES_H
 #define PACE_SYS_TYPES_H
 
-
-#if defined (PACE_SUNOS)
-/* specific to SunOS 5.7 ace.cs <luther@cs.wustl.edu> */
-/*# include <inttypes.h> */
-#endif /* (PACE_SUNOS) */
-
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-/* Wrap a handle. */
+  /* Wrap a handle. */
 # define PACE_HANDLE int
 # define PACE_INVALID_HANDLE -1
+
+  /* ADD_THESE_AS_NEEDED */
+#if 0
 
 #ifndef PACE_DEV_T
 #define PACE_DEV_T
@@ -123,8 +119,14 @@ extern "C" {
   typedef uid_t pace_uid_t;
 #endif /* PACE_UID_T */
 
+#endif /* ADD_AS_NEEDED */
+
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_SYS_TYPES_H */
+
+
+
+
