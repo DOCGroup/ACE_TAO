@@ -200,18 +200,13 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
     }
   os->gen_endif ();
 
-  // @@ Michael:
-  // This is here just temporarily, we remove that after refactoring
-  if (idl_global->ami_call_back () == I_FALSE)
+  // generate code for the elements of the valuetype
+  if (this->visit_scope (node) == -1)
     {
-      // generate code for the elements of the valuetype
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_cs::"
-                             "visit_valuetype - "
-                             "codegen for scope failed\n"), -1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cs::"
+                         "visit_valuetype - "
+                         "codegen for scope failed\n"), -1);
     }
 
   // by using a visitor to declare and define the TypeCode, we have the
