@@ -10,14 +10,12 @@
  */
 //=============================================================================
 
-#ifndef TAO_REQUEST_PROCESSING_POLICY_VALUE_H
-#define TAO_REQUEST_PROCESSING_POLICY_VALUE_H
+#ifndef TAO_REQUEST_PROCESSING_POLICY_VALUE_AOM_ONLY_H
+#define TAO_REQUEST_PROCESSING_POLICY_VALUE_AOM_ONLY_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "RequestProcessingPolicyC.h"
-#include "ace/Service_Object.h"
-#include "ace/Service_Config.h"
+#include "RequestProcessingPolicyValue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,20 +27,23 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export RequestProcessingPolicyValue
-      : public virtual ACE_Service_Object
+    class TAO_PortableServer_Export RequestProcessingPolicyValueAOMOnly
+      : public virtual RequestProcessingPolicyValue
     {
       public:
-        virtual ~RequestProcessingPolicyValue (void);
+        virtual ~RequestProcessingPolicyValueAOMOnly  (void);
 
         virtual ::PortableServer::RequestProcessingPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-          ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+          ACE_THROW_SPEC ((CORBA::SystemException));
     };
+
+    ACE_STATIC_SVC_DECLARE (RequestProcessingPolicyValueAOMOnly)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingPolicyValueAOMOnly)
   }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_REQUEST_PROCESSING_POLICY_VALUE_H */
+#endif /* TAO_REQUEST_PROCESSING_POLICY_VALUE_AOM_ONLY_H */
 

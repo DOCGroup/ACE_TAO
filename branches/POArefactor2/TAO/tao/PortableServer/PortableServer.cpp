@@ -48,7 +48,9 @@
 #include "tao/PortableServer/ImplicitActivationPolicyValueExplicit.h"
 #include "tao/PortableServer/ImplicitActivationPolicyValueImplicit.h"
 
-#include "tao/PortableServer/RequestProcessingPolicyValue.h"
+#include "tao/PortableServer/RequestProcessingPolicyValueAOMOnly.h"
+#include "tao/PortableServer/RequestProcessingPolicyValueDefaultServant.h"
+#include "tao/PortableServer/RequestProcessingPolicyValueServantManager.h"
 
 #include "tao/PortableServer/ServantRetentionPolicyValueRetain.h"
 #include "tao/PortableServer/ServantRetentionPolicyValueNonRetain.h"
@@ -88,21 +90,27 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactoryImpl
     );
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueDefaultServant
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueServantManager
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyValueAOMOnly
     );
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyValueNonRetain
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyValueRetain
@@ -144,9 +152,11 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyValueUnique
     );
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyValueExplicit
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyValueImplicit
