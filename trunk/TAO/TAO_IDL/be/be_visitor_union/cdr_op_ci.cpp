@@ -99,10 +99,43 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
 
   // Generate a temporary to store the discriminant
   *os << disc_type->fullname ()
-      << " " << "_tao_discriminant;" << be_nl
-      << "if ( !(strm >> _tao_discriminant) )" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "CORBA::Boolean result = 0;" << be_nl
+      << " " << "_tao_discriminant;" << be_nl;
+
+  switch (node->udisc_type ())
+    {
+      case AST_Expression::EV_bool:
+        *os << "CORBA_Any::to_boolean tmp (_tao_discriminant);" << be_nl
+            << "if ( !(strm >> tmp) )" << be_idt_nl
+            << "{" << be_idt_nl
+            << "return 0;" << be_uidt_nl
+            << "}" << be_uidt_nl;
+        break;
+
+      case AST_Expression::EV_char:
+        *os << "CORBA_Any::to_char tmp (_tao_discriminant);" << be_nl
+            << "if ( !(strm >> tmp) )" << be_idt_nl
+            << "{" << be_idt_nl
+            << "return 0;" << be_uidt_nl
+            << "}" << be_uidt_nl;
+        break;
+
+      case AST_Expression::EV_wchar:
+        *os << "CORBA_Any::to_wchar tmp (_tao_discriminant);" << be_nl
+            << "if ( !(strm >> tmp) )" << be_idt_nl
+            << "{" << be_idt_nl
+            << "return 0;" << be_uidt_nl
+            << "}" << be_uidt_nl;
+        break;
+
+      default:
+        *os << "if ( !(strm >> _tao_discriminant) )" << be_idt_nl
+            << "{" << be_idt_nl
+            << "return 0;" << be_uidt_nl
+            << "}" << be_uidt_nl;
+        break;
+    }
+
+  *os << "CORBA::Boolean result = 0;" << be_nl
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt_nl;
 
