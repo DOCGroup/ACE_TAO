@@ -1,99 +1,104 @@
+Thu Jan 28 20:49:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp: removed ACE_Hash<ACE_CString>
+          explicit template instantiation, because it's in tao/POA.cpp.
+
 Thu Jan 28 18:04:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/TAO.dsp: 
-	* tao/TAO_Static.dsp: 
-	  Added the new files to the NT projects.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Added the new files to the NT projects.
 
-	* tao/Makefile: 
-	  Minor cosmetic changes.
+        * tao/Makefile:
+          Minor cosmetic changes.
 
-	* tao/IIOP_Profile.h: 
-	* tao/IIOP_Profile.cpp: 
-	* tao/IIOP_Transport.cpp: 
-	  Fixed warnings about out of order initialization of members and
-	  about signed/unsigned comparisons.
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Transport.cpp:
+          Fixed warnings about out of order initialization of members and
+          about signed/unsigned comparisons.
 
 Thu Jan 28 16:47:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AVStreams_Full.idl: 
-	* orbsvcs/orbsvcs/CosEventChannelAdmin.idl: 
-	* orbsvcs/orbsvcs/CosEventComm.idl: 
-	* orbsvcs/orbsvcs/RtecScheduler.idl: 
-	* orbsvcs/orbsvcs/TimeService.idl: 
-	  Fixed some problems with #pragma prefix
+        * orbsvcs/orbsvcs/AVStreams_Full.idl:
+        * orbsvcs/orbsvcs/CosEventChannelAdmin.idl:
+        * orbsvcs/orbsvcs/CosEventComm.idl:
+        * orbsvcs/orbsvcs/RtecScheduler.idl:
+        * orbsvcs/orbsvcs/TimeService.idl:
+          Fixed some problems with #pragma prefix
 
 Thu Jan 28 16:34:14 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
-	* Added support for Pluggable Protocols (PP) This required the
-	  modification of several files, deleting others as well as adding
-	  and removing classes.
+        * Added support for Pluggable Protocols (PP) This required the
+          modification of several files, deleting others as well as adding
+          and removing classes.
 
-	* removed the files IIOP_Object.{h,i,cpp} and object IIOP_Object.
-  	  All functionality now resided in the old base class STUB_Object.
+        * removed the files IIOP_Object.{h,i,cpp} and object IIOP_Object.
+          All functionality now resided in the old base class STUB_Object.
 
-	* Added the following classes and files
-  	  1) Pluggable.h - Contains all the base classes and registries
-	     used in Pluggable protocols.  New transport implementations
-	     will have 
-	     to use these classes in order to 'plugin' to the framework.
-	     a) TAO_Profile
+        * Added the following classes and files
+          1) Pluggable.h - Contains all the base classes and registries
+             used in Pluggable protocols.  New transport implementations
+             will have
+             to use these classes in order to 'plugin' to the framework.
+             a) TAO_Profile
              b) TAO_Connector
              c) TAO_Transport
              d) TAO_Acceptor
              e) TAO_Connector_Registry
              Pluggable.cpp - Connector_Registry implementation and Profile
-	     Version class.  Each transport specific TAO_[*]_Connector
-	     registers itself with this singleton.
+             Version class.  Each transport specific TAO_[*]_Connector
+             registers itself with this singleton.
           2) IIOP_Profile.{h,cpp}
              Class TAO_IIOP_Profile is defined here and it profides IIOP
-	     specific processing.  Much of the transport specific
-	     processing located in the old IIOP_Object has been relocated
-	     to here.
-	     In particular an IIOP_Profile will contain a reference to the
-	     currently used transport, that is the connection handler.
-	  3) IIOP_Connector.{h,cpp}
+             specific processing.  Much of the transport specific
+             processing located in the old IIOP_Object has been relocated
+             to here.
+             In particular an IIOP_Profile will contain a reference to the
+             currently used transport, that is the connection handler.
+          3) IIOP_Connector.{h,cpp}
              All transport specific connection processing is hidden behind
-	     this class. The connection handler hint () is taken from the
-	     TAO_Profile (i.e. IIOP_Profile) object.
+             this class. The connection handler hint () is taken from the
+             TAO_Profile (i.e. IIOP_Profile) object.
           4) IIOP_Acceptor - basically just a transport neutral wrapper
-	     for the Acceptor.
+             for the Acceptor.
 
-	* Changed many files and classes to use this new transport
-	  independent Pluggable classes.  Also relocated transport
-	  specific processing to the new classes.
+        * Changed many files and classes to use this new transport
+          independent Pluggable classes.  Also relocated transport
+          specific processing to the new classes.
           1) Connect.{h,cpp}
              Created new base classes TAO_IIOP_Client_Transport and
-	     TAO_IIOP_Server_Transport in order to keep TAO_Transport
-	     references and leverage dynamic binding.  That is, all
-	     handlers use either of these classes as a base class.
-	     TAO_SVC_HANDLER is a member object.  
-         
+             TAO_IIOP_Server_Transport in order to keep TAO_Transport
+             references and leverage dynamic binding.  That is, all
+             handlers use either of these classes as a base class.
+             TAO_SVC_HANDLER is a member object.
+
              Edited code so it passed TAO_Transport object references to
-	     GIOP::send_request and GIOP::recv_request.
+             GIOP::send_request and GIOP::recv_request.
           2) GIOP.{h,cpp}
              Replaced all references to the handler object with the new
-	     transport object.  Also moved all transport specific code
-	     used for reading and writing messages to the network to the
-	     new IIOP_Transport class.
+             transport object.  Also moved all transport specific code
+             used for reading and writing messages to the network to the
+             new IIOP_Transport class.
           3) IIOP_ORB.{h,cpp}
              IIOP_ORB.h -> got rid of the #include "tao/corba.h"
              IIOP_ORB.cpp changed references from IIOP_Object and
-	     Client_Handler to STUB_Object and TAO_Transport.  Also moved
-	     much of the IIOP specific marsheling code to IIOP_Profile.
+             Client_Handler to STUB_Object and TAO_Transport.  Also moved
+             much of the IIOP specific marsheling code to IIOP_Profile.
           4) Invocation.{h,i,cpp}
              Changed references from IIOP_Object to STUB_Object.  Also use
-	     TAO_Transport and TAO_Profile instead of Client_Handler and
-	     IIOP_Object::IIOP.
+             TAO_Transport and TAO_Profile instead of Client_Handler and
+             IIOP_Object::IIOP.
              Additionally, the connection is now made by the
-	     Connector_Registry object.
+             Connector_Registry object.
              All IIOP specific processing moved to TAO_IIOP_Profile.
           5) ORB.{h,i,cpp}
              The preconnect method's functionality is moved to
-	     Connector_Registry and TAO_[*]_Profile.
+             Connector_Registry and TAO_[*]_Profile.
           6) ORB_Core.{h,i,cpp}
              The ORB_Core was changed to allocate memory for the new
-	     objects: TAO_Connector_Registry, TAO_IIOP_Connector and
-	     TAO_IIOP_Acceptor. Preconnect () moved also.
+             objects: TAO_Connector_Registry, TAO_IIOP_Connector and
+             TAO_IIOP_Acceptor. Preconnect () moved also.
           7) Object.{i,cpp}
              Changed to use STUB_Object refs rather than IIOP_Object.
           8) Servant_Base.cpp
@@ -102,23 +107,23 @@ Thu Jan 28 16:34:14 1999 Fred Kuhns <fredk@cs.wustl.edu>
              Changed to use STUB_Object refs rather than IIOP_Object.
          10) Stub.{h,i,cpp}
              All logic from IIOP_Object (minus transport specific stuff)
-	     moved to the STUB_Object.  
+             moved to the STUB_Object.
          11) decode.cpp
              Changed IIOP_Object ref to STUB_Object
-	     Moved all IIOP specific processing (parsing IORs) to
-	     IIOP_Profile.
+             Moved all IIOP specific processing (parsing IORs) to
+             IIOP_Profile.
          12) encode.cpp
              Changed IIOP_Object ref to STUB_Object
              Moved all IIOP specific processing (parsing IORs) to
-	     IIOP_Profile.
+             IIOP_Profile.
          13) params.{h,i,cpp}
              Changed use_IIOP_lite_protocol to use_lite_protocol.
          14) Any.h
              Changed "friend class IIOP_Object" to "friend class
-	     STUB_Object"
+             STUB_Object"
          15) corba.h
              Added #include's for the new Pluggable Protocol header
-	     files.
+             files.
 
 Thu Jan 28 15:26:49 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -135,90 +140,90 @@ Thu Jan 28 15:26:49 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Thu Jan 28 11:32:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/IIOP_ORB.cpp (string_to_object): Checked if the <str> passed
-	  in is null.  If yes, simply return a null object.
+        * tao/IIOP_ORB.cpp (string_to_object): Checked if the <str> passed
+          in is null.  If yes, simply return a null object.
 
-	* TAO-INSTALL.html (href): Fixed directory name leads to
-	  IDL_Cubit.  Thanks to Zoran Ivanovic <zorani@pathcom.com> for
-	  reporting these.
+        * TAO-INSTALL.html (href): Fixed directory name leads to
+          IDL_Cubit.  Thanks to Zoran Ivanovic <zorani@pathcom.com> for
+          reporting these.
 
 Thu Jan 28 11:41:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  Disabled the support for the new EC implementation, it is not
-	  compiled by default in orbsvcs, hence it cannot be used by
-	  default either.
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+          Disabled the support for the new EC implementation, it is not
+          compiled by default in orbsvcs, hence it cannot be used by
+          default either.
 
 Wed Jan 27 22:09:14 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
-	Enaaabled the exporting of properties by  mutiple augmented servers
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+        Enaaabled the exporting of properties by  mutiple augmented servers
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
-	Need to initialize the handle everytime in rstat
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+        Need to initialize the handle everytime in rstat
 
-	* orbsvcs/tests/AVStreams/server_discovery/Strip_Chart.java:
-	Modified the algorithm to get the performance graph working
+        * orbsvcs/tests/AVStreams/server_discovery/Strip_Chart.java:
+        Modified the algorithm to get the performance graph working
 
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java:
-	Modified  the Jtree to to display multiple movie  info
-	Enabled the display of the performance graph
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java:
+        Modified  the Jtree to to display multiple movie  info
+        Enabled the display of the performance graph
 
 
-	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.java:
-	Added the thread to get the dynamic properties and display as a
-	graph
+        * orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.java:
+        Added the thread to get the dynamic properties and display as a
+        graph
 
 
 
 Wed Jan 27 21:59:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	  Added a new entry to the TAO_ORBSVCS macro, Event2, right now it
-	  is disabled by default.
-	  The makefile add a -DTAO_ORBSVCS_HAS_* for each entry in the
-	  TAO_ORBSVCS list.
+        * orbsvcs/orbsvcs/Makefile:
+          Added a new entry to the TAO_ORBSVCS macro, Event2, right now it
+          is disabled by default.
+          The makefile add a -DTAO_ORBSVCS_HAS_* for each entry in the
+          TAO_ORBSVCS list.
 
-	* orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp:
-	  Use the TAO_ORBSVCS_HAS_* macros to instantiate only the needed
-	  templates.
+        * orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp:
+          Use the TAO_ORBSVCS_HAS_* macros to instantiate only the needed
+          templates.
 
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
-	  A variable was not properly initialized.
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
+          A variable was not properly initialized.
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
-	  Added missing template instantiations
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+          Added missing template instantiations
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  It can create an instance of the new EC for testing purposes.
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+          It can create an instance of the new EC for testing purposes.
 
 Wed Jan 27 19:59:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.h:
-	* orbsvcs/orbsvcs/Event/EC_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.cpp:
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.i:
-	  Completed the first prototype, this version does not support
-	  filtering or real-time features, but it is useful to get
-	  baseline numbers.
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.cpp:
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.i:
+          Completed the first prototype, this version does not support
+          filtering or real-time features, but it is useful to get
+          baseline numbers.
 
 Wed Jan 27 13:14:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
