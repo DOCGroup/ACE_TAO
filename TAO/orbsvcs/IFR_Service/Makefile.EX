@@ -44,7 +44,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #       Local targets
 #----------------------------------------------------------------------------
 
-CPPFLAGS += -I../TAO_IDL/include -I../TAO_IDL/fe
+CPPFLAGS += -I../../TAO_IDL/include -I../../TAO_IDL/fe
 
 ifeq ($(TAO_IDL_PREPROCESSOR),)
 	CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"
