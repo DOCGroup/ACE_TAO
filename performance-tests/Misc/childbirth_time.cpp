@@ -101,6 +101,7 @@ prof_ace_process (size_t iteration)
 
       for (size_t c = 0; c < iteration; c++)
         {
+          ACE_OS::sleep (0);
           ptimer.start ();
           result = aProcess.spawn (popt);
           ptimer.stop ();
@@ -136,6 +137,7 @@ prof_fork (size_t iteration)
 
       for (size_t i = 0; i < iteration; i++)
         {
+          ACE_OS::sleep (0);
           ptimer.start ();
           switch (ACE_OS::fork ())
             {
@@ -174,6 +176,7 @@ prof_native_thread (size_t iteration)
 
       for (size_t i = 0; i < iteration; i++)
         {
+          ACE_OS::sleep (0);
           ptimer.start ();
           for (int j = 0; j < MULTIPLY_FACTOR; j++)
             {
@@ -221,6 +224,7 @@ prof_ace_os_thread (size_t iteration)
 
       for (size_t i = 0; i < iteration; i++)
         {
+          ACE_OS::sleep (0);
           ptimer.start ();
 
           for (int j = 0; j < MULTIPLY_FACTOR; j++)
@@ -257,6 +261,7 @@ prof_tm_thread (size_t iteration)
 
       for (size_t i = 0; i < iteration; i++)
         {
+          ACE_OS::sleep (0);
           ptimer.start ();
 
           if (ACE_Thread_Manager::instance ()->spawn_n (MULTIPLY_FACTOR,
