@@ -8,9 +8,9 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
+#include "tao/WrongTransactionC.h"
 
-#include "WrongTransactionC.h"
+#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // default constructor
 CORBA_WrongTransaction::CORBA_WrongTransaction (void)
@@ -39,7 +39,7 @@ CORBA_WrongTransaction::operator= (const CORBA_WrongTransaction &_tao_excp)
 }
 
 // narrow
-CORBA_WrongTransaction_ptr 
+CORBA_WrongTransaction_ptr
 CORBA_WrongTransaction::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", exc->_id ())) // same type
@@ -60,6 +60,4 @@ CORBA::Exception *CORBA_WrongTransaction::_alloc (void)
   return new CORBA_WrongTransaction;
 }
 
-#endif /* ! defined TAO_HAS_MINIMUM_CORBA */
-
-
+#endif /* TAO_HAS_MINIMUM_CORBA */

@@ -5,6 +5,7 @@
 
 #include "tao/POA.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Environment.h"
 #include "tao/Exception.h"

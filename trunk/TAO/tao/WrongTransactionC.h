@@ -21,12 +21,12 @@
 #ifndef TAO_IDL_WRONG_TRANSACTIONC_H
 #define TAO_IDL_WRONG_TRANSACTIONC_H
 
+#include "tao/orbconf.h"
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 #include "tao/corbafwd.h"
-
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
-
 #include "tao/Exception.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
@@ -51,7 +51,7 @@ class TAO_Export CORBA_WrongTransaction : public CORBA::UserException
 //   associated with a transaction and is found to have an
 //   error in its parameters when checked at runtime (invocation).
 public:
-    
+
   CORBA_WrongTransaction (void); // default ctor
   CORBA_WrongTransaction (const CORBA_WrongTransaction &); // copy ctor
   ~CORBA_WrongTransaction (void); // dtor
@@ -72,6 +72,6 @@ public:
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#endif /* ! defined TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #endif /* ifndef TAO_IDL_WRONG_TRANSACTIONC_H */

@@ -7,6 +7,7 @@
 #include "tao/GIOP.h"
 #include "tao/GIOP_Server_Request.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB.h"
 #include "tao/POA.h"
 #include "tao/CDR.h"
 

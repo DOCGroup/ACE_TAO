@@ -72,9 +72,9 @@ protected:
                      CORBA::Boolean wait_for_completion,
                      CORBA_Environment &ACE_TRY_ENV);
 
-  PortableServer::POAManager::State get_state_i ();
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+  PortableServer::POAManager::State get_state_i ();
 
   ACE_Lock &lock (void);
 

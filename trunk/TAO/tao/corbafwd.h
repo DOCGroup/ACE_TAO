@@ -795,14 +795,14 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA_DomainManagerList_out DomainManagerList_out;
   static CORBA::TypeCode_ptr _tc_DomainManagerList;
 
+  static const PolicyType SecConstruction;
+
 #if ! defined (TAO_HAS_MINIMUM_CORBA)
   typedef CORBA_ConstructionPolicy ConstructionPolicy;
   typedef CORBA_ConstructionPolicy *ConstructionPolicy_ptr;
   typedef CORBA_ConstructionPolicy_var ConstructionPolicy_var;
   typedef CORBA_ConstructionPolicy_out ConstructionPolicy_out;
   static CORBA::TypeCode_ptr _tc_ConstructionPolicy;
-
-  static const PolicyType SecConstruction;
 
   typedef CORBA_WrongTransaction WrongTransaction;
   typedef WrongTransaction *WrongTransaction_ptr;
