@@ -45,9 +45,12 @@ ACE_Typed_SV_Message_Queue<T>::send (const ACE_Typed_SV_Message<T> &mb,
 				     int mflags)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::send");
-  return this->message_queue_.send ((ACE_SV_Message &) mb),
-				    mb.length (),
-                                    mflags);
+  return this->message_queue_.
+    send (ACE_reinterpret_cast (ACE_SV_Message &,
+                                ACE_const_cast (ACE_Typed_SV_Message<T> &,
+                                                mb)),
+          mb.length (),
+          mflags);
 }
 
 template <class T> ACE_INLINE int
