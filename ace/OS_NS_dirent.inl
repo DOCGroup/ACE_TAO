@@ -120,6 +120,8 @@ ACE_OS::readdir_r (ACE_DIR *dirp,
 #    if defined (HPUX_10)   /* But HP 10.x doesn't follow the draft either */
     *result = entry;
     return ::readdir_r (dirp, entry);
+#elif defined(__GNUC__) && defined (_AIX)
+	return ::readdir_r (dirp, entry, result);
 #    else
     // <result> had better not be 0!
     *result = ::readdir_r (dirp, entry);
