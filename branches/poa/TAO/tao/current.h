@@ -19,7 +19,7 @@
 
 #include "tao/corba.h"
 
-class TAO_POA_Current_Impl
+class TAO_POA_Current : public POA_PortableServer::Current
 {
   // = TITLE
   // Implementation of the PortableServer::Current object.
@@ -36,20 +36,20 @@ class TAO_POA_Current_Impl
   // Thread-Specific Storage so that upcalls can get context
   // information regarding their invocation.  The POA itself must
   // insure that all <set_*> operations are performed in the execution
-  // thread so that the proper <TAO_POA_Current_Impl> pointer is
+  // thread so that the proper <TAO_POA_Current> pointer is
   // obtained from TSS.
 
 public:
   // = Specification-mandated methods
   
-  PortableServer::POA *get_POA (CORBA_Environment &env);
+  PortableServer::POA_ptr get_POA (CORBA_Environment &env);
   // Return pointer to the invoking POA.  This has _out
   // semantics. (Irfan is this correct?)  Raises the
   // <CORBA::NoContext> exception.
   //
   // 
 
-  PortableServer::ObjId *get_object_id (CORBA_Environment &env);
+  PortableServer::ObjectId *get_object_id (CORBA_Environment &env);
   // Return pointer to the object id through which this was invoked.
   // This may be necessary in cases where a <Servant> is serving under
   // the guise of multiple object ids.  This has _out semantics
@@ -73,13 +73,13 @@ public:
   TAO_POA *POA_impl (void) const;
   // Get the POA imeplemantation
 
-  void object_id (const PortableServer::ObjId &the_id);
+  void object_id (const PortableServer::ObjectId &id);
   // Set the object ID.
 
-  const PortableServer::ObjId &object_id (void) const;
+  const PortableServer::ObjectId &object_id (void) const;
   // Get the object ID.
 
-  void object_key (const TAO::ObjectKey &the_key);
+  void object_key (const TAO::ObjectKey &key);
   // Set the object key.
 
   const TAO::ObjectKey &object_key (void) const;
@@ -91,17 +91,17 @@ public:
   int in_upcall (void) const;
   // Get whether we're in an upcall (non-zero is yes).
 
-  TAO_POA_Current_Impl (void);
+  TAO_POA_Current (void);
   // Constructor
 
-  ~TAO_POA_Current_Impl (void);
+  virtual ~TAO_POA_Current (void);
   // Destructor
   
 private:
   TAO_POA *poa_impl_;
   // The POA implementation invoking an upcall
   
-  const PortableServer::ObjId *object_id_;
+  const PortableServer::ObjectId *object_id_;
   // The object ID of the current context.
   
   int in_upcall_;
@@ -111,8 +111,8 @@ private:
   // The object key of the current context.
 
   // = Hidden because we don't allow these
-  TAO_POA_Current_Impl (const TAO_POA_Current_Impl &);
-  operator = (const TAO_POA_Current_Impl &);
+  TAO_POA_Current (const TAO_POA_Current &);
+  void operator= (const TAO_POA_Current &);
 };
 
 #endif /* TAO_POA_CURRENT_H */
