@@ -1,3 +1,47 @@
+Wed Jun 23 11:25:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	  Changed to not check for SysV IPC functions unless the
+	  cooresponding header files are present.  OS X does not support
+	  SysV IPC, but it's C library contains stubs for all the system
+	  calls (probably left over from the BSD libc).
+	
+	* ace/README:
+	* ace/config-openvms.h:
+	* ace/os_include/sys/os_shm.h:
+	  Removed ACE_LACKS_SHMID_DS_T.  Replaced conditional definition
+	  with an opaque declaration.
+
+	* ace/README:
+	* ace/config-openvms.h:
+	* ace/config-win32-common:
+	* ace/os_include/sys/os_msg.h:
+	  Removed ACE_LACKS_MSQID_DS_T.  Replaced conditional definition
+	  with an opaque declaration.
+
+	* configure.ac:
+	* ace/README:
+	* ace/config-mvs.h:
+	* ace/config-qnx-neutrino.h:
+	* ace/config-qnx-rtp-62x.h:
+	* ace/config-qnx-rtp-pre62x.h:
+	* ace/config-tandem-nsk-mips-v2.h:
+	* ace/config-tandem.h:
+	* ace/config-win32-common.h:
+	* ace/os_include/sys/os_msg.h:
+	* m4/config_h.m4:
+	  Removed ACE_LACKS_MSGBUF_T.  Previous changed removed last 
+	  instance where msgbuf was used.
+
+	* ace/OS_NS_sys_msg.inl:
+	  Fixed case where C-style cast was being used to cast away const
+	  when it didn't need to.
+
+	* ace/OS_NS_sys_msg.inl:
+	  Removed conditional code enabled by ACE_LACKS_POSIX_PROTOTYPES 
+	  and ACE_LACKS_SOME_POSIX_PROTOTYPES, as those macros have been
+	  obsolete for some time.
+	  
 Wed Jun 23 11:24:39 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_macros.h:

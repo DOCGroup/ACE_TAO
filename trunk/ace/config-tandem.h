@@ -366,8 +366,6 @@
 //open() mode masks.
 //ACE_LACKS_MPROTECT                    The platform doesn't have mprotect(2)
 //(e.g., EPLX real time OS from CDC (based on LYNX))
-//ACE_LACKS_MSGBUF_T                    Platform lacks struct msgbuf (e.g.,
-// NT and MSV).
 //ACE_LACKS_MSYNC                               Platform lacks msync() (e.g., Linux)
 //ACE_LACKS_NETDB_REENTRANT_FUNCTIONS   Platform does not support reentrant
 // netdb functions (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,

@@ -114,9 +114,6 @@ typedef enum CMA_T_SCHED_POLICY {
 // The platform doesn't have mprotect(2)
 #define ACE_LACKS_MPROTECT
 
-// Platform lacks struct msgbuf
-#define ACE_LACKS_MSGBUF_T
-
 // Platform lacks msync()
 #define ACE_LACKS_MSYNC
 

@@ -36,9 +36,9 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_LACKS_SHMID_DS_T)
-  struct shmid_ds {};
-#endif /* ACE_LACKS_SHMID_T */
+  // Declare opaque type.  Needed for ACE_OS wrappers on systems
+  // without SysV IPC.
+  struct shmid_ds;
 
 #ifdef __cplusplus
 }
