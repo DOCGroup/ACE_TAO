@@ -13,6 +13,10 @@ LIBNAME  = liborbsvcs
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
+# On non-Windows environment, we should at least define
+# the export_include IDL flag.
+IDL_FLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
+
 IDL_FILES = \
 	CosNamingC \
 	CosNamingS \
@@ -44,7 +48,7 @@ FILES= $(IDL_FILES) \
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
-## Add the implementation files 
+## Add the implementation files
 FILES += AVStreams_i CosPropertyService_i
 endif
 
@@ -85,7 +89,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_O
 
 clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
- 
+
 realclean: clean
 	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
 
