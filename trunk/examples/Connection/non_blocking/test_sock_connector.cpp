@@ -18,7 +18,7 @@ main (int argc, char *argv[])
 {
   // Since this test waits on the STDIN handle to become ready, we
   // have to make sure that the WFMO_Reactor is used on Win32. This is
-  // necessary since select() on NT does not support waiting on STDIN.
+  // necessary since <select> on NT does not support waiting on STDIN.
 
 #if defined (ACE_WIN32)
   ACE_WFMO_Reactor wfmo_reactor;
@@ -32,7 +32,10 @@ main (int argc, char *argv[])
   IPC_CLIENT peer_connector;
 
   if (peer_connector.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init"),
+                      -1);
 
   return peer_connector.svc ();
 }

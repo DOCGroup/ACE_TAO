@@ -21,8 +21,10 @@ main (int argc, char *argv[])
   IPC_SERVER peer_acceptor;
 
   if (peer_acceptor.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init"),
+                      -1);
   return peer_acceptor.svc ();
 }
 
@@ -40,11 +42,12 @@ template class Svc_Handler<ACE_TLI_STREAM>;
 #pragma instantiate Svc_Handler<ACE_TLI_STREAM>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-
 #else
 int
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support TLI\n"), 1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "your platform does not support TLI\n"),
+                    1);
 }
 #endif /* ACE_HAS_TLI */

@@ -21,7 +21,10 @@ main (int argc, char *argv[])
   IPC_CLIENT peer_connector;
 
   if (peer_connector.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init"),
+                      -1);
 
   return peer_connector.svc ();
 }
@@ -50,11 +53,12 @@ template class Peer_Handler<ACE_SPIPE_STREAM>;
 #pragma instantiate Peer_Handler<ACE_SPIPE_STREAM>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-
 #else
 int
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "This test is not ported to Win32 (yet)\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "This test is not ported to Win32 (yet)\n"),
+                    -1);
 }
 #endif /* !ACE_WIN32 */
