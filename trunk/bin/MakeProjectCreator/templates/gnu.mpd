@@ -299,6 +299,9 @@ ifneq ($(LIB),)
 <%endif%>
 <%endif%>
 all: idl_stubs
+
+# This rule forces make to run the idl_stubs
+# target before building any of the source files.
 <%source_files%>: idl_stubs
 endif
 
@@ -435,23 +438,27 @@ ADDITIONAL_IDL_TARGETS =
 <%if(flag_overrides(idl_file, idlgendir))%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
 GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>$(ext))
-<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.cpp <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>S.cpp: <%idl_file%>
+<%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
+<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%idl_file%>
 <%else%>
 <%if(idlgendir)%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%idlgendir%>/<%basenoextension(idl_file)%>C.h
 GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%idlgendir%>/<%basenoextension(idl_file)%>$(ext))
-<%idlgendir%>/<%basenoextension(idl_file)%>C.h <%idlgendir%>/<%basenoextension(idl_file)%>C.cpp <%idlgendir%>/<%basenoextension(idl_file)%>S.cpp: <%idl_file%>
+<%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
+<%idlgendir%>/<%basenoextension(idl_file)%>C.h <%idlgendir%>/<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%idl_file%>
 <%else%>
 # IDL File Directory: <%dirname(idl_file)%>
 <%if(dirname_found)%>
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
-<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp <%noextension(idl_file)%>S.cpp: <%idl_file%>
+<%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
+<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%idl_file%>
 <%else%>
 <%if(flag_overrides(idl_file, idlflags))%>
-<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp <%noextension(idl_file)%>S.cpp: <%idl_file%>
+<%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
+<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) <%flag_overrides(idl_file, idlflags)%> <%idl_file%>
 <%endif%>
 <%endif%>

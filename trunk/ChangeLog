@@ -1,3 +1,10 @@
+Thu Sep 18 10:55:58 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Removed the S.cpp from the specialized idl file rules to avoid yet
+          another parallel build problem.
+
 Thu Sep 18 08:34:14 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-all.h:
