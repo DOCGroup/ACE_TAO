@@ -480,7 +480,7 @@ ACE_Select_Reactor_Notify::max_notify_iterations (void)
 // ACE_NOTSUP_RETURN if ACE_HAS_REACTOR_NOTIFICATION_QUEUE is not defined.
 int
 ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
-                                                        ACE_Reactor_Mask   mask)
+                                                        ACE_Reactor_Mask  mask )
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::purge_pending_notifications");
 
@@ -563,6 +563,7 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
 
 #else /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
   ACE_UNUSED_ARG (eh);
+  ACE_UNUSED_ARG (mask);
   ACE_NOTSUP_RETURN (-1);
 #endif  /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
 }
@@ -587,7 +588,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
   if (disable_notify_pipe == 0)
     {
-      this->select_reactor_ = 
+      this->select_reactor_ =
         ACE_dynamic_cast (ACE_Select_Reactor_Impl *, r);
 
       if (select_reactor_ == 0)
@@ -605,7 +606,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
       ACE_Notification_Buffer *temp;
-      
+
       ACE_NEW_RETURN (temp,
                       ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                       -1);
@@ -682,16 +683,16 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
       // No pending notifications.
-      if (this->notify_queue_.is_empty ()) 
+      if (this->notify_queue_.is_empty ())
         notification_required = 1;
 
       ACE_Notification_Buffer *temp = 0;
 
-      if (free_queue_.dequeue_head (temp) == -1) 
+      if (free_queue_.dequeue_head (temp) == -1)
         {
           // Grow the queue of available buffers.
           ACE_Notification_Buffer *temp1;
-          
+
           ACE_NEW_RETURN (temp1,
                           ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                           -1);
@@ -702,11 +703,11 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
           // Start at 1 and enqueue only
           // (ACE_REACTOR_NOTIFICATION_ARRAY_SIZE - 1) elements since
           // the first one will be used right now.
-          for (size_t i = 1; 
-               i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; 
+          for (size_t i = 1;
+               i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE;
                i++)
             this->free_queue_.enqueue_head (temp1 + i);
-          
+
           temp = temp1;
         }
 

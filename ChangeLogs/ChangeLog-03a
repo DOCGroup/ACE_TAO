@@ -1,3 +1,7 @@
+Tue Jul  3 15:43:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Select_Reactor_Base.cpp: Fixed a warning in g++.
+
 Tue Jul  3 14:44:00 2001  Craig Rodrigues  <crodrigues@bbn.com>
 
         * ace/config-win32-common.h: Borland C++ apparently
