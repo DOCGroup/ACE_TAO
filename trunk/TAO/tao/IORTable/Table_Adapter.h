@@ -47,7 +47,7 @@ public:
                             CORBA::Environment &ACE_TRY_ENV);
   virtual int priority (void) const;
   virtual int dispatch (TAO_ObjectKey &key,
-                        CORBA::ServerRequest &request,
+                        TAO_ServerRequest &request,
                         void *context, /* unused? */
                         CORBA::Object_out foward_to,
                         CORBA::Environment &ACE_TRY_ENV)

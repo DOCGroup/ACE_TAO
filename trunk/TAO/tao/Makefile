@@ -120,19 +120,18 @@ PLUGGABLE_PROTOCOLS_FILES = \
   SHMIOP_Endpoint
 
 PLUGGABLE_MESSAGING_FILES = \
-Pluggable_Messaging \
-Pluggable_Messaging_Utils \
-GIOP_Message_Base \
-GIOP_Message_Connectors \
-GIOP_Message_Acceptors \
-GIOP_Message_Accept_State \
-GIOP_Utils \
-GIOP_Message_Headers \
-target_specification \
-GIOP_Server_Request \
-GIOP_Message_Lite \
-GIOP_Message_State \
-Tagged_Profile
+  Pluggable_Messaging \
+  Pluggable_Messaging_Utils \
+  GIOP_Message_Base \
+  GIOP_Message_Connectors \
+  GIOP_Message_Acceptors \
+  GIOP_Message_Accept_State \
+  GIOP_Utils \
+  GIOP_Message_Headers \
+  target_specification \
+  GIOP_Message_Lite \
+  GIOP_Message_State \
+  Tagged_Profile
 
 DEFAULT_RESOURCES_FILES = \
   default_client \
@@ -174,7 +173,6 @@ ORB_CORE_FILES = \
   TimeBaseS \
   Principal \
   Sequence \
-  Server_Request \
   MProfile \
   Stub \
   Typecode \
@@ -205,6 +203,7 @@ ORB_CORE_FILES = \
   Server_Strategy_Factory \
   Sync_Strategies \
   TAO_Internal \
+  TAO_Server_Request \
   Typecode_Constants \
   Wait_Strategy \
   Wait_On_Read \
@@ -269,6 +268,7 @@ ORB_CORE_FILES += \
   Context \
   Request \
   Services \
+  Server_Request \
   NVList
 
 INTERFACE_REPO_FILES += \

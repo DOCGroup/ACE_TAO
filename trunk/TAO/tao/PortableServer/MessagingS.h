@@ -61,7 +61,7 @@ TAO_NAMESPACE  POA_Messaging
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -69,7 +69,7 @@ TAO_NAMESPACE  POA_Messaging
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -77,7 +77,7 @@ TAO_NAMESPACE  POA_Messaging
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()

@@ -56,7 +56,7 @@ PLUGGABLE_MESSAGING_FILES = \
   GIOP_Utils \
   GIOP_Message_Headers \
   target_specification \
-  GIOP_Server_Request \
+  TAO_Server_Request \
   GIOP_Message_Lite \
   GIOP_Message_State \
   Tagged_Profile

@@ -53,7 +53,7 @@
       );
 
     static void _is_a_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -61,7 +61,7 @@
       );
 
     static void _non_existent_skel (
-        CORBA::ServerRequest &req,
+        TAO_ServerRequest &req,
         void *obj,
         void *context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -69,7 +69,7 @@
       );
 
     virtual void _dispatch (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -92,7 +92,7 @@
       )) = 0;
 
     static void get_domain_policy_skel (
-        CORBA::ServerRequest &_tao_req,
+        TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_context,
         CORBA::Environment &ACE_TRY_ENV =
@@ -299,7 +299,7 @@ public:
     );
 
   static void _is_a_skel (
-      CORBA::ServerRequest &req,
+      TAO_ServerRequest &req,
       void *obj,
       void *context,
       CORBA::Environment &ACE_TRY_ENV =
@@ -307,7 +307,7 @@ public:
     );
 
   static void _non_existent_skel (
-      CORBA::ServerRequest &req,
+      TAO_ServerRequest &req,
       void *obj,
       void *context,
       CORBA::Environment &ACE_TRY_ENV =
@@ -315,7 +315,7 @@ public:
     );
 
   virtual void _dispatch (
-      CORBA::ServerRequest &_tao_req,
+      TAO_ServerRequest &_tao_req,
       void *_tao_context,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
@@ -339,7 +339,7 @@ public:
     )) = 0;
 
   static void make_domain_manager_skel (
-      CORBA::ServerRequest &_tao_req,
+      TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_context,
       CORBA::Environment &ACE_TRY_ENV =
@@ -347,7 +347,7 @@ public:
     );
 
   static void _get_policy_type_skel (
-      CORBA::ServerRequest &req,
+      TAO_ServerRequest &req,
       void *obj,
       void *context,
       CORBA::Environment &ACE_TRY_ENV =
@@ -355,7 +355,7 @@ public:
     );
 
   static void copy_skel (
-      CORBA::ServerRequest &req,
+      TAO_ServerRequest &req,
       void *obj,
       void *context,
       CORBA::Environment &ACE_TRY_ENV =
@@ -363,7 +363,7 @@ public:
     );
 
   static void destroy_skel (
-      CORBA::ServerRequest &req,
+      TAO_ServerRequest &req,
       void *obj,
       void *context,
       CORBA::Environment &ACE_TRY_ENV =
@@ -376,38 +376,47 @@ public:
   // This needed to be able to store the arguments, exceptiosn, constexts
   // and build the lists dynamically on demand so that unnecessary time overhead
   // of building these lists when they arent used is avoided.
-      class TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager : public TAO_ServerRequest_Info
+  class TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager 
+    : public TAO_ServerRequest_Info
   {
   public:
     friend class POA_CORBA_ConstructionPolicy;
     TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
       const char *  _tao_operation,
-      IOP::ServiceContextList &_tao_service_context_list        ,    IR_InterfaceDef* object_type        ,    CORBA::Boolean constr_policy    ,
-        CORBA::Environment &ACE_TRY_ENV =
-      TAO_default_environment ()
+      IOP::ServiceContextList &_tao_service_context_list,
+      IR_InterfaceDef* object_type,
+      CORBA::Boolean constr_policy,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
     );
 
-     virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV =
-         TAO_default_environment ())
-     ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual Dynamic::ParameterList * arguments (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual Dynamic::ExceptionList * exceptions (
-    CORBA::Environment &ACE_TRY_ENV =
-       TAO_default_environment ())
-   ACE_THROW_SPEC ((CORBA::SystemException));
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-virtual CORBA::Any * result (
-  CORBA::Environment &ACE_TRY_ENV =
-     TAO_default_environment ())
- ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Any * result (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-
-private:
-TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (const TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &);
-void operator= (const TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &);
-IR_InterfaceDef* & object_type_;
-CORBA::Boolean & constr_policy_;
+  private:
+    TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
+        const TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &
+      );
+    void operator= (
+        const TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &
+      );
+    IR_InterfaceDef* & object_type_;
+    CORBA::Boolean & constr_policy_;
 };
 
 #endif /* TAO_HAS_INTERCEPTORS */

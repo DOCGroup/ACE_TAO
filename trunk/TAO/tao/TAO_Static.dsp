@@ -271,10 +271,6 @@ SOURCE=.\GIOP_Message_State.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Server_Request.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
@@ -663,6 +659,10 @@ SOURCE=.\TAO_Internal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAO_Server_Request.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO_Singleton.h
 # End Source File
 # Begin Source File
@@ -900,10 +900,6 @@ SOURCE=.\GIOP_Message_Headers.i
 # Begin Source File
 
 SOURCE=.\GIOP_Message_State.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Server_Request.i
 # End Source File
 # Begin Source File
 
@@ -1152,6 +1148,10 @@ SOURCE=.\Tagged_Profile.i
 # Begin Source File
 
 SOURCE=.\TAO_Internal.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAO_Server_Request.i
 # End Source File
 # Begin Source File
 
@@ -1416,10 +1416,6 @@ SOURCE=.\GIOP_Message_Lite.cpp
 # Begin Source File
 
 SOURCE=.\GIOP_Message_State.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Server_Request.cpp
 # End Source File
 # Begin Source File
 
@@ -1772,6 +1768,10 @@ SOURCE=.\Tagged_Profile.cpp
 # Begin Source File
 
 SOURCE=.\TAO_Internal.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAO_Server_Request.cpp
 # End Source File
 # Begin Source File
 

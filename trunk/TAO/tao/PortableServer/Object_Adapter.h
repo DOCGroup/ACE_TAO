@@ -230,7 +230,7 @@ public:
   // Destructor.
 
   void dispatch_servant (const TAO_ObjectKey &key,
-                         CORBA::ServerRequest &req,
+                         TAO_ServerRequest &req,
                          void *context,
                          CORBA_Environment &ACE_TRY_ENV);
 
@@ -286,7 +286,7 @@ public:
                             CORBA::Environment &ACE_TRY_ENV);
   virtual int priority (void) const;
   virtual int dispatch (TAO_ObjectKey &key,
-                        CORBA::ServerRequest &request,
+                        TAO_ServerRequest &request,
                         void *context, /* unused? */
                         CORBA::Object_out foward_to,
                         CORBA::Environment &ACE_TRY_ENV)
@@ -306,7 +306,7 @@ protected:
                                        CORBA_Environment &ACE_TRY_ENV);
 
   void dispatch_servant_i (const TAO_ObjectKey &key,
-                           CORBA::ServerRequest &req,
+                           TAO_ServerRequest &req,
                            void *context,
                            CORBA_Environment &ACE_TRY_ENV);
 

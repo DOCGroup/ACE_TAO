@@ -30,7 +30,7 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
 
-class TAO_GIOP_ServerRequest;
+class TAO_ServerRequest;
 class TAO_GIOP_Locate_Request_Header;
 
 
@@ -54,7 +54,7 @@ class TAO_Export TAO_GIOP_Message_Lite : public TAO_Pluggable_Messaging
   //
 public:
   TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core);
-  //Ctor
+  // Ctor
 
   virtual ~TAO_GIOP_Message_Lite (void);
   // Dtor
@@ -138,7 +138,7 @@ private:
   // <request_id> and <response_required> are set as part of the
   // message processing.
 
-  int parse_request_header (TAO_GIOP_ServerRequest &request);
+  int parse_request_header (TAO_ServerRequest &request);
   // Parse the Request Message header
 
   int parse_locate_header (TAO_GIOP_Locate_Request_Header &request);

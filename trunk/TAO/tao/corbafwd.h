@@ -189,6 +189,7 @@ class CORBA_Current_var;
 class CORBA_Current_out;
 typedef class CORBA_Current *CORBA_Current_ptr;
 
+class TAO_ServerRequest;
 class CORBA_ServerRequest;
 typedef class CORBA_ServerRequest *CORBA_ServerRequest_ptr;
 
@@ -320,7 +321,7 @@ typedef CORBA_Bounds *CORBA_Bounds_ptr;
 typedef u_int CORBA_Flags;
 
 typedef void (*TAO_Skeleton)(
-    CORBA_ServerRequest &,
+    TAO_ServerRequest &,
     void *,
     void *,
     CORBA_Environment &ACE_TRY_ENV

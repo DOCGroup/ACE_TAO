@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
+#include "tao/TAO_Server_Request.h"
 #include "tao/Server_Request.h"
 
 ACE_RCSID(tao, Servant_Base, "$Id$")
@@ -69,7 +70,8 @@ TAO_ServantBase::_default_POA (CORBA::Environment &ACE_TRY_ENV)
     TAO_ORB_Core_instance ()->root_poa (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
-  return PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+  return PortableServer::POA::_narrow (object.in (), 
+                                       ACE_TRY_ENV);
 }
 
 CORBA::Boolean
@@ -120,8 +122,8 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
 
   CORBA::ORB_ptr servant_orb = 0;
 
-  if (poa_current_impl != 0 &&
-      this == poa_current_impl->servant ())
+  if (poa_current_impl != 0 
+      && this == poa_current_impl->servant ())
     {
       servant_orb = poa_current_impl->orb_core ().orb () ;
 
@@ -167,6 +169,7 @@ TAO_ServantBase::_increment_single_threaded_poa_lock_count (void)
   // Only one thread at a time through this code (guarantee provided
   // by the POA).
   u_long current_count = this->single_threaded_poa_lock_count_++;
+
   if (current_count == 0)
     {
       ACE_NEW (this->single_threaded_poa_lock_,
@@ -180,6 +183,7 @@ TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
   // Only one thread at a time through this code (guarantee provided
   // by the POA).
   u_long current_count = --this->single_threaded_poa_lock_count_;
+
   if (current_count == 0)
     {
       delete this->single_threaded_poa_lock_;
@@ -187,13 +191,15 @@ TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
     }
 }
 
-void TAO_ServantBase::synchronous_upcall_dispatch(CORBA::ServerRequest &req,
-                                                  void *context,
-                                                  void *derived_this,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+void TAO_ServantBase::synchronous_upcall_dispatch (
+    TAO_ServerRequest &req,
+    void *context,
+    void *derived_this,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
   TAO_Skeleton skel;
-  const char *opname = req.operation();
+  const char *opname = req.operation ();
 
   // It seems that I might have missed s/g here.  What if
   // it is a one way that is SYNC_WITH_SERVER.
@@ -201,15 +207,15 @@ void TAO_ServantBase::synchronous_upcall_dispatch(CORBA::ServerRequest &req,
 
   // Handle the one ways that are SYNC_WITH_SERVER
   if (req.sync_with_server ())
-  {
-     req.send_no_exception_reply ();
-  }
+    {
+       req.send_no_exception_reply ();
+    }
 
   // Fetch the skeleton for this operation
   if (this->_find(opname,skel,req.operation_length()) == -1)
-  {
-    ACE_THROW (CORBA_BAD_OPERATION());
-  }
+    {
+      ACE_THROW (CORBA_BAD_OPERATION());
+    }
 
   ACE_TRY
   {
@@ -227,9 +233,9 @@ void TAO_ServantBase::synchronous_upcall_dispatch(CORBA::ServerRequest &req,
     if ((!req.sync_with_server () &&
          req.response_expected () &&
          !req.deferred_reply ()))
-    {
-      req.tao_send_reply();
-    }
+      {
+        req.tao_send_reply ();
+      }
 
   }
   ACE_CATCH(CORBA::Exception,ex)
@@ -259,6 +265,7 @@ void
 TAO_RefCountServantBase::_remove_ref (CORBA::Environment &)
 {
   CORBA::ULong new_count = --this->ref_count_;
+
   if (new_count == 0)
     {
       delete this;
@@ -295,20 +302,26 @@ TAO_ServantBase_var::TAO_ServantBase_var (const TAO_ServantBase_var &b)
   : ptr_ (b.ptr_)
 {
   if (this->ptr_ != 0)
-    this->ptr_->_add_ref ();
+    {
+      this->ptr_->_add_ref ();
+    }
 }
 
 TAO_ServantBase_var::~TAO_ServantBase_var (void)
 {
   if (this->ptr_ != 0)
-    this->ptr_->_remove_ref ();
+    {
+      this->ptr_->_remove_ref ();
+    }
 }
 
 TAO_ServantBase_var &
 TAO_ServantBase_var::operator= (TAO_ServantBase *p)
 {
   if (this->ptr_ != 0)
-    this->ptr_->_remove_ref ();
+    {
+      this->ptr_->_remove_ref ();
+    }
 
   this->ptr_ = p;
 
@@ -321,10 +334,14 @@ TAO_ServantBase_var::operator= (const TAO_ServantBase_var &b)
   if (this->ptr_ != b.ptr_)
   {
     if (this->ptr_ != 0)
-      this->ptr_->_remove_ref ();
+      {
+        this->ptr_->_remove_ref ();
+      }
 
     if ((this->ptr_ = b.ptr_) != 0)
-      this->ptr_->_add_ref ();
+      {
+        this->ptr_->_add_ref ();
+      }
   }
 
   return *this;
@@ -352,7 +369,9 @@ TAO_ServantBase *&
 TAO_ServantBase_var::out (void)
 {
   if (this->ptr_ != 0)
-    this->ptr_->_remove_ref();
+    {
+      this->ptr_->_remove_ref();
+    }
 
   this->ptr_ = 0;
 
@@ -368,7 +387,7 @@ TAO_ServantBase_var::_retn (void)
 }
 
 void
-TAO_Local_ServantBase::_dispatch (CORBA::ServerRequest &,
+TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
                                   void *,
                                   CORBA_Environment &ACE_TRY_ENV)
 {
@@ -387,14 +406,21 @@ TAO_DynamicImplementation::_this (CORBA::Environment &ACE_TRY_ENV)
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  // Create a object
-  return new TAO_Collocated_Object (stub, 1, this);
+  // Create a object.
+  TAO_Collocated_Object *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  TAO_Collocated_Object (stub, 
+                                         1, 
+                                         this),
+                  CORBA::Object::_nil ());
+
+  return retval;
 }
 
 const char *
 TAO_DynamicImplementation::_interface_repository_id (void) const
 {
-  // This should never be called
+  // This should never be called.
   return 0;
 }
 
@@ -403,7 +429,7 @@ TAO_DynamicImplementation::_downcast (const char *repository_id)
 {
   ACE_UNUSED_ARG (repository_id);
 
-  // Don't know enough to do better
+  // Don't know enough to do better.
   return this;
 }
 
@@ -418,8 +444,8 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
     ACE_static_cast(TAO_POA_Current_Impl *,
                     TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
-  if (poa_current_impl == 0 ||
-      this != poa_current_impl->servant ())
+  if (poa_current_impl == 0 
+      || this != poa_current_impl->servant ())
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         0);
@@ -428,14 +454,17 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
   PortableServer::POA_var poa = poa_current_impl->get_POA (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::RepositoryId interface = this->_primary_interface (poa_current_impl->object_id (),
-                                                            poa.in (),
-                                                            ACE_TRY_ENV);
+  CORBA::RepositoryId interface = 
+    this->_primary_interface (poa_current_impl->object_id (),
+                              poa.in (),
+                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   CORBA::PolicyList_var client_exposed_policies =
-    poa_current_impl->poa ()->client_exposed_policies (poa_current_impl->priority (),
-                                                       ACE_TRY_ENV);
+    poa_current_impl->poa ()->client_exposed_policies (
+                                  poa_current_impl->priority (),
+                                  ACE_TRY_ENV
+                                );
   ACE_CHECK_RETURN (0);
 
   // @@ PPOA
@@ -444,21 +473,26 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
   // @@ poa_current_impl->poa (),
   // @@ ACE_TRY_ENV);
   return poa_current_impl->poa ()->key_to_stub (
-      poa_current_impl->object_key (),
-      interface,
-      poa_current_impl->priority (),
-      ACE_TRY_ENV);
+                                       poa_current_impl->object_key (),
+                                       interface,
+                                       poa_current_impl->priority (),
+                                       ACE_TRY_ENV
+                                     );
 }
 
 void
-TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
+TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
                                       void *context,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (context);
 
-  // Delegate to user
-  this->invoke (&request, ACE_TRY_ENV);
+  // Create DSI request object.
+  CORBA::ServerRequest dsi_request (request);
+
+  // Delegate to user.
+  this->invoke (&dsi_request, 
+                ACE_TRY_ENV);
   ACE_CHECK;
 
   if (request.response_expected ())
@@ -466,22 +500,22 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
       request.init_reply (ACE_TRY_ENV);
       ACE_CHECK;
 
-      request.dsi_marshal (ACE_TRY_ENV);
+      dsi_request.dsi_marshal (ACE_TRY_ENV);
       ACE_CHECK;
     }
 
    ACE_TRY
-   {
-     if ((!request.sync_with_server() && request.response_expected()))
      {
-       request.tao_send_reply();
+       if ((!request.sync_with_server () && request.response_expected ()))
+         {
+           request.tao_send_reply ();
            ACE_TRY_CHECK;
+         }
      }
-   }
    ACE_CATCH(CORBA::Exception,ex)
-   {
-     request.tao_send_reply_exception(ex);
-   }
+     {
+       request.tao_send_reply_exception(ex);
+     }
    ACE_ENDTRY;
 }
 
