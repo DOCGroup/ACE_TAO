@@ -8,6 +8,8 @@
 #include "ace/IO_SAP.i"
 #endif
 
+ACE_RCSID(ace, IO_SAP, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_IO_SAP)
 
 // This is the do-nothing constructor.  It does not perform a

@@ -6,6 +6,8 @@
 #include "ace/Stream_Modules.h"
 #include "ace/Stream.h"
 
+ACE_RCSID(ace, Service_Types, "$Id$")
+
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
 typedef ACE_Task<ACE_SYNCH> MT_Task;

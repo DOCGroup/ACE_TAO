@@ -23,6 +23,8 @@
 #include "ace/Thread_Manager.h"
 #include "test_config.h"
 
+ACE_RCSID(tests, Reactor_Exceptions_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

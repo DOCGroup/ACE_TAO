@@ -7,6 +7,8 @@
 
 #include "ace/Timer_Heap_T.h"
 
+ACE_RCSID(ace, Timer_Heap_T, "$Id$")
+
 // Define some simple macros to clarify the code.
 #define ACE_HEAP_PARENT(X) (X == 0 ? 0 : (((X) - 1) / 2))
 #define ACE_HEAP_LCHILD(X) (((X)+(X))+1)

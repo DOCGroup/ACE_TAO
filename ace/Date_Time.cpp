@@ -8,3 +8,4 @@
 #include "ace/Date_Time.i"
 #endif
 
+ACE_RCSID(ace, Date_Time, "$Id$")

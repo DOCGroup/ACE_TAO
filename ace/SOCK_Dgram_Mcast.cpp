@@ -9,6 +9,8 @@
 #include "ace/SOCK_Dgram_Mcast.i"
 #endif
 
+ACE_RCSID(ace, SOCK_Dgram_Mcast, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast)
 
 void

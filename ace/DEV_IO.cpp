@@ -8,6 +8,8 @@
 #include "ace/DEV_IO.i"
 #endif
 
+ACE_RCSID(ace, DEV_IO, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_IO)
 
 // Return the local endpoint address.

@@ -9,4 +9,6 @@
 #include "ace/Env_Value_T.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Env_Value_T, "$Id$")
+
 #endif /* ACE_ENV_VALUE_T_C */

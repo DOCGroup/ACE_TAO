@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/SPIPE_Acceptor.h"
 
+ACE_RCSID(ace, SPIPE_Acceptor, "$Id$")
+
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (void)
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");

@@ -8,6 +8,8 @@
 #include "ace/FILE_Connector.i"
 #endif
 
+ACE_RCSID(ace, FILE_Connector, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_Connector)
 
 void

@@ -26,6 +26,8 @@
 #include "ace/SString.h"
 #include "ace/Profile_Timer.h"
 
+ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
+
 #if defined (__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB ("..\ace\aced.lib");
 //---------------------------------------------------------------------------

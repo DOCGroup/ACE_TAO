@@ -6,6 +6,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Asynch_Acceptor.h"
 
+ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
+
 #if defined (ACE_WIN32) 
 // This only works on Win32 platforms 
 

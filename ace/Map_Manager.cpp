@@ -13,6 +13,8 @@
 #include "ace/Map_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Map_Manager, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Entry)
 
 template <class EXT_ID, class INT_ID>

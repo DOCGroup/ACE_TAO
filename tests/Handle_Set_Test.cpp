@@ -23,6 +23,8 @@
 #include "ace/Handle_Set.h"
 #include "ace/Containers.h"
 
+ACE_RCSID(tests, Handle_Set_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

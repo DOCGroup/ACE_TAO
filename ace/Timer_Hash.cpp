@@ -13,6 +13,8 @@
 #include "ace/Timer_Hash_T.cpp"
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
+ACE_RCSID(ace, Timer_Hash, "$Id$")
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Free_List<ACE_Timer_Node_T<ACE_Event_Handler *> >;
 template class ACE_Locked_Free_List<ACE_Timer_Node_T<ACE_Event_Handler *>,

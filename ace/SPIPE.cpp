@@ -8,6 +8,8 @@
 #include "ace/SPIPE.i"
 #endif
 
+ACE_RCSID(ace, SPIPE, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE)
 
 // This is the do-nothing constructor. 

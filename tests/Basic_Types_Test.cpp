@@ -20,6 +20,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Basic_Types.h"
 
+ACE_RCSID(tests, Basic_Types_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -7,6 +7,8 @@
 #include "ace/FILE_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, FILE_Addr, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_Addr)
 
 ACE_FILE_Addr::ACE_FILE_Addr (void)

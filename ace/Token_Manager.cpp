@@ -9,6 +9,8 @@
 #include "ace/Token_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Token_Manager, "$Id$")
+
 // singleton token manager
 ACE_Token_Manager *ACE_Token_Manager::token_manager_ = 0;
 

@@ -9,6 +9,8 @@
 #include "ace/SOCK_Dgram_Bcast.i"
 #endif
 
+ACE_RCSID(ace, SOCK_Dgram_Bcast, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Bcast)
 
 ACE_Bcast_Node::ACE_Bcast_Node (ACE_INET_Addr &addr,

@@ -12,6 +12,8 @@
 #include "ace/Timer_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Timer_Queue_T, "$Id$")
+
 template <class TYPE> void
 ACE_Timer_Node_T<TYPE>::dump (void) const
 {

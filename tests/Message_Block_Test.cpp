@@ -24,6 +24,8 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Free_List.h"
 
+ACE_RCSID(tests, Message_Block_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -7,6 +7,8 @@
 
 #include "ace/IOStream.h"
 
+ACE_RCSID(ace, IOStream, "$Id$")
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 ///////////////////////////////////////////////////////////////////////////

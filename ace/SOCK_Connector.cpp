@@ -11,6 +11,8 @@
 #include "ace/SOCK_Connector.i"
 #endif
 
+ACE_RCSID(ace, SOCK_Connector, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Connector)
 
 void

@@ -22,6 +22,8 @@
 #include "test_config.h"
 #include "MT_Reactor_Timer_Test.h"
 
+ACE_RCSID(tests, MT_Reactor_Timer_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

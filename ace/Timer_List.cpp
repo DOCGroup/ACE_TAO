@@ -7,6 +7,8 @@
 
 #include "ace/Timer_List.h"
 
+ACE_RCSID(ace, Timer_List, "$Id$")
+
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_List_T.cpp"

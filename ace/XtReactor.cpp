@@ -6,6 +6,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/XtReactor.h"
 
+ACE_RCSID(ace, XtReactor, "$Id$")
+
 #if defined (ACE_HAS_XT)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_XtReactor)

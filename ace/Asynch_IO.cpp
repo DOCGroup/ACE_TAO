@@ -3,6 +3,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Asynch_IO.h"
 
+ACE_RCSID(ace, Asynch_IO, "$Id$")
+
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) \
     || (defined (ACE_HAS_AIO_CALLS))
 // This only works on Win32 platforms

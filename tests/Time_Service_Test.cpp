@@ -24,6 +24,8 @@
 #include "test_config.h"
 #include "ace/Process.h"
 
+ACE_RCSID(tests, Time_Service_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

@@ -5,6 +5,8 @@
 #include "ace/Filecache.h"
 #include "ace/Object_Manager.h"
 
+ACE_RCSID(ace, Filecache, "$Id$")
+
 #if defined (__BORLANDC__) //VSB
 // Third parameter will be ignored in ACE_OS::open
 static const int R_MASK = 0;

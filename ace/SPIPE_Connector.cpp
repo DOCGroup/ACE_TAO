@@ -8,6 +8,8 @@
 #include "ace/SPIPE_Connector.i"
 #endif
 
+ACE_RCSID(ace, SPIPE_Connector, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Connector)
 
 // Creates a Local ACE_SPIPE. 

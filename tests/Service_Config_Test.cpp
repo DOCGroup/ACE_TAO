@@ -21,6 +21,8 @@
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
 
+ACE_RCSID(tests, Service_Config_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------

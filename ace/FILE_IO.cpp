@@ -8,6 +8,8 @@
 #include "ace/FILE_IO.i"
 #endif
 
+ACE_RCSID(ace, FILE_IO, "$Id$")
+
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_IO)
 
 void

@@ -9,6 +9,8 @@
 #include "ace/Process.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Process, "$Id$")
+
 ACE_Process::ACE_Process (void)
 #if !defined (ACE_WIN32)
   : child_id_ (0)

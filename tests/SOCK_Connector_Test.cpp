@@ -17,11 +17,13 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/OS.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
-#include "test_config.h"
+
+ACE_RCSID(tests, SOCK_Connector_Test, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");

@@ -11,6 +11,8 @@
 #include "ace/RB_Tree.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, RB_Tree, "$Id$")
+
 /////////////////////////////////////////
 // template class RB_Tree_Node<KEY, T> //
 /////////////////////////////////////////

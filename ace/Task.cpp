@@ -11,6 +11,8 @@
 #include "ace/Task.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, Task, "$Id$")
+
 ACE_Task_Base::~ACE_Task_Base (void)
 {
 }

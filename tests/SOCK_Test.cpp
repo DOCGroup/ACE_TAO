@@ -28,6 +28,8 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
 
+ACE_RCSID(tests, SOCK_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
