@@ -68,7 +68,7 @@ ACE_ReactorEx_Handler_Repository::Current_Info::Current_Info (void)
 {  
 }
 
-void 
+ACE_INLINE void 
 ACE_ReactorEx_Handler_Repository::Current_Info::set (int io_entry,
 						     ACE_Event_Handler *event_handler,
 						     ACE_HANDLE io_handle,
@@ -88,7 +88,7 @@ ACE_ReactorEx_Handler_Repository::Current_Info::set (int io_entry,
 		    delete_event);
 }
 
-void 
+ACE_INLINE void 
 ACE_ReactorEx_Handler_Repository::Current_Info::set (Common_Info &common_info,
 						     int delete_entry,
 						     ACE_Reactor_Mask close_masks,
@@ -100,7 +100,7 @@ ACE_ReactorEx_Handler_Repository::Current_Info::set (Common_Info &common_info,
   Common_Info::set (common_info);
 }
 
-void 
+ACE_INLINE void 
 ACE_ReactorEx_Handler_Repository::Current_Info::reset (void)
 {
   this->delete_entry_ = 0;
@@ -117,7 +117,7 @@ ACE_ReactorEx_Handler_Repository::To_Be_Added_Info::To_Be_Added_Info (void)
 {  
 }
 
-void 
+ACE_INLINE void 
 ACE_ReactorEx_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_handle,
 							 int io_entry,
 							 ACE_Event_Handler *event_handler,
@@ -133,7 +133,7 @@ ACE_ReactorEx_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_handle
 		    delete_event);
 }
 
-void 
+ACE_INLINE void 
 ACE_ReactorEx_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_handle,
 							 Common_Info &common_info)
 {
@@ -141,7 +141,7 @@ ACE_ReactorEx_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_handle
   Common_Info::set (common_info);
 }
 
-void 
+ACE_INLINE void 
 ACE_ReactorEx_Handler_Repository::To_Be_Added_Info::reset (void)
 {
   this->event_handle_ = ACE_INVALID_HANDLE;
