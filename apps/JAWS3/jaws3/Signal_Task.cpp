@@ -3,7 +3,9 @@
 #include "ace/OS.h"
 #include "ace/Thread.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif
 
 #include "jaws3/Signal_Task.h"
 #include "jaws3/Event_Dispatcher.h"

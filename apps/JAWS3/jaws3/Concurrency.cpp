@@ -5,7 +5,9 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif
 
 #include "jaws3/Concurrency.h"
 #include "jaws3/TPOOL_Concurrency.h"
