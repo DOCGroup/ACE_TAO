@@ -32,10 +32,10 @@ $c75_ior = PerlACE::LocalFile ("c75.ior");
 $cookie = PerlACE::LocalFile ("ck_demo_deployment");
 
 ## The following control how to iterate thru various work amount
-$start_work = 300;
-$end_work = 301;
-$work_step = 100;
-$run_time = 40;                 # run for $run_time sec.
+$start_work = 20;
+$end_work = 401;
+$work_step = 10;
+$run_time = 60;                 # run for $run_time sec.
 
 $test_deploy = 0;
 $no_daemon = 0;
