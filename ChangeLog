@@ -1,3 +1,16 @@
+Sun Aug 17 16:35:01 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/RB_Tree.i (dump_i):
+	* ace/RB_Tree.cpp (dump_i):
+
+	  Uninlined this method to avoid adding an inter-header dependency
+	  on "ace/Log_Msg.h".  Also fixes some explicit template
+	  instantiation builds.
+
+	* tests/Collection_Test.cpp:
+
+	  Removed duplicate template instantiation.
+
 Sun Aug 17 16:06:20 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Shared_Object.h:

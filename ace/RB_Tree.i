@@ -1,8 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Guard_T.h"
 #include "ace/Malloc_Base.h"
+#include "ace/Log_Msg.h"
 
 /////////////////////////////////////////////////////
 // template class ACE_RB_Tree_Node<EXT_ID, INT_ID> //
@@ -816,20 +818,6 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::reverse_i (vo
     }
 
   return node_ ? 1 : 0;
-}
-
-
-// Dump the state of an object.
-
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_INLINE void
-ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i (void) const
-{
-  ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nnode_ = %x\n"), this->node_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 

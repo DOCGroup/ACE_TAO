@@ -18,7 +18,9 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, RB_Tree, "$Id$")
+ACE_RCSID (ace,
+           RB_Tree,
+           "$Id$")
 
 // Constructor.
 
@@ -835,7 +837,6 @@ dump_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *node) const
 #endif /* ACE_HAS_DUMP */
 }
 
-
 /// Function to dump node itself.  Does not show parameterized node contents
 /// in its basic form, but template specialization can be used to
 /// provide definitions for various EXT_ID and INT_ID types.
@@ -1064,6 +1065,20 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Iterator_Base");
 }
 
+// Dump the state of an object.
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+void
+ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i (void) const
+{
+  ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nnode_ = %x\n"), this->node_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+
 ACE_ALLOC_HOOK_DEFINE(ACE_RB_Tree_Iterator)
 
 // Constructor.
@@ -1111,7 +1126,7 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tre
 }
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry) 
+ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry)
   : ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (tree,entry)
 {
   ACE_TRACE ("ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Reverse_Iterator");
