@@ -32,7 +32,7 @@ test_write_octet (TAO_OutputCDR &cdr,
 {
   Test::OctetSeq os (bufsize, bufsize, (CORBA::Octet*)buf);
 
-  cdr.encode (Test::_tc_OctetSeq_seq, &os, 0, env);
+  cdr.encode (Test::_tc_OctetSeq, &os, 0, env);
   if (env.exception () != 0)
     return -1;
   return 0;
@@ -45,7 +45,7 @@ test_read_octet (TAO_InputCDR &cdr,
 {
   Test::OctetSeq os;
 
-  cdr.decode (Test::_tc_OctetSeq_seq, &os, 0, env);
+  cdr.decode (Test::_tc_OctetSeq, &os, 0, env);
   if (env.exception () != 0 ||
       os.length () != bufsize
       /* || ACE_OS::memcmp( buf, os.get_buffer (), bufsize) != 0 */)
@@ -64,7 +64,7 @@ test_write_char (TAO_OutputCDR &cdr,
 {
   Test::CharSeq cs (bufsize, bufsize, buf);
 
-  cdr.encode (Test::_tc_CharSeq_seq, &cs, 0, env);
+  cdr.encode (Test::_tc_CharSeq, &cs, 0, env);
   if (env.exception () != 0)
     return -1;
   return 0;
@@ -77,7 +77,7 @@ test_read_char (TAO_InputCDR &cdr,
 {
   Test::CharSeq cs;
 
-  cdr.decode (Test::_tc_CharSeq_seq, &cs, 0, env);
+  cdr.decode (Test::_tc_CharSeq, &cs, 0, env);
   if (env.exception () != 0 ||
       cs.length () != bufsize
       /* || ACE_OS::memcmp( buf, cs.get_buffer (), bufsize) != 0 */)

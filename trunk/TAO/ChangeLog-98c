@@ -1,7 +1,13 @@
+Sat Jun  6 20:32:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/OctetSeq/OctetSeq.cpp: Changed Test::_tc_CharSeq_seq and
+ 	  Test::_tc_OctetSeq_seq to Test::_tc_CharSeq and
+ 	  Test::_tc_OctetSeq.  Thanks to David Levine for spotting this.
+
 Sat Jun 6 Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* docs/orbsvcs.html: Changed the test directory from
-	CosPropertyService to Property
+	  CosPropertyService to Property.
 
 Sat Jun 6 Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 

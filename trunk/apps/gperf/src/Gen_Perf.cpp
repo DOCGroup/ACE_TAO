@@ -1,7 +1,6 @@
 // $Id$
 
-/* structures the code generation output.
-   Copyright (C) 1989 Free Software Foundation, Inc.
+/* Copyright (C) 1989 Free Software Foundation, Inc.
    written by Douglas C. Schmidt (schmidt@ics.uci.edu)
 
 This file is part of GNU GPERF.
@@ -39,18 +38,22 @@ Gen_Perf::Gen_Perf (void)
   int non_linked_length;
 
   this->key_list.read_keys ();
+
   if (option[ORDER])
     this->key_list.reorder ();
-  asso_value_max    = option.get_asso_max ();
+
+  asso_value_max = option.get_asso_max ();
   non_linked_length = this->key_list.keyword_list_length ();
-  num_done          = 1;
+  num_done = 1;
   fewest_collisions = 0;
+
   if (asso_value_max == 0)
     asso_value_max = non_linked_length;
   else if (asso_value_max > 0)
     asso_value_max *= non_linked_length;
   else // if (asso_value_max < 0)
     asso_value_max = non_linked_length / -asso_value_max;
+
   option.set_asso_max (ACE_POW (asso_value_max));
   
   if (option[RANDOM])
@@ -68,21 +71,29 @@ Gen_Perf::Gen_Perf (void)
         for (int i = ALPHA_SIZE - 1; i >= 0; i--)
           Vectors::asso_values[i] = asso_value & option.get_asso_max () - 1;
     }
-  max_hash_value = this->key_list.max_key_length () + option.get_asso_max () * 
-    option.get_max_keysig_size ();
+  max_hash_value = this->key_list.max_key_length () 
+    + option.get_asso_max () 
+    * option.get_max_keysig_size ();
   
   printf ("/* ");
+
   if (option[C])
     printf ("C");
+
   else if (option[CPLUSPLUS])
     printf ("C++");
-  printf (" code produced by gperf version %s */\n", version_string);
+
+  printf (" code produced by gperf version %s */\n",
+          version_string);
   Options::print_options ();
 
   if (option[DEBUG])
-    fprintf (stderr, "total non-linked keys = %d\nmaximum associated value is %d"
-             "\nmaximum size of generated hash table is %d\n",
-             non_linked_length, asso_value_max, max_hash_value);
+    ACE_DEBUG ((LM_DEBUG,
+                "total non-linked keys = %d\nmaximum associated value is %d"
+                "\nmaximum size of generated hash table is %d\n",
+                non_linked_length,
+                asso_value_max,
+                max_hash_value));
 }
 
 // Merge two disjoint hash key multisets to form the ordered disjoint
@@ -147,7 +158,7 @@ Gen_Perf::sort_set (char *union_set, int len)
 inline int 
 Gen_Perf::hash (List_Node *key_node) 
 {                             
-  int   sum = option[NOLENGTH] ? 0 : key_node->length;
+  int sum = option[NOLENGTH] ? 0 : key_node->length;
 
   for (char *ptr = key_node->char_set; *ptr; ptr++)
       sum += Vectors::asso_values[*ptr];
@@ -166,8 +177,17 @@ inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
   int original_char = Vectors::asso_values[c];
-  int total_iterations = !option[FAST]
-    ? option.get_asso_max () : option.get_iterations () ? option.get_iterations () : this->key_list.keyword_list_length ();
+  int total_iterations;
+  
+  if (!option[FAST])
+    total_iterations = option.get_asso_max ();
+  else 
+    {
+      total_iterations = option.get_iterations ();
+
+      if (total_iterations == 0)
+        total_iterations = this->key_list.keyword_list_length ();
+    }
   
   // Try all legal associated values.
 
@@ -175,8 +195,8 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
     { 
       int collisions = 0;
 
-      Vectors::asso_values[c] = Vectors::asso_values[c] + (option.get_jump () ? option.get_jump () : rand ())
-                                         & option.get_asso_max () - 1;
+      Vectors::asso_values[c] = Vectors::asso_values[c] + 
+        (option.get_jump () ? option.get_jump () : rand ()) & option.get_asso_max () - 1;
 
       // Iteration Number array is a win, O(1) intialization time!
       this->char_search.reset ();     
@@ -191,7 +211,9 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
           {
             fewest_collisions = collisions;
             if (option[DEBUG])
-              fprintf (stderr, "- resolved after %d iterations", total_iterations - i);
+              ACE_DEBUG ((LM_DEBUG,
+                          "- resolved after %d iterations",
+                          total_iterations - i));
             return 0;
           }    
     }
@@ -213,12 +235,16 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
     union_set = new char [2 * option.get_max_keysig_size () + 1];
 
   if (option[DEBUG])
-    {
-      fprintf (stderr, "collision on keyword #%d, prior = \"%s\", curr = \"%s\" hash = %d\n",
-               num_done, prior->key, curr->key, curr->hash_value);
-      fflush (stderr);
-    }
-  sort_set (union_set, compute_disjoint_union (prior->char_set, curr->char_set, union_set));
+    ACE_DEBUG ((LM_DEBUG, 
+                "collision on keyword #%d, prior = \"%s\", curr = \"%s\" hash = %d\n",
+                num_done,
+                prior->key,
+                curr->key,
+                curr->hash_value));
+  sort_set (union_set,
+            compute_disjoint_union (prior->char_set,
+                                    curr->char_set,
+                                    union_set));
 
   // Try changing some values, if change doesn't alter other values
   // continue normal action.
@@ -228,11 +254,11 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
     if (!affects_prev (*temp, curr))
       {
         if (option[DEBUG])
-          {
-            fprintf (stderr, " by changing asso_value['%c'] (char #%d) to %d\n", 
-                     *temp, temp - union_set + 1, Vectors::asso_values[*temp]);
-            fflush (stderr);
-          }
+          ACE_DEBUG ((LM_DEBUG,
+                      " by changing asso_value['%c'] (char #%d) to %d\n", 
+                      *temp,
+                      temp - union_set + 1,
+                      Vectors::asso_values[*temp]));
         return; // Good, doesn't affect previous hash values, we'll take it.
       }
 
@@ -242,12 +268,10 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
   hash (curr);
 
   if (option[DEBUG])
-    {
-      fprintf (stderr, "** collision not resolved after %d iterations, %d duplicates remain, continuing...\n", 
+    ACE_DEBUG ((LM_DEBUG, 
+                "** collision not resolved after %d iterations, %d duplicates remain, continuing...\n", 
                !option[FAST] ? option.get_asso_max () : option.get_iterations () ? option.get_iterations () : this->key_list.keyword_list_length (),
-               fewest_collisions + this->key_list.total_duplicates);
-      fflush (stderr);
-    }
+               fewest_collisions + this->key_list.total_duplicates));
 }
 
 // Does the hard stuff....  Initializes the Iteration Number array,
@@ -263,11 +287,15 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
 int
 Gen_Perf::generate (void)
 {
+#if defined (LARGE_STACK_ARRAYS)
+  STORAGE_TYPE buffer[max_hash_value + 1];
+#else
   // Note: we don't use new, because that invokes a custom operator new.
   STORAGE_TYPE *buffer
     = (STORAGE_TYPE*) malloc (sizeof(STORAGE_TYPE) * (max_hash_value + 1));
   if (buffer == NULL)
     abort ();
+#endif /* LARGE_STACK_ARRAYS */
 
   this->char_search.init (buffer, max_hash_value + 1);
   
@@ -329,14 +357,18 @@ Gen_Perf::~Gen_Perf (void)
 {                             
   if (option[DEBUG])
     {
-      fprintf (stderr, "\ndumping occurrence and associated values tables\n");
-      
+      ACE_DEBUG ((LM_DEBUG,
+                  "\ndumping occurrence and associated values tables\n"));
       for (int i = 0; i < ALPHA_SIZE; i++)
         if (Vectors::occurrences[i])
-          fprintf (stderr, "Vectors::asso_values[%c] = %6d, Vectors::occurrences[%c] = %6d\n",
-                   i, Vectors::asso_values[i], i, Vectors::occurrences[i]);
-      
-      fprintf (stderr, "end table dumping\n");
+          ACE_DEBUG ((LM_DEBUG, 
+                      "Vectors::asso_values[%c] = %6d, Vectors::occurrences[%c] = %6d\n",
+                      i,
+                      Vectors::asso_values[i],
+                      i,
+                      Vectors::occurrences[i]));
+      ACE_DEBUG ((LM_DEBUG, 
+                  "end table dumping\n"));
     }
 }
 

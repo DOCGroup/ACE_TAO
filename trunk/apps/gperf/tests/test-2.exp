@@ -1,5 +1,5 @@
 /* C code produced by gperf version 2.5 (GNU C++ version) */
-/* Command-line: ../src/gperf -a -n -k1-8 -l  */
+/* Command-line: ../src/gperf -n -k1-8 -l  */
 
 #define TOTAL_KEYWORDS 40
 #define MIN_WORD_LENGTH 2
@@ -9,7 +9,9 @@
 /* maximum key range = 256, duplicates = 0 */
 
 static unsigned int
-hash (char *str, unsigned int len)
+hash (str, len)
+     char *str;
+     int unsigned len;
 {
   static unsigned short asso_values[] =
     {
@@ -54,7 +56,9 @@ hash (char *str, unsigned int len)
 }
 
 char *
-in_word_set (char *str, unsigned int len)
+in_word_set (str, len)
+     char *str;
+     unsigned int len;
 {
 
   static unsigned char lengthtable[] =

@@ -31,7 +31,7 @@ check:
 	@echo "performing some tests of the perfect hash generator"   
 	$(CXX) -c $(CFLAGS) $(srcdir)/test.cpp
 	$(GPERF) -a -p -c -l -S1 -o $(srcdir)/c.gperf > cinset.cpp
-	$(CXX) $(CFLAGS) -o cout cinset.c test.o
+	$(CXX) $(CFLAGS) -o cout cinset.cpp test.o
 	@echo "testing ANSI C reserved words, all items should be found in the set"
 	./cout -v < $(srcdir)/c.gperf > c.out
 	-diff -b $(srcdir)/c.exp c.out
@@ -57,7 +57,7 @@ check:
 	./pout -v < $(srcdir)/pascal.gperf > pascal.out
 	-diff -b $(srcdir)/pascal.exp pascal.out
 # these next 5 are demos that show off the generated code
-	$(GPERF) -a -p -j1 -g -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf > test-1.out
+	$(GPERF) -a -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf > test-1.out
 	-diff -b $(srcdir)/test-1.exp test-1.out
 	$(GPERF) -a -n -k1-8 -l <$(srcdir)/modula2.gperf > test-2.out
 	-diff -b $(srcdir)/test-2.exp test-2.out
@@ -74,3 +74,9 @@ check:
 	./aout -v < $(srcdir)/c.gperf > test-7.out
 	-diff -b $(srcdir)/test-7.exp test-7.out
 
+include		$(ACE_ROOT)/include/makeinclude/macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU

@@ -1,5 +1,5 @@
 /* C code produced by gperf version 2.5 (GNU C++ version) */
-/* Command-line: ../src/gperf -a -g -o -j1 -t -p -N is_reserved_word  */
+/* Command-line: ../src/gperf -g -o -j1 -t -p -N is_reserved_word  */
 /* ISO Pascal 7185 reserved words.
  *
  * For GNU Pascal compiler (GPC) by jtv@hut.fi
@@ -18,11 +18,11 @@ struct resword { char *name; short token; short iclass;};
 #define MAX_HASH_VALUE 43
 /* maximum key range = 42, duplicates = 0 */
 
-#ifdef __GNUC__
 inline
-#endif
 static unsigned int
-hash (char *str, unsigned int len)
+hash (str, len)
+     char *str;
+     int unsigned len;
 {
   static unsigned char asso_values[] =
     {
@@ -43,11 +43,11 @@ hash (char *str, unsigned int len)
   return len + asso_values[str[len - 1]] + asso_values[str[0]];
 }
 
-#ifdef __GNUC__
 inline
-#endif
 struct resword *
-is_reserved_word (char *str, unsigned int len)
+is_reserved_word (str, len)
+     char *str;
+     unsigned int len;
 {
   static struct resword wordlist[] =
     {
