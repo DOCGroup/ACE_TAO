@@ -227,7 +227,7 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
 
   CORBA::ULong bodylen = total_len - header_len;
   
-#if !defined (TAO_ENABLE_SWAP_ON_WRITE)
+#if !defined (ACE_ENABLE_SWAP_ON_WRITE)
   *ACE_reinterpret_cast(CORBA::ULong*,buf + offset) = bodylen;
 #else
   if (!stream->do_byte_swap ())
@@ -237,7 +237,7 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
     CDR::swap_4 (ACE_reinterpret_cast (char *,
                                        &bodylen),
                  buf + offset);
-#endif /* TAO_ENABLE_SWAP_ON_WRITE */
+#endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux

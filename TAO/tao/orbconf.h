@@ -157,39 +157,13 @@
 #define TAO_NAMESPACE_DEFINE(TYPE,NAME,RHS) NAME = RHS;
 #endif /* ACE_HAS_USING_KEYWORD */
 
-// In some environments it is useful to swap the bytes on write, for
-// instance: a fast server can be feeding a lot of slow clients that
-// happen to have the wrong byte order.
-// This macro enables the functionality to support that, but we still
-// need a way to activate it on a per-connection basis.
-//
-// #define TAO_ENABLE_SWAP_ON_WRITE
-
-// In some environements we never need to swap bytes when reading, for
-// instance embebbed systems (such as avionics) or homogenous
-// networks.
-// Setting this macro disables the capabilities to demarshall streams
-// in the wrong byte order.
-//
-// #define TAO_DISABLE_SWAP_ON_READ
-
-// For some applications it is important to optimize octet sequences
-// and minimize the number of copies made of the sequence buffer.
-// TAO supports this optimizations by sharing the CDR stream buffer
-// and the octet sequences buffer via ACE_Message_Block's.
-// This feature can be disabled for: debugging, performance
-// comparisons, complaince checking (the octet sequences add an API to
-// access the underlying message block).
-//
+// Instead of replacing this with the ACE macro 
+// in 20+ files, define it conditionally.
+// The TAO_OutputCDR class uses the ACE macro, which
+// is defined by default.
+#if defined (ACE_NO_COPY_OCTET_SEQUENCES)
 #define TAO_NO_COPY_OCTET_SEQUENCES
-
-// Even though the strategy above minimizes copies in some cases it is
-// more efficient just to copy the octet sequence, for instance, while
-// enconding a "small" octet sequence in a buffer that has enough
-// space.
-// This parameter controls the default value for "small enough", but
-// can also be set using the command line option -ORBCDRtradeoff
-#define TAO_DEFAULT_CDR_MEMCPY_TRADEOFF 256
+#endif /* ACE_NO_COPY_OCTET_SEQUENCES */
 
 #if defined (ACE_HAS_EXCEPTIONS)
 # define TAO_HAS_EXCEPTIONS
@@ -199,16 +173,6 @@
 #elif (defined (TAO_HAS_EXCEPTIONS) || defined (TAO_USE_EXCEPTIONS)) && !defined (ACE_HAS_EXCEPTIONS)
 # error "tao/orbconf.h: You can only use exceptions in TAO if ACE supports them"
 #endif /* TAO_HAS_EXCEPTIONS */
-
-// The CDR growing strategy is control by several parameters:
-// + The default or initial CDR buffer size.
-// + From that value the CDR buffer is grown exponentially (size
-//   duplicated each time) until it reaches EXP_GROWTH_MAX.
-// + From then on the buffer is grown linearly in chunks of
-// LINEAR_GROWTH_MAX
-#define TAO_DEFAULT_CDR_BUFSIZE 512
-#define TAO_DEFAULT_CDR_EXP_GROWTH_MAX 4096
-#define TAO_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 4096
 
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
