@@ -5,6 +5,9 @@ Wed May 19 15:12:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Use the TAO_EC_Default_Factory for the Rtec Event Channel and
 	  configure it using a svc.conf file.
 
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	  Fixed more template instantiation problems.
+
 Wed May 19 13:07:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
