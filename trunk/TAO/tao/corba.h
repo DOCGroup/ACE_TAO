@@ -43,6 +43,7 @@
 #include "tao/Any_Special_Basic_Impl_T.h"
 #include "tao/Any_Array_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
+#include "tao/SArgument_T.h"
 
 #include "tao/Environment.h"
 #include "tao/Exception.h"
@@ -73,6 +74,7 @@
 
 // Template _var and _out classes.
 #include "tao/Objref_VarOut_T.h"
+#include "tao/Pseudo_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/Array_VarOut_T.h"
