@@ -496,7 +496,7 @@ module Components {
   };
 
   typedef CosPersistentState::CatalogBase CatalogBase;
-  typedef CosPersistentState::TypeId TypeId;
+  typedef CosPersistentState::_TypeId _TypeId;
 
   typedef short SegmentId;
   const SegmentId COMPONENT_SEGMENT = 0;
@@ -535,7 +535,7 @@ module Components {
     void req_passivate ()
       raises (PolicyMismatch);
 
-    CatalogBase get_persistence (in TypeId catalog_type_id)
+    CatalogBase get_persistence (in _TypeId catalog_type_id)
       raises (PersistenceNotAvailable);
   };
 
@@ -629,6 +629,18 @@ module Components {
 
     ComponentId get_cid_from_ref (in Object objref)
       raises (BadComponentReference);
+  };
+
+  local interface ExecutorLocator : EnterpriseComponent
+  {
+    Object obtain_executor (in string name)
+      raises (CCMException);
+
+    void release_executor (in Object exc)
+      raises (CCMException);
+
+    void configuration_complete()
+      raises (InvalidConfiguration);
   };
 
   local interface HomeExecutorBase
