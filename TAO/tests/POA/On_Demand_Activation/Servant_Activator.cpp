@@ -1,4 +1,6 @@
-f// $Id$
+// $Id$
+//
+//================================================================================
 //
 // = LIBRARY
 //     TAO/tests/POA/On_Demand_Activation/Servant_Activator
