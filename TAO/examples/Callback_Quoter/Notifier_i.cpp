@@ -68,8 +68,6 @@ Notifier_i::register_callback (const char *stock_name,
     {
      if ( consumers->insert (consumer_data) == -1)
        ACE_THROW ( Callback_Quoter::Invalid_Stock ("Insertion failed! Invalid Stock!\n"));
-     //       ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock
-     //                       ("Insertion failed! Invalid Stock!\n"));
      else
       ACE_DEBUG ((LM_DEBUG,
 		  "Inserted map entry: stockname %s threshold %d",
@@ -88,9 +86,7 @@ Notifier_i::register_callback (const char *stock_name,
       // fails an exception is raised.
       if (consumers->insert (consumer_data) == -1)
         ACE_THROW ( Callback_Quoter::Invalid_Stock ("Insertion failed! Invalid Stock!\n"));
-        //ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock
-        //             ("Insertion failed! Invalid Stock!\n"));
-
+       
       // The bond between the stockname <hash_key> and the consumers <hash_value>
       // is fused.
       if (this->consumer_map_.bind (stock_name, consumers) == -1)
@@ -151,9 +147,6 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
 
        if ((*iter).int_id_->remove (consumer_to_remove) == -1)
          ACE_THROW (Callback_Quoter::Invalid_Handle ( "Unregistration failed! Invalid Consumer Handle!\n"));
-         //	 ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Handle
-         //                     ("Unregistration failed! Invalid Consumer Handle!\n"));
-
        else
         ACE_DEBUG ((LM_DEBUG,
 		    "unregister_callback:consumer removed\n"));
@@ -211,13 +204,6 @@ Notifier_i::market_status (const char *stock_name,
   // Raising an exception caused problems as they were caught by the Market daemon
   // who exited prematurely.
 
-    // /*done*/@@ Please add a user defined exception called something like
-    // NOT_FOUND.
-
-      // Exception is raised when the stock doesnt exist in the Hash_map.
-    //  env.exception (new Callback_Quoter::Invalid_Stock (" Nonexistent Stock"));
-  //  stock_name,
-  //                                                     stock_value);
 }
 
 void
