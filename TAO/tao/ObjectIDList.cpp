@@ -11,6 +11,9 @@
 //
 
 #include "ObjectIDList.h"
+#include "tao/Typecode.h"
+#include "tao/ORB.h"
+#include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ObjectIDList.i"

@@ -16,7 +16,7 @@
 
 #include "tao/IORS.h"
 #include "tao/Stub.h"
-#include "tao/corba.h"
+#include "tao/Invocation.h"
 
 ACE_RCSID(tao, IORC, "$Id$")
 

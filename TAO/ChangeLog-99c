@@ -1,3 +1,16 @@
+Sun Aug  8 15:44:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Transport_Mux_Strategy.cpp:
+	  Removed unreachable statement.
+
+	* tao/IORC.cpp:
+	* tao/IORManipulation.cpp:
+	* tao/IOR_LookupTable.cpp:
+	* tao/ObjectIDList.h:
+	* tao/ObjectIDList.cpp:
+	  Removed cyclic dependencies on corba.h, this may fix the
+	  problems with g++ 2.7.2.X
+
 Fri Aug 06 21:45:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/README: fixed
