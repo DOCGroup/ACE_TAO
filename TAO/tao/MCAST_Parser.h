@@ -13,7 +13,7 @@
 
 #ifndef TAO_MCAST_PARSER_H
 #define TAO_MCAST_PARSER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOR_Parser.h"
 
@@ -93,5 +93,5 @@ private:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_MCAST_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_MCAST_Parser)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_MCAST_PARSER_H */

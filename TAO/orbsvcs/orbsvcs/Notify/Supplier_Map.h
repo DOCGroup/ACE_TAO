@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_SUPPLIER_MAP_H
 #define TAO_Notify_SUPPLIER_MAP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -31,5 +31,5 @@
 
 typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, TAO_SYNCH_RW_MUTEX> TAO_Notify_Supplier_Map;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_SUPPLIER_MAP_H */

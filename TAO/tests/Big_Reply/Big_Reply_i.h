@@ -11,7 +11,7 @@
 
 #ifndef TAO_TESTS_BIG_REPLY_I_H
 #define TAO_TESTS_BIG_REPLY_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -65,6 +65,6 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /*TAO_TESTS_BIG_REPLY_I_H*/

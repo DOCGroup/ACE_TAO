@@ -4,7 +4,7 @@
 
 #ifndef SIMPLE_H
 #define SIMPLE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -34,5 +34,5 @@ public:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* SIMPLE_H */

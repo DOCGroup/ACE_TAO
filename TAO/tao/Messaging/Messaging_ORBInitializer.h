@@ -14,7 +14,7 @@
 #ifndef TAO_MESSAGING_ORB_INITIALIZER_H
 #define TAO_MESSAGING_ORB_INITIALIZER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -91,6 +91,6 @@ private:
 
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_MESSAGING_ORB_INITIALIZER_H */

@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_APPLICATION_COMMAND_H
 #define TAO_Notify_Tests_APPLICATION_COMMAND_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -79,5 +79,5 @@ protected:
   void handle_wait_to_start (ACE_ENV_SINGLE_ARG_DECL);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_APPLICATION_COMMAND_H */

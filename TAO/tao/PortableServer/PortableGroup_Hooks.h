@@ -12,7 +12,7 @@
 
 #ifndef TAO_PORTABLEGROUP_HOOKS_H
 #define TAO_PORTABLEGROUP_HOOKS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PortableServerC.h"
 
@@ -85,5 +85,5 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PORTABLEGROUP_HOOKS_H */

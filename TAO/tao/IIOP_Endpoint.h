@@ -16,7 +16,7 @@
 #ifndef TAO_IIOP_ENDPOINT_H
 #define TAO_IIOP_ENDPOINT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Endpoint.h"
 
@@ -134,5 +134,5 @@ private:
 # include "tao/IIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_IIOP_PROFILE_H */

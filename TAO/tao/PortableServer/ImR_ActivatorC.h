@@ -30,7 +30,7 @@
 
 #ifndef _TAO_IDL_ORIG_IMR_ACTIVATORC_H_
 #define _TAO_IDL_ORIG_IMR_ACTIVATORC_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "portableserver_export.h"
 
 
@@ -89,5 +89,5 @@
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

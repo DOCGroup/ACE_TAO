@@ -14,7 +14,7 @@
 #ifndef TAO_PG_PROPERTY_UTILS_H
 #define TAO_PG_PROPERTY_UTILS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -49,5 +49,5 @@ namespace TAO_PG
 
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_PG_PROPERTY_UTILS_H */

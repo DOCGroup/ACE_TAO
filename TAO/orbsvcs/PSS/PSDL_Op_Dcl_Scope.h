@@ -17,7 +17,7 @@
 #ifndef TAO_PSDL_OP_DCL_SCOPE_H
 #define TAO_PSDL_OP_DCL_SCOPE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PSDL_Scope.h"
 
@@ -49,6 +49,6 @@ protected:
   TAO_PSDL_Scope *parent_scope_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_OP_DCL_SCOPE_H */

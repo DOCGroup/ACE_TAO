@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_COSNOTIFY_INITIALIZER_H
 #define TAO_Notify_COSNOTIFY_INITIALIZER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -34,5 +34,5 @@ public:
 
 static TAO_Notify_CosNotify_Initializer TAO_Notify_CosNotify_initializer;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_COSNOTIFY_INITIALIZER_H */

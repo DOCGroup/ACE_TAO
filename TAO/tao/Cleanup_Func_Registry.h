@@ -12,7 +12,7 @@
 
 #ifndef TAO_CLEANUP_FUNC_REGISTRY_H
 #define TAO_CLEANUP_FUNC_REGISTRY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -86,6 +86,6 @@ private:
 #endif  /* __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_CLEANUP_FUNC_REGISTRY_H */

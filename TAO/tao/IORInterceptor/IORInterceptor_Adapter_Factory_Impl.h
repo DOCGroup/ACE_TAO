@@ -14,7 +14,7 @@
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
 #define TAO_IORINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "IORInterceptorC.h"
 
@@ -70,6 +70,6 @@ TAO_Requires_IORInterceptor_Initializer =
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_IORINTERCEPTOR_ADAPTER_FACTORY_IMPL_H */

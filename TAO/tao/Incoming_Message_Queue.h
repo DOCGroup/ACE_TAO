@@ -12,7 +12,7 @@
 
 #ifndef TAO_INCOMING_MESSAGE_QUEUE_H
 #define TAO_INCOMING_MESSAGE_QUEUE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Pluggable_Messaging_Utils.h"
 
@@ -186,5 +186,5 @@ private:
 # include "Incoming_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_INCOMING_MESSAGE_QUEUE_H*/

@@ -12,7 +12,7 @@
 
 #ifndef TAO_CEC_DISPATCHING_H
 #define TAO_CEC_DISPATCHING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventCommC.h"
 #include "event_export.h"
@@ -92,5 +92,5 @@ public:
 #include "CEC_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CEC_DISPATCHING_H */

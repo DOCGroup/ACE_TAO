@@ -13,7 +13,7 @@
 
 #ifndef TAO_MUXED_TMS_H
 #define TAO_MUXED_TMS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Transport_Mux_Strategy.h"
 
@@ -86,5 +86,5 @@ protected:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* MUXED_TMS_H */

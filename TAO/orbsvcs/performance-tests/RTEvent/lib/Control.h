@@ -7,7 +7,7 @@
 
 #ifndef TAO_RTEC_PERF_CONTROL_H
 #define TAO_RTEC_PERF_CONTROL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Federated_TestS.h"
 
@@ -77,5 +77,5 @@ private:
   Federated_Test::Peer_var *peers_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RTEC_PERF_CONTROL_H */

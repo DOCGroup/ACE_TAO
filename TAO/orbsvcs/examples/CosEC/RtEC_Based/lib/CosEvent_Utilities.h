@@ -19,7 +19,7 @@
 
 #ifndef TAO_COSEVENT_UTILITIES_H
 #define TAO_COSEVENT_UTILITIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecBaseC.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
@@ -166,5 +166,5 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_COSEVENT_UTILITIES_H */

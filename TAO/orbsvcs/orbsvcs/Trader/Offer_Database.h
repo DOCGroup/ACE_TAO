@@ -13,7 +13,7 @@
 
 #ifndef TAO_OFFER_DATABASE_H
 #define TAO_OFFER_DATABASE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Trader.h"
 #include "Offer_Iterators.h"
@@ -203,5 +203,5 @@ class TAO_Service_Offer_Iterator
 #include "Offer_Database.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_SERVICE_TYPE_MAP_H */

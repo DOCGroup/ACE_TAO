@@ -13,7 +13,7 @@
 #ifndef TAO_SSLIOP_X509_H
 #define TAO_SSLIOP_X509_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -110,6 +110,6 @@ private:
 #endif  /* __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_X509_H */

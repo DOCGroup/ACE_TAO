@@ -4,7 +4,7 @@
 
 #ifndef MUXING_CLIENT_TASK_H
 #define MUXING_CLIENT_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestC.h"
 #include "ace/Task.h"
@@ -37,5 +37,5 @@ private:
   CORBA::ULong event_size_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* MUXING_CLIENT_TASK_H */

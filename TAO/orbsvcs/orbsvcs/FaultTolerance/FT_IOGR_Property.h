@@ -16,7 +16,7 @@
 
 #ifndef TAO_FT_IOGR_PROPERTY_H
 #define TAO_FT_IOGR_PROPERTY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #ifndef TAO_FT_SERVICE_SAFE_INCLUDE
 #error "You should not include FT_IOGR_Property.h use FT_Service_Activate.h"
@@ -131,5 +131,5 @@ private:
 # include "FT_IOGR_Property.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_FT_IOGR_PROPERTY_H */

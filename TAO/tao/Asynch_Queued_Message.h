@@ -12,7 +12,7 @@
 
 #ifndef TAO_ASYNCH_QUEUED_MESSAGE_H
 #define TAO_ASYNCH_QUEUED_MESSAGE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Queued_Message.h"
 
@@ -93,5 +93,5 @@ private:
   char *buffer_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_ASYNCH_QUEUED_MESSAGE_H */

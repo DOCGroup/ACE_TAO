@@ -16,7 +16,7 @@
 
 #ifndef ACE_SCHEDULER_FACTORY_H
 #define ACE_SCHEDULER_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -200,7 +200,7 @@ private:
 #include "orbsvcs/Scheduler_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SCHEDULER_FACTORY_H */
 
 

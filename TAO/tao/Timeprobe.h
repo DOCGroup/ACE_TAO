@@ -12,7 +12,7 @@
 
 #ifndef TAO_TIMEPROBE_H
 #define TAO_TIMEPROBE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -96,5 +96,5 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TIMEPROBE_H */

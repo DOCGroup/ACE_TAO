@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
 #define _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "IOP_IORC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -283,5 +283,5 @@ TAO_Export CORBA::Boolean operator>> (
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

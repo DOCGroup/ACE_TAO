@@ -4,7 +4,7 @@
 
 #ifndef CRASH_TASK_H
 #define CRASH_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
 
@@ -28,5 +28,5 @@ private:
   ACE_Time_Value running_time_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CRASH_TASK_H */

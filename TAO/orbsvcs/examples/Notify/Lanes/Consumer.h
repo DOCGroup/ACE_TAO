@@ -12,7 +12,7 @@
 #ifndef TAO_Notify_CONSUMER_H
 #define TAO_Notify_CONSUMER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ORB_Objects.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -105,5 +105,5 @@ protected:
       ));
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_CONSUMER_H */

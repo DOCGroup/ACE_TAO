@@ -16,10 +16,10 @@
 
 #ifndef ACE_CHANNEL_CLIENTS_H
 #define ACE_CHANNEL_CLIENTS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/Channel_Clients_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CHANNEL_CLIENTS_H */
 

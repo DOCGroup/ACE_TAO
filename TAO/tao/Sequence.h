@@ -15,7 +15,7 @@
 #ifndef TAO_SEQUENCE_H
 #define TAO_SEQUENCE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -656,6 +656,6 @@ TAO_Export int operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
 
 #include "tao/Sequence_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_SEQUENCE_H */

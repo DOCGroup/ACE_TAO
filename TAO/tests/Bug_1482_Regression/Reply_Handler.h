@@ -1,7 +1,7 @@
 // $Id$
 #ifndef REPLY_HANDLER_H
 #define REPLY_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "TestS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -28,5 +28,5 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*REPLY_HANDLER_H*/

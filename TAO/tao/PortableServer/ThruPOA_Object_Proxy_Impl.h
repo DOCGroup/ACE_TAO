@@ -21,7 +21,7 @@
 #include "portableserver_export.h"
 
 // -- ACE Include --
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // -- TAO Include --
 #include "tao/corbafwd.h"
@@ -68,6 +68,6 @@ public:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_THRUPOA_OBJECT_PROXY_IMPL_H_ */

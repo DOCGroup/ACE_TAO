@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_COMMAND_BUILDER_H
 #define TAO_Notify_Tests_COMMAND_BUILDER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -70,5 +70,5 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO_NOTIFY_TEST, TAO_Notify_Tests_Command_Builder
 
 ACE_FACTORY_DECLARE (TAO_NOTIFY_TEST, TAO_Notify_Tests_Command_Builder)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_COMMAND_BUILDER_H */

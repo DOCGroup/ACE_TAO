@@ -16,7 +16,7 @@
 
 #ifndef CIAO_DEPLOYMENT_CONFIGURATION_H
 #define CIAO_DEPLOYMENT_CONFIGURATION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -122,5 +122,5 @@ namespace CIAO
 # include "Deployment_Configuration.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_DEPLOYMENT_CONFIGURATION_H */

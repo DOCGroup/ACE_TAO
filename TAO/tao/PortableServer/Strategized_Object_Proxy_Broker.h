@@ -20,7 +20,7 @@
 #include "portableserver_export.h"
 
 // -- ACE Include --
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // -- TAO Include --
 #include "tao/corbafwd.h"
@@ -62,5 +62,5 @@ TAO_Strategized_Object_Proxy_Broker *the_tao_strategized_object_proxy_broker (vo
 // This function is used to access the unique instance of strategized
 // proxy broker. All the CORBA::Object share the proxy broker.
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_STRATEGIZED_OBJECT_PROXY_BROKER_H_ */

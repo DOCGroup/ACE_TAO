@@ -16,7 +16,7 @@
 
 #ifndef ACE_SCHEDULER_UTILITIES_H
 #define ACE_SCHEDULER_UTILITIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -65,5 +65,5 @@ public:
 #include "orbsvcs/Scheduler_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SCHEDULER_UTILITIES_H */

@@ -16,7 +16,7 @@
 
 #ifndef TAO_VARBASE_H
 #define TAO_VARBASE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 /**
  * @class TAO_Base_var
@@ -40,5 +40,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_VARBASE_H */

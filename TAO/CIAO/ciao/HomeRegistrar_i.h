@@ -13,7 +13,7 @@
 
 #ifndef CIAO_HOMEREGISTRAR_I_H
 #define CIAO_HOMEREGISTRAR_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "HomeRegistrarS.h"
 #include <CosNamingC.h>
@@ -78,5 +78,5 @@ namespace CIAO
 #include "HomeRegistrar_i.inl"
 #endif /* !defined INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_HOMEREGISTRAR_I_H */

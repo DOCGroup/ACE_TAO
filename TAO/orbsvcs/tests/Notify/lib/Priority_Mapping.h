@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_PRIORITY_MAPPING_H
 #define TAO_Notify_Tests_PRIORITY_MAPPING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -41,5 +41,5 @@ public:
                 CORBA::Short &corba_priority);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_PRIORITY_MAPPING_H */

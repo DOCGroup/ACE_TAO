@@ -3,7 +3,7 @@
 
 #ifndef ADDRSERVER_H
 #define ADDRSERVER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
 
@@ -36,5 +36,5 @@ private:
   // The address
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ADDRSERVER_H */

@@ -3,7 +3,7 @@
 #ifndef RTCP_PACKET_INCLUDE
 #define RTCP_PACKET_INCLUDE
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -393,5 +393,5 @@ private:
   RR_Block *rr_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /*  RTCP_PACKET_INCLUDE  */

@@ -18,7 +18,7 @@
 
 #ifndef TAO_CUSTOM_NETWORK_PRIORITY_MAPPING_H
 #define TAO_CUSTOM_NETWORK_PRIORITY_MAPPING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -65,5 +65,5 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CUSTOM_NETWORK_PRIORITY_MAPPING_H */

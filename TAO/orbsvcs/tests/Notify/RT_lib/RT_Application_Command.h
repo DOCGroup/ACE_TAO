@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_RT_APPLICATION_COMMAND_H
 #define TAO_Notify_Tests_RT_APPLICATION_COMMAND_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rt_notify_test_export.h"
 
@@ -39,5 +39,5 @@ public:
   virtual void handle_init (ACE_ENV_SINGLE_ARG_DECL);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_RT_APPLICATION_COMMAND_H */

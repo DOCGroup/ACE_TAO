@@ -4,7 +4,7 @@
 
 #ifndef BIG_ONEWAYS_SESSION_H
 #define BIG_ONEWAYS_SESSION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 #include "Session_Task.h"
@@ -110,5 +110,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* BIG_ONEWAYS_SESSION_H */

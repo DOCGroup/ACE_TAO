@@ -15,7 +15,7 @@
 #ifndef TAO_MESSAGING_AMI_CLIENTREQUESTINFO_I_H
 #define TAO_MESSAGING_AMI_CLIENTREQUESTINFO_I_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "messaging_export.h"
 #include "tao/ClientRequestInfo_i.h"
@@ -42,6 +42,6 @@ public:
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_MESSAGING_AMI_CLIENTREQUESTINFO_I_H */

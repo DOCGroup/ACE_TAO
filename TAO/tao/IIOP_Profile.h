@@ -17,7 +17,7 @@
 
 #ifndef TAO_IIOP_PROFILE_H
 #define TAO_IIOP_PROFILE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Profile.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -120,5 +120,5 @@ protected:
 # include "tao/IIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_IIOP_PROFILE_H */

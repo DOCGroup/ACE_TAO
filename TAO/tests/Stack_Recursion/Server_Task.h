@@ -4,7 +4,7 @@
 
 #ifndef STACK_RECURSION_SERVER_TASK_H
 #define STACK_RECUSRION_SERVER_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corba.h"
 
 
@@ -35,5 +35,5 @@ private:
   const Sender *sender_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* STACK_RECUSRION_SERVER_TASK_H */

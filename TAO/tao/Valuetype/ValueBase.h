@@ -14,7 +14,7 @@
 #ifndef TAO_VALUEBASE_H
 #define TAO_VALUEBASE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "valuetype_export.h"
 #include "tao/orbconf.h"
@@ -213,6 +213,6 @@ operator>> (TAO_InputCDR&, CORBA::ValueBase *&);
 # include "ValueBase.inl"
 #endif /* __ACE_INLINE__*/
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_VALUEBASE_H */

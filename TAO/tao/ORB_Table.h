@@ -15,7 +15,7 @@
 #ifndef TAO_ORB_TABLE_H
 #define TAO_ORB_TABLE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/TAO_Export.h"
 
@@ -102,6 +102,6 @@ private:
 # include "tao/ORB_Table.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_ORB_TABLE_H */

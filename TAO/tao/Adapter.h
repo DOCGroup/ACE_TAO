@@ -12,7 +12,7 @@
 
 #ifndef TAO_ADAPTER_H
 #define TAO_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Object.h"
 
@@ -191,5 +191,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_OBJECT_ADAPTER_H */

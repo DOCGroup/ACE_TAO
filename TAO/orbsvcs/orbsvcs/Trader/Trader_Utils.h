@@ -13,7 +13,7 @@
 
 #ifndef TAO_TRADER_UTILS_H
 #define TAO_TRADER_UTILS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Trader.h"
 
@@ -774,5 +774,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TRADER_UTILS_H */

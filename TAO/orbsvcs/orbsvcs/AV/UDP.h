@@ -13,7 +13,7 @@
 
 #ifndef TAO_AV_UDP_H
 #define TAO_AV_UDP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 #include "Protocol_Factory.h"
@@ -285,5 +285,5 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_Factory)
 #include "UDP.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_UDP_H */

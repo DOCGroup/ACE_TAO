@@ -7,7 +7,7 @@
 
 #include "ace/Hash_Map_Manager.h"
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 typedef ACE_Hash_Map_Manager_Ex <ACE_CString,
                                  CORBA::Object_ptr,
@@ -222,5 +222,5 @@ class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
   ImR_Adapter_Activator *activator_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* IMR_LOCATOR_I_H */

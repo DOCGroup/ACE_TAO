@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_RT_PROPERTIES_H
 #define TAO_Notify_RT_PROPERTIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rt_notify_export.h"
 
@@ -61,5 +61,5 @@ TAO_RT_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_RT_Properties, TAO_SY
 #include "RT_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_RT_PROPERTIES_H */

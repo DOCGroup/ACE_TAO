@@ -12,7 +12,7 @@
 
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_H
 #define TAO_PERSISTENT_NAMING_CONTEXT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Hash_Naming_Context.h"
 #include "Persistent_Entries.h"
@@ -263,5 +263,5 @@ protected:
   TAO_Persistent_Context_Index *index_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PERSISTENT_NAMING_CONTEXT_H */

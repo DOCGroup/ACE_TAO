@@ -15,7 +15,7 @@
 
 #ifndef TAO_TRANSPORT_H
 #define TAO_TRANSPORT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -942,5 +942,5 @@ private:
 # include "Transport.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TRANSPORT_H */

@@ -19,7 +19,7 @@
 
 #ifndef TAO_DIRECT_PRIORITY_MAPPING_H
 #define TAO_DIRECT_PRIORITY_MAPPING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -63,5 +63,5 @@ private:
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DIRECT_PRIORITY_MAPPING_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_CONNECTION_CACHE_MANAGER_H
 #define TAO_CONNECTION_CACHE_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Cache_Entries.h"
 
@@ -246,5 +246,5 @@ private:
 # include "tao/Transport_Cache_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_CONNECTION_CACHE_MANAGER_H*/

@@ -16,7 +16,7 @@
 
 #ifndef TAO_UIOP_FACTORY_H
 #define TAO_UIOP_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -79,5 +79,5 @@ ACE_FACTORY_DECLARE (TAO_Strategies, TAO_UIOP_Protocol_Factory)
 
 # endif  /* TAO_HAS_UIOP == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_UIOP_FACTORY_H */

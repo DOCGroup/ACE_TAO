@@ -13,7 +13,7 @@
 
 #ifndef TAO_AV_MCAST_H
 #define TAO_AV_MCAST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "FlowSpec_Entry.h"
 #include "Protocol_Factory.h"
@@ -109,5 +109,5 @@ protected:
 #include "MCast.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_MCAST_H */

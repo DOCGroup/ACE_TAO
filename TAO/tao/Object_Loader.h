@@ -10,7 +10,7 @@
 
 #ifndef TAO_OBJECT_LOADER_H
 #define TAO_OBJECT_LOADER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Exception.h"
 
@@ -55,5 +55,5 @@ public:
 # include "Object_Loader.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_OBJECT_LOADER_H */

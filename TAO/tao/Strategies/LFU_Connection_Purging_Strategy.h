@@ -10,7 +10,7 @@
 
 #ifndef TAO_LFU_PURGING_STRATEGY_H
 #define TAO_LFU_PURGING_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "strategies_export.h"
 #include "tao/Connection_Purging_Strategy.h"
@@ -45,5 +45,5 @@ public:
   virtual void update_item (TAO_Transport* transport);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_LFU_PURGING_STRATEGY_H */

@@ -16,7 +16,7 @@
 #ifndef TAO_IFR_SERVICE_UTILS_T_H
 #define TAO_IFR_SERVICE_UTILS_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Configuration.h"
 
@@ -112,6 +112,6 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_IFR_SERVICE_UTILS_T_H */

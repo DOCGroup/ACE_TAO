@@ -12,7 +12,7 @@
 
 #ifndef TAO_CONDITION_H
 #define TAO_CONDITION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "orbconf.h"
 #include "ace/Synch_T.h"
 
@@ -116,5 +116,5 @@ private:
 #pragma implementation ("Condition.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_CONDITION_H*/

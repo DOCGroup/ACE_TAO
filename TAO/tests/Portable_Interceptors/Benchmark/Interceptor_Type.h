@@ -5,7 +5,7 @@
 
 #ifndef TAO_INTERCEPTOR_TYPE_H
 #define TAO_INTERCEPTOR_TYPE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -29,5 +29,5 @@ enum Interceptor_Type
 void get_interceptor_type (int argc, char *argv[],
                            int &interceptor_type);
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_INTERCEPTOR_TYPE_H */

@@ -11,7 +11,7 @@
 #ifndef TAO_CONTINUOUS_PRIORITY_MAPPING_H
 #define TAO_CONTINUOUS_PRIORITY_MAPPING_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -74,6 +74,6 @@ private:
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CONTINUOUS_PRIORITY_MAPPING_H */

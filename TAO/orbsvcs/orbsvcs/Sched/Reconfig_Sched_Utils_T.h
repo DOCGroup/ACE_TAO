@@ -16,7 +16,7 @@
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_T_H
 #define TAO_RECONFIG_SCHED_UTILS_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -426,5 +426,5 @@ private:
 #pragma implementation ("Reconfig_Sched_Utils_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RECONFIG_SCHED_UTILS_T_H */

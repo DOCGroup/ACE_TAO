@@ -13,7 +13,7 @@
 
 #ifndef TAO_OPTABLE_H
 #define TAO_OPTABLE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 
@@ -384,5 +384,5 @@ typedef TAO_Singleton<TAO_Operation_Table_Factory,
                       TAO_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_FACTORY;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_OPTABLE_H */

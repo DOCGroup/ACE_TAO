@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_PERIODICCONSUMER_COMMAND_H
 #define TAO_Notify_Tests_PERIODICCONSUMER_COMMAND_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -91,5 +91,5 @@ protected:
   void handle_set_qos (ACE_ENV_SINGLE_ARG_DECL);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_PERIODICCONSUMER_COMMAND_H */

@@ -13,7 +13,7 @@
 #ifndef TAO_PG_DEFAULT_PROPERTY_VALIDATOR_H
 #define TAO_PG_DEFAULT_PROPERTY_VALIDATOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/PortableGroupC.h"
 
@@ -73,6 +73,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_PROPERTY_VALIDATOR_H */

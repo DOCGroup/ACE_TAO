@@ -16,7 +16,7 @@
 
 #ifndef CIAO_COMPONENTSERVER_IMPL_H
 #define CIAO_COMPONENTSERVER_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -139,5 +139,5 @@ protected:
 # include "ComponentServer_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_COMPONENTSERVER_IMPL_H */

@@ -19,7 +19,7 @@
 
 #ifndef SCHEDULER_INTERNAL_H
 #define SCHEDULER_INTERNAL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Scheduler.h"
 #include "ace/Unbounded_Set.h"
@@ -133,7 +133,7 @@ private:
 #include "Scheduler_Generic.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* SCHEDULER_INTERNAL_H */
 
 

@@ -15,7 +15,7 @@
 
 #ifndef TAO_TRADER_INTERFACES_H
 #define TAO_TRADER_INTERFACES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Trader_Utils.h"
 #include "Constraint_Interpreter.h"
@@ -1009,5 +1009,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TRADER_INTERFACES_H */

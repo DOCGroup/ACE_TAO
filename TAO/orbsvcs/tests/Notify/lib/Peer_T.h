@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_PEER_T_H
 #define TAO_Notify_Tests_PEER_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -123,5 +123,5 @@ protected:
 #pragma implementation ("Peer_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_PEER_T_H */

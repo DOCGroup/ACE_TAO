@@ -19,7 +19,7 @@
 
 #ifndef TAO_DYNAMIC_IMPLEMENTATION_H
 #define TAO_DYNAMIC_IMPLEMENTATION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/Servant_Base.h"
 
@@ -98,5 +98,5 @@ private:
   // Encapsulates code common to _is_a(), _get_interface() and _create_stub().
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DYNAMIC_IMPLEMENTATION_H */

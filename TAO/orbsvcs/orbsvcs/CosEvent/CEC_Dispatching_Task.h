@@ -12,7 +12,7 @@
 
 #ifndef TAO_CEC_DISPATCHING_TASK_H
 #define TAO_CEC_DISPATCHING_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
 #include "ace/Message_Block.h"
@@ -112,5 +112,5 @@ private:
 #include "CEC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CEC_DISPATCHING_TASK_H */

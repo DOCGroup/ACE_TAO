@@ -14,7 +14,7 @@
 
 #ifndef TAO_BIND_DISPATCHER_GUARD_H
 #define TAO_BIND_DISPATCHER_GUARD_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -57,5 +57,5 @@ private:
 # include "tao/Bind_Dispatcher_Guard.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif

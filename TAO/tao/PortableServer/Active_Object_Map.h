@@ -13,7 +13,7 @@
 
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
 #define TAO_ACTIVE_OBJECT_MAP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Key_Adapters.h"
 #include "Servant_Base.h"
@@ -643,5 +643,5 @@ public:
 # include "Active_Object_Map.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ACTIVE_OBJECT_MAP_H */

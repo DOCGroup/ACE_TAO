@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_PUSHCONSUMER_H
 #define TAO_Notify_Tests_PUSHCONSUMER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -100,5 +100,5 @@ protected:
 #include "PushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_PUSHCONSUMER_H */

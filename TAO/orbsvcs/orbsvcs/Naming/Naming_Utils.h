@@ -18,7 +18,7 @@
 
 #ifndef TAO_NAMING_UTILS_H
 #define TAO_NAMING_UTILS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
@@ -272,5 +272,5 @@ protected:
   CosNaming::NamingContext_var naming_context_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NAMING_UTILS_H */

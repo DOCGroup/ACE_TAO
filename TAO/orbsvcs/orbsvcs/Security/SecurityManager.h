@@ -14,7 +14,7 @@
 #ifndef TAO_SECURITY_MANAGER_H
 #define TAO_SECURITY_MANAGER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "security_export.h"
 
@@ -165,6 +165,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SECURITY_MANAGER_H */

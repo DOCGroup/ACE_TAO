@@ -14,7 +14,7 @@
 #ifndef TAO_LB_PULL_HANDLER_H
 #define TAO_LB_PULL_HANDLER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -65,6 +65,6 @@ private:
   TAO_LB_LoadManager * load_manager_;
 
 };
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_PULL_HANDLER_H */

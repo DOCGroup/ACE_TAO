@@ -13,7 +13,7 @@
 
 #ifndef TAO_VALUETYPE_ADAPTER_H
 #define TAO_VALUETYPE_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -60,5 +60,5 @@ public:
   virtual CORBA::ValueFactory vf_map_find (const char *) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_VALUETYPE_ADAPTER_H */

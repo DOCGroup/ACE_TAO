@@ -17,7 +17,7 @@
 
 #ifndef TAO_AV_QOS_UDP_H
 #define TAO_AV_QOS_UDP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 
 #include "ace/config-all.h"
@@ -299,5 +299,5 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_QoS_Factory)
 
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_QOS_UDP_H */

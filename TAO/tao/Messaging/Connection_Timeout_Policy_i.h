@@ -12,7 +12,7 @@
 
 #ifndef TAO_CONNECTION_TIMEOUT_POLICY_I_H
 #define TAO_CONNECTION_TIMEOUT_POLICY_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -98,5 +98,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_CONNECTION_TIMEOUT_POLICY_I_H*/

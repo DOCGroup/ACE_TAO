@@ -16,7 +16,7 @@
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_H
 #define TAO_RECONFIG_SCHED_UTILS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -330,5 +330,5 @@ public:
 // Include the templates here.
 #include "Reconfig_Sched_Utils_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RECONFIG_SCHED_UTILS_H */

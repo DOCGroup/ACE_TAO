@@ -16,7 +16,7 @@
 
 #ifndef TAO_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_INVOCATION_ENDPOINT_SELECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -121,5 +121,5 @@ protected:
 # include "tao/Invocation_Endpoint_Selectors.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_INVOCATION_ENDPOINT_SELECTOR_H */

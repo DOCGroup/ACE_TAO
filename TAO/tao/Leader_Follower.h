@@ -14,7 +14,7 @@
 #ifndef TAO_LEADER_FOLLOWER_H
 #define TAO_LEADER_FOLLOWER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/LF_Follower.h"
 #include "tao/ORB_Core.h"
@@ -279,6 +279,6 @@ private:
 # include "tao/Leader_Follower.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_LEADER_FOLLOWER_H */

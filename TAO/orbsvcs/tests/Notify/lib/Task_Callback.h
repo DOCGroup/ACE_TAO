@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_Tests_TASK_CALLBACK_H
 #define TAO_Notify_Tests_TASK_CALLBACK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -35,5 +35,5 @@ public:
   virtual void done (TAO_Notify_Tests_Periodic_Consumer* consumer) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_TASK_CALLBACK_H */

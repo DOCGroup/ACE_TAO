@@ -17,7 +17,7 @@
 
 #ifndef TAO_CHAR_IBM1047_ISO8859_TRANSLATOR_H
 #define TAO_CHAR_IBM1047_ISO8859_TRANSLATOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -71,5 +71,5 @@ public:
   virtual ACE_CDR::ULong tcs () {return 0x00010001;}
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CHAR_IBM1047_ISO8859_TRANSLATOR_H */

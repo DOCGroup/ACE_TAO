@@ -15,7 +15,7 @@
 
 #ifndef CIAO_CONTAINER_BASE_H
 #define CIAO_CONTAINER_BASE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -165,5 +165,5 @@ namespace CIAO
 # include "Container_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_CONTAINER_BASE_H */

@@ -9,7 +9,7 @@
 
 #ifndef TAO_RTEC_PERF_CLIENT_OPTIONS_H
 #define TAO_RTEC_PERF_CLIENT_OPTIONS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtec_perf_export.h"
 
@@ -56,5 +56,5 @@ private:
                       int &option_value);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RTEC_PERF_CLIENT_OPTIONS_H */

@@ -16,7 +16,7 @@
 
 #ifndef TAO_TIME_SERVICE_CLERK_H
 #define TAO_TIME_SERVICE_CLERK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Reactor.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
@@ -137,5 +137,5 @@ private:
   Timer_Helper helper_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TIME_SERVICE_CLERK_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_LB_MEMBER_LOCATOR_H
 #define TAO_LB_MEMBER_LOCATOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -84,6 +84,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_MEMBER_LOCATOR_H */

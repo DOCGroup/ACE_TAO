@@ -22,7 +22,7 @@
 #ifndef TAO_PSDL_CODE_GEN_H
 #define TAO_PSDL_CODE_GEN_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "psdl_export.h"
 
@@ -88,6 +88,6 @@ class TAO_PSDL_Export TAO_PSDL_Code_Gen
   IOP::Codec_var codec_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_CODE_GEN_H */

@@ -4,7 +4,7 @@
 
 #ifndef THROUGHPUT_RECEIVER_FACTORY_H
 #define THROUGHPUT_RECEIVER_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -40,5 +40,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* THROUGHPUT_RECEIVER_FACTORY_H */

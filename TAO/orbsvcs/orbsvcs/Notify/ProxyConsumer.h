@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_PROXYCONSUMER_H
 #define TAO_Notify_PROXYCONSUMER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 #include "ace/Auto_Ptr.h"
@@ -90,5 +90,5 @@ typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer> TAO_Notify_Pro
 #include "ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_PROXYCONSUMER_H */

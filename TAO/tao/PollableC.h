@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_POLLABLEC_H_
 #define _TAO_IDL_ORIG_POLLABLEC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "Exception.h"
 
 #if (TAO_HAS_AMI_POLLER == 1)
@@ -513,6 +513,6 @@ TAO_NAMESPACE_CLOSE // module CORBA
 
 #endif /* TAO_HAS_AMI_POLLER == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

@@ -19,7 +19,7 @@
 #ifndef TAO_CORBA_OBJECT_H
 #define TAO_CORBA_OBJECT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Policy_ForwardC.h"
 
@@ -399,5 +399,5 @@ operator>> (TAO_InputCDR&, CORBA::Object *&);
 # include "tao/Object.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CORBA_OBJECT_H */

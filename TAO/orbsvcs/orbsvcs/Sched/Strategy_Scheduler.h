@@ -19,7 +19,7 @@
 
 #ifndef STRATEGY_SCHEDULER_H
 #define STRATEGY_SCHEDULER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "DynSched.h"
 
@@ -497,7 +497,7 @@ private:
 #include "Strategy_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* STRATEGY_SCHEDULER_H */
 
 // EOF

@@ -11,7 +11,7 @@
 
 #ifndef TAO_COMMAND_FACTORY_T_H
 #define TAO_COMMAND_FACTORY_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_test_export.h"
 
@@ -61,5 +61,5 @@ public:
 #pragma implementation ("Command_Factory_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_COMMAND_FACTORY_T_H */

@@ -17,7 +17,7 @@
 #ifndef TAO_PSDL_STRUCT_VISITOR_H
 #define TAO_PSDL_STRUCT_VISITOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PSDL_Node_Visitor.h"
 
@@ -61,6 +61,6 @@ class TAO_PSDL_Struct_Visitor : public TAO_PSDL_Node_Visitor
   const char *struct_name_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_STRUCT_VISITOR_H */

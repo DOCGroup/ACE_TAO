@@ -30,7 +30,7 @@
 
 #ifndef _TAO_IDL_ORIG_RTCORBAC_H_
 #define _TAO_IDL_ORIG_RTCORBAC_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "rtcorba_export.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -2818,6 +2818,6 @@ TAO_RTCORBA_Export CORBA::Boolean operator>> (
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

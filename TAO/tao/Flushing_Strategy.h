@@ -13,7 +13,7 @@
 #ifndef TAO_FLUSHING_STRATEGY_H
 #define TAO_FLUSHING_STRATEGY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -67,6 +67,6 @@ public:
   virtual int flush_transport (TAO_Transport *transport) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_FLUSHING_STRATEGY_H */

@@ -5,7 +5,7 @@
 #ifndef REPLY_HANDLER_H
 #define REPLY_HANDLER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -34,5 +34,5 @@ private:
   CORBA::ORB_var orb_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* REPLY_HANDLER_H */

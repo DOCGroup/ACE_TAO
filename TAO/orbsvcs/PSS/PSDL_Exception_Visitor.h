@@ -20,7 +20,7 @@
 #ifndef TAO_PSDL_EXCEPTION_VISITOR_H
 #define TAO_PSDL_EXCEPTION_VISITOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PSDL_Node_Visitor.h"
 
@@ -51,6 +51,6 @@ class TAO_PSDL_Exception_Visitor : public TAO_PSDL_Node_Visitor
   ACE_CString exception_name_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_EXCEPTION_VISITOR_H */

@@ -17,7 +17,7 @@
 #ifndef TAO_TYPECODE_H
 #define TAO_TYPECODE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -636,6 +636,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
 # include "tao/Typecode.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_TYPECODE_H */

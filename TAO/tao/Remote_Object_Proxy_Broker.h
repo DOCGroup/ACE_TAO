@@ -17,7 +17,7 @@
 #ifndef TAO_REMOTE_OBJECT_PROXY_BROKER_H
 #define TAO_REMOTE_OBJECT_PROXY_BROKER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/Object_Proxy_Broker.h"
@@ -46,6 +46,6 @@ private:
 TAO_Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker (void);
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_REMOTE_OBJECT_PROXY_BROKER_H */

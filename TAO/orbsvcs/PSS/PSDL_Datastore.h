@@ -13,7 +13,7 @@
 
 #ifndef TAO_PSDL_DATASTORE_H
 #define TAO_PSDL_DATASTORE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PSDL_Code_Gen.h"
 
@@ -130,5 +130,5 @@ private:
   void *base_address_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PSDL_DATASTORE_H */

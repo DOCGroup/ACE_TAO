@@ -11,7 +11,7 @@
 
 #ifndef CIAO_SERVER_INIT_H
 #define CIAO_SERVER_INIT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "CIAO_Server_Export.h"
@@ -41,5 +41,5 @@ namespace CIAO
   }
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_SERVER_INIT_H */

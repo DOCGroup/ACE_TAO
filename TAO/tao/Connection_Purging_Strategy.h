@@ -10,7 +10,7 @@
 
 #ifndef TAO_PURGING_STRATEGY_H
 #define TAO_PURGING_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -56,5 +56,5 @@ private:
 # include "tao/Connection_Purging_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PURGING_STRATEGY_H */

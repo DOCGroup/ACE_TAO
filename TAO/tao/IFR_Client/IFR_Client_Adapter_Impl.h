@@ -14,7 +14,7 @@
 #ifndef TAO_IFR_CLIENT_ADAPTER_IMPL_H
 #define TAO_IFR_CLIENT_ADAPTER_IMPL_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IFR_Client_Adapter.h"
 
@@ -88,6 +88,6 @@ TAO_Requires_IFR_Client_Initializer =
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_IFR_CLIENT_ADAPTER_IMPL_H */

@@ -8,7 +8,7 @@
 
 #ifndef Client_ORBInitializer__h_
 #define Client_ORBInitializer__h_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
@@ -29,5 +29,5 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* Client_ORBInitializer__h_ */

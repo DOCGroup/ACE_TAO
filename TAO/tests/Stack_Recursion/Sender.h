@@ -4,7 +4,7 @@
 
 #ifndef STACK_RECURSION_SENDER_H
 #define STACK_RECURSION_SENDER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
@@ -61,5 +61,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* MUXING_RECEIVER_H */
