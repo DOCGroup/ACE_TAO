@@ -54,6 +54,10 @@ $iorfile_1 = $iorfile."_1";
 $iorfile_2 = $iorfile."_2";
 $iorfile_3 = $iorfile."_3";
 
+unlink $iorfile_1;
+unlink $iorfile_2;
+unlink $iorfile_3;
+
 $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-f $iorfile $extra_args");
 
 ACE::waitforfile ($iorfile_1);
