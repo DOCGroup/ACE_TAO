@@ -2,14 +2,14 @@
 //
 // $Id$
 
-#include "tao/BiDir_ORBInitializer.h"
-#include "tao/BiDir_PolicyFactory.h"
-#include "tao/BiDirPolicyC.h"
+#include "BiDir_ORBInitializer.h"
+#include "BiDir_PolicyFactory.h"
+#include "BiDirGIOP.h"
 
-ACE_RCSID (tao, BiDir_ORBInitializer, "$Id$")
+ACE_RCSID (BiDir_GIOP, BiDir_ORBInitializer, "$Id$")
 
 
-#include "tao/ORB_Core.h"
+
 
 void
 TAO_BiDir_ORBInitializer::pre_init (

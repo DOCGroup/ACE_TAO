@@ -19,7 +19,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "BiDirPolicyC.h"
+#include "BiDirGIOP.h"
 
 #if !defined (__ACE_INLINE__)
 #include "BiDirPolicyC.i"
@@ -120,7 +120,7 @@ void *BiDirPolicy::BidirectionalPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -137,4 +137,3 @@ const char* BiDirPolicy::BidirectionalPolicy::_interface_repository_id (void) co
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<BiDirPolicy::BidirectionalPolicy,BiDirPolicy::BidirectionalPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

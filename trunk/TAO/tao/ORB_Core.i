@@ -28,6 +28,21 @@ TAO_ORB_Core::transport_cache (void)
   return this->transport_cache_;
 }
 
+ACE_INLINE int
+TAO_ORB_Core::parse_bidir_policy (CORBA::Policy_ptr policy,
+                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->bidir_adapter_)
+    return this->bidir_adapter_->parse_policy (this,
+                                               policy,
+                                               ACE_TRY_ENV);
+  else
+    // @@ The BiDirectional library hasn't been loaded. What do we do?
+    // We are just returning an error which will be processd by the
+    // POA who requested us to parse the policy.
+    return 0;
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::bidir_giop_policy (void)
 {

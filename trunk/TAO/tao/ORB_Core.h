@@ -43,6 +43,7 @@
 
 #include "RT_Policy_i.h"
 #include "Protocols_Hooks.h"
+#include "BiDir_Adapter.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Thread_Manager.h"
@@ -81,6 +82,7 @@ class TAO_Client_Priority_Policy_Selector;
 class TAO_Message_State_Factory;
 class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
+
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -839,13 +841,16 @@ public:
   /// Return the underlying connection cache.
   TAO_Transport_Cache_Manager &transport_cache (void);
 
+  /// Call the bidir_giop library to parse the policy.
+  int parse_bidir_policy (CORBA::Policy_ptr policy,
+                          CORBA::Environment &ACE_TRY_ENV);
+
   /// Set and Get methods to indicate whether a BiDir IIOP policy has
   /// been set in the POA.
   /// @note At present, the value will be true even if one of the POA's
   ///       is set with the Bi Dir GIOP policy.
   CORBA::Boolean bidir_giop_policy (void);
   void bidir_giop_policy (CORBA::Boolean);
-
 
 
   /// Return the table that maps object key/name to de-stringified
@@ -889,6 +894,10 @@ protected:
 
   /// Obtain and cache the IORManipulation factory object reference.
   void resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV);
+
+  /// Search the Dynamic service list for BiDirectional options that
+  /// can be dynamically loaded.
+  int bidirectional_giop_init (CORBA::Environment &ACE_TRY_ENV);
 
   /// Search the Dynamic service list for well known services that has
   /// callbacks  which can be dynamically loaded.
@@ -1195,6 +1204,9 @@ protected:
 
   /// TAO's connection cache.
   TAO_Transport_Cache_Manager transport_cache_;
+
+  /// BiDirectional GIOP factory
+  TAO_BiDir_Adapter *bidir_adapter_;
 
   /// Bir Dir GIOP policy value
   CORBA::Boolean bidir_giop_policy_;

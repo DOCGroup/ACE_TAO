@@ -22,8 +22,12 @@
 #ifndef _TAO_IDL_BIDIRPOLICYC_H_
 #define _TAO_IDL_BIDIRPOLICYC_H_
 
+#ifndef TAO_BIDIRGIOP_SAFE_INCLUDE
+#error "You should not include BiDirPolicyC.h directly, use BiDirGIOP.h"
+#endif /* !TAO_BIDIRGIOP_SAFE_INCLUDE */
+
 #include "ace/pre.h"
-#include "tao/TAO_Export.h"
+#include "bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,13 +38,13 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_BiDirGIOP_Export
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
 #    undef TAO_EXPORT_NESTED_MACRO
 #  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Export
+#  define TAO_EXPORT_NESTED_MACRO TAO_BiDirGIOP_Export
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
@@ -54,7 +58,7 @@ TAO_NAMESPACE  BiDirPolicy
 {
   typedef CORBA::UShort BidirectionalPolicyValue;
   typedef CORBA::UShort_out BidirectionalPolicyValue_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BidirectionalPolicyValue;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BidirectionalPolicyValue;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort NORMAL;
 
@@ -75,7 +79,7 @@ TAO_NAMESPACE  BiDirPolicy
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY___VAR_CH_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY___VAR_CH_
 
-  class TAO_Export BidirectionalPolicy_var : public TAO_Base_var
+  class TAO_BiDirGIOP_Export BidirectionalPolicy_var : public TAO_Base_var
   {
   public:
     BidirectionalPolicy_var (void); // default constructor
@@ -110,7 +114,7 @@ TAO_NAMESPACE  BiDirPolicy
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY___OUT_CH_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY___OUT_CH_
 
-  class TAO_Export BidirectionalPolicy_out
+  class TAO_BiDirGIOP_Export BidirectionalPolicy_out
   {
   public:
     BidirectionalPolicy_out (BidirectionalPolicy_ptr &);
@@ -134,7 +138,7 @@ TAO_NAMESPACE  BiDirPolicy
 #if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY_CH_)
 #define _BIDIRPOLICY_BIDIRECTIONALPOLICY_CH_
 
-class TAO_Export BidirectionalPolicy: public virtual CORBA::Policy
+class TAO_BiDirGIOP_Export BidirectionalPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)

@@ -9,13 +9,11 @@
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
-
 #ifndef TAO_BIDIR_ORB_INITIALIZER_H
 #define TAO_BIDIR_ORB_INITIALIZER_H
-
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +22,8 @@
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
+#include "tao/corbafwd.h"
+
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -35,7 +35,7 @@
 #endif /* _MSC_VER */
 
 /// Messaging ORB initializer.
-class TAO_Export TAO_BiDir_ORBInitializer :
+class TAO_BiDirGIOP_Export TAO_BiDir_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
   public virtual TAO_Local_RefCounted_Object
 {
