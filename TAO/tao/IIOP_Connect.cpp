@@ -244,10 +244,8 @@ TAO_IIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
                   "IIOP_Server_CH::handle_input, handle_input"));
     }
 
-  if (result == 0)
-    return 0;
-
-  // ACE_ASSERT (result == 1);
+  if (result == 0 || result == -1)
+    return result;
 
   TAO_GIOP::process_server_message (this->transport (),
                                     this->orb_core_,
