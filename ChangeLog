@@ -43,6 +43,11 @@ Sun Oct 13 19:38:35 2002  Krishnakumar B  <kitty@cse.wustl.edu>
           originally. This should fix all the build breakage. Thanks to
           Bala for pointing out the errors in the build.
 
+Sun Oct 13 18:50:53 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/SPIPE_Stream.h: Enhanced the documentation of ACE_SPIPE_Stream.
+	  Thanks to Pat McNerthney <ace@mcnerthney.com> for motivating
+ 	  this.
 
 Sun Oct 13 15:57:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
