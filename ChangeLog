@@ -1,3 +1,9 @@
+Fri Apr 25 08:12:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_auto_compile.pl:
+          Reverted change of yesterday to not build DLL projects twice.
+          This caused several new problems in the build.
+
 Fri Apr 25 06:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
