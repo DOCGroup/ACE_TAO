@@ -129,7 +129,6 @@ main (int argc, char *argv[])
         orb->string_to_object (ior,
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
-#if (TAO_HAS_SMART_PROXIES == 1)
       if (register_smart_proxy == 1)
         {
           // To use the smart proxy it is necessary to allocate the
@@ -149,7 +148,6 @@ main (int argc, char *argv[])
           // an unused variable.
           ACE_UNUSED_ARG (test_factory);
         }
-#endif /*(TAO_HAS_SMART_PROXIES == 1)*/
 
       Test_var server =
         Test::_narrow (object.in (),

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Smart_Proxy_Impl.h"
-#if (TAO_HAS_SMART_PROXIES == 1)
 Smart_Test_Factory::Smart_Test_Factory (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -39,4 +38,3 @@ Smart_Test_Proxy::box_prices (CORBA::Environment &ACE_TRY_ENV)
     }
   return this->price_;
 }
-#endif /*(TAO_HAS_SMART_PROXIES == 1)*/
