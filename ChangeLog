@@ -1,3 +1,8 @@
+Sun May 25 10:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+          Cygwin has si_addr and select.h
+
 Sun May 25 06:04:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_Dirent.cpp:
