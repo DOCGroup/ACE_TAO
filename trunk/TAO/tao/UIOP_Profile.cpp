@@ -149,7 +149,7 @@ TAO_UIOP_Profile::parse_string (const char *string,
   ACE_OS::strncpy (rendezvous.inout (), start, length);
   rendezvous[length] = '\0';
 
-  if (this->object_addr_.set (rendezvous.in ()) == 0)
+  if (this->object_addr_.set (rendezvous.in ()) != 0)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
