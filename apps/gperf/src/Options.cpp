@@ -666,10 +666,10 @@ Options::parse_args (int argc, char *argv[])
         // Print out the version and quit.
         case 'v':
           ACE_ERROR ((LM_ERROR,
-                      "%n: version %s\n%r\n%a",
+                      "%n: version %s\n%r\n",
                       version_string,
-                      &Options::usage,
-                      0));
+                      &Options::usage));
+          ACE_OS::exit (0);
           /* NOTREACHED */
           break;
         // Exit with value of 0 (this is useful to check if gperf exists)
