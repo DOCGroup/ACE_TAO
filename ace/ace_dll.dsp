@@ -135,8 +135,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
-# SUBTRACT CPP /Fr /YX /Yc /Yu
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /Fr /FD /c
+# SUBTRACT CPP /YX /Yc /Yu
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD BASE RSC /l 0x407 /d "_DEBUG"
@@ -307,6 +307,10 @@ SOURCE=.\Dirent_Selector.cpp
 # Begin Source File
 
 SOURCE=.\DLL.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DLL_Manager.cpp
 # End Source File
 # Begin Source File
 
@@ -1319,6 +1323,10 @@ SOURCE=.\Dirent_Selector.h
 # Begin Source File
 
 SOURCE=.\DLL.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DLL_Manager.h
 # End Source File
 # Begin Source File
 
