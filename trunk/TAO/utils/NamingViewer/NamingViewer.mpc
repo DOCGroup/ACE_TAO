@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : namingexe, mfc {
+project : namingexe, ace_mfc {
   exename    = NamingViewer
   pch_header = StdAfx.h
   pch_source = StdAfx.cpp
