@@ -94,6 +94,9 @@ public:
   virtual ACE_HANDLE fetch_handle (void) = 0;
   // Get the underlying handle
 
+  int purge_entry (void);
+  // Purge our entry from the Connection Cache
+
 protected:
 
   TAO_ORB_Core *orb_core (void);

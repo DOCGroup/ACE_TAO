@@ -1,3 +1,17 @@
+Mon Nov 20 19:51:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h: Added a method purge_entry ().
+	
+	* tao/IIOP_Connect.h (TAO_IIOP_Server_Connection_Handler): 
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h: Removed the method close_connection ()
+	  from the base class and moved it to the server & client
+	  transport classes.  Further, added a call to purge_entry () on
+	  the service handler when close_connection () is called.  This is
+	  required as we need to purge the cache map entries when the ORB
+	  decides to shutdown the connection.
+
 Mon Nov 20 18:59:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
