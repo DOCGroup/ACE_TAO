@@ -243,11 +243,8 @@ ACE_Thread_Manager::close (int automatic_wait)
 #else
     ACE_UNUSED_ARG (automatic_wait);
 #endif /* 0 */
-    while (! this->thr_list_.is_empty ())
-      {
-        ACE_Thread_Descriptor *td = this->thr_list_.delete_head ();
-        delete td;
-      }
+  while (this->thr_list_.is_empty () == 0)
+    delete this->thr_list_.delete_head ();
 
   return 0;
 }
@@ -463,8 +460,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                   -1);
 
 #if !defined (ACE_NO_THREAD_ADAPTER)
-  // @@ Defining ACE_NO_THREAD_ADAPTER here really doesn't make any sense.
-  //    If we don't have thread adapter, thread manager won't work then.
+  // @@ Defining ACE_NO_THREAD_ADAPTER here really doesn't make any
+  // sense.  If we don't have thread adapter, thread manager won't
+  // work then.
   ACE_Thread_Adapter *thread_args =
     new ACE_Thread_Adapter (func,
                             args,
@@ -1130,7 +1128,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   ACE_Thread_Descriptor *copy_table = 0;
 
   // We have to make sure that while we wait for these threads to
-  // exit, we do not have the lock. Therefore we make a copy of all
+  // exit, we do not have the lock.  Therefore we make a copy of all
   // interesting entries and let go of the lock.
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -1148,7 +1146,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
         copy_table[copy_count++] = *iter.next ();
   }
 
-  // Now to do the actual work
+  // Now actually join() with all the threads in this group.
   int result = 0;
 
   for (int i = 0;
@@ -1257,30 +1255,21 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 int
 ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 {
-  // @@ What we should do is build a table of threads which have been
-  // removed so that we can ``join'' with them at this point and also
-  // close down the handles.
-
   ACE_TRACE ("ACE_Thread_Manager::wait");
 
 #if defined (ACE_HAS_THREADS)
-  size_t threads_waited_on;
   {
     // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    threads_waited_on = this->thr_list_.size ();
+    size_t threads_waited_on = this->thr_list_.size ();
 
     while (this->thr_list_.size () > 0)
       if (this->zero_cond_.wait (timeout) == -1)
         return -1;
-  } // Let go of the guard, giving other threads a chance to run.
 
-  // @@ Hopefully, we can get rid of all this stuff if we keep a list
-  // of threads to join with...  In addition, we should be able to
-  // close down the HANDLE at this point, as well, on NT.  Note that
-  // we can also mark the thr_table_[entry] as ACE_THR_IDLE once we've
-  // joined with it.
+    // Release the guard, giving other threads a chance to run.
+  } 
 
 #if !defined (VXWORKS)
   {
@@ -1288,9 +1277,9 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 
     ACE_Thread_Descriptor item;
 
-    while (!this->terminated_thr_queue_.dequeue_head (item))
-      if(ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
-	   || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
+    while (this->terminated_thr_queue_.dequeue_head (item) == 0)
+      if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
+          || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
         ACE_Thread::join (item.thr_handle_);
   }
 #endif /* VXWORKS */
