@@ -274,9 +274,9 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::IdUniquenessPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::IdUniquenessPolicyValue>::create (
-              "IdUniquenessPolicyFactory",
+              "IdUniquenessPolicyFactoryImpl",
               ACE_TEXT("dynamic IdUniquenessPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyFactoryImpl()"),
               PortableServer::UNIQUE_ID);
   policies.merge_policy (id_uniqueness_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

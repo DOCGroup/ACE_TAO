@@ -57,9 +57,9 @@ TAO_PortableServer_PolicyFactory::create_policy (
             TAO::Portable_Server::IdUniquenessPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::IdUniquenessPolicyValue>::create (
-              "IdUniquenessPolicyFactory",
+              "IdUniquenessPolicyFactoryImpl",
               ACE_TEXT("dynamic IdUniquenessPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyFactoryImpl()"),
               value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::ID_ASSIGNMENT_POLICY_ID)
