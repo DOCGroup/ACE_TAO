@@ -1,3 +1,11 @@
+Tue Apr 20 12:16:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+        
+          Added usage message for -Ge 2 option. Thanks to Johnny
+          Willemsen <jwillemsen@remedy.nl> for pointing out the
+          oversight.
+
 Tue Apr 20 11:56:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp:

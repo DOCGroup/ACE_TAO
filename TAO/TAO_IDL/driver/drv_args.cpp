@@ -271,6 +271,11 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Ge 2\t\tUse raw throw instead of ACE_THROW macro")
+      ACE_TEXT (" (disabled by default\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -GI[h|s|b|e|c]\t\tGenerate Implemenation Files \n")
     ));
   ACE_DEBUG ((
