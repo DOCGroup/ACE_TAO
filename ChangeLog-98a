@@ -1,3 +1,7 @@
+Fri Feb 13 09:04:13 1998  Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
+
+        * ace/config-osf1-4.0.h: added Rational RCC support.
+
 Wed Feb 11 09:50:27 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-dgux-4.x-ghs.h
