@@ -12104,7 +12104,6 @@ ACE_Countdown_Time::update (void)
   return this->stop () == 0 && this->start ();
 }
 
-
 #if defined (ACE_WIN32)
 ACE_INLINE const OSVERSIONINFO &
 ACE_OS::get_win32_versioninfo ()
