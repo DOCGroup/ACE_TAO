@@ -9,4 +9,9 @@ interface Test
 
   oneway void shutdown ();
   // Shut down the ORB.
+  
+  /* For SHMIOP. Please see Bug 1197 for details. This test seems to 
+   * use SHMIOP
+   */
+  void ping ();
 };

@@ -107,9 +107,15 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a struct in an any
 
+  /// Shutdown routine.
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Shutdown routine.
+
+
+  /// A ping. Please see the idl file for details.
+  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 
   void set_default_poa (PortableServer::POA_ptr poa);
   // Set default poa.

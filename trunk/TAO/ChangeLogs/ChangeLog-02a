@@ -1,3 +1,22 @@
+Thu Apr 25 14:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.h:
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/cubit.idl:
+	
+	* tests/RTCORBA/Client_Protocol/test.idl: 
+	* tests/RTCORBA/Client_Protocol/client.cpp:
+	* tests/RTCORBA/Client_Protocol/server.cpp: 
+
+	  Work around to fix the nasty bug 1197 problem. The client makes
+	  yet another two way invocation before shutting down the ORB and
+	  deleting the underlying shared memory segment. This seems to
+	  work atleast on the platform that I tested, namely
+	  guajira.cs. Finding this race was not simple enough and it
+	  doesnt seem to be much fun either!
+
 Thu Apr 25 05:36:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
