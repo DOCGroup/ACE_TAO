@@ -1,3 +1,10 @@
+Thu Jun 19 13:03:49 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Fixed a bug where the BUILD target wouldn't be updated when the
+          project had component requirements.
+
 Thu Jun 19 12:14:31 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
         * bin/tao_other_tests.lst
