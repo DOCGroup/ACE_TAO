@@ -1,6 +1,9 @@
 // $Id$
+
 #include "TT_Info.h"
 #include "orbsvcs/Trader/Trader_Utils.h"
+
+ACE_RCSID(Trading, TT_Info, "$Id$")
 
 const char* TT_Info::INTERFACE_NAMES[] =
 {

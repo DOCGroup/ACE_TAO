@@ -4,6 +4,7 @@
 #include "Audio_Control_i.h"
 #include "Audio_Control_State.h"
 
+ACE_RCSID(mpeg_server, Audio_Server, "$Id$")
 
 //----------------------------------------
 // Audio_Sig_Handler methods.

@@ -5,6 +5,8 @@
 
 #include "Simple_Dynamic.h"
 
+ACE_RCSID(Trading, Simple_Dynamic, "$Id$")
+
 template <class T>
 TAO_Simple_Dynamic_Property<T>::TAO_Simple_Dynamic_Property (const T& dp)
   : dp_ (dp)

@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -19,6 +20,7 @@
  * ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -43,6 +45,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -75,6 +78,8 @@
 #include "mpeg_client/dither.h"
 
 #include "mpeg_shared/routine.h"
+
+ACE_RCSID(client, vcr, "$Id$")
 
 static int mainPid;
 

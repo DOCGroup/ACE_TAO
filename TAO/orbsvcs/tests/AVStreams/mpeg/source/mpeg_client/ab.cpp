@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -45,6 +46,8 @@
 #include "mpeg_shared/filters.h"
 #include "mpeg_shared/fileio.h"
 #include "mpeg_shared/com.h"
+
+ACE_RCSID(mpeg_client, ab, "$Id$")
 
 /* magic number -- deviation is considered
    caused by clock drift only if rate <= 1/MAX_CLOCK_DRIFT.

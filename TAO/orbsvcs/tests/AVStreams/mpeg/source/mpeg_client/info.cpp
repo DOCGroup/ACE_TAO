@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -23,6 +24,11 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+
+#include "ace/ACE.h"
+
+ACE_RCSID(mpeg_client, info, "$Id$")
+
 char infomessage[] = "\
 \n\
 \n\

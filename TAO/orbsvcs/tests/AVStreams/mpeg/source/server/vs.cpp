@@ -3,6 +3,8 @@
 #include "mpeg_server/Video_Server.h"
 #include "vs.h"
  
+ACE_RCSID(server, vs, "$Id$")
+
 int
 Video_Child_Process::init (int argc,
                            char **argv)

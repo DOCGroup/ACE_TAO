@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -19,11 +20,14 @@
  * ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
+
 #include <string.h>
 #include <stdlib.h>
 #include "video.h"
 #include "dither.h"
 #include "proto.h"
+
+ACE_RCSID(mpeg_client, 2x2, "$Id$")
 
 #define RAND_ERR_RANGE 7
 #define RAND_ERR_SUBVAL 3

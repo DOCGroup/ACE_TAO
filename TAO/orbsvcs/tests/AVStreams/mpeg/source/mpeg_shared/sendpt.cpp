@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -25,6 +26,8 @@
  */
 #include <string.h>
 #include "sendpt.h"
+
+ACE_RCSID(mpeg_shared, sendpt, "$Id$")
 
 /* parameters:
    pat -- pattern

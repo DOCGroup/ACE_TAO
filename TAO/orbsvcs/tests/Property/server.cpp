@@ -18,6 +18,8 @@
 
 #include "server.h"
 
+ACE_RCSID(Property, server, "$Id$")
+
 // Main program
 
 int

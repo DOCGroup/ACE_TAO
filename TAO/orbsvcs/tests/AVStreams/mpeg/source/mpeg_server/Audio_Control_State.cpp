@@ -3,6 +3,8 @@
 #include "Audio_Control_State.h"
 #include "Audio_Control_i.h"
 
+ACE_RCSID(mpeg_server, Audio_Control_State, "$Id$")
+
 Audio_Control_State::Audio_Control_State (void)
   :audio_global_ (AUDIO_GLOBAL::instance ()),
    audio_control_i_ (AUDIO_CONTROL_I::instance ())

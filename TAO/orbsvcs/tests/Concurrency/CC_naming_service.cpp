@@ -1,4 +1,3 @@
-// -*- c++ -*-
 // $Id$
 
 // ============================================================================
@@ -19,6 +18,8 @@
 // ============================================================================
 
 #include "CC_naming_service.h"
+
+ACE_RCSID(Concurrency, CC_naming_service, "$Id$")
 
 CC_naming_service::CC_naming_service (CORBA::ORB_var orb, CORBA::Environment &_env)
   : naming_context_ (0),

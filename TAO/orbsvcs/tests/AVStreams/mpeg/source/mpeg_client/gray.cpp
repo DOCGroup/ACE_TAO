@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -25,6 +26,8 @@
 #include "video.h"
 #include "proto.h"
 #include "dither.h"
+
+ACE_RCSID(mpeg_client, gray, "$Id$")
 
 
 /*

@@ -1,5 +1,8 @@
 // $Id$
+
 #include "Offer_Exporter.h"
+
+ACE_RCSID(Trading, Offer_Exporter, "$Id$")
 
 TAO_Offer_Exporter::
 TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,

@@ -11,6 +11,8 @@
 
 #include "orbsvcs/Sched/Config_Scheduler.h"
 
+ACE_RCSID(Scheduling_Service, Scheduling_Service, "$Id$")
+
 const char* service_name = "ScheduleService";
 
 int

@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1994 The Geometry Center; University of Minnesota
    1300 South Second Street;  Minneapolis, MN  55454, USA;
 
@@ -15,6 +16,7 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -37,6 +39,8 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 #include "include/common.h"
 #include "newproto.h"
 #include "global.h"
+
+ACE_RCSID(mpeg_client, ui, "$Id$")
 
 int cmdBusy = 0;
 

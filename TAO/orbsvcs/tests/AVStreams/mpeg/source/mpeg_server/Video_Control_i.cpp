@@ -3,6 +3,8 @@
 #include "Video_Control_i.h"
 #include "mpeg_server/Video_Server.h"
 
+ACE_RCSID(mpeg_server, Video_Control_i, "$Id$")
+
 Video_Control_i::Video_Control_i ()
   : reactor_ (TAO_ORB_Core_instance ()->reactor ()),
     state_ (0),

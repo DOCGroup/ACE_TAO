@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 // ========================================================================
 // $Id$
 // 
@@ -17,6 +15,8 @@
 
 #include "Locking.h"
 #include "Service_Type_Repository.h"
+
+ACE_RCSID(Trader, Service_Type_Repository, "$Id$")
 
 TAO_Service_Type_Repository::
 TAO_Service_Type_Repository (ACE_Lock* lock)

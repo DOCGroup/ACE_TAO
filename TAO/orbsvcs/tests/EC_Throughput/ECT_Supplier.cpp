@@ -14,6 +14,8 @@
 #include "ECT_Supplier.h"
 #include "ECT_Data.h"
 
+ACE_RCSID(EC_Throughput, ECT_Supplier, "$Id$")
+
 int
 main (int argc, char *argv [])
 {

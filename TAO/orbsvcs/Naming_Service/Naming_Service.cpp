@@ -18,6 +18,8 @@
 
 #include "Naming_Service.h"
 
+ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
+
 // Default Constructor.
 
 Naming_Service::Naming_Service (void)

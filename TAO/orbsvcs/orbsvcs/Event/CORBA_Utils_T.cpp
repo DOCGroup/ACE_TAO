@@ -10,6 +10,8 @@
 #include "CORBA_Utils_T.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Event, CORBA_Utils_T, "$Id$")
+
 template <class TYPE>
 ACE_CORBA_Sequence<TYPE>::ACE_CORBA_Sequence (const ACE_CORBA_Sequence<TYPE> &source)
   : maximum_ (0),

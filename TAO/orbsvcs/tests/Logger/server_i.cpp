@@ -2,6 +2,8 @@
 
 #include "server_i.h"
 
+ACE_RCSID(Logger, server_i, "$Id$")
+
 Logger_Server::Logger_Server (void)
 {
   // Do nothing 

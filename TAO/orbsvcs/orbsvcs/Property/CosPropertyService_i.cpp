@@ -15,6 +15,8 @@
 
 #include "orbsvcs/Property/CosPropertyService_i.h"
 
+ACE_RCSID(Property, CosPropertyService_i, "$Id$")
+
 // = Methods to deal with ACE_Hash_Map_Manager.
 
 CosProperty_Hash_Key::CosProperty_Hash_Key (void)

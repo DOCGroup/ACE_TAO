@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*  
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -19,12 +20,15 @@
  * ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
+
 /* This file contains C code to implement an ordered dither. */
 
 #include <stdlib.h>
 #include "video.h"
 #include "proto.h"
 #include "dither.h"
+
+ACE_RCSID(mpeg_client, ordered2, "$Id$")
 
 #define DITH_SIZE 16
 

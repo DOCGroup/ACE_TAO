@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -23,6 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <X11/Xlib.h>
@@ -30,6 +32,8 @@
 #include <X11/Intrinsic.h>
 
 #include "include/common.h"
+
+ACE_RCSID(mpeg_client, global, "$Id$")
 
 /* Declaration of global variable to hold dither info. */
 

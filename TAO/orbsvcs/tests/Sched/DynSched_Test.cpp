@@ -5,6 +5,8 @@
   #include <quantify.h>
 #endif /* quantify */
 
+ACE_RCSID(Sched, DynSched_Test, "$Id$")
+
 // period times, in 100 nanoseconds
 #define ONE_HZ    10000000
 #define FIVE_HZ    2000000

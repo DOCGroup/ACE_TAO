@@ -16,6 +16,8 @@
 #include "tao/corba.h"
 #include "Life_Cycle_Service.h"
 
+ACE_RCSID(LifeCycle_Service, Life_Cycle_Service, "$Id$")
+
 static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
 
 Life_Cycle_Service_Server::Life_Cycle_Service_Server (void)

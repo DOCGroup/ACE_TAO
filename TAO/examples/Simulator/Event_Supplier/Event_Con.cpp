@@ -34,6 +34,8 @@
 #include "Event_Con.h"
 #include "NavWeapC.h"
 
+ACE_RCSID(Event_Supplier, Event_Con, "$Id$")
+
 static const int SOURCE_ID = 1001;
 
 static const char usage [] = 

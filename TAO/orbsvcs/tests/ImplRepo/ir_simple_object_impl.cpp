@@ -3,6 +3,8 @@
 #include "ir_simple_object_impl.h"
 #include "tao/corba.h"
 
+ACE_RCSID(ImplRepo, ir_simple_object_impl, "$Id$")
+
 // Constructor
 IR_Simple_Impl::IR_Simple_Impl (CORBA::ORB_ptr orb_ptr,
                                 PortableServer::POA_ptr poa_ptr,

@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
+ACE_RCSID(ImplRepo, ir_server_impl, "$Id$")
 
 IR_Server_Impl::IR_Server_Impl (void)
   : ior_output_file_ (0),

@@ -7,6 +7,8 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
+ACE_RCSID(orbsvcs, tmplinst_orbsvcs, "$Id$")
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Object_Manager<CORBA_Object>;
 template class TAO_Object_Manager<CORBA_TypeCode>;

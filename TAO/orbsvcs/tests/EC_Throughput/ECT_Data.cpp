@@ -2,6 +2,8 @@
 
 #include "ECT_Data.h"
 
+ACE_RCSID(EC_Throughput, ECT_Data, "$Id$")
+
 TAO_OutputCDR&
 operator<< (TAO_OutputCDR& cdr, ECT_Data& x)
 {

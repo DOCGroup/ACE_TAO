@@ -19,6 +19,7 @@
 #include "clnt.h"
 #include "NavWeapC.h"
 
+ACE_RCSID(DOVEMIB, clnt, "$Id$")
 
 Any_Test_Client::Any_Test_Client ()
 {

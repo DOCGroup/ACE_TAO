@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -39,6 +40,8 @@
 #include "../mpeg_shared/com.h"    
 #include "../mpeg_shared/routine.h"
 #include "../mpeg_server/proto.h"
+
+ACE_RCSID(server, vcrs, "$Id$")
 
 #define SESSION_NUM 4
 

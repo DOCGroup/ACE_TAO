@@ -12,3 +12,5 @@
 #include "orbsvcs/Scheduler_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(orbsvcs, Scheduler_Utilities, "$Id$")
+

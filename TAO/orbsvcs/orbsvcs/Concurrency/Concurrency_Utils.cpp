@@ -18,6 +18,8 @@
 #include "tao/corba.h"
 #include "Concurrency_Utils.h"
 
+ACE_RCSID(Concurrency, Concurrency_Utils, "$Id$")
+
 // Default constructor
 
 TAO_Concurrency_Server::TAO_Concurrency_Server (void)

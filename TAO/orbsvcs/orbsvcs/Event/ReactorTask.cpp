@@ -6,6 +6,8 @@
 
 #include "ReactorTask.h"
 
+ACE_RCSID(Event, ReactorTask, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Reactor_Task_Timeprobe_Description[] =

@@ -20,6 +20,8 @@
 
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(Event, Event_Channel, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Event_Channel_Timeprobe_Description[] =
