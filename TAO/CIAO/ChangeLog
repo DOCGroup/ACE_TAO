@@ -1,3 +1,9 @@
+Mon Aug 30 12:52:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* performance-tests/Benchmark/Benchmark.mpc:
+
+	  Fixes for link errors in the daily builds
+
 Sun Aug 29 19:25:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tools/XML_Helpers/XMLHelpers.mpc:
