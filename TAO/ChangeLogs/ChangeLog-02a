@@ -1,18 +1,24 @@
+Thu May 17 15:48:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/tutorials/Quoter/RT_Event_Service/index.html:
+          Remove reference to non-existent file.  Thanks to
+          Yew Khong See <seeyk@yahoo.com> for pointing this out.
+
 Thu May 17 18:52:42 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/POA/Loader/Servant_Activator.cpp (ServantLocator_i):   
-	* examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
+        * examples/POA/Loader/Servant_Activator.cpp (ServantLocator_i):
+        * examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
           Generalize this code so that it works on BCB.  Thanks to
           Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
-  
-	* tests/Object_Loader/run_test.pl: The Object_Loader test
-	  dynamically loads a DLL, and for this to work the DLL needs to
- 	  be put on the path.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.
 
-	* examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant): 
-	  Corrected a botched patch.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.
+        * tests/Object_Loader/run_test.pl: The Object_Loader test
+          dynamically loads a DLL, and for this to work the DLL needs to
+          be put on the path.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this.
+
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant):
+          Corrected a botched patch.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this.
 
 Thu May 17 20:28:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -22,16 +28,16 @@ Thu May 17 20:28:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
 
           The change in the IDL compiler of the handling of undefined
- 	  forward declared interfaces necessitated a change in tao_ifr's
- 	  handling of forward declared interfaces (defined or otherwise)
- 	  and of interface members. Thanks to Philippe Merle
- 	  <Philippe.Merle@lifl.fr> for uncovering this bug in his
- 	  CorbaScript testing efforts.
+          forward declared interfaces necessitated a change in tao_ifr's
+          handling of forward declared interfaces (defined or otherwise)
+          and of interface members. Thanks to Philippe Merle
+          <Philippe.Merle@lifl.fr> for uncovering this bug in his
+          CorbaScript testing efforts.
 
 Thu May 17 17:00:39 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Profile.cpp :
-	  Modified the instantiation of TAO_OutputCDR to go with the
+        * examples/PluggableUDP/DIOP/DIOP_Profile.cpp :
+          Modified the instantiation of TAO_OutputCDR to go with the
           new signature.
 
 Thu May 17 18:29:32 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
@@ -43,27 +49,27 @@ Thu May 17 18:29:32 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Thu May 17 16:23:40 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Internal.cpp (open_services):
+        * tao/TAO_Internal.cpp (open_services):
 
-	  Use a CORBA::StringSeq to contain the argument vector for the
-	  Service Configurator instead of an ACE_ARGV to get around some
-	  unwanted side effects caused by the latter.  With this change,
-	  redundant/nested quotes around "-ORBSvcConf..." ORB options is
-	  no longer needed.  [Bug 780]
+          Use a CORBA::StringSeq to contain the argument vector for the
+          Service Configurator instead of an ACE_ARGV to get around some
+          unwanted side effects caused by the latter.  With this change,
+          redundant/nested quotes around "-ORBSvcConf..." ORB options is
+          no longer needed.  [Bug 780]
 
-	* tao/LRU_Connection_Purging_Strategy.cpp (update_item_i):
+        * tao/LRU_Connection_Purging_Strategy.cpp (update_item_i):
 
-	  Fixed unused argument warning.
+          Fixed unused argument warning.
 
 Thu May 17 15:53:26 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.h (TAO_ORB_Core): 
-	* tao/ORB_Core.cpp (data_block_for_message_block): 
-	  Reverted the change I did to ACE_Data_Block *create_data_block_i()
-	  earlier today. There is not much point in having a 
-	  ACE_Allocator *msgblock_allocator in its signature when that has
-	  no role in creating a ACE_Data_Block.
-		
+        * tao/ORB_Core.h (TAO_ORB_Core):
+        * tao/ORB_Core.cpp (data_block_for_message_block):
+          Reverted the change I did to ACE_Data_Block *create_data_block_i()
+          earlier today. There is not much point in having a
+          ACE_Allocator *msgblock_allocator in its signature when that has
+          no role in creating a ACE_Data_Block.
+
 Thu May 17 15:45:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Single_Threaded_Latency/default.conf:
