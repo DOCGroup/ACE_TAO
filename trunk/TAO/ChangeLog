@@ -1,3 +1,9 @@
+Mon Nov 22 15:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+          Added include of Exception.h to get Corba exception streaming
+          operator. Fixes compile problems with the Borland compiler.
+
 Mon Nov 22 09:29:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp (copy_ctor_helper):
@@ -5,7 +11,7 @@ Mon Nov 22 09:29:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           When generating the call to the Messaging::ReplyHandler
           base class constructor for AMI reply handler classes,
           added the ACE_NESTED_CLASS macro wrapper to work around
-          a VC6 compiler bug. Thanks to Johnny Willemsen 
+          a VC6 compiler bug. Thanks to Johnny Willemsen
           <jwillemsen@rememdy.nl> for reporting the problem.
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
