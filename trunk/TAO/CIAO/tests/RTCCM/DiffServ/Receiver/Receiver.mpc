@@ -48,6 +48,7 @@ project(DiffServ_Receiver_exec) : ciao_component {
   
   idlflags  +=  -Wb,export_macro=RECEIVER_EXEC_Export -Wb,export_include=Receiver_exec_export.h
   dynamicflags   = RECEIVER_EXEC_BUILD_DLL
+  requires     += exceptions
 
   IDL_Files {
     

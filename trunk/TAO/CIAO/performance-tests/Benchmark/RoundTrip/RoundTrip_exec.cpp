@@ -46,7 +46,7 @@ MyImpl::RoundTrip_exec_i::~RoundTrip_exec_i ()
 }
 
 ::Benchmark::CCM_LatencyTest *
-MyImpl::RoundTrip_exec_i::get_latency (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::RoundTrip_exec_i::get_latency (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Benchmark::CCM_LatencyTest::_duplicate (this);
@@ -54,11 +54,11 @@ MyImpl::RoundTrip_exec_i::get_latency (ACE_ENV_SINGLE_ARG_DECL)
 
 /* Main method that invokes the octet_sequence */
 CORBA::Long
-MyImpl::RoundTrip_exec_i::makeCall (CORBA::Long data)
+MyImpl::RoundTrip_exec_i::makeCall (CORBA::Long data
+                                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return data*data*data;
-
+  return data * data * data;
 }
 
 // Operations from Components::SessionComponent
