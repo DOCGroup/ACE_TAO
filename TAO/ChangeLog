@@ -1,3 +1,17 @@
+Tue Aug 17 21:16:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+
+	  Changed to inherit from corba_messaging instead of providing
+	  requires statement to eliminate duplicate entries in list.
+
+	* orbsvcs/orbsvcs/RTCosScheduling.mpc:
+	* orbsvcs/orbsvcs/SSLIOP.mpc:
+	* orbsvcs/orbsvcs/Security.mpc:
+
+	  Changed to inherit from interceptors instead of providing
+	  requires statements to eliminate duplicate entries in list.
+
 Tue Aug 17 17:32:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* {docs,examples,orbsvcs,performance-tests,utils}/.../*.{cpp,h,idl}:
@@ -16,7 +30,7 @@ Tue Aug 17 17:56:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/fe_interface_header.cpp:
         * TAO_IDL/include/utl_err.h:
         * TAO_IDL/util/utl_err.cpp:
-        
+
           Eliminated the error message generated when a component is
           supporting an abstract interface - it was mistakenly assumed
           that such a thing was barred by the spec. Once this error
@@ -26,16 +40,16 @@ Tue Aug 17 17:56:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Aug 17 15:48:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
-        
+
           Changed the logic of the check for 'mixed parentage'
           (abstract & concrete) in an interface, to return true not
           only if an interface has an immediate abstract parent (as
-          before) but also if there is an abstract interface 
+          before) but also if there is an abstract interface
           anywhere in its ancestry. This is necessary for skeletons-side
           code generation, since abstract interfaces have no operations
           generated on the skeleton side for children to inherit, the
           operations must be regenerated in each child.
-          
+
         * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
         * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
         * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
@@ -46,7 +60,7 @@ Tue Aug 17 15:48:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
         * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
         * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
-        
+
           For the gen_abstract_ops_helper() static method in each of the
           above visitors, changed the logic to do nothing unless the
           base interface passed to the method is abstract. The check
@@ -55,21 +69,21 @@ Tue Aug 17 15:48:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           can be found and regenerated. Thanks to Markus Stenberg
           <markus.stenberg@conformiq.com> for sending in an example that
           uncovered the bug.
-        
-        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:       
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
         * TAO_IDL/be/be_valuetype.cpp:
         * TAO_IDL/be_include/be_valuetype.h:
-        
+
           Removed unused code.
 
 Tue Aug 17 11:40:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root.cpp:
-        
+
           Added generation of '\n' as the very last thing that
           happens in each generated file, to make absolutely
           sure every file ends with a newline (required by CVS
-          and some compilers). Thanks to 
+          and some compilers). Thanks to
           Markus Stenberg <markus.stenberg@conformiq.com> for
           reporting the problem in *S.inl when -Sp (suppression
           of thru-POA collocation code) is in effect.
