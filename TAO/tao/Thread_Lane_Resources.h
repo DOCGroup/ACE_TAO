@@ -23,7 +23,7 @@
 
 #include "tao/orbconf.h"
 
-#include "ace/Synch_T.h"
+#include "ace/Thread_Mutex.h"
 #include "ace/CORBA_macros.h"
 
 class ACE_Allocator;

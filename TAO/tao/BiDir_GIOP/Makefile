@@ -320,58 +320,6 @@ endif
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Auto_Event.h \
-  $(ACE_ROOT)/ace/Event.h \
-  $(ACE_ROOT)/ace/Event.inl \
-  $(ACE_ROOT)/ace/Auto_Event.inl \
-  $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Manual_Event.h \
-  $(ACE_ROOT)/ace/Manual_Event.inl \
-  $(ACE_ROOT)/ace/Mutex.h \
-  $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/Null_Barrier.h \
-  $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Semaphore.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.inl \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Semaphore.h \
-  $(ACE_ROOT)/ace/Semaphore.inl \
-  $(ACE_ROOT)/ace/Thread_Semaphore.h \
-  $(ACE_ROOT)/ace/Thread_Semaphore.inl \
-  $(ACE_ROOT)/ace/TSS_Adapter.h \
-  $(ACE_ROOT)/ace/TSS_Adapter.inl \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.h \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
-  $(ACE_ROOT)/ace/TSS_T.h \
-  $(ACE_ROOT)/ace/TSS_T.inl \
-  $(ACE_ROOT)/ace/TSS_T.cpp \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Condition_T.h \
-  $(ACE_ROOT)/ace/Condition_T.inl \
-  $(ACE_ROOT)/ace/Condition_T.cpp \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(TAO_ROOT)/tao/LocalObject.i \
   BiDirPolicy_Validator.h \
   $(TAO_ROOT)/tao/Policy_Validator.h \
@@ -409,18 +357,31 @@ endif
   $(TAO_ROOT)/tao/PICurrent.h \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
   $(ACE_ROOT)/ace/Thread_Control.inl \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/TSS_T.h \
+  $(ACE_ROOT)/ace/TSS_T.inl \
+  $(ACE_ROOT)/ace/TSS_T.cpp \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Object_Manager.i \
   $(ACE_ROOT)/ace/Managed_Object.h \
   $(ACE_ROOT)/ace/Managed_Object.i \
@@ -431,6 +392,9 @@ endif
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
   $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
@@ -874,59 +838,6 @@ endif
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Auto_Event.h \
-  $(ACE_ROOT)/ace/Event.h \
-  $(ACE_ROOT)/ace/Event.inl \
-  $(ACE_ROOT)/ace/Auto_Event.inl \
-  $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Manual_Event.h \
-  $(ACE_ROOT)/ace/Manual_Event.inl \
-  $(ACE_ROOT)/ace/Mutex.h \
-  $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/Null_Barrier.h \
-  $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  $(ACE_ROOT)/ace/Null_Semaphore.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.inl \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Semaphore.h \
-  $(ACE_ROOT)/ace/Semaphore.inl \
-  $(ACE_ROOT)/ace/Thread_Semaphore.h \
-  $(ACE_ROOT)/ace/Thread_Semaphore.inl \
-  $(ACE_ROOT)/ace/TSS_Adapter.h \
-  $(ACE_ROOT)/ace/TSS_Adapter.inl \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.h \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
-  $(ACE_ROOT)/ace/TSS_T.h \
-  $(ACE_ROOT)/ace/TSS_T.inl \
-  $(ACE_ROOT)/ace/TSS_T.cpp \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Condition_T.h \
-  $(ACE_ROOT)/ace/Condition_T.inl \
-  $(ACE_ROOT)/ace/Condition_T.cpp \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(TAO_ROOT)/tao/LocalObject.i \
   BiDir_PolicyFactory.h BiDirGIOP.h \
   $(TAO_ROOT)/tao/BiDir_Adapter.h \
@@ -968,6 +879,7 @@ endif
   $(ACE_ROOT)/ace/Signal.h \
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h BiDirPolicyC.h \
   BiDirPolicyC.i
@@ -1179,59 +1091,6 @@ endif
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Auto_Event.h \
-  $(ACE_ROOT)/ace/Event.h \
-  $(ACE_ROOT)/ace/Event.inl \
-  $(ACE_ROOT)/ace/Auto_Event.inl \
-  $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Manual_Event.h \
-  $(ACE_ROOT)/ace/Manual_Event.inl \
-  $(ACE_ROOT)/ace/Mutex.h \
-  $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/Null_Barrier.h \
-  $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  $(ACE_ROOT)/ace/Null_Semaphore.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.inl \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Semaphore.h \
-  $(ACE_ROOT)/ace/Semaphore.inl \
-  $(ACE_ROOT)/ace/Thread_Semaphore.h \
-  $(ACE_ROOT)/ace/Thread_Semaphore.inl \
-  $(ACE_ROOT)/ace/TSS_Adapter.h \
-  $(ACE_ROOT)/ace/TSS_Adapter.inl \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.h \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
-  $(ACE_ROOT)/ace/TSS_T.h \
-  $(ACE_ROOT)/ace/TSS_T.inl \
-  $(ACE_ROOT)/ace/TSS_T.cpp \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Condition_T.h \
-  $(ACE_ROOT)/ace/Condition_T.inl \
-  $(ACE_ROOT)/ace/Condition_T.cpp \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(TAO_ROOT)/tao/LocalObject.i BiDirGIOP.h \
   $(TAO_ROOT)/tao/BiDir_Adapter.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -1272,6 +1131,7 @@ endif
   $(ACE_ROOT)/ace/Signal.h \
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Reactor_Timer_Interface.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h BiDirPolicyC.h \
   BiDirPolicyC.i BiDir_Policy_i.h BiDir_Policy_i.inl
@@ -1506,61 +1366,11 @@ endif
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Auto_Event.h \
-  $(ACE_ROOT)/ace/Event.h \
-  $(ACE_ROOT)/ace/Event.inl \
-  $(ACE_ROOT)/ace/Auto_Event.inl \
-  $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Manual_Event.h \
-  $(ACE_ROOT)/ace/Manual_Event.inl \
-  $(ACE_ROOT)/ace/Mutex.h \
-  $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/Null_Barrier.h \
-  $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Semaphore.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.inl \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Semaphore.h \
-  $(ACE_ROOT)/ace/Semaphore.inl \
-  $(ACE_ROOT)/ace/Thread_Semaphore.h \
-  $(ACE_ROOT)/ace/Thread_Semaphore.inl \
-  $(ACE_ROOT)/ace/TSS_Adapter.h \
-  $(ACE_ROOT)/ace/TSS_Adapter.inl \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.h \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
-  $(ACE_ROOT)/ace/TSS_T.h \
-  $(ACE_ROOT)/ace/TSS_T.inl \
-  $(ACE_ROOT)/ace/TSS_T.cpp \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Condition_T.h \
-  $(ACE_ROOT)/ace/Condition_T.inl \
-  $(ACE_ROOT)/ace/Condition_T.cpp \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(TAO_ROOT)/tao/LocalObject.i \
   BiDir_Policy_i.inl $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/ServicesC.h \
@@ -1807,58 +1617,6 @@ endif
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/Object_KeyC.h \
   $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Auto_Event.h \
-  $(ACE_ROOT)/ace/Event.h \
-  $(ACE_ROOT)/ace/Event.inl \
-  $(ACE_ROOT)/ace/Auto_Event.inl \
-  $(ACE_ROOT)/ace/Barrier.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Barrier.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Manual_Event.h \
-  $(ACE_ROOT)/ace/Manual_Event.inl \
-  $(ACE_ROOT)/ace/Mutex.h \
-  $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/Null_Barrier.h \
-  $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Semaphore.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.inl \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
-  $(ACE_ROOT)/ace/Semaphore.h \
-  $(ACE_ROOT)/ace/Semaphore.inl \
-  $(ACE_ROOT)/ace/Thread_Semaphore.h \
-  $(ACE_ROOT)/ace/Thread_Semaphore.inl \
-  $(ACE_ROOT)/ace/TSS_Adapter.h \
-  $(ACE_ROOT)/ace/TSS_Adapter.inl \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
-  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.h \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
-  $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
-  $(ACE_ROOT)/ace/TSS_T.h \
-  $(ACE_ROOT)/ace/TSS_T.inl \
-  $(ACE_ROOT)/ace/TSS_T.cpp \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Condition_T.h \
-  $(ACE_ROOT)/ace/Condition_T.inl \
-  $(ACE_ROOT)/ace/Condition_T.cpp \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(TAO_ROOT)/tao/LocalObject.i \
   BiDir_Policy_i.inl \
   $(TAO_ROOT)/tao/Policy_Set.h \
@@ -1916,18 +1674,31 @@ endif
   $(TAO_ROOT)/tao/PICurrent.h \
   $(TAO_ROOT)/tao/PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
   $(ACE_ROOT)/ace/Thread_Control.inl \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/TSS_T.h \
+  $(ACE_ROOT)/ace/TSS_T.inl \
+  $(ACE_ROOT)/ace/TSS_T.cpp \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Object_Manager.i \
   $(ACE_ROOT)/ace/Managed_Object.h \
   $(ACE_ROOT)/ace/Managed_Object.i \
@@ -1938,6 +1709,9 @@ endif
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
   $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.h \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
+  $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
   $(TAO_ROOT)/tao/ORB_Core.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -22,7 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 
 #if defined(_MSC_VER)
@@ -32,9 +33,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IORTable_Export TAO_IOR_Table_Impl :
-  public virtual IORTable::Table,
-  public virtual TAO_Local_RefCounted_Object
+class TAO_IORTable_Export TAO_IOR_Table_Impl
+  : public virtual IORTable::Table,
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor

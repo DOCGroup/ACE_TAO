@@ -33,7 +33,7 @@
 // IRIX needs this for the throw specs
 #include "PolicyC.h"
 
-#include "ace/Synch.h"
+#include "ace/Thread_Mutex.h"
 
 typedef enum
 {

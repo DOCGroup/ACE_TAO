@@ -16,8 +16,10 @@
 
 #ifndef TAO_MPROFILE_H
 #define TAO_MPROFILE_H
+
 #include /**/ "ace/pre.h"
-#include "ace/Synch.h"
+
+#include "ace/Recursive_Thread_Mutex.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -235,4 +237,5 @@ private:
 #endif /*__ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_MPROFILE_H */

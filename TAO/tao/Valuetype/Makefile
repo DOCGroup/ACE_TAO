@@ -1339,9 +1339,8 @@ endif
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Auto_Event.h \
-  $(ACE_ROOT)/ace/Event.h \
+  $(ACE_ROOT)/ace/TSS_T.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
@@ -1388,12 +1387,32 @@ endif
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/os_include/os_syslog.h \
   $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/TSS_T.inl \
+  $(ACE_ROOT)/ace/TSS_T.cpp \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Guard_T.h \
+  $(ACE_ROOT)/ace/Guard_T.inl \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
+  $(TAO_ROOT)/tao/TAO_Singleton.inl \
+  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Auto_Event.h \
+  $(ACE_ROOT)/ace/Event.h \
   $(ACE_ROOT)/ace/Event.inl \
   $(ACE_ROOT)/ace/Auto_Event.inl \
   $(ACE_ROOT)/ace/Barrier.h \
   $(ACE_ROOT)/ace/Condition_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.h \
-  $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Condition_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Barrier.inl \
   $(ACE_ROOT)/ace/Condition_Recursive_Thread_Mutex.h \
@@ -1419,36 +1438,17 @@ endif
   $(ACE_ROOT)/ace/TSS_Adapter.h \
   $(ACE_ROOT)/ace/TSS_Adapter.inl \
   $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Lock_Adapter_T.h \
   $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
   $(ACE_ROOT)/ace/Reverse_Lock_T.h \
   $(ACE_ROOT)/ace/Reverse_Lock_T.inl \
   $(ACE_ROOT)/ace/Reverse_Lock_T.cpp \
-  $(ACE_ROOT)/ace/Guard_T.h \
-  $(ACE_ROOT)/ace/Guard_T.inl \
-  $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(ACE_ROOT)/ace/TSS_T.h \
-  $(ACE_ROOT)/ace/TSS_T.inl \
-  $(ACE_ROOT)/ace/TSS_T.cpp \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Condition_T.h \
   $(ACE_ROOT)/ace/Condition_T.inl \
   $(ACE_ROOT)/ace/Condition_T.cpp \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(TAO_ROOT)/tao/TAO_Singleton.inl \
-  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
   $(ACE_ROOT)/ace/Object_Manager.h \
   $(ACE_ROOT)/ace/Object_Manager.i \
   $(ACE_ROOT)/ace/Managed_Object.h \

@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/TSS_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

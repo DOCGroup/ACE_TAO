@@ -29,7 +29,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Object_KeyC.h"
-#include "ace/Synch.h"
+#include "ace/Thread_Mutex.h"
 
 namespace CORBA
 {

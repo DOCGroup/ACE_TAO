@@ -23,9 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Queue.h"
-#include "ace/Synch.h"
 #include "tao/Any.h"
+
+#include "ace/Unbounded_Queue.h"
+#include "ace/Thread_Mutex.h"
 
 
 class TAO_InputCDR;

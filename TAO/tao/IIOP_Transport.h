@@ -24,7 +24,6 @@
 
 #include "tao/IIOPC.h"
 #include "ace/SOCK_Stream.h"
-#include "ace/Synch.h"
 
 
 // Forward decls.
