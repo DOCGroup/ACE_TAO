@@ -136,8 +136,9 @@ SSL_shutdown (ssl);
 
  if test $ac_cv_openssl_libs != no; then
    AC_SUBST([ACE_TLS_LIBS],[$ace_TLS_LIBS])
-   AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
  fi   
+
+ AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
 
  dnl Restore the original library list and preprocessor flags.
  LIBS="$ace_save_LIBS"

@@ -1,3 +1,27 @@
+Thu Dec  4 17:13:29 2003  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Removed extraneous set of [] for AS_IF test
+	  ace_has_tli_funcs = yes. Allows complete testing for all TLI/XTI-
+	  related features. Fixes some HP-UX problems.
+	  Wrapped ACE_HAS_BROKEN_T_ERROR check in
+	  ACE_CONVERT_WARNINGS_TO_ERRORS to work right on HP-UX.
+
+	* m4/compiler.m4: Added a conditional set around CFLAGS on HP-UX,
+	  trying to silence a sh diagnostic at configure time. Didn't work...
+	  Added +p to WERROR for HP aC++. Allows "future error" warnings
+	  to be noted as errrors. Now can properly detect non-const 5th
+	  arg to select().
+
+	* m4/tls.m4: Moved AM_CONDITIONAL(BUILD_SSL) outside of the test
+	  $ac_cv_openssl_libs. THis makes sure BUILD_SSL gets set properly
+	  whether or not with-ssl is set.
+
+	* ace/OS_NS_Thread.cpp (rwlock_init): Added
+	  !defined (ACE_HAS_PTHREADS_UNIX98_EXT) to the cases where the .cpp
+	  version of rwlock_init() is defined (as opposed to the version in
+	  OS_NS_Thread.inl). This matches an earlier change to OS_NS_Thread.h:
+          Thu Nov 20 17:30:18 2003  Steve Huston  <shuston@riverace.com>
+
 Thu Dec  4 13:56:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Basic_Types.cpp:

@@ -621,8 +621,7 @@ AS_IF([test "$ace_has_tli_funcs" = yes],
       AC_DEFINE([ACE_HAS_XTI])
       AC_DEFINE([ACE_HAS_TLI])
      ],)
-  ],
-  [
+
    AC_CHECK_HEADER([sys/xti.h],
      [
       ace_has_tli=yes
@@ -805,6 +804,7 @@ dnl Check for t_errno type in TLI headers
   ],,[AC_DEFINE([ACE_LACKS_T_ERRNO])])
 
 dnl Check if t_error incorrectly accepts char *
+ACE_CONVERT_WARNINGS_TO_ERRORS([
  ACE_CACHE_CHECK([if t_error incorrectly accepts char *],
   [ace_cv_lib_has_broken_t_error],
   [
@@ -853,8 +853,9 @@ dnl Check if t_error incorrectly accepts char *
   [
    AC_DEFINE([ACE_HAS_BROKEN_T_ERROR])
   ],)
+]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
-fi dnl test "$ace_has_tli" = yes
+fi dnl test "$ace_has_tli_funcs" = yes
 ],[])
 
 AC_CHECK_HEADER([sys/time.h],

@@ -1837,7 +1837,8 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_RWLOCK_T)
+#if !defined (ACE_HAS_THREADS) || (defined (ACE_LACKS_RWLOCK_T) && \
+                                   !defined (ACE_HAS_PTHREADS_UNIX98_EXT))
 int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,

@@ -202,7 +202,7 @@ changequote([, ])dnl
          OCXXFLAGS=""
          ;;
        aCC)
-         CFLAGS = "$CFLAGS -Ae"
+         CFLAGS = "${CFLAGS:-} -Ae"
          # -AA has been available since aC++ x.27 (2001?) - if using a
          # compiler without this support, must --enable_stdcpplib=no.
          if test "$ace_user_enable_stdcpplib" = yes; then
@@ -227,7 +227,7 @@ changequote([, ])dnl
          OCXXFLAGS="-O"
          # Warning 67: Invalid pragma name -- needed for
          # ACE_LACKS_PRAGMA_ONCE
-         WERROR="+We67"
+         WERROR="+We67 +p"
 
          # If exception support is explicitly disabled, tell the
          # compiler.  This is not recommended since the run-time
