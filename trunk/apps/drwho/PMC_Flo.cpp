@@ -80,13 +80,13 @@ PMC_Flo::decode (char *packet, int &packet_length)
 
   this->increment_total_users (remote_users);
 
-  for (cp = ACE::strend (cp);
+  for (cp = (char *) ACE::strend (cp);
        *cp != '\n';
        cp++)
     {
       char *login_name = cp;
 
-      for (cp = ACE::strend (cp);
+      for (cp = (char *) ACE::strend (cp);
            *(cp = this->handle_protocol_entries (cp, login_name)) != '\t'; 
 )
 	continue;

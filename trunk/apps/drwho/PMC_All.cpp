@@ -44,7 +44,7 @@ PMC_All::decode (char *packet, int &packet_length)
       ACE_DEBUG ((LM_DEBUG,
                   "\n"));
     }
-  char 	*cp = packet;
+  char *cp = packet;
   int remote_users = 0;
 
   sscanf (cp,
@@ -53,14 +53,16 @@ PMC_All::decode (char *packet, int &packet_length)
 
   this->increment_total_users (remote_users);
 
-  for (cp = ACE::strend (cp); *cp != '\n'; cp++)
+  for (cp = (char *) ACE::strend (cp);
+       *cp != '\n';
+       cp++)
     {
       // Skip over the LOGIN_NAME. 
 
       char *login_name = cp;
-      char *real_name = cp = ACE::strend (cp);
+      char *real_name = cp = (char *) ACE::strend (cp);
 
-      for (cp = ACE::strend (cp); 
+      for (cp = (char *) ACE::strend (cp); 
 	   *(cp = this->handle_protocol_entries (cp, login_name, real_name)) != '\t';
            )
 	continue;

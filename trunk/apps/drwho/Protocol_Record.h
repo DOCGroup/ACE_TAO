@@ -39,8 +39,8 @@ public:
   Drwho_Node *get_drwho_list (void);
 
   static Drwho_Node drwho_node_;
-  char *key_name1_;
-  char *key_name2_;
+  const char *key_name1_;
+  const char *key_name2_;
   Drwho_Node *drwho_list_;
   Protocol_Record *next_;
   int is_active_;
