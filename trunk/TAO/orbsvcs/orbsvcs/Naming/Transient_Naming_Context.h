@@ -134,6 +134,17 @@ public:
   virtual ~TAO_Transient_Naming_Context (void);
   // Destructor.
 
+  // = Utility methods.
+  static CosNaming::NamingContext_ptr make_new_context (PortableServer::POA_ptr poa,
+                                                        const char *poa_id,
+                                                        size_t context_size,
+                                                        CORBA::Environment &ACE_TRY_ENV);
+  // This utility method factors out the code needed to create a new
+  // Transient Naming Context servant and activate it under the
+  // specified POA with the specified id.  This function is static so
+  // that the code can be used, both from inside the class (e.g., <new_context>),
+  // and from outside (e.g., Naming_Utils.cpp).
+
   // = Methods not implemented in TAO_Hash_Naming_Context.
 
   virtual CosNaming::NamingContext_ptr new_context (CORBA::Environment &ACE_TRY_ENV);

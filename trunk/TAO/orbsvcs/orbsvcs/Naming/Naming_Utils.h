@@ -10,8 +10,7 @@
 //    Naming_Utils.h
 //
 // = DESCRIPTION
-//      This class implements wrapper classes for clients and servers
-//      of the Naming Service.
+//      Implement wrappers useful to Naming Service clients and servers.
 //
 // = AUTHORS
 //    Nagarajan Surendran (naga@cs.wustl.edu), Matt Braun
@@ -27,6 +26,9 @@
 #include "orbsvcs/IOR_Multicast.h"
 #include "Naming_Context.h"
 
+// Forward decl;
+class TAO_Persistent_Context_Index;
+
 class TAO_ORBSVCS_Export TAO_Naming_Server
 {
   // = TITLE
@@ -35,12 +37,16 @@ class TAO_ORBSVCS_Export TAO_Naming_Server
   //
   // = DESCRIPTION
   //
-  //    This class either finds an existing Naming Service or creates
-  //    one.  It also defines the operator-> so that <NamingContext>
-  //    functions like <bind>, <unbind> .. can be called on a
-  //    <NameServer> object.  This class is intended to simplify
+  //    This class either finds an existing Naming Service (if the
+  //    <resolve_for_existing_naming_service> flag is set) or creates
+  //    one (if <resolve_for_existing_naming_service> flag isn't set or
+  //    Naming Service was not found).  This class also defines the
+  //    operator-> so that  <NamingContext> functions like <bind>,
+  //    <unbind> .. can be called directly on a <TAO_Naming_Server>
+  //    object, and be forwareded to the root Naming Context.
+  //    This class is intended to simplify
   //    programs that want to play the role of a Naming Service
-  //    servers.  To simplify programs that want to play the role of
+  //    server.  To simplify programs that want to play the role of
   //    Naming Service clients, use <TAO_Naming_Client>.
 public:
   TAO_Naming_Server (void);
@@ -52,9 +58,15 @@ public:
                      ACE_Time_Value *timeout = 0,
                      int resolve_for_existing_naming_service = 1,
                      LPCTSTR persistence_location = 0);
-  // Either find an existing Naming Service or creates one.  Takes the
-  // POA under which to register the Naming Service implementation
-  // object.
+  // Constructor.  Attempts to find an existing Naming Service if
+  // <resolve_for_existing_naming_service> is set to true.  If it is
+  // false, or no Naming Service was found during a <timeout> period,
+  // create the Naming Service in this process.  If creating the
+  // Naming Service locally, make the root context of size
+  // <context_size>, register it under the <poa>, and make the Naming
+  // Service persistent if <persistence_location> is not 0.
+  // (<persistence_location> specifies name of the file to use for
+  // persistent storage).
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa,
@@ -62,41 +74,50 @@ public:
             ACE_Time_Value *timeout = 0,
             int resolve_for_existing_naming_service = 1,
             LPCTSTR persistence_location = 0);
-  // Either find an existing Naming Service or creates one.  Takes the
-  // POA under which to register the Naming Service implementation
-  // object.
+  // Initializer.  Attempts to find an existing Naming Service if
+  // <resolve_for_existing_naming_service> is set to true.  If it is
+  // false, or no Naming Service was found during a <timeout> period,
+  // create the Naming Service in this process.  If creating the
+  // Naming Service locally, make the root context of size
+  // <context_size>, register it under the <poa>, and make the Naming
+  // Service persistent if <persistence_location> is not 0.
+  // (<persistence_location> specifies name of the file to use for
+  // persistent storage).
 
   ~TAO_Naming_Server (void);
   // Destructor.
-
-  TAO_Naming_Context &get_naming_context (void);
-  // Returns the "NameService" NamingContext implementation object
-  // reference.
 
   CORBA::String naming_service_ior (void);
   // Returns the IOR of the naming service.
 
   CosNaming::NamingContext_ptr operator-> (void) const;
-  // Returns a <NamingContext_ptr>.
+  // Returns a <NamingContext_ptr> for the root Naming Context.
 
 protected:
   int init_new_naming (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr root_poa,
                        LPCTSTR persistence_location,
                        size_t context_size);
-  // Initialize a new name server under the given ORB and POA.
-
-  TAO_Naming_Context *naming_context_impl_;
-  // Naming context implementation for "NameService".
+  // Helper method: create Naming Service locally.
+  // Make the root context of size
+  // <context_size>, register it under the <root_poa>, and make the Naming
+  // Service persistent if <persistence_location> is not 0.
+  // (<persistence_location> specifies name of the file to use for
+  // persistent storage).
 
   CosNaming::NamingContext_var naming_context_;
-  // NamingContext ptr.
+  // Root NamingContext_ptr.
 
   TAO_IOR_Multicast *ior_multicast_;
   // The ior_multicast event handler.
 
   CORBA::String_var naming_service_ior_;
-  // The IOR string of the naming service.
+  // The IOR string of the root naming context.
+
+  TAO_Persistent_Context_Index *context_index_;
+  // Pointer to the object used to create/initialize
+  // the Naming Service when local persistent Naming Service is
+  // desired.
 };
 
 class TAO_ORBSVCS_Export TAO_Naming_Client

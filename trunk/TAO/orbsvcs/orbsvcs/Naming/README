@@ -52,28 +52,22 @@ Naming Service will be restructured for one of the upcoming releases
 at which time more documentation will be available in this README file
 and in the source code.
 
-
-
 TO-DO
-
-- migrate ACE_Shared_Map to ACE and use in ACE Naming Service.
-
-- Factor out initialization of a NamingContext into a static function
-  on an appropriate class.
 
 - code review/comments of Entries, Persistent_Entries,
   Persistent_Context_Index, Naming_Utils, Bindings_Iterator
 
 - Update README file
-
 - Factor out Naming_Util initialization code into a factory
+- make sure we can pass hash_table_size to Persistent Naming Context.
+
+- purify
 
 - Check for proper destruction of contexts
 
+--------------------------------------------------
 - update Naming Service slides.
 
 - do code review of Simple_Naming.
 
 - add Load Balancing functionality.
-
-- make sure we can pass hash_table_size to Persistent Naming Context.

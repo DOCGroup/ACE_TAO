@@ -128,66 +128,19 @@ TAO_Persistent_Context_Index::init (void)
     // CASE 1:there are no Naming Contexts registered.  We need to create
     // one.
     {
-      // Store the stub we will return from the method here.
-      CosNaming::NamingContext_var result;
-
-      // Put together a servant for the new Naming Context.
-
-      TAO_Persistent_Naming_Context *context_impl = 0;
-      ACE_NEW_RETURN (context_impl,
-                      TAO_Persistent_Naming_Context (poa_.in (),
-                                                     "NameService",
-                                                     this),
-                      -1);
-
-      // Put <context_impl> into the auto pointer temporarily, in case next
-      // allocation fails.
-      ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context> temp (context_impl);
-
-      if (context_impl->init (ACE_DEFAULT_MAP_SIZE) == -1)
-          return -1;
-
-      // register with the index @@need to roll back in case this fails.
-      this->bind ("NameService",
-                  context_impl->counter_,
-                  context_impl->persistent_context_->map ());
-
-      TAO_Naming_Context *context = 0;
-      ACE_NEW_RETURN (context,
-                      TAO_Naming_Context (context_impl),
-                      -1);
-
-      // Let <implementation> know about it's <interface>.
-      context_impl->interface (context);
-
-      // Change what we hold in auto pointer.
-      temp.release ();
-      ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp2 (context);
-
-      // Register with the POA.
       ACE_DECLARE_NEW_CORBA_ENV;
-      PortableServer::ObjectId_var id =
-        PortableServer::string_to_ObjectId ("NameService");
 
-      this->poa_->activate_object_with_id (id.in (),
-                                           context,
-                                           ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-
-      result = context->_this (ACE_TRY_ENV);
+      CosNaming::NamingContext_var result =
+        TAO_Persistent_Naming_Context::make_new_context (poa_.in (),
+                                                         "NameService",
+                                                         ACE_DEFAULT_MAP_SIZE,
+                                                         this,
+                                                         ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
 
       this->root_ior_=
         orb_->object_to_string (result.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
-
-      // Give POA the ownership of this servant.
-      context->_remove_ref (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
-
-      // Everything went successfully.
-      status = 0;
-      temp2.release ();
     }
 
   else
@@ -273,12 +226,6 @@ TAO_Persistent_Context_Index::recreate_all (void)
           ACE_CHECK_RETURN (-1);
         }
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Recreating Naming Context with poa_id %s and counter %d\n",
-                    entry->ext_id_.poa_id_,
-                    (*(context_impl->counter_))));
-
       temp2.release ();
 
     } while (index_iter->advance ());
@@ -333,6 +280,10 @@ TAO_Persistent_Context_Index::create_index (void)
       size_t index_size = sizeof (INDEX);
       context_index = this->allocator_->malloc (index_size);
 
+      if (context_index == 0)
+        return -1;
+
+      // @@Need to deal with exception below?
       // Initialize the map into its memory location (e.g., shared memory).
       ACE_NEW_RETURN (this->index_,
                       (context_index) INDEX (this->allocator_),

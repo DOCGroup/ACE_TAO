@@ -51,8 +51,8 @@ public:
   // file
 
   int bind (const char *poa_id,
-                    ACE_UINT32 *&counter,
-                    CONTEXT *hash_map);
+            ACE_UINT32 *&counter,
+            CONTEXT *hash_map);
   // Create an entry - new context is created.
 
   int unbind (const char * poa_id);
