@@ -1,3 +1,9 @@
+Mon Jul 19 20:08:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Strategies_T.cpp:
+	  Fixed lookup of connections in the Cached_Connect_Strategy,
+	  thanks to Irfan for providing this fix.
+
 Mon Jul 19 12:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU,
