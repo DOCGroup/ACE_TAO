@@ -1,19 +1,25 @@
+Thu Feb  5 13:38:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bmake.mpd:
+
+          Added rules for all of the MPC supported C++ file extensions.
+
 Thu Feb  5 11:25:50 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* include/makeinclude/rules.bin.GNU:
-	* include/makeinclude/rules.lib.GNU:
-	* include/makeinclude/rules.local.GNU:
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
 
-	  Modified build rules to allow projects with sources in sub-
-	  directoris. Thanks to Don Hinton <dhinton@dre.vanderbilt.edu> 
-	  for his help.
+          Modified build rules to allow projects with sources in sub-
+          directoris. Thanks to Don Hinton <dhinton@dre.vanderbilt.edu>
+          for his help.
 
 Thu Feb  5 08:48:27 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Thread_Manager.{h,cpp}: added a new methods called
-	  testterminate() which checks to see whether a thread has
- 	  terminated or not.  Thanks to Avi Ouziel <ouziel_a@hotmail.com>
- 	  for this suggestion.
+        * ace/Thread_Manager.{h,cpp}: added a new methods called
+          testterminate() which checks to see whether a thread has
+          terminated or not.  Thanks to Avi Ouziel <ouziel_a@hotmail.com>
+          for this suggestion.
 
 Thu Feb  5 07:55:10 2004  Chad Elliott  <elliott_c@ociweb.com>
 

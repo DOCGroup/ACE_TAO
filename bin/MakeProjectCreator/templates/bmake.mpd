@@ -49,6 +49,7 @@ NAME         = <%staticname%>$(LIBMODIFIER)
 <%endif%>
 <%endif%>
 <%endif%>
+CPPDIR       = <%cppdir%>
 <%if(exename || sharedname || staticname)%>
 
 OBJFILES = \
@@ -181,12 +182,27 @@ $(OUTPUTDIR)$(NAME)$(LIB_EXT): $(OBJFILES)
 <%endif%>
 .path$(OBJ_EXT) = $(INTERMEDIATE)
 
-.path.cpp = <%cppdir%>
+.path.cpp = $(CPPDIR)
 .cpp$(OBJ_EXT):
 	@if not exist "$(INTERMEDIATE)" mkdir "$(INTERMEDIATE)"
 	$(CC) $(OCFLAGS) $(THREADFLAGS) $(CFLAGS) -c -n$(@D) $<
 
-.path.c = <%cppdir%>
+.path.cxx = $(CPPDIR)
+.cxx$(OBJ_EXT):
+	@if not exist "$(INTERMEDIATE)" mkdir "$(INTERMEDIATE)"
+	$(CC) $(OCFLAGS) $(THREADFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.path.cc = $(CPPDIR)
+.cc$(OBJ_EXT):
+	@if not exist "$(INTERMEDIATE)" mkdir "$(INTERMEDIATE)"
+	$(CC) $(OCFLAGS) $(THREADFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.path.C = $(CPPDIR)
+.C$(OBJ_EXT):
+	@if not exist "$(INTERMEDIATE)" mkdir "$(INTERMEDIATE)"
+	$(CC) $(OCFLAGS) $(THREADFLAGS) $(CFLAGS) -c -n$(@D) $<
+
+.path.c = $(CPPDIR)
 .c$(OBJ_EXT):
 	@if not exist "$(INTERMEDIATE)" mkdir "$(INTERMEDIATE)"
 	$(CC) $(OCFLAGS) $(THREADFLAGS) $(CFLAGS) -c -n$(@D) $<
