@@ -1,9 +1,14 @@
+Sun Mar  1 13:54:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Makefile: Added cvs command to automatically tag the CVS
+	  repository with version number 'ACE_9_9_99' tag and 'Current'
+	  tag.
 
 Sun Mar  1 12:26:13 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (reset_i): 
+	* ace/Hash_Map_Manager.cpp (reset_i):
 
-	* ace/Hash_Map_Manager.h: 
+	* ace/Hash_Map_Manager.h:
 	Added reset () method for the Hash_Map_Iterator.
 
 Sun Mar 01 10:59:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
