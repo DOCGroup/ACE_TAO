@@ -56,8 +56,11 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (be_valuetype *nod
   *os << be_nl
       << "class _tao_" << node->local_name () << be_idt_nl
       << ": public " << node->local_name () << "," << be_nl
+      << "  public virtual OBV_Messaging::ExceptionHolder," << be_nl
       << "  public virtual CORBA::DefaultValueRefCountBase" << be_uidt_nl
       << "{" << be_idt_nl;
+
+  *os << be_uidt_nl << "public:" << be_idt_nl;
 
   *os << "_tao_" << node->local_name () << " ();" << be_nl << be_nl;
 
@@ -79,7 +82,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (be_valuetype *nod
   // Create code for the valuetype factory
 
   *os << "class " << node->local_name () << "_factory : public "
-      << node->local_name () << "_init" << be_idt_nl
+      << node->full_name () << "_init" << be_idt_nl
       << "{" << be_idt_nl
       << "friend class " << node->local_name () << ";" << be_nl
       << be_uidt_nl << "public:" << be_idt_nl

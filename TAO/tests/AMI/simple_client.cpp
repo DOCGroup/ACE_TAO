@@ -81,25 +81,23 @@ public:
     ~Handler (void) {};
   // Destructor.
 
-  void foo (CORBA::Long result,
+  void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l,
-            const char* in_str,
             CORBA::Environment &ACE_TRY_ENV)
     {
-      ACE_UNUSED_ARG (result);
+      ACE_UNUSED_ARG (ami_return_val);
       ACE_UNUSED_ARG (out_l);
-      ACE_UNUSED_ARG (in_str);
       ACE_UNUSED_ARG (ACE_TRY_ENV);
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Callback method <foo> called: result <%d>, out_arg <%d>\n",
-                      result, 
+                      ami_return_val, 
                       out_l));
         }
     };
 
-  void foo_excep (A::AMI_AMI_TestExceptionHolder *excep_holder,
+  void foo_excep (A::AMI_AMI_TestExceptionHolder_out excep_holder,
                   CORBA::Environment &ACE_TRY_ENV)
     {
 
@@ -196,7 +194,7 @@ main (int argc, char *argv[])
                       ni));
                     
           ami_test_var->sendc_foo (the_handler_var.in (),
-                                   0,
+                                   13,
                                    "Let's talk AMI.",
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;

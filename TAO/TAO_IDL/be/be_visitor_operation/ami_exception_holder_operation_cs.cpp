@@ -14,7 +14,7 @@
 //    Visitor generating code for Operation in the stubs file.
 //
 // = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
 //
 // ============================================================================
 
@@ -76,6 +76,11 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
                          "scopeless operation :-<\n"),
                         -1);
     }
+
+  be_interface *parent_interface = be_interface::narrow_from_decl (parent);
+  if (parent_interface->is_nested () &&
+      parent_interface->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    *os << "OBV_";
 
   // Here we do not have our overridden be_interface methods,
   // so the interface type strategy does not work here.
