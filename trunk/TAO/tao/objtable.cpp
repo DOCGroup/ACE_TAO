@@ -229,7 +229,7 @@ operator== (const PortableServer::ObjectId &l,
 
 // Template specialization....
 u_long
-ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>::
+ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>::
 hash (const PortableServer::ObjectId &ext_id)
 {
   // Based on hash_pjw function on the ACE library.
@@ -648,15 +648,15 @@ TAO_Active_Demux_ObjTable::end () const
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator_Base<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Hash_Map_Entry<PortableServer::ObjectId, PortableServer::Servant>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Iterator_Base<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<PortableServer::ObjectId, PortableServer::Servant>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

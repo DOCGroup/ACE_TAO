@@ -248,8 +248,8 @@ public:
   virtual TAO_Object_Table_Iterator_Impl* end (void) const;
 
   // Dynamic Hashing scheme using template specialization for char*
-  typedef ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX> Hash_Map;
-  typedef ACE_Hash_Map_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_RW_MUTEX> Iterator;
+  typedef ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX> Hash_Map;
+  typedef ACE_Hash_Map_Iterator<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX> Iterator;
 
 private:
   Hash_Map hash_map_;

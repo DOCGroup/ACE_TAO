@@ -15,6 +15,9 @@
 // This is the maximum space require to convert the ulong into a string
 const int TAO_POA::max_space_required_for_ulong = 24;
 
+// This is the maximum space require to convert the ulong into a string
+const int TAO_Creation_Time::max_space_required_for_two_ulong_to_hex = 8 * 2;
+
 #if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
 extern "C"
 {
@@ -574,7 +577,7 @@ TAO_Creation_Time::TAO_Creation_Time (void)
 {
   ACE_OS::memset (this->time_stamp_, 
                   0, 
-                  this->creation_time_length ());
+                  TAO_Creation_Time::creation_time_length ());
 }
 
 void
@@ -582,7 +585,7 @@ TAO_Creation_Time::creation_time (const void *creation_time)
 {
   ACE_OS::memcpy (this->time_stamp_, 
                   creation_time, 
-                  this->creation_time_length ());
+                  TAO_Creation_Time::creation_time_length ());
 }
   
 const void *
@@ -592,9 +595,9 @@ TAO_Creation_Time::creation_time (void) const
 }
   
 int
-TAO_Creation_Time::creation_time_length (void) const
+TAO_Creation_Time::creation_time_length (void) 
 {
-  return sizeof (this->time_stamp_) - 1;
+  return TAO_Creation_Time::max_space_required_for_two_ulong_to_hex;
 }
   
 int 
@@ -602,7 +605,7 @@ TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
   return ACE_OS::memcmp (this->time_stamp_, 
                          rhs.time_stamp_, 
-                         this->creation_time_length ()) == 0;
+                         TAO_Creation_Time::creation_time_length ()) == 0;
 }
 
 int 
@@ -610,7 +613,46 @@ TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
   return ACE_OS::memcmp (this->time_stamp_, 
                          rhs.time_stamp_, 
-                         this->creation_time_length ()) != 0;
+                         TAO_Creation_Time::creation_time_length ()) != 0;
+}
+
+int 
+TAO_Creation_Time::operator== (const TAO_Temporary_Creation_Time &rhs) const
+{
+  return rhs == *this;
+}
+
+int 
+TAO_Creation_Time::operator!= (const TAO_Temporary_Creation_Time &rhs) const
+{
+  return rhs != *this;
+}
+
+TAO_Temporary_Creation_Time::TAO_Temporary_Creation_Time (void)
+  : time_stamp_ (0)
+{
+}
+
+void 
+TAO_Temporary_Creation_Time::creation_time (const void *creation_time)
+{
+  this->time_stamp_ = (void *) creation_time;
+}
+  
+int 
+TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
+{
+  return ACE_OS::memcmp (this->time_stamp_, 
+                         rhs.creation_time (), 
+                         TAO_Creation_Time::creation_time_length ()) == 0;
+}
+
+int 
+TAO_Temporary_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
+{
+  return ACE_OS::memcmp (this->time_stamp_, 
+                         rhs.creation_time (), 
+                         TAO_Creation_Time::creation_time_length ()) != 0;
 }
 
 TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
@@ -1760,13 +1802,13 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       PortableServer::ObjectId_out id_out (id);
       TAO_POA::String poa_name;
       CORBA::Boolean persistent = CORBA::B_FALSE;
-      TAO_Creation_Time poa_creation_time;
+      TAO_Temporary_Creation_Time poa_creation_time;
 
-      int result = this->parse_key (key.in (),
-                                    poa_name,
-                                    id_out,
-                                    persistent,
-                                    poa_creation_time);
+      int result = this->parse_key_temporary_id (key.in (),
+                                                 poa_name,
+                                                 id_out,
+                                                 persistent,
+                                                 poa_creation_time);
       if (result != 0 ||
           poa_name != this->complete_name () ||
           persistent != this->persistent () ||
@@ -1823,13 +1865,13 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   PortableServer::ObjectId_out id_out (id);
   TAO_POA::String poa_name;
   CORBA::Boolean persistent = CORBA::B_FALSE;
-  TAO_Creation_Time poa_creation_time;
+  TAO_Temporary_Creation_Time poa_creation_time;
 
-  int result = this->parse_key (key.in (),
-                                poa_name,
-                                id_out,
-                                persistent,
-                                poa_creation_time);
+  int result = this->parse_key_permanent_id (key.in (),
+                                             poa_name,
+                                             id_out,
+                                             persistent,
+                                             poa_creation_time);
   if (result != 0 ||
       poa_name != this->complete_name () ||
       persistent != this->persistent () ||
@@ -1966,13 +2008,13 @@ TAO_POA::locate_poa_i (const TAO_ObjectKey &key,
 {
   TAO_POA::String poa_name;
   CORBA::Boolean persistent = CORBA::B_FALSE;
-  TAO_Creation_Time poa_creation_time;
+  TAO_Temporary_Creation_Time poa_creation_time;
 
-  int result = this->parse_key (key,
-                                poa_name,
-                                id,
-                                persistent,
-                                poa_creation_time);
+  int result = this->parse_key_temporary_id (key,
+                                             poa_name,
+                                             id,
+                                             persistent,
+                                             poa_creation_time);
   if (result != 0)
     {
       CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
@@ -2272,7 +2314,7 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
     return;
 
   // Setup for upcall
-  TAO_POA_Current upcall_context (poa, key, id.in(), servant);
+  TAO_POA_Current upcall_context (poa, key, id.in (), servant);
   TAO_POA_Current *previous_context;
   poa->pre_invoke (upcall_context,
                    previous_context,
@@ -2311,16 +2353,20 @@ TAO_POA::post_invoke (PortableServer::Servant servant,
 
   PortableServer::ServantLocator::Cookie cookie = poa_current->locator_cookie ();
 
-  PortableServer::POA_var poa = poa_current->get_POA (env);
-
   if (cookie != 0)
-    this->servant_locator_->postinvoke (poa_current->object_id (),
-                                        poa.in (),
-                                        operation,
-                                        cookie,
-                                        servant,
-                                        env);
-  //  poa_current->clear ();
+    {
+      PortableServer::POA_var poa = poa_current->get_POA (env);
+
+      this->servant_locator_->postinvoke (poa_current->object_id (),
+                                          poa.in (),
+                                          operation,
+                                          cookie,
+                                          servant,
+                                          env);
+    }
+
+  // poa_current->clear ();
+
 }
 
 const TAO_Creation_Time &
@@ -2330,25 +2376,68 @@ TAO_POA::creation_time (void)
 }
 
 int
+TAO_POA::parse_key_permanent_id (const TAO_ObjectKey &key,
+                                 TAO_POA::String &poa_name,
+                                 PortableServer::ObjectId_out id,
+                                 CORBA::Boolean &persistent,
+                                 TAO_Temporary_Creation_Time &poa_creation_time)
+{
+  return this->parse_key (key,
+                          poa_name,
+                          id,
+                          persistent,
+                          poa_creation_time,
+                          0);
+}
+
+int
+TAO_POA::parse_key_temporary_id (const TAO_ObjectKey &key,
+                                 TAO_POA::String &poa_name,
+                                 PortableServer::ObjectId_out id,
+                                 CORBA::Boolean &persistent,
+                                 TAO_Temporary_Creation_Time &poa_creation_time)
+{
+  return this->parse_key (key,
+                          poa_name,
+                          id,
+                          persistent,
+                          poa_creation_time,
+                          1);
+}
+
+int 
+TAO_POA::rfind (const TAO_ObjectKey &key,
+                char c, 
+                int pos) const
+{
+  if (pos == ACE_CString::npos)
+    pos = key.length ();
+  
+  for (int i = pos - 1; i >= 0; i--)
+    if (key[i] == c)
+      return i;
+
+  return TAO_POA::String::npos;  
+}
+
+
+int
 TAO_POA::parse_key (const TAO_ObjectKey &key,
                     TAO_POA::String &poa_name,
                     PortableServer::ObjectId_out id,
                     CORBA::Boolean &persistent,
-                    TAO_Creation_Time &poa_creation_time)
+                    TAO_Temporary_Creation_Time &poa_creation_time,
+                    int temporary_id)
 {
-  // Grab the id buffer
-  TAO_POA::String object_key ((const char *) key.buffer (), 
-                              key.length ());
-
   // Try to find the last separator
-  int last_token_position = object_key.rfind (TAO_POA::name_separator ());
+  int last_token_position = this->rfind (key, TAO_POA::name_separator ());
 
   // If not found, the name is not correct
   if (last_token_position == TAO_POA::String::npos)
     return -1;
 
   // Check the first byte (persistence indicator)
-  char object_key_type = object_key[0];
+  char object_key_type = key[0];
   if (object_key_type == this->persistent_key_type ())
     persistent = 1;
   else if (object_key_type == this->transient_key_type ())
@@ -2360,21 +2449,30 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   // Starting at object_key_type_length, take the next
   // creation_time_length byte for the timestamp
   int starting_at = TAO_POA::object_key_type_length ();
-  poa_creation_time.creation_time (&object_key[starting_at]);
+  poa_creation_time.creation_time (&key[starting_at]);
 
   // Take the substring from creation_time_length +
   // object_key_type_length to last_token_position for the POA name
-  starting_at = TAO_POA::object_key_type_length () + poa_creation_time.creation_time_length ();
+  starting_at = TAO_POA::object_key_type_length () + TAO_Creation_Time::creation_time_length ();
   int how_many = last_token_position - starting_at;
-  poa_name = object_key.substr (starting_at,
-                                how_many);
+  poa_name.set ((const char *) &key[starting_at],
+                how_many);
 
   // Take the substring from (last_token_position + separator_length)
   // to length for the objectId
   starting_at = last_token_position + TAO_POA::name_separator_length ();
-  how_many = object_key.length () - starting_at;
-  id = TAO_POA::string_to_ObjectId (&object_key[starting_at],
-                                    how_many);
+  how_many = key.length () - starting_at;
+  
+  // Only for the life time of the upcall
+  if (temporary_id)
+    id = new PortableServer::ObjectId (how_many,
+                                       how_many,
+                                       (CORBA::Octet *) &key[starting_at],
+                                       CORBA::B_FALSE);
+  else
+    // You can use the id as long as you like
+    id = TAO_POA::string_to_ObjectId ((const char *) &key[starting_at],
+                                      how_many);
 
   // Success
   return 0;
@@ -2431,7 +2529,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   // Calculate the space required for the key
   int buffer_size =
     this->object_key_type_length () +
-    this->creation_time_.creation_time_length () +
+    TAO_Creation_Time::creation_time_length () +
     this->complete_name_.length () +
     TAO_POA::name_separator_length () +
     id.length ();
@@ -2449,10 +2547,10 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   starting_at += this->object_key_type_length ();  
   ACE_OS::memcpy (&buffer[starting_at], 
                   this->creation_time_.creation_time (),
-                  this->creation_time_.creation_time_length ());
+                  TAO_Creation_Time::creation_time_length ());
 
   // Put the POA name into the buffer
-  starting_at += this->creation_time_.creation_time_length ();
+  starting_at += TAO_Creation_Time::creation_time_length ();
   ACE_OS::memcpy (&buffer[starting_at],
                   this->complete_name_.c_str (),
                   this->complete_name_.length ());
@@ -2616,7 +2714,7 @@ TAO_POA::string_to_ObjectId (const char *string,
 {
   // Create the buffer for the Id
   CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (size);
-
+  
   // Copy the contents
   ACE_OS::memcpy (buffer, string, size);
 

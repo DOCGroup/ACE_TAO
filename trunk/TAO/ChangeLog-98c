@@ -1,3 +1,62 @@
+Mon Mar 09 22:27:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tests/POA/Generic_Servant/client.cpp: Added code to time calls
+ 	  and produce stats.
+
+	* tao/svrrqst: Removed the lock in CORBA_ServerRequest which was
+ 	  used to protect the refcount. This protection was excessive.
+
+	* tao/optable.cpp: Changed the table so that it does not use a RW
+ 	  Lock. Since the optable is read only, a null lock will suffice.
+
+	* tao/objtable.cpp: Changed the implementation of
+ 	  TAO_Dynamic_Hash_ObjTable so that it does not use a RW Lock. The
+ 	  POA takes care of all necessary locking, and therefore, a null
+ 	  lock will suffice.
+
+	* tao/poa: The following optimizations were made to decrease the
+ 	  time a POA takes to find a servant:
+
+	  - Added new classes TAO_Creation_Time and
+ 	    TAO_Temporary_Creation_Time.  These classes are used to record
+ 	    and compare the creation time of POAs. The old method was
+ 	    inefficient as unsigned long were used.  These long required
+ 	    conversions to strings.  The new scheme uses a fixed size
+ 	    buffer. The TAO_Temporary_Creation_Time is a special class
+ 	    that tracks the creation time only during the lifetime of the
+ 	    upcall.
+	    
+	  - parse_key_permanent_id() and parse_key_temporary_id() were
+ 	    added so that the parse_key() routine can distinguish when to
+ 	    create a new id and when to create a special id which is only
+ 	    used during the lifetime of the upcall.
+	    
+	  - rfind() was added so that the TAO_POA::String::rfind() does
+ 	    not have to be used.
+
+	  - Changed the object_key_type from String to char.
+
+	  - In post_invoke(), only create the POA_var if necessary.
+
+	  - Changed create_object_key() and parse_key() so that the old
+ 	    format of:
+	    
+	    Transient/Seconds/MicroSecond/POAName/ObjectId
+	    
+	    to:
+
+	    T/TimeStampPOAName/ObjectId
+	    
+	  - Removed excessive memcpy() and strcpy() calls in parse_key().
+
+	  - Changed create_object_id() to not include the POA name.
+	  
+	  - Changed is_poa_generated_id() to take the changes to
+ 	    create_object_id() into account.
+
+	  - Changed string_to_ObjectId() and ObjectId_to_string() to not
+ 	    use encode and decode routines.
+
 Mon Mar  9 15:23:19 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp (open):
