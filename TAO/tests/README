@@ -46,6 +46,12 @@ how to run the following tests:
           and checks whether cached handlers are purged effectively
           when the process runs out of descriptors.
 
+	. Crashed_Callback
+
+	  A regression test for callbacks, sent as a reliable oneway,
+	  to a server that crashes.  The client used to hang on
+	  TAO-1.1.12.
+
         . DSI_Gateway
                     
           A simple test for the DSI/DII gateway support. TAO can

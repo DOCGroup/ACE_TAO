@@ -1,3 +1,22 @@
+Fri Mar 09 23:52:02 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/README:
+        * tests/Crashed_Callback/README:
+          Document the purpose of the new Crashed_Callback test.
+
+        * tests/Crashed_Callback/Crashed_Callback.dsw:
+        * tests/Crashed_Callback/client.dsp:
+        * tests/Crashed_Callback/server.dsp:
+          Add project files for the Crashed_Callback test.
+
+        * tests/Crashed_Callback/Makefile:
+          Disable the test if corba messaging is disabled.
+
+        * tests/LongWrites/LongWrites.dsw:
+        * tests/LongWrites/client.dsp:
+        * tests/LongWrites/server.dsp:
+          Add project files for the LongWrites test.
+
 Fri Mar  9 22:44:55 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/RT_ORBInitializer.cpp:

@@ -14,9 +14,9 @@ endif # ! TAO_ROOT
 
 IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
-BIN = client server
+BIN_UNCHECKED = client server
 
-SRC = $(addsuffix .cpp, $(BIN) Crashed_Callback Service) $(IDL_SRC)
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Crashed_Callback Service) $(IDL_SRC)
 
 CLIENT_OBJS = client.o Crashed_Callback.o $(IDL_SRC:.cpp=.o)
 SERVER_OBJS = server.o Service.o $(IDL_SRC:.cpp=.o)
@@ -29,6 +29,11 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+BIN=$(BIN_UNCHECKED)
+endif # corba_messaging
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
