@@ -504,7 +504,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
-  handler_->in_use (CORBA::B_FALSE);
+  if (this->handler_ != 0)
+    handler_->in_use (CORBA::B_FALSE);
 }
 
 // Octet codes for the parameters of the "Opaque" (sequence of octet)
@@ -744,7 +745,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 {
   // Send Request, return on error or if we're done
 
-  if (!TAO_GIOP::send_message (stream, handler_->peer ())) 
+  if (TAO_GIOP::send_message (stream, handler_->peer ()) == 0)
     {
       // send_message () closed the connection; we just release it here.
       //
@@ -760,6 +761,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // point in the code however!  Some minor restructuring needs to
       // happen.
       //
+      handler_->in_use (CORBA::B_FALSE);
       handler_ = 0;
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -977,8 +979,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
 	    if (ACE_OS::strcmp ((char *)exception_id, (char *)xid) == 0) 
 	      {
-		size_t			size;
-		CORBA::Exception		*exception;
+		size_t size;
+		CORBA::Exception *exception;
 
 		size = (*tcp)->size (env);
 		if (env.exception () != 0) 
@@ -1068,18 +1070,17 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
 	env.clear ();
 
-	//
 	// Make sure a new connection is used next time.
-	//
-	handler_ = 0;           // not sure this is correct!
+	handler_->in_use (CORBA::B_FALSE);
+	handler_ = 0; // @@ not sure this is correct!
       }
     break;
     }
 
   // All standard exceptions from here on in the call path know for
   // certain that the call "completed" ... except in the case of
-  // system exceptions which say otherwise, and for TAO_GIOP_LOCATION_FORWARD
-  // responses.
+  // system exceptions which say otherwise, and for
+  // TAO_GIOP_LOCATION_FORWARD responses.
 
   return (TAO_GIOP_ReplyStatusType) reply_status;
 }
