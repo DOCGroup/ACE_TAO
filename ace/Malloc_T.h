@@ -34,7 +34,7 @@ public:
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
   // The following code will break C++ compilers that don't support
   // template typedefs correctly.
-  typedef const MALLOC::MEMORY_POOL_OPTIONS *MEMORY_POOL_OPTIONS;
+  typedef const ACE_TYPENAME MALLOC::MEMORY_POOL_OPTIONS *MEMORY_POOL_OPTIONS;
 #else
   typedef const void *MEMORY_POOL_OPTIONS;
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */

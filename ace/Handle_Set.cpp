@@ -208,12 +208,12 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &f)
   // end of the bitset.
   for (; 
 	this->handles_.mask_.fds_bits[this->index_] == 0
-	&& this->num_ < ACE_Handle_Set::MAXSIZE
+	&& this->num_ < ACE_Handle_Set::MAXSIZE;
 	this->index_++)
     this->num_ += ACE_Handle_Set::WORDSIZE;
 
   if (this->num_ >= ACE_Handle_Set::MAXSIZE)
-    this->num_ = this->handles_.max_handle + 1;
+    this->num_ = this->handles_.max_handle_ + 1;
   else
     for (this->val_ = this->handles_.mask_.fds_bits[this->index_];
 	 (ACE_BIT_DISABLED (this->val_, 1)) && this->num_ < ACE_Handle_Set::MAXSIZE;

@@ -118,6 +118,8 @@ class ACE_Connector : public ACE_Service_Object
 public:
   // = Initialization and termination methods.
 
+  typedef ACE_TYPENAME ACE_PEER_CONNECTOR_ADDR PEER_ADDR;
+
   ACE_Connector (ACE_Reactor *r = ACE_Service_Config::reactor ());
   // Initialize a connector.
 
@@ -130,10 +132,10 @@ public:
   // = Connection establishment method
 
   virtual int connect (SVC_HANDLER *svc_handler,
-		       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+		       const PEER_ADDR &remote_addr,
 		       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-		       const ACE_PEER_CONNECTOR_ADDR &local_addr 
-		         = (ACE_PEER_CONNECTOR_ADDR &) ACE_PEER_CONNECTOR_ADDR::sap_any,
+		       const PEER_ADDR &local_addr 
+		         = (PEER_ADDR &) PEER_ADDR::sap_any,
 		       int reuse_addr = 0,
 		       int flags = O_RDWR,
 		       int perms = 0);
@@ -183,9 +185,9 @@ protected:
   // connecting and activating SVC_HANDLER's, respectively.
 
   virtual int connect_svc_handler (SVC_HANDLER *svc_handler,
-				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+				   const PEER_ADDR &remote_addr,
 				   const ACE_Synch_Options &synch_options,
-				   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+				   const PEER_ADDR &local_addr,
 				   int reuse_addr,
 				   int flags,
 				   int perms);

@@ -23,7 +23,7 @@
 #include "ace/OS.h"
 #include <iomanip.h>
 
-#if defined (__GNUC__)
+#if defined (__GNUC__) && !defined (CHORUS)
 #include <String.h>
 
 class QuotedString : public String

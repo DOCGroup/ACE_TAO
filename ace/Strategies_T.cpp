@@ -343,13 +343,7 @@ template <class SVC_HANDLER>
 ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (int n_processes)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy");
-  this->open (thr_mgr, thr_flags, n_threads);
-}
-
-template <class SVC_HANDLER> 
-ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (void)
-{
-  ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy");
+  this->open (n_processes);
 }
 
 template <class SVC_HANDLER> 

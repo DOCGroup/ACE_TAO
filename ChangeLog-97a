@@ -1,22 +1,17 @@
-Wed Mar 19 16:06:32 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/OS.h,README: added ACE_HAS_AIX_BROKEN_SOCKET_HEADER to wrap
-	  #include of sys/socket.h with #undef/#define of __cplusplus.
-
-	* ace/config-aix-4.[12].x.h: added ACE_HAS_AIX_BROKEN_SOCKET_HEADER,
-	  ACE_HAS_PTHREAD_T, ACE_LACKS_TCP_H, and ACE_LACKS_SETSCHED.
-	  Removed ACE_HAS_SVR4_DYNAMIC_LINKING and ACE_HAS_THREAD_SELF.
-
-	Thanks to Daniel Montalibet <daniel_montalibet@stortek.com> for
-	both of the above modifications.
-
-	* platform_{dgux4_epc,irix5.3_g++,linux*,m88k,osf1_3.2,sco*,
-	  sunos4_g++,sunos5_centerline*,sunos5_g++,sunos5_sunc++*,
-	  unixware_g++,vxworks5.2_g++}.GNU: split out CFLAGS and CCFLAGS.
-	  Also, removed -lstdc++/-lm from g++ versions, because we now set
-	  CXX to g++ instead of gcc, so those libraries are picked up.
-
 Wed Mar 19 15:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace: Added zillions of minor changes so that ACE will compile on
+ 	  the new aCC compiler for HPUX.  Thanks to Gonzalo A. Diethelm
+ 	  <gonzo@ing.puc.cl> and Carlos O'Ryan for help with this.
+
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): In addition to the
+ 	  SO_REUSEADDR option, Irix has a SO_REUSEPORT option that must
+ 	  also be set to allow multiple sockets to bind to the same
+ 	  multicast address.  Thanks to Robert V. Head <rhead@vtcs20a> for
+ 	  reporting this.
+
+	* ace: Added a slew of changes to support CHORUS.  Thanks to
+	  Wei Chiang <chiang@tele.nokia.fi> for these changes.
 
 	* ace/config-sunos4.*.h: Added #define ACE_HAS_UNION_WAIT based
 	  on the recommendation of Kumar Neelakantan
@@ -42,7 +37,23 @@ Wed Mar 19 15:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  check on the first loop therein.  Thanks to Michael Newton
  	  <michaeln@in.ot.com.au> for reporting this.
 
-Wed Mar 19 07:33:42 1997  David L. Levine  <levine@cs.wustl.edu>
+Wed Mar 19 16:06:32 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h,README: added ACE_HAS_AIX_BROKEN_SOCKET_HEADER to wrap
+	  #include of sys/socket.h with #undef/#define of __cplusplus.
+
+	* ace/config-aix-4.[12].x.h: added ACE_HAS_AIX_BROKEN_SOCKET_HEADER,
+	  ACE_HAS_PTHREAD_T, ACE_LACKS_TCP_H, and ACE_LACKS_SETSCHED.
+	  Removed ACE_HAS_SVR4_DYNAMIC_LINKING and ACE_HAS_THREAD_SELF.
+
+	Thanks to Daniel Montalibet <daniel_montalibet@stortek.com> for
+	both of the above modifications.
+
+	* platform_{dgux4_epc,irix5.3_g++,linux*,m88k,osf1_3.2,sco*,
+	  sunos4_g++,sunos5_centerline*,sunos5_g++,sunos5_sunc++*,
+	  unixware_g++,vxworks5.2_g++}.GNU: split out CFLAGS and CCFLAGS.
+	  Also, removed -lstdc++/-lm from g++ versions, because we now set
+	  CXX to g++ instead of gcc, so those libraries are picked up.
 
 	* include/makeinclude/platform_osf1_4.0{,_g++}.GNU:
 	  added -lrt to support ACE_Sched_Params.  Thanks to

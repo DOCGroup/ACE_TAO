@@ -18,6 +18,9 @@ ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
   ACE_Sig_Handler::dispatch (signum, info, context);
 }
 
+static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ace_sig_handler_dispatch);
+
+#if !defined (HPUX)
 extern "C" void 
 ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
@@ -25,8 +28,9 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
   ACE_Sig_Handlers::dispatch (signum, info, context);
 }
 
-static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ace_sig_handler_dispatch);
 static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ace_sig_handlers_dispatch);
+#endif /* HPUX */
+
 #else
 static ACE_SignalHandler ace_signal_handler_dispatcher = ACE_SignalHandler (ACE_Sig_Handler::dispatch);
 
