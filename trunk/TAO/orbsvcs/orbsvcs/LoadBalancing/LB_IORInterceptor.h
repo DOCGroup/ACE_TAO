@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef LB_IOR_INTERCEPTOR_H
-#define LB_IOR_INTERCEPTOR_H
+#ifndef TAO_LB_IOR_INTERCEPTOR_H
+#define TAO_LB_IOR_INTERCEPTOR_H
 
 #include "ace/config-all.h"
 
@@ -49,7 +49,11 @@ class TAO_LB_IORInterceptor
 public:
 
   /// Constructor.
-  TAO_LB_IORInterceptor (const char * repository_ids);
+  TAO_LB_IORInterceptor (const CORBA::StringSeq & object_groups,
+                         const CORBA::StringSeq & repository_ids,
+                         const char * location,
+                         CosLoadBalancing::LoadManager_ptr lm,
+                         const char * orb_id);
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -98,13 +102,21 @@ public:
 
 private:
 
-  /// Space separated list of RepositoryIds corresponding to objects
-  /// that will be load balanced.
-  /**
-   * @note The actual storage for this string is controlled by the
-   *       TAO_LB_ORBInitializer.
-   */
-  const char * repository_ids_;
+  /// List of stringified object group references.
+  const CORBA::StringSeq object_groups_;
+
+  /// List of RepositoryIds for object that will be load
+  /// managed/balanced.
+  const CORBA::StringSeq repository_ids_;
+
+  /// Location at which the LoadBalancing component resides.
+  CORBA::String_var location_;
+
+  /// Reference to the LoadManager.
+  CosLoadBalancing::LoadManager_var lm_;
+
+  /// ORBid of the ORB this IORInterceptor is registered with.
+  CORBA::String_var orb_id_;
 
 };
 
@@ -112,4 +124,4 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif  /* LB_IOR_INTERCEPTOR_H */
+#endif  /* TAO_LB_IOR_INTERCEPTOR_H */
