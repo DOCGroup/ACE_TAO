@@ -174,3 +174,8 @@ main (int, char *[])
   // ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Async_Timer_Queue_Adapter<ACE_Timer_List>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
