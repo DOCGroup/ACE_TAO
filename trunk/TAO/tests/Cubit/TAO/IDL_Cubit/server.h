@@ -26,7 +26,7 @@
 #include "tao/tao_util.h"
 #include "orbsvcs/CosNamingC.h"
 #include "cubit_i.h"
-#include "orbsvcs/Naming_Service/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 class Cubit_Server : public TAO_ORB_Manager
 {
@@ -39,19 +39,23 @@ class Cubit_Server : public TAO_ORB_Manager
   //   init to initialize the cubit_server's state and then call run
   //   to run the orb.
 public:
-  // Default constructor
+
   Cubit_Server (void);
+  // Default constructor
 
-  // Destructor
+
   ~Cubit_Server (void);
+  // Destructor
   
-  // Initialize the Cubit_Server state - parsing arguments and ...
+
   int init (int argc,
-            char **argv,CORBA::Environment &env);
+            char **argv,
+	    CORBA::Environment& env);
+  // Initialize the Cubit_Server state - parsing arguments and ...
 
+
+  int run (CORBA::Environment& env);
   // Run the orb 
-  int run (CORBA::Environment &env);
-
 private:
   int parse_args (void);
   // Parses the commandline arguments.
