@@ -40,7 +40,9 @@
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
 #elif defined (__ia64)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
-#   define ACE_DEFAULT_BASE_ADDR ((char *) 0x8000000000000000)
+// Zero base address should work fine for Linux of IA-64: it just lets
+// the kernel to choose the right value.
+#   define ACE_DEFAULT_BASE_ADDR ((char *) 0x0000000000000000)
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
 #endif /* ! __alpha  &&  ! __powerpc__  && ! __ia64 */
 
