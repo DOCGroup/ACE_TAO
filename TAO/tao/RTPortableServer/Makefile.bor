@@ -12,6 +12,7 @@ NAME = TAO_RTPortableServer
 OBJFILES = \
 	$(OBJDIR)\RTPortableServer.obj \
 	$(OBJDIR)\RTPortableServerC.obj \
+	$(OBJDIR)\RTPortableServerA.obj \
 	$(OBJDIR)\RT_Acceptor_Filters.obj \
 	$(OBJDIR)\RT_Collocation_Resolver.obj \
 	$(OBJDIR)\RT_Object_Adapter_Factory.obj \

@@ -26,25 +26,24 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// be/be_codegen.cpp:186
 
 #ifndef _TAO_IDL_ORIG_RTPORTABLESERVERC_H_
 #define _TAO_IDL_ORIG_RTPORTABLESERVERC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "rtportableserver_export.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#include "tao/Sequence_T.h"
+#include "rtportableserver_export.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
-#include "tao/VarOut_T.h"
 
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -78,6 +77,9 @@
 namespace TAO
 {
   class Collocation_Proxy_Broker;
+
+  template<typename T> class Narrow_Utils;
+  template<typename T> class AbstractBase_Narrow_Utils;
 }
 
 // TAO_IDL - Generated from
@@ -87,7 +89,7 @@ namespace RTPortableServer
 {
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be/be_interface.cpp:611
 
 #if !defined (_RTPORTABLESERVER_POA__VAR_OUT_CH_)
 #define _RTPORTABLESERVER_POA__VAR_OUT_CH_
@@ -110,7 +112,7 @@ namespace RTPortableServer
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTPORTABLESERVER_POA_CH_)
 #define _RTPORTABLESERVER_POA_CH_
@@ -130,10 +132,15 @@ namespace RTPortableServer
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+    static POA_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     static POA_ptr _nil (void)
-      {
-        return (POA_ptr)0;
-      }
+    {
+      return (POA_ptr)0;
+    }
 
     static void _tao_any_destructor (void *);
 
@@ -195,7 +202,7 @@ namespace RTPortableServer
       )) = 0;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
+    // be/be_visitor_interface/interface_ch.cpp:196
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -206,20 +213,19 @@ namespace RTPortableServer
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
+    // Abstract or local interface only.
     POA (void);
+
     virtual ~POA (void);
 
   private:
+    // Private and unimplemented for concrete interfaces.
     POA (const POA &);
+
     void operator= (const POA &);
   };
 
 #endif /* end #if !defined */
-
-  // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_POA;
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:66
@@ -227,7 +233,7 @@ namespace RTPortableServer
 } // module RTPortableServer
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:48
+// be/be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -256,13 +262,6 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_ch.cpp:52
-
-TAO_RTPortableServer_Export void operator<<= (CORBA::Any &, RTPortableServer::POA_ptr); // copying
-TAO_RTPortableServer_Export void operator<<= (CORBA::Any &, RTPortableServer::POA_ptr *); // non-copying
-TAO_RTPortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTPortableServer::POA_ptr &);
-
-// TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
@@ -273,7 +272,7 @@ TAO_RTPortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTPo
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:969
+// be/be_codegen.cpp:1060
 
 #if defined (__ACE_INLINE__)
 #include "RTPortableServerC.i"
@@ -288,4 +287,5 @@ TAO_RTPortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTPo
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ifndef */

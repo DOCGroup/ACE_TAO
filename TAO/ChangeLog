@@ -1,3 +1,29 @@
+Mon Dec 29 11:35:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/RTPortableServer/RTPortableServer.pidl:
+	* tao/RTPortableServer/RTPortableServerC.cpp:
+	* tao/RTPortableServer/RTPortableServerC.h:
+	* tao/RTPortableServer/RTPortableServerC.i:
+
+	  Regenerated the code and improved comments in the pidl file. 
+
+	* tao/RTPortableServer/RTPortableServerA.cpp:
+	* tao/RTPortableServer/RTPortableServerA.h:
+
+	  Moved the Any's to a new file. 
+
+	* tao/RTPortableServer/Makefile.bor:
+	* tao/RTPortableServer/Makefile:
+
+	  Added the new file generated for Any's into the Makefiles for
+	  our daily builds.
+	  
+	* tao/RTScheduling/RTSchedulerC.cpp:
+	* tao/RTScheduling/RTSchedulerC.h:
+	* tao/RTScheduling/RTSchedulerC.i:
+
+	  Code regeneration here again.
+	
 Mon Dec 29 11:15:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1670_Regression/Makefile:
