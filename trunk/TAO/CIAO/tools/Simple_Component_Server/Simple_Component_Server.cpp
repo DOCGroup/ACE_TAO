@@ -44,6 +44,7 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s\n"
+                           "-c instantiate the component"
                            "-i <component config file>\n"
                            "-o <server_ior_output_file>"
                            "\n",

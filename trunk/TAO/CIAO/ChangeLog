@@ -1,3 +1,27 @@
+Sat May 17 11:05:40 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/BasicSP/BasicSP.idl: Changed to include
+	  "CCM_Components.idl" directly instead of
+	  "ciao/CCM_Components.idl".
+
+	* examples/handcrafted/BasicSP/BasicSP.mpc: Removed BasicSPC.cpp
+	  from the svnt library source file list since we are linking with
+	  BasicSP stub library already.  Removed BasicSPES.cpp from the
+	  source file list also because it's basically empty.
+
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc: The stub and
+	  svnt libraries should depends on BasicSP_stub library instead of
+	  themselves.
+
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h: Fixed
+	  incorrect usage of extern "C" and export macro.
+
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.h: Changed
+	  the use of BMDEVICE_STUB_Export macro to BMDEVICE_SVNT_Export.
+
+	* examples/handcrafted/BasicSP/EC/EC_svnt.cpp: The start ()
+	  operation should not return anything.
+
 Fri May 16 18:11:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl (BasicSP):
