@@ -1360,6 +1360,25 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/Sequence_T.h");
     }
+
+  this->gen_arg_file_include (idl_global->decls_seen_masks.basic_arg_seen_,
+                              "tao/Basic_Arguments.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.bd_string_arg_seen_,
+                              "tao/BD_String_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.fixed_array_arg_seen_,
+                              "tao/Fixed_Array_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.fixed_size_arg_seen_,
+                              "tao/Fixed_Size_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.object_arg_seen_,
+                              "tao/Object_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.special_basic_arg_seen_,
+                              "tao/Special_Basic_Arguments.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.ub_string_arg_seen_,
+                              "tao/UB_String_Arguments.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.var_array_arg_seen_,
+                              "tao/Var_Array_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.var_size_arg_seen_,
+                              "tao/Var_Size_Argument_T.h");
 }
 
 void
@@ -1414,25 +1433,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "ace/Auto_Ptr.h");
     }
-
-  this->gen_arg_file_include (idl_global->decls_seen_masks.basic_arg_seen_,
-                              "tao/Basic_Arguments.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.bd_string_arg_seen_,
-                              "tao/BD_String_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.fixed_array_arg_seen_,
-                              "tao/Fixed_Array_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.fixed_size_arg_seen_,
-                              "tao/Fixed_Size_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.object_arg_seen_,
-                              "tao/Object_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.special_basic_arg_seen_,
-                              "tao/Special_Basic_Arguments.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.ub_string_arg_seen_,
-                              "tao/UB_String_Arguments.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.var_array_arg_seen_,
-                              "tao/Var_Array_Argument_T.h");
-  this->gen_arg_file_include (idl_global->decls_seen_masks.var_size_arg_seen_,
-                              "tao/Var_Size_Argument_T.h");
 }
 
 void
@@ -1441,7 +1441,7 @@ TAO_CodeGen::gen_arg_file_include (ACE_UINT64 mask, const char *filepath)
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        mask))
     {
-      this->gen_standard_include (this->client_stubs_,
+      this->gen_standard_include (this->client_header_,
                                   filepath);
     }
 }
