@@ -171,6 +171,27 @@ TAO_Service_Context::get_context (IOP::ServiceId id, const IOP::ServiceContext *
 }
 
 int
+TAO_Service_Context::get_context (IOP::ServiceId id,
+                                  IOP::ServiceContext_out context)
+{
+  CORBA::ULong len = this->service_context_.length ();
+
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      if (id == this->service_context_[i].context_id)
+        {
+          ACE_NEW_RETURN (context, IOP::ServiceContext, 0);
+
+          *(context.ptr ()) = this->service_context_[i];
+
+          return 1;
+        }
+    }
+
+  return 0;
+}
+
+int
 TAO_Service_Context::encode (TAO_OutputCDR& cdr) const
 {
   return (cdr << this->service_context_);

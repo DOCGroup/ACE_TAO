@@ -527,25 +527,12 @@ TAO_ClientRequestInfo_i::get_service_context_i (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Create a new service context to be returned.  Assume
-  // success.
-  IOP::ServiceContext *service_context = 0;
-  ACE_NEW_THROW_EX (service_context,
-                    IOP::ServiceContext,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
+  IOP::ServiceContext_var service_context;
 
-  IOP::ServiceContext_var safe_service_context = service_context;
-
-  service_context->context_id = id;
-  if (service_context_list.get_context (*service_context) != 0)
+  if (service_context_list.get_context (id, service_context.out ()) != 0)
     {
       // Found.
-      return safe_service_context._retn ();
+      return service_context._retn ();
     }
   else
     {
