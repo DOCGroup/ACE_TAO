@@ -292,7 +292,7 @@ int be_visitor_args_request_info_ch::visit_structure (be_structure *node)
       *os << this->type_name (node) << " &";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out") &;
+      *os << this->type_name (node, "_out") <<"&";
       break;
     }
   return 0;
@@ -311,7 +311,7 @@ int be_visitor_args_request_info_ch::visit_union (be_union *node)
       *os << this->type_name (node) << " &";
       break;
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out") &;
+      *os << this->type_name (node, "_out")<<" &";
       break;
     }
   return 0;
