@@ -67,7 +67,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   os->gen_ifdef_macro (class_name);
 
   *os << be_nl << be_nl
-      << "class " << be_global->stub_export_macro () 
+      << "class " << be_global->stub_export_macro ()
       << " " << class_name << be_idt_nl
       << ": public TAO_Bounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
@@ -182,10 +182,10 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
       *os << be_nl << be_nl
           << "virtual void _downcast (" << be_idt << be_idt_nl
           << "void* target," << be_nl
-          << "CORBA_Object *src" << be_nl
+          << "CORBA::Object *src" << be_nl
           << "ACE_ENV_ARG_DECL_WITH_DEFAULTS"  << be_uidt_nl
           << ");" << be_uidt_nl;
-      *os << "virtual CORBA_Object* _upcast (void *src) const;";
+      *os << "virtual CORBA::Object* _upcast (void *src) const;";
     }
 
   *os << be_uidt_nl << "};";
