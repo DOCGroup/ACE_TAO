@@ -1,3 +1,14 @@
+Mon Jun 21 23:34:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IORManipulation.h:
+	* tao/IORManipulation.cpp:
+	  Fixed throw specs
+
+	* tao/IORS.h:
+	* tao/IORS.cpp:
+	  Fixed problems with the _tao_create_collocated()
+	  implementation.
+
 Mon Jun 21 22:56:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Event.dsw:
