@@ -17,9 +17,7 @@
 //
 // ============================================================================
 
-
-
-#include    "CCS.h"        // ORB-specific
+#include    "CCSC.h"        // ORB-specific
 #include    <orbsvcs/CosNamingC.h>
 // #include    <iostream.h>
 // #include    <fstream.h>
@@ -104,7 +102,7 @@ resolve_name(
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
-//#if 0   // This inserter may or may not be needed for your ORB.
+#if 0   // This inserter is not be needed for TAO.
 
 static ostream &
 operator<<(ostream & os, const CORBA::Exception & e)
@@ -121,7 +119,7 @@ operator<<(ostream & os, const CORBA::Exception & e)
     return os;
 }
 
-//#endif
+#endif
 
 //----------------------------------------------------------------
 

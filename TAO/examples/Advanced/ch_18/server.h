@@ -205,7 +205,6 @@ public:
                     PortableServer::POA_ptr          poa,
                     const char *                     operation,
                     void * &                         cookie,
-                    CORBA_Environment &
                 ) throw(
                     CORBA::SystemException,
                     PortableServer::ForwardRequest);
@@ -216,7 +215,6 @@ public:
                     const char *                     /* operation */,
                     void *                           /* cookie */,
                     PortableServer::Servant          /* servant */,
-                    CORBA_Environment &
                 ) throw(CORBA::SystemException) {}
 
 private:
