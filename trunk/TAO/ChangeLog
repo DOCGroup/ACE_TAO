@@ -1,3 +1,10 @@
+Sat Apr 12 22:54:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
+	  dependencies.
+
 Sat Apr 12 22:50:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/ORT/Makefile: Updated dependencies.
