@@ -40,6 +40,13 @@ IDL_SRC = \
   $(addsuffix C.cpp, $(IDL_FILES))
 
 FILES = \
+  SSLIOP/IIOP_SSL_Acceptor \
+  SSLIOP/IIOP_SSL_Connect \
+  SSLIOP/IIOP_SSL_Connector \
+  SSLIOP/SSLIOP_Current \
+  SSLIOP/SSLIOP_Current_Impl \
+  SSLIOP/SSLIOP_Invocation_Interceptor \
+  SSLIOP/SSLIOP_ORBInitializer \
   SSLIOP/SSLIOP_Factory \
   SSLIOP/SSLIOP_Profile \
   SSLIOP/SSLIOP_Endpoint \

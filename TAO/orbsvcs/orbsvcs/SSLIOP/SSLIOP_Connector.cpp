@@ -41,7 +41,7 @@ TAO_SSLIOP_Connect_Creation_Strategy::make_svc_handler
 // ****************************************************************
 
 TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (int no_protection)
-  : TAO_IIOP_Connector (),
+  : TAO_IIOP_SSL_Connector (),
     no_protection_ (no_protection),
     null_activation_strategy_ (),
     connect_strategy_ (),
@@ -52,8 +52,8 @@ TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (int no_protection)
 int
 TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
-  if (this->TAO_IIOP_Connector::open (orb_core) == -1)
-    return -1;
+  if (this->TAO_IIOP_SSL_Connector::open (orb_core) == -1)
+  return -1;
 
   TAO_SSLIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
 
@@ -73,6 +73,8 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_SSLIOP_Connector::close (void)
 {
+  (void) this->TAO_IIOP_SSL_Connector::close ();
+
   delete this->base_connector_.creation_strategy ();
   return this->base_connector_.close ();
 }
@@ -127,7 +129,7 @@ TAO_SSLIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                             CORBA::COMPLETED_NO),
                           -1);
 
-      return this->TAO_IIOP_Connector::connect (
+      return this->TAO_IIOP_SSL_Connector::connect (
                      desc,
                      transport,
                      max_wait_time,

@@ -211,9 +211,11 @@ public:
    * decouple the POA from the ORB, but it cannot add new adapters or
    * other components transparently.
    */
-   /// Accessor to the POA current.
-   CORBA::Object_ptr poa_current(void);
-   void poa_current (CORBA::Object_ptr poa_current);
+  /// Accessor to the POA current.
+  //@{
+  CORBA::Object_ptr poa_current(void);
+  void poa_current (CORBA::Object_ptr poa_current);
+  //@}
 
   ///Get the connector registry
   TAO_Connector_Registry *connector_registry (void);
@@ -339,6 +341,7 @@ public:
   //@}
 
   /// Set/get the collocation flags
+  //@{
   void optimize_collocation_objects (CORBA::Boolean opt);
   CORBA::Boolean optimize_collocation_objects (void) const;
 
@@ -346,6 +349,7 @@ public:
   CORBA::Boolean use_global_collocation (void) const;
 
   CORBA::ULong get_collocation_strategy (void) const;
+  //@}
 
   /// Get the adapter named "RootPOA" and cache the result, this is an
   /// optimization for the POA.
@@ -691,7 +695,8 @@ public:
   int remove_handle (ACE_HANDLE handle);
 
 
-  /** @name ORB Core Service Hooks
+  /** 
+   * @name ORB Core Service Hooks
    *
    * These methods would represent the hooks in the ORB Core. These
    * hooks would be used to call back on the services or other

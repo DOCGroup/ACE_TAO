@@ -246,3 +246,47 @@ TAO_ORBInitInfo::check_validity (CORBA_Environment &ACE_TRY_ENV)
                                           CORBA::COMPLETED_NO));
     }
 }
+
+TAO_ORBInitInfo *
+TAO_ORBInitInfo::_narrow (CORBA::Object_ptr obj,
+                          CORBA::Environment &ACE_TRY_ENV)
+{
+  return TAO_ORBInitInfo::_unchecked_narrow (obj, ACE_TRY_ENV);
+}
+
+TAO_ORBInitInfo *
+TAO_ORBInitInfo::_unchecked_narrow (CORBA::Object_ptr obj,
+                                    CORBA::Environment &)
+{
+  if (CORBA::is_nil (obj))
+    return 0;
+  return
+      ACE_reinterpret_cast (
+        TAO_ORBInitInfo *,
+        obj->_tao_QueryInterface (
+          ACE_reinterpret_cast (ptr_arith_t,
+                                &TAO_ORBInitInfo::_narrow)));
+}
+
+void *
+TAO_ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+  if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &ACE_NESTED_CLASS (::, TAO_ORBInitInfo)::_narrow))
+    retv = ACE_reinterpret_cast (void*, this);
+  else if (type == ACE_reinterpret_cast
+    (ptr_arith_t,
+      &::PortableInterceptor::ORBInitInfo::_narrow))
+    retv = ACE_reinterpret_cast (void *,
+                                 ACE_static_cast (CORBA::Current_ptr,
+                                                  this));
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+    retv = ACE_reinterpret_cast (void *,
+      ACE_static_cast (CORBA::Object_ptr, this));
+    
+//   if (retv)
+//     this->_add_ref ();
+  return retv;
+}

@@ -62,7 +62,6 @@ TAO_SSLIOP_Transport::~TAO_SSLIOP_Transport (void)
 {
 }
 
-
 int
 TAO_SSLIOP_Transport::idle (void)
 {
@@ -87,31 +86,143 @@ TAO_SSLIOP_Transport::event_handler (void)
   return this->service_handler ();
 }
 
-// ****************************************************************
-
-TAO_SSLIOP_Server_Transport::
-    TAO_SSLIOP_Server_Transport (TAO_SSLIOP_Server_Connection_Handler *handler,
-                                 TAO_ORB_Core* orb_core)
-  : TAO_SSLIOP_Transport (orb_core),
-    message_state_ (orb_core),
-    handler_ (handler)
+ssize_t
+TAO_SSLIOP_Transport::send (TAO_Stub *stub,
+                            int two_way,
+                            const ACE_Message_Block *message_block,
+                            const ACE_Time_Value *max_wait_time)
 {
+  if (stub == 0 || two_way)
+    {
+      return this->send (message_block,
+                         max_wait_time);
+    }
+  else
+    {
+      TAO_Sync_Strategy &sync_strategy = stub->sync_strategy ();
+
+      return sync_strategy.send (*this,
+                                 *stub,
+                                 message_block,
+                                 max_wait_time);
+    }
 }
 
-TAO_SSLIOP_Server_Transport::~TAO_SSLIOP_Server_Transport (void)
+ssize_t
+TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
+                            const ACE_Time_Value *max_wait_time,
+                            size_t *bt)
 {
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
+
+  // @@ This code should be refactored into ACE.cpp or something
+  // similar!
+
+  // For the most part this was copied from GIOP::send_request and
+  // friends.
+
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+
+  iovec iov[IOV_MAX];
+  int iovcnt = 0;
+  ssize_t n = 0;
+
+  for (const ACE_Message_Block *i = message_block;
+       i != 0;
+       i = i->cont ())
+    {
+      // Make sure there is something to send!
+      if (i->length () > 0)
+        {
+          iov[iovcnt].iov_base = i->rd_ptr ();
+          iov[iovcnt].iov_len  = i->length ();
+          iovcnt++;
+
+          // The buffer is full make a OS call.  @@ TODO this should
+          // be optimized on a per-platform basis, for instance, some
+          // platforms do not implement writev() there we should copy
+          // the data into a buffer and call send_n(). In other cases
+          // there may be some limits on the size of the iovec, there
+          // we should set IOV_MAX to that limit.
+          if (iovcnt == IOV_MAX)
+            {
+              if (max_wait_time == 0)
+                n = this->service_handler ()->peer ().sendv_n (iov,
+                                                               iovcnt);
+              else
+                // @@ No timeouts!!!
+                n = this->service_handler ()->peer ().sendv_n (iov,
+                                                               iovcnt /*,
+                                                     max_wait_time */);
+
+              if (n == 0 ||
+                  n == -1)
+                return n;
+
+              bytes_transferred += n;
+              iovcnt = 0;
+            }
+        }
+    }
+
+  // Check for remaining buffers to be sent!
+  if (iovcnt != 0)
+    {
+      n = this->service_handler ()->peer ().sendv_n (iov,
+                                                     iovcnt);
+      if (n == 0 ||
+          n == -1)
+        return n;
+
+      bytes_transferred += n;
+    }
+
+  return bytes_transferred;
 }
 
+ssize_t
+TAO_SSLIOP_Transport::send (const u_char *buf,
+                            size_t len,
+                            const ACE_Time_Value * /* max_wait_time */)
+{
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
+
+  return this->service_handler ()->peer ().send_n (buf,
+                                                   len /*,
+                                                   max_wait_time */);
+}
+
+ssize_t
+TAO_SSLIOP_Transport::recv (char *buf,
+                            size_t len,
+                            const ACE_Time_Value * /* max_wait_time */)
+{
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_RECEIVE_START);
+
+  return this->service_handler ()->peer ().recv_n (buf,
+                                         len /*,
+                                         max_wait_time */);
+}
+
+// Default action to be taken for send request.
 int
-TAO_SSLIOP_Server_Transport::idle (void)
+TAO_SSLIOP_Transport::send_request (TAO_Stub *,
+                                    TAO_ORB_Core *  /* orb_core */,
+                                    TAO_OutputCDR & /* stream   */,
+                                    int             /* twoway   */,
+                                    ACE_Time_Value * /* max_wait_time */)
 {
-  return this->handler_->make_idle ();
+  return -1;
 }
 
-TAO_SSL_SVC_HANDLER *
-TAO_SSLIOP_Server_Transport::service_handler (void)
+CORBA::Boolean
+TAO_SSLIOP_Transport::send_request_header (TAO_Operation_Details &,
+                                           TAO_Target_Specification &,
+                                           TAO_OutputCDR &)
 {
-  return this->handler_;
+  // We should never be here. So return an error.
+  return 0;
 }
 
 // ****************************************************************
@@ -394,141 +505,27 @@ TAO_SSLIOP_Client_Transport::send_request_header (
 
 // *********************************************************************
 
-ssize_t
-TAO_SSLIOP_Transport::send (TAO_Stub *stub,
-                            int two_way,
-                            const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time)
+TAO_SSLIOP_Server_Transport::TAO_SSLIOP_Server_Transport (
+  TAO_SSLIOP_Server_Connection_Handler *handler,
+  TAO_ORB_Core* orb_core)
+  : TAO_SSLIOP_Transport (orb_core),
+    message_state_ (orb_core),
+    handler_ (handler)
 {
-  if (stub == 0 || two_way)
-    {
-      return this->send (message_block,
-                         max_wait_time);
-    }
-  else
-    {
-      TAO_Sync_Strategy &sync_strategy = stub->sync_strategy ();
-
-      return sync_strategy.send (*this,
-                                 *stub,
-                                 message_block,
-                                 max_wait_time);
-    }
 }
 
-ssize_t
-TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time,
-                            size_t *bt)
+TAO_SSLIOP_Server_Transport::~TAO_SSLIOP_Server_Transport (void)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
-
-  // @@ This code should be refactored into ACE.cpp or something
-  // similar!
-
-  // For the most part this was copied from GIOP::send_request and
-  // friends.
-
-  size_t temp;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
-
-  iovec iov[IOV_MAX];
-  int iovcnt = 0;
-  ssize_t n = 0;
-
-  for (const ACE_Message_Block *i = message_block;
-       i != 0;
-       i = i->cont ())
-    {
-      // Make sure there is something to send!
-      if (i->length () > 0)
-        {
-          iov[iovcnt].iov_base = i->rd_ptr ();
-          iov[iovcnt].iov_len  = i->length ();
-          iovcnt++;
-
-          // The buffer is full make a OS call.  @@ TODO this should
-          // be optimized on a per-platform basis, for instance, some
-          // platforms do not implement writev() there we should copy
-          // the data into a buffer and call send_n(). In other cases
-          // there may be some limits on the size of the iovec, there
-          // we should set IOV_MAX to that limit.
-          if (iovcnt == IOV_MAX)
-            {
-              if (max_wait_time == 0)
-                n = this->service_handler ()->peer ().sendv_n (iov,
-                                                               iovcnt);
-              else
-                // @@ No timeouts!!!
-                n = this->service_handler ()->peer ().sendv_n (iov,
-                                                               iovcnt /*,
-                                                     max_wait_time */);
-
-              if (n == 0 ||
-                  n == -1)
-                return n;
-
-              bytes_transferred += n;
-              iovcnt = 0;
-            }
-        }
-    }
-
-  // Check for remaining buffers to be sent!
-  if (iovcnt != 0)
-    {
-      n = this->service_handler ()->peer ().sendv_n (iov,
-                                                     iovcnt);
-      if (n == 0 ||
-          n == -1)
-        return n;
-
-      bytes_transferred += n;
-    }
-
-  return bytes_transferred;
 }
 
-ssize_t
-TAO_SSLIOP_Transport::send (const u_char *buf,
-                            size_t len,
-                            const ACE_Time_Value * /* max_wait_time */)
-{
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
-
-  return this->service_handler ()->peer ().send_n (buf,
-                                                   len /*,
-                                         max_wait_time */);
-}
-
-ssize_t
-TAO_SSLIOP_Transport::recv (char *buf,
-                            size_t len,
-                            const ACE_Time_Value * /* max_wait_time */)
-{
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_RECEIVE_START);
-
-  return this->service_handler ()->peer ().recv_n (buf,
-                                         len /*,
-                                         max_wait_time */);
-}
-
-// Default action to be taken for send request.
 int
-TAO_SSLIOP_Transport::send_request (TAO_Stub *,
-                                    TAO_ORB_Core *  /* orb_core */,
-                                    TAO_OutputCDR & /* stream   */,
-                                    int             /* twoway   */,
-                                    ACE_Time_Value * /* max_wait_time */)
+TAO_SSLIOP_Server_Transport::idle (void)
 {
-  return -1;
+  return this->handler_->make_idle ();
 }
 
-CORBA::Boolean
-TAO_SSLIOP_Transport::send_request_header (TAO_Operation_Details &,
-                                           TAO_Target_Specification &,
-                                           TAO_OutputCDR &)
+TAO_SSL_SVC_HANDLER *
+TAO_SSLIOP_Server_Transport::service_handler (void)
 {
-  // We should never be here. So return an error.
-  return 0;
+  return this->handler_;
 }

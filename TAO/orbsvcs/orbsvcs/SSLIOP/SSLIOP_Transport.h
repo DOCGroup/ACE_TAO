@@ -102,7 +102,8 @@ public:
 };
 
 
-class TAO_SSLIOP_Export TAO_SSLIOP_Client_Transport : public TAO_SSLIOP_Transport
+class TAO_SSLIOP_Export TAO_SSLIOP_Client_Transport
+  : public TAO_SSLIOP_Transport
 {
   // = TITLE
   //   The Transport class used for Client side communication with a
@@ -114,7 +115,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Client_Transport : public TAO_SSLIOP_Transpor
   //   lives here.
 public:
   TAO_SSLIOP_Client_Transport (TAO_SSLIOP_Client_Connection_Handler *handler,
-                             TAO_ORB_Core *orb_core);
+                               TAO_ORB_Core *orb_core);
   // Constructor.  Note, TAO_SSLIOP_Handler_Base is the base class for
   // both TAO_SSLIOP_Client_Connection_Handler and
   // TAO_SSLIOP_Server_Connection_Handler.
@@ -183,7 +184,8 @@ private:
 
 // ****************************************************************
 
-class TAO_SSLIOP_Export TAO_SSLIOP_Server_Transport : public TAO_SSLIOP_Transport
+class TAO_SSLIOP_Export TAO_SSLIOP_Server_Transport
+  : public TAO_SSLIOP_Transport
 {
   // = TITLE
   //   The Transport class used for server communication with a
@@ -202,7 +204,7 @@ public:
   ~TAO_SSLIOP_Server_Transport (void);
   // Default destructor
 
-    // Please see Pluggable.h for documentation
+  // Please see Pluggable.h for documentation
   virtual int idle (void);
 
   virtual TAO_SSL_SVC_HANDLER *service_handler (void);
@@ -216,6 +218,7 @@ private:
   TAO_SSLIOP_Server_Connection_Handler *handler_;
   // The connection service handler used for accessing lower layer
   // communication protocols.
+
 };
 
 #include "ace/post.h"

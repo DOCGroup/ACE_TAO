@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -10,11 +11,11 @@
 //    SSLIOP_Acceptor.h
 //
 // = DESCRIPTION
-//   IIOP/SSL specific acceptor processing
+//     IIOP/SSL specific acceptor processing
 //
 // = AUTHOR
-//    Carlos O'Ryan <coryan@ece.uci.edu>
-//    Ossama Othman <ossama@ece.uci.edu>
+//    Carlos O'Ryan <coryan@uci.edu>
+//    Ossama Othman <ossama@uci.edu>
 //
 // ============================================================================
 
@@ -29,14 +30,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SSL/SSL_SOCK_Acceptor.h"
-#include "tao/IIOP_Acceptor.h"
-#include "orbsvcs/SSLIOPC.h"
+#include "IIOP_SSL_Acceptor.h"
 #include "SSLIOP_Connect.h"
+#include "ace/SSL/SSL_SOCK_Acceptor.h"
+#include "orbsvcs/SSLIOPC.h"
+
 
 // TAO SSLIOP_Acceptor concrete call definition
 
-class TAO_SSLIOP_Export TAO_SSLIOP_Acceptor : public TAO_IIOP_Acceptor
+class TAO_SSLIOP_Export TAO_SSLIOP_Acceptor
+  : public TAO_IIOP_SSL_Acceptor
 {
   // = TITLE
   //   TAO_SSLIOP_Acceptor

@@ -1,6 +1,9 @@
 // $Id$
 
 #include "SSLIOP_Connect.h"
+#include "SSLIOP_Current.h"
+#include "SSLIOP_Endpoint.h"
+
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 #include "tao/Base_Connection_Property.h"
@@ -12,7 +15,6 @@
 #include "tao/GIOP_Message_Acceptors.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Endpoint.h"
-#include "SSLIOP_Endpoint.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -59,14 +61,87 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_SSLIOP_Connect_Timeprobe_Description,
 
 // ****************************************************************
 
-TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SSL_SVC_HANDLER (t),
+TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
+  ACE_Thread_Manager* t)
+  : TAO_SSL_SVC_HANDLER (t, 0, 0),
+    current_ (),
+    current_impl_ ()
+{
+}
+
+int
+TAO_SSLIOP_Connection_Handler::setup_ssl_state (TAO_ORB_Core *orb_core)
+{
+  // Make sure we have a valid reference to the SSLIOP::Current
+  // object.
+  if (CORBA::is_nil (this->current_.in ()))
+    {
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
+        {
+          CORBA::Object_var object =
+            orb_core->orb ()->resolve_initial_references (
+              "SSLIOPCurrent",
+              ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          this->current_ = SSLIOP::Current::_narrow (object.in (),
+                                                     ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (CORBA::is_nil (this->current_.in ()))
+            ACE_TRY_THROW (CORBA::INV_OBJREF ());
+        }
+      ACE_CATCHANY
+        {
+          if (TAO_debug_level > 0)
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                 "Could not resolve "
+                                 "\"SSLIOPCurrent\" object");
+
+          return -1;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
+    }
+
+  TAO_SSLIOP_Current *current =
+    ACE_dynamic_cast (TAO_SSLIOP_Current *,
+                      this->current_.in ());
+
+  if (current == 0)   // Sanity check
+    return -1;
+
+  // Make the SSL session state available to the SSLIOP::Current
+  // TSS object.
+  this->current_impl_.ssl (this->peer ().ssl ());
+
+  current->setup (&this->current_impl_);
+
+  return 0;
+}
+
+void
+TAO_SSLIOP_Connection_Handler::teardown_ssl_state (void)
+{
+  TAO_SSLIOP_Current *current =
+    ACE_dynamic_cast (TAO_SSLIOP_Current *,
+                      this->current_.in ());
+
+  if (current != 0)
+    current->teardown ();
+}
+
+// ****************************************************************
+
+TAO_SSLIOP_Server_Connection_Handler::
+TAO_SSLIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
+  : TAO_SSLIOP_Connection_Handler (t),
     TAO_Connection_Handler (0),
     transport_ (this, 0),
     acceptor_factory_ (0),
     refcount_ (1),
     tcp_properties_ (0)
-
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -80,7 +155,7 @@ TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (
   TAO_ORB_Core *orb_core,
   CORBA::Boolean /* lite_flag */,
   void *arg)
-  : TAO_SSL_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_SSLIOP_Connection_Handler (orb_core->thr_mgr ()),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     acceptor_factory_ (orb_core),
@@ -95,7 +170,8 @@ TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (
 }
 
 
-TAO_SSLIOP_Server_Connection_Handler::~TAO_SSLIOP_Server_Connection_Handler (void)
+TAO_SSLIOP_Server_Connection_Handler::
+~TAO_SSLIOP_Server_Connection_Handler (void)
 {
   // If the socket has not already been closed.
   if (this->get_handle () != ACE_INVALID_HANDLE)
@@ -175,15 +251,15 @@ TAO_SSLIOP_Server_Connection_Handler::open (void*)
 
 int
 TAO_SSLIOP_Server_Connection_Handler::activate (long flags,
-                                              int n_threads,
-                                              int force_active,
-                                              long priority,
-                                              int grp_id,
-                                              ACE_Task_Base *task,
-                                              ACE_hthread_t thread_handles[],
-                                              void *stack[],
-                                              size_t stack_size[],
-                                              ACE_thread_t  thread_names[])
+                                                int n_threads,
+                                                int force_active,
+                                                long priority,
+                                                int grp_id,
+                                                ACE_Task_Base *task,
+                                                ACE_hthread_t thread_handles[],
+                                                void *stack[],
+                                                size_t stack_size[],
+                                                ACE_thread_t  thread_names[])
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
@@ -253,12 +329,25 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input (ACE_HANDLE h)
 }
 
 int
-TAO_SSLIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
-                                                      ACE_Time_Value *max_wait_time)
+TAO_SSLIOP_Server_Connection_Handler::handle_input_i (
+  ACE_HANDLE,
+  ACE_Time_Value *max_wait_time)
 {
+  int result;
+
+  ACE_DEBUG ((LM_DEBUG, "***** SERVER IN *****\n"));
+
+  // Set up the SSLIOP::Current object.
+  TAO_SSL_State_Guard ssl_state_guard (this, this->orb_core (), result);
+
+  ACE_DEBUG ((LM_DEBUG, "***** SERVER OUT *****\n"));
+
+  if (result != 0)
+    return -1;
+
   this->refcount_++;
 
-  int result =
+  result =
     this->acceptor_factory_.handle_input (this->transport (),
                                           this->orb_core (),
                                           this->transport_.message_state_,
@@ -331,7 +420,7 @@ TAO_SSLIOP_Server_Connection_Handler::fetch_handle (void)
 //    transport obj.
 TAO_SSLIOP_Client_Connection_Handler::
 TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SSL_SVC_HANDLER (t, 0, 0),
+  : TAO_SSLIOP_Connection_Handler (t),
     TAO_Connection_Handler (0),
     transport_ (this, 0),
     tcp_properties_ (0)
@@ -345,7 +434,7 @@ TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                       TAO_ORB_Core* orb_core,
                                       CORBA::Boolean /* lite_flag */,
                                       void *arg)
-  : TAO_SSL_SVC_HANDLER (t, 0, 0),
+  : TAO_SSLIOP_Connection_Handler (orb_core->thr_mgr ()),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     tcp_properties_ (ACE_static_cast
@@ -357,7 +446,8 @@ TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
   // argument list.
 }
 
-TAO_SSLIOP_Client_Connection_Handler::~TAO_SSLIOP_Client_Connection_Handler (void)
+TAO_SSLIOP_Client_Connection_Handler::
+~TAO_SSLIOP_Client_Connection_Handler (void)
 {
    // If the socket has not already been closed.
   if (this->get_handle () != ACE_INVALID_HANDLE)
@@ -439,9 +529,22 @@ TAO_SSLIOP_Client_Connection_Handler::close (u_long)
 int
 TAO_SSLIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
-  int r = this->transport ()->handle_client_input ();
-  if (r == -1)
+  int result;
+
+  ACE_DEBUG ((LM_DEBUG, "***** CLIENT IN *****\n"));
+
+  // Set up the SSLIOP::Current object.
+  TAO_SSL_State_Guard ssl_state_guard (this, this->orb_core (), result);
+  if (result != 0)
     return -1;
+
+  ACE_DEBUG ((LM_DEBUG, "***** CLIENT OUT *****\n"));
+
+  result = this->transport ()->handle_client_input ();
+
+  if (result == -1)
+    return -1;
+
   return 0;
 }
 

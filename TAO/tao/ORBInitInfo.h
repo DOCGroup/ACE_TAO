@@ -163,6 +163,24 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
+  /**
+   * @name Downcast Related Methods
+   *
+   * These are methods used to get around RTTI compiler deficiencies.
+   * They do not increase the reference count.
+   */
+  //@{
+  static TAO_ORBInitInfo * _narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+ 
+  static TAO_ORBInitInfo * _unchecked_narrow (
+    CORBA::Object_ptr obj,
+    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
+  //@}
+
 protected:
 
   /// Destructor is protected to force instantiation on the heap since

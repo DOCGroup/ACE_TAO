@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ACE_SSL.lib ace.lib TAO.lib TAO_Security.lib TAO_PortableServer.lib ssleay32.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_SSLIOP.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\SSL"
+# ADD LINK32 ACE_SSL.lib ace.lib TAO.lib TAO_Security.lib TAO_PortableServer.lib ssleay32.lib libeay32.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_SSLIOP.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\SSL"
 
 !ELSEIF  "$(CFG)" == "SSLIOP - Win32 Debug"
 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 ACE_SSLd.lib TAOd.lib aced.lib TAO_Securityd.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_SSLIOPd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\SSL"
+# ADD LINK32 ACE_SSLd.lib TAOd.lib aced.lib TAO_Securityd.lib TAO_PortableServerd.lib libeay32.lib ssleay32.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_SSLIOPd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\SSL"
 # SUBTRACT LINK32 /profile
 
 !ENDIF 
@@ -93,6 +93,18 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=.\SSLIOP\IIOP_SSL_Acceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\IIOP_SSL_Connect.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\IIOP_SSL_Connector.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\SSLIOP\ssl_endpoints.cpp
@@ -111,11 +123,27 @@ SOURCE=.\SSLIOP\SSLIOP_Connector.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_Current.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Current_Impl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Endpoint.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Invocation_Interceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
@@ -139,6 +167,18 @@ SOURCE=.\SSLIOPS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\SSLIOP\IIOP_SSL_Acceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\IIOP_SSL_Connect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\IIOP_SSL_Connector.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\ssl_endpoints.h
 # End Source File
 # Begin Source File
@@ -155,6 +195,22 @@ SOURCE=.\SSLIOP\SSLIOP_Connector.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_Current.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Current.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Current_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Current_Impl.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_Endpoint.h
 # End Source File
 # Begin Source File
@@ -164,6 +220,14 @@ SOURCE=.\SSLIOP\SSLIOP_Export.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Invocation_Interceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_ORBInitializer.h
 # End Source File
 # Begin Source File
 
