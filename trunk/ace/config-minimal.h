@@ -9,6 +9,10 @@
 
 #define ACE_HAS_MINIMAL_ACE_OS
 
+#if defined (ACE_HAS_TSS_EMULATION)
+# undef ACE_HAS_TSS_EMULATION
+#endif /* ACE_HAS_TSS_EMULATION */
+
 #if defined (ACE_ASSERT)
 # undef ACE_ASSERT
 #endif /* ACE_ASSERT */
