@@ -512,9 +512,14 @@ public:
 
 
 
-  int run (void);
-  int run (ACE_Time_Value &tv);
-  int run (ACE_Time_Value *tv);
+  int run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  int run (ACE_Time_Value &tv,
+           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  int run (ACE_Time_Value *tv,
+           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Instructs the ORB to initialize itself and run its event loop in
   // the current thread, not returning until the ORB has shut down.
   // If an error occurs during initialization or a run-time this
@@ -704,7 +709,9 @@ protected:
   // Resolve the IOR Manipulation reference for this ORB.
 
   int run (ACE_Time_Value *tv,
-           int break_on_timeouts);
+           int break_on_timeouts,
+           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Implements the run routine
 
 private:

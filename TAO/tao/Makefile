@@ -7269,6 +7269,7 @@ realclean:
  $(ACE_ROOT)/ace/Select_Reactor_T.i \
  $(ACE_ROOT)/ace/Select_Reactor.i \
  $(ACE_ROOT)/ace/FlReactor.h \
+ $(ACE_ROOT)/ace/TkReactor.h \
  $(ACE_ROOT)/ace/Msg_WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Msg_WFMO_Reactor.i \
  $(ACE_ROOT)/ace/TP_Reactor.h \
@@ -11086,8 +11087,7 @@ realclean:
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
- DomainC.i \
+ $(TAO_ROOT)/tao/Any.i DomainC.i \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -11227,9 +11227,8 @@ realclean:
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Any.i \
- TimeBaseC.i TimeBaseS.h TimeBaseS_T.h TimeBaseS_T.i TimeBaseS_T.cpp \
- TimeBaseS.i
+ $(TAO_ROOT)/tao/Any.i TimeBaseC.i \
+ TimeBaseS.h TimeBaseS_T.h TimeBaseS_T.i TimeBaseS_T.cpp TimeBaseS.i
 .obj/TimeBaseS.o .obj/TimeBaseS.so .shobj/TimeBaseS.o .shobj/TimeBaseS.so: TimeBaseS.cpp TimeBaseS.h TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -11303,8 +11302,8 @@ realclean:
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/Any.i \
- TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i TimeBaseS_T.cpp TimeBaseS.i
+ $(TAO_ROOT)/tao/Any.i TimeBaseC.i \
+ TimeBaseS_T.h TimeBaseS_T.i TimeBaseS_T.cpp TimeBaseS.i
 .obj/Principal.o .obj/Principal.so .shobj/Principal.o .shobj/Principal.so: Principal.cpp \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -15000,7 +14999,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Leader_Follower.h \
- $(TAO_ROOT)/tao/Leader_Follower.i
+ $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/debug.h
 .obj/params.o .obj/params.so .shobj/params.o .shobj/params.so: params.cpp \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -16608,8 +16608,8 @@ realclean:
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
- $(TAO_ROOT)/tao/IOPC.i \
- IOPS_T.h IOPS_T.i IOPS_T.cpp IOPS.i
+ $(TAO_ROOT)/tao/IOPC.i IOPS_T.h \
+ IOPS_T.i IOPS_T.cpp IOPS.i
 .obj/PollableC.o .obj/PollableC.so .shobj/PollableC.o .shobj/PollableC.so: PollableC.cpp \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -18424,6 +18424,7 @@ realclean:
  $(TAO_ROOT)/tao/rtcorbafwd.h \
  $(TAO_ROOT)/tao/rtcorbafwd.i \
  $(TAO_ROOT)/tao/Priority_Mapping.i \
+ $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 .obj/Context.o .obj/Context.so .shobj/Context.o .shobj/Context.so: Context.cpp \

@@ -113,30 +113,6 @@ TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::init_ref (const ACE_CString &init_ref)
-{
-  this->init_ref_ = init_ref;
-}
-
-ACE_INLINE const char *
-TAO_ORB_Parameters::init_ref (void) const
-{
-  return this->init_ref_.c_str ();
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::name_service_ior (const ACE_CString &ns)
-{
-  this->name_service_ior_ = ns;
-}
-
-ACE_INLINE const char *
-TAO_ORB_Parameters::name_service_ior (void) const
-{
-  return this->name_service_ior_.c_str ();
-}
-
-ACE_INLINE void
 TAO_ORB_Parameters::name_service_port (CORBA::UShort port)
 {
   this->name_service_port_ = port;
@@ -149,18 +125,6 @@ TAO_ORB_Parameters::name_service_port (void) const
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::trading_service_ior (const ACE_CString &ns)
-{
-  this->trading_service_ior_ = ns;
-}
-
-ACE_INLINE const char *
-TAO_ORB_Parameters::trading_service_ior (void) const
-{
-  return this->trading_service_ior_.c_str ();
-}
-
-ACE_INLINE void
 TAO_ORB_Parameters::trading_service_port (CORBA::UShort port)
 {
   this->trading_service_port_ = port;
@@ -170,18 +134,6 @@ ACE_INLINE CORBA::UShort
 TAO_ORB_Parameters::trading_service_port (void) const
 {
   return this->trading_service_port_;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::implrepo_service_ior (const ACE_CString &ir)
-{
-  this->implrepo_service_ior_ = ir;
-}
-
-ACE_INLINE const char *
-TAO_ORB_Parameters::implrepo_service_ior (void) const
-{
-  return this->implrepo_service_ior_.c_str ();
 }
 
 ACE_INLINE void

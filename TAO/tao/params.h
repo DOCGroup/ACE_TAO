@@ -119,29 +119,13 @@ public:
   // Specifies the endpoints on which this server is willing to
   // listen for requests.
 
-  const char *init_ref (void) const;
-  void init_ref (const ACE_CString &init_ref);
-  // Set/Get the Init Reference of an arbitrary ObjectID.
-
-  const char *name_service_ior (void) const;
-  void name_service_ior (const ACE_CString &ns);
-  // Set/Get the IOR of our name service.
-
   CORBA::UShort name_service_port (void) const;
   void name_service_port (CORBA::UShort port);
   // Set/Get the port of our name service.
 
-  const char *trading_service_ior (void) const;
-  void trading_service_ior (const ACE_CString &ns);
-  // Set/Get the IOR of our trading service.
-
   CORBA::UShort trading_service_port (void) const;
   void trading_service_port (CORBA::UShort port);
   // Set/Get the port of our trading service.
-
-  const char *implrepo_service_ior (void) const;
-  void implrepo_service_ior (const ACE_CString &ir);
-  // Set/Get the IOR of the Implementation Repository service.
 
   CORBA::UShort implrepo_service_port (void) const;
   void implrepo_service_port (CORBA::UShort port);
@@ -221,20 +205,11 @@ private:
   TAO_Endpoint_Insertion_Strategy endpoint_insertion_strategy_;
   // Strategy used to insert endpoints into the endpoint container.
 
-  ACE_CString name_service_ior_;
-  // The IOR of our configured Naming Service.
-
   CORBA::UShort name_service_port_;
   // The port number of our configured Naming Service.
 
-  ACE_CString trading_service_ior_;
-  // The IOR of our configured Trading Service.
-
   CORBA::UShort trading_service_port_;
   // The port number of our configured Trading Service.
-
-  ACE_CString implrepo_service_ior_;
-  // The IOR of our configured Implementation Repository.
 
   CORBA::UShort implrepo_service_port_;
   // The port number of our configured Implementation Repository.
