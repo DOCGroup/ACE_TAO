@@ -55,34 +55,34 @@ public:
 
   void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
-  
+
   CORBA::Long get_dscp_codepoint (void);
 
   void rt_service_context (TAO_Stub *stub,
@@ -94,7 +94,7 @@ public:
                                     CORBA::Policy *model_policy,
                                     CORBA::Short &client_priority
                                     ACE_ENV_ARG_DECL);
-  
+
   void get_selector_hook (CORBA::Policy *model_policy,
                           CORBA::Boolean
                           &is_client_propagated,
@@ -114,24 +114,21 @@ public:
   //@{
   int get_thread_CORBA_priority (CORBA::Short &
                                  ACE_ENV_ARG_DECL);
-  
+
   int get_thread_native_priority (CORBA::Short &
                                   ACE_ENV_ARG_DECL);
-  
+
   int get_thread_CORBA_and_native_priority (CORBA::Short &,
                                             CORBA::Short &
                                             ACE_ENV_ARG_DECL);
-  
+
   int set_thread_CORBA_priority (CORBA::Short
                                  ACE_ENV_ARG_DECL);
-  
+
   int set_thread_native_priority (CORBA::Short
                                   ACE_ENV_ARG_DECL);
-  
-  //@}
 
-  int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry
-                                          ACE_ENV_ARG_DECL);
+  //@}
 
 protected:
 
@@ -160,19 +157,19 @@ protected:
   void extract_protocol_properties (TAO_UIOP_Protocol_Properties &to,
                                     RTCORBA::ProtocolProperties_ptr from
                                     ACE_ENV_ARG_DECL);
-  
+
   void extract_protocol_properties (TAO_SHMIOP_Protocol_Properties &to,
                                     RTCORBA::ProtocolProperties_ptr from
                                     ACE_ENV_ARG_DECL);
-  
+
   void extract_protocol_properties (TAO_DIOP_Protocol_Properties &to,
                                     RTCORBA::ProtocolProperties_ptr from
                                     ACE_ENV_ARG_DECL);
-  
+
   void extract_protocol_properties (TAO_SCIOP_Protocol_Properties &to,
                                     RTCORBA::ProtocolProperties_ptr from
                                     ACE_ENV_ARG_DECL);
-  
+
   CORBA::Boolean set_network_priority (IOP::ProfileId protocol_tag,
                                        RTCORBA::ProtocolProperties_ptr protocol_properties
                                        ACE_ENV_ARG_DECL);

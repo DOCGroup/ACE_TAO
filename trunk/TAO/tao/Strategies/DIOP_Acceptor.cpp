@@ -378,7 +378,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // address.
   ACE_INET_Addr addr;
 
-  if (addr.set (ACE_DEFAULT_SERVER_PORT,
+  if (addr.set (static_cast<unsigned short> (0),
                 ACE_static_cast(ACE_UINT32, INADDR_ANY),
                 1) != 0)
     return -1;
@@ -409,11 +409,25 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   // Connection handler ownership now belongs to the Reactor.
   this->connection_handler_->remove_reference ();
 
+  ACE_INET_Addr address;
+
+  // We do this make sure the port number the endpoint is listening on
+  // gets set in the addr.
+  if (this->connection_handler_->dgram ().get_local_addr (address) != 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) DIOP_Acceptor::open_i ")
+                    ACE_TEXT ("- %p"),
+                    ACE_TEXT ("cannot get local addr\n")));
+      return -1;
+    }
+
   // Set the port for each addr.  If there is more than one network
   // interface then the endpoint created on each interface will be on
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
-  u_short port = addr.get_port_number ();
+  u_short port = address.get_port_number ();
   for (size_t j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 

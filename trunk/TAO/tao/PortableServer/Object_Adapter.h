@@ -377,8 +377,6 @@ protected:
   int unbind_persistent_poa (const poa_name &folded_name,
                              const poa_name &system_name);
 
-  void set_default_server_protocol_policy (ACE_ENV_SINGLE_ARG_DECL);
-
   static ACE_Lock *create_lock (int enable_locking,
                                 TAO_SYNCH_MUTEX &thread_lock);
 

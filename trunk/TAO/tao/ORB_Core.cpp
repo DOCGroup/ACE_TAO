@@ -344,34 +344,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBEndpoint"))))
-        {
-          // Each "endpoint" is of the form:
-          //
-          //   protocol://V.v@addr1,addr2,...,addrN
-          //
-          // or:
-          //
-          //   protocol://addr1,addr2,...,addrN
-          //
-          // where "V.v" is an optional protocol version for each
-          // addr.  All endpoint strings should be of the above
-          // form(s).
-          //
-          // Multiple sets of endpoint may be seperated by a semi-colon `;'.
-          // For example:
-          //
-          //   corbaloc:space:2001,1.2@odyssey:2010;uiop://foo,bar
-          //
-          // All endpoint strings should be of the above form(s).
-
-          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR(current_arg)
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBNameServicePort"))))
         {
           // Specify the port number for the NameService.
@@ -785,6 +757,35 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBEndpoint"))))
+        {
+          // Each "endpoint" is of the form:
+          //
+          //   protocol://V.v@addr1,addr2,...,addrN
+          //
+          // or:
+          //
+          //   protocol://addr1,addr2,...,addrN
+          //
+          // where "V.v" is an optional protocol version for each
+          // addr.  All endpoint strings should be of the above
+          // form(s).
+          //
+          // Multiple sets of endpoint may be seperated by a semi-colon `;'.
+          // For example:
+          //
+          //   corbaloc:space:2001,1.2@odyssey:2010;uiop://foo,bar
+          //
+          // All endpoint strings should be of the above form(s).
+
+          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR (TAO_DEFAULT_LANE),
+                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBListenEndpoints"))))
         {
           // This option is similar to the -ORBEndPoint option. May be
@@ -792,11 +793,37 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // now, I (Priyanka) am leaving so that both options can be
           // used.
 
-          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR(current_arg)
+          this->set_endpoint_helper (ACE_TEXT_ALWAYS_CHAR (TAO_DEFAULT_LANE),
+                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBLaneEndpoint"))) ||
+               (current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBLaneListenEndpoints"))))
+        {
+          // This option is similar to the -ORBEndPoint option but
+          // specifies endpoints for each lane.
+
+          if (arg_shifter.is_option_next ())
+            return -1;
+
+          ACE_CString lane (ACE_TEXT_ALWAYS_CHAR (current_arg));
+          arg_shifter.consume_arg ();
+
+          if(arg_shifter.is_option_next ())
+            return -1;
+
+          ACE_CString endpoints (ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ()));
+          arg_shifter.consume_arg ();
+
+          this->set_endpoint_helper (lane,
+                                     endpoints
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBNoProprietaryActivation"))))
@@ -869,6 +896,34 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
         // Any arguments that don't match are ignored so that the
         // caller can still use them.
         arg_shifter.ignore_arg ();
+    }
+
+  const char *env_endpoint =
+    ACE_OS::getenv ("TAO_ORBENDPOINT");
+
+  if (env_endpoint != 0)
+    {
+      int result =
+        this->orb_params ()->add_endpoints (TAO_DEFAULT_LANE,
+                                            env_endpoint);
+
+      if (result != 0)
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("ERROR: Environment variable TAO_ORBENDPOINT set to invalid value ")
+                          ACE_TEXT ("<%s>.\n"),
+                          env_endpoint));
+            }
+
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                              CORBA::SystemException::_tao_minor_code (
+                                TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                EINVAL),
+                              CORBA::COMPLETED_NO),
+                            -1);
+        }
     }
 
 #if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
@@ -2172,17 +2227,17 @@ TAO_ORB_Core::resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_ORB_Core::set_endpoint_helper (const char *current_arg
+TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
+                                   const ACE_CString &endpoints
                                    ACE_ENV_ARG_DECL)
 {
-  ACE_CString endpts (current_arg);
-
-  if (this->orb_params ()->endpoints (endpts) != 0)
+  if (this->orb_params ()->add_endpoints (lane,
+                                          endpoints) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t)\n")
                   ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(endpts.c_str ())));
+                  ACE_TEXT_CHAR_TO_TCHAR(endpoints.c_str ())));
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
                            CORBA::SystemException::_tao_minor_code (
                               TAO_ORB_CORE_INIT_LOCATION_CODE,

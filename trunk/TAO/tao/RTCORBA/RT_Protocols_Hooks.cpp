@@ -817,64 +817,6 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
   return 0;
 }
 
-int
-TAO_RT_Protocols_Hooks::set_default_server_protocol_policy (
-    TAO_Acceptor_Registry &acceptor_registry
-    ACE_ENV_ARG_DECL
-  )
-{
-  RTCORBA::ProtocolList protocols;
-
-  TAO_AcceptorSetIterator end =
-    acceptor_registry.end ();
-
-  for (TAO_AcceptorSetIterator acceptor =
-         acceptor_registry.begin ();
-       acceptor != end;
-       ++acceptor)
-    {
-      if (*acceptor == 0)
-        continue;
-
-      CORBA::ULong current_length =
-        protocols.length ();
-
-      protocols.length (current_length + 1);
-
-      protocols[current_length].protocol_type =
-        (*acceptor)->tag ();
-
-      protocols[current_length].orb_protocol_properties =
-        RTCORBA::ProtocolProperties::_nil ();
-
-      // @@ Later, we will likely migrate to using RTCORBA protocol
-      // policies for configuration of protocols in nonRT use cases.
-      // Then, the code below will change to each protocol factory
-      // being responsible for creation of its own default protocol
-      // properties.
-      protocols[current_length].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_transport_protocol_property ((*acceptor)->tag (),
-                                                                             this->orb_core_);
-    }
-
-  // Set ServerProtocolPolicy.
-  TAO_ServerProtocolPolicy *server_protocol_policy = 0;
-  ACE_NEW_RETURN (server_protocol_policy,
-                  TAO_ServerProtocolPolicy (protocols),
-                  -1);
-
-  RTCORBA::ServerProtocolPolicy_var safe_server_protocol_policy =
-    server_protocol_policy;
-
-  this->orb_core_->get_default_policies ()->set_policy (
-                                                server_protocol_policy
-                                                ACE_ENV_ARG_PARAMETER
-                                              );
-  ACE_CHECK_RETURN (-1);
-
-  return 0;
-}
-
 ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        ACE_TEXT ("RT_Protocols_Hooks"),
                        ACE_SVC_OBJ_T,
