@@ -1,3 +1,9 @@
+Fri Mar 26 16:00:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: instead of not building Time
+          component if ImplRepo component isn't built, build
+          ImplRepo component if Time component is built.
+
 Fri Mar 26 13:01:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
