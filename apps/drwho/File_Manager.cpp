@@ -102,14 +102,9 @@ File_Manager::open_passwd_file (void)
 
   this->buffer_ptr = (char *) this->mmap_.addr ();
 
-  if (this->buffer_ptr >= 0)
-    {
-      this->buffer_size = this->mmap_.size ();
-      this->current_ptr = this->buffer_ptr;
-      return this->number_of_friends;
-    }
-  else
-    return -1;
+  this->buffer_size = this->mmap_.size ();
+  this->current_ptr = this->buffer_ptr;
+  return this->number_of_friends;
 }
 
 // This function opens up FILENAME and memory maps it in our address
@@ -146,29 +141,24 @@ File_Manager::open_friends_file (const char *filename)
 
   this->buffer_ptr = (char *) this->mmap_.addr ();
 
-  if (this->buffer_ptr >= 0)
-    {
-      this->buffer_size = this->mmap_.size ();
-      this->current_ptr = this->buffer_ptr;
+  this->buffer_size = this->mmap_.size ();
+  this->current_ptr = this->buffer_ptr;
 
-      // Determine how many friends there are by counting the newlines.
+  // Determine how many friends there are by counting the newlines.
 
-      for (char *cp = this->buffer_ptr + this->buffer_size;
-	   cp > this->buffer_ptr
-	   ; )
-	if (*--cp == '\n')
-	  {
-	    this->number_of_friends++;
+  for (char *cp = this->buffer_ptr + this->buffer_size;
+       cp > this->buffer_ptr
+       ;)
+    if (*--cp == '\n')
+      {
+        this->number_of_friends++;
 
-	    // Skip consecutive newlines.
-	    while (cp[-1] == '\n')
-	      --cp;
-	  }
+        // Skip consecutive newlines.
+        while (cp[-1] == '\n')
+          --cp;
+      }
 
-      return this->number_of_friends;
-    }
-  else
-    return -1;
+  return this->number_of_friends;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
