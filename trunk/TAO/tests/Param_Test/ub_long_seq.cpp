@@ -25,7 +25,7 @@
 // ************************************************************************
 
 Test_Long_Sequence::Test_Long_Sequence (void)
-  : opname_ (CORBA::string_dup ("test_longseq")),
+  : opname_ (CORBA::string_dup ("test_long_sequence")),
     in_ (new Param_Test::Long_Seq),
     inout_ (new Param_Test::Long_Seq),
     out_ (0),
@@ -104,7 +104,7 @@ Test_Long_Sequence::add_args (CORBA::NVList_ptr &param_list,
   // add return value type
   (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Long_Seq,
                                                   0,
-                                                  0, // does not own
+                                                  CORBA::B_FALSE, // does not own
                                                   env);
   return 0;
 }
@@ -134,7 +134,6 @@ Test_Long_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Long_Sequence::check_validity (CORBA::Request_ptr req)
 {
-#if 0
   CORBA::Environment env;
 
   Param_Test::Long_Seq *out, *ret;
@@ -144,7 +143,7 @@ Test_Long_Sequence::check_validity (CORBA::Request_ptr req)
 
   this->out_ = out;
   this->ret_ = ret;
-#endif
+
   return this->check_validity ();
 }
 

@@ -25,7 +25,7 @@
 // ************************************************************************
 
 Test_Bounded_Short_Sequence::Test_Bounded_Short_Sequence (void)
-  : opname_ (CORBA::string_dup ("test_bounded_shortseq")),
+  : opname_ (CORBA::string_dup ("test_bounded_short_sequence")),
     in_ (new Param_Test::Bounded_Short_Seq),
     inout_ (new Param_Test::Bounded_Short_Seq),
     out_ (0),
@@ -81,7 +81,7 @@ Test_Bounded_Short_Sequence::run_sii_test (Param_Test_ptr objref,
 {
   Param_Test::Bounded_Short_Seq_out out (this->out_.out ());
   this->ret_ = objref->test_bounded_short_sequence (this->in_.in (),
-                                                                                            this->inout_.inout (),
+                                                    this->inout_.inout (),
                                                     out,
                                                             env);
   return (env.exception () ? -1:0);
@@ -135,7 +135,6 @@ Test_Bounded_Short_Sequence::check_validity (void)
 CORBA::Boolean
 Test_Bounded_Short_Sequence::check_validity (CORBA::Request_ptr req)
 {
-#if 0
   CORBA::Environment env;
 
   Param_Test::Bounded_Short_Seq *out, *ret;
@@ -145,7 +144,7 @@ Test_Bounded_Short_Sequence::check_validity (CORBA::Request_ptr req)
 
   this->out_ = out;
   this->ret_ = ret;
-#endif
+
   return this->check_validity ();
 }
 

@@ -170,6 +170,20 @@ Test_Any::add_args (CORBA::NVList_ptr &param_list,
                     CORBA::NVList_ptr &retval,
                     CORBA::Environment &env)
 {
+  CORBA::Any in_arg (CORBA::_tc_any, &this->in_, 0);
+  CORBA::Any inout_arg (CORBA::_tc_any, &this->inout_, 0);
+  CORBA::Any out_arg (CORBA::_tc_any, &this->out_, 0);
+
+  // add parameters
+  (void)param_list->add_value ("o1", in_arg, CORBA::ARG_IN, env);
+  (void)param_list->add_value ("o2", inout_arg, CORBA::ARG_INOUT, env);
+  (void)param_list->add_value ("o3", out_arg, CORBA::ARG_OUT, env);
+
+  // add return value
+  (void)retval->item (0, env)->value ()->replace (CORBA::_tc_any,
+                                                  0,
+                                                  CORBA::B_FALSE, // does not own
+                                                  env);
   return 0;
 }
 
@@ -218,7 +232,7 @@ Test_Any::check_validity (void)
   else if ((this->in_ >>= obj_in) &&
            (this->inout_ >>= obj_inout) &&
            (this->out_.in () >>= obj_out) &&
-           (this->ret_.in () >>= obj_ret))
+           (this->ret_.in () >>= obj_ret)) 
     {
       // all the >>= operators returned true so we are OK.
       return 1;
@@ -230,6 +244,11 @@ Test_Any::check_validity (void)
 CORBA::Boolean
 Test_Any::check_validity (CORBA::Request_ptr req)
 {
+  CORBA::Environment env;
+
+  *req->arguments ()->item (2, env)->value () >>= *this->out_;
+  *req->result ()->value () >>= *this->ret_;
+
   return this->check_validity ();
 }
 
