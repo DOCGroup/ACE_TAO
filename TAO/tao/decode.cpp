@@ -828,11 +828,11 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                                   break;
                                 case CORBA::tk_enum:
                                   {
-                                    CORBA::Long l;
+                                    CORBA::ULong ul;
                                     TAO_InputCDR stream ((ACE_Message_Block *)
                                                          member_label->_tao_get_cdr ());
-                                    (void)stream.decode (discrim_tc, &l, 0, env);
-                                    if (l == *(CORBA::Long *) discrim_val)
+                                    (void)stream.decode (discrim_tc, &ul, 0, env);
+                                    if (ul == *(CORBA::ULong *) discrim_val)
                                       discrim_matched = 1;
                                   }
                                   break;
@@ -845,8 +845,9 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                                   }
                                   break;
                                 case CORBA::tk_wchar:
-                                  // @@ ASG TO-DO
-                                  if (*(CORBA::WChar *) member_label->value () == *(CORBA::WChar *) discrim_val)
+                                  CORBA::WChar wc;
+                                  *member_label >>= CORBA::Any::to_wchar (wc);
+                                  if (wc == *(CORBA::WChar *) discrim_val)
                                     discrim_matched = 1;
                                   break;
                                 case CORBA::tk_boolean:
