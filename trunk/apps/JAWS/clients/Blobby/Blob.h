@@ -27,10 +27,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Connector.h"
 #include "ace/Message_Block.h"
 #include "Blob_Handler.h"
 
