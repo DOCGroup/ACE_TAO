@@ -1,7 +1,7 @@
 //$Id$
 
 project(CIDLC) {
-  requires += cidl
+  requires += cidl exceptions
   exename = cidlc
   includes += .. ../CCF
   after += IDL2 IDL3 CIDL CodeGenerationKit CompilerElements
