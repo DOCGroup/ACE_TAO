@@ -190,11 +190,19 @@ SOURCE=.\Argv_Type_Converter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Connector.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_IO.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_IO_Impl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Pseudo_Task.cpp
 # End Source File
 # Begin Source File
 
@@ -1118,11 +1126,19 @@ SOURCE=.\Asynch_Acceptor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Connector.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_IO.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_IO_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Pseudo_Task.h
 # End Source File
 # Begin Source File
 
