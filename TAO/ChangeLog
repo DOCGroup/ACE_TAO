@@ -1,17 +1,31 @@
+Wed Nov 27 09:23:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1361_Regression/Test.idl:
+          Fixed fuzz error
+
+        * tests/Bug_1361_Regression/server.bor:
+          Removed not existing file and corrected TAO_IDL flags
+
+        * tests/Bug_1361_Regression/client.bor:
+          Corrected TAO_IDL flags
+
+        * tests/Bug_1361_Regression/Makefile.bor:
+          Added shutdown.bor
+
 Tue Nov 26 23:09:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Makefile:
-	* tests/Makefile.bor: Added the new test to the daily builds. 
+	* tests/Makefile.bor: Added the new test to the daily builds.
 
 	* tests/Bug_1361_Regression/server.bor:
 	* tests/Bug_1361_Regression/client.bor:
-	* tests/Bug_1361_Regression/shutdown.bor: 
+	* tests/Bug_1361_Regression/shutdown.bor:
 	* tests/Bug_1361_Regression/Makefile.bor: The Borland Makefiles.
-	
+
 Tue Nov 26 22:32:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1361_Regression/*: A new regression for BUG
-	  1361. 
+	  1361.
 
 	* tests/Bug_1361_Regression/client.cpp:
 	* tests/Bug_1361_Regression/Echo_Caller.cpp:
@@ -28,10 +42,10 @@ Tue Nov 26 22:32:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tests/Bug_1361_Regression/Server_Timer.cpp
 	* tests/Bug_1361_Regression/Server_Timer.h
 	* tests/Bug_1361_Regression/shutdown.cpp
-	* tests/Bug_1361_Regression/Test.idl: 
+	* tests/Bug_1361_Regression/Test.idl:
 
 	  Thanks to Duane Binder <duane.binder@veritas.com> for donating
-	  this test case. 
+	  this test case.
 
 Tue Nov 26 16:03:52 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -57,16 +71,16 @@ Tue Nov 26 15:01:40 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/DynamicAny/DynCommon.cpp:
         * tao/DynamicAny/DynCommon.h:
 
-          Removed TAO_HAS_VALUETYPE flag. None of the tests or examples that 
+          Removed TAO_HAS_VALUETYPE flag. None of the tests or examples that
           use valuetypes have ever used this flag.
-          
+
 Tue Nov 26 14:21:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
         * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h:
 	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp:
 	  Fixed compile errors by adding dummy implementations for the
 	  base interface methods in interface Stock{}; This should fix
-	  compile errors on many platforms. 	  
+	  compile errors on many platforms.
 
 Tue Nov 26 13:41:21 2002  Pradeep Gore  <pradeep@oomworks.com>
 
@@ -84,8 +98,8 @@ Tue Nov 26 13:41:21 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Makefile.CosNotification:
 	* orbsvcs/orbsvcs/CosNotification.dsp:
 	* orbsvcs/orbsvcs/CosNotification.bor:
-	  Modified to point to renamed files. 
-	
+	  Modified to point to renamed files.
+
 Tue Nov 26 09:09:48 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/PortableGroup.bor:
@@ -98,7 +112,7 @@ Tue Nov 26 00:01:07 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/ORB.cpp: Fix for BUG [1373]. The marshalling and
 	  demarshalling operators for TAO_opaque objects were
 	  wrong. Thanks to Carlos O'Ryan for reporting this problem and
-	  providing a patch. 
+	  providing a patch.
 
 Mon Nov 25 14:39:00 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
@@ -114,7 +128,7 @@ Mon Nov 25 14:39:00 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
           Added IDL compiler command line option to generated AMI code. Also
           added link to TAO Messaging library. These were necessary because some
-          of the interfaces in CosLoadBalancing.idl, which already uses AMI, 
+          of the interfaces in CosLoadBalancing.idl, which already uses AMI,
           inherit from interfaces in PortableGroup.idl, so there must be
           associated reply handlers to inherit as well.
 
@@ -129,8 +143,8 @@ Mon Nov 25 15:09:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* docs/tutorials/Quoter/AMI/Handler_i.h: Fixed compile errors by
 	  adding dummy implementations for the base interface methods in
 	  interface Stock{}; This should fix compile errors on many
-	  platforms. 
-	
+	  platforms.
+
 Mon Nov 25 12:25:47 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Event_Forwarder.idl:
@@ -147,24 +161,24 @@ Mon Nov 25 12:25:47 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* Modified the following changelog entries to thank bug reporters:
 	  Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com> and
 	  Thu Nov 21 18:45:23 2002  Pradeep Gore  <pradeep@oomworks.com>
-	
+
 Mon Nov 25 11:38:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: The Makefile was
 	  by default generating a static library even in dynamic
-	  builds. Fixed the Makefile to work fine. 
+	  builds. Fixed the Makefile to work fine.
 
 Sun Nov 24 12:27:27 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
 
-	  Added check for null result of scoped name lookups in creation of 
-	  inheritance list for reply handlers. Also added a check for each 
+	  Added check for null result of scoped name lookups in creation of
+	  inheritance list for reply handlers. Also added a check for each
 	  possible reply handler parent to determine if it is from an included
 	  IDL file or not, since the AMI preprocessing visitor does not creeate
 	  implied IDL for imported nodes. This check may make the first one
-	  redundant, but it is there anyway for added safety. Thanks to Johnny Willemsen 
-	  <jwillemsen@rememdy.nl> and Craig Rodrigues <crodrigu@bbn.com> for 
+	  redundant, but it is there anyway for added safety. Thanks to Johnny Willemsen
+	  <jwillemsen@rememdy.nl> and Craig Rodrigues <crodrigu@bbn.com> for
 	  reporting the bug.
 
 Sun Nov 24 00:21:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
@@ -176,7 +190,7 @@ Sun Nov 24 00:21:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 Sat Nov 23 10:52:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Transport.cpp: Cosmetic fixes to the debugging
-	  statements. 
+	  statements.
 
 Fri Nov 22 15:30:28 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
