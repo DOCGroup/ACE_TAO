@@ -193,7 +193,7 @@ public:
     {
       return this;
     }
-#endif
+#endif /* ACE_NO_TSS_TOKENS */
 
 private:
   ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &);

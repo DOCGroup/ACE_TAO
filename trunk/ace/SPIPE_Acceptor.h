@@ -32,7 +32,7 @@ public:
     MAX_PIPE_INSTANCES = PIPE_UNLIMITED_INSTANCES,
     MAX_ACCEPT_ATTEMPTS = 3 
   };
-#endif
+#endif /* ACE_WIN32 */
 
   // = Initialization and termination methods.
   ACE_SPIPE_Acceptor (void);

@@ -143,7 +143,7 @@ public:
 #else
   virtual int ipfx0(void)         {  return(iostream::ipfx(0)); }
   virtual int ipfx1(void)         {  return(iostream::ipfx(1)); }
-#endif
+#endif /* __GNUC__ */
   virtual int ipfx (int need = 0) {  return(iostream::ipfx(need)); }
   virtual void isfx (void)        {  iostream::isfx(); return; }
   virtual int opfx (void)         {  return(iostream::opfx()); }

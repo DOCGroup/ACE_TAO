@@ -28,7 +28,7 @@
 #if defined (DEBUGGING)
 #if defined (YY_DECL)
 #undef YY_DECL
-#endif
+#endif /* YY_DECL */
 #define YY_DECL extern "C" char *ace_yylex (void)
 #else
 #define YY_DECL extern "C" int ace_yylex (void)

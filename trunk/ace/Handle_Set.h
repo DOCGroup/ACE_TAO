@@ -82,9 +82,9 @@ private:
   enum
   {
     WORDSIZE = NFDBITS,
-#if !defined(ACE_WIN32)
+#if !defined (ACE_WIN32)
     NUM_WORDS = howmany (MAXSIZE, NFDBITS),
-#endif
+#endif /* ACE_WIN32 */
     NBITS = 256
   };
 
