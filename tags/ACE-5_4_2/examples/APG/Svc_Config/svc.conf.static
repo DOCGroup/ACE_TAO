@@ -1,0 +1,1 @@
+static HA_Status_Static_Service "-f status.ini"
