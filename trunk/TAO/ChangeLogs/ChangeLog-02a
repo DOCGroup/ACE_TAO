@@ -1,3 +1,9 @@
+Fri Feb 15 07:01:28 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Added fixes for the NULL ptr
+ 	  being accessed when stopping associated flows to a stream.
+  	  Thanks to Martin Johnson for these fixes.
+
 Thu Feb 14 17:03:48 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp (shutdown): 

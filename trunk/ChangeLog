@@ -1,3 +1,15 @@
+Thu Feb 14 19:10:04 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Refcounted_Auto_Ptr.h: Make the rep_ protected rather
+	  than private.  Rodney Morris <rodyland@hotmail.com> for
+ 	  motivating this.
+
+Thu Feb 14 15:26:06 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Dynamic_Service.i (instance): Fixed instance to use an
+	  ACE_dynamic_cast() so that the vptr is set correctly.  Thanks to
+ 	  Bill Dyer <bill.dyer@visogent.com> for suggesting this.
+
 Thu Feb 14 16:15:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* COPYING: Updated copyright years.
@@ -110,7 +122,6 @@ Thu Feb 14 00:20:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  Thanks to Johnny Tucker <jtucker@magisnetworks.com> for the
 	  suggestion.
 
->>>>>>> 4.3173
 Wed Feb 13 17:42:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Configuration.cpp (operator=): Fixed a warning in g++

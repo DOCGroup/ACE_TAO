@@ -97,7 +97,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
+protected:
   /// the ACE_Refcounted_Auto_Ptr_Rep
   typedef ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> AUTO_REFCOUNTED_PTR_REP;
 

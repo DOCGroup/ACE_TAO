@@ -1971,11 +1971,14 @@ TAO_StreamEndPoint::stop (const AVStreams::flowSpec &flow_spec
           for (TAO_AV_FlowSpecSetItor begin = this->forward_flow_spec_set.begin ();
                begin != end; ++begin)
             {
-              if (ACE_OS::strcmp ((*begin)->flowname (), flow_spec [i].in ()) == 0)
+              TAO_Forward_FlowSpec_Entry entry;
+               entry.parse (flow_spec[i].in ());
+               if (ACE_OS::strcmp ((*begin)->flowname (), entry.flowname ()) == 0)
                 {
                   TAO_FlowSpec_Entry *entry = *begin;
                   //                  (*begin)->protocol_object ()->stop ();
-                  entry->handler ()->stop (entry->role ());
+                  if (entry->handler() != 0)
+                    entry->handler ()->stop (entry->role ());
                   if (entry->control_handler () != 0)
                     entry->control_handler ()->stop (entry->role ());
                   break;
@@ -1991,7 +1994,8 @@ TAO_StreamEndPoint::stop (const AVStreams::flowSpec &flow_spec
         {
           TAO_FlowSpec_Entry *entry = *begin;
           //          entry->protocol_object ()->stop ();
-          entry->handler ()->stop (entry->role ());
+          if (entry->handler() != 0)
+            entry->handler ()->stop (entry->role ());
           if (entry->control_handler () != 0)
             entry->control_handler ()->stop (entry->role ());
         }
