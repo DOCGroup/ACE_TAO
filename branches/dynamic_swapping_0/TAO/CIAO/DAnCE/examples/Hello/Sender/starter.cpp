@@ -84,6 +84,8 @@ main (int argc, char *argv[])
       return_message = sender->local_message ();
       ACE_DEBUG ((LM_DEBUG, "the message is %s\n", return_message));
 
+      sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
       sender->remove ();
 
       //sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
