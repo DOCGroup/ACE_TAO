@@ -1,6 +1,7 @@
 Sun May  2 17:04:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/DynamicInterface.mpc:
+        * tao/Messaging/Messaging.mpc:
           Removed source and header section, let just MPC do its job
           determining which files are in the directory.
 
