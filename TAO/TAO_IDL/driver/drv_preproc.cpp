@@ -424,13 +424,17 @@ DRV_check_for_include (const char* buf)
   // Terminate this string.
   file_name [i] = '\0';
 
-  // Store in the idl_global, unless it's "orb.idl" -
-  // we don't want to generate header includes for that.
+  // Some backends pass this file through, others don't.
   if (ACE_OS::strcmp (file_name, "orb.idl") == 0)
     {
-      // However, we do want to generate includes for the
-      // .pidl files that it contains.
-      DRV_get_orb_idl_includes ();
+      if (idl_global->pass_orb_idl ())
+        {
+          idl_global->add_to_included_idl_files (file_name);
+        }
+      else
+        {
+          DRV_get_orb_idl_includes ();
+        }
     }
   else
     {

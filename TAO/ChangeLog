@@ -1,3 +1,33 @@
+Sun Aug 15 18:16:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        
+          Fixed minor bug in setting the default version to 1.0.
+          
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          - Moved code to create AST nodes for a struct and sequence
+            implied IDL for 'uses multiple' declarations from the
+            parser back to its original location in the CCM preprocessing
+            visitor.
+            
+          - Added a command line option (-Sm) to suppress the CCM
+            preprocessing visitor, for use on IDL files that have
+            already had their CCM-related implied IDL converted explicitly.
+            
+          - Added a flag to change the way the includes orb.idl,
+            Components.idl and *.pidl are handled. This flag can be set
+            to modify the default behavior by a plugin back end.
+
 Sun Aug 15 18:07:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/compiler.html:
