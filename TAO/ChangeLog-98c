@@ -5,7 +5,7 @@ Thu May 07 11:19:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Object_Key.idl,POA.idl,Policy.idl: moved *.idl files
           to *.IDL, so that the Makefile rules won't automatically
-          regenerate them.  Insert $Id$ strings.
+          regenerate them.  Insert RCS keyword string.
 
         * tao/Makefile: removed rule to suppress regeneration from
           .idl files, because it's no longer needed.
