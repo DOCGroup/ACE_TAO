@@ -148,11 +148,12 @@ module AVStreams
       string reason;
     };
 
-
+  /**
+    * @interface Basic_StreamCtrl
+    * @brief Base class for StreamCtrl, implements basic stream start
+    *        and stop functionality.
+    */
   interface Basic_StreamCtrl : CosPropertyService::PropertySet {
-      // = DESCRIPTION
-      //    Base class for StreamCtrl, implements basic stream start
-      //    and stop functionality.
 
       // = Empty flowSpec => apply operation to all flows
       /// Stop the transfer of data of the stream.Empty the_spec means
