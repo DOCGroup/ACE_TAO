@@ -1,3 +1,9 @@
+Sun Jan 19 15:03:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * websvcs/lib/Makefile:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Sat Jan 18 17:49:20 2003  Steve Huston  <shuston@riverace.com>
 
         * Makefile: Removed PACE references.
@@ -5,11 +11,11 @@ Sat Jan 18 17:49:20 2003  Steve Huston  <shuston@riverace.com>
 Sat Jan 18 17:11:21 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/make_release: Use doxygen 1.2.18 as opposed to doxygen
-	  1.2.13.1. 
+	  1.2.13.1.
 
 Fri Jan 17 09:00:17 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ACE-INSTALL.html (make): Removed all claims that we support 
+	* ACE-INSTALL.html (make): Removed all claims that we support
 	  SunC++ 4.2.  Thanks to Kirat Singh <kirat.singh@gs.com> for
 	  reporting this.
 
