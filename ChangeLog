@@ -1,3 +1,9 @@
+Tue Aug 31 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION for the HP aCC
+          compiler
+
 Tue Aug 31 08:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_time.cpp:
