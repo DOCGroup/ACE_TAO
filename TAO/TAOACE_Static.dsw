@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACE static library"=..\ace\ace_lib.dsp - Package Owner=<4>
+Project: "ACE LIB"=..\ace\ace_lib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -36,7 +36,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO Static"=.\tao\TAO_Static.dsp - Package Owner=<4>
+Project: "TAO LIB"=.\tao\TAO_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -45,7 +45,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ACE static library
+    Project_Dep_Name ACE LIB
     End Project Dependency
 }}}
 
@@ -62,6 +62,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ACE static library
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACE LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -77,3 +80,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
