@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -250,17 +249,6 @@ private:
   TAO_ORB_Core* orb_core_;
   // The ORB_Core, required to extract object references.
 };
-
-// This operators are too complex to be inline....
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
-                                      const CORBA::Any &x);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
-                                      const CORBA::TypeCode *x);
-
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
-                                      CORBA::Any &x);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
-                                      CORBA::TypeCode *&x);
 
 #if defined(__ACE_INLINE__)
 # include "tao/CDR.i"

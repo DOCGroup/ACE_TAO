@@ -44,7 +44,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_GIOP_ServerRequest::
-    TAO_GIOP_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
+    TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging_Interface *mesg_base,
                             TAO_InputCDR &input,
                             TAO_OutputCDR &output,
                             TAO_ORB_Core *orb_core,
@@ -79,7 +79,7 @@ TAO_GIOP_ServerRequest::
 // This constructor is used, by the locate request code
 
 TAO_GIOP_ServerRequest::
-    TAO_GIOP_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
+    TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging_Interface *mesg_base,
                             CORBA::ULong &request_id,
                             CORBA::Boolean &response_expected,
                             TAO_ObjectKey &object_key,

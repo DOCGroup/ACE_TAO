@@ -59,6 +59,13 @@ private:
   int minor_;
   // Changing the version number can be used to provide backwards
   // compatibility with old clients.
+  
+  char *lite_;
+  // Command line arguments that would indicate whether we have to use
+  // GIOP lite or not. 
+  
+  CORBA::Boolean lite_flag_;
+  // Flag for the above. A value of zero represent
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)

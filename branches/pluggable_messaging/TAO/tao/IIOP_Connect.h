@@ -32,9 +32,9 @@
 #include "tao/Wait_Strategy.h"
 
 #include "tao/IIOP_Transport.h"
+#include "tao/Pluggable_Messaging.h"
 
-#include "tao/GIOP_Message_Acceptors.h"
-#include "tao/GIOP_Message_Connectors.h"
+
 
 
 
@@ -110,7 +110,7 @@ protected:
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
 
-  TAO_GIOP_Message_Connectors *mesg_factory_;
+  TAO_Pluggable_Messaging_Interface *mesg_factory_;
   // The Connector messaging factory
 };
 
@@ -123,7 +123,8 @@ class TAO_Export TAO_IIOP_Server_Connection_Handler : public TAO_IIOP_Handler_Ba
 
 public:
   TAO_IIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
-  TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core);
+  TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
+                                      CORBA::Boolean flag);
   ~TAO_IIOP_Server_Connection_Handler (void);
   // Constructor.
 
@@ -172,7 +173,7 @@ protected:
   TAO_IIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
-  TAO_GIOP_Message_Acceptors acceptor_factory_;
+  TAO_Pluggable_Messaging_Interface *acceptor_factory_;
   // Messaging acceptor factory
 
   TAO_ORB_Core *orb_core_;
@@ -183,6 +184,9 @@ protected:
 
   u_long refcount_;
   // Reference count, to avoid early deletes...
+  
+  CORBA::Boolean lite_flag_;
+  // Should we use GIOP or GIOPlite
 };
 
 #if defined (__ACE_INLINE__)

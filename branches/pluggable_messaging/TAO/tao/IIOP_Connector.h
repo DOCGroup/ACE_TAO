@@ -81,7 +81,7 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
   //
 public:
   // = Initialization and termination methods.
-  TAO_IIOP_Connector (void);
+  TAO_IIOP_Connector (CORBA::Boolean flag);
   // Constructor.
 
   // = The TAO_Connector methods, please check the documentation on
@@ -191,7 +191,8 @@ private:
   TAO_IIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for IIOP.
 
-
+  CORBA::Boolean lite_flag_;
+  // Do we need to use a GIOP_Lite for sending messages?
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
@@ -201,6 +202,7 @@ private:
   // Caching strategy which decides the order of removal of entries
   // from the connection cache.
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
+
 
 };
 

@@ -462,7 +462,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Coo
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (PortableInterceptor::_tc_Cookie, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (PortableInterceptor::_tc_Cookie, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
@@ -540,7 +541,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Coo
     else
     {
       ACE_NEW_RETURN (_tao_elem, PortableInterceptor::Cookies, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (PortableInterceptor::_tc_Cookies, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -589,7 +591,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Int
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (PortableInterceptor::_tc_Interceptor, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (PortableInterceptor::_tc_Interceptor, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
@@ -647,7 +650,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Ser
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (PortableInterceptor::_tc_ServerRequestInterceptor, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (PortableInterceptor::_tc_ServerRequestInterceptor, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
@@ -705,7 +709,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableInterceptor::Cli
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (PortableInterceptor::_tc_ClientRequestInterceptor, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (PortableInterceptor::_tc_ClientRequestInterceptor, &_tao_obj_var.out (), 0, ACE_TRY_ENV)

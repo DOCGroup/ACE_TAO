@@ -32,7 +32,6 @@
 
 ACE_RCSID(tao, PollableC, "$Id$")
 
-
 CORBA_Pollable_ptr CORBA_Pollable::_narrow (
     CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV

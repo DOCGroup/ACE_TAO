@@ -122,7 +122,8 @@ class TAO_Export TAO_UIOP_Server_Connection_Handler : public TAO_UIOP_Handler_Ba
 
 public:
   TAO_UIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
-  TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core);
+  TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
+                                      CORBA::Boolean flag = 0);
   // Constructor.
 
   ~TAO_UIOP_Server_Connection_Handler (void);

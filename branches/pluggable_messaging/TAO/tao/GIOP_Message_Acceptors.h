@@ -33,7 +33,11 @@ class TAO_Export TAO_GIOP_Message_Acceptors:
   //   server side of the GIOP classes. 
   
 public:
-  
+
+  TAO_GIOP_Message_Acceptors (void)
+    {
+      cout << "Thaye parameshi "<<endl;
+    }
   int process_connector_messages (TAO_Transport *transport,
                                   TAO_ORB_Core *orb_core,
                                   TAO_InputCDR &input,
@@ -102,9 +106,7 @@ private:
   
   TAO_GIOP_Message_Accept_Impl implementations_;
   
-  static TAO_GIOP_Reply_Status_Type 
-  convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type);
-  // Convert the exception type from CORBA to GIOP
+
 
   ////////////////////////////////////////////////////
   // Inherited methods. Should not be here in the first place? 

@@ -57,6 +57,9 @@ private:
   int minor_;
   // Changing the version number can be used to provide backwards
   // compatibility with old clients.
+  
+  CORBA::Boolean lite_flag_;
+  // Flag for the above. A value of zero represent
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_IIOP_Protocol_Factory)

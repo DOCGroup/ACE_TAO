@@ -32,10 +32,10 @@ TAO_GIOP_Message_Connectors::
 
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
-  if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
-      response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
-      response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
-      response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
+           response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
+           response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
+           response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     // No response required.
     msg << CORBA::Any::from_octet (0);
   

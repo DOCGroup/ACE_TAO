@@ -362,7 +362,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr 
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_DomainManager, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (CORBA::_tc_DomainManager, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
@@ -424,7 +425,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_ConstructionPolicy, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (CORBA::_tc_ConstructionPolicy, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
@@ -503,7 +505,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManagerList 
     else
     {
       ACE_NEW_RETURN (_tao_elem, CORBA_DomainManagerList, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (CORBA::_tc_DomainManagerList, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {

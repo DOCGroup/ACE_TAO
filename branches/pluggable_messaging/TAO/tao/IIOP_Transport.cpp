@@ -242,6 +242,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
       return -1;
     }
 
+
   int result = this->client_mesg_factory_->handle_input (this,
                                                          this->orb_core_,
                                                          *message_state,

@@ -37,6 +37,11 @@ CORBA_Any::to_object::to_object (CORBA_Object_out obj)
 {
 }
 
+ACE_INLINE int
+CORBA_Any::_tao_byte_order (void) const
+{
+  return this->byte_order_;
+}
 // *************************************************************
 // Inline operations for class CORBA_Any_var
 // *************************************************************
