@@ -42,7 +42,7 @@
 // project settings to have this file included for you automatically.
 # if defined (ACE_HAS_VCL) && (ACE_HAS_VCL != 0)
 #  include /**/ <vcl.h>
-# endif 
+# endif
 
 # include "ace/config-win32-common.h"
 
@@ -54,8 +54,8 @@
 # define ACE_CC_PREPROCESSOR_ARGS "-q -P- -o%s"
 
 # define ACE_HAS_ITOA 1
-# define ACE_STRCASECMP_EQUIVALENT ::stricmp 
-# define ACE_STRNCASECMP_EQUIVALENT ::strnicmp 
+# define ACE_STRCASECMP_EQUIVALENT ::stricmp
+# define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 # define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
 # define ACE_EXPORT_NESTED_CLASSES 1
@@ -67,14 +67,14 @@
 # define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION 1
 # define ACE_HAS_MUTABLE_KEYWORD 1
 # define ACE_HAS_NONCONST_SELECT_TIMEVAL 1
-# define ACE_HAS_SIG_ATOMIC_T 1
+# define ACE_HAS_SIG_ATOMIC_T
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION 1
 # define ACE_HAS_STD_TEMPLATE_SPECIALIZATION 1
 # define ACE_HAS_STDCPP_STL_INCLUDES 1
-# define ACE_HAS_STRERROR 1
+# define ACE_HAS_STRERROR
 # define ACE_HAS_STRING_CLASS 1
-# define ACE_HAS_STRPTIME 1
+# define ACE_HAS_STRPTIME
 # define ACE_HAS_TEMPLATE_SPECIALIZATION 1
 # define ACE_HAS_TEMPLATE_TYPEDEFS 1
 # define ACE_HAS_TYPENAME_KEYWORD 1
