@@ -1,3 +1,19 @@
+Sun Jan 10 16:36:24 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Added the following to the Time Service.
+
+	* orbsvcs/Time_Service/README:
+	* orbsvcs/tests/Time/README:
+
+Sun Jan 10 15:36:44 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Makefile: Added the following rule to make
+	sure the ImplRepo_Service is uptodate.
+	include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+
+	There would be no need for this once the files in the
+	ImplRepo_Service are moved to the proper directories.
+
 Sun Jan 10 02:57:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp: Fixed template instantiation
