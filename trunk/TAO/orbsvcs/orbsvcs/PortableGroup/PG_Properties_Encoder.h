@@ -12,12 +12,18 @@
 //=============================================================================
 #ifndef TAO_PG_PROPERTIES_ENCODER_H
 #define TAO_PG_PROPERTIES_ENCODER_H
+
+#include /**/ "ace/pre.h"
+#include <ace/config-all.h>
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/orbsvcs/PortableGroupS.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "portablegroup_export.h"
 
 #include "ace/Vector_T.h"
-#include "ace/Pair_T.h"
 #include "ace/SString.h"
 
 namespace TAO_PG
@@ -34,7 +40,24 @@ namespace TAO_PG
    */
   class TAO_PortableGroup_Export Properties_Encoder
   {
-    typedef ACE_Pair< ACE_CString, PortableGroup::Value> NamedValue;
+    // Originally NamedValue was an ACE_Pair, but ACE_Pair allows operator ==
+    // (delegating to the member's operators ==.)  Since CORBA::Any does
+    // not support operator ==, this confused gcc version 2.9-gnupro-98r2
+    // on LynxOS pfadev04 3.0.1 110298-G PowerPC
+    struct NamedValue
+    {
+    public:
+      ACE_CString name_;
+      PortableGroup::Value value_;
+      NamedValue ();
+      NamedValue (const ACE_CString & name, const PortableGroup::Value & value);
+      NamedValue (const NamedValue & rhs);
+      NamedValue & operator = (const NamedValue & rhs);
+      /// Meaningless method to keep ACE_Vector happy
+      bool operator == (const NamedValue &rhs) const;
+      /// Meaningless method to keep ACE_Vector happy
+      bool operator != (const NamedValue &rhs) const;
+    };
     typedef ACE_Vector< NamedValue, 10 > NamedValueVec;
 
   public:
@@ -66,4 +89,8 @@ namespace TAO_PG
 
 } //namespace TAO_PG
 
+#if defined (__ACE_INLINE__)
+#include "PG_Properties_Encoder.inl"
+#endif /* __ACE_INLINE__ */
+#include /**/ "ace/post.h"
 #endif // TAO_PG_PROPERTIES_ENCODER_H

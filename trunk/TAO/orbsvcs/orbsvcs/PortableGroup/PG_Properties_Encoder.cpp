@@ -13,6 +13,11 @@
 //=============================================================================
 #include "PG_Properties_Encoder.h"
 
+
+#if ! defined (__ACE_INLINE__)
+#include "PG_Properties_Encoder.inl"
+#endif /* !  __ACE_INLINE__ */
+
 //////////
 // Properties_Encoder
 TAO_PG::Properties_Encoder::Properties_Encoder ()
@@ -45,7 +50,7 @@ void TAO_PG::Properties_Encoder::encode (
     PortableGroup::Name & nsName = property.nam;
     PortableGroup::Value & anyValue = property.val;
     // assign the value
-    anyValue = (nv.second());
+    anyValue = (nv.value_);
 
     // assign the name
     // @@: This restricts the name to a single level with no "kind"
@@ -53,15 +58,13 @@ void TAO_PG::Properties_Encoder::encode (
     nsName.length(1);
     CosNaming::NameComponent & nc = nsName[0];
 
-    nc.id = CORBA::string_dup (nv.first().c_str());
+    nc.id = CORBA::string_dup (nv.name_.c_str());
     // nc.kind defaults to empty.  Leave it that way (for now)
   }
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Pair< ACE_CString, PortableGroup::Value>;
   template class ACE_Vector< TAO_PG::Properties_Encoder::NamedValue, 10 >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Pair< ACE_CString, PortableGroup::Value>
 # pragma instantiate ACE_Vector< TAO_PG::Properties_Encoder::NamedValue, 10 >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

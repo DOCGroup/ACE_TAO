@@ -1,3 +1,12 @@
+Mon Mar  1 12:31:38 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
+          ACE_Pair cannot contain CORBA::Any due to missing operator
+          != on Any (and fool compilers that expand unused template
+          methods (LynxOs; gcc version 2.9-gnupro-98r2))
+          Hand-code a simple pair to replace ACE_Pair in this case.
+
 Sun Feb 29 22:10:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Environment.i (release ()):
