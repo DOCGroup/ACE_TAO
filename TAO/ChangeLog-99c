@@ -1,3 +1,19 @@
+Fri Apr 23 000:39:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Marshal.i:
+	  TAO_Marshal_Any::deep_free() was a no-op! I just forced
+	  the Any's destructor call. This may not be portable, but
+	  the alternative would probably necessitate un-inlining
+	  the function. Time will tell. Anyway, this fixed memory
+	  leaks due to Anys containing Anys.
+	* tao/append.cpp:
+	  TAO_Marshal_Any::append() was causing client side memory
+	  leaks due to unreleased typecodes. Also fixed some Any
+	  weirdness I noticed by chance in TAO_Marshal_Union.
+	* tao/skip.cpp:
+          TAO_Marshal_Any::skip() was causing server side memory
+	  leaks due to unreleased typecodes.
+
 Thu Apr 22 20:18:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* man/man7/TAO.7: 
