@@ -9,50 +9,51 @@ use lib '../../../../bin';
 use PerlACE::Run_Test;
 
 # The location of the implementation repository binaries
-$ifr_bin_path  = "../../IFR_Service";
+$ifr_bin_path = "../../IFR_Service";
 
-# The location of the tao_ifr IFR utility 
-if ($^O eq "MSWin32") 
-{
-   $tao_ifr_bin_path = "../../../../bin";
-}
-else 
-{
-   $tao_ifr_bin_path = $ifr_bin_path;
-}
+# The location of the tao_ifr IFR utility
+$tao_ifr_bin_path = "../../../../bin";
 
 # IOR file names
-$ifr_ior_file        = PerlACE::LocalFile("ifr.ior");
+$ifr_ior_file = PerlACE::LocalFile("ifr.ior");
 
 # IDL File
-$idl_file            = PerlACE::LocalFile("test.idl");
+$idl_file = PerlACE::LocalFile("test.idl");
 
 #Log file
-$result_file         = PerlACE::LocalFile("test_result.log");
+$result_file = PerlACE::LocalFile("test_result.log");
 
-$IFRSERVICE    = new PerlACE::Process("$ifr_bin_path/IFR_Service");
+$IFRSERVICE = new PerlACE::Process("$ifr_bin_path/IFR_Service");
 $TAO_IFR    = new PerlACE::Process("$tao_ifr_bin_path/tao_ifr");
 
 sub test_body
 {
    unlink $ifr_ior_file;
-   
+
    # Start the IFR Service to generate an IOR file for the tao_ifr to use...
    $IFRSERVICE->Arguments("-o $ifr_ior_file ");
    $IFRSERVICE->Spawn ();
-   
-   if (PerlACE::waitforfile_timed ($ifr_ior_file, 10) == -1) 
+
+   if (PerlACE::waitforfile_timed ($ifr_ior_file, 10) == -1)
    {
       print STDERR "ERROR: cannot find $ifr_ior_file\n";
       $IFRSERVICE->Kill ();
       return 1;
    }
 
-   $TAO_IFR->Arguments("-ORBInitRef InterfaceRepository=file://$ifr_ior_file -Cw $idl_file &> $result_file");
-   $TAO_IFR->Spawn ();  
+   # Redirect STDERR to a log file so that
+   # we can make sure that we got a warning
+   open(STDERR, '>&SAVEERR');
+   open(STDERR, ">$result_file");
 
-   if (PerlACE::waitforfile_timed ($result_file, 10) == -1) 
-   {
+   $TAO_IFR->Arguments("-ORBInitRef InterfaceRepository=file://$ifr_ior_file -Cw $idl_file");
+   $TAO_IFR->SpawnWaitKill (30);
+
+   # Close the log file and restore STDERR
+   close(STDERR);
+   open(SAVEERR, '>&STDERR');
+
+   if (! -r $result_file) {
       print STDERR "ERROR: cannot find $result_file\n";
       $IFRSERVICE->Kill ();
       $TAO_IFR->Kill ();
@@ -66,17 +67,17 @@ sub test_body
        last if $match;
       }
    close FILE;
-   # Tidy up   
+   # Tidy up
    $IFRSERVICE->TerminateWaitKill (5);
    $TAO_IFR->TerminateWaitKill (5);
    return $match ? 0 : -1;
-}   
+}
 
 # Run regression for bug #1436
 $test_result = test_body();
- 
+
 if ($test_result != 0)
-{   
+{
    print STDERR "ERROR: Regression test for Bug #1436 failed\n";
 }
 else
