@@ -386,9 +386,7 @@ public:
   TAO_InputCDR (const char* buf, size_t bufsiz,
 		int byte_order = TAO_ENCAP_BYTE_ORDER,
 		TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
-                ACE_Allocator* buffer_allocator = 0,
-                ACE_Allocator* data_block_allocator = 0);
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
   // Create an input stream from an arbitrary buffer, care must be
   // exercised wrt alignment, because this contructor will *not* work
   // if the buffer is unproperly aligned.
@@ -396,11 +394,9 @@ public:
   TAO_InputCDR (size_t bufsiz,
 		int byte_order = TAO_ENCAP_BYTE_ORDER,
 		TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
-                ACE_Allocator* buffer_allocator = 0,
-                ACE_Allocator* data_block_allocator = 0);
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
   // Create an empty input stream. The caller is responsible for
-  // putting the right data in here.
+  // putting the right data and providing the right alignment.
 
   TAO_InputCDR (ACE_Message_Block *data,
 		int byte_order =
@@ -408,6 +404,13 @@ public:
 		TAO_Marshal_Factory *f =
                     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
   // Create an input stream from an ACE_Message_Block
+
+  TAO_InputCDR (ACE_Data_Block *data,
+		int byte_order =
+                    TAO_ENCAP_BYTE_ORDER,
+		TAO_Marshal_Factory *f =
+                    TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+  // Create an input stream from an ACE_Data_Block
 
   TAO_InputCDR (const TAO_InputCDR& rhs);
   TAO_InputCDR& operator= (const TAO_InputCDR& rhs);
