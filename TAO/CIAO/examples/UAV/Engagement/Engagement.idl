@@ -18,7 +18,7 @@ module BBN_UAV
 {
   component Engagement
     {
-      publishes EngageTarget engage_target;
+      publishes StartEngage start_engage;
       publishes PrepareMove prepare_move;
       consumes PrepareEngage prepare_engage;
     };
