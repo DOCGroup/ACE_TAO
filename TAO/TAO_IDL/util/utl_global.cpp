@@ -105,6 +105,7 @@ IDL_GlobalData::IDL_GlobalData (void)
       n_allocated_idl_files_ (0),
       pd_parse_state (PS_NoState),
       pd_idl_src_file (0),
+      changing_standard_include_files_ (0),
       export_macro_ (0),
       export_include_ (0),
       client_hdr_ending_ (ACE::strnew ("C.h")),
@@ -694,6 +695,22 @@ String* IDL_GlobalData::idl_src_file()
 void IDL_GlobalData::idl_src_file(String *s)
 {
   this->pd_idl_src_file = s;
+}
+
+// To switch between changing or non-changing standard include files
+// include files, so that #include statements can be 
+// generated with ""s or <>s respectively, for the standard include
+// files (e.g. tao/corba.h) 
+void 
+IDL_GlobalData::changing_standard_include_files (size_t changing)
+{
+  this->changing_standard_include_files_ = changing;
+}
+
+size_t
+IDL_GlobalData::changing_standard_include_files (void)
+{
+  return this->changing_standard_include_files_;
 }
 
 /************ Helper functions **************/
