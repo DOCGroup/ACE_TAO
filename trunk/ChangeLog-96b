@@ -1,3 +1,7 @@
+Fri Dec 06 14:44:20 1996  David L. Levine  <levine@cs.wustl.edu>
+	* ace/OS.cpp: added ::spa () function to allow command line args
+ 	  to be passed to programs in VxWorks
+
 Fri Dec  6 01:21:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* examples/Reactor/ReactorEx/test_reactorEx.cpp: Rewrote the
