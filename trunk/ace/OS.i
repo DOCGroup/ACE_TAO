@@ -1820,7 +1820,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   else
     result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
 
-#   if (!defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) && !defined (_POSIX_THREAD_PROCESS_SHARED))
+#   if (!defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) && !defined (_POSIX_THREAD_PROCESS_SHARED)  ||  defined (ACE_LACKS_MUTEXATTR_PSHARED))
   ACE_UNUSED_ARG (type);
 #   endif /* ! ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
 
