@@ -1,3 +1,8 @@
+Sun Feb 29 09:53:15 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/msvc_static_order.lst:
+	  Added an other dsp to build first
+
 Sat Feb 28 15:56:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
