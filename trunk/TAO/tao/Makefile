@@ -33,6 +33,7 @@ OTHERS_SRCS = \
 	default_server \
 	server_factory \
 	client_factory \
+	arg_shifter \
 	orb_core \
 	objtable \
 	optable \
