@@ -145,11 +145,12 @@ If you use the GNU GCC C++ compiler please note the following:
 	  implicit template instantiation.  Besides wasting space,
 	  this breaks the use of ACE_Singleton:  instead of one
 	  singleton instance, there could be one instance per object
-	  (.o) file that "sees" the template.  Therefore, we strongly
-	  encourage you to add the -fno-implicit-templates option
-	  to CCFLAGS in include/makeinclude/platform_macros.GNU.
+	  (.o) file that "sees" the template.  Therefore, we have
+	  overridden this default in ACE by enabling the
+	  -fno-implicit-templates option to CCFLAGS in all
+	  include/makeinclude/platform_*.GNU files that set CXX to g++.
 
-	  The disadvantage of this approach is that you must then
+	  The disadvantage of this approach is that you must
 	  add template specializations for all templates that your
 	  application uses to your own code.  (The ACE libraries are
 	  self-contained:  you don't need to add the templates that
@@ -163,13 +164,17 @@ If you use the GNU GCC C++ compiler please note the following:
 	  necessary, if the template instantiations themselves reference
 	  other templates.
 
-	  Alternatively, you could apply the Cygnus template
-	  repository patches and use the -repo options.  Please see
-	  the g++ FAQ and gcc manual for more information.  The g++
-	  FAQ indicates that a new implementation of templates planned
-	  for version 2.8 will eliminate the restriction against
-	  static data members in template classes, which would allow
-	  ready implementation of a correct ACE_Singleton.
+	  Alternatively, you could apply the Cygnus template repository
+	  patches and use the -repo option instead of
+	  -fno-implicit-templates.  Please see the g++ FAQ and gcc
+	  manual for more information.  The g++ FAQ indicates that
+	  a new implementation of templates planned for version 2.8
+	  will eliminate the restriction against static data members
+	  in template classes, which would allow ready implementation
+	  of a correct ACE_Singleton.  A final alternative is to
+	  remove the -fno-implicit-templates option from the CCFLAGS
+	  macro in your include/makeinclude/platform_macros.GNU, and
+	  thereby use the default g++ implicit template instantiation.
 
 	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de>
 	  for reporting the problem with ACE_Singleton on g++, and
