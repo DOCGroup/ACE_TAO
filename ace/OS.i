@@ -1163,6 +1163,13 @@ ACE_OS::strtol (const char *s, char **ptr, int base)
   return ::strtol (s, ptr, base);
 }
 
+ACE_INLINE unsigned long 
+ACE_OS::strtoul (const char *s, char **ptr, int base)
+{
+  // ACE_TRACE ("ACE_OS::strtol");
+  return ::strtoul (s, ptr, base);
+}
+
 ACE_INLINE long
 ACE_OS::sysconf (int name)
 {
