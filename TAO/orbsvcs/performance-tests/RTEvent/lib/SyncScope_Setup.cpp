@@ -43,7 +43,7 @@ SyncScope_Setup::SyncScope_Setup (CORBA::ORB_ptr orb,
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  policy_list[0]->destroy (ACE_ENV_ARG_PARAMETER);
+  policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
