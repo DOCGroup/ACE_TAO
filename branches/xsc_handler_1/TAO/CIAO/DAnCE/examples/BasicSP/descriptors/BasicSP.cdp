@@ -229,6 +229,20 @@
   </instance>  
 
   <connection>
+    <name>datain_data_read</name>
+    <internalEndpoint>
+      <portName>data_read</portName>
+      <kind>Facet</kind>
+      <instance>BasicSP-BMDevice-idd</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>datain</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>BasicSP-BMClosedED-idd</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
     <name>comp_data_dataout</name>
     <internalEndpoint>
       <portName>dataout</portName>
