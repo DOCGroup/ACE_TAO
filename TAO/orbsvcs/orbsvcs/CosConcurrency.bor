@@ -22,11 +22,12 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_CONCURRENCY_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_CONCURRENCY_CFLAGS) -DTAO_CONCURRENCY_BUILD_DLL
-!endif
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLSERVER_CFLAGS) \
+	$(TAO_CONCURRENCY_CFLAGS) \
+	-DTAO_CONCURRENCY_BUILD_DLL
 
 CPPDIR = .;Concurrency
 
@@ -35,13 +36,14 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\Concurrency
 INCLUDES = Concurrency\*.h
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
 
-all: idl_src_files concurrency_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-concurrency_lib: $(TARGET)
 
 
 #

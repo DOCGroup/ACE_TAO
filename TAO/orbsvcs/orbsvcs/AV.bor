@@ -38,13 +38,14 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PROPERTY_CFLAGS) \
-	$(TAO_NAMING_CFLAGS) $(TAO_AV_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PROPERTY_CFLAGS) \
-	$(TAO_NAMING_CFLAGS) $(TAO_AV_CFLAGS) -DTAO_AV_BUILD_DLL
-!endif
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_PROPERTY_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_AV_CFLAGS) \
+	-DTAO_AV_BUILD_DLL
 
 CPPDIR = .;AV
 
@@ -53,13 +54,16 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\AV
 INCLUDES = AV\*.h AV\*.i AV\*_T.cpp
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_NAMING_LIB) $(TAO_PROPERTY_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_NAMING_LIB) \
+	$(TAO_PROPERTY_LIB)
 
-all: idl_src_files av_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-av_lib: $(TARGET)
 
 
 #

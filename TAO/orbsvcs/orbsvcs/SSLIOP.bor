@@ -24,14 +24,15 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(ACE_SSL_CFLAGS) \
-	$(SSL_CFLAGS) $(TAO_SECURITY_CFLAGS) $(TAO_SSLIOP_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(ACE_SSL_CFLAGS) \
-	$(SSL_CFLAGS) $(TAO_SECURITY_CFLAGS) $(TAO_SSLIOP_CFLAGS) \
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(ACE_SSL_CFLAGS) \
+	$(SSL_CFLAGS) \
+	$(TAO_SECURITY_CFLAGS) \
+	$(TAO_SSLIOP_CFLAGS) \
 	-DTAO_SSLIOP_BUILD_DLL
-!endif
 
 CPPDIR = .;SSLIOP
 
@@ -40,14 +41,17 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\SSLIOP
 INCLUDES = SSLIOP\*.h SSLIOP\*.i
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(ACE_SSL_LIB)	$(SSL_LIB) \
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(ACE_SSL_LIB) \
+	$(SSL_LIB) \
 	$(TAO_SECURITY_LIB)
 
-all: idl_src_files ssliop_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-ssliop_lib: $(TARGET)
 
 
 #

@@ -34,17 +34,20 @@ OBJFILES = \
 	$(OBJDIR)\Trader.obj \
 	$(OBJDIR)\Trader_Constraint_Visitors.obj \
 	$(OBJDIR)\Trader_Interfaces.obj \
-	$(OBJDIR)\Trader_Utils.obj
+	$(OBJDIR)\Trader_Utils.obj \
+	$(OBJDIR)\Trading_Loader.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-	$(TAO_NAMING_CFLAGS) $(TAO_TRADING_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-	$(TAO_NAMING_CFLAGS) $(TAO_TRADING_CFLAGS) -DTAO_TRADING_BUILD_DLL
-!endif
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_DYNAMICANY_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_TRADING_CFLAGS) \
+	-DTAO_TRADING_BUILD_DLL
 
 CPPDIR = .;Trader
 
@@ -53,13 +56,17 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\Trader
 INCLUDES = Trader\*.h Trader\*_T.cpp
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB) $(TAO_NAMING_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_DYNAMICANY_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_NAMING_LIB)
 
-all: idl_src_files trading_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-trading_lib: $(TARGET)
 
 
 #

@@ -7,14 +7,17 @@ NAME = ORB_destroy
   
 OBJFILES = \
 	$(OBJDIR)\ORB_destroy.obj 
-  
-CPPDIR = .;..
 
-IDLDIR = .
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
   
-!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
-  
-# 
-# IDL Build rules
-# 
-  
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
