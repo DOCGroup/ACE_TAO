@@ -1,3 +1,9 @@
+Mon Apr 10 19:45:32 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Added a #ifdef to
+	  get past a g++ error. I am looking into the right way to
+	  do this.
+
 Mon Apr 10 17:37:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: Addplied John Aughey
