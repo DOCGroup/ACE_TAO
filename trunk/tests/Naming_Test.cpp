@@ -25,8 +25,6 @@
 
 ACE_RCSID(tests, Naming_Test, "$Id$")
 
-#if defined (ACE_HAS_WCHAR)
-
 static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
@@ -174,13 +172,11 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
     }
 }
 
-#endif /* ACE_HAS_WCHAR */
 
 int
 main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Naming_Test"));
-#if defined (ACE_HAS_WCHAR)
   ACE_TCHAR temp_file [BUFSIZ];
   ACE_Naming_Context *ns_context;
   ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
@@ -190,9 +186,9 @@ main (int argc, ACE_TCHAR *argv[])
   name_options->parse_args (argc, argv);
 
   int unicode = 0;
-#if (defined (ACE_WIN32) && defined (UNICODE))
+#if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
   unicode = 1;
-#endif /* ACE_WIN32 && UNICODE */
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
   if (unicode && name_options->use_registry () == 1)
     {
       name_options->namespace_dir (ACE_TEXT ("Software\\ACE\\Name Service"));
@@ -257,9 +253,6 @@ main (int argc, ACE_TCHAR *argv[])
   // since we don't care if the file doesn't exist.
   ACE_OS::unlink (temp_file);
 
-#else /* ACE_HAS_TCHAR */
-  ACE_ERROR ((LM_INFO, ACE_TEXT ("Naming_Test requires wchar_t support to run.\n")));
-#endif /* ACE_HAS_TCHAR */
   ACE_END_TEST;
   return 0;
 }
