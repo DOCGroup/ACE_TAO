@@ -343,7 +343,11 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Iterator_Base
 {
   // = TITLE
-  //     Iterator for the ACE_Hash_Map_Manager.
+  //     Base iterator for the <ACE_Hash_Map_Manager>
+  //
+  // = DESCRIPTION
+  //     This class factors out common code from its templatized
+  //     subclasses.  
 public:
   // = Initialization method.
   ACE_Hash_Map_Iterator_Base (ACE_Hash_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
@@ -361,8 +365,7 @@ public:
   // Returns 1 when all items have been seen, else 0.
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void);
-  // Returns a reference to the interal element <this> is pointing
-  // to.
+  // Returns a reference to the interal element <this> is pointing to.
 
   ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map (void);
   // Returns reference the Hash_Map_Manager that is being iterated
@@ -399,13 +402,18 @@ protected:
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-class ACE_Hash_Map_Iterator
-  : public ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
+class ACE_Hash_Map_Iterator : public ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
   // = TITLE
-  //     Iterator for the ACE_Hash_Map_Manager.
+  //     Forward iterator for the <ACE_Hash_Map_Manager>.
   //
   // = DESCRIPTION
+  //     This class does not perform any internal locking of the
+  //     <ACE_Hash_Map_Manager> it is iterating upon since locking is
+  //     inherently inefficient and/or error-prone within an STL-style
+  //     iterator.  If you require locking, you can explicitly use an
+  //     <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager>'s
+  //     internal lock, which is accessible via its <mutex> method.
 public:
   // = Initialization method.
   ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
@@ -439,13 +447,18 @@ public:
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-class ACE_Hash_Map_Reverse_Iterator
-  : public ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
+class ACE_Hash_Map_Reverse_Iterator : public ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
   // = TITLE
-  //     Iterator for the ACE_Hash_Map_Manager.
+  //     Reverse iterator for the <ACE_Hash_Map_Manager>.
   //
   // = DESCRIPTION
+  //     This class does not perform any internal locking of the
+  //     <ACE_Hash_Map_Manager> it is iterating upon since locking is
+  //     inherently inefficient and/or error-prone within an STL-style
+  //     iterator.  If you require locking, you can explicitly use an
+  //     <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Hash_Map_Manager>'s
+  //     internal lock, which is accessible via its <mutex> method.
 public:
   // = Initialization method.
   ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
