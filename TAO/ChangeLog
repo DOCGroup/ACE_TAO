@@ -1,3 +1,13 @@
+Thu Jan 30 10:40:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_context.h:
+
+	  If there is a system macro defined called 'interface', which
+	  there is on some versions of MingW, redefine
+	  it around the declaration of class be_visitor_context, which
+	  contains a method by that name. Thanks to Johnny Willemsem
+	  <jwillemsem@remedy.nl> for sending in the patch.
+
 Thu Jan 30 07:03:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Makefile.RTOLDEvent
