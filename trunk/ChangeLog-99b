@@ -1,9 +1,14 @@
 Sun Jun 13 14:22:54 1999  Douglas C. Schmidt  <schmidt@maxixe.cs.wustl.edu>
 	
+	* ace/SOCK_Acceptor: Added the new ACE_Accept_QoS_Params parameter
+	  to the ACE_SOCK_Acceptor::accept().  Also created two new
+	  private methods, shared_accept_start() and
+	  shared_accept_finish(), that factor out common code.
+
 	* ace/SOCK_Connector: Added the new ACE_Connect_QoS_Params
-	  parameter.  Also created two new private methods,
-	  shared_connect_start() and shared_connect_finish(), that factor
-	  out common code.
+	  parameter to ACE_SOCK_Connector::connect().  Also created two
+	  new private methods, shared_connect_start() and
+	  shared_connect_finish(), that factor out common code.
 
 	* ace/SOCK_Connector.cpp: Cleaned up the logic that checks for
 	  various types of errors and updated the code to use the new
