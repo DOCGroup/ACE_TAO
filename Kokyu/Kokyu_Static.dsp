@@ -8,12 +8,12 @@ CFG=Kokyu_Static - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Kokyu_Static.mak".
+!MESSAGE NMAKE /f "Kokyu_static.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Kokyu_Static.mak" CFG="Kokyu_Static - Win32 Debug"
+!MESSAGE NMAKE /f "Kokyu_static.mak" CFG="Kokyu_Static - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -64,8 +64,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Static\Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD   /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "ACE_AS_STATIC_LIBS" /FD   /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -99,6 +99,14 @@ SOURCE=.\Dispatcher_Task.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DSRT_Dispatcher_Impl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Schedulers.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Kokyu.cpp
 # End Source File
 # End Group
@@ -116,6 +124,14 @@ SOURCE=.\Dispatcher_Impl.h
 # Begin Source File
 
 SOURCE=.\Dispatcher_Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Dispatcher_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Schedulers.h
 # End Source File
 # Begin Source File
 
@@ -158,6 +174,19 @@ SOURCE=.\Dispatcher_Impl.i
 # Begin Source File
 
 SOURCE=.\Dispatcher_Task.i
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Dispatcher_Impl.i
 
 !IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
 
