@@ -1,3 +1,18 @@
+Sat Sep  4 18:47:58 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
+
+	  Exit status of preprocessor process was incorrectly checked
+	  without using WIFEXITED and WEXITSTATUS macros.
+
+	  Added check for case where preprocessor child process may have
+	  been interrupted by a signal, instead of exiting properly.
+
+	* TAO_IDL/Makefile:
+
+	  Corrected logic that checks when to define a default value for
+	  TAO_IDL_PREPROCESSOR.
+
 Sat Sep 03 18:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/Asynch_Invocation.i,
