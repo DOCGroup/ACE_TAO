@@ -1,3 +1,7 @@
+Fri Dec 27 07:15:34 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/Simple/Simple_Util.h: Somehow missed this in my checkin. 
+
 Thu Dec 26 09:07:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/Simple/Simple_Util.h: Added a method to return the
