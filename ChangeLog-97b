@@ -1,4 +1,8 @@
-Thu Oct 23 23:14:44 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+Thu Oct 23 23:19:24 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* ace/Filecache.cpp: Removed template method specialization of
+	  shared_find.  No longer needed since Hash_Map_Manager has been
+	  changed to no longer rely on sentinel_.
 
 	* ace/Thread_Manager.cpp (various):
 	  Hacked 'til it compiled.  (Chased down syntax errors.)
