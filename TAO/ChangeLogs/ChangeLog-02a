@@ -1,3 +1,13 @@
+Mon Nov  6 17:16:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+
+	  Updated the overlooked POA_CORBA::TypeCodeFactory::_dispatch
+	  method to use Bruce Trask's synchronous_upcall_dispatch()
+	  call. This was causing a protection fault when _dispatch
+	  was called. Thanks to Jean-Christophe Dubois <jcd@one.com>
+	  for reporting this bug.
+
 Mon Nov  6 16:55:05 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connect.h:
