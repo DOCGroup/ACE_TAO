@@ -9,6 +9,9 @@ Fri Aug 21 22:13:51 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i (thr_setcanceltype): don't support if
           ACE_LACKS_PTHREAD_CANCEL.  Thanks to Naga for reporting this.
 
+        * ace/config-chorus.h: added ACE_LACKS_PTHREAD_CANCEL.
+          Thanks to Naga, again.
+
 Fri Aug 21 20:23:44 1998  Douglas C. Schmidt  <schmidt@cumbia.cs.wustl.edu>
 
         * examples/IPC_SAP/UPIPE_SAP/ex[123].cpp: Updated these programs
