@@ -58,7 +58,7 @@ TAO_Target_Specification::profile (void)
 }
 
 ACE_INLINE CORBA::ULong 
-TAO_Target_Specification::iop_ior (IOP::IOR *ior)
+TAO_Target_Specification::iop_ior (IOP::IOR *& ior)
 {
   if (this->specifier_ == TAO_Target_Specification::Reference_Addr)
     {

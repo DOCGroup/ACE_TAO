@@ -67,7 +67,7 @@ public:
   // the stored specifier is not of the right type then this would
   // return a NULL
   
-  CORBA::ULong iop_ior (IOP::IOR *ior);
+  CORBA::ULong iop_ior (IOP::IOR *&ior);
   // Returns a  pointer to IOP::IOR through the parameters and the
   // index of the selected profile as a return parameter after a check
   // of the stored specifier. If the stored specifier is not of the
