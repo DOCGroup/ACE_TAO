@@ -544,6 +544,25 @@ SOURCE=.\Based_Pointer_Repository.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Stats.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Basic_Types.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -2672,6 +2691,25 @@ SOURCE=.\RW_Process_Mutex.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sample_History.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sched_Params.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -4326,6 +4364,10 @@ SOURCE=.\Based_Pointer_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Stats.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
@@ -4926,6 +4968,10 @@ SOURCE=.\RW_Process_Mutex.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sample_History.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sched_Params.h
 # End Source File
 # Begin Source File
@@ -5410,6 +5456,10 @@ SOURCE=.\Based_Pointer_T.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Stats.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Basic_Types.i
 # End Source File
 # Begin Source File
@@ -5835,6 +5885,10 @@ SOURCE=.\Remote_Tokens.i
 # Begin Source File
 
 SOURCE=.\RW_Process_Mutex.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sample_History.inl
 # End Source File
 # Begin Source File
 
