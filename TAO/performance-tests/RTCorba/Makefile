@@ -2,7 +2,7 @@
 #
 #	$Id$
 #
-#	Makefile for the TAO performance-tests
+#	Makefile for the RT performance-tests
 #
 #----------------------------------------------------------------------------
 
@@ -10,14 +10,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Cubit \
-	POA \
-	Pluggable \
-	Thruput \
-	RTCorba
-
-# The following tests have not been updated yet
-# 	Demux
+DIRS  = Oneways \
+	Multiple_Endpoints
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -28,14 +22,6 @@ endif
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-ifndef minimum_corba
-
-# No non_existent() in Minimum CORBA
-  DIRS += Latency
-
-endif # minimum_corba
-
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
