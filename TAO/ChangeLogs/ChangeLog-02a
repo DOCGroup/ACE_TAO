@@ -1,3 +1,14 @@
+Thu May 18 09:14:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+	  When (de)marshaling bounded (w)strings, the IDL compiler
+	  was subtracting 1 from the bound value. Since the bound
+	  value does not include the terminating null, this was
+	  incorrect. Thanks to Russell Mora <rd.mora@router.econz.co.nz>
+	  for reporting this bug.
+
 Thu May 18 08:14:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
