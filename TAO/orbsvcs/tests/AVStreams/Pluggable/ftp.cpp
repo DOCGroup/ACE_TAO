@@ -79,7 +79,7 @@ FTP_Client_Callback::handle_timeout (void *)
           this->count_++;
           if (this->count_ == 2)
             {
-              //@@coryan: Remove these code from this method. 
+              //@@coryan: Remove these code from this method.
               //Should be called when the user wants to stop the stream.
               ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
               AVStreams::flowSpec stop_spec (1);
@@ -88,7 +88,7 @@ FTP_Client_Callback::handle_timeout (void *)
               ACE_CHECK_RETURN (-1);
               CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
               TAO_AV_CORE::instance ()->stop_run ();
-              
+
             }
           else
             return 0;
@@ -154,9 +154,9 @@ Client::parse_args (int argc,
                     char **argv)
 {
   ACE_Get_Opt opts (argc,argv,"f:a:p:sdt");
-  
+
   this->use_sfp_ = 0;
-  char c;
+  int c;
   while ((c= opts ()) != -1)
     {
       switch (c)
@@ -229,7 +229,7 @@ Client::bind_to_server (void)
                            " (%P|%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
                           -1);
-      
+
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
       server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice");
@@ -302,10 +302,10 @@ Client::init (int argc,char **argv)
         {
           ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
         }
-      
-      
+
+
       if (this->bind_to_server () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
                           -1);
     }
@@ -353,7 +353,7 @@ Client::run (void)
       //ACE_High_Res_Timer timer;
       //ACE_Time_Value elapsed;
       // timer.start ();
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->streamctrl_.bind_devs (this->client_mmdevice_._this (ACE_TRY_ENV),
                                      this->server_mmdevice_.in (),
                                      the_qos.inout (),
@@ -397,7 +397,7 @@ int
 main (int argc,
       char **argv)
 {
-  
+
   int result = 0;
   result = CLIENT::instance ()->init (argc,argv);
   if (result < 0)
@@ -408,9 +408,9 @@ main (int argc,
   ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "done\n"));
-  
+
   recv_latency.dump_results ("Receive", gsf);
-  
+
   send_latency.dump_results ("Send", gsf);
 }
 
@@ -420,6 +420,6 @@ template class TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO
 template class TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Client,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> 
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> 
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -91,7 +91,7 @@ FTP_Client_Producer::FTP_Client_Producer (void)
   :TAO_FlowProducer ("Data",CLIENT::instance ()->protocols (),CLIENT::instance ()->format ())
 {
 }
-  
+
 int
 FTP_Client_Producer::set_protocol_object (const char *,
                                           TAO_AV_Protocol_Object *object)
@@ -116,9 +116,9 @@ Client::parse_args (int argc,
                     char **argv)
 {
   ACE_Get_Opt opts (argc,argv,"f:a:p:s");
-  
+
   this->use_sfp_ = 0;
-  char c;
+  int c;
   while ((c= opts ()) != -1)
     {
       switch (c)
@@ -210,7 +210,7 @@ Client::bind_to_server (void)
                            " (%P|%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
                           -1);
-      
+
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
       server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice");
@@ -277,7 +277,7 @@ Client::init (int argc,char **argv)
                       0);
       ACE_OS::sprintf (this->flowname_,
                        "Data");
-                       
+
       this->fdev_->flowname (this->flowname ());
       AVStreams::MMDevice_var mmdevice = this->client_mmdevice_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -300,7 +300,7 @@ Client::init (int argc,char **argv)
           ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
         }
       if (this->bind_to_server () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
                           -1);
     }
@@ -341,7 +341,7 @@ Client::run (void)
       ACE_High_Res_Timer timer;
       ACE_Time_Value elapsed;
       timer.start ();
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->streamctrl_.bind_devs (this->client_mmdevice_._this (ACE_TRY_ENV),
                                      this->server_mmdevice_.in (),
                                      the_qos.inout (),
@@ -376,7 +376,7 @@ main (int argc,
       char **argv)
 {
   TAO_debug_level++;
-    
+
   int result = 0;
   result = CLIENT::instance ()->init (argc,argv);
   if (result < 0)
@@ -394,6 +394,6 @@ template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,A
 template class TAO_FDev <FTP_Client_Producer,TAO_FlowConsumer>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Client,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> 
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> 
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -77,7 +77,7 @@ FTP_Server_Callback::handle_end_stream (void)
 // {
 // }
 
-// AVStreams::FlowConsumer_ptr 
+// AVStreams::FlowConsumer_ptr
 // FTP_Server_FDev::make_consumer (AVStreams::FlowConnection_ptr the_requester,
 //                                 AVStreams::QoS & the_qos,
 //                                 CORBA::Boolean_out met_qos,
@@ -126,7 +126,7 @@ Server::init (int argc,
                                       argv,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      this->orb_manager_ = 
+      this->orb_manager_ =
         TAO_AV_CORE::instance ()->orb_manager ();
 
       // Initialize the orb_manager
@@ -223,7 +223,7 @@ Server::parse_args (int argc,char **argv)
 {
   ACE_Get_Opt opts (argc,argv,"f:p:");
 
-  char c;
+  int c;
   while ((c = opts ()) != -1)
     {
       switch (c)
