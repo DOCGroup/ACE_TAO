@@ -17,7 +17,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
 
 // Controls whether the Service_Repository is deleted when we shut
-// down (we can only delete it safely if we created it!)
+// down (we can only delete it safely if we created it)!
 int ACE_Service_Repository::delete_svc_rep_ = 0;
 
 void
@@ -47,10 +47,13 @@ ACE_Service_Repository::instance (int size /* = ACE_Service_Repository::DEFAULT_
 
       if (ACE_Service_Repository::svc_rep_ == 0)
 	{
-	  ACE_NEW_RETURN (ACE_Service_Repository::svc_rep_, ACE_Service_Repository (size), 0);
+	  ACE_NEW_RETURN (ACE_Service_Repository::svc_rep_,
+                          ACE_Service_Repository (size),
+                          0);
 	  ACE_Service_Repository::delete_svc_rep_ = 1;
 	}
     }
+
   return ACE_Service_Repository::svc_rep_;
 }
 
@@ -92,14 +95,14 @@ ACE_Service_Repository::open (int size)
 {
   ACE_TRACE ("ACE_Service_Repository::open");
 
+  ACE_Service_Type **temp;
+  
+  ACE_NEW_RETURN (temp,
+                  ACE_Service_Type *[size],
+                  -1);
+
+  this->service_vector_ = (const ACE_Service_Type **) temp;
   this->total_size_ = size;
-  this->service_vector_ = 
-    (const ACE_Service_Type **) new ACE_Service_Type *[size];
-  if (this->service_vector_ == 0)
-    {
-      errno = ENOMEM;
-      return -1;
-    }
 
   return 0;
 }
@@ -110,7 +113,9 @@ ACE_Service_Repository::ACE_Service_Repository (int size)
   ACE_TRACE ("ACE_Service_Repository::ACE_Service_Repository");
 
   if (this->open (size) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Service_Repository")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Service_Repository")));
 }
 
 // Finalize (call fini() and possibly delete) all the services.
@@ -127,9 +132,11 @@ ACE_Service_Repository::fini (void)
       // they were added.
       for (int i = this->current_size_ - 1; i >= 0; i--)
         {
-          ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("finalizing %s\n"),
-                      this->service_vector_[i]->name ()));
-          ((ACE_Service_Type *)this->service_vector_[i])->fini ();
+          if (ACE::debug ())
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("finalizing %s\n"),
+                        this->service_vector_[i]->name ()));
+          ((ACE_Service_Type *) this->service_vector_[i])->fini ();
         }
     }
   return 0;
@@ -150,9 +157,7 @@ ACE_Service_Repository::close (void)
       while (this->current_size_ > 0)
         {
           int i = --this->current_size_;
-          //ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("shutting down %s\n"),
-          //            this->service_vector_[i]->name ()));
-          delete (ACE_Service_Type *)this->service_vector_[i];
+          delete (ACE_Service_Type *) this->service_vector_[i];
         }
 
       delete [] this->service_vector_;
@@ -184,14 +189,16 @@ ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
   int i;
 
   for (i = 0; i < this->current_size_; i++)
-    if (ACE_OS::strcmp (name, this->service_vector_[i]->name ()) == 0)
+    if (ACE_OS::strcmp (name,
+                        this->service_vector_[i]->name ()) == 0)
       break;
   
   if (i < this->current_size_)
     {
       if (srp != 0)
 	*srp = this->service_vector_[i];
-      if (ignore_suspended && this->service_vector_[i]->active () == 0)
+      if (ignore_suspended 
+          && this->service_vector_[i]->active () == 0)
 	return -2;
       return i;
     }
@@ -223,7 +230,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
   for (i = 0; i < this->current_size_; i++)
     if (ACE_OS::strcmp (sr->name (), 
-		  this->service_vector_[i]->name ()) == 0)
+                        this->service_vector_[i]->name ()) == 0)
       break;
 
   if (i < this->current_size_) // Replacing an existing entry
@@ -292,6 +299,7 @@ ACE_Service_Repository::remove (const ASYS_TCHAR name[])
 {
   ACE_TRACE ("ACE_Service_Repository::remove");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
   int i = this->find_i (name, 0, 0);
 
   if (i == -1)
@@ -320,7 +328,8 @@ ACE_Service_Repository_Iterator::dump (void) const
 // perform destructive operations on elements during this iteration...
 
 ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator 
-  (ACE_Service_Repository &sr, int ignr_suspended)
+  (ACE_Service_Repository &sr,
+   int ignr_suspended)
   : svc_rep_ (sr),
     next_ (-1),
     ignore_suspended_ (ignr_suspended)
@@ -361,11 +370,13 @@ int
 ACE_Service_Repository_Iterator::advance (void)
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::advance");
+
   for (++this->next_;
        this->next_ < this->svc_rep_.current_size_
        && this->ignore_suspended_
        && this->svc_rep_.service_vector_[this->next_]->active () == 0;
        this->next_++)
     continue;
+
   return this->next_ < this->svc_rep_.current_size_;
 }
