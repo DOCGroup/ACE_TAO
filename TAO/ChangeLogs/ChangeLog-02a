@@ -1,3 +1,12 @@
+Tue Aug 22 11:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+	  Rectified the unused arg warnings in generation of
+	  Dynamic::Paramlist by adding a check for whether the operation
+	  node had any in or inout args at all since the
+	  Dynamic::Paramlist does not consider the out args.
+	
 Tue Aug 22 10:01:49 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Makefiles in $TAO_ROOT/examples: Updated depenedncies.
