@@ -41,6 +41,10 @@ ACE_Thread_Manager::dump (void)
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
+{
+}
+
 int
 ACE_Thread_Descriptor::at_exit (void *object,
                                 ACE_CLEANUP_FUNC cleanup_hook,
@@ -675,7 +679,7 @@ ACE_Thread_Manager::find_thread (ACE_thread_t t_id)
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
        !iter.done ();
        iter.advance ())
-    if (iter.next ()->thr_id_ == t_id)
+    if (ACE_OS::thr_equal (iter.next ()->thr_id_, t_id))
       return iter.next ();
   return 0;
 }

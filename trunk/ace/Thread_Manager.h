@@ -70,6 +70,9 @@ public:
   // failure: -1 if virtual memory is exhausted or 1 if the object (or
   // arrayt) had already been registered.
 
+   ~ACE_Thread_Descriptor (void);
+   // Do nothing destructor to keep some compilers happy
+
 private:
   ACE_thread_t thr_id_;
   // Unique thread ID.
