@@ -1,3 +1,10 @@
+Tue Mar  7 09:33:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/deep_free.cpp:
+	  In TAO_Marshal_Union, the type of 'discrim_tc' was changed
+	  to a _var, but I neglected to change its form when used as
+	  an argument to discrim_tc.in ().
+
 Mon Mar  6 22:49:45 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
