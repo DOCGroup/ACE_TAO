@@ -1,3 +1,8 @@
+Mon Mar  1 18:03:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Multicast_Test_IPV6.cpp: Added #include "ace/Min_Max.h" to
+	  see ACE_MIN, ACE_MAX.
+
 Mon Mar  1 22:50:51 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:

@@ -44,6 +44,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/SString.h"
 #include "ace/Signal.h"
+#include "ace/Min_Max.h"
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
