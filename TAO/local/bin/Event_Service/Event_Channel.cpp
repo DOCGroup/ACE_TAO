@@ -38,12 +38,12 @@ Preemption_Priority (RtecScheduler::handle_t rtinfo)
     }
   ACE_CATCH (RtecScheduler::UNKNOWN_TASK, ex_ut)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "UNKNOWN_TASK %p.\n", 
+      ACE_ERROR_RETURN ((LM_ERROR, "UNKNOWN_TASK %p.\n",
 			 "Preemption_Priority"), 0);
     }
   ACE_CATCHANY
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Unexpected exception %p.\n", 
+      ACE_ERROR_RETURN ((LM_ERROR, "Unexpected exception %p.\n",
 			 "Preemption_Priority"), 0);
 
     }
@@ -177,7 +177,7 @@ public:
   // Schedule a timer at the appropriate priority for <preemption_priority>.
   // Returns the preemption priority used on success, -1 on failure.
 
-  int cancel_timer (RtecScheduler::OS_Priority preemption_priority, 
+  int cancel_timer (RtecScheduler::OS_Priority preemption_priority,
 		    int id, ACE_ES_Timer_ACT *&act);
   // Cancel the timer associated with the priority of
   // <preemption_priority> and <id>.  <act> is filled in with the
@@ -205,7 +205,7 @@ public:
 		   ACE_ES_Dispatching_Module *dispatching_module) :
     request_ (request),
     dispatching_module_ (dispatching_module) { }
-  
+
   virtual void execute (void)
     {
       ACE_TRY
@@ -233,7 +233,7 @@ public:
 // definitions must also be in the cpp file.   The should go here
 // before any use of these methods.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
 				       const ACE_ES_Timer_ACT *act,
 				       RtecScheduler::OS_Priority preemption_priority,
@@ -268,7 +268,7 @@ ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
   tv_delta.usec (int (delta / 10));
   if (tv_delta.usec () == 0)
     tv_delta.usec (1);
-		  
+
   ACE_Time_Value tv_interval;
   if (interval > 0)
     {
@@ -285,7 +285,7 @@ ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
 }
 
 ACE_INLINE int
-ACE_ES_Priority_Timer::cancel_timer (RtecScheduler::OS_Priority preemption_priority, 
+ACE_ES_Priority_Timer::cancel_timer (RtecScheduler::OS_Priority preemption_priority,
 				     int id, ACE_ES_Timer_ACT *&act)
 {
   const void *vp;
@@ -344,7 +344,7 @@ ACE_ES_Event_Container::_release (void)
     delete this;
 }
 
-int 
+int
 ACE_ES_Event_Container::operator== (const ACE_ES_Event_Container &event)
 {
   RtecEventComm::Event &event1 = (RtecEventComm::Event &) *this;
@@ -359,7 +359,7 @@ ACE_ES_Event_Container::operator new (size_t nbytes)
   return ACE_ES_Memory_Pools::new_Event_Container ();
 }
 
-void 
+void
 ACE_ES_Event_Container::operator delete (void *mem)
 {
   ACE_ES_Memory_Pools::delete_Event_Container (mem);
@@ -380,7 +380,7 @@ ACE_Push_Supplier_Proxy::ACE_Push_Supplier_Proxy (ACE_ES_Supplier_Module *sm)
 {
 }
 
-void 
+void
 ACE_Push_Supplier_Proxy::connect_push_supplier (RtecEventComm::PushSupplier_ptr push_supplier,
 						const RtecEventChannelAdmin::SupplierQOS &qos,
 						CORBA::Environment &_env)
@@ -402,11 +402,11 @@ ACE_Push_Supplier_Proxy::connect_push_supplier (RtecEventComm::PushSupplier_ptr 
   // obtain the supplier_id(), BTW, a callback to push_supplier will
   // not work: it usually results in some form of dead-lock.
   source_id_ = qos_.publications_[0].event_.source_;
-  
+
   supplier_module_->connected (this, _env);
 }
 
-void 
+void
 ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
 			       CORBA::Environment &_env)
 {
@@ -417,7 +417,7 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
   supplier_module_->push (this, event, _env);
 }
 
-void 
+void
 ACE_Push_Supplier_Proxy::disconnect_push_consumer (CORBA::Environment &_env)
 {
   ACE_TIMEPROBE_PRINT;
@@ -428,7 +428,7 @@ ACE_Push_Supplier_Proxy::disconnect_push_consumer (CORBA::Environment &_env)
     }
 }
 
-void 
+void
 ACE_Push_Supplier_Proxy::shutdown (void)
 {
   ACE_TRY
@@ -457,7 +457,7 @@ ACE_Push_Consumer_Proxy::~ACE_Push_Consumer_Proxy (void)
 }
 
 
-void 
+void
 ACE_Push_Consumer_Proxy::connect_push_consumer (RtecEventComm::PushConsumer_ptr push_consumer,
 						const RtecEventChannelAdmin::ConsumerQOS &qos,
 						CORBA::Environment &_env)
@@ -480,7 +480,7 @@ ACE_Push_Consumer_Proxy::connect_push_consumer (RtecEventComm::PushConsumer_ptr 
   consumer_module_->connected (this, _env);
 }
 
-void 
+void
 ACE_Push_Consumer_Proxy::disconnect_push_supplier (CORBA::Environment &_env)
 {
   ACE_TIMEPROBE_PRINT;
@@ -488,19 +488,19 @@ ACE_Push_Consumer_Proxy::disconnect_push_supplier (CORBA::Environment &_env)
   push_consumer_ = 0;
 }
 
-void 
+void
 ACE_Push_Consumer_Proxy::suspend (CORBA::Environment &)
 {
   correlation_.suspend ();
 }
 
-void 
+void
 ACE_Push_Consumer_Proxy::resume (CORBA::Environment &)
 {
   correlation_.resume ();
 }
 
-void 
+void
 ACE_Push_Consumer_Proxy::shutdown (void)
 {
   ACE_TRY
@@ -794,13 +794,13 @@ ACE_ES_Subscription_Info::insert_or_allocate (SourceID_Map &sid_map,
 					      RtecEventComm::EventSourceID sid)
 {
   Subscriber_Set *subscribers;
-  
+
   if (sid_map.find (sid, subscribers) == -1)
     {
       // If the correct type set does not exist, make one with a null
       // dependency info (since there is no supplier of this event).
       subscribers = new Subscriber_Set;
-      
+
       if (sid_map.bind (sid, subscribers) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR, "%p bind failed.\n",
@@ -820,13 +820,13 @@ ACE_ES_Subscription_Info::insert_or_allocate (Subscriber_Map &type_map,
 					      RtecEventComm::EventType type)
 {
   Type_Subscribers *subscribers;
-  
+
   if (type_map.find (type, subscribers) == -1)
     {
       // If the correct type set does not exist, make one with a null
       // dependency info (since there is no supplier of this event).
       subscribers = new Type_Subscribers (0);
-      
+
       if (type_map.bind (type, subscribers) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR, "%p bind failed.\n",
@@ -894,7 +894,7 @@ void
 ACE_ES_Consumer_Module::shutdown_request (ACE_ES_Dispatch_Request *request)
 {
   Shutdown_Consumer *sc = (Shutdown_Consumer *) request;
-  
+
   // Tell everyone else that the consumer is disconnected.  This means
   // that *nothing* is left in the system for the consumer, so
   // everyone can free up any resources.
@@ -908,7 +908,7 @@ ACE_ES_Consumer_Module::shutdown_request (ACE_ES_Dispatch_Request *request)
   ACE_ES_GUARD ace_mon (lock_);
   if (ace_mon.locked () == 0)
     return;
-    
+
   // Tell the channel that we may need to shut down.
   if (all_consumers_.size () <= 0)
     {
@@ -956,7 +956,7 @@ ACE_ES_Consumer_Module::shutdown (void)
 	  ACE_ES_GUARD ace_mon (lock_);
 	  if (ace_mon.locked () == 0)
 	    ACE_ERROR ((LM_ERROR, "%p Failed to acquire lock.\n", "ACE_ES_Consumer_Module::shutdown"));
-    
+
 	  if (all_consumers_.remove (*proxy) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p Failed to remove consumer.\n", "ACE_ES_Consumer_Module::shutdown"));
 	}
@@ -977,7 +977,7 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
       ACE_THROW (SYNC_ERROR);
     // @@ TODO Orbix parameters
     // (0, CORBA::COMPLETED_NO, "ACE_ES_Consumer_Module::disconnected"));
-    
+
     if (all_consumers_.remove (consumer) == -1)
       return;
   }
@@ -1067,7 +1067,7 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &_env)
 	delete new_consumer;
 	ACE_THROW_RETURN (SYNC_ERROR, 0);
 	// @@ TODO Orbix parameters:
-	// (0, CORBA::COMPLETED_NO, 
+	// (0, CORBA::COMPLETED_NO,
 	//  "ACE_ES_Consumer_Module::obtain_push_supplier"), 0);
       }
 
@@ -1135,7 +1135,7 @@ ACE_ES_Correlation_Module::push (ACE_ES_Consumer_Rep *consumer,
 				 CORBA::Environment &_env)
 {
   ACE_TIMEPROBE ("  enter ACE_ES_Correlation_Module::push");
-  ACE_ES_Dispatch_Request *request = 
+  ACE_ES_Dispatch_Request *request =
     consumer->correlation ()->push (consumer, event);
   ACE_TIMEPROBE ("  pushed to Correlation_Module");
 
@@ -1172,7 +1172,7 @@ ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consum
   consumer->timer_id (id);
 
   if (id == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p schedule timer failed.\n", 
+    ACE_ERROR_RETURN ((LM_ERROR, "%p schedule timer failed.\n",
 		       "ACE_ES_Correlation_Module::schedule_timeout"), -1);
 
   return 0;
@@ -1222,7 +1222,7 @@ ACE_ES_Correlation_Module::reschedule_timeout (ACE_ES_Consumer_Rep_Timeout *cons
       consumer->timer_id (id);
 
       if (id == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p schedule timer failed.\n", 
+	ACE_ERROR_RETURN ((LM_ERROR, "%p schedule timer failed.\n",
 			   "ACE_ES_Correlation_Module::reschedule_timeout"), -1);
 
       return 0;
@@ -1432,7 +1432,7 @@ ACE_ES_Consumer_Correlation::connected (ACE_Push_Consumer_Proxy *consumer,
 
 	default:
 	  // Non-timer event subscription.
-	  if (this->register_event (*iter, 
+	  if (this->register_event (*iter,
 				    group_type,
 				    cgroup_index,
 				    dgroup_index,
@@ -1531,7 +1531,7 @@ ACE_ES_Consumer_Correlation::get_consumer_rep (RtecEventChannelAdmin::Dependency
 					       int &crep_index)
 {
   ACE_ES_Consumer_Rep *rep = 0;
-  
+
   // Step through all existing consumer reps.
   for (int x=0; x < crep_index; x++)
     {
@@ -1624,11 +1624,11 @@ ACE_ES_Consumer_Correlation::disconnecting (void)
       channel_->disconnect_push_consumer (env);
       if (env.exception () != 0)
 	ACE_ERROR ((LM_ERROR, "ACE_ES_Consumer_Correlation::disconnecting failed.\n"));
-    }  
+    }
 
   for (int x=0; x < n_timer_reps_; x++)
     correlation_module_->cancel_timeout (&timer_reps_[x]);
-  
+
   for (int y=0; y < n_consumer_reps_; y++)
     if (consumer_reps_[y] != 0)
       consumer_reps_[y]->disconnect ();
@@ -1652,10 +1652,10 @@ ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
 	cr->reschedule_deadlines ();
 
 	ACE_TIMEPROBE ("  Consumer_Correlation::push, determine NO CORR.");
-	ACE_ES_Dispatch_Request *request = 
+	ACE_ES_Dispatch_Request *request =
 	  new ACE_ES_Dispatch_Request (consumer_, event, cr->dependency ()->rt_info);
 	ACE_TIMEPROBE ("  Consumer_Correlation::push, NO_CORR: alloc");
-	
+
 	if (request == 0)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
 			     "ACE_ES_Consumer_Correlation::push"), 0);
@@ -1668,7 +1668,7 @@ ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
 
     case ACE_ES_Consumer_Rep::DEADLINE_TIMEOUT:
       {
-	ACE_ES_Dispatch_Request *request = 
+	ACE_ES_Dispatch_Request *request =
 	  new ACE_ES_Dispatch_Request (consumer_, cr->dependency ()->rt_info);
 
 	if (request == 0)
@@ -1681,7 +1681,7 @@ ACE_ES_Consumer_Correlation::push (ACE_ES_Consumer_Rep *cr,
 	// Add any pending events to the outbox.
 	cr->top_group ()->add_events (&(request->event_set ()),
 				      pending_events_, pending_flags_);
-	
+
 	return request;
       }
 
@@ -1811,14 +1811,14 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
 				       CORBA::Environment &_env)
 {
   RtecEventComm::EventSourceID sid = 0;
-  // We will record the source_id for later usage. 
+  // We will record the source_id for later usage.
  {
     ACE_ES_WGUARD ace_mon (lock_);
     if (ace_mon.locked () == 0)
       ACE_THROW (SYNC_ERROR);
     // @@ TODO: Orbix parameters
     // (0, CORBA::COMPLETED_NO, "ACE_ES_Subscription_Module::connected"));
-    
+
     if (all_suppliers_.insert (supplier) == -1)
       ACE_ERROR ((LM_ERROR, "ACE_ES_Subscription_Module insert failed.\n"));
 
@@ -1827,7 +1827,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
     // collection.
     RtecEventChannelAdmin::PublicationSet &publications = supplier->qos ().publications_;
 
-    sid = publications[0].event_.source_; 
+    sid = publications[0].event_.source_;
     for (CORBA::ULong index=0; index < publications.length (); index++)
       {
 	// Check to make sure an RT_Info was specified.
@@ -1838,10 +1838,10 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
 	    ACE_ERROR ((LM_ERROR, "Found a SupplierQOS::dependency_info_.rt_info_ == 0\n"));
 	    continue;
 	  }
-#endif 
+#endif
 
 	RtecEventComm::EventType &event_type = publications[index].event_.type_;
-	
+
 	// Check to make sure a type was specified.
 	if (event_type == ACE_ES_EVENT_ANY)
 	  {
@@ -1862,7 +1862,7 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
 	    ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Subscription_Module::connected"));
 	    return;
 	  }
-	  
+
 	// Check the global type collection for consumers that register
 	// before suppliers.
 	ACE_ES_Subscription_Info::Type_Subscribers *existing_subscribers;
@@ -1956,21 +1956,21 @@ ACE_ES_Subscription_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
     ACE_THROW (SYNC_ERROR);
   // @@ TODO: Orbix parameters
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Subscription_Module::disconnected"));
-    
+
   if (all_suppliers_.remove (supplier) == -1)
     ACE_THROW (SUBSCRIPTION_ERROR);
   // @@ TODO: Orbix parameters.
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Subscription_Module remove failed"));
 
   // Remove all consumers from the supplier's source-based subscription lists.
-  ACE_ES_Subscription_Info::Subscriber_Set_Iterator source_iterator 
+  ACE_ES_Subscription_Info::Subscriber_Set_Iterator source_iterator
     (supplier->subscription_info ().source_subscribers_);
 
   for (ACE_ES_Consumer_Rep **consumer;
        source_iterator.next (consumer) != 0;
        source_iterator.advance ())
     (*consumer)->_release ();
-  
+
   // Get the subscriber list for each type.
   ACE_ES_Subscription_Info::Subscriber_Map_Iterator type_map_iterator
     (supplier->subscription_info ().type_subscribers_);
@@ -1980,7 +1980,7 @@ ACE_ES_Subscription_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
        type_map_iterator.advance ())
     {
       // Remove all consumers from the supplier's source-based subscription lists.
-      ACE_ES_Subscription_Info::Subscriber_Set_Iterator type_iterator 
+      ACE_ES_Subscription_Info::Subscriber_Set_Iterator type_iterator
 	(entry->int_id_->consumers_);
 
       for (ACE_ES_Consumer_Rep **c;
@@ -1998,7 +1998,7 @@ ACE_ES_Subscription_Module::subscribe_all (ACE_ES_Consumer_Rep *)
 }
 
 int
-ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer, 
+ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
 					      RtecEventComm::EventSourceID source)
 {
   // Step through all Supplier Proxies looking for a match to
@@ -2026,7 +2026,7 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
 	    {
 	    case -1:
 	      // Error.
-	      ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", 
+	      ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
 				 "Subscription Module::subscribe_source"), -1);
 	    case 0:
 	    default:
@@ -2036,7 +2036,7 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
 		// Success.
 		// Add each of the supplier's dependency infos to the
 		// consumer's dependency list.
-		ACE_ES_Subscription_Info::Subscriber_Map_Iterator iter2 
+		ACE_ES_Subscription_Info::Subscriber_Map_Iterator iter2
 		  ((*proxy)->subscription_info ().type_subscribers_);
 
 		// Delete all type collections.
@@ -2113,7 +2113,7 @@ ACE_ES_Subscription_Module::subscribe_type (ACE_ES_Consumer_Rep *consumer,
       // operation will fail.  If this succeeds, dependency_info will
       // be added to the consumer.
       RtecScheduler::Dependency_Info *dependency_info;
-      if (ACE_ES_Subscription_Info::insert_or_fail 
+      if (ACE_ES_Subscription_Info::insert_or_fail
 	  ((*proxy)->subscription_info ().type_subscribers_,
 	   consumer, type, dependency_info) == 0)
 	{
@@ -2171,7 +2171,7 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
 	  // Insert the consumer to the supplier's subscription set for
 	  // the type.
 	  RtecScheduler::Dependency_Info *dependency_info;
-	  int insert_result = ACE_ES_Subscription_Info::insert_or_fail 
+	  int insert_result = ACE_ES_Subscription_Info::insert_or_fail
 	    ((*proxy)->subscription_info().type_subscribers_,
 	     consumer, type, dependency_info);
 
@@ -2179,7 +2179,7 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
 	    {
 	    case -1:
 	      // Error.
-	      ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", 
+	      ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
 				 "Subscription Module::subscribe_source_type"), -1);
 	    case 0:
 	    default:
@@ -2418,7 +2418,7 @@ ACE_ES_Subscription_Module::push (ACE_Push_Supplier_Proxy *source,
   // These are all inline function calls.
   if (this->push_source (source, event) == -1)
     return;
-	
+
   ACE_TIMEPROBE ("  begin push_source_type");
 
   if (this->push_source_type (source, event) == -1)
@@ -2511,7 +2511,7 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
     ACE_THROW (SYNC_ERROR);
   // @@ TODO Orbix parameters:
   // (0, CORBA::COMPLETED_NO, "ACE_ES_Supplier_Module::disconnected"));
-    
+
   if (all_suppliers_.remove (supplier) == -1)
     ACE_THROW (SUBSCRIPTION_ERROR);
   // @@ TODO Orbix parameters:
@@ -2524,7 +2524,7 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
       ACE_DEBUG ((LM_DEBUG, "(%t) No more suppliers connected.\n"));
       channel_->report_disconnect (ACE_EventChannel::SUPPLIER);
     }
-  
+
   // IMHO this release is broken: supplier is a parameter, we never
   // actually increased its reference count, so we shouldn't decrease
   // it.
@@ -2562,7 +2562,7 @@ ACE_ES_Supplier_Module::shutdown (void)
   up_->shutdown ();
 }
 
-RtecEventChannelAdmin::ProxyPushConsumer_ptr 
+RtecEventChannelAdmin::ProxyPushConsumer_ptr
 ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &_env)
 {
   ACE_Push_Supplier_Proxy *new_supplier = new ACE_Push_Supplier_Proxy (this);
@@ -2579,10 +2579,10 @@ ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &_env)
 	delete new_supplier;
 	ACE_THROW_RETURN (SYNC_ERROR, 0);
 	// @@ TODO Orbix parameters:
-	// (0, CORBA::COMPLETED_NO, 
+	// (0, CORBA::COMPLETED_NO,
 	// "ACE_ES_Supplier_Module::obtain_push_consumer"), 0);
       }
-    
+
     if (all_suppliers_.insert (new_supplier) == -1)
       ACE_ERROR ((LM_ERROR, "ACE_ES_Supplier_Module insert failed.\n"));
   }
@@ -2610,7 +2610,7 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 	  //  "ACE_ES_Supplier_Module::obtain_push_consumer"));
 
 	  // This will guarantee that release gets called when we exit
-	  // the scope. 
+	  // the scope.
 	  ACE_ES_Event_Container_var event_copy (temp);
 	  temp->_release ();
 	  ACE_TIMEPROBE ("  deliver to Supplier Module (thru Supplier Proxy)");
@@ -2620,25 +2620,25 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
     }
   ACE_CATCH (RtecEventComm::Disconnected, d)
     {
-      ACE_ERROR ((LM_ERROR, "%p Disconnected.\n", 
+      ACE_ERROR ((LM_ERROR, "%p Disconnected.\n",
 		  "ACE_ES_Supplier_Module::push"));
       ACE_RETHROW;
     }
   ACE_CATCH (RtecEventChannelAdmin::TypeError, t)
     {
-      ACE_ERROR ((LM_ERROR, "%p Type Error.\n", 
+      ACE_ERROR ((LM_ERROR, "%p Type Error.\n",
 		  "ACE_ES_Supplier_Module::push"));
       ACE_RETHROW;
     }
   ACE_CATCH (CORBA::NO_MEMORY, e)
     {
-      ACE_ERROR ((LM_ERROR, "%p No Memory.\n", 
+      ACE_ERROR ((LM_ERROR, "%p No Memory.\n",
 		  "ACE_ES_Supplier_Module::push"));
       ACE_RETHROW;
     }
   ACE_CATCH (CORBA::SystemException, e)
     {
-      ACE_ERROR ((LM_ERROR, "%p CORBA System Exception.\n", 
+      ACE_ERROR ((LM_ERROR, "%p CORBA System Exception.\n",
 		  "ACE_ES_Supplier_Module::push"));
       ACE_RETHROW;
     }
@@ -2670,7 +2670,7 @@ ACE_ES_Priority_Timer::connected (RtecScheduler::handle_t rt_info)
 	(rt_info, thread_priority,
 	 subpriority, preemption_priority, ACE_TRY_ENV);
       ACE_CHECK_ENV;
-#if 0  
+#if 0
       ACE_ERROR_RETURN ((LM_ERROR, "%p RtecScheduler::Scheduler::priority failed.\n",
 			 "ACE_ES_Priority_Timer::connected"), -1);
 #endif /* 0 */
@@ -2735,7 +2735,7 @@ ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos)
 
 // ************************************************************
 
-void 
+void
 dump_event (const RtecEventComm::Event &event)
 {
   ACE_DEBUG ((LM_DEBUG, "source_ = %d "
@@ -2775,6 +2775,7 @@ template void operator+=(ACE_CORBA_Sequence<ACE_ES_Event> &,
 			 ACE_ES_Event const &);
 #endif /* ACE_ES_LACKS_ORB */
 
+template class ACE_Atomic_Op<ACE_ES_MUTEX, int>;
 template class ACE_Map_Entry<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT>;
 template class ACE_Map_Entry<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT>;
 template class ACE_Map_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>;
