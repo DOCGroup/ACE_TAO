@@ -1,3 +1,10 @@
+Mon Mar 10 13:47:08 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* include/makeinclude/platform_g++_common.GNU:
+	  Cannot use CXX to determine compiler version because CXX might be
+	  set to "insure" and insure does not pass the -dumpversion option
+	  to the compiler.
+
 Sun Mar  9 10:17:16 2003  Edan Ayal <edanayal@yahoo.com>
 
 	* tests/Future_Set_Test.cpp:
