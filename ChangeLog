@@ -1,92 +1,101 @@
+Thu Dec  4 13:46:36 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/DependencyEditor.pm:
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+        * bin/DependencyGenerator/Preprocessor.pm:
+
+          Added optimizations that cut the dependency generation time by
+          over 40%.
+
 Thu Dec  4 18:34:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Bug_1576_Regression_Test.cpp:
-	  This tests whether loading a non-existent .so will really fail.
-	  Don't log dll.error() because this is the error that we could
-	  not load the .so and this will then result in an error on the
-	  scoreboard. Just log an error in case we are able to load the
-	  non-existent .so
+        * tests/Bug_1576_Regression_Test.cpp:
+          This tests whether loading a non-existent .so will really fail.
+          Don't log dll.error() because this is the error that we could
+          not load the .so and this will then result in an error on the
+          scoreboard. Just log an error in case we are able to load the
+          non-existent .so
 
 Thu Dec  4 16:51:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/config-vxworks5.x.h:
-	  VxWorks 5.5 (0x550) has clearerr, so changed the defines that
-	  set ACE_LACKS_CLEARERR to == 0x542 instead of >= 0x542. Thanks
-	  to Thomas Lockhart <Thomas.Lockhart@jpl.nasa.gov> for reporting
+        * ace/config-vxworks5.x.h:
+          VxWorks 5.5 (0x550) has clearerr, so changed the defines that
+          set ACE_LACKS_CLEARERR to == 0x542 instead of >= 0x542. Thanks
+          to Thomas Lockhart <Thomas.Lockhart@jpl.nasa.gov> for reporting
           this.
 
 Thu Dec  4 16:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Vector_Test.cpp:
-	  When using BCB6 or earlier the second template argument of the
-	  ACE_Vector template must be passed explicit. Just expecting
-	  that the default one is used doesn't work with Borland.
+        * tests/Vector_Test.cpp:
+          When using BCB6 or earlier the second template argument of the
+          ACE_Vector template must be passed explicit. Just expecting
+          that the default one is used doesn't work with Borland.
 
 Thu Dec  4 14:30:44 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 
-	* ace/Task_Ex_T.i (reply, put_next):
-	Thses 2 funcitons releted to ACE_Stream Framework,
-	doesn't work with new ACE_Task_Ex (yet)
+        * ace/Task_Ex_T.i (reply, put_next):
+        Thses 2 funcitons releted to ACE_Stream Framework,
+        doesn't work with new ACE_Task_Ex (yet)
 
 Wed Dec  3 23:37:59 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* ace/Task_Ex_T.h:
-	Add remark about the idea of merging ACE_Task and ACE_Task_Ex.
-	Add remark about sibling alwasy returning 0
+        * ace/Task_Ex_T.h:
+        Add remark about the idea of merging ACE_Task and ACE_Task_Ex.
+        Add remark about sibling alwasy returning 0
 
-	* ace/Task_Ex_T.cpp (ACE_Task_Ex::sibling):
-	ACE_Task_Ex::sibling cannot call mod_->sibling(this) because it
-	is not typed as ACE_Task<>. Return 0 alwasy when calling sibling.
-	TODO: That can be fixed if ACE_Task and ACE_Task_Ex can be merged so
-	ACE_Task_Ex can have the Module ability - aka the Stream model.
-	See ACE_Task_Ex.h for more info on that.
+        * ace/Task_Ex_T.cpp (ACE_Task_Ex::sibling):
+        ACE_Task_Ex::sibling cannot call mod_->sibling(this) because it
+        is not typed as ACE_Task<>. Return 0 alwasy when calling sibling.
+        TODO: That can be fixed if ACE_Task and ACE_Task_Ex can be merged so
+        ACE_Task_Ex can have the Module ability - aka the Stream model.
+        See ACE_Task_Ex.h for more info on that.
 
 Wed Dec  3 12:14:51 2003  Steve Huston  <shuston@riverace.com>
 
-	Pulled in these changes from the 5.3 stream:
+        Pulled in these changes from the 5.3 stream:
 
-	Tue Dec  2 14:43:28 2003  Steve Huston  <shuston@riverace.com>
+        Tue Dec  2 14:43:28 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Vector_T.{h cpp i}: Added operator== and operator!= methods
-	  that take the correct vector length into account. The inherited
-	  ACE_Array methods run the whole array max length.
+        * ace/Vector_T.{h cpp i}: Added operator== and operator!= methods
+          that take the correct vector length into account. The inherited
+          ACE_Array methods run the whole array max length.
 
-	Thu Sep 04 12:20:39 2003  Steve Huston  <shuston@riverace.com>
+        Thu Sep 04 12:20:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Vector_T.{h, i, cpp}: Added new ACE_Vector_Iterator<T> class
-	  to correctly detect end of the vector content. Use this new class as
-	  ACE_Vector<>::Iterator. ACE_Vector previously used ACE_Array_Iterator
-	  as the iterator, but it doesn't notice the end of the legit vector
-	  area.
+        * ace/Vector_T.{h, i, cpp}: Added new ACE_Vector_Iterator<T> class
+          to correctly detect end of the vector content. Use this new class as
+          ACE_Vector<>::Iterator. ACE_Vector previously used ACE_Array_Iterator
+          as the iterator, but it doesn't notice the end of the legit vector
+          area.
 
-	* tests/Vector_Test.cpp: Added a test of the ACE_Vector::Iterator
-	  range to be sure it gets all legit vector elements, and no more.
-	  Thanks to Yann Steff <Yann.Steff@jci.com> for this test addition
-	  and for diagnosing the failure cause.
+        * tests/Vector_Test.cpp: Added a test of the ACE_Vector::Iterator
+          range to be sure it gets all legit vector elements, and no more.
+          Thanks to Yann Steff <Yann.Steff@jci.com> for this test addition
+          and for diagnosing the failure cause.
 
 Wed Dec  3 15:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Misc/basic_perf.bor:
-	* performance-tests/Misc/childbirth_time.bor:
-	* performance-tests/Misc/context_switch_time.bor:
-	* performance-tests/Misc/preempt.bor:
-	* performance-tests/Misc/test_mutex.bor:
-	* performance-tests/Misc/test_naming.bor:
-	* performance-tests/Misc/test_singleton.bor:
-	* netsvcs/build.bor:
-	* include/makeinclude/build_example.bor:
-	* include/makeinclude/build_exe.bor:
-	* examples/Timer_Queue/Async_Timer_Queue_Test.bor:
-	* examples/Timer_Queue/Reactor_Timer_Queue_Test.bor:
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.bor:
-	* examples/Smart_Pointers/gadget_test.bor:
-	* examples/Smart_Pointers/widget_test.bor:
-	* examples/Reactor/Multicast/client.bor:
-	* examples/Reactor/Multicast/server.bor:
-	* examples/Export/export_dll.bor:
-	* examples/Export/test.bor:
-	* apps/build.bor:
-	  Added missing Id tag
+        * performance-tests/Misc/basic_perf.bor:
+        * performance-tests/Misc/childbirth_time.bor:
+        * performance-tests/Misc/context_switch_time.bor:
+        * performance-tests/Misc/preempt.bor:
+        * performance-tests/Misc/test_mutex.bor:
+        * performance-tests/Misc/test_naming.bor:
+        * performance-tests/Misc/test_singleton.bor:
+        * netsvcs/build.bor:
+        * include/makeinclude/build_example.bor:
+        * include/makeinclude/build_exe.bor:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.bor:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.bor:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.bor:
+        * examples/Smart_Pointers/gadget_test.bor:
+        * examples/Smart_Pointers/widget_test.bor:
+        * examples/Reactor/Multicast/client.bor:
+        * examples/Reactor/Multicast/server.bor:
+        * examples/Export/export_dll.bor:
+        * examples/Export/test.bor:
+        * apps/build.bor:
+          Added missing Id tag
 
 Wed Dec  3 09:48:55 2003  Chad Elliott  <elliott_c@ociweb.com>
 

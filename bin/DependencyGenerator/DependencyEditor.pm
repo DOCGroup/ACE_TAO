@@ -43,7 +43,7 @@ sub process {
 
   ## Back up the original file and receive the contents
   my(@contents) = ();
-  if (-r $output) {
+  if (-r $output && -s $output) {
     if (!$self->backup($output, \@contents)) {
       print STDERR "ERROR: Unable to backup $output\n";
       return 1;
