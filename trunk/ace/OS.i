@@ -4465,10 +4465,13 @@ ACE_OS::puts (const char *s)
 ACE_INLINE ACE_SignalHandler
 ACE_OS::signal (int signum, ACE_SignalHandler func)
 {
+  if (signum == 0)
+    return 0;
+  else
 #if !defined (ACE_HAS_TANDEM_SIGNALS) && !defined (ACE_HAS_LYNXOS_SIGNALS)
     return ::signal (signum, func);
 #else
-  return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
+    return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
 #endif /* !ACE_HAS_TANDEM_SIGNALS */
 }
 
@@ -7564,12 +7567,14 @@ ACE_OS::sigaction (int signum,
                    struct sigaction *osa)
 {
   // ACE_TRACE ("ACE_OS::sigaction");
+  if (signum == 0)
+    return 0;
 #if defined (ACE_WIN32)
   struct sigaction sa;
 
   if (osa == 0)
     osa = &sa;
-
+  
   osa->sa_handler = ::signal (signum, nsa->sa_handler);
   return osa->sa_handler == SIG_ERR ? -1 : 0;
 #elif defined (CHORUS)

@@ -87,16 +87,16 @@ To run the tests do the following:
    a. Change the svc.conf file in the ./Peer/ directory to
       another name (e.g., foo.conf).  This will keep the
       program from starting up with the svc.conf file
-      (which dynamically links in the Peers and uses the -p option to
+      (which dynamically links in the Peers and uses the -a option to
       set the port).
       
    b. Then run the peers in different windows as
    
       # Window 1
-      % peerd -p 10003    
+      % peerd -a 10003    
 
       # Window 2
-      % peerd -p 10004
+      % peerd -a 10004
 
       etc.  Naturally, you can also edit the svc.conf file, but that's
       more of a pain if you've got a shared filesystem.

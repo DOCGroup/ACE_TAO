@@ -118,6 +118,23 @@ ACE::register_stdin_handler (ACE_Event_Handler *eh,
 #endif /* ACE_WIN32 */
 }
 
+int
+ACE::remove_stdin_handler (ACE_Reactor *reactor,
+                           ACE_Thread_Manager *thr_mgr)
+{
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (reactor);
+  ACE_UNUSED_ARG (thr_mgr);
+
+  // What should we do here?
+  ACE_NOTSUP_RETURN (-1);
+#else
+  // Keep compilers happy.
+  ACE_UNUSED_ARG (thr_mgr);
+  return reactor->remove_handler (ACE_STDIN, ACE_Event_Handler::READ_MASK);
+#endif /* ACE_WIN32 */
+}
+
 // Used to read from non-socket ACE_HANDLEs in our own thread to work
 // around Win32 limitations that don't allow us to select() on
 // non-sockets (such as ACE_STDIN).  This is commonly used in

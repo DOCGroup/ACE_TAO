@@ -85,28 +85,21 @@ Thread_Handler::Thread_Handler (int delay,
 				size_t n_threads)
     : iterations_(MAX_ITERATIONS)
 {
-  delay_.set (delay);
-  interval_.set (interval);
-
-#if !defined(CHORUS)
   ACE_Sig_Set sig_set;
   
   sig_set.sig_add (SIGQUIT);
   sig_set.sig_add (SIGINT);
-#endif /* CHORUS */
 
+  delay_.set (delay);
+  interval_.set (interval);
   this->id_ = 0;
 
   if (ACE::register_stdin_handler (this,
 				   ACE_Reactor::instance (),
 				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
-
-#if !defined (CHORUS)
   else if (ACE_Reactor::instance ()->register_handler (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "register_handler"));
-#endif /* CHORUS */
-
   else if (ACE_Reactor::instance ()->schedule_timer 
       (this, 0, Thread_Handler::delay_, Thread_Handler::interval_) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "schedule_timer"));
@@ -114,9 +107,7 @@ Thread_Handler::Thread_Handler (int delay,
   // Set up this thread's signal mask, which is inherited by the
   // threads it spawns.
 
-#if !defined (CHORUS)
   ACE_Thread::sigsetmask (SIG_BLOCK, sig_set);
-#endif /* CHORUS */
 
   // Create N new threads of control Thread_Handlers.
 
@@ -127,9 +118,7 @@ Thread_Handler::Thread_Handler (int delay,
       ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread::spawn"));
 
   // Unblock signal set so that only this thread receives them!
-#if !defined (CHORUS)
   ACE_Thread::sigsetmask (SIG_UNBLOCK, sig_set);
-#endif /* CHORUS */
 }
 
 int

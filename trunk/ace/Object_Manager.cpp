@@ -217,7 +217,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   ACE_Object_Manager::starting_up_ = 0;
 
   ACE_NEW (ACE_Object_Manager::default_mask_p_,
-           ACE_Sig_Set(1));
+           ACE_Sig_Set (1));
 }
 
 ACE_Object_Manager *

@@ -29,14 +29,22 @@ public:
   int enabled (int option) const;
   // Determine if an option is enabled.
 
-  u_short port (void) const;
-  // What is our listening port number?
+  u_short acceptor_port (void) const;
+  // Our acceptor port number, i.e., the one that we passively listen
+  // on for connections to arrive from a gatewayd.
+
+  u_short connector_port (void) const;
+  // Our connector port number, i.e., the one that we use to actively
+  // establish connections with a gatewayd.
+
+  const char *connector_host (void) const;
+  // Our connector port host, i.e., the host running the gatewayd.
 
   long timeout (void) const;
-  // What is our timeout?
+  // Duration between disconnects.
 
   long max_queue_size (void) const;
-  // What is the maximum size of the queue?
+  // The maximum size of the queue.
 
 private:
   enum
@@ -62,8 +70,16 @@ private:
   u_long options_;
   // Flag to indicate if we want verbose diagnostics.
 
-  u_short port_;
-  // Our port number.
+  u_short acceptor_port_;
+  // Our acceptor port number, i.e., the one that we passively listen
+  // on for connections to arrive from a gatewayd.
+
+  u_short connector_port_;
+  // Our connector port number, i.e., the one that we use to actively
+  // establish connections with a gatewayd.
+
+  char *connector_host_;
+  // Our connector host.
 
   long timeout_;
   // The amount of time to wait before disconnecting from the Peerd.

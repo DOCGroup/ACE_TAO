@@ -179,9 +179,6 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
     {
       ACE_HANDLE handle = this->get_handle ();
 
-      // We must use the <handle> obtained *before* we deleted the
-      // accept_strategy_...
-
       this->reactor_->remove_handler
         (handle,
          ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);

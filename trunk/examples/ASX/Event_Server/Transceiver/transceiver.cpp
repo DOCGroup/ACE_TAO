@@ -120,19 +120,9 @@ Event_Transceiver::Event_Transceiver (void)
   sig_set.sig_add (SIGINT);
   sig_set.sig_add (SIGQUIT);
 
-#if !defined (ACE_WIN32)
-
   if (ACE_Reactor::instance ()->register_handler
       (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
-
-#else
-
-  if (ACE_Reactor::instance ()->register_handler
-      (SIGINT, this) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
-
-#endif /* ACE_WIN32 */
 
   // We need to register <this> here before we're connected since
   // otherwise <get_handle> will return the connection socket handle

@@ -7,7 +7,7 @@ Options *Options::instance_ = 0;
 void
 Options::print_usage_and_die (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "%n [-acv] [-p port] [-q max-queue-size] [-t timeout]\n"));
+  ACE_DEBUG ((LM_DEBUG, "%n [-a acceptor port] [-c connector port] [-h gateway host] [-q max-queue-size] [-t timeout] [-v]\n"));
 }
 
 Options::Options (void)
@@ -36,9 +36,21 @@ Options::max_queue_size (void) const
 }
 
 u_short
-Options::port (void) const
+Options::acceptor_port (void) const
 {
-  return this->port_;
+  return this->acceptor_port_;
+}
+
+u_short
+Options::connector_port (void) const
+{
+  return this->connector_port_;
+}
+
+const char *
+Options::connector_host (void) const
+{
+  return this->connector_host_;
 }
 
 int
@@ -50,18 +62,18 @@ Options::enabled (int option) const
 void
 Options::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "acp:q:t:v", 0);
+  ACE_Get_Opt get_opt (argc, argv, "a:c:h:q:t:v", 0);
 
-  char *to = ACE_OS::getenv ("TIMEOUT");
+  char *timeout = ACE_OS::getenv ("TIMEOUT");
 
-  if (to == 0) 
+  if (timeout == 0) 
     this->timeout_ = Options::DEFAULT_TIMEOUT;
   else
-    this->timeout_ = ACE_OS::atoi (to);
+    this->timeout_ = ACE_OS::atoi (timeout);
 
-  this->port_ = ACE_DEFAULT_PEER_SERVER_PORT;
-
-  ACE_SET_BITS (this->options_, Options::ACCEPTOR);
+  this->options_ = 0;
+  this->acceptor_port_ = ACE_DEFAULT_PEER_SERVER_PORT;
+  this->connector_port_ = ACE_DEFAULT_GATEWAY_SERVER_PORT;
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -71,16 +83,20 @@ Options::parse_args (int argc, char *argv[])
           // Become an Acceptor (this is the default behavior, so this
           // option is redundant).
           ACE_SET_BITS (this->options_, Options::ACCEPTOR);
+          // Set the acceptor port number.
+	  this->acceptor_port_ = ACE_OS::atoi (get_opt.optarg);
           break;
           /* NOTREACHED */
         case 'c':
           // Become a Connector.
           ACE_SET_BITS (this->options_, Options::CONNECTOR);
+          // Set the connector port number.
+	  this->connector_port_ = ACE_OS::atoi (get_opt.optarg);
           break;
           /* NOTREACHED */
-	case 'p':
-          // Set the port number.
-	  this->port_ = ACE_OS::atoi (get_opt.optarg);
+	case 'h':
+          // connector host
+	  this->connector_host_ = get_opt.optarg;
 	  break;
           /* NOTREACHED */
 	case 'q':

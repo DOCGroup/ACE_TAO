@@ -474,6 +474,10 @@ public:
   // respect to reading from ACE_STDIN (which is non-select()'able on
   // Win32.
 
+  static int remove_stdin_handler (ACE_Reactor *reactor,
+                                   ACE_Thread_Manager *thr_mgr);
+  // Performs the inverse of the <register_stdin_handler> method.
+
   // = Miscelleous functions.
   static size_t round_to_pagesize (off_t length);
   // Rounds the request to a multiple of the page size.
