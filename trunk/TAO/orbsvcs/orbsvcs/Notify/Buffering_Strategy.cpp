@@ -19,7 +19,6 @@ ACE_RCSID (Notify,
 #include "QoSProperties.h"
 
 #include "tao/debug.h"
-#include "ace/Null_Condition.h"
 
 TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
     TAO_Notify_Message_Queue& msg_queue,
