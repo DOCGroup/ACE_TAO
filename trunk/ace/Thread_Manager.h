@@ -114,9 +114,9 @@ class ACE_Thread_Control;
 // problems on g++/VxWorks/i960 with -g.  Note that
 // ACE_Thread_Manager::THR_FUNC is only used internally in
 // ACE_Thread_Manager, so it's not useful for anyone else.
-#if defined (VXWORKS)
+#if defined (VXWORKS) || defined (IRIX5)
 typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
-#endif /* VXWORKS */
+#endif /* VXWORKS || IRIX5 */
 
 class ACE_Export ACE_Thread_Manager
   // = TITLE
@@ -127,9 +127,9 @@ class ACE_Export ACE_Thread_Manager
 {
 friend class ACE_Thread_Control;
 public:
-#if !defined (VXWORKS)
-  typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
-#endif /* !VXWORKS */
+#if !defined (VXWORKS) && !defined (IRIX5)
+  typedef int (*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
+#endif /* !VXWORKS && !IRIX5 */
 
   // = Initialization and termination methods.
   ACE_Thread_Manager (size_t size = 0);

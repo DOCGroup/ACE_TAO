@@ -1,3 +1,22 @@
+Sat Nov  8 15:46:30 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Thread_Manager.h: Both Irix5 and VxWorks have problems with
+ 	  local typedefs with GCC.  Thanks to Laura Paterno
+ 	  <lpaterno@d0chb.fnal.gov> for reporting this.
+
+	* ace/Timer_Queue_Adapters.cpp: Changed some errant uses of lock_
+ 	  to mutex_.  Thanks to David Levine for reporting this.
+
+	* ace/ACE.cpp: set_handle_limit() was buggy because it never
+ 	  increased the handle limit.  With this change we do not need
+ 	  special code in ACE_Select_Reactor with ACE_LACKS_RLIMIT because
+ 	  this is managed in ACE::set_handle_limit.  Thanks to Arturo for
+ 	  this fix.
+
+	* ace/Select_Reactor.cpp (open): We no longer need to
+ 	  conditionally compile for ACE::set_handle_limit().  Thanks to
+ 	  Arturo for this fix.
+
 Fri Nov  7 18:53:13 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* ace/config-netbsd.h: Added file for NetBSD 1.2G.
@@ -3159,7 +3178,6 @@ Mon Oct  6 22:16:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           Functions are found in the list of statically defined functions
           for static services.  Thanks to Eric C. Newton <ecn@smart.net>
           for this fix.
-
 
 Mon Oct  6 13:00:19 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 

@@ -90,11 +90,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
 #CPPFLAGS += -D__IIOP_BUILD -I$(COMPATDIR) -DDEBUG
-TSS_ORB_FLAG = # -DTAO_HAS_TSS_ORBCORE
-CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR) $(TSS_ORB_FLAG)#-H
+CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR) #-H
 LDFLAGS += $(RLDFLAGS)
-DCFLAGS = -g
-OCFLAGS = 
 
 INSINC = ../proto/include
 INSLIB = ../proto/lib

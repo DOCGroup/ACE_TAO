@@ -1494,25 +1494,41 @@ int
 ACE::set_handle_limit (int new_limit)
 {
   ACE_TRACE ("ACE::set_handle_limit");
-#if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
-  struct rlimit rl;
+  ACE_TRACE ("ACE::set_handle_limit");
+  int cur_limit = ACE::max_handles ();
 
-  if (ACE_OS::getrlimit (RLIMIT_NOFILE, &rl) != -1)
+  if (cur_limit == -1)
+    return -1;
+
+  if (new_limit < 0)
     {
-      int max_handles = rl.rlim_cur;
-
-      if (new_limit < 0 || new_limit > max_handles)
-        rl.rlim_cur = max_handles;
-      else
-        rl.rlim_cur = new_limit;
+      errno = EINVAL;
+      return -1;
+    }
+  if (new_limit > cur_limit)
+    {
+#if !defined (ACE_LACKS_RLIMIT)
+      struct rlimit rl;
+      ACE_OS::memset ((void *) &rl, 0, sizeof rl);
+      rl.rlim_cur = new_limit;
       return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
+#else
+      // Must be return EINVAL errno.
+      ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_LACKS_RLIMIT */
     }
   else
-     return -1;
+    {
+#if !defined (ACE_LACKS_RLIMIT)
+      struct rlimit rl;
+      ACE_OS::memset ((void *) &rl, 0, sizeof rl);
+      rl.rlim_cur = new_limit;
+      return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
 #else
-  new_limit = new_limit;
-  ACE_NOTSUP_RETURN (-1);
-#endif /* defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT) */
+      // We give a chance to platforms with not RLIMIT to work.
+      ACE_NOTSUP_RETURN (0);
+#endif /* ACE_LACKS_RLIMIT */
+    }
 }
 
 // Flags are file status flags to turn on.
