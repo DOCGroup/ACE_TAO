@@ -447,10 +447,10 @@ ACE_Process_Semaphore::tryacquire_write (void)
 
 ACE_INLINE
 ACE_Null_Semaphore::ACE_Null_Semaphore (u_int,
-					int,
-					LPCTSTR,
-					void *,
-					int)
+                                        int,
+                                        LPCTSTR,
+                                        void *,
+                                        int)
 {
 }
 
@@ -702,25 +702,6 @@ ACE_Condition_Thread_Mutex::mutex (void)
 {
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::mutex");
   return this->mutex_;
-}
-
-ACE_INLINE
-ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
-{
-  // ACE_TRACE ("ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex");
-}
-
-ACE_INLINE int
-ACE_Recursive_Thread_Mutex::remove (void)
-{
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::remove");
-  int result = 0;
-  if (this->removed_ == 0)
-    {
-      this->removed_ = 1;
-      result = ACE_OS::recursive_mutex_destroy (&this->recursive_mutex_);
-    }
-  return result;
 }
 
 ACE_INLINE void
