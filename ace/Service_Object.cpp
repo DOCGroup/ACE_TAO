@@ -24,6 +24,9 @@ ACE_Service_Type::ACE_Service_Type (const ASYS_TCHAR *n,
 				    const ACE_SHLIB_HANDLE h,
 				    int active)
   : name_ (0),
+#if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+    chname_ (0),
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
     type_ (t),
     handle_ (h),
     active_ (active)
@@ -39,6 +42,9 @@ ACE_Service_Type::~ACE_Service_Type (void)
   if (this->handle_ != 0)
     ACE_OS::dlclose ((ACE_SHLIB_HANDLE) this->handle_);
   delete [] (ASYS_TCHAR *) this->name_;
+#if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+  delete [] (char *) this->chname_;
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 }
 
 void

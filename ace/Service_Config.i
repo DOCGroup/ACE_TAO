@@ -29,3 +29,40 @@ ACE_Service_Config::signal_handler (ACE_Sig_Adapter *signal_handler)
 {
   signal_handler_ = signal_handler;
 }
+
+#if defined (ACE_HAS_WINCE)
+  // We must provide these function to bridge Svc_Conf parser with ACE.
+
+ACE_INLINE int
+ACE_Service_Config::initialize (const ACE_Service_Type *sp, char parameters[])
+{
+  wchar_t *wparameters = ACE_const_cast (wchar_t *, ACE_WIDE_STRING (parameters));
+  return ACE_Service_Config::initialize (sp, wparameters);
+}
+
+ACE_INLINE int
+ACE_Service_Config::initialize (const char svc_name[], char parameters[])
+{
+  const wchar_t *wsvc_name = ACE_WIDE_STRING (svc_name);
+  wchar_t *wparameters = ACE_const_cast (wchar_t *, ACE_WIDE_STRING (parameters));
+  return ACE_Service_Config::initialize (wsvc_name, wparameters);
+}
+
+ACE_INLINE int
+ACE_Service_Config::resume (const char svc_name[])
+{
+  return ACE_Service_Config::resume (ACE_WIDE_STRING (svc_name));
+}
+
+ACE_INLINE int
+ACE_Service_Config::suspend (const char svc_name[])
+{
+  return ACE_Service_Config::suspend (ACE_WIDE_STRING (svc_name));
+}
+
+ACE_INLINE int
+ACE_Service_Config::remove (const char svc_name[])
+{
+  return ACE_Service_Config::remove (ACE_WIDE_STRING (svc_name));
+}
+#endif /* ACE_HAS_WINCE */

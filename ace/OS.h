@@ -4990,6 +4990,24 @@ private:
 #endif /* ACE_HAS_WINCE */
 };
 
+#if defined (ACE_HAS_WINCE)
+//          **** Warning ****
+// You should not use the following functions under CE at all.
+//          **** Warning ****
+size_t fwrite (void *buf, size_t sz, size_t count, FILE *fp);
+size_t fread (void *buf, size_t sz, size_t count, FILE *fp);
+int getc (FILE *fp);
+int ferror (FILE *fp);
+int isatty (ACE_HANDLE h);
+ACE_HANDLE fileno (FILE *fp);
+int fflush (FILE *fp);
+void exit (int status);
+int fprintf (FILE *fp, char *format, const char *msg); // not a general purpose
+                                                 // fprintf at all.
+int printf (const char *format, ...);
+int putchar (int c);
+#endif /* ACE_HAS_WINCE */
+
 #if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
 extern "C" ssize_t send_timedwait (ACE_HANDLE handle,
                                    const char *buf,

@@ -27,7 +27,7 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Wheel.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 // This only works on Win32 platforms
 
 // Forward declarations.

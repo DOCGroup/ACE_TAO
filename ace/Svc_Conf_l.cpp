@@ -748,7 +748,7 @@ case 19:
 YY_USER_ACTION
 # line 52 "Svc_Conf.l"
 { // Eliminate the opening and closing double quotes
-		        *strrchr (ace_yytext, '"') = '\0';
+		        *ACE_OS::strrchr (ace_yytext, '"') = '\0';
 			ace_yyleng -= 1;
                         ace_yylval.ident_ = ace_obstack->copy (ace_yytext + 1, ace_yyleng);
 			return token (ACE_STRING); }
@@ -782,7 +782,7 @@ YY_USER_ACTION
 case 24:
 YY_USER_ACTION
 # line 67 "Svc_Conf.l"
-{ ACE_ERROR ((LM_ERROR, "unknown char = %d\n", *ace_yytext)); }
+{ ACE_ERROR ((LM_ERROR, ASYS_TEXT ("unknown char = %d\n"), *ace_yytext)); }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(PARAMETERS):
