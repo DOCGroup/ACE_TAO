@@ -44,6 +44,8 @@
 // Local Object
 #include "tao/LocalObject.h"
 
+#include "ace/Service_Config.h"
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
