@@ -129,7 +129,7 @@ ECT_Driver::Throughput_Stats::dump_results (const char *test_name,
 
   ACE_DEBUG ((LM_DEBUG,
               "%s/%s: "
-              "%d / %d.%08.8d = %.3f events/second\n",
+              "%d / %d.%06.6d = %.3f events/second\n",
               test_name, subtest,
               this->n_,
               tv.sec (), tv.usec (),

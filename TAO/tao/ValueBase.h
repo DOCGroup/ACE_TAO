@@ -141,10 +141,13 @@ public:
     Block_size_tag_min    =  1,              // range
     Block_size_tag_max    =  0x7fffff00L -1,
     // @@ %! but how encode a stateless block ?
-    End_tag_min           = -0x80000000L +1, // range
-    End_tag_max           = -1,
-    Indirection_min       = -0x80000000L +1, // range
-    Indirection_max       = -5,
+
+    // This constants define the ranges for end tags and
+    // indirections.
+    End_tag_min           = 0x80000000L - 1, // range
+    End_tag_max           = 0xFFFFFFFFL,
+    Indirection_min       = 0x80000000L - 1, // range
+    Indirection_max       = 0xFFFFFFFFL - 4
   };
   // all flags without a comment are complete tested against
   // the analog _sigbits mask.
@@ -152,19 +155,19 @@ public:
 
 
 public:
-  static CORBA::Boolean is_null_ref  (const CORBA::ULong);
-  static CORBA::Boolean is_value_tag (const CORBA::ULong);
-  static CORBA::Boolean has_codebase_url (const CORBA::ULong);
-  static CORBA::Boolean has_no_type_info (const CORBA::ULong);
-  static CORBA::Boolean has_single_type_info (const CORBA::ULong);
-  static CORBA::Boolean has_list_type_info (const CORBA::ULong);
-  static CORBA::Boolean is_chunked (const CORBA::ULong);
-  static CORBA::Boolean is_indirection_tag  (const CORBA::ULong);
-  static CORBA::Boolean block_size (const CORBA::ULong, CORBA::ULong &size);
-  static CORBA::Boolean end_tag_depth (const CORBA::ULong, CORBA::ULong &d);
-  static CORBA::Boolean indirection (const CORBA::ULong, CORBA::Long &jump);
-  //  static CORBA::Boolean (const CORBA::ULong);
-  //  static CORBA::Boolean (const CORBA::ULong);
+  static CORBA::Boolean is_null_ref  (CORBA::ULong);
+  static CORBA::Boolean is_value_tag (CORBA::ULong);
+  static CORBA::Boolean has_codebase_url (CORBA::ULong);
+  static CORBA::Boolean has_no_type_info (CORBA::ULong);
+  static CORBA::Boolean has_single_type_info (CORBA::ULong);
+  static CORBA::Boolean has_list_type_info (CORBA::ULong);
+  static CORBA::Boolean is_chunked (CORBA::ULong);
+  static CORBA::Boolean is_indirection_tag  (CORBA::ULong);
+  static CORBA::Boolean block_size (CORBA::ULong, CORBA::ULong &size);
+  static CORBA::Boolean end_tag_depth (CORBA::ULong, CORBA::ULong &d);
+  static CORBA::Boolean indirection (CORBA::ULong, CORBA::Long &jump);
+  //  static CORBA::Boolean (CORBA::ULong);
+  //  static CORBA::Boolean (CORBA::ULong);
 
 };
 

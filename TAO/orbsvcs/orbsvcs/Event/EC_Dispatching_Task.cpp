@@ -12,9 +12,10 @@ ACE_RCSID(Event, EC_Dispatching, "$Id$")
 int
 TAO_EC_Dispatching_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  int done = 0;
+  while (!done)
     {
-      while (1)
+      ACE_TRY_NEW_ENV
         {
           ACE_Message_Block *mb;
           if (this->getq (mb) == -1)
@@ -39,17 +40,15 @@ TAO_EC_Dispatching_Task::svc (void)
           ACE_Message_Block::release (mb);
 
           if (result == -1)
-            break;
+            done = 1;
         }
-      return 0;
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "EC (%P|%t) exception in dispatching queue");
+        }
+      ACE_ENDTRY;
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "EC (%P|%t) exception in dispatching queue");
-      return -1;
-    }
-  ACE_ENDTRY;
   return 0;
 }
 

@@ -1,3 +1,53 @@
+Thu May  6 15:46:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_args.cpp:
+	* TAO_IDL/be/be_visitor.cpp:
+	  Removed characters after #endif
+
+	* TAO_IDL/be/be_valuetype.cpp: 
+	* TAO_IDL/be_include/be_valuetype.h:
+	  Function overloaded with different signature?
+
+	* examples/OBV/Typed_Events/Event_Types_impl.cpp:
+	  Fixed return expression on void function.
+
+	* tao/ValueBase.h:
+	* tao/ValueBase.i:
+	  No sense in passing arguments by value as const, and they gave
+	  Sun/CC 4.2 some headaches.
+	  Use unsigned quantities for enums MSVC balks at expressions like 
+	  (-0x80000000L).
+
+	* tao/ValueFactory_Map.cpp:
+	  Fixed some constness problems.
+
+	* utils/catior/catior.cpp:
+	  Fixed unsigned/signed warning.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+	  No need to change the priority of this thread, it is activated
+	  at the right priority.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+	  Fixed debug messages.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Scheduler_Info.h:
+	  Adjusted priorities for LynxOS.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+	  Use (min+max)/2 as default priority, to avoid problems on LynxOS 
+	  where the lowest real-time priority is the lowest priority of
+	  the system!
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+	  Inline functions where not declared as such, got duplicate
+	  symbols when compiling against static library.
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+	  Do not exit the loop on exception, continue until shutdown
+	  event.
+
 Thu May 06 14:34:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl.dsp:
