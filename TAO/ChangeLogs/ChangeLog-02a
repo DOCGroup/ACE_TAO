@@ -1,3 +1,15 @@
+Wed Jan  3 11:58:33 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_visitor_macro.h:
+
+          Removed the #pragma once directive. It's
+          unnecessary and egcs warns about it.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Added default case to switch statement in 
+          load_any() method.
+
 Wed Jan  3 10:30:46 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * tests/RTCORBA/README: 
