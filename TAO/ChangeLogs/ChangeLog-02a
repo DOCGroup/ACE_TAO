@@ -53,10 +53,9 @@ Fri Apr 27 11:58:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  trying to do a reset_contents () (basically only memory
 	  allocations as per quantify) which should be gone now. We still
 	  see a problem when we transfer data_blocks. The transfer does a
-	  release which seems to occupy 35% of the time.  Maybe it is time
-	  to think about creating data blocks on the stack if it makes
-	  sense. 
-
+	  release which seems to occupy 35% of the time which would be
+	  almost impossible to do away with. 
+	
 Fri Apr 27 11:45:58 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/POA/Single_Threaded_POA/run_test.pl:
