@@ -73,7 +73,8 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
 
   os->indent ();
 
-  *os << "class " << class_name << " : public TAO_Unbounded_Base_Sequence" << be_nl
+  *os << "class TAO_EXPORT_NESTED_MACRO "
+      << class_name << " : public TAO_Unbounded_Base_Sequence" << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
       << "// = Initialization and termination methods." << be_nl

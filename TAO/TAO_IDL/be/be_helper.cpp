@@ -194,7 +194,14 @@ TAO_OutStream::gen_ifdef_macro (const char *flatname, const char *suffix)
   ACE_OS::sprintf (macro, "_%s_", cg->upcase (flatname));
   if (suffix)
     {
-      ACE_OS::sprintf (macro, "%s_%s_", macro, cg->upcase (suffix));
+      //ACE_OS::sprintf (macro, "%s_%s_", macro, cg->upcase (suffix));
+      // Can't have macro on both sides of sprintf
+      // I'm not sure if the first strcat of "_" should be here or
+      // not, but having it gives the same functionality as the old
+      // sprintf call...
+      ACE_OS::strcat (macro, "_");
+      ACE_OS::strcat (macro, cg->upcase (suffix));
+      ACE_OS::strcat (macro, "_");
     }
 
   // append a suffix representing the stream type

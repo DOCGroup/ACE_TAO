@@ -148,6 +148,10 @@ DRV_cpp_init (void)
 #endif /* _MSC_VER */
 
   DRV_cpp_putarg (cpp_loc);
+#if defined (__BORLANDC__)
+  DRV_cpp_putarg("-P-");
+  DRV_cpp_putarg("-ocon");
+#else
 #if defined (ACE_WIN32)
   DRV_cpp_putarg ("-nologo");
 #endif /* ACE_WIN32 */
@@ -155,6 +159,7 @@ DRV_cpp_init (void)
   DRV_cpp_putarg ("-+");
 #endif /* ACE_MVS */
   DRV_cpp_putarg ("-E");
+#endif /* !defined (__BORLANDC__) */
   DRV_cpp_putarg("-DIDL");
   DRV_cpp_putarg ("-I.");
 
