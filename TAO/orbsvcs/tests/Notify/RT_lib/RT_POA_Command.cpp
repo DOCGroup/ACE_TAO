@@ -326,6 +326,10 @@ TAO_NS_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_pt
 
   CORBA::PolicyList poa_policy_list;
 
+  CORBA::Policy_var activation_policy =
+    parent_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   if (lanes_.length () == 0 && thread_pool_static_threads_ == 0 && bands_.length () == 0)
     {
       poa_policy_list.length (1);
@@ -363,6 +367,12 @@ TAO_NS_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_pt
       poa_policy_list[1] = bands_policy;
       poa_policy_list[2] = lanes_policy;
     }
+
+  // Add the activation policy
+  int act_index = poa_policy_list.length ();
+  poa_policy_list.length (act_index + 1);
+
+  poa_policy_list[act_index] = activation_policy;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "creating POA %s\n", POA_name_.c_str ()));

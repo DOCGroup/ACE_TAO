@@ -28,91 +28,9 @@
 #define TAO_NOTIFY_PUSHCONSUMER_H
 #include "ace/pre.h"
 
-#include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "notify_test_export.h"
+#include "PushConsumer.h"
 
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-class TAO_NOTIFY_TEST_Export TAO_Notify_PushConsumer : public POA_CosNotifyComm::PushConsumer, public PortableServer::RefCountServantBase
-{
-  // = TITLE
-  //   TAO_Notify_PushConsumer
-  //
-  // = DESCRIPTION
-  //   Implements a common servant for the PushConsumer.
-  //
- public:
-    // = Initialization and Termination code
-  TAO_Notify_PushConsumer (void);
-  // Constructor.
-
-  void init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
-  // Init
-
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
-  // Activates this object with the <default_POA_>
-  // Creates a new proxy supplier and connects to it.
-
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
-  // Disconnect from the supplier.
-
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  // Deactivate the object from the POA.
-
-  // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
-protected:
-  virtual ~TAO_Notify_PushConsumer ();
-  // Destructor
-
-  // = NotifyPublish method
-   void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
-
-    void push (
-        const CORBA::Any & data
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-      ));
-  // The default operation is no op.
-
-    void disconnect_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    // = Data members
-    PortableServer::POA_var default_POA_;
-    // The default POA.
-
-    CosNotifyChannelAdmin::ProxyID proxy_id_;
-    // The proxy's id.
-
-    CosNotifyChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-    // The proxy that we are connected to.
-};
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+typedef TAO_NS_PushConsumer TAO_Notify_PushConsumer;
 
 #include "ace/post.h"
 #endif /* TAO_NOTIFY_PUSHCONSUMER_H */

@@ -7,12 +7,13 @@ ACE_RCSID(lib, TAO_Periodic_Consumer_Command, "$id$")
 #include "LookupManager.h"
 #include "Name.h"
 #include "Periodic_Consumer.h"
+#include "Relay_Consumer.h"
+#include "Direct_Consumer.h"
 #include "Activation_Manager.h"
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
 TAO_NS_Periodic_Consumer_Command::TAO_NS_Periodic_Consumer_Command (void)
-: poa_ (TAO_NS_Name::root_poa), ifgop_ (CosNotifyChannelAdmin::OR_OP), id_ (0)
 {
 }
 
@@ -47,28 +48,37 @@ TAO_NS_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
           this->name_ = arg_shifter.get_current ();
           arg_shifter.consume_arg ();
 
-          this->admin_ = arg_shifter.get_current ();
-          arg_shifter.consume_arg ();
+          int is_relay = 0;
+          int is_direct = 0;
+          ACE_CString relay_destination;
 
-          // Is a POA name specified?
-         if (arg_shifter.cur_arg_strncasecmp ("-POA") == 0)
-           {
-             arg_shifter.consume_arg ();
+          if (arg_shifter.cur_arg_strncasecmp ("-Relay") == 0)
+            {
+              is_relay = 1;
 
-             this->poa_ = arg_shifter.get_current ();
-             arg_shifter.consume_arg ();
-           }
+              arg_shifter.consume_arg ();
 
-         if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS [Qos Options]
-           {
-             arg_shifter.consume_arg ();
+              relay_destination = arg_shifter.get_current ();
+              arg_shifter.consume_arg ();
+            }
+          else if (arg_shifter.cur_arg_strncasecmp ("-Direct") == 0)
+            {
+              is_direct = 1;
 
-             TAO_NS_Options_Parser qos_parser;
-             qos_parser.execute (this->qos_, arg_shifter);
-           }
+              arg_shifter.consume_arg ();
+            }
 
-         // create the consumer
-         TAO_NS_Periodic_Consumer* consumer = new TAO_NS_Periodic_Consumer ();
+          TAO_NS_Periodic_Consumer* consumer = 0;
+
+          // create the consumer
+          if (is_relay == 1)
+            consumer = new TAO_NS_Relay_Consumer (relay_destination);
+          else if (is_direct == 1)
+            consumer = new TAO_NS_Direct_Consumer ();
+          else
+            consumer = new TAO_NS_Periodic_Consumer ();
+
+          consumer->set_name (this->name_);
 
          TAO_NS_Activation_Manager* act_mgr = 0;
          LOOKUP_MANAGER->resolve (act_mgr);
@@ -80,7 +90,6 @@ TAO_NS_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
          }
 
          consumer->init_state (arg_shifter);
-         consumer->TAO_Notify_StructuredPushConsumer::name (this->name_);
 
         } /* -Create */
       else if (arg_shifter.cur_arg_strncasecmp ("-Subscription") == 0) // -Subscription admin_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
@@ -163,8 +172,7 @@ TAO_NS_Periodic_Consumer_Command::consumer (void)
 void
 TAO_NS_Periodic_Consumer_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr proxy = this->consumer ()->get_proxy_supplier ();
-  proxy->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
+  this->consumer ()->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -172,48 +180,11 @@ void
 TAO_NS_Periodic_Consumer_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_NS_Periodic_Consumer* consumer = this->consumer ();
+
   if (consumer == 0)
     return;
 
-  // Get the POA
-  PortableServer::POA_var poa;
-  LOOKUP_MANAGER->resolve (poa, this->poa_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // set the POA
-  consumer->TAO_Notify_StructuredPushConsumer::init (poa.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Resolve the consumer admin
-  CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin;
-
-  LOOKUP_MANAGER->resolve (consumer_admin, this->admin_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  NotifyExt::ConsumerAdmin_var consumer_admin_ext;
-  consumer_admin_ext = NotifyExt::ConsumerAdmin::_narrow (consumer_admin.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // create the proxy supplier
-  CosNotifyChannelAdmin::ProxySupplier_var proxy_supplier =
-    consumer_admin_ext->obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                           , this->id_, this->qos_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_ASSERT (!CORBA::is_nil (proxy_supplier.in ()));
-
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var s_proxy_supplier =
-    CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (proxy_supplier.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_ASSERT (!CORBA::is_nil (s_proxy_supplier.in ()));
-
-  // connect consumer to proxy, also activates the consumer as CORBA object in the POA specified.
-  consumer->connect (s_proxy_supplier.in (),this->id_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Register the proxy supplier.
-  LOOKUP_MANAGER->_register (s_proxy_supplier.in (), consumer->proxy_name () ACE_ENV_ARG_PARAMETER);
+  consumer->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "Consumer %s is connected\n", this->name_.c_str ()));
@@ -255,42 +226,13 @@ TAO_NS_Periodic_Consumer_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_NS_Periodic_Consumer_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
 {
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
   TAO_NS_Periodic_Consumer* consumer = this->consumer ();
 
   if (consumer == 0)
     return;
 
-  ACE_TRY
-    {
-      CORBA::Boolean not_exist = consumer->get_proxy_supplier ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (not_exist == 1)
-        {
-          ACE_DEBUG ((LM_DEBUG, "Consumer %s, Proxy does not exist\n",this->name_.c_str ()));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG, "Consumer %s, Proxy exists\n",this->name_.c_str ()));
-        }
-    }
-  ACE_CATCH(CORBA::TRANSIENT, ex)
-    {
-      ACE_PRINT_EXCEPTION (ex, "");
-      ACE_DEBUG ((LM_DEBUG, "Consumer %s is_equivanent transient exception.", this->name_.c_str ()));
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
-      ACE_DEBUG ((LM_DEBUG, "Consumeris_equivanent other exception.", this->name_.c_str ()));
-    }
-  ACE_ENDTRY;
-
-#else
-  return;
-#endif /* TAO_HAS_MINIMUM_CORBA */
+  consumer->status (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void

@@ -50,13 +50,13 @@ void
 TAO_NS_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter)
 {
   const ACE_TCHAR *current_arg = 0;
+  int default_priority = ACE_DEFAULT_THREAD_PRIORITY;
 
   if (arg_shifter.cur_arg_strncasecmp ("-ThreadPool") == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]
     {
       arg_shifter.consume_arg ();
 
       int static_threads = 1;
-      int default_priority = ACE_DEFAULT_THREAD_PRIORITY;
 
       if (arg_shifter.cur_arg_strncasecmp ("-Threads") == 0)
         {
@@ -80,7 +80,10 @@ TAO_NS_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shi
           arg_shifter.consume_arg ();
         }
 
-      NotifyExt::ThreadPoolParams tp_params = {0, static_threads, 0, default_priority, 0, 0, 0 };
+      NotifyExt::ThreadPoolParams tp_params
+        = { NotifyExt::CLIENT_PROPAGATED, default_priority,
+            0, static_threads, 0, default_priority, 0, 0, 0 };
+
       qos.length (1);
       qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
       qos[0].value <<= tp_params;
@@ -97,6 +100,8 @@ TAO_NS_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shi
 
       NotifyExt::ThreadPoolLanesParams tpl_params;
 
+      tpl_params.priority_model = NotifyExt::CLIENT_PROPAGATED;
+      tpl_params.server_priority = default_priority,
       tpl_params.stacksize = 0;
       tpl_params.lanes.length (lanecount);
       tpl_params.allow_borrowing = 0;

@@ -49,7 +49,7 @@ public:
   virtual void shutdown (void);
 
   /// Exec the request.
-  virtual void exec (TAO_NS_Method_Request& method_request);
+  virtual void execute (TAO_NS_Method_Request_No_Copy& method_request ACE_ENV_ARG_DECL);
 
   /// The object used by clients to register timers. This method returns a Reactor based Timer.
   virtual TAO_NS_Timer* timer (void);

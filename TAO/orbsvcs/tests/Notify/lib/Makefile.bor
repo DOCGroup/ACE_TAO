@@ -7,6 +7,16 @@ NAME = TAO_NotifyTests
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
 
 OBJFILES = \
+	$(OBJDIR)\Direct_Consumer \
+	$(OBJDIR)\Direct_Supplier \
+	$(OBJDIR)\Relay_Consumer \
+	$(OBJDIR)\Peer \
+	$(OBJDIR)\StructuredPushConsumer \
+	$(OBJDIR)\SequencePushConsumer \
+	$(OBJDIR)\PushConsumer \
+	$(OBJDIR)\StructuredPushSupplier \
+	$(OBJDIR)\SequencePushSupplier \
+	$(OBJDIR)\PushSupplier \
 	$(OBJDIR)\Activation_ManagerC.obj \
 	$(OBJDIR)\Activation_ManagerS.obj \
 	$(OBJDIR)\Activation_Manager.obj \

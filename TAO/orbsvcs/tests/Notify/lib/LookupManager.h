@@ -81,8 +81,8 @@ public:
   void resolve (CosNotifyChannelAdmin::EventChannel_var& ec, const char *channel_name ACE_ENV_ARG_DECL);
   void resolve (CosNotifyChannelAdmin::SupplierAdmin_var& sa, const char *admin_name ACE_ENV_ARG_DECL);
   void resolve (CosNotifyChannelAdmin::ConsumerAdmin_var& ca , const char *admin_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyChannelAdmin::StructuredProxyPushSupplier_var& proxy, const char *proxy_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyChannelAdmin::StructuredProxyPushConsumer_var& proxy, const char *proxy_name ACE_ENV_ARG_DECL);
+  void resolve (CosNotifyComm::StructuredPushSupplier_var& supplier, const char *supplier_name ACE_ENV_ARG_DECL);
+  void resolve (CosNotifyComm::StructuredPushConsumer_var& consumer, const char *consumer_name ACE_ENV_ARG_DECL);
   void resolve (CosNotifyFilter::FilterFactory_var& ff, const char *filter_factory_name ACE_ENV_ARG_DECL);
   void resolve (CosNotifyFilter::Filter_var& filter, const char *filter_name ACE_ENV_ARG_DECL);
   void resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, const char *filter_admin_name ACE_ENV_ARG_DECL);
