@@ -154,6 +154,7 @@ template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::UsesDescription, TAO_UsesD
 template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::ProvidesDescription, TAO_ProvidesDef_i>;
 template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::ComponentDescription, TAO_ComponentDef_i>;
 template class TAO_IFR_Desc_Utils<CORBA::ValueMember, TAO_ValueMemberDef_i>;
+template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_i>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -300,5 +301,6 @@ template class TAO_IFR_Desc_Utils<CORBA::ValueMember, TAO_ValueMemberDef_i>;
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::ProvidesDescription, TAO_ProvidesDef_i>
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::ComponentDescription, TAO_ComponentDef_i>
 #pragma instantiate TAO_IFR_Desc_Utils<CORBA::ValueMember, TAO_ValueMemberDef_i>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_i>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
