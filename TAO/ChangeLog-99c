@@ -7,14 +7,14 @@ Thu Sep  9 21:30:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Thu Sep  9 20:49:17 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/source.cpp: 
-	* orbsvcs/orbsvcs/AV/source.h: 
+	* orbsvcs/orbsvcs/AV/source.cpp:
+	* orbsvcs/orbsvcs/AV/source.h:
 	  Added the compare_func function to remove warnings
 
 Thu Sep  9 18:43:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
-	  Fixed memory leak in the ORB, thanks to Nanbor for pointing this 
+	  Fixed memory leak in the ORB, thanks to Nanbor for pointing this
 	  out.
 
 Thu Sep 09 14:55:05 1999  David L. Levine  <levine@cs.wustl.edu>
@@ -40,6 +40,19 @@ Wed Sep  9 10:35:12 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
           tests/AMI/simple_client_exclusive.conf
           tests/AMI/simple_client_muxed.conf: Removed these files
           because they got replaced by new ones.
+
+Wed Sep 08 16:40:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Exception.cpp (~CORBA_Exception): Rememberred to release the
+	  typecode pointer.  Otherwise, it caused MLK when sending system
+	  exceptions.
+
+	* tests/Param_Test/param_test_i.cpp (test_exception): There's no
+	  need to dupping the string when throwing the Ooops exception.
+	  The constructor is responsible for dupping the string.
+
+	* tests/Interceptors/server.cpp: Be sure to destroy POA to avoid
+	  resource leaks.
 
 Wed Sep  8 14:58:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
