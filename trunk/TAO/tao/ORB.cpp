@@ -119,7 +119,7 @@ CORBA_ORB::~CORBA_ORB (void)
     CORBA::release (this->trading_service_);
 
   if (this->cond_become_leader_ != 0)
-    this->cond_become_leader_;
+    delete this->cond_become_leader_;
 }
 
 // Set up listening endpoints.
