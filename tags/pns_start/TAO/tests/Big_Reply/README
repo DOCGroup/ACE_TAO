@@ -1,0 +1,18 @@
+/**
+
+@page Muxing Test README File
+
+	A stress test for receiving large replies. This test is a part
+	of the bug 575 test suite. One of the problems that users have
+	faced in a reactive configuration is that the clients have not
+	been able to receive large replies from the server. This test
+	actually tests that feature. This test will not work till we
+	check in bug 575 fixes.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/
