@@ -372,15 +372,6 @@ be_generator::create_expr(char c)
 }
 
 /*
- * Create a BE_Expression node denoting a wide character
- */
-AST_Expression *
-be_generator::create_expr(ACE_CDR::WChar wc)
-{
-  return (AST_Expression *) new be_expression (wc);
-}
-
-/*
  * Create a BE_Expression node denoting a 64-bit floating point number
  */
 AST_Expression *
