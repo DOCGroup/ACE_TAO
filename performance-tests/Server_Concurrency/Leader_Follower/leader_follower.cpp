@@ -11,7 +11,6 @@ static size_t message_size = 100;
 static size_t number_of_threads = 10;
 static size_t burst_size = 10;
 static size_t timeout_between_bursts = 1;
-static size_t debug = 0;
 
 static size_t leader_available = 0;
 static size_t messages_in_this_burst = 0;
@@ -19,6 +18,15 @@ static size_t total_messages_consumed = 0;
 static size_t burst = 1;
 
 static ACE_hrtime_t start_of_burst;
+
+enum DEBUGGING_RANGE
+{
+  NONE = 0,
+  DEFAULT = 1,
+  PRINT_INDIVIDUAL_LATENCY = 2
+};
+
+static DEBUGGING_RANGE debug = NONE;
 
 typedef ACE_Task<ACE_MT_SYNCH> TASK;
 
@@ -33,7 +41,8 @@ public:
   ACE_SYNCH_MUTEX &mutex_;
   ACE_SYNCH_CONDITION &condition_;
 
-  Latency_Stats stats_;
+  Latency_Stats latency_stats_;
+  Throughput_Stats throughput_stats_;
 };
 
 Leader_Follower_Task::Leader_Follower_Task (ACE_SYNCH_MUTEX &mutex,
@@ -136,9 +145,6 @@ Leader_Follower_Task::svc (void)
         }
       else
         {
-          // Record time to wake up follower.
-          this->stats_.sample (ACE_OS::gethrtime () - start_of_burst);
-
           //
           // Process message here.
           //
@@ -150,6 +156,22 @@ Leader_Follower_Task::svc (void)
               u_long n = 1279UL;
               ACE::is_prime (n, 2, n / 2);
             }
+
+          //
+          // Record stats for this message.
+          //
+          ACE_hrtime_t latency_from_start_of_burst =
+            ACE_OS::gethrtime () - start_of_burst;
+          this->latency_stats_.sample (latency_from_start_of_burst);
+
+          this->throughput_stats_.sample ();
+
+          if (debug >= PRINT_INDIVIDUAL_LATENCY)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%t) latency from start of burst: %Q\n",
+                          latency_from_start_of_burst));
+            }
         }
     }
 
@@ -159,7 +181,7 @@ Leader_Follower_Task::svc (void)
 static int
 parse_args (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("m:s:w:b:t:d"));
+  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("m:s:w:b:t:d:"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -182,7 +204,7 @@ parse_args (int argc, ASYS_TCHAR *argv[])
           timeout_between_bursts = ACE_OS::atoi (get_opt.optarg);
           break;
         case 'd':
-          debug = 1;
+          debug = ACE_static_cast (DEBUGGING_RANGE, ACE_OS::atoi (get_opt.optarg));
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -204,14 +226,14 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 int
 main (int argc, ASYS_TCHAR *argv[])
 {
-  move_to_rt_class ();
-  ACE_High_Res_Timer::calibrate ();
-
   int result = parse_args (argc, argv);
   if (result != 0)
     {
       return result;
     }
+
+  move_to_rt_class ();
+  ACE_High_Res_Timer::calibrate ();
 
   ACE_SYNCH_MUTEX mutex;
   ACE_SYNCH_CONDITION condition (mutex);
@@ -243,13 +265,18 @@ main (int argc, ASYS_TCHAR *argv[])
   result = ACE_Thread_Manager::instance ()->wait ();
 
   Latency_Stats latency;
+  Throughput_Stats throughput;
   for (i = 0; i < number_of_threads; ++i)
     {
-      latency.accumulate (leader_followers[i]->stats_);
+      latency.accumulate (leader_followers[i]->latency_stats_);
+      throughput.accumulate (leader_followers[i]->throughput_stats_);
     }
 
-  ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));
+  ACE_DEBUG ((LM_DEBUG, "\nTotals for latency:\n"));
   latency.dump_results (argv[0], "latency");
+
+  ACE_DEBUG ((LM_DEBUG, "\nTotals for throughput:\n"));
+  throughput.dump_results (argv[0], "throughput");
 
   for (i = 0; i < number_of_threads; ++i)
     {
