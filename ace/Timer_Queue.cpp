@@ -47,5 +47,8 @@ template class ACE_Timer_List_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_
 template class ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
 template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
 
+template class ACE_Timer_Wheel_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
+template class ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
+
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
