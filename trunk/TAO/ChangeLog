@@ -13,7 +13,7 @@ Thu Aug 22 15:24:06 2002  Ossama Othman  <ossama@uci.edu>
 
 Thu Aug 22 14:06:06 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\POA.cpp (id_to_servant_i and
+	* tao/PortableServer/POA.cpp (id_to_servant_i and
 	  reference_to_servant_i): If a POA has the USE_DEFAULT_SERVANT
 	  policy and a default servant has been registered with the POA,
 	  id_to_servant() should return the default servant. But since the
@@ -25,7 +25,7 @@ Thu Aug 22 14:06:06 2002  Irfan Pyarali  <irfan@oomworks.com>
 
  	  Thanks to Lan Zhineng <lanzn@huawei.com> for reporting this.
 
-	* tests\POA\Default_Servant: Added new test that checks the
+	* tests/POA/Default_Servant: Added new test that checks the
 	  behavior of POA::id_to_servant() and POA::reference_to_servant()
 	  with the use of default servants.
 
