@@ -1,3 +1,8 @@
+Thu Jul  3 13:43:20 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* Added Visual C++ 5.0 project and workspace files for the TAO 
+	  library and Cubit test
+
 Wed Jul  2 12:44:42 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tests: Moved tests from TAO/IIOP/tests to TAO/tests
