@@ -1,3 +1,12 @@
+Mon May 10 22:40:37 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+        * Dnc/Config_Handlers/DnC_Dump.h:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+
+          I moved DnC_Dump.{h,cpp} from DnC/ to
+          DnC/Config_Handlers
+
 Mon May 10 19:04:57 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/DT_Handler.h:
