@@ -21,7 +21,7 @@ TAO_Condition<MUTEX>::wait (MUTEX &mutex,
 template <class MUTEX> ACE_INLINE int
 TAO_Condition<MUTEX>::wait (const ACE_Time_Value *abstime)
 {
-  return this->wait (this->mutex_, abstime);
+  return this->wait (*this->mutex_, abstime);
 }
 
 template<class MUTEX> ACE_INLINE int
