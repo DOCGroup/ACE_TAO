@@ -12,7 +12,6 @@
 #include "../Utils/resolve_init.h"
 #include "../Utils/ScopeGuard.h"
 #include "../Utils/Log.h"
-#include "../Utils/RT_Task.h"
 
 ACE_RCSID (EventChannel,
            AMI_Primary_Replication_Strategy,
@@ -47,7 +46,7 @@ int  AMI_Primary_Replication_Strategy::release (void)
 
 int AMI_Primary_Replication_Strategy::init()
 {
-  return RT_Task::activate(this);
+  return this->activate();
 }
 
 int AMI_Primary_Replication_Strategy::svc()
