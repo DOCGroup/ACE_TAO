@@ -50,7 +50,7 @@ TAO_LB_LeastLoaded::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::string_dup ("LeastLoaded");
 }
-    
+
 CosLoadBalancing::Properties *
 TAO_LB_LeastLoaded::get_properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -67,7 +67,7 @@ TAO_LB_LeastLoaded::get_properties (ACE_ENV_SINGLE_ARG_DECL)
 
   return props;
 }
-    
+
 void
 TAO_LB_LeastLoaded::push_loads (
     const PortableGroup::Location & the_location,
@@ -142,7 +142,7 @@ TAO_LB_LeastLoaded::push_loads (
   else
     {
       load.id = new_load.id;
-      load.value = this->effective_load (0, new_load.value);      
+      load.value = this->effective_load (0, new_load.value);
     }
 }
 
@@ -197,7 +197,7 @@ TAO_LB_LeastLoaded::next_member (
 CORBA::Boolean
 TAO_LB_LeastLoaded::get_location (
   PortableGroup::ObjectGroup_ptr object_group,
-  const CosLoadBalancing::LoadManager_ptr load_manager,
+  CosLoadBalancing::LoadManager_ptr load_manager,
   const PortableGroup::Locations & locations,
   PortableGroup::Location & location
   ACE_ENV_ARG_DECL)
