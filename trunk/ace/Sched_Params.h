@@ -151,6 +151,46 @@ private:
   // setting the quantum (can that be done on Win32?).
 };
 
+class ACE_Export ACE_Sched_Priority_Iterator
+  // = TITLE
+  //   An iterator over the OS defined priorities.
+  //
+  // = DESCRIPTION
+  //   The order of priorities (numeric value vs. importance) is OS
+  //   dependant, it can be the case that the priorities are not even
+  //   contigous.
+  //   This class permits iteration over priorities using the iterator
+  //   pattern.
+{
+public:
+  ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy& policy,
+			       int scope = ACE_SCOPE_THREAD);
+  // Initialize the iterator, the arguments define the scheduling
+  // policy and scope for the priorities (see ACE_Sched_Param).
+
+  int more (void) const;
+  // Check if there are more priorities.
+
+  int priority (void) const;
+  // Return the current priority
+
+  void next (void);
+  // Move to the next priority.
+  // The iteration is from lowest to highest importance.
+
+  const ACE_Sched_Params::Policy& policy (void) const;
+  // Accessor for the scheduling policy over which we are iterating.
+
+  int scope (void) const;
+  // Accessor for the scheduling
+
+private:
+  ACE_Sched_Params::Policy policy_;
+  int scope_;
+  int priority_;
+  int done_;
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Sched_Params.i"
 #endif /* __ACE_INLINE__ */

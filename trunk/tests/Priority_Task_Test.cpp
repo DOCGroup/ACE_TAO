@@ -24,12 +24,24 @@
 #if defined (ACE_HAS_THREADS)
 
 class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
+// = TITLE
+//   A simple Task that runs itself a different priorities.
+//
+// = DESCRIPTION
+//   This task uses the void* argument on open to run the svc() method
+//   at a different priority. The point is execise the thread priority
+//   features of ACE.
 {
 public:
   Priority_Task (void);
+  // The constructor
 
   int open (void *);
+  // Receives the priority and run svc() on a separate thread at that
+  // priority.
+
   int svc (void);
+  // Runs on a separate thread an checks the priority.
 
 private:
   int priority_;

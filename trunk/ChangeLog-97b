@@ -1,3 +1,46 @@
+Sun Oct 12 00:26:56 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Makefile: 
+	* ace/Priority_Reactor.h: 
+	* ace/Priority_Reactor.i: 
+	* ace/Priority_Reactor.cpp: 
+	  Augmentes Select_Reactor, adding priority based dispatching for
+	  the I/O Event_Handlers, the only feature supported is
+	  dispatching in the order defined by the priorities.
+ 	  Each Event_Handler defines its priority, if the priority is out
+	  of range the culprit is "punished" by dispatching at the lowest
+	  priority.
+	  Care has been exercised to avoid dynamic memory allocation.
+
+	* tests/Makefile: 
+	* tests/Priority_Reactor_Test.h: 
+	* tests/Priority_Reactor_Test.cpp: 
+	  Added small tests of the Priority_Reactor, the test runs an
+	  Acceptor on the main thread and creates several threads (or
+	  processes if the plaform does not support threads) that connect
+	  to this connector. The writing threads send several short
+	  messages, the main thread receives them using one Svc_Handler
+	  per writer, dispatched at different priorities.
+	  The test itself is interesting, it shows how to write very
+	  simple Svc_Handler, Connectors and Acceptors.
+
+	* ace/Select_Reactor.h: 
+	* ace/Select_Reactor.cpp: 
+	  The dispatching of all the handles in a "group" (READ, WRITE or
+	  EXCEPT) was encapsulated in a single routine.
+
+	* ace/Malloc_T.cpp: 
+	  In the Cached_Allocator memory was allocated as an arrays of
+	  char, it must be released the same way.
+
+	* ace/Sched_Params.h: 
+	* ace/Sched_Params.i: 
+	  Added a new class (ACE_Sched_Priority_Iterator) to iterate over
+	  the priorities.
+
+	* tests/Priority_Task_Test.cpp: 
+	  Added some comments.
+
 Sat Oct 10 16:23:49 1997  Steve Huston  <shuston@riverace.com>
 
 	* tests/SOCK_Connector_Test.cpp: Passes the test if the should-fail

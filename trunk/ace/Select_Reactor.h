@@ -88,7 +88,26 @@ private:
 #else
 // If we're non-MT safe then this is just a no-op...
 typedef ACE_Null_Mutex ACE_Select_Reactor_Token;
-#endif /* ACE_MT_SAFE */    
+#endif /* ACE_MT_SAFE */
+
+struct ACE_Event_Tuple
+  // = TITLE
+  //
+  //     An ACE_Event_Handler and its associated ACE_HANDLE.
+  //
+  // = DESCRIPTION
+  //
+  //     One ACE_Event_Handler is registered for one or more
+  //     ACE_HANDLE, in some points this information must be stored
+  //     explicitly. This structure provides a lightweight mechanism
+  //     to do so.
+{
+  ACE_Event_Tuple (void);
+  ACE_Event_Tuple (ACE_Event_Handler* eh, ACE_HANDLE h);
+  
+  ACE_HANDLE handle_;
+  ACE_Event_Handler* event_handler_;
+};
 
 // The following two classes have to be moved out here to keep the SGI
 // C++ compiler happy (it doesn't like nested classes).
@@ -235,16 +254,11 @@ private:
   // <max_size_>.
 
 #if defined (ACE_WIN32)
-  // = This structure maps <HANDLES> to <Event_Handlers>.
-  struct ACE_NT_EH_Record
-  {
-    ACE_HANDLE handle_;
-    ACE_Event_Handler *event_handler_;
-  };
+  // = The mapping from <HANDLES> to <Event_Handlers>.
 
-  ACE_NT_EH_Record *event_handlers_;
+  ACE_Event_Tuple *event_handlers_;
   // The NT version implements this via a dynamically allocated
-  // array of <ACE_NT_EH_Record *>.  Since NT implements ACE_HANDLE
+  // array of <ACE_Event_Tuple *>.  Since NT implements ACE_HANDLE
   // as a void * we can't directly index into this array.  Therefore,
   // we just do a linear search (for now).  Next, we'll modify
   // things to use hashing or something faster...
@@ -745,6 +759,19 @@ protected:
   // Dispatch all the input/output/except handlers that are enabled in
   // the <dispatch_set>.  Returns -1 if the state of the <wait_set_>
   // has changed, else returns number of handlers dispatched.
+
+  virtual int dispatch_io_set (int number_of_active_handles,
+			       int& number_dispatched,
+			       int mask,
+			       ACE_Handle_Set& dispatch_mask,
+			       ACE_Handle_Set& ready_mask,
+			       ACE_EH_PTMF callback);
+  // Factors the dispatching of an io handle set (each WRITE, EXCEPT
+  // or READ set of handles).
+  // It updates the number of handles already dispatched and
+  // invokes this->notify_handle for all the handles in <dispatch_set>
+  // using the <mask>, <ready_set> and <callback> parameters.
+  // Must return -1 if this->state_changed otherwise it must return 0.
 
   virtual void notify_handle (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask, 

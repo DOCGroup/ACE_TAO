@@ -85,7 +85,7 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
 #if defined (ACE_WIN32)
   // Try to allocate the memory.
   ACE_NEW_RETURN (this->event_handlers_,
-                  ACE_NT_EH_Record[size],
+                  ACE_Event_Tuple[size],
                   -1);
 
   // Initialize the ACE_Event_Handler * to { ACE_INVALID_HANDLE, 0 }.
@@ -1510,102 +1510,86 @@ ACE_Select_Reactor::dispatch_notification_handlers (int &number_of_active_handle
 }
 
 int
+ACE_Select_Reactor::dispatch_io_set (int number_of_active_handles,
+				     int& number_dispatched,
+				     int mask,
+				     ACE_Handle_Set& dispatch_mask,
+				     ACE_Handle_Set& ready_mask,
+				     ACE_EH_PTMF callback)
+{
+  ACE_HANDLE handle;
+
+  ACE_Handle_Set_Iterator handle_iter (dispatch_mask);
+
+  while ((handle = handle_iter ()) != ACE_INVALID_HANDLE
+	 && number_dispatched < number_of_active_handles
+	 && this->state_changed_ == 0)
+    {
+      // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatching\n"));
+      number_dispatched++;
+      this->notify_handle (handle,
+			   mask,
+			   ready_mask,
+			   this->handler_rep_.find (handle),
+			   callback);
+    }
+
+  if (number_dispatched > 0 && this->state_changed_)
+    {
+      return -1;
+    }
+
+  return 0;
+}
+
+int
 ACE_Select_Reactor::dispatch_io_handlers (int &number_of_active_handles,
                                           ACE_Select_Reactor_Handle_Set &dispatch_set)
 {
   int number_dispatched = 0;
 
-  if (number_of_active_handles > 0)
-    {
-      ACE_HANDLE handle;
+  // Handle output events (this code needs to come first to handle
+  // the obscure case of piggy-backed data coming along with the
+  // final handshake message of a nonblocking connection).
 
-      // Handle output events (this code needs to come first to handle
-      // the obscure case of piggy-backed data coming along with the
-      // final handshake message of a nonblocking connection).
-
-      ACE_Handle_Set_Iterator handle_iter_wr (dispatch_set.wr_mask_);
-
-      while ((handle = handle_iter_wr ()) != ACE_INVALID_HANDLE
-             && number_dispatched < number_of_active_handles
-             && this->state_changed_ == 0)
-        {
-          number_dispatched++;
-          this->notify_handle (handle,
-                               ACE_Event_Handler::WRITE_MASK,
-                               this->ready_set_.wr_mask_,
-                               this->handler_rep_.find (handle),
-                               &ACE_Event_Handler::handle_output);
-        }
-    }
-
-  if (number_dispatched > 0)
+  // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatch - WRITE\n"));
+  if (this->dispatch_io_set (number_of_active_handles,
+			     number_dispatched,
+			     ACE_Event_Handler::WRITE_MASK,
+			     dispatch_set.wr_mask_,
+			     this->ready_set_.wr_mask_,
+			     &ACE_Event_Handler::handle_output) == -1)
     {
       number_of_active_handles -= number_dispatched;
-      if (this->state_changed_)
-        return -1;
+      return -1;
     }
 
-  number_dispatched = 0;
 
-  if (number_of_active_handles > 0)
-    {
-      ACE_HANDLE handle;
-
-      // Handle "exceptional" events.
-
-      ACE_Handle_Set_Iterator handle_iter_ex (dispatch_set.ex_mask_);
-
-      while ((handle = handle_iter_ex ()) != ACE_INVALID_HANDLE
-             && number_dispatched < number_of_active_handles
-             && this->state_changed_ == 0)
-        {
-          this->notify_handle (handle,
-                               ACE_Event_Handler::EXCEPT_MASK,
-                               this->ready_set_.ex_mask_,
-                               this->handler_rep_.find (handle),
-                               &ACE_Event_Handler::handle_exception);
-          number_dispatched++;
-        }
-    }
-
-  if (number_dispatched > 0)
+  // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatch - EXCEPT\n"));
+  if (this->dispatch_io_set (number_of_active_handles,
+			     number_dispatched,
+			     ACE_Event_Handler::EXCEPT_MASK,
+			     dispatch_set.ex_mask_,
+			     this->ready_set_.ex_mask_,
+			     &ACE_Event_Handler::handle_exception) == -1)
     {
       number_of_active_handles -= number_dispatched;
-      if (this->state_changed_)
-        return -1;
+      return -1;
     }
 
-  number_dispatched = 0;
-
-  if (number_of_active_handles > 0)
-    {
-      ACE_HANDLE handle;
-
-      // Handle input, passive connection, and shutdown events.
-
-      ACE_Handle_Set_Iterator handle_iter_rd (dispatch_set.rd_mask_);
-
-      while ((handle = handle_iter_rd ()) != ACE_INVALID_HANDLE
-             && number_dispatched < number_of_active_handles
-             && this->state_changed_ == 0)
-        {
-          this->notify_handle (handle,
-                               ACE_Event_Handler::READ_MASK,
-                               this->ready_set_.rd_mask_,
-                               this->handler_rep_.find (handle),
-                               &ACE_Event_Handler::handle_input);
-          number_dispatched++;
-        }
-    }
-
-  if (number_dispatched > 0)
+  // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatch - READ\n"));
+  if (this->dispatch_io_set (number_of_active_handles,
+			     number_dispatched,
+			     ACE_Event_Handler::READ_MASK,
+			     dispatch_set.rd_mask_,
+			     this->ready_set_.rd_mask_,
+			     &ACE_Event_Handler::handle_input) == -1)
     {
       number_of_active_handles -= number_dispatched;
-
-      if (this->state_changed_)
-        return -1;
+      return -1;
     }
 
+  number_of_active_handles -= number_dispatched;
   return number_dispatched;
 }
 
