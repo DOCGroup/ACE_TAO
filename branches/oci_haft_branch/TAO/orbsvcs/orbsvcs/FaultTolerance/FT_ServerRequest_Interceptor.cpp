@@ -51,9 +51,20 @@ namespace TAO
                                            ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        this->check_iogr_version (sc.in ()
+        ////////////////////////////////////////////////
+        // Don't check IOGR version on the pseudo method
+        // that pushes a new IOGR
+        CORBA::String_var op =
+          ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+
+        if (ACE_OS::strcmp (op.in (),
+          PortableGroup::TAO_UPDATE_OBJECT_GROUP_METHOD_NAME) != 0)
+        {
+          this->check_iogr_version (sc.in ()
                                   ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
+        }
       }
     ACE_CATCH (CORBA::BAD_PARAM, ex)
       {
@@ -82,7 +93,7 @@ namespace TAO
     ACE_CHECK;
 
     if (ACE_OS::strcmp (op.in (),
-      "tao_update_object_group") == 0)
+      PortableGroup::TAO_UPDATE_OBJECT_GROUP_METHOD_NAME) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
         "FT_ServerRequestInterceptor updating IOGR.\n"
@@ -145,28 +156,30 @@ namespace TAO
       ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
                                    CORBA::COMPLETED_NO));
 
-
     if (fgvsc.object_group_ref_version >
         this->object_group_ref_version_)
       {
-  // @@ Dale, could you please make this a warning. Add TAO_debug_level
-  // around this.
-  //  Further pass in a operation name to this method and make a check here.
-        ACE_ERROR ((LM_ERROR,
-                    "TAO-FT (%P|%t) - Wrong version information "
-                    "within the interceptor [%u | %u] \n",
-                    ACE_static_cast( unsigned, fgvsc.object_group_ref_version ),
-                    ACE_static_cast( unsigned, this->object_group_ref_version_)
-                    ));
+        if (TAO_debug_level > 0)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "TAO-FT (%P|%t) - Wrong version information "
+                        "within the interceptor [%u | %u] \n",
+                        ACE_static_cast( unsigned, fgvsc.object_group_ref_version ),
+                        ACE_static_cast( unsigned, this->object_group_ref_version_)
+                        ));
+          }
       }
     else if (fgvsc.object_group_ref_version <
              this->object_group_ref_version_)
       {
-        ACE_DEBUG ((LM_DEBUG,
-          "Forwarding request to new IOGR  [%u | %u] \n",
-                    ACE_static_cast( unsigned, fgvsc.object_group_ref_version ),
-                    ACE_static_cast( unsigned, this->object_group_ref_version_)
-                    ));
+        if (TAO_debug_level > 0)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              "Forwarding request to new IOGR  [%u | %u] \n",
+                        ACE_static_cast( unsigned, fgvsc.object_group_ref_version ),
+                        ACE_static_cast( unsigned, this->object_group_ref_version_)
+                        ));
+          }
         // Notice that this is a permanent forward.
         ACE_THROW (PortableInterceptor::ForwardRequest (
                    this->iogr_,
@@ -176,12 +189,13 @@ namespace TAO
              this->object_group_ref_version_) &&
              !this->is_primary_)
       {
-
-        ACE_DEBUG ((LM_DEBUG,
-          "Request arrived at backup replica.  Throwing TRANSIENT.[%u] \n",
-                    ACE_static_cast( unsigned, this->object_group_ref_version_)
-                    ));
-
+        if (TAO_debug_level > 0)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              "Request arrived at backup replica.  Throwing TRANSIENT.[%u] \n",
+                        ACE_static_cast( unsigned, this->object_group_ref_version_)
+                        ));
+          }
         ACE_THROW (CORBA::TRANSIENT (
                        CORBA::SystemException::_tao_minor_code (
                        TAO_DEFAULT_MINOR_CODE,
@@ -215,6 +229,15 @@ namespace TAO
                            orb_id.in ()
                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
+
+        // Get an object reference for the ORB's IORManipulation object.
+        CORBA::Object_var iorm_obj = this->orb_->resolve_initial_references (
+          TAO_OBJID_IORMANIPULATION ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+        this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
+          iorm_obj.in () ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
       }
 
     Dynamic::ParameterList_var param =
@@ -224,9 +247,7 @@ namespace TAO
     if (param->length () != 2)
       ACE_THROW (CORBA::TRANSIENT ());
 
-
     const char *str = 0;
-
 
     (*param)[0].argument >>= str;
     (*param)[1].argument >>= this->object_group_ref_version_;
@@ -238,6 +259,19 @@ namespace TAO
                                     ACE_ENV_ARG_PARAMETER);
 
     ACE_CHECK;
+
+    this->is_primary_ = 1; // assume we're primary
+#if 0   // @@ disabled 'cause I don't know "whoami"
+    CORBA::Boolean primary_set = iorm_->is_primary_set (this->iogr_.in() ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    if (primary_set)
+    {
+      CORBA::Object_var primary_obj = iorm_->get_primary (this->iogr_.in() ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      this->is_primary_ = whoami->_is_equivalent (primary_obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+#endif // 0
 
     // @@ This exception is a hack to let the RM know that we have
     // received and updated the IOGR. We will add a special minor code

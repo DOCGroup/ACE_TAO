@@ -24,6 +24,7 @@
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/ORB.h"
+#include <tao/IORManipulation/IORC.h>
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -125,6 +126,10 @@ namespace TAO
     CORBA::Object_var iogr_;
 
     CORBA::ORB_var orb_;
+
+    // The ORB's IORManipulation object
+    TAO_IOP::TAO_IOR_Manipulation_var iorm_;
+
   };
 
 }
