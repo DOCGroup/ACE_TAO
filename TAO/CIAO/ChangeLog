@@ -1,6 +1,47 @@
 2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CIDLC/ServantHeaderGenerator.cpp: Removed usage of Traversal
+        * performance-tests/Benchmark/Benchmark.idl:
+        * performance-tests/Benchmark/Benchmark.mpc:
+        * performance-tests/Benchmark/BenchmarkE.idl:
+        * performance-tests/Benchmark/Benchmark_stub_export.h:
+        * performance-tests/Benchmark/Benchmark_svnt_export.h:
+        * performance-tests/Benchmark/NOTE.txt:
+        * performance-tests/Benchmark/README:
+        * performance-tests/Benchmark/RoundTrip/README:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.cidl:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.idl:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * performance-tests/Benchmark/RoundTrip/RoundTripEI.idl:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec.h:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec_export.h:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_stub_export.h:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_svnt_export.h:
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+        * performance-tests/Benchmark/RoundTrip/run_test.pl:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.cidl:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClientEI.idl:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.h:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec_export.h:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_stub_export.h:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_svnt_export.h:
+        * performance-tests/Benchmark/RoundTripClient/client.cpp:
+        * performance-tests/Benchmark/RoundTripClient/run_test.pl:
+        * performance-tests/Benchmark/descriptors/Benchmark.cad:
+        * performance-tests/Benchmark/descriptors/CIAO_Installation_Data.ini:
+        * performance-tests/Benchmark/descriptors/RoundTrip.csd:
+        * performance-tests/Benchmark/descriptors/RoundTrip.ssd:
+        * performance-tests/Benchmark/descriptors/RoundTripClient.cad:
+        * performance-tests/Benchmark/descriptors/RoundTripClient.csd:
+        * performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
+        * performance-tests/Benchmark/descriptors/test.dat:
+	Added files for the performance tests Arvind and I are
+	developing.
+
+        * CIDLC/ServantHeaderGenerator.cpp: Removed usage of Traversal
 	namespace to avoid name clashing.
 
 	* CIDLC/ExecutorMappingGenerator.cpp:

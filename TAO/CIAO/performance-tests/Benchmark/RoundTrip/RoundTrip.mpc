@@ -1,0 +1,91 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l .. -p Benchmark -i -c RoundTrip"
+
+project(RoundTrip_stub): ciao_client {
+  after += Benchmark_stub
+  sharedname = RoundTrip_stub
+  idlflags += -Wb,stub_export_macro=ROUNDTRIP_STUB_Export -Wb,stub_export_include=RoundTrip_stub_export.h -Wb,skel_export_macro=ROUNDTRIP_SVNT_Export -Wb,skel_export_include=RoundTrip_svnt_export.h
+  dynamicflags   = ROUNDTRIP_STUB_BUILD_DLL
+
+  IDL_Files {
+    RoundTrip.idl
+  }
+
+  Source_Files {
+    RoundTripC.cpp
+  }
+}
+
+project(RoundTrip_svnt) : ciao_servant {
+  after += Benchmark_svnt RoundTrip_stub
+  sharedname  = RoundTrip_svnt
+  libs    += RoundTrip_stub Benchmark_stub Benchmark_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=ROUNDTRIP_SVNT_Export -Wb,export_include=RoundTrip_svnt_export.h
+  dynamicflags = ROUNDTRIP_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    RoundTrip.cidl
+  }
+
+  IDL_Files {
+    RoundTripE.idl
+  }
+
+  Source_Files {
+    RoundTripEC.cpp
+    RoundTripS.cpp
+    RoundTrip_svnt.cpp
+  }
+}
+
+
+project(RoundTrip_exec) : ciao_component {
+  after += RoundTrip_svnt
+  sharedname = RoundTrip_exec
+  libs      += RoundTrip_stub Benchmark_stub RoundTrip_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=ROUNDTRIP_EXEC_Export -Wb,export_include=RoundTrip_exec_export.h
+  dynamicflags   = ROUNDTRIP_EXEC_BUILD_DLL
+
+  IDL_Files {
+    RoundTripEI.idl
+  }
+
+  Source_Files {
+    RoundTripEIC.cpp
+    RoundTrip_exec.cpp
+  }
+}
+
+
+
+project (RoundTrip_client) : ciao_client, valuetype {
+  exename = client
+  after += RoundTrip_stub
+  libs += RoundTrip_stub Benchmark_stub
+  libpaths += ..
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}
+
+
+//project (RoundTrip_controller) : ciao_client, valuetype {
+//  exename = controller
+//  after += RoundTrip_stub
+//  libs += RoundTrip_stub Benchmark_stub
+//  libpaths += ..
+//
+//  IDL_Files {
+//  }
+//
+//  Source_Files {
+//    controller.cpp
+//  }
+//}
+

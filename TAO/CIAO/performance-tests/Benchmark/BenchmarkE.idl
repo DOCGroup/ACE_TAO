@@ -1,0 +1,35 @@
+// $Id$ 
+
+//=============================================================================
+/**
+ * @file BasicSPE.idl
+ *
+ * @author Diego, Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef CIAO_BENCHMARKE_IDL
+#define CIAO_BENCHMARKE_IDL
+
+#include "Benchmark.idl"
+
+module Benchmark 
+{
+
+  /**
+   * @interface CCM_RoundTrip 
+   *
+   * Executor interface mapping for provides interfaces.
+   *
+   */
+  local interface CCM_RoundTrip
+  {
+    long makeCall(in long data);
+  };
+
+
+};
+
+#endif /* CIAO_BENCHMARKE_IDL */
+
+
