@@ -13,8 +13,7 @@
 #include "Profile.h"
 #include "Sequence.h"
 #include "Object.h"
-#include "Invocation.h"
-#include "Asynch_Invocation.h"
+#include "Invocation_Adapter.h"
 #include "ORB_Core.h"
 #include "Client_Strategy_Factory.h"
 #include "Sync_Strategies.h"
@@ -22,6 +21,7 @@
 #include "debug.h"
 #include "Policy_Set.h"
 #include "Policy_Manager.h"
+#include "Special_Basic_Arguments.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -609,6 +609,28 @@ CORBA::Boolean
 TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies
                                ACE_ENV_ARG_DECL)
 {
+  TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
+
+  TAO::Argument *_tao_signature [] =
+    {
+      &_tao_retval
+    };
+
+  TAO::Invocation_Adapter tao_call (0,
+                                    _tao_signature,
+                                    1,
+                                    0,
+                                    0,
+                                    0,
+                                    TAO::TAO_LOCATEREQUEST_INVOCATION);
+
+
+    tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (_tao_retval.excp ());
+
+    return _tao_retval.retn ();
+
+#if 0
   // Use Locate Request to establish connection/make sure the object
   // is there ...
   TAO_GIOP_Locate_Request_Invocation locate_request (this,
@@ -653,6 +675,7 @@ TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies
   ACE_CHECK_RETURN (0);
 
   return 1;
+#endif /*if 0*/
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

@@ -50,3 +50,7 @@
 . Different versions of GIOP
 
 . What about AMH
+
+. _validate_connection and locateRequest
+
+. FTCORBA and service_comm_raise_failure

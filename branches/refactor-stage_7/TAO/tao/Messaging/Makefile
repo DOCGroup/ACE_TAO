@@ -31,8 +31,8 @@ CPP_SRCS += \
   TAO_ExtC \
   Messaging_ORBInitializer \
   Messaging_PolicyFactory \
-  Messaging_Policy_i \
-  AMI_ClientRequestInfo_i
+  Messaging_Policy_i 
+
 
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
