@@ -2,7 +2,7 @@
 
 #include "Supports_Test_impl.h"
 
-#include "ace/Streams.h"
+#include "ace/Stream.h"
 
 /* vt_graph_impl */
 
@@ -187,9 +187,11 @@ test_impl::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) ACE_THROW_SPEC ((CORBA::Syst
 }
 
 void
-test_impl::finish (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) ACE_THROW_SPEC ((CORBA::SystemException))
+test_impl::finish (ACE_ENV_SINGLE_ARG_DECL) 
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->_remove_ref ();
+  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 

@@ -1,3 +1,35 @@
+Thu Oct 30 23:23:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile:
+	* performance-tests/Latency/DII/Makefile:
+	* performance-tests/Latency/DSI/Makefile:
+	* performance-tests/Latency/Deferred/Makefile:
+	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
+	* performance-tests/Sequence_Latency/DII/Makefile:
+	* performance-tests/Sequence_Latency/DSI/Makefile:
+	* performance-tests/Sequence_Latency/Deferred/Makefile:
+
+	  Added missing libraries to the link line. This is necessary
+	  since the DynamicInterface library depends on the Messaging
+	  library.
+
+	* tests/OBV/Supports/Supports_Test_impl.cpp: 
+	* tests/Xt_Stopwatch/Stopwatch_display.h:
+
+	  Fixed compilation problems. These showed up only in builds which
+	  used MPC. 
+
+	* tao/Messaging/Asynch_Timeout_Handler.cpp:
+	* tao/Messaging/Asynch_Timeout_Handler.h:
+	* tao/Messaging/Messaging.cpp:
+	* tao/Messaging/Messaging.h:
+	
+	  Cosmetic fixes to get them compiling in minimum_corba builds. 
+
+	* tao/Messaging/Messaging.mpc:
+
+	  Added the list of files in the project.
+	  
 Thu Oct 30 22:57:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/ORT/Makefile: 
