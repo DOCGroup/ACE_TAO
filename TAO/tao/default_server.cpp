@@ -428,5 +428,4 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
                        &ACE_SVC_NAME (TAO_Default_Server_Strategy_Factory),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_STATIC_SVC_REQUIRE (TAO_Default_Server_Strategy_Factory)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Server_Strategy_Factory)

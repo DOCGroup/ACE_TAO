@@ -31,6 +31,13 @@ TAO_Internal::open_services (int& argc, char** argv, int ignore_default_svc_conf
 
   if (TAO_Internal::service_open_count_++ == 0)
     {
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Resource_Factory);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Default_Client_Strategy_Factory);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Default_Server_Strategy_Factory);
+
       int retv = ACE_Service_Config::open (argc, argv,
                                            ACE_DEFAULT_LOGGER_KEY,
                                            0, // Don't ignore static services.
