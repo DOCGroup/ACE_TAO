@@ -60,7 +60,7 @@ namespace TAO
         return 0;
       }
     ACE_ENDTRY;
-    ACE_CHECK;
+    ACE_CHECK_RETURN (proxy);
 
     return proxy;
   }

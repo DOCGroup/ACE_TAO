@@ -1,3 +1,10 @@
+Tue Dec 23 18:17:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Object_T.cpp:
+	 
+	  Fixed a compilation error in builds where exceptions have been
+	  turned off.
+
 Tue Dec 23 17:47:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
