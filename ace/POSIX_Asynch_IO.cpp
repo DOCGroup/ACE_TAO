@@ -2119,7 +2119,7 @@ ACE_POSIX_Asynch_Accept::close (int flg_notify)
 }
 
 void *
-ACE_POSIX_Asynch_Accept::thread_function (void* arg_reactor)
+ACE_POSIX_Asynch_Accept::thread_function (void *arg_reactor)
 {
   // Retrieve the reactor pointer from the argument.
   ACE_Reactor *reactor = ACE_reinterpret_cast (ACE_Reactor *,
@@ -2137,7 +2137,7 @@ ACE_POSIX_Asynch_Accept::thread_function (void* arg_reactor)
 
   while (reactor->reactor_event_loop_done () == 0)
     if (reactor->handle_events () == -1)
-      return -1;
+      return ACE_reinterpret_cast (void *, -1);
 
   return 0;
 }
