@@ -32,26 +32,10 @@ TAO_SSLIOP_Server_Invocation_Interceptor::name (
 void
 TAO_SSLIOP_Server_Invocation_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    TAO_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
-{
-}
-
-void
-TAO_SSLIOP_Server_Invocation_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  // @@ TODO: Once the receive_request_service_contexts() interception
-  //          point is implemented in TAO, move this secure invocation
-  //          verification code to the
-  //          receive_request_service_contexts() method in this class,
-  //          since it is better to reject a request as early as
-  //          possible.
-
   TAO_ENV_ARG_DEFN;
 
   // The current upcall is not being performed through an SSL
@@ -130,6 +114,15 @@ TAO_SSLIOP_Server_Invocation_Interceptor::receive_request (
     }
   ACE_ENDTRY;
 #endif /* 0 */
+}
+
+void
+TAO_SSLIOP_Server_Invocation_Interceptor::receive_request (
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */
+    TAO_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
+{
 }
 
 void
