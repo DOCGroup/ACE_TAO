@@ -20,10 +20,8 @@
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Even though the documentation suggests that g++/VxWorks 5.3.1
-// supports long long, WRS tech support says that it doesn't (though
-// it's interesting that they wouldn't say that that in a quick email
-// message, but instead called on the phone to tell me :-).
-// And it causes undefined symbols for math functions.
+// (Tornado 1.0.1) supports long long, Wind River tech support says
+// that it doesn't.  It causes undefined symbols for math functions.
 // #define ACE_HAS_LONGLONG_T
 
 // On g++/VxWorks, iostream.h defines a static instance (yes, instance)
