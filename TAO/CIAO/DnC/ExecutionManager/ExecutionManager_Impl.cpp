@@ -16,6 +16,8 @@ CIAO::ExecutionManager_Impl::ExecutionManager_Impl (CORBA::ORB_ptr orb,
 CIAO::ExecutionManager_Impl::~ExecutionManager_Impl ()
 {
   // Delete the Map for maintaining
+  /*  ACE_DEBUG ((LM_DEBUG, "Here d0\n"));
+
   for (Iterator i = this->table_.begin ();
        i != this->table_.end ();
        ++i)
@@ -25,12 +27,15 @@ CIAO::ExecutionManager_Impl::~ExecutionManager_Impl ()
 
       // Release the Object.
       CORBA::release ((*i).int_id_);
+
     }
 
   this->table_.unbind_all ();
 
   // Release memory for init file
   CORBA::string_free (this->init_file_);
+  */
+  ACE_DEBUG ((LM_DEBUG, "Exec Dtor\n"));
 
 }
 
@@ -85,7 +90,6 @@ CIAO::ExecutionManager_Impl::unbind (const char *id)
 
       CORBA::release (obj);
     }
-
   return result;
 }
 
@@ -124,7 +128,8 @@ preparePlan (const Deployment::DeploymentPlan &plan,
    *===================================================================
    */
   servant->init ();
-
+  servant->set_uuid (plan.UUID.in());
+  //  ACE_DEBUG ((LM_DEBUG, "UUID:%s\n", plan.UUID.in()));
   ACE_DEBUG ((LM_DEBUG, "ExecutionManager:init () DAM successful \n"));
 
   // Things are ready for Launching Applications
@@ -142,16 +147,19 @@ preparePlan (const Deployment::DeploymentPlan &plan,
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  Deployment::DomainApplicationManager_var manager =
+  this->dam_ =
     Deployment::DomainApplicationManager::_narrow (objref.in ()
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Bind this reference on to the cache
-  this->bind (plan.UUID, manager.in ());
+  /*if (this->bind ("DAM1.0" plan.UUID.in (), manager.in ()))
+  {
+    ACE_THROW_RETURN (Deployment::StartError (), 0);
+  }*/
 
   // Return the ApplicationManager instance
-  return manager._retn ();
+  return Deployment::DomainApplicationManager::_duplicate (this->dam_.in());
 }
 
 
@@ -167,7 +175,7 @@ CIAO::ExecutionManager_Impl::getManagers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
   // Iterate over the table and get all the Managers
   // Delete the Map for maintaining
-  for (Iterator itr = this->table_.begin ();
+  /*for (Iterator itr = this->table_.begin ();
        itr != this->table_.end ();
        ++itr)
     {
@@ -175,9 +183,12 @@ CIAO::ExecutionManager_Impl::getManagers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       list->length (i + 1);
       list [i] =
         Deployment::DomainApplicationManager::_duplicate ((*itr).int_id_);
-    }
+	}*/
 
   // Return the list
+
+  list->length (0);
+  //list[0] = Deployment::DomainApplicationManager::_duplicate (this->dam.in ());
   return list._retn ();
 }
 
@@ -204,11 +215,7 @@ CIAO::ExecutionManager_Impl::destroyManager (Deployment::DomainApplicationManage
     PortableServer::ObjectId_var oid
       = this->poa_->reference_to_id (tmp.in ()
                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    this->poa_->deactivate_object (oid.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
 
     //Obtain the servant pointer
     PortableServer::ServantBase_var serv_base =
@@ -220,8 +227,19 @@ CIAO::ExecutionManager_Impl::destroyManager (Deployment::DomainApplicationManage
     ACE_dynamic_cast (CIAO::DomainApplicationManager_Impl *,
                       serv_base.in ());
 
+    serv->destroyManager ();
+    ACE_TRY_CHECK;
+
     // Remove the reference from the table using the uuid
-    this->unbind (serv->get_uuid ());
+    //const char * uuid = serv->get_uuid ();
+
+    //this->unbind (uuid);
+
+    this->poa_->deactivate_object (oid.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "Here 7\n"));
   }
   ACE_CATCHANY
   {

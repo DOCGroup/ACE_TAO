@@ -10,6 +10,7 @@
 
 CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
 {
+  ACE_DEBUG ((LM_DEBUG, "Dtor: NAM\n"));
 }
 
 CIAO::NodeApplicationManager_Impl *
@@ -204,12 +205,12 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 		   Deployment::InvalidProperty))
 {
   Deployment::Connections_var retv;
-  CORBA::ULong len = retv->length ();
 
-  ACE_NEW_THROW_EX (retv.out (),
+  ACE_NEW_THROW_EX (retv,
                     Deployment::Connections (),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
+  CORBA::ULong len = retv->length ();
 
   Component_Iterator iter (this->component_map_.begin ());
 
@@ -220,7 +221,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     // Get all the facets first
     Components::FacetDescriptions_var facets =
       ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (0);
 
     for (CORBA::ULong i = 0; i < facets->length (); ++i)
     {
@@ -235,7 +236,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     // Get all the event consumers
     Components::ConsumerDescriptions_var consumers =
       ((*iter).int_id_)->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (0);
 
     for (CORBA::ULong i = 0; i < consumers->length (); ++i)
     {
@@ -287,7 +288,7 @@ startLaunch (const Deployment::Properties & configProperty,
   Deployment::ComponentInfos_var comp_info;
 
   ///////////////////////////////////////////////////////////////////
-  for (CORBA::ULong i = 0; i < infos.length (); ++i)
+  /*for (CORBA::ULong i = 0; i < infos.length (); ++i)
     {
       // Add the names and entry points of each of the DLLs
       ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
@@ -297,6 +298,7 @@ startLaunch (const Deployment::Properties & configProperty,
 		  infos[i].servant_dll.in (),
 		  infos[i].servant_entrypt.in () ));
     }
+  */
   ///////////////////////////////////////////////////////////////////
 
   // This will install all homes and components.
@@ -316,8 +318,12 @@ startLaunch (const Deployment::Properties & configProperty,
       ACE_THROW_RETURN (Deployment::StartError (), 0);
   }
 
+
   providedReference = this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
+
+  if (providedReference == 0 )
+  ACE_THROW_RETURN (Deployment::StartError () ,0);
 
   if (start) this->nodeapp_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);

@@ -16,6 +16,7 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                Deployment::TargetManager_ptr manager,
                                const Deployment::DeploymentPlan & plan,
                                char * deployment_file)
+  ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     target_manager_ (Deployment::TargetManager::_duplicate (manager)),
@@ -23,10 +24,15 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
     deployment_file_ (CORBA::string_dup (deployment_file)),
     deployment_config_ (orb)
 {
+  ACE_NEW_THROW_EX (this->all_connections_,
+		    Deployment::Connections (),
+		    CORBA::NO_MEMORY ());
+  ACE_CHECK;
 }
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
+  ACE_DEBUG ((LM_DEBUG, "Dtor: DAM\n"));
 }
 
 void
@@ -68,25 +74,21 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           Chained_Artifacts & artifacts = entry->int_id_;
 
           // Dump plans
-          Deployment::DnC_Dump::dump (artifacts.child_plan_);
+          // Deployment::DnC_Dump::dump (artifacts.child_plan_);
 
           // Call preparePlan() method on the NodeManager with the
           // corresponding child plan as input, which returns a
-          // NodeApplicationManager object reference.  @@TODO: Does
-          // preparePlan take a _var type variable?
+          // NodeApplicationManager object reference.
 
-          ::Deployment::ApplicationManager_var app_manager =
-            my_node_manager->preparePlan (artifacts.child_plan_
-                                          ACE_ENV_ARG_PARAMETER);
+          Deployment::NodeApplicationManager_var app_manager
+	      = Deployment::NodeApplicationManager::_narrow
+	      (
+	       my_node_manager->preparePlan (artifacts.child_plan_
+					     ACE_ENV_ARG_PARAMETER)
+	       );
           ACE_TRY_CHECK;
 
-          // Narrow down to NodeApplicationManager object reference
-          ::Deployment::NodeApplicationManager_var my_nam =
-            ::Deployment::NodeApplicationManager::_narrow (app_manager.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (CORBA::is_nil (my_nam.in ()))
+          if (CORBA::is_nil (app_manager.in ()))
             {
               ACE_DEBUG ((LM_DEBUG, "DomainAppMgr::init () received a nil\
                                      reference for NodeApplicationManager\n"));
@@ -95,7 +97,7 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_TRY_CHECK;
 
           // Cache the NodeApplicationManager object reference.
-          artifacts.node_application_manager_ = my_nam._retn ();
+          artifacts.node_application_manager_ = app_manager._retn ();
         }
     }
   ACE_CATCHANY
@@ -203,7 +205,7 @@ split_plan (void)
     this->artifact_map_.bind (node_manager_names_[i], artifacts);
   }
 
-   ACE_DEBUG ((LM_DEBUG, "after: initialize empty child plans...\n"));
+  // ACE_DEBUG ((LM_DEBUG, "after: initialize empty child plans...\n"));
 
   // (1) Iterate over the <instance> field of the global DeploymentPlan
   //     variabl.
@@ -281,7 +283,7 @@ split_plan (void)
       // Change the <artifactRef> field of the "implementation".
       child_plan->implementation[index_imp-1].artifactRef = ulong_seq;
 
-      //ACE_DEBUG ((LM_DEBUG, "artifaceRef length %i", 
+      //ACE_DEBUG ((LM_DEBUG, "artifaceRef length %i",
       //           child_plan->implementation[index_imp-1].artifactRef.length ()));
 
 
@@ -311,8 +313,9 @@ split_plan (void)
 
 void
 CIAO::DomainApplicationManager_Impl::
-add_connections (::Deployment::Connections & incoming_conn)
+add_connections (const Deployment::Connections & incoming_conn)
 {
+
   CORBA::ULong old_len = this->all_connections_->length ();
 
   // Expand the length of the <all_connection_> sequence.
@@ -325,31 +328,6 @@ add_connections (::Deployment::Connections & incoming_conn)
   }
 }
 
-bool
-CIAO::DomainApplicationManager_Impl::
-get_outgoing_connections (Deployment::Connections_out provided,
-                          const Deployment::DeploymentPlan &plan)
-{
-  Deployment::Connections * retn_connections;
-  ACE_NEW_RETURN (retn_connections,
-		  Deployment::Connections,
-		  0);
-
-  Deployment::Connections_var safe = retn_connections;
-
-  // For each component instance in the child plan ...
-  for (CORBA::ULong i = 0; i < plan.instance.length (); i++)
-  {
-    // Get the component instance name
-    if (!get_outgoing_connections_i (plan.instance[i].name.in (),
-				     retn_connections))
-      return 0;
-  }
-  provided = safe._retn (); // return the connection.
-  return 1;
-}
-
-
 
 void
 CIAO::DomainApplicationManager_Impl::
@@ -361,6 +339,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
                    ::Deployment::StartError,
                    ::Deployment::InvalidProperty))
 {
+  ACE_UNUSED_ARG (start);
   ACE_TRY
     {
       // Invoke startLaunch() operations on each cached NodeApplicationManager
@@ -375,10 +354,10 @@ startLaunch (const ::Deployment::Properties & configProperty,
                                         entry) != 0)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
-          ::Deployment::NodeApplicationManager_var my_nam =
+          ::Deployment::NodeApplicationManager_ptr my_nam =
             (entry->int_id_).node_application_manager_.in ();
 
-          if (CORBA::is_nil (my_nam.in ()))
+          if (CORBA::is_nil (my_nam))
             {
               ACE_DEBUG ((LM_DEBUG, "While starting launch, the DomainApplicationManager\
                                      has a nil reference for NodeApplicationManager\n"));
@@ -393,7 +372,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
           ::Deployment::Application_var temp_application =
             my_nam->startLaunch (configProperty,
                                  retn_connections.out (),
-                                 start);
+                                 0);  // This is a mistake. This should never be here.
 
           // Narrow down to NodeApplication object reference
           ::Deployment::NodeApplication_var my_na =
@@ -410,15 +389,12 @@ startLaunch (const ::Deployment::Properties & configProperty,
             }
           ACE_TRY_CHECK;
 
-          // Dump the connections for debug purpose.
-          dump_connections (retn_connections);
-
           // Cache the returned set of connections into the list.
           this->add_connections (retn_connections);
 
           // Cache the returned NodeApplication object reference into
           // the hash table.
-          (entry->int_id_).node_application_ = my_na.in ();
+          (entry->int_id_).node_application_ = my_na._retn ();
         }
     }
   ACE_CATCHANY
@@ -447,33 +423,40 @@ finishLaunch (::CORBA::Boolean start
       for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
           // Get the NodeApplication object reference.
-          ACE_Hash_Map_Entry
-            <ACE_CString,
-            Chained_Artifacts> *entry;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
-          Deployment::NodeApplication_var my_na =
-            (entry->int_id_).node_application_.in ();
+          // Dump the connections for debug purpose.
+	  ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
+	  ACE_DEBUG ((LM_DEBUG, "dump incomming connection for child plan:%d\n", i));
+          dump_connections (this->all_connections_.in ());
+	  ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
+
 
           // Get the Connections variable.
-          Deployment::Connections_var my_connections;
-          if (!this->get_outgoing_connections (my_connections.out (),
-					      (entry->int_id_).child_plan_))
-	        ACE_THROW (Deployment::StartError ());
+          Deployment::Connections * my_connections =
+	    this->get_outgoing_connections ((entry->int_id_).child_plan_);
+
+	  if (my_connections == 0)
+	    ACE_THROW (Deployment::StartError ());
+
+	  Deployment::Connections_var safe (my_connections);
 
           // Dump the connections for debug purpose.
-          dump_connections (my_connections);
+	  ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
+	  ACE_DEBUG ((LM_DEBUG, "dump outgoingcomming connection for child plan:%d\n", i));
+          dump_connections (safe.in ());
+	  ACE_DEBUG ((LM_DEBUG, "==============================================\n"));
 
           // Invoke finishLaunch() operation on NodeApplication.
-          my_na->finishLaunch (my_connections,
-                               start
-                               ACE_ENV_ARG_PARAMETER);
+          entry->int_id_.node_application_->finishLaunch (safe.in (),
+							  start
+							  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-
     }
   ACE_CATCHANY
     {
@@ -509,7 +492,7 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
           ::Deployment::NodeApplication_var my_na =
-            (entry->int_id_).node_application_.in ();
+	      (entry->int_id_).node_application_.in ();
 
           my_na->start (ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -529,7 +512,7 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
 void
 CIAO::DomainApplicationManager_Impl::
-destroyApplication ()
+destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Deployment::StopError))
 {
@@ -548,15 +531,13 @@ destroyApplication ()
                                         entry) != 0)
             ACE_THROW (Deployment::StopError ()); // Should never happen!
 
-          ::Deployment::NodeManager_var my_node_manager =
-            (entry->int_id_).node_manager_;
-
-          ::Deployment::NodeApplicationManager_var my_node_application_manager =
-            (entry->int_id_).node_application_manager_.in ();
+          ::Deployment::NodeApplicationManager_ptr my_node_application_manager =
+	      (entry->int_id_).node_application_manager_.in ();
 
           // Invoke destoryManager() operation on the NodeManger.
-          my_node_manager->destroyManager (my_node_application_manager.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+	  // Since we have the first arg is not used by NAM anyway.
+          my_node_application_manager->destroyApplication (0
+							   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -569,11 +550,50 @@ destroyApplication ()
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 }
 
+void
+CIAO::DomainApplicationManager_Impl::
+destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   Deployment::StopError))
+{
+  ACE_TRY
+    {
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
+        {
+          // Get the NodeManager and NodeApplicationManager object references.
+          ACE_Hash_Map_Entry
+            <ACE_CString,
+            Chained_Artifacts> *entry;
 
-/// Returns the DeploymentPlan associated with this ApplicationManager.
+          if (this->artifact_map_.find (this->node_manager_names_[i],
+                                        entry) != 0)
+            ACE_THROW (Deployment::StopError ()); // Should never happen!
+
+          ::Deployment::NodeManager_ptr my_node_manager =
+	      (entry->int_id_).node_manager_.in ();
+
+	  // Since we have the first arg is not used by NM anyway.
+          my_node_manager->destroyManager (0
+					   ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "DomainApplicationManager_Impl::destroyManager\t\n");
+      ACE_RE_THROW;
+      return;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
+}
+
+// Returns the DeploymentPlan associated with this ApplicationManager.
 ::Deployment::DeploymentPlan *
 CIAO::DomainApplicationManager_Impl::
 getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -589,15 +609,36 @@ getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   return plan._retn ();
 }
 
+Deployment::Connections *
+CIAO::DomainApplicationManager_Impl::
+get_outgoing_connections (const Deployment::DeploymentPlan &plan)
+{
+  Deployment::Connections_var connections;
+  ACE_NEW_RETURN (connections,
+		  Deployment::Connections,
+		  0);
+
+  // For each component instance in the child plan ...
+  for (CORBA::ULong i = 0; i < plan.instance.length (); i++)
+    {
+
+    // Get the component instance name
+    if (!get_outgoing_connections_i (plan.instance[i].name.in (),
+				     connections.inout ()))
+      return 0;
+  }
+  return connections._retn ();
+}
+
 bool
 CIAO::DomainApplicationManager_Impl::
 get_outgoing_connections_i (const char * instname,
-			    Deployment::Connections * retv)
+			    Deployment::Connections & retv)
 {
   // Search in all the connections in the plan.
   for (CORBA::ULong i = 0; i < this->plan_.connection.length(); ++i)
   {
-    CORBA::ULong len = retv->length ();
+    CORBA::ULong len = retv.length ();
 
     // Current connection that we are looking at.
     const Deployment::PlanConnectionDescription & curr_conn
@@ -609,6 +650,8 @@ get_outgoing_connections_i (const char * instname,
 	 p_index < curr_conn.internalEndpoint.length ();
 	 ++p_index)
     {
+      //ACE_DEBUG ((LM_DEBUG, "step2\n"));
+
       const Deployment::PlanSubcomponentPortEndpoint & endpoint
 	= curr_conn.internalEndpoint[p_index];
 
@@ -632,11 +675,16 @@ get_outgoing_connections_i (const char * instname,
 	    curr_conn.internalEndpoint[index].portName.in ();
 
 	  bool found = false;
+
+	  //ACE_DEBUG ((LM_DEBUG, "step3\n"));
+
 	  // Now we have to search in the received connections to get the objRef.
 	  for (CORBA::ULong conn_index = 0;
 	       conn_index < this->all_connections_->length ();
 	       ++conn_index)
 	  {
+	    //ACE_DEBUG ((LM_DEBUG, "step4\n"));
+
 	    const Deployment::Connection curr_rev_conn = this->all_connections_[conn_index];
 
 	    // We need to look at the instance name and the port name to confirm.
@@ -646,12 +694,14 @@ get_outgoing_connections_i (const char * instname,
 		ACE_OS::strcmp (curr_rev_conn.portName.in (),
 				port_name.c_str ()) == 0)
 	    {
-	      retv->length (len+1);
-	      (*retv)[len].instanceName = instname;
-	      (*retv)[len].portName = endpoint.portName.in ();
-	      (*retv)[len].kind = endpoint.kind;
-	      (*retv)[len].endpoint = curr_rev_conn.endpoint;  //No need to duplicate here.
-	      ++len;             // This way we dont have do "-1" 4 times.
+	      //ACE_DEBUG ((LM_DEBUG, "step5\n"));
+
+	      retv.length (len+1);
+	      retv[len].instanceName = instname;
+	      retv[len].portName = endpoint.portName.in ();
+	      retv[len].kind = endpoint.kind;
+	      retv[len].endpoint = CORBA::Object::_duplicate(curr_rev_conn.endpoint.in ());
+	      ++len;
 	      found = true;
 	      break;             // Since we know there is only 2 endpoints in a connection.
 	                         // so we dont have to worry about multiplex Receptacle etc.
@@ -659,17 +709,18 @@ get_outgoing_connections_i (const char * instname,
 	 }
 
 	 // We didnt find the counter part connection even we are sure there must be 1.
-	 if (!found ) return false;
+	 if (!found) return false;
 	 break; // We know we have found the connection so even we are still on
 	        // internalpoint 0 we can skip internalpoint 1.
 	}
       }
     }  /* close for loop on internal endpoints */
   }  /* close for loop on all connections in the plan */
+
   return 1;
 }
 
-void 
+void
 CIAO::DomainApplicationManager_Impl::
 dump_connections (const ::Deployment::Connections & connections)
 {
