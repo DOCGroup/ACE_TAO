@@ -44,7 +44,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
   }
 
   Source_Files {
-    CCM_TransactionC.cppaaaa
+    CCM_TransactionC.cpp
     CosPersistentStateC.cpp
     CCM_ContainerC.cpp
     CCM_Container_ExC.cpp
