@@ -1,3 +1,8 @@
+Tue Feb 27 10:51:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added the AMI tests to the daily
+	  builds. 
+
 Tue Feb 27 10:23:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Makefile: Changed the ChangeLog listing in the CONTROLLED_FILES
