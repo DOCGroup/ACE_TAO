@@ -1,3 +1,11 @@
+Fri Dec 29 09:10:43 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Portable_Interceptors/IORInterceptor/client.dsp:
+        * tests/Portable_Interceptors/IORInterceptor/server.dsp:
+
+          Added an include option for TAO_IDL for the IDL files
+          in the Release configuration.
+
 Fri Dec 29 07:38:27 2000  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tests/Policies/Manipulation.cpp:
