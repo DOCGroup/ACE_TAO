@@ -484,8 +484,8 @@ Peer_Handler::await_connection_id (void)
 
   // Register this handler to receive test events on stdin.
   if (ACE_Event_Handler::register_stdin_handler (this,
-						 ACE_Reactor::instance (),
-						 ACE_Thread_Manager::instance ()) == -1)
+                                                 ACE_Reactor::instance (),
+                                                 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
 
   return 0;
@@ -694,7 +694,7 @@ Peer_Connector::open_connector (Peer_Handler *&peer_handler,
 }
 
 int
-Peer_Connector::open (void)
+Peer_Connector::open (ACE_Reactor *, int)
 {
   this->supplier_peer_handler_ = 0;
   this->consumer_peer_handler_ = 0;
