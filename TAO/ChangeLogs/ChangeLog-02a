@@ -11,6 +11,8 @@ Fri Apr 20 16:13:40 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:		
 	* orbsvcs/orbsvcs/AV/QoS_UDP.h:		
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:			
+	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:					
+	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp:				
 
 	  Integrated AQoSA and AVStreams for the UDP unicast protocol. This allows 
 	  to set up an RSVP session between the sender and receiver using AQoSA.
