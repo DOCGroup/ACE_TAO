@@ -1,3 +1,14 @@
+Thu Jan 18 12:49:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Future.h: Changed the order of the thread mutex and the condition
+	  variable to avoid confusion in the future regarding "order of
+ 	  initialization."  Thanks to Edan Ayal <edan@bandwiz.com> for
+ 	  reporting this.
+
+	* examples/Configuration: Updated this example to include the new
+	  test for the ACE_Configuration_Heap methods.  Thanks to Michael
+ 	  Searles <msearles@base16.com> for contributing this.
+
 Thu Jan 18 18:55:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/nightlybuilds/builds.lst:
