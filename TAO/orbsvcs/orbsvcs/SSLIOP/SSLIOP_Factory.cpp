@@ -75,6 +75,17 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
 
   int prevdebug = -1;
 
+  // Force the Singleton instance to be initialized/instantiated.
+  // Some SSLIOP option combinations below will result in the
+  // Singleton instance never being initialized.  In that case,
+  // problems may occur later on due to lack of initialization of the
+  // underlying SSL library (e.g. OpenSSL), which occurs when an
+  // ACE_SSL_Context is instantiated.
+  //
+  // The code is cleaner this way anyway.
+  ACE_SSL_Context * ssl_ctx = ACE_SSL_Context::instance ();
+  ACE_ASSERT (ssl_ctx != 0);
+
   for (int curarg = 0; curarg != argc; ++curarg)
     {
       if ((ACE_OS::strcasecmp (argv[curarg],
@@ -90,14 +101,13 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                              "-SSLNoProtection") == 0)
+                                   "-SSLNoProtection") == 0)
         {
           // Enable the eNULL cipher.  Note that enabling the "eNULL"
           // cipher only disables encryption.  However, certificate
           // exchanges will still occur.
-          if (::SSL_CTX_set_cipher_list (
-                  ACE_SSL_Context::instance ()->context (),
-                  "DEFAULT:eNULL") == 0)
+          if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
+                                         "DEFAULT:eNULL") == 0)
             {
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_ERROR,
@@ -184,7 +194,7 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                   mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
                 }
 
-              ACE_SSL_Context::instance ()->default_verify_mode (mode);
+              ssl_ctx->default_verify_mode (mode);
             }
         }
 
@@ -227,8 +237,8 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
 
   if (dhparams_path != 0)
     {
-      if (ACE_SSL_Context::instance ()->dh_params (dhparams_path,
-                                                   dhparams_type) != 0)
+      if (ssl_ctx->dh_params (dhparams_path,
+                              dhparams_type) != 0)
         {
           if (dhparams_path != certificate_path)
             {
@@ -250,7 +260,8 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                             ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
                             ACE_TEXT ("No DH parameters found in ")
                             ACE_TEXT ("certificate <%s>; either none ")
-                            ACE_TEXT ("are needed (RSA) or badness will ensue later.\n"),
+                            ACE_TEXT ("are needed (RSA) or \"badness\"")
+                            ACE_TEXT ("will ensue later.\n"),
                             dhparams_path));
             }
         }
@@ -271,8 +282,8 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
   // in the underlying SSL_CTX.
   if (certificate_path != 0)
     {
-      if (ACE_SSL_Context::instance ()->certificate (certificate_path,
-                                                    certificate_type) != 0)
+      if (ssl_ctx->certificate (certificate_path,
+                                certificate_type) != 0)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_ERROR,
@@ -296,8 +307,8 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
 
   if (private_key_path != 0)
     {
-      if (ACE_SSL_Context::instance ()->private_key (private_key_path,
-                                                     private_key_type) != 0)
+      if (ssl_ctx->private_key (private_key_path,
+                                private_key_type) != 0)
         {
           if (TAO_debug_level > 0)
             {
