@@ -1,3 +1,15 @@
+Wed May 26 23:51:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_string.cpp:
+
+	  Converted all ACE cast macro calls to their ANSI C++ cast
+	  counterparts.
+
+	* ace/OS_NS_sys_socket.inl:
+
+	  Use prefix {in,dec}rement operators where applicable instead of
+	  postfix operators.  The former are more efficient.
+
 Wed May 26 23:44:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Reactor_Registration_Test.cpp (Event_Handler):

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
@@ -428,7 +429,7 @@ ACE_OS::recvv (ACE_HANDLE handle,
 
   // Step through the buffers requested by caller; for each one, cycle
   // through reads until it's filled or an error occurs.
-  for (i = 0; i < n && result > 0; i++)
+  for (i = 0; i < n && result > 0; ++i)
     {
       chunkp = buffers[i].iov_base;     // Point to part of chunk being read
       chunklen = buffers[i].iov_len;    // Track how much to read to chunk
@@ -627,7 +628,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
 
   int result = 0;
 
-  for (int i = 0; i < buffer_count; i++)
+  for (int i = 0; i < buffer_count; ++i)
     {
        result = ACE_OS::sendto (handle,
                                 reinterpret_cast<char *ACE_CAST_CONST> (
