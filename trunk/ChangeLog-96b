@@ -1,3 +1,15 @@
+Tue Dec 31 15:06:51 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Task.cpp: added comments that try to explain interaction
+          between ACE_Task_Base::svc_run () and ACE_Task_Exitinstance
+
+	* ace/Hi_Res_Timer.h: added comment to print_total () saying it
+	  should only be used for incremental timings; added defaults to
+	  a few print_ave/print_total args
+
+	* ace/Hi_Res_Timer.{i,cpp}: inlined the constructor; trimmed output
+	  if count is 1; rounded instead of truncated usecs portion of time
+
 Mon Dec 30 15:24:59 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: Added a special case for ACE_UNUSED_ARG that works
