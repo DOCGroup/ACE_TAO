@@ -2,6 +2,7 @@ Thu Aug 19 22:00:39 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/MT_IIOP_SSL.mpc:
 	* orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc:
+	* orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.mpc:
 
 	  Fixed incorrect base project.  "orbsvcslib", not "orbsvcsexe".
 	  Addresses problems related to missing directories in the
