@@ -1,3 +1,9 @@
+Sat Dec 13 08:50:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/RTScheduling/VoidData/Makefile:
+
+	  Updated dependencies.
+
 Sat Dec 13 08:36:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/Bug_1559/Makefile:
