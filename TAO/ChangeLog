@@ -1,3 +1,14 @@
+Sat Dec 27 13:21:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Borland/build_idl.bat:
+        * examples/Borland/ChatClient.bpr:
+        * examples/Borland/pch.h:
+          Updated this example:
+          - use BCB5 instead of BCB4
+          - use debug version of ace/tao instead of release
+          - don't include vcl.h but set ACE_HAS_VCL=1 in the project
+            settings so that ACE includes this header file.
+
 Fri Dec 26 22:39:16 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
