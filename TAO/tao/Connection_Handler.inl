@@ -30,6 +30,18 @@ TAO_Connection_Handler::transport (void)
   return this->transport_;
 }
 
+ACE_INLINE int
+TAO_Connection_Handler::is_connect_complete (void) const
+{
+  return this->successful () ||
+    this->error_detected ();
+}
+
+ACE_INLINE int
+TAO_Connection_Handler::is_connect_successful (void) const
+{
+  return this->error_detected ();
+}
 
 ACE_INLINE int
 TAO_Connection_Handler::incr_pending_upcalls (void)

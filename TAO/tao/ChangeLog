@@ -1,5 +1,58 @@
-Tue Apr 16 07:43:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+Mon Apr 22 13:21:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* IIOP_Connector.h: Added a new mthod narrow_endpoint ()
-	* IIOP_Connector.cpp:
+	* tao/Connect_Strategy.h:
+	* tao/Connect_Strategy.cpp: Base class for the new strategies for
+	  establishing non-blocking connections.
+
+	* tao/LF_Connect_Strategy.h:
+	* tao/LF_Connect_Strategy.cpp:
+	* tao/Blocked_Connect_Strategy.h:
+	* tao/Blocked_Connect_Strategy.cpp:
+	* tao/Reactive_Connect_Strategy.h:
+	* tao/Reactive_Connect_Strategy.cpp: Concrete connect strategies. 
+
+	* tao/Client_Strategy_Factory.cpp:
+	* tao/Client_Strategy_Factory.h: Added a new virtual method,
+	  create_connect_strategy ().
+
+	* tao/default_client.cpp:
+	* tao/default_client.h: Concrete implementations for the
+	  create_connect_strategy (). 
+	
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h: 
+	* tao/Connection_Handler.inl: This class inherits from LF_Event to
+	  indicate/signal the change in state from "wait for a connection"
+	  to "completed connection" in the case of non-blocking
+	  connections. Added two new methods to query the status of the
+	  connection. 
+	
+	* tao/IIOP_Connection_Handler.cpp: On completion of the connection
+	  successfully the status of the LF_Event is changed to
+	  LFS_SUCCESS and in case the connection initiation fails, we set
+	  the LFS_FAILURE. 
+
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h: Merged from the main trunk and used the
+	  strategies to establish connections. 
+	
+	* tao/LF_Event.cpp:
+	* tao/LF_Event.h: Added a new event LFS_CONNECTION_WAIT to the
+	  list of LF_Events. 
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h:
+	* tao/Transport_Connector.inl: Added new methods to create and
+	  store the connect strategy. 
+
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h: Merged from the main trunk
+	
+	* tao/*Makefile: Updated dependencies.
+
+
 

@@ -70,24 +70,6 @@ public:
   virtual char object_key_delimiter (void) const;
   //@}
 
-protected:
-
-  /**
-   * @name More TAO_Connector methods
-   *
-   * Please check the documentation in Transport_Connector.h.
-   */
-  //@{
-  int make_connection (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc);
-
-  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Obtains uiop properties that must be used by this connector, i.e.,
-  /// initializes <uiop_properties_>.
-  int init_uiop_properties (void);
-  //@}
-
 public:
 
   typedef TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
@@ -103,6 +85,26 @@ public:
   typedef ACE_Strategy_Connector<TAO_UIOP_Connection_Handler,
                                  ACE_LSOCK_CONNECTOR>
           TAO_UIOP_BASE_CONNECTOR;
+
+protected:
+
+  /**
+   * @name More TAO_Connector methods
+   *
+   * Please check the documentation in Transport_Connector.h.
+   */
+  //@{
+  int set_validate_endpoint (TAO_Endpoint *endpoint);
+
+  int make_connection (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc);
+
+  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Obtains uiop properties that must be used by this connector, i.e.,
+  /// initializes <uiop_properties_>.
+  int init_uiop_properties (void);
+  //@}
 
 private:
 

@@ -25,10 +25,13 @@
 
 class TAO_Transport_Descriptor_Interface;
 class TAO_InputCDR;
+class TAO_Endpoint;
 class TAO_GIOP_Invocation;
 class TAO_Profile;
 class TAO_MProfile;
 class TAO_ORB_Core;
+class TAO_Connect_Strategy;
+
 /**
  * @class TAO_Connector
  *
@@ -74,9 +77,9 @@ public:
    * connect ()  method so it can be called from the invocation code
    * independent of the actual transport protocol in use.
    */
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc
-               ACE_ENV_ARG_DECL);
+  virtual int connect (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc
+                       ACE_ENV_ARG_DECL);
 
   /// Initial set of connections to be established.
   /*
@@ -101,6 +104,10 @@ protected:
   /// Create a profile with a given endpoint.
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
+  /// Set and validate endpoint. We need to do this to initialize our
+  /// remote *_Addr's which have not been done during IOR decode.
+  virtual int set_validate_endpoint (TAO_Endpoint *endpoint) = 0;
+
   /// Do an actual connect using the underlying transport to make a
   /// connection
   virtual int make_connection (TAO_GIOP_Invocation *invocation,
@@ -109,8 +116,16 @@ protected:
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);
 
+  /// Create a connect strategy
+  void create_connect_strategy (void);
+
   /// Return the TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);
+
+protected:
+
+  /// The (a)synch connect strategy
+  TAO_Connect_Strategy *active_connect_strategy_;
 
 private:
 
@@ -119,7 +134,6 @@ private:
 
   /// Pointer to our ORB core
   TAO_ORB_Core *orb_core_;
-
 };
 
 #if defined (__ACE_INLINE__)

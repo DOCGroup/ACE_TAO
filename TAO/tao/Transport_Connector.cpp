@@ -7,6 +7,8 @@
 #include "Environment.h"
 #include "Thread_Lane_Resources.h"
 #include "debug.h"
+#include "Connect_Strategy.h"
+#include "Client_Strategy_Factory.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -20,13 +22,15 @@ ACE_RCSID (tao,
 
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
-  : tag_(tag),
+  : active_connect_strategy_ (0),
+    tag_(tag),
     orb_core_ (0)
 {
 }
 
 TAO_Connector::~TAO_Connector (void)
 {
+  delete this->active_connect_strategy_;
 }
 
 int
@@ -207,6 +211,9 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
                         TAO_Transport_Descriptor_Interface *desc
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
+  if (this->set_validate_endpoint (desc->endpoint ()) == -1)
+    return -1;
+
   TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections
@@ -231,6 +238,21 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
       return 0;
     }
 
+  // @@TODO: This is not the right place for this! -- Bala
+  // Purge connections (if necessary)
+  this->orb_core_->lane_resources ().transport_cache ().purge ();
+
   return this->make_connection (invocation,
                                 desc);
+}
+
+
+void
+TAO_Connector::create_connect_strategy (void)
+{
+  if (this->active_connect_strategy_ == 0)
+    {
+      this->active_connect_strategy_ =
+        this->orb_core_->client_factory ()->create_connect_strategy (this->orb_core_);
+    }
 }
