@@ -154,8 +154,13 @@
        catch (...) \
          {
 
+#   if defined (ACE_HAS_DEPRECATED_ACE_RETHROW)
+#     define ACE_RETHROW throw
+#   endif /* ACE_HAS_DEPRECATED_ACE_RETHROW */
+
 // Rethrowing the exception from catch blocks.
-# define ACE_RETHROW throw
+# define ACE_RE_THROW throw
+# define ACE_RE_THROW_EX(LABEL) throw
 
 // Close the catch block.
 # define ACE_ENDTRY \
@@ -308,13 +313,28 @@
 // support, we simply catch all CORBA exceptions for ACE_CATCHALL.
 # define ACE_CATCHALL ACE_CATCHANY
 
+#   if defined (ACE_HAS_DEPRECATED_ACE_RETHROW)
+#     define ACE_RETHROW \
+        do \
+          ACE_TRY_ENV = ACE_CAUGHT_ENV; \
+        while (0)
+#   endif /* ACE_HAS_DEPRECATED_ACE_RETHROW */
+
 // Rethrowing exception within catch blocks.  Notice that we depends
-// on the ACE_CHECK/ACE_CHECK_RETURN following the ACE_ENDTRY to
-// do the "Right Thing[TM]."
-# define ACE_RETHROW \
-    do \
+// on the ACE_CHECK/ACE_CHECK_RETURN following the ACE_ENDTRY, or
+// ACE_TRY_CHECK/ ACE_TRY_CHECK_EX following the ACE_ENDTRY if the
+// catch block is within another try block, to do the "Right
+// Thing[TM]."
+# define ACE_RE_THROW \
+    do {\
       ACE_TRY_ENV = ACE_CAUGHT_ENV; \
-    while (0)
+      goto ACE_TRY_LABEL; \
+    } while (0)
+# define ACE_RE_THROW_EX(LABEL) \
+    do {\
+      ACE_TRY_ENV = ACE_CAUGHT_ENV; \
+      goto ACE_TRY_LABEL ## LABEL; \
+    } while (0)
 
 // Close the try block.  Notice that since exception may not get
 // caught, and exceptions can also be rethrown from the catch block,
