@@ -1,3 +1,8 @@
+Sun Mar 17 11:53:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          When doing a wchar build don't automatically define UNICODE and _UNICODE.
+
 Fri Mar 15 18:08:28 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Removed the optional setting of
