@@ -1,3 +1,9 @@
+Wed Aug  4 17:40:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp
+          orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp: fixed ACE guard usage
+          for single threaded case.
+
 Wed Aug  4 16:57:45 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/InterfaceC.cpp:
