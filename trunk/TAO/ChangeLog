@@ -1,3 +1,20 @@
+Mon Nov 25 12:25:47 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Event_Forwarder.idl:
+	  Moved up from subdirectory Notify. Dependencies could not be
+	  updated correctly due to the idl file in a subdirectory. Thanks
+	  to Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl> for
+	  prompting this correction.
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	* orbsvcs/orbsvcs/CosNotification.bor:
+	  Modified to point currectly to Event_Forwarder.idl.
+
+	* Modified the following changelog entries to thank bug reporters:
+	  Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com> and
+	  Thu Nov 21 18:45:23 2002  Pradeep Gore  <pradeep@oomworks.com>
+	
 Mon Nov 25 11:38:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: The Makefile was
@@ -53,7 +70,9 @@ Thu Nov 21 18:45:23 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* docs/releasenotes/index.html: Updates the section on
 	  Notification Service.
 	* docs/releasenotes/notify.html: Added a detailed feature matrix
-	  of the Cos Notification Service.
+	  of the Cos Notification Service. Thanks to Sharon Caspi
+	  <sharonc@scopus.net> for suggesting this.
+
 
 Thu Nov 21 13:26:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -2617,8 +2636,22 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 
         Updated framework for TAO's Notification Service:
         - Fixes bugs related to Notification Object Lifecycle,
+	  Thanks to David R Robison <drrobison@openroadsconsulting.com>,
+	  Thomas Natterer <Thomas.Natterer@de.thalesatm.com>,
+	  Wilbur Lang <wilbur@szonline.net> and
+	  Jian Chen <jchen@huawei.com> for reporting various bugs resulting
+	  due to this.
+	
         - Fixes bugs related to incorrect ID assignments,
+	  Thanks to Rick Marlborough <RMarlborough@LIO.AACISD.com>,
+	  David-A O-Brien <david-a.o-brien@db.com> and 
+	  Shelton Tang <stang@altigen.com>  for reporting various bugs resulting
+	  due to this.
+
         - Fixes implementation of SequenceProxys and Event Batch.
+	  Thanks to Frederic Langlet <Frederic.Langlet@alcatel.com> for
+	  reporting this problem.
+
         - Contains base framework for adding RT-CORBA extensions.
 
         Added Files:

@@ -44,9 +44,8 @@ IDL_FILES += \
         CosNotifyFilter \
         CosEventComm \
         CosEventChannelAdmin \
-        NotifyExt
-
-IDL_FILES1 = Notify/Event_Forwarder
+        NotifyExt \
+	Event_Forwarder
 
 CPP_SRCS += \
         Notify/Notify_Extensions \
@@ -125,13 +124,9 @@ IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
         $(addsuffix C.cpp, $(IDL_FILES))
 
-IDL_SRC1 = \
-        $(addsuffix S.cpp, Event_Forwarder) \
-        $(addsuffix C.cpp, Event_Forwarder)
-
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
-LSRC  = $(addsuffix .cpp,$(FILES)) $(IDL_SRC) $(IDL_SRC1)
+LSRC  = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -152,7 +147,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
 .PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
 realclean: clean
-	-$(RM) $(foreach file, $(IDL_FILES) Event_Forwarder, $(foreach ext, $(IDL_EXT), $(file)$(ext)))
+	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 #----------------------------------------------------------------------------
 #       Dependencies
