@@ -6,7 +6,13 @@
  *
  *  $Id$
  *
- *  Header file for a @c tk_objref CORBA::TypeCode.
+ *  Header file for
+ *    @c tk_abstract_interface,
+ *    @c tk_component,
+ *    @c tk_local_interface,
+ *    @c tk_native and
+ *    @c tk_objref
+ *  @c CORBA::TypeCodes.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
@@ -27,15 +33,114 @@ namespace TAO
 {
   namespace TypeCode
   {
+    template <CORBA::TCKind KIND> Objref_Traits;
+
+    template <>
+    struct Objref_Traits<CORBA::tk_abstract_interface>
+    {
+      enum { kind = CORBA::tk_abstract_interface };
+
+      CORBA::TypeCode_ptr
+      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
+                              char const * id
+                              ACE_ENV_ARG_DECL) const
+      {
+        return factory->create_abstract_interface_tc (id,
+                                                      ""  /* empty name */
+                                                      ACE_ENV_ARG_PARAMETER);
+      }
+    };
+
+    template <>
+    struct Objref_Traits<CORBA::tk_component>
+    {
+      enum { kind = CORBA::tk_component };
+
+      CORBA::TypeCode_ptr
+      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
+                              char const * id
+                              ACE_ENV_ARG_DECL) const
+      {
+        return factory->create_component_tc (id,
+                                             ""  /* empty name */
+                                             ACE_ENV_ARG_PARAMETER);
+      }
+    };
+
+
+    template <>
+    struct Objref_Traits<CORBA::tk_home>
+    {
+      enum { kind = CORBA::tk_home };
+
+      CORBA::TypeCode_ptr
+      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
+                              char const * id
+                              ACE_ENV_ARG_DECL) const
+      {
+        return factory->create_home_tc (id,
+                                       ""  /* empty name */
+                                       ACE_ENV_ARG_PARAMETER);
+      }
+    };
+
+    template <>
+    struct Objref_Traits<CORBA::tk_local_interface>
+    {
+      enum { kind = CORBA::tk_local_interface };
+
+      CORBA::TypeCode_ptr
+      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
+                              char const * id
+                              ACE_ENV_ARG_DECL) const
+      {
+        return factory->create_local_interface_tc (id,
+                                                   ""  /* empty name */
+                                                   ACE_ENV_ARG_PARAMETER);
+      }
+    };
+
+    template <>
+    struct Objref_Traits<CORBA::tk_native>
+    {
+      enum { kind = CORBA::tk_native };
+
+      CORBA::TypeCode_ptr
+      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
+                              char const * id
+                              ACE_ENV_ARG_DECL) const
+      {
+        return factory->create_native_tc (id,
+                                          ""  /* empty name */
+                                          ACE_ENV_ARG_PARAMETER);
+      }
+    };
+
+    template <>
+    struct Objref_Traits<CORBA::tk_objref>
+    {
+      enum { kind = CORBA::tk_objref };
+
+      CORBA::TypeCode_ptr
+      create_compact_typcode (TAO_TypeCodeFactory_Adapter * factory
+                              char const * id
+                              ACE_ENV_ARG_DECL) const
+      {
+        return factory->create_interface_tc (id,
+                                             ""  /* empty name */
+                                             ACE_ENV_ARG_PARAMETER);
+      }
+    };
 
     /**
      * @class Objref
      *
      * @brief @c CORBA::TypeCode implementation for an OMG IDL
-     *        @c object.
+     *        @c object and object-like types
      *
      * This class implements a @c CORBA::TypeCode for an OMG IDL
-     * @c object.
+     * @c object (interface) and object-like types (abstract
+     * interface, component, local interface and native).
      */
     template <typename StringType, class RefCountPolicy>
     class Objref
@@ -67,7 +172,9 @@ namespace TAO
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
-       * @c tk_objref @c CORBA::TypeCode -specific template methods.
+       * @c tk_abstract_interface, @c tk_component, @c
+       * tk_local_interface, @c tk_native and @c tk_objref
+       * @c CORBA::TypeCode -specific template methods.
        *
        * @see @c CORBA::TypeCode
        */

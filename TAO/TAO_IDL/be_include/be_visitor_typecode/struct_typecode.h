@@ -33,7 +33,8 @@ namespace TAO
   public:
 
     /// Constructor.
-    be_visitor_struct_typecode (be_visitor_context * ctx);
+    be_visitor_struct_typecode (be_visitor_context * ctx,
+                                bool is_exception);
 
     /// Visit a structure.
     /**
@@ -49,6 +50,11 @@ namespace TAO
 
     /// Generate structure field related TypeCode code.
     int visit_members (be_structure * node);
+
+  private:
+
+    /// Does the TypeCode refer to a CORBA exception?
+    bool const is_exception_;
 
   };
 

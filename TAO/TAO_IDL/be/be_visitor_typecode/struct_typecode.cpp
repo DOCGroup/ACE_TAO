@@ -17,8 +17,10 @@
 
 
 TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
-  be_visitor_context * ctx)
-  : be_visitor_typecode_defn (ctx)
+  be_visitor_context * ctx,
+  bool is_exception)
+  : be_visitor_typecode_defn (ctx),
+    is_exception_ (is_exception)
 {
 }
 
@@ -47,10 +49,12 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
   os << be_uidt_nl
      << "};" << be_uidt_nl << be_nl;
 
-
   // Generate the TypeCode instantiation.
   os
     << "static TAO::TypeCode::Struct<char const *," << be_nl
+    << "                             TAO::TypeCode::Field<char const *> const *," << be_nl
+    << "                             CORBA::tk_"
+    << (this->is_exception_ ? "except" : "struct") << ">," << be_nl
     << "                             TAO::Null_RefCount_Policy> const"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl

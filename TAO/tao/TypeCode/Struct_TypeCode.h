@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  Header file for a @c tk_struct CORBA::TypeCode.
+ *  Header file for a @c tk_struct and @c tk_except
+ *  @c CORBA::TypeCodes.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  *  @author Carlos O'Ryan
@@ -50,14 +51,14 @@ namespace TAO
      * @class Struct
      *
      * @brief @c CORBA::TypeCode implementation for an OMG IDL
-     *        @c struct.
+     *        @c struct or @c exception.
      *
      * This class implements a @c CORBA::TypeCode for an OMG IDL
-     * @c struct.
+     * @c struct or @c exception.
      */
     template <typename StringType,
               class FieldArrayType,
-              class StructTraits,
+              CORBA::TCKind Kind,
               class RefCountPolicy>
     class Struct
       : public CORBA::TypeCode,
@@ -90,7 +91,8 @@ namespace TAO
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
-       * @c tk_struct @c CORBA::TypeCode -specific template methods.
+       * @c tk_struct or @c tk_except @c CORBA::TypeCode -specific
+       * template methods.
        *
        * @see @c CORBA::TypeCode
        */
@@ -122,7 +124,7 @@ namespace TAO
        * @c Struct Attributes
        *
        * Attributes representing the structure of an OMG IDL
-       * @c struct.
+       * @c struct or @c exception.
        *
        * @note These attributes are declared in the order in which
        *       they are marshaled into a CDR stream in order to

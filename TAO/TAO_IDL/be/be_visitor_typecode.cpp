@@ -25,6 +25,7 @@
 #include "be_field.h"
 #include "be_interface.h"
 #include "be_component.h"
+#include "be_home.h"
 #include "be_module.h"
 #include "be_predefined_type.h"
 #include "be_sequence.h"
