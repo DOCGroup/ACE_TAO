@@ -641,7 +641,7 @@ static int init_MPEG1_video_file(void)
   unsigned char nb;
   int state = 0;
   unsigned long fileptr = 0;
-  unsigned long i, j, k;
+  //unsigned long i, j, k;
   int shptr, gopptr, ftptr;
   int inpic = 0;
   unsigned long picptr = 0;
@@ -1140,14 +1140,14 @@ static int init_MPEG1_video_file(void)
     VIDEO_SINGLETON::instance ()->cmd = CmdFAIL;
     sprintf(errmsg, "VS failed to alloc internal buf (type %d)", failureType);
     CmdWrite((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
-    msg = failureType == 1 ? "not a complete MPEG stream" :
-          failureType == 2 ? "can't open MPEG file" :
-          failureType == 3 ? "MPEG file is not seekable" :
-          failureType == 4 ? "not an MPEG stream" :
+    msg = failureType == 1 ? (char *)"not a complete MPEG stream" :
+          failureType == 2 ? (char *)"can't open MPEG file" :
+          failureType == 3 ? (char *)"MPEG file is not seekable" :
+          failureType == 4 ? (char *)"not an MPEG stream" :
           failureType == 5 ?
-             "too many frames in MPEG file, need change MAX_FRAMES and recompile VS" :
-          failureType == 100 ? "failed to connect to live video source" :
-          failureType == 101 ? "live MPEG2 not supported" :
+             (char *)"too many frames in MPEG file, need change MAX_FRAMES and recompile VS" :
+          failureType == 100 ? (char *)"failed to connect to live video source" :
+          failureType == 101 ? (char *)"live MPEG2 not supported" :
           errmsg;
     write_string(VIDEO_SINGLETON::instance ()->serviceSocket, msg);
     ACE_OS::exit (0);
@@ -1423,8 +1423,8 @@ static void StopTimer()
 void GetFeedBack()
 {
   VideoFeedBackPara para;
-  struct itimerval val;
-  int timerUsec;
+  //struct itimerval val;
+  //int timerUsec;
   
   if (FBread((char *)&para, sizeof(para)) == -1 ||
       ntohl(para.cmdsn) != VIDEO_SINGLETON::instance ()->cmdsn) {
@@ -1499,7 +1499,7 @@ static int FastVideoPlay(void)
   
   for (;;)
   {
-    struct fd_set read_mask;
+    fd_set read_mask;
 /*
     fprintf(stderr, "VS: FF/FB - a loop begines. . .\n");
 */
@@ -1630,7 +1630,7 @@ void ComputeFirstSendPattern(float limit)
   int first_frame;
   int frame = para->nextFrame;
   int nfds = (VIDEO_SINGLETON::instance ()->serviceSocket > VIDEO_SINGLETON::instance ()->videoSocket ? VIDEO_SINGLETON::instance ()->serviceSocket : VIDEO_SINGLETON::instance ()->videoSocket) + 1;
-  struct fd_set read_mask;
+  fd_set read_mask;
   struct timeval tval = {0, 0};
   double ratio;
   int result;
@@ -1817,7 +1817,7 @@ static int PLAYvideo()
     int curFrame = timerFrame;
     int curHeader = timerHeader;
     char * sp;
-    struct fd_set read_mask;
+    fd_set read_mask;
     int nfds = (VIDEO_SINGLETON::instance ()->serviceSocket > VIDEO_SINGLETON::instance ()->videoSocket ? VIDEO_SINGLETON::instance ()->serviceSocket : VIDEO_SINGLETON::instance ()->videoSocket) + 1;
     
     if (preGroup != curGroup || curFrame != preFrame)
