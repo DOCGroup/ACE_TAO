@@ -3,6 +3,21 @@ Thu Apr  5 15:36:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/PolicyC.h: Added a missing Environment.h. This should fix
 	  problems in  TRU64_XX builds and SunCC builds.
 
+Thu Apr  5 13:50:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+        * tao/Wait_On_Leader_Follower.cpp:
+
+          Carlos and I worked on a fix for [Bug 842]. This involves
+          electing a new leader if a follower got elected but 
+          concurrently also received a timeout. In such cases
+          a dead-lock could occur, but this fix prevents it 
+          from happening, as the leaving follower elects a new
+          leader, as itself cannot fulfill that role.
+
+          Such situations are detected by the condition that 
+          a timeout occured, remove_follower fails and reply_received
+          equals 0. This fix applies exactly in such situations.
+
 Thu Apr  5 13:09:33 2001  Mayur Deshpande <mayur@ics.uci.edu>
         
         * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
