@@ -438,7 +438,7 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
                                         reuse_addr,
                                         flags,
                                         perms);
-    
+
   // Delegate to connection strategy.
   if (result == -1)
     {
@@ -626,10 +626,6 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
       // Timer_Queue).
       this->closing_ = 1;
 
-      // Remove all timer objects associated with <this> object from
-      // the <Reactor>'s Timer_Queue.
-      this->reactor ()->cancel_timer (this);
-
       MAP_ITERATOR mi (this->handler_map_);
 
       // Iterate through the map and shut down all the pending handlers.
@@ -638,9 +634,6 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
            mi.next (me) != 0;
            mi.advance ())
         {
-          this->reactor ()->remove_handler (me->ext_id_,
-                                            mask | ACE_Event_Handler::DONT_CALL);
-
           AST *ast = 0;
           this->cleanup_AST (me->ext_id_, ast);
 

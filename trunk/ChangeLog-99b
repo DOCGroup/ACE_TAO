@@ -1,3 +1,9 @@
+Mon Apr 19 17:02:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Connector.cpp (handle_close): There is no need to call
+	  cancel_timer() or remove_handler() from handle_close().  Removal
+	  of all svc tuples from the <reactor> is done by <cleanup_AST>.
+
 Mon Apr 19 16:45:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp},Object_Manager.{h,cpp} (ACE_OS_Object_Manager,
