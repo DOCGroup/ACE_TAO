@@ -1,8 +1,15 @@
+Mon Mar 19 00:16:13 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security.dsp:
+
+	  Added missing custom IDL build steps to the "Release"
+	  configuration.
+
 Sun Mar 18 23:50:28 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tests/RTCORBA/Banded_Connections/run_test.pl:
 
-	  Changed the paramether passed to the server and the client.
+	  Changed the parameter passed to the server and the client.
 
 	* tests/RTCORBA/Banded_Connections/bands.unix:
 
@@ -35,7 +42,6 @@ Sun Mar 18 23:50:28 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	  The decision logic assume that the endpoint priority exported in
 	  the server ORB are associated with the maximum value of the
 	  relative bands.
-
 
 Sun Mar 18 21:13:36 2001  Ossama Othman  <ossama@uci.edu>
 
