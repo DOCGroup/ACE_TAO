@@ -33,11 +33,11 @@ Notify_Sequence_Push_Consumer::connect (
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
       CosNotifyChannelAdmin::SEQUENCE_EVENT,
-      proxy_supplier_id_
+      proxy_id_
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->proxy_supplier_ =
+  this->proxy_ =
     CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow (
       proxysupplier.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -47,8 +47,8 @@ Notify_Sequence_Push_Consumer::connect (
   properties[0].name = CORBA::string_dup(CosNotification::MaximumBatchSize);
   properties[0].value <<= (CORBA::Long)10;
 
-  proxy_supplier_->set_qos(properties);
-  proxy_supplier_->connect_sequence_push_consumer (objref.in ()
+  proxy_->set_qos(properties);
+  proxy_->connect_sequence_push_consumer (objref.in ()
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
