@@ -1,3 +1,7 @@
+Fri Dec 01 09:21:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Clarified some comments.
+
 Thu Nov 30 22:49:10 2000  pradeep@cs.wustl.edu  <pradeep@cs.wustl.edu>
 
         * ACE version 5.1.11 released.
