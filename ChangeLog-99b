@@ -11,6 +11,10 @@ Fri Mar 19 10:29:17 1999  David L. Levine  <levine@cs.wustl.edu>
           #defines ACE_HAS_NONSTATIC_OBJECT_MANAGER and uses the
           Object_Manager during construction of static objects.
 
+        * tests/Timeprobe_Test.cpp: added test of ACE_Singleton
+          creation during construction of static objects.  Timeprobes
+          can do that, when they're enabled.
+
         * ace/OS.cpp (fini): added ACE_FINI_HOOK support.  Applications
           can #define ACE_FINI_HOOK to any executable code, and it
           will be executed on program termination.
@@ -29,7 +33,8 @@ Fri Mar 19 03:24:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
           hence causing all sorts of problems.
 
         * ace/OS.cpp (cleanup_tss): Removed the call to
-          free_all_keys_left() as per David's instructions.
+          free_all_keys_left() (WIN32 only), because it causes
+          segmentation faults at shutdown.
 
 Fri Mar 19 00:15:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
