@@ -673,7 +673,7 @@ int
 ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_nesting_level");
-#if defined (ACE_HAS_WINCE) || defined (VXWORKS)
+#if defined (ACE_HAS_WINCE) || defined (VXWORKS) || defined (ACE_PSOS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_RECURSIVE_MUTEXES)
   // This is really a Win32-ism...

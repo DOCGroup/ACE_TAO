@@ -1,3 +1,15 @@
+Sun Jan 02 00:50:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/OS.{cpp, h, i}
+          ace/Signal.cpp
+          ace/Synch.cpp
+          ace/config-psos-diab-ppc.h: Added support for native mutexs,
+          condition variables, and thread-specific storage in pSOS.  Native
+          pSOS mutexes, where available, support several cool features, 
+          including lock recursion and priority inheritance protocol and
+          priority ceiling protocol support.
+
 Sat Jan 01 09:16:39 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ChangeLog,Makefile: moved to ChangeLog-99b.
+

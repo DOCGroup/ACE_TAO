@@ -2320,12 +2320,22 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 
 #   elif defined (ACE_PSOS)
 
-// implement ACE_thread_mutex_t and ACE_mutex_t using pSOS semaphores
+// Some versions of pSOS provide native mutex support.  For others,
+// implement ACE_thread_mutex_t and ACE_mutex_t using pSOS semaphores.
+// Either way, the types are all u_longs.
 typedef u_long ACE_mutex_t;
 typedef u_long ACE_thread_mutex_t;
-
 typedef u_long ACE_thread_t;
 typedef u_long ACE_hthread_t;
+
+#if defined (ACE_PSOS_HAS_COND_T)
+typedef u_long ACE_cond_t;
+struct ACE_Export ACE_condattr_t
+{
+  int type;
+};
+#endif
+
 
 // TCB registers 0-7 are for application use
 #     define PSOS_TASK_REG_TSS 0
@@ -2335,11 +2345,15 @@ typedef u_long ACE_hthread_t;
 #     define PSOS_TASK_MAX_PRIORITY 239
 
 // Key type: the ACE TSS emulation requires the key type be unsigned,
-// for efficiency.  (Current POSIX and Solaris TSS implementations also
-// use unsigned int, so the ACE TSS emulation is compatible with them.)
+// for efficiency.  Current POSIX and Solaris TSS implementations also
+// use unsigned int, so the ACE TSS emulation is compatible with them.
+// Native pSOS TSD, where available, uses unsigned long as the key type.
+#     if defined (ACE_PSOS_HAS_TSS)
+typedef u_long ACE_thread_key_t;
+#     else
 typedef u_int ACE_thread_key_t;
+#     endif /* ACE_PSOS_HAS_TSS */
 
-/* CDG - TBD - revisit these: compare pthreads and pSOS threads */
 #     define THR_CANCEL_DISABLE      0  /* thread can never be cancelled */
 #     define THR_CANCEL_ENABLE       0      /* thread can be cancelled */
 #     define THR_CANCEL_DEFERRED     0      /* cancellation deferred to cancellation point */
@@ -7320,7 +7334,7 @@ private:
 // moved ACE_TSS_Ref, ACE_TSS_Info, and ACE_TSS_Keys class
 // declarations from OS.cpp so they are visible to the single
 // file of template instantiations.
-# if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+# if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
 class ACE_TSS_Ref
 {
   // = TITLE
