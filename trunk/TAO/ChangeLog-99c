@@ -1,3 +1,20 @@
+Wed Jul  7 20:36:20 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/ORB.{h,cpp}
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
+	  Buffer of size BUFSIZ, which is used to receive the ior from
+	  Naming/Trading service in response to a multicast message, was
+	  allocated off the stack.  On some platforms (notably, NT), BUFSIZ
+	  wasn't big enough to house the ior, so the ior got truncated,
+	  and weird things happenned.  Updated the code, to allocate
+	  buffer space for ior dynamically, if what was allocated off the
+	  stack wasn't enough.  To make this simpler, changed
+	  <handle_input> method in TAO_IOR_Multicast to reply to the
+	  client with iovec, containing the length of the ior, followed by
+	  the ior itself.
+
+	  Fixed several memory leaks and other bugs in the surrounding code.
+
 Wed Jul 07 19:51:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
