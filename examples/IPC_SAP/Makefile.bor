@@ -1,8 +1,0 @@
-#
-# Makefile for building the ACE IPC_SAP examples
-#
-
-DIRS = \
-        Sock_Sap
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
