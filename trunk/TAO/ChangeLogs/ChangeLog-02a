@@ -10,7 +10,11 @@ Tue Aug 14 10:56:01 2001  Jeff Parsons <parsons@cs.wustl.edu>
           file, return value allocation in the skeleton body, and
           ancestors in _tao_QueryInterface(). This addition helps
           some compilers when dealing with nested classes. Thanks 
-          to gduzan@bbn.com for reporting the bug.
+          to Gary Duzan <gduzan@bbn.com> for reporting the bug.
+
+        * tests/IDL_Test/nested_scope.idl:
+
+          Added Gary Duzan's example to the test file. 
 
 Mon Aug 13 20:09:24 2001  Balachandran  <bala@cs.wustl.edu>
 
