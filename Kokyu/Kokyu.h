@@ -21,9 +21,19 @@
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 
+//Currently I am not seeing a way to avoid including these here. The
+//whole purpose of the pImpl idiom is to avoid this dependency. But
+//using the auto_ptr<> to store the implementation causes a compile
+//error (in the destructor) that the implementation definition is not
+//found. Note that the auto-ptr<T>::~auto_ptr() calls delete on the
+//internal pointer and at this point the class definition needs to be
+//visible. Need to revisit this and see whether there is a work
+//around.
+#include "Dispatcher_Impl.h"
+
 namespace Kokyu
 {
-  class Dispatcher_Impl;
+  //class Dispatcher_Impl;
 
   /**
    * @class Dispatcher
@@ -89,16 +99,6 @@ namespace Kokyu
 #if defined (__ACE_INLINE__)
 #include "Kokyu.i"
 #endif /* __ACE_INLINE__ */
-
-//Currently I am not seeing a way to avoid including these here. The
-//whole purpose of the pImpl idiom is to avoid this dependency. But
-//using the auto_ptr<> to store the implementation causes a compile
-//error (in the destructor) that the implementation definition is not
-//found. Note that the auto-ptr<T>::~auto_ptr() calls delete on the
-//internal pointer and at this point the class definition needs to be
-//visible. Need to revisit this and see whether there is a work
-//around.
-#include "Dispatcher_Impl.h"
 
 #include "ace/post.h"
 #endif /* KOKYU_H */
