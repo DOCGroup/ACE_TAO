@@ -1028,6 +1028,26 @@ SOURCE=.\gperf.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\gperf.idl
+InputName=gperf
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
 USERDEP__GPERF="..\..\..\bin\tao_idl.exe"	

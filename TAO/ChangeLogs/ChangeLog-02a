@@ -1,3 +1,7 @@
+Sat Aug 11 08:31:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/IDL_Test/idl_test.dsp: Fixed the relase builds.
+
 Sat Aug 11 08:24:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify_ProxyConsumer_T.cpp:
