@@ -187,10 +187,8 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "\"\n\n";
     }
 
-  // This one is a good candidate to go first since applications need
-  // full knowledge of CORBA::ORB. It's rather heavyweight though
-  // (includes PolicyC.h) and should probably be refactored somehow.
-  *this->client_header_ << "#include \"tao/ORB.h\"";
+  this->gen_standard_include (this->client_header_,
+                              "ace/config-all.h");
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -1340,35 +1338,11 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
 void
 TAO_CodeGen::gen_stub_hdr_includes (void)
 {
-  // Always included.
-
-  this->gen_standard_include (this->client_header_,
-                              "tao/Environment.h");
-
-  // Conditionally included.
-
-  // Non-abstract interface or keyword 'Object'.
-  this->gen_cond_file_include (
-      idl_global->decls_seen_masks.non_local_iface_seen_
-      | idl_global->decls_seen_masks.local_iface_seen_
-      | idl_global->decls_seen_masks.base_object_seen_,
-      "tao/Object.h",
-      this->client_header_
-    );
-
-  // Not needed at the moment, since Exception.h is pulled in by ORB.h,
-  // included at the top of the stub header file. May change if ORB.h
-  // is rearranged to make a lighter include for applications.
-#if 0
-  // System exception throw spec for every operation may change soon.
-  // For IDL exception, we need full knowledge of CORBA::UserException.
-  this->gen_cond_file_include (
-      idl_global->decls_seen_masks.operation_seen_
-      | idl_global->decls_seen_masks.exception_seen_,
-      "tao/Exception.h",
-      this->client_header_
-    );
-#endif
+  // Include valuetype headers before ORB core headers to make sure
+  // some things are parsed before some templates
+  // (e.g. TAO_Pseudo_{Var,Out}_T).  Addresses issues with compilers
+  // that require all necessary non-dependent names be parsed prior to
+  // parsing templates that may use them (e.g. GNU g++ 3.4.x).
 
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.abstract_iface_seen_))
@@ -1412,6 +1386,39 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
           this->client_header_
         );
     }
+
+  // @note This header should not go first.  See the discussion above
+  //       regarding non-dependent template names.
+  this->gen_standard_include (this->client_header_,
+                              "tao/ORB.h");
+
+  // Not needed at the moment, since Exception.h is pulled in by ORB.h,
+  // included at the top of the stub header file. May change if ORB.h
+  // is rearranged to make a lighter include for applications.
+#if 0
+  // System exception throw spec for every operation may change soon.
+  // For IDL exception, we need full knowledge of CORBA::UserException.
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.operation_seen_
+      | idl_global->decls_seen_masks.exception_seen_,
+      "tao/Exception.h",
+      this->client_header_
+    );
+#endif
+
+  this->gen_standard_include (this->client_header_,
+                              "tao/Environment.h");
+
+  // Conditionally included.
+
+  // Non-abstract interface or keyword 'Object'.
+  this->gen_cond_file_include (
+      idl_global->decls_seen_masks.non_local_iface_seen_
+      | idl_global->decls_seen_masks.local_iface_seen_
+      | idl_global->decls_seen_masks.base_object_seen_,
+      "tao/Object.h",
+      this->client_header_
+    );
 
   // This is true if we have a typecode or TCKind in the IDL file.
   // If not included here, it will appear in *C.cpp, if TCs not suppressed.
@@ -1635,13 +1642,13 @@ TAO_CodeGen::gen_skel_src_includes (void)
   // Include Portable Interceptor related headers.
   *this->server_skeletons_ << "\n#if TAO_HAS_INTERCEPTORS == 1";
   this->gen_standard_include (this->server_skeletons_,
-                              "tao/RequestInfo_Util.h");
-  this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/PICurrent_Guard.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/ServerRequestInfo.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/ServerInterceptorAdapter.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/RequestInfo_Util.h");
   *this->server_skeletons_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
 
   this->gen_standard_include (this->server_skeletons_,
@@ -1719,16 +1726,16 @@ void
 TAO_CodeGen::gen_var_file_includes (void)
 {
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.interface_seen_
-      | idl_global->decls_seen_masks.fwd_iface_seen_,
-      "tao/Objref_VarOut_T.h",
+      idl_global->decls_seen_masks.valuetype_seen_
+      | idl_global->decls_seen_masks.fwd_valuetype_seen_,
+      "tao/Valuetype/Value_VarOut_T.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
-      idl_global->decls_seen_masks.valuetype_seen_
-      | idl_global->decls_seen_masks.fwd_valuetype_seen_,
-      "tao/Valuetype/Value_VarOut_T.h",
+      idl_global->decls_seen_masks.interface_seen_
+      | idl_global->decls_seen_masks.fwd_iface_seen_,
+      "tao/Objref_VarOut_T.h",
       this->client_header_
     );
 

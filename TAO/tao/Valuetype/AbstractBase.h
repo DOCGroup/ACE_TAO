@@ -21,12 +21,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
+#include "tao/Valuetype/Value_CORBA_methods.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Object.h"  /* For CORBA::Object_var */
 #include "tao/Pseudo_VarOut_T.h"
+#include "ace/CORBA_macros.h"
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
@@ -39,12 +40,6 @@ class TAO_Abstract_ServantBase;
 namespace CORBA
 {
   class ValueBase;
-
-  class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
-
-  extern TAO_Valuetype_Export Boolean is_nil (AbstractBase_ptr);
-  extern TAO_Valuetype_Export void release (AbstractBase_ptr);
 
   typedef TAO_Pseudo_Var_T<AbstractBase> AbstractBase_var;
   typedef TAO_Pseudo_Out_T<AbstractBase, AbstractBase_var> AbstractBase_out;

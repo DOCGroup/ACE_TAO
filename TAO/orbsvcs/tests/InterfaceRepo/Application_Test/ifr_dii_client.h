@@ -4,13 +4,13 @@
 #ifndef IFR_DII_CLIENT_H
 #define IFR_DII_CLIENT_H
 
-#include "tao/IFR_Client/IFR_BasicC.h"
+#include "tao/DynamicInterface/Request.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/DynamicInterface/Request.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 
 class IFR_DII_Client
 {

@@ -20,6 +20,7 @@
 #ifndef PARAM_TEST_CLIENT_H
 #define PARAM_TEST_CLIENT_H
 
+#include "tao/DynamicInterface/Request.h"
 #include "param_testC.h"
 #include "results.h"
 
