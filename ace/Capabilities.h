@@ -37,17 +37,17 @@ class ACE_Export ACE_CapEntry
   //   This class is not instantiable and does not provide accessors
   //   or methods.  If you want to add a new kind of attribute you
   //   subclasses of this class and dynamic cast to proper subclass.
-protected:
-  enum 
-  {
-    INTCAP = 0,
-    STRINGCAP = 1,
-    BOOLCAP = 2
-  };
 public:
    virtual ~ACE_CapEntry (void);
 
 protected:
+  enum
+  {
+    ACE_INTCAP = 0,
+    ACE_STRINGCAP = 1,
+    ACE_BOOLCAP = 2
+  };
+
   ACE_CapEntry (int captype);
 
   int captype_;
