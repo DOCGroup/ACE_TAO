@@ -28,7 +28,7 @@ main (int argc, char *argv[])
       CORBA::Object_var objref;
 
       for (i = 1; i < argc; ++i)
-        { 
+        {
           if (ACE_OS::strcmp (argv[i], "-l") == 0)
             {
               // List initial services
@@ -62,7 +62,7 @@ main (int argc, char *argv[])
                                     -1);
                 }
             }
-          else 
+          else
             {
               objref = orb->resolve_initial_references (argv[i], ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -82,9 +82,13 @@ main (int argc, char *argv[])
                           argv[i],
                           orb->object_to_string (server.in ())));
 
+              CORBA::String_var test_ins_result = 
+                server->test_ins (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
               ACE_DEBUG ((LM_DEBUG,
                           "\nResult of Remote Call : %s\n",
-                          server->test_ins (ACE_TRY_ENV)));
+                          test_ins_result));
             }
         }
     }
