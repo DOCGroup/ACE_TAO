@@ -21,13 +21,6 @@ interface Implementation_Repository
   exception Not_Found {};
   // Object not found in the Implementation Repository
 
-  struct Environment_Variable
-  {
-    string name_;
-    string value_;
-  };
-  // One environment variable
-
   struct INET_Addr
   {
     string host_;
@@ -93,12 +86,13 @@ interface Implementation_Repository
 
   INET_Addr server_is_running (in string server,
                                in INET_Addr addr,
-                               in Object ping);
-
+                               in Object ping)
+    raises (Not_Found);
   // Used to notify the Implementation Repository that <server> is alive and
   // well at <addr>.
 
-  void server_is_shutting_down (in string server);
+  void server_is_shutting_down (in string server)
+    raises (Not_Found);
   // Used to tell the Implementation Repository that <server> is shutting
   // down.
 };
