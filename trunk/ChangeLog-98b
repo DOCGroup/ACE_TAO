@@ -1,56 +1,64 @@
+Wed Oct 14 22:17:31 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added guideline for protection of
+          header files against multiple inclusion.  Thanks to
+          Eric C. Newton <ecn@smart.net> for pointing out the method
+          used by gcc/g++ to minimize unnecessary file inclusion.
+          Fortunately, other compilers use the same method.
+
 Wed Oct 14 12:36:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/run_tests.sh: Added the MT_Reactor_Timer_Test.
+        * tests/run_tests.sh: Added the MT_Reactor_Timer_Test.
 
-	* tests/MT_Reactor_Timer_Test.cpp: Fixed a number of bugs with
- 	  this test.  It seems to work fine on Solaris now.
+        * tests/MT_Reactor_Timer_Test.cpp: Fixed a number of bugs with
+          this test.  It seems to work fine on Solaris now.
 
-	* tests/MT_Reactor_Timer_Test.cpp (main): Added a test to make
- 	  sure that the ACE_Reactor::handle_events() method properly
- 	  counts the number of expired timers.
+        * tests/MT_Reactor_Timer_Test.cpp (main): Added a test to make
+          sure that the ACE_Reactor::handle_events() method properly
+          counts the number of expired timers.
 
-	* ace/Select_Reactor_T: Updated the various methods so that
- 	  handle_events() now works as advertised, i.e., it actually
- 	  returns the number of event handlers it dispatched.
+        * ace/Select_Reactor_T: Updated the various methods so that
+          handle_events() now works as advertised, i.e., it actually
+          returns the number of event handlers it dispatched.
 
-        * ace: Added 
-	
-	  #if !defined (ACE_LACKS_PRAGMA_ONCE)
-	  #pragma once
-	  #endif /* ACE_LACKS_PRAGMA_ONCE */
+        * ace: Added
 
-	  To all the header files in ACE.  This should speed up
- 	  compilation time on platforms whose C++ compilers support
- 	  #pragma once.  Thanks to Patrick J. McNerthney <pat@cartia.com>
- 	  for suggesting this.
+          #if !defined (ACE_LACKS_PRAGMA_ONCE)
+          #pragma once
+          #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-	* ace/Functor.h: Moved the definitions of the constructor and
- 	  destructor of ACE_Command_Base into the *.i file.
+          To all the header files in ACE.  This should speed up
+          compilation time on platforms whose C++ compilers support
+          #pragma once.  Thanks to Patrick J. McNerthney <pat@cartia.com>
+          for suggesting this.
 
-	* ace/Select_Reactor_T: Enhanced dispatch_timer_handlers() so that
- 	  it passes the number of timers dispatched as an out parameter to
- 	  avoid any ambiguity.
+        * ace/Functor.h: Moved the definitions of the constructor and
+          destructor of ACE_Command_Base into the *.i file.
+
+        * ace/Select_Reactor_T: Enhanced dispatch_timer_handlers() so that
+          it passes the number of timers dispatched as an out parameter to
+          avoid any ambiguity.
 
 Wed Oct 14 15:30:42 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Message_Block_T.h: Removed ACE_Export from definition of template
-	  class ACE_Locked_Data_Block.
+        * ace/Message_Block_T.h: Removed ACE_Export from definition of template
+          class ACE_Locked_Data_Block.
 
 Wed Oct 14 12:36:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-cygwin32-common.h,
-	  ace/config-cygwin32.h,
-	  ace/OS.h: 
-	  Added support for Cygwin32.  Thanks to Phil Feairheller
- 	  <Phil.Feairheller@emax.com> for contributing this.
+        * ace/config-cygwin32-common.h,
+          ace/config-cygwin32.h,
+          ace/OS.h:
+          Added support for Cygwin32.  Thanks to Phil Feairheller
+          <Phil.Feairheller@emax.com> for contributing this.
 
-	* ace/config-vxworks5.x.h,
+        * ace/config-vxworks5.x.h,
           ace/config-chorus.h,
-	  ace/config-psos*.h,
-	  ace/config-cygwin32-common.h,
-	  ace/OS.i:
-	  Added and used the new ACE_LACKS_MKFIFO macro.  Thanks to Phil
- 	  Feairheller <Phil.Feairheller@emax.com> for reporting this.
+          ace/config-psos*.h,
+          ace/config-cygwin32-common.h,
+          ace/OS.i:
+          Added and used the new ACE_LACKS_MKFIFO macro.  Thanks to Phil
+          Feairheller <Phil.Feairheller@emax.com> for reporting this.
 
 Wed Oct 14 11:03:45 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -62,39 +70,39 @@ Wed Oct 14 00:28:10 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 1998-10-14  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* ace/Synch_T.cpp : Changed ACE_mutex_t to ACE_cond_t for CHORUS
-	in ACE_Condition constructor.
+        * ace/Synch_T.cpp : Changed ACE_mutex_t to ACE_cond_t for CHORUS
+        in ACE_Condition constructor.
 
 1998-10-13  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* ace/Synch.i (ACE_Mutex::remove): Added a #else for non-chorus
-	  cases instead of #endif to call ACE_OS::mutex_destroy.
+        * ace/Synch.i (ACE_Mutex::remove): Added a #else for non-chorus
+          cases instead of #endif to call ACE_OS::mutex_destroy.
 
-	* ace/OS.cpp : Added static member definition
-		KnCap ACE_OS::actorcaps_[ACE_CHORUS_MAX_ACTORS]
-	for CHORUS.
-	
-	* ace/config-chorus.h: Added ACE_HAS_TSS_EMULATION.
-	
+        * ace/OS.cpp : Added static member definition
+                KnCap ACE_OS::actorcaps_[ACE_CHORUS_MAX_ACTORS]
+        for CHORUS.
+
+        * ace/config-chorus.h: Added ACE_HAS_TSS_EMULATION.
+
 Tue Oct 13 22:40:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Makefile: 
-	* ace/Message_Block.h: 
-	* ace/Message_Block.i: 
-	* ace/Message_Block.cpp: 
-	* ace/Message_Block_T.h: 
-	* ace/Message_Block_T.i: 
-	* ace/Message_Block_T.cpp: 
-	  Added a new variant of the ACE_Data_Block class that holds an
- 	  instance of its locking strategy, this is useful because in some
- 	  cases the lifetime of the lock is tied to the lifetime of the
- 	  Data_Block itself.  The Message_Block class was carefullly
- 	  modified to support this new feature, i.e. it does not hold a
- 	  lock while removing the data block because the hold may be part
- 	  of the data block itself.  Still all the features in the
- 	  Message_Blocks are supported, for instance, a complete
- 	  Message_Block chain ca be destroyed while holding a single lock,
- 	  shared by all the Data_Blocks in the chain.
+        * ace/Makefile:
+        * ace/Message_Block.h:
+        * ace/Message_Block.i:
+        * ace/Message_Block.cpp:
+        * ace/Message_Block_T.h:
+        * ace/Message_Block_T.i:
+        * ace/Message_Block_T.cpp:
+          Added a new variant of the ACE_Data_Block class that holds an
+          instance of its locking strategy, this is useful because in some
+          cases the lifetime of the lock is tied to the lifetime of the
+          Data_Block itself.  The Message_Block class was carefullly
+          modified to support this new feature, i.e. it does not hold a
+          lock while removing the data block because the hold may be part
+          of the data block itself.  Still all the features in the
+          Message_Blocks are supported, for instance, a complete
+          Message_Block chain ca be destroyed while holding a single lock,
+          shared by all the Data_Blocks in the chain.
 
 Tue Oct 13 22:39:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
