@@ -390,7 +390,8 @@ public:
   ~TAO_Unbounded_Sequence (void);
   // see TAO_Unbounded_Sequence in "Sequence_T.h"
 
-  TAO_Unbounded_Sequence<CORBA::Octet> (const ACE_Message_Block* mb);
+  TAO_Unbounded_Sequence<CORBA::Octet> (CORBA::ULong length,
+					const ACE_Message_Block* mb);
   // Create a sequence of octets from a single message block (i.e. it
   // ignores any chaining in the meesage block).
 

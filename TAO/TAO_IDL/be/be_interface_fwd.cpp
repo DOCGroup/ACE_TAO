@@ -505,13 +505,6 @@ be_interface_fwd::tc_size (void)
   return 0;
 }
 
-int be_interface_fwd::write_as_return (TAO_OutStream *stream,
-				       be_type *type)
-{
-  *stream << type->name () << "_ptr";
-  return 0;
-}
-
 int
 be_interface_fwd::accept (be_visitor *visitor)
 {

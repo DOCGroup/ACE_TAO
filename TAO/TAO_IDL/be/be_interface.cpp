@@ -1343,13 +1343,6 @@ be_interface::accept (be_visitor *visitor)
   return visitor->visit_interface (this);
 }
 
-int be_interface::write_as_return (TAO_OutStream *stream,
-                                   be_type *type)
-{
-  *stream << type->name () << "_ptr";
-  return 0;
-}
-
 // Narrowing
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_interface)
