@@ -68,7 +68,7 @@ int PushSupplier_impl::init(CORBA::ORB_ptr orb,
   ACE_TRY {
     RtecEventComm::PushSupplier_var supplier = supplier_servant_._this();
 
-    ACE_Time_Value time_val = ACE_OS::gettimeofday ();
+    FTRTEC_LOGTIME("subscription latency");
 
     RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
       channel->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -80,11 +80,6 @@ int PushSupplier_impl::init(CORBA::ORB_ptr orb,
 
     consumer_->connect_push_supplier(supplier.in(), qos   ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-
-
-    time_val = ACE_OS::gettimeofday () - time_val;
-
-    ACE_DEBUG((LM_DEBUG, "connected to proxy_push_consumer, subscription latency = %d\n", time_val.sec () * 1000000 + time_val.usec ()));
   }
   ACE_CATCHANY 
   {
@@ -93,6 +88,7 @@ int PushSupplier_impl::init(CORBA::ORB_ptr orb,
   }
   ACE_ENDTRY;
   ACE_CHECK;
+  TAO_FTRTEC::TimeLogger::output();
 
   /*
   if (!reactor_task_.thr_count() &&

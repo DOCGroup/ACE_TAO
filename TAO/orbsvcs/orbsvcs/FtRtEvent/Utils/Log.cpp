@@ -33,9 +33,14 @@ namespace TAO_FTRTEC {
   
   TimeLogger::~TimeLogger()
   {
-    ACE_Time_Value result = ACE_OS::gettimeofday () - start_time_;
+    ACE_Time_Value stop = ACE_OS::gettimeofday ();
+    ACE_Time_Value result = stop - start_time_;
+
     int time_in_usec = result.sec()*1000000+result.usec();
-    int n = ACE_OS::snprintf(now, buffer-now+sizeof(buffer), "%s %d\n", msg_, time_in_usec);
+    int n = ACE_OS::snprintf(now, buffer-now+sizeof(buffer), 
+             "%s %d , start = %d.%d, stop = %d.%d\n", 
+             msg_, time_in_usec, start_time_.sec(), start_time_.usec(),
+             stop.sec(), stop.usec());
     now+=n;
   }
 
