@@ -1,20 +1,51 @@
+Sun Mar 11 10:39:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile.bor:
+        * tests/Client_Leaks/Makefile.bor:
+        * tests/Client_Leaks/child.bor:
+        * tests/Client_Leaks/client.bor:
+        * tests/Client_Leaks/server.bor:
+        * tests/Crashed_Callback/Makefile.bor:
+        * tests/Crashed_Callback/client.bor:
+        * tests/Crashed_Callback/server.bor:
+        * tests/LongUpcalls/Makefile.bor:
+        * tests/LongUpcalls/ami_client.bor:
+        * tests/LongUpcalls/ami_server.bor:
+        * tests/LongUpcalls/blocking_client.bor:
+        * tests/LongUpcalls/blocking_server.bor:
+        * MT_Client/Makefile.bor:
+        * MT_Client/client.bor:
+        * MT_Client/orb_creation.bor:
+        * MT_Client/server.bor:
+        * MT_Client/simple-client.bor:
+        * MT_Server/Makefile.bor:
+        * MT_Server/client.bor:
+        * MT_Server/server.bor:
+        * Muxing/Makefile.bor:
+        * Muxing/client.bor:
+        * Muxing/server.bor:
+        * Server_Leaks/Makefile.bor:
+        * Server_Leaks/client.bor:
+        * Server_Leaks/server.bor:
+          Add Borland Makefiles for several crucial tests.
+
 Sun Mar 11 09:53:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/grid/Grid_i.h:
-	* examples/Persistent_Grid/Grid_i.h:
-	* examples/Simple/time/Time_i.h: Added a operator= to
-	  keep g++ 2.7.2 happy. 
+        * examples/Simple/grid/Grid_i.h:
+        * examples/Persistent_Grid/Grid_i.h:
+        * examples/Simple/time/Time_i.h: Added a operator= to
+          keep g++ 2.7.2 happy.
 
 Sun Mar 11 09:02:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/echo/Echo_i.h:
-	* examples/Simple/bank/AccountManager_i.h: Added a operator= to
-	  keep g++ 2.7.2 happy. 
+        * examples/Simple/echo/Echo_i.h:
+        * examples/Simple/bank/AccountManager_i.h: Added a operator= to
+          keep g++ 2.7.2 happy.
 
 Sun Mar 11 07:04:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: Fixed a warning in
-	  g++. 
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: Fixed a warning in
+          g++.
 
 Sun Mar 11 04:17:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -36,42 +67,42 @@ Sun Mar 11 04:17:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
         * examples/PluggableUDP/tests/UDP_i.h:
 
           Fixed the usage of ACE_Thread_Mutex in the single-thread
-          build. Added an include to "ace/Synch.h" and made the 
+          build. Added an include to "ace/Synch.h" and made the
           lock to a ACE_Null_Mutex, as this servant supports only
           single-threaded servers anyway.
 
 Sat Mar 10 22:27:58 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h:
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
-	  Added the following fixes for bugs reported by
-	  Sergey Logvin <S.Logvin@telesens.com.ua> -
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+          Added the following fixes for bugs reported by
+          Sergey Logvin <S.Logvin@telesens.com.ua> -
           + Filters are destroyed correctly.
-	  + Fixed memory leak in EventChannelFactory.
-	  + Implemented TAO_Notify_FilterAdmin_i::remove_all_filters.
-	  + Fixed ConsumerAdmin::get_all_filters.
-	  + Fixed SupplierAdmin::get_all_filters.
-	  + Fixed CosNotifyFilter::Filter::get_constraints.
-	  + Fixed Filter::get_all_constraints.
+          + Fixed memory leak in EventChannelFactory.
+          + Implemented TAO_Notify_FilterAdmin_i::remove_all_filters.
+          + Fixed ConsumerAdmin::get_all_filters.
+          + Fixed SupplierAdmin::get_all_filters.
+          + Fixed CosNotifyFilter::Filter::get_constraints.
+          + Fixed Filter::get_all_constraints.
 
 Sat Mar 10 18:17:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/NestedUpcall/MT_Client_Test/client.cpp (main):
+        * tests/NestedUpcall/MT_Client_Test/client.cpp (main):
 
-	  Make sure the server task was activated before continuing with
-	  the test.
+          Make sure the server task was activated before continuing with
+          the test.
 
-	* tests/NestedUpcall/MT_Client_Test/local_server.cpp (MT_Server):
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp (MT_Server):
 
-	  The ORB_Manager pointer may be zero, i.e. uninitialized, if the
-	  server task was not activated.  Check that it is non-zero before
-	  attempting to call methods through it.  Fixes a seg fault.
+          The ORB_Manager pointer may be zero, i.e. uninitialized, if the
+          server task was not activated.  Check that it is non-zero before
+          attempting to call methods through it.  Fixes a seg fault.
 
 Sat Mar 10 18:20:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -40,6 +40,13 @@ DIRS = \
         Single_Read \
         Strategies \
 	Timed_Buffered_Oneways \
-	Timeout
+	Timeout \
+	MT_Client \
+	MT_Server \
+	Muxing \
+	Client_Leaks \
+	Server_Leaks \
+	Crashed_Callback \
+	LongUpcalls
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
