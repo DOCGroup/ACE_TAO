@@ -12,6 +12,8 @@
 
 ACE_RCSID(tao, Muxed_TMS, "$Id$")
 
+static int kush = 0;
+
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport)
     , request_id_generator_ (0)
@@ -220,9 +222,12 @@ TAO_Muxed_TMS::clear_cache (void)
          this->dispatcher_table_.begin ();
        i != end;
        ++i)
+    {
+      CORBA::ULong request_id = (*i).ext_id_;
       ubs.push ((*i).int_id_);
+      this->dispatcher_table_.unbind (request_id);
+    }
 
-  this->dispatcher_table_.unbind_all ();
   size_t sz =  ubs.size ();
 
   for (size_t k = 0 ; k != sz ; ++k)
@@ -231,6 +236,7 @@ TAO_Muxed_TMS::clear_cache (void)
 
       ubs.pop (rd);
 
+      kush = 1;
       rd->connection_closed ();
     }
 
