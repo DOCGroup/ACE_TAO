@@ -37,7 +37,6 @@
 
 class ACE_Allocator;
 
-/* MATT UPDATE */
 
 /**
  * @class ACE_Bounded_Stack
@@ -148,7 +147,6 @@ private:
 
 //----------------------------------------
 
-/* MATT UPDATE */
 
 /**
  * @class ACE_Fixed_Stack
@@ -289,7 +287,6 @@ private:
 };
 
 
-/* MATT UPDATE */
 
 /**
  * @class ACE_Unbounded_Stack
@@ -707,7 +704,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
-/* MATT UPDATE */
 
 /**
  * @class ACE_Double_Linked_List
@@ -719,13 +715,13 @@ public:
  * like the <ACE_Unbounded_Queue> except that it allows removing
  * of a specific element from a specific location.
  * Notice that this class is an implementation of a very simple
- * data structure.is *NOT* a container class.  You can use the
+ * data structure. This is *NOT* a container class.  You can use the
  * class to implement other contains classes but it is *NOT* a
  * general purpose container class.
- * The parameter class *MUST* has members T* prev and T* next
+ * The parameter class *MUST* have members T* prev and T* next
  * and users of this class are responsible to follow the general
  * rules of using double-linked lists to maintaining the list
- * integrities.
+ * integrity.
  * If you need a double linked container class, use the DLList
  * class which is a container but delegates to the Double_Linked_List 
  * class. 
@@ -746,7 +742,7 @@ public:
   /// construction.  Use user specified allocation strategy
   /// if specified.
   /**
-   * Initizlize an empy list using the allocation strategy specified by the user. 
+   * Initialize an empy list using the allocation strategy specified by the user. 
    * If none is specified, then use default allocation strategy. 
    */
   ACE_Double_Linked_List (ACE_Allocator *alloc = 0);
@@ -1200,7 +1196,6 @@ private:
   ssize_t next_;
 };
 
-/* MATT UPDATE */
 
 /**
  * @class ACE_Fixed_Set
@@ -1365,7 +1360,6 @@ private:
   ssize_t next_;
 };
 
-/* MATT UPDATE */
 
 /**
  * @class ACE_Bounded_Set
@@ -1460,7 +1454,7 @@ public:
    * Remove first occurrence of <item> from the set.  Returns 0 if it
    * removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.  The linear remove operation does not reclaim the 
-   * memory associated with the removed item. B
+   * memory associated with the removed item.
    */
   int remove (const T &item);
 
@@ -1563,7 +1557,6 @@ private:
   ACE_Ordered_MultiSet<T> &set_;
 };
 
-/* MATT UPDATE */
 
 /**
  * @class ACE_Ordered_MultiSet
@@ -1715,7 +1708,6 @@ private:
 
 // ****************************************************************
 
-/* MATT UPDATE */
 /**
  * @class ACE_Array
  *
