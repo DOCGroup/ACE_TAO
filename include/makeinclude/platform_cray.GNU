@@ -1,12 +1,13 @@
 # $Id$
 
-# Initial platform macros for SGI/Cray UNICOS (vector) & UNICOS/mk (mpp) - 
-#    UNICOS 10.0.0.2
-#    UNICOS/mk 2.0.3.10
-#    Cray C++ Version 3.1.0.0
-#    Cray Standard C Version 6.1.0.0
+# Platform macros for SGI/Cray UNICOS (vector) & UNICOS/mk (mpp) -
+#    UNICOS 9.0.2.8
+#    UNICOS 10.0.0.5
+#    UNICOS/mk 2.0.4.57
+#    Cray C++ Version 3.2.0.1
+#    Cray Standard C Version 6.2.0.1
 #
-# Contributed by Doug Anderson <doug@clark.net>
+# Contributed by Doug Anderson <dla@home.com>
 
 debug = 1
 exceptions = 1
@@ -18,13 +19,13 @@ purify =
 # C++ prelinker: error: instantiation loop
 # So, we're using ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 CC              = cc
-LDLIB		+= -L$(ACE_ROOT)/ace
-CXX		= CC
-#CFLAGS		+= 
-CCFLAGS		+= -h noautoinstantiate
-DCFLAGS		+= -g
-DCCFLAGS	+= $(DCFLAGS)
-OCFLAGS		+= -O2
+LDLIB           += -L$(ACE_ROOT)/ace
+CXX             = CC
+#CFLAGS         +=
+CCFLAGS         += -h noautoinstantiate
+DCFLAGS         += -g
+DCCFLAGS        += $(DCFLAGS)
+OCFLAGS         += -O2
 OCCFLAGS        += $(OCFLAGS)
 
 ifndef exceptions

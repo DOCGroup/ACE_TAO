@@ -1,21 +1,39 @@
+Mon Jul 19 21:13:16 1999  Doug Anderson  <doug@clark.net>
+
+        * ace/ACE.cpp,ace/Basic_Types.h,ace/CDR_Stream.{h,cpp},
+          ace/SOCK_Dgram_Bcast.cpp,ace/config-cray.h,
+          tests/Basic_Types_Test.cpp,tests/Handle_Set_Test.cpp,
+          include/makeinclude/platform_cray.GNU
+
+          I finally managed to get the latest and greatest to work on
+          the Cray.  Still no CDR support, but that will be post 5.0.
+
+        * ace/OS.{h,i}: added support for egcs on Digital Unix (4.0d & e).
+          Fixe problem with legacy workarounds in OS.* for sigwait() and
+          cxx/GNU that don't appear to be necessary on 4.0d/e/f with
+          neither cxx nor GNU.
+
+        * include/makeinclude/platform_tru64_g++.GNU: added.  Works
+          with ace/config-tru64.h.
+
 Mon Jul 19 19:46:50 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.h: Added ACE_*_cast_*_ptr and ACE_*_cast_*_ref for const,
-	  static, and reinterpret casts.
+        * ace/OS.h: Added ACE_*_cast_*_ptr and ACE_*_cast_*_ref for const,
+          static, and reinterpret casts.
 
-	* ace/Strategies_T.cpp (find):
-	* ace/Cached_Connect_Strategy_T.cpp (find):
+        * ace/Strategies_T.cpp (find):
+        * ace/Cached_Connect_Strategy_T.cpp (find):
 
           The comparison should be between ACE_PEER_CONNECTOR_ADDR and not
-	  REFCOUNTED_HASH_RECYCLABLE_ADDRESS.
+          REFCOUNTED_HASH_RECYCLABLE_ADDRESS.
 
-	* ace/Svc_Handler: Changed <state> to <recycle_state>.  <state>
-	  was too generic and in some cases a <state> method was already
-	  present in classes deriving from Svc_Handler.
+        * ace/Svc_Handler: Changed <state> to <recycle_state>.  <state>
+          was too generic and in some cases a <state> method was already
+          present in classes deriving from Svc_Handler.
 
-	  Also, added a <recycle_state> accessor.
+          Also, added a <recycle_state> accessor.
 
-	  The following files were effected:
+          The following files were effected:
 
           - ace/Cached_Connect_Strategy_T.cpp
           - ace/Cached_Connect_Strategy_T.h
@@ -25,14 +43,14 @@ Mon Jul 19 19:46:50 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
           - ace/Strategies_T.cpp
           - ace/Strategies_T.h
           - ace/Strategies_T.i
-	  - tests/Cached_Accept_Conn_Test.cpp
-	  - tests/Cached_Conn_Test.cpp
+          - tests/Cached_Accept_Conn_Test.cpp
+          - tests/Cached_Conn_Test.cpp
 
 Mon Jul 19 20:08:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Strategies_T.cpp:
-	  Fixed lookup of connections in the Cached_Connect_Strategy,
-	  thanks to Irfan for providing this fix.
+        * ace/Strategies_T.cpp:
+          Fixed lookup of connections in the Cached_Connect_Strategy,
+          thanks to Irfan for providing this fix.
 
 Mon Jul 19 12:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
