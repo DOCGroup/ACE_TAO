@@ -1,9 +1,17 @@
 Tue Feb 17 04:08:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): The CPP_PATH has
-	  been causing a lot of nasty trouble on NT.  Changed this
-	  function to allow overwrite the internal c++ compiler location
-	  at run time using $CPP_PATH.
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Setting the
+	  CPP_PATH has been causing a lot of nasty trouble on NT.  I
+	  changed this function to allow overwriting the internal c++
+	  compiler location at run time using $CPP_LOCATION.  If someone
+	  forgets to set the CPP_PATH when compiling tao_idl, one can
+	  make tao_idl work by defining this environment variable to
+	  something like:
+
+	     set CPP_LOCATION="C:/Program Files/DevStudio/VC/BIN/CL.exe"
+
+	  Notice that CPP_LOCATION _must_ be a full pathname of the c++
+	  compiler.
 
 Tue Feb 17 00:56:08 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
