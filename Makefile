@@ -69,14 +69,9 @@ clone:
         done
 
 CONTROLLED_FILES = ACE-INSTALL.html \
-		ACE-categories.html \
-                ACE-inheritance.pdf.gz \
-                ACE-inheritance.ps.gz \
                 ACE-install.sh \
-                ACE-lessons.html \
                 ASNMP \
                 BIBLIOGRAPHY \
-		CE-status.txt \
                 COPYING \
                 ChangeLog \
 		ChangeLog-98a \
