@@ -8,6 +8,12 @@
 #include "ace/os_include/os_errno.h"
 #include "ace/os_include/os_search.h"
 
+#if defined(ACE_WCHAR_IN_STD_NAMESPACE)
+# define ACE_WCHAR_STD_NAMESPACE std
+#else
+# define ACE_WCHAR_STD_NAMESPACE ACE_STD_NAMESPACE
+#endif /* ACE_WCHAR_IN_STD_NAMESPACE */
+
 // Doesn't need a macro since it *never* returns!
 
 ACE_INLINE void
@@ -435,7 +441,7 @@ ACE_OS::strtod (const char *s, char **endptr)
 ACE_INLINE double
 ACE_OS::strtod (const wchar_t *s, wchar_t **endptr)
 {
-  return ACE_STD_NAMESPACE::wcstod (s, endptr);
+  return ACE_WCHAR_STD_NAMESPACE::wcstod (s, endptr);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOD */
 
@@ -453,7 +459,7 @@ ACE_OS::strtol (const char *s, char **ptr, int base)
 ACE_INLINE long
 ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
 {
-  return ACE_STD_NAMESPACE::wcstol (s, ptr, base);
+  return ACE_WCHAR_STD_NAMESPACE::wcstol (s, ptr, base);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOL */
 
@@ -471,7 +477,7 @@ ACE_OS::strtoul (const char *s, char **ptr, int base)
 ACE_INLINE unsigned long
 ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
 {
-  return ACE_STD_NAMESPACE::wcstoul (s, ptr, base);
+  return ACE_WCHAR_STD_NAMESPACE::wcstoul (s, ptr, base);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
 

@@ -1,3 +1,39 @@
+Wed Feb 16 07:02:15 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_stdlib.inl:
+        * ace/config-sunos5.7.h:
+        * ace/config-sunos5.8.h:
+
+          On SunOS 5.7, some wchar_t related methods are always in the std
+          namespace when building with SunCC 5.3.
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+
+          Added a ACE_TEST_WINDOW environment variable which can be used to
+          start each process    in a separate window by setting it to
+          something like 'rxvt -e' and ACE_TEST_VERBOSE which causes the
+          command line of each process to be printed out as it is started.
+
+        * examples/C++NPv2/C++NPv2.mpc:
+
+          Added additional project ordering for the gnuace type to avoid
+          build problems with parallel builds.
+
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFCDlg.cpp:
+
+         Simple modifications to allow this to build with EVC 4.
+
+        * include/makeinclude/platform_g++_common.GNU:
+
+          Changed a grep command to something compatible with Solaris as
+          well as Linux.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Set the default template instantiation mode to automatic for every
+          version except SunCC 4.2.
+
 Wed Feb 16 12:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace_rmcast.doxygen:
@@ -5,99 +41,99 @@ Wed Feb 16 12:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Feb 15 18:10:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Removed ACE_ENABLE_RMCAST macro.  Building RMCast library is now
-	  unconditional.
+          Removed ACE_ENABLE_RMCAST macro.  Building RMCast library is now
+          unconditional.
 
 Tue Feb 15 18:45:26 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/POSIX_Asynch_IO.{h cpp}:
-	* ace/POSIX_Proactor.cpp: Fixed compile errors resulting from
-	  Proxy_Ptr changes, below.
+        * ace/POSIX_Asynch_IO.{h cpp}:
+        * ace/POSIX_Proactor.cpp: Fixed compile errors resulting from
+          Proxy_Ptr changes, below.
 
 Tue Feb 15 18:19:25 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_IO.{h cpp}:
-	* ace/Asynch_IO_Impl.h:
-	* ace/POSIX_Asynch_IO.{h cpp}:
-	* ace/POSIX_Proactor.{h cpp}:
-	* ace/Proactor.{h cpp}:
-	* ace/Proactor_Impl.h:
-	* ace/WIN32_Asynch_IO.{h cpp}:
-	* ace/WIN32_Proactor.{h cpp}: All methods that accepted an ACE_Handler
-	  below the user-accessed methods were changed to accept an
-	  ACE_Handler::Proxy_Ptr instead. The ACE_Handler class has a new
-	  Proxy_Ptr typedef which is an ACE_Refcounted_Auto_Ptr for
-	  a Proxy class. When an ACE_Handler is created, it allocates a
-	  Proxy to refer to itself. The Proxy carries a pointer to the
-	  ACE_Handler it proxies for in lower levels of the framework.
-	  When the ACE_Handler is destroyed, it clears the ACE_Handler
-	  pointer in the proxy.
-	  Any part of the framework that dispatches completions gets the
-	  ACE_Handler pointer from the proxy and only dispatches if the
-	  pointer is not 0. This allows ACE_Handlers to be deleted while
-	  operations may be outstanding, a previously vexing issue since one
-	  can never be sure how many operations are outstanding at any given
-	  time. The Proxy remains valid until all references to it are
-	  released.
+        * ace/Asynch_IO.{h cpp}:
+        * ace/Asynch_IO_Impl.h:
+        * ace/POSIX_Asynch_IO.{h cpp}:
+        * ace/POSIX_Proactor.{h cpp}:
+        * ace/Proactor.{h cpp}:
+        * ace/Proactor_Impl.h:
+        * ace/WIN32_Asynch_IO.{h cpp}:
+        * ace/WIN32_Proactor.{h cpp}: All methods that accepted an ACE_Handler
+          below the user-accessed methods were changed to accept an
+          ACE_Handler::Proxy_Ptr instead. The ACE_Handler class has a new
+          Proxy_Ptr typedef which is an ACE_Refcounted_Auto_Ptr for
+          a Proxy class. When an ACE_Handler is created, it allocates a
+          Proxy to refer to itself. The Proxy carries a pointer to the
+          ACE_Handler it proxies for in lower levels of the framework.
+          When the ACE_Handler is destroyed, it clears the ACE_Handler
+          pointer in the proxy.
+          Any part of the framework that dispatches completions gets the
+          ACE_Handler pointer from the proxy and only dispatches if the
+          pointer is not 0. This allows ACE_Handlers to be deleted while
+          operations may be outstanding, a previously vexing issue since one
+          can never be sure how many operations are outstanding at any given
+          time. The Proxy remains valid until all references to it are
+          released.
 
-	* ace/config-win32-common.h: Removed NOMINMAX define. The min/max
-	  stuff is needed for MFC and CString classes and, since we require
-	  ACE includes to come before system includes, adding NOMINMAX in all
-	  cases makes life very hard for these users.
+        * ace/config-win32-common.h: Removed NOMINMAX define. The min/max
+          stuff is needed for MFC and CString classes and, since we require
+          ACE includes to come before system includes, adding NOMINMAX in all
+          cases makes life very hard for these users.
 
-	* ace/OS_NS_stdlib.cpp (mkstemp_emulation): Don't try the
-	  std::numeric_limits<char>::max() call if 'max' is a macro. Use the
-	  older hard-coded 127 instead.
+        * ace/OS_NS_stdlib.cpp (mkstemp_emulation): Don't try the
+          std::numeric_limits<char>::max() call if 'max' is a macro. Use the
+          older hard-coded 127 instead.
 
 Tue Feb 15 14:33:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/RMCast/Send_Msg/Makefile.am:
-	* examples/TMCast/Member/Makefile.am:
+        * examples/RMCast/Send_Msg/Makefile.am:
+        * examples/TMCast/Member/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* examples/RMCast/Send_Msg/Receiver.cpp:
-	* examples/RMCast/Send_Msg/Sender.cpp:
-	* examples/TMCast/Member/member.cpp:
+        * examples/RMCast/Send_Msg/Receiver.cpp:
+        * examples/RMCast/Send_Msg/Sender.cpp:
+        * examples/TMCast/Member/member.cpp:
 
-	  Changed <protocols/ace/*.h> to <ace/*.h> so headers are
-	  #included the same regardless of whether they're in the
-	  source tree or installed.
+          Changed <protocols/ace/*.h> to <ace/*.h> so headers are
+          #included the same regardless of whether they're in the
+          source tree or installed.
 
-	* examples/TMCast/Member/Member.mpc:
+        * examples/TMCast/Member/Member.mpc:
 
-	  Add exename definition so executable is actually built.
+          Add exename definition so executable is actually built.
 
 Tue Feb 15 16:15:28 2005  Steve Huston  <shuston@riverace.com>
 
-	* examples/RMCast/Receiver.cpp:
-	* examples/RMCast/Sender.cpp:
-	* examples/TMCast/Member/member.cpp: Corrected location of includes
-	  after they moved.
+        * examples/RMCast/Receiver.cpp:
+        * examples/RMCast/Sender.cpp:
+        * examples/TMCast/Member/member.cpp: Corrected location of includes
+          after they moved.
 
 Tue Feb 15 13:34:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Move examples until after protocols in SUBDIRS.
+          Move examples until after protocols in SUBDIRS.
 
 Tue Feb 15 13:32:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Configure moved RMCast and TMCast libraries.
+          Configure moved RMCast and TMCast libraries.
 
-	* bin/MakeProjectCreator/config/rmcast.mpb:
+        * bin/MakeProjectCreator/config/rmcast.mpb:
 
-	  Removed "requires += rmcast".  The RMCast library is now built
-	  unconditionally.
+          Removed "requires += rmcast".  The RMCast library is now built
+          unconditionally.
 
-	* bin/MakeProjectCreator/config/rmcast.mpb:
-	* bin/MakeProjectCreator/config/tmcast.mpb:
+        * bin/MakeProjectCreator/config/rmcast.mpb:
+        * bin/MakeProjectCreator/config/tmcast.mpb:
 
-	  Append $(ACE_ROOT)/protocols to includes.
+          Append $(ACE_ROOT)/protocols to includes.
 
 Tue Feb 15 21:27:25 2005  Olli Savia  <ops@iki.fi>
 
@@ -453,7 +489,7 @@ Fri Feb 11 13:55:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * m4/config_h.m4:
 
           Define ACE_HAS_ICMP_SUPPORT if host supports raw sockets.
-	  This fixes bugzilla id [2039].
+          This fixes bugzilla id [2039].
 
 Fri Feb 11 21:33:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

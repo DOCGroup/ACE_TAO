@@ -11,6 +11,8 @@
 // #include the SunOS 5.7 config, then add any SunOS 5.8 updates below.
 #include "ace/config-sunos5.7.h"
 
+#undef ACE_WCHAR_IN_STD_NAMESPACE
+
 // This may be true for versions prior to Solaris 8 as well, but I don't
 // have any to try it on.
 #if !defined (ACE_HAS_TIMEZONE)

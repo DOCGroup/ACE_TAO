@@ -224,6 +224,9 @@ sub Spawn ()
 
         $cmdline = "$executable $orig_cmdline"; 
     }
+    elsif (defined $ENV{'ACE_TEST_WINDOW'}) {
+      $cmdline = $ENV{'ACE_TEST_WINDOW'} . ' ' . $self->CommandLine();
+    }
     else {
         $executable = $self->Executable();
         $cmdline = $self->CommandLine();
@@ -237,6 +240,9 @@ sub Spawn ()
         }
         elsif (defined $self->{PROCESS}) {
             #child here
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+              print "$cmdline\n";
+            }
             exec $cmdline;
             die "ERROR: exec failed for <" . $cmdline . ">";
         }
@@ -353,7 +359,7 @@ sub Kill ()
 {
     my $self = shift;
 
-    if ($self->{RUNNING}) {
+    if ($self->{RUNNING} && !defined $ENV{'ACE_TEST_WINDOW'}) {
         kill ('KILL', $self->{PROCESS});
         waitpid ($self->{PROCESS}, 0);
         $self->check_return_value ($?);
