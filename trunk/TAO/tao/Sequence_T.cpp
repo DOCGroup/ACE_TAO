@@ -1062,7 +1062,7 @@ template<size_t MAX>
 TAO_Bounded_WString_Sequence<MAX>::
 TAO_Bounded_WString_Sequence (void)
   :  TAO_Bounded_Base_Sequence (MAX,
-                                TAO_Bounded_String_WSequence<MAX>::allocbuf(MAX))
+                                TAO_Bounded_WString_Sequence<MAX>::allocbuf(MAX))
 {
 }
 
@@ -1136,7 +1136,7 @@ TAO_Bounded_WString_Sequence<MAX>::allocbuf (CORBA::ULong)
 {
   CORBA::WChar **buf = 0;
 
-  ACE_NEW_RETURN (buf, char *[MAX], 0);
+  ACE_NEW_RETURN (buf, CORBA::WChar *[MAX], 0);
 
   for (CORBA::ULong i = 0; i < MAX; i++)
     buf[i] = 0;
