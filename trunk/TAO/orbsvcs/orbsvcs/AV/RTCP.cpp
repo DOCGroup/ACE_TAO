@@ -657,6 +657,13 @@ TAO_AV_RTCP_Object::send_frame (const iovec *iov,
                                  iovcnt);
 }
 
+int 
+TAO_AV_RTCP_Object::send_frame (const char*,
+                                size_t)
+{
+  return 0;
+}
+
 TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *callback,
                                         TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport)
