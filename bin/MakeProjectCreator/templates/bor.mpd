@@ -87,6 +87,33 @@ CDIR   = <%cppdir%>
 
 INCDIR_NAME = <%relwd%>
 <%endif%>
+<%foreach(custom_types)%>
+
+#
+# <%custom_type%> rules
+#
+
+<%if(cutom_type->libpath)%>
+PATH := $(PATH);<%custom_type->libpath%>
+
+<%endif%>
+<%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
+
+<%custom_type%>_<%forcount(custom_type->input_files)%>=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
+$(<%custom_type%>_<%forcount(custom_type->input_files)%>): <%custom_type->input_file%>
+	<%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+
+all: $(<%custom_type%>_<%forcount(custom_type->input_files)%>)
+
+customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>:
+	@del $(<%custom_type%>_<%forcount(custom_type->input_files)%>) 2>nul
+
+clean: customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>
+
+<%endif%>
+<%endfor%>
+<%endfor%>
 
 #
 # Override defaults in outputdir.bor
@@ -133,33 +160,4 @@ includes_install: $(INCLUDES)
 includes_install:
 	@echo Nothing to install.
 <%endif%>
-<%foreach(custom_types)%>
-
-#
-# <%custom_type%> rules
-#
-
-<%if(cutom_type->libpath)%>
-PATH := $(PATH);<%custom_type->libpath%>
-
-<%endif%>
-<%foreach(custom_type->input_files)%>
-<%if(custom_type->input_file->output_files)%>
-
-<%custom_type%>_<%forcount(custom_type->input_files)%>=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
-$(<%custom_type%>_<%forcount(custom_type->input_files)%>): <%custom_type->input_file%>
-	<%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
-
-all: $(<%custom_type%>_<%forcount(custom_type->input_files)%>)
-
-$(OBJFILES): $(<%custom_type%>_<%forcount(custom_type->input_files)%>)
-
-customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>:
-	@del $(<%custom_type%>_<%forcount(custom_type->input_files)%>) 2>nul
-
-clean: customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>
-
-<%endif%>
-<%endfor%>
-<%endfor%>
 <%marker(bottom)%>

@@ -1,12 +1,21 @@
+Mon Feb  2 13:48:23 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+
+          Move the location of the custom build rules to ensure that they
+          are added to the all target before the object files.  This ensures
+          that the custom build rules are processed before source files are
+          compiled.
+
 Mon Feb 02 10:00:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-win32-msvc-6.h: 
+        * ace/config-win32-msvc-6.h:
 
-	  Looks like VC6 has a non-const swab.
-	
-	* ace/OS_NS_unistd.inl:
+          Looks like VC6 has a non-const swab.
 
-	  Fixed the non-const part of the swab () to compile with vc6. 
+        * ace/OS_NS_unistd.inl:
+
+          Fixed the non-const part of the swab () to compile with vc6.
 
 Mon Feb  2 08:18:41 2004  Chad Elliott  <elliott_c@ociweb.com>
 
