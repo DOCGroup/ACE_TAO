@@ -411,10 +411,10 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     trace_active_ (0),
     tracing_enabled_ (1), // On by default?
     thr_desc_ (0),
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     seh_except_selector_ (ACE_SEH_Default_Exception_Selector),
     seh_except_handler_ (ACE_SEH_Default_Exception_Handler),
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
     priority_mask_ (default_priority_mask_)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
@@ -1218,7 +1218,7 @@ ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
     td->acquire_release ();
 }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_selector (void)
 {
@@ -1246,7 +1246,7 @@ ACE_Log_Msg::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
   this->seh_except_handler_ = n;
   return retv;
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 // Enable the tracing facility on a per-thread basis.
 

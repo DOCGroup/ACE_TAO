@@ -8370,8 +8370,11 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
 ACE_INLINE int
 ACE_OS::fseek (FILE *fp, long offset, int whence)
 {
-#if defined (ACE_WIN32)
-# if SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END
+#if defined (ACE_HAS_WINCE)
+  return ACE_OS::lseek (fp, offset, whence);
+#else /* ACE_HAS_WINCE */
+# if defined (ACE_WIN32)
+#   if SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END
   //#error Windows NT is evil AND rude!
   switch (whence)
     {
@@ -8388,9 +8391,10 @@ ACE_OS::fseek (FILE *fp, long offset, int whence)
       errno = EINVAL;
       return -1; // rather safe than sorry
     }
-# endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
-#endif   /* ACE_WIN32 */
+#   endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
+# endif   /* ACE_WIN32 */
   ACE_OSCALL_RETURN (::fseek (fp, offset, whence), int, -1);
+#endif /* ACE_HAS_WINCE */
 }
 
 ACE_INLINE pid_t

@@ -263,7 +263,7 @@ public:
   // td->acquire_release to block execution until this call
   // return.
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
   // Get/Set TSS exception action.
@@ -271,7 +271,7 @@ public:
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
   // Get/Set TSS exception handler.
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   // = Stop/start/query tracing status on a per-thread basis...
   void stop_tracing (void);
@@ -394,12 +394,12 @@ private:
   // thread descriptor of the thread.  This can be used to repidly
   // access all thread data kept in <ACE_Thread_Descriptor>.
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
   ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
   // These handlers determine how a thread handles win32 structured
   // exception.
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   u_long priority_mask_;
   // Keeps track of all the <ACE_Log_Priority> values that are

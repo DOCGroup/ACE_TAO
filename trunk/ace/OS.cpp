@@ -1870,10 +1870,10 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 
       new_log->restart (this->restart_);
       new_log->trace_depth (this->trace_depth_);
-# if defined (ACE_WIN32)
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
       new_log->seh_except_selector (this->seh_except_selector_);
       new_log->seh_except_handler (this->seh_except_handler_);
-# endif /* ACE_WIN32 */
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
     }
 
   // @@ Now the TSS Log_Mesg has been created, cache my thread
@@ -1994,17 +1994,17 @@ ACE_Thread_Adapter::invoke (void)
           return status;
         }
     }
-#if defined (ACE_WIN32)
   ACE_SEH_EXCEPT (ACE_LOG_MSG->seh_except_selector ()(0))
     {
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
       ACE_LOG_MSG->seh_except_handler ()(0);
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
     }
-#endif /* ACE_WIN32 */
 
   ACE_NOTREACHED (return status);
 }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 int ACE_SEH_Default_Exception_Selector (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -2016,7 +2016,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
 {
   return 0;
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 extern "C" void
 ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
@@ -2053,10 +2053,10 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                                         ACE_THR_C_FUNC entry_point,
                                         ACE_Thread_Manager *tm,
                                         ACE_Thread_Descriptor *td
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
                                         , ACE_SEH_EXCEPT_HANDLER selector,
                                         ACE_SEH_EXCEPT_HANDLER handler
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
                                         )
   : user_func_ (user_func),
     arg_ (arg),
@@ -2070,10 +2070,10 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
     tracing_enabled_ (0),
     restart_ (1),
     trace_depth_ (0)
-# if defined (ACE_WIN32)
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     , seh_except_selector_ (selector),
     seh_except_handler_ (handler)
-# endif /* ACE_WIN32 */
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 {
 // ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
@@ -2086,10 +2086,10 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
       this->tracing_enabled_ = inherit_log_->tracing_enabled ();
       this->restart_ = inherit_log_->restart ();
       this->trace_depth_ = inherit_log_->trace_depth ();
-# if defined (ACE_WIN32)
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
       this->seh_except_selector_ = selector;
       this->seh_except_handler_ = handler;
-# endif /* ACE_WIN32 */
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
     }
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 }

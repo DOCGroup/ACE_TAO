@@ -2579,11 +2579,14 @@ typedef void (*ACE_SignalHandlerV)(...);
 #       define ACE_SEH_EXCEPT(X) __except(X)
 #       define ACE_SEH_FINALLY __finally
 #     endif /* __BORLANDC__ */
+#   endif /* ACE_HAS_WINCE */
+
+#   if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 // Prototype of win32 structured exception handler functions.
 // They are used to get the exception handling expression or
 // as exception handlers.
-#   endif /* ACE_HAS_WINCE */
+#   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 // The "null" device on Win32.
 #   define ACE_DEV_NULL "nul"
@@ -3962,10 +3965,10 @@ public:
                       ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
                       ACE_Thread_Manager *thr_mgr = 0,
                       ACE_Thread_Descriptor *td = 0
-# if defined (ACE_WIN32)
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
                       , ACE_SEH_EXCEPT_HANDLER selector = 0,
                       ACE_SEH_EXCEPT_HANDLER handler = 0
-# endif /* ACE_WIN32 */
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
                       );
   // Constructor.
 
@@ -4025,10 +4028,10 @@ private:
   int trace_depth_;
   // Depth of the nesting for printing traces.
 
-#   if defined (ACE_WIN32)
+#   if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
   ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
-#   endif /* ACE_WIN32 */
+#   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 # endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 
   friend class ACE_Thread_Adapter_Has_Private_Destructor;
@@ -5689,7 +5692,7 @@ struct ACE_Export ACE_IO_Vector :
   void buffer (void *new_buffer);
 };
 
-# if defined (ACE_WIN32)
+# if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE)
 typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
 typedef LPTRANSMIT_FILE_BUFFERS ACE_LPTRANSMIT_FILE_BUFFERS;
 typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;
