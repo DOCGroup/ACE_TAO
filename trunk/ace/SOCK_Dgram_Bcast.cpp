@@ -261,9 +261,12 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
             }
         }
       else
-        ACE_ERROR ((LM_ERROR, "%p [%s]\n",
-                   "ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enable for this interface.", 
-					flags.ifr_name));
+        {
+          if (host_name != 0)
+            ACE_ERROR ((LM_ERROR, "%p [%s]\n",
+                        "ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enable for this interface.", 
+                        flags.ifr_name));
+        }
     }
 #else
   ACE_UNUSED_ARG (host_name);
@@ -275,7 +278,13 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                                   this->if_list_),
                   -1);
 #endif /* !ACE_WIN32 */
-  return this->if_list_ == 0 ? -1 : 0;
+  if (this->if_list_ == 0)
+    {
+      errno = ENXIO;
+      return -1;
+    }
+  else
+    return 0;
 }
 
 // Broadcast the datagram to every interface.  Returns the average
