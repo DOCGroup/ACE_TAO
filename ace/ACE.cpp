@@ -1136,12 +1136,20 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // make sure...
 #if defined (ACE_WIN32)
   need_to_check = (rd_handles.is_set (h) || ex_handles.is_set (h));
+#elif defined (VXWORKS)
+  ACE_UNUSED_ARG (is_tli);
+
+  // Force the check on VxWorks.  The read handle for "h" is not set,
+  // so "need_to_check" is false at this point.  The write handle is
+  // set, for what it's worth.
+  need_to_check = 1;
 #else
   if (is_tli)
     need_to_check = (rd_handles.is_set (h) && !wr_handles.is_set (h));
   else
     need_to_check = rd_handles.is_set (h);
 #endif /* ACE_WIN32 */
+
   if (need_to_check)
     {
       char dummy;
