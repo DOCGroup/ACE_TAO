@@ -21,8 +21,6 @@
 
 #include "PortableInterceptorC.h"
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-
 #if !defined (__ACE_INLINE__)
 #include "PortableInterceptorC.i"
 #endif /* !defined INLINE */
@@ -1601,5 +1599,3 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableIntercepto
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<PortableInterceptor::ORBInitializer,PortableInterceptor::ORBInitializer_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
