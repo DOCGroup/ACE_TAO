@@ -1,0 +1,17 @@
+How to run the cubit example
+----------------------------
+
+server:
+-------
+
+svr [-d] -OAhost <hostname> [-OAport <portnum>]
+
+Due to some problems, it is necessary to provide the hostname
+If you don't use -d, the server will not display the IOR it is using
+and so you cannot provide this string to the client. Thus "-d" is
+necessary.
+
+client:
+-------
+clnt [-d] -n <iterations> -O <IOR string displayed by server>
+

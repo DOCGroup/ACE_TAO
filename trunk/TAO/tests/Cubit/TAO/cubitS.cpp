@@ -16,21 +16,13 @@
 
 #include "method_db.i"
 
-#if defined(CUBIT_USE_DYNAMIC_HASH)
-TAO_Dynamic_Hash_OpTable tao_cubit_optable(7);  // Dynamic Operation Table
-#else
-TAO_Linear_OpTable tao_cubit_optable(7);
-#endif
+TAO_Dynamic_Hash_OpTable tao_cubit_optable(cubit_operations, 7, 14);  // Dynamic Operation Table
 
 _skel_Cubit::_skel_Cubit(const char* obj_name)
 {
   const char* mn = "_skel_Cubit::_skel_Cubit()";
   
-   //  Initialize Method Database
-   initialize_method_db (&tao_cubit_optable);
-
    char *type_id = "IDL:Cubit:1.0";
-   // CORBA_String type_id = "IDL:Cubit:1.0";
    IIOP_Object *data;
 
    CORBA_BOA_ptr oa = TAO_OA_Parameters::instance()->oa();
