@@ -647,14 +647,31 @@ Persistent storage of service types and offers.</li>
 <hr>
 <h3>
 <a NAME="pservices"></a>CORBA Property Service</h3>
-Point of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Babu Arulanthu</a>
-<p>Current status (as of May 2nd, 1998)
-<p>All the interfaces of this service have been implemented.  Please
+Point of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Babu
+Arulanthu</a> 
+
+<p>Current status (as of Mar 9th, 1999): All the interfaces of this
+service have been implemented.  Please 
 go through the test examples at $TAO/orbsvcs/tests/CosPropertyService.
-Property Service is now used by the AVStreams that is currently being
-developed for TAO. More testing is being done.
-<p>For general documentation of the Property Service, please read <a href="http://www.omg.org/corba/sectrans.htm#prop">The
-Property Service Specification.</a>
+Property Service is has been used by the TAO's <a href="#av">Audio Video Streaming
+Service</a>developed for TAO. For general documentation of the
+Property Service, please read <a
+href="http://www.omg.org/corba/sectrans.htm#prop">The Property Service
+Specification.</a> 
+
+<P>Recent Work:
+<ul>
+ <li>
+     Changed the PropertyException from Exception to struct, according
+     to the OMG's changes.
+ </li>
+ <li>
+     Changed the implementation to allocate storage for the Sequence
+     out parameters, eventhough their length is 0. This is according
+     to the CORBA specification.
+ </li>
+</ul>
+
 <p>
 <hr>
 <h3>
