@@ -23,6 +23,10 @@
 
 #include "ace/Addr.h"
 
+#if defined(VXWORKS)
+#  include "inetLib.h"
+#endif /* VXWORKS */
+
 /**
  * @class ACE_INET_Addr
  *
@@ -271,6 +275,10 @@ public:
 private:
   /// Underlying representation.
   sockaddr_in inet_addr_;
+
+#if defined (VXWORKS)
+  char buf_[INET_ADDR_LEN];
+#endif
 };
 
 #if defined (__ACE_INLINE__)
