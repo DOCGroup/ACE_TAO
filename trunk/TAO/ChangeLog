@@ -1,3 +1,16 @@
+Tue Jun  3 15:28:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/ImplRepo_Service/Options.cpp (init): Use a single
+	  threaded reactor instead of the default reactor. The default
+	  reactor ie. the TP reactor cannot be used with
+	  ACE_Process_Manager since the process manager tries to register
+	  a signal handler with the reactor. The registration would fail,
+	  causing ImR_Activators to be unusable. Hence this fix to use the
+	  single threaded reactor.
+	
+	* orbsvcs/ImplRepo_Service/Makefile: Added TAO_Strategies to the
+	  link line.
+
 Tue Jun 03 07:52:12 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * TAO version 1.3.2 released.
