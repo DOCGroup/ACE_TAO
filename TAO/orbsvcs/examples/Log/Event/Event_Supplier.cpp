@@ -14,7 +14,7 @@ ACE_RCSID (Event,
 #define QUERY_LANG "TCL"
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Supplier supplier;
 
@@ -200,7 +200,7 @@ Supplier::run (int argc, char* argv[])
 #endif
 
       ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
-ACE_DEBUG((LM_DEBUG,"before"));
+
      // Disconnect from the EC
       this->consumer_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -214,6 +214,7 @@ ACE_DEBUG((LM_DEBUG,"before"));
       PortableServer::ObjectId_var id =
         poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
       poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -221,9 +222,6 @@ ACE_DEBUG((LM_DEBUG,"before"));
       poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-
-      ACE_TRY_CHECK;
-ACE_DEBUG((LM_DEBUG,"after"));
     }
   ACE_CATCHANY
     {
