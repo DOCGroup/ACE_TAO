@@ -42,7 +42,8 @@ public:
   virtual int open (size_t size,
                     int restart = 0,
                     ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0) = 0;
+                    ACE_Timer_Queue * = 0,
+                    int disable_notify_pipe = 0) = 0;
   // Initialization.
 
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler) = 0;
