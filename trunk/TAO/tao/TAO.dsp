@@ -180,6 +180,11 @@ SOURCE=.\Any.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Any_SystemException.cpp
+# ADD CPP /GR
+# End Source File
+# Begin Source File
+
 SOURCE=.\append.cpp
 # End Source File
 # Begin Source File
@@ -1053,6 +1058,10 @@ SOURCE=.\Any_Special_Basic_Impl_T.h
 # Begin Source File
 
 SOURCE=.\Any_Special_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_SystemException.h
 # End Source File
 # Begin Source File
 
