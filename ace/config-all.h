@@ -574,7 +574,7 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 // ============================================================================
 // PACE macros
 // ============================================================================
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
 # define ACE_HAS_POSIX_SEM
 #endif /* ACE_HAS_PACE */
 
