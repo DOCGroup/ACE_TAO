@@ -17,38 +17,29 @@ namespace TAO
       ::PortableServer::ServantRetentionPolicyValue value)
     {
       ServantRetentionStrategyFactory *strategy_factory = 0;
+      const char *strategy_factory_name = 0;
 
       switch (value)
       {
         case ::PortableServer::RETAIN :
         {
-          strategy_factory =
-            ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyRetainFactory");
-
-          if (strategy_factory == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) %p\n"),
-                               ACE_TEXT ("Unable to get ")
-                               ACE_TEXT ("ServantRetentionStrategyRetainFactory")),
-                               0);
-
+          strategy_factory_name = "ServantRetentionStrategyRetainFactory";
           break;
         }
         case ::PortableServer::NON_RETAIN :
         {
-          strategy_factory =
-            ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyNonRetainFactory");
-
-          if (strategy_factory == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) %p\n"),
-                               ACE_TEXT ("Unable to get ")
-                               ACE_TEXT ("ServantRetentionStrategyNonRetainFactory")),
-                               0);
-
+          strategy_factory_name = "ServantRetentionStrategyNonRetainFactory";
           break;
         }
       }
+
+      strategy_factory =
+        ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance (strategy_factory_name);
+
+      if (strategy_factory == 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Unable to get %s\n"),
+                    strategy_factory_name));
 
       return strategy_factory->create (value);
     }
@@ -58,34 +49,30 @@ namespace TAO
       ServantRetentionStrategy *strategy
       ACE_ENV_ARG_DECL)
     {
+      const char *strategy_factory_name = 0;
+
       switch (strategy->type ())
       {
         case ::PortableServer::RETAIN :
         {
-          ServantRetentionStrategyFactory *servantretention_strategy_factory =
-            ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyRetainFactory");
-
-          if (servantretention_strategy_factory != 0)
-            {
-              servantretention_strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-
-            }
+          strategy_factory_name = "ServantRetentionStrategyRetainFactory";
           break;
         }
         case ::PortableServer::NON_RETAIN :
         {
-          ServantRetentionStrategyFactory *servantretention_strategy_factory =
-            ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyNonRetainFactory");
-
-          if (servantretention_strategy_factory != 0)
-            {
-              servantretention_strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-            }
+          strategy_factory_name = "ServantRetentionStrategyNonRetainFactory";
           break;
         }
       }
+
+      ServantRetentionStrategyFactory *servantretention_strategy_factory =
+        ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance (strategy_factory_name);
+
+      if (servantretention_strategy_factory != 0)
+        {
+          servantretention_strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
     }
 
     ACE_STATIC_SVC_DEFINE (
