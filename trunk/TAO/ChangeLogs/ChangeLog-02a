@@ -16,7 +16,7 @@ Tue Mar 27 19:54:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
 	* orbsvcs/Examples/Notify/Filter/Filter.h:
 	* orbsvcs/Examples/Notify/Subscribe/Subscribe.h:
-	* tao/Examples/POA/Forwarding/MyFooServant.h:
+	* Examples/POA/Forwarding/MyFooServant.h:
 
 	  Minor fixes to eliminate build errors on MSVC, such as adding #include 
 	  file, adding disable of MSVC inheritance via dominance warning, or
