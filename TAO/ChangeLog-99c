@@ -1,3 +1,9 @@
+Wed Aug 11 13:31:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/UIOP_Transport.cpp (handle_client_input): Changed
+	  TAO_GIOP_ServiceContextList to IOP::ServiceContextList.  Thanks
+	  to David for reporting this.
+
 Wed Aug 11 13:06:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* rules.tao.GNU:
