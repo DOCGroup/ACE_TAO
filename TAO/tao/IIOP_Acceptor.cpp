@@ -92,6 +92,8 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   code_set_info.ForWcharData.native_code_set = TAO_DEFAULT_WCHAR_CODESET_ID;
   pfile->tagged_components ().set_code_sets (code_set_info);
 
+  pfile->tagged_components ().set_tao_priority (this->priority ());
+
   return 0;
 }
 
@@ -121,8 +123,11 @@ int
 TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          int major,
                          int minor,
-                         ACE_CString &address)
+                         ACE_CString &address,
+                         CORBA::Short corba_priority)
 {
+  this->priority_ = corba_priority;
+
   if (major >=0 && minor >= 0)
     this->version_.set_version (ACE_static_cast (CORBA::Octet,major),
                                 ACE_static_cast (CORBA::Octet,minor));

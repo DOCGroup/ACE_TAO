@@ -53,36 +53,25 @@ public:
   virtual ~TAO_UIOP_Acceptor (void);
   // Destructor
 
-  int open (TAO_ORB_Core *orb_core,
-            int version_major,
-            int version_minor,
-            ACE_CString &address);
-  // initialize acceptor for this address.
-
-  virtual int close (void);
-  // Closes the acceptor
-
-  virtual int open_default (TAO_ORB_Core *orb_core);
-  // Open an acceptor on the default endpoint for this protocol
-
-  int create_mprofile (const TAO_ObjectKey &object_key,
-                       TAO_MProfile &mprofile);
-  // create profile objects for this Acceptor using the SAP
-  // (service access point) and object_key.
-
-  // = See TAO_Acceptor
-  virtual int is_collocated (const TAO_Profile*);
-
-  virtual ACE_Event_Handler *acceptor (void);
-  // Return the underlying acceptor object, ACE_Acceptor
-
-  CORBA::ULong endpoint_count (void);
-  // return the number of profiles this will generate
-
   typedef ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CONCURRENCY_STRATEGY;
   typedef TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_ACCEPT_STRATEGY;
+
+  // = The TAO_Acceptor methods, check the documentation in
+  //   Pluggable.h for details.
+  virtual int open (TAO_ORB_Core *orb_core,
+                    int version_major,
+                    int version_minor,
+                    ACE_CString &address,
+                    CORBA::Short corba_priority = 0);
+  virtual int open_default (TAO_ORB_Core *orb_core);
+  virtual int close (void);
+  virtual int create_mprofile (const TAO_ObjectKey &object_key,
+                               TAO_MProfile &mprofile);
+  virtual ACE_Event_Handler *acceptor (void);
+  virtual int is_collocated (const TAO_Profile* profile);
+  virtual CORBA::ULong endpoint_count (void);
 
 private:
   int open_i (TAO_ORB_Core *orb_core, const char *rendezvous);

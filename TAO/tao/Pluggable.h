@@ -354,21 +354,33 @@ class TAO_Export TAO_Acceptor
   // = DESCRIPTION
   //   Base class for the Acceptor bridge calss.
 public:
-
   TAO_Acceptor (CORBA::ULong tag);
 
-  virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile) = 0;
-  // Create the corresponding profile for this endpoint.
+  virtual ~TAO_Acceptor (void);
+  // Destructor
+
+  CORBA::ULong tag (void) const;
+  // The tag, each concrete class will have a specific tag value.
+
+  CORBA::Short priority (void) const;
+  // The priority for this endpoint.
 
   virtual int open (TAO_ORB_Core *orb_core,
                     int version_major,
                     int version_minor,
-                    ACE_CString &address) = 0;
+                    ACE_CString &address,
+                    CORBA::Short corba_priority = 0) = 0;
   // method to initialize acceptor for address.
 
   virtual int open_default (TAO_ORB_Core *orb_core) = 0;
   // Open an acceptor on the default endpoint for this protocol
+
+  virtual int close (void) = 0;
+  // Closes the acceptor
+
+  virtual int create_mprofile (const TAO_ObjectKey &object_key,
+                               TAO_MProfile &mprofile) = 0;
+  // Create the corresponding profile for this endpoint.
 
   virtual ACE_Event_Handler *acceptor (void) = 0;
   // Return the ACE acceptor...
@@ -376,23 +388,19 @@ public:
   virtual int is_collocated (const TAO_Profile* profile) = 0;
   // Return 1 if the <profile> has the same endpoint as the acceptor.
 
-  CORBA::ULong tag (void) const;
-  // The tag, each concrete class will have a specific tag value.
-
-  virtual int close (void) = 0;
-  // Closes the acceptor
-
   virtual CORBA::ULong endpoint_count (void) = 0;
   // returns the number of endpoints this acceptor is listening on.  This
   // is used for determining how many profiles will be generated
   // for this acceptor.
 
-  virtual ~TAO_Acceptor (void);
-  // Destructor
+protected:
+  CORBA::Short priority_;
+  // The priority for this endpoint
 
 private:
   CORBA::ULong tag_;
   // IOP protocol tag.
+
 };
 
 class TAO_Export TAO_Connector
