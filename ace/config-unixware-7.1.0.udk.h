@@ -147,7 +147,7 @@
 
 /* Platform has a getrusage () prototype in sys/resource.h that differs from
    the one in ace/OS.i. */
-#define ACE_HAS_GETRUSAGE_PROTO
+#define ACE_HAS_GETRUSAGE_PROTOTYPE
 
 /* The GPERF utility is compiled for this platform */
 #define ACE_HAS_GPERF
@@ -328,7 +328,7 @@
 #define ACE_HAS_SVR4_TLI
 
 /* Compiler/platform contains the <sys/syscall.h> file. */
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 
 /* Platform supports system configuration information */
 #define ACE_HAS_SYSINFO 1

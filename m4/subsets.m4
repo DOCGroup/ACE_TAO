@@ -30,7 +30,7 @@ dnl Assume all subsets will be built, including the full ACE library.
 dnl If any of the components is explicitly enabled or disabled by the user
 dnl then do NOT build the full ACE library.
 AC_ARG_ENABLE([lib-all],
-     AC_HELP_STRING([--enable-lib-all],[build all ACE components [[no]]]),
+     AS_HELP_STRING([--enable-lib-all],[build all ACE components [[no]]]),
               [
                case "${enableval}" in
                 yes)
@@ -49,7 +49,7 @@ AC_ARG_ENABLE([lib-all],
               ])
 
 AC_ARG_ENABLE([lib-full],
-     AC_HELP_STRING([--enable-lib-full],[build the full ACE library [[yes]]]),
+     AS_HELP_STRING([--enable-lib-full],[build the full ACE library [[yes]]]),
               [
                case "${enableval}" in
                 yes)
@@ -68,7 +68,7 @@ AC_ARG_ENABLE([lib-full],
               ])
 
 AC_ARG_ENABLE([lib-os],
-     AC_HELP_STRING([--enable-lib-os],[build ACE_OS library]),
+     AS_HELP_STRING([--enable-lib-os],[build ACE_OS library]),
               [
                case "${enableval}" in
                 yes)
@@ -87,7 +87,7 @@ AC_ARG_ENABLE([lib-os],
               ],)
 
 AC_ARG_ENABLE([lib-codecs],
-     AC_HELP_STRING([--enable-lib-codecs],[build ACE_Codecs library]),
+     AS_HELP_STRING([--enable-lib-codecs],[build ACE_Codecs library]),
               [
                case "${enableval}" in
                 yes)
@@ -107,7 +107,7 @@ AC_ARG_ENABLE([lib-codecs],
               ],)
 
 AC_ARG_ENABLE([lib-connection],
-     AC_HELP_STRING([--enable-lib-connection],[build ACE_Connection library ]),
+     AS_HELP_STRING([--enable-lib-connection],[build ACE_Connection library ]),
               [
                case "${enableval}" in
                 yes)
@@ -126,7 +126,7 @@ AC_ARG_ENABLE([lib-connection],
               ],)
 
 AC_ARG_ENABLE([lib-demux],
-     AC_HELP_STRING([--enable-lib-demux],[build ACE_Demux library]),
+     AS_HELP_STRING([--enable-lib-demux],[build ACE_Demux library]),
               [
                case "${enableval}" in
                 yes)
@@ -145,7 +145,7 @@ AC_ARG_ENABLE([lib-demux],
               ],)
 
 AC_ARG_ENABLE([lib-filecache],
-     AC_HELP_STRING([--enable-lib-filecache],[build ACE_Filecache library]),
+     AS_HELP_STRING([--enable-lib-filecache],[build ACE_Filecache library]),
               [
                case "${enableval}" in
                 yes)
@@ -164,7 +164,7 @@ AC_ARG_ENABLE([lib-filecache],
               ],)
 
 AC_ARG_ENABLE([lib-ipc],
-     AC_HELP_STRING([--enable-lib-ipc],[build ACE_IPC library]),
+     AS_HELP_STRING([--enable-lib-ipc],[build ACE_IPC library]),
               [
                case "${enableval}" in
                 yes)
@@ -183,7 +183,7 @@ AC_ARG_ENABLE([lib-ipc],
               ],)
 
 AC_ARG_ENABLE([lib-logging],
-     AC_HELP_STRING([--enable-lib-logging],[build ACE_Logging library]),
+     AS_HELP_STRING([--enable-lib-logging],[build ACE_Logging library]),
               [
                case "${enableval}" in
                 yes)
@@ -202,7 +202,7 @@ AC_ARG_ENABLE([lib-logging],
               ],)
 
 AC_ARG_ENABLE([lib-memory],
-     AC_HELP_STRING([--enable-lib-memory],[build ACE_Memory library]),
+     AS_HELP_STRING([--enable-lib-memory],[build ACE_Memory library]),
               [
                case "${enableval}" in
                 yes)
@@ -221,7 +221,7 @@ AC_ARG_ENABLE([lib-memory],
               ],)
 
 AC_ARG_ENABLE([lib-metrics],
-     AC_HELP_STRING([--enable-lib-metrics],[build ACE_Metrics library]),
+     AS_HELP_STRING([--enable-lib-metrics],[build ACE_Metrics library]),
               [
                case "${enableval}" in
                 yes)
@@ -240,7 +240,7 @@ AC_ARG_ENABLE([lib-metrics],
               ],)
 
 AC_ARG_ENABLE([lib-sockets],
-     AC_HELP_STRING([--enable-lib-sockets],[build ACE_Sockets library]),
+     AS_HELP_STRING([--enable-lib-sockets],[build ACE_Sockets library]),
               [
                case "${enableval}" in
                 yes)
@@ -259,7 +259,7 @@ AC_ARG_ENABLE([lib-sockets],
               ],)
 
 AC_ARG_ENABLE([lib-streams],
-     AC_HELP_STRING([--enable-lib-streams],[build ACE_Streams library]),
+     AS_HELP_STRING([--enable-lib-streams],[build ACE_Streams library]),
               [
                case "${enableval}" in
                 yes)
@@ -278,7 +278,7 @@ AC_ARG_ENABLE([lib-streams],
               ],)
 
 AC_ARG_ENABLE([lib-svcconf],
-     AC_HELP_STRING([--enable-lib-svcconf],[build ACE_Svcconf library]),
+     AS_HELP_STRING([--enable-lib-svcconf],[build ACE_Svcconf library]),
               [
                case "${enableval}" in
                 yes)
@@ -298,7 +298,7 @@ AC_ARG_ENABLE([lib-svcconf],
               ],)
 
 AC_ARG_ENABLE([lib-threads],
-     AC_HELP_STRING([--enable-lib-threads],[build ACE_Threads library]),
+     AS_HELP_STRING([--enable-lib-threads],[build ACE_Threads library]),
               [
                case "${enableval}" in
                 yes)
@@ -317,7 +317,7 @@ AC_ARG_ENABLE([lib-threads],
               ],)
 
 AC_ARG_ENABLE([lib-timer],
-     AC_HELP_STRING([--enable-lib-timer],[build ACE_Timer library]),
+     AS_HELP_STRING([--enable-lib-timer],[build ACE_Timer library]),
               [
                case "${enableval}" in
                 yes)
@@ -336,7 +336,7 @@ AC_ARG_ENABLE([lib-timer],
               ],)
 
 AC_ARG_ENABLE([lib-token],
-     AC_HELP_STRING([--enable-lib-token],[build ACE_Token library]),
+     AS_HELP_STRING([--enable-lib-token],[build ACE_Token library]),
               [
                case "${enableval}" in
                 yes)
@@ -356,7 +356,7 @@ AC_ARG_ENABLE([lib-token],
               ],)
 
 AC_ARG_ENABLE([lib-utils],
-     AC_HELP_STRING([--enable-lib-utils],[build ACE_Utils library]),
+     AS_HELP_STRING([--enable-lib-utils],[build ACE_Utils library]),
               [
                case "${enableval}" in
                 yes)
@@ -375,7 +375,7 @@ AC_ARG_ENABLE([lib-utils],
               ],)
 
 AC_ARG_ENABLE([lib-uuid],
-     AC_HELP_STRING([--enable-lib-uuid],[build ACE_UUID library]),
+     AS_HELP_STRING([--enable-lib-uuid],[build ACE_UUID library]),
               [
                case "${enableval}" in
                 yes)
@@ -395,7 +395,7 @@ AC_ARG_ENABLE([lib-uuid],
               ],)
 
 AC_ARG_ENABLE([lib-other],
-     AC_HELP_STRING([--enable-lib-other],[build ACE_Other library]),
+     AS_HELP_STRING([--enable-lib-other],[build ACE_Other library]),
               [
                case "${enableval}" in
                 yes)

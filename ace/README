@@ -320,7 +320,7 @@ ACE_HAS_GETPAGESIZE                     Platform supports
                                         except on Win32)
 ACE_HAS_GETRUSAGE                       Platform supports the
                                         getrusage() system call.
-ACE_HAS_GETRUSAGE_PROTO                 Platform has a getrusage ()
+ACE_HAS_GETRUSAGE_PROTOTYPE             Platform has a getrusage ()
                                         prototype in sys/resource.h
                                         that differs from the one in
                                         ace/OS.i.
@@ -581,8 +581,6 @@ ACE_HAS_SVR4_TLI                        Compiler/platform supports
                                         isn't used if ACE_HAS_XTI is set.
 ACE_HAS_SYSCALL_GETRUSAGE               HP/UX has an undefined syscall
                                         for GETRUSAGE...
-ACE_HAS_SYSCALL_H                       Compiler/platform contains the
-                                        <sys/syscall.h> file.
 ACE_HAS_SYSENT_H                        Platform provides <sysent.h>
                                         header
 ACE_HAS_SYSINFO                         Platform supports system
@@ -596,6 +594,8 @@ ACE_HAS_SYS_FILIO_H                     Platform provides
                                         <sys/filio.h> header
 ACE_HAS_SYS_SIGLIST                     Compiler/platform supports
                                         _sys_siglist array
+ACE_HAS_SYS_SYSCALL_H                   Compiler/platform contains the
+                                        <sys/syscall.h> file.
 ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA   Compiler's template
                                         instantiation mechanism
                                         supports the use of "#pragma
@@ -753,7 +753,7 @@ ACE_LACKS_FLOATING_POINT                Platform does not support
 ACE_LACKS_FORK                          Platform lacks the fork()
                                         system call (e.g., Win32,
                                         VxWorks, Chorus)
-ACE_LACKS_GETOPT_PROTO                  Platform lacks the getopt()
+ACE_LACKS_GETOPT_PROTOTYPE              Platform lacks the getopt()
                                         prototype (e.g., LynxOS)
 ACE_LACKS_GETPGID                       Platform lacks getpgid() call
                                         (e.g., Win32, Chorus, and
@@ -815,8 +815,6 @@ ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
                                         use, new.h.
 ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
-ACE_LACKS_PARAM_H                       Platform lacks <sys/param.h>
-                                        (e.g., MVS)
 ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
                                         of multicast dgrams at the socket level.
                                         If == 1, ACE_SOCK_Dgram_Mcast will bind
@@ -894,8 +892,10 @@ ACE_LACKS_SYS_NERR                      Platforms/compiler lacks the
                                         VxWorks and MVS).
 ACE_LACKS_SYSTIME_H                     <time.h> doesn't automatically
                                         #include /**/ <sys/time.h>
-ACE_LACKS_SYS_MSG_H                    Platform lacks sys/msg.h
+ACE_LACKS_SYS_MSG_H                     Platform lacks sys/msg.h
                                         (e.g., Chorus and VxWorks)
+ACE_LACKS_SYS_PARAM_H                   Platform lacks <sys/param.h>
+                                        (e.g., MVS)
 ACE_LACKS_SENDMSG                       Platform lacks sendmsg()
                                         (e.g., Linux)
 ACE_LACKS_SI_ADDR                       Platform lacks the si_addr

@@ -111,7 +111,7 @@
 #define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 
 // OpenBSD supports the getifaddrs interface
 #define ACE_HAS_GETIFADDRS

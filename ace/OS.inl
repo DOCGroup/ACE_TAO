@@ -68,9 +68,9 @@ using std::strftime;
 #   include /**/ <sys/systeminfo.h>
 # endif /* ACE_HAS_SYS_INFO */
 
-# if defined (ACE_HAS_SYSCALL_H)
+# if defined (ACE_HAS_SYS_SYSCALL_H)
 #   include /**/ <sys/syscall.h>
-# endif /* ACE_HAS_SYSCALL_H */
+# endif /* ACE_HAS_SYS_SYSCALL_H */
 
 # if defined (UNIXWARE)  /* See strcasecmp, below */
 #   include /**/ <ctype.h>

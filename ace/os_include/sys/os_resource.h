@@ -35,9 +35,9 @@
 #  include /**/ <sys/systeminfo.h>
 #endif /* ACE_HAS_SYS_INFO */
 
-#if defined (ACE_HAS_SYSCALL_H)
+#if defined (ACE_HAS_SYS_SYSCALL_H)
 #  include /**/ <sys/syscall.h>
-#endif /* ACE_HAS_SYSCALL_H */
+#endif /* ACE_HAS_SYS_SYSCALL_H */
 
 // prusage_t is defined in <sys/procfs.h>
 #if defined (ACE_HAS_PROC_FS)
@@ -92,7 +92,7 @@ extern "C"
 #if !defined (ACE_WIN32)
 // These prototypes are chronically lacking from many versions of
 // UNIX.
-# if !defined (ACE_HAS_GETRUSAGE_PROTO)
+# if !defined (ACE_HAS_GETRUSAGE_PROTOTYPE)
   int getrusage (int who, struct rusage *rusage);
 # endif /* ! ACE_HAS_GETRUSAGE_PROTO */
 

@@ -76,7 +76,7 @@ extern "C" pid_t getpgid (pid_t);
 #define ACE_HAS_MSG
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 
 // Compiler/platform correctly calls init()/fini().
 #define ACE_HAS_AUTOMATIC_INIT_FINI

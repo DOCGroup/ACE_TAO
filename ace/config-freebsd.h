@@ -117,7 +117,7 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 
 #if (__FreeBSD_version >= 300000)
 #define ACE_HAS_SIGINFO_T

@@ -52,7 +52,7 @@
 #define ACE_HAS_MSG
 
 //Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 
 //Platform provides <sysent.h> header
 #define ACE_HAS_SYSENT_H
@@ -327,8 +327,6 @@
 //? ACE_HAS_STRUCT_NETDB_DATA           Compiler/platform has strange
 // hostent API for socket *_r() calls
 //ACE_HAS_VOIDPTR_GETTIMEOFDAY           
-//? ACE_HAS_SYSCALL_GETRUSAGE           HP/UX has an undefined syscall for
-//GETRUSAGE...
 //ACE_HAS_TEMPLATE_TYPEDEFS             Compiler implements templates that
 // support typedefs inside of classes used as formal arguments to a template
 // class.
@@ -370,7 +368,7 @@
 //ACE_LACKS_NETDB_REENTRANT_FUNCTIONS   Platform does not support reentrant
 // netdb functions (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,
 // gethostbyname_r, getservbyname_r).
-//ACE_LACKS_PARAM_H                     Platform lacks <sys/param.h> (e.g.,
+//ACE_LACKS_SYS_PARAM_H                     Platform lacks <sys/param.h> (e.g.,
 //MVS)
 //certain System V functions like shared memory and message queues.
 //ACE_LACKS_RECVMSG                     Platform lacks recvmsg() (e.g., Linux)
