@@ -1,3 +1,9 @@
+Thu Nov  4 18:47:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-WinCE.h: Added ACE_LACKS_WCTYPE_H for CE 3 and lower.
+
+	* ace/OS_NS_sys_stat.inl: For CE, removed data truncation warnings.
+
 Thu Nov  4 17:06:08 CST 2004 Scott Harris <harris_s@ociweb.com>
 
         * test/Test_Output.cpp:
