@@ -1,3 +1,14 @@
+Wed Oct 15 11:22:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport.cpp (send_connection_closed_notifications_i): The
+	  while loop could lead to possible crash. Please see 
+
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1614
+
+	  for details of the problem and the nature of fixes applied. As
+	  usual, thanks to Carlos O'Ryan for digging this one up and
+	  providing patches. 
+
 Wed Oct 15 11:15:56 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTCosScheduling.dsp: Modified the directory to
