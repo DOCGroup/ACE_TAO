@@ -13,7 +13,6 @@ project: ace_qt, zzip {
   }
 
   specific(automake) {
-    includes -= $(ACE_ROOT)
-    includes += $(top_srcdir)
+    includes += $(ACE_BUILDDIR)
   }
 }

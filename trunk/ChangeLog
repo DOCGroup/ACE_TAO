@@ -1,3 +1,10 @@
+Tue Sep 28 15:22:01 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/acedefaults.mpb:
+
+	  Changed to add $(ACE_BUILDDIR) to include path for automake
+	  builds.
+
 Tue Sep 28 15:16:54 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ACEXML/apps/svcconf/Makefile.am:
