@@ -1,3 +1,11 @@
+Fri Jul 16 09:20:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Memory_Pool.h: Added a way to set the segment_size in
+ 	  ACE_Shared_Memory_Pool_Options and ACE_Shared_Memory_Pool.
+  	  Thanks to Serge Kolgan <skolgan@cisco.com> for this fix.  [This
+ 	  feature was actually added a couple of beta releases ago, but
+ 	  somehow the ChangeLog entry got lost.]
+
 Fri Jul 16 02:28:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Changed (*va_arg (argp,PTF))(), which
