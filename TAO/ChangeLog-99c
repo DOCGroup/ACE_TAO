@@ -1,3 +1,9 @@
+Mon Oct 04 12:52:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Servant_Base.cpp (TAO_DynamicImplementation::_create_stub):
+	  The checking for a valid POA current was not correct.  This
+	  should be fixed now.  Thanks to Carlos for pointing this out.
+
 Mon Oct  4 11:08:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
@@ -18,7 +24,7 @@ Mon Oct 03 08:40:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 1999-10-03  Yamuna Krishnamurthy  <yamuna@danzon.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Vic/Makefile: 
+	* orbsvcs/tests/AVStreams/Vic/Makefile:
 	  Modified the Makefile so that it will include the libAVsvc library
 
 Sun Oct  3 16:16:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -38,7 +44,7 @@ Sun Oct 03 13:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  TAO_IDL/be/be_visitor_valuetype/field_ch.cpp,
 	  tao/MessagingC.h:
 	  Fixed the generation and usage of a typedef for anonymous
-	  valuetype field types. This also involved generating a typedef 
+	  valuetype field types. This also involved generating a typedef
 	  for the "var" type.
 
 Sat Oct  2 18:14:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -62,7 +68,7 @@ Sat Oct  2 18:14:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* recursive_struct.h:
 	* recursive_struct.cpp:
 	* bd_array_sequence.cpp:
-	  Cosmetic changes. 
+	  Cosmetic changes.
 
 Sat Oct  2 17:56:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -70,7 +76,7 @@ Sat Oct  2 17:56:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Fixed assignment operator if union is recursive. Before,
 	  the only way to initialize such a union was from the
 	  bottom up. Otherwise we would end up calling the member
-	  sequence copy constructor with a dereference null 
+	  sequence copy constructor with a dereference null
 	  pointer as an rhs. Now recursive unions can be initialized
 	  from the top down.
 
@@ -105,7 +111,7 @@ Sat Oct 02 14:50:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  scope and referenced.
 
 	* tests/AMI/ami_test.idl,
-	  tests/AMI/simple_client.cpp: Activated the tests for 
+	  tests/AMI/simple_client.cpp: Activated the tests for
 	  attributes again.
 
 	* docs/releasenotes/index.html: Updated comment on support
@@ -140,14 +146,14 @@ Fri Oct  1 19:02:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/ORB.cpp (ORB_init);
 
 	  Made allocation of TAO_ORB_Core exception safe by using the
-	  newly added TAO_ORB_Core_Auto_Ptr. 
-	
+	  newly added TAO_ORB_Core_Auto_Ptr.
+
 	* tao/IIOP_Acceptor.cpp (open):
 
 	  Fixed endpoint parsing code so that it works as users expect.
 	  Specifically, the following -ORBEndpoint use cases will work as
 	  expected:
-	  
+
 	    -ORBEndpoint iiop://my_host
 	    -ORBEndpoint iiop://:my_port   (note colon ':' before
 	                                    my_port)
