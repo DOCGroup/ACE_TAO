@@ -1,3 +1,20 @@
+Wed Mar 24 15:31:27 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * High_Res_Timer.cpp:
+        * High_Res_Timer.h:
+        * OS.i:
+
+          Changed the implementation of the High Resolution Timer 
+          to use QueryPerformanceCounter instead of assembly code.
+          The docs also say that this is MP-safe.  Thanks to Gregory
+          Fee <gdf2@cec.wustl.edu> for suggesting this.  
+
+        * Profile_Timer.cpp:
+        * Profile_Timer.h:
+        * Profile_Timer.i:
+
+          Now uses the High Res Timer on Win32 instead of rusage.
+
 Wed Mar 24 14:36:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.cpp (ACE_OS_PREALLOCATE_OBJECT): Initialized obj_p to zero
