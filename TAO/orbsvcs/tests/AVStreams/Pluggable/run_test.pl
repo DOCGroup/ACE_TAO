@@ -20,9 +20,10 @@ $makefile = PerlACE::LocalFile ("Makefile");
 unlink $nsior;
 
 $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $testfile");
+$SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f udp_output");
 $CL = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $makefile");
 
+print STDERR "Using UDP\n";
 print STDERR "Starting Naming Service\n";
 
 $NS->Spawn ();
@@ -33,6 +34,58 @@ if (PerlACE::waitforfile_timed ($nsior, 10) == -1) {
     exit 1;
 }
 
+print STDERR "Starting Server\n";
+
+$SV->Spawn ();
+
+sleep $sleeptime;
+
+print STDERR "Starting Client\n";
+
+$client = $CL->SpawnWaitKill (200);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
+
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
+
+$SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f tcp_output");
+$CL = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f Makefile -p TCP");
+
+print STDERR "Using TCP\n";
+print STDERR "Starting Server\n";
+
+$SV->Spawn ();
+
+sleep $sleeptime;
+
+print STDERR "Starting Client\n";
+
+$client = $CL->SpawnWaitKill (200);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
+
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
+
+$SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f rtp_output");
+$CL = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $makefile -p RTP/UDP");
+
+print STDERR "Using RTP/UDP\n";
 print STDERR "Starting Server\n";
 
 $SV->Spawn ();
