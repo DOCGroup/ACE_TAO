@@ -538,6 +538,26 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 }
 
 ACE_INLINE int
+ACE_OS::lstat (const char *file, struct stat *stp)
+{
+  // ACE_TRACE ("ACE_OS::lstat");
+# if defined (ACE_LACKS_LSTAT) || \
+     defined (ACE_HAS_WINCE) || defined (ACE_WIN32)
+  ACE_UNUSED_ARG (file);
+  ACE_UNUSED_ARG (stp);
+  ACE_NOTSUP_RETURN (-1);
+#else
+# if defined (ACE_HAS_X86_STAT_MACROS)
+   // Solaris for intel uses an macro for lstat(), this macro is a
+   // wrapper for _lxstat().
+  ACE_OSCALL_RETURN (::_lxstat (_STAT_VER, file, stp), int, -1);
+#else /* !ACE_HAS_X86_STAT_MACROS */
+  ACE_OSCALL_RETURN (::lstat (file, stp), int, -1);
+#endif /* !ACE_HAS_X86_STAT_MACROS */
+# endif /* VXWORKS */
+}
+
+ACE_INLINE int
 ACE_OS::fsync (ACE_HANDLE handle)
 {
   // ACE_TRACE ("ACE_OS::fsync");
@@ -7469,6 +7489,21 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
 #else
   return ACE_OS::read (handle, buf, len);
 #endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
+ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
+{
+  // ACE_TRACE ("ACE_OS::readlink");
+# if defined (ACE_LACKS_READLINK) || \
+     defined (ACE_HAS_WINCE) || defined (ACE_WIN32)
+  ACE_UNUSED_ARG (path);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (bufsiz);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_OSCALL_RETURN (::readlink (path, buf, bufsiz), int, -1);
+# endif /* ACE_LACKS_READLINK */
 }
 
 ACE_INLINE int
