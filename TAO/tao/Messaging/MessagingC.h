@@ -2208,6 +2208,8 @@ TAO_NAMESPACE  Messaging
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_QueueOrderPolicy;
   
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
   // Valuetype class
   class ExceptionHolder;
   
@@ -2274,7 +2276,7 @@ TAO_NAMESPACE  Messaging
   
   
 #endif /* end #if !defined */
-  
+
   
 #if !defined (_MESSAGING_EXCEPTIONHOLDER_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER_CH_
@@ -2675,9 +2677,11 @@ TAO_NAMESPACE  Messaging
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyHandler;
   
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
   
 }
 TAO_NAMESPACE_CLOSE // module Messaging
+
 
 // Proxy Broker Factory function pointer declarations.
 
@@ -2860,12 +2864,12 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 
 #endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
 
+#if (TAO_HAS_AMI_CALLBACK == 1)
+
 // Any operators for valuetype Messaging::ExceptionHolder
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ExceptionHolder *); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ExceptionHolder **); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ExceptionHolder *&);
-
-#if (TAO_HAS_AMI_CALLBACK == 1)
 
 // Any operators for interface Messaging::ReplyHandler
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr); // copying
@@ -2890,6 +2894,8 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Routi
 
 #endif /* TAO_HAS_ROUTING_POLICY == 1 */
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 //@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
@@ -2900,7 +2906,6 @@ TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
 //
 //
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *);
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);

@@ -33,6 +33,8 @@
 #if defined (ACE_HAS_USING_KEYWORD)
 TAO_NAMESPACE  POA_Messaging
 {
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  ReplyHandler_tie : public ReplyHandler
@@ -74,6 +76,7 @@ TAO_NAMESPACE  POA_Messaging
     ReplyHandler_tie (const ReplyHandler_tie &);
     void operator= (const ReplyHandler_tie &);
   };
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 }
 TAO_NAMESPACE_CLOSE // module Messaging

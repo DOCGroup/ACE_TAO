@@ -513,7 +513,6 @@ TAO_NAMESPACE CORBA
 }
 TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
-#endif /*__ACE_INLINE__*/
 TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *);
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);
 TAO_Messaging_Export CORBA::Boolean operator<< (
@@ -527,3 +526,4 @@ TAO_Messaging_Export CORBA::Boolean operator>> (
   );
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+#endif /*__ACE_INLINE__*/
