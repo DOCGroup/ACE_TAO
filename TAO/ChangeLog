@@ -7,7 +7,8 @@ Fri May 16 18:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  whereas ptr_arith_t was unsigned. This lead to cases where
 	  alignments got a negative value on Linux and memcpy data into
 	  and from CDR streams were totally busted. This lead to crashes
-	  in Any tests in our daily builds. 
+	  in Any tests in our daily builds. The problem was fixed by
+	  adding the MAX_ALIGNMENT to the aligned value.
 
 	  This will not fix all the problems with Any's. There are some
 	  more fixes which would be checked in in the next few days. 
