@@ -28,8 +28,8 @@ ACE_Bounded_Stack<T>::dump (void) const
 
 template<class T>
 ACE_Bounded_Stack<T>::ACE_Bounded_Stack (size_t size)
-  : top_ (0),
-    size_ (size)
+  : size_ (size),
+    top_ (0)
 {
   ACE_NEW (this->stack_,
            T[size]);
@@ -38,8 +38,8 @@ ACE_Bounded_Stack<T>::ACE_Bounded_Stack (size_t size)
 
 template<class T>
 ACE_Bounded_Stack<T>::ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s)
-  : top_ (s.top_),
-    size_ (s.size_)
+  : size_ (s.size_),
+    top_ (s.top_)
 {
   ACE_NEW (this->stack_,
            T[s.size_]);
@@ -90,16 +90,16 @@ ACE_Fixed_Stack<T, ACE_SIZE>::dump (void) const
 
 template<class T, size_t ACE_SIZE>
 ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack (void)
-  : top_ (0),
-    size_ (ACE_SIZE)
+  : size_ (ACE_SIZE),
+    top_ (0)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack");
 }
 
 template<class T, size_t ACE_SIZE>
 ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
-  : top_ (s.top_),
-    size_ (s.size_)
+  : size_ (s.size_),
+    top_ (s.top_)    
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack");
   for (size_t i = 0; i < this->top_; i++)
