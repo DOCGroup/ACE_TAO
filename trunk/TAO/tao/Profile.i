@@ -9,6 +9,7 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     are_policies_parsed_ (0),
     stub_ (0),
     policy_list_ (0),
+    addressing_mode_ (0),
     tag_ (tag),
     orb_core_ (orb_core),
     forward_to_ (0),
@@ -90,4 +91,10 @@ ACE_INLINE TAO_Tagged_Components&
 TAO_Profile::tagged_components (void)
 {
   return this->tagged_components_;
+}
+
+ACE_INLINE CORBA::Short
+TAO_Profile::addressing_mode (void) const
+{
+  return this->addressing_mode_;
 }
