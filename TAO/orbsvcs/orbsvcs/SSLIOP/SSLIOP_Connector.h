@@ -31,7 +31,9 @@
 #include "tao/Resource_Factory.h"
 
 
+/// Forward declarations.
 class TAO_Base_Transport_Property;
+class TAO_SSLIOP_Endpoint;
 
 /**
  * @class TAO_SSLIOP_Connector
@@ -45,25 +47,46 @@ class TAO_Base_Transport_Property;
 class TAO_SSLIOP_Export TAO_SSLIOP_Connector : public TAO_IIOP_SSL_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_SSLIOP_Connector (int no_protection);
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Pluggable.h
+  /**
+   * @name The TAO_Connector methods
+   *
+   * Please check the documentation in Pluggable.h
+   */
+  //@{
   virtual int open (TAO_ORB_Core *orb_core);
   virtual int close (void);
   virtual int connect (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc,
                        CORBA::Environment &ACE_TRY_ENV);
   virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
-
+  //@}
 
 protected:
 
-  // = More TAO_Connector methods, please check the documentation on
-  //   Pluggable.h
+  /**
+   * @name More TAO_Connector methods
+   *
+   * Please check the documentation in Pluggable.h.
+   */
   virtual TAO_Profile * make_profile (CORBA::Environment &ACE_TRY_ENV);
+
+  /// IIOP-specific connection establishment.
+  /**
+   * @note The IIOP endpoint is extracted from the SSLIOP endpoint.
+   */
+  int iiop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
+                    TAO_GIOP_Invocation *invocation,
+                    CORBA::Environment &ACE_TRY_ENV);
+
+  /// SSLIOP-specific connection establishment.
+  int ssliop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
+                      Security::EstablishTrust *trust,
+                      TAO_GIOP_Invocation *invocation,
+                      TAO_Transport_Descriptor_Interface *desc,
+                      CORBA::Environment &ACE_TRY_ENV);
 
 public:
 

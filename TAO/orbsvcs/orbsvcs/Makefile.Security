@@ -45,6 +45,7 @@ IDL_SRC = \
         $(addsuffix C.cpp, $(IDL_FILES))
 
 FILES = \
+  Security/EstablishTrustPolicy \
   Security/QOPPolicy \
   Security/Security_PolicyFactory \
   Security/Security_Current \

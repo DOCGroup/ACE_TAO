@@ -15,9 +15,23 @@ TAO_SSLIOP_Endpoint::ssl_component (void) const
   return this->ssl_component_;
 }
 
-/*ACE_INLINE TAO_SSLIOP_Client_Connection_Handler *&
-TAO_SSLIOP_Endpoint::ssl_hint(void)
+ACE_INLINE const ACE_INET_Addr &
+TAO_SSLIOP_Endpoint::object_addr (void) const
 {
-  return this->ssl_hint_;
+  // The object_addr_ is initialized here, rather than at IOR decode
+  // time for several reasons:
+  //   1. A request on the object may never be invoked.
+  //   2. The DNS setup may have changed dynamically.
+  //   ...etc..
+
+  // We need to modify the object_addr_ in this method.  Do so using a
+  // non-const copy of the <this> pointer.
+  ACE_INET_Addr &ssl_addr =
+    ACE_const_cast (ACE_INET_Addr &,
+                    this->object_addr_);
+
+  ssl_addr = this->iiop_endpoint_->object_addr ();
+  ssl_addr.set_port_number (this->ssl_component_.port);
+
+  return this->object_addr_;
 }
-*/
