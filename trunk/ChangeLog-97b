@@ -1,5 +1,15 @@
 Sat Oct  4 11:57:25 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* apps/Orbix-Examples/Event_Comm/{Supplier,Consumer}/Makefile:
+ 	  Changed a typo where /src/ was being used instead of /libsrc/.
+  	  Thanks to Jean-Marc STRAUSS <strauss@objectif.fr> for reporting
+ 	  this.
+
+	* examples/Connection/non_blocking/CPP-connector.cpp (init):
+ 	  Removed the initialization of the local address.  This is
+ 	  error-prone and confusing to use.  Thanks to Huiying Shen
+	  <shen@environ.org> for reporting this.
+
 	* ace/SV_Semaphore_Simple: Added support for IPC_EXCL in order to
  	  determine, upon creating the semaphore, if it already exists
 	  (which means a bad key was selected), another daemon is still

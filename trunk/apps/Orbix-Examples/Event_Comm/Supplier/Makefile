@@ -17,9 +17,7 @@ LSRC	= $(addsuffix .cpp,$(FILES)) supplier.cpp
 LOBJ	= $(addsuffix .o,$(FILES))
 SHOBJ	= $(addsuffix .so,$(FILES))
 
-SRX	= ../src/.obj
-
-LDLIBS	= $(addprefix $(VSHDIR),$(LOBJ)) ../src/libEvent_Comm.a 
+LDLIBS	= $(addprefix $(VSHDIR),$(LOBJ)) ../libsrc/libEvent_Comm.a 
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
