@@ -1,3 +1,12 @@
+Tue May 28 19:20:58 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/Read_Buffer.cpp (rec_read):
+
+          It seems that my changes trash the files written by test
+          programs. I need to write a test to check out what's happening
+          before changing the CVS head. Reverting my change of Tue May 28
+          17:00:21 2002 Krishnakumar B <kitty@cs.wustl.edu>.
+
 Tue May 28 23:13:45 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Framework_Component_DLL.cpp:
