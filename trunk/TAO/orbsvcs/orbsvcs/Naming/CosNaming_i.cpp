@@ -22,15 +22,18 @@ NS_NamingContext::NS_NamingContext (void)
   if (context_.open (NS_MAP_SIZE) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "NS_NamingContext"));
 
-  // Enable this whenever create_servant_lock() gets committed. @@
-  // this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock ();
-
-  // this is temporal.  Lock will be obtained from the ORB core.
-  this->lock_ = new ACE_Lock_Adapter<ACE_Null_Mutex> ();
+  // Get the lock from the orb that knows what type is appropriate.
+  // @@ Nanbor, there still is an error if I use this function to get the lock.
+  //  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock ();
+  
+  // if orb core returned a null lock, allocate a thread mutex by default
+  //  if (this->lock_ == 0)
+    ACE_NEW (this->lock_, ACE_Lock_Adapter<ACE_Thread_Mutex> ());
 }
 
 NS_NamingContext::~NS_NamingContext (void)
 {
+  delete this->lock_;
 }
 
 CosNaming::NamingContext_ptr
