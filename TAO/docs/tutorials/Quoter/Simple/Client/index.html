@@ -91,9 +91,9 @@
 $ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
 </PRE>
     <P>The complete documentation of the IDL compiler and its options
-      are include are in the
-      <A HREF="../../../../compiler.html">compiler.html</A>,
-      naturally this file included in the distribution.
+      are included in the
+      <A HREF="../../../../compiler.html">compiler.html</A>.
+      naturally this file is included in the distribution.
     </P>
 
     <P>TAO generates 9 files for each IDL file,
@@ -146,6 +146,12 @@ int main (int argc, char* argv[])
       CORBA::ORB_init (argc, argv,
                        "" /* the ORB name, it can be anything! */);
 </PRE>
+    <P>IDL supports variable-length types whose sizes are not known
+      at compile time. Hence they must be dynamically allocated at run 
+      time. <CODE>_var</CODE> types relieve us of the explicit memory
+      management of the variable-length types and thus hide the 
+      differences between fixed and variable-length structured types.
+    </P>
     <P>Since the ORB initialization can fail, and in fact, any CORBA
       operation can raise a <CODE>CORBA::SystemException</CODE> we use
       a <CODE>try/catch</CODE> block to check for any failures.
@@ -192,8 +198,8 @@ int main (int argc, char* argv[])
       to return the same ORB pointer if the same ORB id is used in
       <CODE>CORBA::init</CODE>,
       the implementation is free to return the same pointer even if
-      different ids are used,
-      usually this is not a problem as most applications instantiate a
+      different ids are used.
+      Usually this is not a problem as most applications instantiate a
       single ORB.  TAO is one of the few CORBA implementations that
       actually support multiple ORB pointers, this can be important
       for real-time applications where each ORB executes at different
@@ -217,6 +223,10 @@ int main (int argc, char* argv[])
     Quoter::Stock_Factory_var factory =
       Quoter::Stock_Factory::_narrow (factory_object.in ());
 </PRE>
+    <P>The <CODE>_narrow()</CODE> tests is used to test if a reference 
+      is of the specified type. If the reference is of the specified 
+      type, it returns a non-nil reference. Else it returns a nil. 
+    </P>
     <P>There are a few interesting things about TAO, first it supports
       the <CODE>file:</CODE> scheme for object references, so the first
       argument could be <CODE>file://a_file_name</CODE>, in that case
@@ -245,7 +255,7 @@ int main (int argc, char* argv[])
       this is part of the CORBA Messaging specification and
       essentially performs the same work as <CODE>_narrow()</CODE>,
       but it does not check the types remotely,
-      it you have compile time knowledge that ensures the correctness
+      if you have compile time knowledge that ensures the correctness
       of the narrow operation, it is more efficient to use the
       unchecked version.
     </P>
@@ -297,7 +307,7 @@ int main (int argc, char* argv[])
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sun Nov 28 18:51:24 CST 1999
+Last modified: Thu Feb 17 17:28:33 PST 2000
 <!-- hhmts end -->
   </body>
 </html>
