@@ -459,7 +459,7 @@ TAO_Hash_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (result._retn ());
 
-  // Put c_impl into the auto pointer temporarily, in case next
+  // Put <c> into the auto pointer temporarily, in case next
   // allocation fails.
   ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp (c);
 
