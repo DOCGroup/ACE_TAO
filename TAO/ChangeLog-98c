@@ -23,6 +23,7 @@ Thu Nov 19 15:12:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/summarize:
           added support for output in either usec or msec.
+          Added 0.5 to floating point inputs, to round instead of truncate.
 
 Thu Nov 19 14:51:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
