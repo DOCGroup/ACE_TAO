@@ -177,15 +177,20 @@ Client::get_high_priority_jitter (void)
   double jitter = 0;
   double average = get_high_priority_latency ();
 
-  // @@ Please comment this code.
+  // Compute the standard deviation (i.e. jitter) from the values
+  // stored in the global_jitter_array_. 
 
+  // we first compute the sum of the squares of the differences
+  // each latency has from the average
   for (u_int i = 0; i < ts_->loop_count_; i ++)
     {
       double difference = ts_->global_jitter_array_ [0][i] - average;
       jitter += difference * difference;
     }
-
-  return sqrt (jitter / (double) (ts_->loop_count_ - 1));
+  
+  // return the square root of the sum of the differences computed
+  // above, i.e. jitter
+  return sqrt (jitter);
 }
 
 double
@@ -194,8 +199,11 @@ Client::get_low_priority_jitter (void)
   double jitter = 0;
   double average = get_low_priority_latency ();
 
-  // @@ Please comment this code.
+  // Compute the standard deviation (i.e. jitter) from the values
+  // stored in the global_jitter_array_. 
 
+  // we first compute the sum of the squares of the differences
+  // each latency has from the average
   for (u_int j = 1; j < ts_->start_count_; j ++)
     for (u_int i = 0; i < ts_->loop_count_; i ++)
       {
@@ -203,7 +211,9 @@ Client::get_low_priority_jitter (void)
         jitter += difference * difference;
       }
 
-  return (double) (jitter / ((ts_->loop_count_* (ts_->start_count_ - 1)) - 1));
+  // return the square root of the sum of the differences computed
+  // above, i.e. jitter
+  return sqrt (jitter);
 }
 
 int
