@@ -3,6 +3,7 @@
 # $Id$
 #
 #----------------------------------------------------------------------------
+
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
@@ -11,7 +12,8 @@ LIBNAME  = libTAO_RTEC_COSEC
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lTAO_RTEvent -lTAO_Svc_Utils -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_RTEvent -lTAO_CosEvent \
+             -lTAO_Svc_Utils -lTAO_PortableServer -lTAO -lACE
 
 CPP_SRCS += \
         ConsumerAdmin_i \
@@ -47,7 +49,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
-	-I$(TAO_ROOT)/orbsvcs/orbsvcs/ESF
+        -I$(TAO_ROOT)/orbsvcs/orbsvcs/ESF
 
 #----------------------------------------------------------------------------
 #       Dependencies
