@@ -1,3 +1,13 @@
+Wed Oct  7 18:18:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* README: 
+	* ace/config-irix6.x-g++.h: 
+	* ace/config-irix6.x-common.h: 
+	* ace/config-irix6.x-sgic++-nothreads.h: 
+	  Peter Nordlund <petern@nada.kth.se> kindly submitted a common
+	  configuration file for IRIX 6.X that works with both g++ and SGI
+	  MIPSPro 7.X
+
 Wed Oct  7 17:21:17 1998  Arturo Montes <mitosys@colomsat.com.co>
 
 	* ace/OS.{i,cpp}: FSU pthreads is draft6, but FSU in SCO is an
