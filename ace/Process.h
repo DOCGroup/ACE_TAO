@@ -23,6 +23,9 @@
 #include "ace/Handle_Set.h"
 #include "ace/os_include/sys/os_types.h"
 
+// Forward declaration
+class ACE_Time_Value;
+
 /**
  * @class ACE_Process_Options
  *
