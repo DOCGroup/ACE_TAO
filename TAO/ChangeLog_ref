@@ -1,7 +1,27 @@
+Sun Aug  3 16:37:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any_Basic_Impl_T.cpp:
+	* tao/Any_Dual_Impl_T.cpp:
+	* tao/Any_Impl_T.cpp:
+	* tao/Any_SystemException.cpp:
+	* tao/Codeset_Manager.h:
+	* tao/Exception.cpp:
+	* tao/Fault_Tolerance_Service.cpp
+	* tao/Fault_Tolerance_Service.h:
+	* tao/Typecode.cpp:
+	* tao/Typecode.h:
+	* tao/PortableServer/Operation_Table.h: Fixed compilation errors
+	  that were introduced due to refactoring of ACE.
+
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Connector.cpp: Fixed compilation errors that came
+	  around due to the merge.
+
 Sun Aug  3 16:32:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
-        * TAO_IDL//be/be_visitor_interface/strategized_proxy_broker_ss.cpp: 
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp: 
 
           Fixed compilation from wrong environmental variable usage. 
 

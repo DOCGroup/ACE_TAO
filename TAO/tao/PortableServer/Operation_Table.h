@@ -24,6 +24,7 @@
 #include "tao/TAO_Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Malloc_Allocator.h"
 
 /**
  * @class TAO_operation_db_entry

@@ -25,11 +25,13 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/corbafwd.h"
 
 
 class TAO_Service_Callbacks;
 class TAO_ORB_Core;
+class ACE_Lock;
 
 /**
  * @class TAO_Fault_Tolerance_Service

@@ -35,7 +35,7 @@ namespace TAO
     if (this->transport_)
       {
         this->transport_->make_idle ();
-        TAO_Transport::release (this->transport_);
+        this->transport_->remove_reference ();
       }
   }
 

@@ -34,13 +34,6 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-  if (connection_handler_ != 0)
-    {
-      // REFCNT: Matches one of
-      // TAO_Transport::connection_handler_close() or
-      // TAO_Transport::close_connection_shared.
-      this->connection_handler_->incr_refcount();
-    }
 #if 0
   // First step in deprecating this. No one seems using it.
   if (flag)

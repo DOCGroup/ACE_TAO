@@ -12,13 +12,13 @@
 // only mutual exclusion relates to reference counting and
 // construction.
 
-#include "tao/Typecode.h"
-#include "tao/Environment.h"
-#include "tao/Any.h"
-#include "tao/Exception.h"
-#include "tao/Marshal.h"
-#include "tao/CORBA_String.h"
-#include "tao/debug.h"
+#include "Typecode.h"
+#include "Environment.h"
+#include "Any.h"
+#include "Exception.h"
+#include "Marshal.h"
+#include "CORBA_String.h"
+#include "debug.h"
 #include "ace/Malloc_Base.h"
 
 #if !defined (__ACE_INLINE__)
