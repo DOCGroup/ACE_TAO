@@ -168,7 +168,7 @@ ACE_Stream<ACE_SYNCH_USE>::replace (const ACE_TCHAR *replace_name,
 
         if (prev_mod)
           prev_mod->link (mod);
-        else // In case the <prev_mod> is <stream_head_>.
+        else // In case the <rep_mod> is <stream_head_>.
           {
             mod->reader ()->next (0);
             this->stream_head_ = mod;
