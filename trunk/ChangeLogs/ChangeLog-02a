@@ -1,3 +1,10 @@
+Thu Feb 14 08:17:40 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Strategies_T.h:
+	* ace/Strategies_T.i: Allow the reactor of the Svc Handler to be
+	  set to the reactor passed to the Creation Strategy.  Thanks to
+ 	  David Smith <smithdav@tycoelectronics.com> for motivating this.
+
 Thu Feb 14 01:14:40 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/ace_flags.bor: Updated ACE_XML_CFLAGS.
@@ -83,13 +90,6 @@ Thu Feb 14 00:20:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  base directory to include XML related files to $(ACE_ROOT).
 	  Thanks to Johnny Tucker <jtucker@magisnetworks.com> for the
 	  suggestion.
-
-Wed Feb 13 20:13:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-	* ace/Strategies_T.cpp (make_svc_handler): Make sure that the
-	  reactor of the Svc Handler is set to the reactor from the
- 	  Creation Strategy.  Thanks to David Smith
- 	  <smithdav@tycoelectronics.com> for reporting this!
 
 Wed Feb 13 17:42:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
