@@ -1,5 +1,12 @@
 // $Id$
 
+// Be very carefull before changing the calculations inside
+// ACE_High_Res_Timer.  The precision matters and we are using integer
+// calculations not floating point.  Also look good at the emulated 64
+// bit int class (inside Basic_Types{h,i,cpp} before changing
+// anything.  It's operator/ only returns 32 bits not 64 bits, among
+// other things.
+
 #include "ace/High_Res_Timer.h"
 
 #if !defined (__ACE_INLINE__)

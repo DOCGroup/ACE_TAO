@@ -363,7 +363,7 @@ ACE_QtReactor::reset_timeout (void)
 long 
 ACE_QtReactor::schedule_timer (ACE_Event_Handler *handler,
                                const void *arg,
-                               const ACE_Time_Value &delta_time,
+                               const ACE_Time_Value &delay_time,
                                const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_QtReactor::schedule_timer");
@@ -375,7 +375,7 @@ ACE_QtReactor::schedule_timer (ACE_Event_Handler *handler,
   long result;
   if ((result = ACE_Select_Reactor::schedule_timer(handler, 
                                                    arg, 
-                                                   delta_time, 
+                                                   delay_time, 
                                                    interval)) == -1 ) 
     return -1;
   else

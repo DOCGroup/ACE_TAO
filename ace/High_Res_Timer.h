@@ -41,12 +41,29 @@
  * factor.  They divide the "time" that they get from
  * <ACE_OS::gethrtime> by global_scale_factor_ to obtain the
  * time in microseconds.  Its units are therefore 1/microsecond.
+ * On Windows the global_scale_factor_ units are 1/millisecond.
+ * There's a macro <ACE_HR_SCALE_CONVERSION> which gives the
+ * units/second.  Because it's possible that the units/second
+ * changes in the future, it's recommended to use it instead
+ * of a "hard coded" solution.
+ * Dependend on the platform and used class members, there's a
+ * maximum elapsed period before overflow (which is not checked).
+ * Look at the documentation with some members functions.
+ * On some (most?) implementations it's not recommended to measure
+ * "long" timeperiods, because the error's can accumulate fast.
+ * This is probably not a problem profiling code, but could be
+ * on if the high resolution timer class is used to initiate
+ * actions after a "long" timeout.
  * On Solaris, a scale factor of 1000 should be used because its
  * high-resolution timer returns nanoseconds.  However, on Intel
  * platforms, we use RDTSC which returns the number of clock
  * ticks since system boot.  For a 200MHz cpu, each clock tick
  * is 1/200 of a microsecond; the global_scale_factor_ should
- * therefore be 200.
+ * therefore be 200 or 200000 if it's in unit/millisecond.
+ * On Windows ::QueryPerformanceCounter() is used, which can be a 
+ * different implementation depending on the used windows HAL
+ * (Hardware Abstraction Layer).  On some it uses the PC "timer chip"
+ * while it uses RDTSC on others.   
  * NOTE:  the elapsed time calculations in the print methods use
  * ACE_hrtime_t values.  Those methods do _not_ check for overflow!
  * NOTE: Gabe <begeddov@proaxis.com> raises this issue regarding
@@ -56,6 +73,23 @@
  * divergence there would be, if any.
  * This issue is not mentioned in the Solaris 2.5.1 gethrtime
  * man page.
+ * A RDTSC NOTE: RDTSC is the Intel Pentium read-time stamp counter
+ * and is actualy a 64 bit clock cycle counter, which is increased 
+ * with every cycle.  It has a low overhead and can be read within
+ * 16 (pentium) or 32 (pentium II,III,...) cycles, but it doesn't
+ * serialize the processor, which could give wrong timings when
+ * profiling very short code fragments.  
+ * Problematic is that some power sensitive devices
+ * (laptops for example, but probably also embeded devices),
+ * do change the cycle rate while running.  
+ * Some pentiums can run on (at least) two clock frequency's.
+ * Another problem arises with multiprocessor computers, there
+ * are reports that the different RDTSC's are not always kept
+ * in sync.
+ * A windows "timer chip" NOTE: (8254-compatible real-time clock)
+ * When ::QueryPerformanceCounter() uses the 8254 it has a 
+ * frequency off about 1.193 Mhz (or sometimes 3.579 Mhz??) and
+ * reading it requires some time (several thousand cycles).
  */
 class ACE_Export ACE_High_Res_Timer
 {
@@ -71,6 +105,9 @@ public:
    * global_scale_factor_ is set to 1000 so that <scale_factor> need
    * not be set.  Careful, a <scale_factor> of 0 will cause division
    * by zero exceptions.
+   * Depending on the platform its units are 1/microsecond or
+   * 1/millisecond. Use <ACE_HR_SCALE_CONVERSION> inside calculations
+   * instead a hardcoded value.
    */
   static void global_scale_factor (ACE_UINT32 gsf);
 
@@ -107,6 +144,7 @@ public:
    * values.  An application can override that by calling calibrate
    * with any desired parameter values _prior_ to constructing the
    * first ACE_High_Res_Timer instance.
+   * Beware for platforms that can change the cycle rate on the fly.
    */
   static ACE_UINT32 calibrate (const ACE_UINT32 usec = 500000,
                                const u_int iterations = 10);
@@ -127,9 +165,17 @@ public:
   void stop (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Set <tv> to the number of microseconds elapsed.
+  /**
+   *  Could overflow within hours on windows with emulated 64 bit int's
+   *  and a fast counter. VC++ and Borland normaly use __int64 and
+   *  so normaly don't have this problem.
+   */
   void elapsed_time (ACE_Time_Value &tv) const;
 
   /// Set <nanoseconds> to the number of nanoseconds elapsed.
+  /**
+   *  Will overflow when measuring more than 194 day's. 
+   */
   void elapsed_time (ACE_hrtime_t &nanoseconds) const;
 
 #if defined (ACE_HAS_POSIX_TIME)
@@ -139,6 +185,10 @@ public:
 #endif /* ACE_HAS_POSIX_TIME */
 
   /// Sets <usecs> to the elapsed (stop - start) time in microseconds.
+  /**
+   *  Will overflow on windows when measuring more than appox. 2^^54 ticks.
+   *  Is still more than 48 days with a 4 Ghz counter. 
+   */
   void elapsed_microseconds (ACE_hrtime_t &usecs) const;
 
   /// Start incremental timing.

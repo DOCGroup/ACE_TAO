@@ -5127,7 +5127,8 @@ ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
 ACE_INLINE
 ACE_Flow_Spec::ACE_Flow_Spec (void)
 {
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
   this->TokenRate = 0;
   this->TokenBucketSize = 0;
   this->PeakBandwidth = 0;

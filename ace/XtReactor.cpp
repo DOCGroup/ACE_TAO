@@ -394,7 +394,7 @@ ACE_XtReactor::reset_timer_interval
 long
 ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
 			       const void *arg,
-			       const ACE_Time_Value &delta_time,
+			       const ACE_Time_Value &delay_time,
 			       const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_XtReactor::schedule_timer");
@@ -402,7 +402,7 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
 
   long result = ACE_Select_Reactor::schedule_timer (handler,
                                                     arg,
-                                                    delta_time,
+                                                    delay_time,
                                                     interval);
   if (result == -1)
     return -1;

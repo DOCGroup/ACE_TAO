@@ -354,7 +354,7 @@ ACE_Connector<SVH, PR_CO_2>::handle_output (ACE_HANDLE handle)
       if (ast->svc_handler ()->peer ().get_remote_addr (raddr) != -1)
         this->activate_svc_handler (ast->svc_handler ());
       else // do the svc handler close below...
-#endif /* ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS */
+#endif /* ACE_WIN32 */
        ast->svc_handler ()->close (0);
     }
   delete ast;
