@@ -115,7 +115,7 @@ open (STDERR, ">&STDOUT") or die "can't redirect stderror: $!";
 
 name_server ();
 
-client ("-ORBnameserviceior file://$iorfile", "-m25");
+client ("-ORBnameserviceior file://$iorfile", "-m15");
 
 close (STDERR);
 close (STDOUT);
@@ -131,7 +131,7 @@ if ($server == -1) {
 unlink $iorfile;
 
 $FL = Process::Create ($EXEPREFIX."process-m-output.pl",
-                       " test_run.data 25");
+                       " test_run.data 15");
 $filter = $FL->TimedWait (60);
 if ($filter == -1) {
   print STDERR "ERROR: filter timedout\n";
