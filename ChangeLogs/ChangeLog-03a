@@ -1,3 +1,25 @@
+Tue Jun 12 23:06:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Event_Server/Options.cpp:
+	* examples/ASX/Event_Server/Event_Server/Options.cpp:
+	* examples/ASX/Message_Queue/buffer_stream.cpp:
+	* examples/ASX/UPIPE_Event_Server/Options.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i:
+	* examples/Shared_Malloc/test_malloc.cpp:
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
+	* examples/Threads/thread_manager.cpp:
+	* examples/Threads/thread_specific.cpp:
+
+	  Fixes for warnings under IA-64 Linux. This involves using the
+	  new ACE_[S]SIZE_T_FORMAT_SPECIFIER and appropriate uses of
+	  ACE_reinterpret_cast. This completes the fixes needed to compile
+	  ACE and TAO on IA-64 Linux (as of today). Now the tests remain
+          examples/examples/to be fixed.
+
+
 Tue Jun 12 18:53:25 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/config-linux-common.h:

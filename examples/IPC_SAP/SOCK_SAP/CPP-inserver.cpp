@@ -23,7 +23,8 @@ run_server (ACE_THR_FUNC server,
   // Spawn a new thread and run the new connection in that thread of
   // control using the <server> function as the entry point.
   if (ACE_Thread_Manager::instance ()->spawn (server,
-                                              (void *) handle,
+                                              ACE_reinterpret_cast(void *, 
+                                                                  handle),
                                               THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) %p\n",

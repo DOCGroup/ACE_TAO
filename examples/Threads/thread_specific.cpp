@@ -200,7 +200,8 @@ main (int argc, char *argv[])
 #if defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn_n (threads,
                                                ACE_THR_FUNC (&worker),
-                                               (void *) count,
+                                               ACE_reinterpret_cast(void *,
+                                                                    count),
                                                THR_BOUND | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

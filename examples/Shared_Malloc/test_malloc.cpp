@@ -113,10 +113,10 @@ spawn (void)
           char msg_size[20];
 
           ACE_OS::sprintf (iterations,
-                           "%d",
+                           ACE_SIZE_T_FORMAT_SPECIFIER,
                            Options::instance ()->iteration_count ());
           ACE_OS::sprintf (msg_size,
-                           "%d",
+                           ACE_SIZE_T_FORMAT_SPECIFIER,
                            Options::instance ()->max_msg_size ());
           const char *cp = 0;
 
