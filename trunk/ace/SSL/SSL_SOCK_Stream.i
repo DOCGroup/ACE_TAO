@@ -44,31 +44,6 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
                     0);
 }
 
-ASYS_INLINE void
-ACE_SSL_SOCK_Stream::operator= (const ACE_SSL_SOCK_Stream &stream)
-{
-  // NOT thread safe!
-
-  ::SSL_free (this->ssl_);
-
-  // @@ What do we do if SSL_dup() fails, i.e. returns NULL?
-  this->ssl_ = ::SSL_dup (stream.ssl_);
-
-  this->set_handle (stream.get_handle ());
-}
-
-ASYS_INLINE
-ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &stream)
-  : ACE_SSL_SOCK (),
-    ssl_ (0),
-    stream_ ()
-{
-  // NOT thread safe!
-
-  *this = stream;
-}
-
-
 ASYS_INLINE
 ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
 {
