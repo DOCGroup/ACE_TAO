@@ -27,6 +27,12 @@ Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/{Log_Msg.cpp,OS.i,Select_Reactor.cpp,Signal.*,WFMO_Reactor.i},
           tests/Sigset_Ops_Test.cpp: replace NSIG with ACE_NSIG.
 
+        * ace/Basic_Types.{h,i}: only use u_longlong_t on sun.  Added
+          operator++ to ACE_U_LongLong, and tweaked calculation in operator/.
+
+        * tests/Time_Value_Test.cpp (test_ace_u_longlong_): added test of
+          operator+, and one simple test of operator/.
+
 Tue Dec 30 20:32:03 1997  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Map_Manager.{h,cpp}: Added STL-styled iterator function.
