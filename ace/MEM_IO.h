@@ -31,6 +31,29 @@ class ACE_Export ACE_MEM_IO : public ACE_SOCK, public ACE_MEM_SAP
   // = TITLE
   //     Defines the methods for the ACE shared memeory wrapper I/O
   //     routines (e.g., send/recv).
+  //
+  //     The shared memory transport uses ACE_SOCK_* class to
+  //     implement the signaling mechanism so we can easily use the
+  //     new mechanism with the Reactor pattern (which uses select
+  //     under the hood.)
+  //
+  //     ACE_MEM_Acceptor and ACE_MEM_Connector are used to establish
+  //     connections.  When a connection is established,
+  //     ACE_MEM_Acceptor creates the MMAP file for data exchange and
+  //     sends the location of the file (complete path name) to
+  //     ACE_MEM_Connector thru the socket.  ACE_MEM_Connector then
+  //     reads the location of the file off the socket and opens up
+  //     the same MMAP file.  ACE_MEM_Stream at each side then
+  //     contains a reference to the ACE_Mallo object using the same
+  //     MMAP file.
+  //
+  //     When sending information using methods provided in this
+  //     class, ACE_MEM_IO requests a chunk of memory from the
+  //     MALLOC_TYPE object, copy the data into the shared memory and
+  //     send the memory offset (from the start of the ACE_Malloc)
+  //     across the socket.  This action also servers as a signal to
+  //     the other end.  The receiving side then reverses the
+  //     procedures and copies the information into user buffer.
 public:
   // = Initialization and termination methods.
   ACE_MEM_IO (void);

@@ -1,3 +1,7 @@
+Tue Feb 22 01:19:40 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_IO.h: Added more comments.
+
 Tue Feb 22 00:39:03 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.h: Changed method fetch_recv_buf as protected and
