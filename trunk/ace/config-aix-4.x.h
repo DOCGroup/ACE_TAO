@@ -28,6 +28,7 @@
 
    // C Set++ 3.1 and IBM C/C++ 3.6
 #  if defined (__xlC__)
+#    define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 #    define ACE_TEMPLATES_REQUIRE_PRAGMA
 #  endif
 
@@ -63,7 +64,9 @@
 
 
 // Compiling for AIX.
-#define AIX
+#ifndef AIX
+#  define AIX
+#endif /* AIX */
 
 // Use BSD 4.4 socket definitions for pre-AIX 4.2.  The _BSD setting also
 // controls the data type used for waitpid(), wait(), and wait3().
@@ -72,8 +75,10 @@
 #  define ACE_HAS_UNION_WAIT
 #endif /* ACE_AIX_MINOR_VERS < 3 */
 
-// This environment requires this thing
-#define _BSD_INCLUDES
+// This environment requires this thing, pre-AIX 4.3
+#if (ACE_AIX_MINOR_VERS < 3)
+#  define _BSD_INCLUDES
+#endif /* ACE_AIX_MINOR_VERS < 3 */
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
@@ -94,7 +99,9 @@
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
-#define ACE_HAS_CHARPTR_DL
+#if (ACE_AIX_MINOR_VERS < 3)
+#  define ACE_HAS_CHARPTR_DL
+#endif /* ACE_AIX_MINOR_VERS < 3 */
 
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
