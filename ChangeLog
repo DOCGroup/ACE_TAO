@@ -1,3 +1,12 @@
+Fri Feb 25 18:46:33 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_Pseudo_Task.cpp: Forgot some cleanups for places
+	  returning -2. Fixed. Also reduced the clutter of diagnostic
+	  messages and added useful output (such as %p) to those remaining.
+
+	* ace/POSIX_Asynch_IO.cpp: Additional handle cleanups and checks
+	  for ACE_POSIX_Asynch_Accept::close ().
+	
 Fri Feb 25 17:29:12 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux-11.00.h: Always set ACE_HAS_SVR4_DYNAMIC_LINKING.
