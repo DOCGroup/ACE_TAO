@@ -548,6 +548,16 @@ TAO::Unknown_IDL_Type::assign_translator (CORBA::TCKind kind,
 
 // ****************************************************************
 
+CORBA::Any_var::Any_var (const CORBA::Any_var &r)
+  : ptr_ (0)
+{
+  if (r.ptr_ != 0)
+    {
+      ACE_NEW (this->ptr_,
+               CORBA::Any (*r.ptr_));
+    }
+}
+
 CORBA::Any_var &
 CORBA::Any_var::operator= (CORBA::Any *p)
 {
