@@ -1,3 +1,12 @@
+Wed Oct 13 21:55:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/wrapper_macros.GNU (acexml):
+
+	  Enable ACEXML support by default.  Addresses build issues
+	  introduced by the "--with-acexml" configure script changes
+	  described below.  Thanks to Bala for pointing this out and for
+	  suggesting a fix.
+
 Tue Oct 12 22:37:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* m4/ace.m4:
