@@ -35,11 +35,11 @@ class Dynamic_Supplier : public Supplier
 public:
   ///Calls up to Service_Handler every time a timeout
   ///occurs. normal_channel_id1 is used as id returned by get_id().
-  Dynamic_Supplier(RtecEventComm::EventSourceID id,
-                   RtecEventComm::EventType normal_type1,
-                   RtecEventComm::EventType normal_type2,
-                   RtecEventComm::EventType ft_type1,
-                   RtecEventComm::EventType ft_type2,
+  Dynamic_Supplier(SourceID id,
+                   EventType normal_type1,
+                   EventType normal_type2,
+                   EventType ft_type1,
+                   EventType ft_type2,
                    Service_Handler *handler = 0);
 
   virtual ~Dynamic_Supplier(void);
