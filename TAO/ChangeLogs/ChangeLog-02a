@@ -72,6 +72,8 @@ Tue Jun 27 00:44:42 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* peformance-tests/RTCorba/Orb_Per_Priority/Makefile
 	* tests/Endpoint_Per_Priority/Makefile
 	* tao/Makefile:
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp
 
 	  Updated dependencies.
 
