@@ -163,6 +163,9 @@ comps           Specifies which components are required to build the target
 tagname         Specifies the make macro to check before building the target
 tagchecks       Specifies the values for tagname to check
 
+NOTE: Within the GNUACE project type, setting sharedname to empty and
+setting staticname to the static library name will result in a project that
+will generate only static libraries.
 
 Custom File Definitions
 -----------------------
