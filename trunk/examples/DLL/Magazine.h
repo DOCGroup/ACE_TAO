@@ -11,7 +11,8 @@
 //    Magazine.h
 //
 // = DESCRIPTION
-//   Abstract class whose methods are implemented by the derived classes.
+//    Abstract class whose methods are implemented by the derived 
+//    classes.
 //
 // = AUTHOR
 //    Kirthika Parameswaran <kirthika@cs.wustl.edu>
