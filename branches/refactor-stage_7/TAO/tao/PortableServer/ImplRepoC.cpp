@@ -30,7 +30,7 @@
 
 
 #include "ImplRepoC.h"
-#include "tao/Stub.h"
+#include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Any_Impl_T.h"
@@ -2033,7 +2033,7 @@ void ImplementationRepository::Administration::activate_server (
       &_tao_server
     };
 
-  static TAO_Exception_Data
+  static TAO::Exception_Data
   _tao_ImplementationRepository_Administration_activate_server_exceptiondata [] =
     {
       {
@@ -2103,7 +2103,7 @@ char * ImplementationRepository::Administration::activate_server_with_startup (
       &_tao_check_startup
     };
 
-  static TAO_Exception_Data
+  static TAO::Exception_Data
   _tao_ImplementationRepository_Administration_activate_server_with_startup_exceptiondata [] =
     {
       {
@@ -2174,7 +2174,7 @@ void ImplementationRepository::Administration::register_server (
       &_tao_options
     };
 
-  static TAO_Exception_Data
+  static TAO::Exception_Data
   _tao_ImplementationRepository_Administration_register_server_exceptiondata [] =
     {
       {
@@ -2282,7 +2282,7 @@ void ImplementationRepository::Administration::remove_server (
       &_tao_server
     };
 
-  static TAO_Exception_Data
+  static TAO::Exception_Data
   _tao_ImplementationRepository_Administration_remove_server_exceptiondata [] =
     {
       {
@@ -2342,7 +2342,7 @@ void ImplementationRepository::Administration::shutdown_server (
       &_tao_server
     };
 
-  static TAO_Exception_Data
+  static TAO::Exception_Data
   _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata [] =
     {
       {
@@ -2408,7 +2408,7 @@ char * ImplementationRepository::Administration::server_is_running (
       &_tao_server_object
     };
 
-  static TAO_Exception_Data
+  static TAO::Exception_Data
   _tao_ImplementationRepository_Administration_server_is_running_exceptiondata [] =
     {
       {
@@ -2470,7 +2470,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
       &_tao_server
     };
 
-  static TAO_Exception_Data
+  static TAO::Exception_Data
   _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata [] =
     {
       {
@@ -2533,7 +2533,7 @@ void ImplementationRepository::Administration::find (
       &_tao_info
     };
 
-  static TAO_Exception_Data
+  static TAO::Exception_Data
   _tao_ImplementationRepository_Administration_find_exceptiondata [] =
     {
       {

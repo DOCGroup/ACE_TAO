@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           ami_exception_holder_operation_cs, 
+ACE_RCSID (be_visitor_operation,
+           ami_exception_holder_operation_cs,
            "$Id$")
 
 // ************************************************************
@@ -69,7 +69,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
   *os << "void " << be_nl;
 
   // Get the scope name.
-  be_decl *parent = 
+  be_decl *parent =
     be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
   if (parent == 0)
@@ -85,7 +85,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
     }
 
   be_interface *parent_interface = be_interface::narrow_from_decl (parent);
-  AST_Decl::NodeType nt = 
+  AST_Decl::NodeType nt =
     parent_interface->defined_in ()->scope_node_type ();
 
   if (parent_interface->is_nested () && nt == AST_Decl::NT_module)
@@ -145,7 +145,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      *os << "static TAO_Exception_Data " << "exceptions_data [] = " << be_nl;
+      *os << "static TAO::Exception_Data " << "exceptions_data [] = " << be_nl;
       *os << "{" << be_idt_nl;
 
       int excep_count = 0;

@@ -21,7 +21,7 @@
 
 #include "dynamicinterface_export.h"
 
-struct TAO_Exception_Data;
+
 class TAO_Operation_Details;
 class TAO_Stub;
 class ACE_Time_Value;
@@ -40,7 +40,7 @@ namespace TAO
 {
   class Argument;
   class Collocation_Proxy_Broker;
-
+  struct Exception_Data;
   /**
    * @class DII_Invocation_Adapter
    *
@@ -135,7 +135,7 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_DII_DEFERRED_INVOCATION);
 
     /// Invoke the target
-    virtual void invoke (TAO_Exception_Data *ex,
+    virtual void invoke (TAO::Exception_Data *ex,
                          unsigned long ex_count
                          ACE_ENV_ARG_DECL);
 

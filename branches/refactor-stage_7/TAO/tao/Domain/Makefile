@@ -171,7 +171,12 @@ endif
   $(TAO_ROOT)/tao/Argument.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.h \
+  $(TAO_ROOT)/tao/ParameterMode.h \
+  $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Exception.h \
@@ -239,15 +244,11 @@ endif
   $(TAO_ROOT)/tao/PortableServer/PolicyS_T.cpp \
   $(TAO_ROOT)/tao/PortableServer/PolicyS.i \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
+  $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
-  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
-  $(TAO_ROOT)/tao/ParameterMode.h \
-  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
-  $(TAO_ROOT)/tao/Any.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.h \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
-  $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -275,8 +276,9 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
+  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.i \
   $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
   $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
@@ -446,8 +448,8 @@ endif
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(TAO_ROOT)/tao/params.h \
-  $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/params.i \
+  $(TAO_ROOT)/tao/ORB_Constants.h \
   $(TAO_ROOT)/tao/PolicyFactory_Registry.h \
   $(TAO_ROOT)/tao/Parser_Registry.h \
   $(TAO_ROOT)/tao/Parser_Registry.i \
@@ -463,7 +465,6 @@ endif
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
-  $(TAO_ROOT)/tao/ORB_Constants.h \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -496,8 +497,6 @@ endif
   $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
-  $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.h \
@@ -510,8 +509,6 @@ endif
   $(TAO_ROOT)/tao/Basic_Argument_T.h \
   $(TAO_ROOT)/tao/Basic_Argument_T.inl \
   $(TAO_ROOT)/tao/Basic_Argument_T.cpp \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.h \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
   $(TAO_ROOT)/tao/Special_Basic_Arguments.h \
   $(TAO_ROOT)/tao/Special_Basic_Argument_T.h \
   $(TAO_ROOT)/tao/Special_Basic_Argument_T.inl \

@@ -40,7 +40,7 @@ namespace TAO
   // than CORBA exception since we are not having a throw spec.
 
   void
-  Invocation_Adapter::invoke (TAO_Exception_Data *ex_data,
+  Invocation_Adapter::invoke (TAO::Exception_Data *ex_data,
                               unsigned long ex_count
                               ACE_ENV_ARG_DECL)
   {

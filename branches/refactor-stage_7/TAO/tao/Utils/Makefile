@@ -103,10 +103,10 @@ CPPFLAGS += -I$(TAO_ROOT)
   Auto_Functor.inl Auto_Functor.cpp \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
-  $(ACE_ROOT)/ace/CORBA_macros.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
@@ -170,7 +170,12 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Argument.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.h \
+  $(TAO_ROOT)/tao/ParameterMode.h \
+  $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -329,7 +334,12 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Argument.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.h \
+  $(TAO_ROOT)/tao/ParameterMode.h \
+  $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -493,7 +503,12 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Argument.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.h \
+  $(TAO_ROOT)/tao/ParameterMode.h \
+  $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Exception.h \

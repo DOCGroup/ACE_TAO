@@ -1327,7 +1327,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     }
 
   // This is true if we have a typecode or TCKind in the IDL file.
-  // If not included here, it will appear in *C.cpp, if TCs not suppressed. 
+  // If not included here, it will appear in *C.cpp, if TCs not suppressed.
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.typecode_seen_,
       "tao/Typecode.h",
@@ -1335,7 +1335,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     );
 
   // This is true if we have an 'any' in the IDL file.
-  // If not included here, it will appear in *C.cpp, if Anys not suppressed. 
+  // If not included here, it will appear in *C.cpp, if Anys not suppressed.
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.any_seen_,
       "tao/Any.h",
@@ -1394,9 +1394,9 @@ TAO_CodeGen::gen_stub_src_includes (void)
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.non_local_op_seen_))
     {
-      this->gen_standard_include (this->client_stubs_, 
-                                  "tao/Stub.h");
-      this->gen_standard_include (this->client_stubs_, 
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Exception_Data.h");
+      this->gen_standard_include (this->client_stubs_,
                                   "tao/Invocation_Adapter.h");
 
       // Any abstract interface present will probably have an operation.

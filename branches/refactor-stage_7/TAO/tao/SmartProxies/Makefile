@@ -156,7 +156,12 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Argument.h \
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/Object_Argument_T.cpp \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.h \
+  $(TAO_ROOT)/tao/ParameterMode.h \
+  $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
