@@ -25,6 +25,7 @@ SNMP Version 1 as defined in the IETF Request for Comments (RFC)
 <sl>
 <li>1155
 <li>1157
+<li>1213
 <li>1215
 <sl>
 <p>Also see the RFC 1902 spec for new SMI datatypes such as Counter64.
@@ -33,6 +34,12 @@ SNMP Version 1 as defined in the IETF Request for Comments (RFC)
 classes then modified for use in the ACE framework. About 10% of the API 
 changed during code rework. See ASNMP/asnmp/ChangeLog for details. 
 
+<p>ASNMP can be used for either manager applications or agent applications.
+The <i>Snmp</i> class contains the interface for manager applications. The
+<i>sagent</i> class contains the interface for agent applications. A
+trivial agent that implements the mib II system group per rfc1213 is
+in the agents/ directory. 
+ 
 <h2>Class Heirarchy</h2>
 
 <pre>
