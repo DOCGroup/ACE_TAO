@@ -56,8 +56,11 @@ CORBA::String_var::~String_var (void)
 
 ACE_INLINE
 CORBA::String_var::String_var (char *p)
-  : ptr_ (CORBA::string_dup (p))
+  : ptr_ (p)
 {
+  // NOTE: According to the CORBA spec this string must *not* be
+  // copied, but it is non-compliant to use it/release it in the
+  // calling code.
   // argument is consumed. p should never be NULL
 }
 

@@ -1,3 +1,20 @@
+Tue Nov 25 20:49:24 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tao/orbobj.h: 
+	* tao/orbobj.cpp: 
+	* tao/params.h: 
+	* tao/params.cpp: 
+	  Removed the parameters to specify the event service and schedule
+	  service IOR, the naming service is working now so it can be
+	  used. And the support in "resolve_initial_references".
+
+	* tao/corbacom.i: 
+	* tao/decode.cpp: 
+	  Reverted the previous change, but this time added proper
+	  comments: the spec says that a Naming_var taking a <char*> is 
+	  *not* supposed to copy it. Hence the ObjRef decoder cannot
+	  release the string it just read.
+
 Mon Nov 24 20:40:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tao/corbacom.i: 

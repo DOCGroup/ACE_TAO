@@ -2,9 +2,7 @@
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : name_service_ior_ (0),
-    name_service_port_ (0),
-    schedule_service_ior_ (0),
-    event_service_ior_ (0)
+    name_service_port_ (0)
 {
 }
 
@@ -41,38 +39,6 @@ TAO_ORB_Parameters::name_service_ior (void)
 }
 
 // Get the IOR of our name service.
-
-void 
-TAO_ORB_Parameters::schedule_service_ior (CORBA::String s)
-{
-  this->schedule_service_ior_ = s;
-}
-
-// Set the IOR of our Schedule service.
-
-CORBA::String 
-TAO_ORB_Parameters::schedule_service_ior (void)
-{
-  return this->schedule_service_ior_;
-}
-
-// Get the IOR of our schedule service.
-
-void 
-TAO_ORB_Parameters::event_service_ior (CORBA::String s)
-{
-  this->event_service_ior_ = s;
-}
-
-// Set the IOR of our Schedule service.
-
-CORBA::String 
-TAO_ORB_Parameters::event_service_ior (void)
-{
-  return this->event_service_ior_;
-}
-
-// Get the IOR of our event service.
 
 void 
 TAO_ORB_Parameters::name_service_port (CORBA::UShort port)

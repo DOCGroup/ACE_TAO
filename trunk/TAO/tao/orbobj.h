@@ -145,13 +145,6 @@ private:
   CORBA_Object_ptr resolve_name_service (void);
   // Resolve the name service object reference.
 
-  // @@ TODO: This should go away once the NamingService is working.
-  CORBA_Object_ptr resolve_schedule_service (void);
-  // Resolve the scheduler service object reference.
-
-  CORBA_Object_ptr resolve_event_service (void);
-  // Resolve the event service object reference.
-
   CORBA_Object_ptr resolve_poa (void);
   // Resolve the POA.
 
