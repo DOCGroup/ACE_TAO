@@ -43,11 +43,18 @@ asx_timestuff:	$(addsuffix .java,$(pkg_asx_timestuff))
 	$(COMPILE.java)
 
 pkg_asx = \
+	IOCntlCmds \
+	IOCntlMsg \
 	Task \
 	TaskFlags \
+	ThruTask \
+	Module \
 	MessageType \
 	MessageBlock \
-	MessageQueue
+	MessageQueue \
+	StreamHead \
+	StreamTail \
+	Stream
 
 asx:	os asx_timestuff reactor concurrency $(addsuffix .java,$(pkg_asx))
 	$(COMPILE.java)
