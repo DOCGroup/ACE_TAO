@@ -239,9 +239,9 @@ Sat Oct 26 21:49:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  <exit_code> to better reflect the intention for using this
 	  method.
 
-	  Thanks to Artashes Ghazaryan <arty@unicad.am> and Jaroslaw
-	  Nozderko <jaroslaw.nozderko@polkomtel.com.pl> for reporting the
-	  problem.
+	  Thanks to Artashes Ghazaryan <arty@unicad.am>, Jaroslaw Nozderko
+ 	  <jaroslaw.nozderko@polkomtel.com.pl>, and Stephen Blake
+ 	  <sblake@speakeasy.net> for reporting the problem.
 
 Sat Oct 26 11:42:04 UTC 2002  John Aughey  <jha@aughey.com>
 

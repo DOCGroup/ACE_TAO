@@ -1,7 +1,13 @@
+Tue Nov  5 08:28:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp (visit_enum): Changed
+	  "val)/" to "val)" to avoid a bug.  Thanks to Jian Chen for
+ 	  reporting the fix and to Marc Alter
+ 	  <marc.alter@fr.thalesgroup.com> for the original bug report.
+
 Mon Nov  4 19:03:12 CST 2002 Pradeep Gore  <pradeep@oomworks.com>
 
-	* (Removed previous bogus ChangeLog entry).
-	
+	* (Removed previous bogus ChangeLog entry).	
 	* orbsvcs/orbsvcs/CosNotification.bor:
           Thanks to Christopher Kohlhoff <chris@kohlhoff.com>, Johnny
           Willemsen <jwillemsen@remedy.nl>, Irfan, Nanbor and Bala for help in
@@ -537,7 +543,6 @@ Thu Oct 31 17:56:55 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tests/MProfile_Connection_Timeout/Makefile: Added the Makefile
 	  for the test.
-
 
 Thu Oct 31 17:33:55 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
