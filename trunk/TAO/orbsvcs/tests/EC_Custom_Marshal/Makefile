@@ -180,16 +180,25 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -237,13 +246,9 @@ realclean:
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/POAC.h \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
@@ -335,41 +340,9 @@ realclean:
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
+ ECM_Supplier.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -381,32 +354,17 @@ realclean:
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.i \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor_T.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.h \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/Select_Reactor_Base.i \
- $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(ACE_ROOT)/ace/Select_Reactor.i \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
- ECM_Supplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp \
  ECM_Data.h dataC.h dataC.i
@@ -530,16 +488,25 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -587,13 +554,9 @@ realclean:
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/POAC.h \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
@@ -685,41 +648,9 @@ realclean:
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Scheduler_Generic.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
+ ECM_Consumer.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -731,32 +662,17 @@ realclean:
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.i \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ReactorTask.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Fast_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/Select_Reactor_T.h \
- $(ACE_ROOT)/ace/Select_Reactor_Base.h \
- $(ACE_ROOT)/ace/Token.h \
- $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/Select_Reactor_Base.i \
- $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
- $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Select_Reactor_T.i \
- $(ACE_ROOT)/ace/Select_Reactor.i \
- $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/Timer_List_T.h \
- $(ACE_ROOT)/ace/Timer_List_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
- ECM_Consumer.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp \
  ECM_Data.h dataC.h dataC.i
@@ -869,16 +785,25 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -926,13 +851,9 @@ realclean:
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/POAC.h \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
@@ -1012,7 +933,7 @@ realclean:
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- dataC.i dataS.h dataS_T.h dataS_T.i dataS_T.cpp dataS.i
+ dataC.i
 .obj/dataS.o .obj/dataS.so .shobj/dataS.o .shobj/dataS.so: dataS.cpp dataS.h dataC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1122,16 +1043,25 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -1179,13 +1109,9 @@ realclean:
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/POAC.h \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
@@ -1379,16 +1305,25 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/IORS.h \
+ $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/IORC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
  $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
@@ -1433,13 +1368,9 @@ realclean:
  $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
- $(TAO_ROOT)/tao/POAC.h \
- $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
  $(TAO_ROOT)/tao/poa_macros.h \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
