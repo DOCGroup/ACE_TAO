@@ -1,3 +1,13 @@
+Thu Oct 15 23:00:35 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao/DynAny_i.h:
+        * tao/DynArray_i.h:
+        * tao/DynEnum_i.h:
+        * tao/DynSequence_i.h:
+        * tao/DynStruct_i.h:
+        * tao/DynUnion_i.h:
+          Added TAO_Export to the class declarations (ouch!)
+
 Thu Oct 15 22:10:48 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:

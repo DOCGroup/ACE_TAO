@@ -18,7 +18,7 @@
 
 #include "ace/Containers.h"
 
-class TAO_DynEnum_i : public POA_CORBA::DynEnum
+class TAO_Export TAO_DynEnum_i : public POA_CORBA::DynEnum
 {
 public:
                           TAO_DynEnum_i       (const CORBA_Any& any);

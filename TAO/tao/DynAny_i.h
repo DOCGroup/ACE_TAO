@@ -18,7 +18,7 @@
 
 #include "tao/corba.h"
 
-class TAO_DynAny_i : public POA_CORBA::DynAny
+class TAO_Export TAO_DynAny_i : public POA_CORBA::DynAny
 {
 public:
                       TAO_DynAny_i      (CORBA_TypeCode_ptr tc);
