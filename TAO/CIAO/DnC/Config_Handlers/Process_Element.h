@@ -62,7 +62,7 @@ using xercesc::DOMNamedNodeMap;
 typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REFMAP;
 
 
-template <typename OBJ, typename DATA>
+template <typename DATA>
 class Process_Function {
 public:
   virtual void call(DOMNodeIterator*, DATA&)=0;
@@ -78,7 +78,7 @@ public:
  */
 
 template <typename OBJ, typename DATA>
-class Process_Member_Function: public Process_Function<OBJ, DATA> {
+class Process_Member_Function: public Process_Function<DATA> {
 public:
   typedef void (OBJ::*func_type) (DOMDocument*, DOMNodeIterator*, DATA&);
   typedef DATA data_type;
@@ -113,8 +113,8 @@ private:
  *  Wrapper class for the static process member functions.
  */
 
-template <typename OBJ, typename DATA>
-class Process_Static_Function: public Process_Function<OBJ, DATA> {
+template <typename DATA>
+class Process_Static_Function: public Process_Function<DATA> {
 public:
   typedef void (*func_type) (DOMNodeIterator*, DATA&);
   typedef DATA data_type;
@@ -140,21 +140,21 @@ private:
 
 DOMDocument* create_document (const char *url);
 
-template <typename DATA, typename VALUE, typename OBJECT>
+template <typename OBJECT, typename DATA, typename VALUE>
 void process_element (DOMNode* node,
                       DOMDocument* doc,
                       DOMNodeIterator* iter,
                       DATA& data,
                       VALUE val,
-                      Process_Function <OBJECT, DATA>* func,
+                      Process_Function <DATA>* func,
                       REFMAP& id_map);
 
-template <typename SEQUENCE, typename DATA, typename OBJECT>
+template <typename OBJECT, typename SEQUENCE, typename DATA>
 void process_sequential_element (DOMNode* node,
                                  DOMDocument* doc,
                                  DOMNodeIterator* iter,
                                  SEQUENCE& seq,
-                                 Process_Function <OBJECT, DATA>* func,
+                                 Process_Function <DATA>* func,
                                  REFMAP& id_map);
 
 /*
@@ -162,29 +162,32 @@ void process_sequential_element (DOMNode* node,
  */
 
 template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
-inline void process_function(OBJECT* obj, SEQUENCE& data, FUNCTION func,
+inline void process_function(OBJECT* obj, SEQUENCE& seq, FUNCTION func,
                              DOMNode* node,
                              DOMDocument* doc,
                              DOMNodeIterator *iter,
                              REFMAP& id_map)
 {
   Process_Member_Function<OBJECT, DATA> pf(obj, func, doc);
-  process_sequential_element (node, doc, iter, data, &pf, id_map);
+  process_sequential_element<OBJECT> (node, doc, iter, seq, (Process_Function <DATA>*)(&pf), id_map);
 }
 
 /*
  *  Process function for static functions
  */
 
+class Null_Class {
+};
+
 template<typename DATA, typename SEQUENCE, typename FUNCTION>
-inline void process_function(SEQUENCE& data, FUNCTION func,
+inline void process_function(SEQUENCE& seq, FUNCTION func,
                              DOMNode* node,
                              DOMDocument* doc,
                              DOMNodeIterator *iter,
                              REFMAP& id_map)
 {
-  Process_Static_Function<OBJECT, DATA> pf(func);
-  process_sequential_element (node, doc, iter, data, &pf, id_map);
+  Process_Static_Function<DATA> pf(func);
+  process_sequential_element<Null_Class> (node, doc, iter, seq, &pf, id_map);
 }
 
 #include "Process_Element.i"
