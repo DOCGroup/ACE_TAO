@@ -47,6 +47,9 @@ endif
 ifeq ($(threads),0)
   CFLAGS += -DACE_MT_SAFE=0
 endif # threads
+ifeq (,$(pipes))
+  pipes = 1
+endif
 
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
@@ -57,16 +60,20 @@ CXX     = g++
 
 MODEL_FLAGS += -mcpu=$(TCPU)
 
-# Never use -pipe with 95/98. On NT/2000, not sure if it helps.
+# If pipes is set to 1 then add the compiler flag -pipe. This uses pipe instead
+# of intermediate files. This can be disabled by setting pipes to 0 in the
+# platform_macros.GNU file.
+ifeq ($(pipes),1)
+   CFLAGS += -pipe
+endif # pipes
+
+
 CFLAGS  += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
         MODEL_FLAGS += -mthreads
 endif # threads
 
 CFLAGS += $(MODEL_FLAGS)
-
-# Never use -pipe with 95/98. On NT/2000, not sure if it helps.
-CFLAGS  += -W -Wall -Wpointer-arith
 
 # Test for template instantiation.
 #
