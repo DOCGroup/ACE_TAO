@@ -36,7 +36,11 @@ ACE_Obstack *ace_obstack;
 svc_config_entries
   : svc_config_entries svc_config_entry 
     {
-      $2->apply (); delete $2; ace_obstack->release (); 
+      if ($2 != 0)
+      {
+	$2->apply (); delete $2;
+      }
+      ace_obstack->release (); 
     }
   | svc_config_entries error 
     { 
@@ -59,6 +63,8 @@ dynamic
     { 
       if ($2 != 0)
 	$$ = new ACE_Dynamic_Node ($2, $3);
+      else
+	$$ = 0;
     }
   ;
 
@@ -195,7 +201,11 @@ svc_location
 	  $$ = new ACE_Service_Record ($1, stp, $3->handle (), $4);
 	}
       else
-	$$ = 0;
+	{
+	  ++yyerrno;
+	  delete $3;
+	  $$ = 0;
+	}
     }
   ;
 
