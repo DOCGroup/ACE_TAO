@@ -13,11 +13,11 @@
 //    and ACE_RB_Tree_Iterator classes.  Two different key and item types are
 //    used in order to demonstrate specialization of the ACE_Less_Than
 //    comparison function object template: int (for which the native <
-//    operator is sufficient), and char * (for which < operator semantics must
-//    be replaced by strcmp semantics).  An RB tree for each of the four
-//    possible type parameter permutations over int and char * is constructed
-//    and filled in, and the resulting order is checked via an iterator over
-//    each.
+//    operator is sufficient), and const char * (for which < operator
+//    semantics must be replaced by strcmp semantics).  An RB tree for each of
+//    the four possible type parameter permutations over int and const char *
+//    is constructed and filled in, and the resulting order is checked via an
+//    iterator over each.
 //
 // = AUTHOR
 //    Chris Gill <cdgill@cs.wustl.edu>
@@ -34,16 +34,34 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+// Type definitions for the four distinct parameterizations of ACE_RB_Tree
+// and its iterators.
+
+typedef ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> INT_INT_RB_TREE;
+typedef ACE_RB_Tree<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex> INT_STR_RB_TREE;
+typedef ACE_RB_Tree<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex> STR_INT_RB_TREE;
+typedef ACE_RB_Tree<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex> STR_STR_RB_TREE;
+
+typedef ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> INT_INT_FWD_ITER;
+typedef ACE_RB_Tree_Iterator<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex> INT_STR_FWD_ITER;
+typedef ACE_RB_Tree_Iterator<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex> STR_INT_FWD_ITER;
+typedef ACE_RB_Tree_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex> STR_STR_FWD_ITER;
+
+typedef ACE_RB_Tree_Reverse_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> INT_INT_REV_ITER;
+typedef ACE_RB_Tree_Reverse_Iterator<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex> INT_STR_REV_ITER;
+typedef ACE_RB_Tree_Reverse_Iterator<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex> STR_INT_REV_ITER;
+typedef ACE_RB_Tree_Reverse_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex> STR_STR_REV_ITER;
+
+
 // These arrays of numbers as ints and character strings
 // are used to instantiate key and item nodes in the tree.
 
-// @@ Chris, the following should be a "const char *" not a "char *".
-static char *number_strings [] =
+static const char *number_strings [] =
 {
   "10", "20", "30", "40", "50", "60", "70", "80"
 };
 
-static int number_integers [] = 
+static int number_integers [] =
 {
   10, 20, 30, 40, 50, 60, 70, 80
 };
@@ -76,14 +94,14 @@ main (int, ASYS_TCHAR *[])
   // comparisons rather than < operator comparison of the pointers
   // themselves.
 
-  // @@ Chris, the following definitions are (1) not const-correct,
-  // (2) should be factored out into typedefs so that the code is
-  // readable, and (3) each variable should be defined 1 per line.
-
-  ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_tree1, int_int_tree2;
-  ACE_RB_Tree<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_tree1, int_str_tree2;
-  ACE_RB_Tree<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_tree1, str_int_tree2;
-  ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_tree1, str_str_tree2;
+  INT_INT_RB_TREE int_int_tree1;
+  INT_INT_RB_TREE int_int_tree2;
+  INT_STR_RB_TREE int_str_tree1;
+  INT_STR_RB_TREE int_str_tree2;
+  STR_INT_RB_TREE str_int_tree1;
+  STR_INT_RB_TREE str_int_tree2;
+  STR_STR_RB_TREE str_str_tree1;
+  STR_STR_RB_TREE str_str_tree2;
 
   // First, test the new ACE_Hash_Map_Manager_Ex compliant interface.
   // Fill in each tree with the key and item from the appropriate
@@ -94,39 +112,38 @@ main (int, ASYS_TCHAR *[])
        i < RB_TREE_TEST_ENTRIES;
        ++i)
     {
-      char *str_item;
+      const char *str_item;
       int int_item;
 
       k = int_int_index [i];
       ACE_ASSERT (k >= 0 && k < RB_TREE_TEST_ENTRIES);
       int_item = -1;
-      // @@ Chris, shouldn't you be checking return values here to
-      // make sure this call worked (same for all calls below)?
-      int_int_tree1.insert (number_integers [k],
-                            number_integers [k]);
+      ACE_ASSERT (int_int_tree1.insert (number_integers [k],
+                                        number_integers [k]) != 0);
       ACE_ASSERT (int_int_tree1.find (number_integers [k], int_item) == 0
                   && int_item == number_integers [k]);
 
       k = int_str_index [i];
       ACE_ASSERT (k >= 0 && k < RB_TREE_TEST_ENTRIES);
       str_item = 0;
-      int_str_tree1.insert (number_integers [k],
-                            number_strings [k]);
+      ACE_ASSERT (int_str_tree1.insert (number_integers [k],
+                                        number_strings [k]) != 0);
       ACE_ASSERT (int_str_tree1.find (number_integers [k], str_item) == 0
                   && str_item == number_strings [k]);
 
       k = str_int_index [i];
       ACE_ASSERT (k >= 0 && k < RB_TREE_TEST_ENTRIES);
       int_item = -1;
-      str_int_tree1.insert (number_strings [k], number_integers [k]);
+       ACE_ASSERT (str_int_tree1.insert (number_strings [k],
+                                         number_integers [k]) != 0);
       ACE_ASSERT (str_int_tree1.find (number_strings [k], int_item) == 0
                   && int_item == number_integers [k]);
 
       k = str_str_index [i];
       ACE_ASSERT (k >= 0 && k < RB_TREE_TEST_ENTRIES);
       str_item = 0;
-      str_str_tree1.insert (number_strings [k], 
-                            number_strings [k]);
+       ACE_ASSERT (str_str_tree1.insert (number_strings [k],
+                                         number_strings [k]) != 0);
       ACE_ASSERT (str_str_tree1.find (number_strings [k], str_item) == 0
                   && str_item == number_strings [k]);
     }
@@ -142,58 +159,58 @@ main (int, ASYS_TCHAR *[])
     {
       k = int_int_index [i];
       ACE_ASSERT (k >= 0 && k < RB_TREE_TEST_ENTRIES);
-      int_int_tree2.insert (number_integers [k],
-                            number_integers [k]);
+      ACE_ASSERT (int_int_tree2.insert (number_integers [k],
+                                        number_integers [k]) != 0);
       ACE_ASSERT (int_int_tree2.find (number_integers [k]) != 0
                   && *int_int_tree2.find (number_integers [k]) == number_integers [k]);
 
       k = int_str_index [i];
       ACE_ASSERT (k >= 0 && k < RB_TREE_TEST_ENTRIES);
-      int_str_tree2.insert (number_integers [k],
-                            number_strings [k]);
+      ACE_ASSERT (int_str_tree2.insert (number_integers [k],
+                                        number_strings [k]) != 0);
       ACE_ASSERT (int_str_tree2.find (number_integers [k]) != 0
-                  && *int_str_tree2.find (number_integers [k]) == number_strings [k]);
+                  && *int_str_tree2.find (number_integers [k]) ==
+                      number_strings [k]);
 
       k = str_int_index [i];
       ACE_ASSERT (k >= 0 && k < RB_TREE_TEST_ENTRIES);
-      str_int_tree2.insert (number_strings [k],
-                            number_integers [k]);
+      ACE_ASSERT (str_int_tree2.insert (number_strings [k],
+                                        number_integers [k]) != 0);
       ACE_ASSERT (str_int_tree2.find (number_strings [k]) != 0
-                  && *str_int_tree2.find (number_strings [k]) == number_integers [k]);
+                  && *str_int_tree2.find (number_strings [k]) ==
+                      number_integers [k]);
 
       k = str_str_index [i];
       ACE_ASSERT (k >= 0 && k < RB_TREE_TEST_ENTRIES);
-      str_str_tree2.insert (number_strings [k],
-                            number_strings [k]);
+      ACE_ASSERT (str_str_tree2.insert (number_strings [k],
+                                        number_strings [k]) != 0);
       ACE_ASSERT (str_str_tree2.find (number_strings [k]) != 0
-                  && *str_str_tree2.find (number_strings [k]) == number_strings [k]);
+                  && *str_str_tree2.find (number_strings [k]) ==
+                     number_strings [k]);
     }
 
 
   // Construct a forward and reverse iterator for each of the trees.
 
-  // @@ Chris, these should also be typedef'd at the beginning of the
-  // file and cleaned up to be const-correct.
+  INT_INT_FWD_ITER int_int_iter1 (int_int_tree1);
+  INT_STR_FWD_ITER int_str_iter1 (int_str_tree1);
+  STR_INT_FWD_ITER str_int_iter1 (str_int_tree1);
+  STR_STR_FWD_ITER str_str_iter1 (str_str_tree1);
 
-  ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_iter1 (int_int_tree1);
-  ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_iter1 (int_str_tree1);
-  ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_iter1 (str_int_tree1);
-  ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_iter1 (str_str_tree1);
+  INT_INT_REV_ITER int_int_rev_iter1 (int_int_tree1);
+  INT_STR_REV_ITER int_str_rev_iter1 (int_str_tree1);
+  STR_INT_REV_ITER str_int_rev_iter1 (str_int_tree1);
+  STR_STR_REV_ITER str_str_rev_iter1 (str_str_tree1);
 
-  ACE_RB_Tree_Reverse_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_rev_iter1 (int_int_tree1);
-  ACE_RB_Tree_Reverse_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_rev_iter1 (int_str_tree1);
-  ACE_RB_Tree_Reverse_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_rev_iter1 (str_int_tree1);
-  ACE_RB_Tree_Reverse_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_rev_iter1 (str_str_tree1);
+  INT_INT_FWD_ITER int_int_iter2 (int_int_tree2);
+  INT_STR_FWD_ITER int_str_iter2 (int_str_tree2);
+  STR_INT_FWD_ITER str_int_iter2 (str_int_tree2);
+  STR_STR_FWD_ITER str_str_iter2 (str_str_tree2);
 
-  ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_iter2 (int_int_tree2);
-  ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_iter2 (int_str_tree2);
-  ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_iter2 (str_int_tree2);
-  ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_iter2 (str_str_tree2);
-
-  ACE_RB_Tree_Reverse_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_rev_iter2 (int_int_tree2);
-  ACE_RB_Tree_Reverse_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_rev_iter2 (int_str_tree2);
-  ACE_RB_Tree_Reverse_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_rev_iter2 (str_int_tree2);
-  ACE_RB_Tree_Reverse_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_rev_iter2 (str_str_tree2);
+  INT_INT_REV_ITER int_int_rev_iter2 (int_int_tree2);
+  INT_STR_REV_ITER int_str_rev_iter2 (int_str_tree2);
+  STR_INT_REV_ITER str_int_rev_iter2 (str_int_tree2);
+  STR_STR_REV_ITER str_str_rev_iter2 (str_str_tree2);
 
   // Iterate over each of the trees, making sure their entries are in
   // the same relative order (i.e., the integers and strings represent
@@ -202,7 +219,7 @@ main (int, ASYS_TCHAR *[])
        i < RB_TREE_TEST_ENTRIES;
        ++i)
     {
-      char *str_item;
+      const char *str_item;
       int int_item;
 
       int_item = (*int_int_iter1).item ();
@@ -341,7 +358,7 @@ main (int, ASYS_TCHAR *[])
        i < RB_TREE_TEST_ENTRIES;
        i += 2)
     {
-      char *str_item;
+      const char *str_item;
       int int_item;
 
       int_item = (*int_int_iter1).item ();
@@ -439,21 +456,21 @@ template class ACE_RB_Tree_Node<int, int>;
 template class ACE_RB_Tree_Iterator_Base<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Reverse_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>;
-template class ACE_RB_Tree<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
-template class ACE_RB_Tree_Node<int, char *>;
-template class ACE_RB_Tree_Iterator_Base<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
-template class ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
-template class ACE_RB_Tree_Reverse_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
-template class ACE_RB_Tree<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>;
-template class ACE_RB_Tree_Node<char *, int>;
-template class ACE_RB_Tree_Iterator_Base<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>;
-template class ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>;
-template class ACE_RB_Tree_Reverse_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>;
-template class ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>;
-template class ACE_RB_Tree_Node<char *, char *>;
-template class ACE_RB_Tree_Iterator_Base<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>;
-template class ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>;
-template class ACE_RB_Tree_Reverse_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>;
+template class ACE_RB_Tree<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Node<int, const char *>;
+template class ACE_RB_Tree_Iterator_Base<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Iterator<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Reverse_Iterator<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
+template class ACE_RB_Tree<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Node<const char *, int>;
+template class ACE_RB_Tree_Iterator_Base<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Iterator<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Reverse_Iterator<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
+template class ACE_RB_Tree<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Node<const char *, const char *>;
+template class ACE_RB_Tree_Iterator_Base<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Reverse_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
 template class ACE_Less_Than<int>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -463,21 +480,21 @@ template class ACE_Less_Than<int>;
 #pragma instantiate ACE_RB_Tree_Iterator_Base<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Reverse_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Node<int, char *>
-#pragma instantiate ACE_RB_Tree_Iterator_Base<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Reverse_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Node<char *, int>
-#pragma instantiate ACE_RB_Tree_Iterator_Base<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Reverse_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Node<char *, char *>
-#pragma instantiate ACE_RB_Tree_Iterator_Base<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Reverse_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Node<int, const char *>
+#pragma instantiate ACE_RB_Tree_Iterator_Base<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Iterator<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Reverse_Iterator<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Node<const char *, int>
+#pragma instantiate ACE_RB_Tree_Iterator_Base<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Iterator<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Node<const char *, const char *>
+#pragma instantiate ACE_RB_Tree_Iterator_Base<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Less_Than<int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
