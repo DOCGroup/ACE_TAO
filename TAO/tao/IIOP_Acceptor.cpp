@@ -59,6 +59,10 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
 
 TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 {
+  // Make sure we are closed before we start destroying the
+  // strategies.
+  this->close ();
+
   delete this->creation_strategy_;
   delete this->concurrency_strategy_;
   delete this->accept_strategy_;
