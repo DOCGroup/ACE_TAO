@@ -1,3 +1,11 @@
+Tue Oct  3 15:03:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.i:
+
+          In the non-Win32 section of hostname (wchar version) I
+          forgot to call wchar_rep on the ACE_Ascii_To_Wide temp
+          class I was using.
+
 Tue Oct  3 14:25:09 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.cpp:
