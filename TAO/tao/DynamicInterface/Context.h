@@ -27,23 +27,24 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#include "dynamicinterface_export.h"
 
-class TAO_Export CORBA_Context
+class TAO_DynamicInterface_Export CORBA_Context
 {
   // = TITLE
-  //   CORBA_Context
+  //    CORBA_Context
   //
   // = DESCRIPTION
-  //   TAO's minimal implementation of the Context interface.  Since
-  //   Contexts are inherently un-typesafe, there use is deprecated
-  //   and the feature may eventaully disappear from CORBA. It is
-  //   implemented only to make the arg list of
-  //   CORBA_Object::_create_request() compliant. The only (pointer)
-  //   value that should be passed is 0.
+  //    TAO's minimal implementation of the Context interface.  Since
+  //    Contexts are inherently un-typesafe, there use is deprecated
+  //    and the feature may eventaully disappear from CORBA. It is
+  //    implemented only to make the arg list of
+  //    CORBA_Object::_create_request() compliant. The only (pointer)
+  //    value that should be passed is 0.
   //
 public:
   // = Initialization and termination methods.
+
   CORBA_Context (void);
   // Constructor.
 
@@ -108,18 +109,18 @@ private:
 
 typedef CORBA_Context* CORBA_Context_ptr;
 
-class TAO_Export CORBA_Context_var
+class TAO_DynamicInterface_Export CORBA_Context_var
 {
   // = TITLE
-  //   The T_var class for Context
+  //     The T_var class for Context.
   //
   // = DESCRIPTION
-  //   As any other pseudo object Context must have a T_var class,
-  //   the interface an semantics are specified in the CORBA spec.
+  //    As any other pseudo object Context must have a T_var class,
+  //    the interface an semantics are specified in the CORBA spec.
   //
-  //   We use <CORBA_Context_ptr> as the _ptr type instead of
-  //   <CORBA::Context_ptr> in an attempt to reduced the cyclic
-  //   dependencies in TAO.
+  //    We use <CORBA_Context_ptr> as the _ptr type instead of
+  //    <CORBA::Context_ptr> in an attempt to reduced the cyclic
+  //    dependencies in TAO.
 public:
   CORBA_Context_var (void);
   CORBA_Context_var (CORBA_Context_ptr);
@@ -143,18 +144,18 @@ private:
   CORBA_Context_ptr ptr_;
 };
 
-class TAO_Export CORBA_Context_out
+class TAO_DynamicInterface_Export CORBA_Context_out
 {
   // = TITLE
-  //   The T_out class for Context
+  //    The T_out class for Context
   //
   // = DESCRIPTION
-  //   As any other pseudo object Context must have a T_out class,
-  //   the interface an semantics are specified in the CORBA spec.
+  //    As any other pseudo object Context must have a T_out class,
+  //    the interface an semantics are specified in the CORBA spec.
   //
-  //   We use <CORBA_Context_ptr> as the _ptr type instead of
-  //   <CORBA::Context_ptr> in an attempt to reduced the cyclic
-  //   dependencies in TAO.
+  //    We use <CORBA_Context_ptr> as the _ptr type instead of
+  //    <CORBA::Context_ptr> in an attempt to reduced the cyclic
+  //    dependencies in TAO.
 public:
   CORBA_Context_out (CORBA_Context_ptr &);
   CORBA_Context_out (CORBA_Context_var &);
@@ -170,13 +171,13 @@ private:
   CORBA_Context_ptr &ptr_;
 };
 
-class CORBA_ContextList
+class TAO_DynamicInterface_Export CORBA_ContextList
 {
   // = TITLE
-  //   ContextList definition taken from CORBA v2.3a Dec 1998
+  //    ContextList definition taken from CORBA v2.3a Dec 1998
   //
   // = DESCRIPTION
-  //   Maintains a list of strings for Contexts.
+  //    Maintains a list of strings for Contexts.
 public:
   CORBA_ContextList (void);
   // Constructor.
@@ -187,10 +188,10 @@ public:
   // strings.
 
   ~CORBA_ContextList (void);
-  // destructor
+  // Destructor.
 
-  CORBA::ULong count ();
-  // return the number of elements
+  CORBA::ULong count (void);
+  // Return the number of elements.
 
   CORBA_ContextList_ptr _duplicate (void);
   // Increment the reference count.
@@ -218,11 +219,11 @@ public:
   void remove (CORBA::ULong slot,
                CORBA_Environment &ACE_TRY_ENV =
                 TAO_default_environment ());
-  // remove the typecode at slot i. Raises the "Bounds" exception
+  // Remove the typecode at slot i. Raises the "Bounds" exception.
 
   void _incr_refcnt (void);
   void  _decr_refcnt (void);
-  // Increment and decrement ref counts
+  // Increment and decrement ref counts.
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ContextList_ptr _ptr_type;
@@ -242,7 +243,7 @@ private:
   // Internal list of typecodes.
 };
 
-class TAO_Export CORBA_ContextList_var
+class TAO_DynamicInterface_Export CORBA_ContextList_var
 {
 public:
   CORBA_ContextList_var (void); // default constructor
@@ -267,19 +268,19 @@ private:
   CORBA_ContextList_ptr ptr_;
 };
 
-class TAO_Export CORBA_ContextList_out
+class TAO_DynamicInterface_Export CORBA_ContextList_out
 {
   // = TITLE
-  //   The T_out class for ContextList
+  //    The T_out class for ContextList
   //
   // = DESCRIPTION
-  //   As any other pseudo object ContextList must have a T_out class,
-  //   the interface an semantics are specified in the CORBA spec.
+  //    As any other pseudo object ContextList must have a T_out class,
+  //    the interface an semantics are specified in the CORBA spec.
   //
   // = NOTE
-  //   We use CORBA_ContextList_ptr as the _ptr type instead of
-  //   CORBA::ContextList_ptr, this is an attempt to reduced the cyclic
-  //   dependencies in TAO.
+  //    We use CORBA_ContextList_ptr as the _ptr type instead of
+  //    CORBA::ContextList_ptr, this is an attempt to reduced the cyclic
+  //    dependencies in TAO.
   //
 public:
   CORBA_ContextList_out (CORBA_ContextList_ptr &);
@@ -297,9 +298,8 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Context.i"
+# include "Context.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"
 #endif /* TAO_CONTEXT_H */

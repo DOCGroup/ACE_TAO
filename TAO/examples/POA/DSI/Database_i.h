@@ -1,11 +1,13 @@
 // $Id$
 
 #include "DatabaseS.h"
-#include "ace/Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include "ace/Malloc.h"
 
 class DatabaseImpl
 {
@@ -25,7 +27,7 @@ public:
   //typedef ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> DATABASE_ITERATOR;
   typedef ACE_Malloc_Iterator<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> DATABASE_ITERATOR;
 
-  class Entry : public PortableServer::DynamicImplementation
+  class Entry : public TAO_DynamicImplementation
   {
   public:
     Entry (CORBA::ORB_ptr orb,

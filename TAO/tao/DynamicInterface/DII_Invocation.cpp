@@ -1,11 +1,9 @@
 // $Id$
 
 
-#include "tao/DII_Invocation.h"
+#include "DII_Invocation.h"
 
-ACE_RCSID(tao, DII_Invocation, "$Id$")
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
 
 #include "tao/Stub.h"
 #include "tao/Principal.h"
@@ -14,7 +12,7 @@ ACE_RCSID(tao, DII_Invocation, "$Id$")
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/DII_Invocation.i"
+# include "DII_Invocation.inl"
 #endif /* ! __ACE_INLINE__ */
 
 
@@ -66,7 +64,9 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)
-    return retval;
+    {
+      return retval;
+    }
 
   // Everything executed ok; lets remember the transport for later.
   this->rd_->transport (this->transport_);
@@ -75,4 +75,3 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   return TAO_INVOKE_OK;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */

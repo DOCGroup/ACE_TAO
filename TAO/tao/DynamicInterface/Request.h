@@ -29,24 +29,23 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
+#include "Context.h"
+#include "ExceptionList.h"
 #include "tao/corbafwd.h"
 #include "tao/ORB.h"
 #include "tao/NVList.h"
 #include "tao/Environment.h"
-#include "tao/Context.h"
 #include "tao/Sequence.h"
 #include "tao/MessagingC.h"
 
-class TAO_Export CORBA_Request
+class TAO_DynamicInterface_Export CORBA_Request
 {
   // = TITLE
-  //   CORBA_Request
+  //    CORBA_Request
   //
   // = DESCRIPTION
-  //   Provides a way to create requests and populate it with parameters for
-  //   use in the Dynamic Invocation Interface
+  //    Provides a way to create requests and populate it with parameters for
+  //    use in the Dynamic Invocation Interface.
   //
 public:
   CORBA::Object_ptr target (void) const;
@@ -88,10 +87,12 @@ public:
   CORBA_Any &add_inout_arg (const char* name);
   CORBA_Any &add_out_arg (void);
   CORBA_Any &add_out_arg (const char* name);
-  // Initialize the return type.
+
   void set_return_type (CORBA::TypeCode_ptr tc);
-  // Returns reference to Any for extraction using >>=.
+  // Initialize the return type.
+
   CORBA_Any &return_value (void);
+  // Returns reference to Any for extraction using >>=.
 
   void invoke (CORBA::Environment &ACE_TRY_ENV =
                  CORBA::Environment::default_environment ());
@@ -124,7 +125,7 @@ public:
                         CORBA::Environment &ACE_TRY_ENV =
                           CORBA::Environment::default_environment ());   
                           
-  // Pseudo object methods
+  // Pseudo object methods.
   static CORBA_Request* _duplicate (CORBA_Request*);
   static CORBA_Request* _nil (void);
 
@@ -133,7 +134,7 @@ public:
   CORBA::ULong _decr_refcnt (void);
 
   void _tao_lazy_evaluation (int lazy_evaluation);
-  // Set the lazy evaluation flag
+  // Set the lazy evaluation flag.
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Request_ptr _ptr_type;
@@ -142,9 +143,9 @@ public:
   // Useful for template programming.
 
 private:
-  friend class CORBA_Object;
+  friend class TAO_Dynamic_Adapter_Impl;
 
-  // following are not allowed
+  // The following are not allowed except when called from the friend class.
 
   CORBA_Request (CORBA::Object_ptr obj,
                  CORBA::ORB_ptr orb,
@@ -165,28 +166,28 @@ private:
   ~CORBA_Request (void);
 
   CORBA::Object_ptr target_;
-  // target object
+  // Target object.
 
   CORBA::ORB_var orb_;
   // Pointer to our ORB.
 
   const CORBA::Char *opname_;
-  // operation name
+  // Operation name.
 
   CORBA::NVList_ptr args_;
-  // parameter list
+  // Parameter list.
 
   CORBA::NamedValue_ptr result_;
-  // result of the operation
+  // Result of the operation.
 
   CORBA::Flags flags_;
-  // invocation flags
+  // Invocation flags.
 
   CORBA::Environment env_;
-  // holds exceptions
+  // Holds exceptions.
 
-  CORBA::ExceptionList_var exceptions_;
-  // list of exceptions raised by the operation
+  CORBA_ExceptionList_var exceptions_;
+  // List of exceptions raised by the operation.
 
   CORBA::ContextList_ptr contexts_;
   // List of the request's result's contexts.
@@ -195,13 +196,13 @@ private:
   // Context associated with this request.
 
   CORBA::ULong refcount_;
-  // reference counting
+  // Reference counting.
 
   ACE_SYNCH_MUTEX lock_;
-  // protect the refcount_ and response_receieved_.
+  // Protect the refcount_ and response_receieved_.
 
   int lazy_evaluation_;
-  // If not zero then the NVList is not evaluated by default
+  // If not zero then the NVList is not evaluated by default.
 
   CORBA::Boolean response_received_;
   // Set to TRUE upon completion of invoke() or
@@ -210,19 +211,19 @@ private:
 
 typedef CORBA_Request* CORBA_Request_ptr;
 
-class TAO_Export CORBA_Request_var
+class TAO_DynamicInterface_Export CORBA_Request_var
 {
   // = TITLE
-  //   The T_var class for Request
+  //    The T_var class for Request.
   //
   // = DESCRIPTION
-  //   As any other pseudo object Request must have a T_var class,
-  //   the interface an semantics are specified in the CORBA spec.
+  //    As any other pseudo object Request must have a T_var class,
+  //    the interface an semantics are specified in the CORBA spec.
   //
   // = NOTE
-  //   We use CORBA_Request_ptr as the _ptr type instead of
-  //   CORBA::Request_ptr, this is an attempt to reduced the cyclic
-  //   dependencies in TAO.
+  //    We use CORBA_Request_ptr as the _ptr type instead of
+  //    CORBA::Request_ptr, this is an attempt to reduced the cyclic
+  //    dependencies in TAO.
   //
 public:
   CORBA_Request_var (void);
@@ -236,7 +237,8 @@ public:
 
   operator const CORBA_Request_ptr &() const;
   operator CORBA_Request_ptr &();
-  // in, inout, out, _retn
+
+  // in, inout, out, _retn.
   CORBA_Request_ptr in (void) const;
   CORBA_Request_ptr &inout (void);
   CORBA_Request_ptr &out (void);
@@ -247,19 +249,19 @@ private:
   CORBA_Request_ptr ptr_;
 };
 
-class TAO_Export CORBA_Request_out
+class TAO_DynamicInterface_Export CORBA_Request_out
 {
   // = TITLE
-  //   The T_out class for Request
+  //    The T_out class for Request
   //
   // = DESCRIPTION
-  //   As any other pseudo object Request must have a T_out class,
-  //   the interface an semantics are specified in the CORBA spec.
+  //    As any other pseudo object Request must have a T_out class,
+  //    the interface an semantics are specified in the CORBA spec.
   //
   // = NOTE
-  //   We use CORBA_Request_ptr as the _ptr type instead of
-  //   CORBA::Request_ptr, this is an attempt to reduced the cyclic
-  //   dependencies in TAO.
+  //    We use CORBA_Request_ptr as the _ptr type instead of
+  //    CORBA::Request_ptr, this is an attempt to reduced the cyclic
+  //    dependencies in TAO.
   //
 public:
   CORBA_Request_out (CORBA_Request_ptr &);
@@ -281,7 +283,8 @@ private:
 #endif /* __ACE_INLINE__ */
 
 // Make sure you instantiate this in Request.cpp
-class CORBA_ORB_RequestSeq : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request,CORBA_Request_var>
+class TAO_DynamicInterface_Export CORBA_ORB_RequestSeq 
+  : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request, CORBA_Request_var>
 {
 public:
 // Helpful with template programming.
@@ -294,7 +297,7 @@ public:
   // Simply delegate on the template for the implementation...
 
   CORBA_ORB_RequestSeq (void);
-  // default ctor
+  // Default constructor.
 
   CORBA_ORB_RequestSeq (CORBA::ULong max);
   // Constructor with a "hint" for the maximum capacity.
@@ -309,13 +312,19 @@ public:
   // Copy ctor, deep copies.
 };
 
-class CORBA_ORB_RequestSeq_var
+class TAO_DynamicInterface_Export CORBA_ORB_RequestSeq_var
 {
 public:
-  CORBA_ORB_RequestSeq_var (void); // default constructor
+  CORBA_ORB_RequestSeq_var (void);
+  // Default constructor.
+
   CORBA_ORB_RequestSeq_var (CORBA_ORB_RequestSeq *);
-  CORBA_ORB_RequestSeq_var (const CORBA_ORB_RequestSeq_var &); // copy constructor
-  ~CORBA_ORB_RequestSeq_var (void); // destructor
+
+  CORBA_ORB_RequestSeq_var (const CORBA_ORB_RequestSeq_var &);
+  // Copy constructor.
+
+  ~CORBA_ORB_RequestSeq_var (void);
+  // Destructor.
 
   CORBA_ORB_RequestSeq_var &operator= (CORBA_ORB_RequestSeq *);
   CORBA_ORB_RequestSeq_var &operator= (const CORBA_ORB_RequestSeq_var &);
@@ -326,7 +335,8 @@ public:
   operator CORBA_ORB_RequestSeq &();
   operator CORBA_ORB_RequestSeq &() const;
   CORBA::Octet &operator[] (CORBA::ULong slot);
-  // in, inout, out, _retn
+
+  // in, inout, out, _retn.
   const CORBA_ORB_RequestSeq &in (void) const;
   CORBA_ORB_RequestSeq &inout (void);
   CORBA_ORB_RequestSeq *&out (void);
@@ -337,7 +347,7 @@ private:
   CORBA_ORB_RequestSeq *ptr_;
 };
 
-class CORBA_ORB_RequestSeq_out
+class TAO_DynamicInterface_Export CORBA_ORB_RequestSeq_out
 {
 public:
   CORBA_ORB_RequestSeq_out (CORBA_ORB_RequestSeq *&);
@@ -352,11 +362,14 @@ public:
 
 private:
   CORBA_ORB_RequestSeq *&ptr_;
-  // assignment from T_var not allowed
+
+  // Assignment from T_var not allowed.
   void operator= (const CORBA_ORB_RequestSeq_var &);
 };
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#if defined (__ACE_INLINE__)
+# include "Request.inl"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 #endif /* TAO_REQUEST_H */

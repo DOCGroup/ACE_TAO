@@ -4,7 +4,7 @@
 
 NAME = TAO
 
-DIRS = DynamicAny PortableServer IORTable IORManipulation
+DIRS = DynamicAny DynamicInterface PortableServer IORTable IORManipulation
 
 OBJFILES = \
 	$(OBJDIR)\Abstract_Servant_Base.obj \
@@ -23,7 +23,6 @@ OBJFILES = \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\ClientRequestInfo.obj \
 	$(OBJDIR)\Connector_Registry.obj \
-	$(OBJDIR)\Context.obj \
 	$(OBJDIR)\CONV_FRAMEC.obj \
 	$(OBJDIR)\CONV_FRAMES.obj \
 	$(OBJDIR)\corbafwd.obj \
@@ -35,12 +34,11 @@ OBJFILES = \
 	$(OBJDIR)\default_client.obj \
 	$(OBJDIR)\default_resource.obj \
 	$(OBJDIR)\default_server.obj \
-	$(OBJDIR)\DII_Invocation.obj \
-	$(OBJDIR)\DII_Reply_Dispatcher.obj \
 	$(OBJDIR)\Direct_Priority_Mapping.obj \
 	$(OBJDIR)\DLL_ORB.obj \
 	$(OBJDIR)\DLL_Parser.obj \
 	$(OBJDIR)\DomainC.obj \
+	$(OBJDIR)\Dynamic_Adapter.obj \
 	$(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\Encodable.obj \
 	$(OBJDIR)\Endpoint.obj \
@@ -130,7 +128,6 @@ OBJFILES = \
 	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
-	$(OBJDIR)\Request.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\RT_Current.obj \
 	$(OBJDIR)\RT_Mutex.obj \
@@ -141,7 +138,6 @@ OBJFILES = \
 	$(OBJDIR)\RTCORBAC.obj \
 	$(OBJDIR)\RTCORBAS.obj \
 	$(OBJDIR)\Sequence.obj \
-	$(OBJDIR)\Server_Request.obj \
 	$(OBJDIR)\Server_Strategy_Factory.obj \
 	$(OBJDIR)\Services.obj \
 	$(OBJDIR)\SHMIOP_Acceptor.obj \

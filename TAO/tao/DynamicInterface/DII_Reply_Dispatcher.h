@@ -25,19 +25,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
+#include "dynamicinterface_export.h"
 #include "tao/Reply_Dispatcher.h"
 
-class TAO_Export TAO_DII_Deferred_Reply_Dispatcher : public TAO_Reply_Dispatcher
+class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher 
+  : public TAO_Reply_Dispatcher
 {
   // = TITLE
-  //
-  //     Reply dispatcher for DII deferred requests.
+  //    TAO_DII_Deferred_Reply_Dispatcher
   //
   // = DESCRIPTION
+  //    Reply dispatcher for DII deferred requests.
   //
-
 public:
   TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req);
  // Constructor.
@@ -75,9 +74,6 @@ private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
 
-  //TAO_GIOP_Version version_;
-  // The version
-
   TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
   // @@ Carlos : message_state should go away. All we need is the reply
@@ -90,12 +86,8 @@ private:
   // This invocation is using this transport, may change...
 };
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-// *********************************************************************
-
 #if defined (__ACE_INLINE__)
-#include "tao/DII_Reply_Dispatcher.i"
+#include "tao/DII_Reply_Dispatcher.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

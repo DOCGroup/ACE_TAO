@@ -12,6 +12,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 DIRS = \
   PortableServer \
   DynamicAny \
+  DynamicInterface \
   IORManipulation \
   IORTable
 
@@ -44,7 +45,6 @@ PUB_HDRS = \
   operation_details \
   Invocation \
   Asynch_Invocation \
-  DII_Invocation \
   Params \
   Marshal \
   Debug \
@@ -67,7 +67,6 @@ PUB_HDRS = \
   Reply_Dispatcher \
   Synch_Reply_Dispatcher \
   Asynch_Reply_Dispatcher \
-  DII_Reply_Dispatcher \
   BoundC \
   GIOPC \
   TAO_Export \
@@ -186,7 +185,6 @@ ORB_CORE_FILES = \
   Invocation \
   Invocation_Endpoint_Selectors \
   Asynch_Invocation \
-  DII_Invocation \
   operation_details \
   PortableInterceptor \
   ClientRequestInfo \
@@ -218,7 +216,6 @@ ORB_CORE_FILES = \
   Reply_Dispatcher \
   Synch_Reply_Dispatcher \
   Asynch_Reply_Dispatcher \
-  DII_Reply_Dispatcher \
   IOPC \
   IOPS \
   PollableC \
@@ -273,11 +270,9 @@ include $(TAO_ROOT)/rules.tao.GNU
 ifeq ($(minimum_corba),0)
 
 ORB_CORE_FILES += \
-  Context \
-  Request \
   Services \
-  Server_Request \
-  NVList
+  NVList \
+  Dynamic_Adapter
 
 INTERFACE_REPO_FILES += \
   InterfaceC

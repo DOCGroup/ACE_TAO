@@ -63,14 +63,14 @@ enum TAO_Invoke_Status
 class TAO_Export TAO_GIOP_Invocation
 {
   // = TITLE
-  //     Encapsulates common behavior for both oneway and twoway
-  //     invocations.
+  //    Encapsulates common behavior for both oneway and twoway
+  //    invocations.
   //
   // = DESCRIPTION
-  //     This class connects (or lookups a connection from the cache)
-  //     to the remote server, builds the CDR stream for the Request,
-  //     send the CDR stream and expects the response and interprets
-  //     the incoming CDR stream.
+  //    This class connects (or lookups a connection from the cache)
+  //    to the remote server, builds the CDR stream for the Request,
+  //    send the CDR stream and expects the response and interprets
+  //    the incoming CDR stream.
 
   friend class TAO_Endpoint_Selector_Factory;
   friend class TAO_Default_Endpoint_Selector;
@@ -233,13 +233,13 @@ protected:
 class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
 {
   // = TITLE
-  //   Sends a two-way request, and expects the reply.
+  //    Sends a two-way request, and expects the reply.
   //
   // = DESCRIPTION
-  //   This class connects (or lookups a connection from the cache) to
-  //   the remote server, builds the CDR stream for the Request, send
-  //   the CDR stream and expects the response and interprets the
-  //   incoming CDR stream.
+  //    This class connects (or lookups a connection from the cache) to
+  //    the remote server, builds the CDR stream for the Request, send
+  //    the CDR stream and expects the response and interprets the
+  //    incoming CDR stream.
   //
 public:
   TAO_GIOP_Twoway_Invocation (TAO_Stub *data,

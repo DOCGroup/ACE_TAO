@@ -2,34 +2,21 @@
 
 // This may look like C, but it's really -*- C++ -*-
 
-// These should never be non-NULL, but the method
-// is required of pseudo objects.
-
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Context_ptr ctx)
-{
-  return ctx == 0;
-}
-
-ACE_INLINE void
-CORBA::release (CORBA::Context_ptr ctx)
-{
-  if (ctx)
-    ctx->_decr_refcnt ();
-}
-
-ACE_INLINE CORBA_Context*
-CORBA_Context::_duplicate (CORBA_Context* x)
+ACE_INLINE CORBA_Context_ptr
+CORBA_Context::_duplicate (CORBA_Context_ptr x)
 {
   if (x != 0)
-    x->_incr_refcnt ();
+    {
+      x->_incr_refcnt ();
+    }
+
   return x;
 }
 
-ACE_INLINE CORBA_Context*
+ACE_INLINE CORBA_Context_ptr
 CORBA_Context::_nil (void)
 {
-  return (CORBA::Context*)0;
+  return (CORBA_Context_ptr)0;
 }
 
 // *************************************************************

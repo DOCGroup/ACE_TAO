@@ -40,9 +40,9 @@ class TAO_Export TAO_ServerRequest
   // = TITLE
   //    Class representing a ServerRequest object.
   //
-  // @@ This class should go away, there is no reason to provide a
-  // per-protocol server request class.
-  //
+  //   DESCRIPTION
+  //    Encapsulates CDR, transport and pluggable messaging
+  //    components on the server side.
 public:
   // Constructors.
 
