@@ -18,6 +18,7 @@
 #include "tao/Policy_Set.h"
 #include "tao/IIOP_Transport.h"
 #include "tao/debug.h"
+#include "tao/CDR.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"

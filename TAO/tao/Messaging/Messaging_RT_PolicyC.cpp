@@ -30,6 +30,7 @@
 
 
 #include "Messaging_RT_PolicyC.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "ace/OS_NS_string.h"
@@ -52,7 +53,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_Timeout[] =
 {
@@ -141,7 +142,7 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -254,7 +255,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_Messaging_RelativeRoundtripTimeoutPolicy[] =
 {
@@ -370,7 +371,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
