@@ -3199,6 +3199,7 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
       {
         result = _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::allocbuf (this->length_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {

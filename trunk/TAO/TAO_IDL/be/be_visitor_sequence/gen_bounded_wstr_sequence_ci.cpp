@@ -212,7 +212,8 @@ be_visitor_sequence_ci::gen_bounded_wstr_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "result = " << class_name << "::allocbuf (this->maximum_);" 
       << be_nl
-      << "this->buffer_ = result;" << be_uidt_nl
+      << "this->buffer_ = result;" << be_nl
+      << "this->release_ = 1;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl
       << "{" << be_idt_nl

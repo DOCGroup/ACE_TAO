@@ -307,6 +307,7 @@ PortableInterceptor::Cookie_out::operator-> (void)
       {
         result = _TAO_Unbounded_Object_Sequence_PortableInterceptor_Cookies::allocbuf (this->maximum_);
         this->buffer_ = result;
+	this->release_ = 1;
       }
       else
       {
