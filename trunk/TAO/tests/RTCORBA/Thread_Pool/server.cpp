@@ -76,6 +76,11 @@ main (int argc, char *argv[])
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      if (CORBA::is_nil (root_poa))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ERROR: Panic <RootPOA> is nil\n"),
+                          -1);
+
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
