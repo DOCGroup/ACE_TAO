@@ -1,3 +1,11 @@
+Wed Jun 14 15:21:48 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+
+	  Regenerated the dependencies yet again since dependencies
+	  related to changes slated for TAO 1.1.5 were inadvertently
+	  committed.
+
 Wed Jun 14 14:21:44 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.LoadBalancing (idl_stubs):
@@ -35,7 +43,6 @@ Tue Jun 13 21:32:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	  Added comment to point out the current assumption of
 	  having only one policy list shared by all profiles,
 	  and whose lifecycle is managed by the TAO_MProfile. 
-	
 
 Tue Jun 13 12:56:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
