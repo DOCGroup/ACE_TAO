@@ -1,3 +1,9 @@
+Sat Mar  2 17:08:47 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* docs/releasenotes/amh.html: 
+	  'Converted' the Word generated HTML document to 'plain'
+	  HTML.  Also added links to the two AMH papers.
+
 Sat Mar  2 16:27:16 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/CosEvent_Service/Makefile:
