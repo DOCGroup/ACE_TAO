@@ -22,6 +22,12 @@ ACE_New_Allocator::calloc (size_t nbytes,
   return (void *) ptr;
 }
 
+ACE_INLINE void *
+ACE_New_Allocator::calloc (size_t n_elem, size_t elem_size, char initial_value)
+{
+  return ACE_New_Allocator::calloc (n_elem * elem_size, initial_value);
+}
+
 ACE_INLINE void
 ACE_New_Allocator::free (void *ptr)
 {
