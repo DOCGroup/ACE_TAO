@@ -1,3 +1,18 @@
+Sun Mar 18 21:13:36 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IORInfo.cpp (add_ior_component_to_profile):
+	* tao/Object_Ref_Table.cpp (register_initial_reference): 
+	* tao/PolicyFactory_Registry.cpp (register_policy_factory):
+
+	  Added missing OMG assigned exception minor codes to ACE_THROW
+	  expressions.
+
+	* tao/corbafwd.h:
+	* tao/CORBALOC_Parser.cpp (parse_string_count_helper):
+	* tao/CORBANAME_Parser.cpp (parse_string_dynamic_request_helper):
+
+	  Removed uses of needless TAO_OMG_MINOR_BAD_PARAM_10 macro.
+
 Sun Mar 18 16:28:03 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Exception.h:
