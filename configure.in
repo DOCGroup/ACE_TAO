@@ -934,7 +934,7 @@ dnl Disable building of static libraries by default
 AC_DISABLE_STATIC
 
 dnl Tell libtool to build a C++ shared library
-AC_LIBTOOL_BUILD_CXX_LIBRARY
+dnl AC_LIBTOOL_BUILD_CXX_LIBRARY
 
 dnl Check for libtool and turn on Automake processing for Libtool
 AC_PROG_LIBTOOL
@@ -2650,7 +2650,6 @@ EOF
      ace_cv_feature_templates_require_source=no
    else
      dnl Now try including the template source
-     rm conftestMain.$ac_ext 
      cat >> conftestMain.$ac_ext <<EOF
 
 #include "conftest.$ac_ext"
@@ -2861,8 +2860,9 @@ ACE_CACHE_CHECK(for static data member templates,
                      class Foo
                      {
                      public:
-                         static T* sdm;
+                       static T* sdm;
                      };
+
                      template <class T> T* Foo<T>::sdm = 0;
                    ],
                    [
@@ -2876,7 +2876,73 @@ ACE_CACHE_CHECK(for static data member templates,
                    ])
   ], ,AC_DEFINE(ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES))
 
-dnl if platform supports C++ exceptions
+dnl Check if compiler needs definitions for hidden functions
+ACE_CACHE_CHECK(if definition is needed for hidden functions,
+  ace_cv_feature_need_func_def,
+  [
+   AC_TRY_LINK(
+     [
+      class Foo
+      {
+       public:
+         Foo (void) { a_ = 0; }
+       private:
+         Foo (const Foo &);
+         void operator= (const Foo &);
+
+         int a_;
+      };
+     ],
+     [
+       Foo Bar;
+     ],
+     [
+      ace_cv_feature_need_func_def=no
+     ],
+     [
+      AC_TRY_LINK(
+        [
+         class Foo
+         {
+          public:
+            Foo (void) { a_ = 0; }
+          private:
+            Foo (const Foo &);
+            const Foo & operator= (const Foo &);
+
+            int a_;
+         };
+
+         Foo::Foo (const Foo &)
+         {
+          a_ = 0;
+         }
+
+         const Foo &
+         Foo::operator= (const Foo &)
+         {
+          a_ = 0;
+
+          return *this;
+         }
+        ],
+        [
+         Foo Bar;
+        ],
+        [
+         ace_cv_feature_need_func_def=yes
+        ],
+        [
+         dnl If we get here then we don't know what is needed!
+         ace_cv_feature_need_func_def=no
+        ])
+     ])
+  ],
+  [
+   AC_DEFINE(ACE_NEEDS_FUNC_DEFINITIONS)
+  ],)
+
+dnl Check if platform supports C++ exceptions
 if test "$ace_user_enable_exceptions" = yes; then
   ACE_CACHE_CHECK(for C++ exceptions,
     ace_cv_feature_posix_exceptions,[
