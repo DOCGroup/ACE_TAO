@@ -44,7 +44,7 @@ public:
 
   int start_orb_and_poa (void);
   // start the ORB.
-  
+
   int init (int argc, char **argv);
   // Get the LoadManager Interface.
 
@@ -54,6 +54,13 @@ public:
   int register_servant (Basic *servant, const char *loc);
   // register the servants with the object group.
 
+  // @@ Jai, we do not inline methods in the header.  If you're going
+  //    to inline this method, put it in a separate inline file.  Is
+  //    it really necessary to inline this method?
+  // @@ Jai, you're missing the "void" parameter in this method.
+  //    According to our coding style, methods/functions without
+  //    parameters must have "void" explicitly placed in the parameter
+  //    list.  I've mentioned this to you before.
   CORBA::ORB_ptr orb () { return this->orb_.in ();}
   // for servants to register to the initialised ORB.
 

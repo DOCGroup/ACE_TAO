@@ -1,3 +1,25 @@
+Thu Oct  3 18:04:56 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Basic.h:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/LB_server.h:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/LB_server.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/server.cpp (main):
+
+	  Code review.  Left a bunch of comments for Jai.
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
+
+	  Updated broken dependencies.
+
+	  (IDL_HDR, SRC):
+
+	  Fixed typos that prevented this test from compiling.
+
+	  (client):
+
+	  No need to link in the TAO_DynamicInterface library.  This test
+	  doesn't use DII.  Fixes a link-time error.
+
 Thu Oct  3 11:16:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp (create_with_id):
