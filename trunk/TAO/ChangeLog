@@ -1,3 +1,20 @@
+Tue Nov  2 09:43:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+
+	  Changed FT_ReplicationManager project to inherit from core so
+	  that executable is installed.
+
+	* orbsvcs/FT_ReplicationManager/Makefile.am:
+	* orbsvcs/Fault_Detector/Makefile.am:
+	* orbsvcs/Fault_Notifier/Makefile.am:
+
+	  Updated to install executables.
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated to omit Log/PersistantStore.cpp.
+
 Tue Nov  2 07:24:04 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:

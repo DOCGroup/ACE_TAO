@@ -10,7 +10,7 @@ TAO_BUILDDIR = $(top_builddir)
 if BUILD_ACE_UUID
 if !BUILD_MINIMUM_CORBA
 
-noinst_PROGRAMS = Fault_Detector
+bin_PROGRAMS = Fault_Detector
 
 Fault_Detector_CPPFLAGS = \
   -I$(ACE_ROOT) \

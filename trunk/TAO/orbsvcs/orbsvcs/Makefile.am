@@ -2662,8 +2662,7 @@ DsLogAdmin = \
   Log/LogRecordStore.cpp \
   Log/Log_Constraint_Interpreter.cpp \
   Log/Log_Constraint_Visitors.cpp \
-  Log/Log_i.cpp \
-  Log/PersistStore.cpp
+  Log/Log_i.cpp
 
 lib_LTLIBRARIES += libTAO_DsLogAdmin_Serv.la
 
