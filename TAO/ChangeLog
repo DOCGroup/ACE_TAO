@@ -1,3 +1,12 @@
+Wed Dec  3 09:41:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+
+          Added visit_union_branch() method to catch anonymous arrays
+          as union members, which are not caught by visit_field(). Thanks
+          to Johnny Willemsen <jwillemsen@remedy.nl> for reporting the
+          problem.
+
 Wed Dec  3 16:15:46 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/FtRtEvent/PushConsumer.cpp:
