@@ -1,3 +1,18 @@
+Wed Oct 29 15:19:07 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
+	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Struct.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/Component.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/Home.hpp: added support for sharing
+	  context by typedef temporary and principal syntax tree node.
+
 Wed Oct 29 13:36:47 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/Traversal/Elements.cpp:

@@ -76,7 +76,7 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
-        
+
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -96,7 +96,7 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
-        
+
       public:
         virtual std::string
         declaration_class ()
@@ -138,8 +138,10 @@ namespace CCF
         ConcreteEventTypeDef (SimpleName const& name,
                               Order const& order,
                               ScopePtr const& scope,
+                              ContextHolderPtr const& ch,
                               ScopedNameSet const& inherits)
-            : Declaration (name, order, scope),
+            : Node (ch),
+              Declaration (name, order, scope),
               ValueTypeDef (inherits)
         {
           type_info (static_type_info ());
@@ -149,10 +151,11 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (
-            new ConcreteEventTypeDef (name, order, scope, inherits ()));
+            new ConcreteEventTypeDef (name, order, scope, ch, inherits ()));
         }
 
 

@@ -26,8 +26,12 @@ define(`built_in_type_impl', `
         }
 
       protected:
-        $1 (SimpleName const& name, Order const& order, ScopePtr const& scope)
-            : Declaration (name, order, scope)
+        $1 (SimpleName const& name,
+            Order const& order,
+            ScopePtr const& scope,
+            ContextHolderPtr const& ch)
+            : Node (ch),
+              Declaration (name, order, scope)
         {
           type_info (static_type_info ());
         }
@@ -36,9 +40,10 @@ define(`built_in_type_impl', `
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
-          return TypeDeclPtr (new $1 (name, order, scope));
+          return TypeDeclPtr (new $1 (name, order, scope, ch));
         }
 
         // Runtime declaration type information.

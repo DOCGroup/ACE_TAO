@@ -71,10 +71,12 @@ namespace CCF
         HomeDef (SimpleName const& name,
                  Order const& order,
                  ScopePtr const& scope,
+                 ContextHolderPtr const& ch,
                  HomeDefRef const& inherits,
                  InterfaceDefRefSetName const& supports,
                  ComponentDefRef const& manages)
-            : Declaration (name, order, scope),
+            : Node (ch),
+              Declaration (name, order, scope),
               inherits_ (inherits),
               supports_ (supports),
               manages_ (manages)
@@ -86,12 +88,14 @@ namespace CCF
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (
             new  HomeDef (name,
                           order,
                           scope,
+                          ch,
                           inherits_,
                           supports_,
                           manages_));
@@ -146,7 +150,7 @@ namespace CCF
         {
           return true;
         }
-        
+
         // Runtime declaration type information
       public:
         virtual std::string

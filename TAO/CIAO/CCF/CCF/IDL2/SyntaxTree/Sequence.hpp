@@ -82,17 +82,28 @@ namespace CCF
           type_info (static_type_info ());
         }
 
+      protected:
+        UnboundedSequenceDecl (SimpleName const& name,
+                               Order const& order,
+                               ScopePtr const& scope,
+                               ContextHolderPtr const& ch,
+                               ScopedName const& type)
+            : Node (ch),
+              Declaration (name, order, scope),
+              SequenceDecl (type)
+        {
+          type_info (static_type_info ());
+        }
+
       public:
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
                                  Order const& order,
-                                 ScopePtr const& scope)
+                                 ScopePtr const& scope,
+                                 ContextHolderPtr const& ch)
         {
           return TypeDeclPtr (new UnboundedSequenceDecl (
-                                name,
-                                order,
-                                scope,
-                                type ()->name ()));
+                                name, order, scope, ch, type ()->name ()));
         }
 
 

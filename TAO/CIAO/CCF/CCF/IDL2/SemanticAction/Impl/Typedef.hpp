@@ -118,7 +118,7 @@ namespace CCF
                 new UnboundedSequenceDecl (name, order, scope_, type));
 
               scope_->insert (seq);
-              
+
               type_ = seq->name ();
 
               if (trace_) cerr << "assigned anonymous sequence name "
