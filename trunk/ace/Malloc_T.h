@@ -481,7 +481,7 @@ public:
 
   /// Deallocate memory pointed to by <ptr>, which must have been
   /// allocated previously by <this->malloc>.
-  void  free (void *ptr);
+  void free (void *ptr);
 
   /// Returns a reference to the underlying memory pool.
   MEMORY_POOL &memory_pool (void);
