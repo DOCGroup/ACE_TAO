@@ -3,7 +3,7 @@ Thu Apr 15 14:04:36 1999  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/rules.lib.GNU: don't call $(RANLIB)
           if it is null.
 
-        * include/makeinclude/platform_vxworks5.x_g++.GNU: removed
+        * include/makeinclude/platform_vxworks5.x_{g++,ghs}.GNU: removed
           RANLIB definition, so that it will be null.  This prevents
           calling "true" on NT hosts.
 
@@ -21,8 +21,8 @@ Wed Apr 14 22:40:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.sh: call run_tests.check via sh, to support
           platforms that don't have /bin/sh.  Thanks to Thomas Mehrkam
-          <Thomas_Mehrkam@i-o.com> for reporting that it's necessary on
-          his NT host.
+          <Thomas_Mehrkam@i-o.com> for reporting that his NT host doesn't
+          have /bin/sh.
 
 Wed Apr 14 18:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
