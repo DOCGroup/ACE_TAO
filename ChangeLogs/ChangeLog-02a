@@ -88,6 +88,12 @@ Sun Nov  5 14:05:13 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Updated to use the new ACE_AS_STATIC_LIBS macro.
 
+        * ace/Sample_History.cpp:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_SOCK_Stream.i:
+
+          Fixed miscellaneous ACE_USES_UNICODE problems with ACE_LIB_TEXT.
+
 Sat Nov  4 19:33:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
