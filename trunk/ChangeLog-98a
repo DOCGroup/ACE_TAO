@@ -1,3 +1,9 @@
+Tue May  5 14:12:08 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU: Added a
+ 	  platform config file courtesy of Arturo Montes
+ 	  <mitosys@colomsat.net.co>.
+
 Tue May 05 08:35:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-irix6.x-sgic++-nothreads.h: updated the determination
