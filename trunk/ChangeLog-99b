@@ -1,3 +1,8 @@
+Tue May 18 09:35:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Thread_Manager_Test.{h,cpp},Makefile:
+          removed Thread_Manager_Test.h.
+
 Mon May 17 22:39:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Manager_Test.cpp: added a couple more
