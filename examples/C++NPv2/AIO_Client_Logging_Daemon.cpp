@@ -92,7 +92,7 @@ public:
   // Cancel accept and close all clients.
   void close (void);
 
-  // Remoce handler from client set.
+  // Remove handler from client set.
   void remove (AIO_Input_Handler *ih)
   { clients_.remove (ih); }
 
@@ -100,6 +100,7 @@ protected:
   // Service handler factory method.
   virtual AIO_Input_Handler *make_handler (void);
 
+  // Set of all connected clients
   ACE_Unbounded_Set<AIO_Input_Handler *> clients_;
 };
 
