@@ -219,8 +219,8 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
     {
       switch (creation_parameters.object_lookup_strategy_for_user_id_policy_)
         {
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
         case TAO_LINEAR:
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
           ACE_NEW_THROW_EX (uim,
                             user_id_linear_map (creation_parameters.active_object_map_size_),
                             CORBA::NO_MEMORY ());
