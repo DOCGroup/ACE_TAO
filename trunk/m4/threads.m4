@@ -46,194 +46,37 @@ dnl Check if compiler accepts specific flag to enable threads
       ])
    ],
    [
-    ace_cv_feature_thread_flag_set=no
-
-    ace_save_CXXFLAGS="$CXXFLAGS"
-    ace_save_CFLAGS="$CFLAGS"
-
-    CXXFLAGS="$CXXFLAGS -mt"
-    CFLAGS="$CFLAGS -mt"
-
-    ACE_CACHE_CHECK(if compiler can use -mt flag,
-      ace_cv_feature_has_mt_flag,
-      [
-       ACE_CHECK_THREAD_FLAGS(
-         [
-          ace_cv_feature_has_mt_flag=yes
-         ],
-         [
-          ace_cv_feature_has_mt_flag=no
-         ])
-      ],
-      [
-       ace_cv_feature_thread_flag_set=yes
-      ],
-      [
-       CXXFLAGS="$ace_save_CXXFLAGS"
-       CFLAGS="$ace_save_CFLAGS"
-      ])
-
-    if test "$ace_cv_feature_thread_flag_set" = no; then
- 
-      CXXFLAGS="$CXXFLAGS -pthread"
-      CFLAGS="$CFLAGS -pthread"
-
-      ACE_CACHE_CHECK(if compiler can use -pthread flag,
-        ace_cv_feature_has_pthread_flag,
-        [
-         ACE_CHECK_THREAD_FLAGS(
-           [
-            ace_cv_feature_has_pthread_flag=yes
-           ],
-           [
-            ace_cv_feature_has_pthread_flag=no
-           ])
-        ],
-        [
-         ace_cv_feature_thread_flag_set=yes
-        ],
-        [
-         CXXFLAGS="$ace_save_CXXFLAGS"
-         CFLAGS="$ace_save_CFLAGS"
-        ])
-
-    fi dnl test "$ace_cv_feature_thread_flag_set" = no
-
-    if test "$ace_cv_feature_thread_flag_set" = no; then
-
-      CXXFLAGS="$CXXFLAGS -pthreads"
-      CFLAGS="$CFLAGS -pthreads"
-
-      ACE_CACHE_CHECK(if compiler can use -pthreads flag,
-        ace_cv_feature_has_pthreads_flag,
-        [
-         ACE_CHECK_THREAD_FLAGS(
-           [
-            ace_cv_feature_has_pthreads_flag=yes
-           ],
-           [
-            ace_cv_feature_has_pthreads_flag=no
-           ])
-        ],
-        [
-         ace_cv_feature_thread_flag_set=yes
-        ],
-        [
-         CXXFLAGS="$ace_save_CXXFLAGS"
-         CFLAGS="$ace_save_CFLAGS"
-        ])
-
-    fi dnl test "$ace_cv_feature_thread_flag_set" = no
-
-    if test "$ace_cv_feature_thread_flag_set" = no; then
-
-      CXXFLAGS="$CXXFLAGS -mthreads"
-      CFLAGS="$CXXFLAGS -mthreads"
-
-      ACE_CACHE_CHECK(if compiler can use -mthreads flag,
-        ace_cv_feature_has_mthreads_flag,
-        [
-         ACE_CHECK_THREAD_FLAGS(
-           [
-            ace_cv_feature_has_mthreads_flag=yes
-           ],
-           [
-            ace_cv_feature_has_mthreads_flag=no
-           ])
-        ],
-        [
-         ace_cv_feature_thread_flag_set=yes
-        ],
-        [
-         CXXFLAGS="$ace_save_CXXFLAGS"
-         CFLAGS="$ace_save_CFLAGS"
-        ])
-
-    fi dnl test "$ace_cv_feature_thread_flag_set" = no
-
-    if test "$ace_cv_feature_thread_flag_set" = no; then
-
-      CXXFLAGS="$CXXFLAGS -threads"
-      CFLAGS="$CXXFLAGS -threads"
-
-      ACE_CACHE_CHECK(if compiler can use -threads flag,
-        ace_cv_feature_has_dash_threads_flag,
-        [
-         ACE_CHECK_THREAD_FLAGS(
-           [
-            ace_cv_feature_has_dash_threads_flag=yes
-           ],
-           [
-            ace_cv_feature_has_dash_threads_flag=no
-           ])
-        ],
-        [
-         ace_cv_feature_thread_flag_set=yes
-        ],
-        [
-         CXXFLAGS="$ace_save_CXXFLAGS"
-         CFLAGS="$ace_save_CFLAGS"
-        ])
-
-    fi dnl test "$ace_cv_feature_thread_flag_set" = no
-
-    if test "$ace_cv_feature_thread_flag_set" = no; then
-
-      CXXFLAGS="$CXXFLAGS -Kthread"
-      CFLAGS="$CXXFLAGS -Kthread"
-
-      ACE_CACHE_CHECK(if compiler can use -Kthread flag,
-        ace_cv_feature_has_kthread_flag,
-        [
-         ACE_CHECK_THREAD_FLAGS(
-           [
-            ace_cv_feature_has_kthread_flag=yes
-           ],
-           [
-            ace_cv_feature_has_kthread_flag=no
-           ])
-        ],
-        [
-         ace_cv_feature_thread_flag_set=yes
-        ],
-        [
-         CXXFLAGS="$ace_save_CXXFLAGS"
-         CFLAGS="$ace_save_CFLAGS"
-        ])
-
-    fi dnl test "$ace_cv_feature_thread_flag_set" = no
+    dnl The compiler/platform has no thread support linked in by default
+    dnl so search for a usable compiler flag to enable thread support.
+    dnl If no thread flag is found then the remaining tests should still
+    dnl figure out how to enable thread support via library checks.
+    ACE_SEARCH_THREAD_FLAGS(mt pthread pthreads mthreads threads Kthread,,)
    ],
    [
     dnl Do nothing
    ])
 
-dnl Check for UNIX International Threads -- STHREADS
+ dnl Check for UNIX International Threads -- STHREADS
+ ACE_SEARCH_LIBS(thr_create, thread,
+   [
+    ace_has_sthreads=yes
+    AC_DEFINE(ACE_HAS_STHREADS)
+   ],
+   [
+    ace_has_sthreads=no
+   ])
 
-  ace_has_sthreads=no
+ dnl Sometimes thr_create is actually found with explicitly linking against
+ dnl -lthread, so try a more "exotic" function.
+ ACE_SEARCH_LIBS(rwlock_destroy, thread,,)
 
-  AC_CHECK_FUNC(thr_create,
-    [
-     ace_has_sthreads=yes
-     AC_DEFINE(ACE_HAS_STHREADS)
-    ],
-    [
-     AC_CHECK_LIB(thread, thr_create, dnl
-                  [
-                   ace_has_sthreads=yes
-dnl Since we AC_DEFINE(ACE_HAS_STHREADS), the default behavior of
-dnl of adding "-lthread" to the "LIBS" variable no longer works.
-dnl So, we have to add it manually.
-                   LIBS="$LIBS -lthread"
-                   AC_DEFINE(ACE_HAS_STHREADS)
-                  ],)
-    ])
-
-  dnl Sometimes thr_create is actually found with explicitly linking against
-  dnl -lthread, so try a more "exotic" function.
-  AC_CHECK_FUNC(rwlock_destroy, , AC_CHECK_LIB(thread, rwlock_destroy,,))dnl
-
-dnl Check for POSIX threads
-
+ dnl Check for POSIX threads
+ ACE_SEARCH_LIBS(pthread_create, pthread pthreads c_r gthreads,
+   [
+    ace_has_pthreads=yes
+    AC_DEFINE(ACE_HAS_PTHREADS)
+   ],
+   [
     dnl Check if platform provides pthreads backward compatibility macros
     dnl (Some platforms may define some pthread functions such as
     dnl  pthread_create() as macros when using a later implementation of
@@ -242,7 +85,7 @@ dnl Check for POSIX threads
     dnl  pthread_create() to co-exist with the old implementation of
     dnl  of pthread_create().)
 
-    AC_CACHE_CHECK(for pthreads backward compatibility macros,
+    ACE_CACHE_CHECK(for pthreads backward compatibility macros,
       ace_cv_lib_pthread_compat_macros,
       [
        AC_EGREP_CPP(ACE_PTHREAD_MACROS,
@@ -250,7 +93,7 @@ dnl Check for POSIX threads
 #include <pthread.h>
 
 #if defined (pthread_create)
-             ACE_PTHREAD_MACROS
+  ACE_PTHREAD_MACROS
 #endif
          ],
          [
@@ -259,89 +102,40 @@ dnl Check for POSIX threads
          [
           ace_cv_lib_pthread_compat_macros=no
          ])
-      ])
-
-    ace_has_pthreads=no
-
-dnl Check for POSIX threads -- PTHREADS
-    ACE_CHECK_FUNC(pthread_create, pthread.h,
-      [
-       ace_has_pthreads=yes
-       AC_DEFINE(ACE_HAS_PTHREADS)
       ],
       [
-       AC_CHECK_LIB(pthread, pthread_create, dnl
-                    [
-                     ace_has_pthreads=yes
-dnl Since we AC_DEFINE(ACE_HAS_PTHREADS), the default behavior of
-dnl of adding "-lpthread" to the "LIBS" variable no longer works.
-dnl So, we have to add it manually.
-                     LIBS="$LIBS -lpthread"
-                     AC_DEFINE(ACE_HAS_PTHREADS)
-                    ],)
-
-dnl Check if pthread function names are mangled (e.g. DU 4.0) to maintain
-dnl older Pthread Draft compatibility.
-       if test "$ace_has_pthreads" = no &&
-          test "$ace_cv_lib_pthread_compat_macros" = yes; then
-         ACE_CHECK_LIB(pthread, pthread_create, pthread.h, dnl
-                      [
-                       ace_has_pthreads=yes
-dnl Since we AC_DEFINE(ACE_HAS_PTHREADS), the default behavior of
-dnl of adding "-lpthread" to the "LIBS" variable no longer works.
-dnl So, we have to add it manually.
-                       LIBS="$LIBS -lpthread"
-                       AC_DEFINE(ACE_HAS_PTHREADS)
-                      ],)
-       fi dnl test "$ace_has_pthreads" = no && have compatibilty macros
-
-dnl Check if we need to use -lpthreads instead (e.g. AIX 4.2)
-       if test "$ace_has_pthreads" = no; then
-         AC_CHECK_LIB(pthreads, pthread_create, dnl
-                      [
-                       ace_has_pthreads=yes
-dnl Since we AC_DEFINE(ACE_HAS_PTHREADS), the default behavior of
-dnl of adding "-lpthread" to the "LIBS" variable no longer works.
-dnl So, we have to add it manually.
-                       LIBS="$LIBS -lpthreads"
-                       AC_DEFINE(ACE_HAS_PTHREADS)
-                      ],)
-       fi dnl test "$ace_has_pthreads" = no
-
-       if test "$ace_has_pthreads" = no; then  
-dnl Check for POSIX threads in -lc_r
-dnl Check if we already have the necessary library, first
-         AC_CHECK_LIB(c_r, pthread_create, dnl
-                      [
-                       ace_has_pthreads=yes
-dnl Since we AC_DEFINE(ACE_HAS_PTHREADS), the default behavior of
-dnl of adding "-lc_r" to the "LIBS" variable no longer works.
-dnl So, we have to add it manually.
-                       LIBS="$LIBS -lc_r"
-                       AC_DEFINE(ACE_HAS_PTHREADS)
-                      ],)
-       fi dnl  test "$ace_has_pthreads" = no
-
-       if test "$ace_has_pthreads" = no; then  
-dnl Check for POSIX threads in -lgthreads, i.e. FSU Pthreads
-         AC_CHECK_LIB(gthreads, pthread_create, dnl
-                      [
-                       ace_has_pthreads=yes
-dnl Since we AC_DEFINE(ACE_HAS_PTHREADS), the default behavior of
-dnl of adding "-lgthreads" to the "LIBS" variable no longer works.
-dnl So, we have to add it manually.
-                       LIBS="$LIBS -lgthreads"
-                       AC_DEFINE(ACE_HAS_PTHREADS)
-                      ],)
-       fi dnl  test "$ace_has_pthreads" = no
+       dnl Check if pthread function names are mangled (e.g. DU 4.0)
+       dnl to maintain older Pthread Draft compatibility.
+       ACE_CHECK_FUNC(pthread_create, pthread.h,
+         [
+          ace_has_pthreads=yes
+          AC_DEFINE(ACE_HAS_PTHREADS)
+         ],
+         [
+          ACE_CHECK_LIB(pthread, pthread_create, pthread.h, dnl
+            [
+             ace_has_pthreads=yes
+             dnl Since we AC_DEFINE(ACE_HAS_PTHREADS), the default behavior
+             dnl of adding "-lpthread" to the "LIBS" variable no longer
+             dnl works, so we have to add it manually.
+             LIBS="$LIBS -lpthread"
+             AC_DEFINE(ACE_HAS_PTHREADS)
+            ],
+            [
+             ace_has_pthreads=yes
+            ])
+         ])
+      ],
+      [
+       ace_has_pthreads=no
       ])
+   ])
 
-dnl If we don't have any thread library, then disable threading altogether!
-  if test "$ace_has_pthreads" != yes && 
-     test "$ace_has_sthreads" != yes; then
-       ace_user_enable_threads=no
-  fi
-
+ dnl If we don't have any thread library, then disable threading altogether!
+ if test "$ace_has_pthreads" != yes && 
+    test "$ace_has_sthreads" != yes; then
+   ace_user_enable_threads=no
+ fi
 ])
 
 dnl This macro will check that the current compiler flags do something
@@ -412,4 +206,54 @@ $ace_real_function();
 
   ])
  ])
+])
+
+dnl Check what compiler thread flag may be used, if any, from the given list.
+dnl The flag list is separated by white space.
+dnl Usage: ACE_SEARCH_THREAD_FLAGS(THREAD-FLAG-LIST,
+dnl                                [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+AC_DEFUN(ACE_SEARCH_THREAD_FLAGS, dnl
+[
+ ACE_CACHE_CHECK(for compiler thread flag,
+   ace_cv_thread_flag_search,
+   [
+    ace_save_CXXFLAGS="$CXXFLAGS"
+    ace_save_CFLAGS="$CFLAGS"
+
+    for i in $1; do
+      CXXFLAGS="$CXXFLAGS -$i"
+      CFLAGS="$CFLAGS -$i"
+
+      ACE_CHECK_THREAD_FLAGS(
+        [
+         ace_cv_thread_flag_search="-$i"
+
+         dnl A usable flag was found so break out of the loop.
+         break;
+        ],
+        [
+         ace_cv_thread_flag_search=no
+        ])
+
+      dnl Reset the flags for the next flag check.
+      CXXFLAGS="$ace_save_CXXFLAGS"
+      CFLAGS="$ace_save_CFLAGS"
+    done
+
+    dnl Reset the flags to a consistent state.
+    dnl This prevents duplicate flags from being added to
+    dnl the C/CXXFLAGS variable.
+    CXXFLAGS="$ace_save_CXXFLAGS"
+    CFLAGS="$ace_save_CFLAGS"
+   ],
+   [
+    dnl Add the found/cached thread flag to the C/CXXFLAGS variables
+    CXXFLAGS="$CXXFLAGS $ace_cv_thread_flag_search"
+    CFLAGS="$CFLAGS $ace_cv_thread_flag_search"
+
+    $2
+   ],
+   [
+    $3
+   ])
 ])

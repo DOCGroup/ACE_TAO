@@ -41,11 +41,8 @@ AC_DEFUN(ACE_CHECK_ASYNCH_IO, dnl
  dnl In some cases, the thread library must be linked to in addition to the
  dnl real-time support library.  As such, make sure these checks are done
  dnl after the thread library checks.
- ace_has_aio_funcs=yes
-  AC_CHECK_FUNC(aio_read, , dnl
-   AC_CHECK_LIB(aio, aio_read, ,
-     AC_CHECK_LIB(posix4, aio_read, , 
-       AC_CHECK_LIB(rt, aio_read, , ace_has_aio_funcs=no))))
+ ACE_SEARCH_LIBS(aio_read, aio posix4 rt, dnl
+    ace_has_aio_funcs=yes, ace_has_aio_funcs=no)
 
 if test "$ace_has_aio_funcs" = yes; then
   ACE_CACHE_CHECK(for working asynchronous IO,
