@@ -130,7 +130,7 @@ ACE_WIN32_Proactor::create_asynch_read_dgram (void)
                   0);
   return implementation;
 }
- 
+
 ACE_Asynch_Write_Dgram_Impl *
 ACE_WIN32_Proactor::create_asynch_write_dgram (void)
 {
@@ -519,11 +519,30 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
       else
         errno = 0;
 
+      u_long result_err = asynch_result->error ();
+
+      // if "result_err" is 0 than
+      //     It is normal OS/WIN32 AIO completion.
+      //     We have cleared asynch_result->error_
+      //     during shared_read/shared_write.
+      //     The real error code is already stored in "errno",
+      //     so copy "errno" value to the "result_err"
+      //     and pass this "result_err" code 
+      //     to the application_specific_code ()
+      // else 
+      //    "result_err" non zero
+      //     it means we have "post_completed" result
+      //     so pass this "result_err" code 
+      //     to the application_specific_code ()
+
+      if ( result_err == 0 ) 
+        result_err = errno ;
+
       this->application_specific_code (asynch_result,
                                        bytes_transferred,
                                        result,
                                        (void *) completion_key,
-                                       errno);
+                                       result_err);
     }
   return 1;
 }
@@ -561,11 +580,26 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
       handle != 0)
     ACE_OS::event_signal (&handle);
 
+  // pass 
+  //   bytes_transferred
+  //   completion_key 
+  // to the ::PostQueuedCompletionStatus()
+  //   error will be extracted later in handle_events()
+
+  u_long bytes_transferred = 0;
+  const void * completion_key = 0 ;
+
+  if ( result != 0 )
+    {
+      bytes_transferred = result->bytes_transferred ();
+      completion_key = result->completion_key();
+    }
+
   // Post a completion
   if (::PostQueuedCompletionStatus (this->completion_port_, // completion port
-                                    0,            // number of bytes tranferred
-                                    0,            // completion key
-                                    result      // overlapped
+                                    bytes_transferred,      // number of bytes transferred
+                                    (ULONG) completion_key, // completion key
+                                    result                  // overlapped
                                     ) == FALSE)
     {
       delete result;

@@ -103,6 +103,12 @@ public:
   /// Destructor.
   virtual ~ACE_WIN32_Asynch_Result (void);
 
+  /// Simulate error value to use in the post_completion ()
+  void set_error (u_long errcode);
+
+  /// Simulate value to use in the post_completion ()
+  void set_bytes_transferred (u_long nbytes);
+
 protected:
   /// Constructor.
   ACE_WIN32_Asynch_Result (ACE_Handler &handler,
@@ -189,7 +195,7 @@ protected:
  * @class ACE_WIN32_Asynch_Read_Stream_Result
  *
  * @brief This is class provides concrete implementation for
- * ACE_Asynch_Read_Stream::Result class. 
+ * ACE_Asynch_Read_Stream::Result class.
  */
 class ACE_Export ACE_WIN32_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl,
                                                        public ACE_WIN32_Asynch_Result
@@ -349,7 +355,7 @@ protected:
  * @class ACE_WIN32_Asynch_Write_Stream_Result
  *
  * @brief This is class provides concrete implementation for
- *    ACE_Asynch_Write_Stream::Result class. 
+ *    ACE_Asynch_Write_Stream::Result class.
  */
 class ACE_Export ACE_WIN32_Asynch_Write_Stream_Result : public virtual ACE_Asynch_Write_Stream_Result_Impl,
                                                         public ACE_WIN32_Asynch_Result
@@ -1246,7 +1252,7 @@ public:
  * @class ACE_WIN32_Asynch_Read_Dgram_Result
  *
  * @brief This is class provides concrete implementation for
- * ACE_Asynch_Read_Dgram::Result class. 
+ * ACE_Asynch_Read_Dgram::Result class.
  */
 class ACE_Export ACE_WIN32_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_Read_Dgram_Result_Impl,
                                                       public ACE_WIN32_Asynch_Result
@@ -1264,7 +1270,7 @@ public:
 
   /// Message block which contains the read data
   ACE_Message_Block *message_block (void) const;
-  
+
   /// The address of where the packet came from
   int remote_address (ACE_Addr& addr) const;
 
@@ -1390,10 +1396,10 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto 
+   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto
    * <message_block->size()> bytes will be read into each <message block> for
    * a total of <message_block->total_size()> bytes.  All <message_block>'s
-   * <wr_ptr>'s will be updated to reflect the added bytes for each 
+   * <wr_ptr>'s will be updated to reflect the added bytes for each
    * <message_block>
    */
   virtual ssize_t recv (ACE_Message_Block *message_block,
@@ -1438,14 +1444,14 @@ protected:
  * @class ACE_WIN32_Asynch_Write_Dgram_Result
  *
  * @brief This is class provides concrete implementation for
- *    ACE_Asynch_Write_Dgram::Result class. 
+ *    ACE_Asynch_Write_Dgram::Result class.
  */
 class ACE_Export ACE_WIN32_Asynch_Write_Dgram_Result : public virtual ACE_Asynch_Write_Dgram_Result_Impl,
                                                        public ACE_WIN32_Asynch_Result
 {
   /// Factory class willl have special permissions.
   friend class ACE_WIN32_Asynch_Write_Dgram;
-  
+
   /// Proactor class has special permission.
   friend class ACE_WIN32_Proactor;
 
@@ -1562,7 +1568,7 @@ public:
   virtual ~ACE_WIN32_Asynch_Write_Dgram (void);
 
   /** This starts off an asynchronous send.  Upto
-   * <message_block->total_length()> will be sent.  <message_block>'s 
+   * <message_block->total_length()> will be sent.  <message_block>'s
    * <rd_ptr> will be updated to reflect the sent bytes if the send operation
    * is successfully completed.
    * Return code of 1 means immediate success and <number_of_bytes_sent>
@@ -1572,7 +1578,7 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto 
+   * method.  Up to IOV_MAX <message_block>'s are supported.  Upto
    * <message_block->length()> bytes will be sent from each <message block>
    * for a total of <message_block->total_length()> bytes.  All
    * <message_block>'s <rd_ptr>'s will be updated to reflect the bytes sent
