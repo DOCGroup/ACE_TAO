@@ -51,12 +51,7 @@ TAO_ServantBase::~TAO_ServantBase (void)
 PortableServer::POA_ptr
 TAO_ServantBase::_default_POA (CORBA::Environment &env)
 {
-  TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-  PortableServer::POA_var result = poa->_this (env);
-  if (env.exception () != 0)
-    return PortableServer::POA::_nil ();
-  else
-    return result._retn ();
+  return TAO_ORB_Core_instance ()->root_poa_reference (env);
 }
 
 CORBA::Boolean
