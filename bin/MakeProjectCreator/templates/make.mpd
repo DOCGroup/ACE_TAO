@@ -104,6 +104,13 @@ $(BIN): $(OBJS)
 
 <%endif%>
 <%if(sharedname)%>
+<%if(sharedname)%>
+INSTARGET = $(SHLIB)
+<%else%>
+<%if(staticname)%>
+INSTARGET = $(LIB)
+<%endif%>
+<%endif%>
 all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
 
 $(SHLIB): $(OBJS)
@@ -130,13 +137,6 @@ install:
 <%endif%>
 <%else%>
 <%if(!exename)%>
-<%if(sharedname)%>
-INSTARGET = $(SHLIB)
-<%else%>
-<%if(staticname)%>
-INSTARGET = $(LIB)
-<%endif%>
-<%endif%>
 install:
 	@mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
 	@[ -f "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(INSTARGET)" ] || ln -s "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
