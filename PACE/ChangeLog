@@ -1,3 +1,15 @@
+Mon Jun  5 15:23:53 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* /pace/linux
+	* /pace/linux/README
+
+	  Added to repository.
+
+	* /pace/emulation
+	* /pace/emulation/README	
+
+	  Removed from repository.
+
 Fri Jun 02 16:55:10 2000    <luther@cs.wustl.edu>
 
 	* ACE_wrappers/pace/pace/paces.dsp
