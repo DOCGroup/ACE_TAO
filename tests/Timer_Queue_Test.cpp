@@ -45,8 +45,14 @@ randomize_array (T array[], size_t size)
     }
 }
 
-// Number of iterations for the performance tests.
+// Number of iterations for the performance tests.  Some platforms have a very
+// high ACE_DEFAULT_TIMERS (HP-UX is 400), so limit this to a reasonable run
+// time.
+#if (ACE_DEFAULT_TIMERS > 20)
+static int max_iterations = 2000;
+#else
 static int max_iterations = ACE_DEFAULT_TIMERS * 100;
+#endif
 
 // Keep track of the timer ids that were assigned to us.
 static long *timer_ids = 0;
