@@ -1,3 +1,8 @@
+Fri Jul 16 19:57:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Makefile: Updated makefile to use
+	  multiple source files and generate Naming_Server.
+
 Fri Jul 16 16:31:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_visitor_array/cdr_op_ci.h:
@@ -30,7 +35,7 @@ Fri Jul 16 15:16:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* */Makefile:
 	  Remved the definitions for VLDLIBS and VBIN, these macros are
-	  defined in wrapper_macros.GNU and depend on the platform. Thanks 
+	  defined in wrapper_macros.GNU and depend on the platform. Thanks
 	  to Steve Huston for pointing this out.
 	  Also removed the definitions for the BUILD macro for similar
 	  reasons.
@@ -70,7 +75,7 @@ Fri Jul 16 13:59:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  when you right click them in windows explorer you can see what
  	  version the file is (e.g., "4.6.45").  Thanks to Christopher
  	  Kohlhoff <chris@kohlhoff.com> for contributing this.
-  
+
 	* examples/Borland: Updated the examples to contain several minor
 	  fixes for Borland C++ Builder.  Thanks to Christopher Kohlhoff
  	  <chris@kohlhoff.com> for reporting this.
