@@ -27,7 +27,6 @@
 #include "ace/config.h"
 #endif /* ACE_USER_CONFIG_H */
 
-#if !defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
 #   if defined (_MSC_VER)
@@ -96,32 +95,6 @@
 #   endif /* ACE_WIN32 */
 
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
-#else /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-
-# if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-#   if defined (_MSC_VER)
-#     pragma warning(disable: 4018 4114 4146 4245)
-#     pragma warning(disable: 4663 4664 4665 4511 4512)
-#   endif /* _MSC_VER */
-
-#   include /**/ <iostream>
-
-#   if defined (_MSC_VER)
-#     pragma warning(4: 4018 4114 4146 4245)
-#     pragma warning(4: 4663 4664 4665 4512 4511)
-#   endif /* _MSC_VER */
-
-#   if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-               (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-      using std::ostream;
-      using std::endl;
-      using std::cerr;
-#   endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-# else /* ACE_HAS_STANDARD_CPP_LIBRARY */
-#   include /**/ <iostream.h>
-# endif
-
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 // Now include the new standard headers (like cstdio) if using the
 // new standard.
