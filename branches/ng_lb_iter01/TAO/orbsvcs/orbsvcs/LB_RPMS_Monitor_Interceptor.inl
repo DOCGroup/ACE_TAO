@@ -8,6 +8,10 @@ TAO_LB_RPMS_Monitor_Interceptor::current_load (void)
   ACE_Time_Value elapsed_time =
     ACE_OS::gettimeofday () - this->interval_start_;
 
+  long milliseconds = elapsed_time.msec ();
+  if (milliseconds == 0)
+    return 0;  // @@ WRONG!
+
   this->interval_start_ = ACE_OS::gettimeofday ();
 
   CORBA::Float load =
