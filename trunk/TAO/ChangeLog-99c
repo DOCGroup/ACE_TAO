@@ -1,4 +1,26 @@
-Mon Jul 19 15:10:01 1999  Ossama Othman  <othman@cs.wustl.edu>
+Mon Jul 19 15:59:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be/be_decl.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	  Reverted previous change to be_union.cpp, and added member
+	  and get/set methods 'has_constructor' to the base class be_decl.
+	  Used in conjunction with compute_size_type(), this addition
+	  should determine whether a union case should be included by
+	  value or by reference without changing the signature of 
+	  generated operations, as the previous change did.
+
+tMon Jul 19 15:10:01 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/UIOP_Acceptor.cpp (~TAO_UIOP_Acceptor):
 
