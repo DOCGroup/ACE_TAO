@@ -7,6 +7,8 @@ project(XML_Helpers): taolib_with_idl, rtcorba, portableserver, acexml, ciao_cli
                   -Wb,export_macro=CIAO_XML_HELPERS_Export
   dynamicflags += CIAO_XML_HELPERS_BUILD_DLL
 
+  libs += TAO_Security
+
   IDL_Files {
    RTConfiguration.idl
   }
