@@ -689,7 +689,7 @@ sub create_kit () {
       "done";
 
   &ex ($build_command);
-  &ex ($md5sum_command);
+  #### This doesn't work:  &ex ($md5sum_command);
 }
 
 
