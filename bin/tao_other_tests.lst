@@ -69,7 +69,7 @@ TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/EC_MT_Mcast/run_test.pl:!ST !MINIMUM !STATIC
-TAO/orbsvcs/tests/ImplRepo/run_test.pl: SANDBOX
+TAO/orbsvcs/tests/ImplRepo/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: SANDBOX
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST
