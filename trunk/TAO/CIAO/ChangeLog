@@ -1,3 +1,11 @@
+Mon Sep 13 06:16:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ciao/Container_Base.cpp:
+	* ciao/Container_Base.cpp:
+
+	  Fixed wrong ACE_CHECK usage. This should fix compilation errors
+	  in Full_Reactors build.
+
 Mon Sep 13 04:20:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ciao/CCM_Core.mpc:
