@@ -9,8 +9,7 @@ ACE_RCSID (FTRT_ClientORB,
            "$Id$")
 
 namespace FTRT {
-  const unsigned F
-T_TRANSACTION_DEPTH = 30;
+  const unsigned FT_TRANSACTION_DEPTH = 30;
   const unsigned FT_FORWARD = 32;
 };
 
