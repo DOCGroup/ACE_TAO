@@ -73,8 +73,6 @@ Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu
 	  Changes propogated due to changes in the Transport_Cache_Manager
 	  interface. 
 
-
->>>>>>> 1.5616
 Fri Mar 11 08:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
