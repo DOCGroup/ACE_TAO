@@ -160,7 +160,8 @@ public:
   // Name Lookup Mechanism
   virtual AST_Decl              *lookup_by_name(UTL_ScopedName *,
                                                 idl_bool treat_as_ref,
-                                                idl_bool in_parent = 1);
+                                                idl_bool in_parent = 1,
+                                                long start_index = 0);
 
   // Look up the Identifier * specified only in the local scope
   virtual AST_Decl              *lookup_by_name_local(Identifier *,
