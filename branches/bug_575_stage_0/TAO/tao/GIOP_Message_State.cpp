@@ -6,7 +6,7 @@
 #include "tao/Pluggable.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-#include "Transport.h"
+//#include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_State.inl"

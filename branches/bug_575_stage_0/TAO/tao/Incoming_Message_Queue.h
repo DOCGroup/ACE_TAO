@@ -23,8 +23,8 @@
 /// Forward declarations
 class ACE_Data_Block;
 class TAO_ORB_Core;
-class TAO_GIOP_Message_State;
 class TAO_Queued_Data;
+class TAO_Transport;
 
 /**
  * @class TAO_Incoming_Message_Queue
@@ -42,20 +42,25 @@ public:
 
 
   /// @@Bala:Docu
-  int add_message (const ACE_Message_Block &block,
-                   const TAO_GIOP_Message_State &state);
+  int add_message (ACE_Message_Block *block,
+                   size_t missing_data,
+                   CORBA::Octet byte_order);
 
-  const ACE_Data_Block *current_message (void) const;
-  const CORBA::Octet current_byte_order (void) const;
+  void copy_message (ACE_Message_Block &block);
 
   CORBA::ULong queue_length (void);
 
-  int complete_message (void);
+  int is_complete_message (void);
 
+  size_t missing_data (void) const;
+  void missing_data (size_t data);
 
-  ACE_Data_Block *get_current_message (CORBA::Octet &byte_order);
+  char *wr_ptr (void) const;
+  ACE_Message_Block *dequeue_head (CORBA::Octet &byte_order);
 
 private:
+
+  friend class TAO_Transport;
 
   /// @@Bala:Docu
   class TAO_Export TAO_Queued_Data
@@ -64,7 +69,7 @@ private:
     TAO_Queued_Data (void);
 
     /// The actual message queue
-    ACE_Data_Block *data_block_;
+    ACE_Message_Block *msg_block_;
 
     CORBA::ULong missing_data_;
 

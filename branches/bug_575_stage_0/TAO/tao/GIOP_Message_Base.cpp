@@ -21,7 +21,6 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
   : message_state_ (orb_core,
                     this),
-    message_queue_ (orb_core),
     output_ (0),
     generator_parser_ (0)
 {
@@ -38,6 +37,8 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                           orb_core->message_block_dblock_allocator (),
                           orb_core->message_block_msgblock_allocator (),
                           orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                          TAO_DEF_GIOP_MAJOR,
+                          TAO_DEF_GIOP_MINOR,
                           orb_core->to_iso8859 (),
                           orb_core->to_unicode ()));
 }
@@ -315,13 +316,7 @@ TAO_GIOP_Message_Base::message_type (void)
 int
 TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
 {
-  // If we have a queue and if the last message is not complete a
-  // complete one, then this read will get us the remaining data. So
-  // do not try to parse the header if we have an incomplete message
-  // in the queue.
-  if (this->message_queue_.queue_length () > 0 &&
-      this->message_queue_.complete_message () == 0)
-    return 0;
+
 
   if (this->message_state_.parse_message_header (incoming) == -1)
     {
@@ -334,48 +329,36 @@ TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
   return 0;
 }
 
-int
-TAO_GIOP_Message_Base::is_message_complete (ACE_Message_Block &incoming)
+size_t
+TAO_GIOP_Message_Base::missing_data (ACE_Message_Block &incoming)
 {
-  // If we have atleast one message in the message queue we just add
-  // the message to the queue
-  if (this->message_queue_.queue_length ())
-    {
-      // Add the new message to the Queue
-      this->message_queue_.add_message (incoming,
-                                        this->message_state_);
-
-      // We could have gotten the rest of the message of a previous
-      // incomplete read. We query to figure whether we have a
-      // complete message...
-      return this->message_queue_.complete_message ();
-    }
-
-  size_t len = incoming.length ();
-
-  len -= TAO_GIOP_MESSAGE_HEADER_LEN;
-
+  // @@Bala: Look for fragmentation here..
   // If we had recd. fragmented messages and if the GIOP minor version
   // is greater than 1, then include the FRAGMENT HEADER to calculate
   // the effective length of the message
-  if (this->message_state_.more_fragments_ &&
+  /*if (this->message_state_.more_fragments_ &&
       this->message_state_.giop_version_.minor > 1)
-    len -= TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
+      len -= TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
+  */
 
-  if (len == this->message_state_.message_size_)
-    return 1;
-  else
-    {
-      // If we have a bigger or smaller message we  add the message to
-      // the queue.
-      this->message_queue_.add_message (incoming,
-                                        this->message_state_);
+  size_t len = incoming.length ();
 
-      // We could have gotten the rest of the message of a previous
-      // incomplete read. We query to figure whether we have a
-      // complete message...
-      return this->message_queue_.complete_message ();
-    }
+  if (len >= this->message_state_.message_size ())
+    return 0;
+
+  return this->message_state_.message_size () - len;
+}
+
+CORBA::Octet
+TAO_GIOP_Message_Base::byte_order (void)
+{
+  return this->message_state_.byte_order_;
+}
+
+int
+TAO_GIOP_Message_Base::is_message_complete (ACE_Message_Block &incoming)
+{
+
 
   // @@Bala: Implement other cases
   return 0;
@@ -384,7 +367,8 @@ TAO_GIOP_Message_Base::is_message_complete (ACE_Message_Block &incoming)
 int
 TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                                                 TAO_ORB_Core *orb_core,
-                                                ACE_Message_Block &incoming)
+                                                ACE_Message_Block &incoming,
+                                                CORBA::Octet byte_order)
 {
   // Set the upcall thread
   orb_core->lf_strategy ().set_upcall_thread (orb_core->leader_follower ());
@@ -393,64 +377,26 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // @@@@Is it necessary  here?
   this->output_->reset ();
 
-  CORBA::Octet byte_order = 0;
-  size_t rd_pos = 0;
-  size_t wr_pos = 0;
-  ACE_Data_Block *data = 0;
-  size_t len = 0;
-  char *ptr = 0;
-  // At this point we have data in the queue or in the <incoming>
-  // message block. If we have data in the queue we process that
-  // first. At this point we are just assuming that (and it is a
-  // pretty good assumption) that the data in <incoming>  has already
-  // been copied.
-  if (this->message_queue_.queue_length ())
-    {
-      // As we have a message in the queue let us process that. We do
-      // that by taking the data block off the queue and sticking it
-      // in the <incoming> message block..
-      data =
-        this->message_queue_.get_current_message (byte_order);
-
-      ptr = data->base ();
-      // Set the read and write pointer positions
-      // @@ What do we if we get Fragmented messages?
-      rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
-      len = wr_pos = data->size ();
-
-    }
-  else
-    {
-      // Get the read and write positions before we steal data.
-      // @@ Bala:Need to change this
-      rd_pos = incoming.rd_ptr () - incoming.base ();
-      wr_pos = incoming.wr_ptr () - incoming.base ();
-      rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
-      byte_order = this->message_state_.byte_order_;
-
-      data = incoming.data_block ()->duplicate ();
-
-      len = incoming.length ();
-      ptr = incoming.rd_ptr ();
-      // Duplicate the data block
-      // @@Do we need to ??
-      //      ACE_Data_Block *data =
-      //incoming.data_block ()->duplicate ();
-    }
-
+  // Get the read and write positions before we steal data.
+  size_t rd_pos = incoming.rd_ptr () - incoming.base ();
+  size_t wr_pos = incoming.wr_ptr () - incoming.base ();
+  rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
   this->dump_msg ("recv",
-                  ACE_reinterpret_cast (u_char *, ptr),
-                  len);
+                  ACE_reinterpret_cast (u_char *, incoming.rd_ptr ()),
+                  incoming.length ());
 
   // Create a input CDR stream.
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
-  TAO_InputCDR input_cdr (data,
+  TAO_InputCDR input_cdr (incoming.data_block (),
+                          ACE_Message_Block::DONT_DELETE,
                           rd_pos,
                           wr_pos,
                           byte_order,
+                          this->message_state_.giop_version_.major,
+                          this->message_state_.giop_version_.minor,
                           orb_core);
 
   // Reset the message handler to receive upcalls if any
@@ -485,65 +431,31 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 int
 TAO_GIOP_Message_Base::process_reply_message (
     TAO_Pluggable_Reply_Params &params,
-    ACE_Message_Block &incoming
+    ACE_Message_Block &incoming,
+    CORBA::Octet byte_order
   )
 {
-  CORBA::Octet byte_order = 0;
-  size_t rd_pos = 0;
-  size_t wr_pos = 0;
-  ACE_Data_Block *data = 0;
-  size_t len = 0;
-  char *ptr = 0;
-  // At this point we have data in the queue or in the <incoming>
-  // message block. If we have data in the queue we process that
-  // first. At this point we are just assuming that (and it is a
-  // pretty good assumption) that the data in <incoming>  has already
-  // been copied.
-  if (this->message_queue_.queue_length ())
-    {
-      // As we have a message in the queue let us process that. We do
-      // that by taking the data block off the queue and sticking it
-      // in the <incoming> message block..
-      data =
-        this->message_queue_.get_current_message (byte_order);
 
-      ptr = data->base ();
-      // Set the read and write pointer positions
-      // @@ What do we if we get Fragmented messages?
-      rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
-      len = wr_pos = data->size ();
-    }
-  else
-    {
-      // Get the read and write positions before we steal data.
-      // @@ Bala:Need to change this
-      rd_pos = incoming.rd_ptr () - incoming.base ();
-      wr_pos = incoming.wr_ptr () - incoming.base ();
-      rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
-      byte_order = this->message_state_.byte_order_;
-
-      data = incoming.data_block ()->duplicate ();
-      len = incoming.length ();
-      ptr = incoming.rd_ptr ();
-      // Duplicate the data block
-      // @@Do we need to ??
-      //      ACE_Data_Block *data =
-      //incoming.data_block ()->duplicate ();
-    }
+  // Get the read and write positions before we steal data.
+  size_t rd_pos = incoming.rd_ptr () - incoming.base ();
+  size_t wr_pos = incoming.wr_ptr () - incoming.base ();
+  rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
   this->dump_msg ("recv",
-                  ACE_reinterpret_cast (u_char *, ptr),
-                  len);
+                  ACE_reinterpret_cast (u_char *, incoming.rd_ptr ()),
+                  incoming.length ());
 
-  // Create a input CDR stream.
+  // Create a empty buffer on stack
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is alos done in the higher layers.
-  TAO_InputCDR input_cdr (data,
+  TAO_InputCDR input_cdr (incoming.data_block (),
+                          ACE_Message_Block::DONT_DELETE,
                           rd_pos,
                           wr_pos,
+                          this->message_state_.giop_version_.major,
+                          this->message_state_.giop_version_.minor,
                           byte_order);
-
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.
@@ -1205,6 +1117,8 @@ TAO_GIOP_Message_Base::send_reply_exception (
                         orb_core->output_cdr_dblock_allocator (),
                         orb_core->output_cdr_msgblock_allocator (),
                         orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                        TAO_DEF_GIOP_MAJOR,
+                        TAO_DEF_GIOP_MINOR,
                         orb_core->to_iso8859 (),
                         orb_core->to_unicode ());
 
