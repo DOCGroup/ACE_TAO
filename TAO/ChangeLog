@@ -1,3 +1,11 @@
+Wed Jul 30 18:34:34 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/UDP.cpp: 
+	  - Change mtu() to return the
+	    maximum theoretical MTU for UDP.  The existing value was too low,
+	    and was silently corrupting data by silently truncating it.
+	  - Make the the iovec version of send_frame() like the other versions.
+
 Wed Jul 30 13:12:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FT_ORB.dsp: Added the new file
