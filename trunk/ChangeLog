@@ -6,7 +6,7 @@ Thu Apr 22 11:53:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 2004-04-22  Marek Brudka  <mbrudka@elka.pw.edy.pl>
 
-	* ace/TMCast/Link_Listener.hpp: removed ACE_Addr bug which led to 
+	* ace/TMCast/Link_Listener.hpp: removed ACE_Addr bug which led to
 	sigsegv in TMCast applications.
 
 Thu Apr 22 12:13:52 2004  Chad Elliott  <elliott_c@ociweb.com>
