@@ -112,9 +112,35 @@ TAO_SSLIOP_Transport::recv_i (char *buf,
                               size_t len,
                               const ACE_Time_Value * /*max_wait_time*/)
 {
-  return this->connection_handler_->peer ().recv (buf,
-                                                  len
-                                                  /*, max_wait_time*/);
+  ssize_t n = this->connection_handler_->peer ().recv (buf,
+                                                       len
+                                                       /* ,max_wait_time */);
+
+  // Most of the errors handling is common for
+  // Now the message has been read
+  if (n == -1 && TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                  ACE_TEXT ("TAO - read message failure ")
+                  ACE_TEXT ("recv_i () \n")));
+    }
+
+  // Error handling
+  if (n == -1)
+    {
+      if (errno == EWOULDBLOCK)
+        return 0;
+
+      return -1;
+    }
+  // @@ What are the other error handling here??
+  else if (n == 0)
+    {
+      return -1;
+    }
+
+  return n;
 }
 
 
