@@ -368,14 +368,22 @@
             (__HP_aCC >= 32500 && defined (_HP_NAMESPACE_STD))) \
            || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB))
 #        define ACE_bad_alloc std::bad_alloc
+#        define ACE_nothrow   std::nothrow
+#        define ACE_nothrow_t std::nothrow_t
 #      else
 #        define ACE_bad_alloc bad_alloc
+#        define ACE_nothrow   nothrow
+#        define ACE_nothrow_t nothrow_t
 #      endif /* __HP_aCC */
 #    elif ((__HP_aCC <  12500 && !defined (RWSTD_NO_NAMESPACE)) || \
            (__HP_aCC >= 12500 && defined (_NAMESPACE_STD)))
 #      define ACE_bad_alloc std::bad_alloc
+#      define ACE_nothrow   std::nothrow
+#      define ACE_nothrow_t std::nothrow_t
 #    else
 #      define ACE_bad_alloc bad_alloc
+#      define ACE_nothrow   nothrow
+#      define ACE_nothrow_t nothrow_t
 #    endif /* HPUX_VERS < 1100 */
 #    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #  elif defined (__SUNPRO_CC)
@@ -402,11 +410,11 @@
 
 #  if defined (ACE_HAS_NEW_NOTHROW)
 #    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new(nothrow) CONSTRUCTOR; \
+   do { POINTER = new(ACE_nothrow) CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
 #    define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { POINTER = new(nothrow) CONSTRUCTOR; \
+   do { POINTER = new(ACE_nothrow) CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
 
