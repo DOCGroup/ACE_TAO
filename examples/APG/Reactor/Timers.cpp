@@ -40,7 +40,7 @@ pid_t timerTask (int initialDelay,
       sleep (interval);
     }
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 // Listing 1
 

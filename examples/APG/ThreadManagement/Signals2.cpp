@@ -42,7 +42,7 @@ public:
           process_message (mb);
       }
 
-    return 0;
+    ACE_NOTREACHED (return 0);
   }
 
   void handle_alert ();

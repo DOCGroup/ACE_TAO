@@ -90,5 +90,5 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
         }
     }
 
-  return (0);
+  ACE_NOTREACHED (return 0);
 }
