@@ -294,6 +294,12 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
                                  this->select_reactor_.wait_set_,
                                  ACE_Reactor::CLR_MASK);
 
+  // And suspend_set.
+  this->select_reactor_.bit_ops (handle,
+                                 mask,
+                                 this->select_reactor_.suspend_set_,
+                                 ACE_Reactor::CLR_MASK);
+
   // Note the fact that we've changed the state of the <wait_set_>,
   // which is used by the dispatching loop to determine whether it can
   // keep going or if it needs to reconsult select().
