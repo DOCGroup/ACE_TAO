@@ -1,3 +1,15 @@
+Thu Feb 13 10:30:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+
+	  Fixed an error in comparing the prefixes of a module and a previous
+	  opening of that module. The error appears only when the previous 
+	  module opening is in an included IDL file, and the IDL compiler
+	  is executed from a subdirectory of the one where the IDL files
+	  are located. Thanks to Will Christof <Will.Christof@krones.de>
+	  for reporting the bug and for providing the example IDL files and
+	  build conditions.
+
 Wed Feb 12 14:58:46 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Transport.cpp: Methods tear_listen_point_list () and
