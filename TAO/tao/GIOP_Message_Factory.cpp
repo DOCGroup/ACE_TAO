@@ -67,7 +67,7 @@ TAO_GIOP_Client_Message_Factory::~TAO_GIOP_Client_Message_Factory (void)
 
 int
 TAO_GIOP_Client_Message_Factory::handle_input (TAO_Transport *transport,
-                                               TAO_ORB_Core */*orb_core*/,
+                                               TAO_ORB_Core * /*orb_core*/,
                                                TAO_Message_State_Factory &mesg_state,
                                                ACE_Time_Value *max_wait_time)
 {
@@ -168,7 +168,7 @@ TAO_GIOP_Client_Message_Factory::write_request_header (const IOP::ServiceContext
                                                        CORBA::ULong request_id,
                                                        CORBA::Octet response_flags,
                                                        TAO_Target_Specification & /*spec*/,
-                                                       const char */*opname*/,
+                                                       const char * /*opname*/,
                                                        TAO_OutputCDR &msg)
 {
   // Adding only stuff that are common to all versions of GIOP. 
@@ -257,7 +257,7 @@ TAO_GIOP_Message_Acceptor::~TAO_GIOP_Message_Acceptor (void)
   
 int
 TAO_GIOP_Message_Acceptor::handle_input (TAO_Transport *transport,
-                                         TAO_ORB_Core */*orb_core*/,
+                                         TAO_ORB_Core * /*orb_core*/,
                                          TAO_Message_State_Factory &mesg_state,
                                          ACE_Time_Value *max_wait_time)
 {

@@ -111,8 +111,8 @@ TAO_GIOP_Message_State::append_fragment (ACE_Message_Block* current)
 
 
 void
-TAO_GIOP_Utils::dump_msg (const char */*label*/,
-                         const u_char */*ptr*/,
+TAO_GIOP_Utils::dump_msg (const char * /*label*/,
+                         const u_char * /*ptr*/,
                          size_t /*len*/)
 {
   if (TAO_debug_level >= 5)

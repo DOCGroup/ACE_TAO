@@ -226,7 +226,7 @@ TAO_GIOP_Client_Message_1_1::start_message (TAO_Pluggable_Message_Type t,
 }
 
 int
-TAO_GIOP_Client_Message_1_1::parse_reply (TAO_Transport */*transport*/,
+TAO_GIOP_Client_Message_1_1::parse_reply (TAO_Transport * /*transport*/,
                                           TAO_Message_State_Factory &mesg_state,
                                           IOP::ServiceContextList& reply_ctx,
                                           CORBA::ULong &request_id,
