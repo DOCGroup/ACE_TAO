@@ -38,7 +38,7 @@ ACE_Hash_Cache_Map_Manager<T_2>::~ACE_Hash_Cache_Map_Manager (void)
 template <T_1> int
 ACE_Hash_Cache_Map_Manager<T_2>:: bind (const KEY &key,
                                         const VALUE &value,
-                                        ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *&entry)
+                                        CACHE_ENTRY *&entry)
 {
   // Insert a entry which has the <key> and the <cache_value> which is
   // the combination of the <value> and the attributes of the caching
@@ -74,7 +74,7 @@ ACE_Hash_Cache_Map_Manager<T_2>:: bind (const KEY &key,
 template <T_1> int
 ACE_Hash_Cache_Map_Manager<T_2>::rebind (const KEY &key,
                                          const VALUE &value,
-                                         ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *&entry)
+                                         CACHE_ENTRY *&entry)
 {
   CACHE_VALUE cache_value (value,
                            this->caching_strategy_.attributes ());
@@ -112,7 +112,7 @@ ACE_Hash_Cache_Map_Manager<T_2>::rebind (const KEY &key,
 template <T_1> int
 ACE_Hash_Cache_Map_Manager<T_2>::trybind (const KEY &key,
                                           VALUE &value,
-                                          ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *&entry)
+                                          CACHE_ENTRY *&entry)
 {
   CACHE_VALUE cache_value (value,
                            this->caching_strategy_.attributes ());
@@ -154,7 +154,7 @@ ACE_Hash_Cache_Map_Manager<T_2>::trybind (const KEY &key,
 
 template <T_1> int
 ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
-                                       ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *&entry)
+                                       CACHE_ENTRY *&entry)
 {
   // Lookup the key and populate the <value>.
   int find_result = this->map_.find (key,
@@ -205,7 +205,7 @@ ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key)
 }
 
 template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>::unbind (ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *entry)
+ACE_Hash_Cache_Map_Manager<T_2>::unbind (CACHE_ENTRY *entry)
 {
   // Remove the entry from the cache.
   int unbind_result = this->map_.unbind (entry);
