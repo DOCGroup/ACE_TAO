@@ -14,7 +14,7 @@ worker (int iterations)
   for (int i = 0; i < iterations; i++)
     {
       if ((i % 10) == 0 
-	  && (ACE_Service_Config::thr_mgr ()->testcancel (ACE_Thread::self ()) != 0))
+		  && (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0))
 	{
 	  ACE_DEBUG ((LM_DEBUG, "(%t) has been cancelled before iteration!\n", i));
 	  break;
@@ -37,7 +37,7 @@ main (int argc, char *argv[])
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
-  ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
+  ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   int grp_id = thr_mgr->spawn_n (n_threads, ACE_THR_FUNC (worker),
 				 (void *) n_iterations,

@@ -65,7 +65,7 @@ class HTTP_Status_Code
   //     Design around the Singleton pattern
 {
 public:
-  static const char **instance(void);
+  static const char **instance (void);
   // Singleton access point.
 
   enum STATUS_CODE 

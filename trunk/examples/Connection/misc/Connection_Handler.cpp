@@ -115,7 +115,7 @@ Connection_Handler::svc (void)
     }
 
   // Cancel all pending timeouts.
-  ACE_Service_Config::reactor ()->cancel_timer (this);
+  ACE_Reactor::instance()->cancel_timer (this);
 
   // Remove ourselves from the Reactor.
   this->reactor ()->remove_handler 
@@ -203,7 +203,7 @@ main (int argc, char *argv[])
   Connection_Acceptor peer_acceptor;
 
   // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Service_Config::end_reactor_event_loop);
+  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
   // Register the signal handler adapter.
   if (daemon.reactor ()->register_handler (SIGINT, &sa) == -1)
@@ -218,8 +218,8 @@ main (int argc, char *argv[])
 
   // Perform connection service until we receive SIGINT.
 
-  while (daemon.reactor_event_loop_done () == 0)
-    daemon.run_reactor_event_loop ();
+  while (ACE_Reactor::event_loop_done() == 0)
+    ACE_Reactor::run_event_loop();
 
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) shutting down connection server\n"));
 

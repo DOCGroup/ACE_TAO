@@ -30,7 +30,7 @@ reader (void *arg)
   // Shared data via a reference.
   int& data = *(int *) arg;
 
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   
   // Wait for writer to complete.
 
@@ -54,7 +54,7 @@ writer (void *arg)
 {
   int& data = *(int *) arg;
 
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   
   // Calculate (work).
   ACE_DEBUG ((LM_DEBUG, "(%t) writer: working for %d secs\n", work_time));
@@ -85,7 +85,7 @@ main (int argc, char **argv)
   work_time = argc == 2 ? atoi (argv[1]) : 5;
 
   // threads manager
-  ACE_Thread_Manager& tm = *ACE_Service_Config::thr_mgr ();
+  ACE_Thread_Manager& tm = *ACE_Thread_Manager::instance ();
 
   // Create reader thread.
   if (tm.spawn (reader, (void *) &data) == -1)

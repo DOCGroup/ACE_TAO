@@ -41,23 +41,23 @@ main (int argc, char *argv[])
 {
   ACE_Service_Config loggerd;
   Event_Handler handler;
-  ACE_Sig_Adapter shutdown_handler ((ACE_Sig_Handler_Ex) ACE_Service_Config::end_reactor_event_loop);
+  ACE_Sig_Adapter shutdown_handler ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
   if (ACE::register_stdin_handler (&handler,
-				   ACE_Service_Config::reactor (),
-				   ACE_Service_Config::thr_mgr ()) == -1)
+				   ACE_Reactor::instance(),
+				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
 
   if (loggerd.open (argc, argv) == -1 && errno != ENOENT)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
 
-  else if (ACE_Service_Config::reactor ()->register_handler
+  else if (ACE_Reactor::instance()->register_handler
     (SIGINT, &shutdown_handler) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
 
   // Perform logging service until we receive SIGINT.
 
-  loggerd.run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop();
 
   return 0;
 }

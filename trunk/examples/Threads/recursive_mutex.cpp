@@ -74,7 +74,7 @@ recursive_worker (size_t nesting_level,
 static void *
 worker (void *arg)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
   ACE_Recursive_Thread_Mutex *rm = (ACE_Recursive_Thread_Mutex *) arg;
 
@@ -90,11 +90,11 @@ main (int argc, char *argv[])
   parse_args (argc, argv);
   ACE_Recursive_Thread_Mutex rm;
 
-  ACE_Service_Config::thr_mgr ()->spawn_n (n_threads, 
+  ACE_Thread_Manager::instance ()->spawn_n (n_threads, 
 					   ACE_THR_FUNC (worker), 
 					   (void *) &rm);
 
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }
 #else

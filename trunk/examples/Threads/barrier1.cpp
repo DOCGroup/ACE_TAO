@@ -33,7 +33,7 @@ static void *
 tester (Tester_Args *args)
 {
   // Keeps track of thread exit.
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
   for (int iterations = 1; 
        iterations <= args->n_iterations_;
@@ -63,13 +63,13 @@ main (int argc, char *argv[])
   
   Tester_Args args (tester_barrier, n_iterations);
 
-  if (ACE_Service_Config::thr_mgr ()->spawn_n 
+  if (ACE_Thread_Manager::instance ()->spawn_n 
       (int(n_threads), ACE_THR_FUNC (tester), 
        (void *) &args, THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   // Wait for all the threads to reach their exit point.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG, "(%t) done\n"));
   return 0;

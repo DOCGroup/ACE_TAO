@@ -90,7 +90,7 @@ int main (void)
 
 This example application shows how to write ReactorEx and Proactor
 event loops that handle events for some fixed amount of time.  It uses
-ACE_Service_Config::run_reactorEx_event_loop (run_time) to handle
+ACE_ReactorEx::run_event_loop(run_time) to handle
 events for run_time seconds.  The output should be the following:
 
 1 timeout occurred for Foo.

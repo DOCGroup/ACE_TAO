@@ -34,17 +34,17 @@ public:
     for (int i = 1; i <= 10; i++)
       {
 	ACE_DEBUG ((LM_DEBUG, "Active threads in ReactorEx (before handle_events) = %d\n", 
-		    ACE_Service_Config::reactorEx ()->active_threads_));
+		    ACE_ReactorEx::instance()->active_threads_));
 	ACE_SEH_TRY 
 	  {
-	    ACE_Service_Config::reactorEx ()->handle_events ();
+	    ACE_ReactorEx::instance()->handle_events ();
 	  }
 	ACE_SEH_EXCEPT (EXCEPTION_EXECUTE_HANDLER)
 	  {
 	    ACE_DEBUG ((LM_DEBUG, "Exception occurred\n"));
 	  }
 	ACE_DEBUG ((LM_DEBUG, "Active threads in ReactorEx (after handle_events) = %d\n", 
-		    ACE_Service_Config::reactorEx ()->active_threads_));
+		    ACE_ReactorEx::instance()->active_threads_));
       }
   }
 };
@@ -54,7 +54,7 @@ main ()
 {
   Event_Handler *handler;
   ACE_NEW_RETURN (handler, Event_Handler, -1);
-  ACE_Service_Config::reactorEx ()->register_handler (handler);
+  ACE_ReactorEx::instance()->register_handler (handler);
   ACE_ReactorEx_Test::doit ();
   delete handler;
   return 0;

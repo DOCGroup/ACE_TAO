@@ -56,7 +56,7 @@ public:
     // Handle events for 13 seconds.
     ACE_Time_Value run_time (13);
 
-    if (ACE_Service_Config::run_proactor_event_loop (run_time) == -1)
+    if (ACE_Proactor::run_event_loop(run_time) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "Worker::svc"), -1);
     else
       ACE_DEBUG ((LM_DEBUG, "(%t) work complete\n"));
@@ -72,7 +72,7 @@ main (void)
 
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
-  if (ACE_Service_Config::proactor ()->schedule_timer (handler,
+  if (ACE_Proactor::instance()->schedule_timer (handler,
 						       (void *) "Foo",
 						       ACE_Time_Value::zero,
 						       foo_tv) == -1)
@@ -80,7 +80,7 @@ main (void)
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  if (ACE_Service_Config::proactor ()->schedule_timer (handler,
+  if (ACE_Proactor::instance()->schedule_timer (handler,
 						       (void *) "Bar",
 						       ACE_Time_Value::zero,
 						       bar_tv) == -1)
@@ -91,6 +91,6 @@ main (void)
   if (worker.activate (THR_NEW_LWP, 10) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
 
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }

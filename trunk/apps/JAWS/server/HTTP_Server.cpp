@@ -350,7 +350,7 @@ HTTP_Server::asynch_thread_pool (void)
       // Register threads with the proactor and thread manager.
       Asynch_Thread_Pool_Task *t;
       ACE_NEW_RETURN (t,
-		      Asynch_Thread_Pool_Task (*ACE_Proactor::instance(),
+		      Asynch_Thread_Pool_Task (*ACE_Proactor::instance (),
 					       this->tm_),
 		      -1);
       if (t->open () != 0) 

@@ -126,7 +126,7 @@ Test_Task::handle_input (ACE_HANDLE)
 static void *
 worker (void *args)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_Reactor *reactor = (ACE_Reactor *) args;
 
   reactor->owner (ACE_Thread::self ());
@@ -157,7 +157,7 @@ worker (void *args)
 int 
 main (void)
 {
-  ACE_Reactor *react1 = ACE_Service_Config::reactor ();
+  ACE_Reactor *react1 = ACE_Reactor::instance();
   ACE_Reactor *react2 = new ACE_Reactor ();
   Test_Task tt1[MAX_TASKS];
   Test_Task tt2[MAX_TASKS];
@@ -168,15 +168,15 @@ main (void)
       tt2[i].open (react2);
     }
 
-  if (ACE_Service_Config::thr_mgr ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn 
       (ACE_THR_FUNC (worker), (void *) react1, THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
-  else if (ACE_Service_Config::thr_mgr ()->spawn 
+  else if (ACE_Thread_Manager::instance ()->spawn 
       (ACE_THR_FUNC (worker), (void *) react2, THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   ACE_DEBUG ((LM_DEBUG, "(%t) done\n"));
 
   return 0;

@@ -152,13 +152,13 @@ main (int argc, char *argv[])
 {
   parse_args (argc, argv);
 
-  Handler handler (UDP_PORT, MCAST_ADDR, INTERFACE, *ACE_Service_Config::reactor ());
+  Handler handler (UDP_PORT, MCAST_ADDR, INTERFACE, *ACE_Reactor::instance());
 
   ACE::register_stdin_handler (&handler,
-			       ACE_Service_Config::reactor (),
-			       ACE_Service_Config::thr_mgr ());
+			       ACE_Reactor::instance(),
+				   ACE_Thread_Manager::instance ());
 
-  ACE_Service_Config::run_reactor_event_loop ();
+  ACE_Reactor::run_event_loop();
 
   cout << "\ntalker Done.\n";
   return 0;

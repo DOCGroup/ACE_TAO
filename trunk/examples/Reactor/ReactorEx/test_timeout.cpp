@@ -53,20 +53,20 @@ main (void)
 
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
-  ACE_Service_Config::reactorEx ()->schedule_timer (&handler,
+  ACE_ReactorEx::instance()->schedule_timer (&handler,
 						    (void *) "Foo",
 						    ACE_Time_Value::zero,
 						    foo_tv);
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  ACE_Service_Config::reactorEx ()->schedule_timer (&handler,
+  ACE_ReactorEx::instance()->schedule_timer (&handler,
 						    (void *) "Bar",
 						    ACE_Time_Value::zero,
 						    bar_tv);
 
   // Handle events for 12 seconds.
   ACE_Time_Value run_time (12);
-  if (ACE_Service_Config::run_reactorEx_event_loop (run_time) == -1)
+  if (ACE_ReactorEx::run_event_loop(run_time) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
 						    
   return 0;

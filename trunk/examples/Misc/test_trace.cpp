@@ -32,7 +32,7 @@ main (int argc, char *argv[])
   ACE_Sig_Action sig2 ((ACE_SignalHandler) ACE_Trace::stop_tracing, SIGUSR2);
   ACE_UNUSED_ARG (sig2);
 
-#if defined (ACE_MT_SAFE)
+#if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   int n_threads = argc > 3 ? ACE_OS::atoi (argv[3]) : 4;
 
   if (ACE_Thread::spawn_n (n_threads, ACE_THR_FUNC (foo), 

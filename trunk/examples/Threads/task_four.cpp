@@ -146,7 +146,7 @@ Invoker_Task::svc (void)
   // Note that the ACE_Task::svc_run () method automatically adds us to
   // the Thread_Manager when the thread begins.
 
-  ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
+	ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
   Worker_Task **worker_task;
    
   ACE_NEW_RETURN (worker_task, Worker_Task *[n_tasks_], -1);

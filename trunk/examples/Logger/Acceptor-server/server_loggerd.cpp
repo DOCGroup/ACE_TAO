@@ -216,7 +216,7 @@ main (int argc, char *argv[])
   OPTIONS::instance ()->parse_args (argc, argv);
 
   // We need to pass in REACTOR::instance() here so that we don't use
-  // the default ACE_Service_Config::reactor().
+  // the default ACE_Reactor::instance().
 
   if (peer_acceptor.open 
       (ACE_INET_Addr (OPTIONS::instance ()->port ()),

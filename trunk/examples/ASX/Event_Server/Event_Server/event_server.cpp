@@ -22,15 +22,15 @@ public:
 };
 
 Quit_Handler::Quit_Handler (void)
-  : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Service_Config::end_reactor_event_loop))
+  : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {  
   // Register to trap input from the user.
   if (ACE::register_stdin_handler (this,
-				   ACE_Service_Config::reactor (),
-				   ACE_Service_Config::thr_mgr ()) == -1)
+				   ACE_Reactor::instance(),
+				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
   // Register to trap the SIGINT signal.
-  else if (ACE_Service_Config::reactor ()->register_handler 
+  else if (ACE_Reactor::instance()->register_handler 
 	   (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
@@ -48,7 +48,7 @@ Quit_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_INFO, "(%t) closing down the test\n"));
   Options::instance ()->print_results ();
 
-  ACE_Service_Config::end_reactor_event_loop ();
+  ACE_Reactor::end_event_loop();
   return -1;
 }
 
@@ -133,13 +133,13 @@ main (int argc, char *argv[])
     // Perform the main event loop waiting for the user to type ^C or
     // to enter a line on the ACE_STDIN.
 
-    daemon.run_reactor_event_loop ();
+    ACE_Reactor::run_event_loop();
     // The destructor of event_server will close down the stream and
     // call the close() hooks on all the ACE_Tasks.
   }
 
   // Wait for the threads to exit.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   ACE_DEBUG ((LM_DEBUG, "exiting main\n"));
 #else
   ACE_UNUSED_ARG (argc);
