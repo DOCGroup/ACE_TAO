@@ -1194,8 +1194,8 @@ ACE_OS::memchr (const void *s, int c, size_t len)
   // ACE_TRACE ("ACE_OS::memchr");
   return ::memchr (s, c, len);
 #else
-  unsigned char *t = (char *) s;
-  unsigned char *e = (char *) s + len;
+  unsigned char *t = (unsigned char *) s;
+  unsigned char *e = (unsigned char *) s + len;
   while (t < e)
     {
       if (((int) *t) == c)
