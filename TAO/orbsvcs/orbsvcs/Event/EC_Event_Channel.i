@@ -30,4 +30,26 @@ TAO_EC_Event_Channel::timer_module (void) const
   this->timer_module_;
 }
 
+ACE_INLINE TAO_EC_ProxyPushSupplier*
+TAO_EC_Event_Channel::create_proxy_push_supplier (void)
+{
+  return this->factory_->create_proxy_push_supplier (this);
+}
 
+ACE_INLINE void
+TAO_EC_Event_Channel::destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier* supplier)
+{
+  this->factory_->destroy_proxy_push_supplier (supplier);
+}
+
+ACE_INLINE TAO_EC_ProxyPushConsumer*
+TAO_EC_Event_Channel::create_proxy_push_consumer (void)
+{
+  return this->factory_->create_proxy_push_consumer (this);
+}
+
+ACE_INLINE void
+TAO_EC_Event_Channel::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer* consumer)
+{
+  this->factory_->destroy_proxy_push_consumer (consumer);
+}

@@ -25,6 +25,54 @@ TAO_EC_SupplierAdmin::set_default_POA (PortableServer::POA_ptr poa)
     PortableServer::POA::_duplicate (poa);
 }
 
+PortableServer::POA_ptr
+TAO_EC_SupplierAdmin::_default_POA (CORBA::Environment&)
+{
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
+}
+
+void
+TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
+				 CORBA::Environment &ACE_TRY_ENV)
+{
+  ConsumerSetIterator end = this->all_consumers_.end ();
+  for (ConsumerSetIterator i = this->all_consumers_.begin ();
+       i != end;
+       ++i)
+    {
+      (*i)->connected (supplier, ACE_TRY_ENV);
+    }
+}
+
+void
+TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
+				    CORBA::Environment &ACE_TRY_ENV)
+{
+  ConsumerSetIterator end = this->all_consumers_.end ();
+  for (ConsumerSetIterator i = this->all_consumers_.begin ();
+       i != end;
+       ++i)
+    {
+      (*i)->disconnected (supplier, ACE_TRY_ENV);
+    }
+}
+
+void
+TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
+				 CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->all_consumers_.insert (consumer) != 0)
+    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+}
+
+void
+TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
+				    CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->all_consumers_.remove (consumer) != 0)
+    ACE_THROW (RtecEventChannelAdmin::SUBSCRIPTION_ERROR ());
+}
+
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_EC_SupplierAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -34,14 +82,5 @@ TAO_EC_SupplierAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
   supplier->set_default_POA (
         this->event_channel_->factory ()->consumer_POA ());
 
-  if (this->all_consumers_.insert (supplier) != 0)
-    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-
   return supplier->_this (ACE_TRY_ENV);
-}
-
-PortableServer::POA_ptr
-TAO_EC_SupplierAdmin::_default_POA (CORBA::Environment&)
-{
-  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
