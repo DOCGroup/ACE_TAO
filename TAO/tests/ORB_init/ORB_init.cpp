@@ -2,10 +2,14 @@
 // $Id$
 
 #include "tao/ORB.h"
+#include "tao/Object.h"
+#include "tao/SystemException.h"
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ORB_init, ORB_init, "$Id$")
+ACE_RCSID (ORB_init,
+           ORB_init,
+           "$Id$")
 
 // Valid test IOR.
 // Do not attempt to narrow the object represented by this IOR, nor
