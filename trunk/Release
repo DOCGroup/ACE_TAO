@@ -55,6 +55,7 @@ CONTROLLED_FILES = \
         ChangeLog* \
         FAQ \
         Release \
+        ACE.mwc \
         Makefile.am \
         PROBLEM-REPORT-FORM \
         README \
