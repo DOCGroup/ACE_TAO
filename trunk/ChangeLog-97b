@@ -4,6 +4,10 @@ Thu Sep 25 17:06:42 1997  Steve Huston  <shuston@riverace.com>
 	  EAGAIN on timeout from pthread_cond_timedwait, so adjust that
 	  to ETIME.
 
+	* tests/SOCK_Connector_Test.cpp - will now try to find another
+	  host to run the connect to.  Won't try on Win32 or VxWorks
+	  though.
+
 Thu Sep 25 15:25:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Object_Manager.cpp,OS.cpp: moved socket_init to Object_Manager
