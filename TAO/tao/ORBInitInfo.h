@@ -56,10 +56,13 @@ class TAO_Export TAO_ORBInitInfo :
 
 public:
 
-  /// Destructor
-  ~TAO_ORBInitInfo (void);
+  /// Constructor.
+  TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
+                   int argc,
+                   char *argv[]);
 
-  /** @name PortableInterceptor::ORBInitInfo Methods
+  /**
+   * @name PortableInterceptor::ORBInitInfo Methods
    *
    * These methods are exported by the
    * PortableInterceptor::ORBInitInfo interface.
@@ -136,9 +139,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
-  /** @name TAO Extensions
-   *  These methods are not part of the PortableInterceptor
-   *  specification, and are TAO-specific extensions.
+  /**
+   * @name TAO Extensions
+   *
+   * These methods are not part of the PortableInterceptor
+   * specification, and are TAO-specific extensions.
    */
 
   //@{
@@ -160,11 +165,9 @@ public:
 
 protected:
 
-  /// Only allow this class to be instantiated on the heap since it is
-  /// reference counted.
-  TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
-                   int argc,
-                   char *argv[]);
+  /// Destructor is protected to force instantiation on the heap since
+  /// it is reference counted.
+  ~TAO_ORBInitInfo (void);
 
   /// Check if this ORBInitInfo instance is valid.  Once post_init()
   /// has been called on each of the ORBInitializers, this ORBInitInfo
@@ -200,4 +203,3 @@ private:
 #include "ace/post.h"
 
 #endif /* TAO_ORB_INIT_INFO_H */
-

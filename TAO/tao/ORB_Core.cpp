@@ -78,6 +78,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     ior_table_ (CORBA::Object::_nil ()),
     orb_ (),
     orb_params_ (),
+    init_ref_map_ (),
+    object_ref_table_ (),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
     resource_factory_from_service_config_ (0),

@@ -66,7 +66,7 @@ TAO_ORBInitInfo::orb_id (CORBA::Environment &ACE_TRY_ENV)
 void
 TAO_ORBInitInfo::register_initial_reference (
     const char * id,
-    CORBA::Object_ptr /* obj */,
+    CORBA::Object_ptr obj,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::InvalidName))
@@ -79,7 +79,11 @@ TAO_ORBInitInfo::register_initial_reference (
   else if (ACE_OS_String::strlen (id) == 0)
     ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
 
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+
+  TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
+
+  table.register_initial_reference (id, obj, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 CORBA::Object_ptr

@@ -50,12 +50,14 @@ class TAO_Export TAO_IORInfo :
   public virtual PortableInterceptor::IORInfo,
   public virtual TAO_Local_RefCounted_Object
 {
-  friend class TAO_ORB_Core;
+  friend class TAO_dummy_friend;
 
 public:
 
-  /// Destructor
-  ~TAO_IORInfo (void);
+  /// Constructor.
+  TAO_IORInfo (TAO_ORB_Core *orb_core,
+	       TAO_MProfile &mp,
+	       CORBA::PolicyList *policy_list);
 
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
@@ -71,7 +73,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles matching the given
-  /// ProfileId. 
+  /// ProfileId.
   virtual void add_ior_component_to_profile (
       const IOP::TaggedComponent & component,
       IOP::ProfileId profile_id,
@@ -80,11 +82,9 @@ public:
 
 protected:
 
-  /// Only allow this class to be instantiated on the heap since it
-  /// is reference counted.
-  TAO_IORInfo (TAO_ORB_Core *orb_core,
-	       TAO_MProfile &mp,
-	       CORBA::PolicyList *policy_list);
+  /// Destructor is protected to force instantiation on the heap since
+  /// it is reference counted.
+  ~TAO_IORInfo (void);
 
 private:
 
@@ -116,4 +116,3 @@ private:
 #include "ace/post.h"
 
 #endif /* TAO_IOR_INFO_H */
-

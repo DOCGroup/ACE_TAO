@@ -1,3 +1,55 @@
+Thu Nov 16 14:50:04 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Object_Ref_Table.h:
+	* tao/Object_Ref_Table.cpp:
+
+	  New table to map ID to destringified object reference.  This
+	  table is used by the ORBInitInfo::register_initial_reference()
+	  method.
+
+	  The class is necessary to allow local objects to be accessible
+	  via the resolve_initial_references() mechanism.  Since local
+	  object references cannot be stringified, they cannot be placed
+	  into the initial reference map that maps object key/name to
+	  stringified object reference.  Hence, another table was needed.
+
+	* tao/IORInfo.h:
+	* tao/ORBInitInfo.h:
+
+	  Destructor is now protected to force instantiation on the heap
+	  since it is reference counted.
+
+	* tao/ORBInitInfo.cpp (register_initial_reference):
+
+	  Implemented this method using the newly added object reference
+	  table in the ORB.
+
+	* tao/ORB_Core.h:
+
+	  Added TAO_Object_Ref_Table attribute.  References to such things
+	  as local objects are stored there.
+
+	  Completed doxygenation of this header.
+
+	* tao/ORB_Core.i (object_ref_table):
+
+	  New accessor method to the underlying object reference table.
+
+	* tao/ORB_Core.cpp (TAO_ORB_Core):
+
+	  Initialize the object reference table in the base member
+	  initializer list.
+
+	* tao/ORB.cpp (resolve_initial_references):
+
+	  Query the newly added object reference table in addition to the
+	  existing object reference resolution mechansims.
+
+	* tao/Makefile:
+	* tao/Makefile.bor:
+
+	  Added Object_Ref_Table.* to these Makefiles.
+
 Thu Nov 16 13:19:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/AMI/FL_Callback/Makefile:
