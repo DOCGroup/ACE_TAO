@@ -296,9 +296,25 @@ Gen_Perf::open (void)
   return 0;
 }
 
+// For binary search, do normal string sort on the keys, and then
+// assign hash values from 0 to N-1. Then go ahead with the normal
+// logic that is there for perfect hashing.
 int
 Gen_Perf::compute_binary_search (void)
 {
+  // Do a string sort.
+  this->key_list.string_sort ();
+  
+  // Assign hash values.
+  List_Node *curr;
+  int hash_value;
+  for (hash_value = 0, curr = this->key_list.head;
+       curr != 0; 
+       curr = curr->next, hash_value++)
+    {
+      curr->hash_value = hash_value;
+    } 
+   
   return 0;
 }
 
@@ -378,12 +394,13 @@ Gen_Perf::run (void)
     {
       if (this->compute_perfect_hash () == -1)
         return 1;
-    }
 
-  // Sorts the key word list by hash value, and then outputs the list.
-  // The generated hash table code is only output if the early stage
-  // of processing turned out O.K.
-  this->key_list.sort ();
+      // Sorts the key word list by hash value, and then outputs the list.
+      // The generated hash table code is only output if the early stage
+      // of processing turned out O.K.
+      this->key_list.sort ();
+    }
+  
   this->key_list.output ();
   return 0;
 }

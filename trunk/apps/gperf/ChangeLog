@@ -1,3 +1,23 @@
+Tue Oct  6 02:48:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	Thanks to Vishal the following things have been done to get Binary
+	Search code generated from GPERF. 
+
+	* src/Options.cpp (parse_args): Added the -B option for the binary
+	search.
+
+	* src/Options.h (enum Option_Type): Added the BINARYSEARCH in the
+	enumeration.
+
+	* src/Key_List.cpp : Added the function output_binary_search_function
+	(void). Changed the output function to include the Binary Search option.
+	Used option[BINARYSEARCH] to distinguish the binary search case from the
+	hashing case.
+
+	* src/Key_List.h : Added the prototype for output_binary_search_function.
+	Also added the key_sort variable to enable sorting based on key values.
+
+
 Mon Oct  5 18:24:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src/Gen_Perf: Created a new function that allows us to split the
