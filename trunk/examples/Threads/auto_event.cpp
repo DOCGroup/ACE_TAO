@@ -103,6 +103,11 @@ main (int argc, char **argv)
 
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 #else
 int 
 main (int, char *[])
@@ -111,3 +116,4 @@ main (int, char *[])
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
+

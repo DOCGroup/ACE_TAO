@@ -167,6 +167,7 @@ main (int, char *[])
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_TSS<Errno>;
+template class Tester<ACE_MT_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #else
