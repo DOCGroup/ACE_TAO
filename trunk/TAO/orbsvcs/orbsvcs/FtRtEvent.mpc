@@ -66,6 +66,10 @@ project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, utils, corba_messagi
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel
   after       += FTORB_Utils
 
+  // We don't want to export symbols from PortableGroup_Simple_DSC.cpp
+  // from this library or FTORB_Utils.
+  macros += TAO_PORTABLEGROUP_SIMPLE_HAS_DLL=0
+
   IDL_Files {
   }
 
