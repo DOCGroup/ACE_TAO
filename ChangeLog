@@ -1,3 +1,10 @@
+Sat Feb 14 09:22:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/TMCast/Makefile:	
+	* ace/TMCast/TMCast.mpc:
+
+	  Needs threads=1 to compile.
+
 Sat Feb 14 08:48:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/TMCast/Group.cpp:
