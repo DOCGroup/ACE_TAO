@@ -33,7 +33,7 @@ typically done via the NFS mount command.  On Windows, the 'explorer'
 application provides an option to share drives.
 
 In general if no such file sharing option is available, then using the
-the Naming Service mechanism is the only alternative, as descrbed by
+the Naming Service mechanism is the only alternative, as described by
 the -n option below.
 
 server:
@@ -66,7 +66,7 @@ options are ignored.
 client:
 -------
 
-client [-d] [-x] [-f <Server_ior_file>] [-n iterations] [-k ior] [-n] [-p] 
+client [-d] [-x] [-f <Server_ior_file>] [-n iterations] [-k ior] [-n] [-p]
        [-q] [-w] [-h] [-v]
 
 Options:
@@ -84,8 +84,8 @@ Options:
 -h    Height of the grid
 -v    Value that needs to be stored in the grid.
 
-The last four options ie. p,q,w,h,v have default values. So, if the client 
-is invoked without these options then default values of one or all are 
+The last four options ie. p,q,w,h,v have default values. So, if the client
+is invoked without these options then default values of one or all are
 taken.
 
 You can either cut and paste the IOR from the server to the client
