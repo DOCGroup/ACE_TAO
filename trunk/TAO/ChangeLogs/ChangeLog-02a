@@ -1,3 +1,9 @@
+Thu Jun 28 11:04:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynUnion_i.cpp (set_discriminator):
+
+          Applied patch sent in by Philippe Merle <Philippe.Merle@lifl.fr>
+
 Thu Jun 28 08:39:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
