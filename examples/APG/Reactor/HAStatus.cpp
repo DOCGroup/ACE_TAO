@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_netdb.h"
 
 // Listing 1 code/ch07

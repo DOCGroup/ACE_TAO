@@ -1,5 +1,8 @@
 // $Id$
 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+
 // Listing 1 code/ch17
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
