@@ -1,0 +1,80 @@
+#include <Components.idl>
+#include "test-2.idl"
+module M
+{
+  local interface CCM_I : I
+  {
+  };
+};
+
+module M1
+{
+  local interface CCM_C1 : ::Components::EnterpriseComponent
+  {
+    ::M::CCM_I get_i ();
+  };
+
+  local interface CCM_C1_Context : ::Components::SessionContext
+  {
+  };
+
+  local interface CCM_H1Implicit
+  {
+    ::Components::EnterpriseComponent create () raises (::Components::CCMException);
+  };
+
+  local interface CCM_H1Explicit : ::Components::HomeExecutorBase
+  {
+    attribute ::M::I i;
+  };
+
+  local interface CCM_H1 : CCM_H1Explicit, CCM_H1Implicit
+  {
+  };
+};
+
+local interface CCM_Goof : Goof
+{
+};
+
+module M2
+{
+  local interface CCM_C2 : ::M1::CCM_C1
+  {
+    ::CCM_Goof get_g ();
+  };
+
+  local interface CCM_C2_Context : ::M1::CCM_C1_Context
+  {
+  };
+
+  local interface CCM_H2Implicit
+  {
+    ::Components::EnterpriseComponent create () raises (::Components::CCMException);
+  };
+
+  local interface CCM_H2Explicit : ::M1::CCM_H1Explicit
+  {
+    attribute long l;
+    attribute ::M::I i;
+    attribute ::M2::OctetSeq seq;
+    attribute ::M2::S_Seq s_seq;
+    void foo (in long l, inout boolean b, out long ol, in ::M::I i, out unsigned long long ull, inout ::M2::S_Seq s_seq);
+    ::Components::EnterpriseComponent new (in long l, in ::M2::OctetSeq s);
+  };
+
+  local interface CCM_H2 : CCM_H2Explicit, CCM_H2Implicit
+  {
+  };
+};
+
+module M3
+{
+  module Impl
+  {
+    local interface C2Context : ::M2::CCM_C2_Context, ::Components::SessionContext
+    {
+    };
+  };
+};
+
