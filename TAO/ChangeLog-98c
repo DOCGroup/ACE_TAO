@@ -28,6 +28,9 @@ Wed May 13 06:58:38 1998  David L. Levine  <levine@cs.wustl.edu>
           out of loops, and changed some loop indexes to CORBA::ULong
           to avoid signed/unsigned comparison.
 
+        * tests/Param_Test/run_tests.sh:  fixed traps, and added
+          uid component to port number.
+
 Wed May 13 00:05:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB.i (orb_free_resources): This should return
