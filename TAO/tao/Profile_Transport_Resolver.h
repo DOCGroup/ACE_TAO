@@ -86,8 +86,10 @@ namespace TAO
      * are used by the clients of this class to access.
      */
 
-    /// Accessors and mutators for profile.
+    /// Mutator for profile.
     void profile (TAO_Profile *pfile);
+
+    /// Accessor for profile.
     TAO_Profile *profile (void) const;
 
     /// Accessor for TAO_Stub
@@ -111,7 +113,7 @@ namespace TAO
                       ACE_Time_Value *val
                       ACE_ENV_ARG_DECL);
 
-    /// Intialize the inconsistent policy list that this object has
+    /// Initialize the inconsistent policy list that this object has
     /// cached.
     void init_inconsistent_policies (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -139,7 +141,7 @@ namespace TAO
     /// The profile that has been selected for this invocation.
     TAO_Profile *profile_;
 
-    /// Has the transport been idled?
+    /// Has the transport been idle?
     mutable bool is_released_;
 
     /// List of inconsistent policies
@@ -155,8 +157,8 @@ namespace TAO
      * beginning of invocation.  This saves extra work of conflicting
      * policies 'logging' when it's not needed.
      *
-     * @NOTE: We don't use _var with a reason. Using _var would
-     * involve including the  header file for atleast
+     * @note We don't use _var with a reason. Using _var would
+     * involve including the  header file for at least
      * Policy_ForwardC.h, and that is what we precisely want to
      * avoid.
      */
