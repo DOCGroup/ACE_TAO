@@ -1,3 +1,9 @@
+Sun Mar 08 14:29:30 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptors):
+          changed SUPPLIER_CONNECTOR to SUPPLIER_ACCEPTOR.  Thanks
+          to Dani Flexer <danif@ivory-sw.com> for reporting this.
+
 Sat Mar 07 16:46:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.4.32, released Sat Mar 07 16:46:58 1998.
