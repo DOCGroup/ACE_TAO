@@ -3,10 +3,13 @@
 
 #include "Messaging.h"
 #include "Messaging_ORBInitializer.h"
-#include "tao/Invocation.h"
+
+#include "tao/Stub.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao, Messaging, "$Id$")
+ACE_RCSID (tao,
+           Messaging,
+           "$Id$")
 
 int
 TAO_Messaging_Initializer::init (void)
