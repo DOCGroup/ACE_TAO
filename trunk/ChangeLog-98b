@@ -7,6 +7,12 @@ Tue Dec 08 21:39:16 1998  David L. Levine  <levine@cs.wustl.edu>
           Gary York <gfyork@ix.netcom.com> for being that last
           cxx 6.x user to trip over this :-)
 
+        * include/makeinclude/platform_lynxos.GNU: override
+          ACE_HAS_GNUG_PRE_2_8 to allow builds of all TAO tests
+          on LynxOS.  Its g++ can handled nested classes, even though
+          it's in the 2.7 family.  Thanks to Patty Hair <patty@Lynx.COM>
+          for suggesting that we try to build the tests.
+
 Tue Dec  8 19:50:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Shared_Object.cpp: Changed the various default
