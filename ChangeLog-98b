@@ -1,5 +1,8 @@
 Mon Sep 21 01:27:19 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Strategies_T.cpp (find_or_create_svc_handler_i): g++ cannot
+	  gork templates...
+
 	* tests/Conn_Test.cpp: Fixed template instantiations.
 
 	* ace/Strategies_T.cpp (ACE_Cached_Connect_Strategy): New methods
