@@ -28,13 +28,18 @@ template <class X, class ACE_LOCK> inline void
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::detach (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>*& rep)
 {
   ACE_ASSERT (rep != 0);
+  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *rep_del = 0;
 
-  ACE_GUARD (ACE_LOCK, guard, rep->lock_);
+  {
+    ACE_GUARD (ACE_LOCK, guard, rep->lock_);
 
-  if (rep->ref_count_-- == 0)
-    // We do not need the lock when deleting the representation.
-    // There should be no side effects from deleting rep and we don
-    // not want to release a deleted mutex.
+    if (rep->ref_count_-- == 0)
+      // Since rep contains the lock held by the ACE_Guard, the guard
+      // needs to be released before freeing the memory holding the
+      // lock. So save the pointer to free, then release, then free.
+      rep_del = rep;
+  }  // Release the lock
+  if (0 != rep_del)
     delete rep;
 }
 
