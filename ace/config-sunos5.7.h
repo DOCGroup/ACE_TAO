@@ -38,13 +38,17 @@
 typedef unsigned long long uint64_t;
 #endif /* __GNUG__ || ghs || __KCC */
 
-// Solaris 5.7 supports SCHED_FIFO and SCHED_RR, as well as SCHED_OTHER.
+// SunOS 5.7 supports SCHED_FIFO and SCHED_RR, as well as SCHED_OTHER.
 #undef ACE_HAS_ONLY_SCHED_OTHER
 
-// Solaris 5.7 gets this right...
+// SunOS 5.7 gets this right . . .
 #undef ACE_HAS_BROKEN_T_ERROR
 
-// Solaris 2.7 can support Real-Time Signals and POSIX4 AIO operations
+// And doesn't need to set LWP priorities, as shown by
+// performance-tests/Misc/preempt.
+#undef ACE_NEEDS_LWP_PRIO_SET
+
+// SunOS 2.7 can support Real-Time Signals and POSIX4 AIO operations
 // are supported.
 
 #if !defined (ACE_HAS_AIO_CALLS)
