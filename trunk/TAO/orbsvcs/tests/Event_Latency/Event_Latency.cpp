@@ -220,10 +220,8 @@ Latency_Consumer::shutdown (void)
   TAO_TRY
     {
       // Disconnect from the push supplier.
-      suppliers_->disconnect_push_supplier (TAO_TRY_ENV);
+      this->suppliers_->disconnect_push_supplier (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      CORBA::release (suppliers_);
 
       ACE_DEBUG ((LM_DEBUG, "@@ we should shutdown here!!!\n"));
       TAO_CHECK_ENV;
@@ -441,9 +439,9 @@ Latency_Supplier::start_generating_events (void)
 	this->consumer_->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      suppliers_->connect_push_consumer (objref,
-                                         dependencies.get_ConsumerQOS (),
-                                         TAO_TRY_ENV);
+      this->suppliers_->connect_push_consumer (objref.in (),
+					       dependencies.get_ConsumerQOS (),
+					       TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY

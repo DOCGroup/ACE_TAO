@@ -33,17 +33,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-$(IDL_SRC): logger.idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl logger.idl
+.PRECIOUS: $(IDL_SRC)
+#$(IDL_SRC): logger.idl
+#	$(TAO_ROOT)/TAO_IDL/tao_idl logger.idl
 
 svr:	$(addprefix $(VDIR),$(logger_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
@@ -87,7 +86,7 @@ realclean: clean
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/loggerC.o .obj/loggerC. .shobj/loggerC.o .shobj/loggerC.: loggerC.cpp loggerC.h \
+.obj/loggerC.o .obj/loggerC.so .shobj/loggerC.o .shobj/loggerC.so: loggerC.cpp loggerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -202,22 +201,26 @@ realclean: clean
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -225,9 +228,15 @@ realclean: clean
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -236,7 +245,6 @@ realclean: clean
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -245,7 +253,6 @@ realclean: clean
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -255,8 +262,8 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- loggerC.i
-.obj/loggerS.o .obj/loggerS. .shobj/loggerS.o .shobj/loggerS.: loggerS.cpp loggerS.h loggerC.h \
+ loggerC.i loggerS.h loggerS.i
+.obj/loggerS.o .obj/loggerS.so .shobj/loggerS.o .shobj/loggerS.so: loggerS.cpp loggerS.h loggerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -371,22 +378,26 @@ realclean: clean
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -394,9 +405,15 @@ realclean: clean
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -405,7 +422,6 @@ realclean: clean
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -414,7 +430,6 @@ realclean: clean
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -425,7 +440,7 @@ realclean: clean
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  loggerC.i loggerS.i
-.obj/logger_i.o .obj/logger_i. .shobj/logger_i.o .shobj/logger_i.: logger_i.cpp \
+.obj/logger_i.o .obj/logger_i.so .shobj/logger_i.o .shobj/logger_i.so: logger_i.cpp \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -440,8 +455,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
- loggerC.h \
+ $(ACE_ROOT)/ace/ACE.i loggerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
@@ -541,22 +555,26 @@ realclean: clean
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -564,9 +582,15 @@ realclean: clean
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -575,7 +599,6 @@ realclean: clean
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -584,7 +607,6 @@ realclean: clean
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \

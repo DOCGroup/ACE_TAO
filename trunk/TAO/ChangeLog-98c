@@ -1,3 +1,49 @@
+Tue Jan 27 15:06:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/Makefile: 
+	* TAO_IDL/be/Makefile: 
+	* orbsvcs/Dump_Schedule/Makefile: 
+	* orbsvcs/Event_Service/Makefile: 
+	* orbsvcs/Naming_Service/Makefile: 
+	* orbsvcs/Scheduling_Service/Makefile: 
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/tests/Event_Latency/Makefile: 
+	* orbsvcs/tests/Logger/Makefile: 
+	* orbsvcs/tests/Simple_Naming/Makefile: 
+	* tao/Makefile: 
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	* tests/Cubit/TAO/MT_Cubit/Makefile: 
+	* tests/POA/Explicit_Activation/Makefile: 
+	* tests/POA/FindPOA/Makefile: 
+	* tests/POA/Generic_Servant/Makefile: 
+	* tests/POA/NewPOA/Makefile: 
+	* tests/POA/On_Demand_Activation/Makefile: 
+	* tests/POA/RootPOA/Makefile: 
+	* tests/Param_Test/Makefile: 
+	  Updated dependencies, apparently they were not properly
+	  generated last time; they worked for Solaris/CC, but not in many
+	  other platforms.
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/tmplinst.cpp: 
+	* orbsvcs/orbsvcs/TAO_IDL_templates.cpp: 
+	  It seems that tmplinst.cpp is becoming our standard for template
+	  instantiation files.
+
+	* tao/poa.h: 
+	  No need to include poa_T.h, it is not used in any place (yet),
+	  and it produces many warnings on IRIX machines.
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
+	  Use a _var for the output sequence of RT_Infos.
+
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	  Fixed some misuses of _var, thanks to Chris Cleeland for
+	  bringing those to my attention.
+
+	* release.pl: 
+	  Added CVS id.
+
 1998-01-27  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* tests/POA/FindPOA:Added comments to all files
