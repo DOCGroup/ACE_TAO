@@ -99,10 +99,10 @@ TAO_HomeDef_i::is_basic (CORBA::Environment & /* ACE_TRY_ENV */)
 }
 
 IR::PrimaryKeyDef_ptr 
-TAO_HomeDef_i::create_primary_key (const char *id,
-                                   const char *name,
-                                   const char *version,
-                                   IR::ValueDef_ptr primary_key,
+TAO_HomeDef_i::create_primary_key (const char * /* id */,
+                                   const char * /* name */,
+                                   const char * /* version */,
+                                   IR::ValueDef_ptr /* primary_key */,
                                    CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -111,11 +111,11 @@ TAO_HomeDef_i::create_primary_key (const char *id,
 }
 
 IR::FactoryDef_ptr 
-TAO_HomeDef_i::create_factory (const char *id,
-                               const char *name,
-                               const char *version,
-                               const IR::ParDescriptionSeq &params,
-                               const IR::ExceptionDefSeq &exceptions,
+TAO_HomeDef_i::create_factory (const char * /* id */,
+                               const char * /* name */,
+                               const char * /* version */,
+                               const IR::ParDescriptionSeq & /* params */,
+                               const IR::ExceptionDefSeq & /* exceptions */,
                                CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -124,11 +124,11 @@ TAO_HomeDef_i::create_factory (const char *id,
 }
 
 IR::FinderDef_ptr 
-TAO_HomeDef_i::create_finder (const char *id,
-                              const char *name,
-                              const char *version,
-                              const IR::ParDescriptionSeq &params,
-                              const IR::ExceptionDefSeq &exceptions,
+TAO_HomeDef_i::create_finder (const char * /* id */,
+                              const char * /* name */,
+                              const char * /* version */,
+                              const IR::ParDescriptionSeq & /* params */,
+                              const IR::ExceptionDefSeq & /* exceptions */,
                               CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
