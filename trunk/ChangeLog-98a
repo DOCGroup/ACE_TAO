@@ -1,3 +1,9 @@
+Wed Apr 01 18:59:42 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Reverted
+ 	  Nanbor's change.  The flag is properly set in
+ 	  ACE_Msg_WFMO_Reactor::alertable_handle_events().
+
 Wed Apr  1 15:40:01 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Made the WMFO_Reactor and Select_Reactor's dump() methods

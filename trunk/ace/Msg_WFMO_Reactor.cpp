@@ -42,7 +42,7 @@ ACE_Msg_WFMO_Reactor::wait_for_multiple_events (int timeout,
                                         this->handler_rep_.handles (),
                                         timeout,
                                         QS_ALLINPUT,
-                                        (alertable ? MWMO_ALERTABLE : 0) );
+                                        alertable);
 #else
   ACE_UNUSED_ARG (alertable);
   return ::MsgWaitForMultipleObjects (this->handler_rep_.max_handlep1 (),
