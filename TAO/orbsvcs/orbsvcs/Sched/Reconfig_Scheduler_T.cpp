@@ -1175,6 +1175,7 @@ set_rt_info_enable_state (RtecScheduler::handle_t handle,
                           ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
+                      RtecScheduler::INTERNAL,
                       RtecScheduler::UNKNOWN_TASK))
 {
 #if defined (SCHEDULER_LOGGING)
@@ -1212,6 +1213,7 @@ set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set
                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
+                      RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK))
 {
 #if defined (SCHEDULER_LOGGING)
@@ -2104,6 +2106,7 @@ remove_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depe
                      ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
+                      RtecScheduler::INTERNAL,
                       RtecScheduler::UNKNOWN_TASK))
 {
 #if defined (SCHEDULER_LOGGING)
@@ -2187,6 +2190,7 @@ set_dependency_enable_state_i (RtecScheduler::handle_t handle,
                                ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
+                      RtecScheduler::INTERNAL,
                       RtecScheduler::UNKNOWN_TASK))
 {
 #if defined (SCHEDULER_LOGGING)
