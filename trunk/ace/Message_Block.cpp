@@ -816,6 +816,18 @@ ACE_Message_Block::operator= (const ACE_Message_Block &)
   return *this;
 }
 
+void
+ACE_Data_Block::base (char *msg_data,
+		      size_t msg_length,
+		      ACE_Message_Block::Message_Flags msg_flags)
+{
+  if (ACE_BIT_DISABLED (this->flags_, ACE_Message_Block::DONT_DELETE))
+    this->allocator_strategy_->free (this->base_);
+  this->max_size_ = msg_length;
+  this->cur_size_ = msg_length;
+  this->base_ = msg_data;
+  this->flags_ = msg_flags;
+}
 
 ////////////////////////////////////////
 // class ACE_Dynamic_Message_Strategy //
