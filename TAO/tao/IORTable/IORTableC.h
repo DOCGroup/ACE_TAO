@@ -380,7 +380,7 @@ namespace TAO
 
 #if !defined (_IORTABLE_LOCATOR__TRAITS_CH_)
 #define _IORTABLE_LOCATOR__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IORTable_Export Objref_Traits<IORTable::Locator>
   {
@@ -401,7 +401,7 @@ namespace TAO
 
 #if !defined (_IORTABLE_TABLE__TRAITS_CH_)
 #define _IORTABLE_TABLE__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IORTable_Export Objref_Traits<IORTable::Table>
   {
@@ -419,7 +419,7 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
