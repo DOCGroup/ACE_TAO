@@ -401,15 +401,3 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-////////////////////////////////////////////////////////////////////////////////
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
