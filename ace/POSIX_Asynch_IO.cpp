@@ -194,16 +194,16 @@ ACE_POSIX_Asynch_Operation::cancel (void)
   // we should call  cancel_aio (this->handle_)
   // method to cancel correctly all deferred AIOs
 
-  switch ( p_impl->get_impl_type ())
+  switch (p_impl->get_impl_type ())
   {
     case ACE_POSIX_Proactor::PROACTOR_SUN:
     case ACE_POSIX_Proactor::PROACTOR_AIOCB:
       {
         ACE_POSIX_AIOCB_Proactor * p_impl_aiocb = ACE_dynamic_cast
           (ACE_POSIX_AIOCB_Proactor *, 
-           p_impl );
+           p_impl);
 
-        if ( ! p_impl_aiocb)
+        if (! p_impl_aiocb)
            return -1;
      
         return p_impl_aiocb->cancel_aio (this->handle_);
@@ -1862,7 +1862,7 @@ ACE_POSIX_Asynch_Accept_Handler::cancel_uncompleted (int flg_notify)
 
   int retval = 0;
 
-  for ( ; ; retval++ )
+  for (; ; retval++)
   {
     ACE_POSIX_Asynch_Accept_Result* result = 0;
 
@@ -1873,7 +1873,7 @@ ACE_POSIX_Asynch_Accept_Handler::cancel_uncompleted (int flg_notify)
 
     this->reactor_->suspend_handler (result->listen_handle ());
  
-    if ( ! flg_notify ) //if we should not notify 
+    if (! flg_notify) //if we should not notify 
       delete result ;   //   we have to delete result
     else                //else notify as any cancelled AIO
       {
@@ -1916,7 +1916,7 @@ ACE_POSIX_Asynch_Accept_Handler::handle_input (ACE_HANDLE /* fd */)
   ACE_HANDLE new_handle = ACE_OS::accept (result->listen_handle (), 0, 0);
   if (new_handle == ACE_INVALID_HANDLE)
     {
-      result->set_error( errno );
+      result->set_error(errno);
       ACE_ERROR ((LM_ERROR,
                 "%N:%l:(%P | %t):%p\n",
                 "ACE_POSIX_AIOCB_Asynch_Accept_Handler::"
@@ -2001,7 +2001,7 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler &handler,
   // check for non zero accept_handler_  
   // we could not create a new handler without closing the previous
 
-  if ( this->accept_handler_ != 0 )
+  if (this->accept_handler_ != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:ACE_POSIX_Asynch_Accept::open:"
                        "accept_handler_ not null\n"),
@@ -2059,7 +2059,7 @@ ACE_POSIX_Asynch_Accept::~ACE_POSIX_Asynch_Accept (void)
 }
 
 int
-ACE_POSIX_Asynch_Accept::close ( int flg_notify)
+ACE_POSIX_Asynch_Accept::close (int flg_notify)
 {
   // 1. It performs cancellation of all pending requests
   // 2. Stops and waits for the thread we had created
@@ -2076,16 +2076,16 @@ ACE_POSIX_Asynch_Accept::close ( int flg_notify)
   //  Return codes : 0 - OK , 
   //                -1 - Errors
 
-  if ( this->accept_handler_ )
-    this->accept_handler_->cancel_uncompleted ( flg_notify );
+  if (this->accept_handler_)
+    this->accept_handler_->cancel_uncompleted (flg_notify);
 
   //stop and wait for the thread
 
-  if ( grp_id_ != -1 )
+  if (grp_id_ != -1)
     {
       reactor_.end_reactor_event_loop ();
 
-      if ( ACE_Thread_Manager::instance ()->wait_grp (grp_id_) ==-1)
+      if (ACE_Thread_Manager::instance ()->wait_grp (grp_id_) ==-1)
         ACE_ERROR ((LM_ERROR,
                    "%N:%l:Thread_Manager::wait_grp failed\n"));
       else
@@ -2094,12 +2094,12 @@ ACE_POSIX_Asynch_Accept::close ( int flg_notify)
 
   //AL remove and destroy accept_handler_
 
-  if ( this->accept_handler_ != 0 )
+  if (this->accept_handler_ != 0)
     {
       this->reactor_.remove_handler
-                           ( this->accept_handler_,
+                           (this->accept_handler_,
                              ACE_Event_Handler::ALL_EVENTS_MASK
-                           | ACE_Event_Handler::DONT_CALL ); 
+                           | ACE_Event_Handler::DONT_CALL); 
  
       delete this->accept_handler_ ;
       this->accept_handler_ = 0 ;
@@ -2109,7 +2109,7 @@ ACE_POSIX_Asynch_Accept::close ( int flg_notify)
   // But I am not sure with compatibility with the old programs
   // You can comment the closure of the socket
 
-  if ( this->handle_ != ACE_INVALID_HANDLE )
+  if (this->handle_ != ACE_INVALID_HANDLE)
     {
       ACE_OS::closesocket (this->handle_);
       this->handle_=ACE_INVALID_HANDLE;
@@ -2118,11 +2118,11 @@ ACE_POSIX_Asynch_Accept::close ( int flg_notify)
   return 0;
 }
 
-void*
+void *
 ACE_POSIX_Asynch_Accept::thread_function (void* arg_reactor)
 {
   // Retrieve the reactor pointer from the argument.
-  ACE_Reactor* reactor = ACE_reinterpret_cast (ACE_Reactor *,
+  ACE_Reactor *reactor = ACE_reinterpret_cast (ACE_Reactor *,
                                                arg_reactor);
 
   // It should be valid Reactor, since we have a reactor_ ,e,ner we
@@ -2135,14 +2135,10 @@ ACE_POSIX_Asynch_Accept::thread_function (void* arg_reactor)
   // For this reactor, this thread is the owner.
   reactor->owner (ACE_OS::thr_self ());
 
-  // Handle events.
-  int result = 0;
+  while (reactor->reactor_event_loop_done () == 0)
+    if (reactor->handle_events () == -1)
+      return -1;
 
-  //while (result != -1)
-  while ( reactor->reactor_event_loop_done () == 0 )
-    {
-      result = reactor->handle_events ();
-    }
   return 0;
 }
 
@@ -2160,7 +2156,7 @@ ACE_POSIX_Asynch_Accept::cancel (void)
 
   //return ACE_POSIX_Asynch_Operation::cancel ();
 
-  if ( this->accept_handler_ == 0 )
+  if (this->accept_handler_ == 0)
     return 1 ;      // AIO_ALLDONE
 
   //cancel with notifications as POSIX should do
@@ -2169,14 +2165,13 @@ ACE_POSIX_Asynch_Accept::cancel (void)
 
   //retval contains now the number of canceled requests
   
-  if ( retval == 0 )
+  if (retval == 0)
     return 1 ;      // AIO_ALLDONE
 
-  if ( retval > 0 )
+  if (retval > 0)
     return 0;       // AIO_CANCELED
 
   return -1;
-
 }
 
 ACE_Proactor *
