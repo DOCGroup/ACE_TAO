@@ -7,6 +7,10 @@ module IR
   typedef CORBA::ScopedName ScopedName;
   typedef CORBA::RepositoryId RepositoryId;
 
+  // Added since ParameterMode belongs to CORBA module
+  // as per portable interceptors spec.
+//  typedef CORBA::ParameterMode ParameterMode;
+  
   enum DefinitionKind 
   {
     dk_none, 
