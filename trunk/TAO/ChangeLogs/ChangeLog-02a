@@ -1,3 +1,15 @@
+Tue Dec  5 11:18:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynamicInterface/TAO_DynamicInterface.dsp:
+	* tao/DynamicAny/TAO_DynamicAny.dsp:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/IORTable/TAO_IORTable.dsp:
+	* orbsvcs/orbsvcs/CosNaming.dsp:
+
+	  Set some overlooked values in the MFC versions of these
+	  projects. Thanks to John Morey <jmorey@tbi.com> for
+	  reporting them.
+
 Tue Dec  5 10:49:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/Smart_Proxies/client.dsp:
