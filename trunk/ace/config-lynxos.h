@@ -30,7 +30,10 @@
 # define ACE_HAS_ALLOCA
 # define ACE_HAS_ALLOCA_H
 # define ACE_HAS_PENTIUM
-#endif /* x86 */
+#elif defined (__powerpc__)
+  // This doesn't work on LynxOS 3.0.0, because it resets the TimeBaseRegister.
+  // # define ACE_HAS_POWERPC_TIMER
+#endif /* __x86__ || __powerpc__ */
 
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
