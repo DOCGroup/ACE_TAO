@@ -7,7 +7,9 @@
 
 namespace CIAO
 {
-  template <typename COMP_SERVANT>
+  template <typename COMP_SERVANT,
+            typename COMP_EXEC,
+            typename COMP_EXEC_VAR>
   PortableServer::Servant Dynamic_Component_Servant<COMP_SERVANT>::create (void)
   {
     return new COMP_SERVANT;

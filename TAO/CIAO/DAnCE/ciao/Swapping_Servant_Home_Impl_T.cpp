@@ -24,8 +24,7 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::Swapping_Servant_Home_Impl (
       EXEC * exe,
-      SWapping_Container * c
-    )
+      Swapping_Container * c)
     : Swapping_Servant_Home_Impl_Base (c),
       executor_ (EXEC::_duplicate (exe))
   {
@@ -185,6 +184,16 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    CORBA::Object_var hobj =
+      this->container_->get_objref (this
+                                    ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (COMP::_nil ());
+
+    Components::CCMHome_var home =
+      Components::CCMHome::_narrow (hobj.in ()
+                                    ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (COMP::_nil ());
+
     const char* obj_id = "composition_name_home_name";
     const char* repo_id = "repo_id";
 
@@ -201,14 +210,14 @@ namespace CIAO
                                  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    // @@ Jai, where is the "Dynamic_Servant_T"?
-    // 
-    // @@ JAI, Bala i have fixed this.
-    //
     Dynamic_Component_Servant_Base *svt =
-      new Dynamic_Component_Servant<COMP_SVNT> ();
+      new Dynamic_Component_Servant<COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR> ();
+ 
+    ::Components::EnterpriseComponent_var _ciao_ec =
+      this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (COMP::_nil ());
 
-    this->container_.update_map (oid.in (), svt);
+    this->container_.update_map (oid.in (), home.in (), _ciao_ec.in (), svt);
 
     return ho._retn ();
   }
