@@ -12,7 +12,7 @@
 
 <h1>TAO Implementation Repository </h1>
 
-<p>Revision 3.03 - July 17, 1998</p>
+<p>Revision 3.04 - August 5, 1998</p>
 
 <hr>
 
@@ -66,6 +66,15 @@
 
 <h2><a name="Changes">Recent Changes</a></h2>
 
+<p>Since 3.03 
+
+<ul>
+  <li>Added information on the new POA policy where the format of the persistent IOR can be
+    changed from that of both the last-known-server-IOR and Implementation Repository to that
+    just of the Implementation Repository</li>
+  <li>TAO is now fork-safe, with the introduction of the CLOEXEC flag through ACE_CLOEXEC.</li>
+</ul>
+
 <p>Since 3.02 
 
 <ul>
@@ -77,62 +86,51 @@
 
 <h2><a name="Overview">Overview</a></h2>
 
-<p>This document describes the proposed design of the TAO
-Implementation Repository, which was originally known as the
-reactivator/activation service. If you have any questions or comments
-on our design, please post them to the <a
-HREF="http://www.cs.wustl.edu/~schmidt/ACE-mail.html">ACE</a> mailing
-list &lt;<a
-HREF="mailto:ace-useres@cs.wustl.edu">ace-users@cs.wustl.edu</a>&gt;
-or send email to Darrell Brunsch &lt;<a
-HREF="mailto:brunsch@cs.wustl.edu">brunsch@cs.wustl.edu</a>&gt;.</p>
+<p>This document describes the proposed design of the TAO Implementation Repository, which
+was originally known as the reactivator/activation service. If you have any questions or
+comments on our design, please post them to the <a
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-mail.html">ACE</a> mailing list &lt;<a
+HREF="mailto:ace-useres@cs.wustl.edu">ace-users@cs.wustl.edu</a>&gt; or send email to
+Darrell Brunsch &lt;<a HREF="mailto:brunsch@cs.wustl.edu">brunsch@cs.wustl.edu</a>&gt;.</p>
 
 <h3><a name="PersistentandTransientIORs">Persistent and Transient IORs</a></h3>
 
 <p>CORBA defines two types of object references: <a
-HREF="http://www.cs.wustl.edu/~schmidt/C++-report-col12.ps.gz">persistent
-and transient</a>.  The difference between the two stems from the
-lifetime of the reference in relation to the lifetime of the server
-process that created it. The lifetime of a transient object reference
-is limited to the lifetime of its server process. Once the server
-process exits the transient object reference no longer exists. All
-references to this object should now be invalid, even if the server is
-restarted. In contrast, persistent object references can outlive their
-originating server process. Therefore, the server can exit and be
-restarted without invalidating its persistent object references. This
-enables the implementation of features like automatic server
-activation and object migration.</p>
+HREF="http://www.cs.wustl.edu/~schmidt/C++-report-col12.ps.gz">persistent and transient</a>.
+The difference between the two stems from the lifetime of the reference in relation to the
+lifetime of the server process that created it. The lifetime of a transient object
+reference is limited to the lifetime of its server process. Once the server process exits
+the transient object reference no longer exists. All references to this object should now
+be invalid, even if the server is restarted. In contrast, persistent object references can
+outlive their originating server process. Therefore, the server can exit and be restarted
+without invalidating its persistent object references. This enables the implementation of
+features like automatic server activation and object migration.</p>
 
-<p>Note that both persistent and transient object references can refer
-to objects that reside in <em>manually activated</em> servers,
-<em>i.e.</em>, the so-called ``persistent servers.'' A persistent
-server is a server that is launched manually, <em>i.e.</em>, it is
-always running. A persistent server can generate transient references
-and/or persistent references. </p>
+<p>Note that both persistent and transient object references can refer to objects that
+reside in <em>manually activated</em> servers, <em>i.e.</em>, the so-called ``persistent
+servers.'' A persistent server is a server that is launched manually, <em>i.e.</em>, it is
+always running. A persistent server can generate transient references and/or persistent
+references. </p>
 
-<p>Developers should be aware that persistence of the object reference
-does not imply any persistence on the object implementation state. It
-is certainly possible to provide persistent object references for
-objects whose state is not persistent. Therefore, servant implementors
-are responsible for preserving the state of their servants,
-<em>e.g.</em>, using a database or file. </p>
+<p>Developers should be aware that persistence of the object reference does not imply any
+persistence on the object implementation state. It is certainly possible to provide
+persistent object references for objects whose state is not persistent. Therefore, servant
+implementors are responsible for preserving the state of their servants, <em>e.g.</em>,
+using a database or file. </p>
 
 <h3><a name="TheImplementationRepository">The Implementation Repository</a></h3>
 
-<p>According to the CORBA specification, &quot;The Implementation
-Repository contains information that allows the ORB to locate and
-activate implementations of objects&quot; [CORBA Spec Rev. 2.2:
-2.1.14] In earlier revisions of the specification, there was a method
-<code>get_implementation</code> in the CORBA Object interface. This
-has been deprecated as of the CORBA 2.2 specification, leaving both
-the interface and implementation of the Implementation Repository to
-the ORB vendor.</p>
+<p>According to the CORBA specification, &quot;The Implementation Repository contains
+information that allows the ORB to locate and activate implementations of objects&quot;
+[CORBA Spec Rev. 2.2: 2.1.14] In earlier revisions of the specification, there was a
+method <code>get_implementation</code> in the CORBA Object interface. This has been
+deprecated as of the CORBA 2.2 specification, leaving both the interface and
+implementation of the Implementation Repository to the ORB vendor.</p>
 
-<p>A good paper describing the functionality of the CORBA
-Implementation Repository is &quot;<a
-href="http://www.cs.wustl.edu/~schmidt/michi.pdf">Binding, Migration,
-and Scalability in CORBA</a>&quot; [Henning]. This paper describes the
-following three functions of the Implementation Repository:
+<p>A good paper describing the functionality of the CORBA Implementation Repository is
+&quot;<a href="http://www.cs.wustl.edu/~schmidt/michi.pdf">Binding, Migration, and
+Scalability in CORBA</a>&quot; [Henning]. This paper describes the following three
+functions of the Implementation Repository: 
 
 <ol>
   <li>Maintain a registry of known servers.</li>
@@ -140,9 +138,8 @@ following three functions of the Implementation Repository:
   <li>Starts servers on demand if they are registered with the Implementation Repository.</li>
 </ol>
 
-<p>The TAO Implementation Repository is based on the design in this
-paper. The next section details our goals and plans for the
-implementation.</p>
+<p>The TAO Implementation Repository is based on the design in this paper. The next
+section details our goals and plans for the implementation.</p>
 
 <hr>
 
@@ -161,16 +158,12 @@ implementation.</p>
     IIOP messages and multiple profiles in IORs, even if the client is not implemented using
     TAO.</li>
   <li>TAO's Implementation Repository will know if one of the servers registered with it is
-    running by the use of a &quot;ping&quot;-like service in the
-      server. This service allows the
-    Implementation Repository to know when it should restart the server.</li>
+    running by the use of a &quot;ping&quot;-like service in the server. This service allows
+    the Implementation Repository to know when it should restart the server.</li>
   <li>TAO will be fork-safe. Since there will be an open connection to the client while the
     server is restarted (via fork or CreateProcess) then care will be needed to make sure that
-    the open sockets will be closed in the client process. This will remove a resource leak. 
-    <!-- Darrell, do you think that the new CLOEXEC feature of TAO -->
-    <!-- will handle this automagically?! -->
-</li>
-
+    the open sockets will be closed in the client process. The addition of CLOEXEC feature to
+    TAO will cover this problem.</li>
   <li>TAO will exploit features of IIOP 1.1 to safely and efficiently verify if an IOR was
     generated by TAO itself on the client side. The server will still determine this through
     the object key, since that is all that is passed in a request.</li>
@@ -178,8 +171,9 @@ implementation.</p>
     key of a CORBA Object. An optimization that will be possible is to have a last known
     profile of the object as the first profile and an Implementation Repository as the second
     profile in an IOR. The client will first try the object to see if it still active at the
-    host/port before it contacts the Implementation Repository.  This
-    strategy will reduce latency. </li>
+    host/port before it contacts the Implementation Repository. This strategy will reduce
+    latency. </li>
+</ul>
 
 <h3><a name="VirtualServers">Virtual Servers</a></h3>
 
@@ -196,12 +190,11 @@ An executable may have one or more virtual servers on it. This allows one virtua
 to be moved off the executable to another executable (for instance, onto another machine)
 without affecting the objects in other virtual servers on the original executable. </p>
 
-<p>Each virtual server will be indexed in the Implementation
-Repository by a name that is given to it by the user. It is also the
-users responsibility to make sure that each virtual server name is
-unique. By default, this name is the name of the executable (since by
-default there is only one virtual server per executable).  However,
-this default behavior can be overridden. </p>
+<p>Each virtual server will be indexed in the Implementation Repository by a name that is
+given to it by the user. It is also the users responsibility to make sure that each
+virtual server name is unique. By default, this name is the name of the executable (since
+by default there is only one virtual server per executable). However, this default
+behavior can be overridden. </p>
 
 <h3><a name="PingObject">Ping Object</a></h3>
 
@@ -231,12 +224,11 @@ server is unresponsive or not.</p>
   </tr>
 </table>
 
-<p>The Type ID is an indicator for the most derived type known at the
-time of the reference creation. It is used as a hint for the client in
-determining what interfaces the object can support. The Sequence of
-Tagged Profiles consist of one or more profiles that encapsulate
-information used by the associated protocol in order to communicate
-with the object (host, port, object id, etc.).</p>
+<p>The Type ID is an indicator for the most derived type known at the time of the
+reference creation. It is used as a hint for the client in determining what interfaces the
+object can support. The Sequence of Tagged Profiles consist of one or more profiles that
+encapsulate information used by the associated protocol in order to communicate with the
+object (host, port, object id, etc.).</p>
 
 <p>Currently, TAO uses only one IIOP 1.0 Tagged Profile, which is defined as follows:</p>
 
@@ -264,8 +256,8 @@ with the object (host, port, object id, etc.).</p>
   </tr>
 </table>
 
-<p>To accomodate the Implementation Repository and IIOP 1.1, the Profile was changed in
-the CORBA specification as follows:</p>
+<p>To accomodate the Implementation Repository and IIOP 1.1, the Profile was changed
+according to the CORBA specification as follows:</p>
 
 <table border="1">
   <tr>
@@ -293,12 +285,15 @@ the CORBA specification as follows:</p>
   </tr>
 </table>
 
-<p>In TAO, Transient objects will have a TimeStamp to ensure uniqueness. Likewise,
-persistent object will have a server name to identify them in the Implementation
-Repository.</p>
+<p>In TAO, Transient object references will have a TimeStamp to ensure uniqueness.
+Likewise, persistent object references will have a server name to identify them in the
+Implementation Repository.</p>
 
-<p>For Persistent IORs, a second tagged profile will be added in TAO to point to the
-Implementation Repository, as follows:</p>
+<p>TAO will support two difference classes of Persistent IORs.&nbsp; For servers that move
+around or need to be restarted often, the IOR will actually contain a reference to the
+Implementation Repository with the object key of the server and the server name imbedded.
+&nbsp; Once the client contacts the Implementation Repository, it will be forwarded to the
+correct object.</p>
 
 <table border="1">
   <tr>
@@ -326,8 +321,15 @@ Implementation Repository, as follows:</p>
   </tr>
 </table>
 
-<p>If the profile was meant for just calls to the Implementation Repository, then the OBJ
-ID would be that of the Implementation Repository Object.</p>
+<p>If the server is expected to remain in the same host/port for a long time, then the IOR
+can be optimized by placing the server profile in the IOR before the Implementation
+Repository profile.&nbsp; TAO clients will first try the server, and if that fails, then
+try the Implementation Repository.&nbsp; Clients from other ORBs may behave the same way,
+but this isn't guaranteed since the handling of multiple profiles is not yet in the CORBA
+spec.</p>
+
+<p>There will be a POA policy to determine which type of Persistent IOR to use.&nbsp; By
+default, the Implementation Repository alone version will be used.</p>
 
 <h4><a name="WhatwaswrongwiththeoldIOR">What was wrong with the old IOR?</a></h4>
 
@@ -339,19 +341,22 @@ so the Implementation Repository knows which server to launch.</p>
 <h4><a name="WhydoesImplRepocontainanOBJKey">Why does the Implementation Repository
 profile contain an Object Key?</a></h4>
 
-<p>It needs to know what the object key of the object when forwarding
-is used. A server may contain more than one object, so the object key
-is needed to forward to the correct object on the server. </p>
+<p>It needs to know what the object key of the object when forwarding is used. A server
+may contain more than one object, so the object key is needed to forward to the correct
+object on the server. </p>
 
 <h3><a name="POAExtensions">POA Extensions</a></h3>
 
-<p>TAO's POA will contain a new TAO-specific method called
-<code>create_reference_with_virtual_server[_and_id] (...)</code>. This
-method takes additional arguments for a virtual server name and a
-sequence of Implementation Repository IORs. The POA will register the
-virtual server name with each of the Implementation Repositories in
-the sequence passed in. Several Implementation Repositories can be
-specified to enhance availability through redundancy. </p>
+<p>TAO's POA will contain a new TAO-specific method called <code>create_reference_with_virtual_server[_and_id]
+(...)</code>. This method takes additional arguments for a virtual server name and a
+sequence of Implementation Repository IORs. The POA will register the virtual server name
+with each of the Implementation Repositories in the sequence passed in. Several
+Implementation Repositories can be specified to enhance availability through redundancy. </p>
+
+<p>TAO's POA will also contain a policy for the type of IOR created with <code>create_reference</code>.
+&nbsp; It can either produce the standard type, with just a reference to the
+Implementation Repository, or it can produce one also containing a reference to the
+current server.</p>
 
 <h3><a name="PossibleFutureGoals">Possible Future Goals</a></h3>
 
@@ -376,15 +381,12 @@ Repository:
 storage. Databases are a good example of this, where the server can be stopped and
 restarted with all the information remaining on disk. </p>
 
-<p>The server must also make sure it creates the POA and Object in a
-way that does not change the POA ID and Object ID. The Implementation
-Repository forwards requests based on the information in the IOR; if
-the POA ID or Object ID changes, then the Implementation Repository
-will be unable to sucessfully forward requests. If the server
-implements dynamic servants with POA activation, then this is not an
-issue.</p>
-<!-- Darrell, can you please explain why this isn't an issue, -->
-<!-- briefly?! -->
+<p>The server must also make sure it creates the POA and Object in a way that does not
+change the POA ID and Object ID. The Implementation Repository forwards requests based on
+the information in the IOR; if the POA ID or Object ID changes, then the Implementation
+Repository will be unable to sucessfully forward requests. If the server implements
+dynamic servants and dynamic POA activations, then this is not an issue since the
+necessary POAs and servants will be created on demand.</p>
 
 <h3><a name="PreliminaryInterface">Preliminary Interface</a></h3>
 
@@ -450,11 +452,6 @@ issue.</p>
     // this, it should send back a response indicating it is sill alive.  
     // Depending on the policy specified, a timeout can be reached where the
     // Implementation Repository will restart the server.
-<!-- DCS: Darrell, can you please explain how this ping() will work, i.e., -->
-<!-- DCS: will it throw an exception if the server isn't live? -->
-<!-- DB: Ok.  But do oneways also return exceptions? -->
-<!-- Darrell, no!  Maybe we shouldn't make this a oneway, but make it -->
-<!-- a twoway with a return value or out parameter? -->
   };
 
   interface Implementation_Repository
@@ -541,26 +538,23 @@ might be running) to try first, and then only if that fails does the client cont
 Implementation Repository. This is an optimization for case where the server does not shut
 down often, and most requests do not need to be forwarded to a new address.</p>
 
-<p>In cases where most requests will require a forward, TAO can
-support a policy that is just like this alternative, where the
-Implmentation Repository will be contacted first.</p>
+<p>In cases where most requests will require a forward, TAO can support a policy that is
+just like this alternative, where the Implmentation Repository will be contacted first.</p>
 
 <hr>
 
 <h2><a name="AccessingtheImplementationRepository">Accessing the Implementation Repository</a>
 </h2>
 
-<p>The Implementation Repository will be transparent to the clients
-and the servers.  Clients will only deal with IIOP 1.1 IORs, and in
-the default case all the Implementation Repository logic on the server
-side will be handled internally by the ORB and the POA. </p>
+<p>The Implementation Repository will be transparent to the clients and the servers.
+Clients will only deal with IIOP 1.1 IORs, and in the default case all the Implementation
+Repository logic on the server side will be handled internally by the ORB and the POA. </p>
 
 <h3><a name="HelperApplication">Helper Application</a></h3>
 
-<p>A helper application will be included with the Implementation
-Repository. It will be a command-line utility that will assist users
-with adding and removing server records (containing virtual server
-names and executable name/options) from the Implementation
+<p>A helper application will be included with the Implementation Repository. It will be a
+command-line utility that will assist users with adding and removing server records
+(containing virtual server names and executable name/options) from the Implementation
 Repository. </p>
 
 <h3><a name="LocatinganinstanceofImplRepo">Locating an Instance of the Implementation
@@ -583,8 +577,8 @@ multicast group) the server name of the Persistent Object the client is interest
 default multicast group and default port of the Implementation Repository can be
 overridden through command line options or environment variables. </p>
 
-<p>In most cases, one Implementation Repository will be enough. For
-redundancy, several Implementation Repositories can be specified.</p>
+<p>In most cases, one Implementation Repository will be enough. For redundancy, several
+Implementation Repositories can be specified.</p>
 
 <hr>
 
@@ -611,15 +605,16 @@ Repository must be specified on the command line or in an environment variable.
   <li>The <code>create_reference</code> operation will create the local profile.</li>
   <li>The stored Implementation Repository profile will have its object id changed to be the
     object key just created.</li>
-  <li>Both profiles will be joined together in a multiple profile IOR and returned.</li>
+  <li>Both profiles will be joined together if the multiple profile IOR policy is set, and
+    then returned.</li>
 </ol>
 
 <h3><a name="HowServerProducesPersistentIORcomplex">How a server produces a Persistent IOR
 (in complex cases)</a></h3>
 
-<p>As with the default case, the server must be registered with an
-Implementation Repository, although it does not need to be multicast
-aware since the IORs will be passed to the POA by the program. </p>
+<p>As with the default case, the server must be registered with an Implementation
+Repository, although it does not need to be multicast aware since the IORs will be passed
+to the POA by the program. 
 
 <ol>
   <li><code>ORB_init</code> is called and does the default work (if it has Implementation
@@ -629,7 +624,8 @@ aware since the IORs will be passed to the POA by the program. </p>
   <li>The profile for the object is created.</li>
   <li>The ping object created in <code>ORB_init</code> and the object key is passed to the
     Implementation Repositories, and their profiles are returned.</li>
-  <li>The full IOR is built and returned.</li>
+  <li>Both profiles will be joined together if the multiple profile IOR policy is set, and
+    then returned.</li>
 </ol>
 
 <h3><a name="HowClientUsesPersistentIOR">How a client uses a Persistent IOR</a></h3>
@@ -639,15 +635,17 @@ aware since the IORs will be passed to the POA by the program. </p>
 <ul>
   <li>Client obtains a Persistent Object Reference, which contains multiple profiles to both
     regular objects and Implementation Repositories.</li>
-  <li>It will now make a request on the first profile, which is the last known profile for the
-    object.</li>
-  <li>If this fails, then the next one will be tried. And if that fails, the next. One of the
-    other profiles will be a reference to the Implementation Repository, in which it will
-    either return NOT_FOUND or will start up the server and return a Location Forward message.</li>
+  <li>It will now make a request on the first profile.</li>
+  <li>If the first profile if the server profile, and the server is still there, then it will
+    be successful.&nbsp; If the server has moved (or shut down), then the next profile will be
+    tried.</li>
+  <li>If the first profile is the Implementation Repository, or if the server profile failed,
+    then it will be contacted.&nbsp; The Implemenation Repository will then return NOT_FOUND
+    or will start up the server and return a Location Forward message.</li>
 </ul>
 
 <p>If everything fails, then most clients will return failure for the request. TAO clients
-will also have added functionality where other Implementation Repositories can be
+will also have added functionality where other Implementation Repositories that are
 specified on the command-line, in environment variables, or found through multicast will
 also be contacted. 
 
