@@ -1017,7 +1017,7 @@ InputPath=.\PortableGroup_Simple_DS.idl
 InputName=PortableGroup_Simple_DS
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -GC -I../.. -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1  -I../.. -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
