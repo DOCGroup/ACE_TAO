@@ -1,3 +1,17 @@
+Wed Jul 23 10:37:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Added space and newline to the not supported option message
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}:
+          Splitted close_i() in two separate methods, one for the supplier
+          proxy, one for the consumer proxies, just call the two new ones.
+          Added a cleanup_consumer_proxies method that just removes the
+          consumer proxies without disconnecting. Can be used in case
+          consumer event channel doesn't exists anymore.
+          Push the events to the consumer ec in a separate method and added
+          exception handling around it.
+
 Tue Jul 22 20:44:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
@@ -6,13 +20,13 @@ Tue Jul 22 20:44:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Tue Jul 22 18:57:59 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\TAO_Tests.dsw: 
+	* tests\TAO_Tests.dsw:
 
 	  Restored DOS style end-of-line markers.
 
 Tue Jul 22 18:05:09 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\Connection_Failure\Connection_Failure.mpc: 
+	* tests\Connection_Failure\Connection_Failure.mpc:
 
 	  No need to include messaging.
 
@@ -27,7 +41,7 @@ Tue Jul 22 18:05:09 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Tue Jul 22 17:51:03 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\Collocation_Opportunities\Makefile: 
+	* tests\Collocation_Opportunities\Makefile:
 
 	  Updated dependencies.
 
