@@ -2841,7 +2841,8 @@ static void on_exit_routine(void)
  
 #define EXP_PLAN_FILE "experiment_plan"
  
-int CTRmain(void)
+int CTRmain(int argc,
+            char **argv)
 {
   int sv[2];
   extern void set_exit_routine_tag(int tag);
@@ -2990,13 +2991,13 @@ int CTRmain(void)
 //                   -1);
  
   //  if (command_handler->init () == -1)
-   if (command_handler.init () == -1)
+   if (command_handler.init (argc,argv) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
                         "(%P|%t) command_handler: init returned -1"),
                        -1);
  
   // .. and register it with the reactor.
-  if (ACE_Reactor::instance ()->register_handler (&command_handler,
+  if (TAO_ORB_Core_instance ()->reactor ()->register_handler (&command_handler,
                                                   ACE_Event_Handler::READ_MASK) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) register_handler for command_handler failed\n"),
@@ -3016,7 +3017,8 @@ int CTRmain(void)
                       -1);
   
   // and run the event loop
-  ACE_Reactor::instance ()->run_event_loop ();
+  //  TAO_ORB_Core_instance ()->reactor ()->run_event_loop ();
+  command_handler.run ();
  
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) Exited the client command handler event loop\n"

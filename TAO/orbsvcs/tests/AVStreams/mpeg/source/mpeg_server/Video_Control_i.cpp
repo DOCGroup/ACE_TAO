@@ -127,8 +127,8 @@ Video_Control_i::stop (CORBA::Long cmdsn,
   return this->state_->stop (cmdsn);
 }
 
-CORBA::UShort
-Video_Control_i::set_peer (const char *peer,
+CORBA::Boolean
+Video_Control_i::set_peer (char * &peer,
                            CORBA::Environment &_tao_environment)
 {
    ACE_INET_Addr client_data_addr (peer);
@@ -144,7 +144,7 @@ Video_Control_i::set_peer (const char *peer,
   if (VIDEO_SINGLETON::instance ()->dgram.open (client_data_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "(%P|%t) UDP open failed: %p\n"),
-                      -1);
+                      CORBA::B_FALSE);
 
   // set the socket buffer sizes to 64k.
   int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
@@ -155,13 +155,13 @@ Video_Control_i::set_peer (const char *peer,
                                                        (void *) &sndbufsize,
                                                        sizeof (sndbufsize)) == -1
       && errno != ENOTSUP)
-    return -1;
+    return CORBA::B_FALSE;
   else if (VIDEO_SINGLETON::instance ()->dgram.set_option (SOL_SOCKET,
                                                            SO_RCVBUF,
                                                            (void *) &rcvbufsize,
                                                            sizeof (rcvbufsize)) == -1
            && errno != ENOTSUP)
-    return -1;
+    return CORBA::B_FALSE;
 
 
   ACE_INET_Addr server_data_addr;
@@ -171,7 +171,7 @@ Video_Control_i::set_peer (const char *peer,
       (server_data_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "(%P|%t) UDP get_local_addr failed: %p\n"),
-                      -1);
+                      CORBA::B_FALSE);
 
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) Video_Server: My UDP port number is %d\n",
@@ -180,13 +180,21 @@ Video_Control_i::set_peer (const char *peer,
   if (this->register_handlers () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Video_Control_i::set_peer: register_handlers failed\n"),
-                      -1);
+                      CORBA::B_FALSE);
 
   VIDEO_SINGLETON::instance ()->videoSocket = VIDEO_SINGLETON::instance ()->dgram.get_handle ();
 
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) set_peer: server port = %d\n",server_data_addr.get_port_number ()));
-  return server_data_addr.get_port_number ();
+  ACE_NEW_RETURN (peer,
+                  char [BUFSIZ],
+                  CORBA::B_FALSE);
+  // hack to set the ip address correctly.
+  server_data_addr.set (server_data_addr.get_port_number (),
+                        server_data_addr.get_host_name ());
+  server_data_addr.addr_to_string (peer,
+                                   BUFSIZ);
 
+  return CORBA::B_TRUE;
 }
 
 int
