@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Ht_Channel.h
+ *  @file    HTBP_Channel.h
  *
  *  $Id$
  *
@@ -12,7 +12,7 @@
 
 #ifndef ACE_HTBP_CHANNEL_H
 #define ACE_HTBP_CHANNEL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Message_Block.h"
@@ -273,5 +273,5 @@ namespace ACE
 #include "HTBP_Channel.inl"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_HTBP_CHANNEL_H */

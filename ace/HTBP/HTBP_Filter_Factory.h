@@ -3,7 +3,7 @@
 
 //=============================================================================
 /**
- *  @file    ACE_HTBP_Filter_Factory.h
+ *  @file    HTBP_Filter_Factory.h
  *
  *  $Id$
  *
@@ -13,7 +13,7 @@
 
 #ifndef ACE_HTBP_FILTER_FACTORY
 #define ACE_HTBP_FILTER_FACTORY
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "HTBP_Export.h"
 #include "HTBP_Filter.h"
@@ -62,5 +62,5 @@ ACE_FACTORY_DECLARE (HTBP, ACE_HTBP_Filter_Factory)
 
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_HTBP_FILTER_FACTORY */

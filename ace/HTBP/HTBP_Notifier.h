@@ -12,7 +12,7 @@
 
 #ifndef ACE_HTBP_NOTIFIER_H
 #define ACE_HTBP_NOTIFIER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Event_Handler.h"
 
@@ -50,5 +50,5 @@ namespace ACE
 #include "HTBP_Notifier.inl"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_HTBP_NOTIFIER_H */

@@ -100,7 +100,7 @@ ACE::HTBP::Session_Id_t::hash () const
 }
 
 ACE_INLINE
-int
+bool
 ACE::HTBP::Session_Id_t::operator ==(const ACE::HTBP::Session_Id_t &other) const
 {
   return ((this->id_ == other.id_) &&

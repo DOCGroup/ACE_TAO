@@ -1,3 +1,7 @@
+// -*- MPC -*-
+//
+// $Id$
+
 project: aceexe {
   libs += ACE_HTBP
   exename = SendRecv_Test
