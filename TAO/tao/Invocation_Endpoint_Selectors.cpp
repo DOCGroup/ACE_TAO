@@ -37,26 +37,13 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       invocation->profile (invocation->stub ()->profile_in_use ());
       invocation->endpoint (invocation->profile ()->endpoint ());
 
-      size_t endpoint_count = invocation->profile ()->endpoint_count();
-      for (size_t i = 0; i < endpoint_count; ++i)
-        {
-          // If known endpoint, select it.
-          if (invocation->endpoint () != 0)
-            {
-              TAO_Base_Transport_Property desc (invocation->endpoint ());
+      int status =
+        this->endpoint_from_profile (invocation,
+                                     ACE_TRY_ENV);
+      ACE_CHECK;
 
-              int status =
-                invocation->perform_call (desc, ACE_TRY_ENV);
-              ACE_CHECK;
-
-              // Check if the invocation has completed.
-              if (status == 1)
-                return;
-
-              // Go to the next endpoint in this profile.
-              invocation->endpoint (invocation->endpoint()->next());
-            }
-        }
+      if (status == 1)
+        return;
     }
   while (invocation->stub ()->next_profile_retry () != 0);
 
@@ -112,4 +99,36 @@ TAO_Default_Endpoint_Selector::close_connection (TAO_GIOP_Invocation *invocation
   // the profile list to point to the first profile!
   // FRED For now we will not deal with recursive forwards!
   invocation->stub ()->reset_profiles ();
+}
+
+
+int
+TAO_Default_Endpoint_Selector::endpoint_from_profile (
+    TAO_GIOP_Invocation *invocation,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  size_t endpoint_count =
+    invocation->profile ()->endpoint_count();
+
+  for (size_t i = 0; i < endpoint_count; ++i)
+    {
+      // If known endpoint, select it.
+      if (invocation->endpoint () != 0)
+        {
+          TAO_Base_Transport_Property desc (invocation->endpoint ());
+
+          int status =
+            invocation->perform_call (desc, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+
+          // Check if the invocation has completed.
+          if (status == 1)
+            return 1;
+
+          // Go to the next endpoint in this profile.
+          invocation->endpoint (invocation->endpoint()->next());
+        }
+    }
+
+  return 0;
 }
