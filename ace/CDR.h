@@ -64,7 +64,7 @@ public:
   {
     // Note that some of these get reused as part of the standard
     // binary format: unsigned is the same size as its signed cousin,
-    // float is CDR_LONG_SIZE, and double is CDR_LONGLONG_SIZE.
+    // float is LONG_SIZE, and double is LONGLONG_SIZE.
 
     OCTET_SIZE = 1,
     SHORT_SIZE = 2,
@@ -77,11 +77,11 @@ public:
     LONG_ALIGN = 4,
     LONGLONG_ALIGN = 8,
     LONGDOUBLE_ALIGN = 8,
-    // Note how the CORBA::LongDouble alignment requirements do not
+    // Note how the CORBA CDR_LongDouble alignment requirements do not
     // match its size...
 
     MAX_ALIGNMENT = 8,
-    // Maximal CDR 1.1 alignment: "quad precision" FP (i.e. "long
+    // Maximal CDR 1.1 alignment: "quad precision" FP (i.e. "CDR_Long
     // double", size as above).
 
     DEFAULT_BUFSIZE = DEFAULT_CDR_BUFSIZE,
@@ -191,8 +191,8 @@ public:
 
   struct ACE_Export from_char
   {
-    from_char (char c);
-    char val_;
+    from_char (CDR_Char c);
+    CDR_Char val_;
   };
 
   struct ACE_Export from_wchar
@@ -203,73 +203,67 @@ public:
 
   struct ACE_Export from_string
   {
-    from_string (char* s,
-                 u_long b,
+    from_string (CDR_Char* s,
+                 CDR_ULong b,
                  CDR_Boolean nocopy = 0);
-    char *val_;
-    u_long bound_;
+    CDR_Char *val_;
+    CDR_ULong bound_;
     CDR_Boolean nocopy_;
   };
 
   // = We have one method per basic IDL type....
   // They return 0 on failure and 1 on success.
   CDR_Boolean write_boolean (CDR_Boolean x);
-  CDR_Boolean write_char (char x);
+  CDR_Boolean write_char (CDR_Char x);
   CDR_Boolean write_wchar (ACE_OS::WChar x);
   CDR_Boolean write_octet (CDR_Octet x);
-  CDR_Boolean write_short (short x);
-  CDR_Boolean write_ushort (u_short x);
-  CDR_Boolean write_long (long x);
-  CDR_Boolean write_ulong (u_long x);
+  CDR_Boolean write_short (CDR_Short x);
+  CDR_Boolean write_ushort (CDR_UShort x);
+  CDR_Boolean write_long (CDR_Long x);
+  CDR_Boolean write_ulong (CDR_ULong x);
   CDR_Boolean write_longlong (const CDR_LongLong &x);
   CDR_Boolean write_ulonglong (const CDR_ULongLong &x);
-  CDR_Boolean write_float (float x);
-  CDR_Boolean write_double (double x);
-
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
-  CDR_Boolean write_longdouble (const long double &x);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
+  CDR_Boolean write_float (CDR_Float x);
+  CDR_Boolean write_double (const CDR_Double &x);
+  CDR_Boolean write_longdouble (const CDR_LongDouble &x);
 
   // For string we offer methods that accept a precomputed length.
-  CDR_Boolean write_string (const char *x);
-  CDR_Boolean write_string (int len, const char *x);
+  CDR_Boolean write_string (const CDR_Char *x);
+  CDR_Boolean write_string (CDR_ULong len, const CDR_Char *x);
   CDR_Boolean write_string (const ACE_CString &x);
   CDR_Boolean write_wstring (const ACE_OS::WChar *x);
-  CDR_Boolean write_wstring (unsigned long length, 
+  CDR_Boolean write_wstring (CDR_ULong length, 
                              const ACE_OS::WChar *x);
 
   // = We add one method to write arrays of basic IDL types.
   // Note: the portion written starts at <x> and ends at <x + length>.
   // The length is *NOT* stored into the CDR stream.
-  CDR_Boolean write_boolean_array (CDR_Boolean* x,
-                                   unsigned long length);
-  CDR_Boolean write_char_array (const char *x, 
-                                unsigned long length);
+  CDR_Boolean write_boolean_array (CDR_Boolean *x,
+                                   CDR_ULong length);
+  CDR_Boolean write_char_array (const CDR_Char *x, 
+                                CDR_ULong length);
   CDR_Boolean write_wchar_array (const ACE_OS::WChar* x,
-                                 unsigned long length);
+                                 CDR_ULong length);
   CDR_Boolean write_octet_array (const CDR_Octet* x,
-                                 unsigned long length);
-  CDR_Boolean write_short_array (const short *x, 
-                                 unsigned long length);
-  CDR_Boolean write_ushort_array (const u_short *x, 
-                                  unsigned long length);
-  CDR_Boolean write_long_array (const long *x, 
-                                unsigned long length);
-  CDR_Boolean write_ulong_array (const u_long *x, 
-                                 unsigned long length);
+                                 CDR_ULong length);
+  CDR_Boolean write_short_array (const CDR_Short *x, 
+                                 CDR_ULong length);
+  CDR_Boolean write_ushort_array (const CDR_UShort *x, 
+                                  CDR_ULong length);
+  CDR_Boolean write_long_array (const CDR_Long *x, 
+                                CDR_ULong length);
+  CDR_Boolean write_ulong_array (const CDR_ULong *x, 
+                                 CDR_ULong length);
   CDR_Boolean write_longlong_array (const CDR_LongLong* x,
-                                    unsigned long length);
+                                    CDR_ULong length);
   CDR_Boolean write_ulonglong_array (const CDR_ULongLong *x,
-                                     unsigned long length);
-  CDR_Boolean write_float_array (const float *x, 
-                                 unsigned long length);
-  CDR_Boolean write_double_array (const double *x,
-                                  unsigned long length);
-
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
-  CDR_Boolean write_longdouble_array (const long double* x,
-                                      unsigned long length);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
+                                     CDR_ULong length);
+  CDR_Boolean write_float_array (const CDR_Float *x, 
+                                 CDR_ULong length);
+  CDR_Boolean write_double_array (const CDR_Double *x,
+                                  CDR_ULong length);
+  CDR_Boolean write_longdouble_array (const CDR_LongDouble* x,
+                                      CDR_ULong length);
 
   CDR_Boolean write_octet_array_mb (const ACE_Message_Block* mb);
   // Write an octet array contained inside a MB, this can be optimized
@@ -289,10 +283,7 @@ public:
   CDR_Boolean append_ulonglong (ACE_InputCDR &);
   CDR_Boolean append_float (ACE_InputCDR &);
   CDR_Boolean append_double (ACE_InputCDR &);
-
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
   CDR_Boolean append_longdouble (ACE_InputCDR &);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
   CDR_Boolean append_wstring (ACE_InputCDR &);
   CDR_Boolean append_string (ACE_InputCDR &);
@@ -327,19 +318,16 @@ private:
   ACE_OutputCDR& operator= (const ACE_OutputCDR& rhs);
   // disallow copying...
 
-  CDR_Boolean write_1 (const char *x);
-  CDR_Boolean write_2 (const ACE_UINT16 *x);
-  CDR_Boolean write_4 (const ACE_UINT32 *x);
-  CDR_Boolean write_8 (const ACE_UINT64 *x);
-
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
-  CDR_Boolean write_16 (const long double* x);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
+  CDR_Boolean write_1 (const CDR_Octet *x);
+  CDR_Boolean write_2 (const CDR_UShort *x);
+  CDR_Boolean write_4 (const CDR_ULong *x);
+  CDR_Boolean write_8 (const CDR_ULongLong *x);
+  CDR_Boolean write_16 (const CDR_LongDouble *x);
 
   CDR_Boolean write_array (const void* x, 
                            size_t size, 
                            size_t align,
-		           unsigned long length);
+		           CDR_ULong length);
   // write an array of <length> elements, each of <size> bytes and
   // the start aligned at a multiple of <align>. The elements are
   // assumed to be packed with the right alignment restrictions.
@@ -401,6 +389,7 @@ private:
   // Set to 0 when an error ocurrs.
 
   size_t memcpy_tradeoff_;
+  // Break-even point for copying.
 };
 
 class ACE_Export ACE_InputCDR
@@ -456,7 +445,7 @@ public:
 
   ACE_InputCDR (const ACE_InputCDR& rhs,
                 size_t size,
-                long offset);
+                CDR_Long offset);
   // When interpreting indirected TypeCodes it is useful to make a
   // "copy" of the stream starting in the new position.
 
@@ -484,8 +473,8 @@ public:
 
   struct ACE_Export to_char
   {
-    to_char (char &c);
-    char &ref_;
+    to_char (CDR_Char &c);
+    CDR_Char &ref_;
   };
 
   struct ACE_Export to_wchar
@@ -502,31 +491,28 @@ public:
 
   struct ACE_Export to_string
   {
-    to_string (char *&s, u_long b);
-    char *&val_;
-    u_long bound_;
+    to_string (CDR_Char *&s, CDR_ULong b);
+    CDR_Char *&val_;
+    CDR_ULong bound_;
   };
 
   // = We have one method per basic IDL type....
   // They return 0 on failure and 1 on success.
   CDR_Boolean read_boolean (CDR_Boolean& x);
-  CDR_Boolean read_char (char &x);
+  CDR_Boolean read_char (CDR_Char &x);
   CDR_Boolean read_wchar (ACE_OS::WChar& x);
   CDR_Boolean read_octet (CDR_Octet& x);
-  CDR_Boolean read_short (short &x);
-  CDR_Boolean read_ushort (u_short &x);
-  CDR_Boolean read_long (long &x);
-  CDR_Boolean read_ulong (u_long &x);
+  CDR_Boolean read_short (CDR_Short &x);
+  CDR_Boolean read_ushort (CDR_UShort &x);
+  CDR_Boolean read_long (CDR_Long &x);
+  CDR_Boolean read_ulong (CDR_ULong &x);
   CDR_Boolean read_longlong (CDR_LongLong& x);
   CDR_Boolean read_ulonglong (CDR_ULongLong& x);
-  CDR_Boolean read_float (float &x);
-  CDR_Boolean read_double (double &x);
+  CDR_Boolean read_float (CDR_Float &x);
+  CDR_Boolean read_double (CDR_Double &x);
+  CDR_Boolean read_longdouble (CDR_LongDouble &x);
 
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
-  CDR_Boolean read_longdouble (long double &x);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
-
-  CDR_Boolean read_string (char *&x);
+  CDR_Boolean read_string (CDR_Char *&x);
   CDR_Boolean read_string (ACE_CString &x);
   CDR_Boolean read_wstring (ACE_OS::WChar*& x);
 
@@ -535,34 +521,31 @@ public:
   // elements.
   // They return -1 on failure and 0 on success.
   CDR_Boolean read_boolean_array (CDR_Boolean* x,
-                                  unsigned long length);
-  CDR_Boolean read_char_array (char *x, 
-                               unsigned long length);
+                                  CDR_ULong length);
+  CDR_Boolean read_char_array (CDR_Char *x, 
+                               CDR_ULong length);
   CDR_Boolean read_wchar_array (ACE_OS::WChar* x,
-                                unsigned long length);
+                                CDR_ULong length);
   CDR_Boolean read_octet_array (CDR_Octet* x,
-                                unsigned long length);
-  CDR_Boolean read_short_array (short *x, 
-                                unsigned long length);
-  CDR_Boolean read_ushort_array (u_short *x, 
-                                 unsigned long length);
-  CDR_Boolean read_long_array (long *x, 
-                               unsigned long length);
-  CDR_Boolean read_ulong_array (u_long *x, 
-                                unsigned long length);
+                                CDR_ULong length);
+  CDR_Boolean read_short_array (CDR_Short *x, 
+                                CDR_ULong length);
+  CDR_Boolean read_ushort_array (CDR_UShort *x, 
+                                 CDR_ULong length);
+  CDR_Boolean read_long_array (CDR_Long *x, 
+                               CDR_ULong length);
+  CDR_Boolean read_ulong_array (CDR_ULong *x, 
+                                CDR_ULong length);
   CDR_Boolean read_longlong_array (CDR_LongLong* x,
-                                   unsigned long length);
+                                   CDR_ULong length);
   CDR_Boolean read_ulonglong_array (CDR_ULongLong* x,
-                                    unsigned long length);
-  CDR_Boolean read_float_array (float *x, 
-                                unsigned long length);
-  CDR_Boolean read_double_array (double *x, 
-                                 unsigned long length);
-
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
-  CDR_Boolean read_longdouble_array (long double* x,
-                             unsigned long length);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
+                                    CDR_ULong length);
+  CDR_Boolean read_float_array (CDR_Float *x, 
+                                CDR_ULong length);
+  CDR_Boolean read_double_array (CDR_Double *x, 
+                                 CDR_ULong length);
+  CDR_Boolean read_longdouble_array (CDR_LongDouble* x,
+                                     CDR_ULong length);
 
   // = We have one method per basic IDL type....
   // They return 0 on failure and 1 on success.
@@ -578,10 +561,7 @@ public:
   CDR_Boolean skip_ulonglong (void);
   CDR_Boolean skip_float (void);
   CDR_Boolean skip_double (void);
-
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
   CDR_Boolean skip_longdouble (void);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
   CDR_Boolean skip_wstring (void);
   CDR_Boolean skip_string (void);
@@ -605,13 +585,10 @@ public:
 
 private:
   CDR_Boolean read_1 (CDR_Octet *x);
-  CDR_Boolean read_2 (ACE_UINT16 *x);
-  CDR_Boolean read_4 (ACE_UINT32 *x);
-  CDR_Boolean read_8 (ACE_UINT64 *x);
-
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
-  CDR_Boolean read_16 (long double* x);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
+  CDR_Boolean read_2 (CDR_UShort *x);
+  CDR_Boolean read_4 (CDR_ULong *x);
+  CDR_Boolean read_8 (CDR_ULongLong *x);
+  CDR_Boolean read_16 (CDR_LongDouble *x);
 
   // Several types can be read using the same routines, since TAO
   // tries to use native types with known size for each CORBA type.
@@ -623,7 +600,7 @@ private:
   CDR_Boolean read_array (void* x, 
                           size_t size, 
                           size_t align,
-		          unsigned long length);
+		          CDR_ULong length);
   // read an array of <length> elements, each of <size> bytes and
   // the start aligned at a multiple of <align>. The elements are
   // assumed to be packed with the right alignment restrictions.
@@ -637,7 +614,7 @@ private:
 
   void rd_ptr (size_t offset);
   char* end (void);
-  // short cuts for the underlying message block.
+  // CDR_Short cuts for the underlying message block.
 
   int adjust (size_t size, 
               char *&buf);
@@ -671,27 +648,23 @@ private:
 
 // CDR output operators for primitive types
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os, 
-                                          short x);
+                                          CDR_Short x);
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os, 
-                                          u_short x);
+                                          CDR_UShort x);
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os, 
-                                          long x);
+                                          CDR_Long x);
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os, 
-                                          u_long x);
+                                          CDR_ULong x);
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os,
                                           CDR_LongLong x);
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os,
                                           CDR_ULongLong x);
-
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR& os,
-                                          long double x);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
-
+                                          CDR_LongDouble x);
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os, 
-                                          float x);
+                                          CDR_Float x);
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os, 
-                                          double x);
+                                          CDR_Double x);
 extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os, 
                                           const ACE_CString &x);
 
@@ -710,31 +683,27 @@ extern ACE_Export CDR_Boolean operator<< (ACE_OutputCDR &os,
                                           const char* x);
 // CDR input operators for primitive types
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is, 
-                                          short &x);
+                                          CDR_Short &x);
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is, 
-                                          u_short &x);
+                                          CDR_UShort &x);
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is, 
-                                          long &x);
+                                          CDR_Long &x);
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is, 
-                                          u_long &x);
+                                          CDR_ULong &x);
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is,
                                           CDR_LongLong &x);
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is,
                                           CDR_ULongLong &x);
-
-#if   ACE_SIZEOF_LONG_DOUBLE == 16
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is,
-                                          long double &x);
-#endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
-
+                                          CDR_LongDouble &x);
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is, 
-                                          float &x);
+                                          CDR_Float &x);
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is, 
-                                          double &x);
+                                          CDR_Double &x);
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is, 
                                           ACE_CString &x);
 
-// CDR output operator from helper classes
+// CDR input operator from helper classes
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is,
                                           ACE_InputCDR::to_boolean x);
 extern ACE_Export CDR_Boolean operator>> (ACE_InputCDR &is,
