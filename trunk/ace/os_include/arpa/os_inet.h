@@ -62,14 +62,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
-   // Work around a lack of ANSI prototypes for these functions on VxWorks.
-   unsigned long  inet_addr (const char *);
-   char           *inet_ntoa (const struct in_addr);
-   struct in_addr inet_makeaddr (const int, const int);
-   unsigned long  inet_network (const char *);
-#endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
-
 #if defined (ACE_LACKS_INET_ATON_PROTOTYPE)
   int inet_aton (const char *, struct in_addr *);
 #endif /* ACE_LACKS_INET_ATON_PROTOTYPE */
