@@ -1,3 +1,13 @@
+Fri Apr 13 11:14:46 2001  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp: 
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: 	
+
+	  Added a timed orb->run () to prevent the sender from shutting
+	  down before the distributer connected to it. This should
+	  fix the breaking of the test on many platforms.
+	
+
 Fri Apr 13 10:50:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
