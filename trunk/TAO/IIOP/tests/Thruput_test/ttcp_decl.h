@@ -32,7 +32,7 @@
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <sys/time.h>		/* struct itimerval */
+#include <sys/time.h>           /* struct itimerval */
 #include <limits.h>
 #include <sys/un.h>
 #include <unistd.h>
@@ -40,8 +40,8 @@
 #include <sys/resource.h>
 
 /* File to be included if Quantify is to be used */
-#if defined (USE_QUANTIFY)
-#include <quantify.h>
+#if defined (ACE_HAS_QUANTIFY)
+# include <quantify.h>
 #endif
 
 
@@ -70,7 +70,7 @@ struct rusage
 #define SEND_DOUBLE ((unsigned long)(5))
 #define SEND_STRUCT ((unsigned long)(6))
 #define SEND_COMPOSITE ((unsigned long)(7))
- 
+
 /**************
 // Prototypes
 ***************/
@@ -97,35 +97,35 @@ void ProcessArguments(int argc, char **argv, unsigned short isTrans);
 
 /* Global variables defined here as extern */
 extern int fromlen;
-extern int domain;           	/* Default is to use Internet domain sockets. */
-extern char *domainname;	/* Rendezvous address for UNIX domain sockets. */
-extern int fd;			/* fd of network socket */
+extern int domain;              /* Default is to use Internet domain sockets. */
+extern char *domainname;        /* Rendezvous address for UNIX domain sockets. */
+extern int fd;                  /* fd of network socket */
 
-extern int buflen;		/* length of buffer */
-extern char *buf;		/* ptr to dynamic buffer */
-extern int nbuf;		/* number of buffers to send in sinkmode */
+extern int buflen;              /* length of buffer */
+extern char *buf;               /* ptr to dynamic buffer */
+extern int nbuf;                /* number of buffers to send in sinkmode */
 
-extern int bufoffset;		/* align buffer to this */
-extern int bufalign;		/* modulo this */
+extern int bufoffset;           /* align buffer to this */
+extern int bufalign;            /* modulo this */
 
-extern int udp;			/* 0 = tcp, !0 = udp */
-extern int options;		/* socket options */
-extern int one;			/* for 4.3 BSD style setsockopt() */
-extern short port;		/* TCP port number */
+extern int udp;                 /* 0 = tcp, !0 = udp */
+extern int options;             /* socket options */
+extern int one;                 /* for 4.3 BSD style setsockopt() */
+extern short port;              /* TCP port number */
 extern char *host;              /* ptr to name of host */
-extern int trans;		/* 0=receive, !0=transmit mode */
-extern int sinkmode;		/* 0=normal I/O, !0=sink/source mode */
-extern int verbose;			/* 0=print basic info, 1=print cpu rate, proc
-				 * resource usage. */
-extern int nodelay;		/* set TCP_NODELAY socket option */
-extern int b_flag;		/* use mread() */
-extern int sockbufsize;		/* socket buffer size to use */
+extern int trans;               /* 0=receive, !0=transmit mode */
+extern int sinkmode;            /* 0=normal I/O, !0=sink/source mode */
+extern int verbose;                     /* 0=print basic info, 1=print cpu rate, proc
+                                 * resource usage. */
+extern int nodelay;             /* set TCP_NODELAY socket option */
+extern int b_flag;              /* use mread() */
+extern int sockbufsize;         /* socket buffer size to use */
 extern int new_line;            /* This is a special flag */
 extern int write_to_file;       /* indecates writing to file (default)*/
-extern char fmt;		/* output format:k=kilobits,K=kilobytes,
-				 *  m = megabits, M = megabytes, 
-				 *  g = gigabits, G = gigabytes */
-extern int touchdata;		/* access data after reading */
+extern char fmt;                /* output format:k=kilobits,K=kilobytes,
+                                 *  m = megabits, M = megabytes,
+                                 *  g = gigabits, G = gigabytes */
+extern int touchdata;           /* access data after reading */
 
 extern struct hostent *addr;
 extern int errno;
@@ -134,20 +134,20 @@ extern char *optarg;
 extern char *title;
 
 extern char stats[128];
-extern unsigned long srcDataSize;	/* Total amount of source data */
-extern unsigned long nbytes;		/* bytes on net */
-extern unsigned long numCalls;		/* # of I/O system calls */
-extern double cput, realt;		/* user, real time (seconds) */
-extern unsigned long	dt;
+extern unsigned long srcDataSize;       /* Total amount of source data */
+extern unsigned long nbytes;            /* bytes on net */
+extern unsigned long numCalls;          /* # of I/O system calls */
+extern double cput, realt;              /* user, real time (seconds) */
+extern unsigned long    dt;
 
 extern unsigned short isDone;
 
 /* declare struct variables for various message types */
-extern ttcp_sequence::ShortSeq		*sseq;	
-extern ttcp_sequence::LongSeq		*lseq;	
-extern ttcp_sequence::OctetSeq		*oseq;	
-extern ttcp_sequence::DoubleSeq	        *dseq;	
-extern ttcp_sequence::CharSeq		*cseq;	
-extern ttcp_sequence::StructSeq	        *Sseq;
+extern ttcp_sequence::ShortSeq          *sseq;
+extern ttcp_sequence::LongSeq           *lseq;
+extern ttcp_sequence::OctetSeq          *oseq;
+extern ttcp_sequence::DoubleSeq         *dseq;
+extern ttcp_sequence::CharSeq           *cseq;
+extern ttcp_sequence::StructSeq         *Sseq;
 
 #endif
