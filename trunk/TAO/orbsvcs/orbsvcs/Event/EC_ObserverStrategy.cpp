@@ -1,7 +1,5 @@
 // $Id$
 
-#include "ace/Synch.h"
-
 #include "EC_ObserverStrategy.h"
 #include "EC_Event_Channel.h"
 #include "EC_ProxySupplier.h"
@@ -9,6 +7,7 @@
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "ace/Synch.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_ObserverStrategy.i"
@@ -156,12 +155,15 @@ TAO_EC_Basic_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*,
 void
 TAO_EC_Basic_ObserverStrategy::fill_qos (
       RtecEventChannelAdmin::ConsumerQOS &qos,
-      CORBA::Environment &)
+      CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_Filter::Headers headers;
+  Headers headers;
 
   {
-    // @@ TODO locking in the consumer admin?
+    ACE_GUARD_THROW (TAO_EC_ConsumerAdmin::Busy_Lock,
+        ace_mon, this->event_channel_->consumer_admin ()->busy_lock (),
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+
     TAO_EC_ConsumerAdmin::SupplierSetIterator end =
       this->event_channel_->consumer_admin ()->end ();
     for (TAO_EC_ConsumerAdmin::SupplierSetIterator i =
@@ -170,13 +172,25 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
          ++i)
       {
         TAO_EC_ProxyPushSupplier* supplier = *i;
-        if (supplier->subscriptions ().is_gateway)
+ 
+        const RtecEventChannelAdmin::ConsumerQOS& sub =
+          supplier->subscriptions ();
+        if (sub.is_gateway)
           continue;
-        supplier->event_ids (headers);
+        for (CORBA::ULong j = 0; j < sub.dependencies.length (); ++j)
+          {
+            const RtecEventComm::Event& event =
+              sub.dependencies[j].event;
+            RtecEventComm::EventType type = event.header.type;
+
+            if (0 <= type && type <= ACE_ES_EVENT_UNDEFINED)
+              continue;
+            headers.insert (event.header, 1);
+          }
       }
   }
   CORBA::ULong count = 1;
-  TAO_EC_Filter::HeadersIterator i (headers);
+  HeadersIterator i (headers);
   for (i.first (); !i.is_done (); i.next ())
     {
       count++;
@@ -202,7 +216,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
       RtecEventChannelAdmin::SupplierQOS &qos,
       CORBA::Environment &)
 {
-  TAO_EC_Filter::Headers headers;
+  Headers headers;
 
   {
     // @@ TODO locking in the consumer admin?
@@ -231,7 +245,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
       }
   }
   CORBA::ULong count = 0;
-  TAO_EC_Filter::HeadersIterator i (headers);
+  HeadersIterator i (headers);
   for (i.first (); !i.is_done (); i.next ())
     {
       count++;
@@ -251,6 +265,10 @@ template class ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle,TAO_EC_Ba
 template class ACE_Map_Iterator_Base<RtecEventChannelAdmin::Observer_Handle,TAO_EC_Basic_ObserverStrategy::Observer_Entry,ACE_Null_Mutex>;
 template class ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle,TAO_EC_Basic_ObserverStrategy::Observer_Entry>;
 
+template class ACE_RB_Tree<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>;
+template class ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>;
+template class ACE_RB_Tree_Node<RtecEventComm::EventHeader,int>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle,TAO_EC_Basic_ObserverStrategy::Observer_Entry,ACE_Null_Mutex>
@@ -258,5 +276,8 @@ template class ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle,TAO_EC_Basic
 #pragma instantiate ACE_Map_Iterator_Base<RtecEventChannelAdmin::Observer_Handle,TAO_EC_Basic_ObserverStrategy::Observer_Entry,ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle,TAO_EC_Basic_ObserverStrategy::Observer_Entry>
 
+#pragma instantiate ACE_RB_Tree<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,TAO_EC_Basic_ObserverStrategy::Header_Compare,ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Node<RtecEventComm::EventHeader,int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

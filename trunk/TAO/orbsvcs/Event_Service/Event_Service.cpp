@@ -65,7 +65,7 @@ parse_args (int argc, char *argv [])
         case 'r':
           reactive = 1;
           break;
-	  
+
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,

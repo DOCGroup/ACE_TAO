@@ -235,11 +235,11 @@ TAO_EC_ProxyPushSupplier::max_event_size (void) const
   return this->child_->max_event_size ();
 }
 
-void
-TAO_EC_ProxyPushSupplier::event_ids (TAO_EC_Filter::Headers& headerset)
+int
+TAO_EC_ProxyPushSupplier::can_match (
+      const RtecEventComm::EventHeader &header) const
 {
-  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
-  // @@ TODO cache this result....
-  this->child_->event_ids (headerset);
+  return this->child_->can_match (header);
 }

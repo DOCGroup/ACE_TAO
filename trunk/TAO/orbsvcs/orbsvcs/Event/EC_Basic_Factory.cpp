@@ -3,12 +3,13 @@
 #include "EC_Basic_Factory.h"
 #include "EC_Dispatching.h"
 #include "EC_Basic_Filter_Builder.h"
-#include "EC_ConsumerAdmin_T.h"
+#include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h"
 #include "EC_SupplierFiltering.h"
 #include "EC_ObserverStrategy.h"
+#include "EC_ProxyPushSupplier_Set_T.h"
 #include "Timer_Module.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -50,7 +51,7 @@ TAO_EC_Basic_Factory::destroy_filter_builder (TAO_EC_Filter_Builder *x)
 TAO_EC_ConsumerAdmin*
 TAO_EC_Basic_Factory::create_consumer_admin (TAO_EC_Event_Channel *ec)
 {
-  return new TAO_EC_ConsumerAdmin_Delayed<ACE_MT_SYNCH> (ec);
+  return new TAO_EC_ConsumerAdmin (ec);
 }
 
 void
@@ -127,6 +128,18 @@ TAO_EC_Basic_Factory::destroy_observer_strategy (TAO_EC_ObserverStrategy *x)
   delete x;
 }
 
+TAO_EC_ProxyPushSupplier_Set*
+TAO_EC_Basic_Factory::create_proxy_push_supplier_set (TAO_EC_Event_Channel *)
+{
+  return new TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH> ();
+}
+
+void
+TAO_EC_Basic_Factory::destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set *x)
+{
+  delete x;
+}
+
 PortableServer::POA_ptr
 TAO_EC_Basic_Factory::consumer_poa (CORBA::Environment&)
 {
@@ -189,16 +202,14 @@ TAO_EC_Basic_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_EC_ConsumerAdmin_Delayed<ACE_MT_SYNCH>;
-template class TAO_EC_ConsumerAdmin_T<ACE_MT_SYNCH>;
+template class TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH>;
 template class ACE_Node<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue<ACE_Command_Base*>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_EC_ConsumerAdmin_Delayed<ACE_MT_SYNCH>
-#pragma instantiate TAO_EC_ConsumerAdmin_T<ACE_MT_SYNCH>
+#pragma instantiate TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH>
 #pragma instantiate ACE_Node<ACE_Command_Base*>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Command_Base*>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>

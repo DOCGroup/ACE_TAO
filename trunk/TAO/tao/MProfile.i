@@ -89,7 +89,7 @@ TAO_MProfile::get_prev (void)
     return 0;
   if (current_ > 1)
     current_--;
- 
+
   return pfiles_[current_ - 1];
 }
 
@@ -103,11 +103,11 @@ TAO_MProfile::get_profile (TAO_PHandle handle)
   else
     return 0;
 }
-  
+
 ACE_INLINE TAO_Profile *
 TAO_MProfile::get_current_profile (void)
 {
-  if (last_ == 0) 
+  if (last_ == 0)
     return 0;
   if (current_ == 0)
     // means list has not been read before.
@@ -116,44 +116,44 @@ TAO_MProfile::get_current_profile (void)
   return pfiles_[current_ - 1];
 }
 
-ACE_INLINE TAO_PHandle 
+ACE_INLINE TAO_PHandle
 TAO_MProfile::get_current_handle (void)
 {
   if (current_ > 0)
     return current_ - 1;
-  else 
+  else
     return 0;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 TAO_MProfile::rewind (void)
 {
   current_ = 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_MProfile::add_profile (TAO_Profile *pfile)
 {
   // skip by the used slots
   if (last_ == size_) // full!
     return -1;
-   
+
   pfiles_[last_++] = pfile;
 
-  if (pfile && pfile->_incr_refcnt () == 0) 
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) Unable to increment reference count in add_profile!\n"), 
+  if (pfile && pfile->_incr_refcnt () == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Unable to increment reference count in add_profile!\n"),
                       -1);
   return last_ - 1;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 TAO_MProfile::give_profile (TAO_Profile *pfile)
 {
   // skip by the used slots
   if (last_ == size_) // full!
     return -1;
-   
+
   pfiles_[last_++] = pfile;
 
   return last_ - 1;
@@ -186,7 +186,7 @@ TAO_MProfile::pfiles (void) const
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_MProfile::is_equivalent (TAO_MProfile *first, 
+TAO_MProfile::is_equivalent (TAO_MProfile *first,
                              TAO_MProfile *second,
                              CORBA::Environment &env)
 {
@@ -197,12 +197,12 @@ TAO_MProfile::is_equivalent (TAO_MProfile *first,
   TAO_Profile_ptr *pfiles2 = second->pfiles ();
   TAO_PHandle first_cnt = first->profile_count ();
   TAO_PHandle second_cnt = second->profile_count ();
-  
+
   for (TAO_PHandle h1 = 0; h1 < first_cnt;h1++)
     for (TAO_PHandle h2 = 0; h2 < second_cnt; h2++ )
       if (pfiles1[h1]->is_equivalent (pfiles2[h2], env))
         return 1;
-  
+
   return 0;
 }
 
@@ -211,13 +211,13 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &env)
 {
   CORBA::ULong hashval = 0;
 
-  if (last_ == 0) 
+  if (last_ == 0)
     return 0;
 
-  for (TAO_PHandle h=0; h < last_ ; h++) 
+  for (TAO_PHandle h=0; h < last_ ; h++)
     hashval += pfiles_[h]->hash (max, env);
 
   // The above hash function return an ULong between 0 and max here we
   // simply take the average value and round.
-  return hashval / last_; 
+  return hashval / last_;
 }

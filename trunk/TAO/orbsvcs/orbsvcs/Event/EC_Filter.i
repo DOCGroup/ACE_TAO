@@ -31,18 +31,6 @@ TAO_EC_Filter::matches (const RtecEventComm::EventHeader& rhs,
 
 // ****************************************************************
 
-ACE_INLINE int
-TAO_EC_Filter::Header_Compare::
-    operator () (const RtecEventComm::EventHeader& lhs,
-                 const RtecEventComm::EventHeader& rhs) const
-{
-  if (lhs.source == rhs.source)
-    return lhs.type < rhs.type;
-  return lhs.source < rhs.source;
-}
-
-// ****************************************************************
-
 ACE_INLINE
 TAO_EC_Null_Filter::TAO_EC_Null_Filter (void)
 {

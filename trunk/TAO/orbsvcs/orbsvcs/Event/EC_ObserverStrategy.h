@@ -35,6 +35,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/RB_Tree.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
 class ACE_Lock;
@@ -201,6 +202,12 @@ public:
     // The observer
   };
 
+  struct Header_Compare
+  {
+    int operator () (const RtecEventComm::EventHeader& lhs,
+                     const RtecEventComm::EventHeader& rhs) const;
+  };
+
 private:
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos,
                  CORBA::Environment &env);
@@ -224,6 +231,9 @@ private:
 
   Observer_Map observers_;
   // Keep the set of Observers
+
+  typedef ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> Headers;
+  typedef ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> HeadersIterator;
 };
 
 #if defined (__ACE_INLINE__)

@@ -49,7 +49,7 @@ class TAO_EC_Type_Filter : public TAO_EC_Filter
 public:
   TAO_EC_Type_Filter (const RtecEventComm::EventHeader& header);
   // Constructor.
-  
+
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
@@ -66,13 +66,13 @@ public:
                             CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headers);
+  virtual int can_match (const RtecEventComm::EventHeader& header) const;
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Type_Filter
                               (const TAO_EC_Type_Filter&))
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Type_Filter& operator=
-                              (const TAO_EC_Type_Filter&))  
+                              (const TAO_EC_Type_Filter&))
 
 private:
   RtecEventComm::EventHeader header_;

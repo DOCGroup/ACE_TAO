@@ -60,6 +60,12 @@
 // without timestamps, transient and persistent POA cannot be
 // distinguished
 
+//#define TAO_USE_DOTTED_DECIMAL_ADDRESSES
+//
+// If set the ORB will use dotted decimal addresses in the IORs it
+// exports, this is useful for platforms or environments that cannot
+// depend on a DNS beign available.
+
 // The default arguments of the resource factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)

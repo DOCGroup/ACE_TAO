@@ -33,3 +33,16 @@ TAO_EC_Basic_ObserverStrategy::Observer_Entry::
      observer (o)
 {
 }
+
+// ****************************************************************
+
+ACE_INLINE int
+TAO_EC_Basic_ObserverStrategy::Header_Compare::
+    operator () (const RtecEventComm::EventHeader& lhs,
+                 const RtecEventComm::EventHeader& rhs) const
+{
+  if (lhs.source == rhs.source)
+    return lhs.type < rhs.type;
+  return lhs.source < rhs.source;
+}
+

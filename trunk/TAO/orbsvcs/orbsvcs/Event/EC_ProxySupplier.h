@@ -138,7 +138,7 @@ public:
                             CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
+  virtual int can_match (const RtecEventComm::EventHeader &header) const;
 
 private:
   CORBA::Boolean is_connected_i (void) const;

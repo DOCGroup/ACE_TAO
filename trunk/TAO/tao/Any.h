@@ -75,7 +75,7 @@ public:
   // = TAO extension
   CORBA_Any (CORBA::TypeCode_ptr type,
              const ACE_Message_Block* mb);
-  // Constructor. Used by DynAny to compose/decompose 
+  // Constructor. Used by DynAny to compose/decompose
   // complex types using a CDR.
 
   CORBA_Any (const CORBA_Any &a);
@@ -170,11 +170,11 @@ public:
   // = Special types.
 
   // These are needed for insertion and extraction of booleans,
-  // octets, chars, and bounded strings. CORBA spec requires 
+  // octets, chars, and bounded strings. CORBA spec requires
   // that they be here, we just typedef to the already-defined
   // ACE_OutputCDR types.
 
-  typedef ACE_OutputCDR::from_boolean from_boolean;  
+  typedef ACE_OutputCDR::from_boolean from_boolean;
   typedef ACE_OutputCDR::from_octet from_octet;
   typedef ACE_OutputCDR::from_char from_char;
   typedef ACE_OutputCDR::from_wchar from_wchar;
@@ -240,14 +240,14 @@ public:
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
                 CORBA::Boolean any_owns_data,
-                CORBA_Environment &TAO_IN_ENV = 
+                CORBA_Environment &TAO_IN_ENV =
                   CORBA::default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe.
 
   void replace (CORBA::TypeCode_ptr type,
                 const void *value,
-                CORBA_Environment &TAO_IN_ENV = 
+                CORBA_Environment &TAO_IN_ENV =
                   CORBA::default_environment ());
   // Replace the current typecode and data with the specified one -
   // unsafe. This uses a default value for the "any_owns_data" parameter
@@ -256,7 +256,7 @@ public:
   // Return TypeCode of the element stored in the Any.
 
   void type (CORBA::TypeCode_ptr type,
-             CORBA_Environment &TAO_IN_ENV = 
+             CORBA_Environment &TAO_IN_ENV =
                CORBA::default_environment ());
   // For use along with <<= of a value of aliased type when the alias must
   // be preserved.
@@ -287,7 +287,7 @@ public:
   void _tao_replace (CORBA::TypeCode_ptr,
                      const ACE_Message_Block *mb,
                      CORBA::Boolean any_owns_data,
-                     CORBA::Environment &TAO_IN_ENV = 
+                     CORBA::Environment &TAO_IN_ENV =
                        CORBA::default_environment ());
   // Replace via message block instead of <value_>.
 
@@ -373,7 +373,7 @@ class TAO_Export CORBA_Any_out
   //   CORBA_Any_out
   //
   // = DESCRIPTION
-  //   The _out class for CORBA_Any. This is used to help in 
+  //   The _out class for CORBA_Any. This is used to help in
   //   managing the out parameters.
 public:
   // = operations.

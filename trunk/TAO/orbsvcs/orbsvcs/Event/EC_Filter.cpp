@@ -69,28 +69,20 @@ TAO_EC_Null_Filter::clear (void)
 CORBA::ULong
 TAO_EC_Null_Filter::max_event_size (void) const
 {
+  // @@ Is there a better way to express this?
   return 0;
 }
 
-void
-TAO_EC_Null_Filter::event_ids(TAO_EC_Filter::Headers& headers)
+int
+TAO_EC_Null_Filter::can_match (const RtecEventComm::EventHeader&) const
 {
-  // @@ TODO maybe we should add the AnyType/AnySource header?
-  // right now we do nothing...
+  return 1;
 }
 
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_RB_Tree<RtecEventComm::EventHeader,int,TAO_EC_Filter::Header_Compare,ACE_Null_Mutex>;
-template class ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,TAO_EC_Filter::Header_Compare,ACE_Null_Mutex>;
-template class ACE_RB_Tree_Node<RtecEventComm::EventHeader,int>;
-
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_RB_Tree<RtecEventComm::EventHeader,int,TAO_EC_Filter::Header_Compare,ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,TAO_EC_Filter::Header_Compare,ACE_Null_Mutex>
-#pragma instantiate ACE_RB_Tree_Node<RtecEventComm::EventHeader,int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

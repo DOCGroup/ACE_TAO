@@ -3,7 +3,7 @@
 #include "EC_Conjunction_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Filter.i"
+#include "EC_Conjunction_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Conjunction_Filter, "$Id$")
@@ -166,14 +166,17 @@ TAO_EC_Conjunction_Filter::max_event_size (void) const
   return n;
 }
 
-void
-TAO_EC_Conjunction_Filter::event_ids (TAO_EC_Filter::Headers& headers)
+int
+TAO_EC_Conjunction_Filter::can_match (
+      const RtecEventComm::EventHeader& header) const
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
        ++i)
     {
-      (*i)->event_ids (headers);
+      if ((*i)->can_match (header) != 0)
+        return 1;
     }
+  return 0;
 }
