@@ -10,6 +10,8 @@ Thu Mar 20 22:38:27 1997  David L. Levine  <levine@cs.wustl.edu>
 	              Token_Handler.cpp: added template specializations.
 	  There are still many missing from libnetsvcs.
 
+	* ace/Log_Msg.cpp: removed commented-out template specialization.
+
 	* include/makeinclude/platform_{chorus,hpux,hpux_gcc}.GNU:
 	  split out CFLAGS and CCFLAGS from CC and CXX.
 
