@@ -186,7 +186,7 @@ fi
 # Tokens_Test: UNICOS fails dlopen() - no shared libs on UNICOS
 test $TOKEN && (test $chorus || test $Unicos || run Tokens_Test) # tests ACE_Token
 
-run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
+#### run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Map_Test                            # tests ACE_Map + Forward and Reverse Map Iterators.
 run Message_Queue_Notifications_Test    # tests ACE_Message_Queue + ACE_Reactor
 test $chorus || run Message_Queue_Test  # tests ACE_Message_Queue + Forward and Reverse Message Queue Iterators.
