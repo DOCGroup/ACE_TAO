@@ -1,33 +1,38 @@
+Wed May 05 13:07:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/Makefile: replaced /bin/rm with $(RM) and removed clean
+          pseudotarget.
+
 Tue May 04 20:38:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * tests/RB_Tree_Test.cpp: Added missing explicit template 
-          instantiations for ACE_RB_Tree_Iterator_Base.  Thanks to 
+        * tests/RB_Tree_Test.cpp: Added missing explicit template
+          instantiations for ACE_RB_Tree_Iterator_Base.  Thanks to
           Carlos O'Ryan for reporting this.
 
         * include/makeinclude/platform_psos_diab_ppc.GNU: added -g flag
           back into debug flags since it can easily be deactivated via
           make debug=0.
-          
+
 1999-05-04  Seth Widoff  <swidoff@cs.cmu.edu>
 
-	* ace/Containers_T.cpp (ACE_Array_Base<T>::max_size):
-	  When resizing the array to be larger, the max_size method was
-	  copying in the contents of the older, smaller array, but not
-	  initializing the new elements. 
+        * ace/Containers_T.cpp (ACE_Array_Base<T>::max_size):
+          When resizing the array to be larger, the max_size method was
+          copying in the contents of the older, smaller array, but not
+          initializing the new elements.
 
 Tue May  4 17:37:30 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Web_Crawler/Options.cpp (parse_args): 
-	  Change the default options from "www.cs.wustl.edu" to
-	  "tao.cs.wustl.edu".
+        * examples/Web_Crawler/Options.cpp (parse_args):
+          Change the default options from "www.cs.wustl.edu" to
+          "tao.cs.wustl.edu".
 
 Tue May 04 16:24:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}: Added deprecation comments to methods that
           are going to be replaced by the new Hash_Map_Manager compliant
-	  interface.  Factored out iterator base class, added reverse iterator.
-	  Interim checkin since it all compiles and RB_Tree_Test runs clean.
-	
+          interface.  Factored out iterator base class, added reverse iterator.
+          Interim checkin since it all compiles and RB_Tree_Test runs clean.
+
 Tue May 04 15:56:41 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: Re-enabled DllMain (see Mon May 3 entry from Chris
