@@ -45,7 +45,7 @@ protected:
 
   virtual int wait_for_multiple_events () {
     active_read_handles_ = master_handle_set_;
-    int width = (int)active_read_handles_.max_set () + 1;
+    int width = (int) active_read_handles_.max_set () + 1;
 
     return ACE::select (width, active_read_handles_);
   }

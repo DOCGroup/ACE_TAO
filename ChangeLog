@@ -1,3 +1,10 @@
+Thu Dec 19 16:47:17 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SOCK_Dgram.h:
+	  ace/SOCK_CODgram.h: Added metatype information for
+ 	  ACE_SOCK_Dgram and ACE_SOCK_CODgram.  Thanks to Sankaranarayanan
+ 	  K V <sankar@migv.mot.com> for reporting this.
+
 Thu Dec 19 10:02:56 2002  Rich Seibel <seibel_r@ociweb.com>
 
         * tests/MM_Shared_Memory_Test.cpp
