@@ -206,7 +206,7 @@ namespace CCF
         }
 
         void
-        add_edge_right (Contains& e)
+        add_edge_right (Contains&)
         {
           // TranslationRegion contains Root
         }
@@ -237,7 +237,7 @@ namespace CCF
         }
 
         void
-        add_edge_right (Contains& e)
+        add_edge_right (Contains&)
         {
         }
       };

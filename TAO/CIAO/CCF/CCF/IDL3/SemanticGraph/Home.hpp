@@ -87,7 +87,7 @@ namespace CCF
         }
 
         void
-        add_edge_right (Inherits& e)
+        add_edge_right (Inherits&)
         {
         }
 

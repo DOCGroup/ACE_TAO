@@ -12,6 +12,7 @@ $(call include, $(UTILITY_BUILD_RULES)/Object.pre.rules)
 
 cxx_translation_units := Attribute.cpp    \
                          Elements.cpp     \
+                         Enum.cpp         \
                          Exception.cpp    \
                          Fundamental.cpp  \
                          Interface.cpp    \
@@ -23,6 +24,7 @@ cxx_translation_units := Attribute.cpp    \
                          Struct.cpp       \
                          Translation.cpp  \
                          TypeId.cpp       \
+                         Union.cpp        \
                          ValueType.cpp
 
 

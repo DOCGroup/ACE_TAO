@@ -1,79 +1,139 @@
-# file      : CCF/IDL2/Makefile.archive
-# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-# cvs-id    : $Id$
+#----------------------------------------------------------------------------
+#
+# $Id$
+#
+#----------------------------------------------------------------------------
 
-root = ../..
+include ../../Config.rules
 
-include $(root)/Bootstrap.rules
+MAKEFILE = Makefile.archive
+LIBNAME  = libIDL2
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
 
-$(call include, $(root)/Config.rules)
+FILES = LexicalAnalyzer Parser
 
-$(call include, $(UTILITY_BUILD_RULES)/Archive.pre.rules)
+LSRC = $(addsuffix .cpp,$(FILES))
+
+override static_libs_only := true
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+
+VLOBJS +=  SemanticGraph/.obj/Attribute.o    \
+           SemanticGraph/.obj/Elements.o     \
+           SemanticGraph/.obj/Enum.o         \
+           SemanticGraph/.obj/Exception.o    \
+           SemanticGraph/.obj/Fundamental.o  \
+           SemanticGraph/.obj/Interface.o    \
+           SemanticGraph/.obj/Literals.o     \
+           SemanticGraph/.obj/Member.o       \
+           SemanticGraph/.obj/Module.o       \
+           SemanticGraph/.obj/Name.o         \
+           SemanticGraph/.obj/Native.o       \
+           SemanticGraph/.obj/Operation.o    \
+           SemanticGraph/.obj/Sequence.o     \
+           SemanticGraph/.obj/Struct.o       \
+           SemanticGraph/.obj/Translation.o  \
+           SemanticGraph/.obj/TypeId.o       \
+           SemanticGraph/.obj/Union.o        \
+           SemanticGraph/.obj/ValueType.o
 
 
-cxx_translation_units := LexicalAnalyzer.cpp Parser.cpp
+VLOBJS +=  Traversal/.obj/Attribute.o    \
+           Traversal/.obj/Elements.o     \
+           Traversal/.obj/Enum.o         \
+           Traversal/.obj/Exception.o    \
+           Traversal/.obj/Fundamental.o  \
+           Traversal/.obj/Interface.o    \
+           Traversal/.obj/Member.o       \
+           Traversal/.obj/Module.o       \
+           Traversal/.obj/Native.o       \
+           Traversal/.obj/Operation.o    \
+           Traversal/.obj/Sequence.o     \
+           Traversal/.obj/Struct.o       \
+           Traversal/.obj/Translation.o  \
+           Traversal/.obj/TypeId.o       \
+           Traversal/.obj/Union.o        \
+           Traversal/.obj/ValueType.o
+
+VLOBJS +=  SemanticAction/.obj/Operation.o
 
 
-translated_units := SemanticGraph/Attribute.o    \
-                    SemanticGraph/Elements.o     \
-                    SemanticGraph/Enum.o         \
-                    SemanticGraph/Exception.o    \
-                    SemanticGraph/Fundamental.o  \
-                    SemanticGraph/Interface.o    \
-                    SemanticGraph/Literals.o     \
-                    SemanticGraph/Member.o       \
-                    SemanticGraph/Module.o       \
-                    SemanticGraph/Name.o         \
-                    SemanticGraph/Native.o       \
-                    SemanticGraph/Operation.o    \
-                    SemanticGraph/Sequence.o     \
-                    SemanticGraph/Struct.o       \
-                    SemanticGraph/Translation.o  \
-                    SemanticGraph/TypeId.o       \
-                    SemanticGraph/Union.o        \
-                    SemanticGraph/ValueType.o
+VLOBJS +=  SemanticAction/Impl/.obj/Attribute.o  \
+           SemanticAction/Impl/.obj/Elements.o   \
+           SemanticAction/Impl/.obj/Enum.o       \
+           SemanticAction/Impl/.obj/Exception.o  \
+           SemanticAction/Impl/.obj/Factory.o    \
+           SemanticAction/Impl/.obj/Include.o    \
+           SemanticAction/Impl/.obj/Interface.o  \
+           SemanticAction/Impl/.obj/Member.o     \
+           SemanticAction/Impl/.obj/Module.o     \
+           SemanticAction/Impl/.obj/Native.o     \
+           SemanticAction/Impl/.obj/Operation.o  \
+           SemanticAction/Impl/.obj/Struct.o     \
+           SemanticAction/Impl/.obj/TypeId.o     \
+           SemanticAction/Impl/.obj/Typedef.o    \
+           SemanticAction/Impl/.obj/Union.o      \
+           SemanticAction/Impl/.obj/ValueType.o
+
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+CPPFLAGS += -I../..
+
+ifneq ($(MAKECMDGOALS),depend)
+CPPFLAGS += $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
+endif
 
 
-translated_units += Traversal/Attribute.o    \
-                    Traversal/Elements.o     \
-                    Traversal/Enum.o         \
-                    Traversal/Exception.o    \
-                    Traversal/Fundamental.o  \
-                    Traversal/Interface.o    \
-                    Traversal/Member.o       \
-                    Traversal/Module.o       \
-                    Traversal/Native.o       \
-                    Traversal/Operation.o    \
-                    Traversal/Sequence.o     \
-                    Traversal/Struct.o       \
-                    Traversal/Translation.o  \
-                    Traversal/TypeId.o       \
-                    Traversal/Union.o        \
-                    Traversal/ValueType.o
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
-translated_units += SemanticAction/Operation.o
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-translated_units += SemanticAction/Impl/Attribute.o  \
-                    SemanticAction/Impl/Elements.o   \
-                    SemanticAction/Impl/Enum.o       \
-                    SemanticAction/Impl/Exception.o  \
-                    SemanticAction/Impl/Factory.o    \
-                    SemanticAction/Impl/Include.o    \
-                    SemanticAction/Impl/Interface.o  \
-                    SemanticAction/Impl/Member.o     \
-                    SemanticAction/Impl/Module.o     \
-                    SemanticAction/Impl/Native.o     \
-                    SemanticAction/Impl/Operation.o  \
-                    SemanticAction/Impl/Struct.o     \
-                    SemanticAction/Impl/TypeId.o     \
-                    SemanticAction/Impl/Typedef.o    \
-                    SemanticAction/Impl/Union.o      \
-                    SemanticAction/Impl/ValueType.o
 
-module_base           := IDL2
-module_prefix         :=
-module_suffix         :=
+.obj/LexicalAnalyzer.o .obj/LexicalAnalyzer.o .obj/LexicalAnalyzer.o .obj/LexicalAnalyzer.o: LexicalAnalyzer.cpp ../../CCF/IDL2/LexicalAnalyzer.hpp \
+  ../../CCF/CompilerElements/TokenStream.hpp \
+  ../../CCF/CompilerElements/PreprocessorToken.hpp \
+  ../../CCF/IDL2/Token.hpp \
+  ../../CCF/CompilerElements/ReferenceCounting.hpp
 
-CXX_PREPROCESS_FLAGS  += -I$(root) $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
+.obj/Parser.o .obj/Parser.o .obj/Parser.o .obj/Parser.o: Parser.cpp ../../CCF/IDL2/Parser.hpp \
+  ../../CCF/CompilerElements/Context.hpp \
+  ../../CCF/CompilerElements/Diagnostic.hpp \
+  ../../CCF/CompilerElements/ExH.hpp \
+  ../../CCF/CompilerElements/FileSystem.hpp \
+  ../../CCF/IDL2/SemanticAction.hpp \
+  ../../CCF/IDL2/SemanticAction/Elements.hpp ../../CCF/IDL2/Token.hpp \
+  ../../CCF/CompilerElements/ReferenceCounting.hpp \
+  ../../CCF/IDL2/SemanticAction/Factory.hpp \
+  ../../CCF/IDL2/SemanticAction/Attribute.hpp \
+  ../../CCF/IDL2/SemanticAction/Enum.hpp \
+  ../../CCF/IDL2/SemanticAction/Exception.hpp \
+  ../../CCF/IDL2/SemanticAction/Include.hpp \
+  ../../CCF/IDL2/SemanticAction/Interface.hpp \
+  ../../CCF/IDL2/SemanticAction/Member.hpp \
+  ../../CCF/IDL2/SemanticAction/Module.hpp \
+  ../../CCF/IDL2/SemanticAction/Native.hpp \
+  ../../CCF/IDL2/SemanticAction/Operation.hpp \
+  ../../CCF/IDL2/SemanticAction/Struct.hpp \
+  ../../CCF/IDL2/SemanticAction/Typedef.hpp \
+  ../../CCF/IDL2/SemanticAction/TypeId.hpp \
+  ../../CCF/IDL2/SemanticAction/Union.hpp \
+  ../../CCF/IDL2/SemanticAction/ValueType.hpp \
+  ../../CCF/IDL2/LexicalAnalyzer.hpp \
+  ../../CCF/CompilerElements/TokenStream.hpp \
+  ../../CCF/CompilerElements/PreprocessorToken.hpp \
+  ../../CCF/IDL2/Parsing/Elements.hpp ../../CCF/IDL2/Parsing/Action.hpp \
+  ../../CCF/IDL2/Parsing/Recovery.hpp
 
-$(call include, $(UTILITY_BUILD_RULES)/Archive.post.rules)
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -168,7 +168,7 @@ struct CLineGrammar : public grammar<CLineGrammar>
 
   struct SetSeparator
   {
-    void execute (CommandLine& cl, string const& s) const throw ()
+    void execute (CommandLine& cl, string const&) const throw ()
     {
       cl.separator = true;
     }

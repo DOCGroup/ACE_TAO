@@ -10,11 +10,9 @@ $(call include, $(root)/Config.rules)
 
 $(call include, $(UTILITY_BUILD_RULES)/Object.pre.rules)
 
-# Factory.cpp
 
 cxx_translation_units := Component.cpp   \
-			 Consumes.cpp    \
-                         Elements.cpp    \
+                         Consumes.cpp    \
                          Emits.cpp       \
                          EventType.cpp   \
                          Factory.cpp     \

@@ -4,22 +4,19 @@
 #
 #----------------------------------------------------------------------------
 
-include ../../../Config.rules
+include ../../Config.rules
 
-MAKEFILE = Makefile.object
-LIBNAME  = libPhony
+LIBNAME  = libCompilerElements
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-FILES = Operation
+FILES = Introspection     \
+        PreprocessorToken \
+        Preprocessor
 
 LSRC = $(addsuffix .cpp,$(FILES))
 
 override static_libs_only := true
-
-.PHONY: objects
-
-objects:
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -32,9 +29,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-objects: $(VSHOBJS)
-
-CPPFLAGS += -I../../..
+CPPFLAGS += -I../..
 
 ifneq ($(MAKECMDGOALS),depend)
 CPPFLAGS += $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
@@ -48,9 +43,14 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Operation.o .obj/Operation.o .obj/Operation.o .obj/Operation.o: Operation.cpp ../../../CCF/IDL2/SemanticAction/Operation.hpp \
-  ../../../CCF/IDL2/SemanticAction/Elements.hpp \
-  ../../../CCF/IDL2/Token.hpp \
-  ../../../CCF/CompilerElements/ReferenceCounting.hpp
+.obj/Introspection.o .obj/Introspection.o .obj/Introspection.o .obj/Introspection.o: Introspection.cpp
+
+.obj/PreprocessorToken.o .obj/PreprocessorToken.o .obj/PreprocessorToken.o .obj/PreprocessorToken.o: PreprocessorToken.cpp \
+  ../../CCF/CompilerElements/PreprocessorToken.hpp
+
+.obj/Preprocessor.o .obj/Preprocessor.o .obj/Preprocessor.o .obj/Preprocessor.o: Preprocessor.cpp \
+  ../../CCF/CompilerElements/Preprocessor.hpp \
+  ../../CCF/CompilerElements/TokenStream.hpp \
+  ../../CCF/CompilerElements/PreprocessorToken.hpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

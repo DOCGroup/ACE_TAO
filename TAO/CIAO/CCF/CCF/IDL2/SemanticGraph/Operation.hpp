@@ -90,7 +90,7 @@ namespace CCF
       class Raises : public virtual Edge
       {
       public:
-        Operation& 
+        Operation&
         operation () const
         {
           return *operation_;
@@ -156,7 +156,7 @@ namespace CCF
         }
 
         void
-        add_edge_right (Receives& e)
+        add_edge_right (Receives&)
         {
         }
 
