@@ -7,6 +7,10 @@ Tue Apr 29 20:03:38 1997    <sumedh@cs.wustl.edu>
 
 Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
 
+	* tests/Process_Strategy_Test.cpp (server): The new thread must
+ 	  become owner before it can call Reactor::handle_events. Also
+	  fixed #define typo.
+
 	* ace/OS.cpp (socket_fini): Remove the ACE error message as the IO
  	  Stream objects are already gone by this point in the program.
 
@@ -15,8 +19,6 @@ Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
  	  the correct inclusion of header files that give a consistent
  	  definition of HKEY. This is a hack till we have a better
  	  solution.
-
-	* tests/Process_Strategy_Test.cpp: Fixed #define typo.
 
 	* ace/Event_Handler: Removed the old Proactor callback methods. 
 
