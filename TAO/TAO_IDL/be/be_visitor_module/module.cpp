@@ -36,7 +36,8 @@ be_visitor_module::~be_visitor_module (void)
 {
 }
 
-int be_visitor_module::visit_module (be_module *node)
+int 
+be_visitor_module::visit_module (be_module *node)
 {
   if (node->nmembers () == 0)
     {
