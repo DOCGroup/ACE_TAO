@@ -1,3 +1,9 @@
+Wed Aug 11 20:08:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIDLC/CIDLC.mpc:
+
+	  Fixed library paths. This seems to have been busted.
+
 Wed Aug 11 14:38:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ExecutionManager/Execution_Manager.cpp:
