@@ -67,11 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // utl_indenter.cc - Implementation of indenter for dumping IDL AST
 //
 
-#include "utl_indenter.h"
 #include "ace/OS_NS_stdio.h"
+#include "utl_indenter.h"
 
-ACE_RCSID (util, 
-           utl_indenter, 
+ACE_RCSID (util,
+           utl_indenter,
            "$Id$")
 
 /*
@@ -122,7 +122,7 @@ UTL_Indenter::skip_to (FILE *fp)
 {
   for (long i = 0; i < this->pd_indent_level; ++i)
     {
-      ACE_OS::fprintf (fp, 
+      ACE_OS::fprintf (fp,
                        "  ");
     }
 }
