@@ -101,7 +101,7 @@ ACE_Log_Record::print (const char host_name[],
       if (host_name == 0)
 	host_name = "<local_host>";
 
-      ret =  ACE_OS::fprintf (fp, "%s.%d%s@%s@%d@%d@%s",
+      ret =  ACE_OS::fprintf (fp, "%s.%d %s@%s@%d@%d@%s",
 			      ctp + 4, 
 			      this->time_stamp_.usec () / 1000,
 			      ctp + 20, 
