@@ -9,7 +9,7 @@ ACE_DEV_Addr::set (const ACE_TCHAR *devname)
   ACE_TRACE ("ACE_DEV_Addr::set");
 
   this->ACE_Addr::base_set (AF_DEV, ACE_OS::strlen (devname));
-  ACE_OS::strncpy (this->devname_, devname, MAXNAMLEN);
+  ACE_OS::strsncpy (this->devname_, devname, MAXNAMLEN);
 }
 
 // Transform the current address into string format.
@@ -19,7 +19,7 @@ ACE_DEV_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 {
   ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
 
-  ACE_OS::strncpy (s, this->devname_, len);
+  ACE_OS::strsncpy (s, this->devname_, len);
   return 0;
 }
 

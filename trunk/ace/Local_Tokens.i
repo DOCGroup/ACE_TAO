@@ -308,7 +308,7 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
   if (n >= ACE_MAXTOKENNAMELEN)
     n = ACE_MAXTOKENNAMELEN - 1;
 
-  ACE_OS::strncpy (this->token_name_, (ACE_TCHAR *) new_name, n);
+  ACE_OS::strsncpy (this->token_name_, (ACE_TCHAR *) new_name, n);
 }
 
 ACE_INLINE const ACE_TCHAR*

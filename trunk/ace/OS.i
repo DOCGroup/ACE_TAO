@@ -8924,7 +8924,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
           // Try the HOST environment variable.
           ACE_TCHAR *const hostenv = ::getenv (ACE_LIB_TEXT ("HOST"));
           if (hostenv)
-            ACE_OS::strncpy (name, hostenv, maxnamelen);
+            ACE_OS::strsncpy (name, hostenv, maxnamelen);
         }
       return 0;
     }
@@ -8935,7 +8935,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
     return -1;
   else
     {
-      ACE_OS::strncpy (name, host_info.nodename, maxnamelen);
+      ACE_OS::strsncpy (name, host_info.nodename, maxnamelen);
       return 0;
     }
 #endif /* ACE_HAS_PHARLAP */
@@ -9858,7 +9858,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   ACE_OSCALL (::ctime_r (t, buf), ACE_TCHAR *, 0, result);
 #      endif /* DIGITAL_UNIX */
   if (result != 0)
-    ::strncpy (buf, result, buflen);
+    ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 #   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
@@ -9871,8 +9871,8 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 #   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 #else /* ACE_HAS_REENTRANT_FUNCTIONS */
 #   if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
-   ::strncpy(buf, "ctime-return",buflen);
-   return buf;
+    ACE_OS::strsncpy(buf, "ctime-return", buflen);
+    return buf;
 #   else /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
 
   ACE_TCHAR *result;
@@ -9882,7 +9882,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   ACE_OSCALL (::ctime (t), char *, 0, result);
 #     endif /* ACE_WIN32 */
   if (result != 0)
-    ACE_OS::strncpy (buf, result, buflen);
+    ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 #   endif /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
 #endif /* ACE_HAS_PACE */
@@ -9979,7 +9979,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 #   else
   ACE_OSCALL (::asctime_r (t, buf), char *, 0, result);
 #   endif /* DIGITAL_UNIX */
-  ::strncpy (buf, result, buflen);
+  ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 # else
 #   if defined (HPUX_10)
@@ -9991,7 +9991,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 #elif ! defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   char *result;
   ACE_OSCALL (::asctime (t), char *, 0, result);
-  ::strncpy (buf, result, buflen);
+  ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 #else
   // @@ Same as ACE_OS::asctime (), you need to implement it

@@ -10,9 +10,9 @@
 ACE_INLINE int
 ACE_SPIPE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 {
-  ACE_OS::strncpy (s,
-		           this->SPIPE_addr_.rendezvous_,
-		           len);
+  ACE_OS::strsncpy (s,
+                    this->SPIPE_addr_.rendezvous_,
+                    len);
   return 0;
 }
 

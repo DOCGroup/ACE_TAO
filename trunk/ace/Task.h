@@ -108,7 +108,9 @@ public:
   // These methods should be overridden by subclasses if you'd like to
   // provide <Task>-specific message processing behavior.
 
-  /// Transfer msg into the queue to handle immediate processing.
+  /// A hook method that can be used to pass a message to a
+  /// task, where it can be processed immediately or queued for subsequent
+  /// processing in the <svc> hook method.
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
 
   /// Run by a daemon thread to handle deferred processing.
