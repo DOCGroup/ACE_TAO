@@ -8,6 +8,8 @@ Mon May 22 17:48:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 				 use it just to remind themselves)
 	  -d			(output a dump of the AST)
 
+	  -Gsp			(changed existing -Gs typo to -Gsp)
+
 	* docs/compiler.html:
 	  Added -d option mentioned above and removed -Gi option
 	  (interpretive marshaling - no longer used in IDL compiler).
