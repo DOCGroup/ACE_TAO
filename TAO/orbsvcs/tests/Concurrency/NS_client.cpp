@@ -167,7 +167,7 @@ CosNaming_Client::list_contents (void)
 }
 
 int
-CosNaming_Client::init (int argc, char **argv)
+CosNaming_Client::init (int argc, char *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -179,7 +179,7 @@ CosNaming_Client::init (int argc, char **argv)
       TAO_CHECK_ENV;
 
       // Initialize the naming services
-      if (my_name_client_.init (orb_, argc_, argv_) != 0)
+      if (my_name_client_.init (orb_) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize "
 			   "the TAO_Naming_Client. \n"),
