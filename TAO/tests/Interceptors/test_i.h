@@ -30,14 +30,17 @@ public:
   // ctor
 
   void normal (CORBA::Long arg,
-               CORBA::Environment&);
+               CORBA::Environment&)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void nothing (CORBA::Environment&);
+  void nothing (CORBA::Environment&)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void user (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException,Test_Interceptors::Silly));
 
-  void system (CORBA::Environment&);
+  void system (CORBA::Environment&)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC (());
