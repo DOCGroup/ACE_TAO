@@ -1059,12 +1059,10 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
           << "_Factory_Initializer (" << be_idt << be_idt_nl
-          << "reinterpret_cast<" << be_idt << be_idt_nl
-          << "size_t> (" << be_nl
+          << "reinterpret_cast<size_t> ("
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_Initializer" << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
+          << "_Factory_Initializer)" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl << be_nl;
     }
 
