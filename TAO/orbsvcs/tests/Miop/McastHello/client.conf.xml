@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+<!-- Converted from ./orbsvcs/tests/Miop/McastHello/client.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <dynamic id="UIPMC_Factory" type="Service_Object">
+   <initializer path="TAO_PortableGroup" init="_make_TAO_UIPMC_Protocol_Factory"/>
+ </dynamic>
+ <static id="Resource_Factory" params="-ORBProtocolFactory IIOP_Factory -ORBProtocolFactory UIPMC_Factory"/>
+</ACE_Svc_Conf>

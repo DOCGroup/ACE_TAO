@@ -1,3 +1,8 @@
+Fri Aug 23 17:03:05 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* */*.conf.xml: Converted all *.conf files to *.conf.xml files and
+	  added them.
+
 Fri Aug 23 11:23:07 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_constant/constant_cs.cpp (visit_constant):
