@@ -21,7 +21,6 @@
 #include "tao/DynAny_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/CDR_Interpreter.h"
 #include "tao/debug.h"
 #include "tao/TAO_Internal.h"
 #include "tao/CDR.h"
@@ -825,7 +824,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
               "dynamic TypeCodeFactory Service_Object * TypeCodeFactory_DLL:_make_TCF_Loader()"
             );
 
-          CORBA::Object_var tf = 
+          CORBA::Object_var tf =
             this->dll_string_to_object (name, ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1183,9 +1182,6 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
       // initialize the factory for marshaling
       TAO_Marshal::init ();
 
-      // initialize the interpreter
-      TAO_CDR_Interpreter::init ();
-
       // initialize the system exceptions
       TAO_Exceptions::init (ACE_TRY_ENV);
       ACE_CHECK;
@@ -1519,7 +1515,7 @@ CORBA_ORB::string_to_object (const char *str,
                           CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
-  
+
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
@@ -1661,7 +1657,7 @@ CORBA_ORB::ior_string_to_object (const char *str,
 
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
-  
+
   int byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);

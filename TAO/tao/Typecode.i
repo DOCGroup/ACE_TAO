@@ -98,26 +98,6 @@ CORBA_TypeCode::member_count (CORBA::Environment &ACE_TRY_ENV) const
     return this->private_member_count (ACE_TRY_ENV);
 }
 
-// calculate size of the typecode
-ACE_INLINE size_t
-CORBA_TypeCode::size (CORBA::Environment &ACE_TRY_ENV)
-{
-  if (this->private_state_->tc_size_known_)
-    return this->private_state_->tc_size_;
-  else
-    return this->private_size (ACE_TRY_ENV);
-}
-
-// calculate alignment requirements of the typecode
-ACE_INLINE size_t
-CORBA_TypeCode::alignment (CORBA::Environment &ACE_TRY_ENV)
-{
-  if (this->private_state_->tc_alignment_known_)
-    return this->private_state_->tc_alignment_;
-  else
-    return this->private_alignment (ACE_TRY_ENV);
-}
-
 // ************************************************************
 // These are in CORBA namespace
 
