@@ -53,6 +53,8 @@ main (int argc, char *argv[])
 
       cubit_server.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      ACE_OS::sleep (5);
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
