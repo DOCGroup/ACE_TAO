@@ -11,6 +11,7 @@
 #  SV_Shared_Memory_Test
 #  MM_Shared_Memory_Test
 #  Reactor_Exceptions_Test
+#  Reactor_Performance_Test (unknown? doesn't appear to do anything)
 #  Notify_Performance_Test (fcntl)
 #  SPIPE_Test
 #  UPIPE_SAP_Test
