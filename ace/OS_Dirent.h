@@ -44,7 +44,10 @@ struct dirent {
   unsigned short d_ino;
   unsigned short d_off;
   unsigned short d_reclen;
-  ACE_TCHAR d_name[1];
+  // This must be a ACE_TCHAR * and not a one element
+  // ACE_TCHAR array.  It causes problems on wide
+  // character builds with Visual C++ 6.0.
+  ACE_TCHAR *d_name;
 };
 
 struct ACE_DIR {
