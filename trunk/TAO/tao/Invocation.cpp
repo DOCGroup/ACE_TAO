@@ -90,7 +90,9 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     transport_ (0),
     profile_ (0),
     endpoint_ (0),
-    max_wait_time_ (0)
+    max_wait_time_ (0),
+    ior_info_ (),
+    restart_flag_ (0)
 {
 }
 
@@ -452,6 +454,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // add to the service context lists
   this->orb_core_->service_context_list (this->stub_,
                                          this->service_info (),
+                                         this->restart_flag_,
                                          ACE_TRY_ENV);
 
   // The target specification mode
@@ -1021,15 +1024,12 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
             TAO_INVOKE_EXCEPTION);
         }
 
-      this->close_connection ();
-
-      // @@ BALA here is a place for FT REINVOCATION hooks
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-          CORBA_SystemException::_tao_minor_code (
-            TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-            errno),
-          CORBA::COMPLETED_MAYBE),
-        TAO_INVOKE_EXCEPTION);
+      // Call the ORB Core which would check whether we need to really
+      // raise an exception or are we going to base our decision on the
+      // loaded services.
+      return this->orb_core_->service_raise_comm_failure (this,
+                                                          this->profile_,
+                                                          ACE_TRY_ENV);
     }
 
   // @@ Alex: the old version of this had some error handling code,
@@ -1273,14 +1273,9 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
             TAO_INVOKE_EXCEPTION);
         }
 
-      this->close_connection ();
-      // @@ BALA here is a place for FT REINVOCATION hooks
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-          CORBA_SystemException::_tao_minor_code (
-            TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-            errno),
-          CORBA::COMPLETED_MAYBE),
-        TAO_INVOKE_EXCEPTION);
+      return this->orb_core_->service_raise_comm_failure (this,
+                                                          this->profile_,
+                                                          ACE_TRY_ENV);
     }
 
   CORBA::ULong reply_status = rd.reply_status ();
@@ -1473,13 +1468,10 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       //    should decide?  Remember that LocateRequests are part of
       //    the strategy to establish a connection.
 
-      // @@ BALA here is a place for FT REINVOCATION hooks
-      ACE_THROW_RETURN (CORBA::TRANSIENT (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
-          errno),
-        CORBA::COMPLETED_MAYBE),
-        TAO_INVOKE_EXCEPTION);
+      return this->orb_core_->service_raise_transient_failure (this,
+                                                               this->profile_,
+                                                               ACE_TRY_ENV);
+
     }
 
   // @@ Maybe the right place to do this is once the reply is
@@ -1513,11 +1505,9 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
             TAO_INVOKE_EXCEPTION);
         }
 
-      this->close_connection ();
-      // @@ BALA here is a place for FT REINVOCATION hooks
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
-                                             CORBA::COMPLETED_MAYBE),
-                        TAO_INVOKE_EXCEPTION);
+      return this->orb_core_->service_raise_comm_failure (this,
+                                                          this->profile_,
+                                                          ACE_TRY_ENV);
     }
 
   CORBA::ULong locate_status = this->rd_.reply_status ();

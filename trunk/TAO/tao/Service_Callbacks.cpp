@@ -13,7 +13,6 @@ TAO_Service_Callbacks::~TAO_Service_Callbacks (void)
 {
 }
 
-
 CORBA::Boolean
 TAO_Service_Callbacks::select_profile (TAO_MProfile * /*mprofile*/,
                                        TAO_Profile *& /*pfile*/)
@@ -54,7 +53,36 @@ TAO_Service_Callbacks::service_create_policy (CORBA::PolicyType /*policy */,
 void
 TAO_Service_Callbacks::service_context_list (TAO_Stub *& /*stub*/ ,
                                              IOP::ServiceContextList & /*service_list*/,
+                                             CORBA::Boolean ,
                                              CORBA::Environment & /*ACE_TRY_ENV*/)
 {
   return;
+}
+
+int
+TAO_Service_Callbacks::raise_comm_failure (
+    TAO_GIOP_Invocation * /*invoke*/,
+    TAO_Profile * /*profile*/,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW_RETURN (CORBA::COMM_FAILURE (
+      CORBA_SystemException::_tao_minor_code (
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+          errno),
+      CORBA::COMPLETED_MAYBE),
+      2);
+}
+
+int
+TAO_Service_Callbacks::raise_transient_failure (
+    TAO_GIOP_Invocation * /*invoke*/,
+    TAO_Profile * /*profile*/,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_THROW_RETURN (CORBA::TRANSIENT (
+      CORBA_SystemException::_tao_minor_code (
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+          errno),
+      CORBA::COMPLETED_MAYBE),
+      2);
 }

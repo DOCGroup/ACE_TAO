@@ -329,7 +329,7 @@ TAO_Wait_On_Leader_Follower::connection_closed (int &reply_received_flag,
   // Obtain the lock.
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, leader_follower.lock ());
 
-  reply_received_flag = -11;
+  reply_received_flag = -1;
 
   (void) leader_follower.remove_follower (condition);
 
