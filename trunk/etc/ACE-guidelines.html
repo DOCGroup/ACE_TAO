@@ -2,13 +2,17 @@
 
 <html>
   <head>
-    <title>ACE Implementation Guidelines</title>
+    <title>ACE Software Development Guidelines</title>
     <link rev=made href="mailto:levine@cs.wustl.edu">
   </head>
 
-<body>
+<BODY text = "#000000"
+link="#000fff"
+vlink="#ff0f0f"
+bgcolor="#ffffff">
+
 <center>
-  <h1>ACE Implementation Guidelines</h1>
+  <h1>ACE Software Development Guidelines</h1>
   <font size=-1>
     Last modified <!--#echo var="LAST_MODIFIED" -->.<p>
   </font>
@@ -17,9 +21,9 @@
 
 Thanks to Graham Dumpleton &lt;grahamd@nms.otc.com.au&gt; for providing
 corrections to the OSE Classtools link and description.  Thanks also
-to Graham for providing the OSE tools!<p>
+to Graham for providing the OSE tools!
 
-
+<p><HR><P>
 <h3>Coding Guidelines</h3>
 <ul>
   <li><strong>General</strong><p>
@@ -337,6 +341,7 @@ to Graham for providing the OSE tools!<p>
   </ul>
 </ul><p>
 
+<p><HR><P>
 
 <h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
   Usage Guidelines</h3>
@@ -400,168 +405,14 @@ to Graham for providing the OSE tools!<p>
 </ul><p>
 
 
-<h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
-  Design Rules</h3>
-<dl>
-  <dt><strong>Initialization on first use is preferred over using static
-      initializations, especially when creating OO class
-      libraries.</strong>  <em>I.e.</em>, use Double Check Locking.
-  <dd>This is a well known problem among OO C++ class designers.  See
-      <em>Designing and Coding Reusable C++</em> by Caroll and Ellis,
-      for example.<p>
-
-  <dt>If you are parameterizing a searchable container template class
-      with readers/writer locks, do not use sentinels or any state
-      that requires updating during a a search.
-  <dd>....<p>
-
-  <dt>In multi-threaded objects, all methods should be re-entrant..<p>
-
-  <dt>Framework users should always use wrappers instead of directly
-      making system calls.
-  <dd>....<p>
-
-  <dt>Always guard against multiple inclusion of header files..<p>
-
-  <dt>Templates may require source.  Hence, source files may need to
-      be guarded against multiple inclusion too.
-  <dt>Template classes should not be mixed with non-template classes..<p>
-
-  <dt>Guard against quirky compiler implementations through #define
-      abstractions (whereever possible)..<p>
-
-  <dt>Use consistent error-handling..<p>
-
-  <dt>Abstract away different representations of handles / file
-      descriptors..<p>
-
-  <dt>Avoid the use of global functions..<p>
-
-  <dt>If functions are required, place them within a namespace or
-      nested in a class..<p>
-
-  <dt>Avoid polluting the namespace..<p>
-
-  <dt>Don't use the inline keyword directly..<p>
-
-  <dt>Separate inline code into their own implementation files.
-      <em>I.e.</em> do not write code in header files..<p>
-
-  <dt>(Internationalization) Do not use the char type directly.
-      Abstract it for wide characters.  Thus, do not assume your
-      character abstraction is a single byte..<p>
-
-  <dt>Don't use conditional compilation based on compiler/OS/hardware
-      platform, but upon available features..<p>
-
-  <dt>Centralize portability #ifdefs in a single place to ease
-      portability maintainence..<p>
-
-  <dt>Either check or return all return values (from framework
-      calls)..<p>
-
-  <dt>Apply strategy pattern to factor out common sources of variation
-      in a component..<p>
-
-  <dt>Use traits to merge multiple template arguments..<p>
-
-  <dt>Allow customization of memory allocation.<p>
-
-  <dt>Instrument framework methods to allow for run-time tracing.<p>
-
-  <dt>Avoid long chains of dereference operators.<p>
-
-  <dt>Use open() methods rather than constructors.
-  <p>
-
-  <dt>Instrument a dump() method in every object.
-  <p>
-
-
-  <dt>Qualify references to base class methods and data.  <em>I.e.</em>,
-      anything outside the scope of the class.
-
-  <p>
-
-  <dt>Guard against multiple open() and close() calls, for
-      idempotency.
-
-  <p>
-
-  <dt>The state of an object does not need to be guarded in
-      destructors.
-
-  <p>
-
-  <dt>Base classes should not store information about derived
-      classes.
-
-  <p>
-
-  <dt>Don't make static objects whose correctness depends on
-      constructors being called.  (That is, if 0 initialization is not
-      sufficient.)
-
-  <p>
-
-  <dt>Guarantee singleton destruction.  <em>E.g.</em>, provide
-      hooks that allow singletons to be deleted before the process
-      exits.
-
-  <p>
-
-  <dt>All uses of the placement new operator must be accompanied by a
-      corresponding explicit destructor call.
-
-  <p>
-
-  <dt>In classes that require locking, have public methods acquire the
-      locks and call protected/private methods that do not acquire the
-      locks.
-
-  <p>
-
-  <dt>Try to minimize the number of template parameters passed to a
-      base class.  Try to have a base class that is not a template,
-      from which specialized classes can be derived that may have
-      template parameters.
-
-  <p>
-
-  <dt>Define wrappers around clusters of functionality that are
-      semantically the same but may have accidental
-      incompatibilities.  <em>E.g.</em>, semaphores, readers/writer
-      locks, mutex + condition variables, which can be used by
-      threads, processes, that may or may not reside on the same
-      machine.
-
-  <p>
-
-  <dt>Define generic components that can be parameterized by the
-      wrappers defined above (in the previous point).
-
-  <p>
-
-  <dt>Separate creation from use.  <em>E.g.</em>, acceptor/connector and
-      service handler.
-
-  <p>
-
-  <dt>In searchable containers, separate traversal logic from item
-      operations.
-
-  <p>
-
-  <dt>...
-</dl><p>
-
 <h3><a href="http://www.cs.wustl.edu/~levine/CVS.html">CVS</a>
   Usage Guidelines</h3>
 <ul>
   <li>Always make sure that a change builds and executes correctly
       on at least one platform before checking it into the CVS repository.<p>
-</ul><p>
+</ul>
 
+<p><HR><P>
 
 <h3>Software Engineering Guidelines</h3>
 <ul>
@@ -586,10 +437,14 @@ to Graham for providing the OSE tools!<p>
       system that cleanly builds and tests at all times.<p>
 </ul><p>
 
+<p>
+<HR><P>
+<h3><a href="http://www.cs.wustl.edu/~schmidt/rules.html">ACE
+  Design Rules</a></h3>
 
 <hr>
 <!-- hhmts start -->
-Last modified: Fri Dec  5 17:29:17 CST 1997
+Last modified: Thu Jan 15 15:48:05 CST 1998
 <!-- hhmts end -->
 
 </body>
