@@ -176,6 +176,7 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core* orb_core)
     schedule_service_ (CORBA_Object::_nil ()),
     event_service_ (CORBA_Object::_nil ()),
     trading_service_ (CORBA_Object::_nil ()),
+    implrepo_service_ (CORBA_Object::_nil ()),
     orb_core_ (orb_core),
     use_omg_ior_format_ (1),
     optimize_collocation_objects_ (1)
@@ -223,6 +224,8 @@ CORBA_ORB::~CORBA_ORB (void)
     CORBA::release (this->event_service_);
   if (!CORBA::is_nil (this->trading_service_))
     CORBA::release (this->trading_service_);
+  if (!CORBA::is_nil (this->implrepo_service_))
+    CORBA::release (this->implrepo_service_);
 
   delete this->cond_become_leader_;
 }
@@ -643,6 +646,45 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
   return CORBA_Object::_duplicate (return_value);
 }
 
+CORBA_Object_ptr
+CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
+                                     CORBA::Environment& ACE_TRY_ENV)
+{
+  // First check to see if we've already initialized this.
+  if (this->implrepo_service_ == CORBA_Object::_nil ())
+    {
+      ACE_CString implrepo_service_ior =
+        this->orb_core_->orb_params ()->implrepo_service_ior ();
+
+      // Second, check to see if the user has give us a parameter on
+      // the command-line.
+      if (implrepo_service_ior.length () == 0)
+        // Third, check to see if the user has an environment variable.
+        implrepo_service_ior = ACE_OS::getenv ("ImplRepoServiceIOR");
+
+      if (implrepo_service_ior.length () != 0)
+        {
+          ACE_TRY 
+            {
+              this->implrepo_service_ =
+                this->string_to_object (implrepo_service_ior.c_str (), 
+                                        ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              this->implrepo_service_ = CORBA_Object::_nil ();
+
+              ACE_RETHROW;
+            }
+          ACE_ENDTRY;
+          ACE_CHECK_RETURN (CORBA_Object::_duplicate (this->implrepo_service_));
+        }
+    }
+
+  return CORBA_Object::_duplicate (this->implrepo_service_);
+}
+
 int
 CORBA_ORB::multicast_query (char *buf,
                             const char *service_name,
@@ -885,6 +927,9 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
     return this->resolve_trading_service (timeout, ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
+    return this->resolve_implrepo_service (timeout, ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     return this->resolve_root_poa (ACE_TRY_ENV);
