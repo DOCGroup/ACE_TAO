@@ -1,3 +1,11 @@
+Thu Mar 20 14:11:01 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Codecs.cpp (encode, decode):
+
+	  Fixed "comparison is always false due to limited range of data
+	  type" warning by removing those comparisons and accompanying
+	  code.
+
 Thu Mar 20 14:00:53 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Memory_Pool.cpp (find_seg):
