@@ -21,6 +21,8 @@ Counter_Servant::~Counter_Servant (void)
 // @@ Angelo, you are going to get warnings about unused environment
 // parameter in the methods below.
 
+// @@ Angelo: you are missing all the throw specs, please fix.
+
 void
 Counter_Servant::increment (CORBA::Environment &ACE_TRY_ENV)
 {
