@@ -46,13 +46,15 @@
 #include "tao/Messaging_Policy_i.h"
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
-#if defined(ACE_HAS_EXCEPTIONS)
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#include /**/ <exception>
+#if defined (ACE_HAS_EXCEPTIONS)
+# if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#  include /**/ <exception>
+#  if !defined (ACE_WIN32)
 using std::set_unexpected;
-#else
-#include /**/ <exception.h>
-#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#  endif /* !ACE_WIN32 */
+# else
+#  include /**/ <exception.h>
+# endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #endif /* ACE_HAS_EXCEPTIONS */
 
 #if !defined (__ACE_INLINE__)

@@ -1,7 +1,13 @@
+Thu Jun 24 21:33:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.cpp: Even though MSVC has support for standard C++
+	  library, the set_unexpected() function is not in the std
+	  namespace.
+
 Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/Repository.cpp: Added an explicit
-	  template instantiation parameter for ACE_Equal_To<>. 
+	  template instantiation parameter for ACE_Equal_To<>.
 
 Thu Jun 24 21:30:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -51,7 +57,7 @@ Thu Jun 24 20:02:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/POA.cpp:
 	* tao/POA.i:
 	* tao/POAManager.i:
-	  The POA was implicitly using the obsolete TAO_TRY macros through 
+	  The POA was implicitly using the obsolete TAO_TRY macros through
 	  its TAO_POA_GUARD_* stuff, updated to use ACE_GUARD_* and
 	  friends.
 
@@ -111,7 +117,7 @@ Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Thu Jun 24 17:44:39 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 	  Fixed a few nested calls with ACE_TRY_ENV. Added appropriate
 	  ACE_TRY_CHECK after these statements. Thanks to Paul Calabrese
 	  <calabrese_p@ociweb.com> for reporting these problems.
@@ -128,8 +134,8 @@ Thu Jun 24 17:26:53 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 	* orbsvcs/Makefile
 	* orbsvcs/orbsvcs/Makefile
 	* orbsvcs/tests/Makefile
-	  Removed all references to the Logging service or Logging tests  
-	
+	  Removed all references to the Logging service or Logging tests
+
 	* examples/Makefile
 	  Added entry for the new Logging example directory
 
@@ -153,7 +159,7 @@ Thu Jun 24 17:26:53 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 	* orbsvcs/tests/Logger/server.dsp
 	* orbsvcs/tests/Logger/server_i.cpp,h
 	  Removed all these files. They were the Logging_Service and all
-	  related tests. 
+	  related tests.
 	* orbsvcs/orbsvcs/Log
 	* orbsvcs/Logging_Service
 	* orbsvcs/tests/Logger
@@ -162,7 +168,7 @@ Thu Jun 24 17:26:53 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 	* examples/Logging
 	  Added this directory to hold the moved logging service
 
-	* examples/Logging/Logger.idl	
+	* examples/Logging/Logger.idl
 	* examples/Logging/Logger_i.cpp,h
 	* examples/Logging/Logging_Service.cpp
 	* examples/Logging/Logging_Service_i.cpp,h
@@ -174,11 +180,11 @@ Thu Jun 24 17:26:53 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 	  These files are the modified versions of the original
 	  Logging_Service and Logger test files. I've removed the old
 	  TAO_THROW macros and added a POA_Manager activation. Also, I've
-	  adjusted the README and Makefiles accordingly. 
- 	
+	  adjusted the README and Makefiles accordingly.
+
 	I fear that this may break things, but I've tried to keep it safe
 	and I've tested my changes. Let us hope.
-	
+
 Thu Jun 24 17:22:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/MT_Client/orb_creation.cpp:
