@@ -1,3 +1,16 @@
+Wed Sep 13 13:52:00 2000  Luther J Baker  <luther@maxixe.doc.wustl.edu>
+
+	* pace/win32/types.h:
+
+	  Removed irrelevant base types and kept pace_* types.
+
+	  (ie:
+	      typedef DWORD nlink_t;
+	      typedef nlink_t pace_nlink_t;
+	  became
+	      typedef DWORD pace_nlink_t;
+	  )
+
 Wed Sep 13 13:42:15 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/sys/wait.h:
