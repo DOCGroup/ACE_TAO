@@ -1,4 +1,4 @@
-$Id$
+//$Id$
 #define ACE_BUILD_SVC_DLL
 #include "Smart_Test_Factory.h"
 
