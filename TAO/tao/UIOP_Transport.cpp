@@ -46,7 +46,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
                                         TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_IOP_TAG_UNIX_IOP,
@@ -59,20 +58,22 @@ TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
 }
 
-TAO_UIOP_Server_Transport::TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler,
-                                                      TAO_ORB_Core* orb_core)
-  : TAO_UIOP_Transport (handler,
-                        orb_core),
+TAO_UIOP_Server_Transport::
+    TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler,
+                               TAO_ORB_Core* orb_core)
+  : TAO_UIOP_Transport (handler, orb_core),
     server_handler_ (handler)
 {
 }
 
-TAO_UIOP_Client_Transport::TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler,
-                                                      TAO_ORB_Core *orb_core)
+TAO_UIOP_Client_Transport::
+    TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler,
+                               TAO_ORB_Core *orb_core)
   :  TAO_UIOP_Transport (handler,
                          orb_core),
      client_handler_ (handler)
 {
+  message_header_.message_size = 0;
 }
 
 TAO_UIOP_Server_Transport::~TAO_UIOP_Server_Transport (void)
@@ -107,18 +108,6 @@ TAO_UIOP_Transport::idle (void)
   return this->handler_->idle();
 }
 
-int
-TAO_UIOP_Transport::is_nil (TAO_Transport *obj)
-{
-  return obj == 0;
-}
-
-TAO_Transport *
-TAO_UIOP_Transport::_nil (void)
-{
-  return (TAO_UIOP_Transport *)0;
-}
-
 void
 TAO_UIOP_Transport::close_connection (void)
 {
@@ -134,13 +123,17 @@ TAO_UIOP_Transport::handle (void)
 int
 TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                          TAO_OutputCDR &stream,
-                                         int twoway)
+                                         int two_way)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_UIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
 
-  return this->ws_->send_request (orb_core,
-                                  stream,
-                                  twoway);
+  if (this->ws_->sending_request (orb_core,
+                                  two_way) == -1)
+    return -1;
+
+  return TAO_GIOP::send_message (this,
+                                 stream,
+                                 orb_core);
 }
 
 // Return 0, when the reply is not read fully, 1 if it is read fully.
@@ -149,9 +142,6 @@ TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 int
 TAO_UIOP_Client_Transport::handle_client_input (int block)
 {
-  // @@ Alex: it should be possible to make this code generic and move
-  //    it to the GIOP class or something similar....
-
   // When we multiplex several invocations over a connection we need
   // to allocate the CDR stream *here*, but when there is a single
   // request over a connection the CDR stream can be pre-allocated on
@@ -178,147 +168,63 @@ TAO_UIOP_Client_Transport::handle_client_input (int block)
   //    removed.
   //    Do I make any sense?
 
-  // Receive the message. Get also the GIOP version number.
-  // <recv_message> is non-blocking!!!!
-  //
-  //   + In <recv_message>, Don't worry about blocking on the GIOP
-  //     header, it's only 12 bytes, use read_n() for the header but
-  //     non-blocking for the rest.
-  //
-  //   + After reading the header you can allocate memory for the
-  //      complete buffer [this is there already, look at how they
-  //      do it!]
-  //
+  TAO_InputCDR* cdr = this->rms_->get_cdr_stream ();
+  ACE_Message_Block* payload =
+    ACE_const_cast(ACE_Message_Block*, cdr->start ());
 
-  //  if (!this->message_size_)
-  // {
-  // Reading the header.
-
-  // @@ Where do I keep this CDR? (alex)
-  // }
-
-  // Get the CDR stream for reading the input.
-  TAO_InputCDR* cdr = this->input_cdr_stream ();
-
-  // @@ Exclsive RMS instead of giving the CDR given by the Invocation
-  //    class, it should give the preallocated CDR so that it can give
-  //    that CDR to the invocation back, if there is a valid reply or
-  //    it can just forget it, for example, if there was a close
-  //    connection message or something. (Alex)
-
-  // If RMS not expecting any message, handle the unexpected data.
-  if (cdr == 0)
-    return this->check_unexpected_data ();
-
-  TAO_GIOP_Version version;
-
-  TAO_GIOP::Message_Type message_type =
-    TAO_GIOP::recv_message (this,
-                            *cdr,
-                            this->orb_core_,
-                            version,
-                            block);
-  switch (message_type)
+  int result = TAO_GIOP::handle_input (this,
+                                       this->orb_core_,
+                                       this->message_header_,
+                                       this->current_offset_,
+                                       payload);
+  if (result == -1)
     {
-    case TAO_GIOP::ShortRead:
-      // Return a value so that this we will get called again to
-      // handle the input.
-      return 0;
-      // NOT REACHED.
-
-    case TAO_GIOP::EndOfFile:
-    case TAO_GIOP::CommunicationError:
-    case TAO_GIOP::MessageError:
-      // Handle errors like these.
-      // @@ this->reply_handler_->error ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO (%P|%t) %N:%l handle_client_input: "
-                         "error on stream.\n"),
-                        -1);
-
-    case TAO_GIOP::Fragment:
-      // Handle this.
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO (%P|%t) %N:%l handle_client_input: "
-                         "fragment.\n"),
-                        -1);
-
-    case TAO_GIOP::Request:
-      // In GIOP 1.0 and GIOP 1.1 this is an error, but it is
-      // *possible* to receive requests in GIOP 1.2.  Don't handle this
-      // on the firt iteration, leave it for the nearby future...
-      // ERROR too.
-      // @@ this->reply_handler_->error ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO (%P|%t) %N:%l handle_client_input: "
-                         "request.\n"),
-                        -1);
-
-    case TAO_GIOP::CancelRequest:
-    case TAO_GIOP::LocateRequest:
-    case TAO_GIOP::CloseConnection:
-    default:
-      // @@ Errors for the time being.
-      // @@ this->reply_handler_->error ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO (%P|%t) %N:%l handle_client_input: "
-                         "wrong message.\n"),
-                        -1);
-
-    case TAO_GIOP::LocateReply:
-    case TAO_GIOP::Reply:
-      // Handle after the switch.
-      break;
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - %p\n",
+                    "UIOP_Transport::handle_client_input, handle_input"));
+      return -1;
     }
+  if (result == 0)
+    return result;
 
-  // For GIOP 1.0 and 1.1 the reply_ctx comes first:
-  // @@ Put this reply ctx into the reply dispatcher. so that
-  // invocation can read it.
-  // We should pass that reply_ctx to the invocation, interceptors
-  // will want to read it!
+  // OK, the complete message is here...
+
+  TAO_GIOP_MessageHeader header_copy = this->message_header_;
+  this->message_header_.message_size = 0;
 
   TAO_GIOP_ServiceContextList reply_ctx;
-  *cdr >> reply_ctx;
-
-  // Read the request id and the reply status type.
-  // status can be NO_EXCEPTION, SYSTEM_EXCEPTION, USER_EXCEPTION,
-  // LOCATION_FORWARD or (on GIOP 1.2) LOCATION_FORWARD_PERM
-
   CORBA::ULong request_id;
   CORBA::ULong reply_status;
+  
+  result = TAO_GIOP::parse_reply (this,
+                                  this->orb_core_,
+                                  *cdr,
+                                  header_copy,
+                                  reply_ctx,
+                                  request_id,
+                                  reply_status);
+  if (result == -1)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - %p\n",
+                    "UIOP_Transport::handle_client_input, parse reply"));
+      return -1;
+    }
 
-  if (!cdr->read_ulong (request_id))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) : UIOP_Client_Transport::"
-                       "handle_client_input - error while "
-                       "reading request_id\n"),
-                      -1);
-
-  if (!cdr->read_ulong (reply_status))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO (%P|%t) : UIOP_Client_Transport::"
-                       "handle_client_input - error while "
-                       "reading reply status\n"),
-                      -1);
-
-  // @@ Alex: for some reason this was causing a crash with the
-  //    leader-follower wait strategy.  Somehow it seems like the rms
-  //    still has a pointer to an object that was already destroyed
-  //    (i.e. the stack was unrolled on the thread waiting for this
-  //     event), since this is only needed for *true* asynchronous
-  //     messaging.
-  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - dispatching reply <%x>\n", this));
   if (this->rms_->dispatch_reply (request_id,
                                   reply_status,
-                                  version,
+                                  header_copy.giop_version,
                                   reply_ctx,
                                   cdr) != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "TAO (%P|%t) : UIOP_Client_Transport::"
-                         "handle_client_input - "
-                         "dispatch reply failed\n"),
-                        -1);
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) : UIOP_Client_Transport::"
+                    "handle_client_input - "
+                    "dispatch reply failed\n"));
+      return -1;
     }
 
   // This is a NOOP for the Exclusive request case, but it actually

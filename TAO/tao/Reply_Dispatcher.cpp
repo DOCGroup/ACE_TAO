@@ -2,10 +2,12 @@
 
 #include "tao/Reply_Dispatcher.h"
 
+#if defined(__ACE_INLINE__)
+#include "tao/Reply_Dispatcher.i"
+#endif /* __ACE_INLINE__ */ 
+
 // Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
-  : request_id_ (0),
-    cdr_ (0)
 {
 }
 
@@ -14,50 +16,18 @@ TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher (void)
 {
 }
 
-void
-TAO_Reply_Dispatcher::request_id (CORBA::ULong request_id)
-{
-  this->request_id_ = request_id;
-}
-
-CORBA::ULong
-TAO_Reply_Dispatcher::request_id (void) const
-{
-  return this->request_id_;
-}
-
-void
-TAO_Reply_Dispatcher::reply_status (CORBA::ULong reply_status)
-{
-  this->reply_status_ = reply_status;
-}
-
-// Get the reply status.
-CORBA::ULong
-TAO_Reply_Dispatcher::reply_status (void) const
-{
-  return this->reply_status_;
-}
-
-// Set the CDR which the has the reply message.
-void
-TAO_Reply_Dispatcher::cdr (TAO_InputCDR *cdr)
-{
-  this->cdr_ = cdr;
-}
-
-// Get the CDR stream.
 TAO_InputCDR *
 TAO_Reply_Dispatcher::cdr (void) const
 {
-  return this->cdr_;
+  return 0;
 }
 
 // *********************************************************************
 
 // Constructor.
-TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (void)
+TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_InputCDR* cdr)
 {
+  this->cdr_ = cdr;
 }
 
 // Destructor.
@@ -67,8 +37,26 @@ TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher (void)
 
 // Dispatch the reply.
 int
-TAO_Synch_Reply_Dispatcher::dispatch_reply (void)
+TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
+                                            const TAO_GIOP_Version& version,
+                                            TAO_GIOP_ServiceContextList& reply_ctx,
+                                            TAO_InputCDR*)
 {
-  // @@ Handover the input CDR to the Invocation class.
+  this->reply_status_ = reply_status;
+  this->version_ = version;
+
+  // Steal the buffer, that way we don't do any unnecesary copies of
+  // this data.
+  CORBA::ULong max = reply_ctx.maximum ();
+  CORBA::ULong len = reply_ctx.length ();
+  TAO_GIOP_ServiceContext* context_list = reply_ctx.get_buffer (1);
+  this->reply_ctx_.replace (max, len, context_list, 1);
+
   return 0;
+}
+
+TAO_InputCDR *
+TAO_Synch_Reply_Dispatcher::cdr (void) const
+{
+  return this->cdr_;
 }

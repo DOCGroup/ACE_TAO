@@ -59,12 +59,6 @@ public:
   TAO_UIOP_Handler_Base *&handler (void);
   // Return a reference to the corresponding connection handler.
 
-  int is_nil (TAO_Transport *obj);
-  // Returns 0 if the obj is 0, else 1.
-
-  TAO_Transport *_nil (void);
-  // Return a NULL pointer of type TAO_Transport *.
-
   ACE_HANDLE handle (void);
   // Return the underlying connection handle.
 
@@ -158,6 +152,11 @@ protected:
 private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
+
+  TAO_GIOP_MessageHeader message_header_;
+  CORBA::ULong current_offset_;
+  // This keep the state of the current message, to enable
+  // non-blocking reads.
 };
 
 // ****************************************************************

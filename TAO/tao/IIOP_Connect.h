@@ -17,18 +17,19 @@
 #ifndef TAO_IIOP_CONNECT_H
 #define TAO_IIOP_CONNECT_H
 
-#  include "ace/Reactor.h"
+#include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#  include "ace/Acceptor.h"
-#  include "ace/SOCK_Acceptor.h"
-#  include "ace/Synch.h"
-#  include "ace/Svc_Handler.h"
+#include "ace/Acceptor.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/Synch.h"
+#include "ace/Svc_Handler.h"
 
-#  include "tao/corbafwd.h"
+#include "tao/corbafwd.h"
+#include "tao/GIOP.h"
 
 // Forward Decls
 class TAO_Transport;
@@ -128,7 +129,8 @@ public:
                               TAO_OutputCDR &response,
                               CORBA::Boolean &response_required,
                               CORBA::ULong &request_id,
-                              CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                              CORBA_Environment &TAO_IN_ENV =
+                                  CORBA::default_environment ());
   // Handle processing of the request residing in <msg>, setting
   // <response_required> to zero if the request is for a oneway or
   // non-zero if for a two-way and <response> to any necessary
@@ -138,14 +140,13 @@ public:
   TAO_Transport *transport (void);
 
 protected:
-  TAO_IIOP_Server_Transport *iiop_transport_;
-  // @@ New transport object reference.
 
   virtual int handle_locate (TAO_InputCDR &msg,
                              TAO_OutputCDR &response,
                              CORBA::Boolean &response_required,
                              CORBA::ULong &request_id,
-                             CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                             CORBA_Environment &TAO_IN_ENV =
+                                 CORBA::default_environment ());
   // Handle processing of the location request residing in <msg>,
   // setting <response_required> to one if no errors are encountered.
   // The LocateRequestReply is placed into <response>.  In case of
@@ -154,11 +155,6 @@ protected:
 
   virtual void send_response (TAO_OutputCDR &response);
   // Send <response> to the client on the other end.
-
-  void send_error (CORBA::ULong request_id,
-                   CORBA::Exception *ex);
-  // Send <error> to the client on the other end, which
-  // means basically sending the exception.
 
   // = Event Handler overloads
 
@@ -170,15 +166,25 @@ protected:
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Perform appropriate closing.
 
+protected:
+  TAO_IIOP_Server_Transport *iiop_transport_;
+  // @@ New transport object reference.
+
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
+
+  TAO_GIOP_MessageHeader message_header_;
+  CORBA::ULong current_offset_;
+  ACE_Message_Block payload_;
+  // This keep the state of the current message, to enable
+  // non-blocking reads.
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/IIOP_Connect.i"
+#include "tao/IIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_IIOP_CONNECT_H */

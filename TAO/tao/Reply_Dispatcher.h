@@ -19,7 +19,7 @@
 #ifndef TAO_REPLY_DISPATCHER_H
 #define TAO_REPLY_DISPATCHER_H
 
-#include "tao/corbafwd.h"
+#include "tao/GIOP.h"
 
 // Forward Declarations.
 
@@ -40,38 +40,14 @@ public:
   virtual ~TAO_Reply_Dispatcher (void);
   // Destructor.
 
-  void request_id (CORBA::ULong request_id);
-  // Set the request id.
-
-  CORBA::ULong request_id (void) const;
-  // Return the request id.
-
-  void reply_status (CORBA::ULong reply_status);
-  // Set the reply status. Reply status is stored as read from the
-  // incoming message. Readers of this data should see it whether this
-  // number fits into the TAO_GIOP_ReplyStatusType type.
-
-  CORBA::ULong reply_status (void) const;
-  // Get the reply status.
-
-  void cdr (TAO_InputCDR *cdr);
-  // Set the CDR which the has the reply message.
-
-  TAO_InputCDR *cdr (void) const;
-  // Get the CDR stream.
-
-  virtual int dispatch_reply (void) = 0;
+  virtual int dispatch_reply (CORBA::ULong reply_status,
+                              const TAO_GIOP_Version& version,
+                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              TAO_InputCDR* cdr) = 0;
   // Dispatch the reply.
 
-protected:
-  CORBA::ULong request_id_;
-  // Request ID for this request.
-
-  TAO_InputCDR *cdr_;
-  // CDR stream for reading the input.
-
-  CORBA::ULong reply_status_;
-  // Replt status.
+  virtual TAO_InputCDR *cdr (void) const;
+  // Get the CDR stream (if any)
 };
 
 class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
@@ -84,14 +60,43 @@ class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
   //
 
 public:
-  TAO_Synch_Reply_Dispatcher (void);
+  TAO_Synch_Reply_Dispatcher (TAO_InputCDR* cdr);
   // Constructor.
 
   virtual ~TAO_Synch_Reply_Dispatcher (void);
   // Destructor.
 
-  virtual int dispatch_reply (void);
-  // NO OP.
+  CORBA::ULong reply_status (void) const;
+  // Get the reply status.
+
+  const TAO_GIOP_Version& version (void) const;
+  // Get the GIOP version
+
+  TAO_GIOP_ServiceContextList& reply_ctx (void);
+  // Get the reply context
+
+  virtual int dispatch_reply (CORBA::ULong reply_status,
+                              const TAO_GIOP_Version& version,
+                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              TAO_InputCDR* cdr);
+  virtual TAO_InputCDR *cdr (void) const;
+
+private:
+  CORBA::ULong reply_status_;
+  // Reply or LocateReply status.
+  
+  TAO_GIOP_Version version_;
+  // The version
+
+  TAO_GIOP_ServiceContextList reply_ctx_;
+  // The service context list
+
+  TAO_InputCDR *cdr_;
+  // CDR stream for reading the input.
 };
+
+#if !defined(__ACE_INLINE__)
+#include "tao/Reply_Dispatcher.i"
+#endif /* __ACE_INLINE__ */ 
 
 #endif /* TAO_REPLY_DISPATCHER_H */
