@@ -41,6 +41,7 @@
 // Forward declarations
 class ACE_POSIX_SIG_Proactor;
 class ACE_POSIX_AIOCB_Proactor;
+class ACE_Proactor_Impl;
 
 class ACE_Export ACE_POSIX_Asynch_Result : public virtual ACE_Asynch_Result_Impl,
                                            public aiocb
