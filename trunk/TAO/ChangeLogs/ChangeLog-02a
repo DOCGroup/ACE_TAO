@@ -1,3 +1,15 @@
+Mon Oct 16 14:14:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_enum.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/include/ast_enum.h:
+
+	  Moved the method lookup_by_value() from be_enum to
+	  AST_Enum. The method is useful to visitors, so it
+	  needs to be available to visitors of AST_<node>
+	  as well as to visitors of be_<node>. 
+
 Sun Oct 15 18:58:16 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Client_Protocol/README:
