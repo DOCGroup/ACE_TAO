@@ -1,3 +1,13 @@
+Fri Apr  6 16:43:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.cpp:
+	* tao/GIOP_Message_Base.cpp: Cleaned up the code. The code was
+	  fixed when we observed problems with  BCB compiler. The code has
+	  now been cleaned so that it is now easier to read what is
+	  happening. One of the important things that was done during
+	  cleanup was to make sure that memory allocations came of the
+	  allocator and not from the heap. 	  
+
 Fri Apr  6 15:08:47 2001  Chad Elliott  <elliott_c@ociweb.com>
   
         * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
