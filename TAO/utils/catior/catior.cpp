@@ -22,6 +22,7 @@
 #include "tao/IIOP_Profile.h"
 #include "tao/Strategies/UIOP_Profile.h"
 
+
 static CORBA::Boolean
 catiiop (char* string,
          CORBA::Environment &ACE_TRY_ENV)
@@ -41,6 +42,7 @@ catiiop (char* string,
   // accept
 
   CORBA::Short  iiop_version_major, iiop_version_minor;
+
   if (isdigit (string [0])
       && isdigit (string [2])
       && string [1] == '.'
@@ -592,9 +594,10 @@ static CORBA::Boolean
 cat_tagged_components (TAO_InputCDR& stream)
 {
   // ... and object key.
+  
   CORBA::ULong len;
   stream >> len;
-
+  
   for (CORBA::ULong i = 0;
        i != len;
        ++i)
@@ -607,7 +610,7 @@ cat_tagged_components (TAO_InputCDR& stream)
       cat_octet_seq ("Component Value", stream);
       ACE_DEBUG ((LM_DEBUG, "%}%}"));
     }
-
+  
   return 1;
 }
 
@@ -682,11 +685,17 @@ cat_profile_helper (TAO_InputCDR& stream,
 
   if (cat_object_key (str) == 0)
     return 0;
-
-  if (cat_tagged_components (str) == 0)
+  
+  //IIOP 1.0 does not have tagged_components.
+  if (iiop_version_minor)
+    {
+      if (cat_tagged_components (str) == 0)
+        return 0;
+      
+      return 1;
+    }
+  else 
     return 0;
-
-  return 1;
 }
 
 static CORBA::Boolean
