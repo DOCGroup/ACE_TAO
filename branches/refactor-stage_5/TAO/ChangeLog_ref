@@ -11,9 +11,9 @@ Thu Aug 21 17:59:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           Added file to repository.
 
         * TAO_IDL/be/be_codegen.cpp:
-        * TAO_IDLbe/be_visitor_traits.cpp:
-        * TAO_IDLbe/be_visitor_operation/ami_cs.cpp:
-        * TAO_IDLbe/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
 
           Changes to support refactoring of AMI operations.
 
