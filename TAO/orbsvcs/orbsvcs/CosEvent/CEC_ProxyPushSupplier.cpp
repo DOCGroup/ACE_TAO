@@ -1,5 +1,11 @@
 // $Id$
 
+// Force CORBA::release(CORBA::Request...) prototype to be parsed
+// before TAO_Pseudo_{Var,Out}_T templates.  All required
+// non-dependent names must be parsed prior to the template in
+// question when using compilers like g++ 3.4.x.
+#include "tao/DynamicInterface/DII_CORBA_methods.h"
+
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_Dispatching.h"
 #include "CEC_EventChannel.h"

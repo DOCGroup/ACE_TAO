@@ -1,9 +1,10 @@
 // $Id$
 
+#include "SCTP_Fault_Detector.h"
+
 #if (TAO_HAS_SCIOP == 1)
 
 #include "FTEC_Fault_Listener.h"
-#include "SCTP_Fault_Detector.h"
 
 #include "ace/OS_NS_strings.h"
 
@@ -90,4 +91,3 @@ int SCTP_Fault_Detector::parse_conf(int argc, char** argv)
 }
 
 #endif /* ACE_HAS_SCTP == 1 */
-
