@@ -65,6 +65,8 @@ module RtEventChannelAdmin
               RtecScheduler::INTERNAL,
               RtecScheduler::SYNCHRONIZATION_FAILURE);
 
+    void notify_gateway_connection();
+
     RtecEventChannelAdmin::EventChannel event_channel();
     RtecScheduler::Scheduler scheduler();
   };

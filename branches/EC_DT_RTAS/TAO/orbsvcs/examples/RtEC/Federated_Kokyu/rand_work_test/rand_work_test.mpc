@@ -1,5 +1,5 @@
 project(Rand_Work_Node1): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyuevent, rgkokyu {
-  exename = Node1
+  exename = Node1_EC
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   libs += wrappers
   includes += $(TAO_ROOT)/orbsvcs
@@ -14,7 +14,7 @@ project(Rand_Work_Node1): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyue
 }
 
 project(Rand_Work_Node2): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyuevent, rgkokyu {
-  exename = Node2
+  exename = Node2_EC
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   libs += wrappers
   includes += $(TAO_ROOT)/orbsvcs
@@ -29,7 +29,7 @@ project(Rand_Work_Node2): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyue
 }
 
 project(Rand_Work_Node3): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyuevent, rgkokyu {
-  exename = Node3
+  exename = Node3_EC
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   libs += wrappers
   includes += $(TAO_ROOT)/orbsvcs
@@ -44,7 +44,7 @@ project(Rand_Work_Node3): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyue
 }
 
 project(Rand_Work_Node4): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyuevent, rgkokyu {
-  exename = Node4
+  exename = Node4_EC
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   libs += wrappers
   includes += $(TAO_ROOT)/orbsvcs
