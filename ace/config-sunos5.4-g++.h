@@ -8,7 +8,7 @@
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
+# define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/config-g++-common.h"
@@ -73,7 +73,6 @@
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_SVR4_TIME
 
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
@@ -127,10 +126,10 @@
 /* Turn off the following defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
-#define ACE_MT_SAFE 1
-#if !defined (_REENTRANT)
-#define _REENTRANT
-#endif /* _REENTRANT */
+# define ACE_MT_SAFE 1
+# if !defined (_REENTRANT)
+#   define _REENTRANT
+# endif /* _REENTRANT */
 #endif /* !ACE_MT_SAFE */
 
 // Platform supports Solaris threads.
@@ -167,12 +166,12 @@
 
 // 10 millisecond fudge factor to account for Solaris timers...
 #if !defined (ACE_TIMER_SKEW)
-#define ACE_TIMER_SKEW 1000 * 10
+# define ACE_TIMER_SKEW 1000 * 10
 #endif /* ACE_TIMER_SKEW */
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 // Defines the page size of the system.
@@ -180,4 +179,5 @@
 #define ACE_HAS_IDTYPE_T
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
+
 #endif /* ACE_CONFIG_H */

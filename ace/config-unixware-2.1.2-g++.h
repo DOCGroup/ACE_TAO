@@ -10,7 +10,7 @@
 // See README for what the ACE_HAS... and ACE_LACKS... macros mean
 
 #if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
+# define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (__GNUG__)
@@ -53,7 +53,6 @@
 #define ACE_HAS_STREAM_PIPES
 #define ACE_HAS_STRERROR
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
-#define ACE_HAS_SVR4_TIME
 #define ACE_HAS_SYSCALL_H
 #define ACE_HAS_SYSINFO
 #define ACE_HAS_SYSV_IPC
@@ -79,17 +78,20 @@
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
 #endif
+
 #define ACE_PAGE_SIZE 4096
 #define ACE_REDEFINES_XTI_FUNCTIONS
 
-#if ! defined (UNIXWARE)
-#define UNIXWARE
-#define UNIXWARE_2_1
+#if !defined (UNIXWARE)
+# define UNIXWARE
+# define UNIXWARE_2_1
 #endif /* ! UNIXWARE */
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+
 #define ACE_HAS_IDTYPE_T
+
 #endif /* ACE_CONFIG_H */
