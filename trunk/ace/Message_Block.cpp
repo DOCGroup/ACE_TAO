@@ -651,4 +651,5 @@ ACE_Message_Block::operator= (const ACE_Message_Block &)
 //
 // template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
 // template class ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
+template class ACE_Guard<ACE_Lock>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

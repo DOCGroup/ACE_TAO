@@ -1,3 +1,8 @@
+Tue May  6 00:00:54 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/Message_Block.cpp: Added template specialization for
+ 	  ACE_Guard<> that prevented ACE from compiling under Linux.
+
 Mon May 05 19:58:16 1997    <irfan@TWOSTEP>
 
 	* ace/ace.{mak,mdp}: Readded IOStream.cpp to the makefile. 
