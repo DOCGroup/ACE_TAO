@@ -219,8 +219,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   // @@ Exclsive RMS instead of giving the CDR given by the Invocation
   //    class, it should give the preallocated CDR so that it can give
   //    that CDR to the invocation back, if there is a valid reply or
-  //    it can just forget it, if there was a close connection message
-  //    or something. (Alex).
+  //    it can just forget it, for example, if there was a close
+  //    connection message or something. (Alex)
 
   // If RMS not expecting any message, handle the unexpected data.
   if (cdr == 0)

@@ -48,7 +48,7 @@ TAO_Muxed_RMS::request_id (void)
 // Bind the dispatcher with the request id.
 int
 TAO_Muxed_RMS::bind_dispatcher (CORBA::ULong request_id,
-                                     TAO_Reply_Dispatcher *rh)
+                                TAO_Reply_Dispatcher *rh)
 {
   // @@
   return 0;
@@ -102,7 +102,7 @@ TAO_Exclusive_RMS::request_id (void)
 // Bind the handler with the request id.
 int
 TAO_Exclusive_RMS::bind_dispatcher (CORBA::ULong request_id,
-                                         TAO_Reply_Dispatcher *rd)
+                                    TAO_Reply_Dispatcher *rd)
 {
   this->request_id_ = request_id;
   this->rd_ = rd;
