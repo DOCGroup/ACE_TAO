@@ -25,7 +25,8 @@ sub process {
   my($files)   = $_[2];
 
   ## Sort the dependencies to make them reproducible
-  return "@$objects: \\\n  " . join(" \\\n  ", sort @$files) . "\n";
+  return '$(sort '. join(' ', @{$objects}). "): \\\n  "
+    . join(" \\\n  ", sort @$files) . "\n";
 }
 
 

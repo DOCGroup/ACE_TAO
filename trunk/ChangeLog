@@ -1,3 +1,20 @@
+Mon Jun 14 16:46:35 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* include/makeinclude/rules.local.GNU:
+	* bin/DependencyGenerator/GNUObjectGenerator.pm:
+	* bin/DependencyGenerator/GNUDependencyWriter.pm:
+	  Generated dependencies that do not depend on the particular
+	  values of VDIR, VSHDIR, OBJEXT and SOEXT at the time of the
+	  dependency generation.  Using the values is silly, as they can
+	  easily be expanded when the dependencies are used.  This new
+	  style makes dependencies "portable."
+
+	* bin/DependencyGenerator/Preprocessor.pm:
+	  Only consider lines that match '^\s*#', preprocessor directives
+	  follow that pattern.  The old code could have added #includes
+	  inside comments (except that most comments were stripped.)
+	  Reduce the depth of those nested ifs() a little bit.
+
 Mon Jun 14 20:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TLI_Acceptor.h:
