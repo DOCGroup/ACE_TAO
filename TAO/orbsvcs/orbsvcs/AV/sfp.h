@@ -214,6 +214,10 @@ class TAO_ORBSVCS_Export TAO_SFP_Object
 public:
   TAO_SFP_Object (TAO_AV_Callback *callback,
                   TAO_AV_Transport *transport = 0);
+
+  virtual ~TAO_SFP_Object (void);
+  // Dtor
+
   virtual int send_frame (ACE_Message_Block *frame,
                           ACE_UINT32 timestamp = 0);
   virtual int end_stream (void);

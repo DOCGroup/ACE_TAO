@@ -135,7 +135,7 @@ TAO_SFP_Base::handle_input (TAO_AV_Transport *transport,
                                             msg_type);
   if (result < 0)
     return result;
-  TAO_InputCDR &input = state.cdr;
+  //  TAO_InputCDR &input = state.cdr;
   switch (msg_type)
     {
     case flowProtocol::SimpleFrame_Msg:
@@ -316,72 +316,64 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
 {
   TAO_SFP_Fragment_Table_Entry *fragment_entry = 0;
   int result = -1;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      ACE_DEBUG ((LM_DEBUG,"frag_number = %d, frag_size = %d,source_id  = %d sequnce_num = %d\n",
-                  fragment.frag_number,fragment.frag_sz,fragment.source_id,fragment.sequence_num));
-
-      ACE_Message_Block *data;
-      ACE_NEW_RETURN (data,
-                      ACE_Message_Block(fragment.frag_sz),
-                      -1);
-
+  
+  ACE_DEBUG ((LM_DEBUG,"frag_number = %d, frag_size = %d,source_id  = %d sequnce_num = %d\n",
+              fragment.frag_number,fragment.frag_sz,fragment.source_id,fragment.sequence_num));
+  
+  ACE_Message_Block *data;
+  ACE_NEW_RETURN (data,
+                  ACE_Message_Block(fragment.frag_sz),
+                  -1);
+  
       // Read the fragment.
-      int n = transport->recv (data->wr_ptr (),fragment.frag_sz);
-      if ((n == -1) || (n==0))
-        ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP::read_fragment:%p",""),-1);
-      // move past the fragment header.
-      data->rd_ptr (fragment_len);
-      data->wr_ptr (n);
-      TAO_SFP_Base::dump_buf (data->rd_ptr (),data->length ());
-      ACE_DEBUG ((LM_DEBUG,"length of %dth fragment is: %d\n",
-                  fragment.frag_number,
-                  data->length ()));
-
-      TAO_SFP_Fragment_Node *new_node;
-      ACE_NEW_RETURN (new_node,
-                      TAO_SFP_Fragment_Node,
-                      -1);
-      new_node->fragment_info_ = fragment;
-      new_node->data_ = data;
-      if (state.fragment_table_.find (fragment.sequence_num,fragment_entry) == 0)
-        {
-          // Already an entry exists. Traverse the list and insert it at the right place.
-          result = fragment_entry->fragment_set_.insert (*new_node);
-          if (result != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,"insert for %dth node failed\n",fragment.frag_number),-1);
-          // check if all the fragments have been received.
-        }
-      else
-        {
-          ACE_NEW_RETURN (fragment_entry,
-                          TAO_SFP_Fragment_Table_Entry,
-                          -1);
-          fragment_entry->fragment_set_.insert (*new_node);
-          // bind a new entry for this sequence number.
-          result = state.fragment_table_.bind (fragment.sequence_num,fragment_entry);
-          if (result != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,"bind for %dth fragment failed\n",
-                               fragment.frag_number),-1);
-        }
-      if (!(fragment.flags & 0x2))
-        {
-          ACE_DEBUG ((LM_DEBUG,"Last fragment received\n"));
-          // if bit 1 is not set then there are
-          // no more fragments.
-          fragment_entry->last_received_ = 1;
-          // since fragment number starts from 0 to n-1 we add 1.
-          fragment_entry->num_fragments_ = fragment.frag_number + 1;
-        }
-    }
-  ACE_CATCHANY
+  int n = transport->recv (data->wr_ptr (),fragment.frag_sz);
+  if ((n == -1) || (n==0))
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP::read_fragment:%p",""),-1);
+  // move past the fragment header.
+  data->rd_ptr (fragment_len);
+  data->wr_ptr (n);
+  TAO_SFP_Base::dump_buf (data->rd_ptr (),data->length ());
+  ACE_DEBUG ((LM_DEBUG,"length of %dth fragment is: %d\n",
+              fragment.frag_number,
+              data->length ()));
+  
+  TAO_SFP_Fragment_Node *new_node;
+  ACE_NEW_RETURN (new_node,
+                  TAO_SFP_Fragment_Node,
+                  -1);
+  new_node->fragment_info_ = fragment;
+  new_node->data_ = data;
+  if (state.fragment_table_.find (fragment.sequence_num,fragment_entry) == 0)
     {
-      ACE_TRY_ENV.print_exception ("TAO_SFP::read_fragment");
-      return -1;
+      // Already an entry exists. Traverse the list and insert it at the right place.
+      result = fragment_entry->fragment_set_.insert (*new_node);
+      if (result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"insert for %dth node failed\n",fragment.frag_number),-1);
+      // check if all the fragments have been received.
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  else
+    {
+      ACE_NEW_RETURN (fragment_entry,
+                      TAO_SFP_Fragment_Table_Entry,
+                      -1);
+      fragment_entry->fragment_set_.insert (*new_node);
+      // bind a new entry for this sequence number.
+      result = state.fragment_table_.bind (fragment.sequence_num,fragment_entry);
+      if (result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,"bind for %dth fragment failed\n",
+                           fragment.frag_number),-1);
+    }
+  if (!(fragment.flags & 0x2))
+    {
+      ACE_DEBUG ((LM_DEBUG,"Last fragment received\n"));
+      // if bit 1 is not set then there are
+      // no more fragments.
+      fragment_entry->last_received_ = 1;
+      // since fragment number starts from 0 to n-1 we add 1.
+      fragment_entry->num_fragments_ = fragment.frag_number + 1;
+    }
+
+  
   state.frame_block_ = check_all_fragments (fragment_entry);
   if (state.frame_block_ != 0)
     {
@@ -981,7 +973,7 @@ TAO_SFP_UDP_Acceptor::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
   // @@ We should actually look at the entry and find out if we're a
   // sink or a source and create the appropriate handler
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Acceptor::make_svc_handler\n"));
-  TAO_SFP_Base *sfp_base = TAO_SFP_BASE::instance ();
+  //  TAO_SFP_Base *sfp_base = TAO_SFP_BASE::instance ();
   TAO_SFP_Object *object;
   TAO_AV_Callback *callback;
   this->endpoint_->get_callback (this->entry_->flowname (),callback);
@@ -1048,7 +1040,7 @@ int
 TAO_SFP_UDP_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Connector::make_svc_handler\n"));
-  TAO_SFP_Base *sfp_base = TAO_SFP_BASE::instance ();
+  //  TAO_SFP_Base *sfp_base = TAO_SFP_BASE::instance ();
   // @@ We should actually look at the entry and find out if we're a
   // sink or a source and create the appropriate handler
   TAO_AV_Callback *callback = 0;
@@ -1078,13 +1070,13 @@ TAO_SFP_UDP_Sender_Handler::TAO_SFP_UDP_Sender_Handler (TAO_SFP_Object *object)
 }
 
 int
-TAO_SFP_UDP_Sender_Handler::handle_input (ACE_HANDLE fd)
+TAO_SFP_UDP_Sender_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   return -1;
 }
 
 int
-TAO_SFP_UDP_Sender_Handler::handle_close (ACE_HANDLE fd,
+TAO_SFP_UDP_Sender_Handler::handle_close (ACE_HANDLE /*fd*/,
                                           ACE_Reactor_Mask)
 {
   return 0;
@@ -1122,7 +1114,7 @@ TAO_SFP_UDP_Receiver_Handler::TAO_SFP_UDP_Receiver_Handler (TAO_AV_Callback *cal
 }
 
 int
-TAO_SFP_UDP_Receiver_Handler::handle_input (ACE_HANDLE fd)
+TAO_SFP_UDP_Receiver_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Receiver_Handler::handle_input\n"));
   // This is the entry point for receiving data.
@@ -1141,8 +1133,8 @@ TAO_SFP_UDP_Receiver_Handler::handle_input (ACE_HANDLE fd)
 }
 
 int
-TAO_SFP_UDP_Receiver_Handler::handle_close (ACE_HANDLE fd,
-                                            ACE_Reactor_Mask mask)
+TAO_SFP_UDP_Receiver_Handler::handle_close (ACE_HANDLE /*fd*/,
+                                            ACE_Reactor_Mask /*mask*/)
 {
   return 0;
 }
@@ -1176,6 +1168,11 @@ TAO_SFP_Object::TAO_SFP_Object (TAO_AV_Callback *callback,
 {
 }
 
+TAO_SFP_Object::~TAO_SFP_Object (void)
+{
+  //no-op
+}
+
 int
 TAO_SFP_Object::end_stream (void)
 {
@@ -1195,7 +1192,7 @@ TAO_SFP_Object::end_stream (void)
 
 int
 TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
-                            ACE_UINT32 timestamp)
+                            ACE_UINT32 /*timestamp*/)
 {
   TAO_OutputCDR out_stream;
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP_Object::send_frame\n"));

@@ -143,7 +143,7 @@ TAO_AV_RTCP::handle_input (TAO_AV_Transport *transport,
     case AF_INET:
       {
         ACE_INET_Addr *inet_addr =
-          ACE_dynamic_cast (ACE_INET_Addr *,&peer_addr);
+          ACE_static_cast (ACE_INET_Addr *,&peer_addr);
         addr = inet_addr->get_ip_address ();
       }
       break;
@@ -297,7 +297,7 @@ TAO_AV_RTP_UDP_Flow_Handler::TAO_AV_RTP_UDP_Flow_Handler (TAO_AV_Callback *callb
 }
 
 int
-TAO_AV_RTP_UDP_Flow_Handler::handle_input (ACE_HANDLE fd)
+TAO_AV_RTP_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   TAO_AV_RTP::rtphdr header;
   ACE_Message_Block *data = 0;
@@ -325,7 +325,7 @@ TAO_AV_RTCP_UDP_Flow_Handler::TAO_AV_RTCP_UDP_Flow_Handler (void)
 }
 
 int
-TAO_AV_RTCP_UDP_Flow_Handler::handle_input (ACE_HANDLE fd)
+TAO_AV_RTCP_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
   TAO_AV_RTCP::rtcphdr rtcp_header;
   int result = TAO_AV_RTCP::handle_input (this->transport_,
@@ -336,8 +336,8 @@ TAO_AV_RTCP_UDP_Flow_Handler::handle_input (ACE_HANDLE fd)
 }
 
 int
-TAO_AV_RTCP_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                              const void *arg)
+TAO_AV_RTCP_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
+                                              const void */*arg*/)
 {
   return -1;
 }
@@ -359,7 +359,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
         case TAO_AV_Policy::TAO_AV_PAYLOAD_TYPE_POLICY:
           {
             TAO_AV_Payload_Type_Policy *payload_policy =
-              ACE_dynamic_cast (TAO_AV_Payload_Type_Policy *,policy);
+              ACE_static_cast (TAO_AV_Payload_Type_Policy *,policy);
             if (payload_policy == 0)
               ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP_Object::send_frame:Payload policy not defined\n"),-1);
             format = payload_policy->value ();
@@ -368,7 +368,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
         case TAO_AV_Policy::TAO_AV_SSRC_POLICY:
           {
             TAO_AV_SSRC_Policy *ssrc_policy =
-              ACE_dynamic_cast (TAO_AV_SSRC_Policy *,policy);
+              ACE_static_cast (TAO_AV_SSRC_Policy *,policy);
             if (ssrc_policy == 0)
               ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
             ssrc = ssrc_policy->value ();;

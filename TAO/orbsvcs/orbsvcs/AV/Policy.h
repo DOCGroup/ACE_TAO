@@ -22,7 +22,7 @@
 #include "tao/TAO.h"
 #include "Transport.h"
 
-class TAO_AV_Policy
+class TAO_ORBSVCS_Export TAO_AV_Policy
 {
 public:
   enum PolicyType
@@ -83,6 +83,9 @@ public:
   TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
                           TAO_AV_Transport *transport = 0);
   // constructor.
+  
+  virtual ~TAO_AV_Protocol_Object (void);
+  // Destructor
 
   int set_policies (PolicyList &policy_list);
   PolicyList get_policies (void);
@@ -108,4 +111,7 @@ protected:
   TAO_AV_Callback *callback_;
 };
 
+#if defined(__ACE_INLINE__)
+#include "Policy.i"
+#endif /* __ACE_INLINE__ */
 #endif /* TAO_AV_POLICY_H */

@@ -29,6 +29,9 @@ public:
   TAO_AV_TCP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = 0);
 
+  virtual ~TAO_AV_TCP_Object (void);
+  // Dtor
+  
   virtual int send_frame (ACE_Message_Block *frame,
                           ACE_UINT32 timestamp = 0);
   // send a data frame.
@@ -45,6 +48,9 @@ public:
   TAO_AV_UDP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = 0);
 
+  virtual ~TAO_AV_UDP_Object (void);
+  // Dtor
+
   virtual int send_frame (ACE_Message_Block *frame,
                           ACE_UINT32 timestamp = 0);
   // send a data frame.
@@ -59,6 +65,9 @@ class TAO_ORBSVCS_Export TAO_AV_UDP_MCast_Object
 public:
   TAO_AV_UDP_MCast_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport = 0);
+
+  virtual ~TAO_AV_UDP_MCast_Object (void);
+  // Dtor
 
   virtual int send_frame (ACE_Message_Block *frame,
                           ACE_UINT32 timestamp = 0);
