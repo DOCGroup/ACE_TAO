@@ -1,3 +1,8 @@
+Tue Jul 11 11:03:50 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: chmod of kits to 664, and chgrp to doc,
+          after creation.
+
 Tue Jul 11 10:45:46 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/generate_man_pages: don't try generate man pages for
