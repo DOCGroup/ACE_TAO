@@ -406,6 +406,11 @@ TAO_CodeGen::start_server_header (const char *fname)
                             << "\"\n";
     }
 
+  // The server header should include the client header.
+  *this->server_header_ << "\n#include \""
+                        << be_global->be_get_client_hdr_fname (1)
+                        << "\"";
+
   // We must include all the skeleton headers corresponding to
   // IDL files included by the current IDL file.
   // We will use the included IDL file names as they appeared
@@ -426,11 +431,6 @@ TAO_CodeGen::start_server_header (const char *fname)
       this->server_header_->print ("\n#include \"%s\"",
                                    server_hdr);
     }
-
-  // The server header should include the client header.
-  *this->server_header_ << "\n#include \""
-                        << be_global->be_get_client_hdr_fname (1)
-                        << "\"";
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -454,11 +454,16 @@ TAO_CodeGen::start_server_header (const char *fname)
         }
 
       this->gen_standard_include (this->server_header_,
-                                  "tao/Collocation_Proxy_Broker.h");
-      this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/PortableServer.h");
       this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/Servant_Base.h");
+
+      if (be_global->gen_thru_poa_collocation ()
+          || be_global->gen_direct_collocation ())
+        {
+          this->gen_standard_include (this->server_header_,
+                                      "tao/Collocation_Proxy_Broker.h");
+        }
 
       if (be_global->gen_amh_classes ())
         {
