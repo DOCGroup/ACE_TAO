@@ -1,3 +1,10 @@
+Sat Oct  3 15:16:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.cpp
+	* orbsvcs/tests/Simple_Naming/README
+	* orbsvcs/tests/Simple_Naming/run_test.pl
+	Added destroy test to the set of tests already there.
+
 Sat Oct 03 09:54:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Thruput/Orbix/Makefile: removed

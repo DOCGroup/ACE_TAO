@@ -765,7 +765,93 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
 int
 Destroy_Test::execute (TAO_Naming_Client &root_context)
 {
-  return -1;
+  TAO_TRY
+    { 
+      // Create a context and bind an object under it.
+
+      CosNaming::NamingContext_var my_context;
+      my_context = root_context->new_context (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Bind a dummy object foo under my_context.
+      My_Test_Object impl;
+      Test_Object_var obj = impl._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CosNaming::Name object_name;
+      object_name.length (1);
+      object_name[0].id = CORBA::string_dup ("foo");
+      my_context->bind (object_name,
+                            obj.in (),
+                            TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Do the testing.
+      not_empty_test (my_context,
+                         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      my_context->unbind (object_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      my_context->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      not_exist_test (my_context,
+                         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Unexpected exception in Exceptions test");
+      return -1;
+    }
+  TAO_ENDTRY;
+  return 0;
+}
+
+void
+Destroy_Test::not_empty_test (CosNaming::NamingContext_var &ref,
+                                    CORBA::Environment &_env)
+{
+  TAO_TRY
+    { 
+      ref->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+
+  TAO_CATCH (CosNaming::NamingContext::NotEmpty, ex)
+    {
+      TAO_TRY_ENV.clear ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "NotEmpty exception works properly\n"));
+    }
+  TAO_CATCHANY
+    {
+      TAO_RETHROW;
+    }
+  TAO_ENDTRY;
+}
+
+void
+Destroy_Test::not_exist_test (CosNaming::NamingContext_var &ref,
+                                    CORBA::Environment &_env)
+{
+  TAO_TRY
+    { 
+      ref->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+
+  TAO_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      TAO_TRY_ENV.clear ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "Destroy works properly\n"));
+    }
+  TAO_CATCHANY
+    {
+      TAO_RETHROW;
+    }
+  TAO_ENDTRY;
 }
 
 // This function runs the test.
