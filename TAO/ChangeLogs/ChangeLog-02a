@@ -1,3 +1,12 @@
+Tue Nov 21 15:38:04 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/tests/ior_corbaname/Makefile : 
+	  Updated dependencies.
+	
+	* orbsvcs/tests/ior_corbaname/status_i.h: 
+	* orbsvcs/tests/ior_corbaname/server.cpp : 
+	  Removed unnecessary #include's.
+	
 Tue Nov 21 15:04:31 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/Latency/server.cpp : 

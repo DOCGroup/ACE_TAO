@@ -1,14 +1,10 @@
 // $Id$
-// server.cpp
-//
 
 #include "status_i.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
-#include <iostream>
 
 int main (int argc, char* argv[])
 {
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
