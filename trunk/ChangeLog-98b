@@ -1,5 +1,8 @@
 Tue Oct 13 00:19:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/High_Res_Timer.cpp: Temporarily commented out the
+ 	  ACE_static_casts so that this will compile with CC.
+
 	* ace/Hash_Map_Manager,
 	  ace/Map_Manager:
 	  Added a public mutex() accessor that allows us to return a
