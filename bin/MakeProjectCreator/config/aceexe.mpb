@@ -1,4 +1,4 @@
-project: aceversion {
+project: acedefaults, aceversion {
   depends  += ace
   includes += $(ACE_ROOT)
   libpaths += $(ACE_ROOT)/ace
