@@ -167,17 +167,3 @@ CORBA_ContextList::_destroy (void)
   if (current == 0)
     delete this;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<char *>;
-template class ACE_Unbounded_Queue<char *>;
-template class ACE_Unbounded_Queue_Iterator<char *>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<char *>
-#pragma instantiate ACE_Unbounded_Queue<char *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<char *>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
