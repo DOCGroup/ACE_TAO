@@ -1,3 +1,8 @@
+Fri Feb 18 20:58:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/auto_compile:
+	  Do not send email if the build completed without errors.
+
 Fri Feb 18 17:30:26 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h: Filled out with the known compiler settings

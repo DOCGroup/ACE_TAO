@@ -45,7 +45,7 @@ $dont_update = 0;
 $dont_run = 0;
 $pre_realclean = 0;
 $post_realclean = 0;
-$report_success = 1;
+$report_success = 0;
 $debug = 0;
 @BUILD_LIST= ();
 
