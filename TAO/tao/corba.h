@@ -89,7 +89,6 @@
 
 // individual CORBA classes
 #include "tao/sequence.h"
-#include "tao/varout.h"
 #include "tao/any.h"
 #include "tao/poa.h"
 
