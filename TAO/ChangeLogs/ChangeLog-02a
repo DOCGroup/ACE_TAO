@@ -1,3 +1,11 @@
+Thu Dec 21 18:53:20 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Strategies/advanced_svc.conf: 
+	  Changed the entry in the conf file from Resource_Factory to
+	  Advanced_Resource_Factory.
+
+	  Thanks to Bala for pointing it out.
+
 Thu Dec 21 13:23:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Removed the file
