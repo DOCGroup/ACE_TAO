@@ -37,9 +37,8 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
     ACE_static_cast (TAO_POA_Current_Impl *,
                      TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
-  TAO_ObjectKey object_key = pc_impl->object_key ();
   PortableServer::ObjectId object_id;
-  int status = TAO_POA::parse_ir_object_key (object_key,
+  int status = TAO_POA::parse_ir_object_key (pc_impl->object_key (),
                                              object_id);
   if (status != 0)
     {
@@ -56,9 +55,13 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
       return;
     }
 
+  ACE_TString path (oid_string,
+                    0,
+                    0);
+
   status = 
     this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                         oid_string,
+                                         path,
                                          this->section_key_,
                                          0);
 
@@ -73,10 +76,10 @@ char *
 TAO_IRObject_i::int_to_string (CORBA::ULong number)
 {
   static char hex_string[9];
-  ACE_OS::sprintf ((char *) hex_string, 
+  ACE_OS::sprintf (hex_string, 
                    "%8.8X", 
                    number);
-  return (char *) hex_string;
+  return hex_string;
 }
 
 char *
@@ -271,7 +274,7 @@ TAO_IRObject_i::create_objref (CORBA::DefinitionKind def_kind,
       repo_id += "IR/ComponentDef:";
       break;
     case CORBA::dk_Home:
-      repo_id += "HomeDef:";
+      repo_id += "IR/:";
       break;
     case CORBA::dk_Factory:
       repo_id += "IR/FactoryDef:";
