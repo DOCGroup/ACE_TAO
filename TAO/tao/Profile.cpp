@@ -84,7 +84,8 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
         }
 
       policy_value_seq[i] = *pv_ptr;
-      
+      delete pv_ptr;
+
       // Reset the CDR buffer index so that the buffer can
       // be reused for the next conversion.
       
