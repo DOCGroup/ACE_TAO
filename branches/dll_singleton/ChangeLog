@@ -7,6 +7,11 @@ Mon May 27 13:18:51 UTC 2002  Don Hinton <dhinton@ieee.org>
 	  need to rethink that implementation or implement ::mktemp
 	  emulation for those platforms lacking it.
 
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+
+	  Added DLL_Manager.{h,cpp} files.
+
 	* tests/Framework_Component_DLL.dsp:
 	* tests/tests.dsw:
 
