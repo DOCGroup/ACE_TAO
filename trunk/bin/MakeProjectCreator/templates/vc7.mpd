@@ -78,8 +78,10 @@
 <%endif%>
 				SubSystem="<%subsystem("1")%>"
 <%if(!debug)%>
+<%if(optimize)%>
 				OptimizeReferences="<%optref("2")%>"
 				EnableCOMDATFolding="<%opticf("2")%>"
+<%endif%>
 <%endif%>
 <%if(type_is_dynamic)%>
 				ImportLibrary="$(OutDir)/<%sharedname%><%lib_modifier%>.lib"

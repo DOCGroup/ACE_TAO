@@ -9,6 +9,7 @@ subsystem          = 1
 pdb                = 1
 
 Release {
+  optimize         = 3
   defines          = NDEBUG
   output_dir       = Release
   intermediate_dir = Release
@@ -26,6 +27,7 @@ Debug {
 }
 
 Static Release {
+  optimize         = 3
   defines          = NDEBUG
   output_dir       = Static_Release
   intermediate_dir = Static_Release
@@ -46,6 +48,7 @@ Static Debug {
 }
 
 MFC Release {
+  optimize         = 3
   common_defines   = WIN32 _WINDOWS
   defines          = NDEBUG _AFXDLL
   output_dir       = MFC_Release
@@ -68,6 +71,7 @@ MFC Debug {
 }
 
 Static MFC Release {
+  optimize         = 3
   defines          = NDEBUG _AFXDLL
   output_dir       = Static_MFC_Release
   intermediate_dir = Static_MFC_Release

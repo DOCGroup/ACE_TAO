@@ -7,6 +7,7 @@ common_defines     = WIN32 _WINDOWS
 Release {
   type_is_dynamic  = 1
   type_is_binary   = 1
+  optimize         = 3
   defines          = NDEBUG
   output_dir       = Release
   intermediate_dir = Release
@@ -29,6 +30,7 @@ Debug {
 
 Static Release {
   type_is_static   = 1
+  optimize         = 3
   defines          = NDEBUG
   output_dir       = Static_Release
   intermediate_dir = Static_Release
@@ -52,6 +54,7 @@ Static Debug {
 MFC Release {
   type_is_dynamic  = 1
   type_is_binary   = 1
+  optimize         = 3
   defines          = NDEBUG
   output_dir       = MFC_Release
   intermediate_dir = MFC_Release
@@ -77,6 +80,7 @@ MFC Debug {
 
 Static MFC Release {
   type_is_static   = 1
+  optimize         = 3
   defines          = NDEBUG
   output_dir       = Static_MFC_Release
   intermediate_dir = Static_MFC_Release

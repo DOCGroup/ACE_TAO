@@ -1,3 +1,15 @@
+Wed Oct  1 09:19:28 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          When optimize is not set, then turn off some linker optimizations.
+
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+
+          When building release targets set optimize equal to 3 (full
+          optimization).
+
 Wed Oct  1 07:20:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/depgen.pl:
