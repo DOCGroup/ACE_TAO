@@ -1,3 +1,43 @@
+Wed Oct 11 22:00:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Profile.cpp:
+
+	  Changed accessor method used to get the policy list from
+	  the MProfile.
+
+	* tao/MProfile.h:
+	* tao/MProfile.i:
+
+	  Fixed bug that could occur in multithreaded environment
+	  while initializing the policy list.
+
+	* tao/ORB_Core.cpp:
+
+	  Removed rewind of the MProfile that were not useful.
+
+	* tao/Object.h:
+
+	  Added declaration of the function pointer
+	  _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer.
+
+	* tao/Object.cpp:
+
+	  Changed constructor to initialize the proxy broker to the
+	  strategized one when the the object is collocated.
+
+	  Added initialization to zero of the function pointer
+	  _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer.
+
+	* tao/Stub.cpp:
+
+	  Removed rewind of the MProfile that were not useful.
+
+	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+
+	  Added code needed to initialize the function pointer
+	  _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer
+	  with the proper factory function.
+
 Wed Oct 11 18:05:15 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/IIOP_Profile.cpp
