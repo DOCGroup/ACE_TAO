@@ -3,6 +3,7 @@
 
 project(CosNaming) : orbsvcslib, core {
   sharedname   = TAO_CosNaming
+  dynamicflags = TAO_NAMING_BUILD_DLL
   idlflags    += -Wb,export_macro=TAO_Naming_Export -Wb,export_include=orbsvcs/Naming/naming_export.h
 
   IDL_Files {
@@ -27,6 +28,7 @@ project(CosNaming) : orbsvcslib, core {
 
 project(CosNaming_Skel) : orbsvcslib, core, naming {
   sharedname   = TAO_CosNaming_Skel
+  dynamicflags = TAO_NAMING_BUILD_DLL
 
   IDL_Files {
   }
