@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosNaming -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO -lTAO_PortableServer
 IDL_FILES = CCS
 IDL_SRC = CCSC.cpp CCSS.cpp
 IDL_HDR = CCSC.h CCSS.h
