@@ -1,3 +1,16 @@
+Wed Sep  1 10:01:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/SOCK_Dgram_Bcast.cpp:
+
+	  Added !defined(__NetBSD__) to conditional so sockaddr.sa_len
+	  version of the code will be used.  Fixes SOCK_Bcast_Dgram_Test
+	  failures.
+
+	* ace/Sock_Connect.cpp:
+
+	  Added !defined(__NetBSD__) to conditional so sockaddr.sa_len
+	  version of the code will be used.
+
 Wed Sep  1 12:40:28 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-aix-4.x.h: Changed the ACE_HAS_3_PARAM_WCSTOK test to
