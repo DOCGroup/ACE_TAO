@@ -1,3 +1,17 @@
+Thu Jan 25 12:48:33 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+	* agent/Makefile.orig    
+	  asnmp/address.h.orig  
+	  examples/next/next.cpp
+	  examples/trap/trap.cpp
+	  examples/walk/walk.cpp
+	  tests/test_config.h
+	  tests/Varbind_Test.cpp
+	  tests/Counter64_Test.cpp
+	  tests/run_tests.sh
+
+	  New agent Makefile, and compilation fixes.
+
 Sun Jun  4 14:51:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * asnmp-overview.html:
