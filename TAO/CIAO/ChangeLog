@@ -1,3 +1,10 @@
+Sat Dec 25 20:55:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* Release:
+
+	  Added INSTALL target which generates textual version of 
+	  CIAO-INSTAll.html for the release.
+
 Sat Dec 25 15:01:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ExecImplSourceGenerator.cpp:
