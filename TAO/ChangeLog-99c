@@ -1,3 +1,12 @@
+Fri May  7 19:16:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/include/ast_expression.h:
+	  Put in many many #if ! defined (ACE_LACKS_LONGLONG_T)
+	  brackets to avoid compile errors on GreenHills and
+	  IBM OpenEdition.
+
 Fri May  7 16:55:08 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Typecode.h (CORBA_TypeCode): 
