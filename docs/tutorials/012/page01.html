@@ -24,5 +24,20 @@ What we'll do in this tutorial is specialize the ACE_Message_Block
 object so that it can carry our data more efficiently.  As you'll see, 
 this isn't very difficult at all.
 <P>
+Kirthika's abstract:
+<UL>
+Here, a Message_Block class is derived from ACE_Message_Block and is
+used to hold a pointer to the object of class Work. Also, the block has
+a header containing text. This example simply illustrates a cleaner way
+of utilizing Message_Blocks to store objects rather than copying their
+contents.
+<P>
+The ACE_Barrier class has been used in the Task class which blocks the
+threads until all of them are rearing to go and grab a block from the
+queue and process it.
+<P>
+Thus a message queue can be used to accomplish a variety of tasks by
+storing a object pointer in the blocks.
+</UL>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue This Tutorial</A>]</CENTER>

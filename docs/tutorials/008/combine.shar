@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-24 15:11 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-01-26 19:48 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/008'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -67,7 +67,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh23993; then
+if mkdir _sh30434; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -441,19 +441,19 @@ enable for this interface.: Unknown error</I>.&nbsp; There are some interfaces
 seeing here.</BLOCKQUOTE>
 Ok, one more warning:
 <blockquote>If you happen to have multiple servers running on your
-network when you invoke this client, the resopnse could come from any
+network when you invoke this client, the response could come from any
 one of them.
 </blockquote>
 X
 SHAR_EOF
-  $shar_touch -am 0124145199 'page04.pst' &&
+  $shar_touch -am 0126194899 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pst:' 'MD5 check failed'
-0f46660ee6a9e96fe30b7d4901fbdbbe  page04.pst
+2e01fc6b6638dfa77ed629c0e3e77e21  page04.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pst'`"
@@ -461,5 +461,5 @@ SHAR_EOF
     $echo 'page04.pst:' 'original size' '1173,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh23993
+rm -fr _sh30434
 exit 0
