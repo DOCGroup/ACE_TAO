@@ -72,7 +72,7 @@ typedef const TAO_IID &TAO_REFIID;
 // All objects in the "Component Object Model" (COM) inherit from
 // this pure virtual base class.
 //
-TAO_DEFINE_GUID (IID_TAO_IUnknown, b,c,d,e,f,g,h,i,j,k,l);
+extern "C" const TAO_IID IID_TAO_IUnknown;
 
 class TAO_IUnknown
 {
