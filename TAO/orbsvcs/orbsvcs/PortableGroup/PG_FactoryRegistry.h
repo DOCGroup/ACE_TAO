@@ -83,6 +83,11 @@ namespace TAO
     int init (CORBA::ORB_ptr orb  ACE_ENV_ARG_DECL);
 
     /**
+     * alternative init using designated poa
+     */
+    void init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
+
+    /**
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */

@@ -1,3 +1,36 @@
+Sun Nov 30 11:53:38 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+          New: support for implementing a GenericFactory for groups.
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Remove all dependancies on PG_PropertyManager, PG_GenericFactory,
+          and PG_ObjectGroupManager.  Uses PG_Properties_Support and
+          PG_Group_Factory (which uses PG_Object_Groups) instead.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+          Add an init method for use when it's not stand-alone.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+          Initialize Group Manipulator (probably moot since I intend
+          to back out all changes to ObjectGroupManager.)
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Revise for use with Group_Factory.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
+          Init was throwing exception and returning status.
+          Changed to report all errors via excepton.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Map.cpp:
+          Removed this file.  It became part of PG_Group_Factory.
+
 Fri Nov 28 18:04:32 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:

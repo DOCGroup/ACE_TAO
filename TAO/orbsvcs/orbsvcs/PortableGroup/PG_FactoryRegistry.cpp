@@ -147,6 +147,33 @@ int TAO::PG_FactoryRegistry::fini (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
+
+void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+{
+  ACE_ASSERT (CORBA::is_nil (this->orb_.in ()));
+  ACE_ASSERT (CORBA::is_nil (this->poa_.in ()));
+  this->orb_ = CORBA::ORB::_duplicate (orb);
+  this->poa_ = PortableServer::POA::_duplicate (poa);
+  ACE_ASSERT ( ! CORBA::is_nil (this->orb_.in ()));
+  ACE_ASSERT ( ! CORBA::is_nil (this->poa_.in ()));
+
+  // Register with the POA.
+  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // find my identity as a corba object
+  this->this_obj_ =
+    this->poa_->id_to_reference (object_id_.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // and create a ior string
+  this->ior_ = this->orb_->object_to_string (this->this_obj_.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+}
+
 int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb  ACE_ENV_ARG_DECL)
 {
   int result = 0;

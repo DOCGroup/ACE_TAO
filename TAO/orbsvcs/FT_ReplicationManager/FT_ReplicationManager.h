@@ -23,15 +23,17 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <orbsvcs/FT_ReplicationManagerS.h>
-#include <orbsvcs/PortableGroup/PG_PropertyManager.h>
-#include <orbsvcs/PortableGroup/PG_GenericFactory.h>
-#include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
+//#include <orbsvcs/PortableGroup/PG_PropertyManager.h>
+//#include <orbsvcs/PortableGroup/PG_GenericFactory.h>
+//#include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
+// Note: the new, improved versions...
+//#include <orbsvcs/PortableGroup/PG_Object_Group_Map.h>
+#include <orbsvcs/PortableGroup/PG_Properties_Support.h>
+#include <orbsvcs/PortableGroup/PG_Group_Factory.h>
+
 #include <orbsvcs/PortableGroup/PG_FactoryRegistry.h>
 #include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
 
-// Note: the new, improved versions...
-#include <orbsvcs/PortableGroup/PG_Object_Group_Map.h>
-#include <orbsvcs/PortableGroup/PG_Properties_Support.h>
 
 namespace TAO
 {
@@ -448,28 +450,8 @@ namespace TAO
     /// A human-readable string to identify this Replication Manager.
     ACE_CString identity_;
 
-    /// The ObjectGroupManager that implements the functionality
-    /// necessary for application-controlled object group membership.
-    TAO_PG_ObjectGroupManager object_group_manager_;
+    TAO::PG_Group_Factory group_factory_;
 
-    /// The PropertyManager that is reponsible for parsing all criteria,
-    /// and keeping track of property-type_id associations.
-    TAO_PG_PropertyManager property_manager_;
-
-    /// The GenericFactory responsible for creating all object groups.
-    TAO_PG_GenericFactory generic_factory_;
-
-
-    // @@ The PortableGroup::ObjectGroupManager contains information about object groups
-    // in a TAO_PG_ObjectGroup_Map  object.  Unfortunatly this doesn't contain
-    // then information necessary to manage IOGRs.  Originally I planned to extend that
-    // structure to support fault tolerance, but I ran into a large number of side effects
-    // as I changed that structure, so as an interim step I defined a new collection:
-    // TAO::PG_Object_Group_Map.  The similarity in names is intentional.  I still hope
-    // to replace the TAO_PG_ObjectGroup_Map int the ObjectGroupManager a with TAO::PG_Object_Group_Map
-    // but not right now.   Dale Wilson wilson_d@ociweb.com
-    /// A container for our object group information
-    TAO::PG_Object_Group_Map object_group_map_;
 
     TAO::PG_Properties_Support properties_support_;
 

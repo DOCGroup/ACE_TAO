@@ -50,14 +50,15 @@ TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
   }
 }
 
+
 TAO::PG_Object_Group::PG_Object_Group (
-  CORBA::ORB_ptr orb,
-  TAO::PG_Object_Group_Manipulator * manipulator,
-  CORBA::Object_ptr empty_group,
-  const PortableGroup::TagGroupTaggedComponent & tagged_component,
-  const char * type_id,
-  const PortableGroup::Criteria & the_criteria,
-  TAO_PG::Properties_Decoder * type_properties)
+    CORBA::ORB_ptr orb,
+    TAO::PG_Object_Group_Manipulator & manipulator,
+    CORBA::Object_ptr empty_group,
+    const PortableGroup::TagGroupTaggedComponent & tagged_component,
+    const char * type_id,
+    const PortableGroup::Criteria & the_criteria,
+    TAO_PG::Properties_Decoder * type_properties)
     : internals_()
     , orb_ (CORBA::ORB::_duplicate (orb))
     , manipulator_ (manipulator)
@@ -75,6 +76,7 @@ TAO::PG_Object_Group::PG_Object_Group (
 {
 }
 
+#if 0
 //static
 TAO::PG_Object_Group * TAO::PG_Object_Group::create (
   CORBA::ORB_ptr orb,
@@ -128,12 +130,10 @@ TAO::PG_Object_Group * TAO::PG_Object_Group::create (
     CORBA::NO_MEMORY());
   return objectGroup;
 }
-
+#endif
 
 TAO::PG_Object_Group::~PG_Object_Group ()
 {
-  delete manipulator_;
-  manipulator_ = 0;
   for (MemberMap_Iterator it = this->members_.begin();
       it != this->members_.end();
       this->members_.begin())
@@ -270,7 +270,7 @@ void TAO::PG_Object_Group::add_member (
   {
     // remove the original profile.  It's a dummy entry supplied by create_object.
     cleaned =
-      this->manipulator_->remove_profiles (cleaned.in (), this->reference_.in () ACE_ENV_ARG_PARAMETER);
+      this->manipulator_.remove_profiles (cleaned.in (), this->reference_.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     this->empty_ = 0;
   }
@@ -283,7 +283,7 @@ void TAO::PG_Object_Group::add_member (
 
   // Now merge the list into one new IOGR
   PortableGroup::ObjectGroup_var new_reference =
-    this->manipulator_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+    this->manipulator_.merge_iors (iors ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var member_ior = this->orb_->string_to_object (member_ior_string ACE_ENV_ARG_PARAMETER);
@@ -342,7 +342,7 @@ int TAO::PG_Object_Group::set_primary_member (
     }
     info->is_primary_ = 1;
 
-    int set_ok = this->manipulator_->set_primary (prop, this->reference_.in (), info->member_.in () ACE_ENV_ARG_PARAMETER);
+    int set_ok = this->manipulator_.set_primary (prop, this->reference_.in (), info->member_.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
     if (! set_ok)
     {
@@ -400,7 +400,7 @@ void TAO::PG_Object_Group::remove_member (
     if (this->members_.current_size() > 0)
     {
       this->reference_ =
-        this->manipulator_->remove_profiles (this->reference_.in (), info->member_.in () ACE_ENV_ARG_PARAMETER);
+        this->manipulator_.remove_profiles (this->reference_.in (), info->member_.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
     else

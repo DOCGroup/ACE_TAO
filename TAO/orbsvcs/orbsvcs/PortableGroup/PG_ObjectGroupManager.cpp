@@ -629,19 +629,22 @@ TAO_PG_ObjectGroupManager::member_count (
 }
 
 int
-TAO_PG_ObjectGroupManager::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr p)
+TAO_PG_ObjectGroupManager::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 {
   int result = 0;
 
-  ACE_ASSERT (CORBA::is_nil (this->orb_.in ()) && !CORBA::is_nil (orb));
+  ACE_ASSERT (CORBA::is_nil (this->orb_.in ()));
+  ACE_ASSERT (CORBA::is_nil (this->poa_.in ()));
   this->orb_ = CORBA::ORB::_duplicate (orb);
+  this->poa_ = PortableServer::POA::_duplicate (poa);
 
-  ACE_ASSERT (CORBA::is_nil (this->poa_.in ()) && !CORBA::is_nil (p));
-  this->poa_ = PortableServer::POA::_duplicate (p);
+  ACE_ASSERT (! CORBA::is_nil (this->orb_.in ()));
+  ACE_ASSERT (! CORBA::is_nil (this->poa_.in ()));
 
-  result = manipulator_.init (orb, p);
+  manipulator_.init (orb, poa ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
-  return result;
+  return 0;
 }
 
 
