@@ -6,7 +6,7 @@ Tue Mar 12 17:12:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Made changes to the logic of the #pragma prefix pushes and pops
           to fix a bug in the example IDL files sent in by Frank Kuhlman
-          <kuhlmann@materna.de>.
+          <kuhlmann@materna.de>. This closes [BUGID:1163].
 
 Tue Mar 12 16:19:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
