@@ -438,6 +438,12 @@ foreach $i (@BUILD_LIST) {
 print LOG "#################### Tests\n";
 
 if ($dont_run == 0) {
+  my $config_params;
+  if ($#CONFIGURATION_OPTIONS != -1) {
+    $config_params = ' -Config ';
+  }
+  $config_params .= join ' -Config ', @CONFIGURATION_OPTIONS;
+
   foreach my $i (@RUN_LIST) {
 
     local $directory = '.';
@@ -461,7 +467,7 @@ if ($dont_run == 0) {
     if ($sandbox ne "") {
       $prefix = $sandbox.' '.$sandbox_timeout.' ';
     }
-    if (open(RUN, $prefix."perl $program 2>&1 |") == 0) {
+    if (open(RUN, $prefix."perl $program $config_params 2>&1 |") == 0) {
         push @failures, "cannot run $program in $directory";
         next;
     }
