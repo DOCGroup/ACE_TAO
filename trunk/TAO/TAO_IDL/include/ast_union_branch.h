@@ -85,14 +85,16 @@ public:
 
   // Constructor(s)
   AST_UnionBranch();
-  AST_UnionBranch(AST_UnionLabel *label,
+  AST_UnionBranch(UTL_LabelList *ll,
                   AST_Type *ft,
                   UTL_ScopedName *n,
                   UTL_StrList *p);
   virtual ~AST_UnionBranch() {}
 
   // Data Accessors
-  AST_UnionLabel *label();
+  AST_UnionLabel *label (unsigned long index = 0);
+  
+  unsigned long label_list_length (void);
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_UnionBranch, AST_Field);
@@ -103,7 +105,8 @@ public:
 
 private:
   // Data
-  AST_UnionLabel                *pd_label;      // Label of this branch
+  UTL_LabelList                 *pd_ll;   // list of labels
+
 };
 
 #endif           // _AST_UNION_BRANCH_AST_UNION_BRAN_HH

@@ -82,15 +82,15 @@ ACE_RCSID(ast, ast_union_branch, "$Id$")
  * Constructor(s) and destructor
  */
 AST_UnionBranch::AST_UnionBranch()
-	       : pd_label(NULL)
+	       : pd_ll (NULL)
 {
 }
 
-AST_UnionBranch::AST_UnionBranch(AST_UnionLabel *fl, AST_Type *ft,
+AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll, AST_Type *ft,
 				   UTL_ScopedName *n, UTL_StrList *p)
 		: AST_Field(AST_Decl::NT_union_branch, ft, n, p),
 		  AST_Decl(AST_Decl::NT_union_branch, n, p),
-		  pd_label(fl)
+		  pd_ll (ll)
 {
 }
 
@@ -112,9 +112,14 @@ AST_UnionBranch::AST_UnionBranch(AST_UnionLabel *fl, AST_Type *ft,
 void
 AST_UnionBranch::dump(ostream &o)
 {
-  o << "case ";
-  pd_label->dump(o);
-  o << ": ";
+  for (unsigned long i = 0; 
+       i < this->label_list_length (); ++i)
+    {
+      o << "case ";
+      AST_UnionLabel *ul = this->label (i);
+      ul->dump(o);
+      o << ": \n";
+    }
   AST_Field::dump(o);
 }
 
@@ -123,9 +128,29 @@ AST_UnionBranch::dump(ostream &o)
  */
 
 AST_UnionLabel *
-AST_UnionBranch::label()
+AST_UnionBranch::label (unsigned long index)
 {
-  return pd_label;
+  unsigned long i = 0;
+  UTL_LabellistActiveIterator iter (this->pd_ll);
+  
+  for (; !iter.is_done (); iter.next ())
+    {
+      if (i == index)
+        {
+          return iter.item ();
+        }
+      ++i;
+    }
+  return 0;
+}
+
+unsigned long
+AST_UnionBranch::label_list_length (void)
+{
+  if (this->pd_ll)
+    return this->pd_ll->length ();
+  else
+    return 0;
 }
 
 // Narrowing

@@ -1,3 +1,100 @@
+Mon May 24 07:59:45 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/ast/ast_generator.cpp (create_union_branch):
+	  TAO_IDL/ast/ast_union_branch.cpp (constructor):
+	  TAO_IDL/be/be_generator.cpp (create_union_branch):
+	  TAO_IDL/be_include/be_generator.h (create_union_branch):
+	  TAO_IDL/be_include/be_union_branch.h (constructor):
+	  TAO_IDL/fe/{idl.yy, y.tab.cpp, y.tab.h}:
+	  TAO_IDL/include/ast_geneator.h (create_union_branch):
+	  TAO_IDL/include/ast_union_branch.h (constructor):
+
+	  Constructor of the union_branch node has been slightly modified
+	  so that now it can take a list of labels as its parameter
+	  instead of a single Union_Label node. This was required because
+	  a single union branch can be shared by several case labels as
+	  shown in the example below:
+
+	  union U switch (long)
+	  {
+	     case 0:
+	       char c;
+	     case 1:
+	     case 2:
+	     default:
+	       octet o;
+	  };
+
+	  We were also required to make modifications to the "actions" in
+	  the fe/idl.yy file for the union branch rule because previously
+	  it would not allow us to have a union branch node to have
+	  several case labels. We now create a UTL_Label_List out of all
+	  such shared case/default labels and then pass this list as a
+	  parameter to the constructor of the UnionBranch node. This
+	  required us to the change the create_union_branch operation
+	  signature in the generator classes. The fe/y.tab.{h, cpp} have
+	  been regenerated.
+
+	* TAO_IDL/be/be_union.cpp:
+	  TAO_IDL/be_include/be_union.h:
+
+	  Added the compute_default_value and default_value methods. These
+	  methods will compute/return the value that must be used for the
+	  "default" label. There are two scenarios whenever such a value
+	  is required. Wheneveran explicit "default" label exists in a
+	  union definition, the Typecode for the default label must
+	  provide a value for the default case. This default value must be
+	  something other than that used by all other case labels and
+	  which is a permissible value as defined by the "type" of the
+	  discriminant. For example, if the discriminant type is an
+	  unsigned long, then the permissible value for default label is
+	  anything from 0 to MAX_ULONG except those already used up by the
+	  case labels. The second scenario where we need this default
+	  value is when no explicit default clause is provided in the
+	  union definition AND the case labels do not cover all the
+	  permissible values supported by the discriminant type. In such a
+	  scenario, the CORBA IDL->C++ mapping requires us to generate a
+	  method called "default ()". 
+
+	  The compute_default_value () method provides the algorithm that
+	  takes care of computing the default value (if at all it is
+	  required) as demanded by the two scenarios described above. The
+	  "default_value" method simply returns the computed value.
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  In the gen_encapsulation and compute_encap_len for union_branch,
+	  we must now account for the shared case labels as well as the
+	  default label that we now support. In particular, the
+	  modifications were necessary because union branches now contain
+	  a list of UnionLabels and special treatment is necessary for
+	  default labels. If we want optimized typecodes, we can now
+	  generate indirections for union branches that have several
+	  shared case labels. Thus, the first one will be fully specified
+	  and the rest will be indirections. No specific change was
+	  required for this part to work.
+	
+	  Another cosmetic change was for "tk_objref", there was an
+	  indentation missing. 
+
+	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+	  TAO_IDL/be/be_visitor_union/union_ch.cpp:
+	  TAO_IDL/be/be_visitor_union/union_ci.cpp:
+	  TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	  TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+	  TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+	
+	  Provided support to handle shared case labels and default
+	  label. We now generate the "default ()" method whenever it is
+	  required as described in the scenario above.
+
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+	
+	  Thanks to (name unknown) gwtovrea@west.raytheon.com for pointing
+	  out incorrectly generated code for enums in the CDR >>
+	  operator.  Rather than generating the actual type for the enum,
+	  we were generating CORBA::Long. This is now fixed.
+	
 Sun May 23 18:06:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Basic/Observer.h:

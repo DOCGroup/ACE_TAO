@@ -67,6 +67,29 @@ public:
   DEF_NARROW_FROM_DECL(be_union);
   DEF_NARROW_FROM_SCOPE(be_union);
 
+  struct DefaultValue
+  {
+    union PermittedTypes
+    {
+      char char_val;
+      idl_bool bool_val;
+      ACE_INT16 short_val;
+      ACE_UINT16 ushort_val;
+      ACE_INT32 long_val;
+      ACE_UINT32 ulong_val;
+      ACE_UINT32 enum_val;
+      // TO-DO - handle (u)longlong types
+    } u;
+    long computed_;
+    // computed == -1 => error condition
+    //          == 0 => does not exist because all cases have been covered
+    //          == 1 => already computed
+    //          == -2 => initial value
+  };
+
+  int default_value (DefaultValue &);
+  // get the default value
+
 protected:
   virtual int compute_size_type (void);
   // compute the size type if it is unknown
@@ -80,12 +103,17 @@ private:
   int compute_default_index (void);
   // count the default index
 
+  virtual int compute_default_value (void);
+  // compute the implicit default value (if any)
+
   int member_count_;
   // number of members
 
   int default_index_;
   // default label index (zero based indexing)
 
+  DefaultValue default_value_;
+  // implicit default value (if any)
 };
 
 #endif

@@ -212,7 +212,7 @@ be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "CORBA::Long _tao_union_tmp"
+      *os << node->name () << " _tao_union_tmp"
           << ";" << be_nl
           << "result = strm >> _tao_union_tmp;" << be_nl
           << "if (result)" << be_idt_nl

@@ -166,7 +166,7 @@ public:
                                       UTL_StrList *p);
 
   // Create a node representing one branch in a union
-  virtual AST_UnionBranch *create_union_branch(AST_UnionLabel *lab,
+  virtual AST_UnionBranch *create_union_branch(UTL_LabelList *ll,
                                                AST_Type *ft,
                                                UTL_ScopedName *n,
                                                UTL_StrList *p);
