@@ -4,6 +4,7 @@
 #include "NamingViewer.h"
 #include "NamingViewerDlg.h"
 #include "ace/ARGV.h"
+#include "ace/ACE.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
