@@ -1,16 +1,25 @@
+Mon Jun 10 14:30:18 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
+	* tao/RTCORBA/RT_ORB_Loader.cpp: Fixed mismatched export macros.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h: Fixed a fuzz
+	  pre/post mismatch warning.
+
 Sun Jun  9 19:16:57 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/MCast.cpp: 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp: 
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
 	  Added template instantiations for the new
  	  ACE_SOCK_Dgram_Mcast_Ex<ACE_Null_Mutex>.
 
 Fri Jun  7 16:32:17 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp (test_method): 
-	  Modified RH calls for platforms without native exceptions. 
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp (test_method):
+	  Modified RH calls for platforms without native exceptions.
 
 Fri Jun  7 09:26:44 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -19,7 +28,7 @@ Fri Jun  7 09:26:44 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Thu Jun  6 13:36:22 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_throw_spec): 
+	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_throw_spec):
 	  The 'throw_spec_close' generation logic was a 'bit off'.  I had
 	  changed the logic before by splitting the 'if' statement into
 	  two separate parts.  The 'throw_spec_close' generation was
@@ -34,14 +43,14 @@ Thu Jun  6 13:36:22 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  2.6) Generate Throw Spec the confirms to raises clause of
 	  original operation in IDL.
 	  -------------------------------------------------------------
-	
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp: 
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
 	  I had forgotten to check if it was an AMH Exception Holder
 	  before generating the protected CORBA::Exception member
 	  variable (2.4), thus this was generating the member variable for
 	  all ExceptionHolders.  This is now fixed.
-	
-	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp: 
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
 	  Cosmetic changes.
 
 Thu Jun 06 13:56:54 2002  Ossama Othman  <ossama@uci.edu>
@@ -102,34 +111,34 @@ Wed Jun  5 18:05:35 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	     app-programmer.  The changes required for this are:
              2.1) Generate the raise_method as non-abstract.
              2.2) Generate a new constructor that takes in a CORBA::Exception*
-             2.3) Make the destructor public (instead of protected) 
+             2.3) Make the destructor public (instead of protected)
              2.4) Generate a private CORBA::Exception* field.
-             2.5) Generate the tao_marshal and tao_unmarshal methods as 
-                  non-abstarct. 
+             2.5) Generate the tao_marshal and tao_unmarshal methods as
+                  non-abstarct.
           ----------------------------------------------------------------------
-	
-	* TAO_IDL/be/be_visitor_operation/operation.cpp (is_amh_exception_holder): 
-	* TAO_IDL/be_include/be_visitor_operation/operation.h: 
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp (is_amh_exception_holder):
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
 	  If we are an ExceptionHolder operation, then we
 	  go ahead and generate the throw spec for the operation (this is
 	  not done for valuetypes).  Code changed to reflect this logic.
 	  This same change in logic applies to the valuetype visitors
 	  below:
 
-	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation): 
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation):
 	* TAO_IDL/be_include/be_visitor_valuetype/arglist.h:
 	  Instead of generating the pure vitual method as is done for
 	  valuetypes, we generate a 'normal' method and also go ahead and
 	  define it as well!  All ExceptionHolder operations do only one
 	  thing, raise the stored exception (all ExceptionHolder
 	  constructors are declared to take in an CORBA::Exception
-	  paramter). We generate the code that does that here. 
+	  paramter). We generate the code that does that here.
 
-	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp (visit_operation): 
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp (visit_operation):
 	  Changed generated '_tao_rh_init_reply' and 'tao_rh_send_reply'
 	  to take in the ACE_ENV_SINGLE_ARG_PARAMTER to be compliant with
-	  the changes in tao/PortableServer/AMH_Response_handler.*	
-	
+	  the changes in tao/PortableServer/AMH_Response_handler.*
+
 	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp (visit_interface):
 	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
 	  Added a node for generating the exception_holder concrete class
@@ -226,7 +235,7 @@ Wed Jun 05 09:25:53 2002  Ossama Othman  <ossama@uci.edu>
 	  Changed signature of this method so that it accepts the factory
 	  creation ID for the object group being populated.  Fixes a
 	  syntax error.
-	
+
 Tue Jun 04 21:10:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
@@ -236,7 +245,7 @@ Tue Jun 04 21:10:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	  New method that extracts group-specific criteria defined by the
 	  PortableGroup IDL.
-	  
+
 	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
 	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp:
@@ -253,7 +262,7 @@ Tue Jun 04 21:10:43 2002  Ossama Othman  <ossama@uci.edu>
 
 Tue Jun  4 14:31:08 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* tao/PortableServer/AMH_Response_Handler.cpp (TAO_AMH_Response_Handler): 
+	* tao/PortableServer/AMH_Response_Handler.cpp (TAO_AMH_Response_Handler):
 	  Changed variable-name 'exception' to 'ex' and also declared
 	  NEW_CORBA_ENV.  This should now fix the minimum-static and
 	  no-inline builds.
@@ -266,7 +275,7 @@ Tue Jun  4 16:00:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
           Added CORBA_String_out constructor from TAO_String_Manager.
           This enables implicit conversion when for example a struct
           member string is passed as an OUT parameter. Tested on
-          MSVC and gcc 2.95.3 20010315. Thanks to Stelios Sfakianakis 
+          MSVC and gcc 2.95.3 20010315. Thanks to Stelios Sfakianakis
           <ssfak@ics.forth.gr> for reporting the problem and suggesting
           the fix.
 
@@ -278,7 +287,7 @@ Tue Jun  4 14:29:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Jun  4 00:34:08 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* tao/PortableServer/AMH_Response_Handler.h: 
+	* tao/PortableServer/AMH_Response_Handler.h:
 	* tao/PortableServer/AMH_Response_Handler.cpp:
 	  Changed method signatures for platforms without native
 	  exceptions. Other notable changes include:
@@ -294,15 +303,15 @@ Tue Jun  4 00:34:08 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	    - More documentation on why we are raising exceptions in
 	  operations and the logic for the minor codes in them.
 
-	* tao/PortableServer/Servant_Base.cpp (asynchronous_upcall_dispatch): 
+	* tao/PortableServer/Servant_Base.cpp (asynchronous_upcall_dispatch):
 	  Removed condition that unnecessarily checked if we needed to
 	  send a reply.  Since this is an asynchronous upcall, we never
 	  need to marshall anything back to the client .. unless, :-), we
 	  encounter an exception.  This method has now been changed to
 	  accomade the above semantics.
 
-	* tao/corbafwd.h (TAO_AMH_RH_REPLY_LOCATION_CODE): 
-	* tao/Exception.cpp (_info): 
+	* tao/corbafwd.h (TAO_AMH_RH_REPLY_LOCATION_CODE):
+	* tao/Exception.cpp (_info):
 	  Added new AMH exception minor code and description.
 
 Mon Jun 03 17:10:38 2002  Ossama Othman  <ossama@uci.edu>
@@ -359,29 +368,29 @@ Sun Jun  2 17:52:17 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Fri May 31 15:22:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp: 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp: 
-	* orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp: 
-	* tao/PortableServer/POA.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
+	* tao/PortableServer/POA.cpp:
 	  Removed the trailing ';' at the end of #pragma instantiates.
   	  Thanks to Oliver Kellog <okellogg@freenet.de> for reporting
  	  this.
 
 Fri May 31 13:13:03 2002  Chris Hafey <chafey@stentor.com>
 
-	* utils/NamingViewer/AddNameServerDlg.cpp 
-	  The default IOR is now the CORBALOC format for a name service 
+	* utils/NamingViewer/AddNameServerDlg.cpp
+	  The default IOR is now the CORBALOC format for a name service
 
 	* utils/NamingViewer/{ViewIORDlg,NamingViewerDlg,BindDialog,NamingTreeCtrl}:
 	  Updated to work with new method to get an exception's repository ID
 
 	* utils/NamingViewer/NamingViewerDlg.cpp
 	  Added a timeout of 500ms for binding to a naming service
-  
+
 	* utils/NamingViewer/ViewIORDlg.cpp
 	  Added support for viewing multiple endpoints
-  
+
 Wed May 29 15:25:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Strategies/DIOP_Connector.cpp:

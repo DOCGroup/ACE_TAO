@@ -48,4 +48,5 @@ namespace TAO_PG
 
 };
 
+#include "ace/post.h"
 #endif  /* TAO_PG_PROPERTY_UTILS_H */
