@@ -20,6 +20,11 @@
 
 class TAO_Naming_Context_Impl;
 
+// This is to remove "inherits via dominance" warnings from MSVC.
+#if defined (_MSC_VER)
+# pragma warning (disable : 4250)
+#endif /* _MSC_VER */
+
 class TAO_ORBSVCS_Export TAO_Naming_Context :
   public virtual PortableServer::RefCountServantBase,
   public virtual POA_CosNaming::NamingContext
