@@ -2917,8 +2917,7 @@ Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
 Sun Jun 27 20:50:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        Added support for IBM's VisualAge C++ compiler.  Thanks to Rene
-        Matteau <matteau@ca.ibm.com> for contributing the following fixes:
+        Added support for IBM's VisualAge C++ compiler.  
 
         * ace: Added a new config-visualage.h file that automatically
           includes the proper configurations for IBM's VisualAge C++
@@ -6883,8 +6882,7 @@ Tue Apr 20 13:55:34 1999  Joe Hoffert <joeh@cs.wustl.edu>
 Tue Apr 20 13:30:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/ace.icc: Added a configuration file for creating a shared
-          library with Visual Age C++.  Thanks to Rene Matteau
-          <matteau@ca.ibm.com> for this.
+          library with Visual Age C++.
 
 Mon Apr 19 23:50:25 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
