@@ -19,7 +19,7 @@ SOEXT=so
 endif
 
 VSHLIB  = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
-VOBJS   = $(LSRC:%.cpp=$(VDIR)%.$(OBJEXT))
+VOBJS   = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VDIR)$(notdir $(file))))
 
 ifdef TEMPINCDIR
 VSHOBJS1 =
