@@ -1,12 +1,15 @@
+Wed Jul 05 14:46:38 2000  Luther J Baker <luther@cs.wustl.edu>
+
+	* pace/win32/aio.h:
+
+	  Removed #include <aio.h>.
+
 Wed Jul 05 13:41:00 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* PACE/win32/types.h:
 
 	  Removed #include <inttypes.h>.
-	  Moved -*- C -*- to same line as $Id$
-	  Removed pace_* types until I need to define them
-	  (as I go through the rest of the files). WIN32 doesn't
-	  use these native types.
+	  Moved -*- C -*- to same line as $-Id-$
 
 Wed Jul  5 13:25:34 2000  Luther J Baker  <luther@cs.wustl.edu>
 
@@ -377,7 +380,7 @@ Tue Jun 27 9:51:43 2000 John Heitmann <jwh1@cs.wustl.edu>
         * pace/tests/Posix_SP_Test.c
           Included pace/stdio.h
 
-Mon Jun 26 15:07:08 2000    <luther@cs.wustl.edu>
+Mon Jun 26 15:07:08 2000  Luther J Baker  <luther@cs.wustl.edu>
 
         * pace/pace/win32/pace.dsw:
         * pace/pace/win32/pace_dll.dsp:
@@ -385,7 +388,7 @@ Mon Jun 26 15:07:08 2000    <luther@cs.wustl.edu>
 
           Updated to link correctly.
 
-Mon Jun 26 13:27:02 2000    <luther@cs.wustl.edu>
+Mon Jun 26 13:27:02 2000  Luther J Baker  <luther@cs.wustl.edu>
 
         * pace/pace/win32/pace.dsw:
         * pace/pace/win32/pace_dll.dsp:
