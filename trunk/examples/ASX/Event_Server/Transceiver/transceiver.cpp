@@ -76,23 +76,23 @@ Event_Transceiver::parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'C':
-	this->role_ = "Consumer";
-	break;
+        this->role_ = "Consumer";
+        break;
       case 'h':
-	this->host_name_ = get_opt.optarg;
-	break;
+        this->host_name_ = get_opt.optarg;
+        break;
       case 'p':
-	this->port_number_ = ACE_OS::atoi (get_opt.optarg);
-	break;
+        this->port_number_ = ACE_OS::atoi (get_opt.optarg);
+        break;
       case 'S':
-	this->role_ = "Supplier";
-	break;
+        this->role_ = "Supplier";
+        break;
       default:
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "usage: %n [-CS] [-h host_name] [-p portnum] \n"),
                           -1);
-	/* NOTREACHED */
-	break;
+        /* NOTREACHED */
+        break;
       }
 
   // Increment by 1 if we're the supplier to mirror the default
@@ -108,7 +108,7 @@ Event_Transceiver::parse_args (int argc, char *argv[])
 
 int
 Event_Transceiver::handle_close (ACE_HANDLE,
-				 ACE_Reactor_Mask)
+                                 ACE_Reactor_Mask)
 {
   ACE_Reactor::end_event_loop ();
   return 0;
@@ -118,9 +118,11 @@ Event_Transceiver::handle_close (ACE_HANDLE,
 
 int
 Event_Transceiver::handle_signal (int signum,
-				  siginfo_t *,
-				  ucontext_t *)
+                                  siginfo_t *,
+                                  ucontext_t *)
 {
+  ACE_UNUSED_ARG (signum);
+
   ACE_Reactor::end_event_loop ();
   return 0;
 }
@@ -154,8 +156,8 @@ Event_Transceiver::Event_Transceiver (int argc, char *argv[])
       // otherwise <get_handle> will return the connection socket
       // handle for the peer.
       else if (ACE_Event_Handler::register_stdin_handler (this,
-							  ACE_Reactor::instance (),
-							  ACE_Thread_Manager::instance ()) == -1)
+                                                          ACE_Reactor::instance (),
+                                                          ACE_Thread_Manager::instance ()) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "register_stdin_handler"));
@@ -188,9 +190,9 @@ Event_Transceiver::open (void *)
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "register_handler"),
-		       -1);
+                       "%p\n",
+                       "register_handler"),
+                       -1);
   return 0;
 }
 
@@ -209,7 +211,7 @@ Event_Transceiver::transmitter (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) entering %s transmitter\n",
-	      this->role_));
+              this->role_));
 
   char buf[BUFSIZ];
   ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
@@ -220,7 +222,7 @@ Event_Transceiver::transmitter (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) leaving %s transmitter\n",
-	      this->role_));
+              this->role_));
   return result;
 }
 
@@ -229,20 +231,20 @@ Event_Transceiver::receiver (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) entering %s receiver\n",
-	      this->role_));
+              this->role_));
 
   char buf[BUFSIZ];
 
   ssize_t n = this->peer ().recv (buf, sizeof buf);
   int result = 0;
 
-  if (n <= 0 
+  if (n <= 0
       || ACE_OS::write (ACE_STDOUT, buf, n) != n)
     result = -1;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) leaving %s receiver\n",
-	      this->role_));
+              this->role_));
   return result;
 }
 
@@ -252,7 +254,7 @@ main (int argc, char *argv[])
   if (ACE_Service_Config::open (argv[0]) == -1
       && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n", 
+                       "%p\n",
                        "open"),
                        -1);
 
