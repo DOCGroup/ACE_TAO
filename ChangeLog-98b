@@ -1,3 +1,24 @@
+Tue Sep 1 3:50:39 US/Central 1998  James CE Johnson <jcej@lads.com>
+
+	* etc/tutorials/006/client_handler.cpp
+	  etc/tutorials/006/client_handler.h
+	  etc/tutorials/006/page04.html
+	  etc/tutorials/006/page05.html
+
+	  Added a close() method to Client_Handler so that it will be closed
+	  properly when the svc() method exits.
+
+	* etc/tutorials/007/client_handler.cpp
+	  etc/tutorials/007/client_handler.h
+	  etc/tutorials/007/page05.html
+	  etc/tutorials/007/page06.html
+	  etc/tutorials/007/page09.html
+
+	  Added Client_Handler::close() that will be called when Client_Handler::svc()
+	  exits in the thread-per-connection model.
+	  Thread_Pool::svc() now calls the handler's handle_close() method to
+	  properly shut down the handler if handle_input() fails.
+
 Tue Sep 01 12:58:02 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * ace/ACE.cpp
