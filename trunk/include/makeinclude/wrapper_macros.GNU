@@ -578,7 +578,7 @@ ifdef shared_libs
       LIB           =
 #      OBJEXT        = so
       ifndef VXWORKS
-        VDIR        = $VSHDIR
+        VDIR        = $(VSHDIR)
         ifeq ($(BIN),)
           #### No executables are being built, so don't create .obj/.
           OBJDIRS     = $(VSHDIR)
