@@ -1,3 +1,13 @@
+Wed Mar  2 06:22:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Server.h:
+
+	  Changed to save the IOR file name instead of opening the IOR
+	  file when parsing command line arguments.  This avoids a file
+	  descriptor leak if multiple "-o" options are specified on the
+	  command line.
+
 Wed Mar  2 12:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/DSI/client.cpp:

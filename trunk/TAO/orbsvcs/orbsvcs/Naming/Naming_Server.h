@@ -183,7 +183,7 @@ protected:
   PortableServer::POA_var ns_poa_;
 
   /// File to output the Naming Service IOR.
-  FILE *ior_output_file_;
+  const ACE_TCHAR *ior_file_name_;
 
   /// File to output the process id.
   const ACE_TCHAR *pid_file_name_;
