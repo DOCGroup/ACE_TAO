@@ -132,7 +132,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Child process code.
   if (child_process)
     {
-      ACE_APPEND_LOG (ACE_TEXT("Process_Mutex_Test-children"));
+      ACE_TCHAR lognm[MAXPATHLEN];
+      int mypid (ACE_OS::getpid ());
+      ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Mutex_Test-child-%d"), mypid);
+
+      ACE_START_TEST (lognm);
       acquire_release ();
       ACE_END_LOG;
     }
@@ -147,7 +151,6 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Process_Mutex shall control the destruction of mutex better.
       ACE_Process_Mutex mutex( mutex_name );
 #     endif
-      ACE_INIT_LOG (ACE_TEXT("Process_Mutex_Test-children"));
 
       ACE_Process_Options options;
       if (release_mutex == 0)
