@@ -110,7 +110,7 @@ ACE_Pipe::open (int buffer_size)
                        ACE_LIB_TEXT ("pipe")),
                       -1);
 
-#if defined(__QNX__)
+#if !defined(__QNX__)
   int arg = RMSGN;
 
   // Enable "msg no discard" mode, which ensures that record
