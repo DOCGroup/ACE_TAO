@@ -2,7 +2,7 @@ Tue Nov  9 17:50:01 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
 	* ace/config-hpux-10.x-hpc++.h: 
           Added ACE_LACKS_PLACEMENT_OPERATOR_DELETE since it doesn't seem
-          to be supported.
+          to be supported on aCC.
 
 Tue Nov  9 15:47:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
