@@ -16,13 +16,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 // For Intel platforms, a scale factor is required for
 // ACE_OS::gethrtime.  We'll still set this to one to prevent division
 // by zero errors.
-#if defined (ACE_HAS_PENTIUM) && !defined (ACE_HAS_HI_RES_TIMER)
+#if (defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_POWERPC_TIMER)) && \
+    !defined (ACE_HAS_HI_RES_TIMER)
 
 # include "ace/Object_Manager.h"
 # include "ace/Synch.h"
 
 # if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
 u_long
 ACE_High_Res_Timer::get_registry_scale_factor (void)
 {
@@ -57,17 +57,16 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
   return speed;
 }
 
-/* static */
   // Initialize the global_scale_factor_ to 1.  The first
   // ACE_High_Res_Timer instance construction will override this
   // value.
-  ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
-# elif defined (ghs) || defined (__GNUG__)
-  // Initialize the global_scale_factor_ to 1.  The first
-  // ACE_High_Res_Timer instance construction will override this
-  // value.
+  /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
 # else
+  // Initialize the global_scale_factor_ to 1.  The first
+  // ACE_High_Res_Timer instance construction will override this
+  // value.
+  /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
 # endif /* ! ACE_WIN32 && ! ghs && ! __GNUG__ */
 #elif defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \
@@ -80,13 +79,15 @@ ACE_High_Res_Timer::get_registry_scale_factor (void)
 #else
   // Don't convert at all, by default.  Application code may have to
   // override this using a call to global_scale_factor ().
+  /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
 #endif /* ACE_WIN32 */
 
 ACE_UINT32
 ACE_High_Res_Timer::global_scale_factor ()
 {
-#if defined (ACE_HAS_PENTIUM) && !defined (ACE_HAS_HI_RES_TIMER) && \
+#if (defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_POWERPC_TIMER)) && \
+    !defined (ACE_HAS_HI_RES_TIMER) && \
     ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
      defined (ghs) || defined (__GNUG__))
   // Check if the global scale factor needs to be set, and do if so.
@@ -130,7 +131,8 @@ ACE_High_Res_Timer::global_scale_factor ()
             ACE_High_Res_Timer::calibrate ();
         }
     }
-#endif /* ACE_HAS_PENTIUM && ! ACE_HAS_HIGH_RES_TIMER &&
+#endif /* (ACE_HAS_PENTIUM || ACE_HAS_POWERPC_TIMER) && \
+          ! ACE_HAS_HIGH_RES_TIMER &&
           ((WIN32 && ! WINCE) || ghs || __GNUG__) */
 
   return global_scale_factor_;
@@ -176,7 +178,9 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
   ACE_Stats_Value actual_sleep (0);
   actual_sleeps.mean (actual_sleep);
 
-  const ACE_UINT32 scale_factor = ticks.whole () / actual_sleep.whole () /
+  // The addition of 5 below rounds instead of truncates.
+  const ACE_UINT32 scale_factor =
+    (ticks.whole () / actual_sleep.whole ()  +  5) /
     10u /* usec/100 usec */;
   ACE_High_Res_Timer::global_scale_factor (scale_factor);
 
