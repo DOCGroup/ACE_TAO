@@ -1,3 +1,11 @@
+Fri May 28 16:21:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	  Removed 'ACE_INLINE' from the create_dyn_* functions,
+	  which had eveidently been moved out of ORB.i. Thanks
+	  to Carlos for reporting the resulting link errors
+	  on CC.
+
 Fri May 28 15:51:18 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	Fixed the overflow problem in some expressions. Thanks to
