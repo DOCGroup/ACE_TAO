@@ -10,109 +10,86 @@
 //=====================================================================
 
 #include "Process_Element.h"
-#include <iostream>
 
-template <typename VALUE, typename DATA>
-void process_element_attributes(DOMNamedNodeMap* named_node_map,
-                                DOMDocument* doc,
-                                DOMNodeIterator* iter,
-                                VALUE value,
-                                DATA& data,
-                                Process_Function <DATA>* func,
-                                REF_MAP& id_map)
-{
-  // the number of attributes
-  int length = named_node_map->getLength();
-  // iterate the attributes
-  for (int j = 0; j < length; ++j)
-    {
-      DOMNode* attribute_node = named_node_map->item (j);
-      XStr strattrnodename (attribute_node->getNodeName ());
-      ACE_TString aceattrnodevalue =
-        XMLString::transcode (attribute_node->getNodeValue ());
+DOMDocument* create_document (const char *url);
 
-      // if xmi::id is given process the element and bind the value
-      if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-        {
-          (*func) (iter, data);
-          id_map.bind (aceattrnodevalue, value);
-        }
-      // if href is given find out the referenced position
-      // and process the element
-      else if (strattrnodename == XStr (ACE_TEXT ("href")))
-        {
-          XMLURL xml_url (aceattrnodevalue.c_str ());
-          XMLURL result (aceattrnodevalue.c_str ());
-          std::string url_string = aceattrnodevalue.c_str ();
-          ACE_TString doc_path =
-            XMLString::transcode ( doc->getDocumentURI ());
-          result.makeRelativeTo
-            (XMLString::transcode (doc_path.c_str ()));
-          ACE_TString final_url =
-            XMLString::transcode (result.getURLText ());
+/*
+ *  Base class for the process function classes.
+ */
 
-          DOMDocument* href_doc;
+template <typename DATA>
+class Process_Function {
+public:
+  virtual void call(DOMNodeIterator*, DATA&)=0;
 
-          if (xml_url.isRelative ())
-            {
-              href_doc = create_document(final_url.c_str ());
-            }
-          else
-            {
-              href_doc = create_document (url_string.c_str ());
-            }
+  void operator() (DOMNodeIterator* iter, DATA& data)
+  {
+    call(iter, data);
+  }
+};
 
-          DOMDocumentTraversal* traverse (href_doc);
-          DOMNode* root = (href_doc->getDocumentElement ());
-          unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-            DOMNodeFilter::SHOW_TEXT;
-          DOMNodeIterator* href_iter = traverse->createNodeIterator
-            (root,
-             filter,
-             0,
-             true);
-          href_iter->nextNode ();
+/*
+ *  Wrapper class for the process member functions.
+ */
 
-          (*func) (href_iter, data);
-        }
-    }
-}
+template <typename OBJ, typename DATA>
+class Process_Member_Function: public Process_Function<DATA> {
+public:
+  typedef void (OBJ::*func_type) (DOMNodeIterator*, DATA&);
+  typedef DATA data_type;
 
-// This function only works for calling static process_ methods
-template <typename DATA, typename VALUE>
-void process_element (DOMNode* node,
-                      DOMDocument* doc,
-                      DOMNodeIterator* iter,
-                      DATA& data,
-                      VALUE val,
-                      Process_Function <DATA>* func,
-                      REF_MAP& id_map)
-{
-  // fetch attributes
-  DOMNamedNodeMap* named_node_map = node->getAttributes ();
-  // the number of attributes the element have
-  int length = named_node_map->getLength();
-  // if there is no other attribute but 'version'
-  if (length == 1)
-    {
-      // call directly the static process_ method
-      (*func) (iter, data);
-    }
-  else if (length > 1)
-    {
-      // Check the xmi::id & href attributes
-      process_element_attributes(named_node_map, doc, iter, val, data, func, id_map);
-    }
-}
+  Process_Member_Function(OBJ& obj, func_type f)
+    : obj_(&obj), f_(f)
+  {
+  }
 
-// This function only works for calling static process_ methods
+  Process_Member_Function(OBJ* obj, func_type f)
+    : obj_(obj), f_(f)
+  {
+  }
+
+  virtual void call(DOMNodeIterator* iter, DATA& data)
+  {
+    (obj_->*f_) (iter, data);
+  }
+
+private:
+  OBJ* obj_;
+  func_type f_;
+};
+
+/*
+ *  Wrapper class for the static process member functions.
+ */
+
+template <typename DATA>
+class Process_Static_Function: public Process_Function<DATA> {
+public:
+  typedef void (*func_type) (DOMNodeIterator*, DATA&);
+  typedef DATA data_type;
+
+  Process_Static_Function(func_type f)
+    : f_(f)
+  {
+  }
+
+  virtual void call(DOMNodeIterator* iter, DATA& data)
+  {
+    (*f_) (iter, data);
+  }
+
+private:
+  func_type f_;
+};
+
 template <typename SEQUENCE, typename DATA>
-void process_sequential_element (DOMNode* node,
-                                 DOMDocument* doc,
-                                 DOMNodeIterator* iter,
-                                 SEQUENCE& seq,
-                                 Process_Function <DATA>* func,
-                                 REF_MAP& id_map)
+inline void
+process_sequential_element (DOMNode* node,
+                            DOMDocument* doc,
+                            DOMNodeIterator* iter,
+                            SEQUENCE& seq,
+                            Process_Function <DATA>* func,
+                            REF_MAP& id_map)
 {
   if (node->hasAttributes ())
     {
@@ -120,44 +97,94 @@ void process_sequential_element (DOMNode* node,
       CORBA::ULong i (seq.length ());
       // add 1 to the size of the sequence
       seq.length (i + 1);
-      // call process only one element
-      process_element(node, doc, iter, seq[i], i, func, id_map);
+      // fetch attributes
+      DOMNamedNodeMap* named_node_map = node->getAttributes ();
+      // the number of attributes the element have
+      int length = named_node_map->getLength();
+      // if there is no other attribute but 'version'
+      if (length == 1)
+        {
+          // call directly the static process_ method
+          (*func) (iter, seq[i]);
+        }
+      else if (length > 1)
+        {
+          // Check the xmi::id & href attributes
+          process_element_attributes(named_node_map, doc, iter, i, seq[i], func, id_map);
+        }
     }
 }
 
 /*
- *  Process references
+ *  Process function for member functions
  */
 
-inline void
+template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
+inline bool
+process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                 XStr& node_name, const char* name,
+                 SEQUENCE& seq, OBJECT* obj, FUNCTION func,
+                 REF_MAP& id_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      Process_Member_Function<OBJECT, DATA>
+        pf(obj, func);
+      process_sequential_element (node, doc, iter, seq, &pf, id_map);
+    }
+
+  return result;
+}
+
+/*
+ *  Process function for static functions
+ */
+
+template<typename DATA, typename SEQUENCE, typename FUNCTION>
+inline bool
+process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                 XStr& node_name, const char* name,
+                 SEQUENCE& seq, FUNCTION func,
+                 REF_MAP& id_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      Process_Static_Function<DATA>
+        pf(func);
+      process_sequential_element (node, doc, iter, seq, &pf, id_map);
+    }
+
+  return result;
+}
+
+void
 process_refs(DOMNode*& node,
              CORBA::ULongSeq& seq,
              int& index,
-             IDREF_MAP& idref_map)
+             IDREF_MAP& idref_map);
+
+/*
+ *  Process function for references
+ */
+
+inline bool
+process_reference(DOMNode* node,
+                  XStr& node_name, const char* name,
+                  CORBA::ULongSeq& seq,
+                  int& index,
+                  IDREF_MAP& idref_map)
 {
-  if (node->hasAttributes())
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
     {
-      CORBA::ULong i (seq.length ());
-      seq.length (i + 1);
-      seq[i] = 0;
-      if (node->hasAttributes ())
-        {
-          DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          
-          int length = named_node_map->getLength ();
-          
-          for (int j = 0; j < length; j++)
-            {
-              DOMNode* attribute_node = named_node_map->item (j);
-              XStr strattrnodename (attribute_node->getNodeName ());
-              ACE_TString aceattrnodevalue = XMLString::transcode
-                (attribute_node->getNodeValue ());
-              if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                {
-                  index = index + 1;
-                  idref_map.bind (index, aceattrnodevalue);
-                }
-            }
-        }
+      process_refs (node, seq, index, idref_map);
     }
+
+  return result;
 }
+

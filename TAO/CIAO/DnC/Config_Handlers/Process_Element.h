@@ -56,166 +56,36 @@ using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::DOMNamedNodeMap;
 
-#include <iostream>
-
 // ID map type definition
 typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
 typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
 typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_Null_Mutex> IDREF_MAP;
 
-template <typename DATA>
-class Process_Function {
-public:
-  virtual void call(DOMNodeIterator*, DATA&)=0;
-
-  void operator() (DOMNodeIterator* iter, DATA& data)
-  {
-    call(iter, data);
-  }
-};
-
-/*
- *  Wrapper class for the process member functions.
- */
-
-template <typename OBJ, typename DATA>
-class Process_Member_Function: public Process_Function<DATA> {
-public:
-  typedef void (OBJ::*func_type) (DOMNodeIterator*, DATA&);
-  typedef DATA data_type;
-
-  Process_Member_Function(OBJ& obj, func_type f)
-    : obj_(&obj), f_(f)
-  {
-  }
-
-  Process_Member_Function(OBJ* obj, func_type f)
-    : obj_(obj), f_(f)
-  {
-  }
-
-  virtual void call(DOMNodeIterator* iter, DATA& data)
-  {
-    (obj_->*f_) (iter, data);
-  }
-
-private:
-  OBJ* obj_;
-  func_type f_;
-};
-
-/*
- *  Wrapper class for the static process member functions.
- */
-
-template <typename DATA>
-class Process_Static_Function: public Process_Function<DATA> {
-public:
-  typedef void (*func_type) (DOMNodeIterator*, DATA&);
-  typedef DATA data_type;
-
-  Process_Static_Function(func_type f)
-    : f_(f)
-  {
-  }
-
-  virtual void call(DOMNodeIterator* iter, DATA& data)
-  {
-    (*f_) (iter, data);
-  }
-
-private:
-  func_type f_;
-};
-
-DOMDocument* create_document (const char *url);
-
-template <typename DATA, typename VALUE>
-void process_element (DOMNode* node,
-                      DOMDocument* doc,
-                      DOMNodeIterator* iter,
-                      DATA& data,
-                      VALUE val,
-                      Process_Function <DATA>* func,
-                      REF_MAP& id_map);
-
-template <typename SEQUENCE, typename DATA>
-void process_sequential_element (DOMNode* node,
-                                 DOMDocument* doc,
-                                 DOMNodeIterator* iter,
-                                 SEQUENCE& seq,
-                                 Process_Function <DATA>* func,
-                                 REF_MAP& id_map);
-
-/*
- *  Process function for member functions
- */
-
+// profcesses sequence - not for common elements -
 template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
 inline bool
 process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                  XStr& node_name, const char* name,
                  SEQUENCE& seq, OBJECT* obj, FUNCTION func,
-                 REF_MAP& id_map)
-{
-  bool result = (node_name == XStr (ACE_TEXT (name)));
+                 REF_MAP& id_map);
 
-  if (result == true)
-    {
-      Process_Member_Function<OBJECT, DATA>
-        pf(obj, func);
-      process_sequential_element (node, doc, iter, seq, &pf, id_map);
-    }
-
-  return result;
-}
-
-/*
- *  Process function for static functions
- */
-
+// Processes sequence - common elements -
 template<typename DATA, typename SEQUENCE, typename FUNCTION>
 inline bool
 process_sequence(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                  XStr& node_name, const char* name,
                  SEQUENCE& seq, FUNCTION func,
-                 REF_MAP& id_map)
-{
-  bool result = (node_name == XStr (ACE_TEXT (name)));
+                 REF_MAP& id_map);
 
-  if (result == true)
-    {
-      Process_Static_Function<DATA>
-        pf(func);
-      process_sequential_element (node, doc, iter, seq, &pf, id_map);
-    }
-
-  return result;
-}
-
-inline void
-process_refs(DOMNode*& node,
-             CORBA::ULongSeq& seq,
-             int& index,
-             IDREF_MAP& idref_map);
-
+// Processes reference sequences
 inline bool
 process_reference(DOMNode* node,
                   XStr& node_name, const char* name,
                   CORBA::ULongSeq& seq,
                   int& index,
-                  IDREF_MAP& idref_map)
-{
-  bool result = (node_name == XStr (ACE_TEXT (name)));
-
-  if (result == true)
-    {
-      process_refs (node, seq, index, idref_map);
-    }
-
-  return result;
-}
+                  IDREF_MAP& idref_map);
 
 #include "Process_Element.i"
+#include "Process_Element.tpp"
 
 #endif // PROCESS_ELEMENT_H
