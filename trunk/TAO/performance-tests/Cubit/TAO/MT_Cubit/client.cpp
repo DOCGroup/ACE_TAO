@@ -572,16 +572,9 @@ Client_i::start_servant (void)
 {
   char high_thread_args[BUFSIZ];
 
-  static char hostname[BUFSIZ];
-
-  if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "hostname"),
-                       -1);
   ACE_OS::sprintf (high_thread_args,
-                   "-ORBsndsock 32768 "
-                   "-ORBrcvsock 32768 ");
+                   "-ORBSndSock 32768 "
+                   "-ORBRcvSock 32768 ");
 
   Cubit_Task *high_priority_task;
 
