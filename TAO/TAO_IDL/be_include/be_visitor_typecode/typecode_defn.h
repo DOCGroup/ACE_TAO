@@ -266,6 +266,9 @@ public:
 
 private:
 
+  //
+  friend class Scoped_Compute_Queue_Guard;
+
   ACE_CDR::Long computed_tc_size_;
   // the tc size of the node under consideration
 
