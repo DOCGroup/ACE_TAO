@@ -1,3 +1,7 @@
+Sat Oct 10 00:40:05 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.51 released.
+
 Fri Oct 09 23:47:42 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Mem_Map.cpp (map_it): Fixed the setting of length_ again.
