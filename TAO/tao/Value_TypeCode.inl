@@ -17,7 +17,7 @@ TAO::TypeCode::Value<StringType, FieldArrayType, Kind, RefCountPolicy>::Value (
   char const * id,
   char const * name,
   CORBA::ValueModifier modifier,
-  CORBA::TypeCode_ptr * concrete_base,
+  CORBA::TypeCode_ptr const * concrete_base,
   Value_Field<StringType> const * fields,
   CORBA::ULong nfields)
   : base_attributes_ (id, name)

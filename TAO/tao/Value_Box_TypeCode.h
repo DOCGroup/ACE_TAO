@@ -47,7 +47,7 @@ namespace TAO
       /// Constructor.
       Value_Box (char const * id,
                  char const * name,
-                 CORBA::TypeCode_ptr * tc);
+                 CORBA::TypeCode_ptr const * tc);
 
       /// Destructor.
       ~Value_Box (void);
@@ -105,7 +105,7 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c TypeCode::Value_Box.
        */
-      CORBA::TypeCode_ptr * content_type_;
+      CORBA::TypeCode_ptr const * const content_type_;
 
     };
 

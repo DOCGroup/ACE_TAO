@@ -13,7 +13,6 @@ ACE_RCSID (tao,
 #include "Empty_Param_TypeCode.h"
 #include "Objref_TypeCode.h"
 #include "String_TypeCode.h"
-#include "Value_TypeCode.h"
 
 
 namespace TAO
@@ -69,32 +68,6 @@ namespace TAO
            CORBA::tk_home,
            TAO::Null_RefCount_Policy> tc_Home (tc_home_id, tc_home_name);
 
-    // --------------
-
-    char const tc_value_base_id[]   = "IDL:omg.org/CORBA/ValueBase:1.0";
-    char const tc_value_base_name[] = "ValueBase";
-    Value<char const *,
-          Value_Field<char const *> const *,
-          CORBA::tk_value,
-          TAO::Null_RefCount_Policy> tc_ValueBase (tc_value_base_id,
-                                                   tc_value_base_name,
-                                                   CORBA::VM_NONE,
-                                                   0,  // Nil TypeCode
-                                                   0,  // Field array
-                                                   0); // Field count
-
-    char const tc_event_base_id[]   = "IDL:omg.org/CORBA/EventBase:1.0";
-    char const tc_event_base_name[] = "EventBase";
-    Value<char const *,
-          Value_Field<char const *> const *,
-          CORBA::tk_event,
-          TAO::Null_RefCount_Policy> tc_EventBase (tc_event_base_id,
-                                                   tc_event_base_name,
-                                                   CORBA::VM_NONE,
-                                                   0,  // Nil TypeCode
-                                                   0,  // Field array
-                                                   0); // Field count
-
   }  // End TypeCode namespace
 }  // End TAO namespace
 
@@ -133,8 +106,5 @@ namespace CORBA
   TypeCode_ptr const _tc_Object     = &TAO::TypeCode::tc_Object;
   TypeCode_ptr const _tc_Component  = &TAO::TypeCode::tc_Component;
   TypeCode_ptr const _tc_Home       = &TAO::TypeCode::tc_Home;
-
-  TypeCode_ptr const _tc_ValueBase  = &TAO::TypeCode::tc_ValueBase;
-  TypeCode_ptr const _tc_EventBase  = &TAO::TypeCode::tc_EventBase;
 
 }
