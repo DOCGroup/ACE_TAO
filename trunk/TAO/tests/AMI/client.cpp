@@ -251,7 +251,7 @@ main (int argc, char *argv[])
 
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
-      number_of_replies = nthreads * niterations;
+      number_of_replies = nthreads *niterations;
 
       if (debug)
         {
