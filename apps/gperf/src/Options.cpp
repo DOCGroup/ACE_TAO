@@ -155,13 +155,13 @@ Options::~Options (void)
       char *ptr;
 
       ACE_OS::fprintf (stderr, "\ndumping Options:\nDEBUG is.......: %s\nORDER is.......: %s"
-                       "\nANSI is........: %s\nTYPE is........: %s\nINLINE is.........: %s"
+                       "\nANSI is........: %s\nTYPE is........: %s\nINLINE is......: %s"
                        "\nRANDOM is......: %s\nDEFAULTCHARS is: %s\nSWITCH is......: %s"
                        "\nPOINTER is.....: %s\nNOLENGTH is....: %s\nLENTABLE is....: %s"
-                       "\nDUP is.........: %s\nFAST is........: %s\nCOMP is.....: %s"
+                       "\nDUP is.........: %s\nFAST is........: %s\nCOMP is........: %s"
                        "\nNOTYPE is......: %s\nGLOBAL is......: %s\nCONSTANT is....: %s"
-                       "\nCPLUSPLUS is...: %s\nC is...........: %s\nENUM is.....: %s"
-                       "\nSTRCASECMP is...: %s\nOPTIMIZE is...........: %s"
+                       "\nCPLUSPLUS is...: %s\nC is...........: %s\nENUM is........: %s"
+                       "\nSTRCASECMP is..: %s\nOPTIMIZE is....: %s"
                        "\niterations = %d\nlookup function name = %s\nhash function name = %s"
                        "\nkey name = %s\njump value = %d\nmax associcated value = %d"
                        "\ninitial associated value = %d\ndelimiters = %s\nnumber of switch statements = %d\n",
