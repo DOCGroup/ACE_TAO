@@ -147,17 +147,11 @@ Priority_Task::svc (void)
 int
 main (int argc, ASYS_TCHAR *argv[])
 {
-#if (HPUX_VERS >= 1100 )
-  if (::geteuid () != 0)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "You must be root to run this test on HPUX 11.0\n" ),
-                      0);
-#endif  // if HPUX 11.0 or greater
   ACE_START_TEST (ASYS_TEXT ("Priority_Task_Test"));
 
   if (argc <= 1)
     // Disable LM_DEBUG messages.
-    ACE_Log_Msg::instance ()->priority_mask
+    ACE_Log_Msg::instance ()->priority_mask 
       (ACE_Log_Msg::instance ()->priority_mask () & ~ LM_DEBUG);
   else if (argc == 2)
     {
