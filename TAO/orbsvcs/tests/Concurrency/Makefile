@@ -77,7 +77,7 @@ CC_command.tab.cpp CC_command.tab.h:	CC_command.y
 		    -e "s/YY/ACE_CC_YY/g" < y.tab.h > /tmp/$(USER).CC_YH
 		cp /tmp/$(USER).CC_Y CC_command.tab.cpp
 		cp /tmp/$(USER).CC_YH CC_command.tab.h
-#		patch < CC_command.tab.cpp.diff
+		patch < CC_command.tab.cpp.diff
 		$(RM) -f /tmp/$(USER).CC_Y  /tmp/$(USER).CC_YH y.tab.c y.tab.h
 
 CC_client:	$(addprefix $(VDIR),$(CC_CLT_OBJS))
