@@ -1433,6 +1433,7 @@ be_interface::cleanup_gperf_temp_file (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
 #if !defined (linux)
+  // tao_idl core dumps on Linux if ss is deleted.
   // Delete the stream ptr.
   TAO_OutStream *ss = cg->gperf_input_stream ();
   delete ss;
