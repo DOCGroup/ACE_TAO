@@ -46,6 +46,18 @@ TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushConsumer* consumer,
 }
 
 void
+TAO_EC_ProxyPushSupplier::reconnected (TAO_EC_ProxyPushConsumer* consumer,
+                                       CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_EC_Scheduling_Strategy *s =
+    this->event_channel_->scheduling_strategy ();
+
+  s->add_proxy_supplier_dependencies (this,
+                                      consumer,
+                                      ACE_TRY_ENV);
+}
+
+void
 TAO_EC_ProxyPushSupplier::disconnected (TAO_EC_ProxyPushConsumer*,
                                         CORBA::Environment &)
 {
@@ -53,6 +65,12 @@ TAO_EC_ProxyPushSupplier::disconnected (TAO_EC_ProxyPushConsumer*,
 
 void
 TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushSupplier*,
+                                     CORBA::Environment &)
+{
+}
+
+void
+TAO_EC_ProxyPushSupplier::reconnected (TAO_EC_ProxyPushSupplier*,
                                      CORBA::Environment &)
 {
 }
@@ -165,6 +183,41 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
     // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
+#if 1
+    if (this->is_connected_i ())
+      {
+        if (this->event_channel_->consumer_reconnect () == 0)
+          ACE_THROW (RtecEventChannelAdmin::AlreadyConnected ());
+
+        // Re-connections are allowed....
+        this->cleanup_i ();
+
+        this->consumer_ =
+          RtecEventComm::PushConsumer::_duplicate (push_consumer);
+        this->qos_ = qos;
+        this->child_ =
+          this->event_channel_->filter_builder ()->build (this,
+                                                          this->qos_,
+                                                          ACE_TRY_ENV);
+        ACE_CHECK;
+
+        this->adopt_child (this->child_);
+
+        TAO_EC_Unlock reverse_lock (*this->lock_);
+
+        {
+          ACE_GUARD_THROW_EX (
+              TAO_EC_Unlock, ace_mon, reverse_lock,
+              CORBA::INTERNAL ());
+          // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+          ACE_CHECK;
+
+          this->event_channel_->reconnected (this, ACE_TRY_ENV);
+          ACE_CHECK;
+        }
+        return;
+      }
+#else
     if (this->is_connected_i ())
       {
         if (this->event_channel_->consumer_reconnect () == 0)
@@ -205,6 +258,7 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
         if (this->is_connected_i ())
           return;
       }
+#endif
 
     this->consumer_ =
       RtecEventComm::PushConsumer::_duplicate (push_consumer);

@@ -84,6 +84,8 @@ public:
 
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
                           CORBA::Environment &env);
+  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier,
+                            CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
                              CORBA::Environment &env);
   // Concrete implementations can use this methods to keep track of
@@ -91,6 +93,8 @@ public:
 
   virtual void connected (TAO_EC_ProxyPushConsumer* consumer,
                           CORBA::Environment &env);
+  virtual void reconnected (TAO_EC_ProxyPushConsumer* consumer,
+                            CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer,
                              CORBA::Environment &env);
   // Usually implemented as no-ops, but some configurations may

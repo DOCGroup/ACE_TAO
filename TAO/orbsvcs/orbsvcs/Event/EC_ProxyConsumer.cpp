@@ -88,6 +88,37 @@ TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
 }
 
 void
+TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushSupplier* supplier,
+                                       CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_EC_Supplier_Filter* filter = 0;
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        CORBA::INTERNAL ());
+    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+
+    if (this->is_connected_i () == 0)
+      return;
+
+    filter = this->filter_;
+    filter->_incr_refcnt ();
+  }
+
+  filter->reconnected (supplier, ACE_TRY_ENV);
+
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        CORBA::INTERNAL ());
+    // @@  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+    filter->_decr_refcnt ();
+  }
+}
+
+void
 TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier,
                                         CORBA::Environment &ACE_TRY_ENV)
 {
@@ -119,6 +150,12 @@ TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier,
 void
 TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushConsumer*,
                                      CORBA::Environment &)
+{
+}
+
+void
+TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushConsumer*,
+                                       CORBA::Environment &)
 {
 }
 
