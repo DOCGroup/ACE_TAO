@@ -1004,22 +1004,22 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
                           missing_data,
                           max_wait_time);
 
-  // If we got an EWOULDBLOCK or some other error..
-  if (n <= 0)
+  // If we got an error..
+  if (n == -1)
     {
-      if (n == -1)
+      if (TAO_debug_level > 4)
         {
-          if (TAO_debug_level > 4)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - TAO_Trasport::consolidate_message,"
-                          "error while trying to consolidate \n"));
-            }
-          this->tms_->connection_closed ();
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - TAO_Trasport::consolidate_message,"
+                      "error while trying to consolidate \n"));
         }
-
-      return n;
+      this->tms_->connection_closed ();
+      return -1;
     }
+
+  // If we had gooten a EWOULDBLOCK n would be equal to zero. But we
+  // have to put the message in the queue anyway. So let us proceed
+  // to do that and return...
 
   // Move the write pointer
   incoming.wr_ptr (n);
@@ -1167,9 +1167,11 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
                               max_wait_time);
 
       // Error...
-      if (n <= 0)
+      if (n < 0)
         return n;
 
+      // If we get a EWOULDBLOCK ie. n==0, we should anyway put the
+      //  message in queue before returning..
       // Move the write pointer
       qd->msg_block_->wr_ptr (n);
 
