@@ -37,7 +37,7 @@ namespace CIAO
    * class serves as a place holder for later, more efficient
    * implementation.
    */
-  template <class COBJ>
+  template <class T, class T_var>
   class Object_Set
   {
   public:
@@ -53,10 +53,14 @@ namespace CIAO
 
     /// Adding a new object reference to the set.  Return -1 if error
     /// occurred.
-    CORBA::Long add (COBJ::_ptr_type objref);
+    CORBA::Long add (T *objref);
 
     /// Removing an object from the set. Return -1 if error occurred.
-    CORBA::Long remove (COBJ::_ptr_type objref);
+    CORBA::Long remove (T *objref);
+
+    /// Access the underlying T_var array directly.  This is added to
+    /// get around a bug in TAO's sequence of object C++ mapping.
+    T_var &at (CORBA::ULong index);
 
     /**
      * Get a copy of the object reference set into the incoming array
@@ -68,12 +72,12 @@ namespace CIAO
      * @retval actual number of objrefs copied into @c buffer.
      */
     CORBA::ULong copy (CORBA::ULong size,
-                       COBJ **buffer);
+                       T **buffer);
 
     /**
      * Check if an object is in the set.  Return 0 if false.
      */
-    int object_in_set (COBJ::_ptr_type objref);
+    int object_in_set (T *objref);
 
     /// Query the current size the set contains.
     CORBA::ULong size (void) const;
@@ -92,7 +96,7 @@ namespace CIAO
 
     /// Pointer to the dynamically allocated buffer that holds the
     /// object references.
-    COBJ::_var_type *buffer_;
+    T_var *buffer_;
 
     /// Maximun capacity of this->buffer_;
     CORBA::ULong capacity_;

@@ -1,3 +1,50 @@
+Fri Feb 14 17:10:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/ConfigValues.html: Updated more supported ConfigValues types.
+
+	* docs/releasenotes.html:
+	* docs/todo.html:
+
+	* ciao/Client_init.cpp:
+	* ciao/Server_init.cpp:
+	* ciao/Client_init.h:
+	* ciao/Server_init.h: Removed "ciao/" from the include paths.  We
+	  now always include ciao core files as they are specified in the
+	  include path directly.
+
+	* ciao/CIAO_Server.dsp:
+	* ciao/CIAO_Servers.idl:
+	* ciao/ComponentServer_Impl.cpp:
+	* ciao/ComponentServer_Impl.h:
+	* ciao/ComponentServer_Impl.inl:
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* ciao/Container_Impl.cpp:
+	* ciao/Container_Impl.h:
+	* ciao/Container_Impl.inl:
+	* ciao/Object_Set_T.cpp:
+	* ciao/Object_Set_T.h:
+	* ciao/Object_Set_T.inl:
+	* ciao/ServerActivator_Impl.cpp:
+	* ciao/ServerActivator_Impl.h:
+	* ciao/ServerActivator_Impl.inl: Filled in more implementations.
+
+	* tools/ServerActivator/README:
+	* tools/ServerActivator/ServerActivator.cpp:
+	* tools/ServerActivator/ServerActivator.dsp:
+	* tools/ServerActivator/ServerActivator.dsw:
+	* tools/ServerActivator/ServerActivator_test_client.cpp:
+	* tools/ServerActivator/ServerActivator_test_client.dsp: Added a
+	  ServerActivator implementation.
+
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/ComponentServer/ComponentServer.dsp:
+	* tools/ComponentServer/ComponentServer.dsw:
+	* tools/ComponentServer/ComponentServer_test_client.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.dsp:
+	* tools/ComponentServer/README: Added a more comprehensive
+	  ComponentServer implementation.
+
 Sun Feb 09 20:39:05 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/todo.html: Added more todo items as we go along. :)

@@ -24,11 +24,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "CCM_DeploymentS.h"
 #include "Container_Base.h"
 #include "Object_Set_T.h"
 
 namespace CIAO
 {
+
+  struct home_installation_info
+  {
+    CORBA::String_var executor_dll_;
+    CORBA::String_var executor_entrypt_;
+    CORBA::String_var servant_dll_;
+    CORBA::String_var servant_entrypt_;
+  };
+
   /**
    * @class Container_Impl
    *
@@ -46,7 +56,9 @@ namespace CIAO
   {
   public:
     /// Constructor
-    Container_Impl (CORBA::ORB_ptr o);
+    Container_Impl (CORBA::ORB_ptr o,
+                    PortableServer::POA_ptr p,
+                    Components::Deployment::ComponentServer_ptr server);
 
     /// Destructor
     virtual ~Container_Impl (void);
@@ -56,7 +68,7 @@ namespace CIAO
     virtual PortableServer::POA_ptr _default_POA (void);
 
     /// Initialize the container with a name.
-    int init (::Components::ConfigValues &options
+    int init (const ::Components::ConfigValues &options
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -90,18 +102,50 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
+    // ------------------- CIAO Internal Operations ------------------------
+    /// Set the cached object reference.
+    void set_objref (Components::Deployment::Container_ptr o
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+    /// Get the cached object reference.  This operation will invoke
+    /// _this if there's no cached reference available.  Notice that
+    /// this method does *NOT* increase the reference count of the
+    /// cached reference.
+    Components::Deployment::Container_ptr get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 protected:
+    /// parse ConfigValues
+    void parse_config_values (const Components::ConfigValues &options,
+                              struct home_installation_info &component_install_info
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::Deployment::UnknownImplId,
+                       Components::Deployment::ImplEntryPointNotFound,
+                       Components::InvalidConfiguration));
+
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
 
-    /// Keep a list of managed CCMHome.
-    Object_Set<::Components::CCMHome> home_set_;
-
-    /// Internal container implementation
+    /// Internal container implementation.
     Container *container_;
+
+    /// Cached ConfigValues.
+    Components::ConfigValues_var config_;
+
+    /// Cached Container reference (of ourselves.)
+    Components::Deployment::Container_var objref_;
+
+    /// Cached ComponentServer.
+    Components::Deployment::ComponentServer_var comserv_;
+
+    /// Synchronize access to the object set.
+    TAO_SYNCH_MUTEX lock_;
+
+    /// Keep a list of managed CCMHome.
+    Object_Set<::Components::CCMHome, ::Components::CCMHome_var> home_set_;
   };
 }
 

@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CCM_DeploymentS.h"
+#include "Object_Set_T.h"
 
 namespace CIAO
 {
@@ -44,7 +45,8 @@ namespace CIAO
   {
   public:
     /// Constructor
-    ComponentServer_Impl (CORBA::ORB_ptr o);
+    ComponentServer_Impl (CORBA::ORB_ptr o,
+                          PortableServer::POA_ptr p);
 
     /// Destructor
     virtual ~ComponentServer_Impl (void);
@@ -88,6 +90,19 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
+    // ------------ CIAO Internal operations -------------
+    /// Set the cached object reference
+    void set_objref (Components::Deployment::ServerActivator_ptr act,
+                     Components::Deployment::ComponentServer_ptr cs = 0
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    /// Return the cached object reference of this ComponentServer object.
+    /// This operation does *NOT* increase the reference count.
+    Components::Deployment::ComponentServer_ptr
+    get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+
 protected:
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
@@ -95,8 +110,20 @@ protected:
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
 
+    /// Cached ConfigValues.
+    Components::ConfigValues_var config_;
+
+    /// And a reference to the ServerActivator that created us.
+    Components::Deployment::ServerActivator_var activator_;
+
+    /// Cached the object reference to ourselves.
+    Components::Deployment::ComponentServer_var objref_;
+
+    /// Synchronize access to the object set.
+    TAO_SYNCH_MUTEX lock_;
+
     /// Keep a list of managed Container objects.
-    Object_Set<::Components::Deployment::Container> container_set_;
+    Object_Set<Components::Deployment::Container, ::Components::Deployment::Container_var> container_set_;
   };
 }
 

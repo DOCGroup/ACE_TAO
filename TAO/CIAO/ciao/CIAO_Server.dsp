@@ -104,7 +104,23 @@ SOURCE=.\CCM_DeploymentS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CIAO_ServersC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_ServersS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ComponentServer_Impl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Container_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Container_Impl.cpp
 # End Source File
 # Begin Source File
 
@@ -121,6 +137,10 @@ SOURCE=.\HomeRegistrarS.cpp
 # Begin Source File
 
 SOURCE=.\Server_init.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerActivator_Impl.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -140,7 +160,23 @@ SOURCE=.\CCM_DeploymentS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CIAO_ServersC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_ServersS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ComponentServer_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Container_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Container_Impl.h
 # End Source File
 # Begin Source File
 
@@ -157,6 +193,10 @@ SOURCE=.\HomeRegistrarS.h
 # Begin Source File
 
 SOURCE=.\Server_init.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerActivator_Impl.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -205,6 +245,71 @@ BuildCmds= \
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
 InputPath=.\CCM_Deployment.idl
 InputName=CCM_Deployment
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_Servers.idl
+
+!IF  "$(CFG)" == "CIAO_Server - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Servers.idl
+InputName=CIAO_Servers
+
+BuildCmds= \
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CIAO_Server - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
+InputPath=.\CIAO_Servers.idl
+InputName=CIAO_Servers
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl
@@ -314,6 +419,26 @@ SOURCE=.\CCM_DeploymentS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\CIAO_ServersC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CIAO_ServersS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ComponentServer_Impl.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Container_Base.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Container_Impl.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\HomeRegistrar_i.inl
 # End Source File
 # Begin Source File
@@ -323,6 +448,10 @@ SOURCE=.\HomeRegistrarC.i
 # Begin Source File
 
 SOURCE=.\HomeRegistrarS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerActivator_Impl.inl
 # End Source File
 # End Group
 # End Target

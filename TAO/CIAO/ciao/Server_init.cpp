@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ciao/Server_init.h"
-#include "ciao/CIAO_common.h"
-#include "ciao/CCM_ComponentC.h"
-#include "ciao/Cookies.h"
+#include "Server_init.h"
+#include "CIAO_common.h"
+#include "CCM_ComponentC.h"
+#include "Cookies.h"
 
 int
 CIAO::Server_init (CORBA::ORB_ptr o)

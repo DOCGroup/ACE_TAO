@@ -1,5 +1,4 @@
 // $Id$
-
 #include "Container_Impl.h"
 
 #if !defined (__ACE_INLINE__)
@@ -14,37 +13,63 @@ CIAO::Container_Impl::~Container_Impl ()
 PortableServer::POA_ptr
 CIAO::Container_Impl::_default_POA (void)
 {
-  return PortableServer::_duplicate (this->poa_.in ());
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 int
-CIAO::Container_Impl::init (::Components::ConfigValues &options
-                               ACE_ENV_ARG_DECL)
+CIAO::Container_Impl::init (const ::Components::ConfigValues &options
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_NEW_RETURN (this->config_,
+                  Components::ConfigValues (),
+                  -1);
+
+  *this->config_ = options;
+
   // @@ Initialize container and create the internal container
   // implementation that actually interacts with installed
   // homes/components.
+
+  // @@ We will need a container factory here later on when we support
+  // more kinds of container implementations.
+
+  // @@ Fish out the ComponentServer object reference from <options>.
+
+  ACE_NEW_RETURN (this->container_,
+                  CIAO::Session_Container (this->orb_.in ()),
+                  -1);
+
+  return this->container_->init (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 ::Components::ConfigValues *
-CIAO::Container_Impl::configuration (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::Container_Impl::configuration (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // return a copy of configration values.
+  Components::ConfigValues *retval;
+
+  ACE_NEW_RETURN (retval,
+                  Components::ConfigValues (),
+                  0);
+
+  *retval = this->config_;
+
+  return retval;
 }
 
 ::Components::Deployment::ComponentServer_ptr
-CIAO::Container_Impl::get_component_server (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::Container_Impl::get_component_server (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  return Components::Deployment::ComponentServer::_duplicate (this->comserv_.in ());
 }
 
 ::Components::CCMHome_ptr
 CIAO::Container_Impl::install_home (const char * id,
-                                       const char * entrypt,
-                                       const Components::ConfigValues & config
-                                       ACE_ENV_ARG_DECL)
+                                    const char * entrypt,
+                                    const Components::ConfigValues & config
+                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::Deployment::UnknownImplId,
                    Components::Deployment::ImplEntryPointNotFound,
@@ -57,23 +82,82 @@ CIAO::Container_Impl::install_home (const char * id,
   // Assembly), simply verify that is correct, or even discard this
   // value.
 
-  // It seems to me that the intention of CCM spec is to get
-  // Assembly/AssemblyFactory to parse all the XML files and convert
-  // all the properties files and such into ConfigValues.
+  // @@ Here we need to resolve paths to both component executors and
+  // component servants (that matches the container type) for the
+  // executor and their entry points before we can install the home.
+  struct home_installation_info config_info;
+  this->parse_config_values (config,
+                             config_info
+                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  Components::CCMHome_var newhome
+    = this->container_->ciao_install_home
+    (config_info.executor_dll_.in (),
+     config_info.executor_entrypt_.in (),
+     config_info.servant_dll_.in (),
+     config_info.servant_entrypt_.in ()
+     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+
+    this->home_set_.add (newhome.in ());
+  }
+  return newhome._retn ();
 }
 
 void
 CIAO::Container_Impl::remove_home (Components::CCMHome_ptr href
-                                      ACE_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  if (this->home_set_.object_in_set (href) == 0)
+    ACE_THROW (CORBA::BAD_PARAM ());
+
+  // @@ Finalizing home... how?  Removing all the components, but how?
+  // It looks like the component home will also need to keep a record
+  // of all the components it creates.
+
+  this->container_->ciao_uninstall_home (href
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // @@ Still need to remove the home if the previous operation fails?
+  if (this->home_set_.remove (href) == -1)
+    ACE_THROW (::Components::RemoveFailure ());
 }
 
 ::Components::CCMHomes *
 CIAO::Container_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+
+  Components::CCMHomes_var retval;
+
+  ACE_NEW_RETURN (retval.out (),
+                  Components::CCMHomes (),
+                  0);
+
+  CORBA::ULong len = this->home_set_.size ();
+  retval->length (len);          // resize
+
+#if 0
+  // TAO is broken here.  Both <replace>, <get_buffer> and friends are missing.
+  this->home_set_.copy (len, retval->get_buffer (0));
+#else
+  for (CORBA::ULong i = 0; i < len; ++i)
+    {
+      retval[i] = this->home_set_.at (i);
+    }
+#endif
+
+  return retval._retn ();
 }
 
 void
@@ -81,4 +165,69 @@ CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
+  // @@ Need to remove all CCMHome
+
+  //  ACE_THROW (CORBA::NO_IMPLEMENT ());
+
+  ACE_DEBUG ((LM_DEBUG, "CIAO::Container_Impl::remove\n"));
+}
+
+void
+CIAO::Container_Impl::parse_config_values (const Components::ConfigValues &options,
+                                           struct home_installation_info &component_install_info
+                                           ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::Deployment::UnknownImplId,
+                   Components::Deployment::ImplEntryPointNotFound,
+                   Components::InvalidConfiguration))
+{
+  for (CORBA::ULong i = 0; i < options.length (); ++i)
+    {
+      CORBA::String_var *info;
+      const char *str_in = 0;
+
+      // @@ The following code need cleaning up.
+      if (ACE_OS::strcmp (options[i]->name (), "CIAO-executor-path") == 0)
+        info = &component_install_info.executor_dll_;
+      else if (ACE_OS::strcmp (options[i]->name (), "CIAO-executor-entrypt") == 0)
+        info = &component_install_info.executor_entrypt_;
+      else if (ACE_OS::strcmp (options[i]->name (), "CIAO-servant-path") == 0)
+        info = &component_install_info.servant_dll_;
+      else if (ACE_OS::strcmp (options[i]->name (), "CIAO-servant-entrypt") == 0)
+        info = &component_install_info.servant_entrypt_;
+      else
+        {
+          Components::InvalidConfiguration exc;
+          exc.name = CORBA::string_dup (options[i]->name ());
+          exc.reason = Components::UnknownConfigValueName;
+          ACE_THROW (exc);
+        }
+
+      if (options[i]->value () >>= str_in)
+        {
+          *info = CORBA::string_dup (str_in);
+          ACE_DEBUG ((LM_DEBUG, "*parse_config_values got (%s) = %s\n",
+                      options[i]->name (),
+                      str_in));
+        }
+      else
+        {
+          Components::InvalidConfiguration exc;
+          exc.name = CORBA::string_dup (options[i]->name ());
+          exc.reason = Components::InvalidConfigValueType;
+          ACE_THROW (exc);
+        }
+    }
+
+  if (component_install_info.executor_dll_.in () == 0 ||
+      component_install_info.executor_entrypt_.in () == 0 ||
+      component_install_info.servant_dll_.in () == 0 ||
+      component_install_info.servant_entrypt_.in () == 0)
+    {
+      Components::InvalidConfiguration exc;
+      // The following should really be the exect missing configvalue name:
+      exc.name = CORBA::string_dup ("home_installation_info");
+      exc.reason = Components::ConfigValueRequired;
+      ACE_THROW (exc);
+    }
 }

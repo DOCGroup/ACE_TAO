@@ -44,13 +44,30 @@ namespace CIAO
 
     virtual ~Container (void) = 0;
 
-    /// Get the containing POA.  This operation does *not*
+    /// Get the containing POA.  This operation does *NOT*
     /// increase the reference count of the POA.
     virtual PortableServer::POA_ptr the_POA (void);
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+    /// Install a new home
+    virtual Components::CCMHome_ptr ciao_install_home
+      (const char *exe_dll_name,
+       const char *exe_entrypt,
+       const char *sv_dll_name,
+       const char *sv_entrypt
+       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::Deployment::UnknownImplId,
+                       Components::Deployment::ImplEntryPointNotFound,
+                       Components::Deployment::InstallationFailure)) = 0;
+
+    // Uninstall a servant for component or home.
+    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   protected:
@@ -82,7 +99,7 @@ namespace CIAO
      *
      * @retval Home objref of the installed home.
      */
-    virtual Components::CCMHome_ptr _ciao_install_home
+    virtual Components::CCMHome_ptr ciao_install_home
       (const char *exe_dll_name,
        const char *exe_entrypt,
        const char *sv_dll_name,
@@ -93,30 +110,30 @@ namespace CIAO
                        Components::Deployment::ImplEntryPointNotFound,
                        Components::Deployment::InstallationFailure));
 
+    // Uninstall a servant for component or home.
+    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     // Install a servant for component or home.
-    virtual CORBA::Object_ptr install_servant (PortableServer::Servant p
-                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    CORBA::Object_ptr install_servant (PortableServer::Servant p
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Get an object reference to a component or home from the servant.
-    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    // Uninstall a servant for component or home.
-    virtual void uninstall (CORBA::Object_ptr objref
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    // Uninstall a servant for component or home.
-    virtual void uninstall (PortableServer::Servant svt
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual void debug_uninstall (CORBA::Object_ptr objref
+    CORBA::Object_ptr get_objref (PortableServer::Servant p
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // Uninstall a servant for component or home.
+    void uninstall (CORBA::Object_ptr objref
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // Uninstall a servant for component or home.
+    void uninstall (PortableServer::Servant svt
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
     long number_;

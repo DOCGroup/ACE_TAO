@@ -15,47 +15,47 @@
 
 ACE_RCSID(ciao, Object_Set_T, "$Id$")
 
-template <class COBJ>
-CIAO::Object_Set<COBJ>::Object_Set (CORBA::ULong init_capacity,
+template <class T, class T_var>
+CIAO::Object_Set<T, T_var>::Object_Set (CORBA::ULong init_capacity,
                                     CORBA::ULong step)
   : capacity_ (init_capacity),
     size_ (0),
     step_ (step)
 {
-  this->buffer_ = new COBJ::_var_type [this->capacity_];
+  this->buffer_ = new T_var [this->capacity_];
 }
 
-template <class COBJ>
-CIAO::Object_Set<COBJ>::~Object_Set ()
+template <class T, class T_var>
+CIAO::Object_Set<T, T_var>::~Object_Set ()
 {
   delete[] this->buffer_;
 }
 
-template <class COBJ> void
-CIAO::Object_Set<COBJ>::release ()
+template <class T, class T_var> void
+CIAO::Object_Set<T, T_var>::release ()
 {
   CORBA::ULong i = 0;
 
   for (; i < this->size_; ++i)
     {
-      this->buffer_[i] = COBJ::_nil ();
+      this->buffer_[i] = T::_nil ();
     }
 }
 
-template <class COBJ> CORBA::Long
-CIAO::Object_Set<COBJ>::add (COBJ::_ptr_type objref)
+template <class T, class T_var> CORBA::Long
+CIAO::Object_Set<T, T_var>::add (T *objref)
 {
   if (this->size_ == this->capacity_)
     this->grow ();
 
-  this->buffer_[this->size_] = COBJ::_duplicate (objref);
+  this->buffer_[this->size_] = T::_duplicate (objref);
   return this->size_++;
 }
 
-template<class COBJ> CORBA::Long
-CIAO::Object_Set<COBJ>::remove (COBJ::_ptr_type objref)
+template<class T, class T_var> CORBA::Long
+CIAO::Object_Set<T, T_var>::remove (T *objref)
 {
-  if (CORBA::_is_nil (objref))
+  if (CORBA::is_nil (objref))
     return -1;
 
   CORBA::ULong i = 0;
@@ -67,18 +67,18 @@ CIAO::Object_Set<COBJ>::remove (COBJ::_ptr_type objref)
         if (i != this->size_)
           this->buffer_[i] = this->buffer_[this->size_];
 
-        this->buffer_[this->size_] = COBJ::_nil ();
+        this->buffer_[this->size_] = T::_nil ();
         return 0;
       }
   return -1;                    // not found.
 }
 
-template <class COBJ> void
-CIAO::Object_Set<COBJ>::grow (void)
+template <class T, class T_var> void
+CIAO::Object_Set<T, T_var>::grow (void)
 {
   this->capacity_ += this->step_;
 
-  COBJ::_var_type *newbuf = new CORBA::_var_type [this->capacity_];
+  T_var *newbuf = new T_var [this->capacity_];
 
   CORBA::ULong i = 0;
   for (; i < this->size_; ++i)
@@ -89,9 +89,9 @@ CIAO::Object_Set<COBJ>::grow (void)
   this->buffer_ = newbuf;
 }
 
-template <class COBJ> CORBA::ULong
-CIAO::Object_Set<COBJ>::copy (CORBA::ULong len,
-                              COBJ **buf)
+template <class T, class T_var> CORBA::ULong
+CIAO::Object_Set<T, T_var>::copy (CORBA::ULong len,
+                                  T **buf)
 {
   if (buf == 0)
     return 0;
@@ -101,15 +101,15 @@ CIAO::Object_Set<COBJ>::copy (CORBA::ULong len,
 
   CORBA::ULong i = 0;
   for (; i < len; ++i)
-    buf[i] = COBJ::_duplicate (this->buffer_[i].in ());
+    buf[i] = T::_duplicate (this->buffer_[i].in ());
 
   return len;
 }
 
-template <class COBJ> int
-CIAO::Object_Set<COBJ>::object_in_set (COBJ::_ptr_type objref)
+template <class T, class T_var> int
+CIAO::Object_Set<T, T_var>::object_in_set (T *objref)
 {
-  if (CORBA::_is_nil (objref))  // Don't count nil objref
+  if (CORBA::is_nil (objref))  // Don't count nil objref
     return 0;
 
   CORBA::ULong i = 0;
