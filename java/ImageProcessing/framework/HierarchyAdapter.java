@@ -27,7 +27,8 @@ class HierarchyAdapter extends Hierarchy
   public void paint(Graphics g)
     {
       super.paint(g);
-
-      getParent().getParent().validate();
+      
+      Container p = getParent().getParent();
+      p.getLayout ().layoutContainer (p);
     }
 }
