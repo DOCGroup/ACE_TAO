@@ -106,10 +106,10 @@ public:
   int operator != (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
   // Inequality operator.
 
-  CONCRETE operator [](long index) const;
+  CONCRETE operator [](int index) const;
   // Subscript operator.
 
-  void operator+= (long index);
+  void operator+= (int index);
   // Increment operator.
 
   operator CONCRETE *() const;

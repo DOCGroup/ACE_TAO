@@ -1,3 +1,10 @@
+Thu Aug  5 00:15:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Based_Pointer_T: Changed the type of index for operator[]
+	  and operator+= to be int instead of long so that it'll work
+ 	  correctly when constant values are used.  Thanks to
+	  Nanbor and KCC for pointing this out!
+
 Wed Aug  4 19:46:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/run_tests.sh:

@@ -63,7 +63,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::operator CONCRETE *() const
 }
 
 template <class CONCRETE> ACE_INLINE CONCRETE
-ACE_Based_Pointer_Basic<CONCRETE>::operator [] (long index) const
+ACE_Based_Pointer_Basic<CONCRETE>::operator [] (int index) const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator[]");
   CONCRETE *c = ACE_reinterpret_cast (CONCRETE *,
@@ -72,7 +72,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::operator [] (long index) const
 }
 
 template <class CONCRETE> ACE_INLINE void
-ACE_Based_Pointer_Basic<CONCRETE>::operator += (long index)
+ACE_Based_Pointer_Basic<CONCRETE>::operator += (int index)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator+=");
   this->base_offset_ += (index * sizeof (CONCRETE));
