@@ -143,9 +143,9 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 
       ACE_OS::sprintf (verbose_msg,
-                       ASYS_TEXT ("%s.%03d %s@%s@%d@%s@%s"),
+                       ASYS_TEXT ("%s.%03lu %s@%s@%ld@%s@%s"),
                        ctp + 4,
-                       this->time_stamp_.usec () / 1000,
+                       this->time_stamp_.usec () / 1000lu,
                        ctp + 20,
                        lhost_name,
                        this->pid_,

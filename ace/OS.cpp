@@ -3790,8 +3790,8 @@ ACE_OS::thr_key_detach (void *inst)
 
 void
 ACE_OS::unique_name (const void *object,
-                  LPTSTR name,
-                  size_t length)
+                     LPTSTR name,
+                     size_t length)
 {
   // The process ID will provide uniqueness between processes on the
   // same machine. The "this" pointer of the <object> will provide
@@ -3801,7 +3801,7 @@ ACE_OS::unique_name (const void *object,
   TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
                    ACE_TEXT ("%x%d"),
-                   object,
+                   ACE_reinterpret_cast (ptr_arith_t, object),
                    ACE_OS::getpid ());
   ACE_OS::strncpy (name,
                    temp_name,
