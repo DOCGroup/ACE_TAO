@@ -11,7 +11,6 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/TSS_Resources.h"
 #include "tao/PortableServer/ServantRetentionStrategyRetain.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
@@ -493,13 +492,23 @@ namespace TAO
     }
 
     PortableServer::ObjectId *
-    Retain_Servant_Retention_Strategy::servant_to_id (
+    Retain_Servant_Retention_Strategy::servant_to_user_id (
       PortableServer::Servant servant
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))
     {
+      // This operation requires the RETAIN and either the UNIQUE_ID or
+      // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
+      // exception is raised.
+      if (!((!this->poa_->allow_multiple_activations ()
+                || this->poa_->allow_implicit_activation ())))
+        {
+          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                            0);
+        }
+
       /**
        * If the POA has both the RETAIN and the UNIQUE_ID policy and the
        * specified servant is active, the Object Id associated with that
@@ -562,25 +571,11 @@ namespace TAO
           return user_id._retn ();
         }
 
-      /**
-       * If the POA has the USE_DEFAULT_SERVANT policy, the servant specified
-       * is the default servant, and the operation is being invoked in the
-       * context of executing a request on the default servant, then the
-       * ObjectId associated with the current invocation is returned.
-       */
-      if (this->poa_->cached_policies().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
-      {
-         return this->Non_Retain_Servant_Retention_Strategy::servant_to_id (
-            servant
-            ACE_ENV_ARG_PARAMETER);
-      }
-
       /*
        * Otherwise, the ServantNotActive exception is raised.
        */
       ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
                         0);
-
     }
 
     PortableServer::ObjectId *

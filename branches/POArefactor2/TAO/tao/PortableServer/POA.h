@@ -305,6 +305,12 @@ public:
                      PortableServer::POA::ServantNotActive,
                      PortableServer::POA::WrongPolicy));
 
+  PortableServer::ObjectId *servant_to_user_id (PortableServer::Servant p_servant
+                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantNotActive,
+                     PortableServer::POA::WrongPolicy));
+
   CORBA::Object_ptr servant_to_reference (PortableServer::Servant p_servant
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,

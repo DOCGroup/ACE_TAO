@@ -689,6 +689,17 @@ TAO_POA::servant_to_id (PortableServer::Servant servant
                                 ACE_ENV_ARG_PARAMETER);
 }
 
+PortableServer::ObjectId *
+TAO_POA::servant_to_user_id (PortableServer::Servant servant
+                             ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantNotActive,
+                   PortableServer::POA::WrongPolicy))
+{
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    servant_to_user_id (servant ACE_ENV_ARG_PARAMETER);
+}
+
 PortableServer::Servant
 TAO_POA::reference_to_servant (CORBA::Object_ptr reference
                                ACE_ENV_ARG_DECL)
@@ -1437,7 +1448,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->
+  return this->active_policy_strategies_.request_processing_strategy()->
     servant_to_id (servant ACE_ENV_ARG_PARAMETER);
 }
 

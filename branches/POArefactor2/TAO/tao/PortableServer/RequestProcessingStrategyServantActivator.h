@@ -76,6 +76,8 @@ namespace TAO
         PortableServer::ObjectId user_id
         ACE_ENV_ARG_DECL);
 
+      virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
+
     private:
       PortableServer::Servant incarnate_servant (
         const PortableServer::ObjectId& object_id
@@ -85,8 +87,6 @@ namespace TAO
         PortableServer::Servant servant,
         CORBA::Boolean cleanup_in_progress
         ACE_ENV_ARG_DECL);
-
-     virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
 
     private:
       PortableServer::ServantActivator_var servant_activator_;

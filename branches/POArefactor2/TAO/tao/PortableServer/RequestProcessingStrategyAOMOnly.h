@@ -90,8 +90,14 @@ namespace TAO
         PortableServer::ObjectId user_id
         ACE_ENV_ARG_DECL);
 
-     virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
+      virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
 
+      virtual PortableServer::ObjectId *servant_to_id (
+        PortableServer::Servant servant
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ServantNotActive,
+                           PortableServer::POA::WrongPolicy));
     private:
       TAO_POA* poa_;
     };

@@ -16,7 +16,6 @@
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/debug.h"
-#include "tao/TSS_Resources.h"
 
 // @todo Check the usage of non_retain and request_processing (default servant especially)
 
@@ -196,46 +195,14 @@ namespace TAO
     }
 
     PortableServer::ObjectId *
-    Non_Retain_Servant_Retention_Strategy::servant_to_id (
-      PortableServer::Servant servant
+    Non_Retain_Servant_Retention_Strategy::servant_to_user_id (
+      PortableServer::Servant /*servant*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      /*
-       * If the POA has the USE_DEFAULT_SERVANT policy, the servant specified
-       * is the default servant, and the operation is being invoked in the
-       * context of executing a request on the default servant, then the
-       * ObjectId associated with the current invocation is returned.
-       */
-
-      PortableServer::Servant default_servant = 0;
-      default_servant = this->poa_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (default_servant != 0 &&
-          default_servant == servant)
-        {
-          // If they are the same servant, then check if we are in an
-          // upcall.
-          TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
-            static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                        (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
-          // If we are in an upcall on the default servant, return the
-          // ObjectId associated with the current invocation.
-          if (poa_current_impl != 0 &&
-              servant == poa_current_impl->servant ())
-            {
-              return poa_current_impl->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-            }
-        }
-
-      /*
-       * If no default servant is available or we are not in the context of the
-       * executing request we throw the ServantNotActive exception
-        */
-      ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         0);
     }
 

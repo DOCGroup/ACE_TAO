@@ -116,13 +116,12 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
-      virtual
-      PortableServer::ObjectId *
-      servant_to_id (PortableServer::Servant servant
-                          ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy));
+      virtual PortableServer::ObjectId *servant_to_user_id (
+        PortableServer::Servant servant
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ServantNotActive,
+                           PortableServer::POA::WrongPolicy));
 
       virtual
       CORBA::Object_ptr

@@ -10,11 +10,13 @@
 //=============================================================================
 
 #include "tao/ORB_Constants.h"
+#include "tao/TSS_Resources.h"
 #include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/ServantManagerC.h"
 #include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
@@ -237,6 +239,35 @@ namespace TAO
     {
     }
 
+    PortableServer::ObjectId *
+    Default_Servant_Request_Processing_Strategy::servant_to_id (
+      PortableServer::Servant servant
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantNotActive,
+                         PortableServer::POA::WrongPolicy))
+    {
+      PortableServer::Servant default_servant = this->default_servant_.in ();
+
+      if (default_servant != 0 &&
+          default_servant == servant)
+        {
+          // If they are the same servant, then check if we are in an
+          // upcall.
+          TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
+            static_cast <TAO::Portable_Server::POA_Current_Impl *>
+                        (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+          // If we are in an upcall on the default servant, return the
+          // ObjectId associated with the current invocation.
+          if (poa_current_impl != 0 &&
+              servant == poa_current_impl->servant ())
+            {
+              return poa_current_impl->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+            }
+        }
+
+      return this->poa_->servant_to_user_id (servant ACE_ENV_ARG_PARAMETER);
+    }
   }
 }
 

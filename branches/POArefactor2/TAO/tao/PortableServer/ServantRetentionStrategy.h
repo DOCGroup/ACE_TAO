@@ -117,19 +117,19 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongPolicy)) = 0;
 
-      virtual PortableServer::ObjectId *servant_to_id (
+      virtual PortableServer::ObjectId *servant_to_user_id (
         PortableServer::Servant servant
         ACE_ENV_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy)) = 0;
 
-      virtual CORBA::Object_ptr
-      servant_to_reference (PortableServer::Servant servant
-                            ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                      PortableServer::POA::ServantNotActive,
-                      PortableServer::POA::WrongPolicy)) = 0;
+      virtual CORBA::Object_ptr servant_to_reference (
+        PortableServer::Servant servant
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ServantNotActive,
+                           PortableServer::POA::WrongPolicy)) = 0;
 
       virtual CORBA::Object_ptr create_reference (
         const char *intf,
