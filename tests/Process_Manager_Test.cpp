@@ -86,8 +86,8 @@ spawn_child (const ACE_TCHAR *argv0,
 
   if (result != ACE_INVALID_PID)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) spawned child: pid %d\n"),
-                int (result)));
+                ACE_TEXT ("(%P) spawned child: pid %d time %d\n"),
+                int (result), sleep_time));
   else
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn failed")));
 
@@ -155,7 +155,7 @@ main (int argc, ACE_TCHAR *argv[])
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) waited for child1, pid %d: %d\n"),
+                ACE_TEXT ("(%P) reaped child1, pid %d: %d\n"),
                 child1,
                 exitcode));
 
@@ -182,7 +182,7 @@ main (int argc, ACE_TCHAR *argv[])
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) waited for child 3, pid %d: %d\n"),
+                ACE_TEXT ("(%P) reaped child 3, pid %d: %d\n"),
                 child3,
                 exitcode));
 
@@ -200,12 +200,11 @@ main (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("error")));
       test_status = 1;
     }
-  // ACE_ASSERT (exitcode == 1);
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P) waited for any child, got pid %d: %d\n"),
-              result,
-              exitcode));
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P) reaped child 2, pid %d: %d\n"),
+                result,
+                exitcode));
 
   // --------------------------------------------------
   // Try the timed wait functions
@@ -226,12 +225,11 @@ main (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("error")));
       test_status = 1;
     }
-  // ACE_ASSERT (exitcode == 1);
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P) waited for any child, got pid %d: %d\n"),
-              result,
-              exitcode));
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P) reaped child 4 pid %d: %d\n"),
+                result,
+                exitcode));
 
   // This one should timeout:
   pid_t child5 = spawn_child (argv[0],
@@ -266,7 +264,8 @@ main (int argc, ACE_TCHAR *argv[])
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) waited for child 5 again: %d\n"),
+                ACE_TEXT ("(%P) reaped child 5, pid %d: %d\n"),
+                result,
                 exitcode));
 
   // --------------------------------------------------
@@ -291,6 +290,12 @@ main (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Reactor loop done!\n") ));
+
+  size_t nr_procs = mgr.managed ();
+  if (nr_procs != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P) %d processes left in manager\n"),
+                nr_procs));
 
   ACE_END_TEST;
   return test_status;

@@ -193,28 +193,13 @@ ACE_Process_Manager::open (size_t size,
 {
   ACE_TRACE ("ACE_Process_Manager::open");
 
-#if !defined (ACE_LACKS_SETPGID)
-  // Set up a process group so that the thread that opened this
-  // Manager will be able to put children into its own group and wait
-  // for them.
-   if (ACE_OS::setpgid (0, 0) == -1)
-     ACE_ERROR ((LM_WARNING,
-                 ACE_LIB_TEXT ("%p.\n"),
-                 ACE_LIB_TEXT ("ACE_Process_Manager::open: can't create a ")
-                 ACE_LIB_TEXT ("process group; some wait functions may fail")));
-#endif /* ACE_LACKS_SETPGID */
-
   if (r)
     {
-      ACE_Event_Handler::reactor (r);
+      this->reactor (r);
 #if !defined (ACE_WIN32) && !defined (ACE_PSOS)
       // Register signal handler object.
-      if (reactor ()->register_handler
-          (SIGCHLD, this) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n%a",
-                    "register_handler",
-                    1));
+      if (r->register_handler (SIGCHLD, this) == -1)
+        return -1;
 #endif  // !defined(ACE_WIN32) && !defined (ACE_PSOS)
     }
 
@@ -379,9 +364,7 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
   if (pid == ACE_INVALID_PID)
     {
       if (this->default_exit_handler_ != 0)
-        this->default_exit_handler_->handle_close
-          (ACE_INVALID_HANDLE,
-           0);
+        this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE, 0);
       this->default_exit_handler_ = eh;
       return 0;
     }
@@ -389,15 +372,13 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
   ssize_t i = this->find_proc (pid);
 
   if (i == -1)
-    // set "process not found" error
+    errno = ECHILD;
     return -1;
 
   ACE_Process_Descriptor &proc_desc = this->process_table_[i];
 
   if (proc_desc.exit_notify_ != 0)
-    proc_desc.exit_notify_->handle_close
-      (ACE_INVALID_HANDLE,
-       0);
+    proc_desc.exit_notify_->handle_close (ACE_INVALID_HANDLE, 0);
   proc_desc.exit_notify_ = eh;
   return 0;
 }
@@ -422,9 +403,6 @@ ACE_Process_Manager::spawn (ACE_Process *process,
                             ACE_Process_Options &options)
 {
   ACE_TRACE ("ACE_Process_Manager::spawn");
-
-  if (options.getgroup () == ACE_INVALID_PID)
-    options.setgroup (ACE_OS::getpid ());
 
   pid_t pid = process->spawn (options);
 
@@ -834,15 +812,52 @@ ACE_Process_Manager::wait (pid_t pid,
               pid = ACE_OS::waitpid (-(ACE_OS::getpid()),
                                      status,
                                      WNOHANG);
-              if (pid != 0)
-                // "no such children" error, or got one!
-                break;
+              if (pid > 0)
+                break;          // Got one - all done
+              if (pid == -1)
+                {
+                  if (errno == EINTR)
+                    continue;   // Try again
+                  break;        // Real error - give up
+                }
+              // pid 0, nothing is ready yet, so wait.
 
-              ACE_Sig_Set alarm_or_child;
+              ACE_Sig_Set wait_for_sigs;
 
-              alarm_or_child.sig_add (SIGALRM);
-              alarm_or_child.sig_add (SIGCHLD);
+              wait_for_sigs.sig_add (SIGCHLD);
 
+#  if defined (ACE_HAS_SIGTIMEDWAIT)
+              // Block SIGCHLD then wait for it.
+              sigset_t orig_set;
+#    if defined (ACE_HAS_THREADS)
+              ACE_OS::thr_sigsetmask (SIG_BLOCK, wait_for_sigs, &orig_set);
+#    else
+              ACE_OS::sigprocmask (SIG_BLOCK, wait_for_sigs, &orig_set);
+#    endif
+              int status = ACE_OS::sigtimedwait (wait_for_sigs,
+                                                 0,
+                                                 &timeout);
+              {
+                ACE_Errno_Guard guard (errno);
+#    if defined (ACE_HAS_THREADS)
+                ACE_OS::thr_sigsetmask (SIG_BLOCK, wait_for_sigs, &orig_set);
+#    else
+                ACE_OS::sigprocmask (SIG_SETMASK, &orig_set, 0);
+#    endif
+              }
+              if (-1 != status || errno == EINTR)
+                continue;       // SIGCHLD ready; go waitpid again
+              // Here if there was a timeout or error. If timeout,
+              // it's not an error for our caller, just return 0.
+              pid = (errno == EAGAIN ? 0 : ACE_INVALID_PID);
+              break;
+#  else
+              // Without sigtimedwait support, this can get hairy... we
+              // set an alarm to fire at the caller-specified future time.
+              // Then we wait for either SIGCHLD or SIGALRM. The problem with
+              // this is that once ualarm is enabled, the SIGALRM will fire
+              // whether we're still here waiting or not. On some platforms,
+              // this will cause a core dump on uncaught signal.
               ACE_Time_Value time_left = wait_until - ACE_OS::gettimeofday ();
 
               // if ACE_OS::ualarm doesn't have sub-second resolution:
@@ -854,8 +869,10 @@ ACE_Process_Manager::wait (pid_t pid,
                 break;
               }
 
+              wait_for_sigs.sig_add (SIGALRM);
               ACE_OS::ualarm (time_left);
-              ACE_OS::sigwait (alarm_or_child);
+              ACE_OS::sigwait (wait_for_sigs);
+#  endif /* ACE_HAS_SIGTIMEDWAIT */
             }
         }
 #endif /* !defined (ACE_WIN32) */
