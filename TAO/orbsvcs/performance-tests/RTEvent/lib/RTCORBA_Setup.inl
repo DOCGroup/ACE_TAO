@@ -1,5 +1,5 @@
 /**
- * @file RTCORBA_Setup.h
+ * @file RTCORBA_Setup.inl
  *
  * $Id$
  *
