@@ -107,10 +107,11 @@ ACEXML_Svcconf_Parser::parse_string (const ACE_TCHAR str[])
 
 #else
 
-#  if defined (ACE_AIX_VERS) && (ACE_AIX_VERS == 403)
-// This simply shuts up the AIX 4.3 linker that complains there are no
-// csects or exported symbols from the shared library.
-extern "C" void shut_up_aix_ld (void) {};
-#  endif /* AIX 4.3 */
+#  if defined (_AIX) && \
+     (defined (__IBMCPP__) && (__IBMCPP__ >= 500) && (__IBMCPP__ < 600))
+// This simply shuts up the AIX linker that complains there are no
+// csects or exported symbols when building with Visual Age C++ 5.
+extern "C" void ace_shut_up_aix_ld (void) {};
+#  endif /* AIX && __IBMCPP__ == 500 */
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */

@@ -33,6 +33,7 @@ ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
   BIN = main
   SHLIB = libClient_Test.$(SOEXT)
   BUILD = $(VSHLIB) $(VBIN)
+  OBJDIRS = $(VDIR) $(VSHDIR)
 endif # Other
 endif # static_libs_only
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
