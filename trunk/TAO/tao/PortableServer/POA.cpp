@@ -48,8 +48,8 @@ ACE_RCSID (PortableServer,
 #endif /* ! __ACE_INLINE__ */
 
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
-// It's an array of octets representing ^t^a^o/0 in octal.
-CORBA::Octet
+// It's an array of constant octets representing ^t^a^o/0 in octal.
+CORBA::Octet const
 TAO_POA::objectkey_prefix [TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE] = {
   024, // octal for ^t
   001, // octal for ^a
