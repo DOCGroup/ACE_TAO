@@ -32,10 +32,10 @@
 #include "ace/SString.h"
 #include "Event_CommS.h"
 
-class ConsumerShutdown
+class ShutdownCallback
 {
   // = TITLE
-  //   Helper callback class to shutdown the Consumer application.
+  //   Helper callback class to shutdown the application.
 public:
   virtual void close (void) = 0;
 };
@@ -64,11 +64,11 @@ public:
   // Disconnect the <Consumer> from the <Notifier>, giving it the
   // <reason>.
 
-  void set (ConsumerShutdown *_consumershutdown);
+  void set (ShutdownCallback *_shutdown);
   // Set the Shutdown callback.
 
 private:
-  ConsumerShutdown *consumershutdown;
+  ShutdownCallback *shutdown;
   // The callback to shutdown the consumer application.
 };
 

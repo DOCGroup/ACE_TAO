@@ -384,7 +384,7 @@ Notifier_i::push (const Event_Comm::Event &event,
 }
 
 Consumer_i::Consumer_i (void)
-  : consumershutdown (0)
+  : shutdown (0)
 {
 }
 
@@ -417,15 +417,15 @@ Consumer_i::disconnect (const char *reason,
               "**** got disconnected due to %s\n",
               reason));
 
-  ACE_ASSERT (consumershutdown != 0);
+  ACE_ASSERT (shutdown != 0);
 
-  consumershutdown->close ();
+  shutdown->close ();
 }
 
 void
-Consumer_i::set (ConsumerShutdown *_consumershutdown)
+Consumer_i::set (ShutdownCallback *_shutdown)
 {
-  consumershutdown = _consumershutdown;
+  shutdown = _shutdown;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

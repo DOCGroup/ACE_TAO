@@ -5,7 +5,7 @@
 
 ACE_RCSID(Supplier, supplier, "$Id$")
 
-class Supplier : public ACE_Event_Handler
+class Supplier : public ACE_Event_Handler, public ShutdownCallback
 {
   // = TITLE
   //   Supplier driver for the TAO Publish/Subscribe example.
@@ -26,6 +26,9 @@ public:
 
   void run (void);
   // Execute the supplier.
+
+  virtual void close (void);
+  // Shutdown the application.
 
 private:
   virtual int handle_signal (int signum,
@@ -57,23 +60,30 @@ Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
               "%S\n",
               signum));
 
-  ACE_Reactor::end_event_loop ();
+  this->close ();
   return 0;
 }
 
 void
 Supplier::run (void)
 {
-  if (ACE_Reactor::run_event_loop () == -1)
+  if (nh_.run () == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "run_reactor_event_loop"));
+                "Notifier_Handler::run"));
+}
+
+void
+Supplier::close (void)
+{
+  ih_.close ();
+  nh_.close ();
 }
 
 int
 Supplier::init (int argc, char *argv[])
 {
-  if (this->nh_.init (argc, argv) == -1)
+  if (this->nh_.init (argc, argv, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "Notifier_Handler did not init\n"),
@@ -83,7 +93,7 @@ Supplier::init (int argc, char *argv[])
 		       "%p\n",
 		       "Supplier Input handler did not init\n"),
                       -1);
-  else if (ACE_Reactor::instance ()->register_handler (SIGINT,
+  else if (nh_.reactor ()->register_handler (SIGINT,
                                                        this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
