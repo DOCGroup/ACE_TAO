@@ -53,7 +53,7 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/PortableInterceptor/ObjectReferenceTemplate:1.0";
 }
-
+#if 0
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
@@ -499,7 +499,7 @@ PortableInterceptor::ObjectReferenceTemplateSeq_out::operator[] (CORBA::ULong in
 }
 
 #endif /* end #if !defined */
-
+#endif /* 0 */
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:712
 

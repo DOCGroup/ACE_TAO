@@ -37,6 +37,8 @@
 #include "StringSeqC.h"
 #include "ValueBase.h"
 #include "Exception.h"
+#include "Value_VarOut_T.h"
+#include "Seq_VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -251,7 +253,24 @@ TAO_NAMESPACE  PortableInterceptor
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:52
   
   class ObjectReferenceTemplate;
+  struct ObjectReferenceTemplate_life;
+  typedef 
+    TAO_Value_Var_T <
+        ObjectReferenceTemplate,
+        ObjectReferenceTemplate_life
+      > ObjectReferenceTemplate_var;
+  typedef
+    TAO_Value_Out_T <
+        ObjectReferenceTemplate,
+        ObjectReferenceTemplate_life
+      > ObjectReferenceTemplate_out;
+  struct ObjectReferenceTemplate_life
+  {
+    static void tao_add_ref (ObjectReferenceTemplate *);
+    static void tao_remove_ref (ObjectReferenceTemplate *);
+  };
 
+#if 0
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___PTR_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___PTR_CH_
   
@@ -325,7 +344,7 @@ TAO_NAMESPACE  PortableInterceptor
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:96
 
 #endif /* end #if !defined */
-
+#endif /* 0 */
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE_CH_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE_CH_
   
@@ -392,7 +411,36 @@ TAO_NAMESPACE  PortableInterceptor
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplate;
-  
+
+typedef
+  TAO_Unbounded_Valuetype_Sequence <
+      ObjectReferenceTemplate,
+      ObjectReferenceTemplate_var,
+      ObjectReferenceTemplate_life
+    > ObjectReferenceTemplateSeq;
+
+typedef
+  TAO_VarSeq_Var_T <
+      ObjectReferenceTemplateSeq,
+      TAO_Valuetype_Manager <
+          ObjectReferenceTemplate,
+          ObjectReferenceTemplate_var,
+          ObjectReferenceTemplate_life
+        >
+    > ObjectReferenceTemplateSeq_var;
+
+typedef
+  TAO_Seq_Out_T <
+      ObjectReferenceTemplateSeq,
+      ObjectReferenceTemplateSeq_var,
+      TAO_Valuetype_Manager <
+          ObjectReferenceTemplate,
+          ObjectReferenceTemplate_var,
+          ObjectReferenceTemplate_life
+        >
+    > ObjectReferenceTemplateSeq_out;
+
+#if 0  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:62
 
@@ -558,7 +606,7 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-  
+#endif /* 0 */
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
   
