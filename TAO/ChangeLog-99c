@@ -1,3 +1,8 @@
+Thu Jun  3 16:42:59 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* Cleaned up the TAO/performance-tests/Demux directory.
+	  The tests are in TAO/performance-tests/POA/Demux.
+	
 Thu Jun  3 16:30:46 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/GIOP.h: 
