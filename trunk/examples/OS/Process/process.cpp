@@ -110,12 +110,12 @@ test_more (void)
       return;
     }
 
-  ACE_ProcessEx new_process;
+  ACE_Process new_process;
   ACE_Process_Options options;
   options.command_line (executable);
   options.set_handles (infile);
 
-  if (new_process.start (options) == -1)
+  if (new_process.spawn (options) == -1)
     {
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR, "%p errno = %d.\n",
@@ -136,8 +136,8 @@ test_date (void)
   options.command_line (DATE_PATH);
 
   // Try to create a new process running date.
-  ACE_ProcessEx new_process;
-  if (new_process.start (options) == -1)
+  ACE_Process new_process;
+  if (new_process.spawn (options) == -1)
     {
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR, "%p errno = %d.\n",
@@ -155,8 +155,8 @@ test_ls (void)
   ACE_Process_Options options;
   options.command_line ("%s -al", LS_PATH);
   
-  ACE_ProcessEx new_process;
-  if (new_process.start (options) == -1)
+  ACE_Process new_process;
+  if (new_process.spawn (options) == -1)
     {
       int error = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR, "%p errno = %d.\n",
@@ -323,8 +323,8 @@ test_setenv (const char *argv0)
   options.setenv ("ACE_PROCESS_TEST= here's a large number %u", 0 - 1);
   options.setenv ("ACE_PROCESS_TEST2", "ophilli");
   options.command_line ("%s -g", argv0);
-  ACE_ProcessEx process;
-  if (process.start (options) == -1)
+  ACE_Process process;
+  if (process.spawn (options) == -1)
     {
       ACE_ERROR ((LM_ERROR, "%p.\n", "test_setenv"));
       return;
@@ -371,8 +371,8 @@ main (int argc, char *argv[])
     {
       ACE_Process_Options options;
       options.command_line ("%s -d -l -s", argv[0]);
-      ACE_ProcessEx process;
-      if (process.start (options) == -1)
+      ACE_Process process;
+      if (process.spawn (options) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
       process.wait ();
     }
