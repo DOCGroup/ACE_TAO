@@ -25,6 +25,12 @@ SERVER_OBJS = $(addsuffix .o, server status_i) $(IDL_SRC:.cpp=.o)
 CORBANAME_CLIENT_OBJS = $(addsuffix .o, corbaname_client status_i) $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1
+
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Naming
+
 #----------------------------------------------------------------------------
 # Include macros and targets
 #----------------------------------------------------------------------------

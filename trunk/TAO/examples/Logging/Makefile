@@ -58,7 +58,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs \
         -I$(TAO_ROOT)
 TAO_IDLFLAGS +=  -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-all: Logging_Service Logging_Test
+#all: Logging_Service Logging_Test
 
 realclean: clean
 	-$(RM) *C.* *S.* *S_T.*
