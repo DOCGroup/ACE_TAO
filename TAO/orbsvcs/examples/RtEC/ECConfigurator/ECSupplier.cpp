@@ -12,7 +12,7 @@
 ACE_RCSID(EC_Examples, ECSupplier, "$Id$")
 
 ECSupplier::ECSupplier (SourceID id,
-                        EventTypeVector &pub_types,
+                        const EventTypeVector &pub_types,
                         Service_Handler *handler)
   : id_ (id)
   , pub_types_(pub_types)

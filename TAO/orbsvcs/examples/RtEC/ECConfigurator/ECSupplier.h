@@ -53,7 +53,7 @@ public:
   typedef std::vector<EventType> EventTypeVector;
   typedef RtecScheduler::handle_t InfoHandle;
 
-  ECSupplier (SourceID id, EventTypeVector &pub_types,
+  ECSupplier (SourceID id, const EventTypeVector &pub_types,
             Service_Handler * handler = 0);
   // Constructor
 
