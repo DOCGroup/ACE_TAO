@@ -3633,22 +3633,22 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   if (rw->important_writer_ && rw->ref_count_ == 1)
     // only the reader requesting to upgrade its lock is left over.
     {
-      result = ace_os::cond_signal (&rw->waiting_important_writer_);
+      result = ACE_OS::cond_signal (&rw->waiting_important_writer_);
       error = errno;
     }
   else if (rw->num_waiting_writers_ > 0 && rw->ref_count_ == 0)
     // give preference to writers over readers...
     {
-      result = ace_os::cond_signal (&rw->waiting_writers_);
+      result = ACE_OS::cond_signal (&rw->waiting_writers_);
       error = errno;
     }
   else if (rw->num_waiting_readers_ > 0 && rw->num_waiting_writers_ == 0)
     {
-      result = ace_os::cond_broadcast (&rw->waiting_readers_);
+      result = ACE_OS::cond_broadcast (&rw->waiting_readers_);
       error = errno;
     }
 
-  ace_os::mutex_unlock (&rw->lock_);
+  ACE_OS::mutex_unlock (&rw->lock_);
   return result;
 # endif /* ! ace_lacks_rwlock_t */
 #else
