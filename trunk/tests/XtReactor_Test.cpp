@@ -160,9 +160,9 @@ inc_tmo (void *w,XtIntervalId *)
                  NULL);
 
   (void) XtAppAddTimeOut (XtWidgetToApplicationContext ((Widget) w),
-			  1000,
-			  inc_tmo,
-			  (Widget) w);
+                          1000,
+                          inc_tmo,
+                          (Widget) w);
 }
 
 class EV_handler : public ACE_Event_Handler
@@ -219,6 +219,15 @@ public:
 #if defined (HummingBird_X)
 extern "C" void HCLXmInit (void);
 #endif /* HummingBird_X */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* ACE_HAS_XT */
 
 int
@@ -296,9 +305,9 @@ main (int argc, char *argv[])
 
   // Register callback for X Timer
   (void) XtAppAddTimeOut (app_context,
-			  1000,
-			  inc_tmo,
-			  (XtPointer) lbl);
+                          1000,
+                          inc_tmo,
+                          (XtPointer) lbl);
 
   XtRealizeWidget (topLevel);
 
@@ -342,12 +351,3 @@ main (int argc, char *argv[])
   ACE_END_TEST;
   return 0;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
