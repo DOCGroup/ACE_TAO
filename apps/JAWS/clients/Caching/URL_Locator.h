@@ -33,7 +33,8 @@ public:
   { 
     NONE,
     SOME,
-    ALL
+    ALL,
+    INVALID_SELECTION
   };
   // Specify how to select offers.
 

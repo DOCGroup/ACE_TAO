@@ -22,7 +22,7 @@
 
 class ACE_Export ACE_URL_Locator_Request
   // = TITLE
-  //     A URL request wrappers.
+  //     A URL request message formater/wrapper.
   //
   // = DESCRIPTION
   //     This class defines a URL request data.
@@ -39,15 +39,21 @@ public:
   };
   // Request type
 
+  ACE_URL_Locator_Request (void);
+  // Default ctor.
+
+  ~ACE_URL_Locator_Request (void);
+  // Default dtor.
+
   int url_query (const int how,
-		 const ACE_URL_Property_Seq *pseq,
+		 const ACE_URL_Property_Seq &pseq,
 		 const int how_many);
   // Query the locator for HTTP with designate properties (none, some,
   // or all).  The locator being queried will return a sequence of
   // offers with <how_many> offers in it.  This interface allocates
   // <offer> so users must deallocate it after use.
 
-  int export_offer (ACE_URL_Offer *offer);
+  int export_offer (const ACE_URL_Offer &offer);
   // Export an offer to the locator.
 
   int withdraw_offer (const ACE_WString &offer_id);
@@ -58,32 +64,42 @@ public:
 
   int modify_offer (const ACE_WString &offer_id,
 		    const char *url = 0,
-		    const ACE_URL_Property_Seq *del = 0,
-		    const ACE_URL_Property_Seq *modify = 0);
+		    const ACE_URL_Property_Seq &del = 0,
+		    const ACE_URL_Property_Seq &modify = 0);
   // Modify a previously registered offer.
 
   int modify_offer (const ACE_WString &offer_id,
 		    const ACE_WString *url = 0,
-		    const ACE_URL_Property_Seq *del = 0,
-		    const ACE_URL_Property_Seq *modify = 0);
+		    const ACE_URL_Property_Seq &del = 0,
+		    const ACE_URL_Property_Seq &modify = 0);
   // Modify a previously registered offer.
 
-  int encode (void);
-  // Encode request for network communication.
+  size_t encode (void);
+  // Encode request for network communication.  If succeed,
+  // returns the size of the buffer, otherwise, return 0.
 
-  int decode (void);
-  // Restore from network data.
+  size_t decode (void *buffer);
+  // Restore from network data.  Returns size of the buffer
+  // if succeed, 0 otherwise.
 
-  int how (void);
-  int how_many (void);
-  ACE_URL_Property_Seq &seq (void);
-  ACE_URL_Property_Seq &del (void);
-  ACE_URL_Property_Seq &modify (void);
-  ACE_WString &id (void);
-  ACE_WString &url (void);
-  void *buffer (void);
+  const int how (void) const;
+  const int how_many (void) const;
+  const ACE_URL_Property_Seq *seq (void) const;
+  const ACE_URL_Property_Seq *del (void) const;
+  const ACE_URL_Property_Seq *modify (void) const;
+  const ACE_URL_Offer *offer (void) const;
+  const ACE_WString &id (void) const;
+  const ACE_WString &url (void) const;
+  const char *buffer (void) const;
   // A bunch of methods to access internal data.
+
+  void dump (void);
+  // Print out this object.
 protected:
+  size_t bsize (void) const;
+  // Return the size of buffer required to encode
+  // this request.
+
   unsigned int code_;
   // Request type code.
 
@@ -95,11 +111,13 @@ protected:
   ACE_URL_Property_Seq *seq2_;
   // For modify seq. in modify_offer.
 
+  ACE_URL_Offer *offer_;
+
   ACE_WString id_;
 
   ACE_WString url_;
 
-  void *buffer_;
+  char *buffer_;
 };
 
 #if defined (__ACE_INLINE__)
