@@ -152,7 +152,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "void" << be_nl
           << "CORBA::release (" 
-          << node->nested_type_name (this->ctx_->scope ()) 
+          << node->name () 
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "CORBA::AbstractBase_ptr abs = p;" << be_nl
@@ -162,7 +162,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "CORBA::Boolean" << be_nl
           << "CORBA::is_nil (" 
-          << node->nested_type_name (this->ctx_->scope ()) 
+          << node->name () 
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "CORBA::Object_ptr obj = p;" << be_nl
