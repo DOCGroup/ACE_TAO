@@ -1,3 +1,9 @@
+Fri Jun 25 08:36:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+          Made first argument of is_primary_member() const, just as it is
+          declared in the header file.
+
 Fri Jun 25 08:32:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Repository_Configuration.cpp:

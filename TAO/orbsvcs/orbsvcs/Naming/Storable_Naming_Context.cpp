@@ -1269,8 +1269,8 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   else
     {
       //  ***  This is a problem.  Is there an exception we can throw? ***
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
       ACE_UNUSED_ARG (bind_iter);
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
 
 #if 0
       // Create a BindingIterator for return.
