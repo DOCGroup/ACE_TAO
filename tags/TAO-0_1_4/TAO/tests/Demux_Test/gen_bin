@@ -1,0 +1,6 @@
+#!/bin/sh
+make clean
+./CodeGen/tao -o $1 -m $2
+make
+mv client client_${1}_${2}
+mv server server_${1}_${2}

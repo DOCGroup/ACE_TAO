@@ -1,0 +1,89 @@
+// $Id$
+
+This is the cubit example that uses the TAO IDL compiler to generate
+the stubs and skeletons. Additional features include presence of a
+factory to create Cubit objects and testing the _bind call to get the
+factory object reference.
+
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
+The client and server can also make use of the Naming Service.
+To use the NamingService you need to start the 
+	TAO/orbsvcs/Naming_Service/Naming_Service
+before starting the server and client.
+
+server:
+-------
+
+% server [-d] [-s] [-ORBhost <serverhost>] [-ORBport <portnum>]
+           [-n <number-of-cubit-objects>] [-o <ior_output_file>] 
+
+-s option tells the server to register the cubit-factory object 
+  with the Naming Service.
+
+The server cubit factory maintains num_of_cubit objects (default =
+1). They are assigned keys that look like "key0", "key1", ...
+
+When the server is started and you have used the -d flag, you should
+see as the first line of output something that looks like
+	iiop:1.0//swarm:10015/Persistent/886013035/850128/RootPOA/RootPOA_is_BAD/factory
+	(-ORBobjrefstyle url)
+or
+	IOR:000000000000001649444c3a43756269745...
+	(-ORBobjrefstyle ior)
+
+Using -d turns on debugging messages.  It is additive, i.e., the more
+-d options provided, the more debugging you can get.  At the moment,
+only 2 levels of debugging are implemented, and more than 2 -d options
+are ignored.
+
+Using the -o option the Cubit_Factory_obj IOR can be outputted to a file.	
+Irrespective of the -o option the IOR will be outputted on the screen.
+
+client:
+-------
+
+% client [-d] [-s] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations> 
+
+	There are 3 ways of giving the CubitFactory IOR to the client:
+
+	1. From a file using the -f option. (This file can be produced using 
+		the -o option of the server.)
+	
+	2. Directly on the commandline using the -k option.
+	
+	3. Get it from the Naming Service using the -s option.
+
+Sample Run:
+----------
+
+1. Start the server.
+
+% server -ORBport 20000 -ORBobjrefstyle url -o theior
+
+starting up daemon <unknown>
+opening dynamic service Resource_Factory
+did dynamic on Resource_Factory, error = 0
+opening dynamic service Client_Strategy_Factory
+did dynamic on Client_Strategy_Factory, error = 0
+opening dynamic service Server_Strategy_Factory
+did dynamic on Server_Strategy_Factory, error = 0
+The IOR is: <iiop:1.0//tango:20000/Persistent/887665222/647179/RootPOA/RootPOA_is_BAD/factory\00\00>
+
+
+2.Start the client.
+
+%client -ORBport 19998 -f theior
+
+starting up daemon <unknown>
+opening dynamic service Resource_Factory
+did dynamic on Resource_Factory, error = 0
+opening dynamic service Client_Strategy_Factory
+did dynamic on Client_Strategy_Factory, error = 0
+opening dynamic service Server_Strategy_Factory
+did dynamic on Server_Strategy_Factory, error = 0
+Factory received OK
+.
+.
+.
