@@ -95,7 +95,7 @@ ACE_Time_Request::timeout (void) const
 }
 
 void
-ACE_Time_Request::timeout (const ACE_Time_Value timeout)
+ACE_Time_Request::timeout (const ACE_Time_Value& timeout)
 {
   ACE_TRACE ("ACE_Time_Request::timeout");
   this->transfer_.sec_timeout_  = timeout.sec ();

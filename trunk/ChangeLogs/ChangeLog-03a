@@ -1,3 +1,13 @@
+Thu Nov 14 06:59:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Date_Time.{h,i}:
+          Added update() method with which it is possible to set the values
+          in ACE_Date_Time based on a passed ACE_Time_Value.
+
+        * ace/Time_Request_Reply.{h,cpp}:
+          Made the argument of the timeout method const&. Updated doxygen
+          documentation and marked init() as deprecated because it is a no-op.
+
 Wed Nov 13 18:28:39 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/FIFO_Test.cpp: Changed to both clarify the usage of
@@ -29,11 +39,11 @@ Wed Nov 13 17:29:31 2002  Steve Huston  <shuston@riverace.com>
 Wed Nov 13 16:52:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
         * ace/Lib_Find.cpp (ldname): MacOS X prepends an underscore to
-	  symbols in shared libaries.  
-	
+	  symbols in shared libaries.
+
         * ace/config-macosx.h:
         * include/makeinclude/platform_macosx.GNU:
-        
+
 	- add support for dlcompat, a third party package which provides
             dlopen(), dlsym(), dlcose() functions
 
@@ -43,17 +53,17 @@ Wed Nov 13 16:52:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 Tue Nov 12 14:12:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	This is a hackish fix for BUG 1361. Please see
-	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361 
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361
 	for details of this problem
-	
+
 	* ace/TP_Reactor.cpp (handle_socket_events): A hack to prevent
 	  BUG 1361 from surfacing for applications like TAO, using the
 	  TP_Reactor. This fix basically ensures that resume_i () is
-	  not called naively. 
+	  not called naively.
 
 	* ace/Event_Handler.h: Added a enum type which could be could be
 	  used by  the TP_Reactor.
-	  
+
 Tue Nov 12 11:53:29 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.lst: Change FIFO_Test from !MSVC to !Win32 to

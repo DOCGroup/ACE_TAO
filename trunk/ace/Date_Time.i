@@ -8,8 +8,13 @@ ACE_Date_Time::update (void)
 {
   ACE_TRACE ("ACE_Date_Time::update");
 
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-  time_t time = now.sec ();
+  update(ACE_OS::gettimeofday ());
+}
+
+ASYS_INLINE void
+ACE_Date_Time::update (const ACE_Time_Value& timevalue)
+{
+  time_t time = timevalue.sec ();
   struct tm tm_time;
   ACE_OS::localtime_r (&time, &tm_time);
   this->day_ = tm_time.tm_mday;
@@ -18,7 +23,7 @@ ACE_Date_Time::update (void)
   this->hour_ = tm_time.tm_hour;
   this->minute_ = tm_time.tm_min;
   this->second_ = tm_time.tm_sec;
-  this->microsec_ = now.usec ();
+  this->microsec_ = timevalue.usec ();
   this->wday_ = tm_time.tm_wday;
 }
 
