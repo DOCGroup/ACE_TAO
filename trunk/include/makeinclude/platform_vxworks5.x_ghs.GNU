@@ -13,6 +13,15 @@
 #### 3) You'll probably need to set your GHS environment variable to the
 ####    location of your Green Hills executables.
 ####
+#### 4) For x86 target, the ghsblin.o, ghsmath.o, and objghsvx/*.o
+####    object files were added to libedgnoe.a using this command:
+####
+####    $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/ar386 rsv libedgnoe.a \
+####    ghs*.o objghsvx/*.o
+####
+####    If you don't do that, you'll have to add the individual .o files
+####    to LIBS below.
+####
 #### Here's an example platform_macros.GNU file:
 ####
 #### WIND_BASE = /project/doc/wind
@@ -47,11 +56,13 @@ ifeq ($(CPU),86)
   ifndef GHS
     GHS = /project/doc/green/vx$(CPU)
   endif # GHS
+  LIBS += $(GHS)/libedgnoe.a
 else
 ifeq ($(CPU,ppc)
   ifndef GHS
     GHS = /appl/newgreen/vx$(CPU)603
   endif # GHS
+  LIBS += $(GHS)/ghsbltin.o $(GHS)/ghsmath.o
 endif # ppc
 endif # CPU
 
@@ -63,7 +74,6 @@ DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
 LDFLAGS         = --no_auto_instantiation
-LIBS            += $(GHS)/ghsbltin.o $(GHS)/ghsmath.o
 OCFLAGS         += -OL -OM
 PIC             =
 AR              = ax
