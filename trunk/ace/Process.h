@@ -28,12 +28,12 @@ class ACE_Export ACE_Process_Options
 //    and exec).
 {
 public:
-  enum { DEFAULT_CL_OPTIONS_BUF_LEN = 1024 };
+  enum { DEFAULT_COMMAND_LINE_BUF_LEN = 1024 };
 
   ACE_Process_Options (int inherit_environment = 1,
-		       int cl_options_buf_len=DEFAULT_CL_OPTIONS_BUF_LEN);
+		       int command_line_buf_len=DEFAULT_COMMAND_LINE_BUF_LEN);
   // If <inherit_environment> == 1, the new process will inherit the
-  // environment of the current process.  <cl_options_buf_len> is the
+  // environment of the current process.  <command_line_buf_len> is the
   // max strlen for command-line arguments.
 
   ~ACE_Process_Options (void);
@@ -52,6 +52,10 @@ public:
   // sure to set the others to ACE_INVALID_HANDLE.  Returns 0 on
   // success, -1 on failure.
 
+  int setenv (const char *format, ...);
+  // <format> must be of the form "VARIABLE= VALUE".  There can not be
+  // any spaces between VARIABLE and the equal sign.
+
   int setenv (const char *variable_name, const char *format, ...);
   // Set a single environment variable, <variable_name>.  Since
   // different platforms separate each environment variable
@@ -64,36 +68,29 @@ public:
   // Set the working directory for the process.  strlen of <wd> must
   // be <= MAXPATHLEN.
 
-  void path (LPCTSTR p);
-  // Set the path to the application.  This can either be a full path,
-  // relative path, or just an executable name.  If an executable name
-  // is used, we rely on the platforms support for searching paths.
-  // strlen of <p> must be <= MAXPATHLEN.  Since we need a path to run
-  // a process, this method *must* be called!
-
-  void cl_options (const char *format, ...);
+  void command_line (const char *format, ...);
   // Set the command-line arguments.  <format> can use any printf
-  // formats.  Check this->cl_options_buf and this->argv_cl_options
-  // for accessors.
+  // formats.  The first token in <format> should be the path to the
+  // application.  This can either be a full path, relative path, or
+  // just an executable name.  If an executable name is used, we rely
+  // on the platform's support for searching paths.  Since we need a
+  // path to run a process, this method *must* be called!
 
   // ************************************************************
   // = These operations are used by ACE_Process to retrieve options
   // values.
   // ************************************************************
 
-  LPCTSTR path (void) const;
-  // The full path to the application.
-
   LPTSTR working_directory (void);
   // Current working directory.  Returns "" if nothing has been set.
 
-  LPTSTR cl_options_buf (void);
+  LPTSTR command_line_buf (void);
   // Buffer of command-line options.  Returns exactly what was passed
-  // to this->cl_options.
+  // to this->command_line.
 
-  char * const *cl_options_argv (void);
+  char * const *command_line_argv (void);
   // argv-style command-line options.  Parses and modifies the string
-  // created from this->cl_options.  All spaces not in quotes ("" or
+  // created from this->command_line.  All spaces not in quotes ("" or
   // '') are replaced with null (\0) bytes.  An argv array is built
   // and returned with each entry pointing to the start of
   // null-terminated string.  Returns { 0 } if nothing has been set.
@@ -208,23 +205,17 @@ protected:
   char *environment_argv_[MAX_ENVIRONMENT_ARGS];
   // Pointers into environment_buf_.
 
-  LPTSTR cl_options_buf_;
+  LPTSTR command_line_buf_;
   // Buffer of command-line arguments.  E.g., "-f foo -b bar".
 
-  char *cl_options_;
-  // Buffer containing command line options.
+  char *command_line_argv_[MAX_COMMAND_LINE_OPTIONS];
+  // Argv-style command-line arguments.
 
-  char *cl_options_argv_[MAX_COMMAND_LINE_OPTIONS];
-  // Are 64 command-line arguments enough?
-
-  int cl_options_argv_calculated_;
-  // Ensures cl_options_argv is only calculated once.
+  int command_line_argv_calculated_;
+  // Ensures command_line_argv is only calculated once.
 
   TCHAR working_directory_[MAXPATHLEN + 1];
   // The current working directory.
-
-  TCHAR path_[MAXPATHLEN + 1];
-  // The application path.
 };
 
 // ************************************************************

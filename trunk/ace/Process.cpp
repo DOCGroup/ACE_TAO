@@ -216,8 +216,8 @@ ACE_ProcessEx::start (ACE_Process_Options &options)
 {
 #if defined (ACE_WIN32)
   BOOL fork_result = 
-    ::CreateProcess (options.path (),
-		     options.cl_options_buf (), // command-line options
+    ::CreateProcess (0,
+		     options.command_line_buf (), // command-line options
 		     options.get_process_attributes (),
 		     options.get_thread_attributes (),
 		     options.handle_inheritence (),
@@ -234,7 +234,7 @@ ACE_ProcessEx::start (ACE_Process_Options &options)
     return -1;
 #else /* ACE_WIN32 */
   // Fork the new process.
-  this->child_id_ = ACE_OS::fork (options.path ());
+  this->child_id_ = ACE_OS::fork (options.command_line_argv ()[0]);
 
   switch (this->child_id_)
     {
@@ -262,12 +262,11 @@ ACE_ProcessEx::start (ACE_Process_Options &options)
 	int result;
       
 	if (options.env_argv () == 0)
-	  // Not sure if options.path () will work.
-	  result = ACE_OS::execvp (options.path (), 
-				   options.cl_options_argv ()); // command-line args
+	  result = ACE_OS::execvp (options.command_line_argv ()[0],
+				   options.command_line_argv ()); // command-line args
 	else
-	  result = ACE_OS::execve (options.path (),
-				   options.cl_options_argv (), // command-line args
+	  result = ACE_OS::execve (options.command_line_argv ()[0],
+				   options.command_line_argv (), // command-line args
 				   options.env_argv ()); // environment variables
 
 	if (result == -1)
@@ -539,7 +538,8 @@ ACE_Process::ACE_Process (char *argv[],
 
 ACE_Process_Options::ACE_Process_Options (int ie,
 					  int cobl)
-  : inherit_environment_ (ie),
+  : command_line_buf_ (0),
+    inherit_environment_ (ie),
 #if defined (ACE_WIN32)
     handle_inheritence_ (TRUE),
     new_console_ (FALSE),
@@ -554,15 +554,12 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 #endif /* ACE_WIN32 */
     environment_buf_index_ (0),
     environment_argv_index_ (0),
-    cl_options_buf_ (0),
-    cl_options_ (0),
-    cl_options_argv_calculated_ (0)
+    command_line_argv_calculated_ (0)
 {
-  ACE_NEW (cl_options_, char[cobl]);
-  cl_options_[0] = '\0';
+  ACE_NEW (command_line_buf_, char[cobl]);
+  command_line_buf_[0] = '\0';
 
   working_directory_[0] = '\0';
-  path_[0] = '\0';
   environment_buf_[0] = '\0';
   
 #if defined (ACE_WIN32)
@@ -608,8 +605,7 @@ ACE_Process_Options::inherit_environment (void)
 #endif /* ACE_WIN32 */
 
 int
-ACE_Process_Options::setenv (const char *variable_name,
-			     const char *format, ...)
+ACE_Process_Options::setenv (const char *format, ...)
 {
   char stack_buf[1024];
 
@@ -617,13 +613,8 @@ ACE_Process_Options::setenv (const char *variable_name,
   va_list argp;
   va_start (argp, format);
 
-  char newformat[1024];
-
-  // Add in the variable name.
-  ACE_OS::sprintf (newformat, "%s=\"%s\"", variable_name, format);
-
   // Add the rest of the varargs.
-  ::vsprintf (stack_buf, newformat, argp);
+  ::vsprintf (stack_buf, format, argp);
 
   // End varargs.
   va_end (argp);
@@ -638,6 +629,19 @@ ACE_Process_Options::setenv (const char *variable_name,
 #endif /* ACE_WIN32 */
 
   return 0;
+}
+
+int
+ACE_Process_Options::setenv (const char *variable_name,
+			     const char *format, ...)
+{
+  char newformat[1024];
+
+  // Add in the variable name.
+  ACE_OS::sprintf (newformat, "%s=%s", variable_name, format);
+
+  // Delegate.
+  return this->setenv (newformat);
 }
 
 int
@@ -679,7 +683,7 @@ ACE_Process_Options::~ACE_Process_Options (void)
     }
 #endif /* ACE_WIN32 */
 
-  delete cl_options_;
+  delete command_line_buf_;
 }
 
 int
@@ -736,49 +740,46 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
 }
 
 void
-ACE_Process_Options::cl_options (const char *format, ...)
+ACE_Process_Options::command_line (const char *format, ...)
 {
   // Store all ... args in argp.
   va_list argp;
   va_start (argp, format);
 
-  // sprintf the format and args into cl_options_.
-  ::vsprintf (cl_options_, format, argp);
+  // sprintf the format and args into command_line_buf__.
+  ::vsprintf (command_line_buf_, format, argp);
 
   // Useless macro.
   va_end (argp);
 }
 
 char * const *
-ACE_Process_Options::cl_options_argv (void)
+ACE_Process_Options::command_line_argv (void)
 {
-  if (cl_options_argv_calculated_ == 0)
+  if (command_line_argv_calculated_ == 0)
     {
-      cl_options_argv_calculated_ = 1;
+      command_line_argv_calculated_ = 1;
 
       // This tokenizer will replace all spaces with end-of-string
       // characters and will preserve text between "" and '' pairs.
-      ACE_Tokenizer parser (cl_options_);
+      ACE_Tokenizer parser (command_line_buf_);
       parser.delimiter_replace (' ', '\0');
       parser.preserve_designators ('\"', '\"');
       parser.preserve_designators ('\'', '\'');
 
-      // argv[0] is the program name.
-      cl_options_argv_[0] = path_;
-
-      int x = 1;
+      int x = 0;
       do
 	{
-	  cl_options_argv_[x] = parser.next ();
+	  command_line_argv_[x] = parser.next ();
 	}
-      while (cl_options_argv_[x] != 0 &&
+      while (command_line_argv_[x] != 0 &&
 	     // substract one for the ending zero.
 	     ++x < MAX_COMMAND_LINE_OPTIONS-1);
 
-      cl_options_argv_[x] = 0;
+      command_line_argv_[x] = 0;
     }
 			
-  return cl_options_argv_;
+  return command_line_argv_;
 }
 
 char **
