@@ -97,15 +97,13 @@ private:
  * Creates and destroys RT CORBA objects, i.e., policies,
  * threadpools, mutexes.
  */
-
-class TAO_Export TAO_RT_ORB : public RTCORBA::RTORB, public CORBA::LocalObject
+class TAO_Export TAO_RT_ORB
+  : public RTCORBA::RTORB,
+    public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor.
   TAO_RT_ORB (void);
-
-  /// Destructor.
-  virtual ~TAO_RT_ORB (void);
 
   /**
    * Create a new mutex.  Mutexes returned by this method
@@ -241,6 +239,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+  /// Protected destructor to enforce proper memory management of this
+  /// reference counted object.
+  virtual ~TAO_RT_ORB (void);
 
   /// mutex_mgr_ manages the names associated with named mutexes.
   TAO_Named_RT_Mutex_Manager mutex_mgr_;
