@@ -8,6 +8,7 @@ Fri Mar 30 11:12:53 2001  Carlos O'Ryan  <coryan@uci.edu>
         * performance-tests/*/Makefile:
         * tests/*/Makefile:
         * websvcs/*/Makefile:
+        * ASNMP/*/Makefile:
           Regenerate dependencies.
 
 Fri Mar 30 08:15:26 2001  Carlos O'Ryan  <coryan@uci.edu>
