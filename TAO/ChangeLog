@@ -1,3 +1,19 @@
+Sun Nov 14 09:50:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Set BUILD_ACEXML automake conditional to true.
+
+	  Added orbsvcs/ImplRepo_Service/Makefile to AC_CONFIG_FILES.
+
+	* orbsvcs/Makefile.am:
+
+	  Added ImplRepo_Service to SUBDIRS.
+
+	* orbsvcs/ImplRepo_Service/Makefile.am:
+
+	  Updated now that ACEXML is available for autoconf builds.
+
 Sun Nov 14 16:51:28 2004  Martin Corino  <mcorino@remedy.nl>
 
  	* tao/PortableServer/Object_Adapter.cpp:
