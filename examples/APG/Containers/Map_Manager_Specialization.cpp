@@ -26,7 +26,7 @@ private:
   int val_;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 int
 ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::equal
 (const KeyType& r1, const KeyType &r2)
@@ -35,7 +35,7 @@ ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::equal
 }
 // Listing 1
 #else
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 int
 ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::equal
 (const KeyType& r1, const KeyType &r2)

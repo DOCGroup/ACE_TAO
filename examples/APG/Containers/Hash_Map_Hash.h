@@ -22,7 +22,7 @@ private:
 };
 
 // Specialize the hash functor.
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class ACE_Hash<KeyType>
 {
 public:
@@ -35,7 +35,7 @@ public:
 
 
 // Specialize the equality functor.
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class ACE_Equal_To<KeyType>
 {
 public:
