@@ -495,6 +495,9 @@ AH_TEMPLATE([ACE_HAS_IPV6],[Platform supports IPv6])
 AH_TEMPLATE([ACE_USES_IPV4_IPV6_MIGRATION],
 [Enable IPv6 support on platforms that don't have IPv6 turned on by default])
 
+AH_TEMPLATE([ACE_HAS_NEW_NOTHROW],
+[Compiler supports new (std::nothrow)])
+
 AH_TEMPLATE([ACE_HAS_NONSTATIC_OBJECT_MANAGER],
 [Causes the ACE_Object_Manager instance to be created in
    main (int, char *[]), instead of as a static (global) instance.])

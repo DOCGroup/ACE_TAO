@@ -124,10 +124,14 @@ typedef void *ACE_MALLOC_T;
 #  elif defined (__BORLANDC__) || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #    include /**/ <new>
 #    define ACE_bad_alloc std::bad_alloc
+#    define ACE_nothrow   std::nothrow
+#    define ACE_nothrow_t std::nothrow_t
 #    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #  else
 #    include /**/ <new>
 #    define ACE_bad_alloc bad_alloc
+#    define ACE_nothrow   nothrow
+#    define ACE_nothrow_t nothrow_t
 #    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #  endif /* __HP_aCC */
 

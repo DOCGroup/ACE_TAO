@@ -4740,6 +4740,32 @@ if test "$ace_user_enable_exceptions" = yes; then
   fi dnl ace_cv_new_throws_bad_alloc_exceptions = no
 fi dnl $ace_user_enable_exceptions = yes
 
+AC_CACHE_CHECK([if compiler supports new(std::nothrow)],
+	[ace_cv_has_new_nothrow],
+        [AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+#if defined (ACE_HAS_NEW_NO_H)
+# include <new>
+#elif defined (ACE_HAS_NEW_H)
+# include <new.h>
+#endif
+
+int main(int, char*[]) {
+	int *foo;
+
+#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+	foo = new (std::nothrow) int;
+#else
+	foo = new (nothrow) int;
+#endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+}]])], [
+	 ace_cv_has_new_nothrow=yes
+	],[
+	 ace_cv_has_new_nothrow=no
+	])])
+if test $ace_cv_has_new_nothrow = yes; then
+  AC_DEFINE([ACE_HAS_NEW_NOTHROW])
+fi
+
 ACE_CONVERT_WARNINGS_TO_ERRORS([
 dnl Check if putmsg takes a const struct strbuf *
 dnl If we have getmsg() we can be pretty sure that we have putmsg()
@@ -7362,6 +7388,11 @@ AC_CONFIG_FILES([
   tests/SSL/Makefile
 ])
 
+dnl Configure subdirectories if they are present.
+dnl if test -d $srcdir/TAO; then
+dnl   AC_CONFIG_SUBDIRS([TAO])
+dnl fi
+
 dnl Note that the "ACE_VERSION" in the message below is an M4 macro
 dnl that expands to the version of ACE being configured.
 AC_CONFIG_COMMANDS([default],[
@@ -7370,10 +7401,3 @@ AC_CONFIG_COMMANDS([default],[
   echo ""
  ],[])
 AC_OUTPUT
-
-
-
-dnl Configure the TAO directory if it exists.
-dnl if test -d $srcdir/TAO; then
-dnl   AC_CONFIG_SUBDIRS([TAO])
-dnl fi
