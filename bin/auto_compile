@@ -51,6 +51,8 @@ $pre_realclean = 0;
 $post_realclean = 0;
 $report_success = 0;
 $debug = 0;
+$sandbox = '';
+$sandbox_timeout = 600;
 @BUILD_LIST= ();
 @CONFIGURATION_OPTIONS = ();
 
@@ -90,10 +92,12 @@ while ($#ARGV >= 0) {
     shift;
     $copy_logs = 1;
     $LOG_DESTINATION = $ARGV[0];
-  } elsif ($ARGV[0] eq "-mail_logs") {
+  } elsif ($ARGV[0] eq "-sandbox") {
     shift;
-    $copy_logs = 0;
-    $LOG_DESTINATION = $ARGV[0];
+    $sandbox = $ARGV[0];
+  } elsif ($ARGV[0] eq "-sandbox_timeout") {
+    shift;
+    $sandbox_timeout = $ARGV[0];
   } elsif ($ARGV[0] eq "-dont_run") {
     $dont_run = 1;
   } elsif ($ARGV[0] eq "-pre_realclean") {
@@ -448,7 +452,11 @@ if ($dont_run == 0) {
         || mydie "cannot chdir to $subdir";
 
     $run_error = 0;
-    if (open(RUN, "perl $program 2>&1 |") == 0) {
+    my $prefix = '';
+    if ($sandbox ne "") {
+      $prefix = $sandbox.' '.$sandbox_timeout.' ';
+    }
+    if (open(RUN, $prefix."perl $program 2>&1 |") == 0) {
         push @failures, "cannot run $program in $directory";
         next;
     }
