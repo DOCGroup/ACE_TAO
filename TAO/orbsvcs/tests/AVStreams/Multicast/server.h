@@ -50,4 +50,4 @@ protected:
   char *protocol_;
 };
 
-typedef ACE_Singleton<Server,ACE_Null_Mutex> SERVER;
+typedef ACE_Singleton<Server,ACE_Null_Mutex> FTP_SERVER;
