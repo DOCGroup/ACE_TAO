@@ -181,6 +181,12 @@ ACE_POSIX_Asynch_Operation::cancel (void)
     return 1;
   else if (result == AIO_NOTCANCELED)
     return 2;
+  else 
+    ACE_ERROR_RETURN ((LM_ERROR,,
+                       "(%P | %t):%p\n",
+                       "ACE_POSIX_Asynch_Operation::cancel: "
+                       "Unexpected result from <aio_cancel>"),
+                      -1);
 }
 
 ACE_Proactor *
