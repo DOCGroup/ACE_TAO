@@ -1,7 +1,0 @@
-//  -*- MPC -*-
-// $Id$
-
-project(HTBP) : acelib, core {
-  sharedname   = ACE_HTBP
-  dynamicflags = HTBP_BUILD_DLL
-}

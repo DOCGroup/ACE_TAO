@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ftorbutils {
-  after     += FT_ClientORB 
-  libs      += TAO_FT_ClientORB
-  requires  += ace_uuid
-  tagchecks += FT_ClientORB
-}
