@@ -1,3 +1,11 @@
+Wed Sep 16 12:21:20 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* TAO/orbsvcs/tests/Simple_Naming/run-test.pl
+	  Updated perl script to run all client tests.
+
+	* TAO/orbsvcs/tests/Simple_Naming/client.cpp
+	  Updated Tree_Test to provide output in case a test is successful.
+	
 Wed Sep 16 09:14:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connect.cpp: 
