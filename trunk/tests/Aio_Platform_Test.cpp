@@ -44,50 +44,54 @@ int query_aio_completions (void);
 int setup_signal_delivery (void);
 #endif /* ACE_HAS_AIO_CALLS */
 
-int
+static int
 do_sysconf (void)
 {
 #if !defined (VXWORKS)
   // Call sysconf to find out runtime values.
   errno = 0;
 #if defined (_SC_LISTIO_AIO_MAX)
-  ACE_ERROR ((LM_ERROR,
+  ACE_DEBUG ((LM_DEBUG,
               "Runtime value of LISTIO_AIO_MAX is %d, errno = %d\n",
-              ACE_OS::sysconf(_SC_LISTIO_AIO_MAX),
+              ACE_OS::sysconf (_SC_LISTIO_AIO_MAX),
+              errno));
+#elif defined (_SC_AIO_LISTIO_MAX)
+  ACE_DEBUG ((LM_DEBUG,
+              "Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
+              ACE_OS::sysconf (_SC_AIO_LISTIO_MAX),
               errno));
 #else
   ACE_ERROR ((LM_ERROR,
-              "Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
-              ACE_OS::sysconf(_SC_AIO_LISTIO_MAX),
-              errno));
-#endif
+              "_SC_LISTIO_AIO_MAX or _SC_AIO_LISTIO_MAX"
+              " do not exist on this platform\n"));
+#endif /* _SC_LISTIO_AIO_MAX */
 
   errno = 0;
-  ACE_ERROR ((LM_ERROR,
+  ACE_DEBUG ((LM_DEBUG,
               "Runtime value of AIO_MAX is %d, errno = %d\n",
               ACE_OS::sysconf (_SC_AIO_MAX),
               errno));
 
   errno = 0;
-  ACE_ERROR ((LM_ERROR,
+  ACE_DEBUG ((LM_DEBUG,
               "Runtime value of _POSIX_ASYNCHRONOUS_IO is %d, errno = %d\n",
               ACE_OS::sysconf (_SC_ASYNCHRONOUS_IO),
               errno));
 
   errno = 0;
-  ACE_ERROR ((LM_ERROR,
+  ACE_DEBUG ((LM_DEBUG,
               "Runtime value of _POSIX_REALTIME_SIGNALS is %d, errno = %d\n",
               ACE_OS::sysconf (_SC_REALTIME_SIGNALS),
               errno));
 
   errno = 0;
-  ACE_ERROR ((LM_ERROR,
+  ACE_DEBUG ((LM_DEBUG,
               "Runtime value of RTSIG_MAX %d, Errno = %d\n",
               ACE_OS::sysconf (_SC_RTSIG_MAX),
               errno));
 
   errno = 0;
-  ACE_ERROR ((LM_ERROR,
+  ACE_DEBUG ((LM_DEBUG,
               "Runtime value of SIGQUEUE_MAX %d, Errno = %d\n",
               ACE_OS::sysconf (_SC_SIGQUEUE_MAX),
               errno));
@@ -97,17 +101,22 @@ do_sysconf (void)
 }
 
 #if defined (ACE_HAS_AIO_CALLS)
-int
+static int
 test_aio_calls (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "test_aio_calls: Errno : %d\n", errno));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "test_aio_calls: Errno : %d\n",
+              errno));
   // Set up the input file.
   // Open file (in SEQUENTIAL_SCAN mode)
-  file_handle = ACE_OS::open ("Aio_Platform_Test.cpp", O_RDONLY);
+  file_handle = ACE_OS::open ("Aio_Platform_Test.cpp",
+                              O_RDONLY);
 
   if (file_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "ACE_OS::open"),
+                      -1);
 
   if (setup_signal_delivery () < 0)
     return -1;
@@ -121,7 +130,7 @@ test_aio_calls (void)
   return 0;
 }
 
-int
+static int
 setup_signal_delivery (void)
 {
   // Make the sigset_t consisting of the completion signal.
@@ -158,11 +167,10 @@ setup_signal_delivery (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Proactor couldnt do sigaction for the RT SIGNAL"),
                       -1);
-
   return 0;
 }
 
-int
+static int
 issue_aio_calls (void)
 {
   // Setup AIOCB.
@@ -202,16 +210,15 @@ issue_aio_calls (void)
   return 0;
 }
 
-int
+static int
 query_aio_completions (void)
 {
-  size_t number_of_compleions = 0;
-  for (number_of_compleions = 0;
+  for (size_t number_of_compleions = 0;
        number_of_compleions < 2;
        number_of_compleions ++)
     {
-      // Wait for <milli_seconds> amount of time.
-      // @@ Assigning <milli_seconds> to tv_sec.
+      // Wait for <milli_seconds> amount of time.  @@ Assigning
+      // <milli_seconds> to tv_sec.
       timespec timeout;
       timeout.tv_sec = ACE_INFINITE;
       timeout.tv_nsec = 0;
@@ -308,13 +315,11 @@ query_aio_completions (void)
 }
 #endif /* ACE_HAS_AIO_CALLS */
 
-int
+static int
 have_asynchio (void)
 {
 #if defined (_POSIX_ASYNCHRONOUS_IO)
-
 #if defined (_POSIX_ASYNC_IO)
-
 #if _POSIX_ASYNC_IO == -1
   ACE_DEBUG ((LM_DEBUG,
               "_POSIX_ASYNC_IO = -1.. ASYNCH IO NOT supported at all\n"));
@@ -333,17 +338,24 @@ have_asynchio (void)
 #endif /* _POSIX_ASYNC_IO */
 
   // System defined POSIX Values.
-  ACE_DEBUG ((LM_DEBUG, "System claims to have  POSIX_ASYNCHRONOUS_IO\n"));
-  ACE_DEBUG ((LM_DEBUG, "_POSIX_AIO_LISTIO_MAX = %d\n", _POSIX_AIO_LISTIO_MAX));
-  ACE_DEBUG ((LM_DEBUG, "_POSIX_AIO_MAX = %d\n", _POSIX_AIO_MAX));
+  ACE_DEBUG ((LM_DEBUG,
+              "System claims to have  POSIX_ASYNCHRONOUS_IO\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "_POSIX_AIO_LISTIO_MAX = %d\n",
+              _POSIX_AIO_LISTIO_MAX));
+  ACE_DEBUG ((LM_DEBUG,
+              "_POSIX_AIO_MAX = %d\n",
+              _POSIX_AIO_MAX));
 
   // @@ Debugging.
-  ACE_DEBUG ((LM_DEBUG, "Before do_sysconf : Errno %d\n", errno));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "Before do_sysconf : Errno %d\n",
+              errno));
   // Check and print the run time values.
   do_sysconf ();
 
-  ACE_DEBUG ((LM_DEBUG, "After do_sysconf: Errno : %d\n", errno));
+  ACE_DEBUG ((LM_DEBUG,
+              "After do_sysconf: Errno : %d\n", errno));
 
 #if defined (ACE_HAS_AIO_CALLS)
   // Test the aio calls. Issue two <aio_read>s. Assing SIGRTMIN as the
