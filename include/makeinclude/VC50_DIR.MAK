@@ -49,14 +49,16 @@ $(MAK_LIST) :
 	@mkdir $(ACE_CHECK_DIR)
 !ENDIF	
 !ENDIF
-!IFDEF VC50_ROOT
+!IF	"$(MSVC_VER)" == "5.0"
 #       When using MSVC 5.0
 	@Echo NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /f $@.MAK
 	@NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /NOLOGO /f $@.MAK $(ACE_ACTION)
-!ELSE
+!ELSE IF "$(MSVC_VER)" == "4.2"
 #       When using MSVC 4.2
 	@Echo NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /f $(MAK_NAME).MAK
 	@NMake $(MYMAKEFLAGS) CFG="$@ - $(ACE_PLATFORM) $(ACE_TARGET)" /NOLOGO /f $(MAK_NAME).MAK $(ACE_ACTION)
+!ELSE
+!MESSAGE "You must define the version number of MSVC you are using."
 !ENDIF	
 !ENDIF
 
