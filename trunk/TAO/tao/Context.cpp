@@ -2,6 +2,10 @@
 
 #include "tao/Context.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/Context.i"
+#endif /* ! __ACE_INLINE__ */
+
 CORBA_Context::CORBA_Context (void)
 {
 }
