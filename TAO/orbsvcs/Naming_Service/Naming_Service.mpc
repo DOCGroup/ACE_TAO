@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, core, naming {
+project : orbsvcsexe, core, naming_serv {
   exename  = Naming_Service
   Source_Files {
     Naming_Server.cpp
@@ -9,7 +9,7 @@ project : orbsvcsexe, core, naming {
   }
 }
 
-project(NT_Naming_Service) : orbsvcsexe, core, naming {
+project(NT_Naming_Service) : orbsvcsexe, core, naming_serv {
   exename  = NT_Naming_Service
   Source_Files {
     Naming_Service.cpp

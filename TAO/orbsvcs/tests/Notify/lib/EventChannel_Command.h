@@ -22,7 +22,7 @@
 #include "ace/SString.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "Command.h"
-#include "../../../orbsvcs/Notify/CosNotify_Initializer.h"
+//#include "../../../orbsvcs/Notify/CosNotify_Initializer.h"
 
 class TAO_Notify_Service;
 

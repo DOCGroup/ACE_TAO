@@ -1,24 +1,63 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosNaming) : orbsvcslib, core, messaging, svc_utils, iortable {
+project(CosNaming) : orbsvcslib, core {
   sharedname   = TAO_CosNaming
   idlflags    += -Wb,export_macro=TAO_Naming_Export -Wb,export_include=orbsvcs/Naming/naming_export.h
-  dynamicflags = TAO_NAMING_BUILD_DLL
-  tagchecks   += Naming
 
   IDL_Files {
     CosNaming.idl
   }
 
+  Source_Files {
+    CosNamingC.cpp
+    Naming/Naming_Client.cpp
+  }
+
+  Header_Files {
+    CosNamingC.h
+    Naming/Naming_Client.h
+  }
+
+  Inline_Files {
+    CosNamingC.inl
+  }
+}
+
+
+project(CosNaming_Skel) : orbsvcslib, core, naming {
+  sharedname   = TAO_CosNaming_Skel
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    CosNamingS.cpp
+  }
+
+  Header_Files {
+    CosNamingS.h
+  }
+
+  Inline_Files {
+    CosNamingS.inl
+  }
+}
+  
+
+project(CosNaming_Serv) : orbsvcslib, core, naming_skel, messaging, svc_utils, iortable {
+  sharedname   = TAO_CosNaming_Serv
+  dynamicflags = TAO_NAMING_BUILD_DLL
+  tagchecks   += Naming
+
+  IDL_Files {
+  }
+
   Source_Files(ORBSVCS_COMPONENTS) {
     Naming {
-      CosNamingC.cpp
-      CosNamingS.cpp
       Naming/Entries.cpp
       Naming/Flat_File_Persistence.cpp
       Naming/Hash_Naming_Context.cpp
-      Naming/Naming_Client.cpp
       Naming/Naming_Context_Interface.cpp
       Naming/Naming_Loader.cpp
       Naming/Naming_Server.cpp
@@ -34,7 +73,6 @@ project(CosNaming) : orbsvcslib, core, messaging, svc_utils, iortable {
   
   Header_Files {
     Naming/naming_export.h
-    Naming/Naming_Client.h
     Naming/Naming_Server.h
   }
 }

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*poa server): namingexe {
+project(*poa server): namingexe, portableserver {
   Source_Files {
     demux_test_server.cpp
     demux_test_i.cpp
@@ -9,7 +9,7 @@ project(*poa server): namingexe {
   }
 }
 
-project(*poa client): namingexe {
+project(*poa client): namingexe, portableserver {
   exename = client
 
   Source_Files {

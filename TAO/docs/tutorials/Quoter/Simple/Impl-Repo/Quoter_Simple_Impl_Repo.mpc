@@ -11,7 +11,7 @@ project(*client) : taoexe, portableserver, rtevent, naming  {
   }
 }
 
-project(*server) : taoexe, portableserver, rtevent, naming {
+project(*server) : taoexe, portableserver, rtevent, naming, iortable {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
