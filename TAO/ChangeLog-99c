@@ -1,3 +1,14 @@
+Thu Feb 11 14:40:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/DynanyC.cpp:
+        * tao/DynanyS.cpp:
+        * tao/DynAny_i.cpp:
+        * tao/DynEnum_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.cpp:
+          Fixed the g++ unused arg warnings for these files.
+
 Thu Feb 11 14:34:46 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/tao.dsp:

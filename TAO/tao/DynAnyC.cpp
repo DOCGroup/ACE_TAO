@@ -403,36 +403,36 @@ CORBA_DynAny::type (CORBA::Environment &)
 }
 
 void
-CORBA_DynAny::assign (CORBA_DynAny_ptr CORBA_Dyn_any,
-                      CORBA::Environment &env)
+CORBA_DynAny::assign (CORBA_DynAny_ptr,
+                      CORBA::Environment &)
 {
 }
 
 CORBA_DynAny_ptr
-CORBA_DynAny::copy (CORBA::Environment &env)
+CORBA_DynAny::copy (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynAny::destroy (CORBA::Environment &env)
+CORBA_DynAny::destroy (CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::from_any (const CORBA_Any& any,
-                        CORBA::Environment &env)
+CORBA_DynAny::from_any (const CORBA_Any &,
+                        CORBA::Environment &)
 {
 }
 
 CORBA::Any_ptr
-CORBA_DynAny::to_any (CORBA::Environment &env)
+CORBA_DynAny::to_any (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA_DynAny_ptr
-CORBA_DynAny::current_component (CORBA::Environment &env)
+CORBA_DynAny::current_component (CORBA::Environment &)
 {
   return 0;
 }
@@ -444,7 +444,7 @@ CORBA_DynAny::next (CORBA::Environment &)
 }
 
 CORBA::Boolean
-CORBA_DynAny::seek (CORBA::Long index,
+CORBA_DynAny::seek (CORBA::Long,
                     CORBA::Environment &)
 {
   return 0;
@@ -456,175 +456,175 @@ CORBA_DynAny::rewind (CORBA::Environment &)
 }
 
 void
-CORBA_DynAny::insert_boolean (CORBA::Boolean value,
-                              CORBA::Environment &env)
+CORBA_DynAny::insert_boolean (CORBA::Boolean,
+                              CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_octet (CORBA::Octet value,
-                            CORBA::Environment &env)
+CORBA_DynAny::insert_octet (CORBA::Octet,
+                            CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_char (CORBA::Char value,
-                           CORBA::Environment &env)
+CORBA_DynAny::insert_char (CORBA::Char,
+                           CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_short (CORBA::Short value,
-                            CORBA::Environment &env)
+CORBA_DynAny::insert_short (CORBA::Short,
+                            CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_ushort (CORBA::UShort value,
-                             CORBA::Environment &env)
+CORBA_DynAny::insert_ushort (CORBA::UShort,
+                             CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_long (CORBA::Long value,
-                           CORBA::Environment &env)
+CORBA_DynAny::insert_long (CORBA::Long,
+                           CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_ulong (CORBA::ULong value,
-                            CORBA::Environment &env)
+CORBA_DynAny::insert_ulong (CORBA::ULong,
+                            CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_float (CORBA::Float value,
-                            CORBA::Environment &env)
+CORBA_DynAny::insert_float (CORBA::Float,
+                            CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_double (CORBA::Double value,
-                             CORBA::Environment &env)
+CORBA_DynAny::insert_double (CORBA::Double,
+                             CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_string (const char * value,
-                             CORBA::Environment &env)
+CORBA_DynAny::insert_string (const char *,
+                             CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_reference (CORBA::Object_ptr value,
-                                CORBA::Environment &env)
+CORBA_DynAny::insert_reference (CORBA::Object_ptr,
+                                CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_typecode (CORBA::TypeCode_ptr value,
-                               CORBA::Environment &env)
+CORBA_DynAny::insert_typecode (CORBA::TypeCode_ptr,
+                               CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_longlong (CORBA::LongLong value,
-                               CORBA::Environment &env)
+CORBA_DynAny::insert_longlong (CORBA::LongLong,
+                               CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_ulonglong (CORBA::ULongLong value,
-                                CORBA::Environment &env)
+CORBA_DynAny::insert_ulonglong (CORBA::ULongLong,
+                                CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_wchar (CORBA::WChar value,
-                            CORBA::Environment &env)
+CORBA_DynAny::insert_wchar (CORBA::WChar,
+                            CORBA::Environment &)
 {
 }
 
 void
-CORBA_DynAny::insert_any (const CORBA::Any& value,
-                          CORBA::Environment &env)
+CORBA_DynAny::insert_any (const CORBA::Any &,
+                          CORBA::Environment &)
 {
 }
 
 CORBA::Boolean
-CORBA_DynAny::get_boolean (CORBA::Environment &env)
+CORBA_DynAny::get_boolean (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::Octet
-CORBA_DynAny::get_octet (CORBA::Environment &env)
+CORBA_DynAny::get_octet (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::Char
-CORBA_DynAny::get_char (CORBA::Environment &env)
+CORBA_DynAny::get_char (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::Short
-CORBA_DynAny::get_short (CORBA::Environment &env)
+CORBA_DynAny::get_short (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::UShort
-CORBA_DynAny::get_ushort (CORBA::Environment &env)
+CORBA_DynAny::get_ushort (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::Long
-CORBA_DynAny::get_long (CORBA::Environment &env)
+CORBA_DynAny::get_long (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::ULong
-CORBA_DynAny::get_ulong (CORBA::Environment &env)
+CORBA_DynAny::get_ulong (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::Float
-CORBA_DynAny::get_float (CORBA::Environment &env)
+CORBA_DynAny::get_float (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::Double
-CORBA_DynAny::get_double (CORBA::Environment &env)
+CORBA_DynAny::get_double (CORBA::Environment &)
 {
   return 0;
 }
 
 char *
-CORBA_DynAny::get_string (CORBA::Environment &env)
+CORBA_DynAny::get_string (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::Object_ptr
-CORBA_DynAny::get_reference (CORBA::Environment &env)
+CORBA_DynAny::get_reference (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::TypeCode_ptr
-CORBA_DynAny::get_typecode (CORBA::Environment &env)
+CORBA_DynAny::get_typecode (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::LongLong
-CORBA_DynAny::get_longlong (CORBA::Environment &env)
+CORBA_DynAny::get_longlong (CORBA::Environment &)
 {
 #if defined (ACE_LACKS_LONGLONG_T)
   CORBA::LongLong tmp = {0, 0};
@@ -635,19 +635,19 @@ CORBA_DynAny::get_longlong (CORBA::Environment &env)
 }
 
 CORBA::ULongLong
-CORBA_DynAny::get_ulonglong (CORBA::Environment &env)
+CORBA_DynAny::get_ulonglong (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::WChar
-CORBA_DynAny::get_wchar (CORBA::Environment &env)
+CORBA_DynAny::get_wchar (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::Any_ptr
-CORBA_DynAny::get_any (CORBA::Environment &env)
+CORBA_DynAny::get_any (CORBA::Environment &)
 {
    return 0;
 }
@@ -732,26 +732,26 @@ CORBA_DynEnum_ptr CORBA_DynEnum::_nil (void)
 } // end of _nil
 
 char*
-CORBA_DynEnum::value_as_string (CORBA::Environment& env)
+CORBA_DynEnum::value_as_string (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynEnum::value_as_string (const char* value_as_string,
-                                CORBA::Environment& env)
+CORBA_DynEnum::value_as_string (const char*,
+                                CORBA::Environment &)
 {
 }
 
 CORBA::ULong
-CORBA_DynEnum::value_as_ulong (CORBA::Environment&)
+CORBA_DynEnum::value_as_ulong (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynEnum::value_as_ulong (CORBA::ULong value_as_ulong,
-                               CORBA::Environment& env)
+CORBA_DynEnum::value_as_ulong (CORBA::ULong,
+                               CORBA::Environment &)
 {
 }
 
@@ -1028,25 +1028,25 @@ CORBA_DynStruct_ptr CORBA_DynStruct::_nil (void)
 } // end of _nil
 
 FieldName
-CORBA_DynStruct::current_member_name (CORBA::Environment& env)
+CORBA_DynStruct::current_member_name (CORBA::Environment  &)
 {
   return 0;
 }
 
 CORBA::TCKind
-CORBA_DynStruct::current_member_kind (CORBA::Environment& env)
+CORBA_DynStruct::current_member_kind (CORBA::Environment &)
 {
   return CORBA::tk_null;
 }
 
 NameValuePairSeq*
-CORBA_DynStruct::get_members (CORBA::Environment& env)
+CORBA_DynStruct::get_members (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynStruct::set_members (const NameValuePairSeq& value,
+CORBA_DynStruct::set_members (const NameValuePairSeq &,
                               CORBA::Environment& env)
 {
 }
@@ -1136,50 +1136,50 @@ CORBA_DynUnion_ptr CORBA_DynUnion::_nil (void)
 } // end of _nil
 
 CORBA::Boolean
-CORBA_DynUnion::set_as_default (CORBA::Environment& env)
+CORBA_DynUnion::set_as_default (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynUnion::set_as_default (CORBA::Boolean set_as_default,
-                                CORBA::Environment&)
+CORBA_DynUnion::set_as_default (CORBA::Boolean,
+                                CORBA::Environment &)
 {
 }
 
 CORBA_DynAny_ptr
-CORBA_DynUnion::discriminator (CORBA::Environment& env)
+CORBA_DynUnion::discriminator (CORBA::Environment &)
 {
   return 0;
 }
 
 CORBA::TCKind
-CORBA_DynUnion::discriminator_kind (CORBA::Environment& env)
+CORBA_DynUnion::discriminator_kind (CORBA::Environment &)
 {
   return CORBA::tk_null;
 }
 
 CORBA_DynAny_ptr
-CORBA_DynUnion::member (CORBA::Environment& env)
+CORBA_DynUnion::member (CORBA::Environment &)
 {
   return 0;
 }
 
 char*
-CORBA_DynUnion::member_name (CORBA::Environment& env)
+CORBA_DynUnion::member_name (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynUnion::member_name (const char* member_name,
-                             CORBA::Environment& env)
+CORBA_DynUnion::member_name (const char*,
+                             CORBA::Environment &)
 {
 }
 
 
 CORBA::TCKind
-CORBA_DynUnion::member_kind (CORBA::Environment& env)
+CORBA_DynUnion::member_kind (CORBA::Environment &)
 {
   return CORBA::tk_null;
 }
@@ -1351,20 +1351,20 @@ CORBA_DynSequence::length (CORBA::Environment &)
 }
 
 void
-CORBA_DynSequence::length (CORBA::ULong length,
-                           CORBA::Environment& env)
+CORBA_DynSequence::length (CORBA::ULong,
+                           CORBA::Environment &)
 {
 }
 
 AnySeq_ptr
-CORBA_DynSequence::get_elements (CORBA::Environment& env)
+CORBA_DynSequence::get_elements (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynSequence::set_elements (const AnySeq& value,
-                                 CORBA::Environment& env)
+CORBA_DynSequence::set_elements (const AnySeq &,
+                                 CORBA::Environment &)
 {
 }
 
@@ -1455,14 +1455,14 @@ CORBA_DynArray_ptr CORBA_DynArray::_nil (void)
 } // end of _nil
 
 AnySeq_ptr
-CORBA_DynArray::get_elements (CORBA::Environment& env)
+CORBA_DynArray::get_elements (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynArray::set_elements (const AnySeq& value,
-                              CORBA::Environment& env)
+CORBA_DynArray::set_elements (const AnySeq &,
+                              CORBA::Environment &)
 {
 }
 
