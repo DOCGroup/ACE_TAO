@@ -1,3 +1,10 @@
+Wed Feb 09 00:41:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Pipe_Test.cpp (main): Spawn command should be
+	  "./Pipe_Test" and not "Pipe_Test".  Otherwise the test will fail
+	  if the user does not have "." in his/her PATH.  Thanks to Ossama
+	  for reporting this problem.
+
 Tue Feb 08 21:22:45 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Token: Yesterday's change caused one problem.  There was no
