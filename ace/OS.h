@@ -1019,7 +1019,7 @@ public:
   operator timeval () const;
   // Returns the value of the object as a <timeval>.
 
-  operator timeval *() const;
+  operator const timeval *() const;
   // Returns a pointer to the object as a <timeval>.
 
 #if defined (ACE_WIN32)

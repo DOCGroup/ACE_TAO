@@ -1,3 +1,10 @@
+Tue Jan 13 16:31:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.i: Changed the signature of ACE_Time_Value::operator
+ 	  timeval *() to return operator const timeval *().  Thanks to
+ 	  Oleg Krivosheev <kriol@fnal.gov> for reporting this.  Changed
+ 	  several other unsafe casts to use the ACE_const_cast() macro.
+
 Tue Jan 13 13:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Profile_Timer.cpp (elapsed_time): use floating point
