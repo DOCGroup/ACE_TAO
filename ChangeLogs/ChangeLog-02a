@@ -1,8 +1,27 @@
+Mon Nov 20 19:16:12 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.i (mutex_init):
+
+	  Fixed an unused argument warning that was showing up in
+	  ACE+Autoconf builds.
+
+	* ace/Makefile.am (libACE_Utils_la_SOURCES):
+
+	  Updated "Init.cpp" to "Init_ACE.cpp."  For some reason this
+	  file wasn't updated when the name change was made.
+
+	  (libACE_Utils_la_SOURCES):
+
+	  Moved `Sock_Connect.cpp' to this list of sources.  Similar to
+	  the above change, this files wasn't updated when the
+	  corresponding to changes was made to the classical Makefile.
+
 Mon Nov 20 15:00:26 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst:
 
-	  Added RTCORBA/Private_Connection, updated options for other RTCORBA tests.
+	  Added RTCORBA/Private_Connection, updated options for other
+	  RTCORBA tests.
 
 Sun Nov 19 15:26:56 2000  Ossama Othman  <ossama@uci.edu>
 

@@ -149,11 +149,10 @@ libACE_OS_la_SOURCES = \
 
 libACE_Utils_la_SOURCES = \
   ACE.cpp \
-  Init.cpp \
+  Init_ACE.cpp \
   Flag_Manip.cpp \
   Handle_Ops.cpp \
   Lib_Find.cpp \
-  Sock_Connect.cpp \
   Malloc_Instantiations.cpp \
   Active_Map_Manager.cpp \
   Arg_Shifter.cpp \
@@ -249,6 +248,7 @@ libACE_Sockets_la_SOURCES = \
   SOCK.cpp \
   SOCK_Acceptor.cpp \
   SOCK_CODgram.cpp \
+  Sock_Connect.cpp \
   SOCK_Connector.cpp \
   SOCK_Dgram.cpp \
   SOCK_Dgram_Bcast.cpp \
