@@ -50,6 +50,7 @@ FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   , nsName_(0)
   , quitOnIdle_(0)
   , removed_(0)
+  , quitRequested_(0)
 {
 }
 
@@ -149,8 +150,8 @@ const char * FT_FaultDetectorFactory_i::identity () const
 int FT_FaultDetectorFactory_i::idle (int & result)
 {
   ACE_UNUSED_ARG (result);
-  int quit = 0;
-  if (detectors_.size() == removed_)
+  int quit = quitRequested_;
+  if (quit == 0 && detectors_.size() == removed_)
   {
     ACE_ERROR (( LM_ERROR,
       "FaultDetectorFactory is idle.\n"
@@ -317,8 +318,9 @@ void FT_FaultDetectorFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ))
 {
   METHOD_ENTRY(FT_FaultDetectorFactory_i::shutdown);
-
-  delete this;
+  InternalGuard guard (internals_);
+  shutdown_i ();
+  quitRequested_ = 1;
   METHOD_RETURN(FT_FaultDetectorFactory_i::shutdown);
 }
 

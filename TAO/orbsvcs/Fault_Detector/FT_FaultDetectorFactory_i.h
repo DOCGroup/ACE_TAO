@@ -264,6 +264,7 @@ private:
    * Used to determine when the factory is idle.
    */
   size_t removed_;
+  int quitRequested_;
 };
 
 #include <ace/post.h>
