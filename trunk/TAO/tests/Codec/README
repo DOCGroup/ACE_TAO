@@ -16,18 +16,30 @@ Expected output follows:
 ==== Running Codec test
 Testing CDR encapsulation Codec encode()/decode()
 =================================================
-Original                        Extracted
---------                        ---------
-I need a standing ovation!      I need a standing ovation!
--3427                           -3427
-I'm Batman.                     I'm Batman.
+Original
+--------
+I want a standing ovation!
+-3427
+I'm Batman.
+
+Extracted
+---------
+I want a standing ovation!
+-3427
+I'm Batman.
 
 Testing CDR encapsulation Codec encode_value()/decode_value()
 =============================================================
-Original                        Extracted
---------                        ---------
-I need a standing ovation!      I need a standing ovation!
--3427                           -3427
-I'm Batman.                     I'm Batman.
+Original
+--------
+I want a standing ovation!
+-3427
+I'm Batman.
+
+Extracted
+---------
+I want a standing ovation!
+-3427
+I'm Batman.
 
 Codec test passed.
