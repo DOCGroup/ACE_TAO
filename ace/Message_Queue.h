@@ -208,6 +208,21 @@ protected:
   int activate_i (void);
   // Activate the queue.
 
+  // = Helper methods to factor out common #ifdef code.
+  int wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
+			  ACE_Time_Value *tv);
+  // Wait for the queue to become non-full.
+
+  int wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
+			   ACE_Time_Value *tv);
+  // Wait for the queue to become non-empty.
+
+  int signal_enqueue_waiters (void);
+  // Inform any threads waiting to enqueue that they can procede.
+
+  int signal_dequeue_waiters (void);
+  // Inform any threads waiting to dequeue that they can procede.
+
   ACE_Message_Block *head_;           
   // Pointer to head of ACE_Message_Block list.
 
