@@ -1,4 +1,5 @@
 project(*Server): taoexe, portableserver {
+   avoids += minimum_corba
    Source_Files {
     server.cpp
     Servant_Activator.cpp

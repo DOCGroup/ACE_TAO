@@ -1,5 +1,5 @@
 project(*Client) : taoexe, portableserver {
-  requires += minimum_corba
+  avoids += minimum_corba
   idlflags -= -Sc
   source_files {
     client.cpp
@@ -8,6 +8,7 @@ project(*Client) : taoexe, portableserver {
 }
 
 project(*Server) : taoexe, portableserver {
+  avoids += minimum_corba
   idlflags -= -Sc
   source_files {
     test_i.cpp
