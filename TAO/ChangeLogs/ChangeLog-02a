@@ -1,3 +1,25 @@
+Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/RT_Policy_i.cpp: 
+
+	  Changed <_tao_encode> methods implementation for the
+	  client exposed policies.
+
+        * TAO/tests/Exposed_Policies/client.cpp:
+        * TAO/tests/Exposed_Policies/Client.dsp:
+        * TAO/tests/Exposed_Policies/Counter.idl:
+        * TAO/tests/Exposed_Policies/Counter_i.cpp:
+        * TAO/tests/Exposed_Policies/Counter_i.h:
+        * TAO/tests/Exposed_Policies/Exposed_Policies.dsw:
+        * TAO/tests/Exposed_Policies/Exposed_Policies.ncb:
+        * TAO/tests/Exposed_Policies/Makefile:
+        * TAO/tests/Exposed_Policies/Makefile.bor:
+        * TAO/tests/Exposed_Policies/README:
+        * TAO/tests/Exposed_Policies/server.cpp:
+        * TAO/tests/Exposed_Policies/Server.dsp:
+        
+          Added files for testing the client exposed policies.
+
 Fri Jun 16 08:46:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/Naming_Service/Naming_Server_static.dsw:
