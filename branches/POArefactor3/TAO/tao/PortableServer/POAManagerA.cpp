@@ -27,6 +27,8 @@
 
 #include "POAManagerC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
 #include "tao/Any_Basic_Impl_T.h"
@@ -136,14 +138,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::POAManager>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::POAManager>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -195,14 +197,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
@@ -269,14 +271,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }void operator<<= (
     CORBA::Any &_tao_any,
     PortableServer::POAManager::State _tao_elem

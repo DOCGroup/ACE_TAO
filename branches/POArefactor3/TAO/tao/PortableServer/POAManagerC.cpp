@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:301
+// be\be_codegen.cpp:302
 
 
 #include "POAManagerC.h"
@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -91,12 +91,6 @@ TAO::Objref_Traits<PortableServer::POAManager>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*PortableServer__TAO_POAManager_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
 
@@ -130,21 +124,20 @@ PortableServer::POAManager::AdapterInactive::operator= (const ::PortableServer::
 void PortableServer::POAManager::AdapterInactive::_tao_any_destructor (void *_tao_void_pointer)
 {
   AdapterInactive *_tao_tmp_pointer =
-    static_cast<AdapterInactive*> (_tao_void_pointer);
+    static_cast<AdapterInactive *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
 PortableServer::POAManager::AdapterInactive *
 PortableServer::POAManager::AdapterInactive::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/PortableServer/POAManager/AdapterInactive:2.3", _tao_excp->_rep_id ()))
-    {
-      return dynamic_cast<AdapterInactive *> (_tao_excp);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<AdapterInactive *> (_tao_excp);
+}
+
+const PortableServer::POAManager::AdapterInactive *
+PortableServer::POAManager::AdapterInactive::_downcast (CORBA::Exception const *_tao_excp)
+{
+  return dynamic_cast<const AdapterInactive *> (_tao_excp);
 }
 
 CORBA::Exception *PortableServer::POAManager::AdapterInactive::_alloc (void)
@@ -301,18 +294,18 @@ PortableServer::POAManager::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/PortableServer/POAManager:2.3"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/LocalObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
+    )
     {
       return 1; // success using local knowledge
     }
