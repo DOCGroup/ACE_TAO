@@ -1,3 +1,44 @@
+Sat Jan 16 19:08:12 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/High_Res_Timer.cpp: Added #ifdef so high-res timers work
+ 	  correctly on KCC.  Thanks to Scott Snyder
+ 	  <snyder@d0sgif.fnal.gov> for contributing this.
+
+	* tests/test_config.h: Updated randomize() so that it uses a
+ 	  "fixed" seed, so that it will produce "reusable" random numbers.
+
+	* include/makeinclude/platform_linux_kcc.GNU (LD): Added the -lm
+ 	  flag.  Thanks to Scott Snyder <snyder@d0sgif.fnal.gov> for
+ 	  contributing this.
+
+	* tests/run_tests.sh: Added an
+ 	  LD_LIBRARY_PATH=../netsvcs/lib:$LD_LIBRARY_PATH so that we can
+ 	  use a relative name for the svc.conf files used in the
+	  Time_Service_Test and Tokens_Test.
+
+	* ace/config-irix6.x-common.h: Added support for long double for
+ 	  KCC.  Thanks to Scott Snyder <snyder@d0sgif.fnal.gov> for
+ 	  contributing this.
+
+	* ace/config-irix6.x-kcc.h: Added KCC support.  Thanks to Scott
+ 	  Snyder <snyder@d0sgif.fnal.gov> for contributing this.
+
+	* ace/config-osf1-4.0.h: Added KCC support.  Thanks to Scott
+ 	  Snyder <snyder@d0sgif.fnal.gov> for contributing this.
+
+	* ace/IOStream.h: Fixed up the PUT_CODE and GET_CODE macros so
+ 	  that they work with KCC.  Thanks to Scott Snyder
+ 	  <snyder@d0sgif.fnal.gov> for contributing this.
+
+	* ace/Env_Value_T.h (ACE_Convert): Added a new ACE_Convert
+ 	  constructor for u_int so that TAO compiles correctly with KCC.
+  	  Thanks to Scott Snyder <snyder@d0sgif.fnal.gov> for contributing
+ 	  this.
+
+	* include/makeinclude/platform_osf1_4.0_kcc.GNU: Added a new
+ 	  platform config file for KCC.  Thanks to Scott Snyder
+ 	  <snyder@d0sgif.fnal.gov> for contributing this.
+
 Sat Jan 16 18:13:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: Commented out adding

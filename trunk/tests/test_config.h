@@ -373,7 +373,9 @@ randomize (int array[], size_t size)
   for (i = 0; i < size; i++)
     array [i] = i;
 
-  ACE_OS::srand (ACE_OS::time (0L));
+  // See with a fixed number so that we can produce "repeatable"
+  // random numbers.
+  ACE_OS::srand (0);
 
   // Generate an array of random numbers from 0 .. size - 1.
 

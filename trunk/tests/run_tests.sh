@@ -17,6 +17,7 @@ usage="usage: $0 <target>"
 IFS="|"
 tmp=/tmp
 compilation_log="log/compilations.log"
+LD_LIBRARY_PATH=../netsvcs/lib:$LD_LIBRARY_PATH
 
 ####
 #### Process command line arguments.

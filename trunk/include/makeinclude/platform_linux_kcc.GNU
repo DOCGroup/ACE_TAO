@@ -13,7 +13,7 @@ CCFLAGS += $(CFLAGS) -DNULL=0
 DCFLAGS += +K0 -g
 DLD     = $(CC)
 LD      = $(CC)
-LIBS    += -ldl -lpthread
+LIBS    += -ldl -lpthread -lm
 EXCEPTION = --no_exceptions
 OCFLAGS += +K3 -O --one_instantiation_per_object $(EXCEPTION)
 PIC     = -fPIC

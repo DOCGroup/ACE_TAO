@@ -83,7 +83,7 @@ ACE_High_Res_Timer::global_scale_factor ()
      defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER) && \
     ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
-     defined (ghs) || defined (__GNUG__))
+     defined (ghs) || defined (__GNUG__) || defined (__KCC))
   // Check if the global scale factor needs to be set, and do if so.
   if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
     {
