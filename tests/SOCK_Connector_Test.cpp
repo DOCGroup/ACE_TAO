@@ -124,9 +124,9 @@ fail_no_listener_nonblocking (void)
 }
 
 
-// This test tries to hit a port that's listening.  SMTP (25) is pretty
+// This test tries to hit a port that's listening.  Echo (7) is pretty
 // popular.  Just in case, though, it won't report a failure if it gets
-// 'refused" (no listener) since the real fixed bug this is testing is
+// "refused" (no listener) since the real fixed bug this is testing is
 // a returned error of EWOULDBLOCK when the connect really did work.
 // That was a side-affect of how ACE::handle_timed_complete does checks
 // on some systems.
@@ -135,15 +135,15 @@ succeed_nonblocking (void)
 {
   ASYS_TCHAR test_host[MAXHOSTNAMELEN];
   int status;
-  ACE_INET_Addr smtp_server;
+  ACE_INET_Addr echo_server;
   ACE_SOCK_Connector con;
   ACE_SOCK_Stream sock;
   ACE_Time_Value nonblock (0, 0);
 
   find_another_host (test_host);
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host %s\n"), test_host));
-  smtp_server.set ((u_short) 25, test_host);
-  status = con.connect (sock, smtp_server, &nonblock);
+  echo_server.set ((u_short) 7, test_host);
+  status = con.connect (sock, echo_server, &nonblock);
 
   // Need to test the call to 'complete' really.
   if (status == 0 || (status == -1 && errno != EWOULDBLOCK))
@@ -158,8 +158,12 @@ succeed_nonblocking (void)
         status = con.complete (sock);
 
       if (status == -1)
-	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("%p\n"),
-		    ASYS_TEXT("connect:complete")));
+	{
+	  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("%p\n"),
+		      ASYS_TEXT("connect:complete")));
+	  if (errno == ECONNREFUSED || errno == ENOTCONN)
+	    status = 0;
+	}
       else
 	ACE_DEBUG((LM_DEBUG,
 		   ASYS_TEXT("Connect which should succeed, did\n")));
