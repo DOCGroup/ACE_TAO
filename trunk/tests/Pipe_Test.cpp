@@ -28,6 +28,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+#if !defined (ACE_LACKS_FORK)
 static int close_pipe = 1;
 static int child_process = 0;
 static int iterations = ACE_MAX_ITERATIONS;
@@ -79,11 +80,15 @@ open (ACE_Pipe &pipe,
   if (close_pipe)
     pipe.close ();
 }
+#endif /* ! ACE_LACKS_FORK */
 
 int
 main (int argc, char *argv[])
 {
 #if defined (ACE_LACKS_FORK)
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   ACE_START_TEST ("Pipe_Test");
   ACE_ERROR ((LM_INFO, "fork is not supported on this platform\n"));
   ACE_END_TEST;
