@@ -131,7 +131,7 @@ InputPath=.\Grid.idl
 InputName=Grid
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -169,7 +169,7 @@ InputPath=.\Grid.idl
 InputName=Grid
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

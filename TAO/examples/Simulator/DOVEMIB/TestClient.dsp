@@ -94,7 +94,7 @@ InputPath=.\any_test.idl
 InputName=any_test
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -135,7 +135,7 @@ InputName=NavWeap
 
 BuildCmds= \
 	xcopy ..\$(InputName).idl . \
-	..\..\..\..\bin\tao_idl $(InputName).idl \
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl \
 	
 
 "$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
