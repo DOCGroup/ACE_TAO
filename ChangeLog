@@ -3,6 +3,9 @@ Fri Apr 12 08:22:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
         * ace/WFMO_Reactor.h:
           Minor improvements doxygen comments
 
+        * ace/POSIX_Asynch_IO.h:
+          Doxygen-ized some of the comments
+
 Fri Apr 12 00:15:32 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
