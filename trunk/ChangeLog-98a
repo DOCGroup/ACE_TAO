@@ -1,3 +1,10 @@
+Thu Apr  9 12:27:23 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* tests/Hash_Map_Manager_Test.cpp: 
+	  POOL_SIZE was simple "const POOL_SIZE" I changed that to "const
+	  int POOL_SIZE".
+	  Added missing template instantiation for Static_Allocator.
+
 Thu Apr 09 10:50:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (dump): Fixed signed/unsigned mismatched
