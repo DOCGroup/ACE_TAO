@@ -8,7 +8,6 @@
 #include "debug.h"
 #include "Connect_Strategy.h"
 #include "Client_Strategy_Factory.h"
-#include "Wait_Strategy.h"
 #include "Connection_Handler.h"
 #include "Profile_Transport_Resolver.h"
 

@@ -1,5 +1,10 @@
 Thu Jul 29 13:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/Transport_Connector.cpp:
+          Removed not needed include
+
+Thu Jul 29 13:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tao/Transport.{h,cpp}:
           Renamed set_connected to post_open, we do much more then just
           setting a property. When the transport is connected we register
