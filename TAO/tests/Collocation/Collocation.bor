@@ -1,5 +1,5 @@
 #
-# Makefile for building the Collocation test
+# Makefile for building	the Collocation	test
 #
 
 NAME = Collocation
@@ -20,7 +20,7 @@ LIBFILES = \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(BINDIR)\Diamond$(LIB_DECORATOR).lib \
-	$(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib 
+	$(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib
 
 CPPDIR = .
 
