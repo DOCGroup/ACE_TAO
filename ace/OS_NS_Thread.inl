@@ -2497,6 +2497,8 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   pthread_rwlockattr_setpshared (&attr, (type == USYNC_THREAD ?
                                          PTHREAD_PROCESS_PRIVATE :
                                          PTHREAD_PROCESS_SHARED));
+#    else
+  ACE_UNUSED_ARG (type);
 #    endif /* !ACE_LACKS_RWLOCKATTR_PSHARED */
   status = ACE_ADAPT_RETVAL (pthread_rwlock_init (rw, &attr), status);
   pthread_rwlockattr_destroy (&attr);

@@ -1,3 +1,8 @@
+Thu Nov 18 14:42:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+	* ace/OS_NS_Thread.inl:
+	  Fixed unused arg warning.
+
 Thu Nov 18 14:38:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* ace/Semaphore.cpp:
