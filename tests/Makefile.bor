@@ -124,7 +124,7 @@ DIRS =  RMCast \
 DIRS =  RMCast
 !endif
 
-MAKEFILES = DLL_Test.bor Service_Config_DLL.bor
+MAKEFILES = DLL_Test.bor Service_Config_DLL.bor Framework_Component_DLL.bor
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 

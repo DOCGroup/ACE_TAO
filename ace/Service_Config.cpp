@@ -389,11 +389,7 @@ ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
                       0);
 
   void *foo;
-
-  // @@ Now this sucks..  Why can't we just pass the operation name to dll.symbol?
-  ACE_TCHAR *cdecl_str = ACE::ldname (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
-  foo = xmldll.symbol (cdecl_str);
-  delete[] cdecl_str;
+  foo = xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object");
 
   // Cast the void* to long first.
   long tmp = ACE_reinterpret_cast (long, foo);
