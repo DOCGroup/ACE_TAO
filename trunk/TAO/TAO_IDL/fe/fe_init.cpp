@@ -616,15 +616,6 @@ FE_init (void)
   idl_global->set_lineno (-1);
   idl_global->set_prog_name (0);
 
-#if defined (TAO_IDL_PREPROCESSOR)
-  idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
-#elif defined (ACE_CC_PREPROCESSOR)
-  idl_global->set_cpp_location (ACE_CC_PREPROCESSOR);
-#else
-  // Just default to cc
-  idl_global->set_cpp_location ("cc");
-#endif /* TAO_IDL_PREPROCESSOR */
-
   char local_escapes[LOCAL_ESCAPES_BUFFER_SIZE];
   ACE_OS::memset (&local_escapes,
                   0,

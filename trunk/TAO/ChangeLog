@@ -1,3 +1,16 @@
+Wed Jun 23 14:29:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp (DRV_init):
+        * TAO_IDLfe/fe_init.cpp (FE_init):
+          
+          Moved code that sets the preprocessor back into the executable
+          build from the front end library where it was recently moved.
+          This code checks for a preprocessor directive given to the
+          C++ compiler, and the preprocessor was not getting set
+          correctly on some platforms because the directive was
+          passed in the executable build and not the front end
+          library build.
+
 Wed Jun 23 15:24:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Asynch_Queued_Message.h:
