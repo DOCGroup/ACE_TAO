@@ -1,3 +1,47 @@
+Mon Apr 10 13:17:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Makefile:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/Object_Loader.h:
+	* tao/Object_Loader.i:
+	* tao/Object_Loader.cpp:
+	  New style for object references, the application can invoke
+	  orb->string_to_object ("DLL:....")
+	  The purpose of this feature is twofold:
+	  - Allow application developers to choose, very late in the
+	    development cycle, if they want to dynamically load a
+	    service.
+	    For example they can use resolve_initial_references to resolve
+	    the service, and then use -ORBInitRef Service=DLL:... to
+	    dynamically load it or -ORBInitRef Service=corbaloc:... to use
+	    a remote version.
+	  - It can be used to dynamically load ORB components, such as the
+	    POA, the DynamicAnys, the IORManipulation interface, etc.
+	    All these components are accessed through the
+	    resolve_initial_references interface, so they could be loaded
+	    using the DLL-style IORs.
+
+	* tests/Makefile:
+	* tests/Object_Loader/Loader.cpp:
+	* tests/Object_Loader/Loader.h:
+	* tests/Object_Loader/Loader.i:
+	* tests/Object_Loader/Makefile:
+	* tests/Object_Loader/OLT_Export.h:
+	* tests/Object_Loader/Object_Loader.dsw:
+	* tests/Object_Loader/Test.idl:
+	* tests/Object_Loader/Test_DLL.dsp:
+	* tests/Object_Loader/Test_i.cpp:
+	* tests/Object_Loader/Test_i.h:
+	* tests/Object_Loader/Test_i.i:
+	* tests/Object_Loader/driver.cpp:
+	* tests/Object_Loader/driver.dsp:
+	* tests/Object_Loader/svc.conf:
+	  Add a very simple test that creates multiple ORBs and loads a
+	  different object into each one.
+
 Mon Apr 10 13:41:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/compiler.html:  Removed the entry about -Gc flag (compile
