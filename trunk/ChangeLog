@@ -1,3 +1,23 @@
+Mon Nov  3 16:43:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_NS_dlfcn.inl:
+          Added missing #includes needed on HPUX due to recent
+          subsetting.
+
+        * ace/OS_NS_time.inl:
+          Changed #ifdef around ACE_OS::timezone implementation to be just
+          __GNUG__ since it seems to be needed on all OS's that use g++.
+
+        * ace/OS_NS_string.h:
+          Changed ACE_OS_Export to ACE_Export.
+
+        * ace/OS_NS_unistd.cpp:
+          Added #include of sys/pstat.h needed on HPUX.
+
+        * ace/os_include/os_termios.h:
+          Added #include of sys/modem.h on HPUX to pickup the MDTR
+          definition.
+
 Mon Nov  3 10:19:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.bor:
