@@ -1,3 +1,12 @@
+Thu Sep 17 11:23:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp (run_server): Oops,
+ 	  we can't use ACE_THR_FUNC here since that has a different
+ 	  signature on VxWorks.  So we'll just expand this a bit.  I
+ 	  modeified David' change just a bit to make this more portable.
+  	  Thanks to Raja Ati <rati@jupiter.montereynets.com> for reporting
+ 	  this.
+
 Thu Sep 17 09:54:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Svc_Handler.cpp (new): cleaned up the ACE_ASSERT check
