@@ -1,3 +1,14 @@
+Sun Oct 25 22:18:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp (dispatch): Be more careful in how we
+ 	  handle dispatching when signals occur.  In general, if we're
+ 	  interrupted by a non-Reactor-aware signal handler we need to
+ 	  bail out...  Thanks to Naga for reporting this.
+
+	* examples/Reactor/Misc/test_signals_1.cpp: Cleaned up this test
+ 	  so that it'll show off the signal handling capabilities of the
+ 	  ACE Reactor better.
+
 Sun Oct 25 14:13:31 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/OS.i: Changed ACE_OS::sigaction to work with a null value
