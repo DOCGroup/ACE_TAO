@@ -40,13 +40,13 @@ public:
   typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE> REVERSE_ITERATOR;
 
   // = Initialization and termination methods.
-  ACE_Message_Queue (size_t hwm = DEFAULT_HWM,
-                     size_t lwm = DEFAULT_LWM,
+  ACE_Message_Queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                     size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                      ACE_Notification_Strategy * = 0);
 
   // Create a message queue with all the defaults.
-  virtual int open (size_t hwm = DEFAULT_HWM,
-                    size_t lwm = DEFAULT_LWM,
+  virtual int open (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                    size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                     ACE_Notification_Strategy * = 0);
   // Create a message queue with all the defaults.
 
@@ -362,8 +362,8 @@ class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE>
 public:
   // = Initialization and termination methods.
   ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
-                             size_t hwm = DEFAULT_HWM,
-                             size_t lwm = DEFAULT_LWM,
+                             size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                             size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                              ACE_Notification_Strategy * = 0);
 
   virtual ~ACE_Dynamic_Message_Queue (void);
@@ -443,14 +443,14 @@ class ACE_Export ACE_Message_Queue_Factory
 
 public:
   static ACE_Message_Queue<ACE_SYNCH_USE> *
-    create_static_message_queue (size_t hwm = DEFAULT_HWM,
-                                 size_t lwm = DEFAULT_LWM,
+    create_static_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                                 size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                                  ACE_Notification_Strategy * = 0);
   // factory method for a statically prioritized ACE_Message_Queue
 
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
-    create_deadline_message_queue (size_t hwm = DEFAULT_HWM,
-                                   size_t lwm = DEFAULT_LWM,
+    create_deadline_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                                   size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                                    ACE_Notification_Strategy * = 0,
                                    u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
                                    u_long static_bit_field_shift = 10,            // 10 low order bits
@@ -460,8 +460,8 @@ public:
   // factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
 
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
-    create_laxity_message_queue (size_t hwm = DEFAULT_HWM,
-                                 size_t lwm = DEFAULT_LWM,
+    create_laxity_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                                 size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                                  ACE_Notification_Strategy * = 0,
                                  u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
                                  u_long static_bit_field_shift = 10,            // 10 low order bits
