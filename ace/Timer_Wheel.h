@@ -14,7 +14,7 @@
 
 #ifndef ACE_TIMER_WHEEL_H
 #define ACE_TIMER_WHEEL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Timer_Wheel_T.h"
 
@@ -35,5 +35,5 @@ typedef ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *,
                                    ACE_SYNCH_RECURSIVE_MUTEX>
         ACE_Timer_Wheel_Iterator;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TIMER_WHEEL_H */

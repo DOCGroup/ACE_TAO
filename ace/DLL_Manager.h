@@ -13,7 +13,7 @@
 
 #ifndef ACE_DLL_MANAGER_H
 #define ACE_DLL_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch_T.h"
 
@@ -244,5 +244,5 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL_Manager &))
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DLL_MANAGER_H */

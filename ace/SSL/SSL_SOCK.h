@@ -14,7 +14,7 @@
 #ifndef ACE_SSL_SOCK_H
 #define ACE_SSL_SOCK_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSL_Export.h"
 
@@ -85,7 +85,7 @@ protected:
 #include "SSL_SOCK.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SSL_SOCK_H */
 

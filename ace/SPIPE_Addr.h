@@ -14,7 +14,7 @@
 #ifndef ACE_SPIPE_ADDR_H
 #define ACE_SPIPE_ADDR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -113,6 +113,6 @@ private:
 #include "ace/SPIPE_Addr.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SPIPE_ADDR_H */

@@ -13,7 +13,7 @@
 
 #ifndef ACE_IOSTREAM_H
 #define ACE_IOSTREAM_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -509,5 +509,5 @@ typedef ostream& (*__omanip_)(ostream&);
 #include "ace/IOStream_T.h"
 #endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_IOSTREAM_H */

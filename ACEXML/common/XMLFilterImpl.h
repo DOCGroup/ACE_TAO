@@ -11,7 +11,7 @@
 //=============================================================================
 #ifndef ACEXML_XMLFILTERIMPL_H
 #define ACEXML_XMLFILTERIMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ACEXML/common/XMLFilter.h"
 #include "ACEXML/common/XMLReader.h"
@@ -289,6 +289,6 @@ private:
 # include "ACEXML/common/XMLFilterImpl.i"
 #endif /* __ACEXML_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACEXML_XMLFILTERIMPL_H */

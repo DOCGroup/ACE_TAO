@@ -14,7 +14,7 @@
 
 #ifndef ACE_PROACTOR_IMPL_H
 #define ACE_PROACTOR_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -247,5 +247,5 @@ public:
 };
 
 #endif /* (ACE_WIN32 && ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_PROACTOR_IMPL_H */

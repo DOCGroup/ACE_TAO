@@ -15,7 +15,7 @@
 
 #ifndef ACE_SYSTEM_TIME_H
 #define ACE_SYSTEM_TIME_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -83,5 +83,5 @@ private:
   long *delta_time_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SYSTEM_TIME_H */

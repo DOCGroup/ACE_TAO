@@ -8,7 +8,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
@@ -183,5 +183,5 @@ ange */
 
 #define ACE_LACKS_GETHOSTENT
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

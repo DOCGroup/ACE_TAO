@@ -17,7 +17,7 @@
 #ifndef ACE_SSL_SOCK_CONNECTOR_H
 #define ACE_SSL_SOCK_CONNECTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSL_Export.h"
 
@@ -309,7 +309,7 @@ private:
 #include "SSL_SOCK_Connector.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SSL_SOCK_CONNECTOR_H */
 

@@ -12,7 +12,7 @@
 
 #ifndef ACE_ATOMIC_OP_T_H
 #define ACE_ATOMIC_OP_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -250,5 +250,5 @@ private:
 #pragma implementation ("Atomic_Op_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*ACE_ATOMIC_OP_T_H*/

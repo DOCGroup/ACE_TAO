@@ -15,7 +15,7 @@
 #ifndef ACE_OS_H
 #define ACE_OS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -4698,5 +4698,5 @@ extern ACE_OS_Export int sys_nerr;
 # include "ace/Thread_Control.h"
 #endif  /* ACE_LEGACY_MODE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* ACE_OS_H */

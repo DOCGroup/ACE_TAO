@@ -16,7 +16,7 @@
 #ifndef ACE_SSL_SOCK_STREAM_H
 #define ACE_SSL_SOCK_STREAM_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSL_Export.h"
 
@@ -303,6 +303,6 @@ protected:
 #include "SSL_SOCK_Stream.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SSL_SOCK_STREAM_H */

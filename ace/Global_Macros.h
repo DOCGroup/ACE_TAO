@@ -16,7 +16,7 @@
 #ifndef ACE_GLOBAL_MACROS_H
 #define ACE_GLOBAL_MACROS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // Included just keep compilers that see #pragma dierctive first
 // happy.
@@ -727,6 +727,6 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 
 # define ACE_NOOP(x)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /*ACE_GLOBAL_MACROS_H*/

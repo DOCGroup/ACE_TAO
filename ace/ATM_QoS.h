@@ -13,7 +13,7 @@
 
 #ifndef ACE_ATM_QoS_H
 #define ACE_ATM_QoS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -99,5 +99,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_ATM_QoS_H */

@@ -12,7 +12,7 @@
 
 #ifndef ACE_FILE_LOCK_H
 #define ACE_FILE_LOCK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -160,5 +160,5 @@ private:
 #include "ace/File_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FILE_LOCK_H */

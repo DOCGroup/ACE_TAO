@@ -17,7 +17,7 @@
 
 #ifndef ACE_PROCESS_SEMAPHORE_H
 #define ACE_PROCESS_SEMAPHORE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -138,5 +138,5 @@ protected:
 #include "ace/Process_Semaphore.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_PROCESS_SEMAPHORE_H */

@@ -15,7 +15,7 @@
 
 #ifdef ACEXML_HAS_ZZIPLIB
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -137,7 +137,7 @@ private:
   int           limit_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACEXML_HAS_ZZIPLIB */
 

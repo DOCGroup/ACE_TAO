@@ -13,7 +13,7 @@
 #ifndef ACE_MALLOC_ALLOCATOR_H
 #define ACE_MALLOC_ALLOCATOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -137,6 +137,6 @@ protected:
 #include "ace/Malloc_Allocator.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* MALLOC_ALLOCATOR_H */

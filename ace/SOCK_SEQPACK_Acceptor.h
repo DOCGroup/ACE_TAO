@@ -15,7 +15,7 @@
 #ifndef ACE_SOCK_SEQ_ACCEPTOR_H
 #define ACE_SOCK_SEQ_ACCEPTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -181,6 +181,6 @@ private:
 #include "ace/SOCK_SEQPACK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SOCK_SEQ_ACCEPTOR_H */

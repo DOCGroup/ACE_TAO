@@ -12,7 +12,7 @@
 
 #ifndef ACE_PRIORITY_REACTOR_H
 #define ACE_PRIORITY_REACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Unbounded_Queue.h"
 
@@ -85,5 +85,5 @@ private:
   ACE_Priority_Reactor &operator = (const ACE_Priority_Reactor &);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_PRIORITY_REACTOR_H */

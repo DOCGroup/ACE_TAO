@@ -14,7 +14,7 @@
 
 #ifndef ACE_OS_QOS_H
 #define ACE_OS_QOS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -382,5 +382,5 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* ACE_OS_QOS_H */

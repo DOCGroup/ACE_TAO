@@ -15,7 +15,7 @@
 
 #ifndef ACE_FUTURE_H
 #define ACE_FUTURE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Unbounded_Set.h"
 #include "ace/Synch.h"
@@ -380,5 +380,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_THREADS */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FUTURE_H */

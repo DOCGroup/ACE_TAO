@@ -12,7 +12,7 @@
 
 #ifndef ACE_SAMPLE_HISTORY_H
 #define ACE_SAMPLE_HISTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 #include "ace/Basic_Types.h"
@@ -82,5 +82,5 @@ private:
 #include "ace/Sample_History.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SAMPLE_HISTORY_H */

@@ -13,7 +13,7 @@
 
 #ifndef ACE_UNIX_ADDR_H
 #define ACE_UNIX_ADDR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -98,5 +98,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_UNIX_ADDR_H */

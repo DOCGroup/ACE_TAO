@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_GETPGID
@@ -102,5 +102,5 @@
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

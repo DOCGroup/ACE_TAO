@@ -13,7 +13,7 @@
 
 #ifndef ACE_LOCAL_SOCK_CODGRAM_H
 #define ACE_LOCAL_SOCK_CODGRAM_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -70,5 +70,5 @@ public:
 #endif
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOCAL_SOCK_CODGRAM_H */

@@ -14,7 +14,7 @@
 #ifndef ACE_FILECACHE_H
 #define ACE_FILECACHE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Mem_Map.h"
 
@@ -355,6 +355,6 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_FILECACHE_H */

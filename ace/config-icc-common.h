@@ -2,7 +2,7 @@
 
 #ifndef ACE_LINUX_ICC_COMMON_H
 #define ACE_LINUX_ICC_COMMON_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 # define ACE_HAS_ANSI_CASTS
 # define ACE_HAS_CPLUSPLUS_HEADERS
@@ -56,5 +56,5 @@
 #   define ACE_NEW_THROWS_EXCEPTIONS
 # endif /* ACE_HAS_EXCEPTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LINUX_ICC_COMMON_H */

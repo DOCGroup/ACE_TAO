@@ -13,7 +13,7 @@
 #ifndef ACE_TIME_VALUE_H
 #define ACE_TIME_VALUE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS_Export.h"
 #include "ace/ACE_export.h"
@@ -325,6 +325,6 @@ private:
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_TIME_VALUE_H */

@@ -12,7 +12,7 @@
 
 #ifndef ACE_SERVICE_OBJECT_H
 #define ACE_SERVICE_OBJECT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Shared_Object.h"
 #include "ace/Svc_Conf_Tokens.h"
@@ -167,5 +167,5 @@ private:
 #include "ace/Service_Object.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SERVICE_OBJECT_H */

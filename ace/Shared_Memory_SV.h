@@ -13,7 +13,7 @@
 
 #ifndef ACE_SHARED_MALLOC_SV_H
 #define ACE_SHARED_MALLOC_SV_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Shared_Memory.h"
 
@@ -93,5 +93,5 @@ private:
 #include "ace/Shared_Memory_SV.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SHARED_MALLOC_SV_H */

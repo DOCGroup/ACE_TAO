@@ -12,7 +12,7 @@
 #ifndef _ACEXML_DEBUG_DTD_Manager_H_
 #define _ACEXML_DEBUG_DTD_Manager_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -70,7 +70,7 @@ public:
                                           const ACEXML_Char *qName ACEXML_ENV_ARG_DECL);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 
 #endif /* _ACEXML_DTD_Manager_H_ */

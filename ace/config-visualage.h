@@ -6,7 +6,7 @@
 
 #ifndef CONFIG_VISUALAGE_H
 #define CONFIG_VISUALAGE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #ifdef __TOS_WIN__
    #include "ace/config-win32.h"
@@ -16,5 +16,5 @@
    #include "PLATFORM NOT SPECIFIED"
 #endif /* __TOS_WIN__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif //CONFIG_VISUALAGE_H

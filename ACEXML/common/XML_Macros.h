@@ -22,7 +22,7 @@
 #ifndef _ACEXML_MACROS_H
 #define _ACEXML_MACROS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -438,6 +438,6 @@
 #  define ACEXML_ENV_RAISE(ex) (ex)->_raise ()
 #endif /* ACEXML_CORBA_HAS_EXCEPTIONS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* _ACEXML_MACROS_H */

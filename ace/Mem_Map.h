@@ -13,7 +13,7 @@
 #ifndef ACE_MEM_MAP_H
 #define ACE_MEM_MAP_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -212,6 +212,6 @@ private:
 #include "ace/Mem_Map.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_MEM_MAP_H */

@@ -15,7 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CLASSIX_OS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #define ACE_CLASSIX_OS_H
 
 /* ------------------------------------------------------------------------- */
@@ -130,5 +130,5 @@ class ACE_CLASSIX_Msg
 #include "ace/CLASSIX/CLASSIX_OS.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CLASSIX_OS_H */

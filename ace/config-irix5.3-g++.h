@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
 // this must appear before its #include.
@@ -119,5 +119,5 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

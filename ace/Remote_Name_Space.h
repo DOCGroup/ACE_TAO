@@ -14,7 +14,7 @@
 #ifndef ACE_REMOTE_NAME_SPACE_H
 #define ACE_REMOTE_NAME_SPACE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -137,6 +137,6 @@ private:
   ACE_Name_Proxy ns_proxy_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_REMOTE_NAME_SPACE_H */

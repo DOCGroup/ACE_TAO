@@ -1,3 +1,28 @@
+Sat Jul 19 18:38:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * docs/ACE-guidelines.html:
+          Added comment that adding "/**/" between the #include and the
+          file name prevents Doxygen from including the file in the file
+          reference tree graphs, and should be used with pre.h and
+          post.h--which makes the large ones much easier to understand.
+
+        * ace/*.h:
+        * ace/CLASSIX/*.h:
+        * ace/QoS/*.h:
+        * ace/RMCast/*.h:
+        * ace/SSL/*.h:
+        * ace/os_include/*.h:
+        * ace/os_include/arpa/*.h:
+        * ace/os_include/net/*.h:
+        * ace/os_include/netinet/*.h:
+        * ace/os_include/sys/*.h:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
+        * tests/Service_Config_DLL.h:
+          Added "/**/" between the #include and filename for pre.h and
+          post.h so Doxygen won't include them in the file reference tree
+          graphs.
+
 Fri Jul 18 17:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_IO.h:

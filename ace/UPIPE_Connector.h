@@ -13,7 +13,7 @@
 
 #ifndef ACE_UPIPE_CONNECTOR_H
 #define ACE_UPIPE_CONNECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/UPIPE_Stream.h"
 
@@ -108,5 +108,5 @@ public:
 #endif
 
 #endif /* ACE_HAS_THREADS */
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_UPIPE_CONNECTOR_H */

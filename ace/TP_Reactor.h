@@ -29,7 +29,7 @@
 
 #ifndef ACE_TP_REACTOR_H
 #define ACE_TP_REACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Select_Reactor.h"
 #include "ace/Log_Msg.h"
@@ -348,5 +348,5 @@ private:
 #include "ace/TP_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_TP_REACTOR_H */

@@ -13,7 +13,7 @@
 
 #ifndef ACE_DUMP_T_H
 #define ACE_DUMP_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Dump.h"
 
@@ -74,5 +74,5 @@ private:
 #pragma implementation ("Dump_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DUMP_T_H */

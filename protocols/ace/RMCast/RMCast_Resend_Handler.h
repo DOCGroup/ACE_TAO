@@ -2,7 +2,7 @@
 
 #ifndef ACE_RMCAST_RESEND_HANDLER_H
 #define ACE_RMCAST_RESEND_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Export.h"
 #include "ace/Event_Handler.h"
@@ -40,5 +40,5 @@ private:
 #include "RMCast_Resend_Handler.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_RESEND_HANDLER_H */

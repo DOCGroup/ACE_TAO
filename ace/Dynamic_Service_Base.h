@@ -14,7 +14,7 @@
 #ifndef ACE_DYNAMIC_SERVICE_BASE_H
 #define ACE_DYNAMIC_SERVICE_BASE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -42,5 +42,5 @@ protected:
   static void* instance (const ACE_TCHAR *name);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DYNAMIC_SERVICE_BASE_H */

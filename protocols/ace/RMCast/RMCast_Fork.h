@@ -3,7 +3,7 @@
 
 #ifndef ACE_RMCAST_FORK_H
 #define ACE_RMCAST_FORK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Module.h"
 
@@ -51,5 +51,5 @@ private:
 #include "RMCast_Fork.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_FORK_H */

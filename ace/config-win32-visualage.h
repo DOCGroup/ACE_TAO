@@ -14,7 +14,7 @@
 
 #ifndef ACE_CONFIG_WIN32_VISUALAGE_H
 #define ACE_CONFIG_WIN32_VISUALAGE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -97,5 +97,5 @@
 
 #endif /* defined(__IBMCPP__) */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_VISUALAGE_H */

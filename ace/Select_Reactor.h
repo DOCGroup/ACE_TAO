@@ -12,7 +12,7 @@
 
 #ifndef ACE_SELECT_REACTOR_H
 #define ACE_SELECT_REACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Select_Reactor_T.h"
 
@@ -55,5 +55,5 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> > &))
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SELECT_REACTOR_H */

@@ -16,7 +16,7 @@
 #ifndef ACE_SOCK_SEQPACK_CONNECTOR_H
 #define ACE_SOCK_SEQPACK_CONNECTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/config.h"
 #include "ace/ACE_export.h"
 
@@ -320,6 +320,6 @@ protected:
 #include "ace/SOCK_SEQPACK_Connector.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SOCK_SEQPACK_CONNECTOR_H */

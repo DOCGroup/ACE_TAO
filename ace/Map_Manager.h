@@ -13,7 +13,7 @@
 #ifndef ACE_MAP_MANAGER_H
 #define ACE_MAP_MANAGER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -707,6 +707,6 @@ public:
 #pragma implementation ("Map_Manager.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_MAP_MANAGER_H */

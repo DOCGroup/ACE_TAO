@@ -13,7 +13,7 @@
 #ifndef ACE_CONTAINERS_H
 #define ACE_CONTAINERS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -68,6 +68,6 @@ protected:
 
 #include "ace/Containers_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CONTAINERS_H */

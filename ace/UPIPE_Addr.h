@@ -14,7 +14,7 @@
 
 #ifndef ACE_UPIPE_ADDR_H
 #define ACE_UPIPE_ADDR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/SPIPE_Addr.h"
 
@@ -24,5 +24,5 @@
 
 typedef ACE_SPIPE_Addr ACE_UPIPE_Addr;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_UPIPE_ADDR_H */

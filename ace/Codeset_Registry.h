@@ -24,7 +24,7 @@
 #ifndef ACE_CODESET_REGISTRY_H
 #define ACE_CODESET_REGISTRY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/SString.h"
 #include "ace/CDR_Base.h"
 
@@ -95,5 +95,5 @@ private:
 #include "ace/Codeset_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CODESET_REGISTRY_H */

@@ -16,7 +16,7 @@
 
 #ifndef ACE_RMCAST_UDP_PROXY_H
 #define ACE_RMCAST_UDP_PROXY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "RMCast_Proxy.h"
 
@@ -84,5 +84,5 @@ private:
 #include "RMCast_UDP_Proxy.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_UDP_PROXY_H */

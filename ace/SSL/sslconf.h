@@ -14,7 +14,7 @@
 #ifndef ACE_SSLCONF_H
 #define ACE_SSLCONF_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -50,6 +50,6 @@
 #define ACE_SSL_RAND_FILE_ENV  "SSL_RAND_FILE"
 #endif /* ACE_SSL_RAND_FILE_ENV */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_SSLCONF_H */

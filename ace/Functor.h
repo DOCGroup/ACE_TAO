@@ -30,7 +30,7 @@
 
 #ifndef ACE_FUNCTOR_H
 #define ACE_FUNCTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -463,5 +463,5 @@ public:
 // Include the templates here.
 #include "ace/Functor_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FUNCTOR_H */

@@ -17,7 +17,7 @@
 #ifndef ACE_SSTRINGFWD_H
 #define ACE_SSTRINGFWD_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Basic_Types.h"   /* ACE_WCHAR_T definition */
 
@@ -41,6 +41,6 @@ typedef ACE_WString ACE_TString;
 typedef ACE_CString ACE_TString;
 #endif /* ACE_USES_WCHAR */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* ACE_SSTRINGFWD_H */

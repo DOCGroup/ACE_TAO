@@ -14,7 +14,7 @@
 
 #ifndef ACE_SYNCH_H
 #define ACE_SYNCH_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -1860,5 +1860,5 @@ public:
 # include "ace/Test_and_Set.h"
 #endif  /* ACE_LEGACY_MODE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_SYNCH_H */

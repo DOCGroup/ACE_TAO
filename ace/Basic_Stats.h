@@ -12,7 +12,7 @@
 
 #ifndef ACE_BASIC_STATS_H
 #define ACE_BASIC_STATS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 #include "ace/Basic_Types.h"
@@ -83,5 +83,5 @@ private:
 #include "ace/Basic_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_BASIC_STATS_H */

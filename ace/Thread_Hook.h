@@ -12,7 +12,7 @@
 
 #ifndef ACE_THREAD_HOOK_H
 #define ACE_THREAD_HOOK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -52,5 +52,5 @@ public:
   static ACE_Thread_Hook *thread_hook (void);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_THREAD_HOOK_H */

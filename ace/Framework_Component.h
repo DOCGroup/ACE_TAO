@@ -34,7 +34,7 @@
 
 #ifndef ACE_FRAMEWORK_COMPONENT_H
 #define ACE_FRAMEWORK_COMPONENT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -189,5 +189,5 @@ private:
 // Include the templates classes at this point.
 #include "ace/Framework_Component_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FRAMEWORK_COMPONENT_H */

@@ -8,7 +8,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if ! defined (VXWORKS)
 # define VXWORKS
@@ -228,5 +228,5 @@
 #define ACE_USE_RCSID 0
 #endif /* #if !defined (ACE_USE_RCSID) */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -18,7 +18,7 @@
 
 #ifndef ACE_LOG_RECORD_H
 #define ACE_LOG_RECORD_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -190,5 +190,5 @@ private:
 #include "ace/Log_Record.i"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOG_RECORD_H */

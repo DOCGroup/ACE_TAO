@@ -13,7 +13,7 @@
 #ifndef ACEXML_PARSER_CONTEXT_H
 #define ACEXML_PARSER_CONTEXT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ACEXML/parser/parser/Parser_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -74,6 +74,6 @@ private:
 # include "ACEXML/parser/parser/ParserContext.inl"
 #endif /* __ACEXML_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACEXML_PARSER_CONTEXT_H */

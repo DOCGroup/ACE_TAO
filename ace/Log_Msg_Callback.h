@@ -12,7 +12,7 @@
 
 #ifndef ACE_LOG_MSG_CALLBACK_H
 #define ACE_LOG_MSG_CALLBACK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -61,5 +61,5 @@ public:
   virtual void log (ACE_Log_Record &log_record) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_CALLBACK_H */

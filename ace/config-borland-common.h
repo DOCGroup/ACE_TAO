@@ -5,7 +5,7 @@
 
 #ifndef ACE_CONFIG_BORLAND_COMMON_H
 #define ACE_CONFIG_BORLAND_COMMON_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #define ACE_HAS_CUSTOM_EXPORT_MACROS
 #define ACE_Proper_Export_Flag __declspec (dllexport)
@@ -78,5 +78,5 @@
 
 # define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_BORLAND_COMMON_H */

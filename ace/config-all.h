@@ -14,7 +14,7 @@
 
 #ifndef ACE_CONFIG_ALL_H
 #define ACE_CONFIG_ALL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config.h"
 
@@ -681,5 +681,5 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_ALL_H */
