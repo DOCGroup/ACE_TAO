@@ -166,19 +166,28 @@
 
 // By default, we use non-static object manager on Win32.  That is,
 // the object manager is allocated in main's stack memory.  If this
-// does not suit your need, you can disable the behavior by defining
-// ACE_HAS_NONSTATIC_OBJECT_MANAGER to 0.
+// does not suit your need, i.e., if your programs depend on the use
+// of static object manager, you neet to disable the behavior by
+// defining ACE_HAS_NONSTATIC_OBJECT_MANAGER=0.
 //
-// MFC users: the main function is defined withing MFC library.
-// Therefore, you'll need to instantiate the ACE_Object_Manager by
+// MFC users: the main function is defined within a MFC library and
+// therefore, ACE won't be able to meddle with main function and
+// instantiate the non-static object manager for you.  To solve the
+// problem, you'll need to instantiate the ACE_Object_Manager by
 // either:
 //
-// 1. Using static object manager (as described above).
-// 2. #define ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER in your
-//    ace/config.h, _and_ either 1) call ACE::init () at the beginning
-//    and ACE::fini () at the end, _or_ 2) instantiate the
-//    ACE_Object_Manager in your CApplication derived class.
+// 1. Using static object manager (as described above), however, using
+// the non-static object manager is prefered, therefore,
+// 2. Instantiate the non-static object manager yourself by either 1)
+//    call ACE::init () at the beginning and ACE::fini () at the end,
+//    _or_ 2) instantiate the ACE_Object_Manager in your CApplication
+//    derived class.
 //
+// Optionally, you can #define
+// ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER in your
+// ace/config.h and always take care of the business by yourself.
+// ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER has no effect when
+// using static object managers.
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 # define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #elif (ACE_HAS_NONSTATIC_OBJECT_MANAGER == 0)
