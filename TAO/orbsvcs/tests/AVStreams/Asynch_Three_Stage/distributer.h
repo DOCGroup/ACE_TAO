@@ -154,4 +154,6 @@ protected:
 
   int done_;
   // Flag to know when we are done.
+
+  ACE_CString addr_file_;
 };
