@@ -1,3 +1,12 @@
+Sat May 26 16:36:27 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+
+	Switched off TAO/examples/PluggableUDP/tests/Basic/run_test.pl
+	from the Single Threaded builds. Added
+	TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
+	instead to run on all the builds.
+
 Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * netsvcs/build.bor:
@@ -5,7 +14,7 @@ Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Fri May 25 13:38:21 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Message_Block.h: Added a better explanation of what "crunch()" does. 
+	* ace/Message_Block.h: Added a better explanation of what "crunch()" does.
 	  Thanks to Masaoud T. Moonim <masaoud@mailandnews.com> for
  	  motivating this.
 
@@ -39,7 +48,7 @@ Thu May 24 22:06:45 2001  Sharath R. Cholleti  <sharth@cs.wustl.edu>
 	* tests/CDR_Test.cpp: Changed the initialization of WChar variable, to
 	  remove the warning "integer conversion resulted in a change of sign"
 	  by some compilers.
-	
+
 Thu May 24 20:26:39 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Heap_T.{h cpp}: Fixed some problems in managing the
@@ -62,7 +71,7 @@ Thu May 24 12:15:35 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* ace/OS.h: Added #defines for RTLD_LAZY, RTLD_NOW, RTLD_GLOBAL.
 	  Thanks to Kobi Cohen-Arazi <kobic@bvr.co.il> for suggesting
  	  this.
-  
+
 	* ace/OS.h: Updated the ACE_Time_Value class to point out that the
           values are in secs and usecs.  Thanks to Israel Illescas Gomez
  	  <illescas@dycsa.es> for motivating this.
