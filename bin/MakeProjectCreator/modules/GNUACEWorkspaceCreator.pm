@@ -73,11 +73,12 @@ sub pre_workspace {
 sub write_comps {
   my($self)     = shift;
   my($fh)       = shift;
-  my($projects) = $self->get_projects();
-  my($pjs)      = $self->get_project_info();
-  my(%targnum)  = ();
-  my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum);
   my($crlf)     = $self->crlf();
+  my($projects) = $self->get_projects();
+  my(%targnum)  = ();
+  my(@list)     = $self->number_target_deps($projects,
+                                            $self->get_project_info(),
+                                            \%targnum);
 
   ## Only use the list if there is more than one project
   if ($#list > 0) {

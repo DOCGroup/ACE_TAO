@@ -37,7 +37,7 @@ sub new {
       if (!$status) {
         ## We only want to warn the user about problems
         ## with the feature file.
-        my($lnumber) = $self->line_number();
+        my($lnumber) = $self->get_line_number();
         $warn =~ s/ERROR/WARNING/;
         print "$f: line $lnumber:\n$warn\n";
       }

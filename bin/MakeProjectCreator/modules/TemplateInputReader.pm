@@ -119,9 +119,9 @@ sub parse_line {
   elsif ($line =~ /^conditional_include\s+"([\w\s\-\+\/\\\.]+)"$/) {
     my($file) = $self->search_include_path("$1.$mpt");
     if (defined $file) {
-      my($ol) = $self->{'line_number'};
+      my($ol) = $self->get_line_number();
       ($status, $errorString) = $self->read_file($file);
-      $self->{'line_number'} = $ol;
+      $self->set_line_number($ol);
     }
   }
   else {

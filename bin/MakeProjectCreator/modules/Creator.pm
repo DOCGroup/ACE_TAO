@@ -119,28 +119,28 @@ sub generate_default_input {
 
 
 sub parse_file {
-  my($self)       = shift;
-  my($input)      = shift;
-  my($typecheck)  = $self->{'type_check'};
-  my($oline)      = $self->line_number();
+  my($self)  = shift;
+  my($input) = shift;
+  my($oline) = $self->get_line_number();
 
   ## Read the input file and get the last line number
   my($status, $errorString) = $self->read_file($input);
-  my($linenumber) = $self->line_number();
 
   if (!$status) {
     print STDERR $self->getcwd() .
-                 "/$input: line $linenumber:\n$errorString\n";
+                 "/$input: line " . $self->get_line_number() .
+                 ":\n$errorString\n";
   }
-  elsif ($status && $self->{$typecheck}) {
+  elsif ($status && $self->{$self->{'type_check'}}) {
     ## If we are at the end of the file and the type we are looking at
     ## is still defined, then we have an error
     print STDERR $self->getcwd() .
-                 "/$input: line $linenumber:\nERROR: Did not " .
+                 "/$input: line " . $self->get_line_number() .
+                 ":\nERROR: Did not " .
                  "find the end of the $self->{'grammar_type'}\n";
     $status = 0;
   }
-  $self->line_number($oline);
+  $self->set_line_number($oline);
 
   return $status;
 }
@@ -187,15 +187,15 @@ sub parse_assignment {
   my($values) = shift;
   my($status) = 1;
 
-  if ($line =~ /^(\w+)\s*=\s*(.*)?/) {
-    my($name)  = lc($1);
-    my($value) = $2;
-    push(@$values, 'assignment', $name, $value);
-  }
-  elsif ($line =~ /^(\w+)\s*\+=\s*(.*)?/) {
+  if ($line =~ /^(\w+)\s*\+=\s*(.*)?/) {
     my($name)  = lc($1);
     my($value) = $2;
     push(@$values, 'assign_add', $name, $value);
+  }
+  elsif ($line =~ /^(\w+)\s*=\s*(.*)?/) {
+    my($name)  = lc($1);
+    my($value) = $2;
+    push(@$values, 'assignment', $name, $value);
   }
   elsif ($line =~ /^(\w+)\s*\-=\s*(.*)?/) {
     my($name)  = lc($1);
@@ -217,7 +217,6 @@ sub parse_known {
   my($errorString) = '';
   my($type)        = $self->{'grammar_type'};
   my(@values)      = ();
-  my($typecheck)   = $self->{'type_check'};
 
   ##
   ## Each regexp that looks for the '{' looks for it at the
@@ -231,14 +230,15 @@ sub parse_known {
   elsif ($line =~ /^$type\s*(\([^\)]+\))?\s*(:.*)?\s*{$/) {
     my($name)    = $1;
     my($parents) = $2;
-    if ($self->{$typecheck}) {
+    if ($self->{$self->{'type_check'}}) {
       $errorString = "ERROR: Did not find the end of the $type";
       $status = 0;
     }
     else {
       if (defined $parents) {
         my(@parents) = ();
-        foreach my $parent (split(/[:,]/, $parents)) {
+        $parents =~ s/^://;
+        foreach my $parent (split(',', $parents)) {
           $parent =~ s/^\s+//;
           $parent =~ s/\s+$//;
           if ($parent ne '') {
@@ -257,7 +257,7 @@ sub parse_known {
     }
   }
   elsif ($line =~ /^}$/) {
-    if ($self->{$typecheck}) {
+    if ($self->{$self->{'type_check'}}) {
       push(@values, $type, $line);
     }
     else {
@@ -271,7 +271,7 @@ sub parse_known {
     my(@names) = split(/\s*,\s*/, $name);
     push(@values, $type, \@names);
   }
-  elsif (!$self->{$typecheck}) {
+  elsif (!$self->{$self->{'type_check'}}) {
     $errorString = "ERROR: No $type was defined";
     $status = 0;
   }
@@ -419,8 +419,7 @@ sub transform_file_name {
 sub file_written {
   my($self) = shift;
   my($file) = shift;
-  my($full) = $self->getcwd() . '/' . $file;
-  return (defined $all_written{$full});
+  return (defined $all_written{$self->getcwd() . '/' . $file});
 }
 
 
@@ -437,8 +436,7 @@ sub add_file_written {
   }
   push(@{$self->{'files_written'}}, $file);
 
-  my($full) = $self->getcwd() . '/' . $file;
-  $all_written{$full} = 1;
+  $all_written{$self->getcwd() . '/' . $file} = 1;
 }
 
 
@@ -482,17 +480,18 @@ sub process_assignment {
   my($name)   = shift;
   my($value)  = shift;
   my($assign) = shift;
-  my($tag)    = ($self->{'reading_global'} ? 'global_assign' : 'assign');
+
 
   ## If no hash table was passed in
   if (!defined $assign) {
-    $assign = $self->{$tag};
-  }
+    my($tag) = ($self->{'reading_global'} ? 'global_assign' : 'assign');
+    $assign  = $self->{$tag};
 
-  ## If we haven't yet defined the hash table in this project
-  if (!defined $assign) {
-    $assign = {};
-    $self->{$tag} = $assign;
+    ## If we haven't yet defined the hash table in this project
+    if (!defined $assign) {
+      $assign = {};
+      $self->{$tag} = $assign;
+    }
   }
 
   if (defined $value) {
@@ -500,10 +499,11 @@ sub process_assignment {
     $value =~ s/\s+$//;
 
     ## Modify the assignment value before saving it
-    $value = $self->modify_assignment_value($value);
+    $$assign{$name} = $self->modify_assignment_value($value);
   }
-
-  $$assign{$name} = $value;
+  else {
+    $$assign{$name} = undef;
+  }
 }
 
 

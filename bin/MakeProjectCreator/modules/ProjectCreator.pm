@@ -218,7 +218,6 @@ sub parse_line {
   my($self)   = shift;
   my($ih)     = shift;
   my($line)   = shift;
-  my($type)   = $self->{'grammar_type'};
   my($status,
      $errorString,
      @values) = $self->parse_known($line);
@@ -230,7 +229,7 @@ sub parse_line {
   ## sort.
 
   if ($status && defined $values[0]) {
-    if ($values[0] eq $type) {
+    if ($values[0] eq $self->{'grammar_type'}) {
       my($name)      = $values[1];
       my($typecheck) = $self->{'type_check'};
       if (defined $name && $name eq '}') {
@@ -267,19 +266,8 @@ sub parse_line {
           }
 
           if ($status) {
-#            ## Now add in the features that have been defined
-#            $self->{$typecheck} = 0;
-#            $self->{'type_specific_assign'} = {};
-#            ($status, $errorString) = $self->process_features();
-#
-#            if ($status) {
-#              ## If the feature added any type specific assignments
-#              ## then we need to processs them before we write the project
-#              $self->process_type_specific_assignments();
-
-              ## End of project; Write out the file.
-              ($status, $errorString) = $self->write_project();
-#            }
+            ## End of project; Write out the file.
+            ($status, $errorString) = $self->write_project();
 
             foreach my $key (keys %{$self->{'valid_components'}}) {
               delete $self->{$key};
@@ -641,8 +629,7 @@ sub parse_components {
         if (defined $over) {
           $$over{$line} = \%flags;
         }
-        my($array) = $$comps{$current};
-        push(@$array, $line);
+        push(@{$$comps{$current}}, $line);
       }
     }
     else {
@@ -674,11 +661,9 @@ sub parse_verbatim {
   while($_ = $fh->getline()) {
     my($line) = $self->strip_line($_);
 
-    if ($line eq '') {
-    }
-    elsif ($line =~ /^}/) {
+    if ($line =~ /^}/) {
       ## This is not an error,
-      ## this is the end of the components
+      ## this is the end of the verbatim
       last;
     }
     else {
@@ -688,35 +673,6 @@ sub parse_verbatim {
 
   return 1;
 }
-
-
-#sub save_feature {
-#  my($self)  = shift;
-#  my($fh)    = shift;
-#  my($names) = shift;
-#  my(@lines) = ("project {\n");
-#  my($curly) = 1;
-#
-#  while($_ = $fh->getline()) {
-#    my($line) = $self->strip_line($_);
-#    push(@lines, "$line\n");
-#
-#    ## This is a very simplistic way of finding the end of
-#    ## the feature definition.  It will work as long as no spurious
-#    ## open curly braces are counted.
-#    if ($line =~ /{$/) {
-#      ++$curly;
-#    }
-#    elsif ($line =~ /^}$/) {
-#      --$curly;
-#    }
-#    if ($curly == 0) {
-#      $self->{'feature_defined'} = 0;
-#      last;
-#    }
-#  }
-#  push(@{$self->{'feature_definitions'}}, [ $names, \@lines ]);
-#}
 
 
 sub process_feature {
@@ -1491,7 +1447,6 @@ sub generated_source_listed {
   my($arr)   = shift;
   my($names) = $self->{$tag};
   my(@gen)   = $self->generated_extensions($gent, $tag);
-  my(@found) = ();
 
   ## Find out which generated source files are listed
   foreach my $name (keys %$names) {
@@ -1503,14 +1458,15 @@ sub generated_source_listed {
           foreach my $i (@$arr) {
             my($ifile) = $self->escape_regex_special($i);
             if ($val =~ /$ifile$ext$/) {
-              push(@found, $val);
+              return 1;
             }
           }
         }
       }
     }
   }
-  return (defined $found[0]);
+
+  return 0;
 }
 
 
@@ -1868,16 +1824,16 @@ sub get_grouped_value {
   my($based) = shift;
   my($value) = undef;
 
+  ## Make it all lowercase
+  $type = lc($type);
+
   ## Remove the grouped_ part
   $type =~ s/^$grouped_key//;
 
   ## Add the s if it isn't there
-  if ($type !~ /s$/i) {
+  if ($type !~ /s$/) {
     $type .= 's';
   }
-
-  ## Make it all lowercase
-  $type = lc($type);
 
   my($names) = $self->{$type};
   if ($cmd eq 'files') {

@@ -127,15 +127,16 @@ sub read_file {
 }
 
 
-sub line_number {
+sub get_line_number {
+  my($self) = shift;
+  return $self->{'line_number'};
+}
+
+
+sub set_line_number {
   my($self)   = shift;
   my($number) = shift;
-
-  if (defined $number) {
-    $self->{'line_number'} = $number;
-  }
-
-  return $self->{'line_number'};
+  $self->{'line_number'} = $number;
 }
 
 
@@ -156,15 +157,14 @@ sub get_include_path {
 sub search_include_path {
   my($self)  = shift;
   my($file)  = shift;
-  my($found) = undef;
 
   foreach my $include ('.', @{$self->{'include'}}) {
     if (-r "$include/$file") {
-      $found = "$include/$file";
-      last;
+      return "$include/$file";
     }
   }
-  return $found;
+
+  return undef;
 }
 
 

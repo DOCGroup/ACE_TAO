@@ -54,7 +54,8 @@ sub new {
   $self->{'ti'}       = $prjc->get_template_input();
   $self->{'cslashes'} = $prjc->convert_slashes();
   $self->{'addtemp'}  = $prjc->get_addtemp();
-  $self->{'crlf'}     = undef;
+  $self->{'crlf'}     = $prjc->crlf();
+  $self->{'clen'}     = length($self->{'crlf'});
   $self->{'values'}   = {};
   $self->{'defaults'} = {};
   $self->{'lines'}    = [];
@@ -496,7 +497,7 @@ sub handle_if {
   my($val)    = shift;
   my($name)   = 'endif';
 
-  push(@{$self->{'lstack'}}, $self->line_number() . " $val");
+  push(@{$self->{'lstack'}}, $self->get_line_number() . " $val");
   if (!$self->{'if_skip'}) {
     my($true)  = 1;
     push(@{$self->{'sstack'}}, $name);
@@ -564,7 +565,7 @@ sub handle_foreach {
   my($status)      = 1;
   my($errorString) = '';
 
-  push(@{$self->{'lstack'}}, $self->line_number());
+  push(@{$self->{'lstack'}}, $self->get_line_number());
   if (!$self->{'if_skip'}) {
     my($vname) = undef;
     if ($val =~ /([^,]+),(.*)/) {
@@ -726,33 +727,12 @@ sub handle_marker {
 sub split_name_value {
   my($self)   = shift;
   my($line)   = shift;
-  my($length) = length($line);
   my($name)   = undef;
   my($val)    = undef;
 
-  for(my $i = 0; $i < $length; ++$i) {
-    my($ch) = substr($line, $i, 1);
-    if (!defined $name && $ch eq '(') {
-      $name = substr($line, 0, $i);
-      $val  = '';
-    }
-    elsif (!defined $name && $ch eq '%') {
-      if (substr($line, $i + 1, 1) eq '>') {
-        $name = substr($line, 0, $i);
-        last;
-      }
-    }
-    elsif (defined $val && $ch ne ')') {
-      $val .= $ch;
-    }
-    elsif (defined $val && $ch eq ')') {
-      if (substr($line, $i + 1, 2) eq '%>') {
-        last;
-      }
-      else {
-        $val .= $ch;
-      }
-    }
+  if ($line =~ /([^%\(]+)(\(([^%]+)\))?%>/) {
+    $name = $1;
+    $val  = $3;
   }
 
   return lc($name), $val;
@@ -854,9 +834,6 @@ sub collect_data {
   my($self) = shift;
   my($prjc) = $self->{'prjc'};
 
-  ## Save crlf so we don't have to keep going back to the prjc
-  $self->{'crlf'} = $prjc->crlf();
-
   ## Collect the components into {'values'} somehow
   foreach my $key (keys %{$prjc->{'valid_components'}}) {
     my(@list) = $prjc->get_component_list($key);
@@ -907,8 +884,6 @@ sub parse_line {
   my($errorString) = '';
   my($length)      = length($line);
   my($name)        = 0;
-  my($crlf)        = $self->{'crlf'};
-  my($clen)        = length($crlf);
   my($startempty)  = ($line eq '' ? 1 : 0);
   my($append_name) = 0;
 
@@ -917,8 +892,8 @@ sub parse_line {
   ## not need to add a newline to the end.
   if ($self->{'foreach'}->{'processing'} == 0 &&
       !$self->is_only_keyword($line)) {
-    $line   .= $crlf;
-    $length += $clen;
+    $line   .= $self->{'crlf'};
+    $length += $self->{'clen'};
   }
 
   if ($self->{'foreach'}->{'count'} < 0) {
@@ -992,7 +967,7 @@ sub parse_line {
     ## If the line started out empty and we're not
     ## skipping from the start or the built up line is not empty
     if ($startempty ||
-        ($self->{'built'} ne $crlf && $self->{'built'} ne '')) {
+        ($self->{'built'} ne $self->{'crlf'} && $self->{'built'} ne '')) {
       push(@{$self->{'lines'}}, $self->{'built'});
     }
   }
@@ -1018,7 +993,7 @@ sub parse_file {
   }
 
   if (!$status) {
-    my($linenumber) = $self->line_number();
+    my($linenumber) = $self->get_line_number();
     $errorString = "$input: line $linenumber:\n$errorString\n";
   }
 

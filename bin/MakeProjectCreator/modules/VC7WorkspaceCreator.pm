@@ -43,9 +43,9 @@ sub workspace_file_name {
 sub pre_workspace {
   my($self) = shift;
   my($fh)   = shift;
-  my($crlf) = $self->crlf();
 
-  print $fh "Microsoft Visual Studio Solution File, Format Version 7.00$crlf";
+  print $fh "Microsoft Visual Studio Solution File, Format Version 7.00" .
+            $self->crlf();
 }
 
 
@@ -123,7 +123,7 @@ sub write_comps {
   ## I hate to add yet another loop through all the projects, but 
   ## we must have some way to map plain project names to guids.
   my(%name_to_guid_map) = ();
-  foreach my $project(sort @list) {
+  foreach my $project(@list) {
     my($name, $deps, $guid) = @{$$pjs{$project}};
     $name_to_guid_map{$name} = $guid;
   }

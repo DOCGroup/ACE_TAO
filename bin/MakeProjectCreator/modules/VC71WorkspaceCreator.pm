@@ -26,9 +26,9 @@ use vars qw(@ISA);
 sub pre_workspace {
   my($self) = shift;
   my($fh)   = shift;
-  my($crlf) = $self->crlf();
 
-  print $fh "Microsoft Visual Studio Solution File, Format Version 8.00$crlf";
+  print $fh "Microsoft Visual Studio Solution File, Format Version 8.00" .
+            $self->crlf();
 }
 
 
