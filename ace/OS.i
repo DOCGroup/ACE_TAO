@@ -107,6 +107,55 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 # include /**/ <malloc.h>
 #endif /* ACE_LACKS_MALLOC_H */
 
+ACE_INLINE
+ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref,
+				  int error)
+  :
+#if defined (ACE_MT_SAFE)
+    errno_ptr_ (&errno_ref),
+#endif /* ACE_MT_SAFE */
+    error_ (error) 
+{
+}
+
+ACE_INLINE
+ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref)
+  :
+#if defined (ACE_MT_SAFE)
+    errno_ptr_ (&errno_ref),
+#endif /* ACE_MT_SAFE */
+    error_ (errno_ref) 
+{ 
+}
+
+ACE_INLINE 
+ACE_Errno_Guard::~ACE_Errno_Guard (void)
+{
+#if defined (ACE_MT_SAFE)
+  *errno_ptr_ = this->error_;
+#else
+  errno = this->error_;
+#endif /* ACE_MT_SAFE */
+}
+
+ACE_INLINE int 
+ACE_Errno_Guard::operator= (int error)
+{
+  return this->error_ = error;
+}
+
+ACE_INLINE int 
+ACE_Errno_Guard::operator== (int error)
+{
+  return this->error_ == error;
+}
+
+ACE_INLINE int 
+ACE_Errno_Guard::operator!= (int error)
+{
+  return this->error_ != error;
+}
+
 // Returns the value of the object as a timeval.
 
 ACE_INLINE
@@ -4154,6 +4203,8 @@ ACE_Flow_Spec::token_rate (u_long tr)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->TokenRate = tr; 
+#else
+  ACE_UNUSED_ARG (tr);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4172,6 +4223,8 @@ ACE_Flow_Spec::token_bucket_size (u_long tbs)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->TokenBucketSize = tbs; 
+#else
+  ACE_UNUSED_ARG (tbs);
 #endif /* ACE_HAS_WINSOCK2 */
 }
   
@@ -4190,6 +4243,8 @@ ACE_Flow_Spec::peak_bandwidth (u_long pb)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->PeakBandwidth = pb; 
+#else
+  ACE_UNUSED_ARG (pb);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4208,6 +4263,8 @@ ACE_Flow_Spec::latency (u_long l)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->Latency = l; 
+#else
+  ACE_UNUSED_ARG (l);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4225,6 +4282,8 @@ ACE_Flow_Spec::delay_variation (u_long dv)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->DelayVariation = dv; 
+#else
+  ACE_UNUSED_ARG (dv);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4243,6 +4302,8 @@ ACE_Flow_Spec::service_type (ACE_SERVICE_TYPE st)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->ServiceType = st; 
+#else
+  ACE_UNUSED_ARG (st);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4261,6 +4322,8 @@ ACE_Flow_Spec::max_sdu_size (u_long mss)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->MaxSduSize = mss; 
+#else
+  ACE_UNUSED_ARG (mss);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4279,6 +4342,8 @@ ACE_Flow_Spec::minimum_policed_size (u_long mps)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->MinimumPolicedSize = mps; 
+#else
+  ACE_UNUSED_ARG (mps);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4297,6 +4362,8 @@ ACE_QoS::sending_flowspec (const ACE_Flow_Spec &fs)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->SendingFlowspec = (FLOWSPEC) fs; 
+#else
+  ACE_UNUSED_ARG (fs);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4315,6 +4382,8 @@ ACE_QoS::receiving_flowspec (const ACE_Flow_Spec &fs)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->ReceivingFlowspec = (FLOWSPEC) fs; 
+#else
+  ACE_UNUSED_ARG (fs);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -4333,6 +4402,8 @@ ACE_QoS::provider_specific (const iovec &ps)
 { 
 #if defined (ACE_HAS_WINSOCK2)
   this->ProviderSpecific = (WSABUF) ((iovec &) ps); 
+#else
+  ACE_UNUSED_ARG (ps);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
@@ -11357,52 +11428,4 @@ ACE_OS_CString::wchar_rep (void)
   return this->rep_;
 }
 
-ACE_INLINE
-ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref,
-				  int error)
-  :
-#if defined (ACE_MT_SAFE)
-    errno_ptr_ (&errno_ref),
-#endif /* ACE_MT_SAFE */
-    error_ (error) 
-{
-}
-
-ACE_INLINE
-ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref)
-  :
-#if defined (ACE_MT_SAFE)
-    errno_ptr_ (&errno_ref),
-#endif /* ACE_MT_SAFE */
-    error_ (errno_ref) 
-{ 
-}
-
-ACE_INLINE 
-ACE_Errno_Guard::~ACE_Errno_Guard (void)
-{
-#if defined (ACE_MT_SAFE)
-  *errno_ptr_ = this->error_;
-#else
-  errno = this->error_;
-#endif /* ACE_MT_SAFE */
-}
-
-ACE_INLINE int 
-ACE_Errno_Guard::operator= (int error)
-{
-  return this->error_ = error;
-}
-
-ACE_INLINE int 
-ACE_Errno_Guard::operator== (int error)
-{
-  return this->error_ == error;
-}
-
-ACE_INLINE int 
-ACE_Errno_Guard::operator!= (int error)
-{
-  return this->error_ != error;
-}
 
