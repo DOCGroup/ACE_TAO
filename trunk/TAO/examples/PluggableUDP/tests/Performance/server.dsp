@@ -188,7 +188,7 @@ LINK32=link.exe
 # PROP Target_Dir "server"
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
-# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /YX /FD  /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -198,8 +198,8 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:IX86 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\PortableServer"
 # SUBTRACT BASE LINK32 /incremental:no
-# ADD LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:IX86 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\PortableServer"
-# SUBTRACT LINK32 /incremental:no
+# ADD LINK32 TAOs.lib aces.lib TAO_PortableServers.lib TAO_DIOPs.lib advapi32.lib user32.lib /nologo /subsystem:console /incremental:no /machine:IX86 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\DIOP"
+# SUBTRACT LINK32 /debug /pdbtype:<none>
 
 !ENDIF 
 
@@ -645,6 +645,7 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
+USERDEP__UDP_I="..\..\..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\UDP.idl
 InputName=UDP
@@ -682,7 +683,8 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "UDP Performance Server - Win32 Static Release"
 
-# Begin Custom Build
+USERDEP__UDP_I="..\..\..\..\..\bin\Release\tao_idl_static.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\UDP.idl
 InputName=UDP
 
