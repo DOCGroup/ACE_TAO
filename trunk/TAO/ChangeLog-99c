@@ -16,8 +16,8 @@ Fri Jul  2 17:50:56 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/Pluggable.h:
 	* tao/{IIOP,UIOP}_Connector.h:
 
-	  Made check_prefix() and object_key_delimiter() methods.  There
-	  is no need for them to be otherwise.  This change was also
+	  Made check_prefix() and object_key_delimiter() methods public.
+	  There is no need for them to be otherwise.  This change was also
 	  needed so that the TAO_Connector_Registry could call them.
 	
 	* tao/ORB.cpp (resolve_initial_references):
