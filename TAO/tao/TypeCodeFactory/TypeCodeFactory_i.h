@@ -209,12 +209,6 @@ private:
                               const CORBA::UnionMemberSeq &members,
                               TAO_OutputCDR &cdr);
 
-  /// Insert a non-default label value into the typecode being created.
-  CORBA::Boolean insert_label_value (CORBA::TCKind kind,
-                                     const CORBA::Any &any,
-                                     TAO_OutputCDR &cdr
-                                     ACE_ENV_ARG_DECL);
-
   /// Called for all types that take just an id and a name.
   CORBA::TypeCode_ptr create_tc_common (
       const char *id,
