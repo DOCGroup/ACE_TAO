@@ -125,14 +125,10 @@ realclean: clean
 
 .obj/fe_declarator.o .obj/fe_declarator.so .shobj/fe_declarator.o .shobj/fe_declarator.so: fe/fe_declarator.cpp include/fe_declarator.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -154,12 +150,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/ast_array.h include/ast_concrete_type.h include/ast_type.h \
  include/ast_decl.h include/idl_narrow.h include/utl_err.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -231,8 +225,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -279,10 +272,7 @@ realclean: clean
  include/global_extern.h
 
 .obj/fe_lookup.o .obj/fe_lookup.so .shobj/fe_lookup.o .shobj/fe_lookup.so: fe/fe_lookup.cpp include/fe_private.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -294,14 +284,11 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_String.inl
 
 .obj/fe_private.o .obj/fe_private.so .shobj/fe_private.o .shobj/fe_private.so: fe/fe_private.cpp include/fe_private.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/utl_strlist.h include/utl_list.h include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/utl_strlist.h \
+ include/utl_list.h include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -323,19 +310,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i
 
 .obj/fe_init.o .obj/fe_init.so .shobj/fe_init.o .shobj/fe_init.so: fe/fe_init.cpp include/ast_module.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -357,8 +339,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -432,13 +413,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h \
- include/ast_predefined_type.h include/ast_concrete_type.h \
- include/ast_generator.h include/ast_operation.h \
- include/ast_argument.h include/ast_field.h include/ast_union_label.h \
- include/ast_root.h include/utl_identifier.h include/global_extern.h \
- include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/ast_predefined_type.h \
+ include/ast_concrete_type.h include/ast_generator.h \
+ include/ast_operation.h include/ast_argument.h include/ast_field.h \
+ include/ast_union_label.h include/ast_root.h include/utl_identifier.h \
+ include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -480,20 +460,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/utl_stack.h include/fe_extern.h
+ $(ACE_ROOT)/ace/Containers_T.cpp include/utl_stack.h \
+ include/fe_extern.h
 
 .obj/fe_extern.o .obj/fe_extern.so .shobj/fe_extern.o .shobj/fe_extern.so: fe/fe_extern.cpp include/fe_extern.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/ast_root.h include/ast_module.h include/ast_decl.h \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/ast_root.h \
+ include/ast_module.h include/ast_decl.h include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -515,8 +491,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -590,9 +565,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h include/global_extern.h \
- include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -640,8 +614,6 @@ realclean: clean
 
 .obj/fe_global.o .obj/fe_global.so .shobj/fe_global.o .shobj/fe_global.so: fe/fe_global.cpp include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl
@@ -650,12 +622,9 @@ realclean: clean
  include/fe_interface_header.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -677,12 +646,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/ast_valuetype.h include/ast_interface.h include/ast_type.h \
  include/ast_decl.h include/idl_narrow.h include/utl_scope.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -754,8 +721,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
@@ -806,14 +772,10 @@ realclean: clean
 .obj/fe_tmplinst.o .obj/fe_tmplinst.so .shobj/fe_tmplinst.o .shobj/fe_tmplinst.so: fe/fe_tmplinst.cpp include/ast_component.h \
  include/ast_interface.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -835,8 +797,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -910,8 +871,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
@@ -959,12 +919,9 @@ realclean: clean
  include/ast_decl.h include/utl_scoped_name.h include/utl_idlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -986,8 +943,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_array.h include/ast_concrete_type.h \
  include/ast_type.h include/ast_attribute.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -1062,11 +1018,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_operation.h include/utl_scope.h include/ast_typedef.h \
- include/ast_generator.h include/ast_predefined_type.h \
- include/ast_union_label.h include/ast_module.h \
- include/ast_valuetype.h include/ast_interface.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_operation.h \
+ include/utl_scope.h include/ast_typedef.h include/ast_generator.h \
+ include/ast_predefined_type.h include/ast_union_label.h \
+ include/ast_module.h include/ast_valuetype.h include/ast_interface.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
@@ -1074,8 +1029,7 @@ realclean: clean
  include/ast_eventtype.h include/ast_eventtype_fwd.h \
  include/ast_component.h include/ast_component_fwd.h \
  include/ast_home.h include/ast_constant.h include/global_extern.h \
- include/idl_global.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ include/idl_global.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -1113,22 +1067,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/utl_stack.h include/ast_union.h include/ast_structure.h \
- include/ast_union_fwd.h include/ast_structure_fwd.h \
- include/ast_extern.h include/ast_enum.h include/ast_root.h \
- include/ast_sequence.h include/ast_string.h include/ast_factory.h \
- include/ast_exception.h include/fe_declarator.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp include/utl_stack.h \
+ include/ast_union.h include/ast_structure.h include/ast_union_fwd.h \
+ include/ast_structure_fwd.h include/ast_extern.h include/ast_enum.h \
+ include/ast_root.h include/ast_sequence.h include/ast_string.h \
+ include/ast_factory.h include/ast_exception.h include/fe_declarator.h \
  include/fe_interface_header.h include/utl_identifier.h \
  include/utl_err.h include/utl_string.h include/utl_strlist.h \
  include/utl_namelist.h include/utl_exprlist.h include/utl_labellist.h \
  include/utl_decllist.h include/nr_extern.h
 
-.obj/lex.yy.o .obj/lex.yy.so .shobj/lex.yy.o .shobj/lex.yy.so: fe/lex.yy.cpp \
- $(ACE_ROOT)/ace/OS.h \
+.obj/lex.yy.o .obj/lex.yy.so .shobj/lex.yy.o .shobj/lex.yy.so: fe/lex.yy.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1152,13 +1102,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/utl_strlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  include/idl_bool.h include/utl_exprlist.h include/utl_labellist.h \
  include/utl_decllist.h include/utl_string.h include/utl_err.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -1230,8 +1178,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1284,14 +1232,10 @@ realclean: clean
 .obj/ast_array.o .obj/ast_array.so .shobj/ast_array.o .shobj/ast_array.so: ast/ast_array.cpp include/ast_array.h \
  include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -1313,8 +1257,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1388,19 +1331,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_visitor.h include/utl_exprlist.h include/utl_identifier.h
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_visitor.h \
+ include/utl_exprlist.h include/utl_identifier.h
 
 .obj/ast_argument.o .obj/ast_argument.so .shobj/ast_argument.o .shobj/ast_argument.so: ast/ast_argument.cpp include/ast_argument.h \
  include/ast_field.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -1422,20 +1362,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_visitor.h
 
 .obj/ast_attribute.o .obj/ast_attribute.so .shobj/ast_attribute.o .shobj/ast_attribute.so: ast/ast_attribute.cpp include/ast_attribute.h \
  include/ast_field.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -1457,12 +1393,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_exception.h include/ast_structure.h \
  include/ast_concrete_type.h include/ast_type.h include/utl_scope.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -1534,14 +1468,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_visitor.h include/utl_namelist.h include/utl_exceptlist.h \
- include/utl_err.h include/idl_global.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_visitor.h \
+ include/utl_namelist.h include/utl_exceptlist.h include/utl_err.h \
+ include/idl_global.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -1584,18 +1516,13 @@ realclean: clean
  include/global_extern.h
 
 .obj/ast_check.o .obj/ast_check.so .shobj/ast_check.o .shobj/ast_check.so: ast/ast_check.cpp include/global_extern.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_global.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_global.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -1616,8 +1543,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1720,9 +1646,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/idl_bool.h include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp include/idl_bool.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -1730,23 +1655,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/ast_predefined_type.h include/ast_concrete_type.h \
- include/ast_type.h include/ast_decl.h include/idl_narrow.h \
- include/utl_stack.h include/utl_err.h
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/ast_predefined_type.h \
+ include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
+ include/idl_narrow.h include/utl_stack.h include/utl_err.h
 
 .obj/ast_component.o .obj/ast_component.so .shobj/ast_component.o .shobj/ast_component.so: ast/ast_component.cpp include/ast_component.h \
  include/ast_interface.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -1768,8 +1688,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1843,15 +1762,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  include/ast_attribute.h include/ast_field.h include/ast_visitor.h \
  include/utl_identifier.h include/utl_indenter.h include/utl_err.h \
- include/idl_global.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ include/idl_global.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -1898,12 +1815,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -1925,21 +1839,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_visitor.h include/utl_identifier.h
 
 .obj/ast_concrete_type.o .obj/ast_concrete_type.so .shobj/ast_concrete_type.o .shobj/ast_concrete_type.so: ast/ast_concrete_type.cpp \
  include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -1961,17 +1870,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h
 
 .obj/ast_constant.o .obj/ast_constant.so .shobj/ast_constant.o .shobj/ast_constant.so: ast/ast_constant.cpp include/ast_constant.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1997,8 +1902,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2068,10 +1972,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h include/idl_bool.h include/ast_decl.h \
- include/idl_narrow.h include/global_extern.h include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
+ include/idl_bool.h include/ast_decl.h include/idl_narrow.h \
+ include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2124,12 +2028,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -2151,8 +2052,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2226,12 +2126,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_array.h include/ast_concrete_type.h include/ast_field.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_array.h \
+ include/ast_concrete_type.h include/ast_field.h \
  include/ast_structure.h include/ast_sequence.h include/ast_string.h \
  include/ast_visitor.h include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -2279,14 +2178,10 @@ realclean: clean
 .obj/ast_enum.o .obj/ast_enum.so .shobj/ast_enum.o .shobj/ast_enum.so: ast/ast_enum.cpp include/ast_enum.h \
  include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -2308,8 +2203,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2383,10 +2277,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_enum_val.h include/ast_constant.h \
- include/global_extern.h include/idl_global.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_enum_val.h include/ast_constant.h include/global_extern.h \
+ include/idl_global.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -2439,8 +2332,6 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2466,8 +2357,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2537,10 +2427,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h include/idl_bool.h include/ast_decl.h \
- include/idl_narrow.h include/global_extern.h include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
+ include/idl_bool.h include/ast_decl.h include/idl_narrow.h \
+ include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2591,12 +2481,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -2618,8 +2505,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2693,14 +2579,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_field.h include/ast_union.h include/ast_enum.h \
- include/ast_enum_val.h include/ast_constant.h include/global_extern.h \
- include/idl_global.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_field.h \
+ include/ast_union.h include/ast_enum.h include/ast_enum_val.h \
+ include/ast_constant.h include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2748,8 +2632,6 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2775,8 +2657,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2846,11 +2727,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h include/idl_bool.h include/ast_constant.h \
- include/ast_decl.h include/idl_narrow.h include/global_extern.h \
- include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
+ include/idl_bool.h include/ast_constant.h include/ast_decl.h \
+ include/idl_narrow.h include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2903,12 +2783,9 @@ realclean: clean
  include/ast_decl.h include/utl_scoped_name.h include/utl_idlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -2930,8 +2807,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3005,12 +2881,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_visitor.h include/utl_identifier.h include/utl_indenter.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_visitor.h \
+ include/utl_identifier.h include/utl_indenter.h \
  include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -3058,14 +2933,10 @@ realclean: clean
  include/ast_eventtype_fwd.h include/ast_valuetype_fwd.h \
  include/ast_interface_fwd.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -3087,11 +2958,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_interface.h include/utl_scope.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -3163,23 +3032,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_visitor.h include/utl_identifier.h
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_visitor.h \
+ include/utl_identifier.h
 
 .obj/ast_factory.o .obj/ast_factory.so .shobj/ast_factory.o .shobj/ast_factory.so: ast/ast_factory.cpp include/ast_factory.h \
  include/ast_decl.h include/utl_scoped_name.h include/utl_idlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -3201,8 +3066,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3276,10 +3140,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h include/ast_argument.h \
- include/ast_field.h include/ast_visitor.h include/global_extern.h \
- include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/ast_argument.h include/ast_field.h \
+ include/ast_visitor.h include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3327,14 +3190,10 @@ realclean: clean
 
 .obj/ast_field.o .obj/ast_field.so .shobj/ast_field.o .shobj/ast_field.so: ast/ast_field.cpp include/ast_field.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -3356,22 +3215,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_type.h include/ast_visitor.h \
  include/utl_identifier.h
 
 .obj/ast_home.o .obj/ast_home.so .shobj/ast_home.o .shobj/ast_home.so: ast/ast_home.cpp include/ast_home.h \
  include/ast_interface.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -3393,8 +3247,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3468,8 +3321,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
@@ -3523,12 +3375,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -3550,8 +3399,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3625,8 +3473,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
@@ -3684,14 +3531,10 @@ realclean: clean
 .obj/ast_interface_fwd.o .obj/ast_interface_fwd.so .shobj/ast_interface_fwd.o .shobj/ast_interface_fwd.so: ast/ast_interface_fwd.cpp \
  include/ast_interface_fwd.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -3713,11 +3556,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_interface.h include/utl_scope.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -3789,23 +3630,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_visitor.h include/utl_identifier.h
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_visitor.h \
+ include/utl_identifier.h
 
 .obj/ast_module.o .obj/ast_module.so .shobj/ast_module.o .shobj/ast_module.so: ast/ast_module.cpp include/ast_module.h \
  include/ast_decl.h include/utl_scoped_name.h include/utl_idlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -3827,8 +3664,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3902,19 +3738,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h \
- include/ast_predefined_type.h include/ast_concrete_type.h \
- include/ast_valuetype.h include/ast_interface.h \
- $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/ast_predefined_type.h \
+ include/ast_concrete_type.h include/ast_valuetype.h \
+ include/ast_interface.h $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  include/ast_valuetype_fwd.h include/ast_interface_fwd.h \
  include/ast_eventtype.h include/ast_eventtype_fwd.h \
  include/ast_component.h include/ast_component_fwd.h \
  include/ast_home.h include/ast_constant.h include/global_extern.h \
- include/idl_global.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ include/idl_global.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -3952,11 +3786,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/utl_stack.h include/ast_exception.h include/ast_structure.h \
- include/ast_union.h include/ast_union_fwd.h \
- include/ast_structure_fwd.h include/ast_enum.h include/ast_enum_val.h \
- include/ast_native.h include/ast_generator.h include/ast_operation.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp include/utl_stack.h \
+ include/ast_exception.h include/ast_structure.h include/ast_union.h \
+ include/ast_union_fwd.h include/ast_structure_fwd.h \
+ include/ast_enum.h include/ast_enum_val.h include/ast_native.h \
+ include/ast_generator.h include/ast_operation.h \
  include/ast_argument.h include/ast_field.h include/ast_union_label.h \
  include/ast_visitor.h include/ast_extern.h include/utl_err.h \
  include/utl_identifier.h include/utl_indenter.h include/nr_extern.h
@@ -3965,12 +3799,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -3992,20 +3823,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_visitor.h
 
 .obj/ast_operation.o .obj/ast_operation.so .shobj/ast_operation.o .shobj/ast_operation.so: ast/ast_operation.cpp include/ast_operation.h \
  include/ast_decl.h include/utl_scoped_name.h include/utl_idlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -4027,8 +3854,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4102,15 +3928,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h \
- include/ast_predefined_type.h include/ast_concrete_type.h \
- include/ast_argument.h include/ast_field.h include/ast_exception.h \
- include/ast_structure.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/ast_predefined_type.h \
+ include/ast_concrete_type.h include/ast_argument.h \
+ include/ast_field.h include/ast_exception.h include/ast_structure.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_visitor.h include/utl_err.h include/idl_global.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_visitor.h \
+ include/utl_err.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -4149,8 +3974,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/utl_stack.h include/utl_namelist.h include/utl_exceptlist.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp include/utl_stack.h \
+ include/utl_namelist.h include/utl_exceptlist.h \
  include/utl_identifier.h include/utl_string.h include/utl_strlist.h \
  include/global_extern.h
 
@@ -4159,12 +3984,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -4186,8 +4008,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_visitor.h include/utl_identifier.h \
  include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -4295,8 +4116,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/ast_expression.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -4305,19 +4125,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_stack.h
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_stack.h
 
 .obj/ast_root.o .obj/ast_root.so .shobj/ast_root.o .shobj/ast_root.so: ast/ast_root.cpp include/ast_root.h include/ast_module.h \
  include/ast_decl.h include/utl_scoped_name.h include/utl_idlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -4339,8 +4155,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4414,22 +4229,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h include/ast_sequence.h \
- include/ast_concrete_type.h include/ast_string.h include/ast_array.h \
- include/ast_visitor.h include/utl_identifier.h
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/ast_sequence.h include/ast_concrete_type.h \
+ include/ast_string.h include/ast_array.h include/ast_visitor.h \
+ include/utl_identifier.h
 
 .obj/ast_sequence.o .obj/ast_sequence.so .shobj/ast_sequence.o .shobj/ast_sequence.so: ast/ast_sequence.cpp include/ast_sequence.h \
  include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -4451,8 +4262,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4526,20 +4336,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_visitor.h include/utl_identifier.h
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_visitor.h \
+ include/utl_identifier.h
 
 .obj/ast_string.o .obj/ast_string.so .shobj/ast_string.o .shobj/ast_string.so: ast/ast_string.cpp include/ast_string.h \
  include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -4561,8 +4367,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4636,20 +4441,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_visitor.h
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_visitor.h
 
 .obj/ast_structure.o .obj/ast_structure.so .shobj/ast_structure.o .shobj/ast_structure.so: ast/ast_structure.cpp include/ast_union.h \
  include/ast_structure.h include/ast_concrete_type.h \
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -4671,8 +4472,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4746,15 +4546,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  include/ast_structure_fwd.h include/ast_field.h include/ast_enum.h \
  include/ast_enum_val.h include/ast_constant.h include/global_extern.h \
- include/idl_global.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ include/idl_global.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -4799,14 +4597,10 @@ realclean: clean
 .obj/ast_structure_fwd.o .obj/ast_structure_fwd.so .shobj/ast_structure_fwd.o .shobj/ast_structure_fwd.so: ast/ast_structure_fwd.cpp \
  include/ast_structure_fwd.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -4828,12 +4622,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_structure.h \
  include/ast_concrete_type.h include/utl_scope.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -4905,23 +4697,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_visitor.h include/utl_identifier.h
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_visitor.h \
+ include/utl_identifier.h
 
 .obj/ast_type.o .obj/ast_type.so .shobj/ast_type.o .shobj/ast_type.so: ast/ast_type.cpp include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -4943,8 +4730,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_visitor.h include/utl_identifier.h \
  include/idl_defines.h include/nr_extern.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -4956,12 +4742,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -4983,8 +4766,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_visitor.h include/utl_identifier.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -4996,12 +4778,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -5023,8 +4802,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5098,8 +4876,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
@@ -5145,21 +4922,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/utl_stack.h include/ast_visitor.h include/utl_err.h \
- include/utl_identifier.h include/utl_indenter.h
+ $(ACE_ROOT)/ace/Containers_T.cpp include/utl_stack.h \
+ include/ast_visitor.h include/utl_err.h include/utl_identifier.h \
+ include/utl_indenter.h
 
 .obj/ast_union_fwd.o .obj/ast_union_fwd.so .shobj/ast_union_fwd.o .shobj/ast_union_fwd.so: ast/ast_union_fwd.cpp include/ast_union_fwd.h \
  include/ast_structure_fwd.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -5181,12 +4954,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_union.h include/ast_structure.h \
  include/ast_concrete_type.h include/utl_scope.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -5258,24 +5029,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_visitor.h include/utl_identifier.h
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_visitor.h \
+ include/utl_identifier.h
 
 .obj/ast_union_branch.o .obj/ast_union_branch.so .shobj/ast_union_branch.o .shobj/ast_union_branch.so: ast/ast_union_branch.cpp \
  include/ast_union_branch.h include/ast_field.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -5297,16 +5063,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_union_label.h include/ast_visitor.h \
  include/utl_labellist.h
 
 .obj/ast_union_label.o .obj/ast_union_label.so .shobj/ast_union_label.o .shobj/ast_union_label.so: ast/ast_union_label.cpp include/ast_union_label.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -5331,10 +5093,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -5406,21 +5166,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/idl_bool.h include/ast_visitor.h
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/idl_bool.h \
+ include/ast_visitor.h
 
 .obj/ast_valuetype.o .obj/ast_valuetype.so .shobj/ast_valuetype.o .shobj/ast_valuetype.so: ast/ast_valuetype.cpp include/ast_valuetype.h \
  include/ast_interface.h include/ast_type.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -5442,8 +5198,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5517,14 +5272,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_factory.h include/ast_visitor.h include/ast_extern.h \
- include/utl_err.h include/idl_global.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_factory.h \
+ include/ast_visitor.h include/ast_extern.h include/utl_err.h \
+ include/idl_global.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -5572,12 +5325,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -5599,11 +5349,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_interface.h include/utl_scope.h \
- include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -5675,23 +5423,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/ast_visitor.h include/utl_identifier.h
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/ast_visitor.h \
+ include/utl_identifier.h
 
 .obj/ast_generator.o .obj/ast_generator.so .shobj/ast_generator.o .shobj/ast_generator.so: ast/ast_generator.cpp include/ast_root.h \
  include/ast_module.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -5713,8 +5457,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5788,9 +5531,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h include/ast_valuetype.h \
- include/ast_interface.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/ast_valuetype.h include/ast_interface.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
@@ -5850,14 +5592,10 @@ realclean: clean
 
 .obj/ast_redef.o .obj/ast_redef.so .shobj/ast_redef.o .shobj/ast_redef.so: ast/ast_redef.cpp include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -5879,8 +5617,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h
 
 .obj/ast_recursive.o .obj/ast_recursive.so .shobj/ast_recursive.o .shobj/ast_recursive.so: ast/ast_recursive.cpp include/ast_union.h \
@@ -5888,12 +5625,9 @@ realclean: clean
  include/ast_type.h include/ast_decl.h include/utl_scoped_name.h \
  include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -5915,8 +5649,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5990,12 +5723,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- include/utl_stack.h include/global_extern.h include/idl_global.h \
+ $(ACE_ROOT)/ace/Unbounded_Queue.cpp include/utl_stack.h \
+ include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6038,24 +5770,17 @@ realclean: clean
  include/ast_predefined_type.h
 
 .obj/ast_visitor.o .obj/ast_visitor.so .shobj/ast_visitor.o .shobj/ast_visitor.so: ast/ast_visitor.cpp include/ast_visitor.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl
 
 .obj/utl_scope.o .obj/utl_scope.so .shobj/utl_scope.o .shobj/utl_scope.so: util/utl_scope.cpp include/utl_scope.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -6077,8 +5802,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -6152,10 +5876,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h include/utl_identifier.h \
- include/utl_err.h include/idl_global.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/utl_identifier.h include/utl_err.h \
+ include/idl_global.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -6215,15 +5938,12 @@ realclean: clean
  include/nr_extern.h
 
 .obj/utl_stack.o .obj/utl_stack.so .shobj/utl_stack.o .shobj/utl_stack.so: util/utl_stack.cpp include/utl_stack.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/utl_scope.h include/ast_decl.h include/utl_scoped_name.h \
- include/utl_idlist.h include/utl_list.h include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/utl_scope.h \
+ include/ast_decl.h include/utl_scoped_name.h include/utl_idlist.h \
+ include/utl_list.h include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -6245,8 +5965,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -6320,9 +6039,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h include/global_extern.h \
- include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6368,14 +6086,10 @@ realclean: clean
  include/ast_predefined_type.h include/ast_concrete_type.h
 
 .obj/utl_string.o .obj/utl_string.so .shobj/utl_string.o .shobj/utl_string.so: util/utl_string.cpp include/utl_string.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -6397,8 +6111,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -6505,8 +6218,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/ast_expression.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -6515,23 +6227,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/ast_predefined_type.h include/ast_concrete_type.h \
- include/ast_type.h include/ast_decl.h include/idl_narrow.h \
- include/utl_stack.h include/utl_err.h
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/ast_predefined_type.h \
+ include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
+ include/idl_narrow.h include/utl_stack.h include/utl_err.h
 
 .obj/utl_decllist.o .obj/utl_decllist.so .shobj/utl_decllist.o .shobj/utl_decllist.so: util/utl_decllist.cpp include/utl_decllist.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/utl_list.h include/idl_bool.h include/fe_declarator.h \
- include/utl_scoped_name.h include/utl_idlist.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/utl_list.h \
+ include/idl_bool.h include/fe_declarator.h include/utl_scoped_name.h \
+ include/utl_idlist.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -6552,29 +6259,21 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i
 
 .obj/utl_labellist.o .obj/utl_labellist.so .shobj/utl_labellist.o .shobj/utl_labellist.so: util/utl_labellist.cpp include/utl_labellist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h
 
 .obj/utl_namelist.o .obj/utl_namelist.so .shobj/utl_namelist.o .shobj/utl_namelist.so: util/utl_namelist.cpp include/utl_namelist.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -6596,28 +6295,21 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i
 
 .obj/utl_exceptlist.o .obj/utl_exceptlist.so .shobj/utl_exceptlist.o .shobj/utl_exceptlist.so: util/utl_exceptlist.cpp include/utl_exceptlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h
 
 .obj/utl_strlist.o .obj/utl_strlist.so .shobj/utl_strlist.o .shobj/utl_strlist.so: util/utl_strlist.cpp include/utl_strlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -6639,19 +6331,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/utl_string.h
 
 .obj/utl_list.o .obj/utl_list.so .shobj/utl_list.o .shobj/utl_list.so: util/utl_list.cpp include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -6673,25 +6360,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i
 
 .obj/utl_exprlist.o .obj/utl_exprlist.so .shobj/utl_exprlist.o .shobj/utl_exprlist.so: util/utl_exprlist.cpp include/utl_exprlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h
 
 .obj/utl_err.o .obj/utl_err.so .shobj/utl_err.o .shobj/utl_err.so: util/utl_err.cpp include/utl_err.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6717,8 +6398,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6788,9 +6468,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h include/idl_bool.h include/idl_global.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
+ include/idl_bool.h include/idl_global.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6841,10 +6521,7 @@ realclean: clean
  include/ast_union.h include/ast_structure.h include/ast_union_label.h
 
 .obj/utl_indenter.o .obj/utl_indenter.so .shobj/utl_indenter.o .shobj/utl_indenter.so: util/utl_indenter.cpp include/utl_indenter.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/OS.h $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -6868,18 +6545,13 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i
 
 .obj/utl_identifier.o .obj/utl_identifier.so .shobj/utl_identifier.o .shobj/utl_identifier.so: util/utl_identifier.cpp include/utl_identifier.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -6901,8 +6573,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/global_extern.h include/idl_global.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
@@ -7009,8 +6680,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/ast_expression.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -7019,21 +6689,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/ast_predefined_type.h include/ast_concrete_type.h \
- include/ast_type.h include/ast_decl.h include/idl_narrow.h \
- include/utl_stack.h include/utl_err.h include/utl_string.h
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/ast_predefined_type.h \
+ include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
+ include/idl_narrow.h include/utl_stack.h include/utl_err.h \
+ include/utl_string.h
 
 .obj/utl_idlist.o .obj/utl_idlist.so .shobj/utl_idlist.o .shobj/utl_idlist.so: util/utl_idlist.cpp include/utl_idlist.h \
  include/utl_list.h include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -7055,18 +6722,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/utl_identifier.h
 
 .obj/utl_global.o .obj/utl_global.so .shobj/utl_global.o .shobj/utl_global.so: util/utl_global.cpp include/idl_global.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -7090,8 +6753,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -7194,9 +6856,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- include/idl_bool.h include/ast_expression.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp include/idl_bool.h \
+ include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
@@ -7204,27 +6865,23 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h include/ast_predefined_type.h \
- include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
- include/idl_narrow.h include/utl_stack.h include/global_extern.h \
- include/ast_root.h include/ast_module.h include/utl_scope.h \
- include/ast_typedef.h include/ast_generator.h include/ast_operation.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+ include/utl_idlist.h include/utl_list.h include/TAO_IDL_FE_Export.h \
+ include/ast_predefined_type.h include/ast_concrete_type.h \
+ include/ast_type.h include/ast_decl.h include/idl_narrow.h \
+ include/utl_stack.h include/global_extern.h include/ast_root.h \
+ include/ast_module.h include/utl_scope.h include/ast_typedef.h \
+ include/ast_generator.h include/ast_operation.h \
  include/ast_argument.h include/ast_field.h include/ast_union_label.h \
  include/utl_identifier.h include/utl_indenter.h include/utl_err.h \
  include/utl_string.h
 
 .obj/narrow.o .obj/narrow.so .shobj/narrow.o .shobj/narrow.so: narrow/narrow.cpp include/ast_module.h include/ast_decl.h \
  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
- include/TAO_IDL_FE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl include/idl_bool.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -7246,8 +6903,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  include/idl_narrow.h include/utl_scope.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -7321,10 +6977,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- include/ast_typedef.h include/ast_type.h include/ast_root.h \
- include/ast_valuetype.h include/ast_interface.h \
- $(ACE_ROOT)/ace/Unbounded_Queue.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+ include/ast_type.h include/ast_root.h include/ast_valuetype.h \
+ include/ast_interface.h $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  include/ast_eventtype.h include/ast_component.h include/ast_home.h \
