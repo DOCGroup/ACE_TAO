@@ -162,6 +162,7 @@ OBJFILES = \
 	$(OBJDIR)\Notify_Constraint_Visitors.obj \
 	$(OBJDIR)\Notify_ConsumerAdmin_i.obj \
 	$(OBJDIR)\Notify_Dispatcher.obj \
+	$(OBJDIR)\Notify_Event_Manager.obj \
 	$(OBJDIR)\Notify_EventChannel_i.obj \
 	$(OBJDIR)\Notify_EventChannelFactory_i.obj \
 	$(OBJDIR)\Notify_Filter_i.obj \
@@ -171,12 +172,16 @@ OBJFILES = \
 	$(OBJDIR)\Notify_ProxyPushConsumer_i.obj \
 	$(OBJDIR)\Notify_ProxyPushSupplier_i.obj \
 	$(OBJDIR)\Notify_ProxySupplier_i.obj \
+	$(OBJDIR)\Notify_PushConsumer.obj \
+	$(OBJDIR)\Notify_PushSupplier.obj \
 	$(OBJDIR)\Notify_QoSAdmin_i.obj \
+	$(OBJDIR)\Notify_Resource_Manager.obj \
 	$(OBJDIR)\Notify_StructuredProxyPushConsumer_i.obj \
 	$(OBJDIR)\Notify_StructuredProxyPushSupplier_i.obj \
 	$(OBJDIR)\Notify_StructuredPushConsumer.obj \
 	$(OBJDIR)\Notify_StructuredPushSupplier.obj \
 	$(OBJDIR)\Notify_SupplierAdmin_i.obj \
+	$(OBJDIR)\Notify_Types.obj \
 	$(OBJDIR)\NotifyPublish_i.obj \
 	$(OBJDIR)\NotifySubscribe_i.obj \
 	$(OBJDIR)\Offer_Database.obj \
