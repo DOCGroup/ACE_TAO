@@ -131,11 +131,10 @@ main (int, char *[])
 {
   ACE_START_TEST ("SV_Shared_Memory_Test");
 
-#if defined (ACE_HAS_SYSV_IPC)
+#if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_LACKS_FORK)
   char *shm = (char *) myallocator ().malloc (27);
 
   switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
-  //  switch (1)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P) fork failed\n"), -1);
@@ -149,7 +148,7 @@ main (int, char *[])
     }
 #else
   ACE_ERROR ((LM_ERROR,
-              "SYSV IPC is not supported on this platform\n"));
+              "SYSV IPC and fork are not supported on this platform\n"));
 #endif /* ACE_HAS_SYSV_IPC */
   ACE_END_TEST;
   return 0;
