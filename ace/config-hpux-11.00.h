@@ -360,6 +360,9 @@
 // HP-UX 11 conforms to the XPG4 spec, which ACE calls broken for the
 // errmsg not being const...
 #define ACE_HAS_BROKEN_T_ERROR
+// The definitions of TCP_NODELAY and TCP_MAXSEG conflict between
+// sys/xti.h and netinet/tcp.h.
+#define ACE_HAS_CONFLICTING_XTI_MACROS
 
 /////////////////////////////////////////////////////////////////////////
 //

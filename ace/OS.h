@@ -3638,6 +3638,14 @@ extern "C"
 #   endif /* ! VXWORKS */
 }
 #   if !defined (ACE_LACKS_TCP_H)
+#     if defined(ACE_HAS_CONFLICTING_XTI_MACROS)
+#       if defined(TCP_NODELAY)
+#         undef TCP_NODELAY
+#       endif
+#       if defined(TCP_MAXSEG)
+#         undef TCP_MAXSEG
+#       endif
+#     endif
 #     include /**/ <netinet/tcp.h>
 #   endif /* ACE_LACKS_TCP_H */
 

@@ -59,7 +59,7 @@ endif
 endif
 
 # Suppress warning 302 ((...) parameter list is a non-portable feature)
-CCFLAGS		+= $(CFLAGS) $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE -w +W302,129 
+CCFLAGS		+= $(THR_DEFS) -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE -w +W302
 
 # If exception support is explicitly disabled, tell the compiler.
 # This is not recommended since the run-time library can throw exceptions.
@@ -75,7 +75,7 @@ endif
 ifeq ($(word 2,$(HPVERS_WORDS)), 10)
 CCFLAGS         += +W495,667,829
 endif
-DCFLAGS		+= -g
+DCCFLAGS	+= -g
 DLD		= $(CXX) $(CCFLAGS)
 LD		= $(CXX)
 OCCFLAGS	= -O
