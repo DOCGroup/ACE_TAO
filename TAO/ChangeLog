@@ -1,7 +1,8 @@
 Fri Jul  4 12:27:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:
-          Only when using cygwin, use cygpath for setting TAO_IDL_PREPROCESSOR,.
+          Only when using cygwin, use cygpath for setting TAO_IDL_PREPROCESSOR.
+          Thanks to Serge Kolgan <skolgan@trigraph.com> for reporting this.
 
 Fri Jul  4 10:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
