@@ -4,6 +4,13 @@ Sat Feb 12 15:58:54 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/orbsvcs/orbsvcs_static.dsp:
           Add the new files to the MSVC projects.
 
+	* orbsvcs/tests/CosEvent/CosEvent.dsw:
+	* orbsvcs/tests/CosEvent/Basic/Disconnect.dsp:
+	* orbsvcs/tests/CosEvent/Basic/Shutdown.dsp:
+	* orbsvcs/tests/Event/Event.dsw:
+	  Add workspaces for the new CosEvent tests, and update the Event
+	  tests workspace.
+
 Sat Feb 12 13:37:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:
