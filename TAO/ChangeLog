@@ -1,3 +1,13 @@
+Thu Oct  7 16:07:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Typecode.h:
+        
+          Added patch sent in by Frank Pilhofer <fp@mc.com> that makes
+          a guarded explicit template instantiation of
+          TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode>, as a
+          workaround for the VC 7.1 bug described in
+          http://support.microsoft.com/default.aspx?scid=kb;en-us;309801.
+
 Thu Oct  7 11:39:46 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Typedef_String_Array/client.cpp:
