@@ -220,13 +220,16 @@ AST_Module *AST_Module::fe_add_module (AST_Module *t)
         {
           UTL_String *s = t->file_name ();
           long lineno = t->line ();
-          ACE_ERROR ((LM_ERROR,
-                      "%s:warning: %s:%d: %s%s",
-                      idl_global->prog_name (),
-                      (idl_global->read_from_stdin () ? "standard input" : s->get_string ()),
-                      lineno,
-                      "reopening module but platform does not\n",
-                      "      support namespaces, generated code may not compile\n"))
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ASYS_TEXT ("%s:warning: %s:%d: %s%s"),
+                             ASYS_TEXT (idl_global->prog_name ()),
+                             ASYS_TEXT ((idl_global->read_from_stdin () 
+                                            ? "standard input" 
+                                            : s->get_string ())),
+                             lineno,
+                             ASYS_TEXT ("reopening module but platform does not\n"),
+                             ASYS_TEXT ("support namespaces, generated code may not compile\n")),
+                            0);
         }
 #endif /* ACE_HAS_USING_KEYWORD */
 
