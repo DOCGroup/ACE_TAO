@@ -1,3 +1,8 @@
+Mon Jan 11 16:36:08 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * TAO/docs/releasenotes/index.html:
+          Added a section for the forthcoming Interface Repository
+
 Mon Jan 11 13:15:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/GIOP.cpp: Changed the implementation to use the new
