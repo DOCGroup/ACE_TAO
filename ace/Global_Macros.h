@@ -877,6 +877,9 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #   define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor
 #   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector
 #   define ACE_SOCK_STREAM ACE_SOCK_Stream
+#   define ACE_SOCK_DGRAM ACE_SOCK_Dgram
+#   define ACE_SOCK_DGRAM_BCAST ACE_SOCK_Dgram_Bcast
+#   define ACE_SOCK_DGRAM_MCAST ACE_SOCK_Dgram_Mcast
 
 // Handle ACE_SOCK_SEQPACK_*
 #   define ACE_SOCK_SEQPACK_ACCEPTOR ACE_SOCK_SEQPACK_Acceptor
@@ -963,6 +966,9 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #   define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor, ACE_INET_Addr
 #   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector, ACE_INET_Addr
 #   define ACE_SOCK_STREAM ACE_SOCK_Stream, ACE_INET_Addr
+#   define ACE_SOCK_DGRAM ACE_SOCK_Dgram, ACE_INET_Addr
+#   define ACE_SOCK_DGRAM_BCAST ACE_SOCK_Dgram_Bcast, ACE_INET_Addr
+#   define ACE_SOCK_DGRAM_MCAST ACE_SOCK_Dgram_Mcast, ACE_INET_Addr
 
 // Handle ACE_SOCK_SEQPACK_*
 #   define ACE_SOCK_SEQPACK_ACCEPTOR ACE_SOCK_SEQPACK_Acceptor, ACE_Multihomed_INET_Addr

@@ -121,6 +121,16 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * r)
 }
 
 
+////////////////////////////////////////////////////////////////////////
+//  class ACE_RB_Tree_Base                                            //
+////////////////////////////////////////////////////////////////////////
+
+// Accessor for allocator
+
+ACE_INLINE ACE_Allocator * ACE_RB_Tree_Base::allocator () const
+{
+  return allocator_;
+}
 
 ////////////////////////////////////////////////////////////////////////
 // template class ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> //

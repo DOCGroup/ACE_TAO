@@ -1,3 +1,16 @@
+Fri Jul  9 21:23:13 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/RB_Tree.{h,inl,cpp}: Fixed a number of bugs pertaining to
+	  ACE_RB_Tree's failure to use its allocators correctly.  Thanks
+ 	  to Lothar Werzinger <lothar@xcerla.com> for these fixes.
+
+	* ace/Global_Macros.h: Added macros for ACE_SOCK_DGRAM,
+	  ACE_SOCK_DGRAM_MCAST, and ACE_SOCK_DGRAM_BCAST so they will work
+ 	  on compilers like MIPSPro v.7.41 that don't support template
+ 	  typedefs.  Thanks to Brian Waltersdorf
+ 	  <brian.j.waltersdorf@boeing.com> for reporting this and
+ 	  suggesting a fix.
+
 Thu Jul  8 16:00:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Timer_Queue_Adapters.h: If ACE_HAS_DEFERRED_TIMER_COMMANDS is
