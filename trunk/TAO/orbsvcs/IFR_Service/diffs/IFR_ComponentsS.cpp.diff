@@ -1,5 +1,5 @@
 --- orig/IFR_ComponentsS.cpp	Mon Apr 30 22:22:39 2001
-+++ IFR_ComponentsS.cpp	Thu May 10 20:43:22 2001
++++ IFR_ComponentsS.cpp	Fri May 11 00:03:05 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -329,14 +329,16 @@
  static TAO_IR_ComponentDef_Perfect_Hash_OpTable tao_IR_ComponentDef_optable;
  
  #if (TAO_HAS_INTERCEPTORS == 1)
-@@ -8981,10 +8981,10 @@
+@@ -8980,11 +8980,11 @@
+   
    if (
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/ComponentDef:1.0")) ||
-     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
+-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Container:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
++    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/InterfaceDef:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
@@ -344,9 +346,12 @@
      (!ACE_OS::strcmp ((char *)value, base_id)))
        return 1;
      else
-@@ -8999,13 +8999,13 @@
+@@ -8997,15 +8997,15 @@
+ {
+   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/ComponentDef:1.0") == 0)
      return ACE_static_cast (POA_IR::ComponentDef_ptr, this);
-   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_InterfaceDef:1.0") == 0)
+-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_InterfaceDef:1.0") == 0)
++  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/InterfaceDef:1.0") == 0)
      return ACE_static_cast (POA_CORBA_InterfaceDef_ptr, this);
 -  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Container:1.0") == 0)
 +  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Container:1.0") == 0)
@@ -421,20 +426,25 @@
  static TAO_IR_FactoryDef_Perfect_Hash_OpTable tao_IR_FactoryDef_optable;
  
  #if (TAO_HAS_INTERCEPTORS == 1)
-@@ -10400,8 +10400,8 @@
+@@ -10399,9 +10399,9 @@
+   
    if (
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/FactoryDef:1.0")) ||
-     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
+-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
++    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/OperationDef:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
      (!ACE_OS::strcmp ((char *)value, base_id)))
        return 1;
      else
-@@ -10416,9 +10416,9 @@
+@@ -10414,11 +10414,11 @@
+ {
+   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/FactoryDef:1.0") == 0)
      return ACE_static_cast (POA_IR::FactoryDef_ptr, this);
-   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_OperationDef:1.0") == 0)
+-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_OperationDef:1.0") == 0)
++  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/OperationDef:1.0") == 0)
      return ACE_static_cast (POA_CORBA_OperationDef_ptr, this);
 -  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Contained:1.0") == 0)
 +  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Contained:1.0") == 0)
@@ -462,20 +472,25 @@
  static TAO_IR_FinderDef_Perfect_Hash_OpTable tao_IR_FinderDef_optable;
  
  #if (TAO_HAS_INTERCEPTORS == 1)
-@@ -10894,8 +10894,8 @@
+@@ -10893,9 +10893,9 @@
+   
    if (
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/FinderDef:1.0")) ||
-     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
+-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_OperationDef:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
++    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/OperationDef:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IRObject:1.0")) ||
      (!ACE_OS::strcmp ((char *)value, base_id)))
        return 1;
      else
-@@ -10910,9 +10910,9 @@
+@@ -10908,11 +10908,11 @@
+ {
+   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/FinderDef:1.0") == 0)
      return ACE_static_cast (POA_IR::FinderDef_ptr, this);
-   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_OperationDef:1.0") == 0)
+-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_OperationDef:1.0") == 0)
++  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/OperationDef:1.0") == 0)
      return ACE_static_cast (POA_CORBA_OperationDef_ptr, this);
 -  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Contained:1.0") == 0)
 +  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Contained:1.0") == 0)
@@ -503,14 +518,16 @@
  static TAO_IR_HomeDef_Perfect_Hash_OpTable tao_IR_HomeDef_optable;
  
  #if (TAO_HAS_INTERCEPTORS == 1)
-@@ -13706,10 +13706,10 @@
+@@ -13705,11 +13705,11 @@
+   
    if (
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/IR/HomeDef:1.0")) ||
-     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
+-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_InterfaceDef:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Container:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Contained:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IDLType:1.0")) ||
 -    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_IRObject:1.0")) ||
++    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/InterfaceDef:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Container:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Contained:1.0")) ||
 +    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/IDLType:1.0")) ||
@@ -518,9 +535,12 @@
      (!ACE_OS::strcmp ((char *)value, base_id)))
        return 1;
      else
-@@ -13724,13 +13724,13 @@
+@@ -13722,15 +13722,15 @@
+ {
+   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/HomeDef:1.0") == 0)
      return ACE_static_cast (POA_IR::HomeDef_ptr, this);
-   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_InterfaceDef:1.0") == 0)
+-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_InterfaceDef:1.0") == 0)
++  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/InterfaceDef:1.0") == 0)
      return ACE_static_cast (POA_CORBA_InterfaceDef_ptr, this);
 -  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Container:1.0") == 0)
 +  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Container:1.0") == 0)
