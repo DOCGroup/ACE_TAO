@@ -153,7 +153,7 @@ private:
 };
 
 #if 0
-// The following two classes are commented out since there doesn't
+// The following class is commented out since there doesn't
 // appear to be a portable and robust means of implementing this
 // functionality across platforms.  If you know of a portable and
 // robust way to implement this functionality please let us know.
