@@ -9,7 +9,7 @@ Fri May  1 06:19:03 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_interface.cpp: Modified the generated code
 	for <<= and >>= operators. It involves more memory allocation. The
 	previous version was buggy because it was holding pointers to data
-	laid on function call stacks.
+	allocated on function call stacks.
 
 	* Makefiles: A few Makefiles have been updated with the .PRECIOUS
 	clause. Otherwise the make was deleting some IDL compiler
