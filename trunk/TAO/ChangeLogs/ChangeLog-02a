@@ -1,3 +1,8 @@
+Mon May 28 06:23:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/POA/Create_Reference/create_reference.cpp:
+	  Fixed a compile error in g++. 
+
 Sat May 27 10:40:27 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp: 
@@ -23,7 +28,7 @@ Sun May 27 22:43:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
         * tests/ior_corbaloc/status_i.cpp:
         * tests/ior_corbaloc/status_i.h:
 
-          Updated the ior_corbaloc to fix a few bugs, improve
+          Updated the ior_corbaloc to fix a few bugs, improvev
           documentation, and clarify debug output.
           Added tests for the corbaname: URL.
 

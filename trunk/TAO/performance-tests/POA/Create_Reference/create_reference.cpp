@@ -103,14 +103,14 @@ object_creation_test (PortableServer::POA_ptr poa,
             poa->create_reference_with_id (oid.in (),
                                            "IDL:Test/Simple:1.0",
                                            ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_CHECK;
         }
       else
         {
           object =
             poa->create_reference ("IDL:Test/Simple:1.0",
                                    ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_CHECK;
         }
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
