@@ -1,51 +1,39 @@
+[Please use the form below to submit bug reports, problem
+ reports, etc., to the TAO developers and interested users.
+ Send to ace-users@cs.wustl.edu.
+
+ Replace/remove all the explanatory text in brackets before mailing.
+
+ PLEASE make your Subject: line as descriptive as possible.
+ Subjects like "TAO bug" or "bug report" are not helpful!
+ Also, do _not_ include the word "help" in the Subject!]
+
+8<----------8<----------8<----------8<----------8<----------8<----------8<----
+
 To: ace-users@cs.wustl.edu
 Subject: [area]: [synopsis]
-  [replace with actual area and short description]
-  [PLEASE make your Subject: line as descriptive as possible.
-  Subjects like "TAO bug" or "bug report" are not helpful!
-  Also, do _not_ include the word "help" in the Subject!]
 
+    TAO VERSION:  [from $ACE_ROOT/TAO/VERSION]
+    ACE VERSION:  [from $ACE_ROOT/VERSION]
 
-     TAO VERSION:
+    HOST MACHINE and OPERATING SYSTEM:
+    TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
+    COMPILER NAME AND VERSION:
 
-[version number is found in the VERSION file, in $ACE_ROOT/TAO/VERSION]
-
-     ACE VERSION:
-
-[version number is found in the VERSION file, in $ACE_ROOT/VERSION]
-
-     CLIENT MACHINE and OPERATING SYSTEM:
-
-[e.g. Sparc/SunOS 5.6, PC/NT 4.0 Service Pak 3, Linux RedHat 5.1]
-
-     COMPILER NAME AND VERSION:
-
-[e.g. Sun/Sparc Sun C++ v4.2, Digital Unix C++ 6.0, gcc 2.5.8, ...]
-
-     AREA/CLASS/EXAMPLE AFFECTED:
-
+    AREA/CLASS/EXAMPLE AFFECTED:
 [what example failed?  What module failed to compile?]
 
-     SYNOPSIS:
-
+    SYNOPSIS:
 [Brief description of the problem]
 
-     DESCRIPTION:
-
+    DESCRIPTION:
 [Detailed description of problem.  Don't just say "<blah>
 doesn't work, here's a fix," explain what your program does
 to get to the <blah> state. ]
 
-     REPEAT BY:
-
+    REPEAT BY:
 [What you did to get the error; include test program or session
 transcript if at all possible.  ]
 
-     SAMPLE FIX/WORKAROUND:
-
+    SAMPLE FIX/WORKAROUND:
 [If available ]
-
-
-[Remove all the explanatory text in brackets before mailing.]
-
-[Send to ace-users@cs.wustl.edu, as shown in the sample message header above]
