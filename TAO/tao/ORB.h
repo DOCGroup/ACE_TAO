@@ -73,7 +73,7 @@ namespace CORBA
   /**
    * @class ORB
    *
-   * @brief ORB pseudo-objref.
+   * @brief ORB pseudo-object.
    *
    * The "ORB" pseudo-object is used in bootstrapping, such as to
    * create object references from strings.  This class is intended
