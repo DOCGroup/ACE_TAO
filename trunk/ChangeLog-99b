@@ -1,27 +1,41 @@
+Sat May 08 08:49:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/CDR_Stream.h: only use unsigned long for Boolean
+          with Green Hills 1.8.8 on Chorus, not 1.8.9.
+
+        * ace/IOStream.h,README: added ACE_LACKS_UCHAR_STAR_RIGHT_SHIFT
+          and ACE_LACKS_CHAR_RIGHT_SHIFTS support.
+
+        * ace/config-chorus.h: added ACE_LACKS_UCHAR_STAR_RIGHT_SHIFT
+          #define for g++.
+
+        * ace/config-vxworks5.x.h: added ACE_LACKS_CHAR_RIGHT_SHIFTS
+          #define for Green Hills 1.8.9.
+
 Sat May 08 08:44:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}
           tests/RB_Tree_Test.cpp
           apps/JAWS/PROTOTYPE/HTTPU/http_headers.cpp: Added more implementation
-          code and necessary template instantiations for migrationof RB_Tree
+          code and necessary template instantiations for migration of RB_Tree
           class templates to conform to the ACE_Hash_Map_Manager API.
 
 Sat May 08 03:59:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32-common.h: Re-ordered __ACE_INLINE__ macro check
-	  and definition so users can turn of inlining correctly.
-	  However, the right thing to do is to define ACE_NO_INLINE macro.
+        * ace/config-win32-common.h: Re-ordered __ACE_INLINE__ macro check
+          and definition so users can turn of inlining correctly.
+          However, the right thing to do is to define ACE_NO_INLINE macro.
 
-	* ace/ace_{dll,lib}.dsp: Moved RB_Tree.cpp to template folder and
-	  excluded it from being built.
+        * ace/ace_{dll,lib}.dsp: Moved RB_Tree.cpp to template folder and
+          excluded it from being built.
 
-	* ace/ace_lib.dsp:
-	* performance-tests/Misc/basic_perf.dsp:
-	* performance-tests/Misc/context_switch_time.dsp:
-	* tests/version_tests/*.dsp: We should have used ACE_NO_INLINE
-	  instead of defining __ACE_INLINE__=0 to supress the use of
-	  inlining.  Thanks to Nick Sawadsky
-	  <Nick_Sawadsky@BrooksSoftware.com> for reporting this.
+        * ace/ace_lib.dsp:
+        * performance-tests/Misc/basic_perf.dsp:
+        * performance-tests/Misc/context_switch_time.dsp:
+        * tests/version_tests/*.dsp: We should have used ACE_NO_INLINE
+          instead of defining __ACE_INLINE__=0 to supress the use of
+          inlining.  Thanks to Nick Sawadsky
+          <Nick_Sawadsky@BrooksSoftware.com> for reporting this.
 
 Fri May 07 23:05:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
