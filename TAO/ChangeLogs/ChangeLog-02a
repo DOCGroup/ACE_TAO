@@ -34,10 +34,10 @@ Thu Apr 25 14:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/RTCORBA/Client_Protocol/client.cpp:
 	* tests/RTCORBA/Client_Protocol/server.cpp: 
 
-	  Work around to fix the nasty bug 1197 problem. The client makes
- 	  yet another two way invocation before shutting down the ORB and
- 	  deleting the underlying shared memory segment. This seems to
- 	  work atleast on the platform that I tested, namely
+	  Work around to for the nasty [BUG 1197] problem. The client
+	  makes yet another two way invocation before shutting down the
+	  ORB and deleting the underlying shared memory segment. This
+	  seems to work atleast on the platform that I tested, namely
  	  guajira.cs. Finding this race was not simple enough and it
  	  doesnt seem to be much fun either!
 
