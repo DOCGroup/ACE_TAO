@@ -1,3 +1,11 @@
+Wed Jun 23 07:24:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src/Key_List.cpp (output_hash_function): Use conditional
+	  compilation rather than a runtime check to test if
+ 	  ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE.  This
+ 	  suppresses a warning on DEC UNIX.  Thanks to David Levine for
+ 	  reporting this.
+
 Fri Jun 18 16:54:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
   
 	* apps/gperf/src/Key_List.cpp (output_lookup_array): Prefixed
