@@ -13,7 +13,12 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
    Will not happen
 
 - (Steve, J.T., Ossama) Autoconfigure using all MPC-generated files.
-  **In progress. Mostly fighting with MPC.
+  Gave up on autogenerating automake files using MPC. The automake language
+  are richer than that of MPC, so not everything we need can be done without
+  large extensions to MPC. So we generated the files using MPC then tweaked
+  and committed the .am files to CVS. Autoconfigure support should now
+  work on most platforms, though some glitches still exist that should be
+  addressed before ACE 5.5.
 
 - (Steve) Wide-char functionality on POSIX (Linux, etc.)
   Tue Aug 24 14:07:22 2004  Steve Huston  <shuston@riverace.com>

@@ -1,3 +1,9 @@
+Thu Dec 30 11:44:51 2004  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Noted that the autoconf stuff gave up on complete automation
+	  via MPC-generation of the Makefile.am files. Autoconf should work
+	  mostly for 5.4.3 and completely before 5.5.
+
 Wed Dec 29 18:53:12 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/run_test.pl: If running a WinCE test, the log file has a
