@@ -12,6 +12,7 @@ ACE_RCSID(ace, TLI_Connector, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Handle_Set.h"
+#include "ace/ACE.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Connector)
 

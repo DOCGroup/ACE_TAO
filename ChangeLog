@@ -1,3 +1,34 @@
+Mon May  6 09:33:00 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/TLI_Acceptor.cpp:
+	* ace/TLI_Stream.i:
+	* ace/TLI_Connector.cpp:
+
+	  Added include of ACE.h.
+
+	* ace/Handle_Set.i:
+
+	  Added include of ace_string.h since FD_ZERO seems to use memset on
+	  suns.
+
+	* ace/Sched_Params.cpp:
+
+	  Added include of OS_String.h if ACE_HAS_PRIOCNTL && ACE_HAS_STHREADS 
+	  are defined.
+	
+	* ace/ace_stdio.h:
+	* ace/ace_limits.h:
+
+	  Moved L_cuserid definition from ace_limits.h to ace_stdio.h; moved
+	  IOV_MAX definition form ace_stdio.h to ace_limits.h.
+	
+	* ace/ace_sys_types.h:
+	* ace/ace_signal.h:
+	* ace/Object_Manager_Base.h:
+
+	  Moved sigset_t typedef from ace_sys_types.h to ace_signal.h, and included
+	  ace_signal.h in Object_Manager_Base.h to pick up the type.
+
 Sat May  4 22:35:23 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/OS.i (sema_destroy):
