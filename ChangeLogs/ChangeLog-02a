@@ -1,47 +1,64 @@
+Sun Apr 08 18:55:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/DLL_Test.cpp:
+          Use ACE::ldname() instead of keeping a local function to
+          decorate the name.
+          Use the "d" suffix only on MSVC debug builds.
+
+        * tests/Makefile.bor:
+        * tests/DLL_Test.bor:
+          New Borland Makefile for the shared library in DLL_Test.  Thanks
+          to Christopher Kohlhoff  <chris@kohlhoff.com> for providing the
+          patches.
+
+        * tests/run_test.pl:
+          Add ExeSubDir to the path, required in Borland builds to find
+          the shared libraries created locally.
+
 Sun Apr  8 13:12:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/SString.cpp: Reordered various constructor initializers so
-	  G++ doesn't complain.  Thanks to Bala for reporting this.
+        * ace/SString.cpp: Reordered various constructor initializers so
+          G++ doesn't complain.  Thanks to Bala for reporting this.
 
-	* ace/SString.{h,i,cpp}: Added various optimizations to ACE_WString
-	  so it will perform certain operations as efficiently as
- 	  ACE_CString.  Thanks to Eric Zuur <Eric.Zuur@meco.nl> for
- 	  contributing these enhancements.
+        * ace/SString.{h,i,cpp}: Added various optimizations to ACE_WString
+          so it will perform certain operations as efficiently as
+          ACE_CString.  Thanks to Eric Zuur <Eric.Zuur@meco.nl> for
+          contributing these enhancements.
 
 Sun Apr 08 12:10:30 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/Makefile: Updated obsolete
-	  shared-memory transport functions.
+        * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/Makefile: Updated obsolete
+          shared-memory transport functions.
 
 Sun Apr  8 09:49:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* bin: Added a new shell script called "make-components" that enables
-	  each ACE component to be built in a simple manner using the
- 	  following change from Arturo.
+        * bin: Added a new shell script called "make-components" that enables
+          each ACE component to be built in a simple manner using the
+          following change from Arturo.
 
-	* ace/Makefile: Generalized the libACE.a and libACE.$(SOEXT) targets
-	  to simplify subsettings.  Thanks to Arturo Montes
- 	  <mitosys@colomsat.net.co> for reporting this.
+        * ace/Makefile: Generalized the libACE.a and libACE.$(SOEXT) targets
+          to simplify subsettings.  Thanks to Arturo Montes
+          <mitosys@colomsat.net.co> for reporting this.
 
 Sat Apr  7 16:00:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests: Added a new rtems_init.c file.  Thanks to Joel Sherrill
- 	  <joel@OARcorp.com> for contributing this port.
+        * tests: Added a new rtems_init.c file.  Thanks to Joel Sherrill
+          <joel@OARcorp.com> for contributing this port.
 
-	* include/makeinclude: Added the new platform_rtems.x_g++.GNU file.
-	* ace: Added the new config-rtems.h file.
+        * include/makeinclude: Added the new platform_rtems.x_g++.GNU file.
+        * ace: Added the new config-rtems.h file.
 
-	* ace/OS.cpp: Added support for RTEMS, which is an open-source
-	  real-time operating system that can be downloaded from
- 	  ftp://ftp.oarcorp.com/pub/rtems.  Thanks to Joel Sherrill
- 	  <joel@OARcorp.com> for contributing this port.
+        * ace/OS.cpp: Added support for RTEMS, which is an open-source
+          real-time operating system that can be downloaded from
+          ftp://ftp.oarcorp.com/pub/rtems.  Thanks to Joel Sherrill
+          <joel@OARcorp.com> for contributing this port.
 
-	* ace/OS.cpp: The return type for ACE_OS::readv_emulation()
-	  should have been ssize_t, not int, to be consistent with its
- 	  definition in the header file.  Thanks to Joel Sherrill
- 	  <joel@OARcorp.com> for reporting this.
+        * ace/OS.cpp: The return type for ACE_OS::readv_emulation()
+          should have been ssize_t, not int, to be consistent with its
+          definition in the header file.  Thanks to Joel Sherrill
+          <joel@OARcorp.com> for reporting this.
 
 Sat Apr  7 21:16:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
