@@ -240,7 +240,7 @@ copied instead of appended to the CDR stream.</TD></TR>
 	      Though <CODE>tss</CODE> should give the
 	      optimal performance;
 	      we made the default <CODE>global</CODE>.
-	      TAO optimizations for octet sequences will not work when 
+	      TAO optimizations for octet sequences will not work when
 	      returning that data type if the allocator is
 	      <CODE>tss</CODE>.
 	      Using global allocator also allows the users to
@@ -392,10 +392,35 @@ This makes sense in case of optiziations and is allowed when
 no forwarding is used or only a single threaded client.
 </TD></TR>
 <TR>
-<TD><CODE>-ORBclientconnectionhandler</CODE> <EM>MT / ST</EM></TD>
-<TD><A name="-ORBclientconnectionhandler"></a> ST means use the
-single-threaded client connection handler and MT means use the
-multi-threaded client connection handler .</TD></TR>
+<TD><CODE>-ORBclientconnectionhandler</CODE> <EM>MT / ST / RW</EM></TD>
+
+<TD><A name="-ORBclientconnectionhandler"></a>
+
+ST means use the single-threaded client connection handler, i.e., the
+leader follower model will not be used.  However, ST does support
+nested upcalls and handling of new requests while waiting for the
+reply from a server. <p>
+
+MT means use the multi-threaded client connection handler which uses
+the leader follower model. This model allows the use of multiple
+threads with a single Reactor.  <p>
+
+RW selects a strategy that simply blocks in recv() when waiting for a
+response from the server instead of waiting in the Reactor.  The RW
+strategy only works when the application does not have to worry about
+new request showing up when waiting for a response. Therefore, this
+strategy is appropriate only for "pure" clients. Note that
+applications with nested upcalls are not "pure" clients. Also note
+that this strategy will only effect two way calls, since there is no
+waiting for one way calls. This strategy can also be used in an
+application that is both a client and a server if the server side is
+handled by a separate thread and the client threads are "pure"
+clients. <p>
+
+Default for this option is MT.
+
+</TD></TR>
+
 </TABLE>
 </P>
 </BLOCKQUOTE>
