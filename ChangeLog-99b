@@ -1,3 +1,10 @@
+Thu Sep 16 11:08:45 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Makefile:
+	* tests/Makefile:
+
+	  Updated dependencies.
+
 Wed Sep 15 21:42:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h:
@@ -16,7 +23,7 @@ Wed Sep 15 14:49:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Hash_Map_With_Allocator_T.h:
 	* ace/Hash_Map_With_Allocator_T.i: Added a method unbind () which
-	  unbinds an etry by only taking a key.
+	  unbinds an entry by only taking a key.
 
 Wed Sep 15 13:19:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
