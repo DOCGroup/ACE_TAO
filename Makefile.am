@@ -17,10 +17,10 @@ man_MANS = ace-config.1
 ## Build the library directories first.
 ## The docs directory is currently handled by the "dist-hook" makefile target.
 SUBDIRS = \
-  ace
-##  netsvcs \
+  ace \
+  apps
 ##  tests \
-##  apps \
+##  netsvcs \
 ##  man
 
 ##SUBDIRS = \
