@@ -1,3 +1,8 @@
+Wed Sep  8 16:51:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Acceptor.cpp (handle_close): Removed a unnecessary check
+	  for <concurrency_strategy_> which was causing UMR to occur.
+
 Wed Sep 08 16:48:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.gnu (purify): moved
