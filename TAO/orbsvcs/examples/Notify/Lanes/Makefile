@@ -315,6 +315,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -820,6 +821,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -830,8 +832,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  ORB_Run_Task.h \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
+  ORB_Run_Task.h $(ACE_ROOT)/ace/Arg_Shifter.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -1170,6 +1171,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -1503,6 +1505,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -1756,6 +1759,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -2071,6 +2075,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -2218,8 +2223,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
-  ORB_Run_Task.h \
-  $(ACE_ROOT)/ace/Arg_Shifter.h \
+  ORB_Run_Task.h $(ACE_ROOT)/ace/Arg_Shifter.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(TAO_ROOT)/tao/params.h \
@@ -2511,6 +2515,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
@@ -2844,6 +2849,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \

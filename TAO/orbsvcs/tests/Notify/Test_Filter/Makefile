@@ -64,8 +64,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
 
 .obj/RT_Test_Filter.o .obj/RT_Test_Filter.so .shobj/RT_Test_Filter.o .shobj/RT_Test_Filter.so: RT_Test_Filter.cpp RT_Test_Filter.h \
-  $(ACE_ROOT)/ace/pre.h \
-  rt_test_filter_export.h \
+  $(ACE_ROOT)/ace/pre.h rt_test_filter_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -282,6 +281,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -546,8 +546,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
   $(TAO_ROOT)/tao/PortableServer/POA.i
 
 .obj/RT_Test_FilterFactory.o .obj/RT_Test_FilterFactory.so .shobj/RT_Test_FilterFactory.o .shobj/RT_Test_FilterFactory.so: RT_Test_FilterFactory.cpp \
-  RT_Test_FilterFactory.h \
-  $(ACE_ROOT)/ace/pre.h \
+  RT_Test_FilterFactory.h $(ACE_ROOT)/ace/pre.h \
   rt_test_filter_export.h \
   $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/config.h \
@@ -765,6 +764,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -834,7 +834,6 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
   $(ACE_ROOT)/ace/Service_Object.i \
-  RT_Test_Filter.h \
-  $(TAO_ROOT)/tao/debug.h
+  RT_Test_Filter.h $(TAO_ROOT)/tao/debug.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

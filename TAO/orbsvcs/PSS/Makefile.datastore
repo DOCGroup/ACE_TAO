@@ -296,8 +296,8 @@ realclean: clean
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  PSDL_Datastore.h $(ACE_ROOT)/ace/Malloc.h \
+  $(TAO_ROOT)/tao/IOPC.i PSDL_Datastore.h \
+  $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
   $(ACE_ROOT)/ace/Malloc_Allocator.h \
@@ -603,9 +603,8 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  PSDL_Datastore.h PSDL_Code_Gen.h \
-  $(TAO_ROOT)/tao/IOPC.h \
+  $(ACE_ROOT)/ace/ACE_export.h PSDL_Datastore.h \
+  PSDL_Code_Gen.h $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
   $(TAO_ROOT)/tao/Sequence.h \

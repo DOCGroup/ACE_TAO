@@ -1105,8 +1105,7 @@ endif
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/CosConcurrencyControlC.o .obj/CosConcurrencyControlC.so .shobj/CosConcurrencyControlC.o .shobj/CosConcurrencyControlC.so: CosConcurrencyControlC.cpp \
-  CosConcurrencyControlC.h \
-  $(ACE_ROOT)/ace/pre.h \
+  CosConcurrencyControlC.h $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -1364,8 +1363,7 @@ endif
   $(TAO_ROOT)/tao/Special_Basic_Argument_T.cpp
 
 .obj/CosConcurrencyControlS.o .obj/CosConcurrencyControlS.so .shobj/CosConcurrencyControlS.o .shobj/CosConcurrencyControlS.so: CosConcurrencyControlS.cpp \
-  CosConcurrencyControlS.h \
-  $(ACE_ROOT)/ace/pre.h \
+  CosConcurrencyControlS.h $(ACE_ROOT)/ace/pre.h \
   CosConcurrencyControlC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \

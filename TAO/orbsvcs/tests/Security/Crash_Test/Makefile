@@ -79,8 +79,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -278,8 +277,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i testC.i
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -373,8 +371,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
-  $(ACE_ROOT)/ace/OS_NS_pwd.inl test_i.h \
-  testS.h testC.h $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl test_i.h testS.h \
+  testC.h $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \

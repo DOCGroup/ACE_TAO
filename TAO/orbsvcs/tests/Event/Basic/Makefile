@@ -428,9 +428,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
@@ -789,9 +788,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h
 
@@ -1139,8 +1137,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Gateway.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients.h \
@@ -1150,8 +1147,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
-  ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
@@ -1528,8 +1524,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminC.i \
@@ -1537,8 +1532,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS.i \
-  ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h \
@@ -6220,8 +6214,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
@@ -6230,8 +6223,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
-  ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
@@ -6670,9 +6662,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
@@ -7031,9 +7022,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h
 
@@ -7381,8 +7371,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Gateway.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients.h \
@@ -7392,8 +7381,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp \
-  ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
@@ -7770,8 +7758,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
   $(ACE_ROOT)/ace/Null_Condition.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h \
-  ../lib/Driver.i \
+  $(ACE_ROOT)/ace/Null_Mutex.h ../lib/Driver.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminC.i \
@@ -7779,8 +7766,7 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecUDPAdminS.i \
-  ../lib/Consumer.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  ../lib/Consumer.h $(ACE_ROOT)/ace/OS_NS_time.h \
   $(ACE_ROOT)/ace/OS_NS_time.inl \
   ../lib/Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h \

@@ -449,8 +449,8 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i Client_i.h \
-  testC.h testC.i $(ACE_ROOT)/ace/Get_Opt.h \
+  $(TAO_ROOT)/tao/ORB.i Client_i.h testC.h \
+  testC.i $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \

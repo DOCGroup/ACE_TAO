@@ -369,7 +369,6 @@ realclean: clean
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/ORB.i \
-  ../lib/Driver_Base.h
+  $(TAO_ROOT)/tao/ORB.i ../lib/Driver_Base.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

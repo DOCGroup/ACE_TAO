@@ -287,7 +287,7 @@ CPPFLAGS += -I../lib -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -625,7 +625,7 @@ CPPFLAGS += -I../lib -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \

@@ -244,7 +244,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -384,7 +384,6 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -702,7 +701,7 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -724,7 +723,6 @@ endif
   ../lib/Counting_Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -933,7 +931,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -1064,7 +1062,6 @@ endif
   ../lib/Counting_Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -1273,7 +1270,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -1404,7 +1401,6 @@ endif
   ../lib/Counting_Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -1613,7 +1609,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -1744,7 +1740,6 @@ endif
   ../lib/Counting_Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -1952,7 +1947,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -2087,7 +2082,6 @@ endif
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i \
@@ -2295,7 +2289,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -2435,7 +2429,6 @@ endif
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -2753,7 +2746,7 @@ endif
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
@@ -2775,7 +2768,6 @@ endif
   ../lib/Counting_Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -2984,7 +2976,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -3115,7 +3107,6 @@ endif
   ../lib/Counting_Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -3324,7 +3315,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -3455,7 +3446,6 @@ endif
   ../lib/Counting_Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -3664,7 +3654,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -3795,7 +3785,6 @@ endif
   ../lib/Counting_Supplier.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
@@ -4003,7 +3992,7 @@ endif
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -4138,7 +4127,6 @@ endif
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i \

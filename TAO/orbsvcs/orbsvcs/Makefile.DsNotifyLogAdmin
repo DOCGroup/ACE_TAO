@@ -1701,8 +1701,8 @@ endif
   CosEventCommC.i CosEventChannelAdminC.i DsLogAdminC.h Log/log_export.h \
   TimeBaseC.h svc_utils_export.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  TimeBaseC.i DsLogAdminC.i DsEventLogAdminC.i CosNotifyChannelAdminC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i TimeBaseC.i \
+  DsLogAdminC.i DsEventLogAdminC.i CosNotifyChannelAdminC.h \
   Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
   CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
@@ -1994,15 +1994,14 @@ endif
   CosEventChannelAdminC.h CosEventChannelAdminC.i \
   CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
   CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i DsLogAdminS.h \
-  TimeBaseS.h \
-  $(TAO_ROOT)/tao/TimeBaseS.h \
+  TimeBaseS.h $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/TimeBaseC.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  TimeBaseC.h svc_utils_export.h TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i \
+  $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+  svc_utils_export.h TimeBaseC.i TimeBaseS_T.h TimeBaseS_T.i \
   TimeBaseS_T.cpp TimeBaseS.i DsLogAdminC.h Log/log_export.h \
   DsLogAdminC.i DsLogAdminS_T.h DsLogAdminS_T.i DsLogAdminS_T.cpp \
   DsLogAdminS.i DsEventLogAdminC.h Log/eventlog_export.h \

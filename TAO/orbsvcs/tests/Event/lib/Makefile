@@ -1157,8 +1157,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
   $(TAO_ROOT)/tao/debug.h
 
 .obj/Counting_Consumer.o .obj/Counting_Consumer.so .shobj/Counting_Consumer.o .shobj/Counting_Consumer.so: Counting_Consumer.cpp Counting_Consumer.h \
-  ectest_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
+  ectest_export.h $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -1385,8 +1384,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i
 
 .obj/Counting_Supplier.o .obj/Counting_Supplier.so .shobj/Counting_Supplier.o .shobj/Counting_Supplier.so: Counting_Supplier.cpp Counting_Supplier.h \
-  ectest_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
+  ectest_export.h $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \

@@ -57,8 +57,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
 
 .obj/Counting_Consumer.o .obj/Counting_Consumer.so .shobj/Counting_Consumer.o .shobj/Counting_Consumer.so: Counting_Consumer.cpp Counting_Consumer.h \
-  cectest_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
+  cectest_export.h $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -235,7 +234,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -365,8 +364,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
   $(ACE_ROOT)/ace/Null_Mutex.h
 
 .obj/Counting_Supplier.o .obj/Counting_Supplier.so .shobj/Counting_Supplier.o .shobj/Counting_Supplier.so: Counting_Supplier.cpp Counting_Supplier.h \
-  cectest_export.h \
-  $(ACE_ROOT)/ace/config-all.h \
+  cectest_export.h $(ACE_ROOT)/ace/config-all.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/config.h \
   $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
@@ -543,7 +541,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
