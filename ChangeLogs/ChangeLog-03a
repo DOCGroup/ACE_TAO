@@ -1,3 +1,20 @@
+Thu Jun  1 15:16:26 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-linux-common.h:
+
+	  The change that allowed more than 256 file descriptors to be
+	  opened for non-root processes on Linux only works for more
+	  recent Linux kernels, such as the 2.2.x series.  As such, the
+	  default Select Reactor size is now set to 256 for Linux kernels
+	  older than 2.2.0.  Thanks to David for pointing out this
+	  limitation.
+
+	* m4/platform.m4 (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+
+	  Added test that sets the default Select Reactor size to 256 if
+	  the Linux kernel version is less than 2.2.0.  This change is
+	  related to the 256 file descriptor limit described above.
+
 Thu Jun 01 12:35:00 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/ace_dll.dsp:  Fixed typos in ACEMFC configuration.  Thanks
