@@ -37,18 +37,20 @@ HREF="ACE.FAQ.html">FAQ</A> before building and installing ACE.
 
 The ADAPTIVE Communication Environment has been ported and tested
 extensively on a wide range of C++ compilers and uni-processor and
-multi-processor OS platforms including Win32 (i.e., WinNT and Win95),
-most versions of UNIX (e.g., SunOS 4.x and 5.x, SGI IRIX, DG/UX,
-HP-UX, OSF/1 a.k.a. DEC UNIX, AIX 4.x, Linux, SCO, UnixWare, and
-FreeBSD), <A HREF="http://www.wrs.com">VxWorks</A>, and <A
+multi-processor OS platforms including Win32 (i.e., WinNT/i386,
+WinNT/Alpha, and Win95), most versions of UNIX (e.g., SunOS 4.x and
+5.x, SGI IRIX, DG/UX, HP-UX, OSF/1 a.k.a. DEC UNIX, AIX 4.x, Linux,
+SCO, UnixWare, and <A HREF="http://www.freebsd.org/">FreeBSD</A>), <A
+HREF="http://www.wrs.com">VxWorks</A>, and <A
 HREF="http://www.s390.ibm.com/products/oe/index.html">MVS
 OpenEdition</A>.  If you have a problem compiling the ACE wrappers on
-the platforms shown below please send email to the <A
+the platforms shown below please send email to either <A
+HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
 HREF="mailto:ace-users@cs.wustl.edu">ACE mailing list</A> and we'll
 try to fix it for you.
 
 <DL>
-<DT> <B>Win32 (Windows NT and Windows '95) </B><BR><BR>
+<DT> <B>Win32 (Windows NT/i386, NT/Alpha and Windows '95) </B><BR><BR>
 
 <DD> All of ACE has been ported to the Win32 API (which includes
 	  Windows NT and Windows '95).  The entire release now
@@ -444,7 +446,8 @@ ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
      and ACE_ROOT\ace to your library path. <BR><BR>
 <LI> Each project will contain 8 different configurations.  These
      are a mixture of Debug/Release, Unicode/non-Unicode, and
-     Static/Dynamic library versions.  <STRONG>Note:</STRONG> If you
+     Static/Dynamic library versions for both i386 and Alpha machines.
+     <STRONG>Note:</STRONG> If you
      use the dynamic libraries, make sure you include ACE_ROOT\ace
      in your PATH whenever you run programs that use ACE.<BR><BR>
 <LI> If you are building for Windows NT and plan to use the STL
@@ -796,10 +799,10 @@ additional tips: <P>
 <HR><P>
 <H4><A NAME="flags">Makefile Flags</A></H4>
 
-ACE supports the following flags.  They can be enabled either on the command 
-line, e.g., "make purify=1", or added to your platform_macros.GNU.  To 
-disable the option, set the flag to null, e.g., "make debug=".  Some flags 
-support setting to 0 disable, e.g., "make debug=0".  debug=1 is enabled in 
+ACE supports the following flags.  They can be enabled either on the command
+line, e.g., "make purify=1", or added to your platform_macros.GNU.  To
+disable the option, set the flag to null, e.g., "make debug=".  Some flags
+support setting to 0 disable, e.g., "make debug=0".  debug=1 is enabled in
 the platform files that are released with ACE.<P>
 
 Please note that the effects of a flag may be platform specific.
