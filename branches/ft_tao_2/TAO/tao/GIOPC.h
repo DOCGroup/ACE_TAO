@@ -273,6 +273,8 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::IORAddressing
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::IORAddressingInfo &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::TargetAddress &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::Version &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::Version &);
 
 #endif /* __ACE_INLINE__ */
 
