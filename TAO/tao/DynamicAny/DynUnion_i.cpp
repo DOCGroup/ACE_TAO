@@ -316,8 +316,11 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value,
   CORBA::TypeCode_var tc = value->type (ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::Boolean equivalent = this->type_->equivalent (tc.in (),
-                                                       ACE_TRY_ENV);
+  CORBA::TypeCode_var disc_tc = this->discriminator_->type (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::Boolean equivalent = disc_tc->equivalent (tc.in (),
+                                                   ACE_TRY_ENV);
   ACE_CHECK;
 
   if (!equivalent)
