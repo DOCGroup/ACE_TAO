@@ -6,6 +6,7 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
+#include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/IIOP_Acceptor.i"

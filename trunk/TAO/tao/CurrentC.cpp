@@ -26,10 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "CurrentC.h"
+#include "tao/CDR.h"
+#include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -41,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -50,7 +52,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::Current.
 
@@ -90,7 +92,7 @@ TAO::Objref_Traits<CORBA::Current>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_Current_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -101,7 +103,7 @@ CORBA::Current::Current (void)
 CORBA::Current::~Current (void)
 {}
 
-void
+void 
 CORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
@@ -119,10 +121,10 @@ CORBA::Current::_narrow (
     {
       return Current::_nil ();
     }
-
+  
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-
+  
   return Current::_duplicate (proxy);
 }
 
@@ -136,10 +138,10 @@ CORBA::Current::_unchecked_narrow (
     {
       return Current::_nil ();
     }
-
+  
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-
+  
   return Current::_duplicate (proxy);
 }
 
@@ -150,7 +152,7 @@ CORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -195,7 +197,7 @@ CORBA::Current::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -208,7 +210,7 @@ CORBA::Current::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         CORBA::Current
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         CORBA::Current
@@ -225,10 +227,11 @@ CORBA::Current::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         CORBA::Current
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Current
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+

@@ -8020,7 +8020,7 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
-  CurrentA.h Typecode.h \
+  Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
@@ -11212,7 +11212,7 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/RW_Mutex.h TimeBaseA.h \
+  $(ACE_ROOT)/ace/RW_Mutex.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor_T.h \
@@ -18217,7 +18217,7 @@ realclean:
   Seq_Var_T.inl \
   Seq_Out_T.h \
   Seq_Out_T.cpp \
-  Seq_Out_T.inl OctetSeqA.h \
+  Seq_Out_T.inl \
   Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -25809,7 +25809,7 @@ realclean:
   Seq_Out_T.inl \
   VarOut_T.h \
   VarOut_T.cpp \
-  VarOut_T.inl IOP_IORA.h \
+  VarOut_T.inl \
   Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -26542,7 +26542,7 @@ realclean:
   Sequence_T.i \
   VarOut_T.h \
   VarOut_T.cpp \
-  VarOut_T.inl CONV_FRAMEA.h \
+  VarOut_T.inl \
   Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -27524,7 +27524,7 @@ realclean:
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
-  Messaging_SyncScopeC.h TAOA.h \
+  Messaging_SyncScopeC.h \
   Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor_T.h \
@@ -35726,7 +35726,7 @@ realclean:
   Seq_Var_T.inl \
   Seq_Out_T.h \
   Seq_Out_T.cpp \
-  Seq_Out_T.inl ServicesA.h \
+  Seq_Out_T.inl \
   Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -36456,7 +36456,7 @@ realclean:
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
   Messaging_SyncScopeC.h \
-  LocalObject.h TAOA.h \
+  LocalObject.h \
   Buffering_Constraint_Policy.i
 
 .obj/Messaging_PolicyValueC.o .obj/Messaging_PolicyValueC.so .shobj/Messaging_PolicyValueC.o .shobj/Messaging_PolicyValueC.so: Messaging_PolicyValueC.cpp \

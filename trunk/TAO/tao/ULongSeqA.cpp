@@ -30,6 +30,48 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:290
+
+static const CORBA::Long _oc_CORBA_ULongSeq[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  31,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f554c),
+  ACE_NTOHL (0x6f6e6753),
+  ACE_NTOHL (0x65713a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ULongSeq:1.0
+    9,
+  ACE_NTOHL (0x554c6f6e),
+  ACE_NTOHL (0x67536571),
+  ACE_NTOHL (0x0),  // name = ULongSeq
+    CORBA::tk_sequence, // typecode kind
+  12, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_ulong,
+
+    0U,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ULongSeq (
+    CORBA::tk_alias,
+    sizeof (_oc_CORBA_ULongSeq),
+    (char *) &_oc_CORBA_ULongSeq,
+    0,
+    sizeof (CORBA::ULongSeq)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_ULongSeq =
+    &_tc_TAO_tc_CORBA_ULongSeq;
+}
+
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.

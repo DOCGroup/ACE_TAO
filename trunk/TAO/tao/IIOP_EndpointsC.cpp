@@ -26,10 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "IIOP_EndpointsC.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
@@ -41,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -49,10 +50,10 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
-// be/be_visitor_structure/structure_cs.cpp:66
+// TAO_IDL - Generated from 
+// be\be_visitor_structure/structure_cs.cpp:66
 
-void
+void 
 TAO::IIOP_Endpoint_Info::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -62,8 +63,8 @@ TAO::IIOP_Endpoint_Info::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// TAO_IDL - Generated from 
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_IIOPENDPOINTSEQUENCE_CS_)
 #define _TAO_IIOPENDPOINTSEQUENCE_CS_
@@ -116,7 +117,32 @@ void TAO::IIOPEndpointSequence::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const TAO::IIOP_Endpoint_Info &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.host.in ()) &&
+    (strm << _tao_aggregate.port) &&
+    (strm << _tao_aggregate.priority);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    TAO::IIOP_Endpoint_Info &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.host.out ()) &&
+    (strm >> _tao_aggregate.port) &&
+    (strm >> _tao_aggregate.priority);
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_TAO_IIOPEndpointSequence_CPP_
 #define _TAO_CDR_OP_TAO_IIOPEndpointSequence_CPP_
@@ -127,20 +153,20 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-
+      
       return _tao_marshal_flag;
     }
-
+  
   return 0;
 }
 
@@ -150,7 +176,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-
+  
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -160,35 +186,35 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-
+      
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-
+      
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         {
           return 1;
         }
-
+      
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i]);
         }
-
+      
       return _tao_marshal_flag;
-
+    
     }
-
+  
   return 0;
 }
 
 #endif /* _TAO_CDR_OP_TAO_IIOPEndpointSequence_CPP_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -284,4 +310,5 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+

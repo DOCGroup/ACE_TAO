@@ -24,8 +24,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Transport_Timer.h"
-#include "Incoming_Message_Queue.h"
+#include "tao/Transport_Timer.h"
+#include "tao/Incoming_Message_Queue.h"
+#include "ace/Time_Value.h"
 
 class TAO_ORB_Core;
 class TAO_Target_Specification;

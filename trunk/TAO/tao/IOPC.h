@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be\be_codegen.cpp:171
 
 #ifndef _TAO_IDL_ORIG_IOPC_H_
 #define _TAO_IDL_ORIG_IOPC_H_
@@ -38,6 +38,9 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/TAO_Export.h"
+#include "tao/Environment.h"
 
 #include "IOP_CodecC.h"
 
@@ -65,17 +68,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_ch.cpp:63
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-
-  template<typename T> class Narrow_Utils;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -83,17 +76,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
-
-#ifndef __ACE_INLINE__
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
-
-#endif /* __ACE_INLINE__ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
+// be\be_codegen.cpp:978
 
 #if defined (__ACE_INLINE__)
 #include "IOPC.i"
@@ -108,5 +91,6 @@ namespace TAO
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ifndef */
 

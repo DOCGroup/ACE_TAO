@@ -15,17 +15,23 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
+// be\be_codegen.cpp:566
 
-#ifndef _TAO_IDL_IOPS_T_H_
-#define _TAO_IDL_IOPS_T_H_
+#ifndef _TAO_IDL_ORIG_IOPS_T_H_
+#define _TAO_IDL_ORIG_IOPS_T_H_
 
-
+#include /**/ "ace/pre.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -35,18 +41,8 @@
 #endif /* _MSC_VER */
 
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
-
-#if defined (ACE_HAS_USING_KEYWORD)
-namespace POA_IOP
-{
-}
-// end module IOP
-#endif /* ACE_HAS_USING_KEYWORD */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
+// TAO_IDL - Generated from 
+// be\be_codegen.cpp:1111
 
 #if defined (__ACE_INLINE__)
 #include "IOPS_T.i"
@@ -64,4 +60,5 @@ namespace POA_IOP
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include /**/ "ace/post.h"
 #endif /* ifndef */

@@ -50,44 +50,6 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_PolicyType[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x54797065), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/PolicyType:1.0
-    11,
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795479), 
-  ACE_NTOHL (0x70650000),  // name = PolicyType
-    CORBA::tk_ulong,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyType (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_PolicyType),
-    (char *) &_oc_CORBA_PolicyType,
-    0,
-    sizeof (CORBA::PolicyType)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_PolicyType =
-    &_tc_TAO_tc_CORBA_PolicyType;
-}
-
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
@@ -144,63 +106,6 @@ void CORBA::PolicyList::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_PolicyList[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x4c697374), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/PolicyList:1.0
-    11,
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63794c69), 
-  ACE_NTOHL (0x73740000),  // name = PolicyList
-    CORBA::tk_sequence, // typecode kind
-  68, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_objref, // typecode kind
-    52, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      29,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x434f5242), 
-      ACE_NTOHL (0x412f506f), 
-      ACE_NTOHL (0x6c696379), 
-      ACE_NTOHL (0x3a312e30), 
-      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Policy:1.0
-            7,
-      ACE_NTOHL (0x506f6c69), 
-      ACE_NTOHL (0x63790000),  // name = Policy
-      
-    0U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyList (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_PolicyList),
-    (char *) &_oc_CORBA_PolicyList,
-    0,
-    sizeof (CORBA::PolicyList)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_PolicyList =
-    &_tc_TAO_tc_CORBA_PolicyList;
-}
-
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
@@ -253,117 +158,6 @@ void CORBA::PolicyTypeSeq::_tao_any_destructor (
 }
 
 #endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_PolicyTypeSeq[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x54797065), 
-  ACE_NTOHL (0x5365713a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/PolicyTypeSeq:1.0
-    14,
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63795479), 
-  ACE_NTOHL (0x70655365), 
-  ACE_NTOHL (0x71000000),  // name = PolicyTypeSeq
-    CORBA::tk_sequence, // typecode kind
-  80, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_alias, // typecode kind for typedefs
-    64, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      33,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x434f5242), 
-      ACE_NTOHL (0x412f506f), 
-      ACE_NTOHL (0x6c696379), 
-      ACE_NTOHL (0x54797065), 
-      ACE_NTOHL (0x3a312e30), 
-      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/PolicyType:1.0
-            11,
-      ACE_NTOHL (0x506f6c69), 
-      ACE_NTOHL (0x63795479), 
-      ACE_NTOHL (0x70650000),  // name = PolicyType
-            CORBA::tk_ulong,
-
-
-    0U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyTypeSeq (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_PolicyTypeSeq),
-    (char *) &_oc_CORBA_PolicyTypeSeq,
-    0,
-    sizeof (CORBA::PolicyTypeSeq)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_PolicyTypeSeq =
-    &_tc_TAO_tc_CORBA_PolicyTypeSeq;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_SetOverrideType[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5365), 
-  ACE_NTOHL (0x744f7665), 
-  ACE_NTOHL (0x72726964), 
-  ACE_NTOHL (0x65547970), 
-  ACE_NTOHL (0x653a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/SetOverrideType:1.0
-  16,
-  ACE_NTOHL (0x5365744f), 
-  ACE_NTOHL (0x76657272), 
-  ACE_NTOHL (0x69646554), 
-  ACE_NTOHL (0x79706500),  // name = SetOverrideType
-  2, // member count
-  13,
-  ACE_NTOHL (0x5345545f), 
-  ACE_NTOHL (0x4f564552), 
-  ACE_NTOHL (0x52494445), 
-  ACE_NTOHL (0x0),  // name = SET_OVERRIDE
-  13,
-  ACE_NTOHL (0x4144445f), 
-  ACE_NTOHL (0x4f564552), 
-  ACE_NTOHL (0x52494445), 
-  ACE_NTOHL (0x0),  // name = ADD_OVERRIDE
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_SetOverrideType (
-    CORBA::tk_enum,
-    sizeof (_oc_CORBA_SetOverrideType),
-    (char *) &_oc_CORBA_SetOverrideType,
-    0,
-    sizeof (CORBA::SetOverrideType)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_SetOverrideType =
-    &_tc_TAO_tc_CORBA_SetOverrideType;
-}
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_cs.cpp:96
@@ -521,7 +315,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::SetOverrideType &_tao_enum
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

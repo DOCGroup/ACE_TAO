@@ -30,6 +30,7 @@
 
 
 #include "BoundsC.h"
+#include "tao/CDR.h"
 #include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
 
@@ -162,41 +163,6 @@ CORBA::TypeCode_ptr CORBA::Bounds::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_Bounds[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  29,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f426f), 
-  ACE_NTOHL (0x756e6473), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Bounds:1.0
-    7,
-  ACE_NTOHL (0x426f756e), 
-  ACE_NTOHL (0x64730000),  // name = Bounds
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Bounds (
-    CORBA::tk_except,
-    sizeof (_oc_CORBA_Bounds),
-    (char *) &_oc_CORBA_Bounds,
-    0,
-    sizeof (CORBA::Bounds)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_Bounds =
-    &_tc_TAO_tc_CORBA_Bounds;
-}
-
-// TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_cs.cpp:60
 
 CORBA::Boolean operator<< (
@@ -224,7 +190,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

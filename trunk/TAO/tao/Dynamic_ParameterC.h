@@ -40,7 +40,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
-#include "tao/orbconf.h"
+#include "tao/Environment.h"
 #include "tao/Any.h"
 #include "tao/VarOut_T.h"
 

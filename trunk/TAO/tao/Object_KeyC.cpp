@@ -30,6 +30,7 @@
 
 
 #include "Object_KeyC.h"
+#include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 
 #if defined (__BORLANDC__)
@@ -53,7 +54,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_OBJECTKEY_CS_)
