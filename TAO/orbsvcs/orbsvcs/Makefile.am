@@ -4824,7 +4824,6 @@ BUILT_SOURCES += \
   SSLIOPS.inl \
   SSLIOPS_T.inl \
   SSLIOPC.cpp \
-  SSLIOPS.cpp \
   SSLIOPC.h \
   SSLIOPS.h \
   SSLIOPS_T.h
@@ -4835,13 +4834,12 @@ CLEANFILES += \
   SSLIOPS.inl \
   SSLIOPS_T.inl \
   SSLIOPC.cpp \
-  SSLIOPS.cpp \
   SSLIOPC.h \
   SSLIOPS.h \
   SSLIOPS_T.h \
   SSLIOP-stamp
 
-SSLIOPS_T.cpp SSLIOPC.inl SSLIOPS.inl SSLIOPS_T.inl SSLIOPC.cpp SSLIOPS.cpp SSLIOPC.h SSLIOPS.h SSLIOPS_T.h: SSLIOP-stamp
+SSLIOPS_T.cpp SSLIOPC.inl SSLIOPS.inl SSLIOPS_T.inl SSLIOPC.cpp SSLIOPC.h SSLIOPS.h SSLIOPS_T.h: SSLIOP-stamp
 
 SSLIOP-stamp: $(srcdir)/SSLIOP.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP/SSLIOP_Export.h $(srcdir)/SSLIOP.idl
@@ -4869,13 +4867,13 @@ SSLIOP = \
   SSLIOP/SSLIOP_ORBInitializer.cpp \
   SSLIOP/SSLIOP_OwnCredentials.cpp \
   SSLIOP/SSLIOP_Profile.cpp \
+  SSLIOP/SSLIOP_SSL.cpp \
   SSLIOP/SSLIOP_TargetCredentials.cpp \
   SSLIOP/SSLIOP_Transport.cpp \
   SSLIOP/SSLIOP_Util.cpp \
   SSLIOP/SSLIOP_X509.cpp \
   SSLIOP/ssl_endpoints.cpp \
-  SSLIOPC.cpp \
-  SSLIOPS.cpp
+  SSLIOPC.cpp
 
 if BUILD_SSL
 if BUILD_INTERCEPTORS
@@ -4930,13 +4928,13 @@ nobase_include_HEADERS += \
   SSLIOP/SSLIOP_ORBInitializer.h \
   SSLIOP/SSLIOP_OwnCredentials.h \
   SSLIOP/SSLIOP_Profile.h \
+  SSLIOP/SSLIOP_SSL.h \
   SSLIOP/SSLIOP_TargetCredentials.h \
   SSLIOP/SSLIOP_Transport.h \
   SSLIOP/SSLIOP_Util.h \
   SSLIOP/SSLIOP_X509.h \
   SSLIOP/ssl_endpoints.h \
   SSLIOPC.h \
-  SSLIOPS.h \
   SSLIOPS_T.h \
   Channel_Clients_T.i \
   SSLIOP/IIOP_SSL_Connection_Handler.inl \
@@ -4945,13 +4943,10 @@ nobase_include_HEADERS += \
   SSLIOP/SSLIOP_Credentials.inl \
   SSLIOP/SSLIOP_Current.inl \
   SSLIOP/SSLIOP_Current_Impl.inl \
-  SSLIOP/SSLIOP_EVP_PKEY.inl \
   SSLIOP/SSLIOP_Endpoint.i \
   SSLIOP/SSLIOP_Profile.i \
-  SSLIOP/SSLIOP_X509.inl \
   SSLIOP/ssl_endpoints.i \
   SSLIOPC.inl \
-  SSLIOPS.inl \
   SSLIOPS_T.inl \
   Channel_Clients_T.cpp \
   SSLIOPS_T.cpp \
