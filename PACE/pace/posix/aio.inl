@@ -16,42 +16,42 @@
 
 PACE_INLINE
 int
-pace_io_cancel (int fildes, struct aiocb * aiocbp)
+pace_aio_cancel (int fildes, struct aiocb * aiocbp)
 {
   return aio_cancel (fildes, aiocbp);
 }
 
 PACE_INLINE
 int
-pace_io_error (const struct aiocb * aiocbp)
+pace_aio_error (const struct aiocb * aiocbp)
 {
   return aio_error (aiocbp);
 }
 
 PACE_INLINE
 int
-pace_io_fsync (int op, struct aiocb * aiocbp)
+pace_aio_fsync (int op, struct aiocb * aiocbp)
 {
   return aio_fsync (op, aiocbp);
 }
 
 PACE_INLINE
 int
-pace_io_read (struct aiocb * aiocbp)
+pace_aio_read (struct aiocb * aiocbp)
 {
   return aio_read (aiocbp);
 }
 
 PACE_INLINE
 int
-pace_io_return (struct aiocb * aiocbp)
+pace_aio_return (struct aiocb * aiocbp)
 {
   return aio_return (aiocbp);
 }
 
 PACE_INLINE
 int
-pace_io_suspend (const struct aiocb * const list[],
+pace_aio_suspend (const struct aiocb * const list[],
                  int nent,
                  const struct timespec * timeout)
 {
@@ -60,7 +60,7 @@ pace_io_suspend (const struct aiocb * const list[],
 
 PACE_INLINE
 int
-pace_io_write (struct aiocb * aiocbp)
+pace_aio_write (struct aiocb * aiocbp)
 {
   return aio_write (aiocbp);
 }
