@@ -78,31 +78,27 @@ public:
   // passed on to the appropriate states.
 
 protected:
-  virtual const size_t header_len (void);
+  const size_t header_len (void);
   // This will give the size of the header for different versions of
   // GIOP. 
   
-  virtual const size_t message_size_offset (void);
+  const size_t message_size_offset (void);
   // This will give the message_size offset as specified by different
   // versions of GIOP
 
-  virtual const size_t major_version_offset (void);
+  const size_t major_version_offset (void);
   // This will give the major_version offset as specified by different
   // versions of GIOP
   
-  virtual const size_t minor_version_offset (void);
+  const size_t minor_version_offset (void);
   // This will give the minor_version offset as specified by different
   // versions of GIOP
   
-  virtual const size_t flags_offset (void);
+  const size_t flags_offset (void);
   // This will give the flags  offset as specified by different
   // versions of GIOP
 
-  //  virtual const size_t message_size_offset (void);
-  // This will give the message size offset as specified by different
-  // versions of GIOP
-
-  virtual const size_t message_type_offset (void);
+  const size_t message_type_offset (void);
   // This will give the message type offset as specified by different
   // versions of GIOP
   // @@The above  methods may not be required. But we have it for a
@@ -110,6 +106,11 @@ protected:
 
   int  send_error (TAO_Transport *transport);
   // Send error messages
+
+  void dump_msg (const char *label,
+                 const u_char *ptr,
+                 size_t len);
+  // Print out a debug messages..
 
 private:
   virtual CORBA::Octet major_version (void) = 0;

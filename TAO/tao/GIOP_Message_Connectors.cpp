@@ -3,6 +3,7 @@
 #include "tao/Any.h"
 #include "tao/debug.h"
 #include "tao/Principal.h"
+#include "tao/TAOC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Connectors.i"
@@ -26,36 +27,27 @@ TAO_GIOP_Message_Connectors::
   msg << request_id;
 
   // Second the response flags
-  switch (response_flags)
-    {
-      // We have to use magic numbers as the actual variables are
-      // declared as const short. They cannot be used in switch case
-      // statements. Probably what we can do is to add them as an
-      // definitions in this class or in the parent and then use the
-      // definitions. Hmm. Good idea.. But we will live with this for
-      // the time being.
-    case 0: // SYNC_NONE
-    case 1: // SYNC_WITH_TRANSPORT
-    case 4: // This one corresponds to the TAO extension SYNC_FLUSH.
-      // No response required.
-      msg << CORBA::Any::from_octet (0);
-        break;
-    case 2: // SYNC_WITH_SERVER
-      // Return before dispatching servant.
-      msg << CORBA::Any::from_octet (1);
-      break;
-    case 3: // SYNC_WITH_TARGET
-      // Return after dispatching servant.
-      msg << CORBA::Any::from_octet (3);
-      break;
-      // Some cases for the DII are missing here. We can add that once
-      // our IDL compiler starts supporting those stuff. This is
-      // specific to GIOP 1.2. So some of the services would start
-      // using this at some point of time and we will have them here
-      // naturally out of a need.
-    default:
-      return 0;
-    }
+  // Sync scope - ignored by server if request is not oneway.
+  if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
+      response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
+      response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
+      response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
+    // No response required.
+    msg << CORBA::Any::from_octet (0);
+  
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
+    // Return before dispatching servant.  We're also setting the high
+    // bit here. This is a temporary fix until the rest of GIOP 1.2 is
+    // implemented in TAO.
+    msg << CORBA::Any::from_octet (129);
+  
+  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
+    // Return after dispatching servant.
+    msg << CORBA::Any::from_octet (3);
+
+  else
+    // Until more flags are defined by the OMG.
+    return 0;
 
   return 1;
 }

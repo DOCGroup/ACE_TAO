@@ -13,7 +13,7 @@ int
 TAO_GIOP_Message_Accept_State_11::
   parse_request_header (TAO_GIOP_ServerRequest &request)
 {
-    // Tear out the service context ... we currently ignore it, but it
+  // Tear out the service context ... we currently ignore it, but it
   // should probably be passed to each ORB service as appropriate
   // (e.g. transactions, security).
   //
@@ -44,7 +44,12 @@ TAO_GIOP_Message_Accept_State_11::
   CORBA::Octet response_flags;
   hdr_status = hdr_status && input.read_octet (response_flags);
   request.response_expected ((response_flags != 0));
-  request.sync_with_server ((response_flags == 1));
+
+  // The high bit of the octet has been set if the SyncScope policy
+  // value is SYNC_WITH_SERVER. This is a temporary hack until all
+  // of GIOP 1.2 is in place. Then we can check the version in the
+  // message header instead.
+  request.sync_with_server ((response_flags == 129));
 
   // We use ad-hoc demarshalling here: there is no need to increase
   // the reference count on the CDR message block, because this key
