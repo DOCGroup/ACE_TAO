@@ -33,6 +33,10 @@
 # define ACE_HAS_SOCKLEN_T
 # define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
+  // To avoid the strangeness with Linux's ::select (), which modifies
+  // its timeout argument, use ::poll () instead.
+# define ACE_HAS_POLL
+
   // NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
   //        on Alpha.  I assume that they're necessary on Intel as well,
   //        but that may depend on the version of glibc that is used.
@@ -107,10 +111,6 @@
 #define ACE_HAS_IP_MULTICAST
 
 #define ACE_HAS_LONG_FDMASK
-
-// To avoid the strangeness with Linux's ::select (), which modifies
-// its timeout argument, use ::poll () instead.
-#define ACE_HAS_POLL
 
 #define ACE_HAS_STRING_CLASS
 
