@@ -3,6 +3,10 @@
 #include "ace/Map_Manager.h"
 #include "ace/Capabilities.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Capabilities.i"
+#endif /* !__ACE_INLINE__ */
+
 #define ACE_ESC ((char)0x1b)
 
 ACE_Capabilities::ACE_Capabilities (void)
