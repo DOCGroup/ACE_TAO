@@ -1,3 +1,97 @@
+Wed May 01 22:54:13 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/Servant_Dispatcher:
+	* tao/RTPortableServer/RT_Servant_Dispatcher:
+	* tao/PortableServer/Default_Servant_Dispatcher:
+
+	  The way these classes were being used was that in
+	  TAO_Object_Adapter::dispatch_servant, the dispatcher would take
+	  over, call pre_invoke using the request to change the priority
+	  of the upcall thread, make the upcall, and then call post_invoke
+	  to reset the priority of the upcall thread.  This worked fine
+	  for remote requests since all the request parameters are
+	  represented by the TAO_ServerRequest object.
+
+	  However, this scheme would not work for collocated cases as the
+	  request parameters are not represented in a single object.  
+
+	  Therefore, the dispatch() call on the dispatchers was replaced
+	  by pre_invoke_remote_request(), pre_invoke_collocated_request(),
+	  and post_invoke().  pre_invoke_remote_request() and
+	  pre_invoke_collocated_request() are different since in the
+	  remote case we need to do more, i.e., extract the
+	  client-propagated priority from the ServiceContextList of the
+	  request.  In the collocated case, the priority of the client is
+	  the priority of the request thread.
+
+	  Default_Servant_Dispatcher still is a no-op.  The state for
+	  resetting the priority of the thread had to be moved from
+	  RT_Priority_Model_Processing to the Servant_Upcall.  Therefore,
+	  the RT_Priority_Model_Processing was no longer needed and was
+	  removed.
+
+	  pre_invoke_collocated_request() check for a thread pool without
+	  lanes and the SERVER_DECLARED policy.  If this combination
+	  exists, it may need to change the priority of the upcall thread
+	  if the target server declared priority is different.
+
+	* tao/RTPortableServer/RT_Collocation_Resolver.cpp
+	  (is_collocated): If the target POA does not have a dedicated
+	  thread pool, then all calls to it are collocated.
+
+	* tao/PortableServer/Object_Adapter.cpp (dispatch_servant):
+	  Pre_Invoke_State was removed from RT_Priority_Model_Processing
+	  and added to the Servant_Upcall.
+
+	* tests/RTCORBA/Collocation: Extended this test to do more
+	  extensive and precise testing and cover all collocation uses
+	  cases. The new test now has the following structure:
+
+	  - One servant is in the Root POA which is service by the default
+	  thread pool.
+
+	  - One servant is in a POA with the CLIENT_PROPAGATED policy and
+	  is serviced by a thread pool without lanes.
+
+	  - Two servants are in a POA with the SERVER_DECLARED policy and
+	  is serviced by a thread pool without lanes.  One of the servant
+	  is at default priority and the other is at default + 1 priority.
+
+	  - One servant is in a POA without a priority model policy and is
+	  serviced by a thread pool without lanes.
+
+	  - One servants is in a POA with the CLIENT_PROPAGATED policy and
+	  is serviced by a thread pool with lanes.  Depending on the
+	  priority of the caller, either one of the lanes processes the
+	  request.
+
+	  - Two servants are in a POA with the SERVER_DECLARED policy and
+	  is serviced by a thread pool with lanes.  One of the servant is
+	  at default priority and the other is at default + 1 priority.
+
+	  The main thread still uses both the default priority and the
+	  default + 1 priority.  The test checks that the correct pool,
+	  lane, and priority is being used to run the upcall.  For
+	  servants in POAs without RT thread pools, made sure that all
+	  upcalls on these servants are collocated. Also, added additional
+	  assertion checks and abstracted out common code.
+
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp
+	  (visit_operation): Added a call to
+	  servant_upcall.pre_invoke_collocated_request() to
+	  ThruPOA_Proxy_Impl collocated methods.
+
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/Collocated_Object.cpp: 
+	  Added a call to servant_upcall.pre_invoke_collocated_request()
+	  to _non_existent() and _is_a().
+
+	* tao/PortableServer/ImplRepoS.cpp: 
+	* tao/Domain/DomainS.cpp: 
+	* tao/PortableServer/PolicyS.cpp:
+	  Added calls to servant_upcall.pre_invoke_collocated_request()
+	  for hand generated collocated upcall code.
+
 Wed May  1 23:42:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: #included

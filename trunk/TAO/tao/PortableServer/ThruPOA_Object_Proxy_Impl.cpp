@@ -33,8 +33,13 @@ TAO_ThruPOA_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
     target->_object_key (),
     "_is_a",
     forward_to.out ()
-    ACE_ENV_ARG_PARAMETER);
+    ACE_ENV_ARG_PARAMETER
+    );
   ACE_CHECK_RETURN (0);
+
+  servant_upcall.pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   return servant_upcall.servant ()->_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
 }
 
@@ -59,7 +64,11 @@ TAO_ThruPOA_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
          target->_object_key (),
          "_non_existent",
          forward_to.out ()
-         ACE_ENV_ARG_PARAMETER);
+         ACE_ENV_ARG_PARAMETER
+         );
+      ACE_TRY_CHECK;
+
+      servant_upcall.pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return servant_upcall.servant ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -93,7 +102,11 @@ TAO_ThruPOA_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
          target->_object_key (),
          "_get_interface",
          forward_to.out ()
-         ACE_ENV_ARG_PARAMETER);
+         ACE_ENV_ARG_PARAMETER
+         );
+      ACE_TRY_CHECK;
+
+      servant_upcall.pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return servant_upcall.servant ()->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);

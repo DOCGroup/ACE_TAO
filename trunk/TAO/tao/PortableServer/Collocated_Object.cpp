@@ -67,6 +67,10 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id
                                          forward_to.out ()
                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
+
+      servant_upcall.pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
       return servant_upcall.servant ()->_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
     }
 
@@ -133,6 +137,10 @@ TAO_Collocated_Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
                                              forward_to.out ()
                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          servant_upcall.pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
           return servant_upcall.servant ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
         }
 

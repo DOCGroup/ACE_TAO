@@ -9,17 +9,6 @@ TAO_Default_Servant_Dispatcher::~TAO_Default_Servant_Dispatcher (void)
 {
 }
 
-void
-TAO_Default_Servant_Dispatcher::dispatch (
-  TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-  TAO_ServerRequest &req
-  ACE_ENV_ARG_DECL)
-{
-  servant_upcall.servant ()->_dispatch (req,
-                                        &servant_upcall
-                                        ACE_ENV_ARG_PARAMETER);
-}
-
 TAO_POA *
 TAO_Default_Servant_Dispatcher::create_POA (const ACE_CString &name,
                                             TAO_POA_Manager &poa_manager,
@@ -47,4 +36,29 @@ TAO_Default_Servant_Dispatcher::create_POA (const ACE_CString &name,
   ACE_CHECK_RETURN (0);
 
   return poa;
+}
+
+void
+TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (TAO_POA &,
+                                                           CORBA::Short,
+                                                           TAO_Service_Context &,
+                                                           TAO_Service_Context &,
+                                                           TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &
+                                                           ACE_ENV_ARG_DECL)
+{
+}
+
+void
+TAO_Default_Servant_Dispatcher::pre_invoke_collocated_request (TAO_POA &,
+                                                               CORBA::Short,
+                                                               TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &
+                                                               ACE_ENV_ARG_DECL)
+{
+}
+
+void
+TAO_Default_Servant_Dispatcher::post_invoke (TAO_POA &,
+                                             TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &)
+
+{
 }

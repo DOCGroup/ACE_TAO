@@ -29,6 +29,7 @@ class TAO_POA_Policy_Set;
 class TAO_POA;
 class ACE_Lock;
 class TAO_ORB_Core;
+class TAO_Service_Context;
 
 /**
  * @class TAO_Servant_Dispatcher
@@ -41,10 +42,23 @@ class TAO_PortableServer_Export TAO_Servant_Dispatcher
 public:
   virtual ~TAO_Servant_Dispatcher (void);
 
-  /// Dispatch the request to the servant.
-  virtual void dispatch (TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-                         TAO_ServerRequest &req
-                         ACE_ENV_ARG_DECL) = 0;
+  /// Pre_invoke remote request.
+  virtual void pre_invoke_remote_request (TAO_POA &poa,
+                                          CORBA::Short servant_priority,
+                                          TAO_Service_Context &request_service_context,
+                                          TAO_Service_Context &reply_service_context,
+                                          TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                          ACE_ENV_ARG_DECL) = 0;
+
+  /// Pre_invoke collocated request.
+  virtual void pre_invoke_collocated_request (TAO_POA &poa,
+                                              CORBA::Short servant_priority,
+                                              TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                              ACE_ENV_ARG_DECL) = 0;
+
+  /// Post_invoke request.
+  virtual void post_invoke (TAO_POA &poa,
+                            TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) = 0;
 
   /// Factory method for creating new POA's.
   virtual TAO_POA *create_POA (const ACE_CString &name,

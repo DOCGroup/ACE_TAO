@@ -37,21 +37,34 @@ class TAO_PortableServer_Export TAO_Default_Servant_Dispatcher
 public:
   virtual ~TAO_Default_Servant_Dispatcher (void);
 
-  /// Dispatch the request to the servant.
-  virtual void dispatch (TAO_Object_Adapter::Servant_Upcall &servant_upcall,
-                         TAO_ServerRequest &req
-                         ACE_ENV_ARG_DECL);
+  /// Pre_invoke remote request.
+  void pre_invoke_remote_request (TAO_POA &poa,
+                                  CORBA::Short servant_priority,
+                                  TAO_Service_Context &request_service_context,
+                                  TAO_Service_Context &reply_service_context,
+                                  TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                  ACE_ENV_ARG_DECL);
+
+  /// Pre_invoke collocated request.
+  void pre_invoke_collocated_request (TAO_POA &poa,
+                                      CORBA::Short servant_priority,
+                                      TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+                                      ACE_ENV_ARG_DECL);
+
+  /// Post_invoke request.
+  void post_invoke (TAO_POA &poa,
+                    TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State &pre_invoke_state);
 
   /// Factory method for creating new POA's.
-  virtual TAO_POA *create_POA (const ACE_CString &name,
-                               TAO_POA_Manager &poa_manager,
-                               const TAO_POA_Policy_Set &policies,
-                               TAO_POA *parent,
-                               ACE_Lock &lock,
-                               TAO_SYNCH_MUTEX &thread_lock,
-                               TAO_ORB_Core &orb_core,
-                               TAO_Object_Adapter *object_adapter
-                               ACE_ENV_ARG_DECL);
+  TAO_POA *create_POA (const ACE_CString &name,
+                       TAO_POA_Manager &poa_manager,
+                       const TAO_POA_Policy_Set &policies,
+                       TAO_POA *parent,
+                       ACE_Lock &lock,
+                       TAO_SYNCH_MUTEX &thread_lock,
+                       TAO_ORB_Core &orb_core,
+                       TAO_Object_Adapter *object_adapter
+                       ACE_ENV_ARG_DECL);
 };
 
 #include "ace/post.h"

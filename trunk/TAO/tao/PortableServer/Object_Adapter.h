@@ -624,6 +624,32 @@ public:
     friend class TAO_POA;
     friend class TAO_RT_Collocation_Resolver;
 
+    class Pre_Invoke_State
+    {
+      // = TITLE
+      //     This struct keeps track of state related to pre- and
+      //     post-invoke operations.
+    public:
+      // Constructor.
+      Pre_Invoke_State (void);
+
+      enum State
+      {
+        NO_ACTION_REQUIRED,
+        PRIORITY_RESET_REQUIRED
+      };
+
+      // Indicates whether the priority of the thread needs to be
+      // reset back to its original value.
+      State state_;
+
+      // Original native priority of the thread.
+      CORBA::Short original_native_priority_;
+
+      // Original CORBA priority of the thread.
+      CORBA::Short original_CORBA_priority_;
+    };
+
     // @@ PPOA: Servant_Upcall (TAO_Object_Adapter &object_adapter);
     Servant_Upcall (TAO_ORB_Core *orb_core);
     // Constructor.
@@ -636,6 +662,16 @@ public:
                             CORBA::Object_out forward_to
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
     // Locate POA and servant.
+
+    void pre_invoke_remote_request (TAO_ServerRequest &req
+                                    ACE_ENV_ARG_DECL);
+    // Run pre_invoke for a remote request.
+
+    void pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_DECL);
+    // Run pre_invoke for a collocated request.
+
+    void post_invoke (void);
+    // Run post_invoke for a request.
 
     TAO_POA *lookup_POA (const TAO_ObjectKey &key
                          ACE_ENV_ARG_DECL);
@@ -733,6 +769,9 @@ public:
 
     int using_servant_locator_;
     // Are we using the servant locator?
+
+    Pre_Invoke_State pre_invoke_state_;
+    // Preinvoke data for the upcall.
 
   private:
     Servant_Upcall (const Servant_Upcall &);
