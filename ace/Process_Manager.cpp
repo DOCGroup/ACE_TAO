@@ -372,8 +372,10 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
   ssize_t i = this->find_proc (pid);
 
   if (i == -1)
-    errno = ECHILD;
-    return -1;
+    {
+      errno = ECHILD;
+      return -1;
+    }
 
   ACE_Process_Descriptor &proc_desc = this->process_table_[i];
 
