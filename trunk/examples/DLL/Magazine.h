@@ -5,13 +5,15 @@
 
 class Magazine 
 {
-  //= TITLE 
+  // = TITLE 
   //   This is an abstract class used in the DLL example.
   //
-  //= DESCRIPTION 
+  // = DESCRIPTION 
   //   This class simply is an inetrface which the derived classes will
   //   exploit.
- public:
+public:
+
+  // @@ Kirthika, please put the comments under the methods.
 
   // No-op virtual destructor.
   virtual ~Magazine (void) {};

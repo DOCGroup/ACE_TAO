@@ -12,13 +12,16 @@
 
 class Today : public Magazine
 {
-  //= TITLE 
+  // = TITLE 
   //   This is an derived class of Magazine.
   // 
-  //= DESCRIPTION
+  // = DESCRIPTION
   //   Polymoriphism is exploited and an object pointer
   //   of Magazine is bound to the Today object at runtime.
- public:
+public:
+
+  // @@ Kirthika, please put this comment underneath the title()
+  // method.  Also, please make the comment more descriptive.
 
   // The virtual abstract class method.
   void title (void);
