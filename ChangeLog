@@ -1,3 +1,10 @@
+Wed Jun 27 14:07:43 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+	* ace/CDR_Stream.{cpp,h}:
+
+	  Changed write_wstring() and read_wstring() to partially comply
+	  with GIOP 1.2.
+	
 Wed Jun 27 07:13:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/OS_TLI.inl: Fixed a compile error in Win32 builds.
@@ -279,7 +286,7 @@ Tue Jun 19 16:08:34 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
           Fixed the skip_wchar() according to the changes in WChar
           implementation of GIOP 1.2. Thanks to
           Peter Phillips  <pphillip@opentext.com> for reporting the problem
-          the fix.  This fixes BIGID 945.
+          the fix.  This fixes BUGID 945.
 
 Tue Jun 19 08:13:52 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
@@ -1156,7 +1163,7 @@ Fri May 25 05:42:39 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
           and return 0 in this case.  Thanks to Airat A. Sadreev
           <airat@hq.tatenergo.ru> for reporting this.
 
-Thu May 24 22:06:45 2001  Sharath R. Cholleti  <sharth@cs.wustl.edu>
+Thu May 24 22:06:45 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
         * tests/CDR_Test.cpp: Changed the initialization of WChar variable, to
           remove the warning "integer conversion resulted in a change of sign"

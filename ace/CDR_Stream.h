@@ -618,7 +618,7 @@ public:
   /**
    * The buffer <x> must be large enough to contain <length>
    * elements.
-   * Return -1 on failure and 0 on success.
+   * Return 0 on failure and 1 on success.
    */
   //@{ @name Read basic IDL types arrays
   ACE_CDR::Boolean read_boolean_array (ACE_CDR::Boolean* x,
