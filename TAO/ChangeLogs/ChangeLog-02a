@@ -1,3 +1,28 @@
+Tue Jan 25 18:19:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl.cpp:
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd.cpp:
+	* TAO_IDL/be_include/be_visitor_interface_fwd.h:
+	  Modified files
+
+	* TAO_IDL/be_include/be_visitor_interface_fwd/cdr_op_ch.h:
+	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+	  New files.
+
+	  Changes to support code generation and C++ compilation
+	  for IDL files containing a forward declared interface
+	  that is not defined in the same file. The spec had
+	  required that the definition be present, but the rule
+	  was recently relaxed in CORBA 2.3.1 (99-10-07). If
+	  the full definition is not in some generated .cpp file
+	  that is included in the build, the C++ compiler will
+	  produce a link error. This closes Bugzilla entry #401.
+
 Tue Jan 25 14:23:04 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/pluggable_protocols/index.html:
