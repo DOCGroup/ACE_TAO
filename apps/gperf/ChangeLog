@@ -1,3 +1,10 @@
+Thu Sep 17 11:42:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src/Key_List.cpp (output_lookup_array): Put 'signed' keyword
+ 	  before 'char lookup' to avoid problems on platforms where char
+ 	  is defined as unsigned.  Thanks to Margherita Vittone Wiersma
+ 	  <vittone@fndaub.fnal.gov> for reporting this.
+
 Wed Sep 16 19:08:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: don't run build/run tests on CROSS-COMPILE platforms.

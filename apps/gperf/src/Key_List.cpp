@@ -1067,8 +1067,8 @@ Key_List::output_lookup_array (void)
 
       char *indent = option[GLOBAL] ? "" : "  ";
 
-      printf ("%sstatic %s%s lookup[] =\n%s%s{\n      ", indent, option[CONSTANT] ? "const " : "",
-              max <= SCHAR_MAX ? "char" : (max <= USHRT_MAX ? "short" : "int"),
+      printf ("%sstatic %ssigned %s lookup[] =\n%s%s{\n      ", indent, option[CONSTANT] ? "const " : "",
+              max <= SCHAR_MAX ? "char" : (max <= SHRT_MAX ? "short" : "int"),
               indent, indent);
 
       int count = max;
