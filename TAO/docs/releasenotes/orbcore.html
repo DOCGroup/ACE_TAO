@@ -28,6 +28,13 @@
       Recently Completed Work:
 
       <BLOCKQUOTE>
+	<li>Got rid of need to have compile in TSS ORB Core
+	(<code>-DTAO_HAS_TSS_ORBCORE</code>).  Create an Resource
+	Factory Factory which is consulted for the pointers which go
+	into TAO_ORB_Core instances.  Thus, it is the only place that
+	needs to know whether the items should be global or held in
+	TSS.</li>
+
 	<li>Made all command-line like options look like the
 	standard-professed options, i.e., <b>-ORBxxx</b> or
 	<b>-OAxxxx</b>.</li>
@@ -178,13 +185,6 @@
 	pass in a comma-separated list of <em>host:port</em>
 	destinations using the <code>CORBA::ORB_init()</code>
 	interface.</LI>
-
-	<li>Get rid of need to have compile in TSS ORB Core
-	(<code>-DTAO_HAS_TSS_ORBCORE</code>).  Create an ORB Policy
-	Factory which is consulted for the pointers which go into
-	TAO_ORB_Core instances.  Thus, it is the only place that needs
-	to know whether the items should be global or held in
-	TSS.</li>
 
       </BLOCKQUOTE>
 

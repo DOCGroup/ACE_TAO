@@ -121,11 +121,9 @@ public:
   // Returns pointer to the client factory.
   TAO_Server_Strategy_Factory *server_factory (void);
   // Returns pointer to the server factory.
-  TAO_ORB_Parameters *params (void);
-  // Returns pointer to ORB parameters.
 
   int open (void);
-  // Set up the internal acceptor to listen on the
+  // Set up the ORB Core's acceptor to listen on the
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
@@ -136,7 +134,7 @@ protected:
 private:
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
-  CORBA::Boolean open_called_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> open_called_;
 
   // @@ Quite possibly everything btw ORB_CORE_STUFF should go into
   // the TAO_ORB_Core class...
@@ -151,15 +149,6 @@ private:
   TAO_Server_Strategy_Factory *server_factory_;
 
   CORBA::Boolean server_factory_from_service_config_;
-
-  TAO_ORB_Parameters params_;
-
-  ACE_INET_Addr addr_;		
-  // The address of the endpoint on which we're listening for
-  // connections and requests.
-
-  TAO_ACCEPTOR peer_acceptor_;
-  // The acceptor passively listening for connection requests.
 
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> should_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should

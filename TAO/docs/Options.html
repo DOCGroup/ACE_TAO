@@ -32,6 +32,7 @@ is does not recognize as its own.</P>
 <UL>
   <LI><A HREF="#ORB"><CODE>CORBA::ORB</CODE></A>
   <LI><A HREF="#POA"><CODE>CORBA::POA</CODE></A>
+  <LI><A HREF="#ResourceFactory"><CODE>TAO_Resource_Factory</CODE></A>
   <LI><A HREF="#DefaultServer"><CODE>TAO_Default_Server_Strategy_Factory</CODE></A>
   <LI><A HREF="#DefaultClient" TARGET="_top"><CODE>TAO_Default_Client_Strategy_Factory</CODE></A>
 </UL>
@@ -104,6 +105,21 @@ requests.</TD></TR>
 <TR>
 <TD><CODE>-OAid</CODE> <EM>OA Identifier</EM></TD>
 <TD>Associates <I><EM>OA Identifier</EM></I> with the Object Adapter.</TD></TR>
+</TABLE>
+</P>
+
+<H3><CODE>TAO_Resource_Factory</CODE><A NAME="ResourceFactory"></A></H3>
+
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" WIDTH="100%" HEIGHT=
+"186">
+<TR>
+<TH WIDTH="43%" HEIGHT="17">Option</TH>
+<TH WIDTH="55%">Description</TH></TR>
+<TR>
+<TD HEIGHT="43"><CODE>-ORBresources</CODE> <EM>which</EM></TD>
+<TD>Specify whether each thread uses a global 
+(<em>which</em> = <code>global</code>) or a thread-specific
+(<em>which</em> = <code>tss</code>) instance for the resources it returns.</TD></TR>
 </TABLE>
 </P>
 
