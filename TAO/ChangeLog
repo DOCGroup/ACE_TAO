@@ -1,3 +1,9 @@
+Mon Mar 31 12:03:51 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IOP_IORC.{h,cpp,i}: Regenerated the files
+	* tao/diffs/IOP_IOR.diff:
+	* tao/diffs/IOP_Codec.diff: Added the diffs for future use. 
+
 Mon Mar 31 11:52:26 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IOP_Codec.pidl: Fixed some comments
