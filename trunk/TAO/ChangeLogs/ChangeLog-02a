@@ -1,3 +1,36 @@
+Sun Sep 17 06:37:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Services_Activate.h:
+	* tao/Services_Activate.cpp: New files added for  service
+	  activation. If a service like FT service that has lot of ORB
+	  components is loaded, a virtual method is used to create a
+	  Service_Callback object. The ORB holds that object to call back
+	  in to the services at appropriate places to override default
+	  behavious in th ORB.
+
+	* tao/Service_Callbacks.cpp:
+	* tao/Service_Callbacks.h:
+	* tao/Service_Callbacks.i: New files added for service
+	  callbacks. Now services like  FT service can implement methods
+	  in these Callback objects to get the right behaviours.
+
+	* tao/Invocation.cpp:
+	* tao/Stub.cpp:
+	* tao/Stub.h:
+	* tao/Stub.i: Added hooks to call the service specific
+	  functions. These methods would do the profile selection if the
+	  service is loaded in to the ORB_Core.
+
+	* tao/Object.cpp:
+	* tao/Object.i: Added hooks to call services to supplement the
+	  behaviour of is_nil () function.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i: The hooks in the ORB_Core to call the service
+	  objects that have been loaded. The hooks are available in the
+	  Service_Callback object for calling teh services.
+
 Sun Sep 17 06:32:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IOR.pidl:

@@ -175,7 +175,14 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
   // Since we have been forwarded, we must set profile_success_ to 0
   // since we are starting a new with a new set of profiles!
   this->profile_success_ = 0;
+
+  // Reset any flags that may be appropriate in the services that
+  // selects profiles for invocation
+  this->orb_core_->reset_service_profile_flags ();
 }
+
+
+
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
@@ -572,6 +579,7 @@ TAO_Stub::parse_policies (void)
     = this->base_profiles_.policy_list ();
 
   CORBA::ULong length = policy_list->length ();
+  //  CORBA::ULong index = 0;
 
   for (unsigned int i = 0; i < length; ++i)
     {

@@ -40,6 +40,7 @@
 
 #include "tao/MProfile.h"
 #include "tao/ORB.h"
+#include "tao/ORB_Core.h"
 
 // Forward declarations.
 
@@ -50,7 +51,6 @@ class TAO_Buffering_Constraint_Policy;
 
 class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
-class TAO_ORB_Core;
 class TAO_Policy_Manager_Impl;
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -380,6 +380,10 @@ public:
   CORBA::Short addressing_mode (void);
   // Return the Addressing mode
 
+  CORBA::Boolean service_profile_selection (void);
+  // Make a call on to services to see whether they have some
+  // preferences on selecting the right profiles.
+
 protected:
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -427,7 +431,7 @@ private:
   // Helper method used to parse the policies.
 
   void exposed_priority_model (CORBA::Policy_ptr policy);
-  
+
   void exposed_priority_banded_connection (CORBA::Policy_ptr policy);
 
   void exposed_client_protocol (CORBA::Policy_ptr policy);
