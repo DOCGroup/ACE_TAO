@@ -33,6 +33,7 @@ NAMES = \
 	FlReactor_Test \
 	Future_Set_Test \
 	Future_Test \
+        Get_Opt_Test \
 	Handle_Set_Test \
 	Hash_Map_Bucket_Iterator_Test \
 	Hash_Map_Manager_Test \
