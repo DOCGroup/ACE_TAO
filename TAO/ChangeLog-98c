@@ -4,6 +4,10 @@ Mon Sep 14 11:06:00 1998  David L. Levine  <levine@cs.wustl.edu>
           moved ACE_Condition<ACE_SYNCH_MUTEX> instantiation from
           Task_Client.cpp to Globals.cpp so that the server can link it.
 
+        * tests/Cubit/TAO/MT_Cubit/client.cpp (do_priority_inversion_test):
+          changed type of loop index "j" from unsigned to signed to
+          avoid signed/unsigned comparison with argc_.
+
 Sun Sep 13 22:40:57 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.10 released.
