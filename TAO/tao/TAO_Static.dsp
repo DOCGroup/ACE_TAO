@@ -598,6 +598,10 @@ SOURCE=.\Tagged_Components.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Tagged_Profile.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO.cpp
 # End Source File
 # Begin Source File
@@ -1178,6 +1182,10 @@ SOURCE=.\Tagged_Components.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Tagged_Profile.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO.h
 # End Source File
 # Begin Source File
@@ -1571,6 +1579,10 @@ SOURCE=.\stub.i
 # Begin Source File
 
 SOURCE=.\Tagged_Components.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Tagged_Profile.i
 # End Source File
 # Begin Source File
 

@@ -2665,6 +2665,25 @@ SOURCE=.\Tagged_Components.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Tagged_Profile.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3571,6 +3590,10 @@ SOURCE=.\Tagged_Components.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Tagged_Profile.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO.h
 # End Source File
 # Begin Source File
@@ -3968,6 +3991,10 @@ SOURCE=.\stub.i
 # Begin Source File
 
 SOURCE=.\Tagged_Components.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Tagged_Profile.i
 # End Source File
 # Begin Source File
 
