@@ -57,7 +57,7 @@ main (int argc, char *argv[])
 
       int result = ACE_OS::select (int (peer_acceptor.get_handle ()) + 1,
 				   handle_set,
-				   0, 0, timeout);
+				   0, 0, &timeout);
       if (result == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "select"), -1);
       else if (result == 0)
