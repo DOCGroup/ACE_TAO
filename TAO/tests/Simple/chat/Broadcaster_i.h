@@ -23,6 +23,7 @@
 #include "ReceiverC.h"
 #include "tao/TAO.h"
 #include "ace/Containers.h"
+#include "ace/SString.h"
 
 class Broadcaster_i : public POA_Broadcaster
 {
@@ -30,40 +31,42 @@ class Broadcaster_i : public POA_Broadcaster
   //    The implementation of the Broadcaster class which is the servant
   //    object for the chat server.
 
- public:
-  Broadcaster_i();
+public:
+  Broadcaster_i (void);
   // Constructor
 
-  ~Broadcaster_i();
+  ~Broadcaster_i (void);
   // Destructor
 
-  virtual CORBA::Long _cxx_register (Receiver_ptr receiver,
-				     const char * nickname, CORBA::Environment &_tao_environment);
+  virtual CORBA::Long add (Receiver_ptr receiver,
+                           const char * nickname, 
+                           CORBA::Environment &_tao_environment);
   // saves receiver references in a list.
 
-  virtual CORBA::Long un_register (Receiver_ptr receiver, CORBA::Environment &_tao_environment);
+  virtual CORBA::Long remove (Receiver_ptr receiver, 
+                              CORBA::Environment &_tao_environment);
   // removes receiver references from the list.
 
   virtual void say (const char * text,
 		    CORBA::Environment &_tao_environment);
   // called by Broadcaster clients to send messages.
 
- private:
+private:
   TAO_ORB_Manager orb_manager_;
   // the ORB manager.
 
   struct Receiver_Data
   {
-    Receiver_ptr receiver_ptr_;
-    char* nick_;
+    Receiver_var receiver_;
+    ACE_CString nick_;
   };
   // per client info
 
-  typedef ACE_Unbounded_Set<Receiver_Data*> Receiver_Set;
-  typedef ACE_Unbounded_Set_Iterator<Receiver_Data*> Receiver_Set_Iterator;
+  typedef ACE_Unbounded_Set<Receiver_Data> RECEIVER_SET;
+  typedef ACE_Unbounded_Set_Iterator<Receiver_Data> RECEIVER_SET_ITERATOR;
 
-  Receiver_Set receiver_set_;
-  //set of registered clients.
+  RECEIVER_SET receiver_set_;
+  // set of registered clients.
 };
 
 #endif /* BROADCASTER_I_H */

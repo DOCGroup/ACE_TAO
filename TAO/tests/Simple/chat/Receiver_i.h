@@ -39,7 +39,8 @@ public:
   ~Receiver_i (void);
   // Destructor
 
-  virtual void message (const char * msg, CORBA::Environment &_tao_environment);
+  virtual void message (const char *msg, 
+                        CORBA::Environment &_tao_environment);
   // receives a message string
 
   virtual void shutdown (CORBA::Environment &_tao_environment);
