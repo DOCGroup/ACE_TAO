@@ -15,8 +15,8 @@
 
 template <class T>
 ACE_Array<T>::ACE_Array (size_t size)
-  : cur_size_ (size),
-    max_size_ (size)
+  : max_size_ (size),
+    cur_size_ (size)
 {
   ACE_NEW (this->array_, T[size]);
 }
@@ -24,8 +24,8 @@ ACE_Array<T>::ACE_Array (size_t size)
 template <class T>
 ACE_Array<T>::ACE_Array (size_t size,
 		 const T &default_value)
-  : cur_size_ (size),
-    max_size_ (size)
+  : max_size_ (size),
+    cur_size_ (size)
 {
   ACE_NEW (this->array_, T[size]);
 
@@ -37,8 +37,8 @@ ACE_Array<T>::ACE_Array (size_t size,
 
 template <class T>
 ACE_Array<T>::ACE_Array (const ACE_Array<T> &s)
-   : cur_size_ (s.size ()),
-     max_size_ (s.size ())
+   : max_size_ (s.size ()),
+     cur_size_ (s.size ())
 {
   ACE_NEW (this->array_, T[s.size ()]);
 
