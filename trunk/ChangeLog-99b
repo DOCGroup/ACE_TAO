@@ -1,3 +1,7 @@
+Fri Jun  4 00:28:07 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/POSIX_Asynch_IO.cpp: Fixed the Linux egcs warning. 
+
 Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.h
