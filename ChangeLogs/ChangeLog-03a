@@ -1,3 +1,14 @@
+Mon May 27 15:04:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h (ACE_FACTORY_DEFINE): Add the export declaration to
+          the generated factory, removing the need to also use the
+          ACE_FACTORY_DECLARE in simple (most common) situations.
+
+        * examples/C++NPv2/SLD.cpp:
+        * examples/C++NPv2/SLDex.cpp:
+        * examples/C++NPv2/Server_Shutdown.cpp: Remove ACE_FACTORY_DECLARE.
+          It's not needed in these situations.
+
 Mon May 27 07:39:41 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
   	* ace/Configuration_Import_Export.cpp (squish): Added a
