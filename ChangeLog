@@ -107,6 +107,9 @@ Thu Dec 16 10:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
           Removed setting of PACE root, we don't use this anymore
+  
+        Thanks to Pete McCann <mccap@lucent.com> for reporting these
+	problems.
 
 Wed Dec 15 17:05:22 2004  Steve Huston  <shuston@riverace.com>
 
