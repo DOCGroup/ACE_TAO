@@ -1,3 +1,58 @@
+Thu Aug 29 21:08:59 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+        Thanks to Paul Calabrese <calabrese_p@ociweb.com> for reporting
+	bug 1091 that resulted in the following changes.
+
+	* tests/POA/Policies: This program tests the construction of RTCORBA
+	  policies, both through the generic ORB::create_policy()
+	  interface and the RTCORBA specific interfaces.
+
+	  The following files were added:
+
+	  - tests/RTCORBA/Policies/Makefile
+	  - tests/RTCORBA/Policies/Policies.cpp
+	  - tests/RTCORBA/Policies/Policies.dsp
+	  - tests/RTCORBA/Policies/Policies.dsw
+	  - tests/RTCORBA/Policies/Policies.mpc
+	  - tests/RTCORBA/Policies/makefile.bor
+	  - tests/RTCORBA/Policies/run_test.pl
+
+	  The following files were updated:
+
+	  - tests/RTCORBA/RTCORBA_tests.dsw
+	  - tests/RTCORBA/Makefile
+	  - tests/RTCORBA/Makefile.bor
+	  - tests/RTCORBA/README
+	  - $ACE_ROOT/bin/auto_run_tests.lst
+
+	* tao\RTCORBA\RT_Policy_i.cpp: Added static helper methods
+	  (*Policy::create()) to help in the implementation of
+	  CORBA::ORB::create_policy() for RTCORBA policies.
+
+	* tao\RTCORBA\RT_PolicyFactory.cpp (create_policy): Fixed this
+	  code which was completely incorrect.  <value> was being ignored
+	  rendering the created policies useless.  In addition, there was
+	  no any support for types RTCORBA::THREADPOOL_POLICY_TYPE,
+	  RTCORBA::SERVER_PROTOCOL_POLICY_TYPE, and
+	  RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE.
+
+	* tao\RTCORBA\RT_ORBInitializer.cpp (register_policy_factories):
+	  Added the registration of the factory for types
+	  RTCORBA::THREADPOOL_POLICY_TYPE,
+	  RTCORBA::SERVER_PROTOCOL_POLICY_TYPE, and
+	  RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE. Not sure why these were
+	  left out.
+
+	* tao\RTCORBA\RTCORBAC.cpp: Added code for inserting/extracting a
+	  RTCORBA::ProtocolList into/from an Any.  The IDL compiler did
+	  not generate this code the last time RTCORBAC.* was created,
+	  though now Jeff has fixed this problem in the IDL compiler.
+
+	* tao\orbconf.h (TAO_POLICY_DEFAULT_SCOPE): Format change.
+
+	* tests\POA\Policies\Policies.cpp (main): Added debug statement
+	  for successful completion of test.
+
 Thu Aug 29 14:48:51 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/corbafwd.h:

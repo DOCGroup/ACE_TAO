@@ -35,7 +35,7 @@ static const char *rt_poa_factory_name = "TAO_RT_POA";
 static const char *rt_poa_factory_directive = "dynamic TAO_RT_POA Service_Object * TAO_RTPortableServer:_make_TAO_RT_Object_Adapter_Factory()";
 
 TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
-					      int network_priority_mapping_type,
+                                              int network_priority_mapping_type,
                                               long sched_policy,
                                               long scope_policy)
   : priority_mapping_type_ (priority_mapping_type),
@@ -128,33 +128,33 @@ TAO_RT_ORBInitializer::pre_init (
                                     manager
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   // Create the initial priority mapping instance.
   TAO_Network_Priority_Mapping *npm;
   switch (this->network_priority_mapping_type_)
     {
-    default: 
+    default:
     case TAO_NETWORK_PRIORITY_MAPPING_LINEAR:
       ACE_NEW (npm,
                TAO_Linear_Network_Priority_Mapping (sched_policy));
       break;
     }
-  
+
   // Set the Priority_Mapping_Manager
   TAO_Network_Priority_Mapping_Manager *network_manager = 0;
 
   ACE_NEW_THROW_EX (network_manager,
                     TAO_Network_Priority_Mapping_Manager (npm),
                     CORBA::NO_MEMORY (
-				      CORBA::SystemException::_tao_minor_code (
-		    TAO_DEFAULT_MINOR_CODE,
-			    ENOMEM),
-				      CORBA::COMPLETED_NO));
+                                      CORBA::SystemException::_tao_minor_code (
+                    TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                                      CORBA::COMPLETED_NO));
   ACE_CHECK;
 
 
   TAO_Network_Priority_Mapping_Manager_var safe_network_manager = network_manager;
-  
+
   info->register_initial_reference ("NetworkPriorityMappingManager",
                                     network_manager
                                     ACE_ENV_ARG_PARAMETER);
@@ -245,22 +245,48 @@ TAO_RT_ORBInitializer::register_policy_factories (
   // Bind the same policy factory to all RTCORBA related policy
   // types since a single policy factory is used to create each of
   // the different types of RTCORBA policies.
+  CORBA::PolicyType type[] = {
+    RTCORBA::PRIORITY_MODEL_POLICY_TYPE,
+    RTCORBA::THREADPOOL_POLICY_TYPE,
+    RTCORBA::SERVER_PROTOCOL_POLICY_TYPE,
+    RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE,
+    RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE,
+    RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE
+  };
 
-  CORBA::PolicyType type = RTCORBA::PRIORITY_MODEL_POLICY_TYPE;
-  info->register_policy_factory (type,
-                                 policy_factory
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  const CORBA::PolicyType *end =
+    type + sizeof (type) / sizeof (type[0]);
 
-  type = RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
-  info->register_policy_factory (type,
-                                 policy_factory
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  type = RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE;
-  info->register_policy_factory (type,
-                                 policy_factory
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  for (CORBA::PolicyType *i = type;
+       i != end;
+       ++i)
+    {
+      ACE_TRY
+        {
+          info->register_policy_factory (*i,
+                                         policy_factory
+                                         ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+        {
+          if (ex.minor () == (TAO_OMG_VMCID | 16))
+            {
+              // The factory is already there, it happens because the
+              // magic initializer in PortableServer.cpp registers
+              // with the ORB multiple times.  This is an indication
+              // that we should do no more work in this
+              // ORBInitializer.
+              return;
+            }
+          ACE_RE_THROW;
+        }
+      ACE_CATCHANY
+        {
+          // Rethrow any other exceptions...
+          ACE_RE_THROW;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
 }

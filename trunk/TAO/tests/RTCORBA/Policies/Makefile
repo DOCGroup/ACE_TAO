@@ -16,7 +16,7 @@ PROG_SRCS = Policies.cpp
 
 PROG_OBJS = Policies.o
 
-BIN = Policies
+BIN_UNCHECKED = Policies
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -25,9 +25,13 @@ BIN = Policies
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(rt_corba),1)
+  BIN=$(BIN_UNCHECKED)
+endif # rt_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
@@ -36,7 +40,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 Policies:	$(addprefix $(VDIR),$(PROG_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(POSTLINK)
 
 realclean: clean
 

@@ -768,7 +768,12 @@ enum TAO_Policy_Scope
   TAO_POLICY_CLIENT_EXPOSED = 0x10
 };
 
-#define TAO_POLICY_DEFAULT_SCOPE (ACE_static_cast(TAO_Policy_Scope, TAO_POLICY_OBJECT_SCOPE | TAO_POLICY_THREAD_SCOPE | TAO_POLICY_ORB_SCOPE | TAO_POLICY_POA_SCOPE))
+#define TAO_POLICY_DEFAULT_SCOPE \
+  (ACE_static_cast(TAO_Policy_Scope, \
+                   TAO_POLICY_OBJECT_SCOPE | \
+                   TAO_POLICY_THREAD_SCOPE | \
+                   TAO_POLICY_ORB_SCOPE | \
+                   TAO_POLICY_POA_SCOPE))
 
 // Control the default version of GIOP used by TAO.
 // The ORB is always able to communicate with 1.0, 1.1 and 1.2
