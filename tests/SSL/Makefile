@@ -14,6 +14,7 @@ BIN =   Thread_Pool_Reactor_SSL_Test
 PSRC=$(addsuffix .cpp,$(BIN))
 LDLIBS = -lACE_SSL -lssl -lcrypto -lTest_Output
 CPPFLAGS += -I..
+SRC = Main.cpp
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

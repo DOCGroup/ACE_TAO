@@ -1,9 +1,21 @@
+Wed Jul  2 23:10:25 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/RMCast/Makefile:
+        * tests/RMCast/Makefile.bor:
+        * tests/RMCast/Main.cpp:
+        * tests/SSL/Makefile:
+        * tests/SSL/Makefile.bor:
+        * tests/SSL/Main.cpp:
+          Added Main.cpp and wired it up in the Makefiles.  This is
+          needed to work with Justin's changes below in preparation to
+          using MPC for all builds.
+
 Wed Jul  2 22:48:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-all.h/
           Rolled back Wed Jul  2 22:17:15 UTC 2003  Don Hinton
           <dhinton@dresystems.com> temporarily, since it is defined
-          inconsistenly and compilation will fail if ACE_HAS_ANSI_CASTS is
+          inconsistently and compilation will fail if ACE_HAS_ANSI_CASTS is
           just defined and not defined as a number.
 
 Wed Jul  2 22:17:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
@@ -81,7 +93,7 @@ Tue Jul  1 19:39:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Added ACE_LACKS_SYS_UN_H and ACE_LACKS_PTHREAD_H.
 
         * ace/os_include/sys/os_mman.h:
-          Added !defined (ACE_WIN32) to the intial #if for the PROT_*
+          Added !defined (ACE_WIN32) to the initial #if for the PROT_*
           define section so Windows can make it to the #ifelse section. 
 
 Sun Jun 29 01:31:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
