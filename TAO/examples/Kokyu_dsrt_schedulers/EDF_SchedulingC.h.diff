@@ -1,0 +1,13 @@
+--- EDF_SchedulingC.h.orig	Thu Oct 30 23:11:00 2003
++++ EDF_SchedulingC.h	Thu Oct 30 23:12:13 2003
+@@ -41,8 +41,8 @@
+ 
+ #include "Kokyu_dsrt_schedulers_export.h"
+ 
+-#include "tao/RTScheduling/RTSchedulerC.h"
+-#include "tao/RTCORBA/RTCORBAC.h"
++#include "tao/RTScheduling/RTScheduler.h"
++#include "tao/RTCORBA/RTCORBA.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO

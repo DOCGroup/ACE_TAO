@@ -4,13 +4,15 @@ project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba {
 
   Source_Files {
         FP_Scheduler.cpp      
-        MUF_Scheduler.cpp      
+        MUF_Scheduler.cpp     
+        EDF_Scheduler.cpp 
         MIF_Scheduler.cpp    
         Task_Stats.cpp
         utils.cpp
         Kokyu_qosC.cpp         
         FP_SchedulingC.cpp    
         MUF_SchedulingC.cpp
+	EDF_SchedulingC.cpp
         MIF_SchedulingC.cpp  
   }
 }
