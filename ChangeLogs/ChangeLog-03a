@@ -1,3 +1,13 @@
+Fri Jan 26 09:33:20 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/auto_run_tests.lst:
+	  Add TAO/tests/Object_Loader to the list
+
+	* include/makeinclude/rules.lib.GNU:
+	  Allow both .cpp and .c files in the LSRC macro.  This should
+	  let the PACE guys use the real name for their files, and
+	  generate proper dependencies.
+
 Fri Jan 26 02:16:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/OS_Test.cpp:
