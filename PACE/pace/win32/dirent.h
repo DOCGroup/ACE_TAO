@@ -39,7 +39,7 @@ extern "C" {
   typedef WIN32_FIND_DATA PACE_TEXT_WIN32_FIND_DATA;
   typedef struct DIR
   {
-    PACE_TCHAR * directory_name_;
+    char * directory_name_;
     // The name of the directory we are looking into
 
     HANDLE current_handle_;
@@ -53,7 +53,7 @@ extern "C" {
 
     int started_reading_;
     // A flag to remember if we started reading already.
-  } pace_dir;
+  } PACE_DIR;
 #endif /* PACE_DIR_T */
 
 #if defined (PACE_HAS_CPLUSPLUS)

@@ -14,7 +14,7 @@
  * ============================================================================= */
 
 PACE_INLINE
-DIR *
+PACE_DIR *
 pace_opendir (const char * dirname)
 {
   return opendir (dirname);
