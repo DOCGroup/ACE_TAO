@@ -20,7 +20,7 @@ AVStreams_CLIENT_OBJS = client.o
 
 COSPROPERTY_OBJS = main.o
 
-BIN = server client
+BIN = client
 
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
