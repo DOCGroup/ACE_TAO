@@ -3,12 +3,14 @@
 #define ACE_BUILD_DLL
 
 #include "ace/Object_Manager.h"
-#include "ace/Containers.h"
-#include "ace/Array.h"
+#include "ace/Token_Manager.h"
+#include "ace/Naming_Context.h"
+#include "ace/Service_Manager.h"
 #include "ace/Service_Config.h"
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
-#include "ace/Token_Manager.h"
+#include "ace/Containers.h"
+#include "ace/Array.h"
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
 
@@ -88,6 +90,65 @@ ACE_Sig_Adapter *ace_service_config_sig_handler = 0;
 #endif /* ACE_HAS_STATIC_PREALLOCATION */
 
 
+class ACE_Object_Manager_Preallocations
+{
+public:
+  ACE_Object_Manager_Preallocations ();
+  ~ACE_Object_Manager_Preallocations();
+
+private:
+  ACE_Static_Svc_Descriptor ace_svc_desc_ACE_Naming_Context;
+  ACE_Static_Svc_Descriptor ace_svc_desc_ACE_Service_Manager;
+};
+
+static
+ACE_Object_Manager_Preallocations *ace_object_manager_preallocations = 0;
+
+// We can't use the ACE_SVC_FACTORY_DECLARE macro here because this
+// needs to be in the ACE_Export context rather than the
+// ACE_Svc_Export context.
+extern "C" ACE_Export ACE_Service_Object *_make_ACE_Service_Manager (void);
+
+ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations ()
+{
+  // Define the static services.  This macro call creates static service
+  // descriptors that are used for initialization below.
+  ACE_STATIC_SVC_DEFINE (ACE_Naming_Context_initializer,
+                         "ACE_Naming_Context",
+                         ACE_SVC_OBJ_T,
+                         &ACE_SVC_NAME (ACE_Naming_Context),
+                         ACE_Service_Type::DELETE_THIS |
+                           ACE_Service_Type::DELETE_OBJ,
+                         0)
+
+  ACE_STATIC_SVC_DEFINE (ACE_Service_Manager_initializer,
+                         "ACE_Service_Manager",
+                         ACE_SVC_OBJ_T,
+                         &ACE_SVC_NAME (ACE_Service_Manager),
+                         ACE_Service_Type::DELETE_THIS |
+                           ACE_Service_Type::DELETE_OBJ,
+                         0)
+
+  // Initialize the static service objects using the descriptors created
+  // above.
+  ace_svc_desc_ACE_Naming_Context =
+    ace_svc_desc_ACE_Naming_Context_initializer;
+
+  ace_svc_desc_ACE_Service_Manager =
+    ace_svc_desc_ACE_Service_Manager_initializer;
+
+  // Add to the list of static configured services.
+  ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_ACE_Naming_Context);
+
+  ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_ACE_Service_Manager);
+}
+
+ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations ()
+{
+}
+
 ACE_Object_Manager::ACE_Object_Manager (void)
   // , lock_ is initialized in the function body.
   // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call
@@ -142,6 +203,9 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 
   // Open Winsock (no-op on other platforms).
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
+
+  ACE_NEW (ace_object_manager_preallocations,
+           ACE_Object_Manager_Preallocations);
 
   // Open the main thread's ACE_Log_Msg.
   (void) ACE_LOG_MSG;
@@ -509,6 +573,9 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
 
   // Close down Winsock (no-op on other platforms).
   ACE_OS::socket_fini ();
+
+  delete ace_object_manager_preallocations;
+  ace_object_manager_preallocations = 0;
 
   delete ace_service_config_sig_handler;
   ace_service_config_sig_handler = 0;
