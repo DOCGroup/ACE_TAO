@@ -39,27 +39,26 @@ int
 TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
 			     PortableServer::ObjectId_out id)
 {
-  auto_ptr<PortableServer::ObjectId> found;
+  id.ptr () = 0;
   auto_ptr<TAO_Object_Table_Iterator_Impl> end = this->end ();
-  for (TAO_Object_Table_Iterator_Impl *i = this->begin ();
+  for (auto_ptr<TAO_Object_Table_Iterator_Impl> i = this->begin ();
        !i->done (end.get ());
        i->advance ())
     {
       const TAO_Object_Table_Entry& item = i->item ();
       if (item.int_id_ == servant)
 	{
-	  if (found.get () != 0)
+	  if (id != 0)
 	    {
 	      // More than one match return -1.
-	      found = 0;
+	      delete id.ptr ();
 	      return -1;
 	    }
 	  // Store the match....
-	  found = new PortableServer::ObjectId (item.ext_id_);
+	  id.ptr () = new PortableServer::ObjectId (item.ext_id_);
 	}
     }
-  id = found.release ();
-  return (id==0)?-1:0;
+  return (id.ptr () == 0)?-1:0;
 }
 
 
@@ -377,8 +376,8 @@ TAO_Array_ObjTable_Iterator::advance (void)
 int
 TAO_Array_ObjTable_Iterator::done (const TAO_Object_Table_Iterator_Impl *end) const
 {
-  TAO_Array_ObjTable_Iterator *tmp =
-    ACE_dynamic_cast(TAO_Array_ObjTable_Iterator*, end);
+  const TAO_Array_ObjTable_Iterator *tmp =
+    ACE_dynamic_cast(const TAO_Array_ObjTable_Iterator*, end);
   return (this->pos_ == tmp->pos_);
 }
 
