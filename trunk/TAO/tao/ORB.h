@@ -391,6 +391,13 @@ public:
   CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ());
 
+  /// Returns an indication of whether the ORB needs to perform some work
+  /// but will look for work to pending for more than the specified time.
+  /// This is useful for implementing an event loop with an idle timeout.
+  CORBA::Boolean work_pending (ACE_Time_Value &tv,
+                               CORBA_Environment &ACE_TRY_ENV = 
+                               TAO_default_environment ());
+
   /**
    * This operation performs an implementation-defined unit of
    * work. Note that the default behavior is not to block; this
