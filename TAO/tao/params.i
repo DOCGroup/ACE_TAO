@@ -113,3 +113,15 @@ TAO_ORB_Parameters::use_IIOP_lite_protocol (int x)
   this->use_IIOP_lite_protocol_ = x;
 }
 
+ACE_INLINE int
+TAO_ORB_Parameters::use_dotted_decimal_addresses (void) const
+{
+  return this->use_dotted_decimal_addresses_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
+{
+  this->use_dotted_decimal_addresses_ = x;
+}
+

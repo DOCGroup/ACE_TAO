@@ -156,6 +156,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   char *preconnections = 0;
 
+  // Use dotted decimal addresses
+  int dotted_decimal_addresses = 0; 
+
   while (arg_shifter.is_anything_left ())
     {
       char *current_arg = arg_shifter.get_current ();
@@ -180,6 +183,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           svc_config_argv[svc_config_argc++] =
             CORBA::string_dup ("-b");
           arg_shifter.consume_arg ();
+        }
+      else if (ACE_OS::strcmp (current_arg, "-ORBdotteddecimaladdresses") == 0)
+        {
+          // Use dotted decimal addresses
+          arg_shifter.consume_arg ();
+	  dotted_decimal_addresses = 1;
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBdebug") == 0)
         {
@@ -388,8 +397,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
 	  iiop_lite = 1;
         }
-     else
-       arg_shifter.ignore_arg ();
+      else
+        arg_shifter.ignore_arg ();
    }
 
 
@@ -532,6 +541,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
 
   this->orb_params ()->use_IIOP_lite_protocol (iiop_lite);
+
+  this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
 
   // Open the <Strategy_Connector>.
   if (this->connector ()->open (this->reactor (),
