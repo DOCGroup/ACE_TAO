@@ -1,3 +1,40 @@
+Mon Aug 30 13:01:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/BoundsC.cpp:
+	* tao/CONV_FRAMEC.i:
+	* tao/CurrentC.cpp:
+	* tao/CurrentS.cpp:
+	* tao/DomainC.cppi:
+	* tao/DomainC.i:
+	* tao/DomainS.cpp:
+	* tao/DynAnyC.cpp:
+	* tao/DynAnyC.i:
+	* tao/DynAnyS.cpp:
+	* tao/InconsistentTypeCodeC.cpp:
+	* tao/InterceptorC.cpp:
+	* tao/InterceptorC.i:
+	* tao/InterceptorS.cpp:
+	* tao/InterfaceC.cpp:
+	* tao/InterfaceC.i:
+	* tao/IORC.cpp:
+	* tao/IORC.i:
+	* tao/IOPC.i:
+	* tao/IORS.cppi:
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.i:
+	* tao/MessagingS.cpp:
+	* tao/Object_KeyC.i:
+	* tao/POAC.cpp:
+	* tao/POAC.i:
+	* tao/POAS.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.i:
+	* tao/PolicyS.cpp:
+	* tao/PollableC.cpp:
+	* tao/PollablS.cpp:
+	* tao/WrongTransactionC.cpp:
+	  Replaced all occurrences of 'new' with 'ACE_NEW*'.
+
 Mon Aug 30 12:25:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Advanced: Converted several of the examples to use
