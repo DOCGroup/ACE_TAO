@@ -4,7 +4,7 @@
 #include "Object_Adapter.h"
 #include "tao/Object.h"
 
-ACE_RCSID(tao, TAO_Direct_Object_Proxy_Impl, "$Id$");
+ACE_RCSID(tao, TAO_Direct_Object_Proxy_Impl, "$Id$")
 
 TAO_Direct_Object_Proxy_Impl::~TAO_Direct_Object_Proxy_Impl (void)
 {
