@@ -28,6 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Policy_ForwardC.h"
+#include "ace/Synch.h"
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;

@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corba.h"
+#include "ace/Event_Handler.h"
 
 class TAO_EC_Event_Channel;
 

@@ -10,6 +10,7 @@
 #include "orbsvcs/Event_Service_Constants.h"
 
 #include "ace/Reactor.h"
+#include "ace/Unbounded_Set.h"
 
 ACE_RCSID(Event, ECG_Mcast_EH, "$Id$")
 
@@ -33,7 +34,7 @@ TAO_ECG_Mcast_Socket::decrement (void)
   int count = TAO_Synch_Refcountable::decrement ();
   ACE_ASSERT (count >= 0);
   if (count == 0)
-    {     
+    {
       this->close ();
       delete this;
     }
@@ -282,7 +283,7 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
       // We're done with it, so decrement the refcount so it can get
       // deleted (either now or when it finishes an upcall.
       socket->decrement ();
-      
+
       // Increment and then remove, this is a safe way to remove the
       // element without invalidating the iterator.
       ++j;
@@ -485,7 +486,7 @@ template class ACE_Unbounded_Set_Iterator<ACE_INET_Addr>;
 
 #pragma instantiate ACE_Hash_Map_Manager<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Hash<ACE_HANDLE>, ACE_Equal_To<ACE_HANDLE>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_HANDLE, TAO_ECG_Mcast_Socket * > 
+#pragma instantiate ACE_Hash_Map_Entry<ACE_HANDLE, TAO_ECG_Mcast_Socket * >
 #pragma instantiate ACE_Hash<ACE_HANDLE>
 #pragma instantiate ACE_Node<ACE_HANDLE>
 #pragma instantiate ACE_Equal_To<ACE_HANDLE>

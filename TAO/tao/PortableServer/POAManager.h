@@ -31,6 +31,8 @@
 
 #include "tao/PortableInterceptorC.h"
 
+#include "ace/Unbounded_Set.h"
+
 // Forward decl.
 class TAO_POA;
 class TAO_Object_Adapter;

@@ -5,6 +5,8 @@
 # include "Synch_Refcountable.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID (tao,
            Synch_Refcountable,
            "$Id$")

@@ -66,6 +66,7 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/SOCK_CODgram.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Event_Handler.h"
 
 class TAO_ECG_UDP_Out_Endpoint;
 

@@ -1,4 +1,5 @@
 #include "PolicyList_Destroyer.h"
+#include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
 # include "PolicyList_Destroyer.inl"
