@@ -1,3 +1,24 @@
+Sun Sep 27 22:37:11 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* examples/POA/Default_Servant/server.cpp
+	* examples/POA/Default_Servant/client.cpp 
+	* examples/POA/DSI/server.cpp
+	* examples/POA/DSI/client.cpp 
+	  Fixed a small misuse of strdup
+	
+	* tests/OctetSeq/run_test.pl: Small script to run OctetSeq test
+
+	* tests/Multiple_Inheritance/run_test.pl: Script to run client and 
+	  server 
+
+	* tests/Multiple_Inheritance/server.cpp
+	* tests/Multiple_Inheritance/client.cpp
+	  Added command line parsing and ability to output the IOR to a
+	  file (server) and read from a file (client)
+	
+	* tests/Multiple_Inheritance/Makefile: Fixed realclean to remove
+	  server and client binaries
+
 Sun Sep 27 21:05:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Object_Table.i (create_object_id): added
