@@ -1,3 +1,9 @@
+Mon Nov  9 23:27:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/ASX/Message_Queue/buffer_stream.cpp (main): Fixed an
+ 	  off-by-one bug.  Thanks to Rainer Blome
+ 	  <rainer_blome@de.ibm.com> for reporting this.
+
 Mon Nov 09 21:31:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Env_Value_Test (main): prepended "./" to name of
