@@ -1,3 +1,14 @@
+Fri Aug 25 16:59:35 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/Makefile.IFR_Service (IFR_Service):
+	  Added these Makefiles to the repository.
+
+	* orbsvcs/IFR_Service/Makefile: Changed the structure to call the
+	  Makefile.TypeCodeFactory and Makefile.IFR_Service instead of
+	  creating dependencies. That seem to break on every alternate
+	  platform.
+
+
 Fri Aug 25 15:47:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/IFR_Service.cpp:
@@ -8,7 +19,7 @@ Fri Aug 25 15:47:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri Aug 25 11:20:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Interoperable_Naming/Makefile: 
+	* orbsvcs/tests/Interoperable_Naming/Makefile:
 	  Modified the order in which the files are compiled.
 
 Thu Aug 24 21:03:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -30,12 +41,12 @@ Thu Aug 24 20:27:26 2000  Marina Spivak  <marina@cs.wustl.edu>
 	  copy.  Changed local variable to be IOP::ServiceContextList &,
 	  so that our changes affect the original context list rather than
 	  the copy.
-	
+
 	* tao/default_resource.cpp:
-	 
+
 	  Changed the default Priority Mapping scheme for DIRECT (from
-	  LINEAR). 
-	
+	  LINEAR).
+
 	* tests/RTCORBA/Client_Propagated/server.cpp
 
 	  Updated output messages.
@@ -45,11 +56,11 @@ Thu Aug 24 20:27:26 2000  Marina Spivak  <marina@cs.wustl.edu>
 	  Set CORBA priority of the client thread to 0 prior to the first
 	  remote invocation.  This way output on different platforms will
 	  look the same.
-	
+
 	* tests/RTCORBA/Client_Propagated/README:
-	  
+
 	  Added expected output section.
-	
+
 	* tests/RTCORBA/Client_Propagated/runt_test.pl
 
 	  Changed formatting of output to improve readability.
@@ -80,7 +91,7 @@ Thu Aug 24 12:08:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_decl.cpp:
 
-	  Fixed some previous cosmetic changes to 
+	  Fixed some previous cosmetic changes to
 	  compute_full_name(), which may have altered its behavior.
 
 Thu Aug 24 11:18:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -116,7 +127,7 @@ Wed Aug 23 16:20:52 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tao/POA.cpp:
 	* tao/POA.i
 	  Fixed bug in the copy constructor of TAO_POA_Policies.
-	  Added const declaration to the method 
+	  Added const declaration to the method
 	  TAO_POA_Policies::client_exposed_fixed_policies.
 
 Wed Aug 23 16:14:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -145,7 +156,7 @@ Wed Aug 23 15:34:29 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tao/RT_Current.h
 	* tao/RT_Current.cpp:
 	* tao/ORB_Core.cpp:
-	
+
 	  After this interface was made local, it no longer had access to
 	  the orb_core through its stub, and wasn't working.  Changed the
 	  implementation to store the pointer to its ORB Core.
