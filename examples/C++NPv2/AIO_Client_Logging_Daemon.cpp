@@ -327,6 +327,7 @@ int AIO_Client_Logging_Daemon::svc (void) {
 #else   /* There's no AIO support on this platform */
 
 #include "ace/Task.h"
+#include "ace/Service_Object.h"
 #include "ace/Synch_Traits.h"
 
 class AIO_Client_Logging_Daemon : public ACE_Task<ACE_NULL_SYNCH> {

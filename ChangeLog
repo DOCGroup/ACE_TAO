@@ -1,9 +1,13 @@
+Thu May 13 18:37:52 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Added missing
+	  #include "ace/Service_Object.h" for the non-AIO case.
+
 Thu May 13 21:39:00 2004-05-13  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* bin/MakeProjectCreator/templates/gnu.mpd: Changed dependency file 
 	name to make file names shorter. Thanks to Chad Elliott 
 	<elliott_c@ociweb.com> for a patch.
-
 
 Thu May 13 21:39:00 2004-05-13  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
