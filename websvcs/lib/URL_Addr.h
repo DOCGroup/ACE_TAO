@@ -77,6 +77,9 @@ public:
   static int known_scheme (LPCTSTR url);
   // Returns 1 if the URL scheme is recognized, 0 otherwise.
 
+  u_long hash (void) const;
+  // Hash function
+
 protected:
   void set_url (LPTSTR url);
   // Allows the derived classes to store the compact representation of
