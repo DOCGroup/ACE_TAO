@@ -4032,9 +4032,15 @@ spa (FUNCPTR entry, ...)
         argv[i] = 0;
     }
 
-  // The hard-coded options are what ::sp () uses.
-  const int ret = ::taskSpawn (argv[0], 100, VX_FP_TASK, 1000000,
-                               entry, argc, (int) argv,
+  // The hard-coded options are what ::sp () uses, except for the
+  // larger stack size (instead of ::sp ()'s 20000).
+  const int ret = ::taskSpawn (argv[0],    // task name
+                               100,        // task priority
+                               VX_FP_TASK, // task options
+                               1000000,    // stack size
+                               entry,      // entry point
+                               argc,       // first argument to main ()
+                               (int) argv, // second argument to main ()
                                0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
