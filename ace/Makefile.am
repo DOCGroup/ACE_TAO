@@ -245,6 +245,8 @@ libACE_OS_la_SOURCES = \
 
 libACE_Utils_la_SOURCES = \
   ACE.cpp \
+  ACE_crc32.cpp \
+  ACE_crc_ccitt.cpp \
   Active_Map_Manager.cpp \
   Arg_Shifter.cpp \
   Capabilities.cpp \
