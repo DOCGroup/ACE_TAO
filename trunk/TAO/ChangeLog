@@ -1,3 +1,20 @@
+Sat Feb  7 20:32:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+
+	  Inherit from PortableServer::RefCountServantBase in addition to
+	  the POA_* class or interface while generating the implementation
+	  of the servant classes. Thanks to Don Hinton for pointing this
+	  out. 
+	
+	* tao/TAO_Internal.cpp:
+
+	  Fix for BUGID 1734. Please see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1734
+
+	  for details.
+
 Sat Feb  7 09:52:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/ORT/ORT.mpc:
