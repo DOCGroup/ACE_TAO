@@ -1,12 +1,6 @@
-#include "ace/Auto_Ptr.h"
 #include "Persistent_Naming_Context.h"
 #include "Persistent_Context_Index.h"
 #include "Bindings_Iterator_T.h"
-
-ACE_RCSID (Naming,
-           Persistent_Naming_Context,
-           "$Id$")
-
 
 // The following #pragma is needed to disable a warning that occurs
 // in MSVC 6 due to the overly long debugging symbols generated for
@@ -17,6 +11,12 @@ ACE_RCSID (Naming,
                                      characters in the browser
                                      information */
 #endif  /* _MSC_VER */
+
+#include "ace/Auto_Ptr.h"
+
+ACE_RCSID (Naming,
+           Persistent_Naming_Context,
+           "$Id$")
 
 
 int

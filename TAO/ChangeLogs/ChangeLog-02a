@@ -1,3 +1,12 @@
+Thu Apr 18 13:01:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+
+	  Moved the pragma that disabled an MSVC++ 6 warning related to an
+	  ACE_Auto_Basic_Ptr template instantiation before in the
+	  "ace/Auto_Ptr.h" include.  The pragma only applies to
+	  classes/templates declared after it.
+
 Thu Apr 18 13:58:11 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/ior_corbaloc/status_i.h (print_status): Replaced a hard-coded
