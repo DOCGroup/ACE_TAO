@@ -1295,11 +1295,11 @@ INSTALL=
     something like the following.  tao_idl should be built to not support
     native exception handling, because that's not available on VxWorks.
 <pre>
-#if defined (__BORLANDC__) || defined (_MSC_VER)
-# include &lt;ace/config-win32.h&gt;
+#if defined (__BORLANDC__)  ||  defined (_MSC_VER)
+# include "ace/config-win32.h"
 # undef ACE_HAS_EXCEPTIONS
 #else
-# include &lt;ace/config-vxworks.h&gt;
+# include "ace/config-vxworks.h"
 #endif
 </pre><p>
    <li>Set your <code>ACE_ROOT</code>, <code>CPP_LOCATION</code>,
