@@ -1,3 +1,9 @@
+Fri Nov 26 17:49:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/run_test.pl:
+
+	  New file.
+
 Fri Nov 26 17:53:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO-INSTALL.html:
