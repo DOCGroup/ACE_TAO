@@ -1,3 +1,9 @@
+Fri Jan 16 11:27:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Service_Config_DLL_Export.h:
+          Added check for ACE_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Fri Jan 16 11:25:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/APG/Svc_Config/HASTATUS_export.h
