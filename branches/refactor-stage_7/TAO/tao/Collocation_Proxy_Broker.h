@@ -10,16 +10,26 @@
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
+
 #ifndef TAO_COLLOCATION_PROXY_BROKER_H
 #define TAO_COLLOCATION_PROXY_BROKER_H
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/TAO_Export.h"
+#include "tao/Collocation_Strategy.h"
+
+namespace CORBA
+{
+  class Object;
+  typedef Object *Object_ptr;
+}
 
 namespace TAO
 {

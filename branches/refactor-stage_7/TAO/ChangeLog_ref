@@ -1,3 +1,30 @@
+Thu Sep 11 10:56:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Collocation_Strategy.h:
+
+          New file, split from corbafwd.h. Contains the enum
+          TAO_Collocation_Strategy.
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/Collocated_Invocation.h:
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/corbafwd.h:
+        * tao/ORB_Core.h:
+
+          Changed includes to accommodate the new file above.
+
+        * tao/TAO.dsp:
+
+          Added new file to project.
+
+        * tao/PortableServer/Servant_Base.cpp:
+
+          Temporary changes to help Bala debug on Linux.
+
+        * tao/Strategies/TAO_Strategies.dsp:
+
+          Turned on RTTI.
+
 Wed Sep 10 22:17:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Acceptor_Impl.cpp:
