@@ -1,3 +1,22 @@
+Fri Oct 15 19:25:37 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB.cpp (key_to_object, _find_collocated_servant):
+
+	  Do not duplicate the ORB when passing it as an argument to
+	  TAO_Stub::servant_orb() since the ORB is duplicated by it.
+	  This fixes a memory leak.  [Bug 363]
+
+	* tao/Stub.cpp (~TAO_Stub):
+
+	  Make sure TAO_ORB_Core pointer is not zero prior to calling
+	  reset_hint() in profile.  The hint in the profile relies on
+	  state stored in the ORB core.	  Removed unnecessary zero pointer
+	  check prior to deletion.  [Bug 360]
+
+	* tao/Stub.i:
+
+	  Updated to conform to ACE style guidelines.
+
 Fri Oct 15 17:47:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/qt_resource.cpp:
@@ -5,12 +24,12 @@ Fri Oct 15 17:47:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/qt_resource.i: The default resources that needs to be
 	  initialised by the application programmer  who intends to use
 	  the QtReactor. Thanks to Hamish Friedlander <ullexco@wave.co.nz>
-	  for donationg this TAO. 
+	  for donating this TAO. 
 
 	  An application that uses QtReactor is yet to be written. That
 	  should be available in the next couple of days.
 	
-	* tao/Makefile : Added the above files for the build.
+	* tao/Makefile: Added the above files for the build.
 
 Fri Oct 15 17:17:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -44,39 +63,6 @@ Fri Oct 15 17:17:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  (c) Flushing based on implicit timeout
 	  (d) Explicit queue flushing (and server shutdown)
 
-Fri Oct 15 17:17:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-	* tao/Sync_Strategies.cpp (timer_check): We now support the
-	  timeout feature of BufferingConstraint policy.
-
-	* tao/Pluggable.h (TAO_Transport): The base class now holds on to
-	  a timeout value <buffering_timeout_value_> and a timer id
-	  <buffering_timer_id_>.  These are used to implement automatic
-	  timed flushing of buffered oneways.
-
-	* tao/IIOP_Transport.cpp (event_handler):
-	* tao/UIOP_Transport.cpp (event_handler):
-
-	  This method provides a way to gain access to the underlying
-	  event handler used by the reactor.
-
-	* tao/UIOP_Connect.cpp (handle_timeout):
-	* tao/IIOP_Connect.cpp (handle_timeout):
-
-	  This new method is called when the buffering timer expires.
-	  Flush the buffered messages when this happens.
-
-	* examples/Buffered_Oneways/client.cpp: Added testing for the
-	  implicit buffering timeout feature.
-
-	* examples/Buffered_Oneways/run_test.pl: Now checks for:
-
-	  (a) Flushing based on implicit message counts
-	  (b) Flushing based on implicit message bytes
-	  (c) Flushing based on implicit timeout
-	  (d) Explicit queue flushing (and server shutdown)
-
->>>>>>> 1.3016
 Thu Oct 14 22:19:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/GIOP.cpp (send_reply_exception): A format code was missing
@@ -3060,7 +3046,6 @@ Mon Sep 13 15:31:40 1999  Luther J Baker  <ljb1@cs.wustl.edu>
           the method to correctly parse the command line arguments.
           ie: -foobar Value == -FooBar value == -foobarValue
           In all of the above examples, 'value' is correctly found.
-
 
 Mon Sep 13 15:01:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
