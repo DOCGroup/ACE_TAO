@@ -4,9 +4,34 @@ Sat Jun 28 08:27:27 1997  David L. Levine  <levine@cs.wustl.edu>
 	  ACE_DEFAULT_SHLIB_MODE on platforms other that
 	  ACE_HAS_SVR4_DYNAMIC_LINKING and hpux.
 
+	* ace/OS.i: split definitions of ACE_OS::cond_* member
+	  functions into two:  for ACE_WIN32/VXWORKS and all others.
+	  That allows us to break the circular dependencies between
+	  those functions and the ACE_OS::sema_* member functions.
+
 	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
 	  assignments in "if" conditionals with parenthesis to avoid
 	  g++ warnings.
+
+	* ace/{ACE,INET_Addr,OS}.cpp (VxWorks only): added ACE_UNUSED_ARG
+	  calls.
+
+	* ace/Parse_Node.cpp (ACE_Stream_Node,ACE_Dynamic_Node,ACE_Dummy_Node
+	  constructors): reordered initializers to match declaration order.
+
+	* ace/Profile_Timer.h (elapsed_time): commented out unused arg "et".
+
+	* ace/Read_Buffer.cpp (rec_read): initialized local variable c to
+	  make sure that it is always defined before use.
+
+	* ace/SPIPE_Acceptor.cpp (remove): don't declare local variable
+	  "result" if ! ACE_HAS_STREAM_PIPES, because it's not used in
+	  that case.
+
+	* platform_vxworks5.2_g++.GNU: added -Wall now that the ACE library
+	  builds cleanly with it.
+
+	* platform_vxworks5.x_g{++,hs}.GNU: renamed 5.x instead of 5.2.
 
 Fri Jun 27 13:10:46 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
