@@ -1,3 +1,15 @@
+Sat Feb 4 15:17:37 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/run_test.pl:
+
+	  Some improvements for autobuild testing with VxWorks.
+
+	* tests/Reactor_Notify_Test.cpp:
+	* tests/Task_Ex_Test.cpp:
+
+	  Scaled down testparameters for VxWorks because otherwise the tests take too
+	  long and are killed before having a chance to finish.
+
 Sat Feb 4 11:38:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/run_test.pl:

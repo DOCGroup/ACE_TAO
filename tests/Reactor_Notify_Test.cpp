@@ -175,7 +175,13 @@ Supplier_Task::perform_notifications (int notifications)
   size_t iterations = ACE_MAX_ITERATIONS;
 
   if (this->long_timeout_)
-    iterations *= (iterations * iterations * 2);
+    {
+      iterations *= (iterations * iterations * 2);
+#if defined (ACE_VXWORKS)
+	  // scale down otherwise the test won'y finish in time
+      iterations /= 4;
+#endif
+    }
 
   for (size_t i = 0; i < iterations; i++)
     {
