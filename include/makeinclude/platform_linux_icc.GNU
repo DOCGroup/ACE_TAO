@@ -64,8 +64,7 @@ endif
 
 CFLAGS  += -w1
 ifeq ($(threads),1)
-    CPPFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
-               $(PLATFORM_AIO_SUPPORT)
+    CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
 

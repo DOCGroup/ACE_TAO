@@ -65,8 +65,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 CFLAGS  += -W -Wall -Wpointer-arith -pipe
 ifeq ($(threads),1)
-    CPPFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
-               $(PLATFORM_AIO_SUPPORT)
+    CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
 CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
