@@ -97,7 +97,7 @@ project(CodeGen_svnt) : ciao_servant {
 
 
 project(CodeGen_exec) : ciao_component {
-  after   += CodeGen_svnt
+  after   += CodeGen_svnt CodeGen_stub
   sharedname = CodeGen_exec
   libs      += CodeGen_stub CodeGen_svnt CIDL_Basic_stub CIDL_Basic_svnt
   dynamicflags   = CODEGEN_EXEC_BUILD_DLL

@@ -1,3 +1,9 @@
+Wed Dec 22 06:53:30 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+
+          Make sure that CodeGen_stub gets built before CodeGen_exec.
+
 Tue Dec 21 11:29:03 2004  Gan Deng <gan.deng@vanderbilt.edu>
 
         * tools/Segment_Timer/Segment_Timer.h
@@ -19,8 +25,8 @@ Mon Dec 20 17:27:01 2004  Gan Deng <gan.deng@vanderbilt.edu>
 
 Mon Dec 20 16:32:54 2004  Nanbor Wang  <nanbor@cse.wustl.edu>
 
-	* DAnCE/Config_Handlers/Config_Handlers.mpc: Added include path to
-	  self for XSC_Config_Handlers project..
+        * DAnCE/Config_Handlers/Config_Handlers.mpc: Added include path to
+          self for XSC_Config_Handlers project..
 
 Wed Dec 15 13:48:44 2004  Chad Elliott  <elliott_c@ociweb.com>
 
