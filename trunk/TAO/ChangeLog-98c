@@ -1,6 +1,6 @@
-Wed Dec 24 18:31:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+Wed Dec 24 18:44:02 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO version 0.0.48, released Wed Dec 24 18:31:24 1997.
+	* tao: Added the nvlist.i file to the tao/ directory.
 
 Wed Dec 24 18:11:08 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
