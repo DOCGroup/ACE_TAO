@@ -22,6 +22,8 @@ int PushConsumer_impl::init(CORBA::ORB_ptr orb, int num_iterations,
                             RtecEventChannelAdmin::EventChannel_ptr channel,
                             const ACE_Time_Value& timer_interval ACE_ENV_ARG_DECL)
 {
+  ACE_UNUSED_ARG(timer_interval);
+
   orb_ = orb;
   num_iterations_ = num_iterations;
   run_times.assign(num_iterations, -1);
@@ -72,7 +74,7 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
     event[0].data.any_value >>= x;
     run_times[x] = static_cast<int>(elaps/10);
 
-    if (num_iterations_-1 == x) {
+    if (num_iterations_-1 == static_cast<int>(x) ) {
       supplier_->disconnect_push_supplier();
       orb_->shutdown();
       output_result();
