@@ -1,3 +1,13 @@
+Thu Jan 17 13:11:27 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Message_Queue.h:
+        * Message_Queue.cpp:
+        * Message_Queue_T.h:
+        * Message_Queue_T.cpp:
+
+          Provide the ability to enqueue based on the message deadline and
+          to dequeue based on priority, deadline and from the end.
+
 Wed Jan 16 11:24:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* THANKS: 
