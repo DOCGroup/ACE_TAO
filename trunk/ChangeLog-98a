@@ -19,6 +19,17 @@ Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sco-5.0.0*.h: added RCS keyword string.
 
+        * include/makeinclude/wrapper_macros.GNU: support "exceptions"
+          make flag on all platform.  If enabled, it adds
+          -DACE_HAS_EXCEPTIONS to CCFLAGS.  Not all platforms support
+          exception handling, of course, and that is noted in the
+          description of the "exceptions" make flag.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU,
+          platform_sunos5.6_sparc_sunc++_4.2.GNU:
+          removed -DACE_HAS_EXCEPTIONS, because it's now done in
+          wrapper_macros.GNU.
+
         * examples/Reactor/Misc/test_event_handler_t.cpp: renamed
           ACE_Sig_Handler to ACE_Test_Sig_Handler to avoid collision
           with ACE_Sig_Handler in ACE library.
