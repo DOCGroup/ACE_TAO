@@ -1,3 +1,11 @@
+Mon Jan 25 20:22:01 1999  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/CDR.{h,i,cpp}:
+        * ace/Basic_Types.h:
+        * ACE_Wrappers/tests/CDR_Test.cpp:
+          Better design of ACE CDR, compiles and runs on NT, g++
+          and CC.
+
 Mon Jan 25 09:35:42 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (handle_timed_complete): If connect times out, set
