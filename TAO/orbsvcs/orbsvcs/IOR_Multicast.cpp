@@ -21,8 +21,13 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
                                       const char *mcast_addr,
                                       TAO_Service_ID service_id)
 {
-  if (this->init (ior, port, mcast_addr, service_id) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("TAO_IOR_Multicast")));
+  if (this->init (ior,
+                  port,
+                  mcast_addr,
+                  service_id) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("TAO_IOR_Multicast")));
 }
 
 // destructor
@@ -46,14 +51,16 @@ TAO_IOR_Multicast::init (const char *ior,
 
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
   if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "subscribe"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "subscribe"),
+                      -1);
   return 0;
 }
 
 int
 TAO_IOR_Multicast::handle_timeout (const ACE_Time_Value &,
-                               const void *)
+                                   const void *)
 {
   return 0;
 }
@@ -67,18 +74,17 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
     CORBA::Short service_id;
   } mcast_info;
 
-
   ACE_INET_Addr remote_addr;
   ssize_t retcode =
     this->mcast_dgram_.recv (&mcast_info,
                              sizeof (mcast_info),
                              remote_addr);
-
   if (retcode == -1)
     return -1;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Received multicast.\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) Received multicast.\n"));
 
   // @@ validate data string received is from a valid client here
   // @@ Probably not needed
@@ -117,9 +123,8 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
         return -1;
     }
   else
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Multicast was not for us."));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) Multicast was not for us."));
 
   return 0;
 }
