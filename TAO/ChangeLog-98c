@@ -1,7 +1,12 @@
+Wed Jul 30 14:20:18 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/boa.{i,h,cpp}: Removed the #include of "tao/objtable.h" and
+	instead moved the methods that needed it from boa.i to boa.cpp
+
 Wed Jul 30 13:58:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/boa.h: Added #include of "tao/objtable.h" since it is needed
-	  in boa.i (which is included here when inlining is turned on)
+	in boa.i (which is included here when inlining is turned on)
 
 Wed Jul 30 10:05:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
