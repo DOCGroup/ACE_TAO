@@ -1,0 +1,28 @@
+module TAO_Trader_Test
+{
+  
+interface Remote_Output
+{
+};
+
+interface Plotter : Remote_Output
+{
+};
+
+interface Printer : Remote_Output
+{
+};
+
+interface File_System : Remote_Output
+{
+};
+
+interface PostScript_Printer : Remote_Output
+{
+};
+
+};
+
+
+
+
