@@ -52,6 +52,12 @@
 # define ACE_HAS_SOCKLEN_T
 # define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
+  // glibc defines both of these, used in OS_String.
+# if defined (_GNU_SOURCE)
+#   define ACE_HAS_STRNLEN
+#   define ACE_HAS_WCSNLEN
+# endif
+
   // To avoid the strangeness with Linux's ::select (), which modifies
   // its timeout argument, use ::poll () instead.
 # define ACE_HAS_POLL

@@ -129,6 +129,28 @@ public:
   /// Finds the length of a string (ACE_WCHAR_T version).
   static size_t strlen (const ACE_WCHAR_T *s);
 
+  /// Finds the length of a limited-length string (char version).
+  /**
+   * @param s       The character string to find the length of.
+   * @param maxlen  The maximum number of characters that will be
+   *                scanned for the terminating nul character.
+   *
+   * @return The length of @arg s, if the terminating nul character
+   *         is located, else @arg maxlen.
+   */
+  static size_t strnlen (const char *s, size_t maxlen);
+
+  /// Finds the length of a limited-length string (ACE_WCHAR_T version).
+  /**
+   * @param s       The character string to find the length of.
+   * @param maxlen  The maximum number of characters that will be
+   *                scanned for the terminating nul character.
+   *
+   * @return The length of @arg s, if the terminating nul character
+   *         is located, else @arg maxlen.
+   */
+  static size_t strnlen (const ACE_WCHAR_T *s, size_t maxlen);
+
   /// Appends part of a string to another string (char version).
   static char *strncat (char *s, const char *t, size_t len);
 

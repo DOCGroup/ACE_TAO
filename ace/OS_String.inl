@@ -262,6 +262,34 @@ ACE_OS_String::strlen (const ACE_WCHAR_T *s)
 # endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSLEN */
 }
 
+ACE_INLINE size_t
+ACE_OS_String::strnlen (const char *s, size_t maxlen)
+{
+#if defined (ACE_HAS_STRNLEN)
+  return ::strnlen (s, maxlen);
+#else /* ACE_HAS_STRNLEN */
+  size_t i;
+  for (i = 0; i < maxlen; ++i)
+    if (s[i] == '\0')
+      break;
+  return i;
+#endif /* ACE_HAS_STRNLEN */
+}
+
+ACE_INLINE size_t
+ACE_OS_String::strnlen (const ACE_WCHAR_T *s, size_t maxlen)
+{
+#if defined (ACE_HAS_WCSNLEN)
+  return wcsnlen (s, maxlen);
+#else /* ACE_HAS_WCSNLEN */
+  size_t i;
+  for (i = 0; i < maxlen; ++i)
+    if (s[i] == '\0')
+      break;
+  return i;
+#endif /* ACE_HAS_WCSNLEN */
+}
+
 ACE_INLINE char *
 ACE_OS_String::strncat (char *s, const char *t, size_t len)
 {
