@@ -391,6 +391,9 @@ IIOP_Object::IIOP_Object (char *repository_id,
     fwd_profile_ (0),
     refcount_ (1)
 {
+  this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
+                                ->client_factory ()
+                                  ->create_iiop_profile_lock ();  
 }
 
 // THREADING NOTE: Code below this point is of course thread-safe (at

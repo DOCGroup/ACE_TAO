@@ -39,6 +39,7 @@ IIOP_Object::~IIOP_Object (void)
 {
   assert (this->refcount_ == 0);
   delete this->fwd_profile_;
+  delete this->fwd_profile_lock_ptr_;
 }
 
 ACE_INLINE
@@ -47,6 +48,9 @@ IIOP_Object::IIOP_Object (char *repository_id)
     fwd_profile_ (0),
     refcount_ (0)
 {
+  this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
+                                ->client_factory ()
+                                  ->create_iiop_profile_lock ();  
 }
 
 ACE_INLINE
@@ -57,9 +61,10 @@ IIOP_Object::IIOP_Object (char *repository_id,
     fwd_profile_ (0),
     refcount_ (0)
 {
+  this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
+                                ->client_factory ()
+                                  ->create_iiop_profile_lock ();  
 }
-
-
 
 
 ACE_INLINE
@@ -73,7 +78,10 @@ ACE_INLINE
 IIOP::Profile *
 IIOP_Object::get_fwd_profile (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->fwd_profile_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
+                            guard, 
+                            *this->fwd_profile_lock_ptr_, 
+                            0));
   return this->get_fwd_profile_i ();
 }
 
@@ -82,7 +90,10 @@ ACE_INLINE
 IIOP::Profile *
 IIOP_Object::set_fwd_profile (IIOP::Profile *new_profile)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->fwd_profile_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, 
+                            guard, 
+                            *this->fwd_profile_lock_ptr_, 
+                            0));
   IIOP::Profile *old = this->fwd_profile_;
   if (new_profile != 0)
   {
@@ -91,13 +102,14 @@ IIOP_Object::set_fwd_profile (IIOP::Profile *new_profile)
                     IIOP::Profile(),
                     0);
     *this->fwd_profile_ = *new_profile;
+    // use the copy operator on IIOP_Profile
   }
   return old;
 }
 
 ACE_INLINE
-ACE_SYNCH_MUTEX &
+ACE_Lock &
 IIOP_Object::get_fwd_profile_lock (void)
 {
-  return fwd_profile_lock_;
+  return *this->fwd_profile_lock_ptr_;
 }
