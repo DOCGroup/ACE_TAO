@@ -1,3 +1,16 @@
+Wed May  3 09:49:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/Caching_Utility_T.cpp:
+	* ace/Map.cpp:
+	* ace/Pair.cpp:
+	* ace/Svc_Handler.cpp:
+	* ace/Win32_Asynch_IO.cpp:
+	* ace/Win32_Proactor.cpp:
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	  Removed inclusion of non-existent .i files from corresponding
+	  .cpp files and from the project files.
+
 Tue May  2 19:33:57 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* Updated all the dependencies.
