@@ -114,7 +114,8 @@ Cubit_Client::read_ior (char *filename)
                        filename),
                       -1);
   ACE_Read_Buffer ior_buffer (this->f_handle_);
-  this->cubit_factory_key_ = ior_buffer.read ();
+  this->cubit_factory_key_ =
+    ior_buffer.read ();
 
   if (this->cubit_factory_key_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -139,7 +140,8 @@ Cubit_Client::parse_args (void)
         TAO_debug_level++;
         break;
       case 'n':                 // loop count
-        this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+        this->loop_count_ =
+          (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.optarg);
@@ -766,7 +768,6 @@ Cubit_Client::run (int testing_collocation)
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_large_sequence<octet>", elapsed_time);
 
-  
   // MIXIN
   this->call_count_ = 0;
   this->error_count_ = 0;
@@ -783,18 +784,21 @@ Cubit_Client::run (int testing_collocation)
 
   if (testing_collocation)
     {
+      // @@ Nanbor, this code should be split into a separate method.
       TAO_ORB_Core_instance ()->using_collocation (CORBA::B_FALSE);
       // Make sure we call the following method "remotely" so
       // the right ORB could be used.
 
       TAO_TRY
         {
+          // @@ This code should be replaced with the
+          // TAO_Naming_Client helper class.
           CORBA::Object_var naming_obj =
             this->orb_->resolve_initial_references ("NameService");
 
           if (CORBA::is_nil (naming_obj.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Unable to resolve the Name Service.\n"),
+                               " (%P|%t) Unable to resolve the NameService.\n"),
                               -1);
 
           CosNaming::NamingContext_var naming_context =
@@ -804,14 +808,19 @@ Cubit_Client::run (int testing_collocation)
 
           CosNaming::Name cubit_shutdown_name (2);
           cubit_shutdown_name.length (2);
-          cubit_shutdown_name[0].id = CORBA::string_dup ("IDL_Cubit");
-          cubit_shutdown_name[1].id = CORBA::string_dup ("shutdown");
+          cubit_shutdown_name[0].id = 
+            CORBA::string_dup ("IDL_Cubit");
+          cubit_shutdown_name[1].id =
+            CORBA::string_dup ("shutdown");
+
           CORBA::Object_var shutdown_obj =
-            naming_context->resolve (cubit_shutdown_name,TAO_TRY_ENV);
+            naming_context->resolve (cubit_shutdown_name,
+                                     TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           Cubit_Shutdown_var shutdown =
-            Cubit_Shutdown::_narrow (shutdown_obj.in (),TAO_TRY_ENV);
+            Cubit_Shutdown::_narrow (shutdown_obj.in (),
+                                     TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (CORBA::is_nil (shutdown.in ()))
@@ -821,7 +830,8 @@ Cubit_Client::run (int testing_collocation)
           shutdown->shutdown (this->env_);
           TAO_CHECK_ENV;
 
-          dexc (this->env_, "server, please ACE_OS::exit");
+          dexc (this->env_,
+                "server, please ACE_OS::exit");
         }
       TAO_CATCHANY
         {
@@ -843,8 +853,7 @@ Cubit_Client::run (int testing_collocation)
 
 Cubit_Client::~Cubit_Client (void)
 {
-  // Free resources
-  // Close the ior files
+  // Free resources and close the IOR files.
   if (this->cubit_factory_ior_file_)
     ACE_OS::fclose (this->cubit_factory_ior_file_);
   if (this->f_handle_ != ACE_INVALID_HANDLE)
