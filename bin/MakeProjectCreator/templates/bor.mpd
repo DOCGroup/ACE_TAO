@@ -112,6 +112,9 @@ PATH := $(PATH);<%custom_type->libpath%>
 
 <%custom_type%>_<%forcount(custom_type->input_files)%>=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
 $(<%custom_type%>_<%forcount(custom_type->input_files)%>): <%custom_type->input_file%>
+<%if(flag_overrides(custom_type->input_file, gendir))%>
+	-mkdir <%flag_overrides(custom_type->input_file, gendir)%> 2> nul
+<%endif%>
 	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
 <%if(flag_overrides(custom_type->input_file, postcommand))%>
 <%foreach(custom_type->input_file->output_files)%>

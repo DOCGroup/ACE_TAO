@@ -185,12 +185,13 @@ project(iinset2): gperf_test {
   }
 
   GPERF_Files {
+    gendir = iout2_gen
     commandflags += -m -M -c -C -D -E -T -a -o -p
     idl.gperf
   }
 
   Source_Files {
-    idl.cpp
+    iout2_gen/idl.cpp
   }
 }
 

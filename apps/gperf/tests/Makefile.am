@@ -14,7 +14,6 @@ ACE_ROOT = $(top_srcdir)
 noinst_PROGRAMS =
 CLEANFILES =
 BUILT_SOURCES =
-
 ## Makefile.adainset.am 
 
 if !BUILD_USES_WCHAR
@@ -23,10 +22,14 @@ BUILT_SOURCES += \
   ada.cpp
 
 CLEANFILES += \
-  ada.cpp
+  ada.cpp \
+  ada-stamp
 
-ada.cpp: $(srcdir)/ada.gperf
-	../src/gperf -a -k1,4,$$ $(srcdir)/ada.gperf> $@
+ada.cpp: ada-stamp
+
+ada-stamp: $(srcdir)/ada.gperf
+	../src/gperf -a -k1,4,$$ $(srcdir)/ada.gperf > ada.cpp
+	@touch $@
 
 noinst_PROGRAMS += aout
 
@@ -51,10 +54,14 @@ BUILT_SOURCES += \
   c.cpp
 
 CLEANFILES += \
-  c.cpp
+  c.cpp \
+  c-stamp
 
-c.cpp: $(srcdir)/c.gperf
-	../src/gperf -a -p -c -l -S1 -o $(srcdir)/c.gperf> $@
+c.cpp: c-stamp
+
+c-stamp: $(srcdir)/c.gperf
+	../src/gperf -a -p -c -l -S1 -o $(srcdir)/c.gperf > c.cpp
+	@touch $@
 
 noinst_PROGRAMS += cout
 
@@ -79,10 +86,14 @@ BUILT_SOURCES += \
   cpp.cpp
 
 CLEANFILES += \
-  cpp.cpp
+  cpp.cpp \
+  cpp-stamp
 
-cpp.cpp: $(srcdir)/cpp.gperf
-	../src/gperf -a -D $(srcdir)/cpp.gperf> $@
+cpp.cpp: cpp-stamp
+
+cpp-stamp: $(srcdir)/cpp.gperf
+	../src/gperf -a -D $(srcdir)/cpp.gperf > cpp.cpp
+	@touch $@
 
 noinst_PROGRAMS += cppout
 
@@ -107,10 +118,14 @@ BUILT_SOURCES += \
   idl.cpp
 
 CLEANFILES += \
-  idl.cpp
+  idl.cpp \
+  idl-stamp
 
-idl.cpp: $(srcdir)/idl.gperf
-	../src/gperf -m -M -c -C -D -S1 -E -T -a -o -p $(srcdir)/idl.gperf> $@
+idl.cpp: idl-stamp
+
+idl-stamp: $(srcdir)/idl.gperf
+	../src/gperf -m -M -c -C -D -S1 -E -T -a -o -p $(srcdir)/idl.gperf > idl.cpp
+	@touch $@
 
 noinst_PROGRAMS += iout
 
@@ -132,13 +147,18 @@ endif !BUILD_USES_WCHAR
 if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
-  idl.cpp
+  iout2_gen/idl.cpp
 
 CLEANFILES += \
-  idl.cpp
+  iout2_gen/idl.cpp \
+  idl-stamp
 
-idl.cpp: $(srcdir)/idl.gperf
-	../src/gperf -m -M -c -C -D -E -T -a -o -p $(srcdir)/idl.gperf> $@
+iout2_gen/idl.cpp: idl-stamp
+
+idl-stamp: $(srcdir)/idl.gperf
+	mkdir -p iout2_gen
+	../src/gperf -m -M -c -C -D -E -T -a -o -p $(srcdir)/idl.gperf > iout2_gen/idl.cpp
+	@touch $@
 
 noinst_PROGRAMS += iout2
 
@@ -147,7 +167,7 @@ iout2_CPPFLAGS = \
   -I$(ACE_BUILDDIR)
 
 iout2_SOURCES = \
-  idl.cpp \
+  iout2_gen/idl.cpp \
   test.cpp
 
 iout2_LDADD = \
@@ -163,10 +183,14 @@ BUILT_SOURCES += \
   modula3.cpp
 
 CLEANFILES += \
-  modula3.cpp
+  modula3.cpp \
+  modula3-stamp
 
-modula3.cpp: $(srcdir)/modula3.gperf
-	../src/gperf -a -k1,2,$$ $(srcdir)/modula3.gperf> $@
+modula3.cpp: modula3-stamp
+
+modula3-stamp: $(srcdir)/modula3.gperf
+	../src/gperf -a -k1,2,$$ $(srcdir)/modula3.gperf > modula3.cpp
+	@touch $@
 
 noinst_PROGRAMS += m3out
 
@@ -191,10 +215,14 @@ BUILT_SOURCES += \
   pascal.cpp
 
 CLEANFILES += \
-  pascal.cpp
+  pascal.cpp \
+  pascal-stamp
 
-pascal.cpp: $(srcdir)/pascal.gperf
-	../src/gperf -a -o -S2 -p $(srcdir)/pascal.gperf> $@
+pascal.cpp: pascal-stamp
+
+pascal-stamp: $(srcdir)/pascal.gperf
+	../src/gperf -a -o -S2 -p $(srcdir)/pascal.gperf > pascal.cpp
+	@touch $@
 
 noinst_PROGRAMS += pout
 
@@ -219,10 +247,14 @@ BUILT_SOURCES += \
   adadefs.cpp
 
 CLEANFILES += \
-  adadefs.cpp
+  adadefs.cpp \
+  adadefs-stamp
 
-adadefs.cpp: $(srcdir)/adadefs.gperf
-	../src/gperf -a -p -D -k1,$$ -s 2 -o $(srcdir)/adadefs.gperf> $@
+adadefs.cpp: adadefs-stamp
+
+adadefs-stamp: $(srcdir)/adadefs.gperf
+	../src/gperf -a -p -D -k1,$$ -s 2 -o $(srcdir)/adadefs.gperf > adadefs.cpp
+	@touch $@
 
 noinst_PROGRAMS += preout
 
@@ -247,10 +279,14 @@ BUILT_SOURCES += \
   tao.cpp
 
 CLEANFILES += \
-  tao.cpp
+  tao.cpp \
+  tao-stamp
 
-tao.cpp: $(srcdir)/tao.gperf
-	../src/gperf -c -C -D -E -f 0 -a -o $(srcdir)/tao.gperf> $@
+tao.cpp: tao-stamp
+
+tao-stamp: $(srcdir)/tao.gperf
+	../src/gperf -c -C -D -E -f 0 -a -o $(srcdir)/tao.gperf > tao.cpp
+	@touch $@
 
 noinst_PROGRAMS += taoout
 
@@ -275,10 +311,14 @@ BUILT_SOURCES += \
   corba.cpp
 
 CLEANFILES += \
-  corba.cpp
+  corba.cpp \
+  corba-stamp
 
-corba.cpp: $(srcdir)/corba.gperf
-	../src/gperf -a -o $(srcdir)/corba.gperf> $@
+corba.cpp: corba-stamp
+
+corba-stamp: $(srcdir)/corba.gperf
+	../src/gperf -a -o $(srcdir)/corba.gperf > corba.cpp
+	@touch $@
 
 noinst_PROGRAMS += tout
 
