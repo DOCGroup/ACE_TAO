@@ -1,3 +1,23 @@
+Thu Jun 29 15:49:16 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.h (ACE_INET_Addr (const ACE_TCHAR [])):
+        * ace/DEV_Addr.h (ACE_DEV_Addr (const ACE_TCHAR *)):
+        * ace/Dirent.h (ACE_Dirent (const ACE_TCHAR *)):
+        * ace/FILE_Addr.h (ACE_FILE_Addr (const ACE_TCHAR *)):
+        * ace/Local_Tokens.h (ACE_Mutex_Token (const ACE_TCHAR *),
+          ACE_RW_Token (const ACE_THCAR *)):
+        * ace/MEM_Addr.h (ACE_MEM_Addr (const ACE_THCAR [])):
+        * ace/Parse_Node.h (ACE_Parse_Node (const ACE_TCHAR *),
+          ACE_Static_Function_Node (const ACE_TCHAR *)): Added ACE_EXPLICIT
+          to prevent unintended conversion of strings to these objects.
+          Thanks to Joseph Weihs <yossi@bandwiz.com> for this correction.
+
+        * ace/OS.h, config-all.h: Move setups for ACE_EXPLICIT and
+          ACE_MUTABLE macros from OS.h to config-all.h. ACE_EXPLICIT was
+          needed for the above (Dirent triggered the need to move it) and
+          ACE_MUTABLE seemed like the same sort of compiler setting thing to
+          be more properly in config-all.h.
+
 Wed Jun 28 19:35:23 2000 Jerry D. De Master <jdemaste@rite-solutions.com>
 
 	* netsvcs/lib/Client_Logging_Handler.cpp:
