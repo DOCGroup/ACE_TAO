@@ -1,3 +1,9 @@
+Fri May  9 16:21:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/SArgument.h:
+	* tao/SArgument_T.h: Removed these files from the main
+	  trunk. Shouldnt have been there in the first place.
+
 Fri May  9 16:19:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/corba.h: Actually doing what is supposed to be done by "Fri
