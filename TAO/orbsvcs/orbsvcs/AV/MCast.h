@@ -92,6 +92,10 @@ public:
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry);
+  virtual int open_i (ACE_Reactor *reactor,
+                      ACE_INET_Addr *&address,
+                      TAO_AV_UDP_MCast_Flow_Handler *&handler);
+
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
                             TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry);
@@ -102,6 +106,7 @@ protected:
   TAO_FlowSpec_Entry *entry_;
   TAO_Base_StreamEndPoint *endpoint_;
   TAO_AV_Core *av_core_;
+  TAO_AV_UDP_MCast_Flow_Handler *handler_;
 };
 
 class TAO_AV_UDP_MCast_Connector
@@ -116,6 +121,10 @@ public:
   virtual int connect (TAO_FlowSpec_Entry *entry,
                        TAO_AV_Transport *&transport);
 
+  int connect_i (ACE_Reactor *reactor,
+                 ACE_INET_Addr *&address,
+                 TAO_AV_UDP_MCast_Flow_Handler *&handler);
+
   virtual int close (void);
   virtual int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&udp_handler);
   virtual int activate_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *handler);
@@ -124,6 +133,7 @@ protected:
   TAO_Base_StreamEndPoint *endpoint_;
   TAO_AV_Core *av_core_;
   TAO_FlowSpec_Entry *entry_;
+  TAO_AV_UDP_MCast_Flow_Handler *handler_;
 };
 
 class TAO_AV_UDP_MCast_Flow_Handler
@@ -141,7 +151,7 @@ public:
 protected:
   ACE_INET_Addr peer_addr_;
   ACE_SOCK_Dgram_Mcast *dgram_mcast_;
-  
+
 };
 
 class TAO_AV_UDP_MCast_Protocol_Factory

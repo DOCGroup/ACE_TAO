@@ -40,15 +40,11 @@ TAO_AV_UDP_MCast_Acceptor::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&mca
 }
 
 int
-TAO_AV_UDP_MCast_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
-                                 TAO_AV_Core *av_core,
-                                 TAO_FlowSpec_Entry *entry)
+TAO_AV_UDP_MCast_Acceptor::open_i (ACE_Reactor *reactor,
+                                   ACE_INET_Addr *&mcast_addr,
+                                   TAO_AV_UDP_MCast_Flow_Handler *&handler)
+
 {
-  this->av_core_ = av_core;
-  this->endpoint_ = endpoint;
-  this->entry_ = entry;
-  ACE_INET_Addr *mcast_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->address ());
-  TAO_AV_UDP_MCast_Flow_Handler *handler;
   this->make_svc_handler (handler);
   int result = handler->get_mcast_socket ()->subscribe (*mcast_addr);
   if (result < 0)
@@ -60,14 +56,14 @@ TAO_AV_UDP_MCast_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
     ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
   // @@ This should also be policies.
   int bufsize = 80 * 1024;
-  if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET, 
-                                                          SO_RCVBUF, 
+  if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET,
+                                                          SO_RCVBUF,
                                                           (char *)&bufsize,
-                                                          sizeof(bufsize)) < 0) 
+                                                          sizeof(bufsize)) < 0)
     {
       bufsize = 32 * 1024;
-      if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET, 
-                                                              SO_RCVBUF, 
+      if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET,
+                                                              SO_RCVBUF,
                                                               (char *)&bufsize,
                                                               sizeof(bufsize)) < 0)
       perror("SO_RCVBUF");
@@ -76,13 +72,31 @@ TAO_AV_UDP_MCast_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   result = this->activate_svc_handler (handler);
   if (result < 0)
     return result;
-
-  entry->handler (handler);
   ACE_INET_Addr *local_addr = 0;
   ACE_NEW_RETURN (local_addr,
-                  ACE_INET_Addr (*mcast_addr),
+                  ACE_INET_Addr,
                   -1);
-  entry->set_local_addr (local_addr);
+  handler->get_mcast_socket ()->get_local_addr (*local_addr);
+  mcast_addr = local_addr;
+  return 0;
+}
+
+int
+TAO_AV_UDP_MCast_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
+                                 TAO_AV_Core *av_core,
+                                 TAO_FlowSpec_Entry *entry)
+{
+  this->av_core_ = av_core;
+  this->endpoint_ = endpoint;
+  this->entry_ = entry;
+
+  ACE_INET_Addr *mcast_addr = ACE_dynamic_cast (ACE_INET_Addr*,entry->address ());
+  this->open_i (av_core->reactor (),
+                mcast_addr,
+                this->handler_);
+
+  entry->handler (this->handler_);
+  entry->set_local_addr (mcast_addr);
   return 0;
 }
 
@@ -159,12 +173,10 @@ TAO_AV_UDP_MCast_Connector::open (TAO_Base_StreamEndPoint *endpoint,
 }
 
 int
-TAO_AV_UDP_MCast_Connector::connect (TAO_FlowSpec_Entry *entry,
-                                     TAO_AV_Transport *&transport)
+TAO_AV_UDP_MCast_Connector::connect_i (ACE_Reactor *reactor,
+                                       ACE_INET_Addr *&mcast_addr,
+                                       TAO_AV_UDP_MCast_Flow_Handler *&handler)
 {
-  this->entry_ = entry;
-  ACE_INET_Addr *mcast_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->address ());
-  TAO_AV_UDP_MCast_Flow_Handler *handler;
   this->make_svc_handler (handler);
   int result = handler->get_mcast_socket ()->subscribe (*mcast_addr);
   if (result < 0)
@@ -175,14 +187,14 @@ TAO_AV_UDP_MCast_Connector::connect (TAO_FlowSpec_Entry *entry,
                                             0) < 0)
     ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
   int bufsize = 80 * 1024;
-  if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET, 
-                                                          SO_RCVBUF, 
+  if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET,
+                                                          SO_RCVBUF,
                                                           (char *)&bufsize,
-                                                          sizeof(bufsize)) < 0) 
+                                                          sizeof(bufsize)) < 0)
     {
       bufsize = 32 * 1024;
-      if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET, 
-                                                              SO_RCVBUF, 
+      if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET,
+                                                              SO_RCVBUF,
                                                               (char *)&bufsize,
                                                               sizeof(bufsize)) < 0)
       perror("SO_RCVBUF");
@@ -191,13 +203,26 @@ TAO_AV_UDP_MCast_Connector::connect (TAO_FlowSpec_Entry *entry,
   result = this->activate_svc_handler (handler);
   if (result < 0)
     return result;
-  entry->handler (handler);
-  transport = handler->transport ();
   ACE_INET_Addr *local_addr = 0;
   ACE_NEW_RETURN (local_addr,
-                  ACE_INET_Addr (*mcast_addr),
+                  ACE_INET_Addr,
                   -1);
-  entry->set_local_addr (local_addr);
+  handler->get_mcast_socket ()->get_local_addr (*local_addr);
+  mcast_addr = local_addr;
+}
+
+int
+TAO_AV_UDP_MCast_Connector::connect (TAO_FlowSpec_Entry *entry,
+                                     TAO_AV_Transport *&transport)
+{
+  this->entry_ = entry;
+  ACE_INET_Addr *mcast_addr = ACE_dynamic_cast (ACE_INET_Addr *,entry->address ());
+  this->connect_i (this->av_core_->reactor (),
+                   mcast_addr,
+                   this->handler_);
+  entry->handler (this->handler_);
+  transport = this->handler_->transport ();
+  entry->set_local_addr (mcast_addr);
   return 0;
 }
 
@@ -259,7 +284,7 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
   return 0;
 }
 
-ACE_INLINE ACE_HANDLE
+ACE_HANDLE
 TAO_AV_UDP_MCast_Flow_Handler::get_handle (void) const
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
@@ -343,7 +368,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
             {
               n = this->handler_->get_mcast_socket ()->send ((const iovec *) iov,
                                                              iovcnt);
-              
+
               if (n < 1)
                 return n;
 

@@ -333,6 +333,17 @@ TAO_AV_Core::init_protocol_factories (void)
 
       this->protocol_factories_.insert (rtp_udp_item);
 
+      TAO_AV_Protocol_Factory *rtp_udp_mcast_protocol_factory = 0;
+      TAO_AV_Protocol_Item *rtp_udp_mcast_item = 0;
+
+      ACE_NEW_RETURN (rtp_udp_mcast_protocol_factory,
+                      TAO_AV_RTP_UDP_MCast_Protocol_Factory,
+                      -1);
+      ACE_NEW_RETURN (rtp_udp_mcast_item, TAO_AV_Protocol_Item ("RTP_UDP_MCast_Factory"), -1);
+      rtp_udp_mcast_item->factory (rtp_udp_mcast_protocol_factory);
+
+      this->protocol_factories_.insert (rtp_udp_mcast_item);
+
 
       if (TAO_debug_level > 0)
         {
@@ -854,7 +865,7 @@ TAO_AV_UDP_Transport::mtu (void)
 ACE_Addr*
 TAO_AV_UDP_Transport::get_peer_addr (void)
 {
-  return 0;
+  return &this->peer_addr_;
 }
 
 ssize_t
@@ -1176,14 +1187,13 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                              BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Acceptor::open: %s",
               buf));
-  TAO_AV_UDP_Flow_Handler *handler;
   int result = this->acceptor_.open (this,
                                      av_core->reactor (),
                                      *address,
-                                     handler);
+                                     this->handler_);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_Acceptor::open failed"),-1);
-  entry->handler (handler);
+  entry->handler (this->handler_);
   entry->set_local_addr (address);
   return 0;
 }
@@ -1201,11 +1211,10 @@ TAO_AV_UDP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   ACE_NEW_RETURN (address,
                   ACE_INET_Addr ("0"),
                   -1);
-  TAO_AV_UDP_Flow_Handler *handler;
   int result = this->acceptor_.open (this,
                                      av_core->reactor (),
                                      *address,
-                                     handler);
+                                     this->handler_);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_Acceptor::open failed"),-1);
   address->set (address->get_port_number (),
@@ -1213,7 +1222,7 @@ TAO_AV_UDP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   char buf[BUFSIZ];
   address->addr_to_string (buf,BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Acceptor::open_default: %s\n",buf));
-  entry->handler (handler);
+  entry->handler (this->handler_);
   entry->set_local_addr (address);
   return 0;
 }
@@ -1361,7 +1370,7 @@ TAO_AV_Dgram_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
 //------------------------------------------------------------
 
 TAO_AV_UDP_Flow_Handler::TAO_AV_UDP_Flow_Handler (TAO_AV_Callback *callback)
-                                                  
+
   :TAO_AV_Flow_Handler(callback)
 {
   ACE_NEW (this->transport_,
@@ -1490,8 +1499,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
   ACE_NEW_RETURN (local_addr,
                   ACE_INET_Addr ("0"),
                   -1);
-  TAO_AV_UDP_Flow_Handler *handler;
-  int result = this->connector_.connect (handler,
+  int result = this->connector_.connect (this->handler_,
                                          *remote_addr,
                                          *local_addr);
   if (result < 0)
@@ -1503,8 +1511,8 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
   local_addr->addr_to_string (buf,BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_CONNECTOR::connect:%s \n",buf));
   entry->set_local_addr (local_addr);
-  entry->handler (handler);
-  transport = handler->transport ();
+  entry->handler (this->handler_);
+  transport = this->handler_->transport ();
   return 0;
 }
 

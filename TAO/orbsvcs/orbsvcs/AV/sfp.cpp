@@ -316,15 +316,15 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
 {
   TAO_SFP_Fragment_Table_Entry *fragment_entry = 0;
   int result = -1;
-  
+
   ACE_DEBUG ((LM_DEBUG,"frag_number = %d, frag_size = %d,source_id  = %d sequnce_num = %d\n",
               fragment.frag_number,fragment.frag_sz,fragment.source_id,fragment.sequence_num));
-  
+
   ACE_Message_Block *data;
   ACE_NEW_RETURN (data,
                   ACE_Message_Block(fragment.frag_sz),
                   -1);
-  
+
       // Read the fragment.
   int n = transport->recv (data->wr_ptr (),fragment.frag_sz);
   if ((n == -1) || (n==0))
@@ -336,7 +336,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
   ACE_DEBUG ((LM_DEBUG,"length of %dth fragment is: %d\n",
               fragment.frag_number,
               data->length ()));
-  
+
   TAO_SFP_Fragment_Node *new_node;
   ACE_NEW_RETURN (new_node,
                   TAO_SFP_Fragment_Node,
@@ -373,7 +373,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
       fragment_entry->num_fragments_ = fragment.frag_number + 1;
     }
 
-  
+
   state.frame_block_ = check_all_fragments (fragment_entry);
   if (state.frame_block_ != 0)
     {
@@ -1170,7 +1170,7 @@ TAO_SFP_Object::TAO_SFP_Object (TAO_AV_Callback *callback,
   :TAO_AV_Protocol_Object (callback,transport),
    source_id_ (10),
    credit_ (20)
-   
+
 {
 }
 
@@ -1198,7 +1198,7 @@ TAO_SFP_Object::end_stream (void)
 
 int
 TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
-                            ACE_UINT32 /*timestamp*/)
+                            TAO_AV_frame_info *frame_info)
 {
   TAO_OutputCDR out_stream;
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP_Object::send_frame\n"));
