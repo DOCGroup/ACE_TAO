@@ -11,16 +11,15 @@ IIOP::Profile::Profile (void)
 ACE_INLINE
 IIOP::Profile::~Profile (void)
 {
-  ACE_OS::free (host);
-  //  ACE_OS::free (object_key.buffer);
-  delete [] object_key.buffer;
+  ACE_OS::free (this->host);
+  delete [] this->object_key.buffer;
 }
 
 ACE_INLINE void
 IIOP::Profile::set_object_addr (void)
 {
-  if (host)
-    object_addr_.set (port, host);
+  if (this->host)
+    object_addr_.set (this->port, this->host);
 }
 
 ACE_INLINE ACE_INET_Addr &
@@ -52,7 +51,8 @@ IIOP_Object::IIOP_Object (char *repository_id,
     base (this),
     refcount_ (1),
     fwd_profile_ (0)
-{}
+{
+}
 
 ACE_INLINE
 IIOP::Profile *
