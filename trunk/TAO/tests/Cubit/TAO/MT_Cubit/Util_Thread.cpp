@@ -27,9 +27,12 @@ Util_Thread::svc (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Threads have bound, "
-              "utilization test started\n"));
+              "utilization test STARTED\n"));
 
   this->run_computations ();
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) utilization test ENDED\n"));
 
   return 0;
 }
@@ -65,6 +68,14 @@ Util_Thread::run_computations (void)
 {
   while (this->done_ == 0)
     {
+      // bound the number of computations, since we can potentially
+      // block the machine if this thread never leaves the loop. 
+      if (this->number_of_computations_ > (ts_->loop_count_ * 50)) // magic number
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "\t(%t) utilization test breaking loop so machine won't block.\n"));
+	  break;
+	}
       this->computation ();
       this->number_of_computations_ ++;
       ACE_OS::thr_yield (); // Shouldn't need this.  And I'm not sure
