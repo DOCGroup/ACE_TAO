@@ -149,15 +149,14 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   *os << "TAO_CHECK_ENV;" << be_nl;
   *os << "CORBA::release (obj);" << be_nl;
   *os << "return 1;" << be_uidt_nl;
-  *os << "}" << be_nl;
-  *os << "return 0; // error" << be_uidt_nl;
+  *os << "}" << be_uidt_nl;
   *os << "}" << be_nl
       << "TAO_CATCHANY" << be_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
       << "TAO_ENDTRY;" << be_nl
-      << "ACE_NOTREACHED (return 0);" << be_uidt_nl;
+      << "return 0; // error" << be_uidt_nl;
   *os << "}\n\n";
 
   node->cli_stub_cdr_op_gen (1);
