@@ -57,7 +57,7 @@ protected:
     (const ACE_Asynch_Write_Stream::Result &result);
 };
 
-typedef ACE_Unmanaged_Singleton<AIO_Output_Handler, ACE_Null_Mutex> 
+typedef ACE_Unmanaged_Singleton<AIO_Output_Handler, ACE_Null_Mutex>
         OUTPUT_HANDLER;
 
 
