@@ -9,7 +9,7 @@ Sat Aug 14 13:07:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Sat Aug 14 14:48:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/templates/gnu.mpd:
-	  
+
 	  Add /usr/lib as a path for library check. If the location of the
 	  library is not specified by the application, the compiler,
 	  linker and loader knows where to look in for *nix based
