@@ -1,4 +1,7 @@
-// $Id$
+// file      : CIDLC/DescriptorGenerator.hpp
+// author    : Jeff Parsons <j.parsons@vanderbilt.edu>
+// cvs-id    : $Id$
+
 #ifndef DESCRIPTOR_GENERATOR_HPP
 #define DESCRIPTOR_GENERATOR_HPP
 

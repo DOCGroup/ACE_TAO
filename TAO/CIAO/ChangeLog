@@ -1,3 +1,37 @@
+Sun Oct 12 20:44:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/Collectors.hpp:
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/DescriptorGenerator.hpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.hpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantGenerator.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.hpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.hpp:
+
+	      Changed top of files to match the 
+	      title/author/cvs id  format for all other
+	      CCF and CIDLC files.
+
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+
+	      New files, adding support for all basic IDL
+	      types, and factoring out the typename emitter
+	      classes for operation return types and parameters
+	      into a separate translation unit, to eliminate
+	      the duplication in ServantHeaderGenerator.cpp and 
+	      ServantSourceGenerator.cpp.
+
+        * CIDLC/cidlc.mpc:
+        * CIDLC/CIDLC.vcproj:
+
+	      Updated with the new files above.
+
 Sun Oct 12 18:36:16 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * performance-tests/Benchmark/Benchmark.mpc:

@@ -145,6 +145,9 @@
 			<File
 				RelativePath=".\ServantSourceGenerator.cpp">
 			</File>
+			<File
+				RelativePath=".\TypeNameEmitter.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -173,6 +176,9 @@
 			</File>
 			<File
 				RelativePath=".\ServantSourceGenerator.hpp">
+			</File>
+			<File
+				RelativePath=".\TypeNameEmitter.hpp">
 			</File>
 		</Filter>
 	</Files>
