@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Misc
+ *    JACE.Misc
  *
  * = FILENAME
  *    GetOpt.java
@@ -9,7 +9,7 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Misc;
+package JACE.Misc;
 
 import java.io.*;
 import java.util.Hashtable;

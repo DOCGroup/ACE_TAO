@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Connection
+ *    JACE.Connection
  *
  * = FILENAME
  *    CreationStrategy.java
@@ -9,7 +9,7 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Connection;
+package JACE.Connection;
 
 /**
  * <hr>

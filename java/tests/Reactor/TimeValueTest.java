@@ -11,8 +11,8 @@
  *************************************************/
 package tests.Reactor;
 
-import ACE.OS.*;
-import ACE.ASX.*;
+import JACE.OS.*;
+import JACE.ASX.*;
 
 public class TimeValueTest
 {

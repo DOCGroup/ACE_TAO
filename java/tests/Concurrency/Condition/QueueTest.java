@@ -7,7 +7,7 @@
 
 package tests.Concurrency.Condition;
 
-import ACE.ASX.TimeValue;
+import JACE.ASX.TimeValue;
 
 public class QueueTest
 {

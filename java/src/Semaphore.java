@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Concurrency
+ *    JACE.Concurrency
  *
  * = FILENAME
  *    Semaphore.java
@@ -9,12 +9,12 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.Concurrency;
+package JACE.Concurrency;
 
 import java.util.*;
-import ACE.ASX.*;
+import JACE.ASX.*;
 
-class TimedWaitSAdapter extends ACE.ASX.TimedWait
+class TimedWaitSAdapter extends JACE.ASX.TimedWait
 {
   TimedWaitSAdapter (Object obj)
   {
@@ -83,7 +83,7 @@ public class Semaphore
    *@exception InterruptedException exception during wait
    */
   public synchronized void acquire (TimeValue tv)
-      throws ACE.ASX.TimeoutException, InterruptedException 
+      throws JACE.ASX.TimeoutException, InterruptedException 
     {
       this.monitor_.timedWait (tv);
       this.monitor_.decrement ();

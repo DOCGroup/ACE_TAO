@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.Concurrency
+ *    JACE.Concurrency
  *
  * = FILENAME
  *    RWMutex.java
@@ -10,9 +10,9 @@
  *
  *************************************************/
 
-package ACE.Concurrency;
+package JACE.Concurrency;
 
-import ACE.OS.*;
+import JACE.OS.*;
 
 /*******************************************************************************
 * <HR>

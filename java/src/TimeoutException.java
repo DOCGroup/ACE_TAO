@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.ASX
+ *    JACE.ASX
  *
  * = FILENAME
  *    TimeoutException.java
@@ -9,7 +9,7 @@
  *@author Prashant Jain and Doug Schmidt
  *
  *************************************************/
-package ACE.ASX;
+package JACE.ASX;
 
 public class TimeoutException extends Exception
 { 

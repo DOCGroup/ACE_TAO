@@ -12,8 +12,8 @@
 // ============================================================================
 package tests.Misc;
 
-import ACE.OS.*;
-import ACE.Misc.*;
+import JACE.OS.*;
+import JACE.Misc.*;
 
 public class ParseArgsTest
 {

@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.ASX
+ *    JACE.ASX
  *
  * = FILENAME
  *    MessageType.java
@@ -9,7 +9,7 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.ASX;
+package JACE.ASX;
 
 /**
  * <hr>

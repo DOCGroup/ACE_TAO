@@ -1,7 +1,7 @@
 /*************************************************
  *
  * = PACKAGE
- *    ACE.ASX
+ *    JACE.ASX
  *
  * = FILENAME
  *    StreamHead.java
@@ -9,9 +9,9 @@
  *@author Prashant Jain
  *
  *************************************************/
-package ACE.ASX;
+package JACE.ASX;
 
-import ACE.OS.*;
+import JACE.OS.*;
 
 /**
  * <hr>

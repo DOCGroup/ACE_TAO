@@ -14,8 +14,8 @@ package tests.Connection;
 
 import java.io.*;
 import java.net.*;
-import ACE.OS.*;
-import ACE.Connection.*;
+import JACE.OS.*;
+import JACE.Connection.*;
 
 public class ServerHandler extends SvcHandler
 {

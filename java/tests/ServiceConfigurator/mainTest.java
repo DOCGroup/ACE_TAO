@@ -11,8 +11,8 @@
  *************************************************/
 package tests.ServiceConfigurator;
 
-import ACE.ServiceConfigurator.*;
-import ACE.OS.*;
+import JACE.ServiceConfigurator.*;
+import JACE.OS.*;
 import java.io.*;
 
 public class mainTest
@@ -41,7 +41,7 @@ public class mainTest
       } 
     catch (ClassNotFoundException e)
       {
-	ACE.ERROR (e);
+	ACE.ERROR (e + "foo");
       }
     catch (IllegalAccessException e)
       {
