@@ -1,5 +1,8 @@
 $Id$
 
+Use - for things to do, * for urgent things, and + for things that
+have been done.
+
 Things to do
 ------------
 
@@ -11,7 +14,7 @@ Things to do
     "Video_Server.cpp", line 880: Warning: para hides Video_Server::para.
     "Video_Server.cpp", line 906: Warning: para hides Video_Server::para.
 
-- Seg fault wile exiting
++ Seg fault wile exiting
   Destructor of reactor crashes the server
   -- I think I've fixed this! Naga, can you confirm that it doesnt crash
      anymore ?
@@ -30,7 +33,8 @@ Things to do
 - Change handle_input to handle_connection in
   Mpeg_Svc_Handler
 
-- Video_Sig_Handler is in Mpeg_Server -- needs to be moved to Video_Server
++ Video_Sig_Handler is in Mpeg_Server -- needs to be moved to Video_Server
+  -- done
 
 - Split up VIDEO_FAST into two commands - VIDEO_FAST_{FORWARD,BACKWARD}
 
