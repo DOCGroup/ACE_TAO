@@ -29,8 +29,6 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "portableserver_export.h"
-
 #include "tao/PortableInterceptorC.h"
 #include "tao/Interceptor_List.h"
 
@@ -49,7 +47,7 @@ namespace TAO
    * A convenient helper class to invoke registered server request
    * interceptor(s) in TAO_IDL generated code.
    */
-  class TAO_PortableServer_Export ServerRequestInterceptor_Adapter
+  class ServerRequestInterceptor_Adapter
   {
   public:
 
