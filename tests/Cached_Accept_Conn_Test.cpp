@@ -113,10 +113,6 @@ Server_Svc_Handler::open (void *)
                 this,
                 this->peer ().get_handle ()));
 
-  int result = ACE_Reactor::instance ()->end_event_loop ();
-  ACE_ASSERT (result != 1);
-  ACE_UNUSED_ARG (result);
-
   return this->close ();
 }
 
@@ -261,6 +257,10 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDLER *svc_handler)
 {
+  // Stop the event loop.
+  int result = ACE_Reactor::instance ()->end_event_loop ();
+  ACE_ASSERT (result != 1);
+
   // Note: The base class method isnt called since it closes the
   // svc_handler on error which we want to avoid as we are trying to
   // accept after purging.
@@ -272,12 +272,12 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   // associations.
   int reset_new_handle = this->reactor_->uses_event_associations ();
 
-  int result = this->acceptor_.accept (svc_handler->peer (), // stream
-                                       0, // remote address
-                                       0, // timeout
-                                       1, // restart
-                                       reset_new_handle  // reset new handler
-                                       );
+  result = this->acceptor_.accept (svc_handler->peer (), // stream
+                                   0, // remote address
+                                   0, // timeout
+                                   1, // restart
+                                   reset_new_handle  // reset new handler
+                                   );
   if (result == 0)
     return result;
 
@@ -285,19 +285,11 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   // limit was exhausted, then purge the connection cache of some
   // entries.
   result = this->out_of_sockets_handler ();
-  if (result == 0)
-    {
-      return this->acceptor_.accept (svc_handler->peer (), // stream
-                                     0, // remote address
-                                     0, // timeout
-                                     1, // restart
-                                     reset_new_handle  // reset new handler
-                                     );
-    }
+  ACE_ASSERT (result == 0);
 
   // Close down handler to avoid memory leaks.
   svc_handler->close (0);
-  return result;
+  return -1;
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
