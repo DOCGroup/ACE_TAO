@@ -102,12 +102,14 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
 #if !defined(ACE_WIN32)
 	this->size_ = 0;
 
-	for (int i = (max - 1) / ACE_Handle_Set::WORDSIZE; i >= 0; i--)
-	this->size_ += count_bits (this->mask_.fds_bits[i]);
+	for (int i = (max - 1) / ACE_Handle_Set::WORDSIZE; 
+	     i >= 0; 
+	     i--)
+	  this->size_ += count_bits (this->mask_.fds_bits[i]);
 
 	this->set_max (max);
 #else
-	ACE_UNUSED_ARG(max);
+	ACE_UNUSED_ARG (max);
 #endif /* !ACE_WIN32 */
 }
 

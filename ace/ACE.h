@@ -43,13 +43,14 @@ public:
 		       size_t len, 
 		       int flags);
   // Receive up to <len> bytes into <buf> from <handle> (uses the
-  // <recv> call).
+  // <ACE_OS::recv> call).
 
   static ssize_t recv (ACE_HANDLE handle, 
 		       void *buf, 
 		       size_t len);
   // Receive up to <len> bytes into <buf> from <handle> (uses the
-  // <read> system call on UNIX and the <recv> call on Win32).
+  // <ACE_OS::read> system call on UNIX and the <ACE_OS::recv> call on
+  // Win32).
 
   static ssize_t recv (ACE_HANDLE handle, 
 		       void *buf, 
@@ -57,26 +58,30 @@ public:
 		       int flags,
 		       const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to receive up to <len> bytes
-  // into <buf> from <handle> (uses the <recv> call).  If <recv> times
-  // out a -1 is returned with <errno == ETIME>.  If it succeeds the
-  // number of bytes received is returned.
+  // into <buf> from <handle> (uses the <ACE_OS::recv> call).  The
+  // <ACE_Time_Value> indicates how long to blocking trying to
+  // receive.  If <timeout> == 0, the caller will block until action
+  // is possible, else will wait until the relative time specified in
+  // *<timeout> elapses).  If <recv> times out a -1 is returned with
+  // <errno == ETIME>.  If it succeeds the number of bytes received is
+  // returned.
 
   // = Network I/O functions that recv and send exactly n bytes.
   static ssize_t recv_n (ACE_HANDLE handle, 
 			 void *buf, 
 			 size_t len, 
 			 int flags);
-  // Receive <len> bytes into <buf> from <handle> (uses the <recv>
-  // call).  If <handle> is set to non-blocking mode this call will
-  // poll until all <len> bytes are received.
+  // Receive <len> bytes into <buf> from <handle> (uses the
+  // <ACE_OS::recv> call).  If <handle> is set to non-blocking mode
+  // this call will poll until all <len> bytes are received.
 
   static ssize_t recv_n (ACE_HANDLE handle, 
 			 void *buf, 
 			 size_t len);
-  // Receive <len> bytes into <buf> from <handle> (uses the <read>
-  // system call on UNIX and the <recv> call on Win32).  If <handle>
-  // is set to non-blocking mode this call will poll until all <len>
-  // bytes are received.
+  // Receive <len> bytes into <buf> from <handle> (uses the
+  // <ACE_OS::read> system call on UNIX and the <ACE_OS::recv> call on
+  // Win32).  If <handle> is set to non-blocking mode this call will
+  // poll until all <len> bytes are received.
 
   static ssize_t recv_n (ACE_HANDLE handle, 
 			 void *buf, 
@@ -84,49 +89,71 @@ public:
 			 int flags,
 			 const ACE_Time_Value *timeout);
   // Try to recv exactly <len> bytes into <buf> from <handle> (uses
-  // the <recv> call).  If <recv> blocks for longer than <timeout> the
-  // number of bytes actually read is returned with <errno == ETIME>.
-  // If a timeout does not occur, <recv_n> return <len> (i.e., the
-  // number of bytes requested to be read).
+  // the <ACE_OS::recv> call).  The <ACE_Time_Value> indicates how
+  // long to blocking trying to receive.  If <timeout> == 0, the
+  // caller will block until action is possible, else will wait until
+  // the relative time specified in *<timeout> elapses).  If <recv>
+  // blocks for longer than <timeout> the number of bytes actually
+  // read is returned with <errno == ETIME>.  If a timeout does not
+  // occur, <recv_n> return <len> (i.e., the number of bytes requested
+  // to be read).
 
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
 		       size_t len, 
 		       int flags);
-  // Send up to <len> bytes into <buf> from <handle> (uses the <send>
-  // call).
+  // Send up to <len> bytes into <buf> from <handle> (uses the
+  // <ACE_OS::send> call).
 
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
 		       size_t len);
-  // Send up to <len> bytes into <buf> from <handle> (uses the <write>
-  // system call on UNIX and the <send> call on Win32).
+  // Send up to <len> bytes into <buf> from <handle> (uses the
+  // <ACE_OS::write> system call on UNIX and the <ACE_OS::send> call
+  // on Win32).
 
   static ssize_t send_n (ACE_HANDLE handle, 
 			 const void *buf, 
 			 size_t len, 
 			 int flags);
-  // Send <len> bytes from <buf> to <handle> (uses the <send> system
-  // call).  If <handle> is set to non-blocking mode this call will
-  // poll until all <len> bytes are sent.
+  // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::send>
+  // system call).  If <handle> is set to non-blocking mode this call
+  // will poll until all <len> bytes are sent.
 
   static ssize_t send_n (ACE_HANDLE handle, 
 			 const void *buf, 
 			 size_t len);
-  // Send <len> bytes from <buf> to <handle> (uses the <write> system
-  // call on UNIX and the <recv> call on Win32).  If <handle> is set
-  // to non-blocking mode this call will poll until all <len> bytes
-  // are sent.
+  // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
+  // system call on UNIX and the <ACE_OS::recv> call on Win32).  If
+  // <handle> is set to non-blocking mode this call will poll until
+  // all <len> bytes are sent.
+
+  static ssize_t send (ACE_HANDLE handle, 
+		       const void *buf, 
+		       size_t len, 
+		       const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to send up to <len> bytes
+  // into <buf> from <handle> (uses the <ACE_OS::write> system call on
+  // UNIX and the <ACE_OS::send> call on Win32).  The <ACE_Time_Value>
+  // indicates how long to blocking trying to send.  If <timeout>
+  // == 0, the caller will block until action is possible, else will
+  // wait until the relative time specified in *<timeout> elapses).
+  // If <send> times out a -1 is returned with <errno == ETIME>.  If
+  // it succeeds the number of bytes sent is returned.
 
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
 		       size_t len, 
 		       int flags,
 		       const ACE_Time_Value *timeout);
-  // Wait to to <timeout> amount of time to send up to <len> bytes
-  // into <buf> from <handle> (uses the <send> call).  If <send> times
-  // out a -1 is returned with <errno == ETIME>.  If it succeeds the
-  // number of bytes sent is returned.  
+  // Wait up to <timeout> amount of time to send up to <len> bytes
+  // into <buf> from <handle> (uses the <ACE_OS::send> call).  The
+  // <ACE_Time_Value> indicates how long to blocking trying to
+  // send.  If <timeout> == 0, the caller will block until action
+  // is possible, else will wait until the relative time specified in
+  // *<timeout> elapses).  If <send> times out a -1 is returned with
+  // <errno == ETIME>.  If it succeeds the number of bytes sent is
+  // returned.
 
   static ssize_t send_n (ACE_HANDLE handle, 
 			 const void *buf, 
@@ -134,30 +161,39 @@ public:
 			 int flags,
 			 const ACE_Time_Value *timeout);
   // Try to send exactly <len> bytes into <buf> from <handle> (uses
-  // the <send> call).  If <send> blocks for longer than <timeout> the
-  // number of bytes actually sent is returned with <errno == ETIME>.
-  // If a timeout does not occur, <send_n> return <len> (i.e., the
-  // number of bytes requested to be sent).
+  // the <ACE_OS::send> call).  The <ACE_Time_Value> indicates how
+  // long to blocking trying to send.  If <timeout> == 0, the caller
+  // will block until action is possible, else will wait until the
+  // relative time specified in *<timeout> elapses).  If <send> blocks
+  // for longer than <timeout> the number of bytes actually sent is
+  // returned with <errno == ETIME>.  If a timeout does not occur,
+  // <send_n> return <len> (i.e., the number of bytes requested to be
+  // sent).
 
-  // = File system I/O functions that encapsulate differences between UNIX and Win32 and also send and recv exactly n bytes.
+  // = File system I/O functions.
+
+  // These encapsulate differences between UNIX and Win32 and also
+  // send and recv exactly n bytes.
+
   static ssize_t read_n (ACE_HANDLE handle, 
 			 void *buf, 
 			 size_t len);
-  // Receive <len> bytes into <buf> from <handle> (uses the <read>
-  // system call on UNIX and the <ReadFile> call on Win32).  If
-  // <handle> is set to non-blocking mode this call will poll until
-  // all <len> bytes are received.
+  // Receive <len> bytes into <buf> from <handle> (uses the
+  // <ACE_OS::read> call, which uses the <read> system call on UNIX
+  // and the <ReadFile> call on Win32).  If <handle> is set to
+  // non-blocking mode this call will poll until all <len> bytes are
+  // received.
 
   static ssize_t write_n (ACE_HANDLE handle, 
 			  const void *buf, 
 			  size_t len);
-  // Send <len> bytes from <buf> to <handle> (uses the <write> system
-  // call on UNIX and the <WriteFile> call on Win32).  If <handle> is
-  // set to non-blocking mode this call will poll until all <len>
-  // bytes are sent.
+  // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
+  // calls, which is uses the <write> system call on UNIX and the
+  // <WriteFile> call on Win32).  If <handle> is set to non-blocking
+  // mode this call will poll until all <len> bytes are sent.
 
-  // = Functions that perform useful behavior related to establishing
-  // socket connections active and passively.
+  // = Socket connection establishment calls.
+
   static int bind_port (ACE_HANDLE handle);
   // Bind a new unused port to <handle>.
 
@@ -205,14 +241,7 @@ public:
   // this process.  This maximum may be extended using
   // <ACE::set_handle_limit>.
 
-  // = Miscelleous functions.
-  static size_t	round_to_pagesize (off_t length);
-  // Rounds the request to a multiple of the page size.
-
-  static int format_hexdump (char *buffer, int size, char *obuf, int obuf_sz);
-  // Format buffer into printable format.  This is useful for
-  // debugging.
-
+  // = String functions
   static char *strenvdup (const char *str);
   // Return a dynamically allocated duplicate of <str>, substituting
   // the environment variable if <str[0] == '$'>.  Note that the
@@ -250,7 +279,8 @@ public:
   static int daemonize (const char pathname[] = "/");
   // Become a daemon process.
 
-  // = Methods for searching and opening shared libraries using relative naming. 
+  // = Methods for searching and opening shared libraries.
+
   static int ldfind (const char *filename, 
 		     char *pathname, 
 		     size_t maxlen);
@@ -267,12 +297,7 @@ public:
   // returns a pointer to the file, else it returns a NULL
   // pointer. <type> specifies how the file should be open.
 
-  static u_long hash_pjw (const char *str);
-  // Computes the hash value of <str> using the ``Hash PJW'' routine...
-
-  static int map_errno (int error);
-  // Map troublesome win32 errno values to values that standard C
-  // strerr function understands.  Thank you Microsoft.
+  // = Shield us from Win32's inability to select on STDIN.
 
   static void *read_adapter (void *event_handler);
   // Used to read from non-socket ACE_HANDLEs in our own thread to
@@ -291,6 +316,21 @@ public:
   // Abstracts away from the differences between Win32 and ACE with
   // respect to reading from ACE_STDIN (which is non-select()'able on
   // Win32.
+
+  // = Miscelleous functions.
+  static size_t	round_to_pagesize (off_t length);
+  // Rounds the request to a multiple of the page size.
+
+  static int format_hexdump (char *buffer, int size, char *obuf, int obuf_sz);
+  // Format buffer into printable format.  This is useful for
+  // debugging.
+
+  static u_long hash_pjw (const char *str);
+  // Computes the hash value of <str> using the ``Hash PJW'' routine...
+
+  static int map_errno (int error);
+  // Map troublesome win32 errno values to values that standard C
+  // strerr function understands.  Thank you Microsoft.
 
 private:
   ACE (void);

@@ -36,7 +36,87 @@ typedef ACE_Token ACE_REACTOREX_MUTEX;
 // Forward decl.
 class ACE_ReactorEx;
  
+class ACE_Export ACE_ReactorEx_Handle_Set
+  // = TITLE 
+  //      Track handles we are interested for various events.
+{
+public:
+};
+
+class ACE_Export ACE_ReactorEx_Handler_Repository
+  // = TITLE
+  //     Used to map <ACE_HANDLE>s onto the appropriate
+  //     <ACE_Event_Handler> *. 
+  // 
+{
+public:
+  ACE_ReactorEx_Handler_Repository (ACE_ReactorEx &);
+  // Default "do-nothing" constructor.
+
+  int open (size_t size);
+  // Initialize the repository of the approriate <size>.
+  
+  int close (void);
+  // Close down the handler repository.
+
+  // = Search structure operations.
+
+  ACE_Event_Handler *find (size_t index);
+  // Return the <ACE_Event_Handler *> associated with <index>.  Return
+  // 0 if <index> is invalid.
+
+  int bind (ACE_HANDLE, ACE_Event_Handler *);
+  // Bind the <ACE_Event_Handler *> to the <ACE_HANDLE>.
+
+  int unbind (ACE_HANDLE, ACE_Reactor_Mask mask);
+  // Remove the binding of <ACE_HANDLE> in accordance with the <mask>.
+
+  int unbind_all (void);
+  // Remove all bindings of <ACE_HANDLE, ACE_Event_Handler> tuples.
+
+  // = Sanity checking.
+
+  // Check the <handle> to make sure it's a valid ACE_HANDLE that
+  // within the range of legal handles (i.e., >= 0 && < max_size_).
+  int invalid_handle (ACE_HANDLE handle);
+
+  // Check the <handle> to make sure it's a valid ACE_HANDLE that
+  // within the range of currently registered handles (i.e., >= 0 && <
+  // max_handlep1_).
+  int handle_in_range (ACE_HANDLE handle);
+
+  // = Accessors.
+  size_t max_handlep1 (void);
+  // Maximum ACE_HANDLE value, plus 1.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+private:
+  ACE_ReactorEx &reactorEx_;
+  // Reference to our <ReactorEx>.
+  
+  size_t max_size_;
+  // Maximum number of handles.
+
+  size_t max_handlep1_;
+  // The highest currently active handle, plus 1.  Since this ranges
+  // between 0 and <max_size_> it also is a count of the number of
+  // active handles.
+
+  ACE_HANDLE *handles_;
+  // Array of <ACE_HANDLEs> passed to <WaitForMultipleObjects>.
+
+  ACE_Event_Handler **event_handlers_;
+  // Array of <ACE_Event_Handler> pointers that store the event
+  // handlers to dispatch when the corresponding <handles_[i]> entry
+  // becomes signaled.
+};
+
 class ACE_Export ACE_ReactorEx_Token : public ACE_REACTOREX_MUTEX
+  // = TITLE
+  //     Used as a synchronization mechanism to coordinate concurrent
+  //     access to a Reactor object.
 {
 public:
   ACE_ReactorEx_Token (ACE_ReactorEx &r);
@@ -58,7 +138,6 @@ private:
 #endif /* ACE_MT_SAFE */
 
 #if defined (ACE_WIN32)
-// ************************************************************
 
 class ACE_Export ACE_ReactorEx_Notify : public ACE_Event_Handler
   // = TITLE
@@ -78,11 +157,16 @@ class ACE_Export ACE_ReactorEx_Notify : public ACE_Event_Handler
 {
 public:
   int notify (ACE_Event_Handler *eh = 0,
-	      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK);
+	      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
+	      ACE_Time_Value *timeout = 0);
   // Special trick to unblock WaitForMultipleObjects() when updates
   // occur in somewhere other than the main <ACE_ReactorEx> thread.
   // All we do is enqueue <eh> and <mask> onto the <ACE_Message_Queue>
   // and wakeup the ReactorEx by signaling its <ACE_Event> handle.
+  // The <ACE_Time_Value> indicates how long to blocking trying to
+  // notify the <Reactor>.  If <timeout> == 0, the caller will block
+  // until action is possible, else will wait until the relative time
+  // specified in *<timeout> elapses).
 
 private:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
@@ -118,14 +202,31 @@ class ACE_Export ACE_ReactorEx
 public:
   enum 
   {
-    MAX_SIZE = MAXIMUM_WAIT_OBJECTS,
+    DEFAULT_SIZE = MAXIMUM_WAIT_OBJECTS,
     // Default size of the ReactorEx's handle table.
   };
 
   // = Initialization and termination methods.
 
-  ACE_ReactorEx (ACE_Timer_Queue *tq = 0);
-  // Initialize the new ACE_ReactorEx with the default size.
+  ACE_ReactorEx (ACE_Sig_Handler * = 0
+		 ACE_Timer_Queue * = 0);
+  // Initialize <ACE_ReactorEx> with the default size.
+
+  ACE_ReactorEx (size_t size, 
+		 int unused = 0,
+		 ACE_Sig_Handler * = 0
+		 ACE_Timer_Queue * = 0);
+  // Initialize <ACE_ReactorEx> with size <size>.
+
+  virtual int open (size_t size = DEFAULT_SIZE, 
+		    int restart = 0, 
+		    ACE_Sig_Handler * = 0,
+		    ACE_Timer_Queue * = 0);
+  // Initialize <ACE_ReactorEx> with size <size>.
+
+
+  virtual int close (void);
+  // Close down the ReactorEx and release all of its resources.
 
   virtual ~ACE_ReactorEx (void);
   // Close down the ReactorEx and release all of its resources.
@@ -136,16 +237,17 @@ public:
 			     int wait_all = 0,
 			     ACE_Event_Handler *wait_all_callback = 0,
 			     int alertable = 0);
-  // This event loop driver blocks for up to <max_wait_time> for I/O
-  // or signaled events occur.  Note that <max_wait_time> can be 0, in
-  // which case this method blocks until I/O events or signaled events
-  // occur.  Returns 0 if timed out, 1 if an event occurred, and -1 if
-  // an error occured.  <max_wait_time> is decremented to reflect how
-  // much time this call took.  For instance, if a time value of 3
-  // seconds is passed to handle_events and an event occurs after 2
-  // seconds, <max_wait_time> will equal 1 second.  This can be used
-  // if an application wishes to handle events for some fixed amount
-  // of time.
+  // This event loop driver blocks for up to <max_wait_time> before
+  // returning.  It will return earlier if timer events, I/O events,
+  // or signal events occur.  Note that <max_wait_time> can be 0, in
+  // which case this method blocks indefinitely until events occur.
+  //
+  // <max_wait_time> is decremented to reflect how much time this call
+  // took.  For instance, if a time value of 3 seconds is passed to
+  // handle_events and an event occurs after 2 seconds,
+  // <max_wait_time> will equal 1 second.  This can be used if an
+  // application wishes to handle events for some fixed amount of
+  // time.
   // 
   // If <wait_all> is TRUE, then handle_events will only dispatch the
   // handlers if *all* handles become active.  If a timeout occurs,
@@ -159,15 +261,21 @@ public:
   // If <alertable> is true, then <WaitForMultipleObjectsEx> is used
   // as the demultiplexing call, otherwise <WaitForMultipleObjects> is
   // used.
+  // 
+  // Returns the total number of <ACE_Event_Handler>s that were
+  // dispatched, 0 if the <max_wait_time> elapsed without dispatching
+  // any handlers, or -1 if an error occurs.
 
   virtual int handle_events (ACE_Time_Value &max_wait_time,
 			     int wait_all = 0,
 			     ACE_Event_Handler *wait_all_callback = 0,
 			     int alertable = 0);
-  // This method is just like the one above, except the <max_wait_time>
-  // value is a reference and must therefore never be NULL.
+  // This method is just like the one above, except the
+  // <max_wait_time> value is a reference and can therefore never be
+  // NULL.
 
   // = Register and remove Handlers. 
+
   virtual int register_handler (ACE_Event_Handler *eh, 
 				ACE_HANDLE handle = ACE_INVALID_HANDLE);
   // Register an Event_Handler <eh>.  If handle == ACE_INVALID_HANDLE
@@ -181,12 +289,8 @@ public:
   // I/O handle.  If <mask> == ACE_Event_Handler::DONT_CALL then the
   // <handle_close> method of the <eh> is not invoked.
 
-  int notify (ACE_Event_Handler * = 0, 
-	      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK);
-  // Wakeup <ACE_ReactorEx> if currently blocked in
-  // <WaitForMultipleObjects>.
-
   // = Timer management. 
+
   virtual int schedule_timer (ACE_Event_Handler *eh,
 			      const void *arg,
 			      const ACE_Time_Value &delta,
@@ -214,6 +318,17 @@ public:
   // argument passed in when the Event_Handler was registered.  This
   // makes it possible to free up the memory and avoid memory leaks.
 
+  // = Notification methods.
+
+  int notify (ACE_Event_Handler * = 0, 
+	      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
+	      ACE_Time_Value *);
+  // Wakeup <ACE_ReactorEx> if it is currently blocked in
+  // <WaitForMultipleObjects>.  The <ACE_Time_Value> indicates how
+  // long to blocking trying to notify the <Reactor>.  If <timeout> ==
+  // 0, the caller will block until action is possible, else will wait
+  // until the relative time specified in *<timeout> elapses).
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -221,16 +336,22 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  virtual int remove_handler (int index,
-			      ACE_Reactor_Mask mask);
-  // Helper function for removing handlers.
+  virtual int wait_for_multiple_events (ACE_ReactorEx_Handle_Set &wait_set,
+					ACE_Time_Value *max_wait_time,
+					int wait_all,
+					int alertable);
+  // Wait for timer and I/O events to occur.
 
-  int dispatch (size_t index);
+  virtual dispatch (int number_of_active_handles, 
+		    ACE_ReactorEx_Handle_Set &dispatch_set);
+  // Dispatches the timers and I/O handlers.
+
+  int dispatch_handles (size_t index);
   // Dispatches any active handles from handles_[<index>] to
   // handles_[active_handles_] using <WaitForMultipleObjects> to poll
   // through our handle set looking for active handles.
 
-  int dispatch (ACE_Event_Handler *wait_all_callback);
+  int dispatch_callbacks (ACE_Event_Handler *wait_all_callback);
   // This is called when the user called handle_events() with the
   // <wait_all> parameter enabled.  In this case, all the handlers are
   // now signaled.  If <wait_all_callback> is NULL then we dispatch
@@ -244,6 +365,7 @@ protected:
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
 
+private:
   ACE_Timer_Queue *timer_queue_;
   // Defined as a pointer to allow overriding by derived classes...
 
@@ -251,28 +373,18 @@ protected:
   // Keeps track of whether we should delete the timer queue (if we
   // didn't create it, then we don't delete it).
 
-  ACE_HANDLE handles_[MAX_SIZE];
-  // Array of handles passed to WaitForMultipleObjects.
-
-  ACE_Event_Handler *event_handlers_[MAX_SIZE];
-  // Array of Event_Handler pointers that store the handlers to
-  // dispatch when the corresponding handles_ entry becomes signaled.
-
-  size_t active_handles_;
-  // Number of handles that are currently active (ranges between 0 and
-  // MAX_SIZE).
-
   ACE_ReactorEx_Token token_;
   // Synchronization token for the MT_SAFE ACE_Reactor.
 
-private:
+  ACE_ReactorEx_Handler_Repository handler_rep_;
+  // Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
+
+  ACE_ReactorEx_Notify notify_handler_;
+  // Called when notify is called.
 
   // Deny access since member-wise won't work...
   ACE_ReactorEx (const ACE_ReactorEx &);
   ACE_ReactorEx &operator = (const ACE_ReactorEx &);
-
-  ACE_ReactorEx_Notify notify_handler_;
-  // Called when notify is called.
 };
 
 #else /* NOT win32 */

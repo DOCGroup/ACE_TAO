@@ -1035,10 +1035,71 @@ ACE::send (ACE_HANDLE handle,
 	case 0: // Timer expired.
 	  errno = ETIME;
 	  /* FALLTHRU */
-	default: // if we got here directly select() must have returned -1
+	default: // if we got here directly select() must have returned -1.
 	  return -1;
 	}
     }
+}
+
+ssize_t
+ACE::send (ACE_HANDLE handle, 
+	   const void *buf, 
+	   size_t n, 
+	   const ACE_Time_Value *tv)
+{
+  if (tv == 0)
+    // Use the blocking send.
+    return ACE::send (handle, buf, n);
+  else
+#if defined (ACE_WIN32)
+    // Use the socket timed send();
+    return ACE::send (handle, buf, n, 0, tv);
+#else
+    {
+      // On timed writes we always go into select(); only if the
+      // descriptor is available for writing within the specified
+      // amount of time do we put it in non-blocking mode
+
+      ACE_Handle_Set handle_set;
+      handle_set.set_bit (handle);
+
+      switch (ACE_OS::select (int (handle) + 1, 0, handle_set, 0, tv))
+	{
+	case 1: // Ok to write now
+	  // We need to record whether we are already *in* nonblocking
+	  // mode, so that we can correctly reset the state when we're
+	  // done.
+	  {
+	    int val = ACE::get_flags (handle);
+
+	    if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+	      // Set the descriptor into non-blocking mode if it's not
+	      // already in it.
+	      ACE::set_flags (handle, ACE_NONBLOCK);
+
+	    ssize_t bytes_written = ACE_OS::write (handle, (const char *) buf, n);
+
+	    if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+	      {
+		// We need to stash errno here because ACE::clr_flags() may
+		// reset it.
+		int error = errno;
+
+		// Only disable ACE_NONBLOCK if we weren't in non-blocking mode
+		// originally.
+		ACE::clr_flags (handle, ACE_NONBLOCK);
+		errno = error;
+	      }
+	    return bytes_written;
+	  }
+	case 0: // Timer expired.
+	  errno = ETIME;
+	  /* FALLTHRU */
+	default: // if we got here directly select() must have returned -1.
+	  return -1;
+	}
+    }
+#endif /* ACE_WIN32 */
 }
 
 ssize_t

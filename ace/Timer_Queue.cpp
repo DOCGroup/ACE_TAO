@@ -253,21 +253,24 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
   ACE_TRACE ("ACE_Timer_Queue::expire");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  for (;;)
-    {
-      if (this->is_empty () || this->earliest_time () > cur_time)
-	break; // There aren't any more timers eligible to expire.
+  int number_of_timers_expired = 0;
 
+  // Keep looping while there are timers remaining and the earliest
+  // timer is <= the <cur_time> passed in to the method.
+
+  for (; 
+       this->is_empty () == 0 && this->earliest_time () <= cur_time;
+       number_of_timers_expired++)
+    {
       ACE_Timer_Node *expired = this->head_;
       ACE_Event_Handler *handler = 
 	(ACE_Event_Handler *) expired->handler_;
       const void *arg = expired->arg_;
       int reclaim = 1;
-      int result;
 
       this->head_ = this->head_->next_;
 
-      // Check whether this is an interval timer.
+      // Check if this is an interval timer.
       if (expired->interval_ > ACE_Time_Value::zero)
 	{
 	  // Make sure that we skip past values that have already
@@ -283,15 +286,14 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 	}
 
       // Perform the callback.
-      result = handler->handle_timeout (cur_time, arg);
-
-      if (result == -1)
+      if (handler->handle_timeout (cur_time, arg) == -1)
 	this->cancel (handler);
 
       if (reclaim)
 	delete expired;
     }
-  return 0;
+
+  return number_of_timers_expired;
 }
 
 // Determines the maximum amount of time that the Reactor must wait

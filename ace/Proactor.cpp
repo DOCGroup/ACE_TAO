@@ -122,7 +122,7 @@ ACE_Overlapped_IO::dispatch (u_long bytes_transferred)
     }
 }
 
-// When we port this to use Posix async I/O, these calls will be
+// When we port this to use POSIX async I/O, these calls will be
 // replace will generic ACE_OS calls.
 
 int

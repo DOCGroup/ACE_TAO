@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "ace/Service_Config.h"
@@ -153,7 +152,11 @@ Thread_Handler::svc (void)
 	// Block for delay_.secs () / 2, then notify the Reactor.
 	ACE_OS::sleep (Thread_Handler::delay_.sec () / 2);
 
-      this->notify ();
+      // Only wait up to 10 milliseconds to notify the Reactor.
+      ACE_Time_Value timeout (0, 10 * 1000);
+
+      if (this->notify (0, ACE_Event_Handler::EXCEPT_MASK, &timeout) == -1)
+	ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", "notify()"));
     }
   return 0;
 }

@@ -154,8 +154,8 @@ public:
 protected:
 
   ACE_Timer_Queue *timer_queue_;
-  // Maintains the list of pending timers. Defined as a pointer to
-  // allow overriding by derived classes...
+  // Maintains the list of timers. Defined as a pointer to allow
+  // overriding by derived classes...
 
   int delete_timer_queue_;
   // Keeps track of whether we should delete the timer queue (if we
