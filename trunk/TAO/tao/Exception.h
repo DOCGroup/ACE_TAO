@@ -164,6 +164,9 @@ public:
 
   virtual int _is_a (const char *type_id) const;
   // helper for the _narrow operation
+
+  virtual void _raise (void);
+
 private:
   CORBA::ULong minor_;
   // minor code

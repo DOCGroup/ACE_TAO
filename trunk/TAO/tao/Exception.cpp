@@ -197,6 +197,13 @@ CORBA_SystemException::_narrow (CORBA_Exception* exception)
   return 0;
 }
 
+void
+CORBA_SystemException::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
+
 // ****************************************************************
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (void)

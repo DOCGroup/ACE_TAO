@@ -1,3 +1,19 @@
+Tue Sep  1 16:29:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Exception.h: 
+	* tao/Exception.cpp: 
+	  CORBA_SystemException shoul be a concrete class.  Thanks to Tom
+	  Dobridge <dobridge@persimmon.com> for pointing this out.
+
+	* tao/default_server.h: 
+	* tao/default_server.cpp: 
+	  Added new default creation strategy for Server side connection
+	  handlers. This reduces the number of calls to
+	  ORB_Core_instance() a notch.
+
+	* tao/Makefile: 
+	  Updated dependencies.
+
 Tue Sep  1 09:37:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/catior/catior.cpp (main): Fixed a minor printing bug

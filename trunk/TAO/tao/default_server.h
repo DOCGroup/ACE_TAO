@@ -20,6 +20,16 @@
 #include "tao/corba.h"
 #include "tao/ORB_Strategies_T.h"
 
+class TAO_Default_Server_Creation_Strategy : public TAO_Server_Strategy_Factory::CREATION_STRATEGY
+{
+public:
+  TAO_Default_Server_Creation_Strategy (ACE_Thread_Manager * = 0);
+  // ctor
+
+  // = Factory method.
+  virtual int make_svc_handler (TAO_Server_Connection_Handler *&sh);
+};
+
 class TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
 {
   // = TITLE
@@ -35,6 +45,9 @@ public:
   // Call <open> for our strategies.
 
   // = Server-side ORB Strategy Factory Methods.
+  virtual CREATION_STRATEGY *creation_strategy (void);
+  // Return concrete creation strategy.
+
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
 
   virtual TAO_Object_Table_Impl *create_object_table (void);
@@ -140,12 +153,18 @@ private:
   // The threaded strategy used for passively establishing
   // connections.
 
+  CREATION_STRATEGY *creation_strategy_;
+  // concrete creation strategy.
+
   CONCURRENCY_STRATEGY *concurrency_strategy_;
   // concrete concurrency strategy.
 
+  TAO_Default_Server_Creation_Strategy default_creation_strategy_;
+  // The default creation strategy for the server side connection
+  // handlers
+
 #if 0
   // Someday we'll need these!
-  CREATION_STRATEGY *creation_strategy_;
   ACCEPT_STRATEGY *accept_strategy_;
   SCHEDULING_STRATEGY *scheduling_strategy_;
 #endif /* 0 */
