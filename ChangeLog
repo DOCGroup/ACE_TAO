@@ -1,11 +1,46 @@
+Thu Nov 11 15:56:00 2004  Gary Maxey    <gary.maxey@hp.com>
+
+        * ace/OS_NS_time.h
+          Add typedef for ACE_hrtime_t for Tandem platform.
+          Add conversion defines needed by High_Res_Timer.cpp.
+
+        * ace/High_Res_Timer.cpp
+          Use macro definition for time difference calculation in
+          ACE_High_Res_Timer::calibrate.
+
+        * ace/OS_NS_sys_select.inl
+
+          Use spt_select instead of select for Tandem pthreads.
+
+        * ace/os_include/os_pthread.h
+        * ace/OS_NS_Thread.cpp
+        * ace/Sched_Params.cpp
+
+          Add clause to existing ifdef for Tandem pthreads process
+          priority definitions.
+
+        * ace/CDR_Base.h
+
+          Use LongLong typedef specialized for Tandem platform.
+
+        * ace/Basic_Types.cpp
+
+          For Tandem platform, altered initialization of flags
+          variable in "operator<<" method.
+
+        * ace/ACE_Export.h
+
+          Added variation for "#define ACE_NAMESPACE_STORAGE_CLASS"
+          for Tandem platform compiler.
+
 Thu Nov 11 17:27:24 2004  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
-	* ace/Logging_Strategy.cpp: 
-	Fixed handle_timeout conditional test to check the max_size against the size of the
-	file and not the value of a pointer.
-	Fix init to handle re-init correctly. When wipeout_logfile_ is true, than
-	close the file and reopen it truncated, when wipeout_logfile_ is false, don't reopen the
-	file unless its not open already.
+      * ace/Logging_Strategy.cpp: 
+        Fixed handle_timeout conditional test to check the max_size against the size of the
+        file and not the value of a pointer.
+        Fix init to handle re-init correctly. When wipeout_logfile_ is true, than
+        close the file and reopen it truncated, when wipeout_logfile_ is false, don't reopen the
+        file unless its not open already.
 
 Thu Nov 11 08:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -121,6 +156,7 @@ Tue Nov  9 09:07:26 2004  Olli Savia  <ops@iki.fi>
         * examples/Web_Crawler/Command_Processor.cpp:
           Added explicit static template member instantiations.
 
+>>>>>>> 4.7882
 Mon Nov  8 13:30:47 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/OS_Test.cpp:

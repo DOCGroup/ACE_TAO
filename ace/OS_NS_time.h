@@ -201,6 +201,8 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #   endif // ACE_LACKS_LONGLONG_T
 # elif defined (ACE_PSOS)
 typedef ACE_UINT64 ACE_hrtime_t;
+# elif defined (_TNS_R_TARGET)
+typedef long long ACE_hrtime_t;
 # else /* !ACE_WIN32 && !ACE_PSOS */
 #   if defined (ACE_HAS_HI_RES_TIMER) &&  !defined (ACE_LACKS_LONGLONG_T)
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
@@ -210,6 +212,14 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #   endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
 # endif /* ACE_WIN32 */
 
+
+# if defined (ACE_HRTIME_T_IS_BASIC_TYPE)
+#   define ACE_HRTIME_CONVERSION(VAL) (VAL)
+#   define ACE_HRTIME_TO_U64(VAL) ACE_U_LongLong(VAL)
+# else
+#   define ACE_HRTIME_CONVERSION(VAL) ACE_U64_TO_U32(VAL)
+#   define ACE_HRTIME_TO_U64(VAL) (VAL)
+# endif
 
 
 namespace ACE_OS {

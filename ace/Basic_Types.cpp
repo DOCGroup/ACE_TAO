@@ -114,7 +114,11 @@ ACE_U_LongLong::as_string (ACE_TCHAR *output,
 ostream&
 operator<< (ostream& os, const ACE_U_LongLong& ll)
 {
+#ifdef __TANDEM && (__CPLUSPLUS_VERSION >= 3)
+  unsigned long flags = os.flags();
+#else
   unsigned long flags = os.setf(0);
+#endif
   char buffer[32];
 
   if ((flags & ios::oct) != 0)
