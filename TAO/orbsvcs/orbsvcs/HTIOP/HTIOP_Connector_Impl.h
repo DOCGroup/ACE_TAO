@@ -106,8 +106,8 @@ namespace TAO
       TAO_ORB_Core *orb_core_;
 
     };
-  };
-};
+  }
+}
 
 #if defined(__ACE_INLINE__)
 #include "HTIOP_Connector_Impl.i"

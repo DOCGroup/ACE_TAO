@@ -125,8 +125,8 @@ namespace TAO
 
     private:
     };
-  };
-};
+  }
+}
 #if defined (__ACE_INLINE__)
 #include "HTIOP_Connection_Handler.i"
 #endif /* __ACE_INLINE__ */

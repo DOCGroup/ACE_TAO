@@ -222,8 +222,8 @@ namespace TAO
       /// if -1.
       int inside_;
     };
-  };
-};
+  }
+}
 
 #if defined(__ACE_INLINE__)
 #include "HTIOP_Acceptor.i"
