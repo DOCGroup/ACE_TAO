@@ -268,7 +268,7 @@ Oid& Oid::operator+=( const char *a)
   return *this;
 }
 
-//=============[ int operator == oid,oid ]=================================
+//=============[ bool operator == oid,oid ]=================================
 // equivlence operator overloaded
 bool operator==( const Oid &lhs, const Oid &rhs)
 {
@@ -281,14 +281,14 @@ bool operator==( const Oid &lhs, const Oid &rhs)
     return false;
 }
 
-//==============[ operator!=( Oid &x,Oid &y) ]=============================
+//==============[ bool operator!=( Oid &x,Oid &y) ]=======================
 //not equivlence operator overloaded
 bool operator!=( const Oid &lhs,const Oid &rhs)
 {
   return (!(lhs == rhs));
 }
 
-//==============[ operator<( Oid &x,Oid &y) ]=============================
+//==============[ bool operator<( Oid &x,Oid &y) ]========================
 // less than < overloaded
 bool operator<( const Oid &lhs,const Oid &rhs)
 {
@@ -310,7 +310,7 @@ bool operator<( const Oid &lhs,const Oid &rhs)
   }
 }
 
-//==============[ operator<=( Oid &x,Oid &y) ]=============================
+//==============[ bool operator<=( Oid &x,Oid &y) ]=======================
 // less than <= overloaded
 bool operator<=( const Oid &x,const Oid &y)
 {
@@ -320,7 +320,7 @@ bool operator<=( const Oid &x,const Oid &y)
     return false;
 }
 
-//==============[ operator>( Oid &x,Oid &y) ]=============================
+//==============[ bool operator>( Oid &x,Oid &y) ]========================
 // greater than > overloaded
 bool operator>( const Oid &x,const Oid &y)
 {
@@ -331,7 +331,7 @@ bool operator>( const Oid &x,const Oid &y)
     return false;
 }
 
-//==============[ operator>=( Oid &x,Oid &y) ]=============================
+//==============[ bool operator>=( Oid &x,Oid &y) ]=======================
 // greater than >= overloaded
 bool operator>=( const Oid &x,const Oid &y)
 {
