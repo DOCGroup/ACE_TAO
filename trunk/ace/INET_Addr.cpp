@@ -40,9 +40,6 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
                       ACE_OS::strlen (this->get_host_addr ()))
     + ACE_OS::strlen ("65536") // Assume the max port number.
     + sizeof (':')
-#if defined ACE_HAS_IPV6
-    + ACE_OS::strlen ("[]")
-#endif
     + sizeof ('\0'); // For trailing '\0'.
 
   if (size < total_len)
@@ -50,11 +47,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   else
     {
       ACE_OS::sprintf (s,
-#if defined ACE_HAS_IPV6
-                       ACE_LIB_TEXT ("[%s]:%d"),
-#else
                        ACE_LIB_TEXT ("%s:%d"),
-#endif
                        ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
                                                ? this->get_host_name ()
                                                : this->get_host_addr ()),
