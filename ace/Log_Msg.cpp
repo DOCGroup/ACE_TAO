@@ -92,18 +92,6 @@ private:
 // deleted.
 int ACE_Log_Msg::instance_count_ = 0;
 
-void
-ACE_Log_Msg::close (void)
-{
-#if !defined (VXWORKS)
-  // Please note that this will be called by a statement that is
-  // harded coded into the ACE_Object_Manager's shutdown sequence,
-  // in its destructor.
-
-  ACE_Log_Msg_Manager::close ();
-#endif /* ! VXWORKS */
-}
-
 ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
 
 ACE_Thread_Mutex *
@@ -302,7 +290,6 @@ ACE_Log_Msg::instance (void)
 	// exit to delete the memory.
 	if (ACE_OS::thr_setspecific (key_, (void *) tss_log_msg) != 0)
 	  return 0; // Major problems, this should *never* happen!
-	ACE_Object_Manager::at_exit(tss_log_msg, &delete_log_msg, NULL);
       }
     }
 
@@ -334,6 +321,18 @@ int ACE_Log_Msg::msg_off_ = 0;
 
 // Call after a fork to resynchronize the PID and PROGRAM_NAME
 // variables.
+
+void
+ACE_Log_Msg::close (void)
+{
+#if !defined (VXWORKS)
+  // Please note that this will be called by a statement that is
+  // harded coded into the ACE_Object_Manager's shutdown sequence,
+  // in its destructor.
+
+  ACE_Log_Msg_Manager::close ();
+#endif /* ! VXWORKS */
+}
 
 void
 ACE_Log_Msg::sync (const char *prog_name)
