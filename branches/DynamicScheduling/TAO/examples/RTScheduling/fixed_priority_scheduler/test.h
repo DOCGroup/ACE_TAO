@@ -30,6 +30,7 @@ class DT_Test
   
   RTScheduling::Current_ptr current (void); 
 
+  CORBA::ORB_ptr orb (void);
  private:
   /// = Policies
   long thr_sched_policy_;
@@ -43,7 +44,7 @@ class DT_Test
   Fixed_Priority_Scheduler* scheduler_;
 };
 
-typedef ACE_Singleton <DT_Test, ACE_Null_Mutex> DT_TEST;
+typedef ACE_Singleton <DT_Test, ACE_Thread_Mutex> DT_TEST;
 
 #include "ace/post.h"
 #endif /*TEST_H*/

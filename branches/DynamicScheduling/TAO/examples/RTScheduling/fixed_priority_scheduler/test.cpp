@@ -22,20 +22,22 @@ DT_Test::check_supported_priorities (void)
   this->thr_sched_policy_ = orb_->orb_core ()->orb_params ()->sched_policy ();
   this->thr_scope_policy_ = orb_->orb_core ()->orb_params ()->scope_policy ();
 
-  if (thr_sched_policy_ == THR_SCHED_FIFO)
+  if (thr_sched_policy_ == THR_SCHED_RR)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_FIFO\n"));
-
-      sched_policy_ = ACE_SCHED_FIFO;
-    }
-  else if (thr_sched_policy_ == THR_SCHED_RR)
-    {
-      if (TAO_debug_level > 0)
+      //if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
 
       sched_policy_ = ACE_SCHED_RR;
     }
+  else 
+  if (thr_sched_policy_ == THR_SCHED_FIFO)
+    {
+      // if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_FIFO\n"));
+
+      sched_policy_ = ACE_SCHED_FIFO;
+    }
+  
   else
     {
       if (TAO_debug_level > 0)
@@ -126,7 +128,8 @@ DT_Test::run (int argc, char* argv []
   dt_creator_->create_distributable_threads (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-  this->orb_->run ();
+  orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -144,7 +147,13 @@ DT_Test::scheduler (void)
 RTScheduling::Current_ptr 
 DT_Test::current (void)
 {
-  return current_.retn ();
+  return current_.in ();
+}
+
+CORBA::ORB_ptr
+DT_Test::orb (void)
+{
+  return orb_.in ();
 }
 
 int
@@ -152,7 +161,7 @@ main (int argc, char* argv [])
 {
   ACE_TRY_NEW_ENV
     {
-      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_DT_Test);
+      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_DT_Creator);
       
       DT_TEST::instance ()->run (argc, argv
 								  ACE_ENV_ARG_PARAMETER);
