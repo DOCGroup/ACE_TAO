@@ -380,8 +380,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
               else
                 return 0;
                 // Shouldn't do this here because of errors with the wchar ver
-                // This is because ACE_ERROR_RETURN converts the __FILE__ to 
-                // wchar before printing out.  The compiler will complain 
+                // This is because ACE_ERROR_RETURN converts the __FILE__ to
+                // wchar before printing out.  The compiler will complain
                 // about this since a destructor would present in a SEH block
                 //ACE_ERROR_RETURN ((LM_ERROR,
                 //                   ACE_TEXT ("(%P|%t) %p\n"),
@@ -621,13 +621,16 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::avail_chunks (size_t size) const
   size_t count = 0;
   // Avoid dividing by 0...
   size = size == 0 ? 1 : size;
+  MALLOC_HEADER *currp = this->cb_ptr_->freep_;
 
-  for (MALLOC_HEADER *currp = this->cb_ptr_->freep_->next_block_;
-       currp != this->cb_ptr_->freep_;
-       currp = currp->next_block_)
-    // Calculate how many will fit in this block.
-    if (currp->size_ * sizeof (MALLOC_HEADER) >= size)
-      count += currp->size_ * sizeof (MALLOC_HEADER) / size;
+  // Calculate how many will fit in this block.
+  do {
+    size_t avail_size = currp->size_ - 1;
+    if (avail_size * sizeof (MALLOC_HEADER) >= size)
+      count += avail_size * sizeof (MALLOC_HEADER) / size;
+    currp = currp->next_block_;
+  }
+  while (currp != this->cb_ptr_->freep_);
 
   return count;
 }
