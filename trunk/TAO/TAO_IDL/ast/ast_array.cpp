@@ -149,7 +149,7 @@ AST_Array::dump(ostream &o)
 /*
  * Data accessors
  */
-const unsigned long 
+unsigned long 
 AST_Array::n_dims()
 {
   return pd_n_dims;

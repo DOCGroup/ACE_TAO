@@ -35,7 +35,7 @@ class TAO_Export CORBA_NamedValue
   // mode, and some ownership rules for "top level" memory.
 public:
   TAO_CONST CORBA::String _FAR name (void) 
-    { return (const CORBA::String) _name; }
+    { return (CORBA::String) _name; }
 
   CORBA::Any_ptr	_FAR value (void) { return &_any; }
   CORBA::Flags flags (void) const { return _flags; }

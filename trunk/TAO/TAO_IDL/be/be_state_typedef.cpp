@@ -314,7 +314,7 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, tdef, temp);
       } // end of case
-      break;
+      //break;  unreachable statement!
     } // end of switch
 
   return 0;

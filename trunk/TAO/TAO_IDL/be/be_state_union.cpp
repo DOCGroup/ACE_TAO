@@ -86,7 +86,7 @@ be_state_union_disctypedefn_ch::gen_code (be_type *bt, be_decl *d, be_type *type
         temp = t->primitive_base_type ();
         return this->gen_code (t, d, temp);
       }
-      break;
+      //break;  unreachable statement!
     } // end of switch
   return 0;
 }
@@ -306,7 +306,7 @@ be_state_union_public_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, ub, temp);
       }
-      break;
+      //break;  unreachable statement!
     } // end of switch
 
   // enclosing union is variable if the member is variable
@@ -734,7 +734,7 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, ub, temp);
       }
-      break;
+      //break;  unreachable statement!
     } // end of switch
 
   return 0;
@@ -849,7 +849,7 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, ub, temp);
       }
-      break;
+      //break;  unreachable statement!!
     } // end of switch
   return 0;
 }

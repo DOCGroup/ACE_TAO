@@ -119,7 +119,7 @@ AST_Attribute::dump(ostream &o)
  * Data accessors
  */
 
-const idl_bool
+idl_bool
 AST_Attribute::readonly()
 {
   return pd_readonly;

@@ -140,7 +140,7 @@ public:
   virtual AST_Decl 		*call_add();
 
   // Data Accessors
-  const	AST_Decl::NodeType scope_node_type()
+  AST_Decl::NodeType scope_node_type()
   {
     return pd_scope_node_type;
   }

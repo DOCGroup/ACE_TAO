@@ -86,7 +86,7 @@ public:
   virtual ~AST_Array() {}
 
   // Data Accessors
-  const unsigned long n_dims();
+  unsigned long n_dims();
   AST_Expression **dims();
   void		   set_dims(AST_Expression **, unsigned long);
   AST_Type	  *base_type();

@@ -117,7 +117,7 @@ AST_PredefinedType::dump(ostream &o)
  * Data accessors
  */
 
-const AST_PredefinedType::PredefinedType
+AST_PredefinedType::PredefinedType
 AST_PredefinedType::pt()
 {
   return pd_pt;
