@@ -365,11 +365,6 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
       ACE_Auto_Basic_Array_Ptr<TAO_DIOP_Connection_Handler*>
         safe_handlers (handlers);
 
-      /*char *failures;
-      ACE_NEW_RETURN (failures,
-                      char[num_connections],
-                      -1);*/
-
       // No longer need to worry about exception safety at this point.
       remote_addrs = safe_remote_addrs.release ();
       handlers = safe_handlers.release ();
@@ -382,7 +377,12 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
 
 
       // @@ Michael
-      /*
+#if 0
+      char *failures;
+      ACE_NEW_RETURN (failures,
+                      char[num_connections],
+                      -1);
+
       // Finally, try to connect.
       this->base_connector_.connect_n (num_connections,
                                        handlers,
@@ -424,7 +424,7 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
                         remote_addrs[slot].get_host_name (),
                         remote_addrs[slot].get_port_number ()));
         }
-      */
+#endif /* 0 */
 
       ACE_OS::free (preconnections);
 

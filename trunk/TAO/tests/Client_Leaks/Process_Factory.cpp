@@ -65,6 +65,7 @@ Process_Factory::create_new_process (CORBA::Environment &ACE_TRY_ENV)
 
   Test::Process_var process =
     Test::Process::_narrow (object.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (Test::Process::_nil ());
   if (CORBA::is_nil (process.in ()))
     ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
 
