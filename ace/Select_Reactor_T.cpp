@@ -1079,7 +1079,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
 
   // Check if we have timers to fire.
   int timers_pending =
-    (this_timeout != 0 && *this_timeout != max_wait_time ? 1 : 0);
+    (this_timeout != 0 && *this_timeout != mwt ? 1 : 0);
 
   u_long width = (u_long) this->handler_rep_.max_handlep1 ();
 
