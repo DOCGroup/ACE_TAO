@@ -1,3 +1,9 @@
+Fri Nov 17 03:37:37 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added RTCORBA/Banded_Connections test.
+
 Fri Nov 17 01:16:25 2000  Ossama Othman  <ossama@uci.edu>
 
 	* include/makeinclude/wrapper_macros.GNU (ssl):
