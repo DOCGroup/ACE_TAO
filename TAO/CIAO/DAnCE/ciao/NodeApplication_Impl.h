@@ -7,6 +7,7 @@
  *         the NodeApplication interface.
  *
  * @auther Tao Lu <lu@dre.vanderbilt.edu>
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
  *========================================================*/
 
 #ifndef NODEAPPLICATION_IMPL_H
@@ -40,11 +41,6 @@ using CIAO::Utility::write_IOR;
  * complexity of the framework by omitting the componentserver layer.
  *
  * @@TODO add configuration capabilities. Threading is one of them.
- *
- * @@Assumptions:
- * 1. There is only 1 container for all components/homes associating
- *    with 1 NodeApplication
- * 2. Now the implementation is not thread safe.
  **/
 
 namespace CIAO
@@ -99,57 +95,6 @@ namespace CIAO
     virtual CORBA::Long init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // Start install homes and components.
-    virtual ::Deployment::ComponentInfos *
-      install (const ::Deployment::ImplementationInfos & impl_infos
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Deployment::UnknownImplId,
-                       ::Deployment::ImplEntryPointNotFound,
-                       ::Deployment::InstallationFailure,
-                       ::Components::InvalidConfiguration));
-
-    // Access the readonly attribute.
-    virtual ::Deployment::Properties *
-    properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual ::Components::CCMHome_ptr
-      install_home (const ::Deployment::ImplementationInfo & impl_info
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::UnknownImplId,
-                       Deployment::ImplEntryPointNotFound,
-                       Deployment::InstallationFailure,
-                       Components::InvalidConfiguration));
-
-    /**
-     * @@Note: I don't know how to remove a home right now.
-     *         I assume that user will only call remove instead.
-     *         This is true at least for DnC run time.
-     *
-     * Right now, in this implementation I assumpe that there will be
-     * same number of homes as the components even if the components
-     * are of the same type. I don't think that we have the modeling
-     * side support of this either. So bear me if you think I avoid
-     * the real thinking for easiness.
-     */
-    virtual void remove_home (const char * comp_ins_name
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
-
-    // Remove everything inside including all components and homes.
-    // User must be sure that no connection is active before calling this!!
-    virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
-
-    // Return all homes.
-    virtual ::Components::CCMHomes *
-    get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
     /*-------------  CIAO specific helper functions (C++)---------
      *
      *-----------------------------------------------------------*/
@@ -166,23 +111,6 @@ namespace CIAO
 
     protected:
 
-    // @@ (OO) Methods internal to the class, e.g. protected and not
-    //         defined in IDL should not be using default arguments.
-    //         Please drop the "_WITH_DEFAULTS" in all of the below
-    //         protected methods.
-
-    // This is a helper method to clean up components
-    // should only be called when we are sure that there is no
-    // active connection on this component.
-    virtual void remove_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
-
-    virtual void remove_component (const char * comp_ins_name
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
-
     // This function is a helper for start call. Bala's
     // Idea of adding those pre/post activate calls doesn't work
     // with the new sepc.
@@ -195,53 +123,14 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
-    // To store all created CCMHome object
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    Components::CCMHome_ptr,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> CCMHome_Map;
-    typedef CCMHome_Map::iterator Home_Iterator;
-    CCMHome_Map home_map_;
-
-    // To sotre all created Component object.
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    Components::CCMObject_ptr,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> CCMComponent_Map;
-    typedef CCMComponent_Map::iterator Component_Iterator;
-    CCMComponent_Map component_map_;
-
     // Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
     // Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
 
-    // Internal container implementation.
-    CIAO::Container *container_;
-
-    // Cached properties
-    Deployment::Properties properties_;
-
     // And a reference to the NodeApplicationManager that created us.
     ::CORBA::Object_var node_app_manager_;
-
-    // Synchronize access to the object set.
-    // This will be needed in the case when component/home run in different thread
-    // TAO_SYNCH_MUTEX lock_;
-
-    //@@ As I have stated in the idl we are not going to use properties for now.
-    // parse The Properties
-    /*void parse_config_values (const ::Deployment::Properties & properties,
-                              struct home_installation_info &component_install_info
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::UnknownImplId,
-                       Deployment::ImplEntryPointNotFound,
-                       Components::InvalidConfiguration));
-    */
   };
 }
 

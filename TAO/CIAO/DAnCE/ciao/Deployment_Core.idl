@@ -107,6 +107,47 @@ module Deployment
 
   // This NodeApplication contains the semantic from both Container and
   // the new DnC NodeApplication  --Tao
+  
+  // I separated the Container and NodeApplication interfaces for the
+  // RT-CCM integration purpose.
+
+  interface NodeApplication; // Forward decl.
+  typedef sequence<NodeApplication> NodeApplications;
+
+  interface Container
+  {
+    readonly attribute ::Deployment::Properties properties;
+
+    NodeApplication get_node_application ();
+
+    //@@ The properties will contain
+    //1 component instance name as the key.
+    //2 dll/so name of the exec
+    //3 entry point of the exec
+    //4 dll/so name of the svnt
+    //5 entry point of the svnt
+    //6 Poosible other configuration for container/home/component
+    //Note:: We have to decide later how container/home/component could be configured.
+    //       These properties could be passed in here or at higher level
+    //       according to the plan(@ NodeApplicationManager/NodeApplication?)
+    //
+    ::Components::CCMHome install_home (in ImplementationInfo impl_info)
+        raises (UnknownImplId,
+                ImplEntryPointNotFound,
+                InstallationFailure,
+                ::Components::InvalidConfiguration);
+
+    void remove_home (in string comp_ins_name)
+      raises (::Components::RemoveFailure);
+
+    ::Components::CCMHomes get_homes ();
+
+    void remove ()
+      raises (::Components::RemoveFailure);
+  };
+  typedef sequence<Container> Containers;
+
+
   interface NodeApplication : Application
   {
     readonly attribute ::Deployment::Properties properties;
@@ -145,38 +186,16 @@ module Deployment
     //@@ We know that Dployment::NodeApplicationManager will be returned,
     //   however to avoid the size of the shared object of CIAO_Server.
     //   we return an Object.
-       Object get_node_application_manager ();
+    Object get_node_application_manager ();
 
-    //@@ The properties will contain
-    //1 component instance name as the key.
-    //2 dll/so name of the exec
-    //3 entry point of the exec
-    //4 dll/so name of the svnt
-    //5 entry point of the svnt
-    //6 Poosible other configuration for container/home/component
-    //Note:: We have to decide later how container/home/component could be configured.
-    //       These properties could be passed in here or at higher level
-    //       according to the plan(@ NodeApplicationManager/NodeApplication?)
-    //
-    //The reason that I want to expose these operation in IDL (can be called remotely)
-    //is   1. for easy testing.
-    //     2. Might comes in handy in the future.
-    //                                                   --Tao
-    ::Components::CCMHome install_home (in ImplementationInfo impl_info)
-        raises (UnknownImplId,
-                ImplEntryPointNotFound,
-                InstallationFailure,
-                ::Components::InvalidConfiguration);
+    Container create_container (in ::Components::ConfigValues config)
+      raises (::Components::CreateFailure,
+              ::Components::InvalidConfiguration);
 
-    void remove_home (in string comp_ins_name)
+    void remove_container (in Container cref)
       raises (::Components::RemoveFailure);
 
-    ::Components::CCMHomes get_homes ();
-
-    void remove ()
-      raises (::Components::RemoveFailure);
-
-
+    Containers get_containers ();
   };
 
 };
