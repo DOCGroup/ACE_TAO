@@ -162,10 +162,6 @@ SOURCE=.\debug.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\deep_free.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\default_client.cpp
 # End Source File
 # Begin Source File
