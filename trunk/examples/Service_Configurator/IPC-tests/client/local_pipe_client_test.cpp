@@ -4,6 +4,7 @@
 // pipes and then ships certain ends over to the server to act as a
 // filter!
 
+#include "ace/OS.h"
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/Get_Opt.h"
