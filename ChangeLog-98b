@@ -6,6 +6,10 @@ Sun Jun 07 09:51:02 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Stanley Leeson <STANLEY.D.LEESON@cdev.com> for
           reporting this.
 
+        * tests/Timeprobe_Test.cpp: added #include of ace/Timeprobe.cpp
+          to pick up template instantiations, if ACE_COMPILE_TIMEPROBES
+          was not defined.
+
 Sun Jun  7 01:06:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/config-freebsd-pthread.h: Added the
