@@ -1,3 +1,8 @@
+Thu Sep  2 09:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          With gcc 3.4.1 -mcpu is deprecated, but -mtune must be used
+
 Thu Sep  2 07:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/FaCE/FaCE.mpc:
