@@ -576,7 +576,6 @@ TAO_IFR_Service_Utils::pre_exist (
     CORBA::DefinitionKind kind
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_Service_Utils::id_exists (id,
                                     repo
