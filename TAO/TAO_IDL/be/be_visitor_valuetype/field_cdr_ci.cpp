@@ -155,7 +155,6 @@ be_visitor_valuetype_field_cdr_ci::visit_array (be_array *node)
       // This is the case for anonymous arrays.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CI);
       be_visitor_array_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -215,7 +214,6 @@ be_visitor_valuetype_field_cdr_ci::visit_enum (be_enum *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
       be_visitor_enum_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -256,7 +254,7 @@ be_visitor_valuetype_field_cdr_ci::visit_interface (be_interface *)
       *os << "(strm >> " << pre_ << f->local_name () << post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ".in ())";
+      *os << pre_ << f->local_name () << post_ << ".in ()->marshal (strm)";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done because an interface cannit be declared inside a
@@ -299,7 +297,7 @@ be_visitor_valuetype_field_cdr_ci::visit_interface_fwd (be_interface_fwd *)
       *os << "(strm >> " << pre_ << f->local_name () << post_ << ").out ()";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ").in ()";
+      *os << pre_ << f->local_name () << post_ << ".in ()->marshal (strm)";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done because an interface cannit be declared inside a
@@ -552,7 +550,6 @@ be_visitor_valuetype_field_cdr_ci::visit_sequence (be_sequence *node)
       // Anonymous sequence.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI);
       be_visitor_sequence_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -654,7 +651,6 @@ be_visitor_valuetype_field_cdr_ci::visit_structure (be_structure *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
       be_visitor_structure_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
@@ -735,7 +731,6 @@ be_visitor_valuetype_field_cdr_ci::visit_union (be_union *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
       be_visitor_union_cdr_op_ci visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

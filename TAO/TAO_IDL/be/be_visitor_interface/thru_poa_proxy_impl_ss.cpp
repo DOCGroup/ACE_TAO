@@ -114,7 +114,6 @@ be_visitor_interface_thru_poa_proxy_impl_ss::gen_abstract_ops_helper (
           be_visitor_interface::add_abstract_op_args (op,
                                                       new_op);
           new_op.set_name (base);
-          ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_PROXY_IMPL_SS);
           be_visitor_operation_thru_poa_proxy_impl_ss op_visitor (&ctx);
           op_visitor.visit_operation (&new_op);
 

@@ -228,7 +228,6 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
         }
 
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
       be_visitor_operation_interceptors_info_rettype oiir_visitor (&ctx);
 
       if (bt->accept (&oiir_visitor) == -1)
@@ -342,7 +341,6 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
         }
 
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
       be_visitor_operation_interceptors_info_rettype toiir_visitor (&ctx);
 
       if (bt->accept (&toiir_visitor) == -1)
@@ -781,7 +779,6 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
 
           // Generate the insertion of result into Any.
           ctx = *this->ctx_;
-          ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT);
           be_visitor_operation_interceptors_result oir_visitor (&ctx);
 
           if (bt->accept (&oir_visitor) == -1)
@@ -870,7 +867,6 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
           << "result (";
 
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
       be_visitor_operation_rettype or_visitor (&ctx);
 
       if (bt->accept (&or_visitor) == -1)

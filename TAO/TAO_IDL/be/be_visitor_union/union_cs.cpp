@@ -60,7 +60,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
                          "bad discriminant type\n"), -1);
     }
 
-  ctx.state (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CS);
   be_visitor_union_discriminant_cs disc_visitor (&ctx);
 
   if (bt->accept (&disc_visitor) == -1)
@@ -279,7 +278,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
   if (!node->is_local () && be_global->tc_support ())
     {
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
 
       be_visitor_typecode_defn tc_visitor (&ctx);

@@ -69,8 +69,6 @@ int be_visitor_union_ci::visit_union (be_union *node)
                         -1);
     }
 
-  ctx.state (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CI);
-                                                     
   be_visitor_union_discriminant_ci visitor (&ctx);
 
   if (bt->accept (&visitor) == -1)
@@ -84,8 +82,6 @@ int be_visitor_union_ci::visit_union (be_union *node)
 
   // Now generate the implementation of the access methods for the
   // union. For this set our state.
-  this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_CI);
-
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -239,7 +239,7 @@ be_visitor_interface_tie_si::method_helper (be_interface *derived,
     }
 
   be_visitor_context ctx;
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
+  ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SI);
   ctx.interface (derived);
   ctx.stream (os);
   be_visitor_interface_tie_si visitor (&ctx);

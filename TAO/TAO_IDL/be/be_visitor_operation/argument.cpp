@@ -162,42 +162,36 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     {
     case TAO_CodeGen::TAO_OPERATION_ARG_PRE_INVOKE_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_PRE_INVOKE_CS);
         be_visitor_args_pre_invoke_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_INVOKE_CS);
         be_visitor_args_invoke_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_INVOKE_CS);
         be_visitor_args_post_invoke_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS);
         be_visitor_args_vardecl_ss visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_DEMARSHAL_SS);
         be_visitor_args_marshal_ss visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_MARSHAL_SS);
         be_visitor_args_marshal_ss visitor (&ctx);
         status = node->accept (&visitor);
         break;
@@ -211,7 +205,6 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
       }
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);
         be_visitor_args_upcall_ss visitor (&ctx);
         status = node->accept (&visitor);
         break;

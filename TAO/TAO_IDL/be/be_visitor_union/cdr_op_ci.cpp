@@ -41,16 +41,18 @@ be_visitor_union_cdr_op_ci::~be_visitor_union_cdr_op_ci (void)
 int
 be_visitor_union_cdr_op_ci::visit_union (be_union *node)
 {
-  // already generated and/or we are imported. Don't do anything.
-  if (node->cli_inline_cdr_op_gen ()
-      || node->imported ()
-      || node->is_local ())
+  // There is no check for is_local here because we have no way of
+  // knowing which member will be active at marshaling time. So we
+  // generate the CDR operators and let the local interface member
+  // (if any) be caught at runtime.
+  if (node->cli_inline_cdr_op_gen () 
+      || node->imported ())
     {
       return 0;
     }
 
   // Set the substate as generating code for the types defined in our scope.
-  this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);
 
   if (this->visit_scope (node) == -1)
     {

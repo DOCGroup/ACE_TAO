@@ -154,6 +154,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
+  *os << be_nl << be_nl
+      << "CORBA::Boolean" << be_nl
+      << "tao_" << node->flat_name () << "_marshal (" << be_idt << be_idt_nl
+      << node->name () << "_ptr p," << be_nl
+      << "TAO_OutputCDR &strm" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return p->marshal (strm);" << be_uidt_nl
+      << "}";
+
   // Generate the _var class.
   if (node->gen_var_impl () == -1)
     {
@@ -208,7 +218,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
 
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_BROKER_CS);
       be_visitor_interface_remote_proxy_broker_cs irpb_visitor (&ctx);
 
       if (node->accept (&irpb_visitor) == -1)
@@ -618,6 +627,24 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "\";" << be_uidt_nl
       << "}";
 
+  *os << be_nl << be_nl
+      << "CORBA::Boolean" << be_nl;
+
+  if (node->is_local ())
+    {
+      *os << node->name () << "::marshal (TAO_OutputCDR &)" << be_nl
+          << "{" << be_idt_nl
+          << "return 0;" << be_uidt_nl
+          << "}";
+    }
+  else
+    {
+      *os << node->name () << "::marshal (TAO_OutputCDR &cdr)" << be_nl
+          << "{" << be_idt_nl
+          << "return (cdr << this);" << be_uidt_nl
+          << "}";
+    }
+
   // Generate code for the elements of the interface.
   if (this->visit_scope (node) == -1)
     {
@@ -651,7 +678,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (be_global->tc_support ())
     {
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
       ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       be_visitor_typecode_defn tc_visitor (&ctx);
 

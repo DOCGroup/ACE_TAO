@@ -41,7 +41,6 @@ int
 be_visitor_component_any_op_cs::visit_component (be_component *node)
 {
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS);
   be_visitor_interface_any_op_cs visitor (&ctx);
   return visitor.visit_interface (node);
 }

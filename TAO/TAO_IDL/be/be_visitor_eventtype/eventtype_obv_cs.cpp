@@ -46,7 +46,6 @@ int
 be_visitor_eventtype_obv_cs::visit_eventtype (be_eventtype *node)
 {
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
   be_visitor_valuetype_obv_cs visitor (&ctx);
   return visitor.visit_valuetype (node);
 }

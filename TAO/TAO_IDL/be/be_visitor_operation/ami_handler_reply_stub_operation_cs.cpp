@@ -243,7 +243,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   *os << " ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  *os << "Messaging::ExceptionHolder::_tao_seq_Octet "
+  *os << "CORBA::OctetSeq "
       << "_tao_marshaled_exception (" << be_idt << be_idt_nl
       << "cdr->length ()," << be_nl
       << "cdr->length ()," << be_nl
@@ -344,7 +344,6 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_pre_stub_info (
   if (!this->ctx_->attribute ())
     {
       be_visitor_context ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
       be_visitor_operation_exceptlist_cs visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

@@ -54,8 +54,6 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
   this->generate_shared_prologue (node, os, "");
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
-
   be_visitor_args_arglist arglist_visitor (&ctx);
   arglist_visitor.set_fixed_direction (AST_Argument::dir_IN);
   ctx.scope (node);

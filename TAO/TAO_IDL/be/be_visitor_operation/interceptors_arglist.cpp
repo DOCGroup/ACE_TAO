@@ -215,14 +215,12 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH);
         be_visitor_args_request_info_arglist visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CH);
         be_visitor_args_request_info_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
@@ -243,14 +241,12 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
       }
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_PARAMLIST);
         be_visitor_args_paramlist visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SH);
         be_visitor_args_request_info_sh visitor (&ctx);
         status = node->accept (&visitor);
         break;
@@ -264,7 +260,6 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
       }
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);
         be_visitor_args_upcall_ss visitor (&ctx);
         status = node->accept (&visitor);
         break;

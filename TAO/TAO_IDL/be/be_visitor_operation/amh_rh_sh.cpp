@@ -89,7 +89,6 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
   *os << node->local_name();
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
   be_visitor_operation_arglist visitor (&ctx);
 
   if (node->accept (&visitor) == -1)
