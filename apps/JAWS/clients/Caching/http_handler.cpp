@@ -134,8 +134,7 @@ HTTP_Handler::svc (void)
                     &this->response_size_) == 1))
     {
       ACE_Filecache_Handle afh (this->filename_,
-				this->response_size_,
-                                1);
+				this->response_size_);
 
       this->peer ().recv_n (afh.address (), this->response_size_);
 

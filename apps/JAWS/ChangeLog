@@ -1,3 +1,7 @@
+Mon Dec 29 20:20:36 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* clients/Caching/http_handler.cpp: Idem to previous change.
+
 Mon Dec 29 18:50:02 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* server/IO.cpp: Idem to previous change, but fixes to improve
