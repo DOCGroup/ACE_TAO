@@ -1,3 +1,9 @@
+Sun Jan 20 16:33:39 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/Notify_Service/Makefile:
+
+          Added orbsvcs/orbsvcs/ETCL to library search path.
+
 Sun Jan 20 15:56:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/OBV/Any/Any.dsw:
