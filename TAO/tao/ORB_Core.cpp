@@ -58,8 +58,6 @@ TAO_ORB_Core::TAO_ORB_Core (void)
     arl_same_port_connect_ (0),
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
     preconnections_ (0),
-    input_cdr_dblock_allocator_ (0),
-    input_cdr_buffer_allocator_ (0),
     default_environment_ (0),
     tss_environment_ (this)
 {
@@ -72,10 +70,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // here once that chunk is actually implemented.
   if (preconnections_)
     ACE_OS::free (preconnections_);
-
-  // Clean up memory pools
-  this->output_cdr_dblock_allocator_.remove ();
-  this->output_cdr_buffer_allocator_.remove ();
 }
 
 TAO_Default_Reactor::TAO_Default_Reactor (int nolock)
@@ -554,11 +548,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   // @@ Init acceptor ... This needs altering for Pluggable Protocols! fredk
   this->acceptor (trf->get_acceptor ());
-
-  this->input_cdr_dblock_allocator_ =
-    trf->input_cdr_dblock_allocator ();
-  this->input_cdr_buffer_allocator_ =
-    trf->input_cdr_buffer_allocator ();
 
   TAO_Server_Strategy_Factory *ssf = this->server_factory ();
 
@@ -1120,6 +1109,18 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
 #endif
 }
 
+ACE_Allocator*
+TAO_ORB_Core::output_cdr_dblock_allocator (void)
+{
+  return this->resource_factory ()->output_cdr_dblock_allocator ();
+}
+
+ACE_Allocator*
+TAO_ORB_Core::output_cdr_buffer_allocator (void)
+{
+  return this->resource_factory ()->output_cdr_buffer_allocator ();
+}
+
 // ****************************************************************
 
 
@@ -1423,6 +1424,58 @@ TAO_Resource_Factory::input_cdr_buffer_allocator (void)
   return 0;
 }
 
+ACE_Allocator*
+TAO_Resource_Factory::output_cdr_dblock_allocator (void)
+{
+  switch (this->cdr_allocator_source_)
+    {
+    case TAO_GLOBAL:
+      if (GLOBAL_APP_ALLOCATED::instance ()->output_cdr_dblock_allocator_ == 0)
+        {
+          ACE_NEW_RETURN (GLOBAL_APP_ALLOCATED::instance ()->output_cdr_dblock_allocator_,
+                          GBL_ALLOCATOR,
+                          0);
+        }
+      return GLOBAL_APP_ALLOCATED::instance ()->output_cdr_dblock_allocator_;
+      ACE_NOTREACHED (break);
+    case TAO_TSS:
+      if (TSS_APP_ALLOCATED::instance ()->output_cdr_dblock_allocator_ == 0)
+        {
+          ACE_NEW_RETURN (TSS_APP_ALLOCATED::instance ()->output_cdr_dblock_allocator_,
+                          TSS_ALLOCATOR,
+                          0);
+        }
+      return TSS_APP_ALLOCATED::instance ()->output_cdr_dblock_allocator_;
+      ACE_NOTREACHED (break);
+    }
+  return 0;
+}
+
+ACE_Allocator *
+TAO_Resource_Factory::output_cdr_buffer_allocator (void)
+{
+  switch (this->cdr_allocator_source_)
+    {
+    case TAO_GLOBAL:
+      if (GLOBAL_APP_ALLOCATED::instance ()->output_cdr_buffer_allocator_ == 0)
+        {
+          ACE_NEW_RETURN (GLOBAL_APP_ALLOCATED::instance ()->output_cdr_buffer_allocator_,
+                          GBL_ALLOCATOR,
+                          0);
+        }
+      return GLOBAL_APP_ALLOCATED::instance ()->output_cdr_buffer_allocator_;
+    case TAO_TSS:
+      if (TSS_APP_ALLOCATED::instance ()->output_cdr_buffer_allocator_ == 0)
+        {
+          ACE_NEW_RETURN (TSS_APP_ALLOCATED::instance ()->output_cdr_buffer_allocator_,
+                          TSS_ALLOCATOR,
+                          0);
+        }
+      return TSS_APP_ALLOCATED::instance ()->output_cdr_buffer_allocator_;
+    }
+  return 0;
+}
+
 
 ACE_Data_Block*
 TAO_Resource_Factory::create_input_cdr_data_block (size_t size)
@@ -1503,7 +1556,9 @@ TAO_Resource_Factory::App_Allocated::App_Allocated (void)
     poa_(0),
     alloc_(0),
     input_cdr_dblock_allocator_ (0),
-    input_cdr_buffer_allocator_ (0)
+    input_cdr_buffer_allocator_ (0),
+    output_cdr_dblock_allocator_ (0),
+    output_cdr_buffer_allocator_ (0)
 {
 }
 
@@ -1516,6 +1571,14 @@ TAO_Resource_Factory::App_Allocated::~App_Allocated (void)
   if (this->input_cdr_buffer_allocator_ != 0)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
+
+  if (this->output_cdr_dblock_allocator_ != 0)
+    this->output_cdr_dblock_allocator_->remove ();
+  delete this->output_cdr_dblock_allocator_;
+
+  if (this->output_cdr_buffer_allocator_ != 0)
+    this->output_cdr_buffer_allocator_->remove ();
+  delete this->output_cdr_buffer_allocator_;
 }
 
 TAO_Resource_Factory::Pre_Allocated::~Pre_Allocated (void)
