@@ -1,8 +1,16 @@
+Mon May 12 13:23:27 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Convert dashes in project names to underscores.  VC6 can't handle
+          project names with dashes.
+
 Mon May 12 16:35:16 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* include/makeinclude/build_example.bor:
+        * include/makeinclude/build_example.bor:
 
-	  Added missing libraries to fix static build link errors.
+          Added missing libraries to fix static build link errors.
 
 Mon May 12 08:56:27 2003  Chad Elliott  <elliott_c@ociweb.com>
 
