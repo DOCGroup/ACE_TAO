@@ -33,7 +33,7 @@ class CosECConsumer : public POA_CosEventComm::PushConsumer
 
 public:
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-             CORBA::ORB_var orb,
+             CORBA::ORB_ptr orb,
              CORBA::Environment& ACE_TRY_ENV);
   // This method connects the consumer to the EC.
 

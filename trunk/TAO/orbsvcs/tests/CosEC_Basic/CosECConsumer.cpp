@@ -5,7 +5,7 @@
 
 void
 CosECConsumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-                     CORBA::ORB_var orb,
+                     CORBA::ORB_ptr orb,
                      CORBA::Environment& ACE_TRY_ENV)
 {
   this->orb_ = orb;
@@ -69,7 +69,8 @@ CosECConsumer::push (const CORBA::Any &,
 {
   ACE_DEBUG ((LM_DEBUG,
               "in CosECConsumer::push\n"));
-  this->orb_->shutdown ();
+  // this->orb_->shutdown ();
+  // @@ read comment in run
 }
 
 void
