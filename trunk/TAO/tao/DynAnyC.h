@@ -861,7 +861,7 @@ public:
 // NameValuePairSeq
 // *************************************************************
 
-class  NameValuePairSeq : public
+class TAO_Export NameValuePairSeq : public 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
        || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_NameValuePairSeq
@@ -1411,7 +1411,7 @@ public:
 // AnySeq
 // *************************************************************
 
-class  AnySeq : public
+class TAO_Export AnySeq : public 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
        || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_AnySeq
