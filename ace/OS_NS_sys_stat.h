@@ -25,7 +25,7 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_types.h"
+#include "ace/os_include/sys/os_stat.h"
 #include "ace/Default_Constants.h" // for ACE_DEFAULT_DIR_PERMS
 #include "ace/ACE_export.h"
 

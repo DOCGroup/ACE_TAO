@@ -2148,7 +2148,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 {
   ACE_OS_TRACE ("ACE_OS::rw_trywrlock_upgrade");
 #if defined (ACE_HAS_THREADS)
-# if !defined (ACE_LACKS_RWLOCK_T)
+# if !defined (ACE_LACKS_RWLOCK_T) || defined (ACE_HAS_PTHREADS_UNIX98_EXT)
   // Some native rwlocks, such as those on Solaris and HP-UX 11, don't
   // support the upgrade feature . . .
   ACE_UNUSED_ARG (rw);
