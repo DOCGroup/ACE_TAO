@@ -21,8 +21,10 @@ Mon May  5 13:20:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Mon May  5 13:09:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTPortableServer/Makefile.bor:
+        * tao/RTPortableServer/Makefile:
+        * tao/RTPortableServer/RTPortableServer.mpc:
 
-          Added TAO_ORT_* to the list of CFLAGS and LIBs.
+          Added links and dependencies for TAO_Valuetype and TAO_ObjRefTemplate.
 
 Mon May  5 17:34:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
