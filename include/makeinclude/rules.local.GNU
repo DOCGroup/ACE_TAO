@@ -275,20 +275,24 @@ ifdef IDL_FILES
 	-$(RM) $(foreach ext, $(IDL_EXT), $(addsuffix $(ext), $(IDL_FILES)))
 endif
 
-ifdef CLEANUP_BIN
+ifneq ($(CLEANUP_BIN),)
   DO_CLEANUP = 1
   REALCLEAN_FILES = $(CLEANUP_BIN:%=%$(EXEEXT)) $(CLEANUP_BIN:%=%_debug$(EXEEXT)) $(CLEANUP_BIN:%=%_profile$(EXEEXT)) $(CLEANUP_BIN:%=%_optimize$(EXEEXT))
 endif # !CLEANUP_BIN
 
-ifdef CLEANUP_LIB
-  DO_CLEANUP = 1
-  REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
-endif # !CLEANUP_LIB
+ifdef static_libs
+  ifneq ($(CLEANUP_LIB),)
+    DO_CLEANUP = 1
+    REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
+  endif # !CLEANUP_LIB
+endif # static_libs
 
-ifdef CLEANUP_SHLIB
-  DO_CLEANUP = 1
-  REALCLEAN_FILES += $(CLEANUP_VSHLIB:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%_debug) $(CLEANUP_VSHLIB_NO_VER:%=%_profile) $(CLEANUP_VSHLIB_NO_VER:%=%_optimize)
-endif # !CLEANUP_SHLIB
+ifdef shared_libs
+  ifneq ($(CLEANUP_SHLIB),)
+    DO_CLEANUP = 1
+    REALCLEAN_FILES += $(CLEANUP_VSHLIB:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%) $(CLEANUP_VSHLIB_NO_VER:%=%_debug) $(CLEANUP_VSHLIB_NO_VER:%=%_profile) $(CLEANUP_VSHLIB_NO_VER:%=%_optimize)
+  endif # !CLEANUP_SHLIB
+endif # shared_libs
 
 CLEANUP_OBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC)))))
 CLEANUP_OBJS += $(addsuffix .o, $(addprefix $(VDIR),$(CLEANUP_BIN)))
@@ -306,7 +310,7 @@ endif # DO_CLEANUP
 
 realclean.local: clean.local deinstall.local clean_idl_stubs.local
 ifdef DO_CLEANUP
-	-$(RM) -r $(REALCLEAN_FILES) $(CLEANUP_OBJDIRS)
+	-$(RM) -r $(REALCLEAN_FILES) $(sort $(CLEANUP_OBJDIRS))
 endif # DO_CLEANUP
 
 
