@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_CosNaming -lTAO_IORTable -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_CosNaming -lTAO_IORTable -lTAO_Svc_Utils $(TAO_SRVR_LIBS)
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
 SRC = test.cpp

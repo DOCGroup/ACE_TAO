@@ -9,7 +9,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     = -lTAO_AV -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS     = -lTAO_AV -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 RECEIVER_OBJS = receiver.o
 SENDER_OBJS = sender.o

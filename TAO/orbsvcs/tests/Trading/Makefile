@@ -38,8 +38,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 
 LSRC    = $(addsuffix .cpp,$(FILES)) $(IDL_SRC)
 PSRC    = $(addsuffix .cpp,$(BIN2))
-ACE_SHLIBS = -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO -lACE
-LDLIBS  = -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO
+ACE_SHLIBS = -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny $(TAO_SRVR_LIBS)
+LDLIBS  = -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny $(TAO_SRVR_LIBS)
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
