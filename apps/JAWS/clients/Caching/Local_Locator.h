@@ -33,6 +33,8 @@ class ACE_URL_Record
   //     out of scope.
 {
   friend class ACE_URL_Local_Locator;
+  // Nanbor, is it really necessary to have ACE_Node<> as a friend?
+  // That seems like it breaks encapsulation. 
   friend class ACE_Node<ACE_URL_Record>;
 public:
   ACE_URL_Record (ACE_URL_Offer *offer);
@@ -46,15 +48,17 @@ public:
 
   int operator!= (const ACE_URL_Record &rhs) const;
   // Unequal, complement of equal.
+
 private:
   ACE_URL_Record (void);
+  // Nanbor, please explain why this is private.
   // default ctor.
 
   ACE_WString *id_;
   // Offer ID in the repository.
 
   ACE_URL_Offer *offer_;
-  // Offer (and its properties.)
+  // Offer (and its properties).
 };
 
 class ACE_Export ACE_URL_Local_Locator
@@ -95,8 +99,11 @@ class ACE_Export ACE_URL_Local_Locator
 			    const ACE_URL_Property_Seq *del = 0,
 			    const ACE_URL_Property_Seq *modify = 0);
   // Modify a previously registered offer.
+
 protected:
   ACE_Unbounded_Stack<ACE_URL_Record> repository_;
+  // Nanbor, please add a comment here.  In particular, why do you use
+  // a stack rather than, e.g., a set?
 };
 
 #if defined (__ACE_INLINE__)

@@ -21,6 +21,7 @@
 #include "URL_Properties.h"
 
 class ACE_Export ACE_URL_Locator_Request
+// Nanbor, please make sure you explain what this class is *used* for!
   // = TITLE
   //     A URL request message formater/wrapper.
   //
@@ -74,6 +75,24 @@ public:
 		    const ACE_URL_Property_Seq &modify = 0);
   // Modify a previously registered offer.
 
+<<<<<<< Locator_Request_Reply.h
+  int encode (void);
+  // Encode request for network communication.
+
+  int decode (void);
+  // Restore from network data.
+
+  // = A bunch of methods to access internal data.
+  int how (void);
+  int how_many (void);
+  ACE_URL_Property_Seq &seq (void);
+  ACE_URL_Property_Seq &del (void);
+  ACE_URL_Property_Seq &modify (void);
+  ACE_WString &id (void);
+  ACE_WString &url (void);
+  void *buffer (void);
+
+=======
   size_t encode (void);
   // Encode request for network communication.  If succeed,
   // returns the size of the buffer, otherwise, return 0.
@@ -95,13 +114,16 @@ public:
 
   void dump (void);
   // Print out this object.
+
 protected:
+  u_int code_;
+  // Request type code.
+
+  // Nanbor, please make sure that you comment all of these data
+  // members.
   size_t bsize (void) const;
   // Return the size of buffer required to encode
   // this request.
-
-  unsigned int code_;
-  // Request type code.
 
   int how_;
   int how_many_;

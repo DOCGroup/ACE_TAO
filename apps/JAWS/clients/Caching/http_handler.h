@@ -18,15 +18,14 @@
 #include "ace/Connector.h"
 #include "ace/SOCK_Connector.h"
 
-class HTTP_Handler
-  : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+class HTTP_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
   //     A simple HTTP protocol handler for clients.
   // 
   // = DESCRIPTION
-  //     Checks to see if the requested file is already cached.  If so,
-  //     it says so.  If not, the request is issued to the connection.
-  //     The fetched file is cached.
+  //     Checks to see if the requested file is already cached.  If
+  //     so, it says so.  If not, the request is issued to the
+  //     connection.  The fetched file is cached.
 {
 public:
   // = Initialization methods.
@@ -34,6 +33,8 @@ public:
   HTTP_Handler (const char * path);
 
   virtual int open (void *);
+  // Open hook.
+
   virtual int svc (void);
   // Entry points defined by the abstract Svc_Handler.
 
@@ -53,8 +54,8 @@ class HTTP_Connector
   //     A simple HTTP connector.
   // 
   // = DESCRIPTION
-  //     Creates an HTTP Handler based on the URL, and then delegates to
-  //     to the SOCK_CONNECTOR.  Adapter pattern.
+  //     Creates an HTTP Handler based on the URL, and then delegates
+  //     to to the SOCK_CONNECTOR.  Adapter pattern.
 {
 public:
   int connect (const char * url);
@@ -69,5 +70,7 @@ private:
 
 private:
   ACE_Connector<HTTP_Handler, ACE_SOCK_CONNECTOR> connector_;
+  // Factory that actively establishes a connection with an HTTP
+  // server.
 };
 
