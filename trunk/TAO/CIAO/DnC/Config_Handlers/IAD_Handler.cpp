@@ -10,7 +10,7 @@
 #include "Property_Handler.h"
 #include "Requirement_Handler.h"
 #include "PCI_Handler.h"
-#include "CompIntfDesc_Handler.h"
+#include "CompIntrDesc_Handler.h"
 
 #include <iostream>
 
