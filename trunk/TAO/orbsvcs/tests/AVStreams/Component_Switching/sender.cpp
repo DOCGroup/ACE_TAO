@@ -4,9 +4,50 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Event_Handler.h"
 
 typedef ACE_Singleton<Sender, ACE_Null_Mutex> SENDER;
 /// Create a singleton instance of the Sender.
+
+int g_shutdown = 0;
+
+// constructor.
+Signal_Handler::Signal_Handler (const ACE_CString &sender_name)
+  : sender_name_ (sender_name)
+{
+}
+
+int
+Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
+{
+  if (signum == SIGINT)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "In the signal handler\n"));
+      
+      g_shutdown = 1;
+      
+      TAO_AV_CORE::instance ()->reactor ()->end_event_loop ();//resume_handlers (); //notify ();
+      
+      ACE_DEBUG ((LM_DEBUG,
+		  "It reached here\n"));
+
+     
+    }  
+  return 0;
+}
+
+const ACE_CString&
+Signal_Handler::sender_name (void)
+{
+  return this->sender_name_;
+}
+
+void
+Signal_Handler::sender_name (const ACE_CString& sender_name)
+{
+  this->sender_name_ = sender_name;
+}
 
 ACE_CString &
 Sender_Callback::flowname (void)
@@ -27,7 +68,11 @@ Sender_Callback::handle_destroy (void)
   SENDER::instance ()->connection_manager ().protocol_objects ().unbind (this->flowname_.c_str ());
    
   SENDER::instance ()->connection_manager ().streamctrls ().unbind (this->flowname_.c_str ());
+
+  SENDER::instance ()->connection_manager ().receivers ().unbind (this->flowname_.c_str ());
   
+  //  SENDER::instance ()->remove_stream ();
+
   return 0;
 }
 
@@ -35,6 +80,8 @@ int
 Sender_StreamEndPoint::get_callback (const char * flowname,
                                      TAO_AV_Callback *&callback)
 {
+  //SENDER::instance ()->add_stream ();
+    
   /// Create and return the client application callback and return to the AVStreams
   /// for further upcalls.
   callback = &this->callback_;
@@ -86,7 +133,7 @@ Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
       /// If the flowname is found.
       if (result == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "\nSender switching receivers\n\n"));
+          ACE_DEBUG ((LM_DEBUG, "\nSender switching distributers\n\n"));
 
           /// Destroy old stream with the same flowname.
           connection_manager.destroy (flowname);
@@ -102,8 +149,40 @@ Sender::Sender (void)
     input_file_ (0),
     frame_rate_ (5),
     mb_ (BUFSIZ),
-    sender_name_ ("sender")
+    sender_name_ ("sender"),
+    //    stream_count_ (0),
+    signal_handler_ (sender_name_)
 {
+}
+
+Sender::~Sender (void)
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Sender destructor\n"));
+}
+
+void
+Sender::shut_down (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      AVStreams::MMDevice_var mmdevice;
+      
+      SENDER::instance ()->connection_manager ().unbind_sender (this->sender_name_,
+								mmdevice.in (),
+								ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      SENDER::instance ()->connection_manager ().destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Sender::shut_down Failed\n");
+    }
+  ACE_ENDTRY;
 }
 
 int
@@ -162,6 +241,17 @@ Sender::init (int argc,
                       argv);
   if (result != 0)
     return result;
+  
+  this->signal_handler_.sender_name (this->sender_name_);
+  
+  ACE_Reactor *reactor = 
+    TAO_AV_CORE::instance ()->reactor ();
+  
+  if (reactor->register_handler (SIGINT,
+				 &this->signal_handler_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "Error in handler register\n"),
+		      -1);
 
   /// Open file to read.
   this->input_file_ =
@@ -229,6 +319,13 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
       /// Continue to send data till the file is read to the end.
       while (1)
         {
+
+	  if (g_shutdown == 1)
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  "Shut Down called\n"));
+	      break;
+	    }
           /// Read from the file into a message block.
           int n = ACE_OS::fread (this->mb_.wr_ptr (),
                                  1,
@@ -243,11 +340,25 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
           if (n == 0)
             {
               /// At end of file break the loop and end the sender.
-              if (TAO_debug_level > 0)
+	      if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
-              break;
-            }
 
+	      AVStreams::MMDevice_var mmdevice =
+		this->sender_mmdevice_->_this (ACE_TRY_ENV);
+	      ACE_TRY_CHECK;
+	      
+	      this->connection_manager_.unbind_sender (this->sender_name_,
+						       mmdevice.in (),
+						       ACE_TRY_ENV);
+	      ACE_TRY_CHECK;
+
+  	      this->connection_manager_.destroy (ACE_TRY_ENV);
+  	      ACE_TRY_CHECK;
+	      
+	      break;
+			    
+            }
+	  
           this->mb_.wr_ptr (n);
 
           if (this->frame_count_ > 1)
@@ -283,9 +394,10 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 
                   /// Run the orb for the wait time so the sender can
                   /// continue other orb requests.
-                  TAO_AV_CORE::instance ()->orb ()->run (wait_time,
-                                                         ACE_TRY_ENV);
-                  ACE_TRY_CHECK;
+		  TAO_AV_CORE::instance ()->orb ()->run (wait_time,
+							 ACE_TRY_ENV);
+		  ACE_TRY_CHECK;
+		  
                 }
             }
 
@@ -318,6 +430,7 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
           this->mb_.reset ();
 
         } /// end while
+
     }
   ACE_CATCHANY
     {
@@ -334,6 +447,24 @@ Sender::connection_manager (void)
 {
   return this->connection_manager_;
 }
+
+//  void
+//  Sender::add_stream (void)
+//  {
+//    this->stream_count_++;
+//  }
+
+//  void
+//  Sender::remove_stream (void)
+//  {
+//    this->stream_count_--;
+//  }
+
+//  int
+//  Sender::stream_alive (void)
+//  {
+//    return this->stream_count_;
+//  }
 
 int
 main (int argc,
@@ -386,8 +517,7 @@ main (int argc,
       SENDER::instance ()->pace_data (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      SENDER::instance ()->connection_manager ().destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
   ACE_CATCHANY
     {

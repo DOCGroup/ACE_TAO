@@ -71,6 +71,16 @@ public:
                 CORBA::Environment & = TAO_default_environment ());
   // Destroy streams associated with <flowname>.
 
+  void unbind_sender (const ACE_CString &sender_name, 
+		      AVStreams::MMDevice_ptr sender_mmdevice,
+		      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()) ;
+  // Unbind the sender from the Naming Service
+
+  void unbind_receiver (const ACE_CString &sender_name, 
+			const ACE_CString &receiver_name, 
+			AVStreams::MMDevice_ptr receiver_mmdevice);
+  // Unbind the Receiver from the Naming Service
+
   void add_streamctrl (const ACE_CString &flowname,
                        TAO_StreamEndPoint *endpoint,
                        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());

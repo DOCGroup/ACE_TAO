@@ -43,7 +43,7 @@ Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flows
       /// If the flowname is found.
       if (result == 0)
 	{
-	  ACE_DEBUG ((LM_DEBUG, "\nDistributer switching senders handle connection requested\n\n"));
+	  ACE_DEBUG ((LM_DEBUG, "\nReceiver switching distributers handle connection requested\n\n"));
 	  
 	  ///Destroy old stream with the same flowname.
 	  
@@ -108,6 +108,24 @@ Receiver::Receiver (void)
 
 Receiver::~Receiver (void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+	      "Receiver destructor\n"));
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  this->unbind (ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+ACE_CString
+Receiver::sender_name (void)
+{
+  return this->sender_name_;
+}
+
+ACE_CString
+Receiver::receiver_name (void)
+{
+  return this->receiver_name_;
 }
 
 int
@@ -196,6 +214,28 @@ Receiver::output_file_name (void)
   return this->output_file_name_;
 }
 
+void
+Receiver::unbind (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      AVStreams::MMDevice_var mmdevice_obj =
+	this->mmdevice_->_this (ACE_TRY_ENV);
+      
+      ACE_TRY_CHECK;
+
+      this->connection_manager_.unbind_receiver (this->sender_name_,
+						 this->receiver_name_,
+						 mmdevice_obj.in ());
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Receiver::unbind");
+    }
+  ACE_ENDTRY;
+	
+}
+
 int
 main (int argc,
       char **argv)
@@ -268,11 +308,10 @@ main (int argc,
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      /// Hack for now....
-      ACE_OS::sleep (1);
-
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      ACE_OS::fclose (output_file);
     }
   ACE_CATCHANY
     {
@@ -281,8 +320,6 @@ main (int argc,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }

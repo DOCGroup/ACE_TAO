@@ -33,9 +33,6 @@ Distributer_Sender_StreamEndPoint::set_protocol_object (const char *flowname,
   connection_manager.add_streamctrl (flowname,
                                      this);
   
-  /// Increment the stream count.
-  DISTRIBUTER::instance ()->stream_created ();
-  
   return 0;
 }
 
@@ -67,7 +64,7 @@ CORBA::Boolean
 Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec,
                                                                   CORBA::Environment &)
 {
-  if (TAO_debug_level > 0)
+  //if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"Distributer_Receiver_StreamEndPoint::handle_connection_requested\n"));	     
   
@@ -84,7 +81,7 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
       TAO_Forward_FlowSpec_Entry entry;
       entry.parse (flowspec[i].in ());
       
-      if (TAO_debug_level > 0)
+      //if (TAO_debug_level > 0)
 	ACE_DEBUG ((LM_DEBUG,
 		    "Handle Conection Requested flowname %s \n",
 		    entry.flowname ()));	     
@@ -183,13 +180,9 @@ int
 Distributer_Sender_Callback::handle_destroy (void)
 {
   /// Called when the sender requests the stream to be shutdown.
-  ///   ACE_DECLARE_NEW_CORBA_ENV;
+
   ACE_DEBUG ((LM_DEBUG,
               "Distributer_Sender_Callback::end_stream\n"));
-  
-  /// Decrement the stream count.
-  DISTRIBUTER::instance ()->stream_destroyed ();
-  
   return 0;
 }
 
@@ -204,7 +197,6 @@ Distributer::Distributer (void)
 Distributer::~Distributer (void)
 {
 }
-
 
 void 
 Distributer::stream_created (void)
@@ -341,6 +333,33 @@ Distributer::done (void) const
 }
 
 void
+Distributer::unbind (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      AVStreams::MMDevice_var receiver_mmdevice = 
+	this->distributer_receiver_mmdevice_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      DISTRIBUTER::instance ()->connection_manager ().unbind_receiver (this->sender_name_,
+								       this->distributer_name_,
+								       receiver_mmdevice.in ());
+      AVStreams::MMDevice_var sender_mmdevice = 
+	this->distributer_sender_mmdevice_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      DISTRIBUTER::instance ()->connection_manager ().unbind_sender (this->distributer_name_,
+								     sender_mmdevice.in ());
+      
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Distributer::unbind");
+    }
+  ACE_ENDTRY;
+}
+
+void
 Distributer::done (int done)
 {
   this->done_ = done;
@@ -395,15 +414,15 @@ main (int argc,
       if (result != 0)
         return result;
 
-      ///  while (!DISTRIBUTER::instance ()->done ())
-      ///         {
-      ///           orb->perform_work (ACE_TRY_ENV);
-      ///           ACE_TRY_CHECK;
-      ///         }
+      while (!DISTRIBUTER::instance ()->done ())
+	{
+	  orb->perform_work (ACE_TRY_ENV);
+	  ACE_TRY_CHECK;
+	}
+
+      DISTRIBUTER::instance ()->unbind (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
-      orb->run ();
-      /// Hack for now....
-      ACE_OS::sleep (1);
     }
   ACE_CATCHANY
     {
