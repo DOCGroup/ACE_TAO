@@ -21,7 +21,7 @@ foreach $i (@ARGV) {
         $debug_level = '1';
     } 
     elsif ($i eq '-exclusive') {
-        $client_conf = PerlACE::LocalFile ('exclusive$PerlACE::svcconf_ext');
+        $client_conf = PerlACE::LocalFile ("exclusive$PerlACE::svcconf_ext");
     }
 }
 
