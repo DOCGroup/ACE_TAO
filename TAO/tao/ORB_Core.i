@@ -59,25 +59,6 @@ TAO_ORB_Core::root_poa (const char *adapter_name,
   return this->root_poa_;
 }
 
-ACE_INLINE PortableServer::POA_ptr
-TAO_ORB_Core::root_poa_reference (CORBA::Environment &TAO_IN_ENV,
-                                  const char *adapter_name,
-                                  TAO_POA_Manager *poa_manager,
-                                  const TAO_POA_Policies *policies)
-{
-  if (CORBA::is_nil (this->root_poa_reference_.in ()))
-    {
-      TAO_POA *poa = this->root_poa (adapter_name,
-                                     poa_manager,
-                                     policies);
-
-      this->root_poa_reference_ = poa->_this (TAO_IN_ENV);
-      TAO_CHECK_RETURN (PortableServer::POA::_nil ());
-    }
-
-  return PortableServer::POA::_duplicate (this->root_poa_reference_.in ());
-}
-
 ACE_INLINE TAO_OA_Parameters *
 TAO_ORB_Core::oa_params (void)
 {

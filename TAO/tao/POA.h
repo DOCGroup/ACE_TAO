@@ -69,15 +69,15 @@ public:
 
   TAO_Thread_Policy (const TAO_Thread_Policy &new_policy);
 
-  virtual PortableServer::ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::ThreadPolicyValue value_;
@@ -95,15 +95,15 @@ public:
 
   TAO_Lifespan_Policy (const TAO_Lifespan_Policy &rhs);
 
-  virtual PortableServer::LifespanPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::LifespanPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::LifespanPolicyValue value_;
@@ -119,15 +119,15 @@ public:
 
   TAO_Id_Uniqueness_Policy (const TAO_Id_Uniqueness_Policy &rhs);
 
-  virtual PortableServer::IdUniquenessPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::IdUniquenessPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::IdUniquenessPolicyValue value_;
@@ -143,15 +143,15 @@ public:
 
   TAO_Id_Assignment_Policy (const TAO_Id_Assignment_Policy &rhs);
 
-  virtual PortableServer::IdAssignmentPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::IdAssignmentPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::IdAssignmentPolicyValue value_;
@@ -169,15 +169,15 @@ public:
 
   TAO_Implicit_Activation_Policy (const TAO_Implicit_Activation_Policy &rhs);
 
-  virtual PortableServer::ImplicitActivationPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::ImplicitActivationPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::ImplicitActivationPolicyValue value_;
@@ -193,15 +193,15 @@ public:
 
   TAO_Servant_Retention_Policy (const TAO_Servant_Retention_Policy &rhs);
 
-  virtual PortableServer::ServantRetentionPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::ServantRetentionPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::ServantRetentionPolicyValue value_;
@@ -217,15 +217,15 @@ public:
 
   TAO_Request_Processing_Policy (const TAO_Request_Processing_Policy &rhs);
 
-  virtual PortableServer::RequestProcessingPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::RequestProcessingPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::Policy_ptr copy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void destroy (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
   PortableServer::RequestProcessingPolicyValue value_;
@@ -243,38 +243,38 @@ public:
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  virtual PortableServer::ThreadPolicyValue thread (void) const;
-  virtual void thread (PortableServer::ThreadPolicyValue value);
+  PortableServer::ThreadPolicyValue thread (void) const;
+  void thread (PortableServer::ThreadPolicyValue value);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  virtual PortableServer::LifespanPolicyValue lifespan (void) const;
-  virtual void lifespan (PortableServer::LifespanPolicyValue value);
+  PortableServer::LifespanPolicyValue lifespan (void) const;
+  void lifespan (PortableServer::LifespanPolicyValue value);
 
-  virtual PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
-  virtual void id_uniqueness (PortableServer::IdUniquenessPolicyValue value);
+  PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
+  void id_uniqueness (PortableServer::IdUniquenessPolicyValue value);
 
-  virtual PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
-  virtual void id_assignment (PortableServer::IdAssignmentPolicyValue value);
+  PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
+  void id_assignment (PortableServer::IdAssignmentPolicyValue value);
 
-  virtual PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
-  virtual void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
+  PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
+  void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
 
-  virtual PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
-  virtual void servant_retention (PortableServer::ServantRetentionPolicyValue value);
+  PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
+  void servant_retention (PortableServer::ServantRetentionPolicyValue value);
 
-  virtual PortableServer::RequestProcessingPolicyValue request_processing (void) const;
-  virtual void request_processing (PortableServer::RequestProcessingPolicyValue value);
+  PortableServer::RequestProcessingPolicyValue request_processing (void) const;
+  void request_processing (PortableServer::RequestProcessingPolicyValue value);
 
-  virtual void parse_policies (const CORBA::PolicyList &policies,
-                               CORBA_Environment &ACE_TRY_ENV);
+  void parse_policies (const CORBA::PolicyList &policies,
+                       CORBA_Environment &ACE_TRY_ENV);
 
 protected:
 
-  virtual void parse_policy (const CORBA::Policy_ptr policy,
-                             CORBA_Environment &ACE_TRY_ENV);
+  void parse_policy (const CORBA::Policy_ptr policy,
+                     CORBA_Environment &ACE_TRY_ENV);
 
-  virtual int validity_check (void);
+  int validity_check (void);
 
   PortableServer::ThreadPolicyValue thread_;
 
@@ -301,9 +301,9 @@ public:
 
   TAO_Creation_Time (void);
 
-  virtual void creation_time (const void *creation_time);
+  void creation_time (const void *creation_time);
 
-  virtual const void *creation_time (void) const;
+  const void *creation_time (void) const;
 
   static CORBA::ULong creation_time_length (void);
 
@@ -335,7 +335,7 @@ public:
 
   TAO_Temporary_Creation_Time (void);
 
-  virtual void creation_time (const void *creation_time);
+  void creation_time (const void *creation_time);
 
   int operator== (const TAO_Creation_Time &rhs) const;
 
@@ -357,112 +357,112 @@ public:
 
   typedef ACE_CString String;
 
-  virtual PortableServer::POA_ptr create_POA (const char *adapter_name,
-                                              PortableServer::POAManager_ptr poa_manager,
-                                              const CORBA::PolicyList &policies,
-                                              CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::POA_ptr create_POA (const char *adapter_name,
+                                      PortableServer::POAManager_ptr poa_manager,
+                                      const CORBA::PolicyList &policies,
+                                      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::POA_ptr find_POA (const char *adapter_name,
-                                            CORBA::Boolean activate_it,
-                                            CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual void destroy (CORBA::Boolean etherealize_objects,
-                        CORBA::Boolean wait_for_completion,
-                        CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-  virtual PortableServer::ThreadPolicy_ptr create_thread_policy (PortableServer::ThreadPolicyValue value,
-                                                                 CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-  virtual PortableServer::LifespanPolicy_ptr create_lifespan_policy (PortableServer::LifespanPolicyValue value,
-                                                                     CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::IdUniquenessPolicy_ptr create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value,
-                                                                              CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
-                                                                              CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-  virtual PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
-                                                                                          CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::ServantRetentionPolicy_ptr create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,
-                                                                                      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
-                                                                                        CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-  virtual CORBA::String the_name (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::POA_ptr the_parent (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::POAManager_ptr the_POAManager (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-  virtual PortableServer::AdapterActivator_ptr the_activator (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual void the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
-                              CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::ServantManager_ptr get_servant_manager (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual void set_servant_manager (PortableServer::ServantManager_ptr imgr,
+  PortableServer::POA_ptr find_POA (const char *adapter_name,
+                                    CORBA::Boolean activate_it,
                                     CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual PortableServer::Servant get_servant (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual void set_servant (PortableServer::Servant servant,
-                            CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-  virtual PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant,
-                                                     CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual void activate_object_with_id (const PortableServer::ObjectId &id,
-                                        PortableServer::Servant p_servant,
-                                        CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual void deactivate_object (const PortableServer::ObjectId &oid,
-                                  CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual CORBA::Object_ptr create_reference (const char *intf,
-                                              CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual CORBA::Object_ptr create_reference_with_id (const PortableServer::ObjectId &oid,
-                                                      const char *intf,
-                                                      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-  virtual PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant,
-                                                   CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual CORBA::Object_ptr servant_to_reference (PortableServer::Servant p_servant,
-                                                  CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::Servant reference_to_servant (CORBA::Object_ptr reference,
-                                                        CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::ObjectId *reference_to_id (CORBA::Object_ptr reference,
-                                                     CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual PortableServer::Servant id_to_servant (const PortableServer::ObjectId &oid,
-                                                 CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,
-                                             CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  void destroy (CORBA::Boolean etherealize_objects,
+                CORBA::Boolean wait_for_completion,
+                CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  virtual void forward_object (const PortableServer::ObjectId &oid,
-                               CORBA::Object_ptr forward_to,
-                               CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::ThreadPolicy_ptr create_thread_policy (PortableServer::ThreadPolicyValue value,
+                                                         CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  PortableServer::LifespanPolicy_ptr create_lifespan_policy (PortableServer::LifespanPolicyValue value,
+                                                             CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::IdUniquenessPolicy_ptr create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value,
+                                                                      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
+                                                                      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
+                                                                                  CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::ServantRetentionPolicy_ptr create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,
+                                                                              CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
+                                                                                CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  CORBA::String the_name (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::POA_ptr the_parent (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::POAManager_ptr the_POAManager (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  PortableServer::AdapterActivator_ptr the_activator (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  void the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
+                      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::ServantManager_ptr get_servant_manager (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  void set_servant_manager (PortableServer::ServantManager_ptr imgr,
+                            CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::Servant get_servant (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  void set_servant (PortableServer::Servant servant,
+                    CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant,
+                                             CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  void activate_object_with_id (const PortableServer::ObjectId &id,
+                                PortableServer::Servant p_servant,
+                                CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  void deactivate_object (const PortableServer::ObjectId &oid,
+                          CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  CORBA::Object_ptr create_reference (const char *intf,
+                                      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  CORBA::Object_ptr create_reference_with_id (const PortableServer::ObjectId &oid,
+                                              const char *intf,
+                                              CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant,
+                                           CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  CORBA::Object_ptr servant_to_reference (PortableServer::Servant p_servant,
+                                          CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::Servant reference_to_servant (CORBA::Object_ptr reference,
+                                                CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::ObjectId *reference_to_id (CORBA::Object_ptr reference,
+                                             CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  PortableServer::Servant id_to_servant (const PortableServer::ObjectId &oid,
+                                         CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+  CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,
+                                     CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  void forward_object (const PortableServer::ObjectId &oid,
+                       CORBA::Object_ptr forward_to,
+                       CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -491,7 +491,7 @@ public:
            TAO_ORB_Core &orb_core,
            CORBA_Environment &ACE_TRY_ENV);
 
-  virtual ~TAO_POA (void);
+  ~TAO_POA (void);
 
   static char name_separator (void);
 
@@ -512,90 +512,90 @@ protected:
 
   const ACE_CString &name (void) const;
 
-  virtual TAO_POA *create_POA (const String &adapter_name,
-                               TAO_POA_Manager &poa_manager,
-                               const TAO_POA_Policies &policies,
-                               CORBA_Environment &ACE_TRY_ENV);
+  TAO_POA *create_POA (const String &adapter_name,
+                       TAO_POA_Manager &poa_manager,
+                       const TAO_POA_Policies &policies,
+                       CORBA_Environment &ACE_TRY_ENV);
 
-  virtual TAO_POA *create_POA_i (const String &adapter_name,
-                                 TAO_POA_Manager &poa_manager,
-                                 const TAO_POA_Policies &policies,
-                                 CORBA_Environment &ACE_TRY_ENV);
+  TAO_POA *create_POA_i (const String &adapter_name,
+                         TAO_POA_Manager &poa_manager,
+                         const TAO_POA_Policies &policies,
+                         CORBA_Environment &ACE_TRY_ENV);
 
-  virtual TAO_POA *find_POA_i (const ACE_CString &child_name,
-                               CORBA::Boolean activate_it,
-                               CORBA::Environment &ACE_TRY_ENV);
+  TAO_POA *find_POA_i (const ACE_CString &child_name,
+                       CORBA::Boolean activate_it,
+                       CORBA::Environment &ACE_TRY_ENV);
 
-  virtual void destroy_i (CORBA::Boolean etherealize_objects,
-                          CORBA::Boolean wait_for_completion,
-                          CORBA_Environment &ACE_TRY_ENV);
+  void destroy_i (CORBA::Boolean etherealize_objects,
+                  CORBA::Boolean wait_for_completion,
+                  CORBA_Environment &ACE_TRY_ENV);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  virtual PortableServer::ServantManager_ptr get_servant_manager_i (CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::ServantManager_ptr get_servant_manager_i (CORBA_Environment &ACE_TRY_ENV);
 
-  virtual void set_servant_manager_i (PortableServer::ServantManager_ptr imgr,
-                                      CORBA_Environment &ACE_TRY_ENV);
-
-  virtual PortableServer::Servant get_servant_i (CORBA_Environment &ACE_TRY_ENV);
-
-  virtual void set_servant_i (PortableServer::Servant servant,
+  void set_servant_manager_i (PortableServer::ServantManager_ptr imgr,
                               CORBA_Environment &ACE_TRY_ENV);
 
+  PortableServer::Servant get_servant_i (CORBA_Environment &ACE_TRY_ENV);
+
+  void set_servant_i (PortableServer::Servant servant,
+                      CORBA_Environment &ACE_TRY_ENV);
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  virtual PortableServer::ObjectId *activate_object_i (PortableServer::Servant p_servant,
-                                                       CORBA_Environment &ACE_TRY_ENV);
-
-  virtual void activate_object_with_id_i (const PortableServer::ObjectId &id,
-                                          PortableServer::Servant p_servant,
-                                          CORBA_Environment &ACE_TRY_ENV);
-
-  virtual void deactivate_object_i (const PortableServer::ObjectId &oid,
-                                    CORBA_Environment &ACE_TRY_ENV);
-
-  virtual CORBA::Object_ptr create_reference_i (const char *intf,
-                                                CORBA_Environment &ACE_TRY_ENV);
-
-  virtual CORBA::Object_ptr create_reference_with_id_i (const PortableServer::ObjectId &oid,
-                                                        const char *intf,
-                                                        CORBA_Environment &ACE_TRY_ENV);
-  virtual PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant,
-                                                     CORBA_Environment &ACE_TRY_ENV);
-
-  virtual PortableServer::ObjectId *servant_to_system_id (PortableServer::Servant p_servant,
-                                                          CORBA_Environment &ACE_TRY_ENV);
-
-  virtual PortableServer::ObjectId *servant_to_system_id_i (PortableServer::Servant p_servant,
-                                                            CORBA_Environment &ACE_TRY_ENV);
-
-  virtual PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid,
-                                                   CORBA_Environment &ACE_TRY_ENV);
-
-  virtual CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
+  PortableServer::ObjectId *activate_object_i (PortableServer::Servant p_servant,
                                                CORBA_Environment &ACE_TRY_ENV);
+
+  void activate_object_with_id_i (const PortableServer::ObjectId &id,
+                                  PortableServer::Servant p_servant,
+                                  CORBA_Environment &ACE_TRY_ENV);
+
+  void deactivate_object_i (const PortableServer::ObjectId &oid,
+                            CORBA_Environment &ACE_TRY_ENV);
+
+  CORBA::Object_ptr create_reference_i (const char *intf,
+                                        CORBA_Environment &ACE_TRY_ENV);
+
+  CORBA::Object_ptr create_reference_with_id_i (const PortableServer::ObjectId &oid,
+                                                const char *intf,
+                                                CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant,
+                                             CORBA_Environment &ACE_TRY_ENV);
+
+  PortableServer::ObjectId *servant_to_system_id (PortableServer::Servant p_servant,
+                                                  CORBA_Environment &ACE_TRY_ENV);
+
+  PortableServer::ObjectId *servant_to_system_id_i (PortableServer::Servant p_servant,
+                                                    CORBA_Environment &ACE_TRY_ENV);
+
+  PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid,
+                                           CORBA_Environment &ACE_TRY_ENV);
+
+  CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
+                                       CORBA_Environment &ACE_TRY_ENV);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  virtual void forward_object_i (const PortableServer::ObjectId &oid,
-                                 CORBA::Object_ptr forward_to,
-                                 CORBA_Environment &ACE_TRY_ENV);
+  void forward_object_i (const PortableServer::ObjectId &oid,
+                         CORBA::Object_ptr forward_to,
+                         CORBA_Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  virtual ACE_Lock &lock (void);
+  ACE_Lock &lock (void);
 
-  virtual TAO_POA_Policies &policies (void);
+  TAO_POA_Policies &policies (void);
 
-  virtual TAO_Active_Object_Map &active_object_map (void) const;
+  TAO_Active_Object_Map &active_object_map (void) const;
 
-  virtual int delete_child (const String &child);
+  int delete_child (const String &child);
 
-  virtual void set_folded_name (void);
+  void set_folded_name (void);
 
-  virtual TAO_ObjectKey *create_object_key (const PortableServer::ObjectId &id);
+  TAO_ObjectKey *create_object_key (const PortableServer::ObjectId &id);
 
-  virtual int is_poa_generated_id (const PortableServer::ObjectId &id);
+  int is_poa_generated_id (const PortableServer::ObjectId &id);
 
   static int parse_key (const TAO_ObjectKey &key,
                         TAO_Object_Adapter::poa_name &poa_system_name,
@@ -616,20 +616,20 @@ public:
   };
 
 protected:
-  virtual LOCATION_RESULT locate_servant_i (const PortableServer::ObjectId &id,
-                                            PortableServer::Servant &servant,
+  LOCATION_RESULT locate_servant_i (const PortableServer::ObjectId &id,
+                                    PortableServer::Servant &servant,
+                                    CORBA_Environment &ACE_TRY_ENV);
+
+  PortableServer::Servant locate_servant_i (const char *operation,
+                                            const PortableServer::ObjectId &id,
+                                            TAO_POA_Current *poa_current,
                                             CORBA_Environment &ACE_TRY_ENV);
 
-  virtual PortableServer::Servant locate_servant_i (const char *operation,
-                                                    const PortableServer::ObjectId &id,
-                                                    TAO_POA_Current *poa_current,
-                                                    CORBA_Environment &ACE_TRY_ENV);
+  const TAO_Creation_Time &creation_time (void);
 
-  virtual const TAO_Creation_Time &creation_time (void);
+  CORBA::Boolean persistent (void);
 
-  virtual CORBA::Boolean persistent (void);
-
-  virtual char persistent_key_type (void);
+  char persistent_key_type (void);
 
   static char persistent_key_char (void);
 
@@ -637,9 +637,9 @@ protected:
 
   static CORBA::ULong persistent_key_type_length (void);
 
-  virtual CORBA::Boolean system_id (void);
+  CORBA::Boolean system_id (void);
 
-  virtual char system_id_key_type (void);
+  char system_id_key_type (void);
 
   static char system_id_key_char (void);
 
@@ -647,9 +647,9 @@ protected:
 
   static CORBA::ULong system_id_key_type_length (void);
 
-  virtual CORBA::Boolean root (void);
+  CORBA::Boolean root (void);
 
-  virtual char root_key_type (void);
+  char root_key_type (void);
 
   static char root_key_char (void);
 
@@ -686,7 +686,7 @@ protected:
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   typedef ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
-          CHILDREN;
+  CHILDREN;
 
   CHILDREN children_;
 
@@ -709,9 +709,9 @@ class TAO_Export TAO_Adapter_Activator : public POA_PortableServer::AdapterActiv
 {
 public:
 
-  virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
-                                          const char *name,
-                                          CORBA_Environment &ACE_TRY_ENV);
+  CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
+                                  const char *name,
+                                  CORBA_Environment &ACE_TRY_ENV);
 };
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -743,11 +743,11 @@ public:
 
   // = Specification-mandated methods
 
-  virtual PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr get_POA (CORBA_Environment &ACE_TRY_ENV);
   // Return pointer to the invoking POA.  Raises the
   // <CORBA::NoContext> exception.
 
-  virtual PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV);
+  PortableServer::ObjectId *get_object_id (CORBA_Environment &ACE_TRY_ENV);
   // Return pointer to the object id through which this was invoked.
   // This may be necessary in cases where a <Servant> is serving under
   // the guise of multiple object ids.  This has _out semantics Raises
@@ -755,48 +755,48 @@ public:
 
   // = TAO Extensions
 
-  virtual void clear (void);
+  void clear (void);
   // Clear any prior settings made.  This will make things which can
   // throw the <CORBA::NoContext> exception raise it if invoked
   // without a corresponding <set_*> operation.
 
-  virtual int context_is_valid (void);
+  int context_is_valid (void);
   // Returns non-zero if the context is valid, i.e., if it would be
   // impossible for a <CORBA::NoContext> exception to be raised.
 
-  virtual void POA_impl (TAO_POA *impl);
+  void POA_impl (TAO_POA *impl);
   // Set the POA implementation.
 
-  virtual TAO_POA *POA_impl (void) const;
+  TAO_POA *POA_impl (void) const;
   // Get the POA imeplemantation
 
-  virtual void object_id (const PortableServer::ObjectId &id);
+  void object_id (const PortableServer::ObjectId &id);
   // Set the object ID.
 
-  virtual const PortableServer::ObjectId &object_id (void) const;
+  const PortableServer::ObjectId &object_id (void) const;
   // Get the object ID.
 
-  virtual void object_key (const TAO_ObjectKey &key);
+  void object_key (const TAO_ObjectKey &key);
   // Set the object key.
 
-  virtual const TAO_ObjectKey &object_key (void) const;
+  const TAO_ObjectKey &object_key (void) const;
   // Get the object key.
 
-  virtual void servant (PortableServer::Servant servant);
+  void servant (PortableServer::Servant servant);
   // Set the servant for the current upcall.
 
-  virtual PortableServer::Servant servant (void) const;
+  PortableServer::Servant servant (void) const;
   // Get the servant for the current upcall.
 
-  virtual int in_upcall (void) const;
+  int in_upcall (void) const;
   // Get whether we're in an upcall (non-zero is yes).
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  virtual PortableServer::ServantLocator::Cookie locator_cookie (void) const;
+  PortableServer::ServantLocator::Cookie locator_cookie (void) const;
   // Get the Servant Locator's cookie
 
-  virtual void locator_cookie (PortableServer::ServantLocator::Cookie cookie);
+  void locator_cookie (PortableServer::ServantLocator::Cookie cookie);
   // Set the Servant Locator's cookie
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -811,7 +811,7 @@ public:
                    TAO_ORB_Core &orb_core);
   // Convenience constructor combining construction & initialization.
 
-  virtual ~TAO_POA_Current (void);
+  ~TAO_POA_Current (void);
   // Destructor
 
 protected:
