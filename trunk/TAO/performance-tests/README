@@ -1,4 +1,6 @@
-$Id$
+#
+# $Id$
+#
 
 This directory contains a number of tests that illustrate the
 performance of TAO and other ORBs.  The individual directories contain
@@ -10,38 +12,10 @@ READMEs on how to run the following performance tests:
           measure the latency, jitter, CPU utilization, and
           priority inversion of these ORBs.
 
-        . AMI_Latency
+        . Latency
 
-          A latency test for AMI requests
-
-	. AMH_Single_Threaded_Latency
-
-	  Latency test for AMH single threaded applications
-
-        . DII_Latency
-
-          A latency test for DII requests
-
-        . DSI_Latency
-
-          A latency test for DSI servers
-
-        . Deferred_Latency
-
-          A latency test for deferred synchronous requests
-
-	. Single_Threaded_Latency
-
-	  Latency test for single threaded applications
-
-	. Thread_Pool_Latency
-
-	  Latency test for thread pool servers (and threaded clients)
-
-	. Thread_Per_Connection_Latency
-
-	  Latency test for thread-per-connection servers (and threaded
-	  clients)
+          A set of performance tests that measure throughput, latency
+          and jitter.
 
         . POA
         
