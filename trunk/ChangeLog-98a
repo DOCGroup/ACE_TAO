@@ -1,3 +1,12 @@
+Fri Apr 10 00:41:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Reactor_Exception_Test: Tidied the test up a bit.  Thanks
+ 	  to Bob Laferriere <laferrie@gsao.med.ge.com> for suggesting
+ 	  this.
+
+	* tests/test_config.h: Enabled ACE_Log_Msg::VERBOSE since it gives
+ 	  more information that can be useful for debugging.
+
 Fri Apr 10 00:04:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Proactor.cpp (post_completion): Added a new method to the
