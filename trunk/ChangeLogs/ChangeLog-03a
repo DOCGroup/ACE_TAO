@@ -6,11 +6,6 @@ Fri Mar 15 18:08:28 2002  Steve Huston  <shuston@riverace.com>
           rid the build of all the "duplicate symbol" warnings, and it
           broke the incremental builds.
 
-Fri Mar 15 16:02:52 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-	* TAO/TAO-INSTALL.html: Updated to include Solaris 8.  Thanks to
-	  Stephane Chatre <schatre@qoptics.com> for reporting this.	
-
 Fri Mar 15 12:19:58 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_vxworks5.x_ghs.GNU:
