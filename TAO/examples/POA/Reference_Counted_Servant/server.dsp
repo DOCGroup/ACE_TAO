@@ -91,10 +91,6 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Reference_Counted_Foo.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\server.cpp
 # End Source File
 # End Group
