@@ -39,7 +39,8 @@ sub Create
 sub Kill
 {
   my $self = shift;
-  kill ($SIG{'TERM'}, $self->[0]);
+  kill ('TERM', $self->[0]);
+  # print STDERR "Process_Unix::Kill 'TERM' $self->[0]\n";
 }
 
 sub Wait
