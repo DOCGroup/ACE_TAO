@@ -253,7 +253,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // we have to add this to avoid ambiguity.
   if (node->supports_abstract ())
     {
-      *os << be_nl << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;
+      *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
+      *os << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;
       *os << "virtual void _remove_ref (void) = 0;" << be_nl;
       *os << "virtual CORBA::ValueBase *_tao_to_value (void);";
     }
