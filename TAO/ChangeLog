@@ -1,4 +1,12 @@
-2002-11-27  D A Hanvey  <dhanvey@qub.ac.uk>
+Wed Nov 27 13:19:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
+
+	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin:
+	* orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin:
+	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin:
+
+	Files amended for new *LogConsumer files.
+
+2002-11-27  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
