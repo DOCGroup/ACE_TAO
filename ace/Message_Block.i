@@ -319,6 +319,14 @@ ACE_Message_Block::wr_ptr (size_t n)
   this->wr_ptr_ += n;
 }
 
+ACE_INLINE void
+ACE_Message_Block::reset (void)
+{
+  ACE_TRACE ("ACE_Message_Block::reset");
+  this->rd_ptr_ = 0;
+  this->wr_ptr_ = 0;
+}
+
 ACE_INLINE size_t
 ACE_Message_Block::space (void) const
 {
