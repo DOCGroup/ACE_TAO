@@ -296,11 +296,7 @@ class ACE_Timeout_Manager;
 #   endif /* ACE_HAS_STRINGS */
 
 #   if defined (ACE_HAS_TERM_IOCTLS)
-#     if defined (__QNX__)
-#       include "ace/os_include/os_termios.h"
-#     else  /* ! __QNX__ */
-#       include "ace/os_include/os_termios.h"  // <sys/termios.h>
-#     endif /* ! __QNX__ */
+#     include "ace/os_include/os_termios.h"
 #     if defined (HPUX)
 #       include /**/ <sys/modem.h>
 #     endif /* HPUX */
