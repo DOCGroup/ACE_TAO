@@ -203,9 +203,10 @@ public:
 
   virtual int cancel (const TYPE &type,
 		      int dont_call_handle_close = 1) = 0;
-  // Cancel all timer associated with <type>.  If <dont_call> is 0
-  // then the <functor> will be invoked.  Returns number of timers
-  // cancelled.
+  // Cancel all timer associated with <type>.  If
+  // <dont_call_handle_close> is 0 then the <functor> will be invoked,
+  // which typically invokes the <handle_close> hook.  Returns number
+  // of timers cancelled.
 
   virtual int cancel (long timer_id, 
 		      const void **act = 0,
@@ -214,9 +215,10 @@ public:
   // was returned from the <schedule> method).  If act is non-NULL
   // then it will be set to point to the ``magic cookie'' argument
   // passed in when the timer was registered.  This makes it possible
-  // to free up the memory and avoid memory leaks.  If <dont_call> is
-  // 0 then the <functor> will be invoked.  Returns 1 if cancellation
-  // succeeded and 0 if the <timer_id> wasn't found.
+  // to free up the memory and avoid memory leaks.  If
+  // <dont_call_handle_close> is 0 then the <functor> will be invoked,
+  // which typically calls the <handle_close> hook.  Returns 1 if
+  // cancellation succeeded and 0 if the <timer_id> wasn't found.
 
   virtual int expire (const ACE_Time_Value &current_time);
   // Run the <functor> for all timers whose values are <= <cur_time>.
@@ -337,8 +339,12 @@ public:
                             ACE_LOCK>
           TIMER_QUEUE;
   
+  // = Initialization and termination methods.
   ACE_Event_Handler_Handle_Timeout_Upcall (void);
+  // Constructor.
+
   ~ACE_Event_Handler_Handle_Timeout_Upcall (void);
+  // Destructor.
 
   int timeout (TIMER_QUEUE &timer_queue,
 	       ACE_Event_Handler *handler,
