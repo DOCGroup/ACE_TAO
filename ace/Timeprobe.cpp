@@ -29,7 +29,7 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size,
 template <class ACE_LOCK>
 ACE_Timeprobe<ACE_LOCK>::~ACE_Timeprobe (void)
 {
-  for (int i = 0; i < this->max_size_; i++)
+  for (u_long i = 0; i < this->max_size_; i++)
     this->timeprobes_[i].timeprobe_t::~timeprobe_t ();
 
   this->allocator_->free (this->timeprobes_);
@@ -74,7 +74,18 @@ ACE_Timeprobe<ACE_LOCK>::reset (void)
 }
 
 template <class ACE_LOCK> void
-ACE_Timeprobe<ACE_LOCK>::print_times (const char *event_descriptions[]) const
+ACE_Timeprobe<ACE_LOCK>::event_descriptions (const char **descriptions,
+                                             u_long minimum_id)
+{
+  Event_Descriptions events;
+  events.descriptions_ = descriptions;
+  events.minimum_id_ = minimum_id;
+
+  this->event_descriptions_.insert (events);
+}
+
+template <class ACE_LOCK> void
+ACE_Timeprobe<ACE_LOCK>::print_times (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nACE_Timeprobe; %d timestamps were recorded:\n",
@@ -89,36 +100,47 @@ ACE_Timeprobe<ACE_LOCK>::print_times (const char *event_descriptions[]) const
               "thread",
               "usec"));
 
-  const char *description = 0;
-  if (this->timeprobes_[0].event_type_ == timeprobe_t::STRING)
-    description = this->timeprobes_[0].event_.event_description_;
-  else
-    description = event_descriptions[this->timeprobes_[0].event_.event_number_];
-                                    
   ACE_DEBUG ((LM_DEBUG,
               "%-50.50s %8.8x %13.13s\n",
-              description,
+              this->find_description (0),
               this->timeprobes_[0].thread_,
               "START"));
 
-  for (u_int i = 1; i < this->current_size_; i++)
+  for (u_long i = 1; i < this->current_size_; i++)
     {
       ACE_hrtime_t time_difference = 
         this->timeprobes_[i].time_ - this->timeprobes_[i-1].time_;
 
-      float elapsed_time_in_micro_seconds = 
-        (float) time_difference / ACE_High_Res_Timer::global_scale_factor ();
+      ACE_UINT32 elapsed_time_in_micro_seconds = 
+        (ACE_UINT32) (time_difference / ACE_High_Res_Timer::global_scale_factor ());
 
-      if (this->timeprobes_[i].event_type_ == timeprobe_t::STRING)
-        description = this->timeprobes_[i].event_.event_description_;
-      else
-        description = event_descriptions[this->timeprobes_[i].event_.event_number_];
-                                    
       ACE_DEBUG ((LM_DEBUG,
-                  "%-50.50s %8.8x %13.3f\n",
-                  description,
+                  "%-50.50s %8.8x %13u\n",
+                  this->find_description (i),
                   this->timeprobes_[i].thread_,
-                  elapsed_time_in_micro_seconds));
+                  (unsigned int) elapsed_time_in_micro_seconds));
+    }
+}
+
+template <class ACE_LOCK> const char *
+ACE_Timeprobe<ACE_LOCK>::find_description (u_long i)
+{
+  if (this->timeprobes_[i].event_type_ == timeprobe_t::STRING)
+    return this->timeprobes_[i].event_.event_description_;
+  else
+    {
+      EVENT_DESCRIPTIONS::iterator iterator = this->event_descriptions_.begin ();
+      for (u_long j = 0;
+           j < this->event_descriptions_.size () - 1;
+           iterator++, j++)
+        {
+          EVENT_DESCRIPTIONS::iterator next_event_descriptions = iterator;
+          next_event_descriptions++;
+          
+          if (this->timeprobes_[i].event_.event_number_ < (*next_event_descriptions).minimum_id_)
+            break;
+        }
+      return (*iterator).descriptions_[this->timeprobes_[i].event_.event_number_ - (*iterator).minimum_id_];
     }
 }
 

@@ -1,3 +1,12 @@
+Tue May 26 00:35:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Timeprobe: Added the ability to have multiple event tables
+ 	  for time probes. Multiple maps can be used to chunk up the time
+ 	  probes.  Each one can be added by calling event_descriptions().
+  	  Different tables are used internally by consulting the
+ 	  minimum_id for each table.  It is up to the user to make sure
+ 	  that multiple tables do not share the same event id range.
+	
 Sat Apr 18 01:28:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Timeprobe.h (class ACE_Timeprobe): Changed ACE_Timeprobe to
