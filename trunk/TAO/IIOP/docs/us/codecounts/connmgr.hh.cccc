@@ -1,26 +1,9 @@
-
-CCCC - a code counter for C and C++
-===================================
-
-A program to analyse C and C++ source code and report on
-some simple software metrics
-Version  1.00 
-Copyright Tim Littlefair, 1995
-
-The development of this program was heavily dependent on
-the Purdue Compiler Construction Tool Set (PCCTS) 
-by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
-and others.
-
-This software is provided with NO WARRANTY
-
-
-Scope: ../../../lib/bridge/connmgr.hh
+Scope: connmgr.hh
 Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
 --------------------                 ---- ---- ----- ----- ----- ----- -----
-template<>class autorelease{};       1    45      14    16     6   1.1   0.4
-struct client_endpoint{};            48   83      11    15     0   1.4   0.0
-class server_endpoint{};             86   139     15    27     0   1.8   0.0
+template<>class autorelease{};       1    47      14    16     6   1.1   0.4
+struct client_endpoint{};            50   85      11    15     0   1.4   0.0
+class server_endpoint{};             88   141     15    27     0   1.8   0.0
 --------------------                 ---- ---- ----- ----- ----- ----- -----
 Summary for scope:                                40    61     6   1.5   0.2
 --------------------                 ---- ---- ----- ----- ----- ----- -----
