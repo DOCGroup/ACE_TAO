@@ -488,7 +488,7 @@ ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
 const ACE_TCHAR *
 ACE::dirname (const ACE_TCHAR *pathname, ACE_TCHAR delim)
 {
-  ACE_TRACE ("ACE::basename");
+  ACE_TRACE ("ACE::dirname");
   static ACE_TCHAR return_dirname[MAXPATHLEN + 1];
 
   const ACE_TCHAR *temp = ACE_OS::strrchr (pathname, delim);

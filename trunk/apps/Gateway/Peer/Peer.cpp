@@ -565,7 +565,8 @@ Peer_Handler::await_events (void)
                     this->total_bytes_));
         if (Options::instance ()->enabled (Options::VERBOSE))
           ACE_DEBUG ((LM_DEBUG,
-                      "data_ = %s\n",
+                      "data_ = %*s\n",
+                      event->header_.len_ - 2,
                       event->data_));
         mb->release ();
         return 0;

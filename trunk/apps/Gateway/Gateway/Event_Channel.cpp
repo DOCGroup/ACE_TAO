@@ -320,33 +320,37 @@ Event_Channel::initiate_connector (void)
 int
 Event_Channel::initiate_acceptors (void)
 {
-  if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR)
-      && this->consumer_acceptor_.open
-      (Options::instance ()->consumer_acceptor_port (),
-       ACE_Reactor::instance (),
-       Options::instance ()->blocking_semantics ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "cannot register acceptor"),
-                       -1);
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "accepting Consumers at %d\n",
-                Options::instance ()->consumer_acceptor_port ()));
-
-  if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR)
-      && this->supplier_acceptor_.open
-      (Options::instance ()->supplier_acceptor_port (),
-       ACE_Reactor::instance (),
-       Options::instance ()->blocking_semantics ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "cannot register acceptor"),
-                      -1);
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "accepting Suppliers at %d\n",
-                Options::instance ()->supplier_acceptor_port ()));
+  if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR))
+    {
+    
+      if (this->consumer_acceptor_.open
+          (Options::instance ()->consumer_acceptor_port (),
+           ACE_Reactor::instance (),
+           Options::instance ()->blocking_semantics ()) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "cannot register acceptor"),
+                          -1);
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "accepting Consumers at %d\n",
+                    Options::instance ()->consumer_acceptor_port ()));
+    }
+  if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR))
+    {
+      if (this->supplier_acceptor_.open
+          (Options::instance ()->supplier_acceptor_port (),
+           ACE_Reactor::instance (),
+           Options::instance ()->blocking_semantics ()) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "cannot register acceptor"),
+                          -1);
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "accepting Suppliers at %d\n",
+                    Options::instance ()->supplier_acceptor_port ()));
+    }
 
   return 0;
 }

@@ -24,6 +24,13 @@ ifeq ($(threads),0)
   CFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
+ifeq (,$(exceptions))
+ exceptions = 0
+endif
+ifeq ($(exceptions),0)
+ CFLAGS += -fno-exceptions
+endif # exceptions
+
 ifeq ($(shell /bin/uname -m),i86pc)
   #### gcc on Solaris86 doesn't use -g
   DCFLAGS         += -gstabs+

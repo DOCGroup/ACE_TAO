@@ -16,9 +16,10 @@ Wed Feb  7 14:31:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 Wed Feb  7 12:57:35 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/Acceptor_Registry.cpp:
-	  Fixed redundant call to strtok_r in open_i when a 
-	  protocol is specified without an endpoint.  This was
-	  causing core dumps on Linux platforms.
+	  Fixed redundant call to strtok_r in open_i when a protocol is
+ 	  specified without an endpoint.  This was causing core dumps on
+ 	  Linux platforms.  Thanks to Christian Ewald
+ 	  <christian.ewald@zuehlke.com> for reporting this.
 
 Tue Feb  6 22:39:06 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
