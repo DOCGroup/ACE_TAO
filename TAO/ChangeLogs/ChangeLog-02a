@@ -1,3 +1,17 @@
+Mon Nov 27 13:07:29 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+
+	  Removed trailing whitespace.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (open, open_default):
+
+  	  Renamed "open_i" method to "ssliop_open_i" to avoid ambiguities
+	  with the virtual "open_i" method in the TAO_IIOP_SSL_Acceptor
+	  base class.  This fixes warnings emanating from Borland compiler
+	  builds.
+
 Mon Nov 27 13:05:59 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
