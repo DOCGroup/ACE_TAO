@@ -1,3 +1,8 @@
+Fri Apr 26 12:53:13 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connection_Handler.cpp: Removed vague debug statement
+
 Tue Apr 23 12:16:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Handler.cpp:

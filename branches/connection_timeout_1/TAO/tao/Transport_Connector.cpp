@@ -223,7 +223,7 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                    ACE_LIB_TEXT ("(%P|%t) Transport_Connector::connect - ")
                     ACE_LIB_TEXT ("got an existing transport with id %d\n"),
                     base_transport->id ()));
 
@@ -238,7 +238,7 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
       return 0;
     }
 
-  // @@TODO: This is not the right place for this! -- Bala
+  // @@TODO: This is not the right place for this!
   // Purge connections (if necessary)
   this->orb_core_->lane_resources ().transport_cache ().purge ();
 
@@ -250,6 +250,7 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
 void
 TAO_Connector::create_connect_strategy (void)
 {
+  // @@ todo:Not exception safe!
   if (this->active_connect_strategy_ == 0)
     {
       this->active_connect_strategy_ =
