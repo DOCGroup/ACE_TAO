@@ -1,5 +1,8 @@
 Mon Aug 24 10:53:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/RTI_IO.cpp (operator<<): Only
+	  print out the RTI structure of TAO_debug_level is > 0.
+
 	* tests/Cubit/TAO/IDL_Cubit: Renamed a number of files to be more
  	  consistent.  Also, integrated the RTI test operation.  Thanks to
  	  Dave Meyer <dmeyer@std.saic.com> for contributing this.
