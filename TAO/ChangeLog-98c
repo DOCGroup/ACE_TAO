@@ -102,6 +102,7 @@ Tue Dec 15 10:40:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
           This is a collocated version of the Event Channel Throughput
           test.
+
 Mon Dec 14 20:38:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
