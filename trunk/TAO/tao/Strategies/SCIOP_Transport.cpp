@@ -251,7 +251,7 @@ TAO_SCIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
 
-  cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+  cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
   if ((cdr >> listen_list) == 0)
@@ -317,8 +317,7 @@ TAO_SCIOP_Transport::get_listen_point (
     TAO_Acceptor *acceptor)
 {
   TAO_SCIOP_Acceptor *sciop_acceptor =
-    ACE_dynamic_cast (TAO_SCIOP_Acceptor *,
-                      acceptor );
+    dynamic_cast<TAO_SCIOP_Acceptor *> (acceptor );
 
   // Get the array of endpoints serviced by TAO_SCIOP_Acceptor
   const ACE_INET_Addr *endpoint_addr =

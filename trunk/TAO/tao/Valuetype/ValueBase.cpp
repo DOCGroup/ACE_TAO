@@ -63,7 +63,7 @@ CORBA::ValueBase::_downcast (CORBA::ValueBase *vt)
 void
 CORBA::ValueBase::_tao_any_destructor (void *x)
 {
-  CORBA::ValueBase *tmp = ACE_static_cast (CORBA::ValueBase *, x);
+  CORBA::ValueBase *tmp = static_cast<CORBA::ValueBase *> (x);
   CORBA::remove_ref (tmp);
 }
 
@@ -500,8 +500,7 @@ operator<< (TAO_OutputCDR &strm,
 {
   return CORBA::ValueBase::_tao_marshal (
              strm,
-             ACE_const_cast (CORBA::ValueBase *,
-                             _tao_valuetype),
+             const_cast<CORBA::ValueBase *> (_tao_valuetype),
              (ptrdiff_t) &CORBA::ValueBase::_downcast
            );
 }

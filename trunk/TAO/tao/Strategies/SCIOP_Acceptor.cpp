@@ -206,7 +206,7 @@ int
 TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_SCIOP_Endpoint *endp =
-    ACE_dynamic_cast (const TAO_SCIOP_Endpoint *, endpoint);
+    dynamic_cast<const TAO_SCIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == 0)
@@ -288,7 +288,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
       // Now reset the port and set the host.
       if (addr.set (temp_addr.get_port_number (),
-                    ACE_static_cast (ACE_UINT32, INADDR_ANY),
+                    static_cast<ACE_UINT32> (INADDR_ANY),
                     1) != 0)
         return -1;
       else
@@ -510,8 +510,8 @@ TAO_SCIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // address.
   ACE_Multihomed_INET_Addr addr;
 
-  if (addr.set (ACE_static_cast(u_short, 0),
-                ACE_static_cast(ACE_UINT32, INADDR_ANY),
+  if (addr.set (static_cast<u_short> (0),
+                static_cast<ACE_UINT32> (INADDR_ANY),
                 1) != 0)
     return -1;
 
@@ -766,9 +766,9 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   if (if_cnt == lo_cnt)
-    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
   else
-    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt - lo_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
 
   ACE_NEW_RETURN (this->addrs_,
                   ACE_INET_Addr[this->endpoint_count_],
@@ -897,7 +897,7 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   TAO_InputCDR cdr (profile.profile_data.mb ());
 #else
-  TAO_InputCDR cdr (ACE_reinterpret_cast(char*,profile.profile_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<char*> (profile.profile_data.get_buffer ()),
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
@@ -989,7 +989,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = ACE_static_cast (CORBA::ULong, len)
+        end = static_cast<CORBA::ULong> (len)
           - begin;  // Handle last endpoint differently
 
       if (end == begin)
@@ -1002,7 +1002,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
 
           int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1)
+          if (slot == static_cast<int> (len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) SCIOP option <%s> is ")
@@ -1028,7 +1028,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
             }
           else if (name == "portspan")
             {
-              int range = ACE_static_cast (int, ACE_OS::atoi (value.c_str ()));
+              int range = static_cast<int> (ACE_OS::atoi (value.c_str ()));
               // @@ What's the lower bound on the range?  zero, or one?
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -1038,7 +1038,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
                                    value.c_str (), ACE_MAX_DEFAULT_PORT),
                                   -1);
 
-              this->port_span_ = ACE_static_cast (u_short, range);
+              this->port_span_ = static_cast<u_short> (range);
             }
           else if (name == "hostname_in_ior")
             {

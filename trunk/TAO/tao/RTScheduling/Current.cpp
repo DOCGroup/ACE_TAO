@@ -254,8 +254,7 @@ TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
     TAO_TSS_RESOURCES::instance ();
 
   TAO_RTScheduler_Current_i *old =
-    ACE_static_cast (TAO_RTScheduler_Current_i *,
-                     tss->rtscheduler_current_impl_);
+    static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   tss->rtscheduler_current_impl_ = new_current;
 
   return old;
@@ -268,8 +267,7 @@ TAO_RTScheduler_Current::implementation (void)
     TAO_TSS_RESOURCES::instance ();
 
   TAO_RTScheduler_Current_i* impl =
-    ACE_static_cast (TAO_RTScheduler_Current_i *,
-                     tss->rtscheduler_current_impl_);
+    static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   return impl;
 }
 
@@ -955,7 +953,7 @@ CORBA::Object *
 TAO_RTScheduler_Current_var::upcast (void *src)
 {
   TAO_RTScheduler_Current **tmp =
-    ACE_static_cast (TAO_RTScheduler_Current **, src);
+    static_cast<TAO_RTScheduler_Current **> (src);
   return *tmp;
 }
 

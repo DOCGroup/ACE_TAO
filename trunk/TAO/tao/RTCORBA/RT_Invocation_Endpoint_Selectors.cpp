@@ -69,8 +69,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
 
       /// Cast to TAO_ClientProtocolPolicy
       TAO_ClientProtocolPolicy *tao_client_protocol_policy =
-        ACE_static_cast (TAO_ClientProtocolPolicy *,
-                         client_protocol_policy.in ());
+        static_cast<TAO_ClientProtocolPolicy *> (client_protocol_policy.in ());
 
       /// Get the ProtocolList
       RTCORBA::ProtocolList &client_protocols =
@@ -342,9 +341,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           if (!CORBA::is_nil (private_connection_policy.in ()))
             {
               private_connection_descriptor_property.init
-                (ACE_static_cast (long,
-                                  ACE_reinterpret_cast (ptrdiff_t,
-                                                        r.stub ())));
+                (static_cast<long> (reinterpret_cast<ptrdiff_t> (r.stub ())));
               rt_transport_descriptor.insert
                 (&private_connection_descriptor_property);
             }

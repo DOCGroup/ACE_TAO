@@ -177,10 +177,10 @@ CORBA::Boolean
 TAO_SCIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
   TAO_Endpoint *endpt =
-    ACE_const_cast (TAO_Endpoint *, other_endpoint);
+    const_cast<TAO_Endpoint *> (other_endpoint);
 
   TAO_SCIOP_Endpoint *endpoint =
-    ACE_dynamic_cast (TAO_SCIOP_Endpoint *, endpt);
+    dynamic_cast<TAO_SCIOP_Endpoint *> (endpt);
   if (endpoint == 0)
     return 0;
 

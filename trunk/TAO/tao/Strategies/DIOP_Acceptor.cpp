@@ -139,8 +139,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_DIOP_PROFILE)
       {
-        iiop_profile = ACE_dynamic_cast (TAO_DIOP_Profile *,
-                                         pfile);
+        iiop_profile = dynamic_cast<TAO_DIOP_Profile *> (pfile);
         break;
       }
     }
@@ -199,7 +198,7 @@ int
 TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_DIOP_Endpoint *endp =
-    ACE_dynamic_cast (const TAO_DIOP_Endpoint *, endpoint);
+    dynamic_cast<const TAO_DIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == 0)
@@ -252,10 +251,8 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     return -1;
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
+    this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                static_cast<CORBA::Octet> (minor));
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
@@ -282,7 +279,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
       // Now reset the port and set the host.
       if (addr.set (addr.get_port_number (),
-                    ACE_static_cast (ACE_UINT32, INADDR_ANY),
+                    static_cast<ACE_UINT32> (INADDR_ANY),
                     1) != 0)
         return -1;
       else
@@ -360,10 +357,8 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
     }
 
   if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
+    this->version_.set_version (static_cast<CORBA::Octet> (major),
+                                static_cast<CORBA::Octet> (minor));
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -379,7 +374,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   ACE_INET_Addr addr;
 
   if (addr.set (static_cast<unsigned short> (0),
-                ACE_static_cast(ACE_UINT32, INADDR_ANY),
+                static_cast<ACE_UINT32> (INADDR_ANY),
                 1) != 0)
     return -1;
 
@@ -555,9 +550,9 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   if (if_cnt == lo_cnt)
-    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
   else
-    this->endpoint_count_ = ACE_static_cast (CORBA::ULong, if_cnt - lo_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
 
   ACE_NEW_RETURN (this->addrs_,
                   ACE_INET_Addr[this->endpoint_count_],
@@ -612,7 +607,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   TAO_InputCDR cdr (profile.profile_data.mb ());
 #else
-  TAO_InputCDR cdr (ACE_reinterpret_cast(char*,profile.profile_data.get_buffer ()),
+  TAO_InputCDR cdr (reinterpret_cast<char*> (profile.profile_data.get_buffer ()),
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
@@ -704,8 +699,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = ACE_static_cast (int,
-                               len - begin); // Handle last endpoint differently
+        end = static_cast<int> (len - begin); // Handle last endpoint differently
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -717,7 +711,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
 
           int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1)
+          if (slot == static_cast<int> (len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) DIOP option <%s> is ")

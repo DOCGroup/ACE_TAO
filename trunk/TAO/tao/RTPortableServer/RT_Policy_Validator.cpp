@@ -216,8 +216,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
   ACE_CHECK;
 
   TAO_PriorityBandedConnectionPolicy *bands_policy =
-    ACE_dynamic_cast (TAO_PriorityBandedConnectionPolicy *,
-                      priority_bands.in ());
+    dynamic_cast<TAO_PriorityBandedConnectionPolicy *> (priority_bands.in ());
 
   // If priority banded connections are set, make sure that:
   //  0. A priority model was specified.

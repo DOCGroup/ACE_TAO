@@ -269,8 +269,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
         }
       else
         {
-          CORBA::ULong index = ACE_static_cast (CORBA::ULong,
-                                                default_index);
+          CORBA::ULong index = static_cast<CORBA::ULong> (default_index);
 
           CORBA::TypeCode_var default_tc = 
             tc->member_type (index
@@ -441,8 +440,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
           this->set_to_default_member (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          this->member_slot_ = ACE_static_cast (CORBA::ULong,
-                                                default_index);
+          this->member_slot_ = static_cast<CORBA::ULong> (default_index);
         }
     }
 
@@ -484,8 +482,7 @@ TAO_DynUnion_i::set_to_default_member (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      CORBA::ULong index = ACE_static_cast (CORBA::ULong,
-                                            default_index);
+      CORBA::ULong index = static_cast<CORBA::ULong> (default_index);
 
       CORBA::TypeCode_var default_tc =
         unaliased_tc->member_type (index

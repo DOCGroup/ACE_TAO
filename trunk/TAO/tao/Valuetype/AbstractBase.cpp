@@ -129,7 +129,7 @@ CORBA::AbstractBase::_remove_ref (void)
 void
 CORBA::AbstractBase::_tao_any_destructor (void *x)
 {
-  CORBA::AbstractBase_ptr tmp = ACE_static_cast (CORBA::AbstractBase_ptr, x);
+  CORBA::AbstractBase_ptr tmp = static_cast<CORBA::AbstractBase_ptr> (x);
   CORBA::release (tmp);
 }
 

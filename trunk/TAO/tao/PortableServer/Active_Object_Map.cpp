@@ -885,8 +885,7 @@ TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
   // Smartly copy all the data; <user_id does not own the data>.
   user_id.replace (system_id.maximum (),
                    system_id.length (),
-                   ACE_const_cast (CORBA::Octet *,
-                                   system_id.get_buffer ()),
+                   const_cast<CORBA::Octet *> (system_id.get_buffer ()),
                    0);
 
   return 0;

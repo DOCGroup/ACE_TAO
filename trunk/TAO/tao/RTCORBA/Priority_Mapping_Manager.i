@@ -129,7 +129,7 @@ ACE_INLINE CORBA::Object *
 TAO_Priority_Mapping_Manager_var::upcast (void *src)
 {
   TAO_Priority_Mapping_Manager **tmp =
-    ACE_static_cast (TAO_Priority_Mapping_Manager **, src);
+    static_cast<TAO_Priority_Mapping_Manager **> (src);
   return *tmp;
 }
 
@@ -155,13 +155,13 @@ TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (TAO_Priority
 
 ACE_INLINE
 TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (const ::TAO_Priority_Mapping_Manager_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (TAO_Priority_Mapping_Manager_out &, p).ptr_)
+  : ptr_ (const_cast<TAO_Priority_Mapping_Manager_out &> (p).ptr_)
 {}
 
 ACE_INLINE ::TAO_Priority_Mapping_Manager_out &
 TAO_Priority_Mapping_Manager_out::operator= (const ::TAO_Priority_Mapping_Manager_out &p)
 {
-  this->ptr_ = ACE_const_cast (TAO_Priority_Mapping_Manager_out&, p).ptr_;
+  this->ptr_ = const_cast<TAO_Priority_Mapping_Manager_out&> (p).ptr_;
   return *this;
 }
 

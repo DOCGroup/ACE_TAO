@@ -140,8 +140,7 @@ TAO_PriorityModelPolicy::_tao_scope (void) const
   // server priority field is set dynamically depending on the model
   // and the servant's priority.  Therefore, it can't be simply
   // copied to the list of client exposed policies.
-  return ACE_static_cast (TAO_Policy_Scope,
-                          TAO_POLICY_ORB_SCOPE |
+  return static_cast<TAO_Policy_Scope> (TAO_POLICY_ORB_SCOPE |
                           TAO_POLICY_POA_SCOPE);
 }
 
@@ -233,8 +232,7 @@ TAO_ThreadpoolPolicy::_tao_cached_type (void) const
 TAO_Policy_Scope
 TAO_ThreadpoolPolicy::_tao_scope (void) const
 {
-  return ACE_static_cast (TAO_Policy_Scope,
-                          TAO_POLICY_ORB_SCOPE |
+  return static_cast<TAO_Policy_Scope> (TAO_POLICY_ORB_SCOPE |
                           TAO_POLICY_POA_SCOPE);
 }
 
@@ -312,8 +310,7 @@ TAO_PrivateConnectionPolicy::_tao_cached_type (void) const
 TAO_Policy_Scope
 TAO_PrivateConnectionPolicy::_tao_scope (void) const
 {
-  return ACE_static_cast (TAO_Policy_Scope,
-                          TAO_POLICY_OBJECT_SCOPE |
+  return static_cast<TAO_Policy_Scope> (TAO_POLICY_OBJECT_SCOPE |
                           TAO_POLICY_THREAD_SCOPE |
                           TAO_POLICY_ORB_SCOPE);
 }
@@ -429,8 +426,7 @@ TAO_PriorityBandedConnectionPolicy::_tao_cached_type (void) const
 TAO_Policy_Scope
 TAO_PriorityBandedConnectionPolicy::_tao_scope (void) const
 {
-  return ACE_static_cast (TAO_Policy_Scope,
-                          TAO_POLICY_DEFAULT_SCOPE |
+  return static_cast<TAO_Policy_Scope> (TAO_POLICY_DEFAULT_SCOPE |
                           TAO_POLICY_CLIENT_EXPOSED);
 }
 
@@ -535,8 +531,7 @@ TAO_ServerProtocolPolicy::_tao_cached_type (void) const
 TAO_Policy_Scope
 TAO_ServerProtocolPolicy::_tao_scope (void) const
 {
-  return ACE_static_cast (TAO_Policy_Scope,
-                          TAO_POLICY_ORB_SCOPE |
+  return static_cast<TAO_Policy_Scope> (TAO_POLICY_ORB_SCOPE |
                           TAO_POLICY_POA_SCOPE);
 }
 
@@ -646,8 +641,7 @@ TAO_ClientProtocolPolicy::_tao_cached_type (void) const
 TAO_Policy_Scope
 TAO_ClientProtocolPolicy::_tao_scope (void) const
 {
-  return ACE_static_cast (TAO_Policy_Scope,
-                          TAO_POLICY_DEFAULT_SCOPE |
+  return static_cast<TAO_Policy_Scope> (TAO_POLICY_DEFAULT_SCOPE |
                           TAO_POLICY_CLIENT_EXPOSED);
 }
 

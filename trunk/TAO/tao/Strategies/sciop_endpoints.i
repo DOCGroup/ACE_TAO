@@ -60,7 +60,7 @@
     if (rhs.buffer_ != 0)
     {
       TAO_SCIOP_Endpoint_Info *tmp1 = _TAO_Unbounded_Sequence_TAO_SCIOPEndpointSequence::allocbuf (this->maximum_);
-      TAO_SCIOP_Endpoint_Info * const tmp2 = ACE_reinterpret_cast (TAO_SCIOP_Endpoint_Info * ACE_CAST_CONST, rhs.buffer_);
+      TAO_SCIOP_Endpoint_Info * const tmp2 = reinterpret_cast<TAO_SCIOP_Endpoint_Info * ACE_CAST_CONST> (rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
@@ -85,7 +85,7 @@
       if (this->maximum_ < rhs.maximum_)
       {
         // free the old buffer
-        TAO_SCIOP_Endpoint_Info *tmp = ACE_reinterpret_cast (TAO_SCIOP_Endpoint_Info *, this->buffer_);
+        TAO_SCIOP_Endpoint_Info *tmp = reinterpret_cast<TAO_SCIOP_Endpoint_Info *> (this->buffer_);
         _TAO_Unbounded_Sequence_TAO_SCIOPEndpointSequence::freebuf (tmp);
         this->buffer_ = _TAO_Unbounded_Sequence_TAO_SCIOPEndpointSequence::allocbuf (rhs.maximum_);
       }
@@ -95,8 +95,8 @@
 
     TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-    TAO_SCIOP_Endpoint_Info *tmp1 = ACE_reinterpret_cast (TAO_SCIOP_Endpoint_Info *, this->buffer_);
-    TAO_SCIOP_Endpoint_Info * const tmp2 = ACE_reinterpret_cast (TAO_SCIOP_Endpoint_Info * ACE_CAST_CONST, rhs.buffer_);
+    TAO_SCIOP_Endpoint_Info *tmp1 = reinterpret_cast<TAO_SCIOP_Endpoint_Info *> (this->buffer_);
+    TAO_SCIOP_Endpoint_Info * const tmp2 = reinterpret_cast<TAO_SCIOP_Endpoint_Info * ACE_CAST_CONST> (rhs.buffer_);
 
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
@@ -110,7 +110,7 @@
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    TAO_SCIOP_Endpoint_Info* tmp = ACE_reinterpret_cast(TAO_SCIOP_Endpoint_Info*,this->buffer_);
+    TAO_SCIOP_Endpoint_Info* tmp = reinterpret_cast<TAO_SCIOP_Endpoint_Info*> (this->buffer_);
     return tmp[i];
   }
 
@@ -119,7 +119,7 @@
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    TAO_SCIOP_Endpoint_Info * const tmp = ACE_reinterpret_cast (TAO_SCIOP_Endpoint_Info* ACE_CAST_CONST, this->buffer_);
+    TAO_SCIOP_Endpoint_Info * const tmp = reinterpret_cast<TAO_SCIOP_Endpoint_Info* ACE_CAST_CONST> (this->buffer_);
     return tmp[i];
   }
 
@@ -140,7 +140,7 @@
       }
       else
       {
-        result = ACE_reinterpret_cast (TAO_SCIOP_Endpoint_Info*, this->buffer_);
+        result = reinterpret_cast<TAO_SCIOP_Endpoint_Info*> (this->buffer_);
       }
     }
     else // if (orphan == 1)
@@ -149,7 +149,7 @@
       {
         // We set the state back to default and relinquish
         // ownership.
-        result = ACE_reinterpret_cast(TAO_SCIOP_Endpoint_Info*,this->buffer_);
+        result = reinterpret_cast<TAO_SCIOP_Endpoint_Info*> (this->buffer_);
         this->maximum_ = 0;
         this->length_ = 0;
         this->buffer_ = 0;
@@ -162,7 +162,7 @@
   ACE_INLINE const TAO_SCIOP_Endpoint_Info *
   _TAO_Unbounded_Sequence_TAO_SCIOPEndpointSequence::get_buffer (void) const
   {
-    return ACE_reinterpret_cast(const TAO_SCIOP_Endpoint_Info * ACE_CAST_CONST, this->buffer_);
+    return reinterpret_cast<const TAO_SCIOP_Endpoint_Info * ACE_CAST_CONST> (this->buffer_);
   }
 
   ACE_INLINE void
@@ -175,7 +175,7 @@
     this->length_ = length;
     if (this->buffer_ && this->release_ == 1)
     {
-      TAO_SCIOP_Endpoint_Info *tmp = ACE_reinterpret_cast(TAO_SCIOP_Endpoint_Info*,this->buffer_);
+      TAO_SCIOP_Endpoint_Info *tmp = reinterpret_cast<TAO_SCIOP_Endpoint_Info*> (this->buffer_);
       _TAO_Unbounded_Sequence_TAO_SCIOPEndpointSequence::freebuf (tmp);
     }
     this->buffer_ = data;

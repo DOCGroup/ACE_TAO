@@ -75,8 +75,7 @@ CORBA::Boolean
 TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Interface *other_prop)
 {
   const TAO_RT_Transport_Descriptor *rhs =
-    ACE_dynamic_cast (const TAO_RT_Transport_Descriptor*,
-                      other_prop);
+    dynamic_cast<const TAO_RT_Transport_Descriptor*> (other_prop);
 
   if (rhs == 0)
     return 0;

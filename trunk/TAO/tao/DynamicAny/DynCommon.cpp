@@ -436,8 +436,7 @@ TAO_DynCommon::insert_string (const char * value
           ACE_THROW (DynamicAny::DynAny::InvalidValue ());
         }
 
-      this->any_ <<= CORBA::Any::from_string (ACE_const_cast (char *,
-                                                              value),
+      this->any_ <<= CORBA::Any::from_string (const_cast<char *> (value),
                                               bound);
     }
 }
@@ -736,8 +735,7 @@ TAO_DynCommon::insert_wstring (const CORBA::WChar * value
           ACE_THROW (DynamicAny::DynAny::InvalidValue ());
         }
 
-      this->any_ <<= CORBA::Any::from_wstring (ACE_const_cast (CORBA::WChar *,
-                                                               value),
+      this->any_ <<= CORBA::Any::from_wstring (const_cast<CORBA::WChar *> (value),
                                                bound);
     }
 }
@@ -1552,8 +1550,7 @@ TAO_DynCommon::seek (CORBA::Long slot
       this->current_position_ = -1;
       return 0;
     }
-  else if (slot < 0 || slot >= ACE_static_cast (CORBA::Long,
-                                                this->component_count_))
+  else if (slot < 0 || slot >= static_cast<CORBA::Long> (this->component_count_))
     {
       this->current_position_ = -1;
       return 0;
@@ -1594,9 +1591,7 @@ TAO_DynCommon::next (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   if (this->has_components_ == 0
-      || this->current_position_ + 1 >= ACE_static_cast (
-                                            CORBA::Long,
-                                            this->component_count_
+      || this->current_position_ + 1 >= static_cast<CORBA::Long> (this->component_count_
                                           ))
     {
       this->current_position_ = -1;
