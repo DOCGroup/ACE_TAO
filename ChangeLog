@@ -1,36 +1,41 @@
+Sun Oct  3 18:45:03 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.cpp: (realpath)
+          Removed extra "}". 
+
 Fri Oct  1 23:41:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_ctype.h:
-	* ace/OS_NS_ctype.inl:
+        * ace/OS_NS_ctype.h:
+        * ace/OS_NS_ctype.inl:
 
-	  Removed "const" qualifier from all pass-by-value function
-	  parameters.  There is no point in making such parameters
-	  "const".
+          Removed "const" qualifier from all pass-by-value function
+          parameters.  There is no point in making such parameters
+          "const".
 
 Fri Oct  1 23:30:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_stdlib.h (mkstemp, mkstemp_emulation):
-	* ace/OS_NS_stdlib.inl (mkstemp):
-	* ace/OS_NS_stdlib.cpp (mkstemp_emulation):
+        * ace/OS_NS_stdlib.h (mkstemp, mkstemp_emulation):
+        * ace/OS_NS_stdlib.inl (mkstemp):
+        * ace/OS_NS_stdlib.cpp (mkstemp_emulation):
 
-	  Added new mkstemp(3) implementation for the case where
-	  ACE_LACKS_MKSTEMP is defined.  It attempts to retain all of the
-	  security features that vendor supplied mkstemp() implementation
-	  provide, such as preventing symbolic link attacks.  A race
-	  condition, however, may exist when attempting to use this
-	  implementation to create a temporary file on a network
-	  filesystem.
+          Added new mkstemp(3) implementation for the case where
+          ACE_LACKS_MKSTEMP is defined.  It attempts to retain all of the
+          security features that vendor supplied mkstemp() implementation
+          provide, such as preventing symbolic link attacks.  A race
+          condition, however, may exist when attempting to use this
+          implementation to create a temporary file on a network
+          filesystem.
 
-	  ACE_OS::mkstemp() is now available when ACE_LACKS_MKSTEMP is
-	  defined.
+          ACE_OS::mkstemp() is now available when ACE_LACKS_MKSTEMP is
+          defined.
 
-	From Ganesh Pai <GPai at sonusnet dot com>
-	* ace/Hash_Map_Manager_T.h:
-	* ace/Map_Manager.h:
-	* ace/RB_Tree.h:
+        From Ganesh Pai <GPai at sonusnet dot com>
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Map_Manager.h:
+        * ace/RB_Tree.h:
 
-	  Added new "lock_type" type trait.  Allows one to more easily
-	  determine the type of the underlying map/table lock.
+          Added new "lock_type" type trait.  Allows one to more easily
+          determine the type of the underlying map/table lock.
 
 Fri Oct  1 11:54:17 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
@@ -39,195 +44,195 @@ Fri Oct  1 11:54:17 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
 Fri Oct  1 11:35:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
-	* configure.ac:
+        * Makefile.am:
+        * configure.ac:
 
-	  Changed to configure/build Kokyu if directory is present.
+          Changed to configure/build Kokyu if directory is present.
 
-	* Kokyu/Makefile.am:
-	* Kokyu/tests/Makefile.am:
-	* Kokyu/tests/DSRT_MIF/Makefile.am:
-	* Kokyu/tests/EDF/Makefile.am:
-	* Kokyu/tests/FIFO/Makefile.am:
+        * Kokyu/Makefile.am:
+        * Kokyu/tests/Makefile.am:
+        * Kokyu/tests/DSRT_MIF/Makefile.am:
+        * Kokyu/tests/EDF/Makefile.am:
+        * Kokyu/tests/FIFO/Makefile.am:
 
-	  New files.
+          New files.
 
 Thu Sep 30 22:20:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* m4/tls.m4 (ACE_CHECK_TLS):
+        * m4/tls.m4 (ACE_CHECK_TLS):
 
-	  Fixed problem where leading forward slash was not included in
-	  the Kerberos include directory pathname.  Thanks to Steve Huston
-	  for reporting the problem.
+          Fixed problem where leading forward slash was not included in
+          the Kerberos include directory pathname.  Thanks to Steve Huston
+          for reporting the problem.
 
 Thu Sep 30 19:30:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
-	* ace/ace.mpc:
+        * ace/Makefile.am:
+        * ace/ace.mpc:
 
-	  Added Guard_T.* and IO_Cntl_Msg.h to header, inline, and
-	  template files.
+          Added Guard_T.* and IO_Cntl_Msg.h to header, inline, and
+          template files.
 
 Thu Sep 30 18:24:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Update.
+          Update.
 
-	* ace/ace.mpc:
+        * ace/ace.mpc:
 
-	  Remove headers that no longer exist / have been renamed.
+          Remove headers that no longer exist / have been renamed.
 
 Thu Sep 30 18:06:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ace.mpc:
+        * ace/ace.mpc:
 
-	  Sorted header, inline, and template file sections to make it
-	  easier to figure out if something is missing.
+          Sorted header, inline, and template file sections to make it
+          easier to figure out if something is missing.
 
 Thu Sep 30 18:00:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ace.mpc:
+        * ace/ace.mpc:
 
-	  Added many missing header, inline, and template files.  These
-	  were based on what used to be installed with the old automake
-	  builds and were lost now that ace/Makefile.am is generated by
-	  MPC.
+          Added many missing header, inline, and template files.  These
+          were based on what used to be installed with the old automake
+          builds and were lost now that ace/Makefile.am is generated by
+          MPC.
 
 Thu Sep 30 17:32:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACEXML/parser/parser/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
 
-	  Fix typo in includedir definition.
+          Fix typo in includedir definition.
 
 Thu Sep 30 14:02:26 2004  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Added the same kernel version-checking code to the
-	  ACE_HAS_EVENT_POLL check that Dev_Poll_Reactor.h uses to be sure
-	  that if enabled, it will compile.
+        * configure.ac: Added the same kernel version-checking code to the
+          ACE_HAS_EVENT_POLL check that Dev_Poll_Reactor.h uses to be sure
+          that if enabled, it will compile.
 
 Thu Sep 30 07:19:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Removed aceConf.sh.in from AC_CONFIG_FILES.
+          Removed aceConf.sh.in from AC_CONFIG_FILES.
 
-	* aceConf.sh.in:
+        * aceConf.sh.in:
 
-	  Removed file.
+          Removed file.
 
 Thu Sep 30 01:26:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added check for Linux event poll interface.
+          Added check for Linux event poll interface.
 
-	* m4/config_h.m4:
+        * m4/config_h.m4:
 
-	  Added autoheader templates for the ACE_HAS_{EVENT,DEV}_POLL
-	  preprocessor symbols.
+          Added autoheader templates for the ACE_HAS_{EVENT,DEV}_POLL
+          preprocessor symbols.
 
-	* m4/tls.m4 (ACE_CHECK_TLS):
+        * m4/tls.m4 (ACE_CHECK_TLS):
 
-	  Fixed test for Kerberos include flags so that it wouldn't assume
-	  that Kerberos include flags are needed for all cases.
+          Fixed test for Kerberos include flags so that it wouldn't assume
+          that Kerberos include flags are needed for all cases.
 
-	  Fixed problem where the Kerberos include flags would not be set
-	  correctly if running the `configure' script with cached results.
+          Fixed problem where the Kerberos include flags would not be set
+          correctly if running the `configure' script with cached results.
 
-	  Define and substitute new make variable
-	  "ACE_KERBEROS_INCLUDES" that contains a directory rather than a
-	  preprocessor command line option.  The existing
-	  "ACE_TLS_CPPFLAGS" preprocessor command line option variable is
-	  not compatible with MPC.
+          Define and substitute new make variable
+          "ACE_KERBEROS_INCLUDES" that contains a directory rather than a
+          preprocessor command line option.  The existing
+          "ACE_TLS_CPPFLAGS" preprocessor command line option variable is
+          not compatible with MPC.
 
-	* ace/SSL/Makefile.am (libACE_SSL_la_CPPFLAGS):
+        * ace/SSL/Makefile.am (libACE_SSL_la_CPPFLAGS):
 
-	  Added "-I$(ACE_KERBEROS_INCLUDES)" to the preprocessor flag
-	  list.
+          Added "-I$(ACE_KERBEROS_INCLUDES)" to the preprocessor flag
+          list.
 
-	  (libACE_SSL_la_LIBADD):
+          (libACE_SSL_la_LIBADD):
 
-	  Added "-lssl -lcrypto" to the library link list.
+          Added "-lssl -lcrypto" to the library link list.
 
-	* ace/SSL/ssl.mpc:
+        * ace/SSL/ssl.mpc:
 
-	  Define new automake project-specific section that defines the
-	  OpenSSL libraries to link, and added the
-	  $(ACE_KERBEROS_INCLUDES) include directory variable to the
-	  generated include path.
+          Define new automake project-specific section that defines the
+          OpenSSL libraries to link, and added the
+          $(ACE_KERBEROS_INCLUDES) include directory variable to the
+          generated include path.
 
 Wed Sep 29 18:13:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/tests.mpc: Added 'script' as a base project for Test_Output
-	  and set Script_Files to run_test.pl and run_test.lst. This is to
-	  pull the testing files to the build area for tests.
+        * tests/tests.mpc: Added 'script' as a base project for Test_Output
+          and set Script_Files to run_test.pl and run_test.lst. This is to
+          pull the testing files to the build area for tests.
 
 Wed Sep 29 17:50:27 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_Memory.h: If ACE_HAS_NEW_NOTHROW is defined, then make sure
-	  that ACE_NEW_THROWS_EXCEPTIONS is defined as well. The configure
-	  script checks for ACE_HAS_NEW_NOTHROW and I believe that all
-	  "up to date" compiler run-times throw an exception on a new()
-	  failure.
+        * ace/OS_Memory.h: If ACE_HAS_NEW_NOTHROW is defined, then make sure
+          that ACE_NEW_THROWS_EXCEPTIONS is defined as well. The configure
+          script checks for ACE_HAS_NEW_NOTHROW and I believe that all
+          "up to date" compiler run-times throw an exception on a new()
+          failure.
 
 Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/Basic_Stats.{h,inl,cpp}:
+        * ace/Basic_Stats.{h,inl,cpp}:
 
-	  - Removed calculation of variation squared or deviation in the
-	  output from dump_results(). I don't think either was been
-	  calculated since the formula of (sum squared / samples_count) -
-	  (avg squared) isn't a meaningful statistical value.
+          - Removed calculation of variation squared or deviation in the
+          output from dump_results(). I don't think either was been
+          calculated since the formula of (sum squared / samples_count) -
+          (avg squared) isn't a meaningful statistical value.
 
-	  - Also simplified division in dump_results() and removed
-	  unnecessary conversions.
+          - Also simplified division in dump_results() and removed
+          unnecessary conversions.
 
-	  - <sum2> is no longer needed.
+          - <sum2> is no longer needed.
 
-	  - Made some minor simplifications to the code.
+          - Made some minor simplifications to the code.
 
-	  - Made the fields of ACE_Basic_Stats public.
+          - Made the fields of ACE_Basic_Stats public.
 
-	  - <min_at_> and <max_at_> were not being assigned in accumulate().
+          - <min_at_> and <max_at_> were not being assigned in accumulate().
 
-	* performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
 
-	  Fixed a for loop.  It should be 1 to n inclusive.
+          Fixed a for loop.  It should be 1 to n inclusive.
 
-	* ace/DLL_Manager.cpp:
+        * ace/DLL_Manager.cpp:
 
-	  Added additional debug statements.
+          Added additional debug statements.
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  TAO/performance-tests/Protocols/run_test.pl was added.
+          TAO/performance-tests/Protocols/run_test.pl was added.
 
 Wed Sep 29 17:11:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/TMCast/LinkListener.hpp: Added #include "Protocol.hpp" to
-	  be able to see the Protocol namespace and "ace/OS_NS_string.h"
-	  to see ACE_OS::memcpy().
+        * ace/TMCast/LinkListener.hpp: Added #include "Protocol.hpp" to
+          be able to see the Protocol namespace and "ace/OS_NS_string.h"
+          to see ACE_OS::memcpy().
 
 Wed Sep 29 13:01:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACEXML/apps/svcconf/Makefile.am:
-	* ACEXML/common/Makefile.am:
-	* ACEXML/parser/parser/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
 
-	  Update so that libraries and headers are installed.
+          Update so that libraries and headers are installed.
 
 Wed Sep 29 12:29:44 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/TMCast/MTQueue.cpp: (new file)
-	* ace/TMCast/Group.cpp: Added/fixed explicit template instantiations
-	  to get build working on Solaris, Forte 7.
+        * ace/TMCast/MTQueue.cpp: (new file)
+        * ace/TMCast/Group.cpp: Added/fixed explicit template instantiations
+          to get build working on Solaris, Forte 7.
 
 Wed Sep 29 12:20:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/Smart_Pointers/widget_test.cpp: Include "ace/Null_Mutex.h"
-	  to get the ACE_Null_Mutex specializations for ACE_Guards. Fixes
-	  build error on Sun Forte C++.
+        * examples/Smart_Pointers/widget_test.cpp: Include "ace/Null_Mutex.h"
+          to get the ACE_Null_Mutex specializations for ACE_Guards. Fixes
+          build error on Sun Forte C++.
 
 Wed Sep 29 09:41:02 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -566,10 +571,10 @@ Fri Sep 24 22:35:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
           New ICMP and "ping" support, and accompanying test.
 
-	* ace/Makefile.am (libACE_Sockets_la_SOURCES):
-	* ace/ace.mpc:
-	* tests/Makefile.am:
-	* tests/tests.mpc:
+        * ace/Makefile.am (libACE_Sockets_la_SOURCES):
+        * ace/ace.mpc:
+        * tests/Makefile.am:
+        * tests/tests.mpc:
 
           Added new ICMP and "ping" source files to the appropriate
           source lists.

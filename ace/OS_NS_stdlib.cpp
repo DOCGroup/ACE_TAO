@@ -431,9 +431,8 @@ ACE_OS::realpath (const char *file_name,
               file_name = expand_buf; // Source path is now in expand_buf
             }
         }
-    }
 #  endif /* ACE_LACKS_SYMLINKS */
-  }
+    }
 
   *dest = '\0';
 
