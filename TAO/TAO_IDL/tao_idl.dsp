@@ -24,7 +24,6 @@ CFG=tao_idl - Win32 Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 RSC=rc.exe
 
@@ -414,6 +413,10 @@ SOURCE=.\be\be_visitor_sequence.cpp
 # Begin Source File
 
 SOURCE=.\be\be_visitor_structure.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_typecode.cpp
 # End Source File
 # Begin Source File
 
@@ -874,6 +877,10 @@ SOURCE=.\be_include\be_visitor_sequence.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_structure.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_typecode.h
 # End Source File
 # Begin Source File
 
