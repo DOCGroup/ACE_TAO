@@ -171,11 +171,6 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
     }
   *os << "}\n\n";
 
-  // Generate the iostream operator overload for this exception,
-  // unless it is suppressed
-  if (idl_global->gen_except_ostream_op ())
-    node->gen_iostream_op_impl (os);
-
   node->cli_inline_cdr_op_gen (1);
   return 0;
 }
