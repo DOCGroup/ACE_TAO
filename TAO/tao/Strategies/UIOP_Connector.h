@@ -58,6 +58,9 @@ public:
   // state/info to the service handler upon creation.  Currently used
   // by IIOP and UIOP to pass protocol configuration properties.
 
+  ~TAO_UIOP_Connect_Creation_Strategy (void);
+  // Destructor
+
   virtual int make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh);
   // Makes TAO_UIOP_Client_Connection_Handlers
 
@@ -87,6 +90,9 @@ public:
   // Constructor.
   // @@ Do we want to pass in the tag here or should it be statically
   // defined?
+
+  ~TAO_UIOP_Connector (void);
+  // Destructor
 
   // = The TAO_Connector methods, please check the documentation on
   // Pluggable.h

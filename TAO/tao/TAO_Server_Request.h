@@ -158,7 +158,12 @@ public:
   void dsi_nvlist_align (ptr_arith_t alignment);
   // Set the member.
 
+  void argument_flag (CORBA::Boolean flag);
+  CORBA::Boolean argument_flag (void);
+  // Get/Set operations for the argument_flag
+
 private:
+
   TAO_Pluggable_Messaging *mesg_base_;
 
   ACE_CString operation_;
@@ -214,6 +219,12 @@ private:
 
   ptr_arith_t dsi_nvlist_align_;
   // Used to pad CDR stream if we have used DSI.
+
+  CORBA::Boolean argument_flag_;
+  // An argument flag to indicate whether there is any data that is
+  // going to get marshalled along as a reply. The default will be 1
+  // which indicates that we have some data that needs to be sent back
+  // to the client.
 };
 
 #if defined (__ACE_INLINE__)

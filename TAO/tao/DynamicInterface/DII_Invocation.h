@@ -40,13 +40,14 @@ class TAO_GIOP_DII_Invocation : public TAO_GIOP_Twoway_Invocation
   // = DESCRIPTION
   //    This class replaces just one method - invoke - of its base
   //    class with one of a slightly different signature. The class
-  //    is not exported because it is only instantiated by 
+  //    is not exported because it is only instantiated by
   //    CORBA::Request in this library.
   //
 public:
   TAO_GIOP_DII_Invocation (TAO_Stub *data,
                            const char *operation,
                            CORBA::ULong opname_len,
+                           CORBA::Boolean argument_flag,
                            TAO_ORB_Core *orb_core);
   // Constructor.
 
@@ -72,6 +73,7 @@ class TAO_DynamicInterface_Export TAO_GIOP_DII_Deferred_Invocation
 public:
   TAO_GIOP_DII_Deferred_Invocation (TAO_Stub *data,
                                     TAO_ORB_Core* orb_core,
+                                    CORBA::Boolean argument_flag,
                                     const CORBA::Request_ptr req);
   // Constructor.
 

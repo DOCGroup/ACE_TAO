@@ -30,6 +30,11 @@ TAO_IIOP_Connect_Creation_Strategy::
 
 }
 
+TAO_IIOP_Connect_Creation_Strategy::
+  ~TAO_IIOP_Connect_Creation_Strategy (void)
+{
+}
+
 int
 TAO_IIOP_Connect_Creation_Strategy::make_svc_handler
   (TAO_IIOP_Client_Connection_Handler *&sh)

@@ -25,6 +25,11 @@ TAO_SHMIOP_Connect_Creation_Strategy::
 {
 }
 
+TAO_SHMIOP_Connect_Creation_Strategy::
+  ~TAO_SHMIOP_Connect_Creation_Strategy (void)
+{
+}
+
 int
 TAO_SHMIOP_Connect_Creation_Strategy::make_svc_handler
   (TAO_SHMIOP_Client_Connection_Handler *&sh)
@@ -46,6 +51,11 @@ TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Octet flag)
     lite_flag_ (flag)
 {
 }
+
+TAO_SHMIOP_Connector::~TAO_SHMIOP_Connector (void)
+{
+}
+
 
 int
 TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)

@@ -1,3 +1,77 @@
+Wed Nov 15 21:35:17 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	  This set of changes have been motivated by the CORBA 2.4
+	  spec. The spec specifies that the GIOP request header should not
+	  be padded to a 8 byte boundary if there is no information or
+	  data that is sent along. In other words, Request headers for
+	  operations with no arguments should not be padded to a 8 byte
+	  boundary.  Actually, the CORBA 2.4 spec has specified this only
+	  for the request header. But, the same argument has been applied
+	  for the reply header too. ORBIX 2000 already does this. If the
+	  operation returns a void and has no arguments, the reply header
+	  is not padded to an 8 byte boundary. So, the same has been done
+	  for TAO too.
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: Set a flag
+	  for one of the arguments to the constructors of
+	  TAO_GIOP_invocation classes. The flag is set 1 if there are any
+	  arguments that are marshalled and 0 if there are no arguments
+	  that are marshalled.
+	  
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Added a line
+	  of generated code to set a flag in the TAO_Server_Request class
+	  if there are no arguments and return types for the operation
+	  that need to be marshalled.
+	
+	* tao/Invocation.h:
+	* tao/Invocation.cpp:
+	* tao/Invocation.i: 
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.cpp:
+	* tao/Asynch_Invocation.i: Added an extra argument to the
+	  TAO_GIOP_Invocation classes. This argument is passed to the
+	  constructor of TAO_Operation_details. 
+
+	* tao/DynamicInterface/DII_Invocation.h:
+	* tao/DynamicInterface/DII_Invocation.inl:
+	* tao/DynamicInterface/Request.cpp: Made the above changes to
+	  these classes too.
+
+	* tao/operation_details.h:
+	* tao/operation_details.i: Added a argument to the
+	  constructor. Stored the argument in the class and provided an
+	  accessor for it. 
+	
+	* tao/GIOP_Message_Accept_State.cpp:
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Connectors.cpp: Added a check to check to see
+	  whether the GIOP message is going to carry any data before we
+	  align the pointer to an 8 byte boundary. 
+
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.cpp
+	* tao/TAO_Server_Request.i: Added an extra flag and accessor for a
+	  flag that would be set by the generated code to 0 if there are no
+	  data that needs to be marshalled. 
+
+	* tao/CORBANAME_Parser.cpp:
+	* tao/DomainC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PortableServer/ImplRepoC.cpp: Changed the arguments for the
+	  TAO_GIOP_invocation calls.
+
+
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp
+	* tao/Strategies/SHMIOP_Connector.h
+	* tao/Strategies/UIOP_Connector.cpp
+	* tao/Strategies/UIOP_Connector.h: Totally unrelated to the above
+	  change. Added default constructors and derstructors as g++2.7.2
+	  seems to be looking for it.
+	
 Wed Nov 15 19:11:28 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security.idl:

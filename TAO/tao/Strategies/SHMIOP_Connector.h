@@ -52,6 +52,9 @@ public:
                                         TAO_ORB_Core* orb_core = 0,
                                         CORBA::Boolean flag = 0);
 
+  ~TAO_SHMIOP_Connect_Creation_Strategy (void);
+  // Default destructor
+
   virtual int make_svc_handler (TAO_SHMIOP_Client_Connection_Handler *&sh);
   // Makes TAO_SHMIOP_Client_Connection_Handlers
 
@@ -79,6 +82,9 @@ public:
   // = Initialization and termination methods.
   TAO_SHMIOP_Connector (CORBA::Boolean flag = 0);
   // Constructor.
+
+  ~TAO_SHMIOP_Connector (void);
+  // Default destructor
 
   // = The TAO_Connector methods, please check the documentation on
   // Pluggable.h
