@@ -39,7 +39,13 @@
 #   define ACE_static_cast(TYPE, EXPR)       static_cast<TYPE> (EXPR)
 #   define ACE_const_cast(TYPE, EXPR)        const_cast<TYPE> (EXPR)
 #   define ACE_reinterpret_cast(TYPE, EXPR)  reinterpret_cast<TYPE> (EXPR)
-#   define ACE_dynamic_cast(TYPE, EXPR)      dynamic_cast<TYPE> (EXPR)
+#   if defined (__SUNPRO_CC) && !defined (ACE_HAS_RTTI)
+      // Sun C++ with castop but without rtti converts dynamic_cast to
+      // static cast.  We do it here, to avoid the warning.
+#     define ACE_dynamic_cast(TYPE, EXPR)    static_cast<TYPE> (EXPR)
+#   else  /* ! __SUNPRO_CC  ||  ACE_ACE_RTTI */
+#     define ACE_dynamic_cast(TYPE, EXPR)    dynamic_cast<TYPE> (EXPR)
+#   endif /* ! __SUNPRO_CC  ||  ACE_ACE_RTTI */
 # else
 #   define ACE_static_cast(TYPE, EXPR)       ((TYPE) (EXPR))
 #   define ACE_const_cast(TYPE, EXPR)        ((TYPE) (EXPR))
@@ -48,10 +54,10 @@
 # endif /* ACE_HAS_ANSI_CASTS */
 
 # if !defined (ACE_CAST_CONST)
+    // Sun CC 4.2, for example, requires const in reinterpret casts of
+    // data members in const member functions.  But, other compilers
+    // complain about the useless const.  This keeps everyone happy.
 #   if defined (__SUNPRO_CC)
-  // Sun CC 4.2, for example, requires const where it really shouldn't.
-  // An example is a reinterpret cast to a local pointer variable in a
-  // const member function.
 #     define ACE_CAST_CONST const
 #   else  /* ! __SUNPRO_CC */
 #     define ACE_CAST_CONST
