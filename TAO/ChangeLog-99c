@@ -1,3 +1,13 @@
+Mon Sep 27 15:15:34 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/ORB.h:
+	* tao/ORB_Core.cpp:
+
+	  Changed "DEBUG" macro to "TAO_DEBUG" to prevent namespace
+	  pollution.  Thanks to Kristopher Johnson
+	  <kjohnson@gardnersys.com> for reporting this.
+
 Mon Sep 27 01:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_interface/interface.cpp:
