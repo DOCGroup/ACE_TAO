@@ -4,9 +4,9 @@ Sat Feb 19 17:53:47 2000  Ossama Othman  <ossama@uci.edu>
 
 	  Another attempt to fix MD5 checksum generation at release time:
 	  The problem was that an attempt to get the MD5 checksum for a
-	  file in the current was being made, but that file had already
-	  been moved to the destination FTP directory.  Prepending the
-	  destination directory to the filename should correct the
+	  file in the current directory was being made, but that file had
+	  already been moved to the destination FTP directory.  Prepending
+	  the destination directory to the filename should correct the
 	  problem.  MD5 checksum generation has been re-enabled.
 
 Sat Feb 19 17:32:28 2000  Ossama Othman  <ossama@uci.edu>
