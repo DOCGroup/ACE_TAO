@@ -28,6 +28,13 @@ Thu Jan 01 17:13:06 1998  David L. Levine  <levine@cs.wustl.edu>
           because they're not needed.  And, restored BUILD so that static
           lib will be built if requested.
 
+        * include/makeinclude/rules.lib.GNU: added OBJEXT macro, defaulted
+          to "o", and use it in VOBJS definition.
+
+        * include/makeinclude/wrapper_macros.GNU: if building shared libs
+          only, set OBJEXT to "so" and VDIR to .shobj/, so that only shared
+          objects will be built.
+
 Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
