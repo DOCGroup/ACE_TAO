@@ -7,6 +7,9 @@ Fri Mar 27 23:04:08 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_HAS_GETPAGESIZE, even though getpagesize () doesn't get
           used.  ACE_OS::getpagesize () uses sysconf on Linux.
 
+        * performance-tests/UDP/udp_test.cpp (main): getopt.optarg instead
+          of optarg, for -f option.
+
 Fri Mar 27 16:47:26 1998  Steve Huston  <shuston@riverace.com>
 
 	* tests/tests.mdp: Made settings for Env_Value_Test consistent with
