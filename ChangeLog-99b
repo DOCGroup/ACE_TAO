@@ -1,3 +1,13 @@
+Sun Dec 12 20:10:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-hpux-10.x.h: Tweaked ACE_MALLOC_PADDING,
+	  ACE_MALLOC_ALIGN, and ACE_CONTROL_BLOCK_ALIGN_LONGS manually on
+	  HPUX.
+
+	* tests/Malloc_Test.cpp: Added an ACE_TEST_REMAP_ON_FAULT macro
+	  which is not defined on linux only.  Linux seems to have problem
+	  calling mmap from within the signal handler.
+
 Sat Dec 11 15:00:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Malloc_Test.cpp (main): Alignment information should only

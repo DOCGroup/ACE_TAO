@@ -40,6 +40,13 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 #define MMAP_FILENAME ACE_TEXT ("test_file")
 #define MUTEX_NAME ACE_TEXT ("test_lock")
 
+#if !defined (linux)
+#define ACE_TEST_REMAP_ON_FAULT
+// Linux seems to have problem when calling mmap from the signal
+// handler.  On this plarform, we make sure the remapping will never
+// occur.
+#endif /* linux */
+
 // Parents <ACE_Malloc> base address in shared memory.
 static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 
@@ -60,11 +67,15 @@ static const void *CHILD_BASE_ADDR =
 static MALLOC *
 myallocator (const void *base_addr = 0)
 {
-  ACE_MMAP_Memory_Pool_Options options (base_addr);
   static auto_ptr<MALLOC> static_allocator;
 
   if (static_allocator.get () == 0)
     {
+      ACE_MMAP_Memory_Pool_Options options (base_addr);
+#if !defined (ACE_TEST_REMAP_ON_FAULT)
+      options.minimum_bytes_ = 512 * 1024;
+#endif /* ACE_TEST_REMAP_ON_FAULT */
+
       MALLOC *ptr = new MALLOC (MMAP_FILENAME,
                                 MUTEX_NAME,
                                 &options);
@@ -206,22 +217,22 @@ parent (Test_Data *data)
   // Sleep for a 200 msecs so that the child will have a chance to spin!
   ACE_OS::sleep (ACE_Time_Value (0, 200 * 1000));
 
-#if 1
+#if defined (ACE_TEST_REMAP_ON_FAULT)
   char *small_buf[1024];
   int cntr;
 
   for (cntr = 0 ; cntr < 1024; ++cntr)
     small_buf[cntr] = (char *) myalloc->malloc (1);
   char *big_buf = (char *) myalloc->malloc (1024 * 4069);
-#endif /* 0 */
+#endif /* ACE_TEST_REMAP_ON_FAULT */
 
   int result = myalloc->bind ("bar", data);
 
-#if 1
+#if defined (ACE_TEST_REMAP_ON_FAULT)
   myalloc->free (big_buf);
   for (cntr = 0 ; cntr < 1024; ++cntr)
     myalloc->free (small_buf[cntr]);
-#endif /* 0 */
+#endif /* ACE_TEST_REMAP_ON_FAULT */
 
   ACE_ASSERT (result != -1);
   return 0;
