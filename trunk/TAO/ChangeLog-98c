@@ -1,3 +1,7 @@
+Tue May 26 12:40:30 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/ORB.cpp: We seem to have an extra comma here...
+
 Tue May 26 10:32:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * TAO_IDL/tao_idl.dsp: Updated project files per Andy's changes.
