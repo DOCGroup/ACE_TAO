@@ -1,7 +1,7 @@
 // $Id$
 
-ACE_INLINE const IOP::ServiceContextList&
-TAO_Reply_Dispatcher::reply_service_info (void) const
+ACE_INLINE IOP::ServiceContextList&
+TAO_Reply_Dispatcher::reply_service_info (void)
 {
   return this->reply_service_info_;
 }

@@ -35,8 +35,8 @@ TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
 {
 }
 
-ACE_INLINE const IOP::ServiceContextList &
-TAO_GIOP_Twoway_Invocation::reply_service_info (void) const
+ACE_INLINE IOP::ServiceContextList &
+TAO_GIOP_Twoway_Invocation::reply_service_info (void)
 {
   return this->rd_.reply_service_info ();
 }

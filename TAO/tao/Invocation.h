@@ -219,7 +219,7 @@ public:
                         TAO_default_environment ());
   // No CORBA::Context support (deprecated).
 
-  const IOP::ServiceContextList& reply_service_info (void) const;
+ IOP::ServiceContextList& reply_service_info (void);
   // Accessor to the reply ServiceContextList.
 
   TAO_InputCDR &inp_stream (void);

@@ -130,8 +130,8 @@ public:
 
   virtual const TAO_ObjectKey &object_key (void) const;
 
-  virtual const IOP::ServiceContextList &request_service_info (void) const;
-  virtual const IOP::ServiceContextList &reply_service_info (void);
+  virtual IOP::ServiceContextList &request_service_info (void);
+  virtual IOP::ServiceContextList &reply_service_info (void);
 
   // The pseudo object methods, not really needed because the class is
   // not in the spec, but we add them for the sake of completeness.

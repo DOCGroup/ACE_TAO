@@ -31,6 +31,9 @@
 #include "tao/Services.h"
 #include "tao/IORManipulation.h"
 
+// Interceptor definitions.
+#include "tao/InterceptorC.h"
+
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
 
@@ -378,6 +381,23 @@ public:
   CORBA::ValueFactory_ptr lookup_value_factory (const char *repository_id,
                                                 CORBA_Environment &ACE_TRY_ENV = TAO_default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
+
+  // = Interceptor registration routine
+  //   Currently, we only support one interceptor per-ORB.
+
+  PortableInterceptor::ClientRequestInterceptor_ptr _register_client_interceptor
+  (PortableInterceptor::ClientRequestInterceptor_ptr ci,
+   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableInterceptor::ServerRequestInterceptor_ptr _register_server_interceptor
+  (PortableInterceptor::ServerRequestInterceptor_ptr ci,
+   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableInterceptor::ClientRequestInterceptor_ptr _get_client_interceptor
+    (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+
+  PortableInterceptor::ServerRequestInterceptor_ptr _get_server_interceptor
+    (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -743,6 +763,10 @@ private:
   TAO_ValueFactory_Map *valuetype_factory_map_;
   // If non-0 then this is the Factory for OBV unmarshaling
 #endif /* TAO_HAS_VALUETYPE */
+
+  PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
+  PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
+  // Interceptor registries.
 
   TAO_IOR_LookupTable lookup_table_;
   // Table of ObjectID->IOR mappings.
