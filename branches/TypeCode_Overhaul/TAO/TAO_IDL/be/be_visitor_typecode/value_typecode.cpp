@@ -161,8 +161,8 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
                             -1);
         };
 
-      os 
-         << 
+      os
+         <<
          << " }";
 
 
