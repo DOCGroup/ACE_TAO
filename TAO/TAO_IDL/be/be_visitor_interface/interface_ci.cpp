@@ -18,10 +18,9 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           interface_ci, 
+ACE_RCSID (be_visitor_interface,
+           interface_ci,
            "$Id$")
-
 
 // **************************************************
 // Interface visitor for client inline
@@ -73,13 +72,13 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << "ACE_INLINE" << be_nl
-          << node->name () << "::" << node->local_name () 
+          << node->name () << "::" << node->local_name ()
           << " (void)" << be_idt_nl
           << ": CORBA::AbstractBase ()" << be_uidt_nl
           << "{}" << be_nl << be_nl;
 
       *os << "ACE_INLINE" << be_nl
-          << node->name () << "::" << node->local_name () 
+          << node->name () << "::" << node->local_name ()
           << " (const " << node->local_name () << " &rhs)" << be_idt_nl
           << ": CORBA::AbstractBase (rhs)" << be_uidt_nl
           << "{}" << be_nl << be_nl;
@@ -120,7 +119,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           *os << be_nl << be_nl
               << "template<>" << be_nl
               << "CORBA::Boolean" << be_nl
-              << "TAO::Any_Impl_T<" << node->name () 
+              << "TAO::Any_Impl_T<" << node->name ()
               << ">::to_abstract_base ("
               << be_idt <<  be_idt_nl
               << "CORBA::AbstractBase_ptr &_tao_elem" << be_uidt_nl
@@ -133,7 +132,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
         }
 
       // Since we don't generate CDR stream operators for types that
-      // explicitly contain a local interface (at some level), we 
+      // explicitly contain a local interface (at some level), we
       // must override these Any template class methods to avoid
       // calling the non-existent operators. The zero return value
       // will eventually cause CORBA::MARSHAL to be raised if this
@@ -152,12 +151,29 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           *os << be_nl << be_nl
               << "template<>" << be_nl
               << "CORBA::Boolean" << be_nl
-              << "TAO::Any_Impl_T<" << node->name () 
+              << "TAO::Any_Impl_T<" << node->name ()
               << ">::demarshal_value (TAO_InputCDR &)" << be_nl
               << "{" << be_idt_nl
               << "return 0;" << be_uidt_nl
               << "}";
         }
+    }
+
+  if (!node->is_local ())
+    {
+      *os << be_nl << be_nl
+          << "ACE_INLINE" << be_nl;
+      *os << node->name () << "::"
+          << node->local_name () << " ("
+          << be_idt << be_idt_nl
+          << "IOP::IOR *ior," << be_nl
+          << "TAO_ORB_Core *oc" << be_uidt_nl
+          << ")"
+          << be_nl;
+      *os << ": ACE_NESTED_CLASS (CORBA, Object) (ior, oc)";
+
+      *os << be_nl << "{" << be_idt_nl
+          << "}" ;
     }
 
   os->gen_endif ();

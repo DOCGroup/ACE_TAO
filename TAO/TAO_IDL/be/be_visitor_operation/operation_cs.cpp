@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           operation_cs, 
+ACE_RCSID (be_visitor_operation,
+           operation_cs,
            "$Id$")
 
 // ************************************************************
@@ -168,6 +168,15 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                   << "ACE_CDR_LONG_DOUBLE_INITIALIZER;" << be_nl << be_nl;
             }
         }
+
+      // If the object is lazily evaluated the proxy brker might well
+      // be null.  Initialize it now
+      *os << "if (!this->is_evaluated ())" << be_idt_nl
+          << "{" << be_idt_nl
+          << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);" << be_nl
+          << "this->" << intf->flat_name ()
+          << "_setup_collocation (this->_is_collocated ());" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
 
       // Generate code that retrieves the proper proxy implementation
       // using the proxy broker available, and perform the call
