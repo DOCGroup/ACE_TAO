@@ -2,6 +2,7 @@ Tue Jan 29 08:17:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/ace_flags.bor:
           Added compiler flags for new cosevent orbsvcs test library CECTEST
+          Added compiler flags for new notify orbsvcs test library NotifyTests
 
 Mon Jan 28 17:44:51 2002  Steve Huston  <shuston@riverace.com>
 
