@@ -306,6 +306,7 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
 {
   CORBA::Boolean return_value = 0;
 
+#if 0
   TAO_TRY
     {
       CORBA::TypeCode_var any_type = any_value.type ();
@@ -324,6 +325,11 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
           kind_1 == kind_2)
         {
           if (any_value.any_owns_data ())
+            {
+              seq = (SEQ_TYPE*) any_value.value ();
+              return_value = 1;
+            }
+          else
             {
               ACE_NEW_RETURN (seq, SEQ_TYPE, return_value);
               TAO_InputCDR stream ((ACE_Message_Block*) any_value.value ());
@@ -346,11 +352,6 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
               else
                 delete seq;
             }
-          else
-            {
-              seq = (SEQ_TYPE*) any_value.value ();
-              return_value = 1;
-            }
         }
     }
   TAO_CATCHANY
@@ -359,6 +360,10 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
         delete seq;
     }
   TAO_ENDTRY;
+#else
+  if (any_value >>= seq)
+    return_value = 1;
+#endif /* 0 */
 
   return return_value;
 }
