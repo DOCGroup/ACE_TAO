@@ -1,60 +1,68 @@
+Wed Jun 17 22:47:50 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (rw_trywrlock_upgrade): moved declaration of
+          local "result" before the ACE_PTHREAD_CLEANUP_PUSH.
+          PTHREAD_CLEANUP_PUSH/POP are macros that contain open/
+          close braces on some platforms.  So, any declarations
+          between them are not visible after the POP.
+
 Wed Jun 17 19:01:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  The following changes provide an interface for ACE programmers
-	  of more finer control over how Win32 structured exceptions are
-	  handled.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
-	  for contemplating the idea and passing it to us.
+          The following changes provide an interface for ACE programmers
+          of more finer control over how Win32 structured exceptions are
+          handled.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
+          for contemplating the idea and passing it to us.
 
-	* ace/Log_Msg.{h,cpp} (seh_except_{selector,handler}): Added
-	  new methods to retrieve/set structured exception handling
- 	  behavior.  <Selector> is used to determine the "proper" action a
- 	  thread should take upon a structured exception and <handler>
- 	  performs the actual exception handling routine.  They are
- 	  structured as below in ace_thread_adapter:
+        * ace/Log_Msg.{h,cpp} (seh_except_{selector,handler}): Added
+          new methods to retrieve/set structured exception handling
+          behavior.  <Selector> is used to determine the "proper" action a
+          thread should take upon a structured exception and <handler>
+          performs the actual exception handling routine.  They are
+          structured as below in ace_thread_adapter:
 
-	      __except (ACE_LOG_MSG->seh_except_selector () (0))
-	        {
-		  ACE_LOG_MSG->seh_except_handler () (0);
-		}
+              __except (ACE_LOG_MSG->seh_except_selector () (0))
+                {
+                  ACE_LOG_MSG->seh_except_handler () (0);
+                }
 
-	* ace/OS.{h,cpp} (ACE_SEH_EXCEPT_HANDLER): New typedef used to
-	  define user win32 structured exception handler.
+        * ace/OS.{h,cpp} (ACE_SEH_EXCEPT_HANDLER): New typedef used to
+          define user win32 structured exception handler.
 
-	  (ACE_SEH_Exception_{Selector,Handler}): Default structured
-	  exception handler.  Two handlers ACE_Log_Msg are initialized to
-	  them by default.
+          (ACE_SEH_Exception_{Selector,Handler}): Default structured
+          exception handler.  Two handlers ACE_Log_Msg are initialized to
+          them by default.
 
-	  (ACE_Thread_Adapter,inherit_log_msg):  Added initializing and
-	  inheriting code to pass the spawning thread's structured
-	  exception handling behaviors.
+          (ACE_Thread_Adapter,inherit_log_msg):  Added initializing and
+          inheriting code to pass the spawning thread's structured
+          exception handling behaviors.
 
-	* ace/config-win32-common.h
-	  (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION):  This macro defines
-	  the default action taken by ACE when a win32 structured
-	  exception occurs.  It is by default defined to
-	  EXCEPTION_CONTINUE_SEARCH, which does not handle the exception
-	  but simply pass the exception out.  Users can overwrite the
-	  default behavior by defining the macro in their config.h files. 
+        * ace/config-win32-common.h
+          (ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION):  This macro defines
+          the default action taken by ACE when a win32 structured
+          exception occurs.  It is by default defined to
+          EXCEPTION_CONTINUE_SEARCH, which does not handle the exception
+          but simply pass the exception out.  Users can overwrite the
+          default behavior by defining the macro in their config.h files.
 
 Wed Jun 17 17:30:11 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-        * ace/OS.h: Added a condition variable and a flag to 
-	  the definition of reader/writer locks.
-	
-	* ace/OS.i: Implemented ACE_OS::rw_trywrlock_upgrade properly
-	  using one condition variable and a flag. The condition 
-	  variable is used to get in front of all the possible 
-	  waiting writers and to wait on still working readers
-	  on the rw_lock. The flag is used to indicate, that
-	  a reader is upgrading its lock. rw_unlock obeys one more
-	  case now.
+        * ace/OS.h: Added a condition variable and a flag to
+          the definition of reader/writer locks.
 
-	* ace/OS.cpp: The constructor for the Reader/writer locks
-	  has changed slightly to initialize and destroy the
-	  new members.
-	
-	* tests/Reader_Writer_Test.cpp: Added the use of the
-	  rw_mutex.tryacquire_write_upgrade () method to the test.
+        * ace/OS.i: Implemented ACE_OS::rw_trywrlock_upgrade properly
+          using one condition variable and a flag. The condition
+          variable is used to get in front of all the possible
+          waiting writers and to wait on still working readers
+          on the rw_lock. The flag is used to indicate, that
+          a reader is upgrading its lock. rw_unlock obeys one more
+          case now.
+
+        * ace/OS.cpp: The constructor for the Reader/writer locks
+          has changed slightly to initialize and destroy the
+          new members.
+
+        * tests/Reader_Writer_Test.cpp: Added the use of the
+          rw_mutex.tryacquire_write_upgrade () method to the test.
 
 Wed Jun 17 07:34:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
