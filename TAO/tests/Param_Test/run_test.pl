@@ -20,7 +20,7 @@ if ($^O eq "MSWin32")
 
   read (IPNUM, $line, 80);
 
-  ($junk, $ip1, $ip2, $ip3, $ip4) = split (/: (\d+)\.(\d+)\.(\d+)\.(\d+)/, $line);
+  $ip4 = (split (/: (\d+)\.(\d+)\.(\d+)\.(\d+)/, $line))[4];
 
   close IPNUM;
 
@@ -38,10 +38,11 @@ $iorfile = "theior";
 $invocation = "sii";
 $num = 1;
 $other = "";
+$debug = "";
+$type = "";
 
 sub run_test
 {
-  print ("BEGIN Testing type ".$type."\n");
   my $type = shift(@_);
 
   $SV = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
@@ -59,7 +60,6 @@ sub run_test
   # Unix, but on NT ???
 
   $SV->Kill ();
-  print ("END   Testing type ".$type."\n");
 }
 
 # Parse the arguments
