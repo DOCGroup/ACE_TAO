@@ -116,10 +116,9 @@ private:
            ACE_Time_Value *tv) const;
 
   /**
-   * Attaches the specified observer to a subject (i.e. the
-   * <ACE_Future_Rep>).  The update method of the specified subject will
-   * be invoked with a copy of the written-to <ACE_Future> as input when
-   * the result gets set.
+   * Attaches the specified observer to a subject (i.e. the <ACE_Future_Rep>).
+   * The update method of the specified subject will be invoked with a copy of
+   * the written-to <ACE_Future> as input when the result gets set.
    *
    * Returns 0 if the observer is successfully attached, 1 if the
    * observer is already attached, and -1 if failures occur.
@@ -128,11 +127,10 @@ private:
                ACE_Future<T> &caller);
 
   /**
-   * Detaches the specified observer from a subject (i.e. the
-   * <ACE_Future_Rep>).  The update method of the specified subject will
-   * not be invoked when the <ACE_Future_Rep>s result gets set.  Returns
-   * 1 if the specified observer was actually attached to the subject
-   * prior to this call and 0 if was not.
+   * Detaches the specified observer from a subject (i.e. the <ACE_Future_Rep>).
+   * The update method of the specified subject will not be invoked when the
+   * <ACE_Future_Rep>s result gets set.  Returns 1 if the specified observer was
+   * actually attached to the subject prior to this call and 0 if was not.
    *
    * Returns 0 if the observer was successfully detached, and -1 if the
    * observer was not attached in the first place.
@@ -305,12 +303,11 @@ public:
   int ready (void) const;
 
   /**
-   * Attaches the specified observer to a subject (i.e. the
-   * <ACE_Future>).  The update method of the specified subject will be
-   * invoked with a copy of the associated <ACE_Future> as input when
-   * the result gets set.  If the result is already set when this
-   * method gets invoked, then the update method of the specified
-   * subject will be invoked immediately.
+   * Attaches the specified observer to a subject (i.e. the <ACE_Future>).
+   * The update method of the specified subject will be invoked with a copy of
+   * the associated <ACE_Future> as input when the result gets set.  If the
+   * result is already set when this method gets invoked, then the update
+   * method of the specified subject will be invoked immediately.
    *
    * Returns 0 if the observer is successfully attached, 1 if the
    * observer is already attached, and -1 if failures occur.
@@ -318,11 +315,10 @@ public:
   int attach (ACE_Future_Observer<T> *observer);
 
   /**
-   * Detaches the specified observer from a subject (i.e. the
-   * <ACE_Future_Rep>).  The update method of the specified subject will
-   * not be invoked when the <ACE_Future_Reps> result gets set.  Returns
-   * 1 if the specified observer was actually attached to the subject
-   * prior to this call and 0 if was not.
+   * Detaches the specified observer from a subject (i.e. the <ACE_Future_Rep>).
+   * The update method of the specified subject will not be invoked when the
+   * <ACE_Future_Reps> result gets set.  Returns 1 if the specified observer
+   * was actually attached to the subject prior to this call and 0 if was not.
    *
    * Returns 0 if the observer was successfully detached, and -1 if the
    * observer was not attached in the first place.
