@@ -1,4 +1,5 @@
 Tue Jul  7 10:48:42 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
+
 	* tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
 	Use a counter, max. number of unread messages, instead of wait
         to work around the blocking problem in ipcSend()
