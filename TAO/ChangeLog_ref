@@ -1,3 +1,11 @@
+Thu May  1 15:48:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ObjectReferencTemplate/ObjectReferenceTemplateC.h:
+        * tao/Valuetype/ValueFactory_Map.h:
+
+          Minor changes to get the ORT and Valuetype libraries to
+          compile.
+
 Wed Apr 30 21:33:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ORB.cpp:
