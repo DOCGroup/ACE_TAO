@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_SUPPLIER_CLIENT_H
 #define TAO_Notify_SUPPLIER_CLIENT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ORB_Objects.h"
 #include "ace/Task.h"
@@ -75,5 +75,5 @@ protected:
   int max_events_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_SUPPLIER_CLIENT_H */
