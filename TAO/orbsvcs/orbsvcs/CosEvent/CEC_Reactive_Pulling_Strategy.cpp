@@ -46,8 +46,6 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
                                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "CEC - start iteration in pulling strategy\n"));
       TAO_CEC_Pull_Event worker (this->event_channel_->consumer_admin (),
                                  this->event_channel_->supplier_control ());
 
@@ -138,8 +136,6 @@ TAO_CEC_Pulling_Strategy_Adapter::handle_timeout (
       const ACE_Time_Value &tv,
       const void *arg)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "CEC - handle_timeout in Adapter\n"));
   this->adaptee_->handle_timeout (tv, arg);
   return 0;
 }
@@ -155,9 +151,6 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer,
 
   ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "CEC - Pulling event from %x\n",
-                  long(consumer)));
       any = consumer->try_pull_from_supplier (has_event,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -171,9 +164,6 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer,
 
   if (has_event)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "    CEC - pushing the event from %x\n",
-                  long(consumer)));
       this->consumer_admin_->push (any.in (), ACE_TRY_ENV);
       ACE_CHECK;
     }
