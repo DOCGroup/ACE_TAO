@@ -121,7 +121,7 @@ be_visitor_operation_rettype::visit_native (be_native *node)
   else
     bt = node;
 
-  *os << bt->name () << " *";
+  *os << bt->name ();
 
   return 0;
 }
@@ -179,7 +179,7 @@ be_visitor_operation_rettype::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "char *";
     }

@@ -108,8 +108,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ss::"
-                         "visit_operation - "
+                         "(%N:%l) be_visitor_args_info_ss::"
+                         "visit_argument- "
                          "codegen for argument pre invoke failed\n"),
                         -1);
     }
@@ -164,6 +164,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         *os << be_nl << "return &this->parameter_list_;\n}\n\n";
     }
 
+  os->decr_indent ();
   *os << "Dynamic::ExceptionList *" << be_nl;
   if (node->is_nested ())
     {
@@ -181,8 +182,32 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
   *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
       << "exceptions (CORBA::Environment &)"<< be_nl
-      << "{\n // Generate the exception list on demand \n return 0;\n}\n\n";
+      << "{\n // Generate the exception list on demand" << be_nl;
+  if (!node->exceptions ())
+    {
+      *os << "return 0;\n}\n\n" << be_nl;
+    }
+  else
+    {
+      // We change our scope to be able to generate the exceptionlist
+        ctx = *this->ctx_;
+        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTLIST);
+        visitor = tao_cg->make_visitor (&ctx);
+        if (!visitor || (node->accept (visitor) == -1))
+          {
+            delete visitor;
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_visitor_operation_cs::"
+                               "visit_operation - "
+                               "codegen for exceptlist failed\n"),
+                              -1);
+          }
+        delete visitor;
 
+        *os << be_nl << "return &this->exception_list_;"<<be_nl<<"}\n\n";
+    }
+
+  os->decr_indent ();
   *os << "CORBA::Any * " << be_nl;
   if (node->is_nested ())
     {
@@ -200,8 +225,33 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
   *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
       << "result (CORBA::Environment &)"<< be_nl
-      << "{\n // Generate the result on demand \n return 0;\n}\n\n";
+      << "{\n // Generate the result on demand" << be_nl;
+  bt = be_type::narrow_from_decl (node->return_type ());
+  if (this->void_return_type (bt)) 
+    {      
+      *os << " CORBA::TypeCode tc (CORBA::tk_void);"<<be_nl
+          << "this->result_val_.type (tc);" << be_nl;
+    }
+  else
+    {
+      // Generate the insertion of result into Any.
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for result failed\n"),
+                            -1);
+        }
+      delete visitor;
+    }
+  *os  << be_nl << "return &this->result_val_;" << be_nl << "}\n\n";
 
+  os->decr_indent ();
   *os << "char * " << be_nl;
   if (node->is_nested ())
     {
@@ -218,9 +268,29 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     }
 
   *os << "TAO_ServerRequest_Info_"<<node->flat_name ()<< "::"
-      << "received_exception_id (CORBA::Environment &)"<< be_nl
-      << "{\n // Return the exception thrown \n return 0;\n}\n\n";
-
+      << "sending_exception (CORBA::Environment &)"<< be_nl
+      << "{\n // Return the exception thrown " << be_nl;
+  // We change state to generate the sent exception id
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTION_ID);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for exceptlist failed\n"),
+                        -1);
+    }
+  delete visitor;
+  
+  // If theres no exception then we throw an exception that it is UNKNOWN.
+  // So basically we dont need to return 0 here.
+  //<< "return 0;"
+  *os << be_nl << "}\n\n";
+  os->decr_indent ();
+  
   return 0;  
   
 }

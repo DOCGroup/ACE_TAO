@@ -421,7 +421,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << ");\n";
 
 
-  *os << "_tao_vfr.send_exception (&ri_excp " << be_idt << be_idt_nl
+  *os << "_tao_vfr.send_exception (&ri_excp ," << be_idt << be_idt_nl
     /*      << "_tao_server_request.request_id ()," << be_nl;
 
   if (node->flags () == AST_Operation::OP_oneway)

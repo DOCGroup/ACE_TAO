@@ -90,8 +90,12 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
-  *os << be_idt_nl << "ACE_THROW_SPEC (("
-      << be_idt_nl << "CORBA::SystemException";
+  if (idl_global->use_raw_throw ())
+    *os << be_idt_nl << "throw (";
+  else
+    *os << be_idt_nl << "ACE_THROW_SPEC ((";
+
+  *os << be_idt_nl << "CORBA::SystemException";
    if (node->exceptions ())
      {
 
@@ -122,7 +126,11 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
         } // end of while loop
       delete ei;
     } // end of if
-   *os << be_uidt_nl << "))"<< be_uidt;
+
+  if (idl_global->use_raw_throw ())
+    *os << be_uidt_nl << ")"<< be_uidt;
+  else
+    *os << be_uidt_nl << "))"<< be_uidt;
 
    return 0;
 

@@ -245,7 +245,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "//             We have to think about this case." << be_nl
       << "break;" << be_uidt_nl
       << "}" << be_uidt_nl;
-  *os << be_uidt_nl << "};" << be_nl << be_nl;
+  *os << be_uidt_nl << "}" << be_nl << be_nl;
 
   return 0;
 }
@@ -289,18 +289,24 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (be_arg
 }
 
 int
-be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_raise_exception (be_type *bt,
-                                                                    const char *excep,
-                                                                    const char *completion_status)
+be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_raise_exception (
+    be_type *bt,
+    const char *excep,
+    const char *completion_status
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor;
   be_visitor_context ctx;
 
   if (this->void_return_type (bt))
-    {
-      *os << "ACE_THROW ("
-          << excep << " (" << completion_status << "));\n";
+    { 
+      if (idl_global->use_raw_throw ())
+        *os << "throw (";
+      else
+        *os << "ACE_THROW (";
+
+      *os << excep << " (" << completion_status << "));\n";
     }
   else
     {
@@ -314,11 +320,14 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_raise_exception (b
       if (!visitor || (bt->accept (visitor) == -1))
         {
           delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_ami_handler_reply_stub_operation_cs::"
-                             "gen_raise_exception - "
-                             "codegen for return var failed\n"),
-                            -1);
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_ami_handler_reply_stub_operation_cs::"
+              "gen_raise_exception - "
+              "codegen for return var failed\n"
+            ),
+            -1
+          );
         }
       *os << ");\n";
     }
@@ -486,8 +495,11 @@ be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::
       delete visitor;
 
       *os << be_uidt << be_uidt_nl
-          << " ))" << be_nl
-          << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+          << " ))" << be_nl;
+      if (idl_global->use_raw_throw ())
+        *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+      else
+        *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
     }
 
 
