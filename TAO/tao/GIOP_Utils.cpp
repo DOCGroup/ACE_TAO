@@ -60,7 +60,7 @@ TAO_GIOP_Utils::read_buffer (TAO_Transport *transport,
                 ACE_TEXT ("              transport = %d, ")
                 ACE_TEXT ("bytes = %d, len = %d\n"),
                 ACE_TEXT ("read_buffer"),
-                transport->handle (),
+                transport->id (),
                 bytes_read,
                 len));
 

@@ -157,6 +157,9 @@ TAO_SSLIOP_Connection_Handler::activate (long flags,
                  flags,
                  THR_BOUND));
 
+  // Set the id in the transport now that we're active.
+  this->transport ()->id (this->get_handle ());
+
   return TAO_SSL_SVC_HANDLER::activate (flags,
                                         n_threads,
                                         force_active,

@@ -110,6 +110,12 @@ int
 TAO_Transport_Cache_Manager::find_transport (TAO_Transport_Descriptor_Interface *prop,
                                              TAO_Transport *&transport)
 {
+  if (prop == 0)
+    {
+      transport = 0;
+      return -1;
+    }
+
   // Compose the ExternId
   TAO_Cache_ExtId ext_id (prop);
   TAO_Cache_IntId int_id;
@@ -184,7 +190,7 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
 
 int
 TAO_Transport_Cache_Manager::rebind_i (const TAO_Cache_ExtId &key,
-                                           const TAO_Cache_IntId &value)
+                                       const TAO_Cache_IntId &value)
 {
   return this->cache_map_.rebind (key,
                                   value);
@@ -192,7 +198,7 @@ TAO_Transport_Cache_Manager::rebind_i (const TAO_Cache_ExtId &key,
 
 int
 TAO_Transport_Cache_Manager::trybind_i (const TAO_Cache_ExtId &key,
-                                         TAO_Cache_IntId &value)
+                                        TAO_Cache_IntId &value)
 {
   return this->cache_map_.trybind (key, value);
 }
@@ -205,7 +211,7 @@ TAO_Transport_Cache_Manager::unbind_i (const TAO_Cache_ExtId &key)
 
 int
 TAO_Transport_Cache_Manager::unbind_i (const TAO_Cache_ExtId &key,
-                                        TAO_Cache_IntId &value)
+                                       TAO_Cache_IntId &value)
 {
   return this->cache_map_.unbind (key,
                           value);
@@ -214,7 +220,9 @@ TAO_Transport_Cache_Manager::unbind_i (const TAO_Cache_ExtId &key,
 int
 TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 {
-
+  if (entry == 0)
+    return -1;
+  
   // First get the entry again (if at all things had changed in the
   // cache map in the mean time)
   HASH_MAP_ENTRY *new_entry = 0;
@@ -240,7 +248,7 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 
 
 int
-TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set & /*handle_set*/)
+TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
 {
   for (HASH_MAP_ITER iter = this->cache_map_.begin ();
        iter != this->cache_map_.end ();
@@ -251,6 +259,22 @@ TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set & /*handle_set*/)
 
       if ((*iter).int_id_.recycle_state () != ACE_RECYCLABLE_CLOSED)
         {
+#if 0 
+          // @@ This code from Connection_Cache_Manager disappeared
+          // during the changeover; we need the functional equivalent back.
+          // The problem is that with the locking stuff that we're putting
+          // in to the Transport, we might want to encapsulate the whole
+          // exercise of adding to the handle set in a method on the transport
+          // rather than doing it here.  That way, the locking is correct.
+          if ((*iter).int_id_.handler ()->is_registered ())
+            {
+              handle_set.set_bit ((*iter).int_id_.handler ()->fetch_handle ());
+            }
+#else
+          // Get the transport to fill its associated connection's handle in
+          // the handle_set.
+          (*iter).int_id_.transport ()->provide_handle (handle_set);
+#endif
           // Inform the transport that has a reference to the entry in the
           // map that we are *gone* now. So, the transport should not use
           // the reference to the entry that he has, to acces us *at any
@@ -296,10 +320,9 @@ TAO_Transport_Cache_Manager::mark_invalid_i (HASH_MAP_ENTRY *&entry)
 
 
 int
-TAO_Transport_Cache_Manager::
-    get_last_index_bind (TAO_Cache_ExtId &key,
-                         TAO_Cache_IntId &val,
-                         HASH_MAP_ENTRY *&entry)
+TAO_Transport_Cache_Manager::get_last_index_bind (TAO_Cache_ExtId &key,
+                                                  TAO_Cache_IntId &val,
+                                                  HASH_MAP_ENTRY *&entry)
 {
   CORBA::ULong ctr = entry->ext_id_.index ();
 
@@ -324,8 +347,7 @@ TAO_Transport_Cache_Manager::
 
 
 int
-TAO_Transport_Cache_Manager::
-    is_entry_idle (HASH_MAP_ENTRY *&entry)
+TAO_Transport_Cache_Manager::is_entry_idle (HASH_MAP_ENTRY *&entry)
 {
   if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
       entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)

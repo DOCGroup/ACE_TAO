@@ -142,6 +142,9 @@ TAO_IIOP_Connection_Handler::activate (long flags,
                  flags,
                  THR_BOUND));
 
+  // Set the id in the transport now that we're active.
+  this->transport ()->id (this->get_handle ());
+
   return TAO_IIOP_SVC_HANDLER::activate (flags,
                                          n_threads,
                                          force_active,
