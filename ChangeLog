@@ -15,7 +15,8 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           $(TAO_ROOT)/orbsvcs/orbsvcs.  These objects are cleaned up even
           if a particular feature is not enabled, e.g., rmcast, ssl,
           Other, etc., as is not dependant on bin/ace_components or the
-          files it maintains.
+          files it maintains.  So, for normal development, prefer clean
+          over realclean.
 
         realclean: Cleans up everything, including the removal of the
           .obj or .shobj directory, and any IDL files, e.g., *C.h, etc.
