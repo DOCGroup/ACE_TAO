@@ -613,7 +613,7 @@ preinvoke (
     const PortableServer::ObjectId & oid,
     PortableServer::POA_ptr          /* poa */,
     const char *                     operation,
-    void * &                         /* cookie */,
+    void * &                         /* cookie */
 ) throw (CORBA::SystemException, PortableServer::ForwardRequest)
 {
     // Convert object id into asset number.

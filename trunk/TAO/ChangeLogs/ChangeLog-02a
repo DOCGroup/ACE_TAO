@@ -1,3 +1,9 @@
+Sat Jan 20 09:29:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Advanced/ch_18/server.cpp: Made several fixes so
+	  this example will compile correctly.  Thanks to Craig Rodrigues
+ 	  <rodrigc@mediaone.net> for reporting this.
+	
 Fri Jan 19 17:41:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
