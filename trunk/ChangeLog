@@ -1,3 +1,10 @@
+Sun Dec 02 12:15:25 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/OS.cpp: 
+	  Fixed typos in ACE_Time_Value::operator++ implementations.
+	  Also moved the implementation outside the #ifdef ACE_WIN32
+	  section.
+
 Sun Dec  2 12:17:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Reactor.i: Fixed a warning in TRU 64. Thanks to
