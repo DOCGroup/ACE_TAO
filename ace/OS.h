@@ -551,7 +551,7 @@ public:
 #if defined (ACE_WIN32)
   ACE_Time_Value (const FILETIME &ft);
   //  Initializes the ACE_Time_Value object from a Win32 FILETIME
-#endif
+#endif /* ACE_WIN32 */
 
   void set (long sec, long usec);
   // Construct a <Time_Value> from two <long>s.
@@ -1558,7 +1558,7 @@ typedef int ACE_thread_key_t;
 // Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for this fix.
 #if defined (DIGITAL_UNIX)
 #undef sigwait
-#endif
+#endif /* DIGITAL_UNIX */
 
 #if defined (ACE_HAS_BROKEN_SENDMSG)
 typedef struct msghdr ACE_SENDMSG_TYPE;
@@ -2000,11 +2000,11 @@ typedef char TCHAR;
 #define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
 #define ACE_LOGGER_KEY "/tmp/server_daemon"
-#ifdef __hpux
+#if defined (__hpux)
 #define ACE_DLL_SUFFIX ".sl"
 #else
 #define ACE_DLL_SUFFIX ".so"
-#endif
+#endif /* __hpux */
 #define ACE_DLL_PREFIX "lib"
 
 // The following 3 defines are used by the ACE Name Server...
@@ -2134,7 +2134,7 @@ struct ACE_OVERLAPPED
 
 #if defined (ACE_HAS_BROKEN_IF_HEADER)
 struct ifafilt;
-#endif
+#endif /* ACE_HAS_BROKEN_IF_HEADER */
 
 #if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
   #undef __cplusplus
@@ -2142,9 +2142,10 @@ struct ifafilt;
   #define __cplusplus
 #else
   #include /**/ <sys/socket.h>
-#endif
+#endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 
-extern "C" {
+extern "C" 
+{
 #if defined (VXWORKS)
   struct  hostent {
     char    *h_name;        /* official name of host */
@@ -2629,7 +2630,7 @@ struct sigaction
 
 #if !defined (WNOHANG)
 #define WNOHANG 42
-#endif
+#endif /* !WNOHANG */
 
 #if !defined (EDEADLK)
 #define EDEADLK 1000 /* Some large number.... */
@@ -2847,7 +2848,7 @@ typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontex
 
 #if defined (ACE_REDEFINES_XTI_FUNCTIONS)
 #include /**/ <xti.h>
-#ifdef UNIXWARE         /* They apparantly forgot one... */
+#if defined (UNIXWARE)         /* They apparantly forgot one... */
 extern "C" int _xti_error(char *);
 #endif /* UNIXWARE */
 #endif /* ACE_REDEFINES_XTI_FUNCTIONS */

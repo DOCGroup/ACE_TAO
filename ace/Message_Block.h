@@ -224,7 +224,7 @@ public:
 	     size_t size, 
 	     Message_Flags = DONT_DELETE);
   // Set message data (doesn't reallocate).
-#endif
+#endif /* 0 */
 
   char *end (void) const;
   // Return a pointer to 1 past the end of the data in a message.
@@ -392,7 +392,7 @@ public:
 	     size_t size, 
 	     Message_Flags = DONT_DELETE);
   // Set message data pointer (doesn't reallocate).
-#endif
+#endif /* 0 */
 
   char *end (void) const;
   // Return a pointer to 1 past the end of the data in a message.
