@@ -1,6 +1,11 @@
+Fri Nov 08 10:47:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Abstract_Interface/Abstract_Interface_Server.dsp: Fixed
+	  the broken release configuration.
+
 Fri Nov 08 10:03:22 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/RTEventLog.dsp: Fixed release build
+	* orbsvcs/orbsvcs/RTEventLog.dsp: Fixed the broken release build
 	  configuration.
 
 Thu Nov 07 12:21:21 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
