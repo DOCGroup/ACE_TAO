@@ -61,6 +61,25 @@ TAO_NS_EventChannelFactory::get_default_filter_factory (ACE_ENV_SINGLE_ARG_DECL_
   return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
 }
 
+void
+TAO_NS_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+  this->inherited::destroy (this ACE_ENV_ARG_PARAMETER);
+
+  TAO_NS_Properties* properties = TAO_NS_PROPERTIES::instance();
+
+  // Shutdown the ORB.
+  CORBA::ORB_var orb = properties->orb ();
+  orb->shutdown ();
+
+  // Reset references to CORBA objects.
+  properties->orb (CORBA::ORB::_nil ());
+  properties->default_poa (PortableServer::POA::_nil ());
+}
+
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_NS_EventChannelFactory::create_channel (
     const CosNotification::QoSProperties & initial_qos,
     const CosNotification::AdminProperties & initial_admin,

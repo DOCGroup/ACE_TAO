@@ -46,12 +46,15 @@ TAO_NS_Peer::handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_NS_Peer::dispatch_updates (const TAO_NS_EventTypeSeq & added, const TAO_NS_EventTypeSeq & removed ACE_ENV_ARG_DECL)
 {
+  TAO_NS_EventTypeSeq subscribed_types ;
+  this->proxy ()->subscribed_types (subscribed_types ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   ACE_TRY
     {
       CosNotification::EventTypeSeq cos_added;
       CosNotification::EventTypeSeq cos_removed;
 
-      const TAO_NS_EventTypeSeq& subscribed_types = this->proxy ()->subscribed_types ();
       const TAO_NS_EventType& special = TAO_NS_EventType::special ();
 
       // Don;t inform of types that we already know about.

@@ -51,7 +51,6 @@ TAO_NS_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->shutdown_ = 1;
   this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   this->shutdown_worker_task ();
