@@ -30,7 +30,7 @@ Thu Aug 10 13:58:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Also changed the base class constructors to take a
 	  repository id argument insead of a TypeCode. This will make
 	  exception construction more lightweight and help deal with
-	  the fact that local exceptions have to valid TypeCode.
+	  the fact that local exceptions have no valid TypeCode.
 
 	  Made the _type() member function virtual, and added overrides
 	  for non-local exceptions generated from IDL files.
