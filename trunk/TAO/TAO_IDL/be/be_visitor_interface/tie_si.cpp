@@ -114,7 +114,6 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   *os << "template <class T> ACE_INLINE" << be_nl
       << fulltiename << "<T>::~" << localtiename << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::release (this->poa_);" << be_nl
       << "if (this->rel_) delete this->ptr_;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -168,7 +167,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "return PortableServer::POA::_nil ();" << be_uidt_nl
       << "else" << be_idt_nl
       << "return result._retn ();" << be_uidt << be_uidt_nl
-      << "}" << be_uidt
+      << "}" << be_uidt_nl
       << "}\n\n";
 
   if (node->traverse_inheritance_graph (be_visitor_interface_tie_si::method_helper, os) == -1)

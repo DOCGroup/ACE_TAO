@@ -124,9 +124,8 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
     }
   delete visitor;
 
-  *os << "{" << be_idt << "\n";
+  *os << "{" << be_idt_nl;
 
-  os->indent ();
   if (bt->node_type () != AST_Decl::NT_pre_defined
       || be_predefined_type::narrow_from_decl (bt)->pt () != AST_PredefinedType::PT_void)
     {
