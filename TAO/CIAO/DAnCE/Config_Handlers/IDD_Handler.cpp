@@ -1,10 +1,11 @@
 // $Id$
 
 #include "IDD_Handler.h"
-#include "Prop_Handler.h"
-#include "ANY_Handler.h"
+#include "Property_Handler.h"
+#include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
+#include "cdp.hpp"
 
 namespace CIAO
 {
@@ -15,10 +16,10 @@ namespace CIAO
         const DeploymentPlan &src,
         Deployment::InstanceDeploymentDescriptions& dest)
     {
-      InstanceDeploymentDescription::instance_const_iterator idd_e =
+      DeploymentPlan::instance_const_iterator idd_e =
         src.end_instance ();
 
-      for (InstanceDeploymentDescription::instance_const_iterator idd_b =
+      for (DeploymentPlan::instance_const_iterator idd_b =
              src.begin_instance ();
            idd_b != idd_e;
            ++idd_b)
@@ -38,8 +39,8 @@ namespace CIAO
       return true;
     }
 
-    void
-    IDD_Handler::get_InstanceDeploymentDescription (
+    bool
+    IDD_Handler::instance_deployment_descr (
         const InstanceDeploymentDescription& src,
         Deployment::InstanceDeploymentDescription& dest)
     {
@@ -57,10 +58,10 @@ namespace CIAO
       // this later.
       dest.implementationRef = 0;
 
-      InstanceDeploymentDescription::configProperty_iterator pend =
+      InstanceDeploymentDescription::configProperty_const_iterator pend =
         src.end_configProperty ();
 
-      for (ComponentInterfaceDescription::configProperty_iterator pstart =
+      for (ComponentInterfaceDescription::configProperty_const_iterator pstart =
              src.begin_configProperty ();
            pstart != pend;
            ++pstart)
