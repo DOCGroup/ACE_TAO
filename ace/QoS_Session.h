@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_SOCK;
-#include "ace/Containers_T.h"
+class ACE_QoS_Manager;
 
 typedef int ACE_Protocol_ID;
 // IPPROTO_UDP or IPPROTO_TCP.
@@ -65,6 +65,7 @@ public:
   // Returns the QoS in the current session.
    
   virtual int qos (ACE_SOCK *socket,
+                   ACE_QoS_Manager *qos_manager,
                    const ACE_QoS &ace_qos) = 0;
   // Set QoS for the current session. The socket parameter is used to confirm if
   // this QoS session was subscribed to by the socket.
@@ -81,7 +82,11 @@ public:
   // Invoking this method is an indication of a QoS event occurring, that may have 
   // resulted in a change of QoS for the underlying session. This method updates 
   // the QoS object associated with this session.
- 
+
+  virtual ACE_End_Point_Type flags (void) const = 0;
+  virtual void flags (const ACE_End_Point_Type flags) = 0;
+  // Get/Set methods for the flags_.
+
   virtual int session_id (void) const = 0;
   // Get the session id.
   
