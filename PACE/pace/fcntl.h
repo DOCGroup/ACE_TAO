@@ -53,7 +53,12 @@ extern "C" {
 # if defined (PACE_WIN32)
   int fcntl (PACE_HANDLE fildes, int cmd, /* arg */ ... );
 # endif /* PACE_WIN32 */
+
+# if defined (PACE_VXWORKS) && PACE_VXWORKS
+  PACE_INLINE int pace_fcntl(PACE_HANDLE fildes, int cmd, long arg) { PACE_ERRNO_NO_SUPPORT_RETURN (-1); }
+# else
 #  define pace_fcntl fcntl
+# endif /* ! PACE_VXWORKS */
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**

@@ -148,8 +148,20 @@ PACE_INLINE
 int
 pace_sigwait (const pace_sigset_t * set, int * sig)
 {
-  PACE_UNUSED_ARG (sig);
-  return sigwait (PACE_NONCONST_ARG_CAST (pace_sigset_t *) set);
+  /* It appears that sigwait is not supported for 5.3.1 or 5.4.
+   * ACE uses sigtimedwait instead. (The code below is directly
+   * from ACE_OS.
+   * This is the call that should be made if VxWorks supported
+   * sigwait:
+   PACE_UNUSED_ARG (sig);
+   return sigwait (set);
+
+   * Second arg is a struct siginfo *, which we don't need (the
+   * selected signal number is returned).  Third arg is timeout:  0
+   * means forever.
+   */
+  *sig = sigtimedwait (set, 0, 0);
+  return *sig;
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 

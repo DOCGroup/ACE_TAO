@@ -17,6 +17,8 @@
 
 #include "pace/unistd.h"
 
+#include "pace/stdio.h"
+
 /*
  * PACE - POSIX Functions
  */
@@ -165,50 +167,6 @@ pace_pthread_attr_getstacksize (const pace_pthread_attr_t * attr,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_pthread_attr_init (pace_pthread_attr_t * attr)
-{
-  /*
-   * Attempt to allocate memory for the attributes object.
-   */
-
-  if ((*attr = (pace_pthread_attr_t) malloc(sizeof(struct _PTHREAD_ATTR)))
-      == NULL)
-    {
-      return ERROR;
-    }
-
-  /*
-   * Set the default attributes.
-   */
-
-  memcpy ((void *)(*attr), (void *)pthread_attr_default, 
-          sizeof(struct _PTHREAD_ATTR));
-
-  return OK;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_attr_setdetachstate (pace_pthread_attr_t * attr,
-                                  int detachstate)
-{
-  if ((detachstate != PTHREAD_CREATE_DETACHED) ||
-      (detachstate != PTHREAD_CREATE_JOINABLE))
-    {
-      (*attr)->dstate = PTHREAD_CREATE_DETACHED;
-      return ERROR;
-    }
-
-  (*attr)->dstate = detachstate;
-  return OK; 
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
 pace_pthread_attr_setinheritsched (pace_pthread_attr_t * attr,
                                    int inheritsched)
 {
@@ -222,24 +180,6 @@ pace_pthread_attr_setinheritsched (pace_pthread_attr_t * attr,
     }
 
   return ERROR;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_attr_setschedparam (pace_pthread_attr_t * attr,
-                                 const pace_sched_param * param)
-{
-  /* range check */
-  if (param->sched_priority > SCHED_RR_HIGH_PRI ||
-      param->sched_priority < SCHED_RR_LOW_PRI )
-    {
-      return ERROR;
-    }
-
-  (*attr)->schedule.sched_priority = param->sched_priority;
-  return OK;
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
@@ -312,27 +252,6 @@ pace_pthread_attr_setstacksize (pace_pthread_attr_t * attr,
     (*attr)->stacksize = PTHREAD_DEFAULT_STACK_SIZE;
 
   return OK;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_cancel (pace_pthread_t thread)
-{
-  /*
-   * In VxWorks, to cancel a thread is to delete a task. 
-   */
-  if (!pacevx_pthread_verify(thread))
-    return ESRCH;
-
-  if (taskIdVerify(thread->tid) == ERROR) /* already exit, never happen */
-    return ERROR;
-
-  if (thread->stateflag == PTHREAD_CANCEL_DISABLE)
-    return ERROR;
-  else
-    return (taskDelete(thread->tid));
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
@@ -471,48 +390,6 @@ pace_pthread_exit (void * value_ptr)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_pthread_getschedparam (pace_pthread_t thread,
-                            int * policy,
-                            pace_sched_param * param)
-{
-  if (thread == 0)
-    return ERROR;
-
-  *policy = sched_getscheduler(thread->tid);
-
-  if (sched_getparam(thread->tid, param) == OK)
-    {
-      /* convert VxWorks priority to POSIX priority */
-      param->sched_priority = SCHED_FIFO_HIGH_PRI - param->sched_priority;
-      return OK;
-    }
-  
-   return ERROR;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-void *
-pace_pthread_getspecific (pace_pthread_key_t key)
-{
-  pace_pthread_t pthread;
-
-  if (!pacevx_pthread_key_validate(key))
-    return NULL;
-
-  if ((pthread = pace_pthread_self()) != NULL)
-    {
-      return pthread->keyvaluelist[key];
-    }
-
-  return NULL;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
 pace_pthread_kill (pace_pthread_t thread, int sig)
 {
   if (pacevx_pthread_verify(thread))
@@ -553,55 +430,6 @@ pace_pthread_mutex_getprioceiling (pace_pthread_mutex_t * mutex,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_pthread_mutex_init (pace_pthread_mutex_t * mutex,
-                         const pace_pthread_mutexattr_t * attr)
-{
-  /*
-   * Initialises the mutex referenced by mutex with attributes 
-   * specified by attr. If attr is NULL, the default mutex 
-   * attributes are used.
-   */
-  int options = 0;
-
-  if (attr != NULL)
-    {
-      if((*attr)->protocol == PTHREAD_PRIO_INHERIT)
-        options = SEM_INVERSION_SAFE;
-    }
-
-  *mutex = semMCreate(options);
-  if (*mutex == NULL)
-    return ERROR;
-
-  return OK;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_mutex_lock (pace_pthread_mutex_t * mutex)
-{
-  STATUS status;
-  int errornumber;
-
-  status = semTake(*mutex, WAIT_FOREVER);
-  if (status == OK) 
-    return OK;
-  else
-    {
-      errornumber = errnoGet();
-      if (errornumber == S_objLib_OBJ_ID_ERROR)
-        return EINVAL;
-
-      return ERROR;
-    }
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
 pace_pthread_mutex_setprioceiling (pace_pthread_mutex_t * mutex,
                                    int prioceiling,
                                    int * old_ceiling)
@@ -617,52 +445,6 @@ pace_pthread_mutex_setprioceiling (pace_pthread_mutex_t * mutex,
     return ERROR;
 
   return OK;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_mutex_trylock (pace_pthread_mutex_t * mutex)
-{
-  STATUS status;
-  int errornumber;
-
-  status = semTake(*mutex, NO_WAIT);
-  if (status == OK) 
-    return OK;
-  else
-    {
-      errornumber = errnoGet();
-      if (errornumber == S_objLib_OBJ_ID_ERROR)
-        return EINVAL;
-      if (errornumber == S_objLib_OBJ_UNAVAILABLE)
-        return EBUSY;
-
-      return ERROR;
-    }
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_mutex_unlock (pace_pthread_mutex_t * mutex)
-{
-  STATUS status;
-  int errornumber;
-
-  status = semGive(*mutex);
-  if (status == OK) 
-    return OK;
-  else
-    {
-      errornumber = errnoGet();
-      if (errornumber == S_semLib_INVALID_OPERATION)
-        return EPERM;
-
-      return ERROR;
-    }
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
@@ -730,26 +512,6 @@ pace_pthread_mutexattr_setprioceiling (pace_pthread_mutexattr_t * attr,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_pthread_mutexattr_setprotocol (pace_pthread_mutexattr_t * attr,
-                                    int protocol)
-{
-/* 
- * Does not support PTHREAD_PRIO_PROTECT for VxWorks
- */
-  if ((protocol == PTHREAD_PRIO_NONE) ||
-      (protocol == PTHREAD_PRIO_INHERIT )) 
-    {
-      (*attr)->protocol = protocol;
-      return OK;
-    }
-
-  return ERROR;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
 pace_pthread_mutexattr_getpshared (const pace_pthread_mutexattr_t * attr,
                                    int * pshared)
 {
@@ -758,47 +520,6 @@ pace_pthread_mutexattr_getpshared (const pace_pthread_mutexattr_t * attr,
    */
   *pshared = PTHREAD_PROCESS_SHARED;
   return OK;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_mutexattr_init (pace_pthread_mutexattr_t * attr)
-{
-  /*
-   * Initializes a mutex attributes object attr with the 
-   * default value for all of the attributes
-   */
-  pace_pthread_mutexattr_t pattr;
-  pattr = (pace_pthread_mutexattr_t) malloc(sizeof(struct _PTHREAD_MUX_ATTR));
-  if (pattr == NULL)
-    return ERROR;
-     
-  pattr->protocol = PTHREAD_PRIO_INHERIT;
-  pattr->shared = PTHREAD_PROCESS_SHARED;
-  pattr->type = PTHREAD_MUTEX_DEFAULT;
-
-  *attr = pattr;
-  return OK;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_mutexattr_setpshared (pace_pthread_mutexattr_t * attr,
-                                   int pshared)
-{
-  /*
-   * Only supports PTHREAD_PROCESS_SHARED
-   */
-  if (attr == 0) return EINVAL;
-
-  if (pshared != PTHREAD_PROCESS_SHARED)
-    return ERROR;
-  else
-    return OK;
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
@@ -813,129 +534,6 @@ pace_pthread_self ()
     return (pace_pthread_t)NULL;
 
   return (pace_pthread_t)(pTcb->_USER_SPARE4);
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_setcancelstate (int state, int * oldstate)
-{
-  int key;
-  pace_pthread_t pthread;
-
-  if ((state != PTHREAD_CANCEL_ENABLE) &&
-      (state != PTHREAD_CANCEL_DISABLE))
-    {
-      return ERROR;
-    }
-
-  if ((pthread = pace_pthread_self()) == NULL)
-    return ERROR;
-
-  key = intLock();
-  *oldstate = pthread->stateflag;
-  pthread->stateflag = state;
-  intUnlock(key);
-
-  return OK;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_setcanceltype (int type, int * oldtype)
-{
-  /* 
-   * Only asychronouse type is supported 
-   */
-  pace_pthread_t pthread;
-
-  if (type != PTHREAD_CANCEL_ASYNCHRONOUS)
-    return ERROR;
-
-  if ((pthread = pace_pthread_self()) == NULL)
-    return ERROR;
-
-  *oldtype = pthread->canceltype;
-
-  return OK;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_setschedparam (pace_pthread_t thread,
-                            int policy,
-                            const pace_sched_param * param)
-{
-  /* 
-   * Only priority can be changed.
-   */
-  struct sched_param sparam;
-
-  if (thread == 0)
-    return ERROR;
-
-  if (policy != sched_getscheduler(thread->tid))
-    return ERROR;
- 
-  /* convert POSIX priority to VxWorks priority */
-  sparam.sched_priority = SCHED_FIFO_HIGH_PRI - param->sched_priority;
- 
-  return (sched_setparam(thread->tid, &sparam));
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_setspecific (pace_pthread_key_t key, const void * value)
-{
-  pace_pthread_t pthread;
-
-  if (!pacevx_pthread_key_validate(key))
-    return ERROR;
-
-  if ((pthread = pace_pthread_self()) != NULL)
-    {
-      pthread->keyvaluelist[key] = PACE_NONCONST_ARG_CAST(void *) value;
-      return OK;
-    }
-
-  return ERROR;
-}
-#endif /* PACE_HAS_NONUOF_FUNCS */
-
-#if (PACE_HAS_POSIX_NONUOF_FUNCS)
-PACE_INLINE
-int
-pace_pthread_sigmask (int how, const sigset_t * set,
-                      sigset_t * oset)
-{
-  switch (how)
-    {
-    case SIG_BLOCK:
-    case SIG_UNBLOCK:
-      {
-        /* get the old mask */
-        *oset = sigsetmask (*set);
-        /* create a new mask:  the following assumes that sigset_t is 4 bytes,
-         * which it is on VxWorks 5.2, so bit operations are done simply . . .
-         */
-        sigsetmask (how == SIG_BLOCK ? (*oset |= *set) : (*oset &= ~*set));
-        break;
-      }
-    case SIG_SETMASK:
-      *oset = sigsetmask (*set);
-      break;
-    default:
-      return -1;
-    }
- 
-  return 0;
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
