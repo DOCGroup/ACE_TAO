@@ -1,3 +1,8 @@
+Sun Jul 20 16:03:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp: Fixed compile errors that were caused from
+	  undefined environment variables. 
+
 Sun Jul 20 12:10:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
