@@ -1,8 +1,27 @@
+Fri Jun 25 11:43:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Any.h:
+        * tao/Any_Impl.h:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Profile.h:
+        * tao/ORB_Core.h:
+        * tao/orbconf.h:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Queued_Message.h:
+        * tao/Stub.h:
+        * tao/Thread_Per_Connection_Handler.h:
+        * tao/Transport.h:
+        * tao/Transport_Cache_Manager.h:
+          Fixed small documentation typos and doxygen tag usage
+
 Fri Jun 25 06:12:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Invocation_Adapter.cpp (TAO): 
+	* tao/Invocation_Adapter.cpp (TAO):
 
-	  Removed wrong comments in the file. 
+	  Removed wrong comments in the file.
 
 	* tao/IIOP_Connector.cpp (make_connection):
 	* tao/Strategies/SCIOP_Connector.cpp:
