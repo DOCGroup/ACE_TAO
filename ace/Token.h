@@ -64,7 +64,7 @@ class ACE_Export ACE_Token
 public:
 
   /**
-   * Available queueing strategies.  
+   * Available queueing strategies.
    */
   enum QUEUEING_STRATEGY
   {
@@ -76,7 +76,10 @@ public:
 
   // = Initialization and termination.
 
+  /// Constructor
   ACE_Token (const ACE_TCHAR *name = 0, void * = 0);
+
+  /// Destructor
   virtual ~ACE_Token (void);
 
   // = Strategies
@@ -199,37 +202,37 @@ public:
 
   struct ACE_Token_Queue_Entry
   {
+    /// Constructor
     ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                            ACE_thread_t t_id);
-    // Constructor
 
+    /// Constructor using a pre-allocated attributes
     ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                            ACE_thread_t t_id,
                            ACE_Condition_Attributes &attributes);
-    // Constructor using a pre-allocated attributes
 
+    /// Entry blocks on the token.
     int wait (ACE_Time_Value *timeout, ACE_Thread_Mutex &lock);
-    // Entry blocks on the token.
 
+    /// Notify (unblock) the entry.
     int signal (void);
-    // Notify (unblock) the entry.
 
+    /// Pointer to next waiter.
     ACE_Token_Queue_Entry *next_;
-    // Pointer to next waiter.
 
+    /// ACE_Thread id of this waiter.
     ACE_thread_t thread_id_;
-    // ACE_Thread id of this waiter.
 
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
+    /// ACE_Semaphore object used to wake up waiter when it can run again.
     ACE_Semaphore cv_;
-    // ACE_Semaphore object used to wake up waiter when it can run again.
 #else
+    /// ACE_Condition object used to wake up waiter when it can run again.
     ACE_Condition_Thread_Mutex cv_;
-    // ACE_Condition object used to wake up waiter when it can run again.
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
 
+    /// Ok to run.
     int runable_;
-    // Ok to run.
   };
 
 private:
@@ -241,20 +244,21 @@ private:
 
   struct ACE_Token_Queue
   {
+    /// Constructor
     ACE_Token_Queue (void);
 
+    /// Remove a waiter from the queue.
     void remove_entry (ACE_Token_Queue_Entry *);
-    // Remove a waiter from the queue.
 
+    /// Insert a waiter into the queue.
     void insert_entry (ACE_Token_Queue_Entry &entry,
                        int requeue_position = -1);
-    // Insert a waiter into the queue.
 
+    /// Head of the list of waiting threads.
     ACE_Token_Queue_Entry *head_;
-    // Head of the list of waiting threads.
 
+    /// Tail of the list of waiting threads.
     ACE_Token_Queue_Entry *tail_;
-    // Tail of the list of waiting threads.
   };
 
   /// Implements the <acquire> and <tryacquire> methods above.
