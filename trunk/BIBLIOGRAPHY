@@ -357,15 +357,17 @@ http://www.cs.wustl.edu/~schmidt/resume.html
 	MONTH = "September"
 }
 
-@incollection{Schmidt:95g,
+@article{Schmidt:95g,
 	AUTHOR = "Douglas C. Schmidt",
-	TITLE="{A System of Reusable Design Patterns
-	for Communication Software}",
-	BOOKTITLE="The Theory and Practice of
+	TITLE="{A Family of Design Patterns for
+	Application-level Gateways}",
+	JOURNAL="The Theory and Practice of
 	Object Systems (Special Issue on Patterns and Pattern Languages)",
 	EDITOR={Stephen P. Berczuk},
 	PUBLISHER="Wiley and Sons",
-	YEAR = 1995,
+	YEAR = 1996,
+	VOLUME = 2,
+	NUMBER = 1,
 	ABSTRACT = ""
 }
 
