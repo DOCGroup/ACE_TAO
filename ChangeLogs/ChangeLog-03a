@@ -1,3 +1,10 @@
+Wed Mar  8 19:16:56 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Time_Service_Test.cpp (main): Added the ASYS_TEXT macro
+	  to the "ace-malloc-XXXXXX" string to avoid an error when
+ 	  compiled with Unicode.  Thanks to Steve Huston
+ 	  <shuston@riverace.com> for reporting this.
+
 Wed Mar  8 19:19:46 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-irix6.x-common.h: Defined ACE_PI_CONTROL_BLOCK_ALIGN_LONGS
