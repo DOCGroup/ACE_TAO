@@ -15,6 +15,8 @@ Fri Feb 20 06:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Mem_Map.* (unmap): on LynxOS, write back the shared object to
           the plain file, if the mmap () protection included PROT_WRITE.
 
+        * ace/README: added ACE_HAS_BOOL, which can be used by TAO.
+
 Thu Feb 19 17:59:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* apps/JAWS/clients/Caching/*: Reworked and cleaned up these files a
