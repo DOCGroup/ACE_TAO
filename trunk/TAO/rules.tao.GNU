@@ -47,9 +47,6 @@ endif # ! minimum_corba
 ifeq (1,$(CROSS-COMPILE))
 else
 ifeq (1,$(ACE_HAS_GNUG_PRE_2_8))
-else
-  #### Enable the interface repository by default
-  interface_repo=1
 endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # ! CROSS-COMPILE
 
