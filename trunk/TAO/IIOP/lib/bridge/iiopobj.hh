@@ -111,7 +111,7 @@ class _EXPCLASS IIOP_Object : public STUB_Object
     IIOP::ProfileBody		*fwd_profile;
 
 				IIOP_Object (char *repository_id)
-				    : fwd_profile (0), base (this),
+				    : fwd_profile (0), base(this),
 					STUB_Object (repository_id),
 					_refcount (1)
 				    { }

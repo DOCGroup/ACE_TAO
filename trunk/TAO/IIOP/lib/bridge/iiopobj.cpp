@@ -131,6 +131,21 @@ IIOP_Object::is_equivalent (
 DEFINE_GUID (IID_IIOP_Object,
 0xa201e4c3, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
+// Added by BRM: 2/21/97
+// IID_STUB_Object and IID_CORBA_Object were not being defined.
+// Need a central place for all of these macros.
+
+// {A201E4C7-F258-11ce-9598-0000C07CA898}
+DEFINE_GUID (IID_STUB_Object,
+0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
+
+// {A201E4C2-F258-11ce-9598-0000C07CA898}
+DEFINE_GUID (IID_CORBA_Object,
+0xa201e4c2, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
+
+// End - Added by BRM: 2/21/97
+// IID_STUB_Object and IID_CORBA_Object were not being defined.
+// Need a central place for all of these macros.
 
 ULONG
 __stdcall
@@ -188,7 +203,7 @@ IIOP_Object::QueryInterface (
 	    || IID_IUnknown == riid)
 	*ppv = this;
     else if (IID_CORBA_Object == riid)
-	*ppv = &base;
+    *ppv = &base;
 
     if (*ppv == 0)
 	return ResultFromScode (E_NOINTERFACE);

@@ -146,7 +146,7 @@ class _EXPCLASS TCP_OA : public TOA {
     CORBA_Boolean		shutting_down ()
 				{ return do_exit; }
 
-    void			clean_shutdown (
+    void	__stdcall clean_shutdown (
 				    CORBA_Environment	&env
 				);
 
