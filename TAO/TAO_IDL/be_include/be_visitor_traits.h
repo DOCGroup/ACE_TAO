@@ -54,7 +54,7 @@ public:
   
   virtual int visit_exception (be_exception *node);
   
-  virtual int visit_struct (be_structure *node);
+  virtual int visit_structure (be_structure *node);
   
   virtual int visit_union (be_union *node);
   

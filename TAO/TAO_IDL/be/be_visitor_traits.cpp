@@ -326,7 +326,7 @@ be_visitor_traits::visit_exception (be_exception *node)
 }
 
 int
-be_visitor_traits::visit_struct (be_structure *node)
+be_visitor_traits::visit_structure (be_structure *node)
 {
   if (this->visit_scope (node) == -1)
     {
