@@ -259,7 +259,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
     {
       ACE_Message_Block::release (this->mb_);
       this->buffer_ =
-	TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (rhs.length_);
+        TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (rhs.length_);
     }
   else if (this->release_)
     {
@@ -267,7 +267,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
         {
           // free the old buffer
           CORBA::Octet *tmp = ACE_reinterpret_cast (CORBA::Octet *,
-						    this->buffer_);
+                                                    this->buffer_);
           TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (tmp);
           this->buffer_ =
             TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (rhs.length_);
@@ -290,11 +290,11 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
 
 TAO_Unbounded_Sequence<CORBA::Octet>::
 TAO_Unbounded_Sequence (const ACE_Message_Block *mb)
-  :  mb_ (ACE_Message_Block::duplicate (mb)),
-     TAO_Unbounded_Base_Sequence (mb->length (),
-				  mb->length (),
-				  mb->rd_ptr (),
-				  CORBA::B_FALSE)
+  :  TAO_Unbounded_Base_Sequence (mb->length (),
+                                  mb->length (),
+                                  mb->rd_ptr (),
+                                  CORBA::B_FALSE),
+     mb_ (ACE_Message_Block::duplicate (mb))
 {
 }
 
@@ -307,7 +307,7 @@ void
 TAO_Unbounded_Sequence<CORBA::Octet>::_allocate_buffer (CORBA::ULong length)
 {
   CORBA::Octet *tmp = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (length);
-  
+
   if (this->buffer_ != 0)
     {
       CORBA::Octet *old = ACE_reinterpret_cast (CORBA::Octet *, this->buffer_);
@@ -316,14 +316,14 @@ TAO_Unbounded_Sequence<CORBA::Octet>::_allocate_buffer (CORBA::ULong length)
         tmp[i] = old[i];
 
       if (this->mb_ != 0)
-	{
-	  ACE_Message_Block::release (this->mb_);
-	  this->mb_ = 0;
-	}
+        {
+          ACE_Message_Block::release (this->mb_);
+          this->mb_ = 0;
+        }
       else if (this->release_)
-	{
-	  TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (old);
-	}
+        {
+          TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (old);
+        }
     }
 
   this->buffer_ = tmp;
@@ -338,16 +338,16 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
       // We retain ownership.
 
       if (this->buffer_ == 0)
-	{
-	  // The buffer was not allocated, we must allocate it now.
-	  result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
-	  this->buffer_ = result;
-	}
+        {
+          // The buffer was not allocated, we must allocate it now.
+          result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
+          this->buffer_ = result;
+        }
       else
-	{
-	  result =
-	    ACE_reinterpret_cast (CORBA::Octet*,this->buffer_);
-	}
+        {
+          result =
+            ACE_reinterpret_cast (CORBA::Octet*,this->buffer_);
+        }
     }
   else if (this->mb_ != 0) // (orphan == CORBA::B_TRUE)
     {
@@ -358,7 +358,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
       //   somewhere at the beginning of the buffer (before the actual
       //   data), but that will not work in 64 bit machines when the
       //   buffer comes from a CDR stream.
-      // 
+      //
       result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
       ACE_OS::memcpy (result, this->buffer_, this->length_);
     }
@@ -381,9 +381,9 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
 
 void
 TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
-					       CORBA::ULong length,
-					       CORBA::Octet *data,
-					       CORBA::Boolean release)
+                                               CORBA::ULong length,
+                                               CORBA::Octet *data,
+                                               CORBA::Boolean release)
 {
   this->maximum_ = max;
   this->length_ = length;
