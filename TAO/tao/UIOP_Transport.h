@@ -10,6 +10,7 @@
 //     UIOP_Transport.h
 //
 // = DESCRIPTION
+//     UIOP Transport specific processing
 //
 // = AUTHOR
 //     Fred Kuhns <fredk@cs.wustl.edu>
@@ -38,7 +39,9 @@ class TAO_Export TAO_UIOP_Transport : public TAO_Transport
   //   connection handler (handler_).
   //
   // = DESCRIPTION
-  //   Implements common UIOP methods for the Transport adaptor class.
+  //   Specialization of the base TAO_Transport class to handle the UIOP
+  //   protocol.  This class in turn will be further specialized for
+  //   the client and server side.
 public:
   TAO_UIOP_Transport (TAO_UIOP_Handler_Base *handler,
                       TAO_ORB_Core *orb_core);
@@ -110,7 +113,9 @@ class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
   //   server.
   //
   // = DESCRIPTION
-  //   Implements the methods specific to the client.
+  //   Specialization of the TAO_UIOP_Transport class for client
+  //   side.  Methods related to sending one and two way requests
+  //   lives here.
 public:
   TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler,
                              TAO_ORB_Core *orb_core);
