@@ -9,7 +9,7 @@
 <center>
 <hr></center>
 
-<center> <h3> 
+<center> <h3>
 
 Release Information for The ACE ORB (TAO)</h3></center> This document
 contains information on the following topics related to the <a
@@ -554,7 +554,7 @@ Support for valuetypes has been expanded.<br>
 </ul>
 </li>
 
-<li>Support for the CCM extensions to IDL, which first appeared in CORBA 3.0 is 
+<li>Support for the CCM extensions to IDL, which first appeared in CORBA 3.0 is
 complete, with the exception of support for the 'import' keyword.
 </li>
 
@@ -1525,7 +1525,7 @@ Service </a> prototype was updated in TAO 1.3.
   </li>
 
   <li>
-      The Logging_Service (<tt>$TAO_ROOT/orbsvcs/Logging_Service</tt>) contains 4 
+      The Logging_Service (<tt>$TAO_ROOT/orbsvcs/Logging_Service</tt>) contains 4
       separate services
       <ul>
         <li>Basic_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/Basic_Logging_Service</tt></li>
@@ -1533,13 +1533,13 @@ Service </a> prototype was updated in TAO 1.3.
         <li>Notify_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/Notify_Logging_Service</tt></li>
         <li>RTEvent_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/RTEvent_Logging_Service</tt></li>
       </ul>
-      Each service registers with the Naming Service as "BasicLogFactory", 
+      Each service registers with the Naming Service as "BasicLogFactory",
       "EventLogFactory", "NotifyLogFactory" and "RTEventLogFactory" respectively.
       <br>
   </li>
   <li>
       There are now examples that demonstrate simple usage of the Log Services.
-      These are found in  <tt>$TAO_ROOT/orbsvcs/examples/Log</tt> and the 
+      These are found in  <tt>$TAO_ROOT/orbsvcs/examples/Log</tt> and the
       relevant sub-directories.
       <br>
       A thorough test <tt>$TAO_ROOT/orbsvcs/tests/Log/Basic_Log_Test</tt> tests
@@ -1571,73 +1571,123 @@ Service </a> prototype was updated in TAO 1.3.
 
 
 <hr WIDTH="100%">
-<h3><a NAME="notify"></a>CORBA Notification Service </h3>
+<h3><a NAME="notify"></a>Notification Service </h3>
 
 <h4> Last updated:Thu Nov 21 18:41:11 2002 </h4>
 Point of contact: <a href="mailto:pradeep@oomworks.com">Pradeep Gore</a>
 <p>
-Work is underway to implement the TAO Real-Time Notification
-Service. This is an extension to TAO's CORBA Notification Service with
-Real-Time CORBA support.
 
-The current <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf">
+<h4><u> CORBA Notification Service </u></h4>
+
+TAO's CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf">
 Notification Service </a> implementation consists of the following
 (see the associated README's for more information):
 <ul>
         <li>
             The implementation of the interfaces in the Notification Service
-            spec is in <tt>$TAO_ROOT/orbsvcs/orbsvcs/Notify</tt>.
+            spec is in <tt><a href = "../../orbsvcs/orbsvcs/Notify"> $TAO_ROOT/orbsvcs/orbsvcs/Notify </a></tt>.
         </li>
 
         <li>
-            The service executable is implemented in
-            <tt>$TAO_ROOT/orbsvcs/Notify_Service</tt>.
+            The service driver is implemented in
+            <tt><a href = "../../orbsvcs/Notify_Service">$TAO_ROOT/orbsvcs/Notify_Service</a></tt>. <br>
+The various options of the Notify_Service are described <a href="notify.html#notify_Service">here </a>.
         </li>
 
         <li>
-            The example in <tt>$TAO_ROOT/orbsvcs/examples/Notify/Filter</tt>
+            The example in <tt><a href = "../../orbsvcs/examples/Notify/Filter"> $TAO_ROOT/orbsvcs/examples/Notify/Filter</a></tt>
             shows a basic example of using filters.
         </li>
 
         <li>
-            The example in <tt>$TAO_ROOT/orbsvcs/examples/Notify/Subscribe
+            The example in <tt><a href= "../../orbsvcs/examples/Notify/Subscribe"> $TAO_ROOT/orbsvcs/examples/Notify/Subscribe</a>
             </tt> shows a basic example of how to use subscriptions.
         </li>
 
         <li>
-            Feature unit tests are under <tt>$TAO_ROOT/orbsvcs/tests/Notify/</tt>
+            Feature unit tests are under <tt><a href="../../orbsvcs/tests/Notify"> $TAO_ROOT/orbsvcs/tests/Notify </a></tt>
         </li>
-        
+
         <li>
-            The <a href="notify.html" >Notification feature matrix </a>lists the features implemented.
+            The <a href="notify.html#feature_matrix" >Notification feature matrix </a>lists the features implemented.
         </li>
 </ul>
 
-Note that this implementation does not support Pull interfaces and
-Typed Event style communication.
+<i>Note that this implementation does not support Pull interfaces and
+Typed Event style communication.</i>
 <p>
-New features (TAO 1.2.6 onwards):
-<li>
-      Dead or unresponsive consumers and
-      suppliers are detected and automatically disconnected from the Notification Service.
-</li>
-
+<h4> <u>Real-Time Notification Service </u></h4>
+This is an extension to TAO's CORBA Notification Service with
+Real-Time CORBA support.
 <p>
-Known bugs:
-<li>
-      Blocking test is failing in several places. This will be fixed
-between TAO 1.2.6 and TAO 1.3.
+<b>IDL Extensions:</b>
+<ul>
+<li> <b>Interface Extensions:</b>The <a href ="../../orbsvcs/orbsvcs/NotifyExt.idl"> $TAO_ROOT/orbsvcs/orbsvcs/NotifyExt.idl</a> extends the ConsumerAdmin
+and SupplierAdmin interfaces. The <tt> obtain_notification_push_supplier_with_qos <tt> <tt> and <tt> obtain_notification_push_consumer_with_qos <tt> methods can be used to specify QoS parameters.</li>
+
+<li><b>QoS Definitions:</b>
+<ul>
+
+<li>ThreadPoolParams: This specifies the parameters for creating a
+threadpool in an RT POA.
 </li>
 
-<li>
-        RedGreen test SEGVs with lookup.conf on shutdown on Debian and RedHat.
+<li>ThreadPoolLanesParams: This specifies the parameters for creating a
+threadpool with lanes in an RT POA.
 </li>
-
-<li>
-        Filter test is running into an exception on RedHat.
-</li>
-
 </ul>
+
+</li>
+</ul>
+
+<b>Tests and Examples:</b>
+<ul>
+<li>
+The <a href = "../../orbsvcs/examples/Notify/Lanes" > <tt>$TAO_ROOT/orbsvcs/examples/Notify/Lanes </tt></a> example shows how to use RTCORBA
+Lanes in RT Notification.
+</li>
+
+<li>
+The <a href ="../../orbsvcs/examples/Notify/ThreadPool"> <tt>$TAO_ROOT/orbsvcs/examples/Notify/ThreadPool</a></tt> example shows how to
+use RTCORBA ThreadPools in RT Notification.
+</li>
+</ul>
+
+The performance tests for RT Notification measure the throughput,
+latency and jitter for various test configurations using Periodic Suppliers:
+<ul>
+<li>
+<a href = "../../orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes" ><tt>$TAO_ROOT/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes</tt></a> <br>
+This configuration measures performance for a single data path when
+the load is increased. The Supplier sends events in a single burst.
+</li>
+<li>
+<a href = "../../orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes" ><tt>$TAO_ROOT/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes</tt></a> <br>
+This configuration measures performance for 3 data paths of high,
+,medium and low priorities when the Load is increased. The Suppliers send events at 100Hz.
+ </li>
+<li>
+<a href = "../../orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput"> <tt>$TAO_ROOT/tests/Notify/performance-tests/scripts/Paths_vs_Throughput </tt></a><br>
+This configuration has 1 high priority path ans several low priority
+paths. we measure the performance of the high priority path as a
+function of the number of low priority paths.
+</li>
+<li>
+<a href = "../../orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput"> <tt>$TAO_ROOT/tests/Notify/performance-tests/scripts/Max_Throughput</tt></a> <br>
+This Configuration measures the performance obtained for a data path using a Structured Event payload:
+<ul>
+<li>directly between a Supplier and Consumer in seperate processes.</li>
+<li>directly between a colocated Supplier and Consumer.</li>
+<li>between a Supplier and Consumer with a "Relay Consumer" as an
+intermidiary.</li>
+<li>between a a Supplier and Consumer using the Notification Service.</li>
+</ul>
+</li>
+</ul>
+<b>Test Framework:</b><br>
+The <a href = "../../orbsvcs/tests/Notify/lib"><tt>$TAO_ROOT/orbsvcs/tests/Notify/lib</a></tt> contains a scripting based test
+framework which can be used to quickly create test cases.
+The framemork and its options are described <a href="notify.html#test_framework">here. </a>
 
 <!-- BEGIN: CORBA Security Service Release Notes -->
 <HR WIDTH="100%">
@@ -1693,8 +1743,8 @@ Implemented Features:
           </LI>
           <LI>
             The <CODE>SecurityLevel2::EstablishTrustPolicy</CODE>
-	    policy has been implemented.  This policy is used to set
-	    the desired
+            policy has been implemented.  This policy is used to set
+            the desired
             invocation level of establishment of trust.  It can be created
             using <CODE>ORB::create_policy()</CODE>, and used in
             conjunction with the standard policy manipulation CORBA
@@ -1711,13 +1761,13 @@ Implemented Features:
       <LI>
         Implemented
         <CODE>SecurityLevel2::PrincipalAuthenticator</CODE> support
-	for SSLIOP.  In particular, a SSLIOP-specific
-	<CODE>SecurityReplaceable::Vault</CODE> implementation is now
-	available.
+        for SSLIOP.  In particular, a SSLIOP-specific
+        <CODE>SecurityReplaceable::Vault</CODE> implementation is now
+        available.
       </LI>
       <LI>
         Initial SSLIOP-specific <CODE>Credentials</CODE>
-	implementation is complete.
+        implementation is complete.
       </LI>
     </UL>
   </LI>
@@ -1801,7 +1851,7 @@ Schedule:
     <UL>
       <LI>
         Begin implementation of the <I>Resource Access Decision (RAD)
-	Facility</I> specification for TAO.
+        Facility</I> specification for TAO.
       </LI>
     </UL>
   </LI>
@@ -1939,7 +1989,7 @@ non-standards based prototype.  Those features and advantages include:
  <li>Extensible load monitoring</li>
  <li>Both "push" and "pull" style monitoring are supported</li>
  <li>Support for infrastructure and application controlled object
-	    group membership</li>
+            group membership</li>
  <li>Improved server-side transparency</li>
 </ul>
 

@@ -1,3 +1,23 @@
+Tue Jul 08 15:24:33 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* docs/releasenotes/index.html:
+	* docs/releasenotes/notify.html:
+
+	  Updated information in the Notification Service section.
+
+	* orbvsvcs/Notify_Service/Notify_Service.cpp:
+	  
+	  Deprecated the "-Notify_TPReactor" option and updated it with
+	  the "-ORBRunThreads".
+
+	* orbvsvcs/Notify_Service/README:
+	* orbvsvcs/CosEvent_Service/README:
+
+	  Updated the READMEs with a note explaining how to use the Naming
+	  Service with the "-m 1" option or the -ORBInitRef option while
+	  starting these services. Thanks to Tram Nguyen <ttnguye@sandia.gov>
+	  for reporting this issue.
+	
 Mon Jul 07 23:18:24 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\Strategies\UIOP_Connector.cpp (make_connection): 
