@@ -221,6 +221,7 @@ typedef u_int ACE_thread_key_t;
 #     define THR_SCHED_FIFO          0
 #     define THR_SCHED_RR            0
 #     define THR_SCHED_DEFAULT       0
+#     define THR_INHERIT_SCHED       0
 #     define USYNC_THREAD            T_LOCAL
 #     define USYNC_PROCESS           T_GLOBAL
 
@@ -379,6 +380,7 @@ public:
 #     define THR_SCHED_FIFO          0
 #     define THR_SCHED_RR            0
 #     define THR_SCHED_DEFAULT       0
+#     define THR_INHERIT_SCHED       0
 #     define THR_SCOPE_PROCESS       0
 #     define THR_SCOPE_SYSTEM        0
 #   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS **********/
@@ -642,6 +644,9 @@ struct ACE_recursive_mutex_state
 #   if !defined (THR_SCHED_DEFAULT)
 #     define THR_SCHED_DEFAULT 0
 #   endif /* ! THR_SCHED_DEFAULT */
+#   if !defined (THR_INHERIT_SCHED)
+#     define THR_INHERIT_SCHED 0
+#   endif /* ! THR_INHERIT_SCHED */
 #   if !defined (USYNC_THREAD)
 #     define USYNC_THREAD 0
 #   endif /* ! USYNC_THREAD */
