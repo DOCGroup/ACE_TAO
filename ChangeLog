@@ -1,3 +1,14 @@
+Wed May 28 15:18:47 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tests/Proactor_Test.dsp:
+
+          Added release configuration.
+
+        * tests/Test_Output.dsp:
+
+          Removed post build step from release and static configurations.
+          No longer needed.
+
 Wed May 28 11:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * THANKS: Added Branko Mijic to the hall of fame.
