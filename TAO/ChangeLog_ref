@@ -1,3 +1,25 @@
+Tue Sep 23 17:53:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+		
+	* tao/Valuetype/AbstractBase.inl
+	* tao/Valuetype/AbstractBase.cpp:
+	* tao/Valuetype/AbstractBase.h: Added a new method
+	  equivalent_objref () that generates the object reference, caches
+	  and returns the object reference within CORBA::AbstractBase. 
+
+	  We now generate a object reference for caching while doing an
+	  _unchecked_narrow (). 
+
+	  The cached object reference is returns the cached object
+	  reference after duplicating it in the to_object () call. 
+
+	* tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+	* tao/Valuetype/AbstractBase_Invocation_Adapter.cpp: Invocation
+	  adapter classes for Abstract interfaces. 
+	
+	* tao/Valuetype/Makefile: Added the file containing the adapter
+	  class into the Makefile.
+
 Tue Sep 23 10:26:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Makefile.tao: Added the new file into our daily builds. 

@@ -18,6 +18,7 @@ ACE_SHLIBS = -lTAO -lACE
 CPP_SRCS += \
   ValueBase \
   Valuetype_Adapter_Impl \
+  AbstractBase_Invocation_Adapter \
   AbstractBase \
   ValueFactory \
   ValueFactory_Map \
