@@ -529,7 +529,6 @@ realclean: clean
   $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/Servant_Locator.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/Options.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
