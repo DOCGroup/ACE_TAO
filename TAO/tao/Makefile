@@ -9,21 +9,26 @@ LIBNAME  = libTAO
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-# These are components that are only headers and must be installed
-CORBA_HDRS = orb sequence stub orbconf objtable optable $(CORBA_SRCS)
-CORBA_SRCS = any corbacom except nvlist object orbobj poa \
-	     principa request svrrqst typecode sequence
+# These are headers for things which are exported and must be
+# installed.  (Currently not used).
+PUB_HDRS = align cdr giop iiopobj iioporb xdr connect params marshal debug \
+	   default_client default_server server_factory client_factory orb_core
 
-# These are components that are only headers and must be installed
-OTHERS_HDRS = align cdr giop iiopobj iioporb xdr connect params marshal debug \
-              default_client default_server server_factory client_factory orb_core
-
-OTHERS_INLN = any poa cdr connect iiopobj iioporb object orbobj params svrrqst \
-	nvlist typecode marshal default_client default_server server_factory \
-	client_factory orb_core
-
-# These are components that are either header & source or source-only
-OTHERS_SRCS = \
+ORBCORE_SRCS = \
+	any \
+	corbacom \
+	except \
+	nvlist \
+	object \
+	orbobj \
+	poa \
+	poaC \
+	poaS \
+	principa \
+	request \
+	sequence \
+	svrrqst \
+	typecode \
 	arg_shifter \
 	cdr \
 	client_factory \
@@ -34,6 +39,7 @@ OTHERS_SRCS = \
 	deep_free \
 	default_client \
 	default_server \
+	objkeyC \
 	encode \
 	giop \
 	iiopobj \
@@ -46,11 +52,12 @@ OTHERS_SRCS = \
 	orb_core \
 	params \
 	server_factory \
+	servant_base \
 	tao_internals \
 	tc_const \
-	Timeprobe \
+	Timeprobe
 
-FILES	 = $(OTHERS_SRCS) $(CORBA_SRCS)
+FILES	 = $(ORBCORE_SRCS)
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
@@ -61,9 +68,7 @@ COMPATFILES = objbase.h initguid.h
 
 BIN = # t-xdr t-sizes
 
-TEMPLATE_FILES =
-
-DEFS  	= $(addsuffix .h,$(OTHERS_HDRS))
+DEFS  	= $(addsuffix .h,$(PUB_HDRS))
 LSRC	= $(addsuffix .cpp,$(FILES))
 LSRC2	= $(addsuffix .cpp,$(TEMPLATE_FILES))
 
@@ -79,14 +84,14 @@ BUILD	= $(VSHLIB) $(VLIB) $(VBIN)
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-#VSHDIR = obj/
-#VSHOBJS = $(LSRC:%.cpp=$(VSHDIR)/$(notdir %).so)
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
 #	Local targets (and local hacks)
@@ -98,7 +103,7 @@ endif
 ifdef VXWORKS
   override fakesvcconf = 1
 endif
-  
+
 ifeq ($(fakesvcconf),1)
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
 endif
@@ -108,37 +113,8 @@ ifeq ($(probe),1)
 endif # probe
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
-#CPPFLAGS += -D__IIOP_BUILD -I$(COMPATDIR) -DDEBUG
 CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR) #-H
 LDFLAGS += $(RLDFLAGS)
-
-INSINC = ../proto/include
-INSLIB = ../proto/lib
-
-# The first value is a nasty hack because $(VSHLIB) was not working
-# for some reason :-(
-INSTALL = $(INSLIB)/libTAO.$(SOEXT) \
-	$(addprefix $(INSINC)/,$(addsuffix .h,$(OTHERS_HDRS)) $(addsuffix .i,$(OTHERS_INLN)) $(addsuffix .h,$(basename $(COMPATFILES)) ) ) \
-	$(addprefix $(INSINC)/corba/, $(addsuffix .h,$(CORBA_SRCS) $(CORBA_HDRS) debug)) \
-
-
-INST = install -c
-INSTALL_BY_COPY = $(INST) $^ $@
-
-$(INSINC)/%:	%
-	test -d $(@D) || mkdir -p $(@D)
-	$(INSTALL_BY_COPY)
-$(INSINC)/%:	$(COMPATDIR)/%
-	test -d $(@D) || mkdir -p $(@D)
-	$(INSTALL_BY_COPY)
-$(INSLIB)/%:	%
-	test -d $(@D) || mkdir -p $(@D)
-	$(INSTALL_BY_COPY)
-$(INSINC)/corba/%:	%
-	test -d $(@D) || mkdir -p $(@D)
-	$(INSTALL_BY_COPY)
-
-copy:	$(INSTALL)
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.

@@ -82,7 +82,7 @@ class Cubit_Factory_i: public POA_Cubit_Factory
   //  factory object returning the cubit objrefs
 {
 public:
-  Cubit_Factory_i (const char *key, int numobjs);
+  Cubit_Factory_i (void);
   // constructor
 
   ~Cubit_Factory_i (void);
@@ -92,8 +92,7 @@ public:
   // make the cubit object whose key is "key"
 
 private:
-  Cubit_i_ptr *my_cubit_;
-  u_int numobjs_;
+  Cubit_i my_cubit_;
 };
 
 #endif /* _CUBIT_I_HH */

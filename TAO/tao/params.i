@@ -49,7 +49,7 @@ TAO_OA_Parameters::tablesize (void)
 }
 
 ACE_INLINE void 
-TAO_OA_Parameters::userdef_lookup_strategy (TAO_Object_Table *&ot)
+TAO_OA_Parameters::userdef_lookup_strategy (TAO_Object_Table_Impl *&ot)
 {
   // provide a way for user defined object key lookup strategies to be plugged
   // in
@@ -57,7 +57,7 @@ TAO_OA_Parameters::userdef_lookup_strategy (TAO_Object_Table *&ot)
   ot = 0;  // we own it now
 }
 
-ACE_INLINE TAO_Object_Table *
+ACE_INLINE TAO_Object_Table_Impl *
 TAO_OA_Parameters::userdef_lookup_strategy (void)
 {
   // return the lookup strategy

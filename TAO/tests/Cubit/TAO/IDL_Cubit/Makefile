@@ -9,7 +9,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     =  -lTAO
+LDLIBS = -lTAO
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
 PROG_SRCS =	$(IDL_SRC) svr.cpp clnt.cpp tmplinst.cpp
@@ -17,7 +17,7 @@ PROG_SRCS =	$(IDL_SRC) svr.cpp clnt.cpp tmplinst.cpp
 LSRC = $(PROG_SRCS)
 
 CUBIT_SVR_OBJS = cubitC.o cubitS.o svr.o cubit_i.o tmplinst.o
-CUBIT_CLT_OBJS = cubitC.o clnt.o tmplinst.o
+CUBIT_CLT_OBJS = cubitC.o cubitS.o clnt.o tmplinst.o
 
 BIN = svr clnt
 BUILD = $(BIN)
@@ -30,21 +30,17 @@ VBIN = $(BIN:%=%$(VAR))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/taoconfig.mk
 
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 DCFLAGS = -g
-LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-$(IDL_SRC): cubit.idl
-	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
+#$(IDL_SRC): cubit.idl
+#	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
@@ -80,11 +76,12 @@ check:	$(TESTS)
 	@./clnt -n250 -O `cat obj.5` -x
 	@echo ''
 
-clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+#clean:
+#	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf cubitC.* cubitS.*
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
