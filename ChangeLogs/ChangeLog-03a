@@ -1,5 +1,4 @@
 Sat Aug 31 13:55:52 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
-
 	* ace/OS.i (ctime_r): This fixes a problem on Linux for the call
 	  to ::ctime_r where the pointer returned (result) is the same as
 	  the pointer (buf) passed in, causing the buffer to get clobbed
@@ -7,6 +6,9 @@ Sat Aug 31 13:55:52 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  caller's buffer.
 
 	* tests/OS_Test.cpp: Added a test for ACE_OS::ctime_r ().
+
+	  Thanks to Michael Searles <msearles@base16.com> for providing
+	  this patch. 
 
 Sat Aug 31 17:45:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
