@@ -612,9 +612,9 @@ federated_query (const CosTrading::LinkNameSeq& links,
 
   for (int i = links.length () - 1; i >= 0; i--)
     {
-      CosTrading::OfferSeq_ptr out_offers = 0;
-      CosTrading::OfferIterator_ptr out_offer_iter = 0;
-      CosTrading::PolicyNameSeq_ptr out_limits = 0;
+      CosTrading::OfferSeq *out_offers = 0;
+      CosTrading::OfferIterator *out_offer_iter = 0;
+      CosTrading::PolicyNameSeq *out_limits = 0;
 
       ACE_TRY
         {
