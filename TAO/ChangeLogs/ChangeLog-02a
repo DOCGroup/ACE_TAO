@@ -1,3 +1,50 @@
+Fri Apr 19 18:13:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.h:
+	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.cpp:
+
+	  New secondary client request interceptor used when verifying
+	  that the RSC->TSC->RSC copying scenario described below actually
+	  works.  All it does is attempt to extract a value from the RSC's
+	  slot table.
+
+	* tests/Portable_Interceptors/PICurrent/ServerORBInitializer.cpp
+	  (post_init):
+
+	  Create and register a secondary client request interceptor for
+	  this test.  It is used when verifying that the RSC->TSC->RSC
+	  copying scenario described below actually works.
+
+	  Explicitly disable collocation optimizations since TAO doesn't
+ 	  implement interceptor support for THRU_POA collocated
+	  invocations yet, and we need to force a client request
+	  interceptor to be invoked in this server.
+	* tests/Portable_Interceptors/PICurrent/test_i.cpp (invoke_me):
+
+	  Call the newly added invoke_you() method via the servant's own
+	  object reference (not the C++ "this" pointer!) to force the
+	  newly added client request interceptor to be invoked.
+
+	  (invoke_you):
+
+	  New no-op method to be called by the invoke_me() method when
+	  testing the RSC->TSC->RSC copying scenario described below.
+
+	* tests/Portable_Interceptors/PICurrent/test_i.idl (invoke_you):
+	* tests/Portable_Interceptors/PICurrent/test_i.h (invoke_you):
+
+	  Declare the newly added method described above.
+
+	* tests/Portable_Interceptors/PICurrent/Makefile:
+	* tests/Portable_Interceptors/PICurrent/server.bor:
+	* tests/Portable_Interceptors/PICurrent/server.dsp:
+
+	  Added the new ClientRequestInterceptor2 sources to these files.
+
+	* tests/Portable_Interceptors/PICurrent/README:
+
+	  Updated expected out.
+
 Fri Apr 19 16:43:34 2002  Dmitry Goldshtain <dmitry@goldshtain.com>
 
 	* tao/PICurrent.cpp (copy):

@@ -37,8 +37,14 @@ public:
   /// Destructor.
   ~test_i (void);
 
-  /// Return the number assigned to this object.
+  /// Main servant test method.
   virtual void invoke_me (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// No-op method used so that a client request interceptor will be
+  /// invoked when invoking this method from the above invoke_me()
+  /// method.  Say that 10 times fast. :-)
+  virtual void invoke_you (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the ORB.
