@@ -1,5 +1,12 @@
 Sun Nov 29 18:22:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tests/Thread_Pool_Reactor_Test.cpp: Removed the use of
+	  "main_reactor".  The "main_reactor" was added to handle incoming
+	  connections because this test was not working correctly without
+	  moving out the acceptor to another reactor.  However, I recently
+	  found that the problem was actually due to the deadlocked
+	  notify_handler which I fixed a while back.
+
 	* ace/OS.h: Added forward declarations of ACE_Time_Value's
 	  operator{+,-} so VC 6.0 won't get confused with the
 	  operator{+,-} in namespace std.  Thanks to Victor Yu
