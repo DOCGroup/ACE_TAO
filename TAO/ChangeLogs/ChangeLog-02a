@@ -1,3 +1,14 @@
+Sun Sep 17 19:28:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+          Pass the arguments to the Request_Info constructors by
+          reference.  That removes problems under the Borland compiler, in
+          fact it fixes some semantics problems.
+
 Sun Sep 17 17:07:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo.bor:

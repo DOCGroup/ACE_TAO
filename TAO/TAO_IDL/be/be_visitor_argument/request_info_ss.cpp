@@ -54,7 +54,6 @@ int be_visitor_args_request_info_ss::visit_argument (be_argument *node)
                         -1);
     }
       
-      
   os->indent ();
   switch (this->ctx_->state ())
     {
@@ -105,6 +104,3 @@ int be_visitor_args_request_info_ss::visit_argument (be_argument *node)
     }
   return 0;
 }
-
-
-
