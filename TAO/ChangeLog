@@ -1,3 +1,11 @@
+Thu Aug 28 17:34:51 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.cpp
+	  (~Auto_Functor):
+
+	  Fixed emulated exception macro.  "ACE_ENV_ARG_PARAMETER", not
+	  "ACE_ENV_SINGLE_ARG_PARAMETER" (in this case).
+
 Thu Aug 28 23:39:28 UTC 2003  Scott Harris <harris_s@ociweb.com>
 
 	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp
