@@ -17,6 +17,54 @@
 #include "ace/Auto_Ptr.h"
 #include "cubit_i.h"
 
+#include "tao/Timeprobe.h"
+
+static const char *Cubit_i_Timeprobe_Description[] = 
+{ 
+  "Cubit_i::cube_octet - start",
+  "Cubit_i::cube_octet - end",
+
+  "Cubit_i::cube_short - start",
+  "Cubit_i::cube_short - end",
+
+  "Cubit_i::cube_long - start",
+  "Cubit_i::cube_long - end",
+
+  "Cubit_i::cube_struct - start",
+  "Cubit_i::cube_struct - end",
+
+  "Cubit_i::cube_union - start",
+  "Cubit_i::cube_union - end",
+
+  "Cubit_i::cube_sequence - start",
+  "Cubit_i::cube_sequence - end"
+};
+
+enum 
+{
+  CUBIT_I_CUBE_OCTET_START = 10000,
+  CUBIT_I_CUBE_OCTET_END,
+
+  CUBIT_I_CUBE_SHORT_START,
+  CUBIT_I_CUBE_SHORT_END,
+
+  CUBIT_I_CUBE_LONG_START,
+  CUBIT_I_CUBE_LONG_END,
+
+  CUBIT_I_CUBE_STRUCT_START,
+  CUBIT_I_CUBE_STRUCT_END,
+
+  CUBIT_I_CUBE_UNION_START,
+  CUBIT_I_CUBE_UNION_END,
+
+  CUBIT_I_CUBE_SEQUENCE_START,
+  CUBIT_I_CUBE_SEQUENCE_END
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_i_Timeprobe_Description, 
+                                  CUBIT_I_CUBE_OCTET_START);
+
 // Constructor
 
 Cubit_Factory_i::Cubit_Factory_i (void)
@@ -54,6 +102,8 @@ CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o,
                      CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_OCTET_START);
+
   ACE_UNUSED_ARG (env);
   return o * o * o;
 }
@@ -64,6 +114,8 @@ CORBA::Short
 Cubit_i::cube_short (CORBA::Short s,
                      CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_SHORT_START);
+
   ACE_UNUSED_ARG (env);
   return s * s * s;
 }
@@ -74,6 +126,8 @@ CORBA::Long
 Cubit_i::cube_long (CORBA::Long l,
                     CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_START);
+
   ACE_UNUSED_ARG (env);
   return l * l * l;
 }
@@ -84,6 +138,8 @@ Cubit::Many
 Cubit_i::cube_struct (const Cubit::Many &values,
                       CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_STRUCT_START);
+
   Cubit::Many temp;
 
   ACE_UNUSED_ARG (env);
@@ -100,6 +156,8 @@ Cubit::oneof
 Cubit_i::cube_union (const Cubit::oneof &values,
                      CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_UNION_START);
+
   Cubit::oneof temp;
 
   ACE_UNUSED_ARG (env);
@@ -132,6 +190,8 @@ Cubit_i::cube_sequence(const Cubit::vector &input,
 		       Cubit::vector_out output,
 		       CORBA::Environment &)
 {
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_SEQUENCE_START);
+
   if (output.ptr () == 0)
     output = new Cubit::vector (input.length ());
 

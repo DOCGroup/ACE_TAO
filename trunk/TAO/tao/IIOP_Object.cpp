@@ -17,6 +17,24 @@
 # include "tao/IIOP_Object.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "tao/Timeprobe.h"
+
+static const char *TAO_IIOP_Object_Timeprobe_Description[] = 
+{ 
+  "IIOP_Object::do_static_call - start",
+  "IIOP_Object::do_static_call - end",
+};
+
+enum 
+{
+  TAO_IIOP_OBJECT_DO_STATIC_CALL_START = 500,
+  TAO_IIOP_OBJECT_DO_STATIC_CALL_END
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_Object_Timeprobe_Description, 
+                                  TAO_IIOP_OBJECT_DO_STATIC_CALL_START);
+
 int
 IIOP::Profile::set (const char *h,
                     const CORBA::UShort p,
@@ -417,6 +435,8 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
                              ...)                       // ... any parameters
 
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_START);
+
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
   TAO_GIOP_Invocation call (this,
