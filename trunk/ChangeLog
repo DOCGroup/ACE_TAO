@@ -1,3 +1,9 @@
+Wed Dec 10 10:20:48 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/NT_Service.cpp (wait_for_service_state):
+          Initialize last_state and last_check_point with 0 to fix MinGW
+          compiler warnings.
+
 Wed Dec 10  9:31:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Task_Ex_T.h:
