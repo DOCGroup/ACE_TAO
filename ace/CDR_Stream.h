@@ -333,6 +333,9 @@ public:
   /// gateway.
   void reset_byte_order (int byte_order);
 
+  /// set GIOP version info
+  int set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor);
+
 private:
   /// disallow copying...
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
@@ -504,11 +507,7 @@ public:
    * the internal buffer, so the same stream can be read multiple
    * times efficiently.
    */
-  ACE_InputCDR (const ACE_InputCDR& rhs,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+  ACE_InputCDR (const ACE_InputCDR& rhs);
 
   ACE_InputCDR& operator= (const ACE_InputCDR& rhs);
 
@@ -516,30 +515,18 @@ public:
   /// "copy" of the stream starting in the new position.
   ACE_InputCDR (const ACE_InputCDR& rhs,
                 size_t size,
-                ACE_CDR::Long offset,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+                ACE_CDR::Long offset);
 
   /// This creates an encapsulated stream, the first byte must be (per
   /// the spec) the byte order of the encapsulation.
   ACE_InputCDR (const ACE_InputCDR& rhs,
-                size_t size,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+                size_t size);
 
   /// Create an input CDR from an output CDR.
   ACE_InputCDR (const ACE_OutputCDR& rhs,
                 ACE_Allocator* buffer_allocator = 0,
                 ACE_Allocator* data_block_allocator = 0,
-                ACE_Allocator* message_block_allocator = 0,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+                ACE_Allocator* message_block_allocator = 0);
 
   /// Helper class to transfer the contents from one input CDR to
   /// another without requiring any extra memory allocations, data
@@ -551,11 +538,7 @@ public:
     ACE_InputCDR &rhs_;
   };
   /// Transfer the contents from <rhs> to a new CDR
-  ACE_InputCDR (Transfer_Contents rhs,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+  ACE_InputCDR (Transfer_Contents rhs);
 
   /// Destructor
   ~ACE_InputCDR (void);

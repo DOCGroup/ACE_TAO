@@ -603,16 +603,14 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
 
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
                             size_t size,
-                            ACE_CDR::Long offset,
-                            ACE_CDR::Octet major_version,
-                            ACE_CDR::Octet minor_version)
+                            ACE_CDR::Long offset)
   : start_ (rhs.start_.data_block ()->duplicate ()),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
     char_translator_ (0),
     wchar_translator_ (0),
-    major_version_ (major_version),
-    minor_version_ (minor_version)
+    major_version_ (rhs.major_version_),
+    minor_version_ (rhs.minor_version_)
 {
   char* newpos = rhs.start_.rd_ptr() + offset;
   if (this->start_.base () <= newpos
@@ -629,16 +627,14 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
 }
 
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
-                            size_t size,
-                            ACE_CDR::Octet major_version,
-                            ACE_CDR::Octet minor_version)
+                            size_t size)
   : start_ (rhs.start_.data_block ()->duplicate ()),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
     char_translator_ (0),
     wchar_translator_ (0),
-    major_version_ (major_version),
-    minor_version_ (minor_version)
+    major_version_ (rhs.major_version_),
+    minor_version_ (rhs.minor_version_)
 {
   char* newpos = rhs.start_.rd_ptr();
   if (this->start_.base () <= newpos
@@ -660,31 +656,27 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     }
 }
 
-ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
-                            ACE_CDR::Octet major_version,
-                            ACE_CDR::Octet minor_version)
+ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
   : start_ (rhs.start_.data_block ()->duplicate ()),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
     char_translator_ (rhs.char_translator_),
     wchar_translator_ (rhs.wchar_translator_),
-    major_version_ (major_version),
-    minor_version_ (minor_version)
+    major_version_ (rhs.major_version_),
+    minor_version_ (rhs.minor_version_)
 {
   this->start_.rd_ptr (rhs.start_.rd_ptr ());
   this->start_.wr_ptr (rhs.start_.wr_ptr ());
 }
 
-ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x,
-                            ACE_CDR::Octet major_version,
-                            ACE_CDR::Octet minor_version)
+ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
   : start_ (x.rhs_.start_.data_block ()),
     do_byte_swap_ (x.rhs_.do_byte_swap_),
     good_bit_ (1),
     char_translator_ (x.rhs_.char_translator_),
     wchar_translator_ (x.rhs_.wchar_translator_),
-    major_version_ (major_version),
-    minor_version_ (minor_version)
+    major_version_ (x.rhs_.major_version_),
+    minor_version_ (x.rhs_.minor_version_)
 {
   this->start_.rd_ptr (x.rhs_.start_.rd_ptr ());
   this->start_.wr_ptr (x.rhs_.start_.wr_ptr ());
@@ -703,6 +695,8 @@ ACE_InputCDR::operator= (const ACE_InputCDR& rhs)
       this->start_.wr_ptr (rhs.start_.wr_ptr ());
       this->do_byte_swap_ = rhs.do_byte_swap_;
       this->good_bit_ = 1;
+      this->major_version_ = rhs.major_version_;
+      this->minor_version_ = rhs.minor_version_;
     }
   return *this;
 }
@@ -710,9 +704,7 @@ ACE_InputCDR::operator= (const ACE_InputCDR& rhs)
 ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
                             ACE_Allocator* buffer_allocator,
                             ACE_Allocator* data_block_allocator,
-                            ACE_Allocator* message_block_allocator,
-                            ACE_CDR::Octet major_version,
-                            ACE_CDR::Octet minor_version)
+                            ACE_Allocator* message_block_allocator)
   : start_ (rhs.total_length () + ACE_CDR::MAX_ALIGNMENT,
             ACE_Message_Block::MB_DATA,
             0,
@@ -728,8 +720,8 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
     good_bit_ (1),
     char_translator_ (0),
     wchar_translator_ (0),
-    major_version_ (major_version),
-    minor_version_ (minor_version)
+    major_version_ (rhs.major_version_),
+    minor_version_ (rhs.minor_version_)
 {
   ACE_CDR::mb_align (&this->start_);
   for (const ACE_Message_Block *i = rhs.begin ();
@@ -746,7 +738,7 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
   {
     ACE_CDR::Octet len;
     if (this->read_1 (&len))
-    return this->read_octet_array(ACE_reinterpret_cast (ACE_CDR::Octet*, &x),
+      return this->read_octet_array(ACE_reinterpret_cast (ACE_CDR::Octet*, &x),
                                     ACE_static_cast (ACE_CDR::ULong, len));
   }
   else
@@ -1111,6 +1103,8 @@ ACE_InputCDR::steal_from (ACE_InputCDR &cdr)
   this->start_.data_block (cdr.start_.data_block ()->duplicate ());
   this->start_.rd_ptr (cdr.start_.rd_ptr ());
   this->start_.wr_ptr (cdr.start_.wr_ptr ());
+  this->major_version_ = cdr.major_version_;
+  this->minor_version_ = cdr.minor_version_;
   cdr.reset_contents ();
 }
 
@@ -1156,6 +1150,10 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
 
   if (this->start_.size () >= dwr_pos)
     this->start_.wr_ptr (dwr_pos);
+
+  //Set the GIOP version info
+  this->major_version_ = cdr.major_version_;
+  this->minor_version_ = cdr.minor_version_;
 }
 
 
