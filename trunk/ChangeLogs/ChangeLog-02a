@@ -1,3 +1,12 @@
+Fri Jul 14 19:31:39 2000  Eric Ding  <qnd1@cs.wustl.edu>
+
+        * ace/config-linux.h
+        * ace/config-linux-lxpthreads.h
+        * include/makeinclude/platform_linux.GNU
+        * include/makeinclude/platform_linux_lxpthreads.GNU
+
+        Changing the default config/platform setting to thread enable on Linux
+
 Fri Jul 14 19:03:49 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
         * include/makeinclude/warpepr_macros.GNU:
