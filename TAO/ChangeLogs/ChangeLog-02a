@@ -1,351 +1,357 @@
+Wed Sep 20 11:55:35 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+          Explicitly include "ace/Process_Semaphore.h", otherwise it does
+          not work when ACE_ONLY_GREATEST_AND_LATEST is enabled.
+
 Wed Sep 20 11:51:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ior_corbaloc/CORBALOC_Parser.cpp :
-	 
-	  Modified the mprofile_helper so that a object reference
-	  consisting of multiple endpoints is returned instead of just
-	  returning a object reference with a single endpoint.
-	
+        * tao/ior_corbaloc/CORBALOC_Parser.cpp :
+
+          Modified the mprofile_helper so that a object reference
+          consisting of multiple endpoints is returned instead of just
+          returning a object reference with a single endpoint.
+
 Wed Sep 20 11:25:31 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/examples/Makefile (DIRS):
+        * orbsvcs/examples/Makefile (DIRS):
 
-	  If the Security ORB service component was compiled, then add the
-	  Security examples to the list of directories to compile.
+          If the Security ORB service component was compiled, then add the
+          Security examples to the list of directories to compile.
 
 Wed Sep 20 13:03:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.cpp:
-	* TAO_IDL/driver/drv_args.cpp:
-	* TAO_IDL/driver/drv_init.cpp:
-	* TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_init.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
 
-	  Replaced some -1s with ACE_INVALID_PID, and some other
-	  magic numbers with named constants.
+          Replaced some -1s with ACE_INVALID_PID, and some other
+          magic numbers with named constants.
 
 Wed Sep 20 08:17:13 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Dynamic/interceptors.cpp
-	  (receive_exception, send_exception):
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp
+          (receive_exception, send_exception):
 
-	  Updated these methods to not use the ACE_CString::c_str()
-	  accessor method when invoking CORBA::Exception::_info().
-	  CORBA::Exception::_info() now returns a "const char *."
+          Updated these methods to not use the ACE_CString::c_str()
+          accessor method when invoking CORBA::Exception::_info().
+          CORBA::Exception::_info() now returns a "const char *."
 
 Wed Sep 20 10:39:20 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Abstract_Servant_Base.cpp:
+        * tao/Abstract_Servant_Base.cpp:
 
-	  Fixed link errors caused by missing implementation of
-	  the copy constructor and of the assignment operator.
+          Fixed link errors caused by missing implementation of
+          the copy constructor and of the assignment operator.
 
-	* tao/Remote_Object_Proxy_Broker.cpp:
+        * tao/Remote_Object_Proxy_Broker.cpp:
 
-	  Fixed warning caused by unused args in method <select_proxy>.
+          Fixed warning caused by unused args in method <select_proxy>.
 
 Wed Sep 20 09:38:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
 
-	  Removed some unused variable.
+          Removed some unused variable.
 
-	* TAO_IDL/be_include/be_state.h:
-	* TAO_IDL/be_include/Makefile.am:
-	* TAO_IDL/TAO_IDL_BE_DLL.dsp:
-	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/be_include/be_state.h:
+        * TAO_IDL/be_include/Makefile.am:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
 
-	  Removed file be_state.h from the repository. It isn't
-	  included in any other file. Removed the filename from
-	  the Makefile and the MSVC projects it was in.
+          Removed file be_state.h from the repository. It isn't
+          included in any other file. Removed the filename from
+          the Makefile and the MSVC projects it was in.
 
 Wed Sep 20 09:34:20 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: Thanks to
-	  Andy for pointing a compile error in this file.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: Thanks to
+          Andy for pointing a compile error in this file.
 
 Wed Sep 20 09:05:38 2000  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Fault_Tolerance.dsp (CFG):
-	* orbsvcs/orbsvcs/orbsvcs.dsw:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsw: Added FT files in to these
-	  for MSVC builds.
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp (CFG):
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsw: Added FT files in to these
+          for MSVC builds.
 
 Tue Sep 19 17:38:38 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Core.h (~TAO_ORB_Core):
+        * tao/ORB_Core.h (~TAO_ORB_Core):
 
-	  Made the ORB Core destructor protected since the ORB Core should
-	  only be allocated on the heap.
+          Made the ORB Core destructor protected since the ORB Core should
+          only be allocated on the heap.
 
-	  (open, destroy, shutdown, get_default_policy):
+          (open, destroy, shutdown, get_default_policy):
 
-	  Removed default value for the CORBA::Environment argument.
-	  These methods are only meant for TAO internal use so the
-	  CORBA::Environment should always be passed and checked.
+          Removed default value for the CORBA::Environment argument.
+          These methods are only meant for TAO internal use so the
+          CORBA::Environment should always be passed and checked.
 
 Tue Sep 19 16:49:23 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/CORBA_String.h:
-	* tao/CORBA_String.inl:
-	* tao/CORBA_String.cpp:
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
+        * tao/CORBA_String.cpp:
 
-	  New files that now contain the CORBA::String related classes.
+          New files that now contain the CORBA::String related classes.
 
-	* tao/ORB.h:
-	* tao/ORB.i:
-	* tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB.cpp:
 
-	  Moved the CORBA::String classes to the newly added
-	  CORBA_String.* files.  There was no reason why these classes had
-	  to be kept inside these files.  This makes it possible to only
-	  pull in the CORBA::String classes, instead of the entire set of
-	  classes and headers inside ORB.h, thus reducing inter-header
-	  dependencies.
+          Moved the CORBA::String classes to the newly added
+          CORBA_String.* files.  There was no reason why these classes had
+          to be kept inside these files.  This makes it possible to only
+          pull in the CORBA::String classes, instead of the entire set of
+          classes and headers inside ORB.h, thus reducing inter-header
+          dependencies.
 
-	* tao/Exception.h:
+        * tao/Exception.h:
 
-	  Forward declare the TAO_{Output,Input}CDR classes so that
-	  `CDR.h' does not have to be explicitly included.
+          Forward declare the TAO_{Output,Input}CDR classes so that
+          `CDR.h' does not have to be explicitly included.
 
-	  (info):
+          (info):
 
-	  Return "const char *" instead "ACE_CString."  This allows us to
-	  remove the inter-header dependency on `ace/SString.h'.
+          Return "const char *" instead "ACE_CString."  This allows us to
+          remove the inter-header dependency on `ace/SString.h'.
 
-	* tao/Exception.cpp:
+        * tao/Exception.cpp:
 
-	  Include `ace/SString.h' to pull in ACE_CString class.
+          Include `ace/SString.h' to pull in ACE_CString class.
 
-	  (info):
+          (info):
 
-	  Return "const char *" instead "ACE_CString" since we only cared
-	  about the underlying C string, not the entire ACE_CString
-	  instance.
+          Return "const char *" instead "ACE_CString" since we only cared
+          about the underlying C string, not the entire ACE_CString
+          instance.
 
-	  (_tao_print_exception):
+          (_tao_print_exception):
 
-	  Invoke "this->_info()" instead "this->_info().c_str()" since the
-	  _info() method now returns a "const char *."
+          Invoke "this->_info()" instead "this->_info().c_str()" since the
+          _info() method now returns a "const char *."
 
-	* tao/Object.h (_request, _is_a, _create_object):
-	* tao/Object.cpp (_request, _is_a, _create_object):
+        * tao/Object.h (_request, _is_a, _create_object):
+        * tao/Object.cpp (_request, _is_a, _create_object):
 
-	  The C++ mapping for strings is "const char *," not "const
-	  CORBA::Char *."  Updated these signatures accordingly.
+          The C++ mapping for strings is "const char *," not "const
+          CORBA::Char *."  Updated these signatures accordingly.
 
-	  (_is_a, _non_existent):
+          (_is_a, _non_existent):
 
-	  Fixed incorrect usage of ACE_TRY_CHECK macro.  The proper macro
-	  is ACE_CHECK_RETURN.
+          Fixed incorrect usage of ACE_TRY_CHECK macro.  The proper macro
+          is ACE_CHECK_RETURN.
 
-	* tao/ORB_Core.h (TAO_Collocation_Strategies):
+        * tao/ORB_Core.h (TAO_Collocation_Strategies):
 
-	  Merged extraneous enumeration that provided count of the number
-	  of collocation strategies into this enumeration.  We
-	  automatically get the count by making it the last value in the
-	  enumeration.
+          Merged extraneous enumeration that provided count of the number
+          of collocation strategies into this enumeration.  We
+          automatically get the count by making it the last value in the
+          enumeration.
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Removed support for the -ORBSetUID and -ORBSetGID options.  They
-	  introduced potential security holes.
-	  Reported by Joe Hoffert <joeh@cs.wustl.edu>
+          Removed support for the -ORBSetUID and -ORBSetGID options.  They
+          introduced potential security holes.
+          Reported by Joe Hoffert <joeh@cs.wustl.edu>
 
-	  (collocation_strategy):
+          (collocation_strategy):
 
-	  Removed "TAO_Collocation_Strategy" from the enumeration value.
-	  It isn't necessary and it confused some compilers.
+          Removed "TAO_Collocation_Strategy" from the enumeration value.
+          It isn't necessary and it confused some compilers.
 
-	  Corrected enumeration value associated with the "DIRECT" case.
-	  The "TAO_ORB_Core::DIRECT_STRATEGY" should have been used.
+          Corrected enumeration value associated with the "DIRECT" case.
+          The "TAO_ORB_Core::DIRECT_STRATEGY" should have been used.
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  Include `ace/CDR_Base.h' instead of `ace/CDR_Stream.h' since we
-	  only need the CDR types.
+          Include `ace/CDR_Base.h' instead of `ace/CDR_Stream.h' since we
+          only need the CDR types.
 
-	* tao/Policy_Factory.i (create_policy):
-	* tao/Policy_Factory.cpp:
+        * tao/Policy_Factory.i (create_policy):
+        * tao/Policy_Factory.cpp:
 
-	  Moved this method to the `.cpp' file since it has the potential
-	  to become quite large, and since doing so allows us to reduce
-	  inter-header dependencies due to the headers that were included
-	  in the `.i' file (which are no longer necessary).
+          Moved this method to the `.cpp' file since it has the potential
+          to become quite large, and since doing so allows us to reduce
+          inter-header dependencies due to the headers that were included
+          in the `.i' file (which are no longer necessary).
 
-	* tao/GIOP_Server_Request.h:
-	* tao/RT_Policy_i.h:
-	* tao/params.h:
+        * tao/GIOP_Server_Request.h:
+        * tao/RT_Policy_i.h:
+        * tao/params.h:
 
-	  Include `ace/SString.h' to pull in definition of ACE_CString.
+          Include `ace/SString.h' to pull in definition of ACE_CString.
 
-	* tao/PortableServer/Collocated_Object.h:
+        * tao/PortableServer/Collocated_Object.h:
 
-	  Include `Servant_Base.h' to pull in definition of
-	  TAO_ServantBase class.  This fixes a compile-time error when
-	  inlining is enabled.
+          Include `Servant_Base.h' to pull in definition of
+          TAO_ServantBase class.  This fixes a compile-time error when
+          inlining is enabled.
 
-	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp
-	  (select_proxy):
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.cpp
+          (select_proxy):
 
-	  Fixed incorrect usage of ACE_TRY_CHECK macro.  The proper macro
-	  is ACE_CHECK_RETURN.
+          Fixed incorrect usage of ACE_TRY_CHECK macro.  The proper macro
+          is ACE_CHECK_RETURN.
 
-	  (create_proxy):
+          (create_proxy):
 
-	  Added missing default case for switch statement.  The default is
-	  the REMOTE_STRATEGY.
+          Added missing default case for switch statement.  The default is
+          the REMOTE_STRATEGY.
 
-	* tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.h:
 
-	  Use virtual inheritance from when deriving from the
-	  TAO_Abstract_ServantBase class to disambiguate the _add_ref()
-	  and _remove_ref() methods when mixing in the RefCountServantBase
-	  class.
+          Use virtual inheritance from when deriving from the
+          TAO_Abstract_ServantBase class to disambiguate the _add_ref()
+          and _remove_ref() methods when mixing in the RefCountServantBase
+          class.
 
-	* tao/PortableServer/Servant_Base.cpp (_add_ref, _remove_ref):
+        * tao/PortableServer/Servant_Base.cpp (_add_ref, _remove_ref):
 
-	  Moved these no-op methods to the TAO_Abstract_ServantBase class.
+          Moved these no-op methods to the TAO_Abstract_ServantBase class.
 
-	* tao/PortableServer/POA.cpp (destroy_i):
+        * tao/PortableServer/POA.cpp (destroy_i):
 
-	  Added missing ACE_TRY_ENV argument to the _remove_ref() call.
+          Added missing ACE_TRY_ENV argument to the _remove_ref() call.
 
-	* TAO_IDL/Makefile.dependencies:
+        * TAO_IDL/Makefile.dependencies:
 
-	  Added a no-op "depend" target to prevent error from occuring
-	  when updating dependencies for the IDL compiler Makefiles.
+          Added a no-op "depend" target to prevent error from occuring
+          when updating dependencies for the IDL compiler Makefiles.
 
-	* TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
 
-	  Include `ace/SString.h' to pull in declaration of ACE_CString.
+          Include `ace/SString.h' to pull in declaration of ACE_CString.
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Removed descriptions of the deprecated -ORBSet{U,G}ID options.
+          Removed descriptions of the deprecated -ORBSet{U,G}ID options.
 
 Tue Sep 19 14:33:39 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp:
-	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
 
-	  Added collocation related file to the workspaces.
+          Added collocation related file to the workspaces.
 
 Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Abstract_Servant_Base.h:
-	* tao/Abstract_Servant_Base.cpp:
+        * tao/Abstract_Servant_Base.h:
+        * tao/Abstract_Servant_Base.cpp:
 
-	  This abstract class is now the class from which the
-	  TAO_ServantBase inherits. This class has been introduced
-	  to make it possible to keep the reference to the servant
-	  in the CORBA::Object and still keeping the TAO library
-	  independent from the PortableServer library.
+          This abstract class is now the class from which the
+          TAO_ServantBase inherits. This class has been introduced
+          to make it possible to keep the reference to the servant
+          in the CORBA::Object and still keeping the TAO library
+          independent from the PortableServer library.
 
-	* tao/Object.h:
-	* tao/Object.cpp:
-	* tao/Object.i
+        * tao/Object.h:
+        * tao/Object.cpp:
+        * tao/Object.i
 
-	  Modified constructor to initialize the servant pointer, and
-	  to set the proxy broker to remote proxy broker.
+          Modified constructor to initialize the servant pointer, and
+          to set the proxy broker to remote proxy broker.
 
-	  Moved servant pointer from TAO_Collocated_Object back to
-	  CORBA::Object.
+          Moved servant pointer from TAO_Collocated_Object back to
+          CORBA::Object.
 
-	  Added member variable keep a reference to the Proxy Broker.
+          Added member variable keep a reference to the Proxy Broker.
 
-	  Added methods to get/set the proxy broker.
+          Added methods to get/set the proxy broker.
 
-	* tao/PortableServer/Servant_Base.h
+        * tao/PortableServer/Servant_Base.h
 
-	  Now the TAO_ServantBase inherits from the TAO_Abstract_ServantBase.
+          Now the TAO_ServantBase inherits from the TAO_Abstract_ServantBase.
 
-	* tao/Object_Proxy_Broker.h:
-	* tao/Object_Proxy_Broker.cpp:
+        * tao/Object_Proxy_Broker.h:
+        * tao/Object_Proxy_Broker.cpp:
 
-	  Proxy Broker superclass. This class define the interface
-	  used by CORBA::Object and its subclasses to get the right
-	  proxy needed to perform a given call. In the new collocation
-	  scheme, the proxy used could change on a call by call basis.
+          Proxy Broker superclass. This class define the interface
+          used by CORBA::Object and its subclasses to get the right
+          proxy needed to perform a given call. In the new collocation
+          scheme, the proxy used could change on a call by call basis.
 
-	* tao/Remote_Object_Proxy_Broker.h:
-	* tao/Remote_Object_Proxy_Broker.cpp:
+        * tao/Remote_Object_Proxy_Broker.h:
+        * tao/Remote_Object_Proxy_Broker.cpp:
 
-	* tao/PortableServer/Strategized_Object_Proxy_Broker.h:
-	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.h:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
 
-	  Concrete Proxy Brokers implementations.
+          Concrete Proxy Brokers implementations.
 
-	* tao/Object_Proxy_Impl.h
-	* tao/Object_Proxy_Impl.cpp
+        * tao/Object_Proxy_Impl.h
+        * tao/Object_Proxy_Impl.cpp
 
-	  Abstract base class for the Object Proxies, each concrete
-	  proxy implements a strategy to perform a call.
+          Abstract base class for the Object Proxies, each concrete
+          proxy implements a strategy to perform a call.
 
-	* tao/Remote_Object_Proxy_Impl.h:
-	* tao/Remote_Object_Proxy_Impl.cpp:
+        * tao/Remote_Object_Proxy_Impl.h:
+        * tao/Remote_Object_Proxy_Impl.cpp:
 
-	  Implementation of the Proxy for non "collocated calls".
+          Implementation of the Proxy for non "collocated calls".
 
-	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
-	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
-	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
-	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+        * tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+        * tao/PortableServer/Direct_Object_Proxy_Impl.h:
+        * tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
 
-	  Implementation of the Proxy for "collocated calls".
+          Implementation of the Proxy for "collocated calls".
 
-	* tao/PortableServer/Collocated_Object.h:
-	* tao/PortableServer/Collocated_Object.cpp:
-	* tao/PortableServer/Collocated_Object.i:
+        * tao/PortableServer/Collocated_Object.h:
+        * tao/PortableServer/Collocated_Object.cpp:
+        * tao/PortableServer/Collocated_Object.i:
 
-	  Removed class TAO_Collocated_Object.
+          Removed class TAO_Collocated_Object.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
 
-	  Added method <collocation_strategy> to resolve dinamically
-	  the collocation strategy to be used on a call by call
-	  basis. Right now this method implement the old logic,
-	  and will be updated as soon as other part of the RT-CORBA
-	  implementation are in place.
+          Added method <collocation_strategy> to resolve dinamically
+          the collocation strategy to be used on a call by call
+          basis. Right now this method implement the old logic,
+          and will be updated as soon as other part of the RT-CORBA
+          implementation are in place.
 
-	  Changend implementation of the method <create_object> to create
+          Changend implementation of the method <create_object> to create
 
-	* tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
 
-	  Modified the implementation of the method <create_collocated_object>
-	  not to create a TAO_Collocated_Object, but to set the
-	  right type of proxy broker.
+          Modified the implementation of the method <create_collocated_object>
+          not to create a TAO_Collocated_Object, but to set the
+          right type of proxy broker.
 
-	* tao/TAO.dsp:
+        * tao/TAO.dsp:
 
-	  Added new files to the TAO's VC++ workspace.
-	  Added <Bind_Dispatcher_Guard.*> to the VC++ workspace.
+          Added new files to the TAO's VC++ workspace.
+          Added <Bind_Dispatcher_Guard.*> to the VC++ workspace.
 
-	* tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/PortableServer/TAO_PortableServer.dsp:
 
-	  Added new files to the TAO_Portable 's VC++ workspace.
+          Added new files to the TAO_Portable 's VC++ workspace.
 
-	* tao/Makefile
+        * tao/Makefile
 
-	  Updated Makefile to compile the new files.
+          Updated Makefile to compile the new files.
 
-	* tao/PortableServer/Makefile
+        * tao/PortableServer/Makefile
 
-	  Updated Makefile to compile the new files.
+          Updated Makefile to compile the new files.
 
 Tue Sep 19 13:32:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
 
-	  Added code to generate ACE_NESTED_CLASS macro in the
-	  stub interceptor request info class constructor when a
-	  primitive type is typedef'd in the same scope as the
-	  operation and used as a parameter in that operation.
-	  Also made a similar addition to the code generation of
-	  the request info class' private member list. Thanks to
-	  Aniruddha Gokhale <gokhale@research.bell-labs.com> for
-	  pointing out this bug.
+          Added code to generate ACE_NESTED_CLASS macro in the
+          stub interceptor request info class constructor when a
+          primitive type is typedef'd in the same scope as the
+          operation and used as a parameter in that operation.
+          Also made a similar addition to the code generation of
+          the request info class' private member list. Thanks to
+          Aniruddha Gokhale <gokhale@research.bell-labs.com> for
+          pointing out this bug.
 
 Tue Sep 19 11:02:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -369,42 +375,42 @@ Tue Sep 19 10:46:15 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Sep 19 10:36:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Object.cpp: Moved the is_nil () of minimum_corba
-	  definitions. It was a big mistake to have put that there in the
-	  first place. Thanks to Carlos for pointing this out.
+        * tao/Object.cpp: Moved the is_nil () of minimum_corba
+          definitions. It was a big mistake to have put that there in the
+          first place. Thanks to Carlos for pointing this out.
 
 Mon Sep 18 18:58:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_sht.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_sht.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
 
-	  Removed generation of ACE_NESTED_CLASS in skeleton interceptor
-	  request info class constructor declarations, definitions, and
-	  private member declarations. The macro is intended to be used
-	  only when a type is used in the same scope in which it is
-	  declared. This is never the case with the skeleton version of
-	  portable interceptors, since the operation parameters are
-	  declared in the stub header files. Since the same visitor is
-	  reused to generate code on both TAO_CLientRequest_Info_* and
-	  TAO_ServerRequest_Info_* classes, a new substate value had to
-	  be added to TAO_CodeGen so the two cases could be distinguished.
-	  Thanks to Aniruddha Gokhale <gokhale@research.bell-labs.com>
-	  for pointing out the problem.
+          Removed generation of ACE_NESTED_CLASS in skeleton interceptor
+          request info class constructor declarations, definitions, and
+          private member declarations. The macro is intended to be used
+          only when a type is used in the same scope in which it is
+          declared. This is never the case with the skeleton version of
+          portable interceptors, since the operation parameters are
+          declared in the stub header files. Since the same visitor is
+          reused to generate code on both TAO_CLientRequest_Info_* and
+          TAO_ServerRequest_Info_* classes, a new substate value had to
+          be added to TAO_CodeGen so the two cases could be distinguished.
+          Thanks to Aniruddha Gokhale <gokhale@research.bell-labs.com>
+          for pointing out the problem.
 
-	  Also modified source code and generated code to better conform
-	  to the ACE style guidelines.
+          Also modified source code and generated code to better conform
+          to the ACE style guidelines.
 
 Mon Sep 18 15:09:29 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/IIOP_Profile.cpp (parse_string):
+        * tao/IIOP_Profile.cpp (parse_string):
 
-	  Correctly assigned the host variable which got messed up during
-	  the merge.
+          Correctly assigned the host variable which got messed up during
+          the merge.
 
 Mon Sep 18 14:33:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -1885,7 +1891,7 @@ Mon Sep 11 12:56:11 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/params.i:
         * tao/params.cpp:
 
-	  Simplify #includes, use the IORTable classes.
+          Simplify #includes, use the IORTable classes.
 
         * */Makefile:
           Update dependencies
