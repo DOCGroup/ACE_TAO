@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_SPECIAL_BASIC_SARGUMENT_T_C
-#define TAO_SPECIAL_BASIC_SARGUMENT_T_C
+#ifndef TAO_SPECIAL_BASIC_SARGUMENT_T_CPP
+#define TAO_SPECIAL_BASIC_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/Special_Basic_SArgument_T.h"
 #include "tao/Dynamic_ParameterC.h"
@@ -10,9 +10,6 @@
 #include "tao/PortableServer/Special_Basic_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           Special_Basic_SArgument_T,
-           "$Id$")
 
 // ============================================================
 
@@ -122,4 +119,4 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_result (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#endif /* TAO_SPECIAL_BASIC_SARGUMENT_T_C */
+#endif /* TAO_SPECIAL_BASIC_SARGUMENT_T_CPP */

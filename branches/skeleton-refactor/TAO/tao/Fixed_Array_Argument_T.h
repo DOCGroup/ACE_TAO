@@ -30,7 +30,7 @@ namespace TAO
    *
    */
   template<typename S, typename S_slice, typename S_forany>
-  class In_Fixed_Array_Argument_T : public Const_Argument_T<S_slice const *>
+  class In_Fixed_Array_Argument_T : public Argument
   {
   public:
     In_Fixed_Array_Argument_T (const S_slice * x);
@@ -39,7 +39,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_slice const * arg (void) const;
+    S_slice const * arg (void) const;
 
   private:
     S_forany x_;
@@ -52,7 +52,7 @@ namespace TAO
    *
    */
   template<typename S, typename S_slice, typename S_forany>
-  class Inout_Fixed_Array_Argument_T : public Mutable_Argument_T<S_slice *>
+  class Inout_Fixed_Array_Argument_T : public Argument
   {
   public:
     Inout_Fixed_Array_Argument_T (S_slice *&x);
@@ -62,7 +62,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_slice * arg (void);
+    S_slice * arg (void);
 
   private:
     S_forany x_;
@@ -75,7 +75,7 @@ namespace TAO
    *
    */
   template<typename S, typename S_slice, typename S_forany>
-  class Out_Fixed_Array_Argument_T : public Mutable_Argument_T<S_slice *&>
+  class Out_Fixed_Array_Argument_T : public Argument
   {
   public:
     Out_Fixed_Array_Argument_T (S_slice *& x);
@@ -84,7 +84,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_slice *& arg (void);
+    S_slice *& arg (void);
 
   private:
     S_forany x_;
@@ -101,7 +101,7 @@ namespace TAO
            typename S_var,
            typename S_forany,
            typename S_tag>
-  class Ret_Fixed_Array_Argument_T : public Mutable_Argument_T<S_slice *&>
+  class Ret_Fixed_Array_Argument_T : public Argument
   {
   public:
     Ret_Fixed_Array_Argument_T (void);
@@ -110,7 +110,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_slice *& arg (void);
+    S_slice *& arg (void);
 
     S_slice * excp (void);
     S_slice * retn (void);

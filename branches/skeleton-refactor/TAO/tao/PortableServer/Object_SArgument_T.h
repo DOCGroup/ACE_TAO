@@ -36,7 +36,7 @@ namespace TAO
    *
    */
   template<typename S_ptr, typename S_var>
-  class In_Object_SArgument_T : public Const_Argument_T<S_ptr>
+  class In_Object_SArgument_T : public Argument
   {
   public:
 
@@ -44,7 +44,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_ptr arg (void) const;
+    S_ptr arg (void) const;
 
   private:
     S_var x_;
@@ -57,7 +57,7 @@ namespace TAO
    *
    */
   template<typename S_ptr, typename S_var>
-  class Inout_Object_SArgument_T : public Mutable_Argument_T<S_ptr &>
+  class Inout_Object_SArgument_T : public Argument
   {
   public:
     Inout_Object_SArgument_T (void);
@@ -67,7 +67,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_ptr & arg (void);
+    S_ptr & arg (void);
 
   private:
     S_var x_;
@@ -80,7 +80,7 @@ namespace TAO
    *
    */
   template<typename S_ptr, typename S_var, typename S_out>
-  class Out_Object_SArgument_T : public Mutable_Argument_T<S_out>
+  class Out_Object_SArgument_T : public Argument
   {
   public:
     Out_Object_SArgument_T (void);
@@ -89,7 +89,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_out arg (void);
+    S_out arg (void);
 
   private:
     S_var x_;
@@ -102,7 +102,7 @@ namespace TAO
    *
    */
   template<typename S_ptr, typename S_var>
-  class Ret_Object_SArgument_T : public Mutable_Argument_T<S_ptr &>
+  class Ret_Object_SArgument_T : public Argument
   {
   public:
     Ret_Object_SArgument_T (void);
@@ -111,7 +111,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_ptr & arg (void);
+    S_ptr & arg (void);
 
   private:
     S_var x_;
@@ -136,10 +136,12 @@ namespace TAO
     typedef Out_Object_SArgument_T<T_ptr,T_var,T_out>     out_arg_val;
     typedef Ret_Object_SArgument_T<T_ptr,T_var>           ret_val;
 
-    typedef Const_Argument_T<in_type>                     in_arg_base;
-    typedef Mutable_Argument_T<inout_type>                inout_arg_base;
-    typedef Mutable_Argument_T<out_type>                  out_arg_base;
-    typedef Mutable_Argument_T<inout_type>                ret_base;
+    // Typedefs corresponding to return value of arg() method in both
+    // the client and server side argument class templates.
+    typedef in_type                                       in_arg_type;
+    typedef inout_type                                    inout_arg_type;
+    typedef out_type                                      out_arg_type;
+    typedef inout_type                                    ret_arg_type;
 
   };
 }

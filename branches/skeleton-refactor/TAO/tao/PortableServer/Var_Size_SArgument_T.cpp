@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_VAR_SIZE_SARGUMENT_T_C
-#define TAO_VAR_SIZE_SARGUMENT_T_C
+#ifndef TAO_VAR_SIZE_SARGUMENT_T_CPP
+#define TAO_VAR_SIZE_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/Var_Size_SArgument_T.h"
 #include "tao/Dynamic_ParameterC.h"
@@ -10,9 +10,6 @@
 #include "tao/PortableServer/Var_Size_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           Var_Size_SArgument_T,
-           "$Id$")
 
 template<typename S>
 CORBA::Boolean
@@ -104,4 +101,4 @@ TAO::Ret_Var_Size_SArgument_T<S,S_var>::interceptor_result (CORBA::Any * any)
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#endif /* TAO_VAR_SIZE_SARGUMENT_T_C */
+#endif /* TAO_VAR_SIZE_SARGUMENT_T_CPP */

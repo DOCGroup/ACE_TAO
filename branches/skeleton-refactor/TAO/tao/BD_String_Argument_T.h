@@ -33,7 +33,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S, size_t BOUND>
-  class In_BD_String_Argument_T : public Const_Argument_T<S const *>
+  class In_BD_String_Argument_T : public Argument
   {
   public:
     In_BD_String_Argument_T (const S * x);
@@ -44,7 +44,7 @@ namespace TAO
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-    virtual S const * arg (void) const;
+    S const * arg (void) const;
 
   private:
 
@@ -59,7 +59,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S, size_t BOUND>
-  class Inout_BD_String_Argument_T : public Mutable_Argument_T<S *&>
+  class Inout_BD_String_Argument_T : public Argument
   {
   public:
     Inout_BD_String_Argument_T (S *& x);
@@ -69,10 +69,10 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S *& arg (void);
+    S *& arg (void);
 
   private:
-    mutable S *& x_;
+    S *& x_;
   };
 
   /**
@@ -86,7 +86,7 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND>
-  class Out_BD_String_Argument_T : public Mutable_Argument_T<S *&>
+  class Out_BD_String_Argument_T : public Argument
   {
   public:
     Out_BD_String_Argument_T (S_out x);
@@ -95,7 +95,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S *& arg (void);
+    S *& arg (void);
 
   private:
     S *& x_;
@@ -112,7 +112,7 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND>
-  class Ret_BD_String_Argument_T : public Mutable_Argument_T<S *&>
+  class Ret_BD_String_Argument_T : public Argument
   {
   public:
     Ret_BD_String_Argument_T (void);
@@ -121,7 +121,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S *& arg (void);
+    S *& arg (void);
 
     S * excp (void);
     S * retn (void);

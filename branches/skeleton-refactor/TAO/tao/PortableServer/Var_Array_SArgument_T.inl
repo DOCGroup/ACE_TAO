@@ -1,32 +1,41 @@
+// -*- C++ -*-
+//
 // $Id$
 
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-TAO::In_Var_Array_SArgument_T<S,S_forany>::In_Var_Array_SArgument_T (void)
+TAO::In_Var_Array_SArgument_T<S,
+                              S_slice,
+                              S_forany>::In_Var_Array_SArgument_T (void)
 {}
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-const S &
-TAO::In_Var_Array_SArgument_T<S,S_forany>::arg (void) const
+S_slice const *
+TAO::In_Var_Array_SArgument_T<S,
+                              S_slice,
+                              S_forany>::arg (void) const
 {
-  return this->x_;
+  return this->x_.in ();
 }
 
 // ==========================================================================
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-TAO::Inout_Var_Array_SArgument_T<S,S_forany>::
-Inout_Var_Array_SArgument_T (void)
+TAO::Inout_Var_Array_SArgument_T<S,
+                                 S_slice,
+                                 S_forany>::Inout_Var_Array_SArgument_T (void)
 {}
 
-template<typename S, typename S_forany>
-S &
-TAO::Inout_Var_Array_SArgument_T<S,S_forany>::arg (void)
+template<typename S, typename S_slice, typename S_forany>
+S_slice *
+TAO::Inout_Var_Array_SArgument_T<S,
+                                 S_slice,
+                                 S_forany>::arg (void)
 {
-  return this->x_;
+  return this->x_.inout ();
 }
 
 // ==========================================================================

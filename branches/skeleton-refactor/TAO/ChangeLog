@@ -1,39 +1,4 @@
-Mon Feb 14 22:56:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
-
-	* tao/Argument_T.h (Const_Argument_T, Mutable_Argument_T):
-
-	  New file.  Contains new base class templates that enable
-	  polymorphic invocations of the client and server side
-	  *_Argument_T<>::arg() method.  These classes are the key to
-	  using the same skeleton code for both collocated and
-	  uncollocated invocations without having to resort to complicated
-	  argument conversion code.  Both of these class templates
-	  subclass the TAO::Argument class.
-
-	* tao/BD_String_Argument_T.h:
-	* tao/Basic_Argument_T.h:
-	* tao/Fixed_Array_Argument_T.h:
-	* tao/Fixed_Size_Argument_T.h:
-	* tao/Object_Argument_T.h:
-	* tao/Special_Basic_Argument_T.h:
-	* tao/Special_Basic_Argument_T.inl:
-	* tao/UB_String_Argument_T.h:
-	* tao/Var_Array_Argument_T.h:
-	* tao/Var_Size_Argument_T.h:
-	* tao/PortableServer/BD_String_SArgument_T.h:
-	* tao/PortableServer/Basic_SArgument_T.h:
-	* tao/PortableServer/Fixed_Array_SArgument_T.h:
-	* tao/PortableServer/Fixed_Size_SArgument_T.h:
-	* tao/PortableServer/Object_SArgument_T.h:
-	* tao/PortableServer/Special_Basic_SArgument_T.h:
-	* tao/PortableServer/UB_String_SArgument_T.h:
-	* tao/PortableServer/Var_Array_SArgument_T.h:
-	* tao/PortableServer/Var_Size_SArgument_T.h:
-
-	  Inherit from TAO::{Const,Mutable}_Argument_T<> class template
-	  instead of TAO::Argument to enable polymorphic invocation of the
-	  arg() method used in the stubs and skeletons.  See
-	  "tao/Argument_T.h" details above.
+Sun Feb 20 16:34:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
 	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:

@@ -30,7 +30,7 @@ namespace TAO
    *
    */
   template<typename S, typename S_var>
-  class In_UB_String_SArgument_T : public Const_Argument_T<S const *>
+  class In_UB_String_SArgument_T : public Argument
   {
   public:
     In_UB_String_SArgument_T (void);
@@ -39,7 +39,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S const * arg (void) const;
+    S const * arg (void) const;
 
   private:
     S_var x_;
@@ -52,7 +52,7 @@ namespace TAO
    *
    */
   template<typename S, typename S_var>
-  class Inout_UB_String_SArgument_T : public Mutable_Argument_T<S *&>
+  class Inout_UB_String_SArgument_T : public Argument
   {
   public:
     Inout_UB_String_SArgument_T (void);
@@ -62,7 +62,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S *& arg (void);
+    S *& arg (void);
 
   private:
     S_var x_;
@@ -75,7 +75,7 @@ namespace TAO
    *
    */
   template<typename S, typename S_var>
-  class Out_UB_String_SArgument_T : public Mutable_Argument_T<S *&>
+  class Out_UB_String_SArgument_T : public Argument
   {
   public:
     Out_UB_String_SArgument_T (void);
@@ -84,7 +84,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S *& arg (void);
+    S *& arg (void);
 
   private:
     S_var x_;
@@ -97,7 +97,7 @@ namespace TAO
    *
    */
   template<typename S, typename S_var>
-  class Ret_UB_String_SArgument_T : public Mutable_Argument_T<S *&>
+  class Ret_UB_String_SArgument_T : public Argument
   {
   public:
     Ret_UB_String_SArgument_T (void);
@@ -106,7 +106,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S *& arg (void);
+    S *& arg (void);
 
   private:
     S_var x_;
@@ -131,10 +131,12 @@ namespace TAO
     typedef Out_UB_String_SArgument_T<T,T_var>          out_arg_val;
     typedef Ret_UB_String_SArgument_T<T,T_var>          ret_val;
 
-    typedef Const_Argument_T<in_type>                   in_arg_base;
-    typedef Mutable_Argument_T<inout_type>              inout_arg_base;
-    typedef Mutable_Argument_T<inout_type>              out_arg_base;
-    typedef Mutable_Argument_T<inout_type>              ret_base;
+    // Typedefs corresponding to return value of arg() method in both
+    // the client and server side argument class templates.
+    typedef in_type                                     in_arg_type;
+    typedef inout_type                                  inout_arg_type;
+    typedef inout_type                                  out_arg_type;
+    typedef inout_type                                  ret_arg_type;
 
   };
 };

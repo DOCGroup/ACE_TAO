@@ -195,31 +195,31 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
 
   if (node->seen_in_operation ())
     {
-      TAO_OutStream *os = this->ctx_->stream ();
+      TAO_OutStream & os = *this->ctx_->stream ();
 
       std::string guard_suffix =
         std::string (this->S_) + std::string ("arg_traits");
 
       // This should be generated even for imported nodes. The ifdef
       // guard prevents multiple declarations.
-      os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+      os.gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
-      *os << be_nl << be_nl
-          << "template<>" << be_nl
-          << "class " << be_global->stub_export_macro () << " "
-          << this->S_ << "Arg_Traits<"
-          << node->name () << ">" << be_idt_nl
-          << ": public" << be_idt << be_idt_nl
-          << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-          << node->name () << " *," << be_nl
-          << node->name () << "_var," << be_nl
-          << node->name () << "_out," << be_nl
-          << "TAO::Value_Traits<" << node->name () << ">" << be_uidt_nl
-          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
-          << "{" << be_nl
-          << "};";
+      os << be_nl << be_nl
+         << "template<>" << be_nl
+         << "class " << be_global->stub_export_macro () << " "
+         << this->S_ << "Arg_Traits<"
+         << node->name () << ">" << be_idt_nl
+         << ": public" << be_idt << be_idt_nl
+         << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
+         << node->name () << " *," << be_nl
+         << node->name () << "_var," << be_nl
+         << node->name () << "_out," << be_nl
+         << "TAO::Value_Traits<" << node->name () << ">" << be_uidt_nl
+         << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+         << "{" << be_nl
+         << "};";
 
-      os->gen_endif ();
+      os.gen_endif ();
     }
 
   if (this->visit_scope (node) != 0)
@@ -316,7 +316,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
                   << be_nl << be_nl;
             }
 
-          *os << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          *os << "template<>" << be_nl
               << "class " << be_global->stub_export_macro () << " "
               << this->S_ << "Arg_Traits<" << node->flat_name ()
               << ">" << be_idt_nl
@@ -377,7 +377,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
   *os << be_nl << be_nl
       << "struct " << node->flat_name () << " {};"
       << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "template<>" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<" << node->flat_name ()
       << ">" << be_idt_nl
@@ -442,7 +442,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
           << be_nl << be_nl;
     }
 
-  *os << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+  *os << "template<>" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<" << node->flat_name ()
       << ">" << be_idt_nl
@@ -479,7 +479,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
   os->gen_ifdef_macro (alias->flat_name (), guard_suffix.c_str ());
 
   *os << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "template<>" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << alias->name () << ">" << be_idt_nl
@@ -555,7 +555,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
     }
 
   *os << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "template<>" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<";
 
@@ -599,18 +599,19 @@ be_visitor_arg_traits::visit_array (be_array *node)
   // Generate the array traits specialization definitions,
   // guarded by #ifdef on unaliased array element type and length.
 
-  ACE_CString unique;
+  ACE_CString unique (this->S_);
+  unique += ACE_CString ("_");
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
   AST_Decl::NodeType nt = bt->node_type ();
 
   if (nt == AST_Decl::NT_typedef)
     {
       be_typedef *td = be_typedef::narrow_from_decl (bt);
-      unique = td->primitive_base_type ()->flat_name ();
+      unique += td->primitive_base_type ()->flat_name ();
     }
   else
     {
-      unique = bt->flat_name ();
+      unique += bt->flat_name ();
     }
 
   char buf[NAMEBUFSIZE];
@@ -630,7 +631,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
   os->gen_ifdef_macro (unique.fast_rep ());
 
   *os << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "template<>" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << node->name () << ">" << be_idt_nl
@@ -688,7 +689,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
   os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
   *os << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "template<>" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << node->name () << ">" << be_idt_nl
@@ -729,7 +730,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
   *os << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "template<>" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << node->name () << ">" << be_idt_nl
@@ -843,7 +844,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
   os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
   *os << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "template<>" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<"
       << node->name () << ">" << be_idt_nl

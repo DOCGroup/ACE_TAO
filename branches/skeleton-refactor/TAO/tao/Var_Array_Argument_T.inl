@@ -11,7 +11,7 @@ In_Var_Array_Argument_T (const S_slice * x)
 
 template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-const S_slice *
+S_slice const *
 TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
 {
   return this->x_.in ();

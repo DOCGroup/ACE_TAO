@@ -173,10 +173,12 @@ namespace TAO
                                       from_T,
                                       BOUND>      ret_val;
 
-    typedef Const_Argument_T<in_type>             in_arg_base;
-    typedef Mutable_Argument_T<inout_type>        inout_arg_base;
-    typedef Mutable_Argument_T<inout_type>        out_arg_base;
-    typedef Mutable_Argument_T<inout_type>        ret_base;
+    // Typedefs corresponding to return value of arg() method in both
+    // the client and server side argument class templates.
+    typedef in_type                               in_arg_type;
+    typedef inout_type                            inout_arg_type;
+    typedef inout_type                            out_arg_type;
+    typedef inout_type                            ret_arg_type;
 
   };
 

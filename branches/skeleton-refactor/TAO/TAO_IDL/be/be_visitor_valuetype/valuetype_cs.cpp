@@ -68,7 +68,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (node->is_defined ())
     {
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
+//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name  () << ">::add_ref ("
           << be_idt << be_idt_nl
@@ -79,7 +79,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
+//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::remove_ref ("
           << be_idt << be_idt_nl
@@ -90,7 +90,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
+//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
