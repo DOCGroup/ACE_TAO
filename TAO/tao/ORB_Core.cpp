@@ -2935,6 +2935,20 @@ TAO_ORB_Core::init_ref_map ()
   return &this->init_ref_map_;
 }
 
+void
+TAO_ORB_Core::set_default (const char *orb_id)
+{
+  TAO_ORB_Table *table = TAO_ORB_Table::instance ();
+  table->set_default (orb_id);
+}
+
+void
+TAO_ORB_Core::not_default (const char *orb_id)
+{
+  TAO_ORB_Table *table = TAO_ORB_Table::instance ();
+  table->not_default (orb_id);
+}
+
 /// Return the valuetype adapter
 TAO_Valuetype_Adapter *&
 TAO_ORB_Core::valuetype_adapter (void)

@@ -992,7 +992,13 @@ public:
   /// Return a pointer to the -ORBInitRef map.
   InitRefMap * init_ref_map (void);
 
+  /// Set the ORB related to the orb_id as the default ORB and not the
+  /// ORB that is first binded in the ORB Table
+  void set_default (const char *orb_id);
 
+  /// Set to choose to be not a default ORB when there are more than
+  /// one ORB.
+  void not_default (const char *orb_id);
 
 protected:
 
