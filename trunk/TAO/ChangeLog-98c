@@ -1,3 +1,18 @@
+Sat Dec  6 13:30:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/tests/ImplRepo/server_impl.cpp:  Forgot a 
+          TAO_CHECK_ENV.
+
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+        * orbsvcs/tests/ImplRepo/IR_Helper.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo.idl:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.h:
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+        * orbsvcs/tests/ImplRepo/Repository_Test.cpp:
+          Changed the storage of the hostname from a number to a string.
+
 Sun Dec  6 03:23:21 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AVStreams.idl: Added the idl code for the
