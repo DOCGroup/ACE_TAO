@@ -11,8 +11,13 @@ Tue Aug 13 07:54:39 2002  Ossama Othman  <ossama@uci.edu>
 	  Added stub and skeleton sources to the list of object files to
 	  build.
 
-	  Thanks to Johnny Willemsen for explaining what was wrong with
-	  this Borland Makefile.
+	  Thanks to Johnny Willemsen for suggesting how to fix this
+	  Borland Makefile.
+
+	  (LIBFILES):
+
+	  Added missing PortableGroup, CosNaming and Messaging libraries
+	  to the list of libraries to link.
 
 Mon Aug 12 20:03:09 2002  Ossama Othman  <ossama@uci.edu>
 
