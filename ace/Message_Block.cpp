@@ -220,7 +220,7 @@ ACE_Message_Block::total_size (void) const
 
   size_t s = 0;
 
-  for (ACE_Message_Block *temp = this;
+  for (ACE_Message_Block *temp = ACE_const_cast (ACE_Message_Block *, this);
        temp != 0;
        temp = temp->cont ())
     s += temp->size ();
