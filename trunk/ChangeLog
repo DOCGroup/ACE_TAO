@@ -1,3 +1,9 @@
+Fri Jan 23 08:41:53 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_time.h:
+          Dinkum STL doesn't have timezone or _timezone so only try to use
+          timezone when we don't have Dinkum STL.
+
 Fri Jan 23 07:38:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/README:
