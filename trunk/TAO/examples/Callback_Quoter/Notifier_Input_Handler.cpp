@@ -38,8 +38,8 @@ Notifier_Input_Handler::~Notifier_Input_Handler (void)
    // Make sure to cleanup the STDIN handler.
 
   if (ACE_Event_Handler::remove_stdin_handler
-      (TAO_ORB_Core_instance ()->reactor (),
-       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
+      (this->notifier_i_.orb_->orb_core ()->reactor (),
+       this->notifier_i_.orb_->orb_core ()->thr_mgr ()) == -1)
      ACE_ERROR ((LM_ERROR,
        	       "%p\n",
        	       "remove_stdin_handler"));
@@ -52,34 +52,41 @@ Notifier_Input_Handler::~Notifier_Input_Handler (void)
 int
 Notifier_Input_Handler::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 {
+
   CORBA::ORB_var orb = this->orb_manager_.orb ();
+  PortableServer::POA_var child_poa = this->orb_manager_.child_poa ();
 
-  PortableServer::POA_var child_poa
-    = this->orb_manager_.child_poa ();
+  this->naming_server_.init (orb.in (),
+                             child_poa.in ());
+  // create the name for the naming service
 
-  int return_val =
-    this->naming_server_.init (orb.in (),
-                               child_poa.in ());
-  if (return_val == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failed to initialize TAO_Naming_Server\n"),
-                      -1);
-
-  // Register the object implementation with the POA.
-  Notifier_var notifier_obj = this->notifier_i_._this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  // Name the object.
   CosNaming::Name notifier_obj_name (1);
   notifier_obj_name.length (1);
   notifier_obj_name[0].id = CORBA::string_dup ("Notifier");
 
-  ACE_CHECK_RETURN (-1);
+  // (re)Bind the object.
+  ACE_TRY
+    {
+      Notifier_var notifier_obj = notifier_i_._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Now, attach the object name to the context.
-  this->naming_server_->bind (notifier_obj_name,
-                              notifier_obj.in (),
+      naming_server_->rebind (notifier_obj_name,
+                              notifier_obj.in(),
                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+    }
+  ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to bind %s \n",
+                         "Notifier"),
+                        -1);
+    }
+  ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -252,7 +259,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
     }
    ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Input_Handler::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Input_Handler::init");
       return -1;
     }
   ACE_ENDTRY;
