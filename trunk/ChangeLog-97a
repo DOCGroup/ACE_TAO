@@ -1,4 +1,86 @@
+Fri Jan  3 10:47:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Replaced all uses of "delete mb" with mb->release ();
+
+	* ace/Stream_Modules.cpp: Replaced the use of explicit bit
+	  twiddling with the ACE_BIT* macros.
+
+	* ace/Message_Block.cpp: Make sure that we use the
+ 	  allocator_strategy_ to create the memory for the reference count
+ 	  since this may need to go into shared memory if that's the
+ 	  memory pool where the Message_Block allocations are coming from.
+
+	* ace/OS.h: Added two new macros, ACE_ALLOCATOR_RETURN and
+	  ACE_ALLOCATOR, which are similar to ACE_NEW_RETURN and ACE_NEW, 
+	  except that these
+
+	* ace/Message_Block.cpp (release): Make sure to "delete this"
+ 	  outside the scope of the locking_strategy_.
+
+	* ace/Service_Object.cpp: Added a destructor to ACE_Service_Type.
+  	  Thanks to Per.Andersson@hfera.ericsson.se (Per Andersson) for
+ 	  suggesting this.
+
+	* ace/Service_Object.i: Be smarter about how we reassign the name_
+ 	  pointer, i.e., delete the old one and make a copy.  Thanks to
+ 	  Per.Andersson@hfera.ericsson.se (Per Andersson) for reporting
+ 	  this.
+
+	* ace/Module.cpp (open): Rearranged the assignments to
+ 	  reader_q->mod_ and writer_q->mod_ so that we don't try to
+ 	  initialize through NULL pointers.  Thanks to
+ 	  Per.Andersson@hfera.ericsson.se (Per Andersson) for reporting
+ 	  this.
+
+	* ace/Service_Record.cpp (ACE_Service_Record): Initialized name_
+ 	  to NULL so that the following change works correctly now.
+  	  Thanks to Per.Andersson@hfera.ericsson.se (Per Andersson) for
+ 	  reporting this.
+
+	* ace/Service_Record.i (name): Make sure to delete [] (char *)
+ 	  this->name_ before allocating a new one.  Thanks to
+ 	  Per.Andersson@hfera.ericsson.se (Per Andersson) for reporting
+ 	  this.
+
+	* ace/Message_Block: Reworked the reference counting implemention
+ 	  so that reference counts are shared correctly amongst their
+ 	  various owners.  This requires making a deep copy the "header"
+ 	  portion, but a shallow copy of the "data."
+
+	* ace/Message_Block.cpp (ACE_Message_Block): Updated all three
+ 	  ACE_Message_Block constructors so that they all call the init()
+ 	  method.  This centralizes all the initialization logic in one
+ 	  place.
+
 Thu Jan  2 00:42:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block.cpp (ACE_Message_Block): Make sure to set the
+ 	  cont_ field to 0 after "releasing" it so that we don't
+ 	  mistakenly think it's still around later on.  This problem arose
+ 	  in the ACE_Message_Queue::close() method, which was trying to
+ 	  count the number of bytes being freed.
+
+	* ace/Message_Queue.cpp (close): Fixed a subtle bug where we
+ 	  weren't actually deleting messages from the
+ 	  ACE_Message_Queue::close() routine.  This should work now...
+
+	* ace/Message_Queue.cpp (close): Replaced the use of "delete mb"
+ 	  with "mb->release()" since the Message_Blocks are now reference
+ 	  counted.  
+
+	* ace/Message_Block: Enhanced the reference counting scheme so
+ 	  that you can increment and decrement the count by an arbitrary
+ 	  amount.  This is particular useful when you know you'll be
+ 	  sending the same Message_Block to N consumers.
+
+	* ace/Singleton: The dump() must be used same as instance()
+          (without supplying an object) so it must be declarated *static*,
+	  i.e.,
+
+	  static void dump (void);
+
+	  Thanks to Sandro Doro <alex@aureus.sublink.org> for reporting
+ 	  this.
 
 	* examples/ASX/Event_Server: Completely rewrote and retested the
  	  ACE Event Server example.  The new code is *much* easier to

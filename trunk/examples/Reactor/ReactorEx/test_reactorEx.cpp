@@ -210,7 +210,7 @@ Peer_Handler::handle_output_complete (ACE_Message_Block *msg,
 
   // This was allocated by the STDIN_Handler, queued, dequeued,
   // passed to the proactor, and now passed back to us.
-  delete msg;
+  msg->release ();
   return 0; // Do not reinvoke a send.
 }
 
@@ -222,21 +222,25 @@ int
 Peer_Handler::handle_input_complete (ACE_Message_Block *msg, 
 				     long bytes_transferred)
 {
+  int result = 1; // Reinvokes the recv() operation by default!
+
   if (bytes_transferred > 0 && msg->length () > 0)
     {
       msg->rd_ptr ()[bytes_transferred] = '\0';
       // Print out the message received from the server.
       ACE_DEBUG ((LM_DEBUG, "%s", msg->rd_ptr ()));
-      delete msg;
-      return 1; // Reinvokes the recv() operation!
+    }
+  else
+    {
+      // If a read failed, we will assume it's because the remote peer
+      // went away.  We will end the event loop.  Since we're in the
+      // main thread, we don't need to do a notify.
+      ACE_Service_Config::end_reactorEx_event_loop ();
+      result = -1;
     }
 
-  delete msg;
-  // If a read failed, we will assume it's because the remote peer
-  // went away.  We will end the event loop.  Since we're in the main
-  // thread, we don't need to do a notify.
-  ACE_Service_Config::end_reactorEx_event_loop ();
-  return -1; // Close down.
+  msg->release ();
+  return result;
 }
 
 // This is so the Proactor can get a message to read into.

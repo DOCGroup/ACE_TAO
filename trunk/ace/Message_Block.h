@@ -157,13 +157,12 @@ public:
 
   // = Reference counting methods.
   ACE_Message_Block *duplicate (void);
-  // Increment our reference count by one.
+  // Increase our reference count by 1.
 
   ACE_Message_Block *release (void);
-  // Decrement our reference count by one.  If the reference count is
-  // > 0 then return this; else if reference count == 0 then delete
-  // <this> and return 0.  Behavior is undefined if reference count <
-  // 0.
+  // Decrease our reference count by 1.  If the reference count is > 0
+  // then return this; else if reference count == 0 then delete <this>
+  // and return 0.  Behavior is undefined if reference count < 0.
 
   static ACE_Message_Block *release (ACE_Message_Block *mb);
   // This behaves like the non-static method <release>, except that it
@@ -252,6 +251,27 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
+  // = Internal initialization methods.
+  ACE_Message_Block (size_t size, 
+		     ACE_Message_Type type,
+		     ACE_Message_Block *cont,
+		     const char *data,
+		     ACE_Allocator *allocator,
+		     ACE_Lock *locking_strategy,
+		     int *reference_count,
+		     Message_Flags flags);
+  // Perform the actual initialization.
+
+  int init_i (size_t size, 
+	      ACE_Message_Type type,
+	      ACE_Message_Block *cont,
+	      const char *data,
+	      ACE_Allocator *allocator,
+	      ACE_Lock *locking_strategy,
+	      int *reference_count,
+	      Message_Flags flags);
+  // Perform the actual initialization.
+
   Message_Flags flags_; 	
   // Misc flags (e.g., DONT_DELETE and USER_FLAGS).
 
@@ -286,16 +306,22 @@ private:
   ACE_Message_Block *prev_;	
   // Pointer to previous message in the list.
 
+  // = Strategies.
   ACE_Allocator *allocator_strategy_;
-  // Pointer to the allocator defined for this message block.
+  // Pointer to the allocator defined for this message block.  Note
+  // that this pointer is shared by all owners of this <Message_Block>.
 
   ACE_Lock *locking_strategy_;
   // Pointer to the locking defined for this message block.  This is
-  // used to protect regions of code containing 
+  // used to protect regions of code that access shared
+  // <ACE_Message_Block> state.  Note that this lock is shared by all
+  // owners of the <Message_Block>'s data.
 
-  size_t reference_count_;
-  // Reference count for this <Message_Block> which is used to avoid
-  // deep copies (i.e., <clone>).
+  int *reference_count_;
+  // Pointer to a reference count for this <Message_Block>, which is
+  // used to avoid deep copies (i.e., <clone>).  Note that this
+  // pointer value is shared by all owners of the <Message_Block>'s
+  // data.
 
   // = Disallow these operations for now (use <clone> instead).
   ACE_Message_Block &operator= (const ACE_Message_Block &);

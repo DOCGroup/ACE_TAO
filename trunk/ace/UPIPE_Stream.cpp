@@ -120,8 +120,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
 			    this->remaining_);
 	    bytes_read += this->remaining_;
 	    this->remaining_ = 0;
-	    delete this->mb_last_;
-	    this->mb_last_ = 0;
+	    this->mb_last_ = this->mb_last_->release ();
 	    return bytes_read;
 	  }
 	else
@@ -139,12 +138,9 @@ ACE_UPIPE_Stream::recv (char *buffer,
 	    this->remaining_ -= n;
 
 	    if (this->remaining_ == 0)
-	      {
-		// Now the Message_Buffer is empty.
+	      // Now the Message_Buffer is empty.
 
-		delete this->mb_last_;
-		this->mb_last_ = 0;
-	      }
+	      this->mb_last_ = this->mb_last_->release ();
 	  }
       }
     else

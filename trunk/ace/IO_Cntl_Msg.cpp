@@ -2,7 +2,9 @@
 // $Id$
 
 #if 0
-/* Forward decl */
+// This is not meant to be used, it's just a place holder...
+
+// Forward decl
 template <class SYNCH> class ACE_Module;
 
 

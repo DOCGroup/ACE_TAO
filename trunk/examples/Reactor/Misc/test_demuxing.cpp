@@ -270,7 +270,7 @@ Message_Handler::handle_input (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) priority = %d\n", mb->msg_priority ()));
-      delete mb;
+      mb->release ();
     }
 
   return 0;

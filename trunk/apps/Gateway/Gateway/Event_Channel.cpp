@@ -18,9 +18,12 @@ ACE_Event_Channel_Options::ACE_Event_Channel_Options (void)
 
 ACE_Event_Channel::~ACE_Event_Channel (void)
 {
+  delete this->lock_adapter_;
 }
 
 ACE_Event_Channel::ACE_Event_Channel (void)
+  : lock_adapter_ (0),
+    acceptor_ (*this)
 {
 }
 
@@ -28,6 +31,12 @@ ACE_Event_Channel_Options &
 ACE_Event_Channel::options (void)
 {
   return this->options_;
+}
+
+ACE_Lock *
+ACE_Event_Channel::message_block_locking_strategy (void)
+{
+  return this->lock_adapter_;
 }
 
 int
@@ -100,7 +109,7 @@ ACE_Event_Channel::compute_performance_statistics (void)
 ACE_Event_Channel::handle_timeout (const ACE_Time_Value &, 
 				   const void *)
 {
-  return this->collection_performance_statistics ();
+  return this->compute_performance_statistics ();
 }
 
 // This method forwards the <event> to Consumer that have registered
@@ -193,11 +202,6 @@ ACE_Event_Channel::initiate_proxy_connection (Proxy_Handler *proxy_handler,
 {
   return this->connector_.initiate_connection (proxy_handler, 
 					       synch_options);
-}
-
-int
-ACE_Event_Channel::initiate_proxy_accept (void)
-{
 }
 
 int
@@ -391,12 +395,20 @@ ACE_Event_Channel::open (void *)
   // Ignore SIPPIPE so each Consumer_Proxy can handle it.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
 
-  if (this->connector_role_)
+  if (this->options ().connector_role_)
     // Actively initiate Peer connections.
     this->initiate_connector ();
 
-  if (this->acceptor_role_)
+  if (this->options ().acceptor_role_)
     // Passively initiate Peer acceptor.
     this->initiate_acceptor ();
+
+  // If we're not running reactively, then we need to make sure that
+  // <ACE_Message_Block> reference counting operations are
+  // thread-safe.  Therefore, we create an <ACE_Lock_Adapter> that is
+  // parameterized by <ACE_Thread_Mutex> to prevent race conditions.
+  if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
+    ACE_NEW_RETURN (this->lock_adapter_, ACE_Lock_Adapter<ACE_Thread_Mutex>, -1);
+
   return 0;
 }

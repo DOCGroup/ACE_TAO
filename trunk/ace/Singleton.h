@@ -35,7 +35,7 @@ public:
   static TYPE *instance (void);
   // Global access point to the Singleton.
 
-  void dump (void) const;
+  static void dump (void);
   // Dump the state of the object.
 
 protected:

@@ -99,7 +99,7 @@ Worker_Task<BARRIER>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
       if (this->output (mb) < 0)
 	ACE_DEBUG ((LM_DEBUG, "(%t) output not connected!\n"));
 
-      delete mb;
+      mb->release ();
     }
   return result;
 }
@@ -149,14 +149,14 @@ Worker_Task<BARRIER>::svc (void)
       if (length == 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG, "(%t) in iteration %d got quit, exit!\n", iter));
-	  delete mb;
+	  mb->release ();
 	  break;
 	}
 
       this->barrier_.wait ();
       this->output (mb);
 
-      delete mb;
+      mb->release ();
     }
 
   // Note that the ACE_Task::svc_run () method automatically removes

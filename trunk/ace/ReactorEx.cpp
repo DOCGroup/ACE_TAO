@@ -357,9 +357,10 @@ ACE_ReactorEx_Notify::handle_signal (int signum,
 	  ACE_Notification_Buffer *buffer = 
 	    (ACE_Notification_Buffer *) mb->base ();
 
-	  // If eh == 0 then we've got major problems!  Otherwise, we need
-	  // to dispatch the appropriate handle_* method on the
+	  // If eh == 0 then we've got major problems!  Otherwise, we
+	  // need to dispatch the appropriate handle_* method on the
 	  // ACE_Event_Handler pointer we've been passed.
+
 	  if (buffer->eh_ != 0)
 	    {
 	      int result = 0;
@@ -385,7 +386,7 @@ ACE_ReactorEx_Notify::handle_signal (int signum,
 	    }
 	  // Make sure to delete the memory regardless of success or
 	  // failure!
-	  delete mb;
+	  mb->release ();
 	}
     }
 }
@@ -409,7 +410,7 @@ ACE_ReactorEx_Notify::notify (ACE_Event_Handler *eh,
 
       if (this->message_queue_.enqueue_tail (mb) == -1)
 	{
-	  delete mb;
+	  mb->release ();
 	  return -1;
 	}
     }

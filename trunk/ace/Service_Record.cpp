@@ -4,9 +4,6 @@
 #define ACE_BUILD_DLL
 #include "ace/Service_Record.h"
 
-#if !defined (ACE_SERVICE_RECORD_C)
-#define ACE_SERVICE_RECORD_C
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Record.i"
 #endif /* __ACE_INLINE__ */
@@ -311,7 +308,10 @@ ACE_Service_Record::ACE_Service_Record (const char *n,
 					ACE_Service_Type *t, 
 					const void *h, 
 					int active)
-  : type_ (t), handle_ (h), active_ (active)
+  : type_ (t), 
+    handle_ (h), 
+    active_ (active),
+    name_ (0)
 {
   ACE_TRACE ("ACE_Service_Record::ACE_Service_Record");
   this->name (n);
@@ -361,5 +361,3 @@ template class ACE_Thru_Task<ACE_SYNCH>;
 template class ACE_Stream_Head<ACE_SYNCH>;
 template class ACE_Stream_Tail<ACE_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
-#endif /* ACE_SERVICE_RECORD_C */

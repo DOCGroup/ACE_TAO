@@ -59,7 +59,7 @@ connector (void *)
   ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), "thanks") == 0);
 
   // Free up the memory block.
-  delete mb;
+  mb->release ();
 
   // Now try the send()/recv() interface.
   char mytext[] = "This string is sent by connector as a buffer";
