@@ -8,7 +8,7 @@ dnl       that determine availablility of certain OS features for ACE.
 dnl 
 dnl -------------------------------------------------------------------------
 
-dnl  Copyright (C) 1998, 1999  Ossama Othman
+dnl  Copyright (C) 1998, 1999, 2002  Ossama Othman
 dnl
 dnl  All Rights Reserved
 dnl
@@ -23,11 +23,12 @@ dnl Asynchronous IO check
 dnl Use this macro to determine if asynchronous IO is working on a
 dnl given platform.
 dnl Usage: ACE_CHECK_ASYNCH_IO
-AC_DEFUN(ACE_CHECK_ASYNCH_IO, dnl
+AC_DEFUN([ACE_CHECK_ASYNCH_IO],
 [
  AC_REQUIRE([AC_PROG_CXX])
  AC_REQUIRE([AC_PROG_CXXCPP])
- AC_REQUIRE([AC_LANG_CPLUSPLUS])
+ AC_LANG([C++])
+ AC_REQUIRE([AC_LANG])
  AC_REQUIRE([ACE_CHECK_THREADS])
 
  dnl In case a library with the asynchronous libraries is found but
@@ -42,15 +43,14 @@ AC_DEFUN(ACE_CHECK_ASYNCH_IO, dnl
  dnl In some cases, the thread library must be linked to in addition to the
  dnl real-time support library.  As such, make sure these checks are done
  dnl after the thread library checks.
- ACE_SEARCH_LIBS([aio_read], [aio rt posix4],
+ AC_SEARCH_LIBS([aio_read], [aio rt posix4],
     [ace_has_aio_funcs=yes], [ace_has_aio_funcs=no])
 
 if test "$ace_has_aio_funcs" = yes; then
   ACE_CACHE_CHECK([for working asynchronous IO],
     [ace_cv_feature_aio_calls],
     [
-     AC_TRY_RUN(
-       [
+     AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifndef ACE_LACKS_UNISTD_H
 #include <unistd.h>
 #endif
@@ -252,7 +252,7 @@ Test_Aio::do_aio (void)
 }
 
 int
-main (int argc, char **argv)
+main ()
 {
   Test_Aio test_aio;
 
@@ -273,8 +273,7 @@ main (int argc, char **argv)
   //        "ACE_POSIX_AIOCB_PROACTOR should work in this platform\n");
   return 0;
 }
-       ],
-       [
+       ]])],[
         dnl Now try another test
 
         dnl Create a file for the test program to read.
@@ -286,8 +285,8 @@ FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR FOO BAR
 EOF
 
 
-        AC_TRY_RUN(
-          [
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
 #ifndef ACE_LACKS_UNISTD_H
 #include <unistd.h>
 #endif
@@ -311,11 +310,11 @@ extern "C"
 #endif
 void null_handler (int /* signal_number */,
                    siginfo_t * /* info */,
-                   void *      /* context */);
+                   void * /* context */);
 
 int file_handle = -1;
-char mb1 [BUFSIZ + 1];
-char mb2 [BUFSIZ + 1];
+char mb1[BUFSIZ + 1];
+char mb2[BUFSIZ + 1];
 aiocb aiocb1, aiocb2;
 sigset_t completion_signal;
 
@@ -569,22 +568,21 @@ null_handler (int         /* signal_number */,
 }
 
 int
-main (int, char *[])
+main ()
 {
   if (test_aio_calls () == 0)
     {
-    //printf ("RT SIG test successful:\n"
-    //        "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
+      // printf ("RT SIG test successful:\n"
+      //         "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
       return 0;
     }
-  else
-    {
-    //printf ("RT SIG test failed:\n"
-    //        "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
+
+  //printf ("RT SIG test failed:\n"
+  //        "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
   return -1;
-    }
+
 }
-         ],
+         ]])],
          [
           ace_cv_feature_aio_calls=yes
          ],
@@ -599,21 +597,19 @@ main (int, char *[])
           dnl from complaining.
           ace_just_a_place_holder=ignoreme
          ])
-       ],
-       [
+       ],[
         ace_cv_feature_aio_calls=no
-       ],
-       [
+       ],[
         dnl Asynchronous IO test for cross-compiled platforms
         dnl This test is weaker than the above run-time tests but it will
         dnl have to do.
-        AC_TRY_COMPILE(
-          [
+        AC_COMPILE_IFELSE(
+          [AC_LANG_PROGRAM([[
 #include <aio.h>
-          ],
-          [
+          ]],
+          [[
            aiocb* aiocb_ptr (void);
-          ],
+          ]])],
           [
            ace_cv_feature_aio_calls=yes
           ],
@@ -621,6 +617,6 @@ main (int, char *[])
            ace_cv_feature_aio_calls=no
           ])
        ])
-    ],[AC_DEFINE(ACE_HAS_AIO_CALLS)],[LIBS="$ace_save_LIBS"])
+    ],[AC_DEFINE([ACE_HAS_AIO_CALLS])],[LIBS="$ace_save_LIBS"])
 fi dnl test "$ace_has_aio_funcs" = yes
 ])
