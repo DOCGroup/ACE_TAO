@@ -119,7 +119,8 @@ TAO_CORBA_Repository_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
       MIN_HASH_VALUE = 11,
       MAX_HASH_VALUE = 51,
       HASH_VALUE_RANGE = 41,
-      DUPLICATES = 2
+      DUPLICATES = 2,
+      WORDLIST_SIZE = 41
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -174,7 +175,7 @@ TAO_CORBA_Repository_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -2730,7 +2731,8 @@ TAO_CORBA_ModuleDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 63,
       HASH_VALUE_RANGE = 60,
-      DUPLICATES = 5
+      DUPLICATES = 5,
+      WORDLIST_SIZE = 37
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -2788,7 +2790,7 @@ TAO_CORBA_ModuleDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -3189,7 +3191,8 @@ TAO_CORBA_ConstantDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 8
+      DUPLICATES = 8,
+      WORDLIST_SIZE = 25
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -3233,7 +3236,7 @@ TAO_CORBA_ConstantDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -4837,7 +4840,8 @@ TAO_CORBA_StructDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 60,
       HASH_VALUE_RANGE = 56,
-      DUPLICATES = 7
+      DUPLICATES = 7,
+      WORDLIST_SIZE = 41
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -4898,7 +4902,7 @@ TAO_CORBA_StructDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -5790,7 +5794,8 @@ TAO_CORBA_UnionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 60,
       HASH_VALUE_RANGE = 56,
-      DUPLICATES = 8
+      DUPLICATES = 8,
+      WORDLIST_SIZE = 44
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -5854,7 +5859,7 @@ TAO_CORBA_UnionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -7470,7 +7475,8 @@ TAO_CORBA_EnumDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 6
+      DUPLICATES = 6,
+      WORDLIST_SIZE = 23
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -7512,7 +7518,7 @@ TAO_CORBA_EnumDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -8400,7 +8406,8 @@ TAO_CORBA_AliasDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 6
+      DUPLICATES = 6,
+      WORDLIST_SIZE = 23
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -8442,7 +8449,7 @@ TAO_CORBA_AliasDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -9330,7 +9337,8 @@ TAO_CORBA_NativeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 5
+      DUPLICATES = 5,
+      WORDLIST_SIZE = 21
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -9370,7 +9378,7 @@ TAO_CORBA_NativeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -9775,7 +9783,8 @@ TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 18,
       HASH_VALUE_RANGE = 14,
-      DUPLICATES = 0
+      DUPLICATES = 0,
+      WORDLIST_SIZE = 12
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -10422,7 +10431,8 @@ TAO_CORBA_StringDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 18,
       HASH_VALUE_RANGE = 14,
-      DUPLICATES = 2
+      DUPLICATES = 2,
+      WORDLIST_SIZE = 13
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -10452,7 +10462,7 @@ TAO_CORBA_StringDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -11331,7 +11341,8 @@ TAO_CORBA_WstringDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 18,
       HASH_VALUE_RANGE = 14,
-      DUPLICATES = 2
+      DUPLICATES = 2,
+      WORDLIST_SIZE = 13
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -11361,7 +11372,7 @@ TAO_CORBA_WstringDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -12184,46 +12195,46 @@ TAO_CORBA_SequenceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int 
   static const unsigned char asso_values[] =
     {
 #if defined (ACE_MVS)
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22,  0,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22,  0,
-     22, 22,  5,  0,  0, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22,  0, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23,  0,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23,  0,
+     23, 23,  0,  5,  0, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23,  5, 23, 23, 23, 23,  0, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23,
 #else
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22,  0, 22,  0, 22, 22,
-      5,  0,  0, 22, 22, 22, 22, 22, 22, 22,
-     22, 22, 22, 22, 22, 22,  0, 22, 22, 22,
-     22, 22, 22, 22, 22, 22, 22, 22,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23,  0, 23,  0, 23, 23,
+      0,  5,  0, 23, 23, 23, 23, 23, 23, 23,
+     23, 23, 23, 23, 23, 23,  5, 23, 23, 23,
+     23,  0, 23, 23, 23, 23, 23, 23,
 #endif /* ACE_MVS */
     };
   return len + asso_values[str[len - 1]] + asso_values[str[0]];
@@ -12234,32 +12245,36 @@ TAO_CORBA_SequenceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
 {
   enum
     {
-      TOTAL_KEYWORDS = 8,
+      TOTAL_KEYWORDS = 11,
       MIN_WORD_LENGTH = 5,
       MAX_WORD_LENGTH = 21,
       MIN_HASH_VALUE = 5,
-      MAX_HASH_VALUE = 21,
-      HASH_VALUE_RANGE = 17,
-      DUPLICATES = 3
+      MAX_HASH_VALUE = 22,
+      HASH_VALUE_RANGE = 18,
+      DUPLICATES = 3,
+      WORDLIST_SIZE = 16
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},{"",0},
       {"_is_a",  &POA_CORBA_SequenceDef::_is_a_skel},
+      {"destroy", 	&POA_CORBA_SequenceDef::destroy_skel},
+      {"_get_bound", 	&POA_CORBA_SequenceDef::_get_bound_skel},
+      {"_set_bound", 	&POA_CORBA_SequenceDef::_set_bound_skel},
+      {"_get_def_kind", 	&POA_CORBA_SequenceDef::_get_def_kind_skel},
+      {"_get_type", 	&POA_CORBA_SequenceDef::_get_type_skel},
       {"_interface",  &POA_CORBA_SequenceDef::_interface_skel},
       {"_non_existent",  &POA_CORBA_SequenceDef::_non_existent_skel},
-      {"_get_bound",    &POA_CORBA_SequenceDef::_get_bound_skel},
-      {"_set_bound",    &POA_CORBA_SequenceDef::_set_bound_skel},
-      {"_get_element_type",     &POA_CORBA_SequenceDef::_get_element_type_skel},
-      {"_get_element_type_def",         &POA_CORBA_SequenceDef::_get_element_type_def_skel},
-      {"_set_element_type_def",         &POA_CORBA_SequenceDef::_set_element_type_def_skel},
+      {"_get_element_type_def", 	&POA_CORBA_SequenceDef::_get_element_type_def_skel},
+      {"_set_element_type_def", 	&POA_CORBA_SequenceDef::_set_element_type_def_skel},
+      {"_get_element_type", 	&POA_CORBA_SequenceDef::_get_element_type_skel},
     };
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,  -1,  -1,   6,  -8,  -2,   7,
-       -1, -25,  -1,  10,  -1, -11,  -2, -23,
+       -1,  -1,  -1,  -1,  -1,   5,  -1,   6,  -7,  -2, -24,  -1,  -1,   9, 
+       10,  11,  -1,  -1,  12, -13,  -2, -24,  15, 
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -12270,7 +12285,7 @@ TAO_CORBA_SequenceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -13873,7 +13888,8 @@ TAO_CORBA_ArrayDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 21,
       HASH_VALUE_RANGE = 17,
-      DUPLICATES = 3
+      DUPLICATES = 3,
+      WORDLIST_SIZE = 16
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -13906,7 +13922,7 @@ TAO_CORBA_ArrayDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -15509,7 +15525,8 @@ TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 60,
       HASH_VALUE_RANGE = 56,
-      DUPLICATES = 7
+      DUPLICATES = 7,
+      WORDLIST_SIZE = 41
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -15570,7 +15587,7 @@ TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -16695,7 +16712,8 @@ TAO_CORBA_AttributeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 8
+      DUPLICATES = 8,
+      WORDLIST_SIZE = 25
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -16739,7 +16757,7 @@ TAO_CORBA_AttributeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -18342,7 +18360,8 @@ TAO_CORBA_OperationDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 36,
       HASH_VALUE_RANGE = 33,
-      DUPLICATES = 10
+      DUPLICATES = 10,
+      WORDLIST_SIZE = 31
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -21495,7 +21514,8 @@ TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 70,
       HASH_VALUE_RANGE = 67,
-      DUPLICATES = 9
+      DUPLICATES = 9,
+      WORDLIST_SIZE = 44
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -21561,7 +21581,7 @@ TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -23627,7 +23647,8 @@ TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, un
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 70,
       HASH_VALUE_RANGE = 67,
-      DUPLICATES = 9
+      DUPLICATES = 9,
+      WORDLIST_SIZE = 44
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -23693,7 +23714,7 @@ TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, un
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
@@ -24102,7 +24123,8 @@ TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsig
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 70,
       HASH_VALUE_RANGE = 67,
-      DUPLICATES = 9
+      DUPLICATES = 9,
+      WORDLIST_SIZE = 44
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -24168,7 +24190,7 @@ TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsig
         {
           int slot = lookup[key];
 
-          if (slot >= 0 && slot < MAX_HASH_VALUE)
+          if (slot >= 0 && slot < WORDLIST_SIZE)
             {
               const char *s = wordlist[slot].opname_;
 
