@@ -1,3 +1,14 @@
+Fri Jun 06 17:11:13 1997    <irfan@TWOSTEP>
+
+	* OS.i (sleep): If ACE_POLL_IS_BROKEN is defined, use select() to
+ 	  do micro second sleeps.
+
+	* ace/CORBA_Handler.h (ACE_CORBA_*): The new version of Orbix
+ 	  (2.2C01) on NT finally supports namespaces.  So now the macros
+ 	  ACE_CORBA_n need to be defined using the "::" and not the "_"
+ 	  for NT if the new Orbix is being used. Thanks to John Morey
+ 	  (jmorey@tbi.com) for the changes.
+
 Fri Jun 06 02:16:08 1997    <nw1@COYOTE>
 
 	* Sigset_Ops_Test.cpp: Added to test correct implementation of
