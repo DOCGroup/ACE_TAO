@@ -1,3 +1,9 @@
+Thu Apr 16 10:10:16 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tests\Quoter\Quoter_Impl.cpp: Improved the move operation
+		* tests\Quoter\client.{h,cpp}: Using the move operation
+		  Status: Bootstraping and moving of Lifecycle Objects works. 
+
 Thu Apr 16 08:36:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Naming_Service/Naming_Service.cpp (parse_args):

@@ -117,10 +117,6 @@ SOURCE=.\QuoterC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\QuoterImpl.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\QuoterS.h
 # End Source File
 # Begin Source File

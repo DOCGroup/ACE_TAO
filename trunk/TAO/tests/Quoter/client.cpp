@@ -111,15 +111,45 @@ Quoter_Client::run (void)
 {
   CORBA::Long q = this->quoter_->get_quote ("ACE Hardware", this->env_);
   if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("with get_quote");
-      return -1;
-    }
-  else
-    { 
-      ACE_DEBUG ((LM_DEBUG, "ACE Hardware = %i\n", q));
-      return q;
-    }
+  {
+    this->env_.print_exception ("with get_quote.");
+    this->env_.clear();
+    return -1;
+  }
+  ACE_DEBUG ((LM_DEBUG, "ACE Hardware = %i\n", q));
+
+  CosLifeCycle::Criteria criteria;
+  CORBA::Object_var quoterObj_var = this->quoter_->copy (factoryFinder_var_, 
+                                         criteria,
+                                         this->env_);
+  if (this->env_.exception () != 0)
+  {
+    this->env_.print_exception ("with copy.");
+    this->env_.clear();
+    return -1;
+  }
+
+
+  Stock::Quoter_var quoter_var =  Stock::Quoter::_narrow (quoterObj_var,
+                                                          this->env_);
+  if (this->env_.exception () != 0)
+  {
+    this->env_.print_exception ("with narrow.");
+    this->env_.clear();
+    return -1;
+  }
+  ACE_DEBUG ((LM_DEBUG, "Copied object\n"));
+
+  q = this->quoter_->get_quote ("ACE Hardware", this->env_);
+  if (this->env_.exception () != 0)
+  {
+    this->env_.print_exception ("with get_quote on copied object.");
+    this->env_.clear();
+    return -1;
+  }
+  ACE_DEBUG ((LM_DEBUG, "Copied object: ACE Hardware = %i\n", q));
+
+  return 0;  
 }
 
 Quoter_Client::~Quoter_Client (void)
@@ -201,12 +231,12 @@ Quoter_Client::init_naming_service (void)
 
     ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory Finder!\n"));
     
-    Stock::QuoterFactoryFinder_var factoryFinder_var =
+    factoryFinder_var_ =
       Stock::QuoterFactoryFinder::_narrow (factory_obj.in (), 
                                       TAO_TRY_ENV);
     TAO_CHECK_ENV;
    
-    if (CORBA::is_nil (factoryFinder_var.in ()))
+    if (CORBA::is_nil (factoryFinder_var_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
       " could not resolve quoter factory in Naming service <%s>\n"),
       -1);
@@ -221,7 +251,7 @@ Quoter_Client::init_naming_service (void)
     
     // Find an appropriate factory over there.
     CosLifeCycle::Factories_ptr factories_ptr = 
-        factoryFinder_var->find_factories (factoryName, TAO_TRY_ENV);
+        factoryFinder_var_->find_factories (factoryName, TAO_TRY_ENV);
 
     if (factories_ptr == 0)
       ACE_ERROR_RETURN ((LM_ERROR,

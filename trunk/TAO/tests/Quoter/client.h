@@ -69,8 +69,11 @@ private:
   int shutdown_;
   // Flag to tell server to shutdown.
 
+  Stock::QuoterFactoryFinder_var factoryFinder_var_;
+  // Pointer to a factory finder 
+
   Stock::Quoter_Factory_var factory_var_;
-  // factory pointer for cubit.
+  // Pointer to a factory
 
   CORBA::Environment env_;
   // Environment variable.
