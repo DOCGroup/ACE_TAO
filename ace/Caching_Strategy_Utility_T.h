@@ -25,14 +25,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declaration
-template <class CONTAINER>
+template <class KEY, class VALUE, class CONTAINER>
 class ACE_Cleanup_Strategy;
-
-template <class CONTAINER, class ATTRIBUTES>
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES>
 class ACE_Caching_Strategy_Utility
 {
   // = TITLE
-  //    Defines a helper class for the Caching Strategies.
+  //    Defines a abstract helper class for the Caching Strategies.
   // 
   // = DESCRIPTION
   //    This class defines the methods commonly used by the 
@@ -41,23 +40,97 @@ class ACE_Caching_Strategy_Utility
 
  public:
   
-  // = Traits.
-  typedef ACE_TYPENAME CONTAINER::KEY KEY;
-  typedef ACE_TYPENAME CONTAINER::VALUE VALUE;
+  virtual ~ACE_Caching_Strategy_Utility (void);
+  // Destructor.
 
-  int clear_cache (CONTAINER &container, 
-                   ACE_Cleanup_Strategy<CONTAINER> *cleanup_s,
-                   const unsigned int purge_percent,
-                   unsigned int &entries);
-  // Purge entries from the <container>. The <entries> had to be
-  // passed by refernce as it wuold reduce on cleanup.
+  virtual int clear_cache (CONTAINER &container, 
+                           ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
+                           const unsigned int purge_percent,
+                           unsigned int &entries)  = 0;
+  // This method will remove the entries from the cache.
   
-  void minimum (CONTAINER &container, 
-                KEY *&key,
-                VALUE *&value);
+  virtual void minimum (CONTAINER &container, 
+                        KEY *&key,
+                        VALUE *&value) = 0;
   // Find the entry with minimum caching attributes.
 
 };
+
+
+////////////////////////////////////////////////////////////////////////////////////
+
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES>
+class ACE_Svc_Caching_Strategy_Utility : public ACE_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>
+{
+  // = TITLE
+  //    Defines a helper class for the Caching Strategies.
+  // 
+  // = DESCRIPTION
+  //    This class defines the methods commonly used by the 
+  //    different caching strategies. For instance: clear_cache ()
+  //    method which decides and purges the entry from the container.
+  //    Note: This class helps in the caching_strategies using a
+  //    container containing entries of <KEY, ACE_Pair<VALUE,
+  //    attributes>> kind. The attributes helps in deciding the
+  //    entries to be purged.
+
+ public:
+  
+  virtual int clear_cache (CONTAINER &container, 
+                           ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
+                           const unsigned int purge_percent,
+                           unsigned int &entries);
+  // Purge entries from the <container>. The Cleanup_Strategy will do
+  // the actual job of cleanup once the entries to be cleaned up are
+  // decided.
+  
+  virtual void minimum (CONTAINER &container, 
+                        KEY *&key,
+                        VALUE *&value);
+  // Find the entry with minimum caching attributes.
+
+};
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES>
+class ACE_Handler_Caching_Strategy_Utility : public ACE_Caching_Strategy_Utility <KEY, VALUE, CONTAINER, ATTRIBUTES>
+{
+  // = TITLE
+  //    Defines a helper class for the Caching Strategies.
+  // 
+  // = DESCRIPTION
+  //    This class defines the methods commonly used by the 
+  //    different caching strategies. For instance: clear_cache ()
+  //    method which decides and purges the entry from the container.
+  //    Note: This class helps in the caching_strategies using a
+  //    container containing entries of <KEY, HANDLER> kind where the 
+  //    HANDLER contains the caching attributes which help in deciding
+  //    the entries to be purged.
+
+public:
+
+  virtual int clear_cache (CONTAINER &container, 
+                           ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
+                           const unsigned int purge_percent,
+                           unsigned int &entries);
+  // Purge entries from the <container>. The Cleanup_Strategy will do
+  // the actual job of cleanup once the entries to be cleaned up are
+  // decided.
+  
+  virtual void minimum (CONTAINER &container, 
+                        KEY *&key,
+                        VALUE *&value);
+  // Find the entry with minimum caching attributes.
+  // This is handler specific since this utility is to be used very
+  // specifically for handler who have caching_attributes for server
+  // side acched connection management.
+
+};
+
+///////////////////////////////////////////////////////////////////////////
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/Caching_Strategy_Utility_T.i"
