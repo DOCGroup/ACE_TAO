@@ -30,5 +30,7 @@
 #include "be_visitor_union_branch/public_reset_cs.h"
 #include "be_visitor_union_branch/public_access_cs.h"
 #include "be_visitor_union_branch/private_ch.h"
+#include "be_visitor_union_branch/cdr_op_ch.h"
+#include "be_visitor_union_branch/cdr_op_cs.h"
 
 #endif // TAO_BE_VISITOR_UNION_BRANCH_H

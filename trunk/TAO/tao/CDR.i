@@ -793,6 +793,39 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Char* x)
   return cdr.good_bit ();
 }
 
+ACE_INLINE CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
+{
+  CORBA::Environment env;
+  if (TAO_MARSHAL_ANY::instance ()->encode (0, &x, &cdr, 0, env)
+      == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
+{
+  CORBA::Environment env;
+  if (TAO_MARSHAL_OBJREF::instance ()->encode (0, &x, &cdr, 0, env)
+      == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
+{
+  CORBA::Environment env;
+  if (TAO_MARSHAL_TYPECODE::instance ()->encode (0, &x, &cdr, 0, env)
+      == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return 1;
+  else
+    return 0;
+}
+
 #if defined (ACE_HAS_BOOL)
 ACE_INLINE CORBA_Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Boolean &x)
@@ -877,6 +910,39 @@ operator>> (TAO_InputCDR& cdr, CORBA::Char*&x)
 {
   cdr.read_string (x);
   return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::Any &x)
+{
+  CORBA::Environment env;
+  if (TAO_MARSHAL_ANY::instance ()->encode (0, &x, &cdr, 0, env)
+      == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::Object *&x)
+{
+  CORBA::Environment env;
+  if (TAO_MARSHAL_OBJREF::instance ()->decode (0, &x, &cdr, 0, env)
+      == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return 1;
+  else
+    return 0;
+}
+
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
+{
+  CORBA::Environment env;
+  if (TAO_MARSHAL_TYPECODE::instance ()->decode (0, &x, &cdr, 0, env)
+      == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return 1;
+  else
+    return 0;
 }
 
 // ***************************************************************************

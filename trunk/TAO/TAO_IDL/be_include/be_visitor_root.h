@@ -33,5 +33,6 @@
 #include "be_visitor_root/root_si.h"
 #include "be_visitor_root/root_ss.h"
 #include "be_visitor_root/any_op.h"
+#include "be_visitor_root/cdr_op.h"
 
 #endif // TAO_BE_VISITOR_ROOT_H

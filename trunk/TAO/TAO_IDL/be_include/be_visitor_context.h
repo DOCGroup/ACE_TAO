@@ -70,6 +70,12 @@ public:
   TAO_CodeGen::CG_STATE state (void);
   // return the code generation state
 
+  void sub_state (TAO_CodeGen::CG_SUB_STATE);
+  // code generation state
+
+  TAO_CodeGen::CG_SUB_STATE sub_state (void);
+  // return the code generation state
+
   void alias (be_typedef *node);
   // set the alias node (if any)
 
@@ -206,6 +212,9 @@ public:
 
 private:
   TAO_CodeGen::CG_STATE state_;
+  // code generation state
+
+  TAO_CodeGen::CG_SUB_STATE sub_state_;
   // code generation state
 
   TAO_OutStream *os_;

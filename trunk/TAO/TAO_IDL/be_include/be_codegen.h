@@ -123,6 +123,8 @@ public:
     TAO_ARRAY_DEFN_SS,
     TAO_ARRAY_ANY_OP_CH,
     TAO_ARRAY_ANY_OP_CS,
+    TAO_ARRAY_CDR_OP_CH,
+    TAO_ARRAY_CDR_OP_CS,
 
     // emitting code for rest of the array decl
     TAO_ARRAY_OTHER_CH,
@@ -146,6 +148,8 @@ public:
     TAO_ENUM_SS,
     TAO_ENUM_ANY_OP_CH,
     TAO_ENUM_ANY_OP_CS,
+    TAO_ENUM_CDR_OP_CH,
+    TAO_ENUM_CDR_OP_CS,
 
     // emitting code for exceptions
     TAO_EXCEPTION_CH,
@@ -159,11 +163,15 @@ public:
     TAO_EXCEPTION_SS,
     TAO_EXCEPTION_ANY_OP_CH,
     TAO_EXCEPTION_ANY_OP_CS,
+    TAO_EXCEPTION_CDR_OP_CH,
+    TAO_EXCEPTION_CDR_OP_CS,
 
     // emitting fields i.e., struct members
     TAO_FIELD_CH,
     TAO_FIELD_CI,
     TAO_FIELD_CS,
+    TAO_FIELD_CDR_OP_CH,
+    TAO_FIELD_CDR_OP_CS,
 
     // emitting code for the interface
     TAO_INTERFACE_CH,
@@ -176,6 +184,8 @@ public:
     TAO_INTERFACE_COLLOCATED_SS,
     TAO_INTERFACE_ANY_OP_CH,
     TAO_INTERFACE_ANY_OP_CS,
+    TAO_INTERFACE_CDR_OP_CH,
+    TAO_INTERFACE_CDR_OP_CS,
     TAO_INTERFACE_TIE_SH,
     TAO_INTERFACE_TIE_SI,
 
@@ -192,6 +202,8 @@ public:
     TAO_MODULE_SS,
     TAO_MODULE_ANY_OP_CH,
     TAO_MODULE_ANY_OP_CS,
+    TAO_MODULE_CDR_OP_CH,
+    TAO_MODULE_CDR_OP_CS,
 
     // emitting code for an operation.
     TAO_OPERATION_CH,                       // in client header
@@ -260,6 +272,8 @@ public:
     TAO_ROOT_SS,
     TAO_ROOT_ANY_OP_CH,
     TAO_ROOT_ANY_OP_CS,
+    TAO_ROOT_CDR_OP_CH,
+    TAO_ROOT_CDR_OP_CS,
 
     // emitting sequences
     TAO_SEQUENCE_CH,
@@ -267,6 +281,8 @@ public:
     TAO_SEQUENCE_CS,
     TAO_SEQUENCE_ANY_OP_CH,
     TAO_SEQUENCE_ANY_OP_CS,
+    TAO_SEQUENCE_CDR_OP_CH,
+    TAO_SEQUENCE_CDR_OP_CS,
 
     // emitting code for sequence base type
     TAO_SEQUENCE_BASE_CH,
@@ -308,6 +324,8 @@ public:
     TAO_STRUCT_CS,
     TAO_STRUCT_ANY_OP_CH,
     TAO_STRUCT_ANY_OP_CS,
+    TAO_STRUCT_CDR_OP_CH,
+    TAO_STRUCT_CDR_OP_CS,
 
     // emitting code for typedefs
     TAO_TYPEDEF_CH,
@@ -318,6 +336,8 @@ public:
     TAO_TYPEDEF_SS,
     TAO_TYPEDEF_ANY_OP_CH,
     TAO_TYPEDEF_ANY_OP_CS,
+    TAO_TYPEDEF_CDR_OP_CH,
+    TAO_TYPEDEF_CDR_OP_CS,
 
     // emitting code for unions
     TAO_UNION_CH,
@@ -325,6 +345,8 @@ public:
     TAO_UNION_CS,
     TAO_UNION_ANY_OP_CH,
     TAO_UNION_ANY_OP_CS,
+    TAO_UNION_CDR_OP_CH,
+    TAO_UNION_CDR_OP_CS,
 
     // emitting code for the discriminant
     TAO_UNION_DISCTYPEDEFN_CH,
@@ -353,6 +375,10 @@ public:
     TAO_UNION_PRIVATE_SI,
     TAO_UNION_PRIVATE_SS,
 
+    // emitting code for CDR operators for types defined inside unions
+    TAO_UNION_BRANCH_CDR_OP_CH,
+    TAO_UNION_BRANCH_CDR_OP_CS,
+
     // emitting code for typecodes
     TAO_TYPECODE_DECL,
     TAO_TYPECODE_DEFN,
@@ -369,6 +395,16 @@ public:
     TAO_PERFECT_HASH,
     TAO_ACTIVE_DEMUX,
     TAO_USER_DEFINED
+  };
+
+  enum CG_SUB_STATE
+  {
+    // sub states
+    TAO_CDR_INPUT,
+    TAO_CDR_OUTPUT,
+    TAO_CDR_SCOPE,
+    
+    TAO_SUB_STATE_UNKNOWN
   };
 
   TAO_CodeGen (void);

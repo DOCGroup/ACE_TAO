@@ -147,9 +147,22 @@ oneway		return IDL_ONEWAY;
 		}
 
 [a-zA-Z][a-zA-Z0-9_]*	{
-    char *z = (char *) malloc(strlen(ace_yytext) + 1);
-    strcpy(z, ace_yytext);
-    yylval.strval = z;
+    /* make sure that this identifier is not a C++ keyword. If it is,
+       prepend it with a _cxx_. Lookup in the perfect hash table for
+       C++ keyword and grab the mapping*/
+
+    TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
+    const TAO_IDL_CPP_Keyword_Entry *entry =
+            cpp_key_tbl.lookup (ace_yytext, 
+                                ACE_OS::strlen (ace_yytext));
+    if (entry)
+      {
+        yylval.strval = ACE_OS::strdup (entry->mapping_);
+      }
+    else
+      {
+        yylval.strval = ACE_OS::strdup (ace_yytext);
+      }
     return IDENTIFIER;
 }
 

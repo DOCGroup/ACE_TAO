@@ -87,4 +87,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * FE Operations
  */
 
+// define an entry for the C++ keyword and its mapping
+struct TAO_IDL_CPP_Keyword_Entry
+{
+  char *keyword_;
+  char *mapping_;
+};
+
+// define a table that provides the lookup for the C++ keyword. The lookup uses
+// a perfect hash function
+class TAO_IDL_CPP_Keyword_Table
+{
+private:
+  unsigned int hash (const char *str, int len);
+public:
+  const TAO_IDL_CPP_Keyword_Entry *lookup (const char *str, int len);
+};
+
 #endif           // _FE_FE_HH

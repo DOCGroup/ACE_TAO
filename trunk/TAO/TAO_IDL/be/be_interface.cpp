@@ -565,9 +565,9 @@ be_interface::gen_out_defn (void)
   // constructor from a _var &
   *ch << namebuf << " (" << local_name () << "_var &);" << nl;
   // constructor from a _out &
-  *ch << namebuf << " (" << namebuf << " &);" << nl;
+  *ch << namebuf << " (const " << namebuf << " &);" << nl;
   // assignment operator from a _out &
-  *ch << namebuf << " &operator= (" << namebuf << " &);" << nl;
+  *ch << namebuf << " &operator= (const " << namebuf << " &);" << nl;
   // assignment operator from a pointer &, cast operator, ptr fn, operator
   // -> and any other extra operators
   // only interface allows assignment from var &
@@ -648,19 +648,19 @@ be_interface::gen_out_impl (void)
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << fname <<
+  *ci << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (p.ptr_)" << nl;
+  *ci << "  : ptr_ (ACE_const_cast (" << fname << "&,p).ptr_)" << nl;
   *ci << "{}\n\n";
 
       // assignment operator from _out &
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << fname <<
+  *ci << fname << "::operator= (const " << fname <<
     " &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = p.ptr_;" << nl;
+  *ci << "this->ptr_ = ACE_const_cast (" << fname << "&,p).ptr_;" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";

@@ -28,6 +28,7 @@ ACE_RCSID(be, be_visitor_context, "$Id$")
 // constructor
 be_visitor_context::be_visitor_context (void)
   : state_ (TAO_CodeGen::TAO_UNKNOWN),
+    sub_state_ (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN),
     os_ (0),
     scope_ (0),
     node_ (0),
@@ -42,6 +43,7 @@ be_visitor_context::be_visitor_context (void)
 
 be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
   : state_ (ctx.state_),
+    sub_state_ (ctx.sub_state_),
     os_ (ctx.os_),
     scope_ (ctx.scope_),
     node_ (ctx.node_),
@@ -58,6 +60,7 @@ be_visitor_context &
 be_visitor_context::operator= (const be_visitor_context &ctx)
 {
   this->state_ = ctx.state_;
+  this->sub_state_ = ctx.sub_state_;
   this->os_ = ctx.os_;
   this->scope_ = ctx.scope_;
   this->node_ = ctx.node_;
@@ -82,6 +85,7 @@ void
 be_visitor_context::reset (void)
 {
   this->state_ = TAO_CodeGen::TAO_INITIAL;
+  this->sub_state_ = TAO_CodeGen::TAO_SUB_STATE_UNKNOWN;
   this->os_ = 0;
   this->scope_ = 0;
   this->node_ = 0;
@@ -139,6 +143,18 @@ TAO_CodeGen::CG_STATE
 be_visitor_context::state (void)
 {
   return this->state_;
+}
+
+void
+be_visitor_context::sub_state (TAO_CodeGen::CG_SUB_STATE st)
+{
+  this->sub_state_ = st;
+}
+
+TAO_CodeGen::CG_SUB_STATE
+be_visitor_context::sub_state (void)
+{
+  return this->sub_state_;
 }
 
 void

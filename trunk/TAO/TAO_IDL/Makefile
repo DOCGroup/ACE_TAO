@@ -22,6 +22,7 @@ FILES = tao_idl \
 	driver/drv_link \
 	driver/drv_preproc \
 	fe/fe_declarator \
+	fe/fe_lookup	\
 	fe/fe_private \
 	fe/fe_init \
 	fe/fe_extern \
@@ -187,6 +188,16 @@ else  # ! CROSS-COMPILE
 	rm -f tao_idl TAGS
 endif # ! CROSS-COMPILE
 
+fe/fe_lookup.cpp: fe/keywords.dat
+	rm -f fe/fe_lookup.cpp
+	echo "// $Id$" > fe/fe_lookup.cpp
+	echo "#include	\"idl.h\"" >> fe/fe_lookup.cpp
+	echo "#include	\"idl_extern.h\"" >> fe/fe_lookup.cpp
+	echo "#include	\"fe_private.h\"" >> fe/fe_lookup.cpp
+	$(ACE_ROOT)/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_  \
+			-L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup fe/keywords.dat \
+			 >> fe/fe_lookup.cpp
+
 fe/lex.yy.cpp:	fe/idl.ll
 	@echo "WARNING: Potentially outdated fe/lex.yy.cpp"
 	@echo "         either touch(1) the file or explicitly"
@@ -229,9 +240,8 @@ y.tab: fe/idl.yy
 
 tags:
 	rm -f TAGS
-	etags -C tao_idl.cpp include/*.h be_include/*.h be_include/be_visitor_*/*.h \
-	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
-		driver/*.cpp fe/*.cpp be/*.cpp be/*/*.cpp
+	find . -name "*.h" -print | etags -a --c++ -
+	find . -name "*.cpp" -print | etags -a -
 
 
 #----------------------------------------------------------------------------
@@ -245,7 +255,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -283,7 +292,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -321,7 +329,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -359,7 +366,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -456,7 +462,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -515,7 +520,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -553,7 +557,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -615,7 +618,44 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ include/intlmacros.h include/idl_narrow.h include/idl_defines.h \
+ include/idl_fwd.h include/idl_bool.h include/utl_string.h \
+ include/utl_identifier.h include/ast.h include/utl_scoped_name.h \
+ include/ast_decl.h include/ast_expression.h include/utl_scope.h \
+ include/ast_type.h include/ast_concrete_type.h \
+ include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
+ include/ast_interface.h include/ast_interface_fwd.h \
+ include/ast_structure.h include/ast_exception.h include/ast_enum.h \
+ include/ast_operation.h include/utl_list.h include/ast_field.h \
+ include/ast_argument.h include/ast_attribute.h include/ast_union.h \
+ include/ast_union_branch.h include/ast_union_label.h \
+ include/ast_constant.h include/ast_enum_val.h include/ast_array.h \
+ include/ast_sequence.h include/ast_string.h include/ast_typedef.h \
+ include/ast_native.h include/utl_strlist.h include/utl_exprlist.h \
+ include/ast_generator.h include/util.h include/utl_stack.h \
+ include/utl_idlist.h include/utl_exceptlist.h include/utl_namelist.h \
+ include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
+ include/utl_error.h include/utl_indenter.h include/idl_extern.h \
+ include/fe_extern.h include/be_extern.h include/drv_extern.h \
+ include/ast_extern.h include/nr_extern.h include/global_extern.h \
+ include/fe_private.h include/fe_interface_header.h \
+ include/fe_declarator.h
+.obj/fe_lookup.o .obj/fe_lookup.so .shobj/fe_lookup.o .shobj/fe_lookup.so: fe/fe_lookup.cpp include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -654,7 +694,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -693,7 +732,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -732,7 +770,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -771,7 +808,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -810,7 +846,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -848,7 +883,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -888,7 +922,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -925,7 +958,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -962,7 +994,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -999,7 +1030,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1036,7 +1066,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1073,7 +1102,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1110,7 +1138,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1147,7 +1174,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1184,7 +1210,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1221,7 +1246,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1258,7 +1282,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1295,7 +1318,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1332,7 +1354,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1369,7 +1390,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1406,7 +1426,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1443,7 +1462,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1480,7 +1498,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1517,7 +1534,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1554,7 +1570,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1591,7 +1606,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1628,7 +1642,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1665,7 +1678,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1702,7 +1714,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1739,7 +1750,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1776,7 +1786,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1813,7 +1822,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1850,7 +1858,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1887,7 +1894,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1924,7 +1930,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1961,7 +1966,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1998,7 +2002,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2035,7 +2038,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2072,7 +2074,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2109,7 +2110,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2146,7 +2146,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2183,7 +2182,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2220,7 +2218,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2257,7 +2254,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2294,7 +2290,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2331,7 +2326,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2368,7 +2362,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2405,7 +2398,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2442,7 +2434,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2479,7 +2470,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2516,7 +2506,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2553,7 +2542,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2590,7 +2578,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2687,7 +2674,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2784,7 +2770,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2881,7 +2866,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2978,7 +2962,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3075,7 +3058,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3172,7 +3154,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3269,7 +3250,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3366,7 +3346,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3463,7 +3442,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3508,6 +3486,8 @@ tags:
  be_include/be_visitor_interface/collocated_ss.h \
  be_include/be_visitor_interface/any_op_ch.h \
  be_include/be_visitor_interface/any_op_cs.h \
+ be_include/be_visitor_interface/cdr_op_ch.h \
+ be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
@@ -3573,7 +3553,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3670,7 +3649,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3767,7 +3745,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3864,7 +3841,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -3961,7 +3937,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4058,7 +4033,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4155,7 +4129,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4255,13 +4228,14 @@ tags:
  be_include/be_visitor_sequence/buffer_type.h \
  be_include/be_visitor_sequence/elemtype.h \
  be_include/be_visitor_sequence/any_op_ch.h \
- be_include/be_visitor_sequence/any_op_cs.h
+ be_include/be_visitor_sequence/any_op_cs.h \
+ be_include/be_visitor_sequence/cdr_op_ch.h \
+ be_include/be_visitor_sequence/cdr_op_cs.h
 .obj/be_string.o .obj/be_string.so .shobj/be_string.o .shobj/be_string.so: be/be_string.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4358,7 +4332,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4455,7 +4428,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4552,7 +4524,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4649,7 +4620,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4746,7 +4716,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4843,7 +4812,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -4940,7 +4908,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5037,7 +5004,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5134,7 +5100,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5231,7 +5196,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5328,7 +5292,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5425,7 +5388,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5522,7 +5484,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5619,7 +5580,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5716,7 +5676,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5813,7 +5772,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -5910,7 +5868,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6004,7 +5961,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6121,7 +6077,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6219,15 +6174,17 @@ tags:
  be_include/be_visitor_array/array_cs.h \
  be_include/be_visitor_array/any_op_ch.h \
  be_include/be_visitor_array/any_op_cs.h \
- be/be_visitor_array/any_op_ch.cpp be/be_visitor_array/any_op_cs.cpp \
- be/be_visitor_array/array.cpp be/be_visitor_array/array_ch.cpp \
- be/be_visitor_array/array_ci.cpp be/be_visitor_array/array_cs.cpp
+ be_include/be_visitor_array/cdr_op_ch.h \
+ be_include/be_visitor_array/cdr_op_cs.h be/be_visitor_array/array.cpp \
+ be/be_visitor_array/array_ch.cpp be/be_visitor_array/array_ci.cpp \
+ be/be_visitor_array/array_cs.cpp be/be_visitor_array/any_op_ch.cpp \
+ be/be_visitor_array/any_op_cs.cpp be/be_visitor_array/cdr_op_ch.cpp \
+ be/be_visitor_array/cdr_op_cs.cpp
 .obj/be_visitor_attribute.o .obj/be_visitor_attribute.so .shobj/be_visitor_attribute.o .shobj/be_visitor_attribute.so: be/be_visitor_attribute.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6327,7 +6284,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6429,7 +6385,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6526,7 +6481,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6623,7 +6577,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6720,14 +6673,16 @@ tags:
  be_include/be_visitor_enum/enum_cs.h \
  be_include/be_visitor_enum/any_op_ch.h \
  be_include/be_visitor_enum/any_op_cs.h \
- be/be_visitor_enum/any_op_ch.cpp be/be_visitor_enum/any_op_cs.cpp \
- be/be_visitor_enum/enum_ch.cpp be/be_visitor_enum/enum_cs.cpp
+ be_include/be_visitor_enum/cdr_op_ch.h \
+ be_include/be_visitor_enum/cdr_op_cs.h be/be_visitor_enum/enum_ch.cpp \
+ be/be_visitor_enum/enum_cs.cpp be/be_visitor_enum/any_op_ch.cpp \
+ be/be_visitor_enum/any_op_cs.cpp be/be_visitor_enum/cdr_op_ch.cpp \
+ be/be_visitor_enum/cdr_op_cs.cpp
 .obj/be_visitor_exception.o .obj/be_visitor_exception.so .shobj/be_visitor_exception.o .shobj/be_visitor_exception.so: be/be_visitor_exception.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6828,20 +6783,23 @@ tags:
  be_include/be_visitor_exception/ctor_assign.h \
  be_include/be_visitor_exception/any_op_ch.h \
  be_include/be_visitor_exception/any_op_cs.h \
- be/be_visitor_exception/any_op_ch.cpp \
- be/be_visitor_exception/any_op_cs.cpp \
- be/be_visitor_exception/ctor_assign.cpp \
+ be_include/be_visitor_exception/cdr_op_ch.h \
+ be_include/be_visitor_exception/cdr_op_cs.h \
  be/be_visitor_exception/exception.cpp \
  be/be_visitor_exception/exception_ch.cpp \
  be/be_visitor_exception/exception_ci.cpp \
  be/be_visitor_exception/exception_cs.cpp \
- be/be_visitor_exception/exception_ctor.cpp
+ be/be_visitor_exception/exception_ctor.cpp \
+ be/be_visitor_exception/ctor_assign.cpp \
+ be/be_visitor_exception/any_op_ch.cpp \
+ be/be_visitor_exception/any_op_cs.cpp \
+ be/be_visitor_exception/cdr_op_ch.cpp \
+ be/be_visitor_exception/cdr_op_cs.cpp
 .obj/be_visitor_field.o .obj/be_visitor_field.so .shobj/be_visitor_field.o .shobj/be_visitor_field.so: be/be_visitor_field.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6936,14 +6894,16 @@ tags:
  be_include/be_visitor_decl.h be_include/be_visitor_field/field_ch.h \
  be_include/be_visitor_field/field_ci.h \
  be_include/be_visitor_field/field_cs.h \
+ be_include/be_visitor_field/cdr_op_ch.h \
+ be_include/be_visitor_field/cdr_op_cs.h \
  be/be_visitor_field/field_ch.cpp be/be_visitor_field/field_ci.cpp \
- be/be_visitor_field/field_cs.cpp
+ be/be_visitor_field/field_cs.cpp be/be_visitor_field/cdr_op_ch.cpp \
+ be/be_visitor_field/cdr_op_cs.cpp
 .obj/be_visitor_interface.o .obj/be_visitor_interface.so .shobj/be_visitor_interface.o .shobj/be_visitor_interface.so: be/be_visitor_interface.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7047,12 +7007,10 @@ tags:
  be_include/be_visitor_interface/collocated_ss.h \
  be_include/be_visitor_interface/any_op_ch.h \
  be_include/be_visitor_interface/any_op_cs.h \
+ be_include/be_visitor_interface/cdr_op_ch.h \
+ be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
- be/be_visitor_interface/any_op_ch.cpp \
- be/be_visitor_interface/any_op_cs.cpp \
- be/be_visitor_interface/collocated_sh.cpp \
- be/be_visitor_interface/collocated_ss.cpp \
  be/be_visitor_interface/interface.cpp \
  be/be_visitor_interface/interface_ch.cpp \
  be/be_visitor_interface/interface_ci.cpp \
@@ -7060,13 +7018,18 @@ tags:
  be/be_visitor_interface/interface_sh.cpp \
  be/be_visitor_interface/interface_si.cpp \
  be/be_visitor_interface/interface_ss.cpp \
- be/be_visitor_interface/tie_sh.cpp be/be_visitor_interface/tie_si.cpp
+ be/be_visitor_interface/collocated_sh.cpp \
+ be/be_visitor_interface/collocated_ss.cpp \
+ be/be_visitor_interface/tie_sh.cpp be/be_visitor_interface/tie_si.cpp \
+ be/be_visitor_interface/any_op_ch.cpp \
+ be/be_visitor_interface/any_op_cs.cpp \
+ be/be_visitor_interface/cdr_op_ch.cpp \
+ be/be_visitor_interface/cdr_op_cs.cpp
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7168,7 +7131,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7264,15 +7226,15 @@ tags:
  be_include/be_visitor_module/module.h \
  be_include/be_visitor_module/module_ch.h \
  be_include/be_visitor_module/module_sh.h \
- be_include/be_visitor_module/any_op.h be/be_visitor_module/any_op.cpp \
- be/be_visitor_module/module.cpp be/be_visitor_module/module_ch.cpp \
- be/be_visitor_module/module_sh.cpp
+ be_include/be_visitor_module/any_op.h \
+ be_include/be_visitor_module/cdr_op.h be/be_visitor_module/module.cpp \
+ be/be_visitor_module/module_ch.cpp be/be_visitor_module/module_sh.cpp \
+ be/be_visitor_module/any_op.cpp be/be_visitor_module/cdr_op.cpp
 .obj/be_visitor_operation.o .obj/be_visitor_operation.so .shobj/be_visitor_operation.o .shobj/be_visitor_operation.so: be/be_visitor_operation.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7411,7 +7373,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7511,17 +7472,17 @@ tags:
  be_include/be_visitor_root/root_sh.h \
  be_include/be_visitor_root/root_si.h \
  be_include/be_visitor_root/root_ss.h \
- be_include/be_visitor_root/any_op.h be/be_visitor_root/any_op.cpp \
- be/be_visitor_root/root.cpp be/be_visitor_root/root_ch.cpp \
- be/be_visitor_root/root_ci.cpp be/be_visitor_root/root_cs.cpp \
- be/be_visitor_root/root_sh.cpp be/be_visitor_root/root_si.cpp \
- be/be_visitor_root/root_ss.cpp
+ be_include/be_visitor_root/any_op.h \
+ be_include/be_visitor_root/cdr_op.h be/be_visitor_root/root.cpp \
+ be/be_visitor_root/root_ch.cpp be/be_visitor_root/root_ci.cpp \
+ be/be_visitor_root/root_cs.cpp be/be_visitor_root/root_sh.cpp \
+ be/be_visitor_root/root_si.cpp be/be_visitor_root/root_ss.cpp \
+ be/be_visitor_root/any_op.cpp be/be_visitor_root/cdr_op.cpp
 .obj/be_visitor_scope.o .obj/be_visitor_scope.so .shobj/be_visitor_scope.o .shobj/be_visitor_scope.so: be/be_visitor_scope.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7619,7 +7580,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7720,8 +7680,12 @@ tags:
  be_include/be_visitor_sequence/elemtype.h \
  be_include/be_visitor_sequence/any_op_ch.h \
  be_include/be_visitor_sequence/any_op_cs.h \
+ be_include/be_visitor_sequence/cdr_op_ch.h \
+ be_include/be_visitor_sequence/cdr_op_cs.h \
  be/be_visitor_sequence/any_op_ch.cpp \
  be/be_visitor_sequence/any_op_cs.cpp \
+ be/be_visitor_sequence/cdr_op_ch.cpp \
+ be/be_visitor_sequence/cdr_op_cs.cpp \
  be/be_visitor_sequence/buffer_type.cpp \
  be/be_visitor_sequence/elemtype.cpp \
  be/be_visitor_sequence/sequence_base.cpp \
@@ -7739,7 +7703,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7838,18 +7801,21 @@ tags:
  be_include/be_visitor_structure/structure_cs.h \
  be_include/be_visitor_structure/any_op_ch.h \
  be_include/be_visitor_structure/any_op_cs.h \
- be/be_visitor_structure/any_op_ch.cpp \
- be/be_visitor_structure/any_op_cs.cpp \
+ be_include/be_visitor_structure/cdr_op_ch.h \
+ be_include/be_visitor_structure/cdr_op_cs.h \
  be/be_visitor_structure/structure.cpp \
  be/be_visitor_structure/structure_ch.cpp \
  be/be_visitor_structure/structure_ci.cpp \
- be/be_visitor_structure/structure_cs.cpp
+ be/be_visitor_structure/structure_cs.cpp \
+ be/be_visitor_structure/any_op_ch.cpp \
+ be/be_visitor_structure/any_op_cs.cpp \
+ be/be_visitor_structure/cdr_op_ch.cpp \
+ be/be_visitor_structure/cdr_op_cs.cpp
 .obj/be_visitor_typecode.o .obj/be_visitor_typecode.so .shobj/be_visitor_typecode.o .shobj/be_visitor_typecode.so: be/be_visitor_typecode.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7951,7 +7917,6 @@ tags:
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8050,17 +8015,21 @@ tags:
  be_include/be_visitor_typedef/typedef_cs.h \
  be_include/be_visitor_typedef/any_op_ch.h \
  be_include/be_visitor_typedef/any_op_cs.h \
- be/be_visitor_typedef/any_op_ch.cpp \
- be/be_visitor_typedef/any_op_cs.cpp be/be_visitor_typedef/typedef.cpp \
+ be_include/be_visitor_typedef/cdr_op_ch.h \
+ be_include/be_visitor_typedef/cdr_op_cs.h \
+ be/be_visitor_typedef/typedef.cpp \
  be/be_visitor_typedef/typedef_ch.cpp \
  be/be_visitor_typedef/typedef_ci.cpp \
- be/be_visitor_typedef/typedef_cs.cpp
+ be/be_visitor_typedef/typedef_cs.cpp \
+ be/be_visitor_typedef/any_op_ch.cpp \
+ be/be_visitor_typedef/any_op_cs.cpp \
+ be/be_visitor_typedef/cdr_op_ch.cpp \
+ be/be_visitor_typedef/cdr_op_cs.cpp
 .obj/be_visitor_union.o .obj/be_visitor_union.so .shobj/be_visitor_union.o .shobj/be_visitor_union.so: be/be_visitor_union.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8162,18 +8131,20 @@ tags:
  be_include/be_visitor_union/discriminant_cs.h \
  be_include/be_visitor_union/any_op_ch.h \
  be_include/be_visitor_union/any_op_cs.h \
- be/be_visitor_union/any_op_ch.cpp be/be_visitor_union/any_op_cs.cpp \
+ be_include/be_visitor_union/cdr_op_ch.h \
+ be_include/be_visitor_union/cdr_op_cs.h \
  be/be_visitor_union/discriminant_ch.cpp \
  be/be_visitor_union/discriminant_ci.cpp \
  be/be_visitor_union/discriminant_cs.cpp be/be_visitor_union/union.cpp \
  be/be_visitor_union/union_ch.cpp be/be_visitor_union/union_ci.cpp \
- be/be_visitor_union/union_cs.cpp
+ be/be_visitor_union/union_cs.cpp be/be_visitor_union/any_op_ch.cpp \
+ be/be_visitor_union/any_op_cs.cpp be/be_visitor_union/cdr_op_ch.cpp \
+ be/be_visitor_union/cdr_op_cs.cpp
 .obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.so .shobj/be_visitor_union_branch.o .shobj/be_visitor_union_branch.so: be/be_visitor_union_branch.cpp \
  include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8273,19 +8244,22 @@ tags:
  be_include/be_visitor_union_branch/public_reset_cs.h \
  be_include/be_visitor_union_branch/public_access_cs.h \
  be_include/be_visitor_union_branch/private_ch.h \
+ be_include/be_visitor_union_branch/cdr_op_ch.h \
+ be_include/be_visitor_union_branch/cdr_op_cs.h \
  be/be_visitor_union_branch/private_ch.cpp \
  be/be_visitor_union_branch/public_assign_cs.cpp \
  be/be_visitor_union_branch/public_reset_cs.cpp \
  be/be_visitor_union_branch/public_access_cs.cpp \
  be/be_visitor_union_branch/public_ch.cpp \
  be/be_visitor_union_branch/public_ci.cpp \
- be/be_visitor_union_branch/public_cs.cpp
+ be/be_visitor_union_branch/public_cs.cpp \
+ be/be_visitor_union_branch/cdr_op_ch.cpp \
+ be/be_visitor_union_branch/cdr_op_cs.cpp
 .obj/be_interpretive.o .obj/be_interpretive.so .shobj/be_interpretive.o .shobj/be_interpretive.so: be/be_interpretive.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -8395,6 +8369,8 @@ tags:
  be_include/be_visitor_array/array_cs.h \
  be_include/be_visitor_array/any_op_ch.h \
  be_include/be_visitor_array/any_op_cs.h \
+ be_include/be_visitor_array/cdr_op_ch.h \
+ be_include/be_visitor_array/cdr_op_cs.h \
  be_include/be_visitor_attribute.h be_include/be_visitor_scope.h \
  be_include/be_visitor_attribute/attribute.h \
  be_include/be_visitor_constant.h \
@@ -8404,6 +8380,8 @@ tags:
  be_include/be_visitor_enum/enum_cs.h \
  be_include/be_visitor_enum/any_op_ch.h \
  be_include/be_visitor_enum/any_op_cs.h \
+ be_include/be_visitor_enum/cdr_op_ch.h \
+ be_include/be_visitor_enum/cdr_op_cs.h \
  be_include/be_visitor_exception.h \
  be_include/be_visitor_exception/exception.h \
  be_include/be_visitor_exception/exception_ch.h \
@@ -8413,9 +8391,13 @@ tags:
  be_include/be_visitor_exception/ctor_assign.h \
  be_include/be_visitor_exception/any_op_ch.h \
  be_include/be_visitor_exception/any_op_cs.h \
+ be_include/be_visitor_exception/cdr_op_ch.h \
+ be_include/be_visitor_exception/cdr_op_cs.h \
  be_include/be_visitor_field.h be_include/be_visitor_field/field_ch.h \
  be_include/be_visitor_field/field_ci.h \
  be_include/be_visitor_field/field_cs.h \
+ be_include/be_visitor_field/cdr_op_ch.h \
+ be_include/be_visitor_field/cdr_op_cs.h \
  be_include/be_visitor_interface.h \
  be_include/be_visitor_interface/interface.h \
  be_include/be_visitor_interface/interface_ch.h \
@@ -8428,6 +8410,8 @@ tags:
  be_include/be_visitor_interface/collocated_ss.h \
  be_include/be_visitor_interface/any_op_ch.h \
  be_include/be_visitor_interface/any_op_cs.h \
+ be_include/be_visitor_interface/cdr_op_ch.h \
+ be_include/be_visitor_interface/cdr_op_cs.h \
  be_include/be_visitor_interface/tie_sh.h \
  be_include/be_visitor_interface/tie_si.h \
  be_include/be_visitor_interface_fwd.h \
@@ -8437,6 +8421,7 @@ tags:
  be_include/be_visitor_module/module_ch.h \
  be_include/be_visitor_module/module_sh.h \
  be_include/be_visitor_module/any_op.h \
+ be_include/be_visitor_module/cdr_op.h \
  be_include/be_visitor_operation.h \
  be_include/be_visitor_operation/operation_ch.h \
  be_include/be_visitor_operation/operation_cs.h \
@@ -8466,7 +8451,8 @@ tags:
  be_include/be_visitor_root/root_sh.h \
  be_include/be_visitor_root/root_si.h \
  be_include/be_visitor_root/root_ss.h \
- be_include/be_visitor_root/any_op.h be_include/be_visitor_sequence.h \
+ be_include/be_visitor_root/any_op.h \
+ be_include/be_visitor_root/cdr_op.h be_include/be_visitor_sequence.h \
  be_include/be_visitor_sequence/sequence_ch.h \
  be_include/be_visitor_sequence/sequence_ci.h \
  be_include/be_visitor_sequence/sequence_cs.h \
@@ -8475,6 +8461,8 @@ tags:
  be_include/be_visitor_sequence/elemtype.h \
  be_include/be_visitor_sequence/any_op_ch.h \
  be_include/be_visitor_sequence/any_op_cs.h \
+ be_include/be_visitor_sequence/cdr_op_ch.h \
+ be_include/be_visitor_sequence/cdr_op_cs.h \
  be_include/be_visitor_structure.h \
  be_include/be_visitor_structure/structure.h \
  be_include/be_visitor_structure/structure_ch.h \
@@ -8482,6 +8470,8 @@ tags:
  be_include/be_visitor_structure/structure_cs.h \
  be_include/be_visitor_structure/any_op_ch.h \
  be_include/be_visitor_structure/any_op_cs.h \
+ be_include/be_visitor_structure/cdr_op_ch.h \
+ be_include/be_visitor_structure/cdr_op_cs.h \
  be_include/be_visitor_typecode.h \
  be_include/be_visitor_typecode/typecode_decl.h \
  be_include/be_visitor_typecode/typecode_defn.h \
@@ -8492,6 +8482,8 @@ tags:
  be_include/be_visitor_typedef/typedef_cs.h \
  be_include/be_visitor_typedef/any_op_ch.h \
  be_include/be_visitor_typedef/any_op_cs.h \
+ be_include/be_visitor_typedef/cdr_op_ch.h \
+ be_include/be_visitor_typedef/cdr_op_cs.h \
  be_include/be_visitor_union.h be_include/be_visitor_union/union.h \
  be_include/be_visitor_union/union_ch.h \
  be_include/be_visitor_union/union_ci.h \
@@ -8501,6 +8493,8 @@ tags:
  be_include/be_visitor_union/discriminant_cs.h \
  be_include/be_visitor_union/any_op_ch.h \
  be_include/be_visitor_union/any_op_cs.h \
+ be_include/be_visitor_union/cdr_op_ch.h \
+ be_include/be_visitor_union/cdr_op_cs.h \
  be_include/be_visitor_union_branch.h \
  be_include/be_visitor_union_branch/public_ch.h \
  be_include/be_visitor_union_branch/public_ci.h \
@@ -8508,6 +8502,8 @@ tags:
  be_include/be_visitor_union_branch/public_assign_cs.h \
  be_include/be_visitor_union_branch/public_reset_cs.h \
  be_include/be_visitor_union_branch/public_access_cs.h \
- be_include/be_visitor_union_branch/private_ch.h
+ be_include/be_visitor_union_branch/private_ch.h \
+ be_include/be_visitor_union_branch/cdr_op_ch.h \
+ be_include/be_visitor_union_branch/cdr_op_cs.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

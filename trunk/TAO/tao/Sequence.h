@@ -243,6 +243,18 @@ public:
   operator const char*() const;
   // cast  (read-only)
 
+  const char *in (void) const;
+  // for in parameter.
+  
+  char *&inout (void);
+  // for inout parameter.
+  
+  char *&out (void);
+  // for out parameter.
+  
+  char *_retn (void);
+  // for string of return type.
+
 private:
   char **ptr_;
   // Address of string element from the parent's buffer.

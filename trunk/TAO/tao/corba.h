@@ -185,6 +185,7 @@ operator>> (TAO_InputCDR&, TAO_opaque&);
 
 // Marshaling
 #include "tao/Marshal.h"
+#include "tao/singletons.h"
 #include "tao/CDR.h"
 
 #include "tao/PolicyC.h"
@@ -219,7 +220,6 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/Invocation.h"
 #include "tao/Server_Request.h"
 
-#include "tao/singletons.h"
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)
@@ -336,9 +336,19 @@ do {\
   _env.exception (new EXCEPTION); \
   return; } while (0)
 
+#define TAO_THROW_ENV(EXCEPTION, ENV) \
+do {\
+  ENV.exception (new EXCEPTION); \
+  return; } while (0)
+
 #define TAO_THROW_RETURN(EXCEPTION, RETURN) \
 do {\
  _env.exception (new EXCEPTION); \
+ return RETURN; } while (0)
+
+#define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) \
+do {\
+ ENV.exception (new EXCEPTION); \
  return RETURN; } while (0)
 
 #define TAO_RETHROW \

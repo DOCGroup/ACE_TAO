@@ -573,9 +573,9 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
   // constructor from a _var &
   *os << namebuf << " (" << node->local_name () << "_var &);" << be_nl;
   // constructor from a _out &
-  *os << namebuf << " (" << namebuf << " &);" << be_nl;
+  *os << namebuf << " (const " << namebuf << " &);" << be_nl;
   // assignment operator from a _out &
-  *os << namebuf << " &operator= (" << namebuf << " &);" << be_nl;
+  *os << namebuf << " &operator= (const " << namebuf << " &);" << be_nl;
   // assignment operator from a pointer &, cast operator, ptr fn, operator
   // -> and any other extra operators
   // assignment

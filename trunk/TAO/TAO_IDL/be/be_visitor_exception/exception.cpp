@@ -67,6 +67,12 @@ be_visitor_exception::visit_field (be_field *node)
     case TAO_CodeGen::TAO_EXCEPTION_CS:
       ctx.state (TAO_CodeGen::TAO_FIELD_CS);
       break;
+    case TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_FIELD_CDR_OP_CH);
+      break;
+    case TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS:
+      ctx.state (TAO_CodeGen::TAO_FIELD_CDR_OP_CS);
+      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,

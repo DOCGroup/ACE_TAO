@@ -373,19 +373,21 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   // copy constructor
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::" << lname << " (" << fname <<
+  *os << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << be_nl;
-  *os << "  : ptr_ (p.ptr_)" << be_nl;
+  *os << "  : ptr_ (ACE_const_cast (" << fname 
+      << "&,p).ptr_)" << be_nl;
   *os << "{}\n\n";
 
   // assignment operator from _out &
   os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
-  *os << fname << "::operator= (" << fname <<
+  *os << fname << "::operator= (const " << fname <<
     " &p)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
-  *os << "this->ptr_ = p.ptr_;" << be_nl;
+  *os << "this->ptr_ = ACE_const_cast (" << fname 
+      << "&,p).ptr_;" << be_nl;
   *os << "return *this;\n";
   os->decr_indent ();
   *os << "}\n\n";

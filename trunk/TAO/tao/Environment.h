@@ -94,7 +94,7 @@ public:
   // print the exception to output determined by f
 
   // = Obtain a default environment to use with TAO.
-  static CORBA_Environment &default_environment();
+  static CORBA_Environment &default_environment (void);
 
 private:
   friend class TAO_ORB_Core;
