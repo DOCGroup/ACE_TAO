@@ -179,7 +179,10 @@ class CORBA_ContextList_var;
 class CORBA_ContextList_out;
 typedef class CORBA_ContextList *CORBA_ContextList_ptr;
 
-
+class CORBA_ConstructionPolicy;
+class CORBA_ConstructionPolicy_var;
+class CORBA_ConstructionPolicy_out;
+typedef class CORBA_ConstructionPolicy *CORBA_ConstructionPolicy_ptr;
 
 #endif /* ! TAO_HAS_MINIMUM_CORBA */
 
@@ -211,6 +214,9 @@ typedef class CORBA_Principal *CORBA_Principal_ptr;
 
 typedef class CORBA_ImplementationDef *CORBA_ImplementationDef_ptr;
 
+class CORBA_InterfaceDef;
+class CORBA_InterfaceDef_var;
+class CORBA_InterfaceDef_out;
 typedef class CORBA_InterfaceDef *CORBA_InterfaceDef_ptr;
 
 #ifdef TAO_HAS_VALUETYPE
@@ -250,6 +256,16 @@ class CORBA_PolicyList;
 class CORBA_PolicyList_var;
 class CORBA_PolicyList_out;
 typedef CORBA_PolicyList *CORBA_PolicyList_ptr;
+
+class CORBA_DomainManager;
+class CORBA_DomainManager_var;
+class CORBA_DomainManager_out;
+typedef CORBA_DomainManager *CORBA_DomainManager_ptr;
+
+class CORBA_DomainManagerList;
+class CORBA_DomainManagerList_var;
+class CORBA_DomainManagerList_out;
+typedef CORBA_DomainManagerList *CORBA_DomainManagerList_ptr;
 
 class CORBA_PollableSet;
 class CORBA_PollableSet_var;
@@ -437,7 +453,10 @@ public:
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
 
-  typedef class CORBA_InterfaceDef *InterfaceDef_ptr;
+  typedef CORBA_InterfaceDef InterfaceDef;
+  typedef CORBA_InterfaceDef *InterfaceDef_ptr;
+  typedef CORBA_InterfaceDef_var InterfaceDef_var;
+  typedef CORBA_InterfaceDef_out InterfaceDef_out;
 
   typedef CORBA_Current Current;
   typedef CORBA_Current *Current_ptr;
@@ -684,6 +703,28 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA_PolicyCurrent PolicyCurrent;
   typedef CORBA_PolicyCurrent *PolicyCurrent_ptr;
   static CORBA::TypeCode_ptr _tc_PolicyCurrent;
+
+  typedef CORBA_DomainManager DomainManager;
+  typedef CORBA_DomainManager *DomainManager_ptr;
+  typedef CORBA_DomainManager_var DomainManager_var;
+  typedef CORBA_DomainManager_out DomainManager_out;
+  static CORBA::TypeCode_ptr _tc_DomainManager;
+
+  typedef CORBA_DomainManagerList DomainManagerList;
+  typedef CORBA_DomainManagerList *DomainManagerList_ptr;
+  typedef CORBA_DomainManagerList_var DomainManagerList_var;
+  typedef CORBA_DomainManagerList_out DomainManagerList_out;
+  static CORBA::TypeCode_ptr _tc_DomainManagerList;
+
+#if ! defined (TAO_HAS_MINIMUM_CORBA)
+  typedef CORBA_ConstructionPolicy ConstructionPolicy;
+  typedef CORBA_ConstructionPolicy *ConstructionPolicy_ptr;
+  typedef CORBA_ConstructionPolicy_var ConstructionPolicy_var;
+  typedef CORBA_ConstructionPolicy_out ConstructionPolicy_out;
+  static CORBA::TypeCode_ptr _tc_ConstructionPolicy;
+
+  static const PolicyType SecConstruction;
+#endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
 
   // ****************************************************************
 

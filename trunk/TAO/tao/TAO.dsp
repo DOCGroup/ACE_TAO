@@ -7709,6 +7709,36 @@ NODEP_CPP_DEFAUL=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\DomainC.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DomainS.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynAny_i.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -30729,6 +30759,14 @@ SOURCE=.\default_server.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DomainC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DomainS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynAny_i.h
 # End Source File
 # Begin Source File
@@ -30905,10 +30943,6 @@ SOURCE=.\PolicyC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PolicyS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
@@ -31014,6 +31048,14 @@ SOURCE=.\default_resource.i
 # Begin Source File
 
 SOURCE=.\default_server.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DomainC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DomainS_T.i
 # End Source File
 # Begin Source File
 
