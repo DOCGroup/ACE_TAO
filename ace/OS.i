@@ -1563,19 +1563,21 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_--;
 
+  int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
+
+  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
+
   if (result != -1)
     {
       // If we're the last waiter thread during this particular
       // broadcast then let all the other threads proceed.
-      if (cv->was_broadcast_ && cv->waiters_ == 0)
+      if (last_waiter)
 #if defined (VXWORKS)
 	ACE_OS::sema_post (&cv->waiters_done_);
 #else
 	ACE_OS::event_signal (&cv->waiters_done_);
 #endif /* VXWORKS */
     }
-
-  ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   // We must always regain the external mutex, even when errors
   // occur because that's the guarantee that we give to our
