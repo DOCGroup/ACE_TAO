@@ -136,6 +136,7 @@ namespace CIAO_GLUE_BasicSP
     ::Components::InvalidConnection));
 
     protected:
+    // @@ George this can be removed, right?
     ACE_Active_Map_Manager<
     ::BasicSP::TimeOutConsumer_var>
     ciao_publishes_timeout_map_;
@@ -207,7 +208,7 @@ namespace CIAO_GLUE_BasicSP
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void 
+    virtual void
     hertz (
     ::CORBA::Long
     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -586,4 +587,3 @@ namespace CIAO_GLUE_BasicSP
 
 #include "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_EC_SVNT_H */
-

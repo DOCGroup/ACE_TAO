@@ -1,3 +1,10 @@
+Wed Jul 30 07:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
+	* examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp: Added @@ George
+	  comments for George. This is a code review. Same comments apply
+	  to other components.
+
 Tue Jul 29 15:36:20 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/*.*: Replaced old version with a new one.
@@ -5,12 +12,12 @@ Tue Jul 29 15:36:20 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 Thu Jul 24 16:22:27 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         Added new files:
-        * CIAO/examples/handcrafted/BasicSP_EC/*.*:
-        * CIAO/examples/handcrafted/BasicSP_EC/BMClosedED/*.*:
-        * CIAO/examples/handcrafted/BasicSP_EC/BMDevice/*.*:
-        * CIAO/examples/handcrafted/BasicSP_EC/BMDisplay/*.*:
-        * CIAO/examples/handcrafted/BasicSP_EC/descriptors/*.*:
-        * CIAO/examples/handcrafted/BasicSP_EC/EC/*.*:
+        * examples/handcrafted/BasicSP_EC/*.*:
+        * examples/handcrafted/BasicSP_EC/BMClosedED/*.*:
+        * examples/handcrafted/BasicSP_EC/BMDevice/*.*:
+        * examples/handcrafted/BasicSP_EC/BMDisplay/*.*:
+        * examples/handcrafted/BasicSP_EC/descriptors/*.*:
+        * examples/handcrafted/BasicSP_EC/EC/*.*:
 
         Modified BasicSP example to use TAO's RT event channel for
         event propagation. This involved modifications to each component's
