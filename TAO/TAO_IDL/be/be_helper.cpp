@@ -166,7 +166,7 @@ TAO_OutStream::indent (void)
   // spaces in the output
   if (this->indent_level_ > 0)
     {
-      for (i=0; i < this->indent_level_; i++)
+      for (i = 0; i < this->indent_level_; i++)
         {
           ACE_OS::fprintf (this->fp_, "  ");
           ACE_OS::fflush (this->fp_);
@@ -224,6 +224,8 @@ TAO_OutStream::gen_ifdef_macro (const char *flatname, const char *suffix)
     case TAO_OutStream::TAO_SVR_IMPL:
       ACE_OS::strcat (macro, "SS_");
       break;
+    default:
+      return -1;
     }
   *this << "\n#if !defined (" << macro << ")\n";
   *this << "#define " << macro << "\n\n";
@@ -283,6 +285,46 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const char *str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str);
+  ACE_OS::fflush (fp_);
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const ACE_CDR::UShort num)
+{
+  ACE_OS::fprintf (this->fp_, "%hu", num);
+  ACE_OS::fflush (fp_);
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const ACE_CDR::Short num)
+{
+  ACE_OS::fprintf (this->fp_, "%hd", num);
+  ACE_OS::fflush (fp_);
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const ACE_CDR::ULong num)
+{
+  ACE_OS::fprintf (this->fp_, "%lu", num);
+  ACE_OS::fflush (fp_);
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const ACE_CDR::Long num)
+{
+  ACE_OS::fprintf (this->fp_, "%ld", num);
+  ACE_OS::fflush (fp_);
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (const unsigned long num)
+{
+  ACE_OS::fprintf (this->fp_, "%lu", num);
   ACE_OS::fflush (fp_);
   return *this;
 }

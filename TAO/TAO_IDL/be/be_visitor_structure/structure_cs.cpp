@@ -50,6 +50,7 @@ int be_visitor_structure_cs::visit_structure (be_structure *node)
       be_visitor *visitor;
       be_visitor_context ctx (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+      ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {

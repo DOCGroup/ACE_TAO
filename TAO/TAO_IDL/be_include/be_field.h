@@ -38,12 +38,6 @@ public:
                                     Visibility vis = vis_NA);
   // constructor
 
-  virtual int gen_encapsulation (void);
-  // generate the typecode
-
-  virtual long tc_encap_len (void);
-  // return the total byte length of ourselves represented as an encapsulation
-
   // Visiting
   virtual int accept (be_visitor *visitor);
 

@@ -53,12 +53,6 @@ public:
   virtual int gen_out_impl (void);
   // generate the _out implementation
 
-  virtual int gen_typecode (void) = 0;
-  // generate the typecode description
-
-  virtual long tc_size (void) = 0;
-  // return typecode size
-
   UTL_ScopedName *tc_name (void);
   // return the typecode name
 
@@ -72,6 +66,11 @@ public:
   // depend on base type they are aliasing.  Since typedefs can be
   // recursive simply using "base_type->node_type()" will not work, so
   // the most "unaliased" type is needed.
+
+  virtual idl_bool in_recursion (be_type *node = 0);
+  // determine if we are involved in some kind of limited recursion. Most types
+  // cannot be involved except structs and unions.
+  // If the parameter is 0, we are trying to determine this for ourselves.
 
   // Visiting
   virtual int accept (be_visitor* visitor);

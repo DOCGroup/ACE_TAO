@@ -41,18 +41,6 @@ public:
   // return the most primitive base type by traversing the chain of typedefed
   // base types
 
-  virtual int gen_typecode (void);
-  // generate the typecode
-
-  virtual int gen_encapsulation (void);
-  // encapsulation for parameters
-
-  virtual long tc_size (void);
-  // return typecode size
-
-  virtual long tc_encap_len (void);
-  // return length of encapsulation
-
   virtual AST_Decl::NodeType base_node_type (void) const;
   // Return the most "unaliased" type node for the base type (see
   // be_type.h).
