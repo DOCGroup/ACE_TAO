@@ -1,3 +1,8 @@
+Tue Feb 22 10:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/ImR_Client_Adapter_Impl.{h,cpp}:
+          Removed empty virtual destructor
+
 Tue Feb 22 10:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/AMI.mpc:
