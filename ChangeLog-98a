@@ -1,11 +1,16 @@
 Mon Apr 27 07:18:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/Service_Types.cpp: Changes to use typedef
+ 	  ACE_Service_Object_Exterminator to define <gobbler>.  Thanks to
+ 	  Chuck Gehr for reminding this.
+
 	* ace/Service_Object.h (ACE_Service_Object_Ptr): 
 	* netsvcs/servers/main.cpp (main): Added more comments on how to
 	  use ACE_Service_Object_Ptr with ACE_SVC_INVOKE correctly. 
 
 	* ace/OS.h (ACE_Service_Object_Exterminator): Define the type as
- 	  extern "C" function pointer to make MVS happy.  Thanks to
+ 	  extern "C" function pointer to make MVS happy.  Thanks to Chuck
+ 	  Gehr for pointing this out.
 
 	* ace/Service_Object.i (ACE_Service_Object_Ptr): Delete the
  	  underlying Service_Object after calling its fini() method.
