@@ -7,7 +7,7 @@
 #include "tao/LF_Follower_Auto_Adder.h"
 #include "tao/LF_Event.h"
 #include "tao/LF_Event_Binder.h"
-
+#include "tao/debug.h"
 #include "tao/Transport.h"
 
 #include "ace/Reactor.h"
