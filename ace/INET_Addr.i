@@ -9,13 +9,66 @@ ACE_INET_Addr::~ACE_INET_Addr (void)
 {
 }
 
+ACE_INLINE int
+ACE_INET_Addr::determine_type (void) const
+{
+#if defined (ACE_HAS_IPV6)
+#  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  return ACE_Sock_Connect::ipv6_enabled () ? AF_INET6 : AF_INET;
+#  else
+  return AF_INET6;
+#  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
+#endif /* ACE_HAS_IPV6 */
+  return AF_INET;
+}
+
+ACE_INLINE void *
+ACE_INET_Addr::ip_addr_pointer (void) const
+{
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type () == PF_INET)
+    return (void*)&this->inet_addr_.in4_.sin_addr;
+  else
+    return (void*)&this->inet_addr_.in6_.sin6_addr;
+#else
+  return (void*)&this->inet_addr_.in4_.sin_addr;
+#endif
+}
+
+ACE_INLINE size_t
+ACE_INET_Addr::ip_addr_size (void) const
+{
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type () == PF_INET)
+    return sizeof this->inet_addr_.in4_.sin_addr;
+  else
+    return sizeof this->inet_addr_.in6_.sin6_addr;
+#else
+  // These _UNICOS changes were picked up from pre-IPv6 code in
+  // get_host_name_i... the IPv6 section above may need something
+  // similar, so keep an eye out for it.
+#  if !defined(_UNICOS)
+  return sizeof this->inet_addr_.in4_.sin_addr.s_addr;
+#  else /* _UNICOS */
+   return sizeof this->inet_addr_.in4_.sin_addr;
+#  endif /* ! _UNICOS */
+#endif /* ACE_HAS_IPV6 */
+}
+
 // Return the port number, converting it into host byte order...
 
 ACE_INLINE u_short
 ACE_INET_Addr::get_port_number (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_port_number");
-  return ntohs (this->inet_addr_.sin_port);
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type () == PF_INET)
+    return ntohs (this->inet_addr_.in4_.sin_port);
+  else
+    return ntohs (this->inet_addr_.in6_.sin6_port);
+#else
+  return ntohs (this->inet_addr_.in4_.sin_port);
+#endif /* ACE_HAS_IPV6 */
 }
 
 // Return the address.
@@ -24,41 +77,35 @@ ACE_INLINE void *
 ACE_INET_Addr::get_addr (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_addr");
-  return (void *) &this->inet_addr_;
+  return (void*)&this->inet_addr_;
 }
 
-// Return the dotted Internet address.
-
-ACE_INLINE const char *
-ACE_INET_Addr::get_host_addr (void) const
+ACE_INLINE int
+ACE_INET_Addr::get_addr_size (void) const
 {
-  ACE_TRACE ("ACE_INET_Addr::get_host_addr");
-#if defined (VXWORKS)
-  // It would be nice to be able to encapsulate this into
-  // ACE_OS::inet_ntoa(), but that would lead to either inefficiencies
-  // on vxworks or lack of thread safety.
-  //
-  // So, we use the way that vxworks suggests.
-  ACE_INET_Addr *ncthis = ACE_const_cast (ACE_INET_Addr *, this);
-  inet_ntoa_b (this->inet_addr_.sin_addr, ncthis->buf_);
-  return &buf_[0];
-#else /* VXWORKS */
-  return ACE_OS::inet_ntoa (this->inet_addr_.sin_addr);  
-#endif /* VXWORKS */
+  ACE_TRACE ("ACE_INET_Addr::get_addr_size");
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type () == PF_INET)
+    return sizeof this->inet_addr_.in4_;
+  else
+    return sizeof this->inet_addr_.in6_;
+#else
+  return sizeof this->inet_addr_.in4_;
+#endif /* ACE_HAS_IPV6 */
 }
 
-// Return the 4-byte IP address, converting it into host byte order.
 
-ACE_INLINE ACE_UINT32
-ACE_INET_Addr::get_ip_address (void) const
-{
-  ACE_TRACE ("ACE_INET_Addr::get_ip_address");
-  return ntohl (ACE_UINT32 (this->inet_addr_.sin_addr.s_addr));
-}
-
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_INET_Addr::hash (void) const
 {
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type () == PF_INET6)
+    {
+      const unsigned int *addr = (const unsigned int*)this->ip_addr_pointer();
+      return addr[0] + addr[1] + addr[2] + addr[3] + this->get_port_number();
+    }
+  else
+#endif /* ACE_HAS_IPV6 */
   return this->get_ip_address () + this->get_port_number ();
 }
 
@@ -71,27 +118,29 @@ ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs) const
 }
 
 #if defined (ACE_HAS_WCHAR)
-ACE_INLINE int 
-ACE_INET_Addr::set (u_short port_number, 
-                    const wchar_t host_name[], 
-                    int encode)
+ACE_INLINE int
+ACE_INET_Addr::set (u_short port_number,
+                    const wchar_t host_name[],
+                    int encode,
+                    int address_family)
 {
-  return this->set (port_number, 
+  return this->set (port_number,
                     ACE_Wide_To_Ascii (host_name).char_rep (),
-                    encode);
+                    encode,
+                    address_family);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_INET_Addr::set (const wchar_t port_name[],
-                    const wchar_t host_name[], 
+                    const wchar_t host_name[],
                     const wchar_t protocol[])
 {
-  return this->set (ACE_Wide_To_Ascii (port_name).char_rep (), 
+  return this->set (ACE_Wide_To_Ascii (port_name).char_rep (),
                     ACE_Wide_To_Ascii (host_name).char_rep (),
                     ACE_Wide_To_Ascii (protocol).char_rep ());
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_INET_Addr::set (const wchar_t port_name[],
                     ACE_UINT32 ip_addr,
                     const wchar_t protocol[])
@@ -101,7 +150,7 @@ ACE_INET_Addr::set (const wchar_t port_name[],
                     ACE_Wide_To_Ascii (protocol).char_rep ());
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_INET_Addr::set (const wchar_t addr[])
 {
   return this->set (ACE_Wide_To_Ascii (addr).char_rep ());

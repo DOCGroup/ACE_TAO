@@ -1,3 +1,60 @@
+Mon Dec  3 15:50:42 2001  Steve Huston  <shuston@riverace.com>
+
+        * IPv6 changes done by John Aughey and myself. To enable IPv6
+          support for a build, put this in your config.h file:
+              #define ACE_HAS_IPV6
+          If your build with IPv6 enabled must also run on systems where
+          the IPv6 support in the kernel is not actually turned on (for
+          example, Redhat Linux 7 by default), also add this to your
+          config.h file:
+               #define ACE_USES_IPV4_IPV6_MIGRATION
+
+        * ace/ACE.cpp (format_hexdump): Add \n to last part of a dump line.
+
+        * ace/INET_Addr.(h i cpp): If IPv6 is enabled, the inet_addr_
+          member is now a union of sockaddr_in and sockaddr_in6. Which
+          one is legit is noted in ACE_Addr::type as well as the family
+          member of either of the union members.  The host name lookup
+          functions can look up ipv6 as well as ipv4 names, and the
+          caller can force one or the other by using the address_family
+          argument to set().
+
+        * ace/OS.(h i): Removed ACE_OS::gethostbyname2; replaced it with
+          the more correctly-named and more flexible ACE_OS::getipnodebyname.
+          Also added ACE_OS::getipnodebyaddr. These are the IPv6-capable
+          functions analogous to gethostbyname and gethostbyaddr.
+
+        * ace/SOCK.cpp (get_remote_addr, get_local_addr): Set up the
+          ACE_Addr's type properly to account for ipv4/6 possibilities.
+
+        * ace/SOCK_Acceptor.(h cpp): Allow accepting on ipv4 and ipv6 sockets.
+
+        * ace/SOCK_CODgram.h:
+        * ace/SOCK_Connector.(cpp h ):
+        * ace/SOCK_Dgram.(cpp h ): Change default protocol family from
+          PF_INET to vary and take advantage of IPv6 if available.
+
+        * ace/Sock_Connect.(cpp h): Added ACE_Sock_Connect::ipv6_enabled()
+          method - it checks to see if the running kernel can do IPv6
+          sockets or not.
+
+        * ace/Sock_Connect.cpp (get_ip_interfaces): Removed a #if 0'd
+          block that had possible specializations for MSVC 4.2. It's
+          been a number of years, and it's obviously not needed.
+
+        * ace/MEM_Addr.cpp (same_host): Don't try to compare binary
+          addresses directly... get ACE_INET_Addr objects, clear the port
+          numbers, and compare them.
+
+        * ace/MEM_Connector.cpp (connect): Print error text with message.
+
+        * ace/Asynch_Acceptor.cpp (open): For the new socket, use the
+          protocol family from the listen address, not PF_INET.
+
+        * tests/INET_Addr_Test.cpp: New test.
+
+        * tests/Makefile: Added INET_Addr_Test.
+
 Mon Dec  3 10:54:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/OS.h:
@@ -958,6 +1015,14 @@ Wed Oct 24 23:59:13 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
           check of a pointer was made rather than the character pointed to
           by the pointer.  Thanks to Juan Jose Comellas
           <uanjo@comellas.org> for reporting this.
+
+Wed Oct 31 16:45:07 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h (llseek):
+
+	  Made ACE_OS::llseek() a static method, as it was originally
+	  intended to be.  Thanks to Doron Rajwan <doron@BANDWIZ.COM> for
+	  pointing out the problem.
 
 Tue Oct 30 22:53:57 2001  Ossama Othman  <ossama@uci.edu>
 

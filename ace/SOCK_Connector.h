@@ -70,7 +70,7 @@ public:
                       int reuse_addr = 0,
                       int flags = 0,
                       int perms = 0,
-                      int protocol_family = PF_INET,
+                      int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                       int protocol = 0);
 
   /**
@@ -105,7 +105,7 @@ public:
                       u_long flags = 0,
                       int reuse_addr = 0,
                       int perms = 0,
-                      int protocol_family = PF_INET,
+                      int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                       int protocol = 0);
 
   /**
@@ -136,7 +136,7 @@ public:
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
-               int protocol_family = PF_INET,
+               int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                int protocol = 0);
 
   /**
@@ -169,7 +169,7 @@ public:
                u_long flags = 0,
                int reuse_addr = 0,
                int perms = 0,
-               int protocol_family = PF_INET,
+               int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                int protocol = 0);
 
   /// Default dtor.

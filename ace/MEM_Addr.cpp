@@ -68,8 +68,14 @@ ACE_MEM_Addr::same_host (const ACE_INET_Addr &sap)
 {
   ACE_TRACE ("ACE_MEM_Addr::same_host");
 
-  return this->external_.get_ip_address () ==
-    sap.get_ip_address ();
+  // Rather than try to obtain and compare low-level binary
+  // data, get copies of both addresses, set the ports to 0
+  // (don't care about them) then compare for equality.
+  ACE_INET_Addr me (this->external_);
+  ACE_INET_Addr you (sap);
+  me.set_port_number (0, 0);    // No need to encode a 0
+  you.set_port_number (0, 0);
+  return me == you;
 }
 
 int

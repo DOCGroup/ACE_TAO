@@ -48,7 +48,7 @@ public:
    */
   ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                      int reuse_addr = 0,
-                     int protocol_family = PF_INET,
+                     int protocol_family = PF_UNSPEC,
                      int backlog = ACE_DEFAULT_BACKLOG,
                      int protocol = 0);
 
@@ -59,7 +59,7 @@ public:
                      ACE_SOCK_GROUP g,
                      u_long flags,
                      int reuse_addr,
-                     int protocol_family,
+                     int protocol_family = PF_UNSPEC,
                      int backlog = ACE_DEFAULT_BACKLOG,
                      int protocol = 0);
 
@@ -72,7 +72,7 @@ public:
    */
   int open (const ACE_Addr &local_sap,
             int reuse_addr = 0,
-            int protocol_family = PF_INET,
+            int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
 
@@ -83,7 +83,7 @@ public:
             ACE_SOCK_GROUP g,
             u_long flags,
             int reuse_addr,
-            int protocol_family,
+            int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
 
@@ -120,7 +120,7 @@ public:
    * and vice versa.
    */
   int accept (ACE_SOCK_Stream &new_stream,
-	      ACE_Accept_QoS_Params qos_params,
+              ACE_Accept_QoS_Params qos_params,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
               int restart = 1,
@@ -140,14 +140,14 @@ protected:
   /// Perform operations that must occur before <ACE_OS::accept> is
   /// called.
   int shared_accept_start (ACE_Time_Value *timeout,
-			   int restart,
-			   int &in_blocking_mode) const;
+                           int restart,
+                           int &in_blocking_mode) const;
 
   /// Perform operations that must occur after <ACE_OS::accept> is
   /// called.
   int shared_accept_finish (ACE_SOCK_Stream new_stream,
-			    int in_blocking_mode,
-			    int reset_new_handle) const;
+                            int in_blocking_mode,
+                            int reset_new_handle) const;
 
   /**
    * This method factors out the common <open> code and is called by
