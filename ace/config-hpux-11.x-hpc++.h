@@ -93,6 +93,9 @@
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
 #define ACE_LACKS_SIGNED_CHAR
 
+#define ACE_HAS_DIRENT
+#define ACE_HAS_GPERF
+
 #include "ace/config-hpux11.h"		/* OS information */
 
 #endif /* ACE_CONFIG_H */
