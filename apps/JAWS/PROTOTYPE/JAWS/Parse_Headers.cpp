@@ -29,7 +29,11 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
         {
           int r = this->parse_header_value (info, mb);
           if (r == 1)
-            break;
+            {
+              if (info->end_of_headers ())
+                return 1;
+              break;
+            }
           continue;
         }
     }
@@ -173,6 +177,15 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
           if (q[-1] == '\r')
             mb.rd_ptr (q-1);
 
+          return 1;
+        }
+
+      if (*q == '\0')
+        {
+          // We are in the middle of binary data.  Get out!
+          mb.rd_ptr (q);
+          info->end_of_line (1);
+          info->end_of_headers (1);
           return 1;
         }
 
