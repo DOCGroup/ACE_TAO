@@ -145,6 +145,19 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
     ACE_THROW (AVStreams::noSuchFlow ());// is this right?
 }
 
+
+// ----------------------------------------------------------------------
+// TAO_Negotiator
+// ----------------------------------------------------------------------
+
+CORBA::Boolean
+TAO_Negotiator::negotiate (AVStreams::Negotiator_ptr remote_negotiator,
+                           const AVStreams::streamQoS &qos_spec,
+                           CORBA::Environment &ACE_TRY_ENV)
+{
+  return 0;
+}
+
 // ----------------------------------------------------------------------
 // TAO_StreamCtrl
 // ----------------------------------------------------------------------
@@ -174,51 +187,55 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
       // Check to see if we have non-nil parties to bind!
       if (CORBA::is_nil (a_party) ||
           CORBA::is_nil (b_party))
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_DEBUG ((LM_DEBUG,
                            "(%P|%t) TAO_StreamCtrl::bind_devs: "
                            "a_party or b_party is null"
-                           "Multicast not supported in this implementation!\n"),
-                          0);
+                           "Multicast mode\n"));
 
       // Request a_party to create the endpoint and vdev
       CORBA::Boolean met_qos;
       CORBA::String_var named_vdev;
 
-      this->stream_endpoint_a_ =
-        a_party-> create_A (this->_this (ACE_TRY_ENV),
-                            this->vdev_a_.out (),
-                            the_qos,
-                            met_qos,
-                            named_vdev.inout (),
-                            the_flows,
-                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (a_party))
+        {
+          this->stream_endpoint_a_ =
+            a_party-> create_A (this->_this (ACE_TRY_ENV),
+                                this->vdev_a_.out (),
+                                the_qos,
+                                met_qos,
+                                named_vdev.inout (),
+                                the_flows,
+                                ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) TAO_StreamCtrl::create_A: succeeded\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) TAO_StreamCtrl::create_A: succeeded\n"));
+        }
 
       // Request b_party to create the endpoint and vdev
+      
+      if (!CORBA::is_nil (b_party))
+        {
+          this->stream_endpoint_b_ =
+            b_party-> create_B (this->_this (ACE_TRY_ENV),
+                                this->vdev_b_.out (),
+                                the_qos,
+                                met_qos,
+                                named_vdev.inout (),
+                                the_flows,
+                                ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-      this->stream_endpoint_b_ =
-        b_party-> create_B (this->_this (ACE_TRY_ENV),
-                            this->vdev_b_.out (),
-                            the_qos,
-                            met_qos,
-                            named_vdev.inout (),
-                            the_flows,
-                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) TAO_StreamCtrl::create_B: succeeded\n"));
-
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) TAO_StreamCtrl::create_B: succeeded\n"));
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "\n(%P|%t)stream_endpoint_b_ = %s",
                   TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_.in (),
                                                                       ACE_TRY_ENV)));
       ACE_TRY_CHECK;
 
-  // Tell the 2 VDev's about one another
+      // Tell the 2 VDev's about one another
       this->vdev_a_->set_peer (this->_this (ACE_TRY_ENV),
                                this->vdev_b_.in (),
                                the_qos,
@@ -407,6 +424,46 @@ TAO_StreamCtrl::unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
 }
 
 // ----------------------------------------------------------------------
+// TAO_MCastConfigIf
+// ----------------------------------------------------------------------
+
+CORBA::Boolean 
+TAO_MCastConfigIf::set_peer (CORBA::Object_ptr peer,
+                             AVStreams::streamQoS & the_qos,
+                             const AVStreams::flowSpec & the_spec,
+                             CORBA::Environment &ACE_TRY_ENV)
+{
+  return 0;
+}
+
+void 
+TAO_MCastConfigIf::configure (const CosPropertyService::Property & a_configuration,
+                              CORBA::Environment &ACE_TRY_ENV)
+{
+}
+
+void 
+TAO_MCastConfigIf::set_initial_configuration (const CosPropertyService::Properties & initial,
+                                              CORBA::Environment &ACE_TRY_ENV)
+{
+}
+
+void 
+TAO_MCastConfigIf::set_format (const char * flowName,
+                               const char * format_name,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
+}
+
+void 
+TAO_MCastConfigIf::set_dev_params (const char * flowName,
+                                   const CosPropertyService::Properties & new_params,
+                                   CORBA::Environment &ACE_TRY_ENV)
+{
+}
+
+
+// ----------------------------------------------------------------------
 // TAO_Base_StreamEndPoint
 // ----------------------------------------------------------------------
 
@@ -545,7 +602,7 @@ TAO_Server_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr ini
                                                CORBA::Environment &ACE_TRY_ENV)
 
 {
-  int result;
+  int result = 0;
   ACE_TRY
     {
       // Use the base class implementation of request_connection
@@ -607,7 +664,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (the_spec);
 
-  CORBA::Boolean result;
+  CORBA::Boolean result = 0;
   ACE_TRY
     {
       ACE_DEBUG ((LM_DEBUG,
