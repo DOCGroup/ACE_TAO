@@ -1,10 +1,18 @@
+Tue Jun 08 15:47:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object.i:
+	* tao/Typecode.i:
+	* tao/ORB.i: Moved is_nil and release around to avoid inline
+	  functions being used before declared inlined warnings.  Thanks
+	  to David for pointing this out.
+
 Tue Jun  8 14:43:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * Fixed the capitalization of all options in TAO's svc.conf files.
 
 	* tao/ORB_Core.cpp,
 	  tao/default_resource.cpp,
-	  tao/default_server.cpp, 
+	  tao/default_server.cpp,
 	  tao/default_client.cpp: Fixed the parsing of options
 	  so that they are case insensitive, e.g., "-ORBsvcconf" is the
 	  same as "-ORBSvcConf".  This allows us to use more intuitive
@@ -18,9 +26,9 @@ Tue Jun  8 14:43:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Jun  8 15:38:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* docs/Options.html: 
+	* docs/Options.html:
 	* tao/default_client.cpp (create_transport_mux_strategy): Renamed
-	the ORBtransportmuxstrategy to ORBRequestMuxStrategy. 
+	the ORBtransportmuxstrategy to ORBRequestMuxStrategy.
 
 Tue Jun 08 15:12:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
