@@ -98,7 +98,7 @@ FE_yyparse()
 void
 FE_set_yyin(File * f)
 {
-  tao_yyin = (FILE*)f;
+  tao_yyin = ACE_reinterpret_cast(FILE*,f);
 }
 
 /*

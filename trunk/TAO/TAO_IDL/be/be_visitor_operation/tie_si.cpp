@@ -139,7 +139,7 @@ int be_visitor_operation_tie_si::visit_operation (be_operation *node)
   *os << "this->ptr_->" << node->local_name () << " (" << be_idt << "\n";
 
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
