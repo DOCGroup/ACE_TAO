@@ -44,7 +44,7 @@ Sat Sep 28 16:18:08 2002  Ossama Othman  <ossama@uci.edu>
 
 Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* tao/PortableServer/AMH_Response_Handler.h (virtual):
+	* tao/PortableServer/AMH_Response_Handler.h:
 	
 	  This seems like a 'stop-gap' fix right now due to pressure to
 	  cut the beta.  Having the PortableServer ResponseHandler class
@@ -70,8 +70,7 @@ Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 Sat Sep 28 13:55:56 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* examples/AMH/Sink_Server/Timer_Handler.cpp (class
-	  Timer_Handler): 
+	* examples/AMH/Sink_Server/Timer_Handler.cpp (Timer_Handler):
 
 	  The ResponseHandler 'duplicated' in the AMH_Servant was
 	  not released here after it was used.  This caused a
@@ -82,7 +81,7 @@ Sat Sep 28 13:30:32 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/examples/Log:
 	 
-	  Removed the folders /Client and /test.
+	  Removed the folders `Client' and `test'.
 
 Sat Sep 28 13:11:22 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
@@ -109,9 +108,9 @@ Sat Sep 28 01:12:53 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 Sat Sep 28 01:10:32 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin
-	* orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin
-	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin
+	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin:
+	* orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin:
+	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin:
 
 	  Files added as part of updated Logging Service.
 	
@@ -163,41 +162,6 @@ Fri Sep 27 09:49:39 2002  Ossama Othman  <ossama@uci.edu>
 	* docs/releasenotes/index.html:
 
 	  Updated load balancer release notes.
-
-Fri Sep 27 09:45:32 2002  Ossama Othman  <ossama@uci.edu>
-
-	* orbsvcs/LoadBalancer/LoadManager.dsp
-	* orbsvcs/LoadBalancer/LoadManager_Static.dsp
-	* ChangeLog
-	* orbsvcs/LoadBalancer/LoadManager.bor
-	* orbsvcs/LoadBalancer/LoadManager.cpp
-	* orbsvcs/LoadBalancer/Makefile.LoadManager
-	* orbsvcs/LoadBalancer/Makefile.LoadMonitor
-	* orbsvcs/LoadBalancer/Signal_Handler.cpp
-	* orbsvcs/LoadBalancer/Signal_Handler.h:
-	
-	ChangeLogTag:Fri Sep 27 13:40:32 2002  Ossama Othman  <ossama@uci.edu>
-
-Tue Sep 27 08:58:54 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
-
-	* ChangeLog, orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
-	ChangeLogTag: Fri Sep 27 11:55:18 2002  Priyanka Gontla  <pgontla@ociweb.com>
-
-Fri Sep 27 08:45:32 2002  Ossama Othman  <ossama@uci.edu>
-
-	* ChangeLog, docs/releasenotes/index.html:
-	ChangeLogTag:Fri Sep 27 09:49:39 2002  Ossama Othman  <ossama@uci.edu>
-
-Thu Sep 27 08:11:11 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
-
-	* ChangeLog, tao/BiDir_GIOP/BiDirGIOP.cpp, tao/BiDir_GIOP/BiDirGIOP.h:
-	ChangeLogTag: Thu Sep 26 21:49:16 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
-
-Fri Sep 27 09:45:32 2002  Ossama Othman  <ossama@uci.edu>
-
-	* ChangeLog, TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	ChangeLogTag:Thu Sep 26 17:38:30 2002  Ossama Othman  <ossama@uci.edu>
-
 
 Thu Sep 26 21:49:16 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -273,170 +237,139 @@ Thu Sep 26 12:41:51 2002  Ossama Othman  <ossama@uci.edu>
 	  CORBA 3.0 adds the missing "omg.org" typeprefix to the "Dynamic"
 	  and "PortableInterceptor" modules.
 
-
-Thu Sep 26 12:29:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-	* ChangeLog
-	* TAO_IDL/be/be_visitor_module/module_ch.cpp
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
-	* TAO_IDL/fe/idl.yy
-	* TAO_IDL/fe/y.tab.cpp
-	* TAO_IDL/util/utl_idlist.cpp:
-	
-	ChangeLogTag: Thu Sep 26 18:23:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-Thu Sep 26 11:06:11 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
-
-	* ChangeLog, tao/Any.cpp:
-	ChangeLogTag: Thu Sep 26 17:06:11 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
-
-Thu Sep 26 10:59:22 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp, ChangeLog:
-	ChangeLogTag: Thu Sep 26 16:07:18 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-Thu Sep 26 10:39:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
-	* TAO_IDL/be/be_visitor_root/root.cpp, ChangeLog:
-	ChangeLogTag: Thu Sep 26 14:59:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
-
 Thu Sep 26 09:15:18 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* /orbsvcs/orbsvcs/Makefile
-	* /orbsvcs/orbsvcs/Makefile.DsLogAdmin	
-	* /orbsvcs/orbsvcs/RTEventLogAdmin.idl
-	* /orbsvcs/orbsvcs/DsEventLogAdmin.idl
-	* /orbsvcs/orbsvcs/DsLogAdmin.idl
-	* /orbsvcs/orbsvcs/DsLogNotification.idl
-	* /orbsvcs/orbsvcs/DsNotifyLogAdmin.idl
-	* /orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp
-	* /orbsvcs/orbsvcs/Log/BasicLogFactory_i.h
-	* /orbsvcs/orbsvcs/Log/BasicLog_i.cpp
-	* /orbsvcs/orbsvcs/Log/BasicLog_i.h
-	* /orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp
-	* /orbsvcs/orbsvcs/Log/EventLogFactory_i.h
-	* /orbsvcs/orbsvcs/Log/EventLogNotification.cpp
-	* /orbsvcs/orbsvcs/Log/EventLogNotification.h
-	* /orbsvcs/orbsvcs/Log/EventLog_i.cpp
-	* /orbsvcs/orbsvcs/Log/EventLog_i.h
-	* /orbsvcs/orbsvcs/Log/Iterator_i.cpp
-	* /orbsvcs/orbsvcs/Log/Iterator_i.h
-	* /orbsvcs/orbsvcs/Log/LogMgr_i.cpp
-	* /orbsvcs/orbsvcs/Log/LogMgr_i.h
-	* /orbsvcs/orbsvcs/Log/LogNotification.cpp
-	* /orbsvcs/orbsvcs/Log/LogNotification.h
-	* /orbsvcs/orbsvcs/Log/LogRecordStore.cpp
-	* /orbsvcs/orbsvcs/Log/LogRecordStore.h
-	* /orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp
-	* /orbsvcs/orbsvcs/Log/LogRecordStore_persist.h
-	* /orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.cpp
-	* /orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h
-	* /orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
-	* /orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h
-	* /orbsvcs/orbsvcs/Log/Log_i.cpp
-	* /orbsvcs/orbsvcs/Log/Log_i.h
-	* /orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp
-	* /orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h
-	* /orbsvcs/orbsvcs/Log/NotifyLogNotification.cpp
-	* /orbsvcs/orbsvcs/Log/NotifyLogNotification.h
-	* /orbsvcs/orbsvcs/Log/NotifyLog_i.cpp
-	* /orbsvcs/orbsvcs/Log/NotifyLog_i.h
-	* /orbsvcs/orbsvcs/Log/PersistStore.cpp
-	* /orbsvcs/orbsvcs/Log/PersistStore.h
-	* /orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp
-	* /orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h
-	* /orbsvcs/orbsvcs/Log/RTEventLogNotification.cpp
-	* /orbsvcs/orbsvcs/Log/RTEventLogNotification.h
-	* /orbsvcs/orbsvcs/Log/RTEventLog_i.cpp
-	* /orbsvcs/orbsvcs/Log/RTEventLog_i.h
-	* /orbsvcs/orbsvcs/Log/eventlog_export.h
-	* /orbsvcs/orbsvcs/Log/log_export.h
-	* /orbsvcs/orbsvcs/Log/notifylog_export.h
-	* /orbsvcs/orbsvcs/Log/rteventlog_export.h
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+	* orbsvcs/orbsvcs/RTEventLogAdmin.idl:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.idl:
+	* orbsvcs/orbsvcs/DsLogAdmin.idl:
+	* orbsvcs/orbsvcs/DsLogNotification.idl:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.idl:
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogNotification.h:
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLog_i.h:
+	* orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+	* orbsvcs/orbsvcs/Log/Iterator_i.h:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/LogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/LogNotification.h:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	* orbsvcs/orbsvcs/Log/Log_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
+	* orbsvcs/orbsvcs/Log/PersistStore.h:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogNotification.h:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+	* orbsvcs/orbsvcs/Log/eventlog_export.h:
+	* orbsvcs/orbsvcs/Log/log_export.h:
+	* orbsvcs/orbsvcs/Log/notifylog_export.h:
+	* orbsvcs/orbsvcs/Log/rteventlog_export.h:
 
-	  The above files were added and constitute the new Logging Service
-	  which is actually 4 separate services - Basic_Logging_Service [same functionality
-	  as previous Logging_Service] - Event_Logging_Service [an event-aware logging 
-	  service which integates the Logging_Service and the CosEvent Service] -
-	  Notify_Logging_Service [integrates Logging_Service and Notification Service] -
-	  RTEvent_Logging_Service [integrates with the RTEvent Service].
+	  The above files were added and constitute the new Logging
+	  Service which is actually 4 separate services:
+	  - Basic_Logging_Service [same functionality as previous
+	    Logging_Service]
+	  - Event_Logging_Service [an event-aware logging service which
+	    integates the Logging_Service and the CosEvent Service]
+	  - Notify_Logging_Service [integrates Logging_Service and
+	    Notification Service]
+	  - RTEvent_Logging_Service [integrates with the RTEvent
+	    Service].
 
 Thu Sep 26 09:10:38 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
-	
-	* /orbsvcs/tests/Log
 
-	  Added directory for Telecom Log Service tests.
-
-	* /orbsvcs/tests/Log/Makefile
-	* /orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp
-	* /orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h
-	* /orbsvcs/tests/Log/Basic_Log_Test/Makefile
-	* /orbsvcs/tests/Log/Basic_Log_Test/client.cpp
+	* orbsvcs/tests/Log/Makefile:
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
+	* orbsvcs/tests/Log/Basic_Log_Test/Makefile:
+	* orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
 
 	  Added a test of the Basic_Logging_Service to the /tests/ directory.
 
 Thu Sep 26 08:57:51 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* /orbsvcs/Logging_Service
+	* orbsvcs/Logging_Service:
 
 	  Logging_Service extended to include event logging.
 	  4 separate services each in its own directory as below.
 	
-	* /orbsvcs/Logging_Service/Basic_Logging_Service/README
-	* /orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp
-	* /orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h
-	* /orbsvcs/Logging_Service/Basic_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/README:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile:
 
-	* /orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp
-	* /orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h
-	* /orbsvcs/Logging_Service/Event_Logging_Service/Makefile
-	* /orbsvcs/Logging_Service/Event_Logging_Service/README:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/Event_Logging_Service/README:
 
-	* /orbsvcs/Logging_Service/Notify_Logging_Service/Makefile
-	* /orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp
-	* /orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp
-	* /orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h
-	* /orbsvcs/Logging_Service/Notify_Logging_Service/README
-	* /orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:
-	
-	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile
-	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp
-	* /orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/README:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:	
+
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
 
 	  Files above added as part of new Telecom Log Service.
 
 Thu Sep 26 09:15:18 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	
-	* /orbsvcs/examples/Log
+	* orbsvcs/examples/Log:
 
 	  Examples of the 4 Logging Services
 
-	* /orbsvcs/examples/Log/Basic
-	* /orbsvcs/examples/Log/Basic/Makefile 
-	* /orbsvcs/examples/Log/Basic/TLS_Client.cpp
-	* /orbsvcs/examples/Log/Basic/TLS_Client.h 
-	* /orbsvcs/examples/Log/Basic/main.cpp
+	* orbsvcs/examples/Log/Basic/Makefile :
+	* orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+	* orbsvcs/examples/Log/Basic/TLS_Client.h :
+	* orbsvcs/examples/Log/Basic/main.cpp:
 
-	* /orbsvcs/examples/Log/Event
-	* /orbsvcs/examples/Log/Event/Event_Consumer.cpp
-	* /orbsvcs/examples/Log/Event/Event_Consumer.h
-	* /orbsvcs/examples/Log/Event/Event_Supplier.cpp
-	* /orbsvcs/examples/Log/Event/Event_Supplier.h
-	* /orbsvcs/examples/Log/Event/Makefile
+	* orbsvcs/examples/Log/Event/Event_Consumer.cpp:
+	* orbsvcs/examples/Log/Event/Event_Consumer.h:
+	* orbsvcs/examples/Log/Event/Event_Supplier.cpp:
+	* orbsvcs/examples/Log/Event/Event_Supplier.h:
+	* orbsvcs/examples/Log/Event/Makefile:
 
-	* /orbsvcs/examples/Log/
-	* /orbsvcs/examples/Log/Notify/Makefile
-	* /orbsvcs/examples/Log/Notify/Notify_Consumer.cpp
-	* /orbsvcs/examples/Log/Notify/Notify_Consumer.h
-	* /orbsvcs/examples/Log/Notify/Notify_Supplier.cpp
-	* /orbsvcs/examples/Log/Notify/Notify_Supplier.h
+	* orbsvcs/examples/Log/Notify/Makefile:
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.cpp:
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.h:
+	* orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
+	* orbsvcs/examples/Log/Notify/Notify_Supplier.h:
 
-	* /orbsvcs/examples/Log/RTEvent 
-	* /orbsvcs/examples/Log/RTEvent/Makefile
-	* /orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp
-	* /orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.h
-	* /orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp
-	* /orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h
+	* orbsvcs/examples/Log/RTEvent/Makefile:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.h:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h:
 
 	  Files above added as part of new Telecom Log Service.
 
