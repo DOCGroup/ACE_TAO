@@ -1,15 +1,20 @@
+Sun Jul 11 20:26:17 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html
+          Added MinGW and Cygwin to the list of environments Remedy supports
+
 Mon Jul 12 01:31:53 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/QtReactor_Test.cpp: 
-	* tests/QtReactor_Test.h: 
-	* tests/tests.mpc: 
-	  New automatic test for testing QtReactor. This test may also serve 
+	* tests/QtReactor_Test.cpp:
+	* tests/QtReactor_Test.h:
+	* tests/tests.mpc:
+	  New automatic test for testing QtReactor. This test may also serve
           as an example of Qt and ACE integration.
 	* ace/QtReactor.cpp:
 	* ace/QtReactor.h:
-	Many bugfixes in QtReactor. QtReactor is operational now, though it should 
+	Many bugfixes in QtReactor. QtReactor is operational now, though it should
 	be rewritten to make it more efficient and improve the clarity of sources.
-	Moreover, valgrind reports small memory leak in QtReactor_Test, though it's 
+	Moreover, valgrind reports small memory leak in QtReactor_Test, though it's
 	not clear now if the leak results from QtReactor ot test code.
 
 Sun Jul 11 16:48:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
