@@ -2072,7 +2072,14 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
   else
     {
       if (obj->_stubobj () == 0)
-        ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO_Stub pointer in CORBA::ORB::object_to_string() "
+                        "is zero.\n"));
+
+          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+        }
 
       // @@ According to Carlos, we shouldn't be using
       //    profile_in_use(). Instead we should use the first profile
@@ -2082,7 +2089,14 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       //    segmentation faults.
       //             -Ossama
       if (obj->_stubobj ()->profile_in_use () == 0)
-        ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "TAO_Profile pointer in "
+                        "CORBA::ORB::object_to_string() is zero.\n"));
+
+          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+        }
 
       return obj->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
     }
