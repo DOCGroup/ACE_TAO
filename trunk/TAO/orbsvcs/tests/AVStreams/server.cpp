@@ -29,7 +29,6 @@ main (int argc, char ** argv)
 
       m.init (argc, 
               argv,
-              "avstreams_poa",
               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -37,8 +36,7 @@ main (int argc, char ** argv)
       TAO_CHECK_ENV;
 
       CORBA::String_var s;
-      s = m.activate ("mmdevice_b",
-                      mmdevice_impl,
+      s = m.activate (mmdevice_impl,
                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
