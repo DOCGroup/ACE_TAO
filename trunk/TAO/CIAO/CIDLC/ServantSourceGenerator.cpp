@@ -1221,7 +1221,7 @@ namespace
     }
 
     virtual void
-    post (Type& t)
+    post (Type&)
     {
       // Namespace closer.
       os << "}";
@@ -2356,17 +2356,17 @@ namespace
       }
 
       virtual void
-      traverse (SemanticGraph::User& u)
+      traverse (SemanticGraph::User&)
       {
       }
 
       virtual void
-      traverse (SemanticGraph::Publisher& p)
+      traverse (SemanticGraph::Publisher&)
       {
       }
 
       virtual void
-      traverse (SemanticGraph::Emitter& p)
+      traverse (SemanticGraph::Emitter&)
       {
       }
 
@@ -2964,7 +2964,7 @@ namespace
     }
 
     virtual void
-    post (Type& t)
+    post (Type&)
     {
       // Namespace closer.
       os << "}";
@@ -3539,7 +3539,7 @@ namespace
     }
 
     virtual void
-    post (Type& t)
+    post (Type&)
     {
       os << "}";
     }
@@ -3557,7 +3557,7 @@ ServantSourceEmitter::ServantSourceEmitter (std::ostream& os_,
 {}
 
 void
-ServantSourceEmitter::pre (TranslationUnit& u)
+ServantSourceEmitter::pre (TranslationUnit&)
 {
   os << COPYRIGHT;
 
