@@ -45,8 +45,8 @@ TAO_LB_RoundRobin::get_properties (ACE_ENV_SINGLE_ARG_DECL)
     
 void
 TAO_LB_RoundRobin::push_loads (
-    const PortableGroup::Location & the_location,
-    const CosLoadBalancing::LoadList & loads
+    const PortableGroup::Location & /* the_location */,
+    const CosLoadBalancing::LoadList & /* loads */
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosLoadBalancing::StrategyNotAdaptive))
@@ -56,8 +56,8 @@ TAO_LB_RoundRobin::push_loads (
     
 CORBA::Object_ptr
 TAO_LB_RoundRobin::next_member (
-    PortableGroup::ObjectGroup_ptr object_group,
-    CosLoadBalancing::LoadManager_ptr load_manager
+    PortableGroup::ObjectGroup_ptr /* object_group */,
+    CosLoadBalancing::LoadManager_ptr /* load_manager */
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound,

@@ -176,7 +176,9 @@ TAO_LB_LeastLoaded::next_member (
     this->get_location (object_group,
                         load_manager,
                         locations.in (),
-                        location);
+                        location
+                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (found_location)
     {
@@ -197,7 +199,8 @@ TAO_LB_LeastLoaded::get_location (
   PortableGroup::ObjectGroup_ptr object_group,
   const CosLoadBalancing::LoadManager_ptr load_manager,
   const PortableGroup::Locations & locations,
-  PortableGroup::Location & location)
+  PortableGroup::Location & location
+  ACE_ENV_ARG_DECL)
 {
   CORBA::Float min_load = 0;
   CORBA::ULong location_index = 0;
@@ -214,14 +217,14 @@ TAO_LB_LeastLoaded::get_location (
       CosLoadBalancing::LoadList_var current_loads =
         load_manager->get_loads (loc
                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (0);
 
       CosLoadBalancing::Load load;
       this->push_loads (loc,
                         current_loads.in (),
                         load
                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK_RETURN (0);
 
       if (load.value < this->reject_threshold_
           && (i == 0 || load.value < min_load))
@@ -244,7 +247,7 @@ TAO_LB_LeastLoaded::get_location (
           load_manager->enable_alert (object_group,
                                       loc
                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_CHECK_RETURN (0);
         }
       else if (load.value <= this->critical_threshold_)
         {
@@ -252,7 +255,7 @@ TAO_LB_LeastLoaded::get_location (
           load_manager->disable_alert (object_group,
                                        loc
                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_CHECK_RETURN (0);
         }
     }
 

@@ -34,7 +34,7 @@ TAO_LB_ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
@@ -58,8 +58,8 @@ TAO_LB_ServerRequestInterceptor::receive_request (
 
 void
 TAO_LB_ServerRequestInterceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

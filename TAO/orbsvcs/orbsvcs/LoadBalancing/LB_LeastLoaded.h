@@ -106,7 +106,8 @@ protected:
   CORBA::Boolean get_location (PortableGroup::ObjectGroup_ptr object_group,
                                CosLoadBalancing::LoadManager_ptr load_manager,
                                const PortableGroup::Locations & locations,
-                               PortableGroup::Location & location);
+                               PortableGroup::Location & location
+                               ACE_ENV_ARG_DECL);
 
   /// Return the effective load.
   CORBA::Float effective_load (CORBA::Float previous_load,
