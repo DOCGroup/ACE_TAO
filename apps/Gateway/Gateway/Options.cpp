@@ -11,6 +11,29 @@ ACE_RCSID(Gateway, Options, "$Id$")
 // Static initialization.
 Options *Options::instance_ = 0;
 
+// Let's have a usage prompt.
+void
+Options::print_usage (void)
+{
+  ACE_DEBUG ((LM_INFO,
+    "gatewayd [-a {C|S}:acceptor-port] [-c {C|S}:connector-port]"
+    " [-C consumer_config_file] [-P connection_config_filename]"
+    " [-q socket_queue_size] [-t OUTPUT_MT|INPUT_MT] [-w time_out]"
+    " [-b] [-d] [-v] [-T]\n"
+    ""
+    "\t-a Become an Acceptor\n"
+    "\t-b Use blocking connection establishment\n"
+    "\t-c Become a Connector\n"
+    "\t-d debugging\n"
+    "\t-q Use a different socket queue size\n"
+    "\t-t Use a different threading strategy\n"
+    "\t-v Verbose mode\n"
+    "\t-w Time performance for a designated amount of time\n"
+    "\t-C Use a different proxy config filename\n"
+    "\t-P Use a different consumer config filename\n"
+    "\t-T Tracing\n"
+  ));
+}
 Options *
 Options::instance (void)
 {
@@ -220,7 +243,7 @@ Options::parse_args (int argc, char *argv[])
           ACE_SET_BITS (this->options_,
                         Options::DEBUG);
           break;
-        case 'P': // Use a different consumer config filename.
+        case 'P': // Use a different connection config filename.
           ACE_OS::strncpy (this->connection_config_file_,
                            get_opt.optarg,
                            sizeof this->connection_config_file_);
@@ -252,6 +275,7 @@ Options::parse_args (int argc, char *argv[])
           this->blocking_semantics_ = 0;
           break;
         default:
+          this->print_usage(); // It's nice to have a usage prompt.
           break;
         }
     }

@@ -14,7 +14,7 @@
 //    appropriate threaded/reactive Consumer/Supplier behavior.
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Doug Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -108,8 +108,17 @@ protected:
   virtual int svc (void);
   // Transmit peer messages.
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  // Called when peers shutdown. 
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  // When thread started, connection become blocked, so no need to use
+  // handle_close to reinitiate the connection_handler, so should
+  // override this function to justify if controlling is in thread or
+  // not. If yes, handle_close do nothing, otherwise, it call parent
+  // handle_close().
+
+private:
+  int in_thread_;
+  // If the controlling is in thread's svc() or not.
 };
 
 class Thr_Supplier_Handler : public Supplier_Handler
@@ -123,11 +132,20 @@ public:
   // Initialize the object and spawn a new thread.
 
 protected:
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  // When thread started, connection become blocked, so no need to use
+  // handle_close to reinitiate the connection_handler, so should
+  // override this function to justify if controlling is in thread or
+  // not. If yes, handle_close do nothing, otherwise, it call parent
+  // handle_close().
+
   virtual int svc (void);
   // Transmit peer messages.
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  // Called when peers shutdown.
+private:
+  int in_thread_;
+  // If the controlling is in thread's svc() or not.
 };
 
 #endif /* CONCRETE_CONNECTION_HANDLER */

@@ -7,13 +7,14 @@
 ACE_RCSID(Peer, Peer, "$Id$")
 
 Peer_Handler::Peer_Handler (void)
-  : connection_id_ (0),
+  : connection_id_ (-1),  // Maybe it's better than 0.
     msg_frag_ (0),
     total_bytes_ (0)
 {
   // Set the high water mark of the <ACE_Message_Queue>.  This is used
   // to exert flow control.
   this->msg_queue ()->high_water_mark (Options::instance ()->max_queue_size ());
+  first_time_ = 1;  // It will be first time to open Peer_Handler.
 }
 
 // Upcall from the <ACE_Acceptor::handle_input> that turns control
@@ -93,7 +94,7 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
       else
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
-                    "transmission failure in transmit_stdin"));
+                    "transmission failure in transmit()")); // Function name fixed.
       // Caller is responsible for freeing a ACE_Message_Block
       // if failures occur.
       mb->release ();
@@ -107,6 +108,8 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
 int
 Peer_Handler::transmit_stdin (void)
 {
+  // If return value is -1, then first_time_ must be reset to 1.
+  int result = 0;
   if (this->connection_id_ != -1)
     {
       ACE_Message_Block *mb;
@@ -133,6 +136,7 @@ Peer_Handler::transmit_stdin (void)
             (ACE_STDIN,
              ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
           mb->release ();
+          result = 0; //
           break;
           /* NOTREACHED */
         case -1:
@@ -140,18 +144,30 @@ Peer_Handler::transmit_stdin (void)
           ACE_ERROR ((LM_ERROR,
                       "%p\n",
                       "read"));
+          result = 0; //
           break;
           /* NOTREACHED */
         default:
-          return this->transmit (mb, n, ROUTING_EVENT);
+          // Do not return directly, save the return value.
+          result = this->transmit (mb, n, ROUTING_EVENT);
+          break;
           /* NOTREACHED */
         }
-      return 0;
-    }
 
+      // Do not return at here, but at exit of function.
+      /*return 0;*/
+    }
+  else
+  {
   ACE_DEBUG ((LM_DEBUG,
               "Must transmit over an opened channel.\n"));
-  return -1;
+    result = -1; // Save return value at here, return at exit of function.
+  }
+  // If transmit error, the stdin-thread will be cancelled, so should
+  // reset first_time_ to 1, which will register_stdin_handler again.
+  if (result == -1)
+    first_time_ = 1;
+  return ret;
 }
 
 // Perform a non-blocking <put> of event MB.  If we are unable to send
@@ -387,7 +403,8 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
   ssize_t data_bytes_left_to_read =
     ssize_t (event->header_.len_ - (msg_frag_->wr_ptr () - event->data_));
 
-  ssize_t data_received =
+  // peer().recv() should not be called when data_bytes_left_to_read is 0.
+  ssize_t data_received = !data_bytes_left_to_read ? 0 :
     this->peer ().recv (this->msg_frag_->wr_ptr (),
                         data_bytes_left_to_read);
 
@@ -403,8 +420,12 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
         /* FALLTHROUGH */;
 
     case 0: // Premature EOF.
+      if (data_bytes_left_to_read)
+      {
       this->msg_frag_ = this->msg_frag_->release ();
       return 0;
+      }
+      /* FALLTHROUGH */;
 
     default:
       // Set the write pointer at 1 past the end of the event.
@@ -492,21 +513,32 @@ Peer_Handler::await_connection_id (void)
   if (Options::instance ()->enabled (Options::CONSUMER_CONNECTOR))
     this->subscribe ();
 
+  // No need to disconnect by timeout.
+  ACE_Reactor::instance ()->cancel_timer(this);
   // Transition to the action that waits for Peer events.
   this->do_action_ = &Peer_Handler::await_events;
 
   // Reset standard input.
   ACE_OS::rewind (stdin);
 
-  // Register this handler to receive test events on stdin.
-  if (ACE_Event_Handler::register_stdin_handler
-      (this,
-       ACE_Reactor::instance (),
-       ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%t) %p\n",
-                       "register_stdin_handler"),
-                      -1);
+  // Call register_stdin_handler only once, until the stdin-thread
+  // closed which caused by transmit_stdin error.
+  if (first_time_)
+    {
+      // Register this handler to receive test events on stdin.
+      if (ACE_Event_Handler::register_stdin_handler
+          (this,
+           ACE_Reactor::instance (),
+           ACE_Thread_Manager::instance ()) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%t) %p\n",
+                           "register_stdin_handler"),
+                          -1);
+
+      // Next time in await_connection_id(), I'll don't call
+      // register_stdin_handler().
+      first_time_ = 0;
+    } 
   return 0;
 }
 
@@ -519,8 +551,11 @@ Peer_Handler::subscribe (void)
                   ACE_Message_Block (sizeof (Event)),
                   -1);
 
-  Subscription *subscription = (Subscription *) ((Event *) mb->rd_ptr ())->data_;
-  subscription->connection_id_ = Options::instance ()->connection_id ();
+  Subscription *subscription =
+    (Subscription *) ((Event *) mb->rd_ptr ())->data_;
+  subscription->connection_id_ =
+    Options::instance ()->connection_id ();
+
   return this->transmit (mb, sizeof *subscription, SUBSCRIPTION_EVENT);
 }
 
@@ -738,8 +773,11 @@ int
 Peer_Factory::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   if (signum != SIGPIPE)
+  {
     // Shut down the main event loop.
+    ACE_DEBUG((LM_NOTICE, "Exit case signal\n")); // Why do I exit?
     ACE_Reactor::end_event_loop();
+  }
 
   return 0;
 }
@@ -817,14 +855,14 @@ Peer_Factory::init (int argc, char *argv[])
                       -1);
 
   if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR)
-      && this->consumer_acceptor_.open
+      && this->supplier_acceptor_.open
       (Options::instance ()->supplier_acceptor_port ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "Acceptor::open"),
                       -1);
   else if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR)
-           && this->supplier_acceptor_.open
+           && this->consumer_acceptor_.open
            (Options::instance ()->consumer_acceptor_port ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

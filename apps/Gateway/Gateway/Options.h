@@ -10,7 +10,7 @@
 //    Options.h
 //
 // = AUTHOR
-//    Douglas C. Schmidt
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -54,6 +54,8 @@ public:
   int parse_args (int argc, char *argv[]);
   // Parse the arguments and set the options.
 
+  void print_usage(void);
+  // Print the gateway supported parameters.
   // = Accessor methods.
   int enabled (int option) const;
   // Determine if an option is enabled.
