@@ -1147,7 +1147,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
   continue_append = dest->append_string (*src);
 
   // Number of fields in the struct.
-  const CORBA::ULong int member_count =
+  const CORBA::ULong member_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
