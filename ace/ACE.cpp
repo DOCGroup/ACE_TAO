@@ -1592,8 +1592,10 @@ ACE::sendv_n (ACE_HANDLE h,
 // Modifications by Todd Montgomery.
 
 int
-ACE::format_hexdump (const char *buffer, int size,
-                     ASYS_TCHAR *obuf, int obuf_sz)
+ACE::format_hexdump (const char *buffer,
+                     int size,
+                     ASYS_TCHAR *obuf,
+                     int obuf_sz)
 {
   ACE_TRACE ("ACE::format_hexdump");
 
@@ -1614,19 +1616,24 @@ ACE::format_hexdump (const char *buffer, int size,
       for (j = 0 ; j < 16; j++)
         {
           c = (u_char) buffer[(i << 4) + j];
-          ACE_OS::sprintf (obuf, ASYS_TEXT ("%02x "), c);
+          ACE_OS::sprintf (obuf,
+                           ASYS_TEXT ("%02x "),
+                           c);
           obuf += 3;
           if (j == 7)
             {
-              ACE_OS::sprintf (obuf, ASYS_TEXT (" "));
+              ACE_OS::sprintf (obuf,
+                               ASYS_TEXT (" "));
               obuf++;
             }
-          textver[j] = (c < 0x20 || c > 0x7e) ? '.' : c;
+          textver[j] = isprint (c) ? c : '.';
         }
 
       textver[j] = 0;
 
-      ACE_OS::sprintf (obuf, ASYS_TEXT ("  %s\n"), textver);
+      ACE_OS::sprintf (obuf,
+                       ASYS_TEXT ("  %s\n"),
+                       textver);
 
       while (*obuf != '\0')
         obuf++;
@@ -1637,25 +1644,31 @@ ACE::format_hexdump (const char *buffer, int size,
       for (i = 0 ; i < size % 16; i++)
         {
           c = (u_char) buffer[size - size % 16 + i];
-          ACE_OS::sprintf (obuf, ASYS_TEXT ("%02x "),c);
+          ACE_OS::sprintf (obuf,
+                           ASYS_TEXT ("%02x "),
+                           c);
           obuf += 3;
           if (i == 7)
             {
-              ACE_OS::sprintf (obuf, ASYS_TEXT (" "));
+              ACE_OS::sprintf (obuf,
+                               ASYS_TEXT (" "));
               obuf++;
             }
-          textver[i] = (c < 0x20 || c > 0x7e) ? '.' : c;
+          textver[i] = isprint (c) ? c : '.';
         }
 
       for (i = size % 16; i < 16; i++)
         {
-          ACE_OS::sprintf (obuf, ASYS_TEXT ("   "));
+          ACE_OS::sprintf (obuf,
+                           ASYS_TEXT ("   "));
           obuf += 3;
           textver[i] = ' ';
         }
 
       textver[i] = 0;
-      ACE_OS::sprintf (obuf, ASYS_TEXT ("  %s\n"), textver);
+      ACE_OS::sprintf (obuf,
+                       ASYS_TEXT ("  %s\n"),
+                       textver);
     }
   return size;
 }
@@ -1667,7 +1680,8 @@ ACE::format_hexdump (const char *buffer, int size,
 // portion of <day_and_time>.
 
 ASYS_TCHAR *
-ACE::timestamp (ASYS_TCHAR date_and_time[], int date_and_timelen)
+ACE::timestamp (ASYS_TCHAR date_and_time[],
+                int date_and_timelen)
 {
   //ACE_TRACE ("ACE::timestamp");
 
