@@ -26,6 +26,11 @@ IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext
 <%endif%>
 
 <%gnu_source_files%>
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+<%marker(macros)%>
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(!exename)%>
 <%if(comps)%>
 
@@ -94,11 +99,6 @@ endif
 <%endif%>
 <%endif%>
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-<%marker(macros)%>
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
