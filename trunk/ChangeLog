@@ -1,3 +1,14 @@
+Fri Jun  6 09:31:21 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug introduced by yesterdays optimization.
+          Added code to detect cyclic inheritance.
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Added more optimizations.
+
 Fri Jun  6 06:37:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
