@@ -72,7 +72,7 @@ parse_commands (char *buf)
 	ACE_NEW_RETURN (eh, Timer_Handler, -1);
 
 	long tid = timer_queue.schedule (eh, 0,
-					ACE_OS::gettimeofday () + tv);
+					 ACE_OS::gettimeofday () + tv);
 
 	if (tid == -1)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
@@ -165,7 +165,7 @@ main (int, char *[])
 
       char buf[BUFSIZ];
 
-      if (ACE_OS::fgets (buf, sizeof buf, stdin) == 0)
+      if (ACE_OS::read (ACE_STDIN, buf, sizeof buf) <= 0)
 	break;
 
       parse_commands (buf);

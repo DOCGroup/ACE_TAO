@@ -110,7 +110,7 @@ void
 ACE_Handle_Set::sync (ACE_HANDLE max)
 {
   ACE_TRACE ("ACE_Handle_Set::sync");
-#if !defined(ACE_WIN32)
+#if !defined (ACE_WIN32)
   this->size_ = 0;
 
   for (int i = (max - 1) / ACE_Handle_Set::WORDSIZE; 
