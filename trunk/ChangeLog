@@ -1,3 +1,11 @@
+Thu Jun  3 17:36:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+	  Added the -Sc to the idlflag to turn the tie class generation
+	  off by default.
+
 Thu Jun  3 23:33:23 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* include/makeinclude/platform_qnx_rtp_gcc.GNU (inline):
