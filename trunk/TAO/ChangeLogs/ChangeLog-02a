@@ -1,3 +1,13 @@
+Fri Nov 10 12:06:42 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* performance-tests/Latency/Makefile : 
+	* performance-tests/Latency/st_client.conf: 
+	* performance-tests/Latency/client-st-exclusive.conf: 
+	* performance-tests/Latency/client-mt-exclusive.conf: 
+	* performance-tests/Latency/st_server.conf: 
+	  Linked TAO_Startegies and dynamically loaded the Advanced
+	  Resource Factory in the service conf files.
+	
 Fri Nov 10 11:54:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/NestedUpcall/Simple/client.cpp:
@@ -11,7 +21,7 @@ Fri Nov 10 12:49:51 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 Fri Nov 10 10:14:50 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
-    	* TAO/tests/RTCORBA/server_protocol/run_test.pl
+      	* TAO/tests/RTCORBA/server_protocol/run_test.pl
 	  Modified the options to not load UIOP and SHMIOP in the case 
           where no config file is used.
 
