@@ -94,7 +94,6 @@ main (int argc, char *argv[])
                             1);
         }
 
-#if 0
       Client client (server.in (), niterations);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
@@ -107,28 +106,6 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
       server->shutdown (ACE_TRY_ENV);
-#endif /* 0 */
-      
-      CORBA::Long number = 0;
-
-      number = server->get_number (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "get_number = %d\n",
-                  number));
-      
-      number = server->get_number (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      
-      ACE_DEBUG ((LM_DEBUG,
-                  "get_number = %d\n",
-                  number));
-
-      server->test_method (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-     server->shutdown (ACE_TRY_ENV);
     }
   ACE_CATCHANY
     {
@@ -163,10 +140,20 @@ Client::svc (void)
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      CORBA::Long number = 0;
+      
       for (int i = 0; i < this->niterations_; ++i)
         {
-          this->server_->test_method (ACE_TRY_ENV);
+          number = server->get_number (ACE_TRY_ENV);
           ACE_TRY_CHECK;
+          
+          ACE_DEBUG ((LM_DEBUG,
+                      "get_number = %d\n",
+                      number));
+          
+          server->test_method (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
