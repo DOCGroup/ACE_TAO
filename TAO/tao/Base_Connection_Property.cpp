@@ -7,6 +7,7 @@
 # include "tao/Base_Connection_Property.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, Base_Connection_Property, "$Id$")
 
 TAO_Base_Connection_Property *
 TAO_Base_Connection_Property::duplicate (void)
