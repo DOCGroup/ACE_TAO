@@ -1,3 +1,11 @@
+Fri Mar 11 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/ImR_Client_Adapter_Impl.cpp:
+          Explicitly catch a CORBA::COMM_FAILURE when notifying the
+          ImR that we are shuttind down. When the ORB is shutting down
+          it can drop replies if configured to do so and then we get
+          this exception which we silently ignore
+
 Fri Mar 11 02:53:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Strategies/SCIOP_Connection_Handler.cpp:
@@ -14,26 +22,26 @@ Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu
 	client sent a request to the server and is waiting for
 	replies. The server may not send back a reply at all. Meanwhile
 	the thread waiting for reply continues to wait even if the ORB is
-	shutdown making the process hang. This is simply ill behaviour. 
-	
+	shutdown making the process hang. This is simply ill behaviour.
+
         * tao/Thread_Lane_Resources_Manager.h:
 
 	  Added a new pure virtual method cleanup_rw_transports () that
-	  can be overridden in concrete classes. 
-	
+	  can be overridden in concrete classes.
+
 	* tao/ORB_Core.cpp:
 
-	  Call cleanup_rw_transports () during shutdown (). 
+	  Call cleanup_rw_transports () during shutdown ().
 
 	* tao/Default_Thread_Lane_Resources_Manager.cpp:
         * tao/Default_Thread_Lane_Resources_Manager.h:
 	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
         * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h:
-	
+
 	  Concrete implementations for cleanup_rw_transports (). The
 	  implementation just delegates it concrete lane resources that
-	  are maintained. 
-	
+	  are maintained.
+
 	* tao/Cache_Entries.cpp:
 	* tao/Cache_Entries.h:
 	* tao/Cache_Entries.inl:
@@ -50,19 +58,19 @@ Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu
 	  entries. Added a new method, blockable_client_transports ()
 	  which returns a list of transports that are opened as clients
 	  and are blocked on read/write (which basically boils down to RW
-	  strategy). 
-	
-        * tao/Connection_Handler.h: 
+	  strategy).
+
+        * tao/Connection_Handler.h:
 
 	  Moved release_os_resources () to be public so that they could be
-	  called from Thread_Lane_Manager during shutdown. 
+	  called from Thread_Lane_Manager during shutdown.
 
 	* tao/Thread_Lane_Resources.cpp:
 	* tao/Thread_Lane_Resources.h:
 
 	  Actual work for cleanup_rw_transports (), which collects all
 	  transports opened as clients and close the socket handles
-	  underneath to wake waiting threads. 
+	  underneath to wake waiting threads.
 
 	* tao/Transport.cpp:
 	* tao/Transport.h:
@@ -71,7 +79,7 @@ Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu
 	* tao/IIOP_Connection_Handler.cpp:
 
 	  Changes propogated due to changes in the Transport_Cache_Manager
-	  interface. 
+	  interface.
 
 Fri Mar 11 08:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
