@@ -53,7 +53,7 @@ protected:
     return this->thr_count () != 0;
   }
 
-  // Tasks on the writter (downstream) side of the stream are called
+  // Tasks on the writer (downstream) side of the stream are called
   // upon to send() data that will ultimately go to the peer.
   virtual int send (ACE_Message_Block *message,
                     ACE_Time_Value *timeout);

@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-10-20 19:37 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 1999-02-10 22:17 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/014'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    414 -rw-r--r-- hdr
 #     44 -rw-r--r-- bodies
-#   1023 -rw-r--r-- page01.pre
+#   2609 -rw-r--r-- page01.pre
 #    231 -rw-r--r-- page02.pre
 #    651 -rw-r--r-- page03.pre
 #    439 -rw-r--r-- page04.pre
@@ -64,7 +64,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh14739; then
+if mkdir _sh28285; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -160,21 +160,55 @@ this way mirrors closely the way System V STREAMS work.  But you don't have to u
 bidirectionally.  In this tutorial, we only use one direction of the Stream.  Down.
 X
 <p>This tutorial is contributed by Bob McWhirter (bob@netwrench.com)
+X
 <P>
+Kirthika's abstract:
+<ul>
+In this tutorial, an ACE_Stream has been implemented which has modules
+flowing through it.(literally ;).
+The chain of modules in the Stream include the Head and Tail Modules. A
+Module is simply a reader-writer pair of ACE_Tasks with the writing side
+acting as downstream and the reading side as upstream. Here we are only
+concerned with going downstream so we install a Task into the write-side
+of the module.
+<P>
+The task implementation makes use of flags to decide on whether to close
+the main task or the service thread. The svc () method follows the
+golden rule of copying message blocks before putting them on the queue
+until it comes across a hang-up message. It then puts the message back
+on the queue for its peers to obtain it and exits.
+<P>
+Any message put onto the Tail module is an error. So a customised
+derivative of the Task class is created, which collects all the garbage
+messages put onto the Tail. This End_Task is put into the Stream at the
+start itself such that no modules whould ever follow it!
+<P>
+Then the other modules are pushed from the Tail-end into the Stream.
+This is because we are interested in writing and not reading.
+(Picture this to be a FIFO (queue) with head and tail nodes such
+that the nodes are removed from the front and put into the queue from
+the back) 
+<P>
+Each module then opens up the task which spawns threads and begins to
+shove messgaes down the stream. Once we have got all the messages into
+the stream, our job is completed and we shut down the Stream. 
+<P>
+A simple way to wade down the stream...;)
+</ul>
 SHAR_EOF
-  $shar_touch -am 1012190598 'page01.pre' &&
+  $shar_touch -am 0210221599 'page01.pre' &&
   chmod 0644 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-5b2cf5b57c135827e8465cdcfc83357f  page01.pre
+23c8c084825939056b1c9226d4ab54c1  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1023 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1023,' 'current size' "$shar_count!"
+    test 2609 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2609,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -319,5 +353,5 @@ SHAR_EOF
     $echo 'page05.pre:' 'original size' '1079,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh14739
+rm -fr _sh28285
 exit 0
