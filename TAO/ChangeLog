@@ -1,3 +1,13 @@
+Mon Nov 22 10:05:01 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+          Function declaration: void foo (const size_t xyzzy);  the
+          const is unnecessary (at best it's an implementation detail
+          that doesn't need to be declared.)  TRU64 compiler was complaining
+          (rightly) when the implementation omitted the const. Remove
+          the const from the declaration.  Repeat as necessary.
+
 Mon Nov 22 09:44:07 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Admin.cpp:

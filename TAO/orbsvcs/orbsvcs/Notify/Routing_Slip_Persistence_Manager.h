@@ -131,9 +131,9 @@ private:
 
     Block_Header(Header_Type type);
     virtual size_t extract_header(Persistent_Storage_Block& psb,
-      const size_t offset = 0);
+      size_t offset = 0);
     virtual size_t put_header(Persistent_Storage_Block& psb,
-      const size_t offset = 0);
+      size_t offset = 0);
 
   public:
     /// Our serial number
@@ -154,9 +154,9 @@ private:
   public:
     Routing_Slip_Header();
     virtual size_t extract_header(Persistent_Storage_Block& psb,
-      const size_t offset = 0);
+      size_t offset = 0);
     virtual size_t put_header(Persistent_Storage_Block& psb,
-      const size_t offset = 0);
+      size_t offset = 0);
 
   public:
     /// The next event in the system
@@ -196,11 +196,11 @@ private:
   /// Fill in a block with data, and return the number of bytes
   /// of data remaining to be written.
   size_t fill_block(Persistent_Storage_Block& psb,
-    const size_t offset_into_block, const ACE_Message_Block* data,
-    const size_t offset_into_msg);
+    size_t offset_into_block, const ACE_Message_Block* data,
+    size_t offset_into_msg);
   size_t fill_block(Persistent_Storage_Block& psb,
-    const size_t offset_into_block, unsigned char* data,
-    const size_t data_size);
+    size_t offset_into_block, unsigned char* data,
+    size_t data_size);
 
   /// Build a chain of Persistent_Storage_Blocks
   bool build_chain(
