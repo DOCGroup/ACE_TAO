@@ -6,17 +6,23 @@ Wed Oct 15 22:47:30 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	  but for strings only. The implementation was taken from the
 	  FreeBSD code.
 
-	* ace/SV_Semaphore_Simple.cpp: 
-	  Improved the hashing algorithm to assign a "unique" key for
-	  semaphore keys using an string.
-	  This solves a problem detected by Mark L. Boriack
+	* ace/SV_Semaphore_Simple.cpp: Improved the hashing algorithm to
+ 	  assign a "unique" key for semaphore keys using an string.  This
+ 	  solves a problem detected by Mark L. Boriack
 	  (Mark.L.Boriack@cpmx.saic.com): under OSF/1 the were too many
-	  collitions with the default arguments for ACE_Process_Mutex.
-	  Note that this is only a problem if no name is given to it.
+ 	  collitions with the default arguments for ACE_Process_Mutex.
+  	  Note that this is only a problem if no name is given to it.
 
-	* ace/Log_Msg.cpp: 
-	  ACE_Log_Msg_message_queue_ was not initialized in platforms
-	  without threads.
+	* ace/Log_Msg.cpp: ACE_Log_Msg_message_queue_ was not initialized
+ 	  in platforms without threads.
+
+	* ace/Containers.h: Added a duplicate ACE_Ubounded_Stack_Iterator
+ 	  to the NANBOR_EXP_CHANGES block.
+
+	* ace/OS.h (ACE_DES_FREE_TEMPLATE): Removed unneeded concatenation
+ 	  that was getting the HP/aCC compiler a bit confused. Thanks to
+ 	  Stephen Coy <stevec@magna.com.au> for pointing out the problem
+ 	  and then reminding me of actually adding the solution to ACE.
 
 Wed Oct 15 11:07:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
@@ -49,18 +55,6 @@ Wed Oct 15 14:59:41 1997    <nw1@CHA-CHA>
 
 	* tests/tests.dsw: Added Reactor_Performance_Test.dsp and
  	  Notify_Performance_Test.dsp.
-
-Wed Oct 15 10:35:38 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
-
-	* ace/Containers.h: 
-	  Added	a duplicate ACE_Ubounded_Stack_Iterator to the
-	  NANBOR_EXP_CHANGES block.
-
-	* ace/OS.h (ACE_DES_FREE_TEMPLATE): 
-	  REmoved unneeded concatenation that was getting the HP/aCC
-	  compiler a bit confused. Thanks to Stephen Coy
-	  <stevec@magna.com.au> for pointing out the problem and then
-	  remainding me of actually adding the solution to ACE.
 
 Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
