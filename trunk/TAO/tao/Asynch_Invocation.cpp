@@ -2,7 +2,8 @@
 
 #include "tao/Asynch_Invocation.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+#if defined (TAO_HAS_CORBA_MESSAGING) 
+#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
 
 #include "tao/Timeprobe.h"
 #include "tao/Stub.h"
@@ -123,4 +124,5 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
+#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_CORBA_MESSAGING */

@@ -39,9 +39,9 @@
 #include "tao/DynAnyC.h"
 #include "tao/DomainC.h"
 #include "tao/Servant_Base.h"
-#if defined(TAO_POLLER)
+#if defined(TAO_HAS_AMI_POLLER)
 #include "tao/PollableC.h"
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_POLLER */
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
@@ -421,7 +421,8 @@ public:
 
   // ****************************************************************
 
-#if defined (TAO_POLLER)
+#if defined (TAO_HAS_AMI_POLLER)
+
   class Pollable;
   typedef Pollable *Pollable_ptr;
   class TAO_Export Pollable :  public virtual PortableServer::ServantBase
@@ -759,7 +760,7 @@ public:
   private:
     PollableSet_ptr servant_;
   };
-#endif /* 0 */
+#endif /* TAO_HAS_AMI_POLLER */
 
   // ****************************************************************
 

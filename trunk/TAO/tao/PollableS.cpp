@@ -19,7 +19,7 @@
 
 #include "tao/PollableS.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_HAS_AMI_POLLER)
 
 #include "tao/Operation_Table.h"
 #include "tao/Server_Request.h"
@@ -947,4 +947,4 @@ POA_CORBA::PollableSet::_this (CORBA_Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (0);
   return new POA_CORBA::_tao_collocated_PollableSet (this, stub);
 }
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_AMI_POLLER */

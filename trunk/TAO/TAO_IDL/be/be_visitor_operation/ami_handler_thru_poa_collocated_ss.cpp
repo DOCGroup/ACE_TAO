@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    ami_handler_thru_poa_collocated_cs.cpp
+//    ami_handler_thru_poa_collocated_ss.cpp
 //
 // = DESCRIPTION
 //    Visitor generating code for thru_poa_collocated Operation in the skeleton.
@@ -25,26 +25,26 @@
 
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, ami_handler_thru_poa_collocated_cs, "$Id$")
+ACE_RCSID(be_visitor_operation, ami_handler_thru_poa_collocated_ss, "$Id$")
 
 
 // *************************************************************************
-//  be_visitor_operation_ami_handler_thru_poa_collocated_cs --
+//  be_visitor_operation_ami_handler_thru_poa_collocated_ss --
 //  This visitor generates code for the thru_poa_collocated operation signature in a
 //  server skeletons file
 // *************************************************************************
 
-be_visitor_operation_ami_handler_thru_poa_collocated_cs::be_visitor_operation_ami_handler_thru_poa_collocated_cs
+be_visitor_operation_ami_handler_thru_poa_collocated_ss::be_visitor_operation_ami_handler_thru_poa_collocated_ss
 (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_operation_ami_handler_thru_poa_collocated_cs::~be_visitor_operation_ami_handler_thru_poa_collocated_cs (void)
+be_visitor_operation_ami_handler_thru_poa_collocated_ss::~be_visitor_operation_ami_handler_thru_poa_collocated_ss (void)
 {
 }
 
-int be_visitor_operation_ami_handler_thru_poa_collocated_cs::visit_operation (be_operation *node)
+int be_visitor_operation_ami_handler_thru_poa_collocated_ss::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -59,7 +59,7 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_cs::visit_operation (be
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_thru_poa_collocated_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_thru_poa_collocated_ss::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);
@@ -70,7 +70,7 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_cs::visit_operation (be
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_thru_poa_collocated_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_thru_poa_collocated_ss::"
                          "visit_operation - "
                          "Bad return type\n"),
                         -1);
@@ -92,7 +92,7 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_cs::visit_operation (be
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_thru_poa_collocated_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_thru_poa_collocated_ss::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
@@ -150,7 +150,7 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_cs::visit_operation (be
   return 0;
 }
 
-int be_visitor_operation_ami_handler_thru_poa_collocated_cs::gen_invoke (be_visitor_context &ctx,
+int be_visitor_operation_ami_handler_thru_poa_collocated_ss::gen_invoke (be_visitor_context &ctx,
                                                     be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -173,7 +173,7 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_cs::gen_invoke (be_visi
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_handler_thru_poa_collocated_cs::"
+                         "(%N:%l) be_visitor_operation_ami_handler_thru_poa_collocated_ss::"
                          "gen_invoke - "
                          "codegen for making upcall failed\n"),
                         -1);
@@ -187,7 +187,7 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_cs::gen_invoke (be_visi
 
 
 int
-be_visitor_operation_ami_handler_thru_poa_collocated_cs::void_return_type (be_type *bt)
+be_visitor_operation_ami_handler_thru_poa_collocated_ss::void_return_type (be_type *bt)
 {
   // is the operation return type void?
 

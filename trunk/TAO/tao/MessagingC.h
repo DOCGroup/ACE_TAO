@@ -1551,7 +1551,8 @@ TAO_NAMESPACE  Messaging
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong INVOCATION_POLICIES;
 
-#if defined (TAO_POLLER)
+#if defined (TAO_HAS_AMI_POLLER)
+
   struct TAO_Export ExceptionHolder
   {
     CORBA::Boolean is_system_exception;
@@ -1636,6 +1637,10 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ExceptionHolder;
+
+#endif  /* TAO_HAS_AMI_POLLER */
+
+#if defined (TAO_HAS_AMI_CALLBACK)
 
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
@@ -1723,6 +1728,10 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyHandler;
+
+#endif /* TAO_HAS_AMI_CALLBACK */
+
+#if defined (TAO_HAS_AMI_POLLER)
 
   class Poller;
   typedef Poller *Poller_ptr;
@@ -1839,7 +1848,7 @@ TAO_NAMESPACE  Messaging
   };
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Poller;
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_POLLER */
 
 }
 TAO_NAMESPACE_CLOSE // module Messaging
@@ -1849,13 +1858,13 @@ TAO_NAMESPACE_CLOSE // module Messaging
 
 class TAO_InputCDR;
 
-#if defined (TAO_POLLER)
+#if defined (TAO_HAS_AMI_CALLBACK)
 typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
     Messaging::ReplyHandler *,
     CORBA::Environment &
     );
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_CALLBACK */
 
 void TAO_Export operator<<= (CORBA::Any &, Messaging::PriorityRange*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::PriorityRange *&);
@@ -1871,17 +1880,20 @@ void TAO_Export operator<<= (CORBA::Any &, const Messaging::PolicyValueSeq &); /
 void TAO_Export operator<<= (CORBA::Any &, Messaging::PolicyValueSeq*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::PolicyValueSeq *&);
 
-#if defined (TAO_POLLER)
-void TAO_Export operator<<= (CORBA::Any &, const Messaging::ExceptionHolder &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, Messaging::ExceptionHolder*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::ExceptionHolder *&);
+#if defined (TAO_HAS_AMI_CALLBACK)
 // Any operators for interface Messaging::ReplyHandler
 void TAO_Export operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::ReplyHandler *&);
+#endif /* TAO_HAS_AMI_CALLBACK */
+
+#if defined (TAO_HAS_AMI_POLLER)
+void TAO_Export operator<<= (CORBA::Any &, const Messaging::ExceptionHolder &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, Messaging::ExceptionHolder*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::ExceptionHolder *&);
 // Any operators for interface Messaging::Poller
 void TAO_Export operator<<= (CORBA::Any &, Messaging::Poller_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::Poller *&);
-#endif
+#endif /* TAO_HAS_AMI_POLLER */
 
 #ifndef __ACE_INLINE__
 
@@ -1896,15 +1908,18 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::PolicyValue::_t
 CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::PolicyValueSeq &); //
 CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::PolicyValueSeq &);
 
-#if defined (TAO_POLLER)
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::ExceptionHolder &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder::_tao_seq_Octet &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::ExceptionHolder::_tao_seq_Octet &);
+#if defined (TAO_HAS_AMI_CALLBACK)
 CORBA::Boolean TAO_Export
 operator<< (TAO_OutputCDR &, const Messaging::ReplyHandler_ptr );
 CORBA::Boolean TAO_Export
 operator>> (TAO_InputCDR &, Messaging::ReplyHandler_ptr &);
+#endif /* TAO_HAS_AMI_CALLBACK */
+
+#if defined (TAO_HAS_AMI_POLLER)
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::ExceptionHolder &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder::_tao_seq_Octet &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, Messaging::ExceptionHolder::_tao_seq_Octet &);
 CORBA::Boolean TAO_Export
 operator<< (TAO_OutputCDR &, const Messaging::Poller_ptr );
 CORBA::Boolean TAO_Export

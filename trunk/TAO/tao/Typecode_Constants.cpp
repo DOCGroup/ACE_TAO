@@ -41,9 +41,9 @@
 #include "tao/NVList.h"
 #include "tao/BoundsC.h"
 
-#if defined(TAO_POLLER)
+#if defined(TAO_HAS_AMI_POLLER)
 #include "tao/PollableC.h"
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_POLLER */
 
 ACE_RCSID(tao, Typecode_Constants, "$Id$")
 
@@ -1615,7 +1615,7 @@ TAO_TypeCodes::init (void)
 
  // ****************************************************************
 
-#if defined(TAO_POLLER)
+#if defined(TAO_HAS_AMI_POLLER)
   static const CORBA::Long _oc_CORBA_Pollable[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
@@ -1693,7 +1693,7 @@ TAO_TypeCodes::init (void)
                         0,
                         sizeof (CORBA_PollableSet));
 
-#endif /* TAO_POLLER */
+#endif /* TAO_HAS_AMI_POLLER */
 
  // ****************************************************************
 
@@ -1977,13 +1977,13 @@ TAO_TypeCodes::fini (void)
 
   CORBA::release (CORBA::_tc_DomainManagerList);
 
-#if defined (TAO_POLLER)
+#if defined (TAO_HAS_AMI_POLLER)
   CORBA::release (CORBA::_tc_Pollable);
 
   CORBA::release (CORBA::_tc_DIIPollable);
 
   CORBA::release (CORBA::_tc_PollableSet);
-#endif /* defined (TAO_POLLER) */
+#endif /* defined (TAO_HAS_AMI_POLLER) */
 
   // Service types
    //= Service type
