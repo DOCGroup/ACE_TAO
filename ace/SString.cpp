@@ -885,17 +885,7 @@ ACE_WString::operator= (const ACE_WString &s)
 void
 ACE_WString::set (const ACE_USHORT16 *s)
 {
-#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-  u_int len = 0;
-
-  while (*s++ != 0)
-    len++;
-
-  this->set (s, len);
-#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-  // Note: Linux glibc 2.0 can't handle an ACE_static_cast here . . .
-  this->set (s, ACE_OS::strlen ((const wchar_t *) s));
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+  this->set (s, ACE_WString::wstrlen (s));
 }
 
 void
