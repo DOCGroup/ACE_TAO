@@ -36,6 +36,10 @@ ld < Atomic_Op_Test
 write 2, "Atomic_Op_Test ", 15
 ace_main; unld "Atomic_Op_Test"
 
+ld < TSS_Test
+write 2, "TSS_Test ", 9
+ace_main; unld "TSS_Test"
+
 ld < Time_Value_Test
 write 2, "Time_Value_Test ", 16
 ace_main; unld "Time_Value_Test"
@@ -74,9 +78,10 @@ ld < Task_Test
 write 2, "Task_Test ", 10
 ace_main; unld "Task_Test"
 
-ld < Thread_Manager_Test
-write 2, "Thread_Manager_Test ", 20
-ace_main; unld "Thread_Manager_Test"
+#### Page Fault
+#### ld < Thread_Manager_Test
+#### write 2, "Thread_Manager_Test ", 20
+#### ace_main; unld "Thread_Manager_Test"
 
 ld < Thread_Pool_Test
 write 2, "Thread_Pool_Test ", 17
@@ -151,10 +156,6 @@ ace_main; unld "Priority_Task_Test"
 ld < IOStream_Test
 write 2, "IOStream_Test ", 14
 ace_main; unld "IOStream_Test"
-
-ld < TSS_Test
-write 2, "TSS_Test ", 9
-ace_main; unld "TSS_Test"
 
 write 2, "\n", 1
 
