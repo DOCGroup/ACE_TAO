@@ -15,6 +15,11 @@ Sun Sep 14 21:02:31 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
 	  assignments in "if" conditionals to avoid g++ warnings.
 
+	* ace/Select_Reactor.h: removed "," at end of DEFAULT_SIZE
+	  enum definition.
+
+	* ace/Select_Reactor.i (register_handler): added ACE_UNUSED_ARGS.
+
 Sun Sep 14 10:35:57 1997    <irfan@TWOSTEP>
 
 	* ace/Reactor: The Reactor classes (ACE_Reactor and ACE_ReactorEx)
