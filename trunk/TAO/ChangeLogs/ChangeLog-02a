@@ -1,3 +1,14 @@
+Fri Mar  2 11:46:40 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CodecFactory.cpp (create_codec):
+
+	  Fixed a "statement is unreachable" warning.
+
+	* tao/PortableInterceptorC.h (sync_scope):
+
+	  Hide the ClientRequestInfo::sync_scope() method declaration if
+	  CORBA Messaging support isn't enabled.
+
 Fri Mar  2 11:37:43 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptor.cpp:

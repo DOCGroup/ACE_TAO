@@ -60,7 +60,6 @@ TAO_CodecFactory::create_codec (const IOP::Encoding & enc,
     default:
       ACE_THROW_RETURN (IOP::CodecFactory::UnknownEncoding (),
 			IOP::Codec::_nil ());
-      break;
 
     }
 
