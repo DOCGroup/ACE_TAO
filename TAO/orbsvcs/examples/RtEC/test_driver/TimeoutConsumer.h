@@ -21,43 +21,59 @@
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Channel_Clients_T.h"
-//#include "ace/Task.h"
-//#include "ace/Synch.h"
-#include "ace/RW_Mutex.h"
+#include "TestConfig.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// TODO: Convert to Observer (or other similar) pattern.
+
+class Timeout_Observer {
+  // = TITLE
+  //   Interface for all TimeoutConsumer observers.
+  //
+  // = DESCRIPTION 
+  //   Any class which wants to receive notifications of timeout events
+  //   needs to be a subclass of this interface.
+
+public:
+  virtual void update(ACE_ENV_SINGLE_ARG_DECL) = 0;
+  // Called by the TimeoutConsumer when a timeout occurs.
+  //
+  // For now, the notification is binary ("A timeout occurred"), but
+  // in the future, it should be useful to pass the event type(s) or
+  // even the events themselves.
+};
+
 class TimeoutConsumer
 {
   // = TITLE
-  //   Simple consumer object which responds to timeout events.
+  //   Simple consumer object of timeout events.
   //
-  // = DESCRIPTION
-  //   This class is a consumer of timeout events.
-  //   For each timeout event it consumes, it pushes a specified EventSet into the EC.
+  // = DESCRIPTION This class is a consumer of timeout events.  For
+  //   each timeout event it consumes, it notifies its observer
+  //   (specified in its constructor).
   //
   //   There are several ways to connect and disconnect this class,
   //   and it is up to the driver program to use the right one.
   //
 public:
-  TimeoutConsumer (void);
-  // Default Constructor.
+  TimeoutConsumer (Timeout_Observer* obs);
+  // For now, only handle a single observer. In the future, handle any number.
+  // Note that the TimeoutConsumer does NOT take ownership of the observer.
 
   virtual ~TimeoutConsumer (void);
 
-  void connect (ACE_RW_Mutex* done,
-                RtecScheduler::Scheduler_ptr scheduler,
-                const char *entry_prefix,
-                TimeBase::TimeT period,
-                RtecScheduler::Importance_t importance,
-                RtecScheduler::Criticality_t criticality,
-                RtecEventComm::EventSourceID supplier_id,
-                size_t to_send,
-                const RtecEventComm::EventSet& events,
-                RtecEventChannelAdmin::EventChannel_ptr ec
-              ACE_ENV_ARG_DECL);
+  RtecScheduler::handle_t get_RT_Info(void);
+
+  void connect (RtecScheduler::Scheduler_ptr scheduler,
+		const char *entry_prefix,
+		TimeBase::TimeT period,
+		RtecScheduler::Importance_t importance,
+		RtecScheduler::Criticality_t criticality,
+		RtecEventChannelAdmin::EventChannel_ptr ec
+		ACE_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
   void disconnect (ACE_ENV_SINGLE_ARG_DECL);
@@ -74,27 +90,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
-  // = The RtecEventComm::PushSupplier methods
-
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // The skeleton methods.
-
 private:
-  size_t _to_send; //number of times to push on timeout
-  size_t _num_sent; //number of pushes so far
-  int _hold_mtx; //1 when hold _done mutex; 0 else
-  ACE_RW_Mutex* _done; //release read lock when _num_sent >= _to_send
+  Timeout_Observer* _observer;
 
-  RtecEventComm::EventSourceID _supplier_id;
-  // We generate an id based on the name....
+  RtecScheduler::handle_t _rt_info;
 
-  RtecEventChannelAdmin::ProxyPushConsumer_var _consumer_proxy;
-  // We talk to the EC (as a supplier) using this proxy.
-
-  ACE_PushSupplier_Adapter<TimeoutConsumer> _supplier;
-  // We connect to the EC as a supplier so we can push events
-  // every time we receive a timeout event.
+  RtecScheduler::Scheduler_ptr _scheduler;
 
   RtecEventChannelAdmin::ProxyPushSupplier_var _supplier_proxy;
   // We talk to the EC (as a consumer) using this proxy.
