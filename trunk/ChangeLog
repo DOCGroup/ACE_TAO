@@ -1,3 +1,9 @@
+Mon Aug 30 10:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/amh.mpb:
+        * bin/MakeProjectCreator/config/ami.mpb:
+          Both use idlflags, so add taoidldefaults as base project
+
 Mon Aug 30 06:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/amh.mpb:
