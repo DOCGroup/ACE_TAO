@@ -12,6 +12,10 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+// We must include at least one ACE/TAO header before the MFC/Windows headers
+// because of the way windows.h is included.  So this must go before the MFC
+// headers.
+
 #include "tao\corba.h"
 #include "ace\Thread_Manager.h"
 
