@@ -1,5 +1,8 @@
 Thu Apr  1 13:47:56 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
+	* tao/Connect.cpp (handle_message): Changed a c-style cast to 
+	  ACE_reinterpret_cast ().
+
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Fixed a warning
 	  for g++.
 

@@ -269,7 +269,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 		      &TAO_POA::objectkey_prefix[0],
 		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
-      ACE_CString object_id ((const char *) request.object_key ().get_buffer (),
+      ACE_CString object_id (ACE_reinterpret_cast (const char *, request.object_key ().get_buffer ()),
 			     TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
 			     0,
 			     0);
