@@ -33,29 +33,30 @@ Supplier_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   TAO_TRY
     {
       // Disconnect all the consumers gracefully.
-      notifier->disconnect ("quit", TAO_TRY_ENV);
+      notifier->disconnect ("quit",
+			    TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Error:Supplier_Input_Handler::handle_close\n ");
+      TAO_TRY_ENV.print_exception ("Error:Supplier_Input_Handler::handle_close\n");
     }
   TAO_ENDTRY;
 
-  // Don't execute a callback here otherwise we'll recurse
-  // indefinitely!
   if (ACE_Reactor::instance ()->remove_handler
       (this,
+       // Don't execute a callback here otherwise we'll recurse
+       // indefinitely!
        ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "remove_handler"));
-
   return 0;
 }
 
-int Supplier_Input_Handler::initialize (Notifier_Handler *notifier,
-					ACE_HANDLE handle) // Use stdin by default.
+int
+Supplier_Input_Handler::initialize (Notifier_Handler *notifier,
+				    ACE_HANDLE handle) // Use stdin by default.
 {
   notifier_ = notifier;
   handle_ = handle;
@@ -64,7 +65,8 @@ int Supplier_Input_Handler::initialize (Notifier_Handler *notifier,
   // cause our handle_input() method to be dispatched automatically.
 
   if (ACE_Reactor::instance ()->register_handler
-      (this, ACE_Event_Handler::READ_MASK) == -1)
+      (this,
+       ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                 "%p\n",
                 "register_handler"), -1);
@@ -93,9 +95,12 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
 
   // Read up to BUFSIZ worth of data from ACE_HANDLE h.
 
-  if (ACE_OS::fgets (buf, sizeof buf - 1, this->fp_) == 0)
+  if (ACE_OS::fgets (buf,
+		     sizeof buf - 1,
+		     this->fp_) == 0)
     {
-      ACE_OS::strcpy (buf, "quit");
+      ACE_OS::strcpy (buf,
+		      "quit");
       ACE_DEBUG ((LM_DEBUG,
                   "shutting down Supplier_Input_Handler\n"));
     }
@@ -108,7 +113,9 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
 	buf[n - 1] = '\0';
       else
 	buf[n] = '\0';
-      ACE_DEBUG ((LM_DEBUG, "notifying for event %s\n", buf));
+      ACE_DEBUG ((LM_DEBUG,
+		  "notifying for event %s\n",
+		  buf));
     }
 
   Event_Comm::Notifier *notifier = this->notifier_->notifier ();
@@ -116,7 +123,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
 
   if (ACE_OS::strcmp (buf, "quit") == 0)
     // Tell the main event loop to shutdown.
-    ACE_Reactor::end_event_loop();
+    ACE_Reactor::end_event_loop ();
   else
     {
       // Use the notifier to notify Consumers.

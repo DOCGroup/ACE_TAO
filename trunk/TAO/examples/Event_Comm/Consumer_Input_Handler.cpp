@@ -42,8 +42,10 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   ACE_DEBUG ((LM_DEBUG,
 	      "closing down Consumer::Input_Handler\n"));
 
-  Event_Comm::Consumer *receiver = this->receiver_handler_->receiver ();
-  Event_Comm::Notifier *notifier = this->receiver_handler_->notifier ();
+  Event_Comm::Consumer *receiver =
+    this->receiver_handler_->receiver ();
+  Event_Comm::Notifier *notifier =
+    this->receiver_handler_->notifier ();
 
   if (this->consumer_initiated_shutdown ())
     {
@@ -55,7 +57,9 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
           // Gracefully shutdown the Receiver by removing it from the
           // Notifier's internal map.
 	  if (notifier != 0)
-	    notifier->unsubscribe (receiver, "", TAO_TRY_ENV);
+	    notifier->unsubscribe (receiver,
+				   "",
+				   TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
         }
       TAO_CATCHANY
@@ -65,10 +69,10 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       TAO_ENDTRY;
     }
 
-  // Don't execute a callback here otherwise we'll recurse
-  // indefinitely!
   if (this->receiver_handler_->reactor()->remove_handler
       (this,
+       // Don't execute a callback here otherwise we'll recurse
+       // indefinitely!
        ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
@@ -87,7 +91,8 @@ int Consumer_Input_Handler::initialize (Consumer_Handler *ch,
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                "Consumer_Input_Handler::Input_Handler\n"), -1);
+		       "Consumer_Input_Handler::Input_Handler\n"),
+		      -1);
   return 0;
 }
 
@@ -109,7 +114,6 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG,
                   "notifying for event %s\n",
                   buf));
-
     }
   else
     {

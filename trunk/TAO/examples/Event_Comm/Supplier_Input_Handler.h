@@ -13,7 +13,7 @@
 //    Handle input from the keyboard.
 //
 // = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu)
+//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wistl.edu)
 //
 // ============================================================================
 
@@ -35,12 +35,12 @@ class Supplier_Input_Handler : public ACE_Service_Object
   //   Handles input events generated from a keyboard.
   //
   // = DESCRIPTION
-  //   The events are currently framed and forwarded to
-  //   all Consumers.  In the future, we will need to
-  //   be more selective and only send to those Consumers
-  //   whose filtering criteria matches!
+  //   The events are currently framed and forwarded to all Consumers.
+  //   In the future, we will need to be more selective and only send
+  //   to those Consumers whose filtering criteria matches!
 public:
-  Supplier_Input_Handler ();
+  // = Initialization and termination methods.
+  Supplier_Input_Handler (void);
   // Constructor.
 
   ~Supplier_Input_Handler (void);
@@ -58,6 +58,7 @@ public:
 
 protected:
   virtual ACE_HANDLE get_handle (void) const;
+  // Return the input handle.
 
   ACE_HANDLE handle_;
   // ACE_HANDLE where the input comes from.
@@ -67,7 +68,7 @@ protected:
   // that events of interest have occurred.
 
   FILE *fp_;
-  // Pointer to an input ACE_FILE.
+  // Pointer to an input FILE.
 };
 
 #endif /* SUPPLIER_INPUT_HANDLER_H */

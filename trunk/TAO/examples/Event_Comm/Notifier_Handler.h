@@ -10,7 +10,7 @@
 //    Notifier_Handler.h
 //
 // = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu)
+//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
 //
 // ============================================================================
 
@@ -30,7 +30,8 @@
 class Notifier_Handler
 {
   // = TITLE
-  //  Holds the <Event_Comm::Notifier> object which is obtained from the naming service.
+  //  Holds the <Event_Comm::Notifier> object which is obtained from
+  //  the naming service.
 public:
   // = Initialization and termination methods.
   Notifier_Handler (void);

@@ -14,7 +14,8 @@
 //    event notification mechanism.
 //
 // = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu)
+//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore
+//    <pradeep@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -42,6 +43,9 @@ public:
 
   ~Consumer_i (void);
   // Destructor.
+
+  void set_reactor (ACE_Reactor *reactor);
+  // set the <ACE_Reactor> to use when quitting.
 
   virtual void push (const Event_Comm::Event & event,
                      CORBA::Environment &TAO_TRY_ENV);

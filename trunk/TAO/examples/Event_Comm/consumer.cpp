@@ -9,23 +9,27 @@ class Consumer : public ACE_Event_Handler
 {
   // = TITLE
   //    Consumer driver for the Publish/Subscribe example.
+  //
   // = DESCRIPTION
-  //    The Consumer holds the <Consumer_Input_Handler> and <Cosumer_Handler> objects.
-
+  //    The Consumer holds the <Consumer_Input_Handler> and
+  //    <Cosumer_Handler> objects.
 public:
-  // = Initialization and Termination methods.
-  Consumer ();
+  // = Initialization and termination methods.
+  Consumer (void);
+  // Constructor.
+
   ~Consumer (void);
+  // Destructor.
 
   int initialize (int argc, char *argv[]);
-  // initialization method.
+  // Initialization method.
 
-  void run (void);
+  int run (void);
   // Execute the consumer;
 
 private:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // signal handler method.
+  // Signal handler method.
 
   Consumer_Input_Handler ih_;
   // Handler for keyboard input.
@@ -35,8 +39,6 @@ private:
 };
 
 Consumer::Consumer (void)
-  : ih_ (),
-    ch_ ()
 {
   // No-Op.
 }
@@ -59,39 +61,41 @@ Consumer::handle_signal (int signum, siginfo_t *, ucontext_t *)
   this->ih_.consumer_initiated_shutdown (1);
 
   // Shut down the ORB
-  ch_.close();
+  ch_.close ();
+
   return 0;
 }
 
-void
+int
 Consumer::run (void)
 {
-  // run the <Consumer_Handler>'s ORB
-  ch_.run();
+  // Run the <Consumer_Handler>'s ORB.
+
+  return ch_.run ();
 }
 
-int Consumer::initialize (int argc, char *argv[])
+int
+Consumer::initialize (int argc, char *argv[])
 {
-  // initialize the <Consumer_Handler>.
+  // Initialize the <Consumer_Handler>.
   if (this->ch_.init (argc, argv) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
 			"%p\n",
 			"Consumer_Handler failed to initialize\n"), -1);
 
-   // initialize the <Consumer_Input_Handler>.
+   // Initialize the <Consumer_Input_Handler>.
   if (this->ih_.initialize (&this->ch_) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
 			"%p\n",
 			"Consumer_Input_Handler failed to initialize\n"), -1);
 
-  if (this->ch_.reactor()->register_handler (SIGINT, this) == -1)
+  if (this->ch_.reactor()->register_handler (SIGINT,
+					     this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "register_handler"), -1);
   return 0;
 }
-
-
 
 int
 main (int argc, char *argv[])
@@ -101,11 +105,16 @@ main (int argc, char *argv[])
 
   if (consumer.initialize (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-			"%p\n",
-			"Consumer init failed\n"), 1);
+		       "%p\n",
+		       "Consumer init failed\n"),
+		      1);
 
   // Loop forever handling events.
-  consumer.run ();
+  if (consumer.run () == -1)
+  ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "Consumer run failed\n"),
+		      1);
 
   return 0;
 }
