@@ -12,10 +12,10 @@
 
 DIRS  =	Cubit \
 	POA \
-	Param_Test
+	Param_Test \
+	Thruput
 
 # The following tests have not been updated yet
-#	Thruput
 # 	Demux_Test
 
 #----------------------------------------------------------------------------
