@@ -3,6 +3,7 @@
 #include "tao/CORBA_String.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/OS.h"
 
 ACE_RCSID (PICurrent,
            ClientRequestInterceptor2,
