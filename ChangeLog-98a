@@ -1,22 +1,31 @@
+Mon Dec  1 14:01:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/Log_Msg.cpp, ace/Log_Msg.h, ace/Log_Record.cpp, 
+          ace/Log_Record.h ace/OS.h, ace/stdcpp.h:
+
+		  Changed use of ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION in stdcpp.h
+          to include iostream when the above is #defined as 1.  Made
+          changes to other files to accommodate this change.
+
 Mon Dec 01 12:15:00 1997    <irfan@TWOSTEP>
 
-	* ace/OS.h: Changed the definition of ACE_UNIMPLEMENTED_FUNC so
- 	  that it just evaporates on platform that have
- 	  ACE_REQUIRES_FUNC_DEFINITIONS defined.  
+        * ace/OS.h: Changed the definition of ACE_UNIMPLEMENTED_FUNC so
+          that it just evaporates on platform that have
+          ACE_REQUIRES_FUNC_DEFINITIONS defined.  
 
-	  ACE_UNIMPLEMENTED_FUNC is only required for template classes and
- 	  not for a normal class.  When the template is explicitly
- 	  instantiated, it causes some compilers to look for the
- 	  definition of all the declared methods.
+          ACE_UNIMPLEMENTED_FUNC is only required for template classes and
+          not for a normal class.  When the template is explicitly
+          instantiated, it causes some compilers to look for the
+          definition of all the declared methods.
 
-	  On platforms that have this behavior, we have decided to take
- 	  out the declaration of this function.  This is necessary since
- 	  an empty definition of {} usually does not work with some
- 	  constructors.  And by providing a explicit definition of this
- 	  function, will cause all platforms to suffer.
+          On platforms that have this behavior, we have decided to take
+          out the declaration of this function.  This is necessary since
+          an empty definition of {} usually does not work with some
+          constructors.  And by providing a explicit definition of this
+          function, will cause all platforms to suffer.
 
-	  Therefore, platforms with ACE_REQUIRES_FUNC_DEFINITIONS defined
- 	  must be specially careful when using this.
+          Therefore, platforms with ACE_REQUIRES_FUNC_DEFINITIONS defined
+          must be specially careful when using this.
 
 Mon Dec 01 07:56:02 1997  David L. Levine  <levine@cs.wustl.edu>
 
