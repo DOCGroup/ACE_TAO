@@ -1,3 +1,11 @@
+Fri May 26 11:29:44 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/ACE.cpp:
+	* ace/Malloc.h:
+
+	  Include "ace/Log_Msg.h" to pull in the appropriate definition of
+	  the ACE logging macros.  This fixes a problem on Solaris.
+
 Thu May 25 19:39:59 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in:
