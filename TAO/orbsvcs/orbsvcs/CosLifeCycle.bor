@@ -21,13 +21,13 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_NAMING_CFLAGS) \
-	$(TAO_LIFECYCLE_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_NAMING_CFLAGS) \
-	$(TAO_LIFECYCLE_CFLAGS) -DTAO_LIFECYCLE_BUILD_DLL
-!endif
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLSERVER_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_LIFECYCLE_CFLAGS) \
+	-DTAO_LIFECYCLE_BUILD_DLL
 
 CPPDIR = .;LifeCycle
 
@@ -36,13 +36,15 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\LifeCycle
 INCLUDES = LifeCycle\*.h
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_NAMING_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_NAMING_LIB)
 
-all: idl_src_files lifecycle_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-lifecycle_lib: $(TARGET)
 
 
 #

@@ -745,4 +745,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, FT::HeartbeatEnabledPolicy
 
 #endif /*TAO_HAS_FT_CORBA == 1 */
 
+#include "ace/post.h"
 #endif /* ifndef */

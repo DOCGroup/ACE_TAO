@@ -27,6 +27,12 @@ OBJFILES = \
 	$(OBJDIR)\keywordsS.obj \
 	$(OBJDIR)\pragmaC.obj \
 	$(OBJDIR)\pragmaS.obj \
+	$(OBJDIR)\reopen_include1C.obj \
+	$(OBJDIR)\reopen_include1S.obj \
+	$(OBJDIR)\reopen_include2C.obj \
+	$(OBJDIR)\reopen_include2S.obj \
+	$(OBJDIR)\reopened_modulesC.obj \
+	$(OBJDIR)\reopened_modulesS.obj \
 	$(OBJDIR)\sequenceC.obj \
 	$(OBJDIR)\sequenceS.obj \
 	$(OBJDIR)\typedefC.obj \
@@ -38,9 +44,15 @@ OBJFILES = \
 	$(OBJDIR)\main.obj \
 	$(OBJDIR)\namespace_check.obj
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS)
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
 
 IDLDIR = .
 CPPDIR = .

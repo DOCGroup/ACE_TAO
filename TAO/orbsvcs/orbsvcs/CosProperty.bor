@@ -19,11 +19,12 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PROPERTY_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PROPERTY_CFLAGS) -DTAO_PROPERTY_BUILD_DLL
-!endif
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_PROPERTY_CFLAGS) \
+	-DTAO_PROPERTY_BUILD_DLL
 
 CPPDIR = .;Property
 
@@ -32,13 +33,14 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\Property
 INCLUDES = Property\*.h
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
 
-all: idl_src_files property_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-property_lib: $(TARGET)
 
 
 #

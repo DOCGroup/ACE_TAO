@@ -10,9 +10,13 @@ OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\client.obj
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS)
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB)
 
 CPPDIR = .
 

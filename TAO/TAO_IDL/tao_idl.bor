@@ -1,0 +1,20 @@
+#
+# Makefile for building the TAO IDL compiler executable
+#
+
+NAME = tao_idl
+
+OBJFILES = \
+	$(OBJDIR)\drv_args.obj \
+	$(OBJDIR)\drv_init.obj \
+	$(OBJDIR)\drv_preproc.obj \
+	$(OBJDIR)\drv_private.obj \
+	$(OBJDIR)\tao_idl.obj
+
+CFLAGS = $(ACE_CFLAGS) $(TAO_IDL_FE_CFLAGS) $(TAO_IDL_BE_CFLAGS)
+
+LIBFILES = $(ACE_LIB) $(TAO_IDL_FE_LIB) $(TAO_IDL_BE_LIB)
+
+CPPDIR = .;driver
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>

@@ -23,11 +23,12 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) -DTAO_SVC_UTILS_BUILD_DLL
-!endif
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+	-DTAO_SVC_UTILS_BUILD_DLL
 
 CPPDIR = .
 
@@ -36,13 +37,14 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs
 INCLUDES = *.h *.i *_T.cpp
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
 
-all: idl_src_files svc_utils_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-svc_utils_lib: $(TARGET)
 
 
 #

@@ -1,240 +1,262 @@
+Fri Sep  8 11:34:59 2000  Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * tao/Makefile.bor:
+        * tao/DynamicAny/Makefile.bor:
+        * tao/PortableServer/Makefile.bor:
+        * orbsvcs/*/*.bor
+        * tests/*/*.bor
+        * orbsvcs/orbsvcs/CosNotification.bor:
+          Added new DynamicAny and PortableServer libraries.
+
+        * tao/FT_CORBAC.h:
+        * tao/DynamicAny/DynamicAny.h:
+        * tao/PortableServer/FT_CORBAS.h:
+        * tao/PortableServer/PortableServer.h:
+          Added missing inclusion of ace/post.h.
+
+        * TAO_IDL/Makefile.bor:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_FE.bor:
+        * TAO_IDL/tao_idl.bor:
+          Added new makefiles for TAO_IDL front- and back-end libraries.
+
 Fri Sep  8 10:43:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Profile.h:
-	* tao/Profile.cpp: Added a data member to hold the cached copy of
-	  the TAO_ORB_Core pointer with a member function to return the
-	  pointer. Made a change to the constructor of the TAO_Profile
-	  class to take in a TAO_ORB_Core pointer.
+        * tao/Profile.h:
+        * tao/Profile.cpp: Added a data member to hold the cached copy of
+          the TAO_ORB_Core pointer with a member function to return the
+          pointer. Made a change to the constructor of the TAO_Profile
+          class to take in a TAO_ORB_Core pointer.
 
-	* tao/IIOP_Profile.h
-	* tao/IIOP_Profile.cpp:
-	* tao/UIOP_Profile.h:
-	* tao/UIOP_Profile.cpp:
-	* tao/SHMIOP_Profile.h:
-	* tao/SHMIOP_Profile.cpp: Removed the data member storing the
-	  ORB_Core pointer, as it is now available through
-	  TAO_Profile.  Also made changes to the constructors to pass the
-	  TAO_ORB_Core pointer to its base class to initialise the base
-	  class properly.
+        * tao/IIOP_Profile.h
+        * tao/IIOP_Profile.cpp:
+        * tao/UIOP_Profile.h:
+        * tao/UIOP_Profile.cpp:
+        * tao/SHMIOP_Profile.h:
+        * tao/SHMIOP_Profile.cpp: Removed the data member storing the
+          ORB_Core pointer, as it is now available through
+          TAO_Profile.  Also made changes to the constructors to pass the
+          TAO_ORB_Core pointer to its base class to initialise the base
+          class properly.
 
-	* tao/Connector_Registry.cpp: Made changes to the constructor of
-	  TAO_Unknown_Profile object.
+        * tao/Connector_Registry.cpp: Made changes to the constructor of
+          TAO_Unknown_Profile object.
 
 Thu Sep  7 23:03:27 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Acceptor_Filter.h:
+        * tao/Acceptor_Filter.h:
 
-	  Replaced <evaluate> method with a more powerful
-	  <fill_mprofile>.  TAO_Acceptor_Filter class has now more
-	  control/responsibility over mprofile creation: rather than just
-	  approving/disapproving individual endpoints, it does all the
-	  work of populating mprofile.
+          Replaced <evaluate> method with a more powerful
+          <fill_mprofile>.  TAO_Acceptor_Filter class has now more
+          control/responsibility over mprofile creation: rather than just
+          approving/disapproving individual endpoints, it does all the
+          work of populating mprofile.
 
-	  Added class documentation.
+          Added class documentation.
 
-	* tao/Acceptor_Registry.h
-	* tao/Acceptor_Registry.cpp (create_mprofile):
+        * tao/Acceptor_Registry.h
+        * tao/Acceptor_Registry.cpp (create_mprofile):
 
-	  Delegated most of the work of creating mprofile to <filter>.
+          Delegated most of the work of creating mprofile to <filter>.
 
-	* tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.cpp:
 
-	  - Renamed TAO_Server_Policy_Acceptor_Filter class to
-	  TAO_Server_Protocol_Acceptor_Filter.
+          - Renamed TAO_Server_Policy_Acceptor_Filter class to
+          TAO_Server_Protocol_Acceptor_Filter.
 
-	 - Reimplemented the class in accordance with the changes in
-	  Acceptor_Filter.h above.  This fixes incorrect profile ordering
-	  with ServerProtocolPolicy bug introduced with separation of
-	  PortableServer.
+         - Reimplemented the class in accordance with the changes in
+          Acceptor_Filter.h above.  This fixes incorrect profile ordering
+          with ServerProtocolPolicy bug introduced with separation of
+          PortableServer.
 
-	 - Added new concrete filter class, TAO_Default_Acceptor_Filter,
-	  which implements the default strategy of including all endpoints
-	  into mprofile.
+         - Added new concrete filter class, TAO_Default_Acceptor_Filter,
+          which implements the default strategy of including all endpoints
+          into mprofile.
 
-	* tao/ORB_Core.cpp (create_stub_object):
+        * tao/ORB_Core.cpp (create_stub_object):
 
-	  Added a check that mprofile contains at least one profile.
+          Added a check that mprofile contains at least one profile.
 
 Thu Sep  7 16:09:30 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.cpp (string_copy):
-	* tao/corbafwd.cpp (string_dup):
-	* tao/corbafwd.i (string_alloc, string_free):
+        * tao/ORB.cpp (string_copy):
+        * tao/corbafwd.cpp (string_dup):
+        * tao/corbafwd.i (string_alloc, string_free):
 
-	  Changed usage of "CORBA::Char *" to "char *."  Both are
-	  equivalent, but the latter is consistent with the CORBA C++
-	  mapping.
+          Changed usage of "CORBA::Char *" to "char *."  Both are
+          equivalent, but the latter is consistent with the CORBA C++
+          mapping.
 
-	  (string_alloc, wstring_alloc):
+          (string_alloc, wstring_alloc):
 
-	  Use "ACE_NEW_RETURN" macro instead "new" operator.
+          Use "ACE_NEW_RETURN" macro instead "new" operator.
 
 Thu Sep  7 15:59:23 2000  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+          (visit_operation):
 
-	  Added missing space between argument type and argument name in
-	  the generated code.  This fixes a syntax error in the generated
-	  code.
+          Added missing space between argument type and argument name in
+          the generated code.  This fixes a syntax error in the generated
+          code.
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
+          (visit_operation):
 
-	  Cosmetic update to generated code.
+          Cosmetic update to generated code.
 
 Thu Sep 07 14:06:40 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  Once the ORB Core pointer has been added to the ORB table,
-	  release it from the Auto_Ptr since the ORB table owns it at that
-	  point.
+          Once the ORB Core pointer has been added to the ORB table,
+          release it from the Auto_Ptr since the ORB table owns it at that
+          point.
 
-	* tao/ORB_Core.cpp (bind):
+        * tao/ORB_Core.cpp (bind):
 
-	  Make sure that the supplied ORB core pointer is valid,
-	  i.e. non-zero.
+          Make sure that the supplied ORB core pointer is valid,
+          i.e. non-zero.
 
-	  Do not increase the reference count on the ORB Core.  Once the
-	  ORB core has been added to the ORB table, the ORB table owns
-	  it, and is therefore responsible for destroying it.
+          Do not increase the reference count on the ORB Core.  Once the
+          ORB core has been added to the ORB table, the ORB table owns
+          it, and is therefore responsible for destroying it.
 
-	  Only set the "first_orb_" member if the given ORB Core was
-	  successfully added to the ORB table.
+          Only set the "first_orb_" member if the given ORB Core was
+          successfully added to the ORB table.
 
-	  (~TAO_ORB_Table):
+          (~TAO_ORB_Table):
 
-	  Fixed memory access violation that was caused by the fact the
-	  loop that decremented the reference count on each ORB Core in
-	  the table was an infinite loop.  The table iterator was not
-	  incremented after each loop iteration, so the loop ran
-	  endlessly, which in turn caused _decr_refcnt() to be called on
-	  an ORB Core that was destroyed in a previous loop iteration.
-	  This problem also prevented other registered ORBs from being
-	  destroyed properly.
+          Fixed memory access violation that was caused by the fact the
+          loop that decremented the reference count on each ORB Core in
+          the table was an infinite loop.  The table iterator was not
+          incremented after each loop iteration, so the loop ran
+          endlessly, which in turn caused _decr_refcnt() to be called on
+          an ORB Core that was destroyed in a previous loop iteration.
+          This problem also prevented other registered ORBs from being
+          destroyed properly.
 
-	* tao/Adapter.cpp (~TAO_Adapter_Registry):
+        * tao/Adapter.cpp (~TAO_Adapter_Registry):
 
-	  Attempt to deallocate the underlying adapter array in case the
-	  adapter registry was not closed properly.  This fixes a leak
-	  that occured when ORB Core initialization was prematurely
-	  terminated due to errors.
+          Attempt to deallocate the underlying adapter array in case the
+          adapter registry was not closed properly.  This fixes a leak
+          that occured when ORB Core initialization was prematurely
+          terminated due to errors.
 
-	* TAOACE.dsw:
+        * TAOACE.dsw:
 
-	  Added Security Service related projects to this MSVC++ workspace
-	  file.
+          Added Security Service related projects to this MSVC++ workspace
+          file.
 
-	* orbsvcs/orbsvcs/SSLIOP.dsp:
-	* orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
 
-	  Added missing TAO_PortableServer{d}.lib and corresponding
-	  library path to the link input information for this project
-	  file.
+          Added missing TAO_PortableServer{d}.lib and corresponding
+          library path to the link input information for this project
+          file.
 
-	* orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
 
-	  Fixed `test.idl' custom build step.
+          Fixed `test.idl' custom build step.
 
 Thu Sep  7 15:02:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
+        * TAO_IDL/be/be_visitor_argument/paramlist.cpp:
 
-	  Added code to strip away the typedef (if any) from the node
-	  type, before generating code base on that type. Thanks to
-	  Erik Johannes <ejohannes@oresis.com> for reporting that
-	  generated code was trying to insert a bare octet (unsigned
-	  char) into an Any when the octet argument is typedef'd. Also
-	  made numereous cosmetic changes to source code and generated
-	  code.
+          Added code to strip away the typedef (if any) from the node
+          type, before generating code base on that type. Thanks to
+          Erik Johannes <ejohannes@oresis.com> for reporting that
+          generated code was trying to insert a bare octet (unsigned
+          char) into an Any when the octet argument is typedef'd. Also
+          made numereous cosmetic changes to source code and generated
+          code.
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
 
-	  Cosmetic changes to source code and generated code.
+          Cosmetic changes to source code and generated code.
 
 Thu Sep  7 13:57:07 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* Added a number of updated Makefile.bor files so that things
-	  work better with Borland C++.  Thanks to Johnny Willemsen
+        * Added a number of updated Makefile.bor files so that things
+          work better with Borland C++.  Thanks to Johnny Willemsen
           <Johnny.Willemsen@meco.nl> for reporting this.
 
 Thu Sep  7 10:29:40 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
-	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
 
-	  Fixed some project settings in the FE and BE static library
-	  projects.
+          Fixed some project settings in the FE and BE static library
+          projects.
 
 Thu Sep  7 00:46:40 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
-	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.i:
-	  Implements the AdminProperties interface methods.
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.i:
+          Implements the AdminProperties interface methods.
 
-	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h:
-	  Buffering Strategy used for MT Worker tasks.
-	  Handles discard and order policies.
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h:
+          Buffering Strategy used for MT Worker tasks.
+          Handles discard and order policies.
 
-	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h:
-	  Split the Notify_worker as reactive and MT.
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h:
+          Split the Notify_worker as reactive and MT.
 
-	* orbsvcs/orbsvcs/Makefile.CosNotification:
-	* orbsvcs/orbsvcs/CosNotification.dsp:
-	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
-	  Added new files, updated dependencies.
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+          Added new files, updated dependencies.
 
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
-	  Delegate admin properties get/set to TAO_Notify_AdminProperties.
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+          Delegate admin properties get/set to TAO_Notify_AdminProperties.
 
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
-	  Added  TAO_Notify_AdminProperties member.
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
+          Added  TAO_Notify_AdminProperties member.
 
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
- 	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
- 	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
-	  on_connect and on_disconnect methods count number of consumers
-	  and suppliers connected to the channel.
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
+          on_connect and on_disconnect methods count number of consumers
+          and suppliers connected to the channel.
 
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp:
- 	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h:
-	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
-	  Changes related to accomodating the TAO_Notify_MT_Worker and
-	  minor corrections.
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+          Changes related to accomodating the TAO_Notify_MT_Worker and
+          minor corrections.
 
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
-	  The usage message was printed incorrectly, fixed it.
-	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
-	  Added a priorities to events. Showing how the channel reorders
-	  according to priority is difficult - i had to put a sleep(1)
-	  statement (temporary) in the TAO_Notify_MT_Task's svc method to
-	  slow it down enough to see priorities in action.
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+          The usage message was printed incorrectly, fixed it.
+        * orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+          Added a priorities to events. Showing how the channel reorders
+          according to priority is difficult - i had to put a sleep(1)
+          statement (temporary) in the TAO_Notify_MT_Task's svc method to
+          slow it down enough to see priorities in action.
 
-	* orbsvcs/tests/Notify/Basic/Makefile:
-	* orbsvcs/tests/Notify/Basic/README:
-	  Updated.
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Basic/README:
+          Updated.
 
-	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
-	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.h:
-	  Test for the newly added EC Admin QoS properties.
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.h:
+          Test for the newly added EC Admin QoS properties.
 
 07 01:04:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -247,68 +269,68 @@ Thu Sep  7 00:46:40 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 Wed Sep  6 20:15:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/bevisitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/bevisitor_exception/exception_cs.cpp:
 
-	  Removed generation of extra string_dup of repository id
-	  when passed to the base class constructor of a user
-	  exception. The base class constructory duplicates the
-	  string.
+          Removed generation of extra string_dup of repository id
+          when passed to the base class constructor of a user
+          exception. The base class constructory duplicates the
+          string.
 
-	* TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
 
-	  Increased the length of the tao_idl command line buffer
-	  from the ACE default of 1024 to 4096. Some complex
-	  applications were exceeding the default length.
+          Increased the length of the tao_idl command line buffer
+          from the ACE default of 1024 to 4096. Some complex
+          applications were exceeding the default length.
 
-	  Thanks to Jeff Butler <jeff@panasas.com> for reporting
-	  the above bugs.
+          Thanks to Jeff Butler <jeff@panasas.com> for reporting
+          the above bugs.
 
-	* TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/tao_idl.cpp:
 
-	  If the -d (AST dump) option was used with the IDl compiler,
-	  a null ostream was being passed to the dump function. Thanks
-	  to Roland Rüdenauer <roland.ruedenauer@freenet.de> for reporting
-	  this bug.
+          If the -d (AST dump) option was used with the IDl compiler,
+          a null ostream was being passed to the dump function. Thanks
+          to Roland Rüdenauer <roland.ruedenauer@freenet.de> for reporting
+          this bug.
 
-	* TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
 
-	  The dump function was reporting an error if the visibility
-	  value was vis_NA (not applicable). This is incorrect - that
-	  value is legitimate if the field does not belong to a
-	  valuetype, so the error output was removed.
+          The dump function was reporting an error if the visibility
+          value was vis_NA (not applicable). This is incorrect - that
+          value is legitimate if the field does not belong to a
+          valuetype, so the error output was removed.
 
 Wed Sep  6 20:02:25 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Client_Propagated/run_test.pl:
+        * tests/RTCORBA/Client_Propagated/run_test.pl:
 
-	  Removed unused code.
+          Removed unused code.
 
-	* tests/Makefile.bor:
+        * tests/Makefile.bor:
 
-	  Added all subdirectories that contain Borland makefiles into
-	  this makefile.
+          Added all subdirectories that contain Borland makefiles into
+          this makefile.
 
-	* tests/RTCORBA/Client_Propagated/server.cpp
-	* tests/RTCORBA/Client_Propagated/client.cpp
-	* tests/RTCORBA/Server_Protocol/server.cpp
-	* tests/RTCORBA/Server_Protocol/client.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp
+        * tests/RTCORBA/Client_Propagated/client.cpp
+        * tests/RTCORBA/Server_Protocol/server.cpp
+        * tests/RTCORBA/Server_Protocol/client.cpp:
 
-	  Added source code protection if RT_CORBA is not supported.
+          Added source code protection if RT_CORBA is not supported.
 
-	* tests/RTCORBA/Server_Protocol/README
-	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf
-	* tests/RTCORBA/Server_Protocol/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/README
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
 
-	  Set up tests for multiple configurations and populated README.
+          Set up tests for multiple configurations and populated README.
 
-	* tests/RTCORBA/Client_Propagated/client.cpp
-	* tests/RTCORBA/Client_Propagated/README:
+        * tests/RTCORBA/Client_Propagated/client.cpp
+        * tests/RTCORBA/Client_Propagated/README:
 
-	  Added a check that enough priority levels are available.
+          Added a check that enough priority levels are available.
 
-	* tests/RTCORBA/README:
+        * tests/RTCORBA/README:
 
-	  Updated.
+          Updated.
 
 Wed Sep 06 19:09:39 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

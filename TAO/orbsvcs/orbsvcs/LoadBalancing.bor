@@ -24,12 +24,12 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_LOADBALANCING_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_LOADBALANCING_CFLAGS) \
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_LOADBALANCING_CFLAGS) \
 	-DTAO_LOADBALANCING_BUILD_DLL
-!endif
 
 CPPDIR = .;LoadBalancing
 
@@ -38,13 +38,14 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\LoadBalancing
 INCLUDES = LoadBalancing\*.h LoadBalancing\*.i
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
 
-all: idl_src_files loadbalancing_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-loadbalancing_lib: $(TARGET)
 
 
 #
