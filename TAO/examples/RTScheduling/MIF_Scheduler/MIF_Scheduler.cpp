@@ -410,6 +410,21 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
 					     0
 					     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  lock_.acquire ();
+  if (ready_que_.message_count () > 0)
+    {
+      current_->the_priority (1
+			      ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      DT* run_dt;
+      ACE_Message_Block* msg;
+      ready_que_.dequeue_head (msg);
+      run_dt = ACE_dynamic_cast (DT*, msg);
+      run_dt->resume ();
+    }
+  lock_.release ();
+
 }
 
 void
@@ -422,6 +437,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
+
 
   IOP::ServiceContext* serv_cxt =
     request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
@@ -488,8 +504,8 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
   new_dt->suspend ();
   lock_.release ();
   */
-
   lock_.acquire ();
+
   /*
   if (ready_que_.message_count () > 0)
     {
@@ -625,6 +641,44 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
+  MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
+    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter (ACE_ENV_SINGLE_ARG_PARAMETER));
+  ACE_CHECK;
+
+  int importance = sched_param_var->importance ();
+  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (int));
+  ACE_OS::memcpy (int_buf,
+		  &importance,
+		  sizeof (int));
+
+  RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_ARG_PARAMETER);
+
+  int gu_id;
+  ACE_OS::memcpy (&gu_id,
+		  guid->get_buffer (),
+		  guid->length ());
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"MIF_Scheduler::receive_reply Guid = %d Imp = %d\n",
+		gu_id,
+		importance));
+
+
+  DT* new_dt;
+  ACE_NEW (new_dt,
+	   DT (this->lock_,
+	       gu_id));
+
+  new_dt->msg_priority (importance);
+
+  lock_.acquire ();
+  ready_que_.enqueue_prio (new_dt);
+  current_->the_priority (0
+			  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  new_dt->suspend ();
+  lock_.release ();
 }
 
 void
@@ -633,6 +687,43 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
+
+
+
+  MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
+    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter (ACE_ENV_SINGLE_ARG_PARAMETER));
+  ACE_CHECK;
+
+  int importance = sched_param_var->importance ();
+  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (int));
+  ACE_OS::memcpy (int_buf,
+		  &importance,
+		  sizeof (int));
+
+  RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_ARG_PARAMETER);
+
+  int gu_id;
+  ACE_OS::memcpy (&gu_id,
+		  guid->get_buffer (),
+		  guid->length ());
+
+
+
+  DT* new_dt;
+  ACE_NEW (new_dt,
+	   DT (this->lock_,
+	       gu_id));
+
+  new_dt->msg_priority (importance);
+
+  lock_.acquire ();
+  ready_que_.enqueue_prio (new_dt);
+  current_->the_priority (0
+			  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  new_dt->suspend ();
+  lock_.release ();
+
 }
 
 void
@@ -641,6 +732,39 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))
 {
+
+ MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
+    MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter (ACE_ENV_SINGLE_ARG_PARAMETER));
+  ACE_CHECK;
+
+  int importance = sched_param_var->importance ();
+  CORBA::Octet *int_buf = CORBA::OctetSeq::allocbuf (sizeof (int));
+  ACE_OS::memcpy (int_buf,
+		  &importance,
+		  sizeof (int));
+
+  RTScheduling::Current::IdType* guid = current_->id (ACE_ENV_ARG_PARAMETER);
+
+  int gu_id;
+  ACE_OS::memcpy (&gu_id,
+		  guid->get_buffer (),
+		  guid->length ());
+
+
+  DT* new_dt;
+  ACE_NEW (new_dt,
+	   DT (this->lock_,
+	       gu_id));
+
+  new_dt->msg_priority (importance);
+
+  lock_.acquire ();
+  ready_que_.enqueue_prio (new_dt);
+  current_->the_priority (0
+			  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  new_dt->suspend ();
+  lock_.release ();
 }
 
 void
