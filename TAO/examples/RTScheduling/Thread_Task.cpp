@@ -29,85 +29,6 @@ Thread_Task::Thread_Task (void)
 //  }
 
 
-int
-Thread_Task::activate_task (RTScheduling::Current_ptr current,
-			    CORBA::Policy_ptr sched_param,
-			    long flags,
-			    ACE_Time_Value* base_time,
-			    ACE_hrtime_t base_hr_time,
-			    ACE_Barrier* barrier
-			    ACE_ENV_ARG_DECL)
-{
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"Thread_Task::activate %d\n",
-		importance_));
-  
-  char msg [BUFSIZ];
-  ACE_OS::sprintf (msg, "Thread_Task::activate task\n");
-  dt_creator_->log_msg (msg);
-
-  barrier_ = barrier;
-   
-  base_time_ = base_time;
-
-  base_hr_time_ = base_hr_time;
-
-  current_ = RTScheduling::Current::_narrow (current
-					     ACE_ENV_ARG_PARAMETER);	
-  ACE_CHECK;
-
-  sched_param_ = CORBA::Policy::_duplicate (sched_param);
-
-  //  this->count_ = ++thread_count.value_i ();
-  
-  //    ACE_DEBUG ((LM_DEBUG,
-  //  	      "thr_id = %d \n importance = %d\n",
-  //  	      count_,
-  //  	      importance_));
-  
-  
-  pre_activate ();
-
-  
-  CORBA::ORB_var orb =  CORBA::ORB::_duplicate (dt_creator_->orb ());
-  TAO_ORB_Core* orb_core = orb->orb_core ();
-  long sched_policy =  orb_core->orb_params ()->sched_policy ();
-  
-
-  if (sched_policy == THR_SCHED_FIFO || sched_policy == THR_SCHED_RR)
-    {
-      //ACE_DEBUG ((LM_DEBUG, "Activated thread \n"));
-      
-      if (this->activate (flags,
-			  1,
-			  0,
-			  this->importance_) == -1)
-	{
-	  if (ACE_OS::last_error () == EPERM)
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       ACE_TEXT ("Insufficient privilege to run this test.\n")),
-			      -1);
-	}
-    }
-  else 
-    if (this->activate (flags,
-			1) == -1)
-      {
-	if (ACE_OS::last_error () == EPERM)
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     ACE_TEXT ("Insufficient privilege to run this test.\n")),
-			    -1);
-      }
-  
-  //    mutex_.acquire ();
-  //    while (!start_)
-  //      task_cond_.wait ();
-  //    mutex_.release ();
-  post_activate ();
-  return 0;
-}
 
 int
 Thread_Task::svc (void)
@@ -180,15 +101,6 @@ Thread_Task::perform_task (void)
   return 0;
 }
 
-void
-Thread_Task::pre_activate (void)
-{
-}
-
-void
-Thread_Task::post_activate (void)
-{
-}
 
 const char*
 Thread_Task::job (void)
@@ -207,7 +119,6 @@ Thread_Task::dist (void)
 {
   return this->dist_;
 }
-
 
 void
 Thread_Task::dump_stats (void)

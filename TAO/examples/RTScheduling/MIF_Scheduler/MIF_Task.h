@@ -16,10 +16,18 @@ class MIF_Task : public Thread_Task
 	    DT_Creator *dt_creator);
 
   ~MIF_Task (void);
+
+  virtual int activate_task (RTScheduling::Current_ptr current,
+			     CORBA::Policy_ptr sched_param,
+			     long flags,
+			     ACE_Time_Value* base_time
+			     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
   virtual int perform_task (void);
   
-  virtual void pre_activate (void);
-  virtual void post_activate (void);
+ private:
+  void pre_activate (void);
+  void post_activate (void);
 };
 
 #endif /*MIF_TASK_H*/

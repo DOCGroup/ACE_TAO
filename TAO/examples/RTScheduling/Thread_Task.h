@@ -22,23 +22,18 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
 
   Thread_Task (void);
 
-  int activate_task (RTScheduling::Current_ptr current,
-		     CORBA::Policy_ptr sched_param,
-		     long flags,
-		     ACE_Time_Value* base_time,
-		     ACE_hrtime_t base_hr_time,
-		     ACE_Barrier* barrier
-		     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+  virtual int activate_task (RTScheduling::Current_ptr current,
+			     CORBA::Policy_ptr sched_param,
+			     long flags,
+			     ACE_Time_Value* base_time
+			     ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+  
   virtual int perform_task (void);
   
   int importance (void);
 
   int start_time (void);
 
-  virtual void pre_activate (void);
-  virtual void post_activate (void);
-  
   /// = Job get/set
   /// Returns the name of the Job exec'ed by this Task.
   const char* job (void);
@@ -59,12 +54,10 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   int load_;
   int iter_;
   int count_;
-  ACE_Barrier* barrier_;
   int importance_;
   DT_Creator *dt_creator_;
   //Task *task_;
   ACE_Time_Value* base_time_;
-  ACE_hrtime_t base_hr_time_;
   int dist_;
   char *job_name_;
   Job_var job_;
