@@ -1,3 +1,16 @@
+Thu Sep 26 17:06:11 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tao/Any.cpp: In operator<< (TAO_OutputCDR& cdr, const CORBA::Any
+	  &), we could make use of the CDR inside the Any and append that
+	  to the CDR stream instead of doing an interpretive marshalling
+	  on the Any. We cannot do this if the byte orders of the CDR and
+	  the Any are different. Hence we have a conditional optimization
+	  that appends the CDR from the Any only if the byte orders are
+	  same, else it will fallback to do an interpretive marshalling. 
+
+	  Thanks to Eric Malenfant <EMalenfant@interstarinc.com> for
+	  suggesting this.
+
 Thu Sep 26 16:07:18 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_field/field_ch.cpp:
