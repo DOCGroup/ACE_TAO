@@ -12,6 +12,7 @@
 //    }
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_main.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
@@ -26,7 +27,7 @@ ACE_RCSID(Threads, task_three, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-static ofstream *out_stream = 0;
+static ACE_OSTREAM_TYPE *out_stream = 0;
 static sig_atomic_t done = 0;
 static const size_t NUM_INVOCATIONS = 100;
 static const size_t TASK_COUNT = 130;
@@ -183,10 +184,15 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
   if (argc > 1)
     {
       // Send output to file.
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       ACE_NEW_RETURN (out_stream,
                       ofstream ("test_task_three.out",
                                 ios::trunc|ios::out),
                       -1);
+#else
+	  if ( (out_stream = ACE_OS::fopen("test_task_three.out", "w")) == NULL )
+		return -1;
+#endif
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (out_stream);
     }
@@ -235,8 +241,13 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
 
   if (argc > 1)
     {
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       *out_stream << flush;
       out_stream->close ();
+#else
+	  ACE_OS::fflush(out_stream);
+	  ACE_OS::fclose(out_stream);
+#endif
     }
 
   // Bail out here so that we don't call the destructors for the tasks..
