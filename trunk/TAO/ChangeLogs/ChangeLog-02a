@@ -1,3 +1,12 @@
+Mon Jul 16 14:25:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_State.cpp (read_ulong): Looks like some of the
+	  compilers  have problems when they try to dereference a pointer
+	  got out of reinterpret_cast'ing another pointer.  The problem
+	  showed up on solaris builds. The fix that has been applied is to
+	  make a local copy on the stack of the data that is needed before
+	  calling a reinterpret_cast on it.
+
 Mon Jul 16 11:44:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/server.cpp: The reply sent was too huge. The bug

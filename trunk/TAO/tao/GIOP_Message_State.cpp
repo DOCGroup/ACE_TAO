@@ -248,27 +248,27 @@ TAO_GIOP_Message_State::read_ulong (char *rd_ptr)
 {
   CORBA::ULong x = 0;
 
-  // @@todo: This is so funny.. I am not sure why and with what in
-  // mind I had aligned this to 4 byte boundary when I was reading
-  // from the stream. Maybe when I was a kid:-). This definitely
-  // creates problems. Maybe we should revisit this if there is a
-  // pellmell.
-  // size_t msg_size = 4;
-
-  // char *buf = ACE_ptr_align_binary (rd_ptr,
-  //                                msg_size);
+  // We dont need to do this sort of copy. But some compilers (read it
+  // as solaris ones) have a problem in deferencing from the
+  // reinterpret_cast pointer of the <rd_ptr>, as the <rd_ptr> can be
+  // on stack. So let us go ahead with this copying...
+  char buf [4];
+  buf[0] = *rd_ptr;
+  buf[1] = *(rd_ptr + 1);
+  buf[2] = *(rd_ptr + 2);
+  buf[3] = *(rd_ptr + 3);
 
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
   if (!(this->byte_order_ != ACE_CDR_BYTE_ORDER))
     {
-      x = *ACE_reinterpret_cast (ACE_CDR::ULong*, rd_ptr);
+      x = *ACE_reinterpret_cast (ACE_CDR::ULong*, buf);
     }
   else
     {
-      ACE_CDR::swap_4 (rd_ptr, ACE_reinterpret_cast (char*, &x));
+      ACE_CDR::swap_4 (buf, ACE_reinterpret_cast (char*, &x));
     }
 #else
-  x = *ACE_reinterpret_cast(ACE_CDR::ULong*, rd_ptr);
+  x = *ACE_reinterpret_cast(ACE_CDR::ULong*, buf);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
   return x;
