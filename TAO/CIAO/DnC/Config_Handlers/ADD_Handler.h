@@ -1,14 +1,14 @@
 //==================================================================
 /**
- *  @file  DP_Handler.h
+ *  @file  ADD_Handler.h
  *
  *  $Id$
  *
  *  @author Aniruddha S. Gokhale <gokhale@dre.vanderbilt.edu>
  */
 //=====================================================================
-#ifndef DP_HANDLER_H
-#define DP_HANDLER_H
+#ifndef ADD_HANDLER_H
+#define ADD_HANDLER_H
 #include /**/ "ace/pre.h"
 
 #include "DeploymentC.h"
@@ -47,39 +47,45 @@ namespace CIAO
   namespace Config_Handler
   {
     /**
-     * @class DP_Handler
+     * @class ADD_Handler
      *
-     * @brief Handler class for <DeploymentPlanning> type 
+     * @brief Handler class for <ArtifactDeploymentDescription> type 
      *
      * This class is within the Execution Data Model subpackage of the
      * Deployment & Configuration package.
      *
      * This class defines handler methods to parse the aforementioned type
-     * in the descriptor files. The corresponding CORBA IDL type for this
+     * in the description files. The corresponding CORBA IDL type for this
      * element is returned.
      */
 
-    class Config_Handler_Export DP_Handler
+    class Config_Handler_Export ADD_Handler
     {
     public:
 
       /// constructor
-      DP_Handler (DOMDocument* doc, unsigned long filter_);
+      ADD_Handler (DOMDocument* doc, unsigned long filter_);
 
       /// constructor
-      DP_Handler (DOMNodeIterator* iter, bool release = false);
+      ADD_Handler (DOMNodeIterator* iter, bool release = false);
 
       /// destructor
-      ~DP_Handler(void);
+      ~ADD_Handler(void);
 
-      /// Process the deployment plan
-      void process_DeploymentPlan (::Deployment::DeploymentPlan &dp);
+      /// Process the artifact deployment description
+      void process_ArtifactDeploymentDescription (::Deployment::ArtifactDeploymentDescription &add);
 
-      /// Process the label attribute
-      void process_label (const XMLCh* name, ::Deployment::DeploymentPlan &dp);
+      /// Process the name attribute
+      void process_name (const XMLCh* name, ::Deployment::ArtifactDeploymentDescription &add);
 
-      /// Process the UUID attribute
-      void process_UUID (const XMLCh* name, ::Deployment::DeploymentPlan &dp);
+      /// Process the location attribute
+      void process_location (const XMLCh* location, ::Deployment::ArtifactDeploymentDescription &add);
+
+      /// Process the node attribute
+      void process_node (const XMLCh* node, ::Deployment::ArtifactDeploymentDescription &add);
+
+      /// Process the source attribute
+      void process_source (const XMLCh* source, ::Deployment::ArtifactDeploymentDescription &add);
 
     private:
 
@@ -99,4 +105,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* DP_HANDLER_H */
+#endif /* ADD_HANDLER_H */
