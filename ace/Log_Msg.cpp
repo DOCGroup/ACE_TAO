@@ -1010,7 +1010,3 @@ ACE_Log_Msg::getpid (void) const
 
   return ACE_Log_Msg::pid_;
 }
-
-// #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-// ACE_MT (template class ACE_Guard<ACE_Thread_Mutex>);
-// #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
