@@ -188,7 +188,7 @@ public:
   // maintain high priority traffic as long as low priority traffic is
   // going through.
 
-  ACE_Thread_Semaphore *semaphore_;
+  ACE_SYNCH_SEMAPHORE *semaphore_;
   // semaphore in order for the high priority client to keep running
   // as long as the low priority clients are running.  See explanation
   // of "high_priority_loop_count_" member in this class.
