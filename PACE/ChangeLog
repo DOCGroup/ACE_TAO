@@ -1,3 +1,7 @@
+Fri Jul 28 18:11:24 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * RAEDME: mention LynxOS' non-standard signal interface.
+
 Fri Jul 28 15:54:38 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * tests/Makefile:
@@ -12,7 +16,7 @@ Fri Jul 28 15:54:38 2000  Joe Hoffert  <joeh@cs.wustl.edu>
           Fixed sigwait and signal for LynxOS (at least for building
           pace).
 
-        * pace/posix/time.inl: 
+        * pace/posix/time.inl:
         * pace/posix/pwd.inl:
         * pace/posix/grp.inl:
         * pace/posix/dirent.inl:
@@ -31,7 +35,7 @@ Fri Jul 28 15:54:38 2000  Joe Hoffert  <joeh@cs.wustl.edu>
           Modified to use bin/ace_components rather than
           bin/pace_components (which is going away).
 
-        * include/makeinclude/rules.common.GNU: 
+        * include/makeinclude/rules.common.GNU:
           Adding -D_POSIX_PTHREAD_SEMANTICS (if threads == 1)
           and -D_REENTRANT for SunOS so they get defined before
           any include files.

@@ -43,3 +43,7 @@ systems.  For example:
   prototypes (and its implementation casts as necessary for
   compatibility).
 
+* LynxOS 3.1.0 has a non-POSIX signal () interface; the handler function
+  prototype is not void (*) (int).  PACE adapts its interface to the
+  POSIX standard interface.
+
