@@ -1,3 +1,8 @@
+Wed Mar 28 17:35:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp (overlaps): Fixed a warning in
+	  Core builds. 
+
 Wed Mar 28 17:05:03 2001  Sharath Cholleti  <sharath@cs.wustl.edu>
 
 	* tao/Stub.cpp: Use all the profiles instead of <profile_in_use_>

@@ -155,104 +155,100 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                    CosTime::TIO_out overlap,
-                   CORBA::Environment &ACE_TRY_ENV)
+                   CORBA::Environment & ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio_i = 0;
 
-  ACE_TRY
+  TimeBase::TimeT lb1 =
+    this->time_interval ().lower_bound;
+
+  TimeBase::TimeT up1 =
+    this->time_interval ().upper_bound;
+
+  TimeBase::TimeT lb2 =
+    tio->time_interval ().lower_bound;
+
+  TimeBase::TimeT up2 =
+    tio->time_interval ().upper_bound;
+
+  if (lb1 == lb2 && up1 == up2)
     {
-      TimeBase::TimeT lb1 =
-        this->time_interval ().lower_bound;
+      ACE_NEW_THROW_EX (tio_i,
+                        TAO_TIO (lb1, up1),
+                        CORBA::NO_MEMORY ());
 
-      TimeBase::TimeT up1 =
-        this->time_interval ().upper_bound;
+      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      TimeBase::TimeT lb2 =
-        tio->time_interval ().lower_bound;
+      overlap = tio_i->_this ();
 
-      TimeBase::TimeT up2 =
-        tio->time_interval ().upper_bound;
+      return CosTime::OTOverlap;
+    }
+  else if (lb1 > lb2 && up1 < up2)
+    {
+      ACE_NEW_THROW_EX (tio_i,
+                        TAO_TIO (lb1, up1),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      if (lb1 == lb2 && up1 == up2)
+      overlap = tio_i->_this ();
+
+      return CosTime::OTContained;
+    }
+  else if (lb1 < lb2 && up1 > up2)
+    {
+      ACE_NEW_THROW_EX (tio_i,
+                        TAO_TIO (lb2, up2),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+
+      overlap = tio_i->_this ();
+
+      return CosTime::OTContained;
+    }
+  else if (lb1 < lb2)
+    {
+      if (up1 < lb2)
         {
-          ACE_NEW_RETURN (tio_i,
-                          TAO_TIO (lb1, up1),
-                          CosTime::OTNoOverlap);
-
-          overlap = tio_i->_this ();
-
-          return CosTime::OTOverlap;
-        }
-      else if (lb1 > lb2 && up1 < up2)
-        {
-          ACE_NEW_RETURN (tio_i,
-                          TAO_TIO (lb1, up1),
-                          CosTime::OTNoOverlap);
-
-          overlap = tio_i->_this ();
-
-          return CosTime::OTContained;
-        }
-      else if (lb1 < lb2 && up1 > up2)
-        {
-          ACE_NEW_RETURN (tio_i,
-                          TAO_TIO (lb2, up2),
-                          CosTime::OTNoOverlap);
-
-          overlap = tio_i->_this ();
-
-          return CosTime::OTContained;
-        }
-      else if (lb1 < lb2)
-        {
-          if (up1 < lb2)
-            {
-              ACE_NEW_RETURN (tio_i,
-                              TAO_TIO (0, 0),
-                              CosTime::OTNoOverlap);
-
-              overlap = tio_i->_this ();
-
-              return CosTime::OTNoOverlap;
-            }
-          else
-            {
-              ACE_NEW_RETURN (tio_i,
-                              TAO_TIO (lb2, up1),
-                              CosTime::OTNoOverlap);
-
-              overlap = tio_i->_this ();
-
-              return CosTime::OTOverlap;
-            }
-        }
-      else if (up2 < lb1)
-        {
-          ACE_NEW_RETURN (tio_i,
-                          TAO_TIO (0, 0),
-                          CosTime::OTNoOverlap);
-
+          ACE_NEW_THROW_EX (tio_i,
+                            TAO_TIO (0, 0),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
           overlap = tio_i->_this ();
 
           return CosTime::OTNoOverlap;
         }
       else
         {
-          ACE_NEW_RETURN (tio_i,
-                          TAO_TIO (lb1, up2),
-                          CosTime::OTNoOverlap);
+          ACE_NEW_THROW_EX (tio_i,
+                            TAO_TIO (lb2, up1),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
           overlap = tio_i->_this ();
 
+          return CosTime::OTOverlap;
         }
     }
-  ACE_CATCHANY
+  else if (up2 < lb1)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Exception:");
+      ACE_NEW_THROW_EX (tio_i,
+                        TAO_TIO (0, 0),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+
+      overlap = tio_i->_this ();
+
+      return CosTime::OTNoOverlap;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+  else
+    {
+      ACE_NEW_THROW_EX (tio_i,
+                        TAO_TIO (lb1, up2),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+      overlap = tio_i->_this ();
+    }
 
   return CosTime::OTNoOverlap;
 }
