@@ -848,17 +848,17 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 	  ACE_CString list_of_profiles;
 
 	  // Used by the strtok_r.
-	  char *lasts[BUFSIZ];
+	  char *lasts = 0;
 
 	  // Append the given object ID to all the end-points of
 	  // Default Init Ref.
 	  for (char *str = ACE_OS::strtok_r (default_init_ref,
                                              ",",
-                                             lasts);
+                                             &lasts);
 	       str != 0 ;
 	       str = ACE_OS::strtok_r (0,
                                        ",",
-                                       lasts))
+                                       &lasts))
 	    {
 	      list_of_profiles += ACE_CString (str);
 	      list_of_profiles += ACE_CString ("/");
@@ -1515,11 +1515,11 @@ CORBA_ORB::iioploc_string_to_object (const char *string,
   // Extract the comma separated profiles in the list and
   // populate the Multiple Profile.
   TAO_IIOP_Profile *pfile;
-  char *lasts[BUFSIZ];
+  char *lasts = 0;
 
-  for (char *str = ACE_OS::strtok_r (list_of_profiles.rep (), ",",lasts);
+  for (char *str = ACE_OS::strtok_r (list_of_profiles.rep (), ",", &lasts);
        str != 0 ;
-       str = ACE_OS::strtok_r (0, ",",lasts))
+       str = ACE_OS::strtok_r (0, ",",&lasts))
 
     {
       ACE_NEW_RETURN (pfile,
