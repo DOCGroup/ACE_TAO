@@ -84,22 +84,11 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 int
 Distributer_Receiver_Callback::handle_destroy (void)
 {
-  // Called when the sender requests the stream to be shutdown.
-  ACE_TRY_NEW_ENV
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Distributer_Callback::end_stream\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Distributer_Callback::end_stream\n"));
 
-      // We can close down now.
-      DISTRIBUTER::instance ()->done (1);
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Distributer_Receiver_Callback::handle_destroy Failed\n");
-      return -1;
-    }
-  ACE_ENDTRY;
+  // We can close down now.
+  DISTRIBUTER::instance ()->done (1);
 
   return 0;
 }
