@@ -175,7 +175,7 @@ CosEC_ServantBase::deactivate (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // Finally we go away..
-  CosEC_Utility_Methods<CosEC_Utility_NIL>::deactivate (this->thispoa_,
+  CosEC_Utility_Methods<CosEC_ServantBase>::deactivate (this->thispoa_,
                                                         this,
                                                         ACE_TRY_ENV);
   ACE_CHECK;
@@ -185,7 +185,7 @@ void
 CosEC_ServantBase::deactivate_rtec (CORBA::Environment &ACE_TRY_ENV)
 {
   // Deactivate the rtec.
-  CosEC_Utility_Methods<CosEC_Utility_NIL>::deactivate (this->poa_,
+  CosEC_Utility_Methods<CosEC_ServantBase>::deactivate (this->poa_,
                                                         this->rtec_servant_,
                                                         ACE_TRY_ENV);
   ACE_CHECK;
@@ -195,7 +195,7 @@ void
 CosEC_ServantBase::deactivate_cosec (CORBA::Environment &ACE_TRY_ENV)
 {
   // Deactivate the cosec.
-  CosEC_Utility_Methods<CosEC_Utility_NIL>::deactivate (this->poa_,
+  CosEC_Utility_Methods<CosEC_ServantBase>::deactivate (this->poa_,
                                                         this->cosec_servant_,
                                                         ACE_TRY_ENV);
   ACE_CHECK;
