@@ -1,7 +1,15 @@
+Thu May 08 15:03:17 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * bin/msvc_auto_compile.pl:
+
+          Added IORInterceptor, ObjRefTemplate, and Valuetype into the -LIB
+          -CORE list. I think the absence was causing the failures to build
+          the Naming Service in the static builds.
+
 Thu May  8 06:44:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/topinfo_iorsize_stats.sh (FILES): Fixed a typo in the
-	  script! 
+	  script!
 
 Wed May  7 17:51:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -22,7 +30,7 @@ Wed May  7 17:02:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* bin/MakeProjectCreator/config/ciao_component.mpb: Added the
 	  required libraries to build the server. This was necessitated by
 	  the recent subsetting in TAO.
-	
+
 Wed May  7 17:25:49 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/Service_Config.h: Added description of the -s option to
@@ -38,7 +46,7 @@ Wed May  7 12:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* bin/topinfo_iorsize_stats.sh (FILES): Removed the memory
 	  tracking on the client side since its of no use. Added code to
 	  collect the actual size of the server growth once data is
-	  marshalled. 
+	  marshalled.
 
 	* bin/generate_topinfo_stats.sh: Used the 4th argument to plot
 	  information on the y axis.
