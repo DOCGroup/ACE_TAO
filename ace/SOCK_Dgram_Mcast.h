@@ -129,6 +129,7 @@ private:
             int protocol = 0,
             int reuse_addr = 0);
 
+#if !defined (ACE_HAS_WINCE)
   /// Not publically visible.
   int open (const ACE_Addr &mcast_addr,
             const ACE_QoS_Params &qos_params,
@@ -138,6 +139,7 @@ private:
             ACE_SOCK_GROUP g = 0,
             u_long flags = 0,
             int reuse_addr = 0);
+#endif  // ACE_HAS_WINCE
 
   /// Subscribe to the multicast interface using BSD-style semantics
   /// (no QoS).
