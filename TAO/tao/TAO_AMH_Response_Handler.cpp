@@ -83,7 +83,7 @@ TAO_AMH_Response_Handler::init_reply (void)
         }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\tgenerating reply header ... \n")));
-      this->mesg_base_->generate_reply_header (this->_tao_out_,
+      this->mesg_base_->generate_reply_header (this->_tao_out,
                                                reply_params);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Done Initialising RH. \n")));
     }
@@ -110,7 +110,7 @@ void TAO_AMH_Response_Handler::send_reply (void)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_RH sending message ... \n")));
 
       // Send the message.
-      int result = this->transport_->send_message (this->_tao_out_);
+      int result = this->transport_->send_message (this->_tao_out);
 
       if (result == -1)
         {
