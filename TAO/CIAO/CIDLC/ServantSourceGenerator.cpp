@@ -3,11 +3,10 @@
 // cvs-id    : $Id$
 
 #include "ServantSourceGenerator.hpp"
-
-#include "CCF/CodeGenerationKit/Regex.hpp"
-
 #include "Literals.hpp"
 #include "TypeNameEmitter.hpp"
+
+#include "CCF/CodeGenerationKit/Regex.hpp"
 
 #include <ostream>
 #include <sstream>
@@ -15,28 +14,6 @@
 using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
 using namespace StringLiterals;
-
-namespace
-{
-  std::string
-  servant_name (Type& t)
-  {
-    std::ostringstream os;
-    os << "::CIAO_GLUE";
-
-    ScopedName scope (t.scoped_name ().scope_name ());
-    Name stripped (scope.begin () + 1, scope.end ());
-      
-    if (!stripped.str ().empty ())
-    {
-      os << "_" << stripped;
-    }
-
-    os << "::" << t.name () << "_Servant";
-
-    return os.str ();
-  }
-}
 
 namespace
 {
@@ -3079,7 +3056,9 @@ namespace
          << "}" << endl
          << "return new" << endl;
 
-      os << servant_name (t) << " (" << endl
+      os << "::CIAO_GLUE"
+         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+         << "::" << t.name () << "_Servant (" << endl
          << "x.in ()," << endl
          << "c);" << endl
          << "}" << endl;
