@@ -113,36 +113,30 @@ TAO_Transport::handle_output ()
                   this->id ()));
     }
 
-  int retval;
-  do
+  // The flushing strategy (potentially via the Reactor) wants to send
+  // more data, first check if there is a current message that needs
+  // more sending...
+  int retval = this->drain_queue ();
+
+  if (TAO_debug_level > 4)
     {
-      // The reactor is asking us to send more data, first check if
-      // there is a current message that needs more sending:
-      retval = this->drain_queue ();
-
-      if (TAO_debug_level > 4)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::handle_output, "
-                      "drain_queue returns %d/%d\n",
-                      this->id (),
-                      retval, errno));
-        }
-
-      if (retval == 1)
-        {
-          // ... there is no current message or it was completely
-          // sent, time to check the queue....
-          // ... no more messages in the queue, cancel output...
-          TAO_Flushing_Strategy *flushing_strategy =
-            this->orb_core ()->flushing_strategy ();
-
-          flushing_strategy->cancel_output (this);
-          return 0;
-        }
-      // ... on Win32 we must continue until we get EWOULDBLOCK ...
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::handle_output, "
+                  "drain_queue returns %d/%d\n",
+                  this->id (),
+                  retval, errno));
     }
-  while (retval > 0);
+
+  if (retval == 1)
+    {
+      // ... there is no current message or it was completely
+      // sent, cancel output...
+      TAO_Flushing_Strategy *flushing_strategy =
+        this->orb_core ()->flushing_strategy ();
+
+      flushing_strategy->cancel_output (this);
+      return 0;
+    }
 
   // Any errors are returned directly to the Reactor
   return retval;
@@ -403,6 +397,8 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
         ace_mon.acquire ();
       }
+      ACE_ASSERT (synch_message.next () == 0);
+      ACE_ASSERT (synch_message.prev () == 0);
       synch_message.destroy ();
       return result;
     }
@@ -424,6 +420,7 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
   // ... insert at the head of the queue, we can use push_back()
   // because the queue is empty ...
 
+  queued_message->bytes_transferred (byte_count);
   queued_message->push_back (this->head_, this->tail_);
 
   // ... this is not a twoway.  We must check if the buffering
@@ -730,24 +727,15 @@ TAO_Transport::drain_queue (void)
 
   // We loop over all the elements in the queue ...
   TAO_Queued_Message *i = this->head_;
-  do
+  while (i != 0)
     {
       // ... each element fills the iovector ...
       i->fill_iov (IOV_MAX, iovcnt, iov);
 
-      // ... if the vector is not full we tack another message into
-      // the vector ...
-      if (iovcnt != IOV_MAX)
-        {
-          // Go for the next element in the list
-          i = i->next ();
-          continue;
-        }
-
-      // ... time to send data because the vector is full.  We need to
-      // loop because a single message can span multiple IOV_MAX
-      // elements ...
-      while (iovcnt == IOV_MAX)
+      // ... the vector is full, no choice but to send some data out.
+      // We need to loop because a single message can span multiple
+      // IOV_MAX elements ...
+      if (iovcnt == IOV_MAX)
         {
           size_t byte_count;
 
@@ -772,14 +760,16 @@ TAO_Transport::drain_queue (void)
               return -1;
             }
 
-          if (this->head_ == 0)
-            break;
-
-          /// Message <i> may have been only partially sent...
-          i->fill_iov (IOV_MAX, iovcnt, iov);
+          // ... start over, how do we guarantee progress?  Because if
+          // no bytes are sent send() can only return 0 or -1
+          ACE_ASSERT (byte_count != 0);
+          i = this->head_;
+          continue;
         }
+      // ... notice that this line is only reached if there is still
+      // room in the iovector ...
+      i = i->next ();
     }
-  while (this->head_ != 0);
 
   size_t byte_count;
   ssize_t retval =

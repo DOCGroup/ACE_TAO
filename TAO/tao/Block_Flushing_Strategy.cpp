@@ -23,7 +23,7 @@ int
 TAO_Block_Flushing_Strategy::flush_message (TAO_Transport *transport,
                                             TAO_Queued_Message *msg)
 {
-  while (!msg->done ())
+  while (!msg->all_data_sent ())
     {
       int result = transport->handle_output ();
       if (result == -1)

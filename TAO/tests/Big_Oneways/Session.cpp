@@ -51,6 +51,9 @@ Session::svc (void)
       CORBA::ULong session_count =
         this->other_sessions_.length ();
 
+      this->validate_connections (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       for (CORBA::ULong i = 0; i != this->message_count_; ++i)
         {
 #if 0
@@ -93,6 +96,25 @@ Session::svc (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Session::svc, end\n"));
   return 0;
+}
+
+void
+Session::validate_connections (CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::ULong session_count =
+    this->other_sessions_.length ();
+  for (CORBA::ULong i = 0; i != 100; ++i)
+    {
+      for (CORBA::ULong j = 0; j != session_count; ++j)
+        {
+          ACE_TRY
+            {
+              this->other_sessions_[j]->ping (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY {} ACE_ENDTRY;
+        }
+    }
 }
 
 void
@@ -154,6 +176,11 @@ Session::start (const Test::Session_List &other_sessions,
 }
 
 void
+Session::ping (CORBA::Environment &) ACE_THROW_SPEC (())
+{
+}
+
+void
 Session::receive_payload (const Test::Payload &the_payload,
                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -176,7 +203,7 @@ Session::receive_payload (const Test::Payload &the_payload,
     if (this->expected_messages_ < 500)
       verbose = (this->expected_messages_ % 100 == 0);
     if (this->expected_messages_ < 100)
-    verbose = (this->expected_messages_ % 10 == 0);
+      verbose = (this->expected_messages_ % 10 == 0);
 #endif /* 0 */
     if (this->expected_messages_ < 5)
       verbose = 1;

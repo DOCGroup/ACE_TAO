@@ -115,7 +115,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Waiting for peers . . . "));
       for (int i = 0;
-           i != 30 && !coordinator_impl->has_all_peers ();
+           i != 60 && !coordinator_impl->has_all_peers ();
            ++i)
         {
           ACE_Time_Value tv (1, 0);

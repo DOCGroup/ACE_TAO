@@ -75,9 +75,6 @@ public:
   /// Destructor
   virtual ~TAO_Queued_Message (void);
 
-  /// Return 0 if the message has not been completely sent
-  int done (void) const;
-
   /// The underlying connection has been closed, release resources and
   /// signal waiting threads.
   void connection_closed (void);

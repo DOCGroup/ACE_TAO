@@ -1,3 +1,30 @@
+Thu Apr 05 10:36:57 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+	  Remove the declaration of the done() method, the semantics were
+	  not clear and it was removed a couple of iterations ago.
+
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+	  Wait until all_data_sent() returns.
+
+        * tao/Transport.cpp:
+	  Cleanup handle_output() no need to loop, the drain_queue()
+	  method does that.
+	  After trying to send a message and blocking the send_message_i()
+	  method was not updating the new Asynch_Queued_Message with the
+	  number of bytes sent.
+	  drain_queue() loop was too complicated for its own sake.
+        
+	* tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/Session.cpp:
+	  Add methods to prime the connections among multiple clients.
+
+        * tests/Big_Oneways/server.cpp:
+	  Increase timeout for initial session registration.  Important
+	  for manual executions.
+
 Wed Apr  4 10:53:27 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
