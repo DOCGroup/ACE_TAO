@@ -37,7 +37,7 @@ option).</p>
 <blockquote>
 <P>Details for the following configurations are provided.</P>
 
-<UL> 
+<UL>
   <li><b><a href="#comp">Configurating key components</a>:</b>
       <ul>
         <li><a href="#concurrency">Server Concurrency Strategy.</a>
@@ -57,7 +57,7 @@ option).</p>
         <li><a href="#multiorb-tpool">Multiple threads,
             ORB-per-thread, thread-pool model.</a> (Not yet implemented.)
         <li>Each configuration has the following information:</p>
-            
+
             <table border=2 width="70%" cellspacing="2" cellpadding="0">
               <tr align=left>
                 <th> Typical Use </th>
@@ -99,62 +99,76 @@ option).</p>
 <h3>Configuring key components<a name="comp"></a></h3>
 
 <ul>
-  <li><a name="concurrency">Server concurrency strategy</a> specifies
-      the concurrency strategy an ORB uses.  It says nothing about how
-      many ORBs (or, threads) are there in a process.<p>
- 
+  <li><b><a name="concurrency">Server concurrency strategy</a></b>
+      specifies the concurrency strategy an ORB uses.  It says nothing
+      about how many ORBs (or, threads) are there in a process.<p>
+
       <ul>
         <li><code>reactive</code>: The ORB handles requests
             reactively, i.e., the ORB runs in one thread and service
             multiple requests/connections simultaneously using
             "<code>select</code>" call.  You can have multiple ORBs
             accepting requests reactively and running in separate
-            threads.<p> 
+            threads.<p>
 
         <li><code>thread-per-connection</code>: The ORB handles new
             connections by spawning a new thread whose job is to
             service requests coming from the connection.  The new
             threads inherits all properties from the ORB threads (see
-            below.) <p> 
+            below.) <p>
 
         <li><code>thread-pool</code> (not yet implemented):  ... to be
-            continued ... <p> 
+            continued ... <p>
 
       </ul><p>
 
-  <li><a name="orb">ORB and other resources.</a><p>
+  <li><b><a name="orb">ORB and other resources.</a></b><p>
 
       <ul>
         <li><code>global</code>: There's only one ORB process-wide.
-            ORB_init () must be called only once.  Every thread
-            accesses the same ORB.  <p>  
+            <code>ORB_init () </code>must be called only once.  Every
+            thread accesses the same ORB.  <p>
 
-        <li><code>tss</code>: In this case, the programmer is
-            responsible for spawning the ORB threads.  ORB_init must
-            be called for each ORB threads.  Any ORB spawned thread
-            shares the same resource the spawning ORB uses.<p>
+        <li><code>tss</code>: When using <code>tss</code> ORB,  the
+            programmer is responsible for spawning the ORB threads and
+            setting up the ORB by calling <code>ORB_init ()</code> for
+            each ORB threads.  Any ORB spawned thread (i.e., thru
+            thread-per-connection) shares the same resource the
+            spawning ORB uses.<p>
 
       </ul><p>
 
-  <li><a name="poa">POA.</a>
+  <li><b><a name="poa">POA.</a></b><p>
+
       <ul>
         <li><code>global</code>: All ORBs share the same POA.  The
-            advantage of this setting is that once an object is
-            registered under an ORB, it can be externalized from other
-            ORB.<p>
+            advantage of using a global POA is that once an object is
+            registered to the POA under an ORB, it can be externalized
+            from other ORB.<p>
 
         <li>per ORB (<code>tss</code>): Each ORB has its own POA,
-            which means, the programmer must also instantiate the POA
+            which means, the programmer should also instantiate the POA
             for each ORB (otherwise, a default RootPOA gets created,
             which might not be what you what and thus, is discouraged.)<p>
 
       </ul><p>
 
-  <li><a name="coltbl">Collocation Table.</a>
-      <ul>
-        <li><code>global</code>:<p>
+  <li><b><a name="coltbl">Collocation Table:</a></b> <sup>*</sup>Care
+      must be taken when using CORBA objects to control the ORB
+      directly.  For you are actually executing the collocated object,
+      not in the object's ORB context, but in the calling ORB's
+      context.<p>
 
-        <LI>per ORB (<code>tss</code>):<p>
+      <ul>
+        <li><code>global</code>: Process keeps a global collocation
+            table which contains tuples of listening endpoint and its
+            corresponding RootPOA. <p>
+
+        <LI>per ORB (<code>tss</code>): At this moment, since TAO only
+            supports one listening endpoint per ORB, there is no
+            per-ORB collocation Table.  Checking of collocated objects
+            is done by comparing object's IIOP profile and the calling
+            ORB's listening endpoint.<p>
 
       </ul><p>
 
@@ -219,7 +233,7 @@ option).</p>
       from a new connection.  This approach works well when
       there are multiple connections active simultaneously and each
       request-per-connection may take a fair amount of time to
-      execute. 
+      execute.
 </tr>
 
 <tr align=left>
@@ -264,7 +278,7 @@ option).</p>
   <th>Typical Use</th>
   <td>In this configuration, there multiple ORBs per process each
       running in its own thread.  Each thread handles requests
-      reactively.  It's good for hard real-time applications that require 
+      reactively.  It's good for hard real-time applications that require
       different thread priorities for the various ORBs.</td>
 </tr>
 
