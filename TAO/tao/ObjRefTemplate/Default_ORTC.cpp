@@ -178,7 +178,7 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal__TAO_Default_ORT_Ob
 }
 
 // TAO_IDL - Generated from
-// be\be_valuetype.cpp:490
+// be\be_valuetype.cpp:488
 
 void
 CORBA::add_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
@@ -210,11 +210,8 @@ operator<< (
   return
     CORBA::ValueBase::_tao_marshal (
         strm,
-        const_cast<
-            TAO_Default_ORT::ObjectReferenceTemplate *> (
-            _tao_valuetype
-          ),
-        (ptrdiff_t) &TAO_Default_ORT::ObjectReferenceTemplate::_downcast
+        const_cast<TAO_Default_ORT::ObjectReferenceTemplate *> (_tao_valuetype),
+        reinterpret_cast<ptrdiff_t> (&TAO_Default_ORT::ObjectReferenceTemplate::_downcast)
       );
 }
 
