@@ -1,6 +1,7 @@
 Sat Feb  2 07:45:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests/run_test.lst:
+	* tests/TP_Reactor_Test.dsp:
 	* tests/Makefile.bor:
 	* tests/Makefile: Added the TP_Reactor_Test.
 
