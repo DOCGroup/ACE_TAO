@@ -38,7 +38,6 @@
 #include <orb.h>
 
 #include "debug.h"
-#include "thread.h"
 
 #include <initguid.h>
 

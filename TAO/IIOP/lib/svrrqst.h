@@ -6,7 +6,7 @@
 //    TAO
 // 
 // = FILENAME
-//    thread.h
+//    svrrqst.h
 //
 // = DESCRIPTION
 //     
@@ -15,6 +15,9 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
+//
+// = VERSION
+//     $Id$
 // 
 // ============================================================================
 
@@ -83,19 +86,9 @@ class ACE_Svc_Export IIOP_ServerRequest : public CORBA_ServerRequest
 public:
   // Constructor, destructor
 
-  // @@ This code should be moved to the *.i file.
   IIOP_ServerRequest (CDR *msg,
 		      CORBA_ORB_ptr the_orb,
-		      CORBA_BOA_ptr the_boa)
-    : _incoming (msg),
-      _params (0), 
-      _retval (0),
-      _exception (0),
-      _ex_type (NO_EXCEPTION),
-      _refcount (1),
-      _orb (the_orb),
-      _boa (the_boa)
-  {}
+		      CORBA_BOA_ptr the_boa);
 
   virtual ~IIOP_ServerRequest (void);
 
@@ -146,5 +139,9 @@ private:
 
   CORBA_BOA_ptr _boa;
 };
+
+#  if defined(__ACE_INLINE__)
+#    include "svrrqst.i"
+#  endif
 
 #endif /* TAO_SVRRQST_H */

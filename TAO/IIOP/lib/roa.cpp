@@ -65,7 +65,7 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
   // Initialize the endpoint ... or try!
   if (client_acceptor_.open (p->addr (),
 			     ACE_Service_Config::reactor (),
-			     fn.creation_strategy (),
+			     f.creation_strategy (),
 			     f.accept_strategy (),
 			     f.concurrency_strategy (),
 			     f.scheduling_strategy ()) == -1)
@@ -655,6 +655,6 @@ request_forwarder (opaque &target_key,
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 // Direct
-template class ACE_Strategy_Acceptor<ROA_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 // Indirect
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

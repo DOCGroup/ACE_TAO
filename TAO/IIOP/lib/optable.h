@@ -141,8 +141,6 @@ private:
   TAO_Active_Demux_OpTable_Entry *tbl_;
 };
 
-// @@ Please prefix these classes with TAO_...
-
 class TAO_Operation_Table_Parameters
 {
 public:
@@ -167,7 +165,7 @@ private:
   DEMUX_STRATEGY type_;
 };
 
-typedef ACE_Singleton<OpTable_Parameters, ACE_RW_Mutex> TAO_OP_TABLE_PARAMETERS;
+typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_RW_Mutex> TAO_OP_TABLE_PARAMETERS;
 
 class TAO_Operation_Table_Factory
 {

@@ -28,16 +28,15 @@
 // generate better code, which in some cases may be very hard to
 // unwind.
 
-#include	<assert.h>
-#include	<stdio.h>
-#include	<stdarg.h>
-#include	<string.h>
-#include	<orb.h>
+#include <assert.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+#include <orb.h>
 
-#include	"cdr.h"
-#include	"debug.h"
-#include	"giop.h"
-#include "connmgr.h"
+#include "cdr.h"
+#include "debug.h"
+#include "giop.h"
 
 class ACE_Synchronous_Cancellation_Required
   // = TITLE
@@ -85,7 +84,7 @@ private:
 
 void 
 IIOP_Object::do_call (CORBA_Environment &env,	// exception reporting
-                      const calldata *info,	// call description
+                      const TAO_Call_Data *info,	// call description
                       ...)                       // ... any parameters
 
 {
@@ -130,7 +129,7 @@ IIOP_Object::do_call (CORBA_Environment &env,	// exception reporting
       // just one indirection.
 
       u_int i;
-      const paramdata *pdp;
+      const TAO_Param_Data *pdp;
       va_list param_vector;
 
       va_start (param_vector, info);
