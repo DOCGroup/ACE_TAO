@@ -915,7 +915,7 @@ int be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen
 
   // For a special case of a deeply nested inheritance graph and one specific
   // way of inheritance in which a node that was already visited, but is not present in
-  // the queue, gets inserted at the tail. This sitation arises when a node
+  // the queue, gets inserted at the tail. This situation arises when a node
   // multiply inherits from two or more interfaces in which the first parent is
   // higher up in the tree than the second parent. In addition, if the second
   // parent turns out to be a child of the first .
@@ -952,8 +952,9 @@ int be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen
       // insert the dequeued element in the del_queue
       if (del_queue.enqueue_tail (bi) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, "(%N:%l) be_interface::gen_operation_table - "
-                             "error generating entries\n"), -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_interface::traverse_graph - "
+                             "enqueue_head failed\n"), -1);
         }
 
       // use the helper method to generate code for ourself using the
@@ -1207,6 +1208,31 @@ be_interface::gen_skel_helper (be_interface *derived,
         } // end of while
       delete si; // free the iterator object
     }
+  return 0;
+}
+
+int
+be_interface::collocated_ctor_helper (be_interface *derived,
+                                      be_interface *base,
+                                      TAO_OutStream *os)
+{
+  if (derived == base)
+    // we are the same. Don't do anything, otherwise we will end up calling
+    // ourself
+    return 0;
+
+  if (base->is_nested ())
+    {
+      be_decl *scope;
+      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
+      *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ","
+          << base->local_coll_name () << ") (servant, stub)," << be_nl;
+    }
+  else
+    {
+      *os << "  " << base->full_coll_name () << " (servant, stub)," << be_nl;
+    }
+
   return 0;
 }
 
