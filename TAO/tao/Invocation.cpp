@@ -613,7 +613,7 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
+TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
 {
@@ -633,23 +633,24 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
       CORBA::String_var buf;
 
+      TAO_InputCDR tmp_stream (this->inp_stream (),
+                               this->inp_stream ().start ()->length (),
+                               0);
+
       // Pull the exception ID out of the marshaling buffer.
-      if (this->inp_stream ().read_string (buf.inout ()) == 0)
+      if (tmp_stream.read_string (buf.inout ()) == 0)
         {
-          // @@ Why do we close the connection. Only the request
-          //    failed, but the connection seems to be still
-          //    valid!
-          // this->transport_->close_connection ();
           ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                             CORBA::COMPLETED_YES),
                             TAO_INVOKE_EXCEPTION);
         }
 
       for (CORBA::ULong i = 0;
-           i < exceptions.count ();
+           exceptions != 0 && i < exceptions->count ();
            i++)
         {
-          CORBA::TypeCode_ptr tcp = exceptions.item (i, ACE_TRY_ENV);
+          CORBA::TypeCode_ptr tcp =
+            exceptions->item (i, ACE_TRY_ENV);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
           const char *xid = tcp->id (ACE_TRY_ENV);

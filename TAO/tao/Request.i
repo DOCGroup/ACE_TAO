@@ -56,7 +56,7 @@ CORBA_Request::result (void)
 ACE_INLINE CORBA::ExceptionList_ptr
 CORBA_Request::exceptions (void)
 {
-  return &this->exceptions_;
+  return this->exceptions_.in ();
 }
 
 // Return the request's contexts
