@@ -1,7 +1,13 @@
+Tue Oct  5 13:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Policy_Creator_T.h:
+          Template to create policies more easier. Still working on the
+          introduction, just a checkin to be sure
+
 Tue Oct  5 09:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Adapter_Activator.h:
-          Removed comment of Bala
+          Removed comment of Bala, got the idea
 
         * tao/PortableServer/POAManager.h:
           Reduced needed includes
