@@ -120,40 +120,6 @@ TAO_ServerRequest::~TAO_ServerRequest (void)
   TAO_Transport::release (this->transport_);
 }
 
-// @@ Mayur: the name of this method is confusing... it is not
-// "instantiating" anything, it is "transferring state" or "copying
-// state" or "initializing an AMH Response_Handler" or something of
-// that nature, but no objects are instantiated.  Please try to make
-// the method name match its function.  The method is not
-// const-correct either, this method does not modify the state of the
-// ServerRequest object, therefore it should be const...
-
-// @@ Mayur: is this a good application of "Dependency Inversion"?
-// What is the more general class?  ServerRequest or
-// AMH_Response_Handler?  The former, right?  So shouldn't the
-// dependency be in the opposite direction, i.e. AMH_Response_Handler
-// should call ServerRequest instead of the other way around?
-// If necessary you can expose more accessors, or grant "friend"
-// access to ServerRequest (the latter is yucky).
-
-// @@ Mayur: I think only *servers* can use the AMH_Response_Handler
-// class, right?  If that is the case we need to come up with an
-// scheme to move the AMH_Response_Handler class to the PortableServer
-// library. Growing the footprint of a pure-client to support AMH
-// makes no sense.
-void
-TAO_ServerRequest::instantiate_AMH_Handler (TAO_AMH_Response_Handler* response_handler)
-{
-  // @@ Mayur: please don't forget to use the this-> prefix when
-  // accessing a member field or a method....
-  response_handler->mesg_base (mesg_base_);
-  response_handler->request_id (request_id ());
-  response_handler->response_expected (response_expected_);
-  response_handler->transport (TAO_Transport::_duplicate (transport()));
-  //response_handler->reply_service_info (reply_service_info ());
-}
-
-
 CORBA::ORB_ptr
 TAO_ServerRequest::orb (void)
 {

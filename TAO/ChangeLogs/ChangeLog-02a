@@ -1,3 +1,60 @@
+Fri Jan 18 17:29:36 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_AMH_Response_Handler.h:
+	* tao/TAO_AMH_Response_Handler.cpp:
+	  The TAO_Server_Request class does not depend on
+	  TAO_AMH_Response_Handler anymore,  instead of forsing
+	  ServerRequest to know about AMH and make it copy its state to
+	  the AMH_Response_Handler we make AMH_Response_Handler a
+	  friend. That way the AMH_Response_Handler can copy whatever
+	  state it needs.
+	  Add some comments for Mayur about this stuff.
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Do not generate AMH_*ResponseHandler nodes for AMI nodes or
+	  other implied-IDL nodes.
+
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+	  Fixed inconsistencies in the generated name for the
+	  TAO_AMH_<InterfaceName>ResponseHandler class.
+	  Change the constructor of those generated classes to take the
+	  TAO_ServerRequest parameter.
+
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	  Fixed indentation problems.
+
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	  Fixed class name in operations (made it consistent with the
+	  generated name in be_visitor_interface/amh_rh_*.cpp).
+	  Fixed exception throwing code (it was hardcoded to use
+	  ACE_THROW, but the IDL compiler should be able to generate raw
+	  throws also).
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  Fixed indentation problem in the generated code.
+	  Improved error messages in case of failure.
+	  Set the visitor context state properly for the arglist visitor.
+
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Use the right constructor for the TAO_AMH_*ResponseHandler
+	  class.
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+	* TAO_IDL/be_include/be_visitor_operation/operation_ss.h:
+	  Move several helper methods to the base class
+	  (be_visitor_operation), because we need them in classes that do
+	  not derive from be_visitor_operation_ss
+
+	* TAO_IDL/ast/ast_decl.cpp:
+	  Fixed small compilation warning.
+
 Fri Jan 18 15:55:59 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/ForwardRequest/client.dsp:
@@ -34,14 +91,14 @@ Fri Jan 18 15:41:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Fri Jan 18 13:19:00 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp: 
-	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp: 
-	* tao/TAO_AMH_Response_handler.h: 
+	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	* tao/TAO_AMH_Response_handler.h:
 	* tao/TAO_AMH_Response_handler.cpp:
-	
-	  Added code that now generates AMH-RH code for operation 
+
+	  Added code that now generates AMH-RH code for operation
 	  in skeleton-source file.  Changed 'tao_out' CDR stream in
-	  TAO_AMH_Response_Handler so that the variable names of the 
+	  TAO_AMH_Response_Handler so that the variable names of the
 	  generated IDL code and that in the tao orb_core files match.
 
 Fri Jan 18 13:47:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -57,11 +114,11 @@ Fri Jan 18 13:21:28 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Added patch sent in by Andy Olsen <olsona@uswest.net> that
           limits the last component of the name of the temporary file
-          used by gperf to no more than 48 characters, when the 
+          used by gperf to no more than 48 characters, when the
           platform is QNX.
 
 Fri Jan 18 22:16:06 2002  Boris Kolpackov <bosk@ipmce.ru>
-	
+
 	* TAO_IDL/be_include/be_visitor_typecode/typecode_decl.h:
 	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
 	* TAO_IDL/be_include/be_visitor_valuetype/any_op_ch.h:
@@ -79,7 +136,7 @@ Fri Jan 18 22:16:06 2002  Boris Kolpackov <bosk@ipmce.ru>
 	* TAO_IDL/be/be_visitor_factory.cpp:
 	* TAO_IDL/be/be_valuetype.cpp:
 	* TAO_IDL/be/be_visitor_valuetype.cpp:
-	* tao/Typecode.h:		
+	* tao/Typecode.h:
 	* tao/Marshal.h:
 	* tao/Marshal.i:
 	* tao/Marshal.cpp:
@@ -88,7 +145,7 @@ Fri Jan 18 22:16:06 2002  Boris Kolpackov <bosk@ipmce.ru>
 	* tao/append.cpp:
 	* tao/skip.cpp:
 	  Added Any and TypeCode support for valuetypes.
-	
+
 Fri Jan 18 11:50:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* */Makefile: Regenerated dependencies.

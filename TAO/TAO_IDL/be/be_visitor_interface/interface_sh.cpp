@@ -187,7 +187,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   this->this_method (node);
 
   // The _interface_repository_id method.
-  *os << "virtual const char* _interface_repository_id "
+  *os << be_nl
+      << "virtual const char* _interface_repository_id "
       << "(void) const;\n\n";
 
   // Generate code for elements in the scope (e.g., operations).
@@ -313,7 +314,7 @@ be_visitor_interface_sh::this_method (be_interface *node)
   // Print out the _this() method.
   *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
       << "TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");\n" << be_uidt_nl;
+      << ");\n" << be_uidt;
 }
 
 int
