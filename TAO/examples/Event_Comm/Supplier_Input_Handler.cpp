@@ -20,7 +20,7 @@ Supplier_Input_Handler::~Supplier_Input_Handler (void)
 }
 
 int
-Supplier_Input_Handler::handle_close (void)
+Supplier_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Supplier::Supplier_Input_Handler\n"));
@@ -37,7 +37,7 @@ Supplier_Input_Handler::handle_close (void)
 }
 
 int
-Supplier_Input_Handler::initialize (Notifier_Handler *notifier)			  
+Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
 {
   notifier_ = notifier;
   // Register our <Input_Handler> to handle STDIN events, which will
@@ -52,7 +52,7 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
 		       "register_stdin_handler"),
 		      -1);
 
-  
+
   return 0;
 }
 

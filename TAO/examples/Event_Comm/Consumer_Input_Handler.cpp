@@ -31,7 +31,7 @@ Consumer_Input_Handler::consumer_initiated_shutdown (int c)
 }
 
 int
-Consumer_Input_Handler::handle_close (void) 
+Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "closing down Consumer::Input_Handler\n"));
