@@ -1,3 +1,10 @@
+Mon Aug 28 11:21:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Notify/Basic/Makefile:
+          This directory cannot compile if the notification service was
+          not built, the proper protections were in place, but a typo(?)
+          broke them
+
 Mon Aug 28 10:18:50 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
