@@ -1,3 +1,11 @@
+Thu Dec 16 09:34:02 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_sys_socket.inl (getsockname):
+
+          Fixed a bug introduced Mon Dec 13 10:34:24 2004 where the sockaddr
+          would be zero'ed out instead of just the sin_zero of the
+          sockaddr_in.
+
 Thu Dec 16 15:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Thread_Manager_Test.cpp:
@@ -75,9 +83,9 @@ Thu Dec 16 10:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec 15 17:05:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Test_Output.cpp: When resetting msg_ostream to cerr, specify
-	  0 for delete_ostream. ACE_Log_Msg is not allowed to delete cerr.
-	  Fixes the crash in Logging_Strategy_Test.
+        * tests/Test_Output.cpp: When resetting msg_ostream to cerr, specify
+          0 for delete_ostream. ACE_Log_Msg is not allowed to delete cerr.
+          Fixes the crash in Logging_Strategy_Test.
 
 Wed Dec 15 16:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -133,9 +141,9 @@ Tue Dec 14 18:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 14 12:25:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* include/makeinclude/platform_vxworks5.5.x.GNU:
-	  Fixed unwanted inclusion of VxWorks system libraries in link
-	  command.
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Fixed unwanted inclusion of VxWorks system libraries in link
+          command.
 
 Tue Dec 14 09:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -155,39 +163,39 @@ Mon Dec 13 19:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec 13 10:34:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Roland Mueb <Roland dot Meub at avaya dot tenovis dot com>:
-	* ace/OS_NS_sys_socket.inl (getpeername, getsockname):
+        From Roland Mueb <Roland dot Meub at avaya dot tenovis dot com>:
+        * ace/OS_NS_sys_socket.inl (getpeername, getsockname):
 
-	  If (the new) ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO preprocessor
-	  symbol is defined, initialize the sockaddr_in::sin_zero field to
-	  zero after the call to get{peer,sock}name() when the address
-	  family is AF_INET.  Some platforms, like older versions of the
-	  Linux kernel, do not initialize the sin_zero field since that
-	  field is generally only used for padding/alignment purposes.  On
-	  those platforms memcmp()-based comparisons of the sockaddr_in
-	  structure, such as the one in the ACE_INET_Addr equality
-	  operator, may fail due to random bytes in the sin_zero field
-	  even though that field is unused.  This fix prevents equality
-	  comparison of two different sockaddr_in instances that refer to
-	  the same socket from failing.
+          If (the new) ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO preprocessor
+          symbol is defined, initialize the sockaddr_in::sin_zero field to
+          zero after the call to get{peer,sock}name() when the address
+          family is AF_INET.  Some platforms, like older versions of the
+          Linux kernel, do not initialize the sin_zero field since that
+          field is generally only used for padding/alignment purposes.  On
+          those platforms memcmp()-based comparisons of the sockaddr_in
+          structure, such as the one in the ACE_INET_Addr equality
+          operator, may fail due to random bytes in the sin_zero field
+          even though that field is unused.  This fix prevents equality
+          comparison of two different sockaddr_in instances that refer to
+          the same socket from failing.
 
-	* ace/OS_NS_macros.h (ACE_SOCKCALL):
+        * ace/OS_NS_macros.h (ACE_SOCKCALL):
 
-	  Added non-returning counterpart to the ACE_SOCKCALL_RETURN
-	  macro.  Used by the above fix.
+          Added non-returning counterpart to the ACE_SOCKCALL_RETURN
+          macro.  Used by the above fix.
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  Define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO if Linux kernel
-	  version is less than 2.5.47.  Kernels prior to that version did
-	  not initialize the sockaddr_in::sin_zero field.
+          Define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO if Linux kernel
+          version is less than 2.5.47.  Kernels prior to that version did
+          not initialize the sockaddr_in::sin_zero field.
 
 Mon Dec 13 10:07:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
+        * configure.ac:
+        * m4/config_h.m4:
 
-	  Changed to provide ACE_INT64 typedef.
+          Changed to provide ACE_INT64 typedef.
 
 Mon Dec 13 10:16:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -350,10 +358,10 @@ Tue Dec  7 17:48:21 2004  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/ThreadManagement/Priorities.cpp: Fixed message block
           handling logic errors. Can't just queue the same block to
- 	  multiple tasks, especially those in different threads. Now it
- 	  clones the block for each putq(), and queues a MB_BREAK block
- 	  when it's done so the service threads know to stop. Thanks to
- 	  Steven Patrick <spo@ngls.net> for reporting this problem.
+          multiple tasks, especially those in different threads. Now it
+          clones the block for each putq(), and queues a MB_BREAK block
+          when it's done so the service threads know to stop. Thanks to
+          Steven Patrick <spo@ngls.net> for reporting this problem.
 
           Fixes Bugzilla #2002
           (http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2002)

@@ -273,7 +273,7 @@ ACE_OS::getsockname (ACE_HANDLE handle,
   // consistent value, e.g. zero.
   if (result != -1 && addr->sa_family == AF_INET)
     {
-      ACE_OS::memset (reinterpret_cast<struct sockaddr_in *> (addr),
+      ACE_OS::memset (reinterpret_cast<struct sockaddr_in *> (addr)->sin_zero,
                       0,
                       sizeof (reinterpret_cast<struct sockaddr_in *> (addr)->sin_zero));
     }
