@@ -198,7 +198,6 @@ template class ACE_Svc_Handler<ACE_TLI_STREAM, ACE_MT_SYNCH>;
 template class ACE_Concurrency_Strategy<CLI_STREAM>;
 template class ACE_Creation_Strategy<CLI_STREAM>;
 template class ACE_Scheduling_Strategy<CLI_STREAM>;
-template class ACE_TSS<ACE_Dynamic>;
 template class ACE_Thread_Strategy<CLI_STREAM>;
 template class CLI_Stream <THR_STREAM>;
 template class Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>;

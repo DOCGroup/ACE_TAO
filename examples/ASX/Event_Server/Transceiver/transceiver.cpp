@@ -208,6 +208,6 @@ main (int argc, char *argv[])
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<Event_Transceiver>;
-template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

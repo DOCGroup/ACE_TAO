@@ -229,10 +229,5 @@ main (int argc, char *argv[])
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
-template class ACE_Module<ACE_NULL_SYNCH>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_TSS<ACE_Dynamic>;
-template class ACE_Task<ACE_NULL_SYNCH>;
-template class ACE_Thru_Task<ACE_NULL_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

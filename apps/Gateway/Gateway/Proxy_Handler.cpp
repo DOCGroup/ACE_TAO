@@ -245,5 +245,4 @@ template class ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
 template class ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
-template class ACE_TSS<ACE_Dynamic>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

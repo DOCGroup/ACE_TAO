@@ -440,9 +440,5 @@ ACE_Event_Channel::open (void *)
 template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 template class ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
 template class ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX>;
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
-template class ACE_Task<ACE_SYNCH>;
-template class ACE_Module<ACE_NULL_SYNCH>;
-template class ACE_Thru_Task<ACE_NULL_SYNCH>;
 template class ACE_Unbounded_Set_Iterator<Proxy_Handler *>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
