@@ -1,3 +1,9 @@
+Fri Jul  6 12:38:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp: Fixed a bug with thread-per-connection
+	  model. We dont need to send notify () to the reactor as there is
+	  no reactor.
+
 Fri Jul  6 11:27:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tao/IFR_Client/IFR_BaseC.h:
@@ -9,13 +15,13 @@ Fri Jul  6 08:27:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Incoming_Message_Queue.h:
 	* tao/Resume_Handle.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h: Fixed fuzz errors. 
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h: Fixed fuzz errors.
 
 Fri Jul  6 08:14:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
 	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: Generated
-	  dependencies again.  
+	  dependencies again.
 
 Fri Jul  6 07:43:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
