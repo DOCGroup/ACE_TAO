@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib '../../../../../bin';
 use PerlACE::Run_Test;
+use File::stat;
 
 # amount of delay between running the servers
 
@@ -15,11 +16,32 @@ $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 $outfile = PerlACE::LocalFile ("output");
-$makefile = PerlACE::LocalFile ("Makefile");
 
 $debug = 0;
 
-unlink $nsior;
+unlink # generate test stream data
+$input = "test_input";
+while ( -e $input ) {
+    $input = $input."X";
+}
+open( INPUT, "> $input" ) || die( "can't create input file: $input" );
+for($i =0; $i < 1000 ; $i++ ) {
+    print INPUT <<EOFINPUT;
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+0123456789
+EOFINPUT
+}
+close(INPUT);
+
+$nsior;
 
 
 @protocols = ("TCP",
@@ -73,7 +95,7 @@ for $protocol (@protocols)
     }
 
     $SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -ORBDebugLevel ".$debug." -f ".$output_file);
-    $CL = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -ORBDebugLevel ".$debug." -p ".$protocol." -f $makefile");
+    $CL = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -ORBDebugLevel ".$debug." -p ".$protocol." -f $input");
     
     print STDERR "Using ".$protocol."\n";
     print STDERR "Starting Server\n";
@@ -107,6 +129,6 @@ if ($nserver != 0) {
 }
 
 unlink $nsior;
-unlink $output;
+unlink $output, $input;
 
 exit $status;
