@@ -69,162 +69,102 @@ parse_args (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-  CORBA::Environment env;
-
-  // Parse the command-line arguments to get the IOR
-  parse_args (argc, argv);
-
-  // Initialize the ORB
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
-  if (env.exception () != 0)
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      env.print_exception ("CORBA::ORB_init");
-      return -1;
-    }
+      // Initialize the ORB
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0,
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // If ior_input_file exists, Read the file, and get the IOR
-  // else, it must have been specified on the command line
-  if (ior_input_file != 0)
+      // Parse the command-line arguments to get the IOR
+      parse_args (argc, argv);
+
+      // If ior_input_file exists, Read the file, and get the IOR
+      // else, it must have been specified on the command line
+      if (ior_input_file != 0)
+        {
+          ACE_HANDLE input_file = ACE_OS::open (ior_input_file, 0);
+          if (input_file == ACE_INVALID_HANDLE)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open input file for reading IOR: %s\n",
+                               ior_input_file),
+                              -1);
+          ACE_Read_Buffer ior_buffer (input_file);
+          char *data = ior_buffer.read ();
+          if (data == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to read ior\n"),
+                              -1);
+          ior = ACE_OS::strdup (data);
+          ior_buffer.alloc ()-> free (data);
+          ACE_OS::close (input_file);
+        }
+      
+      // Get the object reference with the IOR
+      CORBA::Object_var object = orb->string_to_object (ior, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::String_var string;
+
+      // Narrow the object reference
+      A_var a = A::_narrow (object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Narrow the object reference
+      B_var b = B::_narrow (a.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Narrow the object reference
+      C_var c = C::_narrow (a.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Narrow the object reference
+      D_var d = D::_narrow (c.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      string = a->method1 (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+      string = b->method1 (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+      string = b->method2 (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+      string = c->method1 (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+      string = c->method3 (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+      string = d->method1 (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+      string = d->method2 (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+      string = d->method3 (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+      string = d->method4 (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+    }
+  ACE_CATCHANY
     {
-      ACE_HANDLE input_file = ACE_OS::open (ior_input_file, 0);
-      if (input_file == ACE_INVALID_HANDLE)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Cannot open input file for reading IOR: %s\n",
-			   ior_input_file),
-			  -1);
-      ACE_Read_Buffer ior_buffer (input_file);
-      char *data = ior_buffer.read ();
-      if (data == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "Unable to read ior\n"),
-			  -1);
-      ior = ACE_OS::strdup (data);
-      ior_buffer.alloc ()-> free (data);
-      ACE_OS::close (input_file);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      return 1;
     }
-
-  // Get the object reference with the IOR
-  CORBA::Object_var object = orb->string_to_object (ior, env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("CORBA::ORB::string_to_object");
-      return -1;
-    }
-
-  CORBA::String_var string;
-
-  // Narrow the object reference
-  A_var a = A::_narrow (object.in (), env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("A::_narrow");
-      return -1;
-    }
-
-  // Narrow the object reference
-  B_var b = B::_narrow (a.in (), env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("B::_narrow");
-      return -1;
-    }
-
-  // Narrow the object reference
-  C_var c = C::_narrow (a.in (), env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("C::_narrow");
-      return -1;
-    }
-
-  // Narrow the object reference
-  D_var d = D::_narrow (c.in (), env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("D::_narrow");
-      return -1;
-    }
-
-  string = a->method1 (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("A::method1");
-      return -1;
-    }
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
-
-  string = b->method1 (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("B::method1");
-      return -1;
-    }
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
-
-  string = b->method2 (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("B::method2");
-      return -1;
-    }
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
-
-  string = c->method1 (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("C::method1");
-      return -1;
-    }
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
-
-  string = c->method3 (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("C::method3");
-      return -1;
-    }
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
-
-  string = d->method1 (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("D::method1");
-      return -1;
-    }
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
-
-  string = d->method2 (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("D::method2");
-      return -1;
-    }
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
-
-  string = d->method3 (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("A::method3");
-      return -1;
-    }
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
-
-  string = d->method4 (env);
-  if (env.exception () != 0)
-    {
-      env.print_exception ("D::method4");
-      return -1;
-    }
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+  ACE_ENDTRY;
 
   return 0;
 }
