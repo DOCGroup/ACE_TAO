@@ -1,3 +1,18 @@
+Sun Apr  9 14:16:23 2000  James CE Johnson  <jcej@mobsec.com>
+
+	* docs/tutorials/015/page01.html : Thanks to Conrad Hughes for
+	pointing out that a real implementation would compress before
+	encrypting since encrypted data shouldn't really be compressible
+	anyway.
+	
+	* docs/tutorials/015/Protocol_Stream.cpp (open): Reorder the
+	module pushing so that encryption happens before compression.
+	
+	* docs/tutorials/015/Crypt.cpp :
+	* docs/tutorials/015/Compressor.cpp :
+ 	Add a few extra bytes when creating the new message blocks.  A
+	real implementation would probably need that.	
+
 Sun Apr 09 00:04:25 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.cpp (remove): Removed invocation of destructor to

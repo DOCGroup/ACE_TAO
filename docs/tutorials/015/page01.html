@@ -69,7 +69,7 @@ derivative of the ACE_Task) which will then process it.
 <P>
 The implementation of this Protocol Stream model is done using the
 ACE_Module class. The module for Xmit/Recv is shoved in first
-into the stream, followed by the compression and encryption modules. The
+into the stream, followed by the encryption and compression modules. The
 optional Reader if defined is bundled with a dummy task
 (ACE_Thru_Task class) into a module. The get() and put() methods do
 the job of reading and writing to the Stream. Each module is made up

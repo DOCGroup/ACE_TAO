@@ -52,7 +52,8 @@ int <font color=#008888>Compressor::send</font>(ACE_Message_Block *message, ACE_
         <font color=red>// Create a block to hold the compressed data.  I belive libz</font>
         <font color=red>// recommends a buffer about 10-20% larger than the source.</font>
         <font color=red>// Other libraries/algorithms may have their own quirks.</font>
-    ACE_Message_Block * compressed = new ACE_Message_Block( message->size() );
+    ACE_Message_Block * compressed = new ACE_Message_Block(
+        message->size() +16 );
 
         <font color=red>// Perform a bogus compression algorithm.  'CD' just tells me</font>
         <font color=red>// that this is compressed data and when we "<font color=green>decompress</font>" we'll</font>
@@ -87,7 +88,8 @@ int <font color=#008888>Compressor::recv</font>(ACE_Message_Block *message, ACE_
         <font color=red>// possible decompression size but it's cheap and easy just to</font>
         <font color=red>// send that along.  Look again at how I do exacly that</font>
         <font color=red>// between Xmit and Recv.</font>
-    ACE_Message_Block * decompressed = new ACE_Message_Block( message->size() );
+    ACE_Message_Block * decompressed = new ACE_Message_Block(
+        message->size() + 16 );
 
         <font color=red>// Check for our signature.  Even when you use a real</font>
         <font color=red>// compression algorithm you may want to include your own</font>
