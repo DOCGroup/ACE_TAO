@@ -1,11 +1,18 @@
+Tue Jun 08 14:44:07 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Thread_Manager_Test.cpp (main): on Sun only, added 5
+          second sleep before the "main thread finished" printout.
+          It might help (but certainly doesn't prevent) avoid an
+          occasional thread lib panic on SunOS 5.5 through 5.7.
+
 Tue Jun 08 14:01:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6.41 released.
 
 Tue Jun  8 12:42:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Fixed lots of brokens URL links.  Thanks to Eric S Rosenthal
-	  <esr@netcom.com> for reporting these.
+        * Fixed lots of brokens URL links.  Thanks to Eric S Rosenthal
+          <esr@netcom.com> for reporting these.
 
 Mon Jun  7 17:09:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
