@@ -2141,9 +2141,11 @@ ACE_OS::socket_fini (void)
       if (::WSACleanup () != 0)
 	{
 	  int error = ::WSAGetLastError ();
+	  /*
 	  ACE_ERROR_RETURN ((LM_ERROR, 
 			     "WSACleanup failed, WSAGetLastError returned %u.\n", 
 			     error), -1);
+	  */
 	}
       ACE_OS::socket_initialized_ = 0;
     }

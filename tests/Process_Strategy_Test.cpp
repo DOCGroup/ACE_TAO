@@ -548,6 +548,7 @@ server (void *)
 
   // Run the main event loop, but only wait for up to 3 seconds (this
   // is used to shutdown the server.
+  ACE_Service_Config::reactor ()->owner (ACE_Thread::self ());
   ACE_Service_Config::run_reactor_event_loop (timeout);
 
   // Remove the filename.
