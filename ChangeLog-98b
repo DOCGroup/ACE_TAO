@@ -1,3 +1,9 @@
+Mon Jul 13 11:11:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Svc_Handler.h (ACE_SYNCH_USE>): Changed type of member
+ 	  <dynamic_> to int.  Thanks to Zoran Ivanovic
+ 	  <zorani@pathcom.com> for pointing this out.
+
 Sun Jul 12 13:25:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: Separated the Linux RedHat 5.1 and 5.0
