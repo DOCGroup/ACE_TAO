@@ -1,3 +1,18 @@
+Wed Nov 15 03:51:53 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IORInfo.cpp (add_ior_component_to_profile):
+
+	  In accordance with the PortableInterceptor specification, throw
+	  a CORBA::BAD_PARAM exception if no profile matches the given
+	  ProfileId.
+
+	* tao/Profile.cpp (verify_orb_configuration,
+	  verify_profile_version):
+
+	  Updated comments that explain why a CORBA::BAD_PARAM exception
+	  is thrown.  CORBA::BAD_PARAM is thrown in accordance with the
+	  PortableInterceptor spec.
+
 Wed Nov 15 03:39:56 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (establish_components):
