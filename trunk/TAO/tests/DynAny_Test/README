@@ -2,50 +2,30 @@
 		***********  DynAny_Test  ****************
 			
 			updated 9/29/98.
+// $Id$
 
-All the .h .cpp and .idl files (except da_tests.idl and driver.cpp) have
-been moved into TAO. A test suite will be written shortly.
+// ===================================================================
+//
+// = LIBRARY
+//    TAO/tests/DynAny_Test
+//
+// = FILENAME
+//    README
+//
+// = AUTHOR
+//    Jeff Parsons <jp4@cs.wustl.edu>
+//
+// ===================================================================
 
-The file da_tests.idl contains some data structures that have been used 
-for debugging. The file driver.cpp has been 
-used for this debugging, and the contents of these two files are in 
-flux.
+This is a semi-complete run-through of DynAny functionality.
+To run a test, type
 
-****************Some things to note about DynUnion: 
+basic_test -t <dynany|dynarray|dynenum|dynsequence|dynstruct|dynunion>
 
-The spec is vague on the action of set_as_default
-and member_name and there seems to be disparity in the interpretation of 
-the spec by other vendors. In this implementation, they are interpreted 
-as follows:
+To save on output, several things are tested in one pass. For each
+pass, a message is displayed, for example:
 
-set_as_default -
-	Treated as read-only, the assignment version is included to 
-	override the virtual function, but has an empty body. The 
-	fetch version returns TRUE if the DynUnion has a default 
-	value and that default value is the active member.
+"testing: constructor from any/insert/get"     or
+"testing: constructor from typecode/from_any/to_any"
 
-member_name
-	Fetch version just returns the name of the active member. The
-	assignment version makes active the member with the supplied 
-	name (if it is valid), but does not save the previous value, 
-	so to be meaningful, an insert or assignment should be done 
-	after this operation, since the new active member will be 
-	uninitialized.
-
-If a non-valid label is supplied for initialization or assignment 
-(in the typecode of an Any supplied to the constructor or to 
-from_any, for example), and there is a default index, the member 
-index will be set to the default value and the label will be stored 
-in the member DynAny holding the descriminator. If there is 
-not a default index, an exception will be thrown.
-
-For the DynUnion functions next(), seek() and rewind(), a new
-uninitialized member will be created and the original will be lost. 
-I can't see what use these functions have when used with DynUnion, 
-but a behavior has been defined. If some behavior as yet unforeseen 
-turns out to be useful, these functions can always be changed.
-
-The spec calls for the seek() function to take an argument of 
-type Long, which is only one of ten types that a DynUnion label 
-can have, so the argument to seek() must refer to an index and 
-not to a label.
+and finally an error count for the entire test.
