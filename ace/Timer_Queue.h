@@ -24,6 +24,11 @@
 
 #include "ace/Timer_Queuefwd.h"
 #include "ace/Timer_Queue_T.h"
+#if defined (ACE_HAS_THREADS)
+#  include "ace/Recursive_Thread_Mutex.h"
+#else
+#  include "ace/Null_Mutex.h"
+#endif /* ACE_HAS_THREADS */
 
 // The following typedef are here for ease of use and backward
 // compatibility.

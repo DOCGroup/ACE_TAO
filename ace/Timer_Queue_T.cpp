@@ -10,6 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Timer_Queue_T.h"
+#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor_Timer_Interface.h"
 #include "ace/Null_Mutex.h"

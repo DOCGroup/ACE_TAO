@@ -4,6 +4,8 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/Guard_T.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 
 ACE_RCSID(ace, Filecache, "$Id$")

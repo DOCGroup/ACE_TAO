@@ -3,6 +3,9 @@
 #include "ace/FILE_Addr.h"
 #include "ace/Lib_Find.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_string.h"
+#include "ace/os_include/sys/os_socket.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/FILE_Addr.i"

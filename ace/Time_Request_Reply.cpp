@@ -2,6 +2,7 @@
 
 #include "ace/Time_Request_Reply.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/netinet/os_in.h"
 
 ACE_RCSID(ace, Time_Request_Reply, "$Id$")
 

@@ -33,7 +33,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Select_Reactor.h"
-
+#include "ace/Timer_Queue.h"    /* Simple forward decl won't work... */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

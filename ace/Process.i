@@ -5,6 +5,7 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_pwd.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (ACE_WIN32)
 

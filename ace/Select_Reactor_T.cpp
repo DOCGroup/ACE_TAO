@@ -10,6 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE.h"
+#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 #include "ace/Thread.h"
