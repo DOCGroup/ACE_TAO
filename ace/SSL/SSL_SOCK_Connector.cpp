@@ -1,7 +1,9 @@
 // -*- C++ -*-
+// $Id$
 
 #include "SSL_SOCK_Connector.h"
 
+#include "ace/Handle_Set.h"
 #include "ace/INET_Addr.h"
 #include "ace/Synch_T.h"
 #include "ace/Log_Msg.h"
