@@ -1520,7 +1520,7 @@ ACE_Ordered_MultiSet<T>::insert (const T &item)
 
 template <class T> int
 ACE_Ordered_MultiSet<T>::insert (const T &new_item,
-                                 ACE_Ordered_MultiSet_Iterator<T> &iter)
+                                 ITERATOR &iter)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert using iterator");
 
@@ -1563,7 +1563,7 @@ ACE_Ordered_MultiSet<T>::remove (const T &item)
 
 template <class T> int
 ACE_Ordered_MultiSet<T>::find (const T &item,
-                               ACE_Ordered_MultiSet_Iterator<T> &iter) const
+                               ITERATOR &iter) const
 {
   // search an occurance of item, using iterator's current position as a hint
   ACE_DNode<T> *node = iter.current_;
