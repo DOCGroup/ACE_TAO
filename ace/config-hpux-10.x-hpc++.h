@@ -68,10 +68,10 @@
 // Compiler can't handle calls like foo->operator T *()
 #  define ACE_HAS_BROKEN_CONVERSIONS
 
-// Compiler supports C++ exception handling, unless we turned it off with +noeh
-#  if !defined (__HPACC_NOEH)
-#    define ACE_HAS_EXCEPTIONS
-#  endif  /* __HPACC_NOEH */
+// Compiler supports C++ exception handling. However, the user can ask for this
+// to be turned off. If so (using make exceptions=0) then this def is not set.
+// By default, it is set in wrapper_macros.GNU.
+// #    define ACE_HAS_EXCEPTIONS 1
 
 // Compiler enforces need for 'template<>" when specializing template
 // classes.
