@@ -77,6 +77,7 @@ TAO_IMR_i::init (int argc, char **argv)
         ImplementationRepository::Administration::_narrow (implrepo_object.in(), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      this->op_->set_imr (this->implrepo_.in ());
     }
   ACE_CATCHANY
     {
@@ -102,7 +103,7 @@ TAO_IMR_i::parse_args (void)
     return -1;
   }
 
-  this->op_ = TAO_IMR_Op::make_op (this->argv_[1], this->implrepo_.in ());
+  this->op_ = TAO_IMR_Op::make_op (this->argv_[1]);
 
   // Check for unrecognized operation
 
@@ -141,26 +142,35 @@ TAO_IMR_i::print_usage (void)
 // Factory for operations
 
 TAO_IMR_Op *
-TAO_IMR_Op::make_op (const ASYS_TCHAR *op_name, ImplementationRepository::Administration_ptr ir)
+TAO_IMR_Op::make_op (const ASYS_TCHAR *op_name)
 {
   if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("activate")) == 0)
-    return new TAO_IMR_Op_Activate (ir);
+    return new TAO_IMR_Op_Activate ();
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("add")) == 0)
-    return new TAO_IMR_Op_Add (ir);
+    return new TAO_IMR_Op_Add ();
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("autostart")) == 0)
-    return new TAO_IMR_Op_Autostart(ir);
+    return new TAO_IMR_Op_Autostart();
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("ior")) == 0)
-    return new TAO_IMR_Op_IOR(ir);
+    return new TAO_IMR_Op_IOR();
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("list")) == 0)
-    return new TAO_IMR_Op_List (ir);
+    return new TAO_IMR_Op_List ();
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("remove")) == 0)
-    return new TAO_IMR_Op_Remove (ir);
+    return new TAO_IMR_Op_Remove ();
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("shutdown")) == 0)
-    return new TAO_IMR_Op_Shutdown (ir);
+    return new TAO_IMR_Op_Shutdown ();
   else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("update")) == 0)
-    return new TAO_IMR_Op_Update (ir);
+    return new TAO_IMR_Op_Update ();
 
   return 0;
+}
+
+
+// Sets the implrepo pointer.
+
+void 
+TAO_IMR_Op::set_imr (ImplementationRepository::Administration_ptr imr)
+{
+  this->implrepo_ = imr;
 }
 
 
@@ -168,59 +178,50 @@ TAO_IMR_Op::make_op (const ASYS_TCHAR *op_name, ImplementationRepository::Admini
 // = Constructors.
 
 
-TAO_IMR_Op::TAO_IMR_Op (ImplementationRepository::Administration_ptr implrepo)
-: implrepo_ (implrepo)
+TAO_IMR_Op::TAO_IMR_Op (void)
 {
   // Nothing
 }
 
-TAO_IMR_Op_Activate::TAO_IMR_Op_Activate (ImplementationRepository::Administration_ptr implrepo)
-: TAO_IMR_Op (implrepo)
+TAO_IMR_Op_Activate::TAO_IMR_Op_Activate (void)
 {
   // Nothing
 }
 
-TAO_IMR_Op_Add::TAO_IMR_Op_Add (ImplementationRepository::Administration_ptr implrepo)
-: TAO_IMR_Op (implrepo),
-  activation_ (ImplementationRepository::NORMAL)
+TAO_IMR_Op_Add::TAO_IMR_Op_Add (void)
+: activation_ (ImplementationRepository::NORMAL)
 {
   // Nothing
 }
 
-TAO_IMR_Op_Autostart::TAO_IMR_Op_Autostart (ImplementationRepository::Administration_ptr implrepo)
-: TAO_IMR_Op (implrepo)
+TAO_IMR_Op_Autostart::TAO_IMR_Op_Autostart (void)
 {
   // Nothing
 }
 
-TAO_IMR_Op_IOR::TAO_IMR_Op_IOR (ImplementationRepository::Administration_ptr implrepo)
-: TAO_IMR_Op (implrepo)
+TAO_IMR_Op_IOR::TAO_IMR_Op_IOR (void)
 {
   // Nothing
 }
 
-TAO_IMR_Op_List::TAO_IMR_Op_List (ImplementationRepository::Administration_ptr implrepo)
-: TAO_IMR_Op (implrepo),
-  verbose_server_information_ (0)
+TAO_IMR_Op_List::TAO_IMR_Op_List (void)
+: verbose_server_information_ (0)
 {
   // Nothing
 }
 
-TAO_IMR_Op_Remove::TAO_IMR_Op_Remove (ImplementationRepository::Administration_ptr implrepo)
-: TAO_IMR_Op (implrepo)
+TAO_IMR_Op_Remove::TAO_IMR_Op_Remove (void)
 {
   // Nothing
 }
 
-TAO_IMR_Op_Shutdown::TAO_IMR_Op_Shutdown (ImplementationRepository::Administration_ptr implrepo)
-: TAO_IMR_Op (implrepo)
+TAO_IMR_Op_Shutdown::TAO_IMR_Op_Shutdown (void)
 {
   // Nothing
 }
 
-TAO_IMR_Op_Update::TAO_IMR_Op_Update (ImplementationRepository::Administration_ptr implrepo)
-: TAO_IMR_Op (implrepo),
-  set_command_line_ (0),
+TAO_IMR_Op_Update::TAO_IMR_Op_Update (void)
+: set_command_line_ (0),
   set_working_dir_ (0),
   set_activation_ (0)
 {

@@ -76,11 +76,14 @@ class TAO_IMR_Op
   // = DESCRIPTION
   //     Provides a base class with virtual methods for each operation strategy.
 public:
-  static TAO_IMR_Op *make_op (const ASYS_TCHAR *op_name, ImplementationRepository::Administration_ptr ir);
+  static TAO_IMR_Op *make_op (const ASYS_TCHAR *op_name);
   // Factory.
 
-  TAO_IMR_Op (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op (void);
   // Constructor.
+
+  virtual void set_imr (ImplementationRepository::Administration_ptr imr);
+  // Sets the implrepo pointer
 
   virtual ~TAO_IMR_Op (void);
   // Virtual Destructor.
@@ -110,7 +113,7 @@ class TAO_IMR_Op_Activate : public TAO_IMR_Op
   // = DESCRIPTION
   //     Activation is used to start servers via the Implementation Repository
 public:
-  TAO_IMR_Op_Activate (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op_Activate (void);
   ~TAO_IMR_Op_Activate (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
@@ -133,7 +136,7 @@ class TAO_IMR_Op_Add : public TAO_IMR_Op
   // = DESCRIPTION
   //     Add is used to register information about a server with the IMR.
 public:
-  TAO_IMR_Op_Add (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op_Add (void);
   ~TAO_IMR_Op_Add (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
@@ -166,7 +169,7 @@ class TAO_IMR_Op_Autostart : public TAO_IMR_Op
   //     Autostart is used to activate all servers with the AUTO_START activation
   //     mode.
 public:
-  TAO_IMR_Op_Autostart (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op_Autostart (void);
   ~TAO_IMR_Op_Autostart (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
@@ -187,7 +190,7 @@ class TAO_IMR_Op_IOR : public TAO_IMR_Op
   //     IOR is used to create a simple IOR for a server that uses the
   //     IMR and the Interoperable Naming Service.
 public:
-  TAO_IMR_Op_IOR (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op_IOR (void);
   ~TAO_IMR_Op_IOR (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
@@ -214,7 +217,7 @@ class TAO_IMR_Op_List : public TAO_IMR_Op
   //     List is used to either list all the servers registered in the IMR or just
   //     look at one of them.
 public:
-  TAO_IMR_Op_List (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op_List (void);
   ~TAO_IMR_Op_List (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
@@ -244,7 +247,7 @@ class TAO_IMR_Op_Remove : public TAO_IMR_Op
   // = DESCRIPTION
   //     Remove is used to unregister a server in the IMR.
 public:
-  TAO_IMR_Op_Remove (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op_Remove (void);
   ~TAO_IMR_Op_Remove (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
@@ -267,7 +270,7 @@ class TAO_IMR_Op_Shutdown : public TAO_IMR_Op
   // = DESCRIPTION
   //     Shutdown is used to shutdown a server through the IMR.
 public:
-  TAO_IMR_Op_Shutdown (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op_Shutdown (void);
   ~TAO_IMR_Op_Shutdown (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
@@ -291,7 +294,7 @@ class TAO_IMR_Op_Update : public TAO_IMR_Op
   //     Update is used to update the information for a server registered
   //     with the IMR.
 public:
-  TAO_IMR_Op_Update (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op_Update (void);
   ~TAO_IMR_Op_Update (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
