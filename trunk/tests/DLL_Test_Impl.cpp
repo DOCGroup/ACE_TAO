@@ -108,9 +108,11 @@ public:
 
 static Static_Constructor_Test the_instance;
 
+#if defined (ACE_LACKS_RTTI)
 // Test dynamic cast
 extern "C" ACE_Svc_Export int
 dynamic_cast_test (Parent *target)
 {
    return target == dynamic_cast<Child*>( target )? 0 : -1;
 }  
+#endif /* ACE_LACKS_RTTI */
