@@ -18,9 +18,6 @@ ACE_RCSID(ace, Asynch_IO, "$Id$")
 #include "ace/Asynch_IO.i"
 #endif /* __ACE_INLINE__ */
 
-
-
-
 ACE_Asynch_Result::ACE_Asynch_Result (ACE_Handler &handler,
                                       const void* act,
                                       ACE_HANDLE event,
@@ -840,9 +837,9 @@ ACE_Asynch_Accept_Handler::register_accept_call (ACE_Asynch_Accept::Result* resu
 {
   ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept_Handler::register_accept_call called\n"));
 
-  // The queue is updated by main thread in the register function call and
-  // thru the auxillary thread  in the deregister fun. So let us mutex
-  // it.
+  // The queue is updated by main thread in the register function call
+  // and thru the auxillary thread in the deregister fun. So let us
+  // mutex it.
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   // Insert this result to the queue.
@@ -882,8 +879,7 @@ ACE_Asynch_Accept_Handler::deregister_accept_call (void)
   
   ACE_ASSERT (result != 0);
 
-  // Disable the <handle> in the reactor if no <accept>'s are
-  // pending.
+  // Disable the <handle> in the reactor if no <accept>'s are pending.
   if (this->result_queue_.size () == 0)
     {
       int return_val = this->reactor_->suspend_handler (result->listen_handle ()); 

@@ -8,6 +8,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Stats.h"
+#include "ace/Object_Manager.h"
 
 ACE_RCSID(ace, High_Res_Timer, "$Id$")
 

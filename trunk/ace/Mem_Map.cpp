@@ -66,7 +66,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   if (file_len == -1)
     return -1;
 
-  if (this->length_ < ACE_static_cast(size_t, file_len))
+  if (this->length_ < ACE_static_cast (size_t, file_len))
     {
       // If the length of the mapped region is less than the length of
       // the file then we force a complete new remapping by setting
@@ -76,22 +76,25 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
     }
 
   // At this point we know <file_len> is not negative...
-  this->length_ = ACE_static_cast(size_t, file_len);
+  this->length_ = ACE_static_cast (size_t, file_len);
 
   if (len_request == -1)
     len_request = 0;
 
-  if ((this->length_ == 0 && len_request > 0)
-      || this->length_ < ACE_static_cast(size_t, len_request))
-    {
-      this->length_ = len_request;
+  // Check to see if we need to extend the backing store
+  int extend_backing_store = 0;
+  if (this->length_ < ACE_static_cast (size_t, len_request))
+    extend_backing_store = 1;
 
-      // Extend the backing store.
-      if (ACE_OS::pwrite (this->handle_, "", 1,
-                          len_request > 0 ? len_request - 1 : 0) == -1)
-        return -1;
-    }
+  // Set the correct length
+  this->length_ = len_request;
 
+  if (extend_backing_store)
+    // Extend the backing store.
+    if (ACE_OS::pwrite (this->handle_, "", 1,
+                        this->length_ > 0 ? this->length_ - 1 : 0) == -1)
+      return -1;
+  
 #if defined (__Lynx__)
   // Set flag that indicates whether PROT_WRITE has been enabled.
   write_enabled_ = prot & PROT_WRITE  ?  1  :  0;
@@ -102,7 +105,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                                    prot,
                                    share,
                                    this->handle_,
-                                   off_t (ACE::round_to_pagesize (pos)),
+                                   off_t (ACE::round_to_allocation_granularity (pos)),
                                    &this->file_mapping_,
                                    sa);
 

@@ -18,8 +18,8 @@ ACE_RCSID(ace, Proactor, "$Id$")
 #include "ace/Proactor.i"
 #endif /* __ACE_INLINE__ */
 
-  // Process-wide ACE_Proactor.
-  ACE_Proactor *ACE_Proactor::proactor_ = 0;
+// Process-wide ACE_Proactor.
+ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
 // Controls whether the Proactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
@@ -67,8 +67,6 @@ class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
   int shutting_down_;
   // Flag used to indicate when we are shutting down.
 };
-
-
 
 ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
   : ACE_Task <ACE_NULL_SYNCH> (&proactor.thr_mgr_),
