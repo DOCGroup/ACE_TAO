@@ -58,10 +58,12 @@ public:
   virtual void activate (void);
   virtual void shutdown (void);
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
+                     RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env);
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+                            RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info,
                             CORBA::Environment& env);

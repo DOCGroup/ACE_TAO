@@ -1,11 +1,24 @@
 // $Id$
 
 ACE_INLINE
+TAO_EC_Queue::
+    TAO_EC_Queue (size_t high_water_mark,
+                  size_t low_water_mark,
+                  ACE_Notification_Strategy *ns)
+      :  ACE_Message_Queue<ACE_SYNCH> (high_water_mark,
+                                       low_water_mark,
+                                       ns)
+{
+}
+
+ACE_INLINE
 TAO_EC_Dispatching_Task::
 TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
-     allocator_ (0)
+     allocator_ (0),
+     the_queue_ (16, 16384) // @@
 {
+  this->msg_queue (&this->the_queue_);
 }
 
 // ****************************************************************
@@ -35,12 +48,16 @@ TAO_EC_Shutdown_Task_Command::
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Push_Command::TAO_EC_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
-                                          RtecEventComm::EventSet& event,
-                                          ACE_Data_Block* data_block,
-                                          ACE_Allocator *mb_allocator)
+TAO_EC_Push_Command::TAO_EC_Push_Command (
+     TAO_EC_ProxyPushSupplier* proxy,
+     RtecEventComm::PushConsumer_ptr consumer,
+     RtecEventComm::EventSet& event,
+     ACE_Data_Block* data_block,
+     ACE_Allocator *mb_allocator)
   :  TAO_EC_Dispatch_Command (data_block, mb_allocator),
-     proxy_ (proxy)
+     proxy_ (proxy),
+     consumer_ (RtecEventComm::PushConsumer::_duplicate (consumer))
+
 {
   //
   // Efficient copy, steal the buffer from <event>
@@ -52,4 +69,6 @@ TAO_EC_Push_Command::TAO_EC_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
   CORBA::ULong length = event.length ();
   RtecEventComm::Event* buffer = event.get_buffer (1);
   event_.replace (maximum, length, buffer, 1);
+
+  this->proxy_->_incr_refcnt ();
 }
