@@ -1,3 +1,12 @@
+Wed Jul 17 00:49:06 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Any.cpp (operator>>=):
+
+	  Corrected TypeCode that is set in the CORBA::Any when extracting
+	  a CORBA::WString, i.e. use CORBA::_tc_wstring instead of
+	  CORBA::_tc_string.  Addresses CORBA::WString extraction
+	  problems.
+
 Mon Jul 15 10:16:07 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* utils/catior/catior.cpp:
