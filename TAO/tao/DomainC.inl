@@ -97,4 +97,3 @@ CORBA::ConstructionPolicy::ConstructionPolicy (
 }
 
 #endif /* end #if !defined */
-

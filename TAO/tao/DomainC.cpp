@@ -26,34 +26,34 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "DomainC.h"
-#include "IFR_Client_Adapter.h"
 #include "tao/CDR.h"
 #include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
-#include "tao/Typecode.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Special_Basic_Arguments.h"
-#include "ORB_Core.h"
-#include "DynamicC.h"
-#include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
+
+#include "tao/ORB_Core.h"
+#include "tao/IFR_Client_Adapter.h"
+#include "tao/DynamicC.h"
+#include "ace/Dynamic_Service.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "DomainC.i"
+#include "DomainC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:65
 
 // TAO specific stuff.
 namespace CORBA
@@ -93,6 +93,8 @@ TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR & cdr
   return adapter->interfacedef_cdr_insert (cdr, this->x_);
 }
 
+
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -131,7 +133,6 @@ namespace TAO
 
 #endif /* end #if !defined */
 }
-
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
@@ -183,7 +184,7 @@ TAO::Collocation_Proxy_Broker *
 // be\be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::Policy_ptr CORBA::DomainManager::get_domain_policy (
-    CORBA::PolicyType policy_type
+    ::CORBA::PolicyType policy_type
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -200,8 +201,8 @@ TAO::Collocation_Proxy_Broker *
       CORBA_DomainManager_setup_collocation ();
     }
 
-  TAO::Arg_Traits<CORBA::Policy>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::PolicyType>::in_arg_val _tao_policy_type (policy_type);
+  TAO::Arg_Traits< ::CORBA::Policy>::ret_val _tao_retval;
+  TAO::Arg_Traits< CORBA::PolicyType>::in_arg_val _tao_policy_type (policy_type);
 
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -247,7 +248,7 @@ void
 CORBA::DomainManager::_tao_any_destructor (void *_tao_void_pointer)
 {
   DomainManager *_tao_tmp_pointer =
-    ACE_static_cast (DomainManager *, _tao_void_pointer);
+    static_cast<DomainManager *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -381,8 +382,8 @@ TAO::Collocation_Proxy_Broker *
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::ConstructionPolicy::make_domain_manager (
-    CORBA::InterfaceDef_ptr object_type,
-    CORBA::Boolean constr_policy
+    ::CORBA::InterfaceDef_ptr object_type,
+    ::CORBA::Boolean constr_policy
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -399,9 +400,9 @@ void CORBA::ConstructionPolicy::make_domain_manager (
       CORBA_ConstructionPolicy_setup_collocation ();
     }
 
-  TAO::Arg_Traits<void>::ret_val _tao_retval;
-  TAO::Arg_Traits<CORBA::InterfaceDef>::in_arg_val _tao_object_type (object_type);
-  TAO::Arg_Traits<ACE_InputCDR::to_boolean>::in_arg_val _tao_constr_policy (constr_policy);
+  TAO::Arg_Traits< void>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::InterfaceDef>::in_arg_val _tao_object_type (object_type);
+  TAO::Arg_Traits< ACE_InputCDR::to_boolean>::in_arg_val _tao_constr_policy (constr_policy);
 
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -448,7 +449,7 @@ void
 CORBA::ConstructionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ConstructionPolicy *_tao_tmp_pointer =
-    ACE_static_cast (ConstructionPolicy *, _tao_void_pointer);
+    static_cast<ConstructionPolicy *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -536,7 +537,7 @@ CORBA::ConstructionPolicy::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_DOMAINMANAGERLIST_CS_)
@@ -586,7 +587,7 @@ void CORBA::DomainManagerList::_tao_any_destructor (
   )
 {
   DomainManagerList * _tao_tmp_pointer =
-    ACE_static_cast (DomainManagerList *, _tao_void_pointer);
+    static_cast<DomainManagerList *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -610,21 +611,21 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-
+  
   if ((strm >> obj.inout ()) == 0)
     {
       return 0;
     }
-
+  
   typedef ::CORBA::DomainManager RHS_SCOPED_NAME;
-
+  
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer
       );
-
+    
   return 1;
 }
 
@@ -646,21 +647,21 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-
+  
   if ((strm >> obj.inout ()) == 0)
     {
       return 0;
     }
-
+  
   typedef ::CORBA::ConstructionPolicy RHS_SCOPED_NAME;
-
+  
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function_pointer
       );
-
+    
   return 1;
 }
 
@@ -675,22 +676,22 @@ CORBA::Boolean operator<< (
     const CORBA::DomainManagerList &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
             _tao_sequence[i].in ()->marshal (strm);
         }
-
+      
       return _tao_marshal_flag;
     }
-
+  
   return 0;
 }
 
@@ -700,7 +701,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-
+  
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -710,35 +711,35 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-
+      
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-
+      
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         {
           return 1;
         }
-
+      
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
         }
-
+      
       return _tao_marshal_flag;
-
+    
     }
-
+  
   return 0;
 }
 
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -793,7 +794,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         CORBA::DomainManager
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         CORBA::DomainManager
@@ -818,7 +819,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         CORBA::ConstructionPolicy
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         CORBA::ConstructionPolicy
@@ -913,6 +914,12 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
 # pragma instantiate \
+    TAO::Ret_Object_Argument_T< \
+        CORBA::Policy_ptr, \
+        CORBA::Policy_var \
+      >
+
+# pragma instantiate \
     TAO::Objref_Traits< \
         CORBA::DomainManager \
       >
@@ -921,7 +928,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         CORBA::DomainManager
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::DomainManager
@@ -946,7 +953,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         CORBA::ConstructionPolicy
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::ConstructionPolicy
@@ -996,4 +1003,4 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
