@@ -47,13 +47,13 @@ supplier (void *)
                 "(%t) %p\n",
                 "ACE_UPIPE_Acceptor.connect failed"));
 
-  ACE_Auto_Basic_Ptr <char> mybuf = new char[size];
+  ACE_Auto_Basic_Array_Ptr <char> mybuf = new char[size];
 
   for (int i = 0; i < size; i++)
     mybuf[i] = 'a';
 
   for (int j = 0; j < iterations; j++)
-    if (s_stream.send (mybuf, size) == -1)
+    if (s_stream.send (mybuf.get (), size) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%t) %p\n", "send failed"),
                          0);
@@ -107,7 +107,7 @@ consumer (void *)
 
   for (;; blocks++)
     {
-      result = c_stream.recv (mybuf, size);
+      result = c_stream.recv (mybuf.get (), size);
       if (result <= 0)
         break;
     }
@@ -158,7 +158,7 @@ main (int, char *[])
 #endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Ptr <char>;
+template class ACE_Auto_Basic_Array_Ptr <char>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Ptr <char>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr <char>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
