@@ -18,6 +18,11 @@ public class SpreadFilter extends SpatialFilter
       pheight_ = pheight;
     }
 
+  public String info ()
+  {
+    return "Spreads an image (an effect of being under water).";
+  }
+
   public void imageComplete(int status)
   {
     if (status == IMAGEERROR || status == IMAGEABORTED)
