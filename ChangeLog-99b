@@ -1,3 +1,14 @@
+Tue Jul 13 11:13:52 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.3.x.h: New file - these version-specific configs
+          are particularly useful with Visual Age C++, which has its own
+          funky make system that doesn't use the platform_macros.GNU files,
+          and so doesn't pick up the ACE_AIX_MAJOR/MINOR_VERS settings which
+          are used in config-aix-4.x.h.
+
+        * ace/config-aix-4.x.h: Corrected template settings for Visual Age C++
+          and added ACE_HAS_TYPENAME for VAC++ also.
+
 Tue Jul 13 10:40:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.cpp (purge_connections): There is
