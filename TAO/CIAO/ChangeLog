@@ -1,3 +1,9 @@
+Sat Aug 28 18:44:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/examples/BasicSP/BMDevice/BMDevice.mpc:
+
+	  Fixed a compile erros in the daily builds.
+
 Sat Aug 28 09:22:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/examples/BasicSP/BasicSP.mpc:
