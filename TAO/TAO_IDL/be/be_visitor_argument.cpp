@@ -38,7 +38,7 @@
 #include "be_visitor_argument/compiled_marshal_cs.cpp"
 #include "be_visitor_argument/compiled_marshal_ss.cpp"
 #include "be_visitor_argument/pre_invoke_cs.cpp"
-#include "be_visitor_argument/arglist_ami.cpp"
-
+#include "be_visitor_argument/ami_arglist.cpp"
+#include "be_visitor_argument/ami_handler_arglist.cpp"
 ACE_RCSID(be, be_visitor_argument, "$Id$")
 

@@ -51,10 +51,8 @@ be_visitor_operation_arglist_ami::visit_operation (be_operation *node)
   
   *os << " (" << be_idt << be_idt << "\n";
 
-  // #if defined (TAO_IDL_HAS_AMI)
-  // For the AMI, we need the Reply Handler as the first argument.
-
-  // start with current indentation level
+  
+  // Start with current indentation level.
   os->indent ();
 
   

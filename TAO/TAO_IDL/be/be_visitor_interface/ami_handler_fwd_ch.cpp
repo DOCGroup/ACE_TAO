@@ -26,7 +26,7 @@
 
 #include "be_visitor_interface_fwd.h"
 
-ACE_RCSID(be_visitor_ami_handler_fwd, ami_handler_fwd_ch, "$Id$")
+ACE_RCSID(be_visitor_interface_ami_handler_fwd, ami_handler_fwd_ch, "$Id$")
 
 
 // ********************************************************************
@@ -34,18 +34,18 @@ ACE_RCSID(be_visitor_ami_handler_fwd, ami_handler_fwd_ch, "$Id$")
 // Handler interface.
 // ********************************************************************
   
-be_visitor_ami_handler_fwd_ch::be_visitor_ami_handler_fwd_ch (be_visitor_context *ctx)
+be_visitor_interface_ami_handler_fwd_ch::be_visitor_interface_ami_handler_fwd_ch (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_ami_handler_fwd_ch::~be_visitor_ami_handler_fwd_ch (void)
+be_visitor_interface_ami_handler_fwd_ch::~be_visitor_interface_ami_handler_fwd_ch (void)
 {
 }
 
 // visit the interface node and its scope
 int
-be_visitor_ami_handler_fwd_ch::visit_interface (be_interface *node)
+be_visitor_interface_ami_handler_fwd_ch::visit_interface (be_interface *node)
 {
   // Grab the out stream.
   TAO_OutStream *os = this->ctx_->stream ();
@@ -97,7 +97,7 @@ be_visitor_ami_handler_fwd_ch::visit_interface (be_interface *node)
       if (node->gen_var_defn (interface_name) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ami_handler_fwd_ch::"
+                             "(%N:%l) be_visitor_interface_ami_handler_fwd_ch::"
                              "visit_interface_fwd - "
                              "codegen for _var failed\n"), -1);
         }

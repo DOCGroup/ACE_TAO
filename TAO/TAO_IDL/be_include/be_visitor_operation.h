@@ -53,8 +53,9 @@
 #include "be_visitor_operation/rettype_marshal_ss.h"
 #include "be_visitor_operation/compiled_marshal.h"
 #include "be_visitor_operation/rettype_pre_invoke_cs.h"
-#include "be_visitor_operation/operation_ami_ch.h"
-#include "be_visitor_operation/operation_ami_cs.h"
-#include "be_visitor_operation/arglist_ami.h"
-
+#include "be_visitor_operation/ami_ch.h"
+#include "be_visitor_operation/ami_cs.h"
+#include "be_visitor_operation/ami_arglist.h"
+#include "be_visitor_operation/ami_handler_operation_ch.h"
+#include "be_visitor_operation/ami_handler_arglist.h"
 #endif // TAO_BE_VISITOR_OPERATION_H

@@ -43,4 +43,5 @@
 #include "be_visitor_interface/tie_si.h"
 #include "be_visitor_interface/ami_handler_fwd_ch.h"
 #include "be_visitor_interface/ami_handler_fwd_ci.h"
+#include "be_visitor_interface/ami_handler_ch.h"
 #endif /* _BE_VISITOR_INTERFACE_H */
