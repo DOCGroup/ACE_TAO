@@ -13,102 +13,102 @@ interface Implementation_Repository
 {
   exception Already_Registered {};
   // Object already bound in the Implementation Repository
-  
-  exception Cannot_Activate  
-  { 
-    string reason_;  
-  };  
-  
+
+  exception Cannot_Activate
+  {
+    string reason_;
+  };
+
   exception Not_Found {};
   // Object not found in the Implementation Repository
 
-  struct Environment_Variable  
-  {    
-    string name_;    
-    string value_;  
+  struct Environment_Variable
+  {
+    string name_;
+    string value_;
   };
-  // One environment variable    
-  
-  struct INET_Addr  
-  {    
+  // One environment variable
+
+  struct INET_Addr
+  {
     unsigned short port_;
-    unsigned long host_;  
-  };        
+    unsigned long host_;
+  };
   // The location of a server
-  
-  struct Process_Options  
-  {    
+
+  struct Process_Options
+  {
     string command_line_;
     // Command line options
     string environment_;
-    // Environment    
-    string working_directory_;    
-    // Working directory    
-    unsigned long creation_flags_;    
+    // Environment
+    string working_directory_;
+    // Working directory
+    unsigned long creation_flags_;
     // Creation flags
-  };  
-  
-//  Object activate_object (in Object obj)      
+  };
+
+//  Object activate_object (in Object obj)
 //    raises (Not_Found,
 //            Cannot_Activate);
   // Restart server that will contain this persistent object and return the
-  // new Object reference.      
+  // new Object reference.
   //
   // The <Not_Found> exception is raised when <obj> is not found
   // in the Implementation Repository.  The <Cannot_Activate> exception
   // is raised when <obj> is found in the Repository but could not be
-  // activated.    
-    
+  // activated.
+
 //  INET_Addr activate_server (in string server)
-//    raises (Not_Found,              
+//    raises (Not_Found,
 //            Cannot_Activate);
-  // Restart server that is named <server> and return the host/port      
-  // 
+  // Restart server that is named <server> and return the host/port
+  //
   // The <Not_Found> exception is raised when <server> is not found
   // in the Implementation Repository.  The <Cannot_Activate> exception
   // is raised when <server> is found in the Repository but could not be
-  // activated.    
-  
-  
+  // activated.
+
+
   void register_server (in string server,
                         in Process_Options options)
     raises (Already_Registered);
-  // Restart server process when client is looking for <server>.      
+  // Restart server process when client is looking for <server>.
   //
   // The <Already_Registered> exception is raised when <server> has
-  // already been registered with the Implementation Repository.      
-  // 
+  // already been registered with the Implementation Repository.
+  //
   // The <Object_Not_Persistent> exception is raised when <server> is
   // not a Persistent Object Reference.
-  
+
 //  void reregister_server (in string server,
 //                          in Process_Options options)
 //    raises (Already_Registered);
-  // Restart server process when client is looking for <server>.      
+  // Restart server process when client is looking for <server>.
   //
   // The <Already_Registered> exception is raised when <server> has
-  // already been registered with the Implementation Repository.      
-  // 
+  // already been registered with the Implementation Repository.
+  //
   // The <Object_Not_Persistent> exception is raised when <server> is
   // not a Persistent Object Reference.
-  
-  
-//  void remove_server (in string server)      
+
+
+//  void remove_server (in string server)
 //    raises (Not_Found);
-  // Remove <server> from the Implementation Repository.      
+  // Remove <server> from the Implementation Repository.
   //
   // The <Not_Found> exception is raised when <server> is not found
   // in the Implementation Repository.
-  
+
 //  Profile server_is_running (in string server,
   void server_is_running (in string server,
-                          in INET_Addr addr, 
+                          in INET_Addr addr,
                           in Ping_Object ping);
 
   // Used to notify the Implementation Repository that <server> is alive and
-  // well at <addr>.    
-    
+  // well at <addr>.
+
 //  void server_is_shutting_down (in string server);
   // Used to tell the Implementation Repository that <server> is shutting
-  // down. 
+  // down.
 };

@@ -27,7 +27,7 @@ void ImplRepo_i::start (const char *server)
     ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
 
     ACE_Process_Options proc_opts;
-      
+
     proc_opts.command_line (cl);
 
     ACE_Process proc;
@@ -36,7 +36,7 @@ void ImplRepo_i::start (const char *server)
 
     ACE_OS::sleep (2);
     delete [] cl;
-  } 
+  }
   else
   {
     ACE_DEBUG ((LM_DEBUG, "ERROR starting %s\n", server));
@@ -150,7 +150,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &_env)
     if (retval != 0)
       return retval;
 
-    ACE_NEW_RETURN (this->server_impl_, 
+    ACE_NEW_RETURN (this->server_impl_,
                     IR_Simple_i (this->orb_manager_.orb (),
                                  this->orb_manager_.child_poa (),
                                  this),
@@ -175,12 +175,12 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &_env)
 
     if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, "The IR IOR is: <%s>\n", ir_var.in ()));
-  
+
     FILE *ir_file = ACE_OS::fopen ("implrepo.ior", "w");
     ACE_OS::fprintf (ir_file, "%s", ir_var.in ());
     ACE_OS::fclose (ir_file);
 
-    ACE_NEW_RETURN (this->activator_, 
+    ACE_NEW_RETURN (this->activator_,
                     IR_Adapter_Activator(this->server_impl_),
                     -1);
 
@@ -194,7 +194,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &_env)
     this->orb_manager_.root_poa ()->the_activator (activator.in (), TAO_TRY_ENV);
     TAO_CHECK_ENV;
 
-  
+
   }
   TAO_CATCHANY
   {
@@ -315,7 +315,7 @@ ImplRepo_i::~ImplRepo_i (void)
     delete this->activator_;
 }
 
-void 
+void
 ImplRepo_i::register_server (const char *server,
                              const Implementation_Repository::Process_Options &options,
                              CORBA::Environment &env)
@@ -347,15 +347,15 @@ IR_Adapter_Activator::IR_Adapter_Activator (IR_Simple_i_ptr servant)
 }
 
 
-CORBA::Boolean 
+CORBA::Boolean
 IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                        const char *name,
                                        CORBA_Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG, "Unknown Adapter called\n"));
-    
+
   CORBA::PolicyList policies (4);
-  policies.length (4); 
+  policies.length (4);
 
   // ID Assignment Policy
   policies[0] =
@@ -374,7 +374,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       env.print_exception ("PortableServer::POA::create_lifespan_policy");
       return -1;
     }
-  
+
   // Request Processing Policy
   policies[2] =
     parent->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT, env);
@@ -383,7 +383,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       env.print_exception ("PortableServer::POA::create_request_processing_policy");
       return -1;
     }
-  
+
   // Id Uniqueness Policy
   policies[3] =
     parent->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, env);
@@ -396,7 +396,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   PortableServer::POA_var child = parent->create_POA (name,
                                                       PortableServer::POAManager::_nil (),
                                                       policies,
-                                                      env);  
+                                                      env);
   if (env.exception () != 0)
     return 0;
 
@@ -406,7 +406,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
     {
       CORBA::Policy_ptr policy = policies[i];
       policy->destroy (env);
-    }  
+    }
 
   if (env.exception () != 0)
     {
@@ -431,7 +431,7 @@ IR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
       }
 
     child->set_servant (this->servant_, env);
-    
+
     if (env.exception () != 0)
       {
         env.print_exception ("unknown_adapter, set_servant");
@@ -482,7 +482,7 @@ int IR_Simple_i::forward (CORBA::Environment &env)
 {
   this->ir_impl_->start ("Simple_Server");
 
-  ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", 
+  ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n",
     this->orb_var_->object_to_string (this->forward_to_ptr_)));
 
   if (!CORBA::is_nil (this->forward_to_ptr_))
@@ -490,10 +490,10 @@ int IR_Simple_i::forward (CORBA::Environment &env)
       env.exception (new PortableServer::ForwardRequest (this->forward_to_ptr_));
 /*
       ACE_DEBUG ((LM_DEBUG, "Forwarding...\n"));
-    
+
       PortableServer::ObjectId_var oid =
         this->poa_var_->servant_to_id (this, env);
-      
+
       if (env.exception () != 0)
         return -1;
 
@@ -504,11 +504,11 @@ int IR_Simple_i::forward (CORBA::Environment &env)
 //          env.exception (exception);
           return -1;
         }
-      
+
       void *ptr = servant->_downcast ("IDL:PortableServer/POA:1.0");
       POA_PortableServer::POA *poa = (POA_PortableServer::POA *) ptr;
       TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, poa);
-      
+
       tao_poa->forward_object (oid.in (),
                                this->forward_to_var_.in (),
                                env);*/
@@ -530,9 +530,7 @@ void IR_Simple_i::forward_to (CORBA::Object_ptr forward_to_ptr)
   *new_profile = iiop_obj->profile;
   IIOP_Object *new_iiop_obj = new IIOP_Object (iiop_obj->type_id, *new_profile);
 
-  this->forward_to_ptr_ = 
+  this->forward_to_ptr_ =
     new CORBA_Object (new_iiop_obj, forward_to_ptr->_servant ());
 
 }
-
-
