@@ -1,3 +1,12 @@
+Wed Feb 21 20:10:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.i:
+        * tests/DLL_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+
+          Fixed the remaining problems with the Win2000_Unicode tests.
+          [Bug 537]
+
 Tue Feb 20 21:19:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Svc_Conf.h:
