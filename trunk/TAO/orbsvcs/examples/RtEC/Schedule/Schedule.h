@@ -10,28 +10,26 @@
 
 
 static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
-{"Reactor_Task-25000.us",          1,          0,          0,          0,     250000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          0,          0, (RtecScheduler::Info_Type_t) 0 },
-{"Reactor_Task-50000.us",          2,          0,          0,          0,     500000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          1,          0, (RtecScheduler::Info_Type_t) 0 },
-{"Reactor_Task-100000.us",          3,          0,          0,          0,    1000000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          2,          0, (RtecScheduler::Info_Type_t) 0 },
-{"Reactor_Task-200000.us",          4,          0,          0,          0,    2000000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          3,          0, (RtecScheduler::Info_Type_t) 0 },
-{"Reactor_Task-1000000.us",          5,          0,          0,          0,   10000000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          4,          0, (RtecScheduler::Info_Type_t) 0 },
-{"ACE_ES_Dispatch_Queue-25000.us",          6,          0,          0,          0,     250000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          5,          0, (RtecScheduler::Info_Type_t) 0 },
-{"ACE_ES_Dispatch_Queue-50000.us",          7,          0,          0,          0,     500000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          6,          0, (RtecScheduler::Info_Type_t) 0 },
-{"ACE_ES_Dispatch_Queue-100000.us",          8,          0,          0,          0,    1000000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          7,          0, (RtecScheduler::Info_Type_t) 0 },
-{"ACE_ES_Dispatch_Queue-200000.us",          9,          0,          0,          0,    2000000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          8,          0, (RtecScheduler::Info_Type_t) 0 },
-{"ACE_ES_Dispatch_Queue-1000000.us",         10,          0,          0,          0,   10000000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,          9,          0, (RtecScheduler::Info_Type_t) 0 },
-{  "consumer_event_1",         11,      20000,      20000,      20000,          0, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,      20000,          0,         99,         10,          0, (RtecScheduler::Info_Type_t) 0 },
-{  "consumer_event_2",         12,      10000,      10000,      10000,          0, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,      10000,          0,         98,          0,          1, (RtecScheduler::Info_Type_t) 0 },
-{  "supplier_event_1",         13,          0,          0,          0,     100000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,         11,          0, (RtecScheduler::Info_Type_t) 0 },
-{  "supplier_event_2",         14,          0,          0,          0,     200000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         99,         12,          0, (RtecScheduler::Info_Type_t) 0 }
+{"Dispatching_Task-250000.us",          1,          0,          0,          0,     250000, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,          0,          1,         58,          4,          1, (RtecScheduler::Info_Type_t) 0 },
+{"Dispatching_Task-500000.us",          2,          0,          0,          0,     500000, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,          0,          1,         58,          5,          1, (RtecScheduler::Info_Type_t) 0 },
+{"Dispatching_Task-1000000.us",          3,          0,          0,          0,    1000000, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,          0,          1,         58,          6,          1, (RtecScheduler::Info_Type_t) 0 },
+{"Dispatching_Task-2000000.us",          4,          0,          0,          0,    2000000, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,          0,          1,         58,          7,          1, (RtecScheduler::Info_Type_t) 0 },
+{"Dispatching_Task-10000000.us",          5,          0,          0,          0,   10000000, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,          0,          1,         58,          8,          1, (RtecScheduler::Info_Type_t) 0 },
+{  "consumer_event_1",          6,      20000,      20000,      20000,          0, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,      20000,          0,         59,          0,          0, (RtecScheduler::Info_Type_t) 0 },
+{  "consumer_event_2",          7,      10000,      10000,      10000,          0, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,      10000,          0,         58,          1,          1, (RtecScheduler::Info_Type_t) 0 },
+{"(consumer_event_1#rep||consumer_event_2#rep)",          8,          0,          0,          0,          0, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,          0,          0,         58,          3,          1, (RtecScheduler::Info_Type_t) 2 },
+{"consumer_event_1#rep",          9,          0,          0,          0,          0, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,          0,          0,         58,          0,          1, (RtecScheduler::Info_Type_t) 0 },
+{"consumer_event_2#rep",         10,          0,          0,          0,          0, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,          0,          0,         58,          2,          1, (RtecScheduler::Info_Type_t) 0 },
+{  "supplier_event_1",         11,          0,          0,          0,     100000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         59,          1,          0, (RtecScheduler::Info_Type_t) 0 },
+{  "supplier_event_2",         12,          0,          0,          0,     200000, (RtecScheduler::Criticality_t) 4, (RtecScheduler::Importance_t) 0,          0,          1,         59,          2,          0, (RtecScheduler::Info_Type_t) 0 }
 };
 
 static int infos_size = sizeof(infos)/sizeof(infos[0]);
 
 
 static ACE_Scheduler_Factory::POD_Config_Info configs[] = {
-  {          0,         99, (RtecScheduler::Dispatching_Type_t) 2 },
-  {          1,         98, (RtecScheduler::Dispatching_Type_t) 2 }
+  {          0,         59, (RtecScheduler::Dispatching_Type_t) 2 },
+  {          1,         58, (RtecScheduler::Dispatching_Type_t) 2 }
 };
 
 static int configs_size = sizeof(configs)/sizeof(configs[0]);

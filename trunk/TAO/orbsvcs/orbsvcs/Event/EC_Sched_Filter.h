@@ -48,9 +48,11 @@ class TAO_ORBSVCS_Export TAO_EC_Sched_Filter : public TAO_EC_Filter
   //
 public:
   TAO_EC_Sched_Filter (const char* name,
+                       RtecScheduler::handle_t rt_info,
                        RtecScheduler::Scheduler_ptr scheduler,
                        TAO_EC_Filter* body,
                        RtecScheduler::handle_t body_info,
+                       RtecScheduler::handle_t parent_info,
                        RtecScheduler::Info_Type_t info_type);
   // Constructor.
   // It assumes ownership of the <body>, makes a copy of the other
@@ -102,6 +104,9 @@ private:
   RtecScheduler::handle_t rt_info_;
   // The RT_Info handle for this object
 
+  int rt_info_computed_;
+  // Has the Scheduler been updated?
+
   ACE_CString name_;
   // Our operation name
 
@@ -113,6 +118,9 @@ private:
 
   RtecScheduler::handle_t body_info_;
   // The RT_Info handle for the body
+
+  RtecScheduler::handle_t parent_info_;
+  // The RT_Info handle for the parent
 
   RtecScheduler::Info_Type_t info_type_;
   // Required for the scheduling service
