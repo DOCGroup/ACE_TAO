@@ -1,3 +1,10 @@
+Sun Apr 23 16:15:16 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+
+          I missed a LPTSTR during my last changes (all the win32 specific
+          macros were replaced with ACE_TCHAR types).
+
 Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO/TAO_IDL/ast/ast_module.cpp:
