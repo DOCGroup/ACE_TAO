@@ -10,7 +10,7 @@ LSRC = Event_Logging_Service.cpp
 
 LOG_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lTAO -lTAO_PortableServer -lTAO_DsLogAdmin -lTAO_DsEventLogAdmin -lTAO_CosNaming -lACE -lTAO_CosEvent 
+LDLIBS = -lTAO_DsEventLogAdmin -lTAO_DsLogAdmin -lTAO_CosEvent -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
 
 BIN2 = Event_Logging_Service
 

@@ -1,3 +1,13 @@
+Sun Oct  6 09:35:07 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile (LDLIBS):
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile (LDLIBS):
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile (LDLIBS):
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile (LDLIBS):
+
+	  Corrected order of libraries to link.  Order matters on UNIX
+	  platforms.  Addresses some "undefined reference" errors.
+
 Sun Oct  6 09:28:18 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile (MKLIST):
