@@ -1,18 +1,26 @@
+Tue Nov  2 10:15:01 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp:
+
+          Cast the first parameter to ACE_Thread_Manager::spawn to
+          ACE_THR_FUNC (as is done in other tests) to avoid compilation
+          problems on Windows.
+
 Mon Nov  1 07:27:11 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/INET_Addr.cpp: Fixed the implementation of 
-	
-	  ACE_INET_Addr (const char port_name[],
-	                 ACE_UINT32 ip_addr,
-			 const char protocol[] = "tcp");
-  
-	  ACE_INET_Addr (const wchar_t port_name[],
-	                 ACE_UINT32 ip_addr,
-			 const wchar_t protocol[] = "tcp");
+        * ace/INET_Addr.cpp: Fixed the implementation of
+
+          ACE_INET_Addr (const char port_name[],
+                         ACE_UINT32 ip_addr,
+                         const char protocol[] = "tcp");
+
+          ACE_INET_Addr (const wchar_t port_name[],
+                         ACE_UINT32 ip_addr,
+                         const wchar_t protocol[] = "tcp");
 
           so that they convert the ip_addr into network byte order before
- 	  calling set().  Thanks to Xue Yong Zhi <seclib@seclib.com> for
- 	  reporting this bug and providing the fix.
+          calling set().  Thanks to Xue Yong Zhi <seclib@seclib.com> for
+          reporting this bug and providing the fix.
 
 Tue Nov  2 06:56:21 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -31,8 +39,8 @@ Tue Nov  2 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Nov  1 10:21:00 2004  Gary Maxey  <gary.maxey@hp.com>
 
-	* ace/TP_Reactor.cpp: performace enhancement in handle_timer_events
-	  See Bugzilla #1971 for details.
+        * ace/TP_Reactor.cpp: performace enhancement in handle_timer_events
+          See Bugzilla #1971 for details.
 
         * ace/TP_Reactor.cpp: performace enhancement in handle_timer_events
           See Bugzilla #1971 for details.
