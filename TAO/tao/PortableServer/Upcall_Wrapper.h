@@ -25,15 +25,10 @@
 
 #include "tao/orbconf.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/PortableServer/ServerRequestInfo.h"
-#include "tao/PortableServer/ServerInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-
 class TAO_ServantBase;
 class TAO_ServerRequest;
-
+class TAO_InputCDR;
+class TAO_OutputCDR;
 
 namespace PortableServer
 {
@@ -57,79 +52,71 @@ namespace TAO
   public:
 
     /// Constructor.
-    Upcall_Wrapper (TAO::Argument * args[],
-                    size_t nargs,
-                    TAO_ServerRequest & server_request,
-                    TAO::Upcall_Command & command,
-                    void * servant_upcall,
-                    PortableServer::ServantBase * servant,
-                    CORBA::TypeCode_ptr * exceptions,
-                    size_t nexceptions);
+    Upcall_Wrapper ();
 
+
+    /**
+     * @note The TAO::Argument corresponding to the return value is
+     *       always the first element in the array, regardless of
+     *       whether or not the return type is void.
+     */
 
     /// Perform the upcall.
-    bool upcall (void);
+    /**
+     * @param server_request Object containing server side messaging
+     *                       operations (e.g. CDR reply construction, etc).
+     * @param args           Operation argument list.
+     * @param nargs          Number of arguments in the operation
+     *                       argument list.
+     * @param command        @c Command object that performs the
+     *                       actual upcall into the servant.
+     *
+     * @param servant_upcall Object containing information for POA
+     *                       that dispatched the servant.
+     * @param servant        The servant handling the upcall.
+     * @param exceptions     Array of user exceptions the operation
+     *                       may raise.
+     * @param nexceptions    The number of exceptions in the operation
+     *                       user exception array.
+     */
+    bool upcall (TAO_ServerRequest & server_request,
+                 TAO::Argument * args[],
+                 size_t nargs,
+                 TAO::Upcall_Command & command
+
+#if TAO_HAS_INTERCEPTORS == 1
+                 , void * servant_upcall
+                 , PortableServer::ServantBase * servant
+                 , CORBA::TypeCode_ptr * exceptions
+                 , size_t nexceptions
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                 );
 
   private:
 
 
     /// Perform pre-upcall operations.
     /**
-     * Perform pre-upcall operations.  Operations include operation
-     * @c IN and @c INOUT argument demarshaling, and intermediate
-     * interception point invocation.
+     * Perform pre-upcall operations, including operation @c IN and
+     * @c INOUT argument demarshaling.
      */
-    bool pre_upcall (void);
+    bool pre_upcall (TAO_InputCDR & cdr,
+                     TAO::Argument ** args,
+                     size_t nargs);
 
     /// Perform post-upcall operations.
     /**
-     * Perform post-upcall operations.  Operations include operation
-     * @c INOUT and @c OUT argument marshaling, and ending
-     * interception point invocation.
+     * Perform post-upcall operations, including operation @c INOUT
+     * and @c OUT argument marshaling.
      */
-    bool post_upcall (void);
-
-  private:
-
-    /// Operation argument list.
-    /**
-     * @note The TAO::Argument corresponding to the return value is
-     *       always the first element in the array, regardless of
-     *       whether or not the return type is void.
-     */
-    TAO::Argument ** const args_;
-
-    /// Number of arguments in the operation argument list.
-    size_t const nargs_;
-
-    /// Object containing server side messaging operations (e.g. CDR
-    /// reply construction, etc).
-    TAO_ServerRequest & server_request_;
-
-    /// @c Command object that performs the actual upcall into the
-    /// servant.
-    TAO::Upcall_Command & upcall_command_;
-
-#if TAO_HAS_INTERCEPTORS == 1
-
-    /// PortableServer::ServerRequestInfo instance specific to the
-    /// upcall.
-    TAO::ServerRequestInfo request_info_;
-
-    /// Interceptor adapter object that encapsulates the server side
-    /// interception points.
-    TAO::ServerRequestInterceptor_Adapter interceptor_adapter_;
-
-#endif  /* TAO_HAS_INTECEPTORS == 1 */
+    bool post_upcall (TAO_OutputCDR & cdr,
+                      TAO::Argument ** args,
+                      size_t nargs);
 
   };
 
 }  // End namespace TAO
 
-
-#ifdef __ACE_INLINE__
-# include "tao/PortableServer/Upcall_Wrapper.inl"
-#endif  /* __ACE_INLINE_*/
 
 #include /**/ "ace/post.h"
 

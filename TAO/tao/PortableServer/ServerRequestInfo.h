@@ -74,9 +74,9 @@ namespace TAO
   public:
 
     /// Constructor.
-    ServerRequestInfo (TAO::Argument ** args,
+    ServerRequestInfo (TAO_ServerRequest & server_request,
+                       TAO::Argument ** args,
                        size_t nargs,
-                       TAO_ServerRequest & server_request,
                        void * servant_upcall,
                        PortableServer::ServantBase * servant,
                        CORBA::TypeCode_ptr * exceptions,
@@ -283,16 +283,16 @@ namespace TAO
 
   protected:
 
+    /// Underlying request object that contains much of the
+    /// information encapsulated by this @c ServerRequestInfo
+    /// implementation.
+    TAO_ServerRequest & server_request_;
+
     /// Operation argument list.
     TAO::Argument ** const args_;
 
     /// Number of element in the operation argument list.
     size_t const nargs_;
-
-    /// Underlying request object that contains much of the
-    /// information encapsulated by this @c ServerRequestInfo
-    /// implementation.
-    TAO_ServerRequest & server_request_;
 
     /// Pointer to the @c Servant_Upcall object that contains the
     /// object ID, among other things.
