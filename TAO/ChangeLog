@@ -1,3 +1,13 @@
+Thu Dec 25 23:55:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FTORB_Utils.bor:
+	* orbsvcs/orbsvcs/FT_ClientORB.bor:
+	* orbsvcs/orbsvcs/FT_ServerORB.bor:
+
+	  Fixed the borland files after the last change. I am sure they
+	  are not perfect. Need to wait for the builds to make the next
+	  round of fixes. 
+
 Thu Dec 25 23:41:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FTORB.mpc:
