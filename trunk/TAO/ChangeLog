@@ -12,7 +12,7 @@ Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  typedefs of the stub type, stub _ptr type and stub _var type
 	  to the code generation for the corresponding skeleton class
 	  for interfaces. This closes [BUGID:1083]. Thanks to 
-	  Andrew Sutton <ansutton@sep.com>, Holget Krekel <krekel@merlinux.de>
+	  Andrew Sutton <ansutton@sep.com>, Holger Krekel <krekel@merlinux.de>
 	  and Jody Hagins <jody@atdesk.com> for their suggestions.
 
 Mon Jun 23 16:53:58 2003  Chris Cleeland  <cleeland_c@ociweb.com>
