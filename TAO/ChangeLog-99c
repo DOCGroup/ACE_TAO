@@ -1,42 +1,42 @@
 Tue Jun  8 00:19:02 1999 Fred Kuhns <fredk@cs.wustl.edu>
-        * Files modified: 
-	    Acceptor_Registry.cpp, Acceptor_Registry.h,
-	    Connector_Registry.cpp, Connector_Registry.h,
-	    IIOP_Acceptor.cpp, IIOP_Connector.cpp, IIOP_Connector.h,
-	    IIOP_Profile.cpp, IIOP_Profile.h, IIOP_Profile.i,
-	    Invocation.cpp, ORB.cpp, ORB_Core.cpp, Object.cpp,
-	    Pluggable.cpp, Pluggable.h, UIOP_Acceptor.cpp,
-	    UIOP_Connector.cpp, UIOP_Profile.cpp, UIOP_Profile.h,
-	    UIOP_Profile.i, UIOP_Transport.h
 
-	* Changed the interface to Connector_Registry.  Altered connect
-	  () method to accept profiles rather than a Stub Object
-	  pointer.
+        * Files modified: Acceptor_Registry.cpp, Acceptor_Registry.h,
+ 	  Connector_Registry.cpp, Connector_Registry.h, IIOP_Acceptor.cpp,
+ 	  IIOP_Connector.cpp, IIOP_Connector.h, IIOP_Profile.cpp,
+ 	  IIOP_Profile.h, IIOP_Profile.i, Invocation.cpp, ORB.cpp,
+ 	  ORB_Core.cpp, Object.cpp, Pluggable.cpp, Pluggable.h,
+ 	  UIOP_Acceptor.cpp, UIOP_Connector.cpp, UIOP_Profile.cpp,
+ 	  UIOP_Profile.h, UIOP_Profile.i, UIOP_Transport.h
 
-        * Acceptor_Registry - comments updates
+	* Changed the interface to Connector_Registry.  Altered connect()
+ 	  method to accept profiles rather than a Stub Object pointer.
 
-	* IIOP_Acceptor - Comments and fixed is_collocated to use the
-          cached copy of the local address.
+        * tao/Acceptor_Registry: comments updates
 
-        * IIOP_Connector - comments and fixed use of profile->addr_to_string
+	* tao/IIOP_Acceptor: Comments and fixed is_collocated to use the
+ 	  cached copy of the local address.
 
-        * IIOP_Profile - comments, changes add_to_string to accept a buffer.
-               changed _key () to be _key (void),
-               removed use of body_ (CDR stream).
+        * tao/IIOP_Connector: comments and fixed use of
+ 	  profile->addr_to_string
 
-        * Invocation - comments and fixed use of connector_registry->connect ()
+        * tao/IIOP_Profile: Comments, changes add_to_string to accept a
+ 	  buffer.  changed _key () to be _key (void), removed use of body_
+ 	  (CDR stream).
 
-        * ORB.cpp - comments and fixed use of profile->_key () to not 
-          include ENV.
+        * tao/Invocation: comments and fixed use of
+ 	  connector_registry->connect ()
 
-        * ORB_Core - comments
+        * tao/ORB.cpp: comments and fixed use of profile->_key () to not
+ 	  include ENV.
 
-	* Pluggable - comments and fixed TAO_XX_Profile::addr_to_string ()
-          to include a buffer, alsoc TAO_XX_Profile::_key () to not include
-          ENV.
+        * tao/ORB_Core: comments
 
-        * UIOP_{Acceptor,Connector,Profile,Transport} - comments and also
-          UIOP_Profile::_key() and UIOP_Profile::addr_to_string.
+	* tao/Pluggable: comments and fixed TAO_XX_Profile::addr_to_string ()
+ 	  to include a buffer, alsoc TAO_XX_Profile::_key () to not
+ 	  include ENV.
+
+        * tao/UIOP_{Acceptor,Connector,Profile,Transport}: comments and
+ 	  also UIOP_Profile::_key() and UIOP_Profile::addr_to_string.
 
 Tue Jun  8 00:09:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
