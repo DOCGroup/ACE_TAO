@@ -75,8 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_identifier.h"
 
-ACE_RCSID (ast, 
-           ast_factory, 
+ACE_RCSID (ast,
+           ast_factory,
            "$Id$")
 
 AST_Factory::AST_Factory (void)
@@ -218,7 +218,7 @@ AST_Factory::fe_add_argument (AST_Argument *t)
 
 // Dump this AST_Factory node (an OBV factory construct) to the ostream o.
 void
-AST_Factory::dump (ostream &o)
+AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 {
   AST_Decl *d = 0;
 
