@@ -4,7 +4,9 @@
 #ifndef ACE_BASELINE_TEST_H
 #define ACE_BASELINE_TEST_H
 
-#include "Benchmark_Base.h"
+#include "ace/Profile_Timer.h"
+
+#include "Synch_Lib/Benchmark_Base.h"
 
 class ACE_Svc_Export Benchmark_Baseline_Test_Base : public Benchmark_Base
 {
@@ -41,7 +43,7 @@ public:
   int test_try_lock (void);
   // Return test configuration.
 
-  int add_time (ACE_Profile_Timer::Elapsed_Time &et);
+  int add_time (ACE_Profile_Timer::ACE_Elapsed_Time &et);
   // Add the time spent in the current iterations.
 
   int inc_loop_counter (void);
@@ -89,19 +91,20 @@ public:
   virtual int post_run_test (void);
   virtual int valid_test_object (Benchmark_Base *);
 
-  virtual int svc (void);
-  // This method is responsible to hold the lock if we are
-  // benchmarking for try_lock method.
+  static void *hold_lock (void * arg);
+  // This method runs in a separate thread, and is used to hold the lock while
+  // we test the performance of try lock.
 
 private:
+  Benchmark_Baseline_Test_Base *current_test_;
   ACE_Barrier get_lock_;
   ACE_Barrier let_go_lock_;
 };
 
-ACE_SVC_FACTORY_DECLARE (Baseline_Test)
+ACE_SVC_FACTORY_DECLARE (Benchmark_Baseline)
 
 #if defined (__ACE_INLINE__)
-#include "ace/Baseline_Test.i"
+#include "Baseline_Test.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_BASELINE_TEST_H */
