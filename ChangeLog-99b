@@ -1,3 +1,23 @@
+Wed Nov 10 23:29:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/Configuration.cpp:
+        * ace/Configuration.h:
+        * ace/Configuration.i:
+        * examples/Configuration/Configuration.dsw:
+        * examples/Configuration/Test.dsp:
+        * examples/Configuration/config_test.cpp:
+          Added the ACE Configuration class files.  Thanks to Chris 
+          Hafey <chafey@pacbell.net> for submitting them.
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+        * ace/Makefile:
+        * examples/Configuration/Makefile:
+          Added the Configuration files to the projects and Makefiles.
+
+        * ace/config-win32.h:
+          MSVC only supports operator placement delete as of version 6.
+
 Wed Nov 10 22:12:32 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:
