@@ -425,14 +425,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   *os << "~" << node->local_name () << " (void);" << be_nl
       << "static void _tao_any_destructor (void*);" << be_nl;
 
-  // Generate the _var_type typedef (only if we are not anonymous),
-  // but we must protect against certain versions of g++.
+  // Generate the _var_type typedef (only if we are not anonymous).
   if (this->ctx_->tdef () != 0)
     {
-      *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-          << be_nl;
-      *os << "typedef " << node->local_name () << "_var _var_type;\n"
-          << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl;
+      *os << "typedef " << node->local_name () << "_var _var_type;"
+          << be_nl << be_nl;
     }
 
   // TAO provides extensions for octet sequences, first find out if

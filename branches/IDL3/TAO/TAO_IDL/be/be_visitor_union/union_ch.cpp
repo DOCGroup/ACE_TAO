@@ -97,12 +97,9 @@ int be_visitor_union_ch::visit_union (be_union *node)
                             -1);
         }
 
-      // Generate the _var_type typedef
-      // but we must protect against certain versions of g++.
-      *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-          << be_nl;
-      *os << "typedef " << node->local_name () << "_var _var_type;\n"
-          << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl;
+      // Generate the _var_type typedef.
+      *os << "typedef " << node->local_name () << "_var _var_type;"
+          << be_nl << be_nl;
 
       // Now generate the public defn for the union branch members. For this,
       // set our state to reflect what we are aiming to do.

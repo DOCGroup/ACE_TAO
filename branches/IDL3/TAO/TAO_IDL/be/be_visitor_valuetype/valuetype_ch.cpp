@@ -166,19 +166,16 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   // Generate the body.
   *os << "{" << be_nl
-      << "public:" << be_idt_nl
+      << "public:" << be_idt_nl;
 
-  // Generate the _ptr_type and _var_type typedef
-  // but we must protect against certain versions of g++
-      << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-      << be_nl
-      << "typedef " << node->local_name () << "* _ptr_type;" << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;\n"
-      << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl
+      // Generate the _ptr_type and _var_type typedef.
+  *os << "typedef " << node->local_name () << "* _ptr_type;" << be_nl
+      << "typedef " << node->local_name () << "_var _var_type;" 
+      << be_nl << be_nl;
 
-  // Generate the static _downcast operation.
-  // (see OMG 20.17.{4,5}).
-      << "static " << node->local_name () << "* "
+      // Generate the static _downcast operation.
+      // (see OMG 20.17.{4,5}).
+  *os << "static " << node->local_name () << "* "
       << "_downcast (CORBA::ValueBase* );" << be_nl
       << "// The address of static _downcast is implicit used as type id\n"
       << be_nl
@@ -193,7 +190,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "static const char* "
       << "_tao_obv_static_repository_id ();" << be_nl << be_nl;
 
-  // Ugly TAO any support routine
   *os << "static void _tao_any_destructor (void *);"
       << be_nl << be_nl;
 

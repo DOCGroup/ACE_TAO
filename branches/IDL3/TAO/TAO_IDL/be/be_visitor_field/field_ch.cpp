@@ -396,17 +396,12 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
       // generate the typedef for that case elsewhere.
       if (this->ctx_->scope ()->node_type () != AST_Decl::NT_interface)
         {
-          // Generate the anonymous sequence member typedef
-          // but we must protect against certain versions of g++.
-          // This provides a consistent name to use instead of the
-          // implementation-specific name.
+          // Generate the anonymous sequence member typedef.
           be_decl *bs = this->ctx_->scope ();
-          *os << "\n#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-              << be_nl
-              << "typedef " << bt->nested_type_name (bs)
+
+          *os << "typedef " << bt->nested_type_name (bs)
               << " _" << this->ctx_->node ()->local_name ()
-              << "_seq;\n";
-          *os << "#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */\n" << be_nl;
+              << "_seq;" << be_nl;
         }
     }
 
