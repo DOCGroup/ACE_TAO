@@ -1,3 +1,11 @@
+Sat Sep 21 13:49:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableInterceptorC.cpp (_create_policy):
+
+	  Removed default argument value.  Default values should only be
+	  set in method/function prototypes, not the implementations.
+	  Fixes a warning exhibited by g++ 3.2.
+
 Sat Sep 21 12:42:25 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:

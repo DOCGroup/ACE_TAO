@@ -3520,7 +3520,7 @@ PortableInterceptor::PolicyFactory::_duplicate (PolicyFactory_ptr obj)
 
 ::CORBA::Policy_ptr
 PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
-                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
