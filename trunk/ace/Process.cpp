@@ -5,6 +5,7 @@
 #include "ace/ARGV.h"
 #include "ace/Signal.h"
 #include "ace/SString.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process.i"

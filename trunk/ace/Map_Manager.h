@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Synch.h"
+#include "ace/Log_Msg.h"
 
 // Forward declaration.
 class ACE_Allocator;

@@ -45,6 +45,8 @@ typedef ACE_SOCK_Connector ACE_LOG_MSG_IPC_CONNECTOR;
 typedef ACE_INET_Addr ACE_LOG_MSG_IPC_ADDR;
 #endif /* ACE_HAS_STREAM_PIPES */
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)

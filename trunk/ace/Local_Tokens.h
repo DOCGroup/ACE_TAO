@@ -57,6 +57,7 @@
 #include "ace/Containers.h"
 #include "ace/Synch_Options.h"
 #include "ace/Map_Manager.h"
+#include "ace/Log_Msg.h"
 
 #if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
 # define ACE_NO_TSS_TOKENS 1

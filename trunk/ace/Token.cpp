@@ -2,6 +2,7 @@
 
 #include "ace/Thread.h"
 #include "ace/Token.h"
+#include "ace/Log_Msg.h"
 
 #if defined (DEBUGGING)
 #include "ace/streams.h"
