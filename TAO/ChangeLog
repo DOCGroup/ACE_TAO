@@ -1,3 +1,8 @@
+Thu Sep  2 07:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.cpp:
+          Replaced ACE cast macros with normal C++ casts
+
 Wed Sep  1 12:55:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* docs/libraries.html:
