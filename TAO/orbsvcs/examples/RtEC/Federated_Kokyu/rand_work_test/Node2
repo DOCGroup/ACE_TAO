@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#rm -f *.ior
 ./Node2_EC -o node2_ec.ior \
            -i node3_ec.ior \
            -i node4_ec.ior \
