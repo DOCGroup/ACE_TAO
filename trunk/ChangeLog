@@ -1,3 +1,21 @@
+Fri Dec 12 08:53:50 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/DependencyEditor.pm:
+        * bin/DependencyGenerator/DependencyWriter.pm:
+        * bin/DependencyGenerator/GNUObjectGenerator.pm:
+        * bin/DependencyGenerator/ObjectGenerator.pm:
+        * bin/DependencyGenerator/Preprocessor.pm:
+        * bin/depgen.pl:
+
+          More optimizations to decrease dependency generation times.
+
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+
+          Fixed a bug where when replacing paths (using the -A option), it
+          wouldn't replace as much of the path as it could depending on the
+          replacement values.  Now they are sorted by length so that the
+          longest values are checked first.
+
 Fri Dec 12 08:37:45 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/create_ace_build.pl:

@@ -17,9 +17,8 @@ use strict;
 # ************************************************************
 
 sub new {
-  my($class) = shift;
   return bless {
-               }, $class;
+               }, $_[0];
 }
 
 
