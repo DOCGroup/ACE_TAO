@@ -1,3 +1,16 @@
+Thu Jun 18 14:17:35 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Attributes_T.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_Validator.cpp:
+	* orbsvcs/orbsvcs/Trader/Lookup.cpp:
+	* orbsvcs/orbsvcs/Trader/Policies.cpp:
+	* orbsvcs/orbsvcs/Trader/Policy_Manager.cpp:
+	* orbsvcs/orbsvcs/Trader/Property_Filter.cpp:
+	* orbsvcs/orbsvcs/Trader/Property_Evaluator.cpp:
+	* orbsvcs/orbsvcs/Trader/Register.cpp:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+	Eliminated warnings on NT compilation.
+
 Thu Jun 18 14:07:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/start_services: use port 0, and use the -o and
