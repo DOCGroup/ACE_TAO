@@ -1,3 +1,31 @@
+Sun Nov 28 17:41:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORInterceptor/IORInterceptor.h:	
+
+	  A new header file which can be included by trhe applications to
+	  pull in IORInterceptor symbols even in static mode. 
+	
+	* tao/IORInterceptor/IORInterceptorC.cpp:
+	* tao/IORInterceptor/IORInterceptorC.h:
+
+	  Regenerated the files with our standard  trick to prevent
+	  applications including this file directly. 
+	
+	* tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
+	* tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h:
+	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+	* tao/IORInterceptor/IORInterceptor_List.h:
+
+	  Reduced inter-header dependancies. 
+	
+ 	* orbsvcs/examples/ORT/Server_IORInterceptor.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+	* tests/ORT/ORT_test_IORInterceptor.h:
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+	* tests/Portable_Interceptors/PolicyFactory/IORInterceptor.h:
+
+	  #included IORInterceptor.h
+
 Sun Nov 28 15:14:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* examples/Simple/grid/Grid_Client_i.cpp:
