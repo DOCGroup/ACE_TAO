@@ -33,6 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include "domain_export.h"
 #include "tao/DomainC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
