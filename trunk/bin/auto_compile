@@ -58,10 +58,11 @@ $MODULE='ACE_wrappers';
       'TAO/orbsvcs/tests/Simple_Naming , run_test.pl',
       'TAO/orbsvcs/tests/Event_Latency , run_test.pl',
       'TAO/orbsvcs/tests/EC_Throughput , run_test.pl',
+      'TAO/orbsvcs/tests/EC_Custom_Marshal , run_test.pl',
       'TAO/orbsvcs/tests/EC_Multiple , run_test.pl',
       'TAO/tests/Cubit/TAO/MT_Cubit , run_test.pl' );
 
-# We obtain our revision to report errors in a "nice" manner.
+# We obtain our revision to report errors.
 $REVISION='$Revision$';
 
 # Find out the command name.
