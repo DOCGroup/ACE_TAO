@@ -12,7 +12,7 @@ Thread_Pool::close (u_long)
 
 Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
 			  int n_threads)
-  : ACE_Task<ACE_SYNCH_MUTEX> (thr_mgr),
+  : ACE_Task<ACE_SYNCH> (thr_mgr),
   nt_(n_threads)
 {
   // Create the pool of worker threads.
