@@ -2603,6 +2603,8 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 {
   CORBA::Policy *result = 0;
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
   // No need to lock, the object is in TSS storage....
   TAO_Policy_Current &policy_current =
     this->policy_current ();
@@ -2621,8 +2623,10 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
   if (result == 0)
     result = this->default_relative_roundtrip_timeout ();
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   return result;
+
 }
 
 #if (TAO_HAS_RT_CORBA == 1)
