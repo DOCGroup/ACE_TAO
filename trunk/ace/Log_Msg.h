@@ -363,6 +363,11 @@ public:
   int log_priority_enabled (ACE_Log_Priority log_priority);
   // Return true if the requested priority is enabled.
 
+  int log_priority_enabled (ACE_Log_Priority log_priority,
+                            const ASYS_TCHAR *,
+                            ...);
+  // Return true if the requested priority is enabled.
+
   pid_t getpid (void) const;
   // Optimize reading of the pid (avoids a system call if the value is
   // cached...).
