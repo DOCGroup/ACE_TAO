@@ -1,3 +1,25 @@
+Wed Jan 14 14:26:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release: 
+
+	  Made changes to the way beta kits are created. We added some
+	  solution files and WinCE files for ACE but not for TAO+CIAO
+	  (with a reason). But when the final kits were created, the
+	  ACE+TAO bundles and ACE+TAO+CIAO bundles had all the ACE
+	  specific stuff which confused the user. Moreover, the autoconf
+	  support was also bootstrapped which confused users to no end
+	  since autoconf works only with ACE. The bootstrapping should have
+	  been done to the ACE distribution and not to other
+	  distributions. 
+
+	* Makefile:
+
+	  Added an extra target for AUTOCONF_RELEASE_FILES. This will have
+	  all the release files in ACE + the files that needs to go in
+	  with autoconf. 
+
+	  I have to test this stuff and will do so shortly.
+
 Wed Jan 14 09:47:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* */*_Static.ds[p,w]:
