@@ -1,8 +1,8 @@
 #
-# Makefile for building	the Coll_Test_Stubs library
+# Makefile for building	the Collocation_Test_Stubs library
 #
 
-NAME = Coll_Test_Stubs
+NAME = Collocation_Test_Stubs
 
 TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -Gd \
 	-Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export \
