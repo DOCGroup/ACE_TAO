@@ -6301,6 +6301,13 @@ ACE_OS::mkdir (const wchar_t *path, mode_t mode)
   ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);  
 }
 
+ACE_INLINE int 
+ACE_OS::chdir (const wchar_t *path)
+{
+  // ACE_TRACE ("ACE_OS::chdir");
+  ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
+}
+
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
 
