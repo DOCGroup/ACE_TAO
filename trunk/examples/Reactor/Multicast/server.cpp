@@ -81,12 +81,16 @@ Server_Events::Server_Events (u_short port,
 {
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
 
-  if (ACE_OS::hostname (this->hostname_, MAXHOSTNAMELEN) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "hostname"));
+  if (ACE_OS::hostname (this->hostname_,
+                        MAXHOSTNAMELEN) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "hostname"));
 
   else if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "subscribe"));
-
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "subscribe"));
   else
     {
       // Point to NULL so that we block in the beginning.
@@ -103,10 +107,13 @@ Server_Events::~Server_Events (void)
 {
   this->mcast_dgram_.unsubscribe ();
 
-  ACE_DEBUG ((LM_DEBUG, "total bytes received = %d after %d second\n",
-              this->total_bytes_received_, this->interval_));
+  ACE_DEBUG ((LM_DEBUG,
+              "total bytes received = %d after %d second\n",
+              this->total_bytes_received_,
+              this->interval_));
 
-  ACE_DEBUG ((LM_DEBUG, "Mbits/sec = %.2f\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "Mbits/sec = %.2f\n",
               (float) (total_bytes_received_ * 8 / (float) (1024*1024*interval_))));
 
   ACE_DEBUG ((LM_DEBUG,
@@ -152,17 +159,30 @@ Server_Events::handle_input (ACE_HANDLE)
   iovp[1].iov_len  = 4 * BUFSIZ - sizeof (log_record_);
 
   ssize_t retcode =
-    this->mcast_dgram_.recv (iovp, 2, this->remote_addr_);
-
+    this->mcast_dgram_.recv (iovp,
+                             2,
+                             this->remote_addr_);
   if (retcode != -1)
     {
       total_messages_received_++;
       total_bytes_received_ += retcode;
-      last_sequence_number_ = ntohl (log_record_->sequence_number);
+      last_sequence_number_ =
+        ntohl (log_record_->sequence_number);
+      
+      for (char *message_end = this->message_ + ACE_OS::strlen (this->message_) - 1;
+           ACE_OS::strchr ("\r\n \t", *message_end) != 0;
+           )
+        {
+          *message_end-- = '\0';
+          if (message_end == this->message_) 
+            break;
+        }
 
-      ACE_DEBUG ((LM_DEBUG, "sequence number = %d\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  "sequence number = %d\n",
                   last_sequence_number_));
-      ACE_DEBUG ((LM_DEBUG, "message = '%s'\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  "message = '%s'\n",
                   this->message_));
 
       if (this->initialized_ == 0)
@@ -172,7 +192,10 @@ Server_Events::handle_input (ACE_HANDLE)
                                          (void *) this->hostname_,
                                          ACE_Time_Value::zero,
                                          ACE_Time_Value (DURATION)) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%p\n",
+                               "schedule_timer"),
+                              -1);
           this->initialized_ = 1;
         }
 
@@ -188,16 +211,21 @@ main (int, char *[])
 {
   // Instantiate a server which will receive messages for DURATION
   // seconds.
-  Server_Events server_events (UDP_PORT, MCAST_ADDR, DURATION);
-
+  Server_Events server_events (UDP_PORT,
+                               MCAST_ADDR,
+                               DURATION);
   // Instance of the ACE_Reactor.
   ACE_Reactor reactor;
 
   if (reactor.register_handler (&server_events,
                                 ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n%a",
+                "register_handler",
+                1));
 
-  ACE_DEBUG ((LM_DEBUG, "starting up server\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "starting up server\n"));
 
   for (;;)
     reactor.handle_events (server_events.wait_time ());
