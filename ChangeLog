@@ -1,3 +1,21 @@
+Thu Sep 23 19:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Manager.h:
+        * ace/Service_Object.h:
+        * ace/Signal.h:
+        * ace/Service_Types.h:
+        * ace/Stream_Modules.h:
+        * ace/Thread.inl:
+          Documentation fixes
+
+        * ace/OS_NS_stdio.inl:
+          Added some checks for __DMC__ for the Digital Mars compiler
+
+        * ace/OS_NS_stdio.cpp:
+          Added some checks for __DMC__ for the Digital Mars compiler and
+          use ::_close instead of _close, the former works with all compilers
+          and DMC, with DMC the _close is a macro.
+
 Thu Sep 23 19:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/streams.h:
