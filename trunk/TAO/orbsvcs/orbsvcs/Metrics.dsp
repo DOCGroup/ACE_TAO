@@ -67,8 +67,8 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 LINK32=link.exe -lib
 MTL=midl.exe
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD   /c
-# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_METRICS_BUILD_DLL" /YX /FD   /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /I "../../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_METRICS_BUILD_DLL" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -89,43 +89,35 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\Metrics_FrameManager.cpp
+SOURCE=.\Metrics\Metrics_FrameManager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_FrameManager_T.cpp
+SOURCE=.\Metrics\Metrics_LocalCache.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_LocalCache.cpp
+SOURCE=.\Metrics\Metrics_Logger.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_LocalCache_T.cpp
+SOURCE=.\Metrics\Metrics_UpcallMonitor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_Logger.cpp
+SOURCE=.\Metrics\Metrics_Utils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_UpcallMonitor.cpp
+SOURCE=.\MetricsC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_UpcallMonitor_T.cpp
+SOURCE=.\MetricsS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_Utils.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\MetricsC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\MetricsS.cpp
+SOURCE=.\MetricsS_T.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -133,47 +125,51 @@ SOURCE=..\MetricsS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\metrics_export.h
+SOURCE=.\Metrics\metrics_export.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_FrameManager.h
+SOURCE=.\Metrics\Metrics_FrameManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_FrameManager_T.h
+SOURCE=.\Metrics\Metrics_FrameManager_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_LocalCache.h
+SOURCE=.\Metrics\Metrics_LocalCache.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_LocalCache_T.h
+SOURCE=.\Metrics\Metrics_LocalCache_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_Logger.h
+SOURCE=.\Metrics\Metrics_Logger.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_UpcallMonitor.h
+SOURCE=.\Metrics\Metrics_UpcallMonitor.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_UpcallMonitor_T.h
+SOURCE=.\Metrics\Metrics_UpcallMonitor_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_Utils.h
+SOURCE=.\Metrics\Metrics_Utils.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\MetricsC.h
+SOURCE=.\MetricsC.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\MetricsS.h
+SOURCE=.\MetricsS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MetricsS_T.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -181,7 +177,51 @@ SOURCE=..\MetricsS.h
 # PROP Default_Filter ".idl"
 # Begin Source File
 
-SOURCE=..\Metrics.idl
+SOURCE=Metrics.idl
+
+!IF  "$(CFG)" == "Metrics - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Metrics - Win32 Debug"
+
+# PROP Intermediate_Dir "DLL\Debug\Metrics"
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=Metrics.idl
+InputName=Metrics
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Metrics_Export -Wb,export_include=Metrics\metrics_export.h $(InputName).idl
+
+"MetricsC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"MetricsC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"MetricsC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"MetricsS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"MetricsS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"MetricsS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"MetricsS_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"MetricsS_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"MetricsS_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -189,31 +229,39 @@ SOURCE=..\Metrics.idl
 # PROP Default_Filter ".i"
 # Begin Source File
 
-SOURCE=.\Metrics_FrameManager.i
+SOURCE=.\Metrics\Metrics_FrameManager.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_FrameManager_T.i
+SOURCE=.\Metrics\Metrics_FrameManager_T.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_LocalCache.i
+SOURCE=.\Metrics\Metrics_LocalCache.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_LocalCache_T.i
+SOURCE=.\Metrics\Metrics_UpcallMonitor.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_UpcallMonitor.i
+SOURCE=.\Metrics\Metrics_UpcallMonitor_T.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_UpcallMonitor_T.i
+SOURCE=.\Metrics\Metrics_Utils.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_Utils.i
+SOURCE=.\MetricsC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\MetricsS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\MetricsS_T.i
 # End Source File
 # End Group
 # End Target

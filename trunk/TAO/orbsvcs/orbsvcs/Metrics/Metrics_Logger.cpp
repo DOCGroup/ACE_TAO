@@ -6,6 +6,10 @@
 
 ACE_RCSID(Metrics_Logger, Metrics_Logger, "$Id$")
 
+#if defined (ACE_METRICS_COLLECTION)
+
+#if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
+
 const int    OPEN_CLOSE_BANNER_CYCLE = 4;
 
 
@@ -893,3 +897,7 @@ template class ACE_Hash_Map_Entry<CORBA::ULong, CORBA::String_var *>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong, CORBA::String_var *, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<CORBA::ULong, CORBA::String_var *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
+#endif /* ACE_METRICS_COLLECTION */
+
