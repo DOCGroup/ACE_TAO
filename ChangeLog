@@ -17,7 +17,7 @@ Fri Sep 24 22:35:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/ace.mpc:
 	* tests/tests.mpc:
 
-	  Added new ICMP and "ping" sources files to the appropriate
+	  Added new ICMP and "ping" source files to the appropriate
 	  source lists.
 
 Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
