@@ -1,3 +1,14 @@
+Thu Feb  8 14:29:13 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/GIOP_Message_Handler.cpp:
+
+          TAO_GIOP_Message_Handler::read_parse_message was checking
+          the errno after trnasport->recv (..) and was masking out
+          a ECONNRESET error.  In the ImR at least, this would cause
+          the ImR + a server to get into an infinite loop.
+
+          I removed this code so the error does get propogated up.
+
 Thu Feb  8 12:21:35 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/stub.cpp:
