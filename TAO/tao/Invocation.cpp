@@ -599,7 +599,9 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
           const ACE_Message_Block* cdr =
             this->inp_stream ().start ();
-          CORBA_Any any (tcp, 0, cdr);
+          CORBA_Any any (tcp, 0,
+                         this->inp_stream ().byte_order (),
+                         cdr);
           CORBA_Exception *exception;
 
           ACE_NEW_THROW_EX (exception,

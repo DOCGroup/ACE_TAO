@@ -51,7 +51,8 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
           // Get the CDR stream of the argument.
           ACE_Message_Block* mb = any._tao_get_cdr ();
 
-          TAO_InputCDR cdr (mb);
+          TAO_InputCDR cdr (mb,
+                            any._tao_byte_order ());
 
           CORBA::TypeCode_var field_tc =
             this->get_element_type (ACE_TRY_ENV);
@@ -62,6 +63,7 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
               // This Any constructor is a TAO extension.
               CORBA_Any field_any (field_tc.in (),
                                    0,
+                                   cdr.byte_order (),
                                    cdr.start ());
 
               // This recursive step will call the correct constructor
@@ -275,7 +277,8 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
-      TAO_InputCDR cdr (mb);
+      TAO_InputCDR cdr (mb,
+                        any._tao_byte_order ());
 
       CORBA::ULong length = this->da_members_.size ();
       CORBA::ULong arg_length = this->get_arg_length (any.type (),
@@ -295,6 +298,7 @@ TAO_DynArray_i::from_any (const CORBA_Any& any,
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc.in (),
                                0,
+                               cdr.byte_order (),
                                cdr.start ());
 
           if (!CORBA::is_nil (this->da_members_[i].in ()))
@@ -343,7 +347,8 @@ TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 
       ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
 
-      TAO_InputCDR field_cdr (field_mb);
+      TAO_InputCDR field_cdr (field_mb,
+                              field_any->_tao_byte_order ());
 
       out_cdr.append (field_tc.in (),
                       &field_cdr,
@@ -361,6 +366,7 @@ TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (my_tc,
                                0,
+                               in_cdr.byte_order (),
                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
@@ -1432,7 +1438,7 @@ TAO_DynArray_i::get_any (CORBA::Environment &ACE_TRY_ENV)
 CORBA::TypeCode_ptr
 TAO_DynArray_i::get_element_type (CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA::TypeCode_var element_type = 
+  CORBA::TypeCode_var element_type =
     CORBA_TypeCode::_duplicate (this->type_.in ());
 
   // Strip away aliases (if any) on top of the outer type

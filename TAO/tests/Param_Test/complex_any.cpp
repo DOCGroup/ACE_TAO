@@ -50,7 +50,7 @@ Test_Complex_Any::opname (void) const
 }
 
 void
-Test_Complex_Any::dii_req_invoke (CORBA::Request *req, 
+Test_Complex_Any::dii_req_invoke (CORBA::Request *req,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   req->invoke (ACE_TRY_ENV);
@@ -87,9 +87,9 @@ Test_Complex_Any::reset_parameters (void)
 
           char *l5_str = gen->gen_string ();
 
-	        if (TAO_debug_level > 0)
-	          ACE_DEBUG ((LM_DEBUG, 
-                        "setting level 5 string = %s\n", 
+                if (TAO_debug_level > 0)
+                  ACE_DEBUG ((LM_DEBUG,
+                        "setting level 5 string = %s\n",
                         l5_str));
 
           level4_struct.level5_string = l5_str;
@@ -100,27 +100,27 @@ Test_Complex_Any::reset_parameters (void)
 
           char *l9_str = gen->gen_string ();
 
-	        if (TAO_debug_level > 0)
-	          ACE_DEBUG ((LM_DEBUG, 
-                        "setting level 9 string = %s\n", 
+                if (TAO_debug_level > 0)
+                  ACE_DEBUG ((LM_DEBUG,
+                        "setting level 9 string = %s\n",
                         l9_str));
 
           level8_struct.level9_string = l9_str;
 
           CORBA::Short l9_bool = ACE_OS::rand () % 2;
 
-	        if (TAO_debug_level > 0)
-	          ACE_DEBUG ((LM_DEBUG, 
-                        "setting level 9 boolean = %d\n",  
+                if (TAO_debug_level > 0)
+                  ACE_DEBUG ((LM_DEBUG,
+                        "setting level 9 boolean = %d\n",
                         l9_bool));
 
           level8_struct.level9_boolean = (CORBA::Boolean) l9_bool;
 
           CORBA::Short l9_short = gen->gen_short ();
 
-	        if (TAO_debug_level > 0)
-	          ACE_DEBUG ((LM_DEBUG, 
-                        "setting level 9 short = %d\n", 
+                if (TAO_debug_level > 0)
+                  ACE_DEBUG ((LM_DEBUG,
+                        "setting level 9 short = %d\n",
                         l9_short));
 
           level8_struct.level9_short = l9_short;
@@ -229,19 +229,23 @@ Test_Complex_Any::check_validity (void)
   Param_Test::AnySeq *level2_in_seq;
   Param_Test::AnySeq *level2_test_seq;
 
-  this->in_ >>= level2_in_seq;
+  if (!(this->in_ >>= level2_in_seq))
+    return 0;
 
-  this->inout_ >>= level2_test_seq;
+  if (!(this->inout_ >>= level2_test_seq))
+    return 0;
 
   if (this->comp_engine (level2_in_seq, level2_test_seq) == 0)
     return 0;
 
-  this->out_.in () >>= level2_test_seq;
+  if (!(this->out_.in () >>= level2_test_seq))
+    return 0;
 
   if (this->comp_engine (level2_in_seq, level2_test_seq) == 0)
     return 0;
 
-  this->ret_.in () >>= level2_test_seq;
+  if (!(this->ret_.in () >>= level2_test_seq))
+    return 0;
 
   if (this->comp_engine (level2_in_seq, level2_test_seq) == 0)
     return 0;
@@ -256,7 +260,7 @@ Test_Complex_Any::comp_engine (const Param_Test::AnySeq *level2_in_seq,
 {
   if (level2_in_seq->length() != level2_comp_seq->length())
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "mismatch of level 2 sequence lengths\n"));
       return 0;
     }
@@ -266,12 +270,14 @@ Test_Complex_Any::comp_engine (const Param_Test::AnySeq *level2_in_seq,
       Param_Test::AnySeq *level3_in_seq;
       Param_Test::AnySeq *level3_test_seq;
 
-      (*level2_in_seq)[i] >>= level3_in_seq;
-      (*level2_comp_seq)[i] >>= level3_test_seq;
+      if (!((*level2_in_seq)[i] >>= level3_in_seq))
+        return 0;
+      if (!((*level2_comp_seq)[i] >>= level3_test_seq))
+        return 0;
 
       if (level3_in_seq->length() != level3_test_seq->length())
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "mismatch of level 3 sequence lengths\n"));
           return 0;
         }
@@ -281,13 +287,15 @@ Test_Complex_Any::comp_engine (const Param_Test::AnySeq *level2_in_seq,
           Param_Test::level4 *level4_in_struct;
           Param_Test::level4 *level4_test_struct;
 
-          (*level3_in_seq)[j] >>= level4_in_struct;
-          (*level3_test_seq)[j] >>= level4_test_struct;
+          if (!((*level3_in_seq)[j] >>= level4_in_struct))
+            return 0;
+          if (!((*level3_test_seq)[j] >>= level4_test_struct))
+            return 0;
 
           if (ACE_OS::strcmp (level4_in_struct->level5_string,
                               level4_test_struct->level5_string))
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           "mismatch of level 5 string values\n"));
               return 0;
             }
@@ -297,36 +305,42 @@ Test_Complex_Any::comp_engine (const Param_Test::AnySeq *level2_in_seq,
           CORBA::Any level7_in_any;
           CORBA::Any level7_test_any;
 
-          level4_in_struct->level5_any >>= level6_in_any;
-          level4_test_struct->level5_any >>= level6_test_any;
+          if (!(level4_in_struct->level5_any >>= level6_in_any))
+            return 0;
+          if (!(level4_test_struct->level5_any >>= level6_test_any))
+            return 0;
 
-          level6_in_any >>= level7_in_any;
-          level6_test_any >>= level7_test_any;
+          if (!(level6_in_any >>= level7_in_any))
+            return 0;
+          if (!(level6_test_any >>= level7_test_any))
+            return 0;
 
           Param_Test::level8 *level8_in_struct;
           Param_Test::level8 *level8_test_struct;
 
-          level7_in_any >>= level8_in_struct;
-          level7_test_any >>= level8_test_struct;
+          if (!(level7_in_any >>= level8_in_struct))
+            return 0;
+          if (!(level7_test_any >>= level8_test_struct))
+            return 0;
 
           if (ACE_OS::strcmp (level8_in_struct->level9_string,
                                level8_test_struct->level9_string))
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           "mismatch of level 9 string values\n"));
               return 0;
             }
 
           if (level8_in_struct->level9_boolean != level8_test_struct->level9_boolean)
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           "mismatch of level 9 boolean values\n"));
               return 0;
             }
 
           if (level8_in_struct->level9_short != level8_test_struct->level9_short)
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           "mismatch of level 9 short values\n"));
               return 0;
             }

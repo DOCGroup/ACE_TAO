@@ -28,30 +28,30 @@
 CORBA::ServiceDetail::_tao_seq_Octet::_tao_seq_Octet (void)
 {}
 CORBA::ServiceDetail::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 CORBA::ServiceDetail::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 CORBA::ServiceDetail::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 CORBA::ServiceDetail::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
@@ -72,7 +72,7 @@ CORBA::TypeCode_ptr CORBA::ServiceDetail::_tc__tao_seq_Octet = &_tc_TAO_tc_CORBA
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CS_
 
@@ -80,43 +80,43 @@ CORBA::TypeCode_ptr CORBA::ServiceDetail::_tc__tao_seq_Octet = &_tc_TAO_tc_CORBA
   CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::ULong* tmp = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       CORBA::ULong *old = ACE_reinterpret_cast (CORBA::ULong *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     CORBA::ULong *tmp = ACE_reinterpret_cast (CORBA::ULong *,this->buffer_);
-    
+
     CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::~_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CS_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CS_
@@ -128,30 +128,30 @@ CORBA::TypeCode_ptr CORBA::ServiceDetail::_tc__tao_seq_Octet = &_tc_TAO_tc_CORBA
 CORBA::ServiceInformation::_tao_seq_ServiceOption::_tao_seq_ServiceOption (void)
 {}
 CORBA::ServiceInformation::_tao_seq_ServiceOption::_tao_seq_ServiceOption (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::ULong>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 CORBA::ServiceInformation::_tao_seq_ServiceOption::_tao_seq_ServiceOption (CORBA::ULong max, CORBA::ULong length, CORBA::ULong *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::ULong>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 CORBA::ServiceInformation::_tao_seq_ServiceOption::_tao_seq_ServiceOption (const _tao_seq_ServiceOption &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::ULong>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 CORBA::ServiceInformation::_tao_seq_ServiceOption::~_tao_seq_ServiceOption (void) // dtor
@@ -162,7 +162,7 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption::~_tao_seq_ServiceOption (void
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CS_
 
@@ -170,43 +170,43 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption::~_tao_seq_ServiceOption (void
   CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::ServiceDetail* tmp = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       CORBA::ServiceDetail *old = ACE_reinterpret_cast (CORBA::ServiceDetail *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     CORBA::ServiceDetail *tmp = ACE_reinterpret_cast (CORBA::ServiceDetail *,this->buffer_);
-    
+
     CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::~_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CS_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CS_
@@ -218,30 +218,30 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption::~_tao_seq_ServiceOption (void
 CORBA::ServiceInformation::_tao_seq_ServiceDetail::_tao_seq_ServiceDetail (void)
 {}
 CORBA::ServiceInformation::_tao_seq_ServiceDetail::_tao_seq_ServiceDetail (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::ServiceDetail>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 CORBA::ServiceInformation::_tao_seq_ServiceDetail::_tao_seq_ServiceDetail (CORBA::ULong max, CORBA::ULong length, CORBA::ServiceDetail *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::ServiceDetail>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 CORBA::ServiceInformation::_tao_seq_ServiceDetail::_tao_seq_ServiceDetail (const _tao_seq_ServiceDetail &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::ServiceDetail>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 CORBA::ServiceInformation::_tao_seq_ServiceDetail::~_tao_seq_ServiceDetail (void) // dtor
@@ -293,7 +293,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ServiceDetail *&_
     else
     {
       ACE_NEW_RETURN (_tao_elem, CORBA::ServiceDetail, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (CORBA::_tc_ServiceDetail, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -310,7 +311,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ServiceDetail *&_
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -359,7 +360,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ServiceInformatio
     else
     {
       ACE_NEW_RETURN (_tao_elem, CORBA::ServiceInformation, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (CORBA::_tc_ServiceInformation, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -376,7 +378,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ServiceInformatio
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -390,20 +392,20 @@ ACE_INLINE CORBA::Boolean operator<< (
   if (strm << _tao_sequence.length ())
   {
     // encode all elements
-    
+
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (CORBA_ServiceDetail::_tao_seq_Octet *)&_tao_sequence);
       if (oseq->mb ())
         return strm.write_octet_array_mb (oseq->mb ());
       else
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
   }
   return 0; // error
@@ -417,11 +419,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ServiceDetail::_
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // retrieve all the elements
-    
+
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
       oseq->replace (_tao_seq_len, strm.start ());
       oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
@@ -430,16 +432,16 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ServiceDetail::_
     }
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
   }
   return 0; // error
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const CORBA_ServiceDetail &_tao_aggregate)
 {
   if (
@@ -449,10 +451,10 @@ operator<< (TAO_OutputCDR &strm, const CORBA_ServiceDetail &_tao_aggregate)
     return 1;
   else
     return 0;
-  
+
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 operator>> (TAO_InputCDR &strm, CORBA_ServiceDetail &_tao_aggregate)
 {
   if (
@@ -462,10 +464,10 @@ operator>> (TAO_InputCDR &strm, CORBA_ServiceDetail &_tao_aggregate)
     return 1;
   else
     return 0;
-  
+
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 operator<< (
             TAO_OutputCDR &strm,
             const CORBA_ServiceInformation::_tao_seq_ServiceOption &_tao_sequence
@@ -479,8 +481,8 @@ operator<< (
   return 0; // error
 }
 
-CORBA::Boolean 
-operator>> (TAO_InputCDR &strm, 
+CORBA::Boolean
+operator>> (TAO_InputCDR &strm,
             CORBA_ServiceInformation::_tao_seq_ServiceOption &_tao_sequence)
 {
   CORBA::ULong _tao_seq_len;
@@ -494,7 +496,7 @@ operator>> (TAO_InputCDR &strm,
   return 0; // error
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 operator<< (
             TAO_OutputCDR &strm,
             const CORBA_ServiceInformation::_tao_seq_ServiceDetail &_tao_sequence
@@ -511,8 +513,8 @@ operator<< (
   return 0; // error
 }
 
-CORBA::Boolean 
-operator>> (TAO_InputCDR &strm, 
+CORBA::Boolean
+operator>> (TAO_InputCDR &strm,
             CORBA_ServiceInformation::_tao_seq_ServiceDetail &_tao_sequence)
 {
   CORBA::ULong _tao_seq_len;
@@ -529,8 +531,8 @@ operator>> (TAO_InputCDR &strm,
   return 0; // error
 }
 
-CORBA::Boolean 
-operator<< (TAO_OutputCDR &strm, 
+CORBA::Boolean
+operator<< (TAO_OutputCDR &strm,
             const CORBA_ServiceInformation &_tao_aggregate)
 {
   if (
@@ -540,10 +542,10 @@ operator<< (TAO_OutputCDR &strm,
     return 1;
   else
     return 0;
-  
+
 }
 
-CORBA::Boolean operator>> (TAO_InputCDR &strm, 
+CORBA::Boolean operator>> (TAO_InputCDR &strm,
                            CORBA_ServiceInformation &_tao_aggregate)
 {
   if (
@@ -553,6 +555,5 @@ CORBA::Boolean operator>> (TAO_InputCDR &strm,
     return 1;
   else
     return 0;
-  
-}
 
+}

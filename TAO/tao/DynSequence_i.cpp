@@ -45,7 +45,8 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
           // Get the CDR stream of the argument.
           ACE_Message_Block *mb = any._tao_get_cdr ();
 
-          TAO_InputCDR cdr (mb);
+          TAO_InputCDR cdr (mb,
+                            any._tao_byte_order ());
 
           CORBA::ULong length;
 
@@ -66,6 +67,7 @@ TAO_DynSequence_i::TAO_DynSequence_i (const CORBA_Any& any)
               // This Any constructor is a TAO extension.
               CORBA_Any field_any (field_tc.in (),
                                    0,
+                                   cdr.byte_order (),
                                    cdr.start ());
 
               // This recursive step will call the correct constructor
@@ -285,7 +287,8 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
       // Get the CDR stream of the argument.
       ACE_Message_Block *mb = any._tao_get_cdr ();
 
-      TAO_InputCDR cdr (mb);
+      TAO_InputCDR cdr (mb,
+                        any._tao_byte_order ());
 
       CORBA::ULong arg_length;
 
@@ -316,6 +319,7 @@ TAO_DynSequence_i::from_any (const CORBA_Any& any,
           // This Any constructor is a TAO extension.
           CORBA_Any field_any (field_tc.in (),
                                0,
+                               cdr.byte_order (),
                                cdr.start ());
 
           if (!CORBA::is_nil (this->da_members_[i].in ()))
@@ -366,7 +370,8 @@ TAO_DynSequence_i::to_any (CORBA::Environment& ACE_TRY_ENV)
       ACE_Message_Block *field_mb =
         field_any->_tao_get_cdr ();
 
-      TAO_InputCDR field_cdr (field_mb);
+      TAO_InputCDR field_cdr (field_mb,
+                              field_any->_tao_byte_order ());
 
       out_cdr.append (field_tc.in (),
                       &field_cdr,
@@ -384,6 +389,7 @@ TAO_DynSequence_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (tc,
                                0,
+                               in_cdr.byte_order (),
                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);

@@ -81,6 +81,7 @@ public:
   // = TAO extension
   CORBA_Any (CORBA::TypeCode_ptr type,
              CORBA::UShort dummy,
+             int byte_order,
              const ACE_Message_Block* mb);
   // Constructor. Used by DynAny and others to optimize Any activities
   // by using CDR. The dummy arg is to keep calls like CORBA_Any foo
@@ -301,12 +302,6 @@ public:
   // otherwise. TAO does *not* guarantee that this value may be casted
   // to the contained type safely.
 
-  // = Debugging method.
-
-  static void dump (const CORBA::Any &any_value);
-  // Prints the type and the value of the any value. Dumping is
-  // supported only for standard data types.
-
   // = TAO extensions
   CORBA::Boolean any_owns_data (void) const;
   // Reports whether the Any own the data or not. This is used by the
@@ -317,37 +312,36 @@ public:
 
   ACE_Message_Block* _tao_get_cdr (void) const;
   // Message block accessor.
+  int _tao_byte_order (void) const;
+  // Get the byte order inside the CDR stream.
 
   void _tao_replace (CORBA::TypeCode_ptr,
+                     int byte_order,
                      const ACE_Message_Block *mb,
-                     CORBA::Environment &ACE_TRY_ENV =
-                       TAO_default_environment ());
+                     CORBA::Environment &ACE_TRY_ENV);
   // Replace via message block instead of <value_>.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
+                     int byte_order,
                      const ACE_Message_Block *mb,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &ACE_TRY_ENV =
-                       TAO_default_environment ());
+                     CORBA::Environment &ACE_TRY_EN);
   // Replace all the contents of the any, used in the <<= operators.
 
   void _tao_replace (CORBA::TypeCode_ptr type,
                      CORBA::Boolean any_owns_data,
                      void* value,
-                     CORBA::Environment &ACE_TRY_ENV =
-                       TAO_default_environment ());
+                     CORBA::Environment &ACE_TRY_ENV);
   // Replace the value of the Any, used in the >>= operators.
 
   void _tao_encode (TAO_OutputCDR &cdr,
                     TAO_ORB_Core *orb_core,
-                    CORBA::Environment &ACE_TRY_ENV =
-                       TAO_default_environment ());
+                    CORBA::Environment &ACE_TRY_ENV);
   // Encode the contents of the Any into <cdr>
 
   void _tao_decode (TAO_InputCDR &cdr,
-                    CORBA::Environment &ACE_TRY_ENV =
-                       TAO_default_environment ());
+                    CORBA::Environment &ACE_TRY_ENV);
   // Decode the <cdr> using the typecode in the Any object.
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -367,6 +361,7 @@ private:
   void *value_;
   // Value for the <Any>.
 
+  int byte_order_;
   ACE_Message_Block *cdr_;
   // encoded value.
 
@@ -478,6 +473,12 @@ private:
   void operator= (const CORBA_Any_var &);
   // assignment from _var disallowed
 };
+
+// These operators are too complex to be inline....
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
+                                      const CORBA::Any &x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
+                                      CORBA::Any &x);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Any.i"

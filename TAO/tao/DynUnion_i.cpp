@@ -340,7 +340,8 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_Message_Block *disc_mb =
     disc_any->_tao_get_cdr ();
 
-  TAO_InputCDR disc_cdr (disc_mb);
+  TAO_InputCDR disc_cdr (disc_mb,
+                         disc_any->_tao_byte_order ());
 
   out_cdr.append (disc_tc,
                   &disc_cdr,
@@ -360,7 +361,8 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_Message_Block *member_mb =
     member_any->_tao_get_cdr ();
 
-  TAO_InputCDR member_cdr (member_mb);
+  TAO_InputCDR member_cdr (member_mb,
+                           member_any->_tao_byte_order ());
 
   out_cdr.append (member_tc,
                   &member_cdr,
@@ -377,6 +379,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (retval,
                     CORBA_Any (tc,
                                0,
+                               in_cdr.byte_order (),
                                in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
@@ -2004,14 +2007,16 @@ TAO_DynUnion_i::Enum_extractor::check_match (const CORBA_Any &inside_any,
   // Get the CDR stream of one argument...
   ACE_Message_Block *mb = inside_any._tao_get_cdr ();
 
-  TAO_InputCDR inside_cdr (mb);
+  TAO_InputCDR inside_cdr (mb,
+                           inside_any._tao_byte_order ());
 
   inside_cdr.read_ulong (this->member_index_);
 
   // And of the other...
   mb = outside_any._tao_get_cdr ();
 
-  TAO_InputCDR outside_cdr (mb);
+  TAO_InputCDR outside_cdr (mb,
+                            outside_any._tao_byte_order ());
 
   outside_cdr.read_ulong (this->arg_index_);
 
@@ -2107,7 +2112,8 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
   // Get the CDR stream of the argument.
   ACE_Message_Block* mb = any._tao_get_cdr ();
 
-  TAO_InputCDR cdr (mb);
+  TAO_InputCDR cdr (mb,
+                    any._tao_byte_order ());
 
   CORBA_TypeCode_ptr disc_tc =
     any.type ()->discriminator_type (ACE_TRY_ENV);
@@ -2115,6 +2121,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
 
   CORBA_Any disc_any (disc_tc,
                       0,
+                      cdr.byte_order (),
                       cdr.start ());
 
   if (!CORBA::is_nil (this->discriminator_.in ()))
@@ -2190,6 +2197,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
 
       CORBA_Any member_any (member_tc.in (),
                             0,
+                            cdr.byte_order (),
                             cdr.start ());
 
       if (!CORBA::is_nil (this->member_.in ()))

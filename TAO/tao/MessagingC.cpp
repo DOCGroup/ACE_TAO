@@ -2109,7 +2109,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PriorityRange
     else
     {
       ACE_NEW_RETURN (_tao_elem, Messaging::PriorityRange, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (Messaging::_tc_PriorityRange, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2177,7 +2178,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::RoutingTypeRa
     else
     {
       ACE_NEW_RETURN (_tao_elem, Messaging::RoutingTypeRange, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (Messaging::_tc_RoutingTypeRange, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2245,7 +2247,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValue *
     else
     {
       ACE_NEW_RETURN (_tao_elem, Messaging::PolicyValue, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (Messaging::_tc_PolicyValue, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2316,7 +2319,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSe
     else
     {
       ACE_NEW_RETURN (_tao_elem, Messaging::PolicyValueSeq, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       if (stream.decode (Messaging::_tc_PolicyValueSeq, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)
       {
@@ -2373,7 +2377,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyHandler_
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (Messaging::_tc_ReplyHandler, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                         _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (Messaging::_tc_ReplyHandler, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
@@ -2429,7 +2434,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (Messaging::_tc_Poller, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                         _tao_any._tao_byte_order ());
     CORBA::Object_var _tao_obj_var;
     ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
     if (stream.decode (Messaging::_tc_Poller, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
