@@ -1,3 +1,31 @@
+Mon Jun 21 23:34:48 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+          Added two new options to TAO and support for them, 
+          -ORBImplRepoPort and -ORBImplRepoIOR.  Also added 
+          ImplRepoService to the list of services supported by 
+          resolve_initial_references ().
+
+          Note: The IR server doesn't support Multicast yet, just the
+          client is done.
+
+        * tao/orbconf.h:
+          Added the necessary macros for ports for ImplRepo multicast and
+          the resolve_initial_references ("ImplRepoService").
+
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          Added resolve_implrepo_service () method and the member variable
+          implrepo_service_.
+
+        * tao/ORB_Core.cpp:
+          Added support for options ORBImplRepoIOR and ORBImplRepoPort.
+
+        * tao/params.h:
+        * tao/params.cpp:
+        * tao/params.i:
+          Added member variables implrepo_service_ior_ and 
+          implrepo_service_port_ and accessors for them.
+
 Mon Jun 21 23:34:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IORManipulation.h:
