@@ -1,3 +1,24 @@
+Mon Apr 15 11:30:50 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Table.h:
+	* tao/ORBInitializer_Registry.h:
+
+	  Declare the singletons in these headers with the
+	  TAO_SINGLETON_DECLARE macro to force a single instance to be
+	  instantiated and exported in/from a Win32 TAO DLL.  This should
+	  correct a problem where multiple instances of TAO's ORB table
+	  and ORBInitializer registry would end up being created despite
+	  the fact they are supposed to be singletons.  Kudos to Nanbor
+	  for his help on these fixes.
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+
+	  Removed unused auto_ptr related explicit template
+	  instantiations.  They were only used by the preconnect code (see
+	  below).
+
 Mon Apr 15 08:05:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_Current_Impl.h: Included

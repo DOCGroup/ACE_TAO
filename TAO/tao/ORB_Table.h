@@ -92,10 +92,22 @@ private:
 
 };
 
-
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Table.inl"
 #endif /* __ACE_INLINE__ */
+
+#if defined (_MSC_VER)
+// Disable "nonstandard extension used : 'extern' before template
+// explicit instantiation" warning.
+#pragma warning(disable:4231)
+#endif /* _MSC_VER */
+
+TAO_SINGLETON_DECLARE (TAO_Singleton, TAO_ORB_Table, TAO_SYNCH_MUTEX)
+
+#if defined (_MSC_VER)
+// Re-enable the warning.
+#pragma warning(default:4231)
+#endif /* _MSC_VER */
 
 #include "ace/post.h"
 
