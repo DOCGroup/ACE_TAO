@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -11,30 +12,12 @@
 // = AUTHOR
 //     Chris Cleeland
 //
-// = VERSION
-//     $Id$
 // ============================================================================
 
 #if !defined (TAO_DEFAULT_SERVER_FACTORY_H)
 #  define TAO_DEFAULT_SERVER_FACTORY_H
 
-#if 0
-#  include "ace/SOCK_Acceptor.h"
-#  include "ace/Svc_Handler.h"
-#  include "ace/Strategies_T.h"
-#  include "ace/Connector.h"
-#  include "ace/Synch.h"
-#  include "ace/Service_Object.h"
-
-#  include "tao/connect.h"
-#  include "tao/objtable.h"
-#endif /* 0 */
-
 #include "tao/corba.h"
-
-#  if !defined(SERVER_OBJECT_TABLE_SIZE)
-#    define SERVER_OBJECT_TABLE_SIZE 64
-#  endif
 
 class TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
   // = TITLE
@@ -58,6 +41,8 @@ public:
 
   // = Service Configurator hooks.
   virtual int init (int argc, char *argv[]);
+  // Initialize the ORB when it's linked dynamically.
+
   int parse_args (int argc, char *argv[]);
   // Arguments are in the form of -ORBxxx.  Valid arguments are:
   // <-ORBconcurrency> <{which}>
