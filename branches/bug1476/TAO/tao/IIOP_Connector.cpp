@@ -229,7 +229,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
         {
           // If we did a non blocking connect, just ignore
           // any timeout errors
-
+          // @@ Johnny, please see my comments in Transport_Connector.cpp.
           result = 0;
 
           // @@ Johnny why are you setting the result to zero here?

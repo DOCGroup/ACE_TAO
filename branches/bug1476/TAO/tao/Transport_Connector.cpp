@@ -247,16 +247,19 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - Transport_Connector::connect, "
                 "got an existing %s Transport[%d]\n",
-                base_transport->is_connected() ? "connected" : "unconnected",
+                base_transport->is_connected () ? "connected" : "unconnected",
                 base_transport->id ()));
 
   // If connected return..
-  if (base_transport->is_connected())
+  if (base_transport->is_connected ())
     return base_transport;
 
-// @bala, Makes it sense to move the code below to a separate method called
-// for example wait_for_connect(r, bese_transport, timeout), this looks
-// very much similar to a part of TAO_IIOP_Connector::make_connection
+  // @bala, Makes it sense to move the code below to a separate method
+  // called for example wait_for_connect(r, bese_transport, timeout),
+  // this looks  very much similar to a part of
+  // TAO_IIOP_Connector::make_connection
+
+  // @@ Johnny, yes, need to..
 
   // If we don't need to block for a transport just set the timeout to
   // be zero.
@@ -287,21 +290,34 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   // following method deals with (c).
 
   // @@ Johnny why don't you consider using the call
-  // transport->event_handler_i () instead. All you need is a
+  // transport->event_handler_i () too. All you need is a
   // ACE_Svc_Handler and that would prevent a bunch of canypptions
   // in the code. BTW, I would also recommend changing the method
   // name event_handler_i () to event_handler ().
+  //
+  // @@ Johnny, here is what I meant. When you pass the connection
+  // handler alone, to check_connection_closure (), you are slightly
+  // handicapped. If you calling cancel_svc_handler (), you land up
+  // doing dynamic cast and stuff. Since you have the information
+  // already available here, why don't you just use it. Extract the
+  // event/svc_handler handler and connection handler and pass it to
+  // the check_connection_closure (). Then you should be just fine.
   if (result == -1)
     {
 
-// @bala, what is the best way to check this, we did a wait of zero time
-// on a non blocking connection, -1 doesn't then indicate a connection
-// failure
+      // @bala, what is the best way to check this, we did a wait of zero time
+      // on a non blocking connection, -1 doesn't then indicate a connection
+      // failure
+
 
       // When we need to get a connected transport
       if (!r->blocked () && errno == ETIME)
         {
-// @bala, this part I really am in doubt
+          // @bala, this part I really am in doubt
+          // @@ Johnny, I don't think solves anything other than
+          // adding to the confusion. Just take a look at code in
+          // Profile_Transport_Resolver.cpp and you will know what I
+          // mean.
           // If we did a non blocking connect, just ignore
           // any timeout errors
           result = 0;
@@ -314,6 +330,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
         }
 
       // In case of errors.
+      // @@ Johnny this error is mistated. This is not a connection
+      // problem, but a problem while trying to check connection
+      // closure.
       if (result == -1)
         {
           // Report that making the connection failed, don't print errno
@@ -353,6 +372,10 @@ TAO_Connector::create_connect_strategy (void)
 int
 TAO_Connector::check_connection_closure (
   TAO_Connection_Handler *svc_handler)
+// @@ Johnny, these are *NOT* service handlers just connection
+// handlers. This is confusing. In IIOP_Connector when we were using
+// IIOP_Connection_Handler we were using it as a service handler. Am I
+// making sense?
 {
   int result = -1;
 

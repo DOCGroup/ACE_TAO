@@ -1,3 +1,9 @@
+Mon Aug  2 13:52:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport_Connector.cpp (connect): 
+	  
+	  Left some comments for Johnny.
+
 Mon Aug  2 09:45:36 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.h:
