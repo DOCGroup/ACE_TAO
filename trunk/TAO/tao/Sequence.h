@@ -377,6 +377,10 @@ public:
   // reference elements, which are freed using release(). The freebuf
   // function will ignore null pointers passed to it.
 
+  // = orbos/98-01-11 proposed extensions.
+  char* *get_buffer (CORBA::Boolean orphan = 0);
+  const char* *get_buffer (void) const;
+
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,

@@ -1,3 +1,9 @@
+Tue Nov 17 20:10:41 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao/Sequence.{h,cpp}:
+          Added get_buffer methods (const and non-const) to 
+          TAO_Unbounded_String_Sequence.
+
 Tue Nov 17 11:28:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/decode.cpp: 
