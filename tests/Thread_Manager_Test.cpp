@@ -152,11 +152,12 @@ main (int, char *[])
 
   // Perform a barrier wait until all the threads have shut down.
   thr_mgr->wait ();
+
+  delete signal_catcher;
+
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
-
-  delete signal_catcher;
 
   ACE_END_TEST;
   return 0;

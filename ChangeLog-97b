@@ -1,3 +1,21 @@
+Sat Sep  6 00:21:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp: We were missing a Guard in the
+ 	  ACE_Thread_Manager::at_exit() method.
+
+	* ace/config-sunos5.5-sunc++-4.x.h: It appears that we need to set
+	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS for Solaris 2.5 since otherwise
+	  wierd things happen randomly.  This is based on the following man
+	  page entry for pthread_exit():
+	  
+	  Do not call pthread_exit() from a cancellation cleanup handler
+ 	  or destructor function that will be invoked as a result of
+ 	  either an implicit or explicit call to pthread_exit().
+
+	* ace/Thread_Manager.cpp (run_thread_exit_hooks): Once the cleanup
+ 	  hook(s) are called we set the value of the cleanup hook variable
+ 	  to 0 to avoid false matches later on.
+
 Fri Sep  5 21:57:44 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Containers.i (is_empty): 
@@ -11,6 +29,10 @@ Fri Sep  5 21:57:44 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	  on Win32 and, therefore, can't depend on it.
 
 Fri Sep  5 19:05:02 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Thread_Manager_Test.cpp (main): moved delete
+ 	  signal_catcher into the ACE_HAS_THREADS part of the main()
+ 	  function.
 
 	* ace/Reactor.cpp (check_handles): When handle_error was optimized
  	  with fstat we put NULL value to second argument.  It requires a
