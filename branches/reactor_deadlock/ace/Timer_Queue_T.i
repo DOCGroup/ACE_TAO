@@ -2,20 +2,6 @@
 
 /* -*- C++ -*- */
 
-template <class TYPE> ACE_INLINE
-ACE_Timer_Node_Dispatch_Info_T<TYPE>::ACE_Timer_Node_Dispatch_Info_T (void)
-  : type_ (),
-    act_ (0)
-{
-
-}
-
-template <class TYPE> ACE_INLINE
-ACE_Timer_Node_Dispatch_Info_T<TYPE>::~ACE_Timer_Node_Dispatch_Info_T (void)
-{
-
-}
-
 template <class TYPE> ACE_INLINE void
 ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
                              const void *a,
