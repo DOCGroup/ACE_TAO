@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -37,7 +36,7 @@ class ACE_Time_Value;
  * An <ACE_Message_Block> is modeled after the message data
  * structures used in System V STREAMS.  Its purpose is to
  * enable efficient manipulation of arbitrarily-large messages
- * without much incurring memory copying overhead.  Here are the
+ * without incurring much memory copying overhead.  Here are the
  * main characteristics of an <ACE_Message_Block>:
  * 1. Contains a pointer to a reference-counted
  *    <ACE_Data_Block>, which in turn points to the actual data
