@@ -1,9 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver {
+project(*Server): taoexe, portableserver, iorinterceptor {
   requires += interceptors
-  idlflags += -I$(TAO_ROOT)
 
   Source_Files {
     test_i.cpp
@@ -15,7 +14,6 @@ project(*Server): taoexe, portableserver {
 
 project(*Client): taoexe {
   requires += interceptors
-  idlflags += -I$(TAO_ROOT)
 
   Source_Files {
     testC.cpp

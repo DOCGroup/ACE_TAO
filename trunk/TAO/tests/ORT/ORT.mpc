@@ -1,10 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-
-project(Test_ORT_Server): taoexe, portableserver {
+project(Test_ORT_Server): taoexe, portableserver, objreftemplate, iorinterceptor {
   requires += interceptors
-  idlflags += -I$(TAO_ROOT)
 
   IDL_Files {
     ORT_test.idl
@@ -27,7 +25,6 @@ project(Test_ORT_Server): taoexe, portableserver {
 
 project(Test_ORT_Client): taoexe {
   requires += interceptors
-  idlflags += -I$(TAO_ROOT)
   after += Test_ORT_Server
 
   IDL_Files {
