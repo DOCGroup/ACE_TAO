@@ -1,0 +1,15 @@
+// $Id$  -*- IDL -*-
+
+// Component implementation definition of hello.idl.
+
+import HelloWorld;              // Do we need this?
+import HelloHome;               // This should import all related defitions.
+
+composition session hello_example
+{
+  home executor HelloHome_Exec
+    {
+      implement HelloHome;      // This implies that HelloWorld_Exec
+      manages HelloWorld_Exec;  // implements HellowWorld.
+    };
+};

@@ -5,10 +5,22 @@ implementation.
 
 File            Notes
 ---------       ---------------------------------------
-Hello.idl       Component and Home IDL definitions.
-HelloC.idl      Client-side equivalent IDL definitions.
-HelloS.idl      Server-side equivalent IDL definitions.
+hello.idl       Component and Home IDL definitions.
+helloC.idl      Equivalent IDL definitions.
 
-???
+hello.cidl      Component and Home implementation definitions.
+helloE.idl      Executor equivalent IDL definitions.
+
+
 --------
-HelloSkel       Server-side implementation skeletons?
+HelloSkel       Servant implementations.
+Hello_executors Executor implementations.
+
+
+This example showcases a component implementation in its simplest
+form.  The utmost purpose is to demonstrate how easy it is to
+implement a component and a system using CCM.
+
+Currently, we define the equivelent interfaces for both the client
+side and server side (servants and executors) manually because both
+the IDL3 and CCIDL compilers are under development.
