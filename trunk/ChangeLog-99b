@@ -1,3 +1,13 @@
+Tue Feb 23 20:58:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Object: Added a new ACE_Service_Object constructor
+ 	  that takes an ACE_Reactor * and passes this down to the
+ 	  ACE_Event_Handler base class.
+
+	* ace/Event_Handler: Added a new ACE_Event_Handler constructor
+ 	  that takes an ACE_Reactor * and an int priority that default to
+ 	  the right values.
+
 Tue Feb 23 21:53:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h,README: added ACE_HAS_MINIMAL_ACE_OS support.
@@ -8,17 +18,17 @@ Tue Feb 23 21:53:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Feb 23 20:28:45 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-        * ace/SString.{h,i,cpp}
-        Added a private member <buf_len_> to the ACE_CString class to keep
-        track of the size of data buffer, and avoid unnecessary memory
-        reallocations.  Updated class methods to use buf_len_.
+        * ace/SString.{h,i,cpp}: Added a private member <buf_len_> to the
+ 	  ACE_CString class to keep track of the size of data buffer, and
+ 	  avoid unnecessary memory reallocations.  Updated class methods
+ 	  to use buf_len_.
 
 Tue Feb 23 19:54:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * ace/POSIX_Asynch_IO.h:
         * ace/POSIX_Asynch_IO.cpp:
-        Fixed the potential dominance warnings in POSIX
-        implementation. Updated the documentation.
+	  Fixed the potential dominance warnings in POSIX
+ 	  implementation. Updated the documentation.
 
 Tue Feb 23 16:54:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
