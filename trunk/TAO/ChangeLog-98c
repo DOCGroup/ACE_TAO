@@ -1,3 +1,9 @@
+Tue Oct 21 03:23:29 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* tao/Orb_Core.cpp: Removed conditional inclusion of Orb_Core.i
+	  since, according to corba.h, it is always included as an inline
+	  function file.
+
 Tue Oct 21 02:24:14 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.13, released Tue Oct 21 02:24:14 1997.
