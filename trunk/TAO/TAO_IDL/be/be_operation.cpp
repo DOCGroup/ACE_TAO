@@ -189,6 +189,7 @@ be_operation::gen_client_stubs (void)
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
         case AST_Decl::NT_string:
+        case AST_Decl::NT_sequence:
           // no need of size here
           *cs << "0}";
           break;
