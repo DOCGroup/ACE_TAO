@@ -1,3 +1,23 @@
+Thu Apr 17 17:07:36 2003  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Process_Mutex_Test.cpp: Reverted my change:
+
+	  Thu Apr 17 16:04:54 2003  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	  David Levine informed me that he had placed that sleep()
+	  purposely:
+
+	  Thu Jul 22 11:54:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+	  and said that:
+
+	  "I think the problem has to do with calling ::waitpid () before
+	  a fork'ed child has actually been created.  It's not enough for
+	  fork () to have returned to the parent.  This really shouldn't
+	  be a problem, but it sure looked like it was on that platform."
+
+	  I have still closed bug 91 since this is a exceptional case.
+
 Thu Apr 17 16:04:54 2003  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Process_Mutex_Test.cpp: Removed call to sleep(). It was
