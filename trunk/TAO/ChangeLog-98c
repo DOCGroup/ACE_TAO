@@ -1,3 +1,7 @@
+Fri May 15 00:25:29 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.1.21 released.
+
 Thu May 14 16:39:15 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/Server_Request.{h,cpp}: Added an extra environment parameter
