@@ -107,6 +107,7 @@ Consumer::push (const RtecEventComm::EventSet& events
 /*DTTIME:
   recording the finishing time on the server side. please also record the deadline_missed_ variable.
 */
+/*
   char* format = "Deadline missed: %d";
   char* extra_info = (char*) ACE_Allocator::instance()->malloc(strlen(format) + sizeof(this->deadline_missed_) - 1);
   if (extra_info != 0)
@@ -122,7 +123,7 @@ Consumer::push (const RtecEventComm::EventSet& events
 
     }
   ACE_Allocator::instance()->free(extra_info);
-
+*/
   //@BT INSTRUMENT with event ID: EVENT_WORK_END Measure time when
   //work triggered by event finishes.
   //DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
@@ -148,6 +149,18 @@ void
 Consumer::setWorkTime(ACE_Time_Value& worktime)
 {
   this->worktime_.set(worktime.sec(),worktime.usec());
+}
+
+void
+Consumer::rt_info(RtecScheduler::handle_t consumer_rt_info)
+{
+  rt_info_ = consumer_rt_info;
+}
+
+RtecScheduler::handle_t
+Consumer::rt_info(void) const
+{
+  return rt_info_;
 }
 
 // ****************************************************************

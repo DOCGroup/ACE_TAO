@@ -18,6 +18,7 @@
 #define SUPPLIER_H
 
 #include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -53,11 +54,15 @@ public:
 
   void set_consumer_proxy(const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy);
 
+  void rt_info(RtecScheduler::handle_t supplier_rt_info);
+  RtecScheduler::handle_t rt_info(void) const;
+
   const RtecEventComm::EventSourceID get_id(void) const;
 
 private:
   RtecEventComm::EventSourceID id_;
   RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy_;
+  RtecScheduler::handle_t rt_info_;
 };
 
 class Timeout_Consumer : public POA_RtecEventComm::PushConsumer
