@@ -90,6 +90,15 @@ how to run the following tests:
 	  betas 1.1.14 and 1.1.15 the ORB would not crash but would
 	  dead-lock.
 
+	. DLL_ORB
+
+	  Test that dynamically loads and unloads objects that
+	  implement client-side and server-side CORBA application
+	  code.  The primary client and server binaries are completely
+	  decoupled from the ORB.  If the test fails then it is likely
+	  that ORB resources were not reclaimed prior to dynamic
+	  unloading (i.e. finalization).
+
         . DSI_Gateway
                     
           A simple test for the DSI/DII gateway support. TAO can
