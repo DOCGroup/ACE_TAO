@@ -143,8 +143,6 @@ ACE_OS::lstat (const ACE_TCHAR *file, ACE_stat *stp)
    // Solaris for intel uses an macro for lstat(), this macro is a
    // wrapper for _lxstat().
   ACE_OSCALL_RETURN (::_lxstat (_STAT_VER, file, stp), int, -1);
-# elif defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (::_lstat (file, stp), int, -1);
 # else /* !ACE_HAS_X86_STAT_MACROS */
   ACE_OSCALL_RETURN (::lstat (file, stp), int, -1);
 # endif /* ACE_LACKS_LSTAT */
