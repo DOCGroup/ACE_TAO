@@ -1,3 +1,16 @@
+Wed Jul  7 10:55:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* Asynch_Invocation.cpp
+	* Asynch_Invocation.h
+	* MessagingC.h
+	* PollableC.cpp
+	* PollableC.h
+	* PollableS.cpp
+	* PollableS.h
+	* Reply_Dispatcher.cpp
+	* Reply_Dispatcher.h: Guarded the AMI specific classes etc with
+	  TAO_HAS_CORBA_MESSAGING && TAO_POLLER.
+
 Tue Jul  6 22:10:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tao/PollableS.cpp:
