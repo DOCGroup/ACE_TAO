@@ -91,7 +91,7 @@ protected:
   TAO_NS_Property_Time timeout_;
 };
 
-template <class EVENT, class SYNCH> class ACE_Refcounted_Auto_Ptr;
+template <class X, class ACE_LOCK> class ACE_Refcounted_Auto_Ptr;
 template <class T> class ACE_Unbounded_Queue;
 typedef ACE_Refcounted_Auto_Ptr<TAO_NS_Event, TAO_SYNCH_MUTEX> TAO_NS_Event_var;
 typedef ACE_Unbounded_Queue<TAO_NS_Event_var> TAO_NS_Event_Collection;
