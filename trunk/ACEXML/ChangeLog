@@ -1,3 +1,10 @@
+Sun Feb 13 23:54:25 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Lothar Werzinger <lothar at xcerla dot com>
+	* apps/svcconf/Svcconf_Handler.cpp:
+
+	  Enhanced error messages.
+
 Wed Jan  5 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * common/DefaultHandler.{h,cpp,i}:
