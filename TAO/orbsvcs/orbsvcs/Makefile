@@ -51,6 +51,7 @@ ifndef TAO_ORBSVCS
     ifeq ($(corba_messaging),1)
       TAO_ORBSVCS += FaultTolerance
       TAO_ORBSVCS += FTORB
+      TAO_ORBSVCS += RTCORBAEvent
     endif #corba_messaging
     endif # ACE_HAS_GNUG_PRE_2_8
 
@@ -61,9 +62,7 @@ ifndef TAO_ORBSVCS
     # The PortableGroup library requires several methods on the POA,
     # which are disabled by Minimum CORBA.
     TAO_ORBSVCS += PortableGroup
-
-    TAO_ORBSVCS += RTCORBAEvent
-
+  
   endif # minimum_corba
 
   ifeq ($(ssl),1)
