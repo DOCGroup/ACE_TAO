@@ -1,0 +1,13 @@
+project(*Collocated): taoserver, taoclient {
+  requires += interceptors
+  Source_Files {
+    testC.cpp
+    testS.cpp
+    test_i.cpp
+    Collocated_ORBInitializer.cpp
+    interceptors.cpp
+    Client_Task.cpp
+    Server_Task.cpp
+    Collocated_Test.cpp
+  }
+}
