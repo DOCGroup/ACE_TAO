@@ -1,3 +1,14 @@
+Wed Jan 21 11:26:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_recursive.cpp:
+        
+          Change to limit the check in the entry below to structs
+          and unions, and exclude it for exceptions. Exceptions
+          may not be recursive at all, so the check, triggered
+          when parsing a member (where there is no knowledge of
+          whether it is a struct, union, or exception member) is
+          inappripriate in such a case.
+
 Tue Jan 20 16:59:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_extern.h:
