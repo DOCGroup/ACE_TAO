@@ -2,8 +2,7 @@
 //
 // $Id$
 
-project: aceexe {
-  libs += ACE_HTBP
+project: aceexe, htbp {
   exename = SendRecv_Test
 
   Source_Files {

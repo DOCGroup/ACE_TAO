@@ -1,3 +1,13 @@
+Wed Oct 27 09:16:16 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/HTBP/Reactor_Tests/Reactor_Tests.mpc:
+        * tests/HTBP/Send_Large_Msg/Send_Large_Msg.mpc:
+        * tests/HTBP/Send_Recv_Tests/SendRecv_Test.mpc:
+        * tests/HTBP/ping/ping.mpc:
+
+          Ensure that these projects get built in the right order by
+          inheriting from the htbp base project.
+
 Wed Oct 27 13:05:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:
