@@ -26,7 +26,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-static void
+extern "C" void
 handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d\n", signum));
@@ -68,11 +68,9 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_THREADS)
   ACE_Service_Config daemon;
-  daemon.open (argv[0]);
 
-  // Register a signal handler
-  ACE_SignalHandler sh (handler);
-  ACE_Sig_Action sa (sh, SIGINT);
+  // Register a signal handler.
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;

@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -28,7 +28,7 @@ static int done = 0;
 static int count = 0;
 static int odd = 0;
 
-class Reactor_Timer : public ACE_Event_Handler
+class Time_Handler : public ACE_Event_Handler
 {
 public:
   virtual int handle_timeout (const ACE_Time_Value &tv,
@@ -52,11 +52,11 @@ public:
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST ("Reactor_Timer_Test.cpp");
+  ACE_START_TEST ("Time_Handler_Test.cpp");
 
   ACE_Reactor reactor;
 
-  Reactor_Timer rt[ACE_MAX_TIMERS];
+  Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
   int i;
   
