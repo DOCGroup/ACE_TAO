@@ -1,3 +1,9 @@
+Wed Jul 16 10:17:57 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* tests/Makefile
+	* tests/TAO_Tests.dsw
+	  Added Bug_1551_Regression directory into daily builds.
+
 Wed Jul 16 13:06:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
