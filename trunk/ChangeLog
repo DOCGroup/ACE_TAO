@@ -1,3 +1,12 @@
+Sat Feb 21 08:33:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/DEV_IO.i (recv_n):
+
+	  Using ACE::recv_n () created problems on Win32 serial port
+	  code. Now we call recv_n () on all platform on all platforms but
+	  Win32. On Win32 we call read_n () which works. Thanks to
+	  <pwmiller@sarnoff.com> for reporting the problem.
+
 Sat Feb 21 08:30:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/CDR_Base.h:
