@@ -29,7 +29,7 @@
 // be/be_codegen.cpp:301
 
 
-#include "BiDirPolicyC.h"
+#include "BiDirGIOP.h"
 #include "tao/Stub.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"

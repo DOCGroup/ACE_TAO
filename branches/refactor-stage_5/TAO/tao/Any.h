@@ -217,6 +217,8 @@ namespace CORBA
     /// For Any return type.
     Any *_retn (void);
 
+    /// TAO specific extension
+    Any *ptr (void) const;
   private:
     /// Holds the Any.
     Any *ptr_;
@@ -266,8 +268,8 @@ namespace TAO
   /// Used in generated code if CORBA::Any is an argument or return type.
   template<>
   class TAO_Export Arg_Traits<CORBA::Any>
-    : public Var_Size_Arg_Traits_T<CORBA::Any, 
-                                   CORBA::Any_var, 
+    : public Var_Size_Arg_Traits_T<CORBA::Any,
+                                   CORBA::Any_var,
                                    CORBA::Any_out>
   {
   };

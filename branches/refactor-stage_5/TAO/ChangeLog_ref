@@ -1,3 +1,84 @@
+Tue Sep  2 10:48:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any.h:
+  	* tao/Any.i: Any_var class gets a new ptr () method which is used
+  	  by the argument classes. 
+  	
+  	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
+  	* tao/BiDir_GIOP/BiDirPolicyC.h:
+  	* tao/Domain/DomainS.cpp:
+  	* tao/Domain/DomainS.h:
+  	* tao/Domain/DomainS.i:
+  	* tao/Domain/DomainS_T.cpp:
+  	* tao/Domain/DomainS_T.h:
+  	* tao/Domain/DomainS_T.i:
+  	* tao/DynamicAny/DynAnyFactory.h
+  	* tao/DynamicAny/DynAny_i.h:
+  	* tao/DynamicAny/DynArray_i.h:
+  	* tao/DynamicAny/DynEnum_i.h:
+  	* tao/DynamicAny/DynSequence_i.h:
+  	* tao/DynamicAny/DynStruct_i.h:
+  	* tao/DynamicAny/DynUnion_i.h:
+  	* tao/DynamicAny/DynamicAny.pidl:
+  	* tao/DynamicAny/DynamicAnyC.cpp:
+  	* tao/DynamicAny/DynamicAnyC.h:
+  	* tao/DynamicAny/DynamicAnyC.i:
+  	* tao/IFR_Client/IFR_BaseC.cpp:
+  	* tao/IFR_Client/IFR_BaseC.h:
+  	* tao/IFR_Client/IFR_BaseC.i:
+  	* tao/IFR_Client/IFR_BaseS.h:
+  	* tao/IFR_Client/IFR_BasicC.cpp:
+  	* tao/IFR_Client/IFR_BasicC.h:
+  	* tao/IFR_Client/IFR_BasicC.i:
+  	* tao/IFR_Client/IFR_ComponentsC.cpp:
+  	* tao/IFR_Client/IFR_ComponentsC.h:
+  	* tao/IFR_Client/IFR_ComponentsC.i:
+  	* tao/IFR_Client/IFR_ExtendedC.cpp:
+  	* tao/IFR_Client/IFR_ExtendedC.h:
+  	* tao/IFR_Client/IFR_ExtendedC.i:
+  	* tao/IORInterceptor/IORInterceptor.pidl:
+  	* tao/IORInterceptor/IORInterceptorC.cpp:
+  	* tao/IORInterceptor/IORInterceptorC.h:
+  	* tao/IORInterceptor/IORInterceptorC.i:
+  	* tao/IORManipulation/IOR.pidl:
+  	* tao/IORManipulation/IORC.cpp:
+  	* tao/IORManipulation/IORC.h:
+  	* tao/IORManipulation/IORC.i:
+  	* tao/IORTable/IORTable.pidl:
+  	* tao/IORTable/IORTableC.cpp:
+  	* tao/IORTable/IORTableC.h:
+  	* tao/IORTable/IORTableC.i:
+  	* tao/IORTable/IOR_Table_Impl.h:
+  	* tao/Messaging/Messaging.pidl:
+  	* tao/Messaging/MessagingC.cpp:
+  	* tao/Messaging/MessagingC.h:
+  	* tao/Messaging/MessagingC.i:
+  	* tao/Messaging/MessagingS.cpp:
+  	* tao/Messaging/MessagingS.h:
+  	* tao/Messaging/MessagingS.i:
+  	* tao/Messaging/MessagingS_T.cpp:
+	* tao/Messaging/MessagingS_T.h:
+	* tao/Messaging/MessagingS_T.i:
+	* tao/Messaging/Messaging_No_ImplC.cpp:
+	* tao/Messaging/Messaging_No_ImplC.h:
+	* tao/Messaging/Messaging_No_ImplC.i:
+	* tao/Messaging/Messaging_RT_PolicyC.cpp:
+	* tao/Messaging/Messaging_RT_PolicyC.h:
+	* tao/Messaging/Messaging_RT_PolicyC.i:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.i:
+	* tao/Messaging/TAO_ExtC.cpp:
+	* tao/Messaging/TAO_ExtC.h:
+	* tao/Messaging/TAO_ExtC.i:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateC.i:
+	* tao/PortableServer/PortableServerC.h: Regenerated code and
+	  improved documentation for pidl files.
+
+
 Tue Sep  2 10:47:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_codegen.h:

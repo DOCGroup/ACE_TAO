@@ -15,36 +15,49 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be/be_codegen.cpp:151
 
 #ifndef _TAO_IDL_ORIG_MESSAGING_NO_IMPLC_H_
 #define _TAO_IDL_ORIG_MESSAGING_NO_IMPLC_H_
 
 #include /**/ "ace/pre.h"
+
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 #include "messaging_export.h"
+#include "tao/Sequence_T.h"
+#include "tao/Objref_VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
+#include "tao/VarOut_T.h"
 #include "tao/PolicyC.h"
 #include "tao/TimeBaseC.h"
-
-#if defined(TRANSPARENT)
-// Some platforms define this macro for ioctl()
-#undef TRANSPARENT
-#endif
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_Messaging_Export
+
+#if defined(TRANSPARENT)
+// Some platforms define this macro for ioctl()
+#undef TRANSPARENT
+#endif
 
 #if defined (TAO_EXPORT_NESTED_CLASSES)
 #  if defined (TAO_EXPORT_NESTED_MACRO)
@@ -65,119 +78,126 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+// be/be_visitor_root/root_ch.cpp:63
 
-TAO_NAMESPACE  Messaging
+namespace TAO
+{
+  class Collocation_Proxy_Broker;
+}
+
+// TAO_IDL - Generated from
+// be/be_visitor_module/module_ch.cpp:48
+
+namespace Messaging
 {
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
+  // be/be_visitor_typedef/typedef_ch.cpp:333
 
   typedef CORBA::Short Priority;
   typedef CORBA::Short_out Priority_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Priority;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
+  // be/be_visitor_typedef/typedef_ch.cpp:333
 
   typedef CORBA::Short RebindMode;
   typedef CORBA::Short_out RebindMode_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RebindMode;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::RebindMode TRANSPARENT = 0;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::RebindMode NO_REBIND = 1;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::RebindMode NO_RECONNECT = 2;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
+  // be/be_visitor_typedef/typedef_ch.cpp:333
 
   typedef CORBA::Short RoutingType;
   typedef CORBA::Short_out RoutingType_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RoutingType;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::RoutingType ROUTE_NONE = 0;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::RoutingType ROUTE_FORWARD = 1;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::RoutingType ROUTE_STORE_AND_FORWARD = 2;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
+  // be/be_visitor_typedef/typedef_ch.cpp:333
 
   typedef CORBA::UShort Ordering;
   typedef CORBA::UShort_out Ordering_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Ordering;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::Ordering ORDER_ANY = 1U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::Ordering ORDER_TEMPORAL = 2U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::Ordering ORDER_PRIORITY = 4U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::Ordering ORDER_DEADLINE = 8U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType REBIND_POLICY_TYPE = 23U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_REBINDPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_REBINDPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_REBINDPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_REBINDPOLICY__VAR_OUT_CH_
 
   class RebindPolicy;
   typedef RebindPolicy *RebindPolicy_ptr;
-  struct tao_RebindPolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -194,7 +214,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_REBINDPOLICY_CH_)
 #define _MESSAGING_REBINDPOLICY_CH_
@@ -205,17 +225,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef RebindPolicy_ptr _ptr_type;
     typedef RebindPolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static RebindPolicy_ptr _duplicate (RebindPolicy_ptr obj);
 
     static RebindPolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static RebindPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -228,7 +242,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual Messaging::RebindMode rebind_mode (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -238,10 +252,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -257,17 +274,17 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RebindPolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType REQUEST_PRIORITY_POLICY_TYPE = 25U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
+  // be/be_type.cpp:258
 
   struct PriorityRange;
 
@@ -282,7 +299,7 @@ TAO_NAMESPACE  Messaging
     PriorityRange_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
+  // be/be_visitor_structure/structure_ch.cpp:52
 
   struct TAO_Messaging_Export PriorityRange
   {
@@ -294,19 +311,18 @@ TAO_NAMESPACE  Messaging
   };
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityRange;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_REQUESTPRIORITYPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_REQUESTPRIORITYPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_REQUESTPRIORITYPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_REQUESTPRIORITYPOLICY__VAR_OUT_CH_
 
   class RequestPriorityPolicy;
   typedef RequestPriorityPolicy *RequestPriorityPolicy_ptr;
-  struct tao_RequestPriorityPolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -323,7 +339,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY_CH_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY_CH_
@@ -334,17 +350,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef RequestPriorityPolicy_ptr _ptr_type;
     typedef RequestPriorityPolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static RequestPriorityPolicy_ptr _duplicate (RequestPriorityPolicy_ptr obj);
 
     static RequestPriorityPolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static RequestPriorityPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -357,7 +367,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual ::Messaging::PriorityRange priority_range (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -367,10 +377,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -386,24 +399,23 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestPriorityPolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType REPLY_PRIORITY_POLICY_TYPE = 26U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_REPLYPRIORITYPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_REPLYPRIORITYPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_REPLYPRIORITYPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_REPLYPRIORITYPOLICY__VAR_OUT_CH_
 
   class ReplyPriorityPolicy;
   typedef ReplyPriorityPolicy *ReplyPriorityPolicy_ptr;
-  struct tao_ReplyPriorityPolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -420,7 +432,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY_CH_)
 #define _MESSAGING_REPLYPRIORITYPOLICY_CH_
@@ -431,17 +443,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef ReplyPriorityPolicy_ptr _ptr_type;
     typedef ReplyPriorityPolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static ReplyPriorityPolicy_ptr _duplicate (ReplyPriorityPolicy_ptr obj);
 
     static ReplyPriorityPolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static ReplyPriorityPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -454,7 +460,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual ::Messaging::PriorityRange priority_range (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -464,10 +470,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -483,24 +492,23 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyPriorityPolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType REQUEST_START_TIME_POLICY_TYPE = 27U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_REQUESTSTARTTIMEPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_REQUESTSTARTTIMEPOLICY__VAR_OUT_CH_
 
   class RequestStartTimePolicy;
   typedef RequestStartTimePolicy *RequestStartTimePolicy_ptr;
-  struct tao_RequestStartTimePolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -517,7 +525,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY_CH_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY_CH_
@@ -528,17 +536,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef RequestStartTimePolicy_ptr _ptr_type;
     typedef RequestStartTimePolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static RequestStartTimePolicy_ptr _duplicate (RequestStartTimePolicy_ptr obj);
 
     static RequestStartTimePolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static RequestStartTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -551,7 +553,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual ::TimeBase::UtcT start_time (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -561,10 +563,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -580,24 +585,23 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestStartTimePolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType REQUEST_END_TIME_POLICY_TYPE = 28U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_REQUESTENDTIMEPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_REQUESTENDTIMEPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_REQUESTENDTIMEPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_REQUESTENDTIMEPOLICY__VAR_OUT_CH_
 
   class RequestEndTimePolicy;
   typedef RequestEndTimePolicy *RequestEndTimePolicy_ptr;
-  struct tao_RequestEndTimePolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -614,7 +618,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY_CH_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY_CH_
@@ -625,17 +629,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef RequestEndTimePolicy_ptr _ptr_type;
     typedef RequestEndTimePolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static RequestEndTimePolicy_ptr _duplicate (RequestEndTimePolicy_ptr obj);
 
     static RequestEndTimePolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static RequestEndTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -648,7 +646,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual ::TimeBase::UtcT end_time (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -658,10 +656,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -677,24 +678,23 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestEndTimePolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType REPLY_START_TIME_POLICY_TYPE = 29U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_REPLYSTARTTIMEPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_REPLYSTARTTIMEPOLICY__VAR_OUT_CH_
 
   class ReplyStartTimePolicy;
   typedef ReplyStartTimePolicy *ReplyStartTimePolicy_ptr;
-  struct tao_ReplyStartTimePolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -711,7 +711,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY_CH_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY_CH_
@@ -722,17 +722,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef ReplyStartTimePolicy_ptr _ptr_type;
     typedef ReplyStartTimePolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static ReplyStartTimePolicy_ptr _duplicate (ReplyStartTimePolicy_ptr obj);
 
     static ReplyStartTimePolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static ReplyStartTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -745,7 +739,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual ::TimeBase::UtcT start_time (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -755,10 +749,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -774,24 +771,23 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyStartTimePolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType REPLY_END_TIME_POLICY_TYPE = 30U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_REPLYENDTIMEPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_REPLYENDTIMEPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_REPLYENDTIMEPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_REPLYENDTIMEPOLICY__VAR_OUT_CH_
 
   class ReplyEndTimePolicy;
   typedef ReplyEndTimePolicy *ReplyEndTimePolicy_ptr;
-  struct tao_ReplyEndTimePolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -808,7 +804,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY_CH_)
 #define _MESSAGING_REPLYENDTIMEPOLICY_CH_
@@ -819,17 +815,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef ReplyEndTimePolicy_ptr _ptr_type;
     typedef ReplyEndTimePolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static ReplyEndTimePolicy_ptr _duplicate (ReplyEndTimePolicy_ptr obj);
 
     static ReplyEndTimePolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static ReplyEndTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -842,7 +832,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual ::TimeBase::UtcT end_time (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -852,10 +842,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -871,24 +864,23 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyEndTimePolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType RELATIVE_REQ_TIMEOUT_POLICY_TYPE = 31U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY__VAR_OUT_CH_
 
   class RelativeRequestTimeoutPolicy;
   typedef RelativeRequestTimeoutPolicy *RelativeRequestTimeoutPolicy_ptr;
-  struct tao_RelativeRequestTimeoutPolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -905,7 +897,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY_CH_
@@ -916,17 +908,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef RelativeRequestTimeoutPolicy_ptr _ptr_type;
     typedef RelativeRequestTimeoutPolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static RelativeRequestTimeoutPolicy_ptr _duplicate (RelativeRequestTimeoutPolicy_ptr obj);
 
     static RelativeRequestTimeoutPolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static RelativeRequestTimeoutPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -939,7 +925,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual TimeBase::TimeT relative_expiry (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -949,10 +935,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -968,17 +957,17 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RelativeRequestTimeoutPolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType ROUTING_POLICY_TYPE = 33U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
+  // be/be_type.cpp:258
 
   struct RoutingTypeRange;
 
@@ -993,7 +982,7 @@ TAO_NAMESPACE  Messaging
     RoutingTypeRange_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
+  // be/be_visitor_structure/structure_ch.cpp:52
 
   struct TAO_Messaging_Export RoutingTypeRange
   {
@@ -1005,19 +994,18 @@ TAO_NAMESPACE  Messaging
   };
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RoutingTypeRange;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_ROUTINGPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_ROUTINGPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_ROUTINGPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_ROUTINGPOLICY__VAR_OUT_CH_
 
   class RoutingPolicy;
   typedef RoutingPolicy *RoutingPolicy_ptr;
-  struct tao_RoutingPolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -1034,7 +1022,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_ROUTINGPOLICY_CH_)
 #define _MESSAGING_ROUTINGPOLICY_CH_
@@ -1045,17 +1033,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef RoutingPolicy_ptr _ptr_type;
     typedef RoutingPolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static RoutingPolicy_ptr _duplicate (RoutingPolicy_ptr obj);
 
     static RoutingPolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static RoutingPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -1068,7 +1050,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual ::Messaging::RoutingTypeRange routing_range (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -1078,10 +1060,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -1097,24 +1082,23 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RoutingPolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType MAX_HOPS_POLICY_TYPE = 34U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_MAXHOPSPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_MAXHOPSPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_MAXHOPSPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_MAXHOPSPOLICY__VAR_OUT_CH_
 
   class MaxHopsPolicy;
   typedef MaxHopsPolicy *MaxHopsPolicy_ptr;
-  struct tao_MaxHopsPolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -1131,7 +1115,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_MAXHOPSPOLICY_CH_)
 #define _MESSAGING_MAXHOPSPOLICY_CH_
@@ -1142,17 +1126,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef MaxHopsPolicy_ptr _ptr_type;
     typedef MaxHopsPolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static MaxHopsPolicy_ptr _duplicate (MaxHopsPolicy_ptr obj);
 
     static MaxHopsPolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static MaxHopsPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -1165,7 +1143,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::UShort max_hops (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -1175,10 +1153,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -1194,24 +1175,23 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_MaxHopsPolicy;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
 
   const CORBA::PolicyType QUEUE_ORDER_POLICY_TYPE = 35U;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // be/be_interface.cpp:601
 
-#if !defined (_MESSAGING_QUEUEORDERPOLICY__ODDS_N_ENDS_CH_)
-#define _MESSAGING_QUEUEORDERPOLICY__ODDS_N_ENDS_CH_
+#if !defined (_MESSAGING_QUEUEORDERPOLICY__VAR_OUT_CH_)
+#define _MESSAGING_QUEUEORDERPOLICY__VAR_OUT_CH_
 
   class QueueOrderPolicy;
   typedef QueueOrderPolicy *QueueOrderPolicy_ptr;
-  struct tao_QueueOrderPolicy_life;
 
   typedef
     TAO_Objref_Var_T<
@@ -1228,7 +1208,7 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MESSAGING_QUEUEORDERPOLICY_CH_)
 #define _MESSAGING_QUEUEORDERPOLICY_CH_
@@ -1239,17 +1219,11 @@ TAO_NAMESPACE  Messaging
   public:
     typedef QueueOrderPolicy_ptr _ptr_type;
     typedef QueueOrderPolicy_var _var_type;
-    static int _tao_class_id;
 
     // The static operations.
     static QueueOrderPolicy_ptr _duplicate (QueueOrderPolicy_ptr obj);
 
     static QueueOrderPolicy_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
-    static QueueOrderPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -1262,7 +1236,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual Messaging::Ordering allowed_orders (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -1272,10 +1246,13 @@ TAO_NAMESPACE  Messaging
       )) = 0;
 
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
-    
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
-    
+    // be/be_visitor_interface/interface_ch.cpp:185
+
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -1291,25 +1268,32 @@ TAO_NAMESPACE  Messaging
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_QueueOrderPolicy;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// be/be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module Messaging
+} // module Messaging
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+};
+
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RebindPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RebindPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RebindPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
+// be/be_visitor_structure/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, const Messaging::PriorityRange &); // copying version
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::PriorityRange*); // noncopying version
@@ -1317,56 +1301,56 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::PriorityRange *&);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestPriorityPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestPriorityPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RequestPriorityPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyPriorityPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyPriorityPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyPriorityPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestStartTimePolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestStartTimePolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RequestStartTimePolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestEndTimePolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RequestEndTimePolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RequestEndTimePolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyStartTimePolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyStartTimePolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyStartTimePolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyEndTimePolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyEndTimePolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyEndTimePolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RelativeRequestTimeoutPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RelativeRequestTimeoutPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RelativeRequestTimeoutPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
+// be/be_visitor_structure/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, const Messaging::RoutingTypeRange &); // copying version
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RoutingTypeRange*); // noncopying version
@@ -1374,50 +1358,50 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::RoutingTypeRange *&);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RoutingPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::RoutingPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::RoutingPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::MaxHopsPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::MaxHopsPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::MaxHopsPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::QueueOrderPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::QueueOrderPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::QueueOrderPolicy_ptr &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+// be/be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+// be/be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::PriorityRange &);
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::PriorityRange &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+// be/be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::RoutingTypeRange &);
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::RoutingTypeRange &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
+// be/be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// be/be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_No_ImplC.i"

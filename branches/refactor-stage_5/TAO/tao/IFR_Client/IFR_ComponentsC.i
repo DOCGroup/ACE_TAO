@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_EVENTDEF___CI_)
 #define _CORBA_COMPONENTIR_EVENTDEF___CI_
@@ -46,17 +46,6 @@ CORBA::ComponentIR::EventDef::EventDef (
   this->CORBA_ComponentIR_EventDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::EventDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::EventDef::EventDef (
     IOP::IOR *ior,
@@ -71,7 +60,7 @@ CORBA::ComponentIR::EventDef::EventDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_CONTAINER___CI_)
 #define _CORBA_COMPONENTIR_CONTAINER___CI_
@@ -90,17 +79,6 @@ CORBA::ComponentIR::Container::Container (
   this->CORBA_ComponentIR_Container_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::Container>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::Container::Container (
     IOP::IOR *ior,
@@ -115,7 +93,7 @@ CORBA::ComponentIR::Container::Container (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_MODULEDEF___CI_)
 #define _CORBA_COMPONENTIR_MODULEDEF___CI_
@@ -134,17 +112,6 @@ CORBA::ComponentIR::ModuleDef::ModuleDef (
   this->CORBA_ComponentIR_ModuleDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::ModuleDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::ModuleDef::ModuleDef (
     IOP::IOR *ior,
@@ -159,7 +126,7 @@ CORBA::ComponentIR::ModuleDef::ModuleDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_REPOSITORY___CI_)
 #define _CORBA_COMPONENTIR_REPOSITORY___CI_
@@ -178,17 +145,6 @@ CORBA::ComponentIR::Repository::Repository (
   this->CORBA_ComponentIR_Repository_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::Repository>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::Repository::Repository (
     IOP::IOR *ior,
@@ -203,7 +159,7 @@ CORBA::ComponentIR::Repository::Repository (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF___CI_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF___CI_
@@ -222,17 +178,6 @@ CORBA::ComponentIR::ProvidesDef::ProvidesDef (
   this->CORBA_ComponentIR_ProvidesDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::ProvidesDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::ProvidesDef::ProvidesDef (
     IOP::IOR *ior,
@@ -247,7 +192,7 @@ CORBA::ComponentIR::ProvidesDef::ProvidesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_USESDEF___CI_)
 #define _CORBA_COMPONENTIR_USESDEF___CI_
@@ -266,17 +211,6 @@ CORBA::ComponentIR::UsesDef::UsesDef (
   this->CORBA_ComponentIR_UsesDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::UsesDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::UsesDef::UsesDef (
     IOP::IOR *ior,
@@ -291,7 +225,7 @@ CORBA::ComponentIR::UsesDef::UsesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_EVENTPORTDEF___CI_)
 #define _CORBA_COMPONENTIR_EVENTPORTDEF___CI_
@@ -310,17 +244,6 @@ CORBA::ComponentIR::EventPortDef::EventPortDef (
   this->CORBA_ComponentIR_EventPortDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::EventPortDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::EventPortDef::EventPortDef (
     IOP::IOR *ior,
@@ -335,7 +258,7 @@ CORBA::ComponentIR::EventPortDef::EventPortDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF___CI_)
 #define _CORBA_COMPONENTIR_EMITSDEF___CI_
@@ -354,17 +277,6 @@ CORBA::ComponentIR::EmitsDef::EmitsDef (
   this->CORBA_ComponentIR_EmitsDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::EmitsDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::EmitsDef::EmitsDef (
     IOP::IOR *ior,
@@ -379,7 +291,7 @@ CORBA::ComponentIR::EmitsDef::EmitsDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF___CI_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF___CI_
@@ -398,17 +310,6 @@ CORBA::ComponentIR::PublishesDef::PublishesDef (
   this->CORBA_ComponentIR_PublishesDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::PublishesDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::PublishesDef::PublishesDef (
     IOP::IOR *ior,
@@ -423,7 +324,7 @@ CORBA::ComponentIR::PublishesDef::PublishesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF___CI_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF___CI_
@@ -442,17 +343,6 @@ CORBA::ComponentIR::ConsumesDef::ConsumesDef (
   this->CORBA_ComponentIR_ConsumesDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::ConsumesDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::ConsumesDef::ConsumesDef (
     IOP::IOR *ior,
@@ -467,7 +357,7 @@ CORBA::ComponentIR::ConsumesDef::ConsumesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF___CI_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF___CI_
@@ -486,17 +376,6 @@ CORBA::ComponentIR::ComponentDef::ComponentDef (
   this->CORBA_ComponentIR_ComponentDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::ComponentDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::ComponentDef::ComponentDef (
     IOP::IOR *ior,
@@ -511,7 +390,7 @@ CORBA::ComponentIR::ComponentDef::ComponentDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF___CI_)
 #define _CORBA_COMPONENTIR_FACTORYDEF___CI_
@@ -530,17 +409,6 @@ CORBA::ComponentIR::FactoryDef::FactoryDef (
   this->CORBA_ComponentIR_FactoryDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::FactoryDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::FactoryDef::FactoryDef (
     IOP::IOR *ior,
@@ -555,7 +423,7 @@ CORBA::ComponentIR::FactoryDef::FactoryDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF___CI_)
 #define _CORBA_COMPONENTIR_FINDERDEF___CI_
@@ -574,17 +442,6 @@ CORBA::ComponentIR::FinderDef::FinderDef (
   this->CORBA_ComponentIR_FinderDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::FinderDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::FinderDef::FinderDef (
     IOP::IOR *ior,
@@ -599,7 +456,7 @@ CORBA::ComponentIR::FinderDef::FinderDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF___CI_)
 #define _CORBA_COMPONENTIR_HOMEDEF___CI_
@@ -618,17 +475,6 @@ CORBA::ComponentIR::HomeDef::HomeDef (
   this->CORBA_ComponentIR_HomeDef_setup_collocation (_tao_collocated);
 }
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::ComponentIR::HomeDef>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
 ACE_INLINE
 CORBA::ComponentIR::HomeDef::HomeDef (
     IOP::IOR *ior,
@@ -643,7 +489,7 @@ CORBA::ComponentIR::HomeDef::HomeDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
+// be/be_visitor_interface_fwd/cdr_op_ci.cpp:59
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -656,7 +502,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface_fwd/cdr_op_ci.cpp:59
+// be/be_visitor_interface_fwd/cdr_op_ci.cpp:59
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -669,7 +515,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -682,7 +528,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -695,7 +541,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -708,7 +554,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -721,7 +567,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -734,7 +580,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -765,7 +611,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -778,7 +624,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -811,7 +657,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -824,7 +670,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -855,7 +701,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -868,7 +714,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -881,7 +727,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -894,7 +740,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_CORBA_ComponentIR_ProvidesDescriptionSeq_I_
 #define _TAO_CDR_OP_CORBA_ComponentIR_ProvidesDescriptionSeq_I_
@@ -912,7 +758,7 @@ CORBA::Boolean TAO_IFR_Client_Export operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ComponentIR_ProvidesDescriptionSeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_CORBA_ComponentIR_UsesDescriptionSeq_I_
 #define _TAO_CDR_OP_CORBA_ComponentIR_UsesDescriptionSeq_I_
@@ -930,7 +776,7 @@ CORBA::Boolean TAO_IFR_Client_Export operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ComponentIR_UsesDescriptionSeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_CORBA_ComponentIR_EventPortDescriptionSeq_I_
 #define _TAO_CDR_OP_CORBA_ComponentIR_EventPortDescriptionSeq_I_
@@ -948,7 +794,7 @@ CORBA::Boolean TAO_IFR_Client_Export operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ComponentIR_EventPortDescriptionSeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -995,7 +841,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -1008,7 +854,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -1021,7 +867,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (

@@ -21,7 +21,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
+#include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 

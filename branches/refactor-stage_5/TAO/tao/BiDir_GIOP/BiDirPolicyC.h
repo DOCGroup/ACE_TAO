@@ -35,6 +35,10 @@
 
 #include "tao/corbafwd.h"
 
+#ifndef TAO_BIDIRGIOP_SAFE_INCLUDE
+#error "You should not include BiDirPolicyC.h directly, use BiDirGIOP.h"
+#endif /* !TAO_BIDIRGIOP_SAFE_INCLUDE */
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
