@@ -47,19 +47,10 @@ int be_visitor_interface_interceptors_sh::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt;
-  
-  // set the right type;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-  // output the class defn
-
   // generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
   // that only legal syntactic elements appear in our scope.
-  
+
   os->indent ();
   *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
@@ -74,17 +65,17 @@ int be_visitor_interface_interceptors_sh::visit_interface (be_interface *node)
       << "// of building these lists when they arent used is avoided." << be_nl;
 
       os->indent ();
-      
+
       if (this->visit_scope (node) == -1)
         {
-  
+
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_interface_sh::"
                            "visit_interface - "
                            "codegen for scope failed\n"), -1);
         }
   *os  << "#endif /* TAO_HAS_INTERCEPTORS */\n";
-  
+
   return 0;
 
 }

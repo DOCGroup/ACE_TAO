@@ -28,7 +28,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   if (policy_list == 0)
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_Profile::policies: Null Policy List!\n")));
       return;
     }
@@ -89,18 +89,14 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   tagged_component.component_data.length (length);
   buf = tagged_component.component_data.get_buffer ();
 
-  int i_length;
   for (const ACE_Message_Block *iterator = out_cdr.begin ();
        iterator != 0;
        iterator = iterator->cont ())
     {
+      CORBA::ULong i_length = iterator->length ();
+      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
 
-      i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
-
-      buf += iterator->length ();
-
-      i_length = iterator->length ();
+      buf += i_length;
     }
 
   // Eventually we add the TaggedComponent to the TAO_TaggedComponents
@@ -184,7 +180,7 @@ TAO_Profile::policies (void)
                   // policies that TAO doesn't support, so as specified
                   // by the RT-CORBA spec. ptc/99-05-03 we just ignore
                   // this un-understood policies.
-                  
+
                   if (TAO_debug_level >= 5)
                     ACE_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("The IOR contains Unsupported Policies.\n")));
