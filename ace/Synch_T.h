@@ -207,9 +207,9 @@ public:
   ACE_LOCK &mutex (void);
   // Returns a reference to the underlying <ACE_LOCK>.  This makes it
   // possible to acquire the lock explicitly, which can be useful in
-  // some cases *if* you instantiate the <ACE_Atomic_Op> with an
-  // <ACE_Recursive_Mutex>.
-  // NOTE: the right name would be lock_, but HP/C++ will choke on that!
+  // some cases if you instantiate the <ACE_Atomic_Op> with an
+  // <ACE_Recursive_Mutex> or <ACE_Process_Mutex>.  NOTE: the right
+  // name would be lock_, but HP/C++ will choke on that!
 
   TYPE &value_i (void);
   // Explicitly return <value_> (by reference).  This gives the user
