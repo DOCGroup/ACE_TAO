@@ -5,6 +5,7 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/ORB_Constants.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (PortableGroup,
            POA_Hooks,
