@@ -1,0 +1,11 @@
+$Id$
+
+This example illustrates how to dynamically link an ORB into an
+application via the ACE Service Configurator.  It also illustrates a
+simple Time & Date class.
+
+run_test.pl:
+------------
+
+This perl script runs the server and client and shuts down the server
+when it is done.
