@@ -494,7 +494,7 @@ main (int, ASYS_TCHAR *[])
       }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) task_count %d future_count %d")
+                  ASYS_TEXT ("(%t) task_count %d future_count %d ")
                   ASYS_TEXT ("capsule_count %d method_request_count %d\n"),
                   task_count.value (),
                   future_count.value (),
@@ -511,7 +511,7 @@ main (int, ASYS_TCHAR *[])
   ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) task_count %d future_count %d")
+              ASYS_TEXT ("(%t) task_count %d future_count %d ")
               ASYS_TEXT ("capsule_count %d method_request_count %d\n"),
               task_count.value (),
               future_count.value (),
