@@ -1,160 +1,89 @@
-//==================================================================
-/**
- *  @file  Cap_Handler.cpp
- *
- *  $Id$
- *
- *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
- */
-//=====================================================================
+//$Id$
 
 #ifndef CAP_HANDLER_C
 #define CAP_HANDLER_C
 
-#include "tao/Exception.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Log_Msg.h"
-
-#include "IAD_Handler.h"
 #include "Cap_Handler.h"
+#include "SP_Handler.h"
+#include "tao/Exception.h"
+#include "Utils.h"
 
-#include <iostream>
+using CIAO::Config_Handler::Utils;
+using CIAO::Config_Handler::SP_Handler;
 
-using std::cerr;
-using std::endl;
-
-namespace CIAO
+void
+CIAO::Config_Handler::CAP_Handler::
+process_Capability (DOMNodeIterator * iter,
+		    Deployment::Capability &ret_struct)
 {
-  namespace Config_Handler
-  {
-    /*
-     * Class RS_Handler
-     */
-
-    RS_Handler::RS_Handler (DOMDocument* doc, unsigned long filter)
-      : doc_ (doc),
-        root_ (doc->getDocumentElement()),
-        filter_ (filter),
-        iter_ (doc_->createNodeIterator (this->root_,
-                                              this->filter_,
-                                              0,
-                                              true)),
-        release_ (true)
-    {}
-
-    RS_Handler::RS_Handler (DOMNodeIterator* iter, bool release)
-      : doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
-    {}
-
-
-    RS_Handler::~RS_Handler()
+  //Check if the Schema IDs for both the elements match
+  DOMNode * node = iter->nextNode ();
+  XStr name (node->getNodeName ());
+  if (name != XStr (ACE_TEXT ("name")))
     {
-      if (this->release_)
-        this->iter_->release();
+      ACE_DEBUG ((LM_DEBUG,
+                  "Config_Handlers::CAP_Handler::process_Capability \
+                   element mismatch expected <name>"));
+      ACE_THROW (CORBA::INTERNAL ());
     }
 
-    /// handle the package configuration and populate it
-    void RS_Handler::process_RequirementSatisfier
-      (::Deployment::RequirementSatisfier &rs)
-    {
-      // This is bogus and should be replaced later.
-      ACE_DECLARE_NEW_CORBA_ENV;
+  // Populate the structure
+  ret_struct.name = Utils::parse_string (iter);
 
-      for (DOMNode* node = this->iter_->nextNode();
-           node != 0;
-           node = this->iter_->nextNode())
-        {
-          XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              // Fetch the text node which contains the "label"
-	      node = this->iter_->nextNode();
-	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_name (text->getNodeValue(), rs);
-	    }
-	  else if (node_name == XStr (ACE_TEXT ("resourceType")))
-            {
-	      // TODO: How to implement this?
-	      // Sequence of string ???
-            }
-          else
-            {
-              // ??? How did we get here ???
-              ACE_THROW (CORBA::INTERNAL());
-            }
-        }
-      return;
+  // Requirement: Atleast one <resourceType> definition present
+  ::CORBA::StringSeq_var res_seq = 0;
+  ACE_NEW_THROW_EX (res_seq,
+                    ::CORBA::StringSeq (1),
+                    CORBA::NO_MEMORY ());
+  res_seq->length (0);
+
+  // Process <resourceType> .. </resourceType> definitions
+  name = node->getNodeName ();
+  for (node = iter->nextNode ();
+       name == XStr (ACE_TEXT ("resourceType"));
+       iter->nextNode ())
+    {
+      ::CORBA::ULong index = res_seq->length ();
+      res_seq->length (res_seq->length () + 1);
+      res_seq [index] = Utils::parse_string (iter);
+      name = node->getNodeName ();
     }
 
-    /// handle name attribute
-    void Cap_Handler::process_name
-      (const XMLCh* name, ::Deployment::RequirementSatisfier &rs)
+  // On exit go one step back to faciliate parsing next tag
+  iter->previousNode ();
+
+  // Assign this sequence to the Return Structure
+  ret_struct.resourceType = res_seq;
+
+  // Process <property> tags
+  Deployment::SatisfierProperties_var property_seq = 0;
+  ACE_NEW_THROW_EX (property_seq,
+                    Deployment::SatisfierProperties,
+                    CORBA::NO_MEMORY ());
+
+  property_seq->length (0);
+
+  name = node->getNodeName ();
+  for (node = iter->nextNode ();
+       name == XStr (ACE_TEXT ("property"));
+       iter->nextNode ())
     {
-      if (name)
-        {
-          rs.name = XMLString::transcode (name);
-        }
+      ::CORBA::ULong index = property_seq->length ();
+
+      // Increment length of sequence
+      property_seq->length (property_seq->length () + 1);
+
+      SP_Handler::process_SatisfierProperty (iter,
+                                             property_seq [index]);
+      // Get next node
+      name = node->getNodeName ();
     }
 
-    /*
-     * Class Cap_Handler
-     */
-    Cap_Handler::Cap_Handler (DOMDocument* doc, unsigned long filter)
-      : doc_ (doc),
-        root_ (doc->getDocumentElement()),
-        filter_ (filter),
-        iter_ (doc_->createNodeIterator (this->root_,
-                                              this->filter_,
-                                              0,
-                                              true)),
-        release_ (true)
-    {}
+  // On exit go one step back to faciliate parsing next tag
+  iter->previousNode ();
 
-    Cap_Handler::Cap_Handler (DOMNodeIterator* iter, bool release)
-      : doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
-    {}
-
-
-    Cap_Handler::~Cap_Handler()
-    {
-      if (this->release_)
-        this->iter_->release();
-    }
-
-    /// handle the package configuration and populate it
-    void Cap_Handler::process_Capability
-      (::Deployment::Capability &cap)
-    {
-      // This is bogus and should be replaced later.
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      for (DOMNode* node = this->iter_->nextNode();
-           node != 0;
-           node = this->iter_->nextNode())
-        {
-          XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              // Fetch the text node which contains the "label"
-	      node = this->iter_->nextNode();
-	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_name (text->getNodeValue(), cap);
-	    }
-	  else if (node_name == XStr (ACE_TEXT ("resourceType")))
-            {
-	      // TODO: How to implement this?
-	      // Sequence of string ???
-            }
-          else
-            {
-              // ??? How did we get here ???
-              ACE_THROW (CORBA::INTERNAL());
-            }
-        }
-      return;
-    }
-
-  }
+  // Copy the sequence to return structure
+  ret_struct.property = property_seq;
 }
 
 #endif /* CAP_HANDLER_C */
