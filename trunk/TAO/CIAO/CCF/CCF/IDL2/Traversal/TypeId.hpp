@@ -23,7 +23,7 @@ namespace CCF
         SyntaxTree::TypeIdPtr
         NodePtr;
 
-        Void ()
+        TypeId ()
         {
           map (typeid (SyntaxTree::TypeId), this);
         }
@@ -41,7 +41,7 @@ namespace CCF
         }
       };
 
-      
+
       //
       //
       //
@@ -51,7 +51,7 @@ namespace CCF
         SyntaxTree::TypePrefixPtr
         NodePtr;
 
-        Void ()
+        TypePrefix ()
         {
           map (typeid (SyntaxTree::TypePrefix), this);
         }
