@@ -32,9 +32,7 @@ CDR_File_Test
 CDR_Array_Test
 Collection_Test
 Config_Test
-# The following test is commented as it impedes build progress. Need
-# to uncomment it after it is fixed. Joh Aughey for you...
-#Conn_Test: !chorus
+Conn_Test: !chorus
 Date_Time_Test
 Dirent_Test
 DLL_Test: !Unicos !STATIC !KCC_Linux
