@@ -11,8 +11,8 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 CC		= gcc
 CXX		= g++
 CFLAGS		+= -w
-CCFLAGS		+= $(CFLAGS) -fno-implicit-templates
-DCFLAGS		+= -g -DHPUX_VERS=$(HPUX_VERS) -D_REENTRANT
+CCFLAGS		+= $(CFLAGS) -fno-implicit-templates -DHPUX_VERS=$(HPUX_VERS) -D_REENTRANT
+DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
 OCFLAGS		+= -O2
