@@ -1,5 +1,9 @@
 Wed Apr  9 21:11:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* apps/Gateway/Gateway/Gateway.cpp (handle_signal): Evil demons
+ 	  added bugs to my code that were causing segfaults when signals
+ 	  shutdown the gateway.  This is now fixed.
+
 	* apps/Gateway/Gateway/Proxy_Handler.h: Changed ACE_Event_Channel
  	  & to ACE_Event_Channel * to keep the compiler happy.
 
