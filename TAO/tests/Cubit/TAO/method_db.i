@@ -1,4 +1,4 @@
-// @(#)method_db.i 05/14/97
+// @ (#)method_db.i 05/14/97
 
 // This file provides a way of initializing the method database
 // Written by: Brian Mendel
@@ -16,7 +16,7 @@ is_a_skel (CORBA_ServerRequest &req,
   CORBA_NamedValue_ptr	nv;
   CORBA_Any			temp_value (_tc_CORBA_String);
 
-  req.orb()->create_list (0, nvlist);
+  req.orb ()->create_list (0, nvlist);
   nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
 
   req.params (nvlist, env);
@@ -27,10 +27,10 @@ is_a_skel (CORBA_ServerRequest &req,
     }
 
   CORBA_Boolean *retval;
-  CORBA_String value = *(CORBA_String *) nv->value()->value();
+  CORBA_String value = * (CORBA_String *) nv->value ()->value ();
 
-  if (ACE_OS::strcmp ((char*)value, "IDL:Cubit:1.0") == 0
-      || ACE_OS::strcmp ((char *)value, _tc_CORBA_Object->id (env)) == 0)
+  if (ACE_OS::strcmp ( (char*)value, "IDL:Cubit:1.0") == 0
+      || ACE_OS::strcmp ( (char *)value, _tc_CORBA_Object->id (env)) == 0)
     retval = new CORBA_Boolean (CORBA_B_TRUE);
   else
     retval = new CORBA_Boolean (CORBA_B_FALSE);
