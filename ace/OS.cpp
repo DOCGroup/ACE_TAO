@@ -258,7 +258,7 @@ ACE_OS::uname (struct utsname *name)
                      vinfo.szCSDVersion);
 
     TCHAR processor[10] = __TEXT ("Unknown");
-    tCHAR subtype[10] = __TEXT ("Unknown");
+    TCHAR subtype[10] = __TEXT ("Unknown");
 
 #if defined (__BORLANDC__)
     // Some changes should be made in winbase.h...
