@@ -504,11 +504,12 @@ CORBA_ORB::resolve_commandline_ref (const char *& init_ref)
 
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
+CORBA_ORB::resolve_service (CORBA::String service_name,
+			    ACE_Time_Value *timeout)
 {
   CORBA::Environment env;
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-
+  
   // First check to see if we've already initialized this.
   if (this->name_service_ != CORBA_Object::_nil ())
     {
@@ -554,7 +555,7 @@ CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
             }
 	  
           this->name_service_ =
-            this->multicast_to_service("NameService",
+            this->multicast_to_service(service_name,
                                        port,
                                        timeout);
         }
@@ -739,7 +740,7 @@ CORBA_ORB::multicast_query (char *buf,
   
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"%s; Service resolved to ior: '%s'\n",
+		"%s; Service resolved to ior: <%s>\n",
 		__FILE__,
 		buf));
   
@@ -803,11 +804,6 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
   TAO_IOR_LookupTable *table = 
     TAO_ORB_Core_instance ()->orb_params ()->ior_lookup_table ();
   
-  // Get the list of initial reference prefixes specified through
-  // -ORBDefaultInitRef.
-  char * default_init_ref = 
-    TAO_ORB_Core_instance ()->orb_params ()->default_init_ref ();
-  
   ACE_CString ior;
   ACE_CString object_id ((const char *) name);
   
@@ -822,6 +818,11 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
     }
   else
     {
+      // Get the list of initial reference prefixes specified through
+      // -ORBDefaultInitRef.
+      char * default_init_ref = 
+	TAO_ORB_Core_instance ()->orb_params ()->default_init_ref ();
+      
       // Check if a DefaultInitRef was specified.
       if (ACE_OS::strlen (default_init_ref) != 0)
 	{
@@ -846,19 +847,25 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 	      list_of_profiles += ACE_CString (",");
 	    }
 	  
+	  // Clean up.
+	  delete [] default_init_ref;
+	  
 	  // Replace the last extra comma with a null.
 	  list_of_profiles[list_of_profiles.length () - 1] = '\0';
 	  
 	  return_value = this->string_to_object (list_of_profiles.rep (),
                                                  TAO_IN_ENV);
-	  return CORBA_Object::_duplicate (return_value);
 	  
+	  return CORBA_Object::_duplicate (return_value);
 	}
+      
+      delete default_init_ref;
     }
   
   if (ACE_OS::strcmp (name,
                       TAO_OBJID_NAMESERVICE) == 0)
-    return this->resolve_name_service (timeout);
+    return this->resolve_service ("NameService",
+				  timeout);
   else if (ACE_OS::strcmp (name,
                            TAO_OBJID_TRADINGSERVICE) == 0)
     return this->resolve_trading_service (timeout);
@@ -869,9 +876,12 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
                            TAO_OBJID_POACURRENT) == 0)
     return this->resolve_poa_current ();
   else
-    TAO_THROW_RETURN (CORBA_ORB::InvalidName (),
-                      CORBA_Object::_nil ());
-
+    return this->resolve_service (name,
+				  timeout);
+  
+  //    TAO_THROW_RETURN (CORBA_ORB::InvalidName (),
+  //                CORBA_Object::_nil ());
+  
 }
 
 TAO_Stub *
