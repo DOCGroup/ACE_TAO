@@ -1,3 +1,16 @@
+Thu May 18 08:14:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd-ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	  Moved the generation of the destructor and default
+	  constructor for interfaces out of the *C.i file and
+	  into the *C.cpp file. Earlier changes to prevent a
+	  widening _var assignment created problems with 
+	  aggessively inlining compilers in the case where an
+	  interface is forward declared, and has a child which
+	  is forward declared earlier.
+
 Wed May 17 20:57:49 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/ORB.cpp:
