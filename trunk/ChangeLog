@@ -1,3 +1,12 @@
+Tue Nov 23 00:37:14 2004  Olli Savia  <ops@iki.fi>
+
+        * examples/APG/ThreadPools/Futures.cpp:
+          Removed unnecesary type cast in CompletionCallBack::update().
+          Replaced NULL with 0 in Manager::shut_down().
+        
+        * examples/Export/dll.cpp:
+          Added explicit static template member instantiation.
+
 Mon Nov 22 13:45:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/GNUmakefile.clone:
