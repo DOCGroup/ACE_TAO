@@ -2,6 +2,8 @@
 
 #include "URL_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(Web_Crawler, URL_Addr, "$Id$")
 

@@ -18,6 +18,7 @@
 #define ACE_URL_ADDR_H
 
 #include "ace/INET_Addr.h"
+#include "ace/Default_Constants.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define ACE_LACKS_PRAGMA_ONCE
