@@ -4,7 +4,11 @@
 project(Hello_Base_stub): ciao_client {
 
   sharedname = Hello_Base_stub
-  idlflags += -Wb,stub_export_macro=HELLO_BASE_STUB_Export -Wb,stub_export_include=Hello_Base_stub_export.h -Wb,skel_export_macro=HELLO_BASE_SVNT_Export -Wb,skel_export_include=Hello_Base_svnt_export.h
+  idlflags += -Sc \
+              -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
+              -Wb,stub_export_include=Hello_Base_stub_export.h \
+              -Wb,skel_export_macro=HELLO_BASE_SVNT_Export \
+              -Wb,skel_export_include=Hello_Base_svnt_export.h
   dynamicflags   = HELLO_BASE_STUB_BUILD_DLL
 
   IDL_Files {
@@ -14,6 +18,18 @@ project(Hello_Base_stub): ciao_client {
   Source_Files {
     Hello_BaseC.cpp
   }
+  
+  Header_Files {
+    Hello_BaseC.h
+    Hello_Base_stub_export.h
+  }
+  
+  Inline_Files {
+    Hello_BaseC.inl
+  }
+  
+  Template_Files {
+  }
 }
 
 project(Hello_Base_svnt) : ciao_server {
@@ -21,7 +37,11 @@ project(Hello_Base_svnt) : ciao_server {
   sharedname  = Hello_Base_svnt
   libs    += Hello_Base_stub 
   
-  idlflags  += -Wb,stub_export_macro=HELLO_BASE_STUB_Export -Wb,stub_export_include=Hello_Base_stub_export.h -Wb,skel_export_macro=HELLO_BASE_SVNT_Export -Wb,skel_export_include=Hello_Base_svnt_export.h
+  idlflags  += -Sc \
+               -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
+               -Wb,stub_export_include=Hello_Base_stub_export.h \
+               -Wb,skel_export_macro=HELLO_BASE_SVNT_Export \
+               -Wb,skel_export_include=Hello_Base_svnt_export.h
   dynamicflags = HELLO_BASE_SVNT_BUILD_DLL
 
   IDL_Files {
@@ -30,5 +50,17 @@ project(Hello_Base_svnt) : ciao_server {
 
   Source_Files {
     Hello_BaseS.cpp
+  }
+  
+  Header_Files {
+    Hello_BaseS.h
+    Hello_Base_svnt_export.h
+  }
+  
+  Inline_Files {
+    Hello_BaseS.inl
+  }
+  
+  Template_Files {
   }
 }
