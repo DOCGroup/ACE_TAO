@@ -267,7 +267,9 @@ public:
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
   // This starts off an asynchronous read.  Upto <bytes_to_read> will
-  // be read and stored in the <message_block>. Priority of the
+  // be read and stored in the <message_block>. <message_block>'s
+  // <wr_ptr> will be updated to reflect the added bytes if the read
+  // operation is successful completed. Priority of the
   // operation is specified by <priority>. On POSIX4-Unix, this is
   // supported. Works like <nice> in Unix. Negative values are not
   // allowed. 0 means priority of the operation same as the process
@@ -375,7 +377,9 @@ public:
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
   // This starts off an asynchronous write.  Upto <bytes_to_write>
-  // will be written from the <message_block>. Priority of the
+  // will be written from the <message_block>. Upon successful completion
+  // of the write operation, <message_block>'s <rd_ptr> is updated to
+  // reflect the data that was written. Priority of the
   // operation is specified by <priority>. On POSIX4-Unix, this is
   // supported. Works like <nice> in Unix. Negative values are not
   // allowed. 0 means priority of the operation same as the process
