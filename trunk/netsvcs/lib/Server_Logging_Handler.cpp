@@ -1,6 +1,9 @@
 // $Id$
 // Server_Logging_Handler.cpp
 
+#if !defined (ACE_SERVER_LOGGING_HANDLER_C)
+#define ACE_SERVER_LOGGING_HANDLER_C
+
 #define ACE_BUILD_SVC_DLL
 #include "ace/Get_Opt.h"
 #include "Server_Logging_Handler.h"
@@ -348,3 +351,5 @@ template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, ACE_Atomic_Op<ACE_Thread_Mutex, u_long>, ACE_MT_SYNCH>;
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#endif /* ACE_SERVER_LOGGING_HANDLER_C */
