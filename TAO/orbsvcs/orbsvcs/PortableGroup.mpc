@@ -28,6 +28,10 @@ project(PortableGroup) : orbsvcslib, core, naming, iormanip, messaging, minimum_
     }
   }
 
+  Header_Files {
+    PortableGroup/portablegroup_export.h
+  }
+
   Template_Files {
   }
 }
