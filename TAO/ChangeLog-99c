@@ -1,3 +1,11 @@
+Thu Oct  7 11:46:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	  Thanks to Dave Meyer <dmeyer@std.saic.com> we can select the
+	  network interface used by the TAO_ECG_Mcast_EH to receive mcast
+	  traffic.
+
 Thu Oct  7 05:04:11 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/Iterator_i.{h.cpp}:

@@ -560,7 +560,15 @@ class TAO_ORBSVCS_Export TAO_ECG_Mcast_EH : public ACE_Event_Handler
   //   gateway which reads the events and transform it into an event.
   //
 public:
-  TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv);
+  TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv,
+                    const ASYS_TCHAR *net_if = 0);
+  // Constructor, the messages received by this EH are forwarded to
+  // the <recv>.
+  // It is possible to select the NIC where the multicast messages are 
+  // expected using <net_if>
+
+  virtual ~TAO_ECG_Mcast_EH (void);
+  // Destructor
 
   int open (RtecEventChannelAdmin::EventChannel_ptr ec,
             CORBA::Environment &env = TAO_default_environment ());
@@ -630,6 +638,9 @@ private:
   // Control the multicast group subscriptions
 
 private:
+  ASYS_TCHAR *net_if_;
+  // The NIC name used to subscribe for multicast traffic.
+
   ACE_SOCK_Dgram_Mcast dgram_;
   // The datagram used to receive the data.
 
