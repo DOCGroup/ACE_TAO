@@ -27,9 +27,6 @@ USELIB("..\ace\aced.lib");
 
 #include "ace/Message_Block.h"
 
-int do_sysconf (void);
-int have_asynchio (void);
-
 #if defined (ACE_HAS_AIO_CALLS)
 static ACE_HANDLE file_handle = ACE_INVALID_HANDLE;
 static ACE_Message_Block mb1 (BUFSIZ + 1);
@@ -37,12 +34,6 @@ static ACE_Message_Block mb2 (BUFSIZ + 1);
 static aiocb aiocb1;
 static aiocb aiocb2;
 static sigset_t completion_signal;
-
-// For testing the <aio> stuff.
-int test_aio_calls (void);
-int issue_aio_calls (void);
-int query_aio_completions (void);
-int setup_signal_delivery (void);
 #endif /* ACE_HAS_AIO_CALLS */
 
 static int
