@@ -15,6 +15,7 @@ class DialogManager
 	frame = new AboutFrame ();
 	break;
       case DialogType.MALFORMED_URL:
+      case DialogType.NOT_SUPPORTED:
       case DialogType.URL_NOT_FOUND:
 	frame = new MessageFrame ("Error", message);
 	break;
@@ -25,11 +26,6 @@ class DialogManager
     Dimension d = Toolkit.getDefaultToolkit ().getScreenSize ();
     frame.move ((d.width - frame.size ().width)/2,
 		(d.height - frame.size ().height)/2);
-    /*    frame.reshape ((d.width - frame.size ().width)/2,
-		   (d.height - frame.size ().height)/2,
-		   frame.size ().width,
-		   frame.size ());
-		   */
     frame.show ();
   }
 }
@@ -40,7 +36,7 @@ class MessageFrame extends Frame
   {
     super (title);
 
-    this.resize (250,100);
+    this.resize (message.length () * 8, 100);
     this.setLayout (new BorderLayout ());
 
     this.text_ = new TextField (message);
