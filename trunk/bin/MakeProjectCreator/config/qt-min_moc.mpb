@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// qt-min_moc.mpb,v 1.2 2003/12/30 15:18:22 dhinton Exp
+
+project : qt-min {
+  Define_Custom(MOC) {
+    automatic        = 0
+    command          = $(ACE_ROOT)/bin/pch_cmd.pl -t -o
+    commandflags     = -c $(QTDIR)/bin/moc
+    output_option    = -o
+    pch_option       = -p
+    inputext         = .h
+    pre_extension    = _moc
+    source_outputext = .cpp
+  }
+}
