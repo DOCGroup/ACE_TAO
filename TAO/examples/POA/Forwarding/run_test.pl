@@ -78,42 +78,63 @@ sub run_test
     $SRV1 = Process::Create  (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
                              "$server1args");
     print STDERR ("server $server1args\n");
-    ACE::waitforfile ("server1");
+
+    if (ACE::waitforfile_timed ("server1", 5) == -1) {
+      print STDERR "ERROR: cannot file <server1> or <server2>\n";
+      $SRV1->Kill (); $SRV1->TimedWait (1);
+      exit 1;
+    }
 
     $SRV2 = Process::Create  (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
                              "$server2args");
     print STDERR ("server $server2args\n");
-    ACE::waitforfile ("server2");
 
-    if ($server3args ne "")
-    {
-        $SRV3 = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
-                                 "$server3args");
-        ACE::waitforfile ("server3");
+    if (ACE::waitforfile_timed ("server2", 5) == -1) {
+      print STDERR "ERROR: cannot file <server1> or <server2>\n";
+      $SRV1->Kill (); $SRV1->TimedWait (1);
+      $SRV2->Kill (); $SRV2->TimedWait (1);
+      exit 1;
+    }
+
+    if ($server3args ne "") {
+      $SRV3 = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
+			       "$server3args");
+
+      if (ACE::waitforfile_timed ("server3", 5) == -1) {
+	print STDERR "ERROR: cannot file <server3>\n";
+	$SRV1->Kill (); $SRV1->TimedWait (1);
+	$SRV2->Kill (); $SRV2->TimedWait (1);
+	$SRV3->Kill (); $SRV3->TimedWait (1);
+	exit 1;
+      }
     }
 
     # Run the client and block until completion
-    $status  = system ("client$Process::EXE_EXT $clientargs");
-    print STDERR ("client $clientargs");
+    $CL = Process::Create ($EXEPREFIX."client".$Process::EXE_EXT,
+			   " $clientargs");
+    print STDERR ("client $clientargs\n");
+
+    $client = $CL->TimedWait (60);
+    if ($client == -1) {
+      print STDERR "ERROR: client timedout\n";
+      $CL->Kill (); $CL->TimedWait (1);
+    }
 
     # Now that the client has finished, kill off the servers
 
-    $SRV1->Kill (); $SRV1->Wait ();
-    $SRV2->Kill (); $SRV2->Wait ();
+    $SRV1->Kill (); $SRV1->TimedWait (1);
+    $SRV2->Kill (); $SRV2->TimedWait (1);
 
     if ($server3args ne "")
     {
-        $SRV3->Kill (); $SRV3->Wait ();
+        $SRV3->Kill (); $SRV3->TimedWait (1);
     }
 
-    if ($status != 0)
-    {
-        print STDERR ("\n$brace Test of $testtype FAILED\n");
-        $status = -1;
-    }
-    else
-    {
-        print STDERR ("\n$brace Test of $testtype SUCCEEDED\n");
+    if ($client != 0) {
+      print STDERR ("\n$brace Test of $testtype FAILED\n");
+      $status = -1;
+    } else {
+      print STDERR ("\n$brace Test of $testtype SUCCEEDED\n");
     }
     cleanup_ior ();
     return $status;

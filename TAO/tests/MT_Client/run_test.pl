@@ -31,6 +31,7 @@ $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT ",
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
   exit 1;
 }
 
