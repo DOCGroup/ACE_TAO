@@ -12,6 +12,10 @@
  */
 
 //#define CIAO_HAS_IMPORT_KEYWORD
+
+#if !defined (CIAO_EVENT_PIDL)
+#define CIAO_EVENT_PIDL
+
 #include "CIAO_Base.pidl"
 
 module Components
@@ -94,3 +98,4 @@ module Components
       raises (InvalidName);
   };
 };
+#endif /* CIAO_EVENT_PIDL */

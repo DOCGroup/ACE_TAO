@@ -20,6 +20,8 @@ import ::CORBA;
 #include "CORBA.pidl"
 #endif /* CIAO_HAS_IMPORT_KEYWORD */
 
+#if !defined (CIAO_BASE_PIDL)
+#define CIAO_BASE_PIDL
 
 module Components
 {
@@ -138,3 +140,4 @@ module Components
       raises (InvalidName);
   };
 };
+#endif /* CIAO_BASE_PIDL */

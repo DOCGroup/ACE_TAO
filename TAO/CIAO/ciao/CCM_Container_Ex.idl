@@ -13,6 +13,9 @@
 
 //#define CIAO_HAS_IMPORT_KEYWORD
 
+#if !defined (CIAO_CONTAINER_EX_PIDL)
+#define CIAO_CONTAINER_EX_PIDL
+
 #include "CIAO_Container.pidl"
 #include <CosPersistentState.pidl>
 
@@ -176,8 +179,5 @@ module Components
     void configuration_complete()
       raises (InvalidConfiguration);
   };
-
-  local interface HomeExecutorBase
-  {
-  };
 };
+#endif /* CIAO_CONTAINER_EX_PIDL */

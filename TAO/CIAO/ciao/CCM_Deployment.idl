@@ -13,6 +13,9 @@
 
 //#define CIAO_HAS_IMPORT_KEYWORD
 
+#if !defined (CIAO_DEPLOYMENT_PIDL)
+#define CIAO_DEPLOYMENT_PIDL
+
 #include "CIAO_Component.pidl"
 
 // *************** Packaging and Deployment ***************
@@ -148,3 +151,4 @@ module Components
 
   };
 };
+#endif /* CIAO_DEPLOYMENT_PIDL */
