@@ -36,8 +36,7 @@ ifndef TAO_ORBSVCS
                 Concurrency \
 		Trader \
 		Log \
-		AV \
-		FaultTolerance
+		AV 
 
   ifeq ($(minimum_corba),0)
 
