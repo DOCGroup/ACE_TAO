@@ -30,21 +30,35 @@ private:
 TAO_RT_CORBA_Priority_Normalizer::TAO_RT_CORBA_Priority_Normalizer (TAO_ORB_Core *orb_core)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      // Save a reference to the priority mapping manager.
+      CORBA::Object_var obj =
+        orb_core->object_ref_table ().resolve_initial_references (
+          TAO_OBJID_PRIORITYMAPPINGMANAGER,
+          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Save a reference to the priority mapping manager.
-  CORBA::Object_var obj =
-    orb_core->object_ref_table ().resolve_initial_references (
-      TAO_OBJID_PRIORITYMAPPINGMANAGER,
-      ACE_TRY_ENV);
-  ACE_CHECK;
+      TAO_Priority_Mapping_Manager_var mapping_manager =
+        TAO_Priority_Mapping_Manager::_narrow (obj.in (),
+                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  TAO_Priority_Mapping_Manager_var mapping_manager =
-    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
-                                           ACE_TRY_ENV);
-  ACE_CHECK;
+      if (CORBA::is_nil (mapping_manager.in ()))
+        ACE_TRY_THROW (CORBA::INTERNAL ());
 
-  this->priority_mapping_ =
-    mapping_manager->mapping ();
+      this->priority_mapping_ =
+        mapping_manager->mapping ();
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "(%P|%t) ERROR: Problem in CORBA Priority "
+                           "Normalizer constructor.\n");
+
+      return;
+    }
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean
