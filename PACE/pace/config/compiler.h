@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    compiler.h
+ *    pace/config/compiler.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -40,13 +40,13 @@
  * ============================================================================
  */
 
-#if defined (ghs) ||         \\
-    defined (__GNUC__) ||    \\
-    defined (__hpux) ||      \\
-    defined (__sgi) ||       \\
-    defined (__DECCXX) ||    \\
-    defined (__KCC) ||       \\
-    defined (__rational__)   \\
+#if defined (ghs) ||         \
+    defined (__GNUC__) ||    \
+    defined (__hpux) ||      \
+    defined (__sgi) ||       \
+    defined (__DECCXX) ||    \
+    defined (__KCC) ||       \
+    defined (__rational__)   \
     || (__USLC__)
 /* Some compilers complain about "statement with no effect" with (a).
  * This eliminates the warnings, and no code is generated for the null
