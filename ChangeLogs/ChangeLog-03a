@@ -1,3 +1,12 @@
+Mon Mar  5 07:52:52 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/RMCast/RMCast_Fragment_Test.cpp,
+	* tests/RMCast/RMCast_Reassembly_Test.cpp,
+	* tests/Dynamic_Priority_Test.cpp,
+	* tests/Thread_Pool_Test.cpp: Make sure to write into the
+	  wr_ptr() rather than the rd_ptr().  Thanks to Gonzalo Diethelm
+ 	  <Gonzalo.Diethelm@sonda.com> for reporting this.
+
 Mon Mar  5 08:00:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/nightlybuilds/builds.lst: 
