@@ -21,6 +21,34 @@ Mon Dec 16 16:34:23 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Dec 18 08:29:04 2002  Rich Seibel <seibel_r@ociweb.com>
 
+        * ace/Synch.cpp: Added code to generate a unique name if a
+          platform lacks unnamed semaphores (MACOSX 10.2).
+
+        * ace/Sock_Connect.cpp: Added a conditional include for
+          ifaddrs.h (MACOSX 10.2).
+
+        * tests/Priority_Task_Test.cpp: Changed test to notify
+          if platform does not implement getprio instead of fail.
+          (MACOSX 10.2)
+
+        * tests/MM_Shared_Memory_Test.cpp: Changed compile time test to
+          pick up the right implementation on platform that have
+          POSIX semaphores but not SYSV semaphores (MACOSX 10.2).
+
+        * ace/Lib_Find.cpp
+          ace/config-macosx.h:
+
+          Gave the builder a choice of where to get the dlcompat package.
+
+        * ace/OS.i
+          ace/config-macosx.h:
+
+          Added a switch to eliminate an error message since the dlcompat
+          provided APPLE dynamic linkage does not support unloading thus
+          complains on the use of dlclose.
+
+Wed Dec 18 08:29:04 2002  Rich Seibel <seibel_r@ociweb.com>
+
         * ace/Timer_Wheel_T.cpp:
 
           Changed types from int to long to match the return
