@@ -1,0 +1,38 @@
+$Id$
+
+This directory contains a number of tests to validate that TAO is
+functioning correctly.  The individual directories contain READMEs on
+how to run the following tests:
+
+        . CDR
+
+          This directory contains several tests for the CDR stream
+          class. 
+
+        . DynAny_Test
+        
+          Tests TAO's DynAny feature, which allows composition and
+          decomposition of arbitrarily complex CORBA::Any values at
+          runtime, without requiring any compile-time knowledge of the
+          IDL. 
+
+        . Multiple_Inheritance
+
+          This test exercises IDL interfaces that inherit from
+          multiple interfaces.
+
+        . NestedUpcall
+
+          Tests TAO's nested upcall feature, which allows
+          single-threaded clients and servers to perform callbacks on
+          each other without deadlocking.
+
+        . OctetSeq
+
+	  Measures the cost of marshaling and demarshaling of
+          sequences of octets of different sizes. NOTE: TAO optimizes
+	  this so the cost should be constant!
+
+        . Param_Test
+ 
+          Tests all the features of TAO's protocol engine.
