@@ -1,3 +1,29 @@
+Fri Sep 13 09:37:59 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.h:
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.h:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	  Re-factor shared code into the TAO_Connection_Handler class.
+	  The routines affected are handle_input(), handle_output(),
+	  handle_close(), handle_close_i() and a couple others.
+	  This fixes:
+	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1309
+
+	* tao/Strategies/DIOP_Acceptor.cpp:
+	  The re-factoring eliminated some default arguments for
+	  handle_close(), which was called directly from this class.
+
 Thu Sep 12 08:08:35 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp (TAO_IIOP_Connection_Handler): 
@@ -6,7 +32,7 @@ Thu Sep 12 08:08:35 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Thu Sep 12 11:31:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * tests/Bug_1269_Regression/Echo.cpp:
+	* tests/Bug_1269_Regression/Echo.cpp:
 	* tests/Bug_1269_Regression/Echo_Caller.cpp:
 	* tests/Bug_1269_Regression/ORB_Task.cpp:
 	* tests/Bug_1269_Regression/Server_Timer.cpp:

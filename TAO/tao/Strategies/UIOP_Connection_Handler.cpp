@@ -145,88 +145,41 @@ TAO_UIOP_Connection_Handler::svc (void)
   return this->svc_i ();
 }
 
-
-int
-TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
-                                           ACE_Reactor_Mask rm)
-{
-  // @@ TODO this too similar to IIOP_Connection_Handler::handle_close,
-  //    in fact, even the comments were identical.  IMHO needs
-  //    re-factoring.
-  ACE_HANDLE my_handle = this->get_handle ();
-
-  if (TAO_debug_level)
-    {
-      ACE_DEBUG  ((LM_DEBUG,
-                   "TAO (%P|%t) - UIOP_Connection_Handler[%d]::handle_close, "
-                   "(%d, %d)\n",
-                   my_handle, handle, rm));
-    }
-
-  if(my_handle == ACE_INVALID_HANDLE)
-    {
-      return 0;
-    }
-  this->peer().close ();
-
-  this->set_handle (ACE_INVALID_HANDLE);
-
-  long upcalls = this->decr_pending_upcalls ();
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
-
-  if (upcalls < 0)
-    return 0;
-
-  if (upcalls == 0)
-    this->decr_refcount ();
-
-  return 0;
-}
-
-void
-TAO_UIOP_Connection_Handler::handle_close_i (void)
-{
-  if (TAO_debug_level)
-    ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) ")
-                 ACE_TEXT ("UIOP_Connection_Handler::handle_close_i ")
-                 ACE_TEXT ("(%d)\n"),
-                 this->transport ()->id ()));
-  if (this->transport ()->wait_strategy ()->is_registered ())
-    {
-      // Make sure there are no timers.
-      this->reactor ()->cancel_timer (this);
-
-      // Set the flag to indicate that it is no longer registered with
-      // the reactor, so that it isn't included in the set that is
-      // passed to the reactor on ORB destruction.
-      this->transport ()->wait_strategy ()->is_registered (0);
-    }
-
-  // Remove the entry as it is invalid
-  this->transport ()->purge_entry ();
-
-  // Signal the transport that we will no longer have
-  // a reference to it.  This will eventually call
-  // TAO_Transport::release ().
-  this->transport (0);
-
-  this->destroy ();
-}
-
 int
 TAO_UIOP_Connection_Handler::resume_handler (void)
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
+int
+TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE h)
+{
+  return this->handle_input_eh (h, this);
+}
 
 int
-TAO_UIOP_Connection_Handler::handle_output (ACE_HANDLE)
+TAO_UIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
-  return this->transport ()->handle_output ();
+  return this->handle_output_eh (handle, this);
+}
+
+int
+TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
+                                           ACE_Reactor_Mask rm)
+{
+  return this->handle_close_eh (handle, rm, this);
+}
+
+void
+TAO_UIOP_Connection_Handler::handle_close_i (void)
+{
+  this->handle_close_i_eh (this);
+}
+
+int
+TAO_UIOP_Connection_Handler::release_os_resources (void)
+{
+  return this->peer().close ();
 }
 
 int
@@ -247,61 +200,6 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
   // Add the handler to Cache
   return this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
                                                                                   this->transport ());
-}
-
-int
-TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE)
-{
-  this->incr_pending_upcalls ();
-
-  TAO_Resume_Handle resume_handle (this->orb_core (),
-                                   this->get_handle ());
-
-  int retval =
-    this->transport ()->handle_input_i (resume_handle);
-
-  // The upcall is done. Bump down the reference count
-  long upcalls = this->decr_pending_upcalls ();
-
-  // Try to clean up things if the upcall count has reached 0
-  if (upcalls == 0)
-    {
-      this->decr_refcount ();
-
-      // As we have already performed the handle closing we dont want
-      // to return a  -1. Doing so would make the reactor call
-      // handle_close () which could be harmful.
-      retval = 0;
-    }
-  else if (upcalls < 0)
-    {
-      retval = 0;
-    }
-
-  if (retval == -1)
-    {
-      // This is really a odd case. We could have a race condition if
-      // we dont do this. Looks like this what happens
-      // - imagine we have more than 1 server threads
-      // - The server has got more than one connection from the
-      //   clients
-      // - The clients make requests and they start dissappearing.
-      // - The connections start getting closed
-      // - at that point one of the server threads is woken up to
-      //   and handle_input () is called.
-      // - the handle_input sees no data and so is about return a -1.
-      // - if the handle is resumed, it looks like the oen more thread
-      //   gets access to the handle and the handle_input is called by
-      //   another thread.
-      // - at that point of time if the thread returning -1 to the
-      //   reactor starts closing down the handler, bad things start
-      //   happening.
-      // Looks subtle though. After adding this I dont see anything
-      // bad happenin and so let us stick with it...
-      resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
-    }
-
-  return retval;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
