@@ -1,3 +1,8 @@
+Sun Aug  4 16:47:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Framework_Component_DLL.cpp: Added a missing template
+	  instantiation. It was caught only in SunCC53 builds.
+
 Sun Aug  4 16:01:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Do not the Stack_Recursion tests in
