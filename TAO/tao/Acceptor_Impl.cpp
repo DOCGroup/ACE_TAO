@@ -27,6 +27,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Connector_Registry.h"
+#include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Impl.i"
