@@ -55,7 +55,7 @@ Video_Global::Video_Global (void)
   pkts_sent = 0;
   start_time = 0;
  
-  conn_tag = 0;
+  conn_tag = -1;
 
   normalExit = 1;
 

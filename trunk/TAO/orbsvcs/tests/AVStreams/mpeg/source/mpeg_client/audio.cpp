@@ -414,7 +414,7 @@ void SetAudioGain(void)
   if (useAF) {
     AFSetOutputGain(ac, volume * 2);
     /*
-    AFSetOutputGain(ac, (volume - 10)/3);
+      AFSetOutputGain(ac, (volume - 10)/3); 
     fprintf(stderr, "CTR audio.c: volume changed to %d.\n", volume);
     */
     return;
