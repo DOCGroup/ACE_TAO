@@ -138,6 +138,10 @@ public:
 
   void local_addr (const ACE_INET_Addr &addr);
 
+  const ACE_INET_Addr &server_addr (void);
+
+  void server_addr (const ACE_INET_Addr &addr);
+
   const ACE_SOCK_Dgram &dgram (void);
   // DIOP Additions - End
 
@@ -155,7 +159,6 @@ protected:
   virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
                               ACE_Time_Value *max_wait_time = 0);
 
-  // @@ Frank: From DIOP_Connect.h
   virtual int handle_cleanup ();
 
   // DIOP Additions - Begin
@@ -164,7 +167,7 @@ protected:
   // This is always the remote address
   ACE_INET_Addr addr_;
 
-  // This is always the local address
+  // This is always the local address for the connector
   ACE_INET_Addr local_addr_;
 
   // DIOP Additions - End
