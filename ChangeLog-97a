@@ -1,11 +1,17 @@
+Mon May 19 12:45:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Released version 4.2.
+
+	* examples/Threads/reader_writer.cpp: Changed the code so that we
+ 	  don't try to treat thread ids as ints!  Thanks to Chuck Gehr for
+ 	  reporting this.
+
 Sun May 18 21:57:54 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/Threads/tss2.cpp: added second parameter to
 	  ACE_TSS_Singleton template specialization.
 
 Sun May 18 09:20:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* Released version 4.2.
 
 	* examples/Threads/TSS_Data.h: Added the second parameter for
  	  ACE_SYNCH_MUTEX since Rich and Chris updated ACE_TSS_Singleton.
