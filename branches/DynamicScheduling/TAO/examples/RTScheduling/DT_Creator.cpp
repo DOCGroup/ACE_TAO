@@ -138,13 +138,18 @@ DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
 				   barrier_
 				   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-
+      
     }
   
+  
+  while (active_dt_count_ > 0)
+    {
+      yield (1,0);
+    }
   current_->end_scheduling_segment (name
 				    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
+  
 }
 
 void
@@ -200,8 +205,6 @@ DT_Creator::check_ifexit (void)
 
 	    // shutdown the ORB
 	    orb_->shutdown (0);
-
-	    
 	  }
       }
   }

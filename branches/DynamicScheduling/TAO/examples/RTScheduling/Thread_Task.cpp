@@ -9,6 +9,10 @@
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_count = 0;
 
+Thread_Task::Thread_Task (void)
+{
+}
+
 //  Thread_Task::Thread_Task (int importance,
 //  			  int start_time,
 //  			  int load,
@@ -47,6 +51,9 @@ Thread_Task::activate_task (RTScheduling::Current_ptr current,
   //  	      count_,
   //  	      importance_));
 
+
+  pre_activate ();
+
   long sched_policy = dt_creator_->orb ()->orb_core ()->orb_params ()->sched_policy ();
 
   if (sched_policy == THR_SCHED_FIFO || sched_policy == THR_SCHED_RR)
@@ -71,16 +78,21 @@ Thread_Task::activate_task (RTScheduling::Current_ptr current,
 			     ACE_TEXT ("Insufficient privilege to run this test.\n")),
 			    -1);
       }
+  
+//    mutex_.acquire ();
+//    while (!start_)
+//      task_cond_.wait ();
+//    mutex_.release ();
+  post_activate ();
   return 0;
 }
 
 int
 Thread_Task::svc (void)
 {
-  char msg [BUFSIZ];
-  ACE_OS::sprintf (msg, "Thread_Task::svc %d\n", count_);
-  dt_creator_->log_msg (msg);
-  
+  static count = 0;
+  count++;
+
   const char * name = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
   this->current_->begin_scheduling_segment (name,
@@ -92,6 +104,11 @@ Thread_Task::svc (void)
   ACE_OS::memcpy (&count_,
 		  this->current_->id ()->get_buffer (),
 		  this->current_->id ()->length ());
+
+  char msg [BUFSIZ];
+  ACE_OS::sprintf (msg, "Thread_Task::svc %d\n", count_);
+  dt_creator_->log_msg (msg);
+
 
   this->perform_task ();
 
@@ -121,4 +138,14 @@ int
 Thread_Task::perform_task (void)
 {
   return 0;
+}
+
+void
+Thread_Task::pre_activate (void)
+{
+}
+
+void
+Thread_Task::post_activate (void)
+{
 }

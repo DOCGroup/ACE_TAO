@@ -19,8 +19,6 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   
   DT_Test (void);
   
-  void check_supported_priorities (void);
-  
   int init (int argc, char *argv []
 	    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 

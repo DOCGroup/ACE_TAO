@@ -13,56 +13,6 @@ DT_Test::DT_Test (void)
 {
 }	
 
-void
-DT_Test::check_supported_priorities (void)
-{
-  // Check that we have sufficient priority range to run this
-  // test, i.e., more than 1 priority level.
-
-  this->thr_sched_policy_ = orb_->orb_core ()->orb_params ()->sched_policy ();
-  this->thr_scope_policy_ = orb_->orb_core ()->orb_params ()->scope_policy ();
-  /*
-  if (thr_sched_policy_ == THR_SCHED_RR)
-    {
-      //if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
-
-      sched_policy_ = ACE_SCHED_RR;
-    }
-  else 
-  if (thr_sched_policy_ == THR_SCHED_FIFO)
-    {
-      // if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_FIFO\n"));
-
-      sched_policy_ = ACE_SCHED_FIFO;
-    }
-  else
-  */
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
-      
-      sched_policy_ = ACE_SCHED_OTHER;
-    }
-  
-  if (thr_sched_policy_ == THR_SCHED_RR || thr_sched_policy_ == THR_SCHED_FIFO)
-    {
-      max_priority_ = ACE_Sched_Params::priority_max (sched_policy_);
-      min_priority_ = ACE_Sched_Params::priority_min (sched_policy_);
-      
-      if (max_priority_ == min_priority_)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Not enough priority levels on this platform"
-		      " to run the test, aborting \n"));
-	  ACE_OS::exit (2);
-	}
-      else ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
-		       max_priority_, min_priority_));
-    }
-}
-
 int
 DT_Test::init (int argc, char *argv []
 	       ACE_ENV_ARG_DECL)
@@ -72,8 +22,6 @@ DT_Test::init (int argc, char *argv []
 			  ""
 			  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  
-  this->check_supported_priorities ();
   
   CORBA::Object_ptr manager_obj = orb_->resolve_initial_references ("RTSchedulerManager"
 								   ACE_ENV_ARG_PARAMETER);
@@ -85,7 +33,7 @@ DT_Test::init (int argc, char *argv []
       
   
   ACE_NEW_RETURN (scheduler_,
-	   MIF_Scheduler (orb_.in ()), -1);
+		  MIF_Scheduler (orb_.in ()), -1);
   
   manager->rtscheduler (scheduler_);
   
@@ -98,24 +46,6 @@ DT_Test::init (int argc, char *argv []
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-  //  if (sched_policy_ != ACE_SCHED_OTHER)
-  // {
-      //Set the main thread to max priority...
-      if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy_,
-						  2,
-						  ACE_SCOPE_PROCESS)) != 0)
-	{
-	  if (ACE_OS::last_error () == EPERM)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  "(%P|%t): user is not superuser, "
-			  "test runs in time-shared class\n"));
-	    }
-	  else
-	    ACE_ERROR ((LM_ERROR,
-			"(%P|%t): sched_params failed\n"));
-	}
-      // }
   return 0;
 }
 
@@ -133,6 +63,10 @@ DT_Test::run (int argc, char* argv []
 
   orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  orb_->destroy ();
+
+  ACE_Thread_Manager::instance ()->wait ();
 }
 
 

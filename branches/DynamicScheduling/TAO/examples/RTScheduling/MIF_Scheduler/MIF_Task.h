@@ -14,6 +14,8 @@ class MIF_Task : public Thread_Task
   
   virtual int perform_task (void);
   
+  virtual void pre_activate (void);
+  virtual void post_activate (void);
 };
 
 #endif /*MIF_TASK_H*/

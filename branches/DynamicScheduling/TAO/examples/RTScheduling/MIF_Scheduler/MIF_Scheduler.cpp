@@ -17,20 +17,16 @@ DT::DT (ACE_Thread_Mutex &lock,
 void
 DT::suspend (void)
 {
-  mutex_.acquire ();
   eligible_ = 0;
   while (!eligible_)
     this->dt_cond_.wait ();
-  mutex_.release ();
 }
 
 void
 DT::resume (void)
 {
-  mutex_.acquire ();
   eligible_ = 1;
   this->dt_cond_.signal ();
-  mutex_.release ();
 }
 
 CORBA::Short 
@@ -48,6 +44,7 @@ Segment_Sched_Param_Policy::importance (CORBA::Short importance)
 }
 
 MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
+  : wait_cond_ (lock_)
 {
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current" 
@@ -58,11 +55,35 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
   
-  state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
+//  state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
+
+  wait_ = 0;
 }
 
 MIF_Scheduler::~MIF_Scheduler (void)
 {
+}
+
+void
+MIF_Scheduler::incr_thr_count (void)
+{
+  wait_++;
+}
+
+void
+MIF_Scheduler::wait (void)
+{
+  lock_.acquire ();
+  while (wait_.value_i () > 0)
+    wait_cond_.wait ();
+  lock_.release ();
+}
+
+void
+MIF_Scheduler::resume_main (void)
+{
+  wait_--;
+  wait_cond_.signal ();
 }
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr 
@@ -99,9 +120,9 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 		  this->current_->id ()->get_buffer (),
 		  this->current_->id ()->length ());
 
-    
   if (count != 1)
     {
+      //NOT Main Thread
       MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param = 
 	MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
 	
@@ -110,41 +131,22 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
       ACE_NEW (new_dt,
 	       DT (this->lock_,
 		   count));
-	
+      
       new_dt->msg_priority (desired_priority);
 	
-      //NOT Main Thread
       if (wait_que_.message_count () > 0)
 	{
-	    
 	  DT* main_dt;
 	  ACE_Message_Block* msg;
 	  wait_que_.dequeue_head (msg);
 	  main_dt = ACE_dynamic_cast (DT*, msg);
 	  main_dt->resume ();
 	}
-      //      ready_que_.enqueue_prio (new_dt);
-      //new_dt->suspend ();
-      else 
-	{
-	  if (ready_que_.message_count() > 0)
-	    {
-	      DT* run_dt;
-	      ACE_Message_Block* msg;
-	      ready_que_.dequeue_head (msg);
-	      run_dt = ACE_dynamic_cast (DT*, msg);
-	      if (run_dt->msg_priority () >= new_dt->msg_priority ())
-		{
-		  run_dt->resume ();
-		  ready_que_.enqueue_prio (new_dt);
-		  new_dt->suspend ();
-		}
-	      else 
-		{
-		  ready_que_.enqueue_prio (run_dt);
-		}
-	    }
-	}
+      ready_que_.enqueue_prio (new_dt);
+      lock_.acquire ();
+      resume_main ();
+      new_dt->suspend ();
+      lock_.release ();
     }
 }
 
@@ -195,13 +197,15 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &g
     {
       if (ready_que_.message_count () > 0)
 	{
-	  wait_que_.enqueue_prio (new_dt);
 	  DT* run_dt;
 	  ACE_Message_Block* msg;
 	  ready_que_.dequeue_head (msg);
 	  run_dt = ACE_dynamic_cast (DT*, msg);
+	  wait_que_.enqueue_prio (new_dt);
+	  lock_.acquire ();
 	  run_dt->resume ();
 	  new_dt->suspend ();
+	  lock_.release ();
 	}
       else delete new_dt;
     }
@@ -209,28 +213,31 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &g
     {
       if (wait_que_.message_count () > 0)
 	{
-	  ready_que_.enqueue_prio (new_dt);
-	  DT* run_dt;
+ 	  DT* run_dt;
 	  ACE_Message_Block* msg;
 	  wait_que_.dequeue_head (msg);
 	  run_dt = ACE_dynamic_cast (DT*, msg);
+	  ready_que_.enqueue_prio (new_dt);
+	  lock_.acquire ();
 	  run_dt->resume ();
 	  new_dt->suspend ();
+	  lock_.release ();
 	}
       else 
 	{
 	  if (ready_que_.message_count() > 0)
 	    {
-	      //ready_que_.enqueue_prio (new_dt);
 	      DT* run_dt;
 	      ACE_Message_Block* msg;
 	      ready_que_.dequeue_head (msg);
 	      run_dt = ACE_dynamic_cast (DT*, msg);
-	      if (run_dt->msg_priority () >= new_dt->msg_priority ())
+	      if (run_dt->msg_priority () > new_dt->msg_priority ())
 		{
+		  lock_.acquire ();
 		  run_dt->resume ();
 		  ready_que_.enqueue_prio (new_dt);
 		  new_dt->suspend ();
+		  lock_.release ();
 		}
 	      else 
 		{
@@ -252,17 +259,15 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 		  guid.get_buffer (),
 		  guid.length ());
   
-  //    ACE_DEBUG ((LM_DEBUG,
-  //  	      "End Scheduling Segment %d\n",
-  //  	      count));
-  
   if (wait_que_.message_count () > 0)  
     {
       DT* run_dt;
       ACE_Message_Block* msg;
       wait_que_.dequeue_head (msg);
       run_dt = ACE_dynamic_cast (DT*, msg);
+      lock_.acquire ();
       run_dt->resume ();
+      lock_.release ();
     }
   else if (ready_que_.message_count () > 0)
     {
@@ -270,7 +275,9 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
       ACE_Message_Block* msg;
       ready_que_.dequeue_head (msg);
       run_dt = ACE_dynamic_cast (DT*, msg);
+      lock_.acquire ();
       run_dt->resume ();
+      lock_.release ();
     }
 }
 
