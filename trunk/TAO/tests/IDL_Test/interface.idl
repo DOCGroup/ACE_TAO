@@ -32,3 +32,21 @@ interface Base
 interface Derived : Base
 {
 };
+
+// The fact that the interface begins with 'foo' was causing
+// problems. The IDL compiler thought the interface was in
+// foo's scope.
+module foo 
+{
+  struct date 
+    {
+	    short month;
+    };
+};
+
+interface foostep
+{
+  foo::date getDate ();
+};
+
+

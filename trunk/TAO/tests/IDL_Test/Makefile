@@ -24,7 +24,6 @@ IDL_SRC =	anonymous		\
 		including		\
 		interface		\
 		keywords		\
-		reopened_modules	\
 		sequence		\
 		typedef			\
 		union			\
@@ -33,7 +32,7 @@ IDL_FILES = \
         $(addsuffix S, $(IDL_SRC)) \
         $(addsuffix C, $(IDL_SRC))
 
-IDL_TEST_FILES = $(IDL_FILES) main
+IDL_TEST_FILES = $(IDL_FILES) main namespace_check
 
 IDL_TEST_OBJS = $(addsuffix .o, $(IDL_TEST_FILES))
 SRC = $(addsuffix .cpp, $(IDL_TEST_FILES))
