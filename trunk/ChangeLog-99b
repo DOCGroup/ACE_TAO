@@ -1,3 +1,9 @@
+Fri Feb 12 16:14:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Remote_Tokens.cpp: Replaced the typedef for
+ 	  ACE_TSS_CONNECTION_MUTEX with #define ACE_TSS_CONNECTION_MUTEX.
+  	  Thanks to Arturo for reporting this.
+
 Fri Feb 12 18:41:22 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/SString.cpp: Added "ace/" to #include "Auto_Ptr.h" to conform
