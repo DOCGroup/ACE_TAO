@@ -1,3 +1,8 @@
+Fri Dec  3 13:26:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+	  Changes to avert a build warning on IRIX.
+
 Fri Dec  3 12:37:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_visitor_union.cdr_op_ci.cpp
