@@ -1,3 +1,37 @@
+Thurs Aug 8 22:33:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/Transport.h: 
+	  
+	  Made the send_message_shared method virtual so it can be
+	  overriden by derived classes. Also made the
+	  send_message_shared_i and check_event_handler_i methods
+	  protected so they can be accessed by derived classes.
+	
+	* tao/IIOP_Transport.h: 	
+	* tao/IIOP_Transport.cpp: 		
+
+	  Overrode the send_message_shared method in order to add the call
+	  to connection_handler_->set_dscp_codepoint (). This was
+	  necessary because the initial call to set_dscp_codepoint on the
+	  connection_handler, from send_message, was failing in some cases
+	  as the connection_handler was already destroyed when the client
+	  invocation terminated and hence closed the
+	  connection_handler. By moving the call to send_message_shared it
+	  was ensured that the check for null connection_handler was done
+	  after grabbing a lock and hence it could not be deleted when
+	  used. Thanks to Balachandran Natarajan <bala@cs.wustl.edu> for
+	  helping fix this.
+
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+
+	  When updating client and server TCP protocol properties, made
+	  sure that the properties for IIOP returned from the policies was
+	  not null. They could be null in cases where a list of protocol
+	  types, provided by the same policy that contains the TCP
+	  protocol properties, could be specified without any protocol
+	  properties set for any of the protocols chosen. Thanks to Irfan
+	  Pyarali <irfan@oomworks.com> for pointing to it.
+	
 Thu Aug  8 13:35:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_expressions.cpp:
