@@ -5,7 +5,7 @@
 #ifndef STOCK_FACTORY_LOCATOR_I_H
 #define STOCK_FACTORY_LOCATOR_I_H
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 
 class Quoter_Stock_Factory_Locator_i : public PortableServer::ServantLocator
