@@ -1,5 +1,7 @@
 Fri Oct 08 10:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
+	* TAO_IDL/Makefile: Updated dependencies.
+
 	* TAO_IDL/be/be_interface_strategy.cpp: Added a new strategy
 	  to suppor the generation of AMI interfaces. A forward declaration
 	  of the AMI Handler is generated.
@@ -168,6 +170,8 @@ Wed Oct  6 10:33:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  methods, moved these to the .i file.
 
 	* tao/Reply_Dispatcher.cpp: Cosmetic changes.
+	
+	* tests/AMI/Makefile: Added the -Ge 1 switch to the IDL compiler.
 
 Wed Oct  6 07:23:23 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
