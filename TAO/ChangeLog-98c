@@ -1,3 +1,9 @@
+Mon Jun 22 11:54:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Makefile: 
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	  Updated dependencies.
+
 Mon Jun 22 11:32:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * TAO/docs/releasenotes/index.html: Added documentation
