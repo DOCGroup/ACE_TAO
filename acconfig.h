@@ -642,9 +642,6 @@
    PTHREAD_PROCESS_SHARED values */
 #undef ACE_HAS_PTHREAD_PROCESS_ENUM
 
-/* Platform has pthread_sigmask() defined. */
-#undef ACE_HAS_PTHREAD_SIGMASK
-
 /* Purify'ing.  Defined on command line. */
 #undef ACE_HAS_PURIFY
 
@@ -1112,7 +1109,7 @@
    memory and message queues. */
 #undef ACE_LACKS_SOME_POSIX_PROTOTYPES
 
-/* Compiler complains about "#pragma once" */
+/* Compiler complains about use of obsolete "#pragma once" */
 #undef ACE_LACKS_PRAGMA_ONCE
 
 /* Platform lacks pri_t (e.g., Tandem NonStop UNIX). */
@@ -1121,10 +1118,10 @@
 /* Platform lack pthread_attr_setstackaddr() */
 #undef ACE_LACKS_THREAD_STACK_ADDR
 
-/* Platform lacks pthread_cancel(). */
+/* Platform lacks pthread_cancel() */
 #undef ACE_LACKS_PTHREAD_CANCEL
 
-/* Platform lacks pthread_sigmask () /
+/* Platform lacks pthread_sigmask () */
 #undef ACE_LACKS_PTHREAD_SIGMASK
 
 /* Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, and OSF/1 3.2) */
