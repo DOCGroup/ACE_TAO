@@ -27,8 +27,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Object_KeyC.h"
 #include "DIOP_Endpoint.h"
 
 #include "ace/Synch.h"
@@ -147,10 +145,6 @@ public:
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
 
-  /// Please refer to Profile.h for the documentation of this
-  /// function.
-  virtual IOP::TaggedProfile &create_tagged_profile (void);
-
 private:
 
   /// Creates an encapsulation of the ProfileBody struct in the <cdr>
@@ -186,14 +180,6 @@ protected:
 
   /// Number of endpoints in the list headed by <endpoint_>.
   size_t count_;
-
-private:
-
-  /// Object_key associated with this profile.
-  TAO::ObjectKey object_key_;
-
-  /// Our tagged profile
-  IOP::TaggedProfile tagged_profile_;
 };
 
 #if defined (__ACE_INLINE__)

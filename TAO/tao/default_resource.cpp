@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/default_resource.h"
 
 #include "tao/ORB_Core.h"
@@ -37,21 +36,22 @@ ACE_RCSID (tao,
            "$Id$")
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
-  : use_locked_data_blocks_ (1),
-    parser_names_count_ (0),
-    parser_names_ (0),
-    protocol_factories_ (),
-    connection_purging_type_ (TAO_CONNECTION_PURGING_STRATEGY),
-    cache_maximum_ (TAO_CONNECTION_CACHE_MAXIMUM),
-    purge_percentage_ (TAO_PURGE_PERCENT),
-    max_muxed_connections_ (0),
-    reactor_mask_signals_ (1),
-    dynamically_allocated_reactor_ (0),
-    options_processed_ (0),
-    factory_disabled_ (0),
-    cached_connection_lock_type_ (TAO_THREAD_LOCK),
-    flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING),
-    codeset_manager_ (0)
+  : use_locked_data_blocks_ (1)
+  , parser_names_count_ (0)
+  , parser_names_ (0)
+  , protocol_factories_ ()
+  , connection_purging_type_ (TAO_CONNECTION_PURGING_STRATEGY)
+  , cache_maximum_ (TAO_CONNECTION_CACHE_MAXIMUM)
+  , purge_percentage_ (TAO_PURGE_PERCENT)
+  , max_muxed_connections_ (0)
+  , reactor_mask_signals_ (1)
+  , dynamically_allocated_reactor_ (0)
+  , options_processed_ (0)
+  , factory_disabled_ (0)
+  , cached_connection_lock_type_ (TAO_THREAD_LOCK)
+  , flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
+  , codeset_manager_ (0)
+  , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)
 {
 }
 
@@ -172,65 +172,71 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                  ACE_LIB_TEXT("-ORBNativeCharCodeSet")) == 0)
     {
         curarg++;
-	CONV_FRAME::CodeSetId ncs;
-        if (ACE_Codeset_Registry::locale_to_registry(argv[curarg],
-						     ncs))
+        CONV_FRAME::CodeSetId ncs;
+        if (ACE_Codeset_Registry::locale_to_registry (argv[curarg],
+                                                      ncs))
           {
             char **endPtr =0;
             ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-					 endPtr, 0);
-	  }
-	// Validate the CodesetId
-	if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
-	  {
-	    if (TAO_debug_level > 0)
-	      ACE_ERROR((LM_ERROR,
-			 ACE_TEXT("(%P|%t) Invalid NativeCharCodeSet, %x\n"),
-			 ncs));
-	    ACE_DECLARE_NEW_CORBA_ENV;
-	    ACE_THROW_RETURN (CORBA::BAD_PARAM (
-			      CORBA::SystemException::_tao_minor_code (
+                                         endPtr, 0);
+          }
+        // Validate the CodesetId
+        if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
+          {
+            if (TAO_debug_level > 0)
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Invalid NativeCharCodeSet, %x\n"),
+                         ncs));
+
+            // @@Phil: This is *completely* busted!
+            ACE_DECLARE_NEW_CORBA_ENV;
+            ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                              CORBA::SystemException::_tao_minor_code (
                                   TAO_ORB_CORE_INIT_LOCATION_CODE,
                                   EINVAL),
                                 CORBA::COMPLETED_NO),
                               -1);
-	  }
-	TAO_Codeset_Manager *csm = this->get_codeset_manager();
-	if (csm)
-	  csm->set_ncs_c(ncs);
+          }
+        TAO_Codeset_Manager *csm =
+          this->get_codeset_manager ();
+        if (csm)
+          csm->set_ncs_c(ncs);
     }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBNativeWCharCodeSet")) == 0)
     {
         curarg++;
-	CONV_FRAME::CodeSetId ncs;
+        CONV_FRAME::CodeSetId ncs;
         if (!ACE_Codeset_Registry::locale_to_registry( argv[curarg],
-						       ncs))
+                                                       ncs))
           {
             char **endPtr = 0;
             ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-					 endPtr, 0);
-	  }
-	// Validate the CodesetId
-	int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
-	if (mb == 0 || ACE_static_cast(size_t,mb) > sizeof (ACE_CDR::WChar))
-	  {
-	    if (TAO_debug_level > 0)
-	      ACE_ERROR((LM_ERROR,
-			 ACE_TEXT("(%P|%t) Invalid NativeWCharCodeSet, %x\n"),
-			 ncs));
-	    ACE_DECLARE_NEW_CORBA_ENV;
-	    ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                                         endPtr, 0);
+          }
+        // Validate the CodesetId
+        int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
+        if (mb == 0 || ACE_static_cast(size_t,mb) > sizeof (ACE_CDR::WChar))
+          {
+            if (TAO_debug_level > 0)
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Invalid NativeWCharCodeSet, %x\n"),
+                         ncs));
+
+            // @@Phile: This is completely busted!
+            ACE_DECLARE_NEW_CORBA_ENV;
+            ACE_THROW_RETURN (CORBA::BAD_PARAM (
                                 CORBA::SystemException::_tao_minor_code (
-			          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                  TAO_ORB_CORE_INIT_LOCATION_CODE,
                                   EINVAL),
                                 CORBA::COMPLETED_NO),
                               -1);
-	  }
-	TAO_Codeset_Manager *csm = this->get_codeset_manager();
-	if (csm)
-	  csm->set_ncs_w(ncs,mb);
+          }
+
+        TAO_Codeset_Manager *csm = this->get_codeset_manager();
+        if (csm)
+          csm->set_ncs_w(ncs,mb);
     }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -239,10 +245,10 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       curarg++;
       if (curarg < argc)
         {
-	  TAO_Codeset_Manager *csm = this->get_codeset_manager();
-	  if (csm)
-	    if (csm->add_char_translator(argv[curarg]) == -1)
-	      return -1;
+          TAO_Codeset_Manager *csm = this->get_codeset_manager();
+          if (csm)
+            if (csm->add_char_translator(argv[curarg]) == -1)
+              return -1;
         }
     }
 
@@ -252,12 +258,12 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     {
       curarg++;
       if (curarg < argc)
-	{
-	  TAO_Codeset_Manager *csm = this->get_codeset_manager();
-	  if (csm)
-	    if (csm->add_wchar_translator(argv[curarg]) == -1)
-	      return -1;
-	}
+        {
+          TAO_Codeset_Manager *csm = this->get_codeset_manager();
+          if (csm)
+            if (csm->add_wchar_translator(argv[curarg]) == -1)
+              return -1;
+        }
     }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -377,6 +383,49 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             else
               this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionCacheLock"), name);
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 ACE_LIB_TEXT("-ORBCorbaObjectLock")) == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            ACE_TCHAR* name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    ACE_LIB_TEXT("thread")) == 0)
+              this->corba_object_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name,
+                                         ACE_LIB_TEXT("null")) == 0)
+              {
+                // @@ Bug 940 :This is a sort of hack now. We need to put
+                // this in a common place once we get the common
+                // switch that is documented in bug 940...
+                this->corba_object_lock_type_ = TAO_NULL_LOCK;
+              }
+            else
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBCorbaObjectLock"), name);
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 ACE_LIB_TEXT("-ORBResourceUsage")) == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            ACE_TCHAR* name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    ACE_LIB_TEXT("eager")) == 0)
+              this->resource_usage_strategy_ = TAO_EAGER;
+            else if (ACE_OS::strcasecmp (name,
+                                         ACE_LIB_TEXT("lazy")) == 0)
+              {
+                this->resource_usage_strategy_ = TAO_LAZY;
+              }
+            else
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBResourceUsage"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -837,6 +886,23 @@ TAO_Default_Resource_Factory::locked_transport_cache (void)
 }
 
 
+ACE_Lock *
+TAO_Default_Resource_Factory::create_corba_object_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  if (this->corba_object_lock_type_ == TAO_NULL_LOCK)
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
+                    0);
+  else
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
+                    0);
+
+  return the_lock;
+}
+
 TAO_Flushing_Strategy *
 TAO_Default_Resource_Factory::create_flushing_strategy (void)
 {
@@ -922,6 +988,12 @@ TAO_Default_Resource_Factory::get_codeset_manager()
       ACE_NEW_RETURN (this->codeset_manager_, TAO_Codeset_Manager, 0);
     }
   return this->codeset_manager_;
+}
+
+TAO_Resource_Factory::Resource_Usage
+TAO_Default_Resource_Factory::resource_usage_strategy (void)const
+{
+  return this->resource_usage_strategy_;
 }
 
 // ****************************************************************

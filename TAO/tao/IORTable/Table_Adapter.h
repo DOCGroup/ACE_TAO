@@ -53,6 +53,8 @@ public:
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
+                                                    CORBA::Object_ptr);
 private:
   /// The ORB Core we belong to
   TAO_ORB_Core *orb_core_;

@@ -707,6 +707,16 @@ public:
   /// object.
   CORBA::Object_ptr create_object (TAO_Stub *the_stub);
 
+  /// Initialize a new object, use the adapter registry to initialize a
+  /// collocated object, if not possible then initialize a regular
+  /// object.
+  /// NOTE: Why would this method be required? The answer is if the
+  /// user decides to use lazy initialization of CORBA object, then
+  /// this is the route that we have to take to do the
+  /// initialization.
+  CORBA::Long initialize_object (TAO_Stub *the_stub,
+                                 CORBA::Object_ptr obj);
+
   /// Return ORBid string.
   const char *orbid (void) const;
 
@@ -1003,12 +1013,10 @@ private:
   /// Obtain and cache the dynamic any factory object reference.
   void resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Try to create a new collocated object, using <other_orb> as the
-  /// target ORB.  If not possible return 0.
-  CORBA::Object_ptr create_collocated_object (TAO_Stub *the_stub,
-                                              TAO_ORB_Core *other_orb,
-                                              const TAO_MProfile &mprofile);
-
+  /// Checks to see whether collocation optimizations have to be
+  /// applied on objects in the <other_orb>
+  CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
+                                         const TAO_MProfile &mp);
 protected:
 
   /// Synchronize internal state...
