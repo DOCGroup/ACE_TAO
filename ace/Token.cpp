@@ -22,9 +22,9 @@ ACE_Token::dump (void) const
 
 ACE_Token::ACE_Queue_Entry::ACE_Queue_Entry (ACE_Thread_Mutex &m, 
 					     ACE_thread_t t_id)
-  : cv_ (m),
-    next_ (0),
+  : next_ (0),
     thread_id_ (t_id),
+    cv_ (m),
     runable_ (0)
 {
   ACE_TRACE ("ACE_Token::ACE_Queue_Entry::ACE_Queue_Entry");
