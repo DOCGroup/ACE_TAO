@@ -107,7 +107,7 @@ public:
   virtual int fini (void);
 
   /// Returns information about this context.
-  virtual int info (char **strp, size_t length) const;
+  virtual int info (ACE_TCHAR **strp, size_t length) const;
 
   /// Returns the ACE_Name_Options associated with the Naming_Context
   ACE_Name_Options *name_options (void);

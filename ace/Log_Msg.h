@@ -432,6 +432,7 @@ public:
    *         <ACE_Trace::get_nesting_indent>).
    *  + 'e', 'E', 'f', 'F', 'g', 'G': print a double
    *  + 'l': print line number where an error occurred.
+   *  + 'M': print the name of the priority of the message.
    *  + 'm': return the message corresponding to errno value, e.g., as
    *         done by strerror()
    *  + 'N': print file name where the error occurred.

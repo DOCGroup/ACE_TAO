@@ -1,9 +1,50 @@
+Fri Nov  9 07:42:41 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Arg_Shifter.cpp: Made the argv parameter to ACE_Arg_Shifter
+	  a "const" ACE_CHAR **.
+
+	* tests/Arg_Shifter_Test.cpp (main): Added "const" to the
+	  args local variable to remove a warning from SunC++.
+
 Fri Nov  9 11:23:01 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tests/Collection_Test.cpp: Fixed up things that caused problems
 	on several platforms.  Added the ARRAY tests back in.
 
 Thu Nov  8 14:52:39 2001  Steve Huston  <shuston@riverace.com>
+
+	* ace/Log_Msg.h: Added a new 'M' option to print out the name of
+	  the log priority.  Thanks to Vladimir Chovanec
+ 	  <Vladimir.CHOVANEC@asset.sk> for reporting this.
+
+Thu Nov  8 10:41:44 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS_String.h: Enhanced the documentation so that it explains
+	  the differences between ACE_OS::strsncpy() and ACE_OS::strcpy()
+ 	  more precisely.  Thanks to Alain Decamps for contributing this.
+
+	* ace/Naming_Context.{h,cpp}: The info() method should have ACE_TCHAR **
+	  rather than char **.  Thanks to Johnny Willemsen for reporting
+ 	  this.
+
+	* ace/OS.cpp: Added support for Borland's idiosyncratic _wfdopen()
+	  method.  Thanks to Johnny Willemsen for reporting this.
+
+Wed Nov  7 05:17:03 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Message_Queue_T.{h,cpp}: Changed the typo DEFUALT_PRIORITY
+	  to DEFAULT_PRIORITY.
+
+	* ace/OS.i: In BCB the _wtempnam() has the following signature:
+	   wchar_t *_wtempnam(wchar_t *dir, wchar_t *prefix)
+
+	 This means that the arguments must be made non-const by a cast.  The 
+	 fix is to add some defines so that with BCB and no wchar the
+ 	  _tempnam is used (with the casts) and with BCB and wchar then
+ 	  the _wtempnam is used with the casts.  Thanks to Johnny
+ 	  Willemsen for this fix.
+
+Thu Nov  8 14:52:39 2001  Steve Huston  <shuston@riverace.comy>
 
         * ace/Arg_Shifter.h: Doxygen-ized some comments.
 
