@@ -141,36 +141,6 @@ Cubit_Server::run (CORBA::Environment& env)
 
 Cubit_Server::~Cubit_Server (void)
 {
-  if (this->use_naming_service_)
-    TAO_TRY
-    {
-      // Unbind cubit factory context and name.
-      CosNaming::Name factory_name (2);
-      factory_name.length (2);
-      factory_name[0].id = CORBA::string_dup ("IDL_Cubit");
-      factory_name[1].id = CORBA::string_dup ("cubit_factory");
-      this->my_name_server_->unbind (factory_name,TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      factory_name.length (1);
-      this->my_name_server_->unbind (factory_name,TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      // Destroy all the POAs.
-      this->poa_->destroy (CORBA::B_TRUE,
-                           CORBA::B_TRUE,
-                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCH (CORBA::SystemException, sysex)
-    {
-      ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
-    }
-  TAO_CATCH (CORBA::UserException, userex)
-    {
-      ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
-    }
-  TAO_ENDTRY;
 }
 
 int
