@@ -99,8 +99,8 @@ public:
   CORBA::ORB_ptr orb (void);
   // Return orb pointer.
 
-  char *root_ior (void);
-  // Return ior of the root Naming Context (returns a copy - must be
+  CosNaming::NamingContext_ptr root_context (void);
+  // Return a pointer to the root Naming Context (returns a copy - must be
   // deallocated by the user).
 
 private:
@@ -143,8 +143,8 @@ private:
   // POA under which to register Persistent Naming Context servants
   // during start-up.
 
-  CORBA::String_var root_ior_;
-  // The ior of the root Naming Context.
+  CosNaming::NamingContext_var root_context_;
+  // The reference to the root Naming Context.
 };
 
 #endif /* TAO_PERSISTENT_CONTEXT_INDEX_H */

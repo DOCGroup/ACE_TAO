@@ -132,18 +132,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
               return -1;
             }
 
-          // Set the root Naming Context reference and ior.
-          this->naming_service_ior_= this->context_index_->root_ior ();
-
-          CORBA::Object_var obj =
-            orb->string_to_object (this->naming_service_ior_.in (),
-                                   ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
+          // Set the root Naming Context reference.
           this->naming_context_ =
-            CosNaming::NamingContext::_narrow (obj.in (),
-                                               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+            this->context_index_->root_context ();
         }
       else
         {
@@ -157,12 +148,13 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          // Set the root Naming Context ior.
-          this->naming_service_ior_=
-            orb->object_to_string (this->naming_context_.in (),
-                                   ACE_TRY_ENV);
-          ACE_TRY_CHECK;
         }
+
+      // Set the ior of the root Naming Context.
+      this->naming_service_ior_=
+        orb->object_to_string (this->naming_context_.in (),
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Make the Naming Service locatable through iioploc.
       if (orb->_tao_add_to_IOR_table ("NameService",

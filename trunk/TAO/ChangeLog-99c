@@ -1,3 +1,12 @@
+Thu Jul 15 21:03:31 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.{h,cpp}:
+	  Changed TAO_Persistent_Context_Index to store/return reference
+	  to the root Naming Context, rather than its stringified ior.
+	  This saves <object_to_string> conversion, and a <narrow> call
+	  later on.
+
 Thu Jul 15 21:01:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_helper.cpp:
@@ -53,7 +62,7 @@ Thu Jul 15 17:35:07 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/ORB_Core.*:
 
 	  Changed TAO_ORB_Parameters pointer member to a non-pointer
-	  member.  The main reason why it was made a pointer member was to 
+	  member.  The main reason why it was made a pointer member was to
 	  reduce compile-time dependencies.  However, params.h is already
 	  included, so we gain nothing by keeping it a pointer.  It's
 	  safer this way, anyway.
