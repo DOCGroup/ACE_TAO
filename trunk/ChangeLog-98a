@@ -34,6 +34,10 @@ Fri Apr 03 10:01:32 1998  Steve Huston  <shuston@riverace.com>
 
 Fri Apr 03 09:16:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * ace/OS.cpp (ACE_TSS_Info::key_in_use): return true if
+          thread_count_ > 0, not if it is != -1.  Thanks to Chris
+          Lahey <CLahey@cccis.com> for finding and reporting this.
+
         * ace/OS.i (thr_yield): on VxWorks, changed argument of
           ::taskDelay () from 0 to 1.  With an argument of 0,
           ::taskDelay () doesn't appear to yield the current thread.
