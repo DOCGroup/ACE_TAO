@@ -1,28 +1,47 @@
+Mon Jul 19 06:38:00 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Instead of hard coding the makefile name, we use a new method on
+          the WorkspaceCreator to get the current output name.  Also, when
+          recursing into directories, pass the current makefile name as a
+          parameter to make to ensure that we are sticking with the correct
+          line of generated makefiles.
+
+        * bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_server.mpb:
+        * bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
+
+          Removed the project name from these base projects.
+
+        * bin/MakeProjectCreator/config/client.mpb:
+
+          Removed this file.  It is no longer referenced.
+
 Sun Jul 18 11:33:58 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* Birthday number 42!!
+        * Birthday number 42!!
 
 Sun Jul 18 09:08:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst:
+        * bin/tao_orb_tests.lst:
 
-	  Added new PolicyFactory test to the test run list.
+          Added new PolicyFactory test to the test run list.
 
 Sun Jul 18 00:26:19 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/QtReactor.h
-	* ace/QtReactor.cpp
+        * ace/QtReactor.h
+        * ace/QtReactor.cpp
 
-	  Changed QtReactor constructors to follow the way plain
-	  ACE_Select_Reactor is constructed.
+          Changed QtReactor constructors to follow the way plain
+          ACE_Select_Reactor is constructed.
 
-	* tests/QtReactor.cpp
-	* tests/QtReactor.h
-	  Reduced number of socket handlers for QNX NTO as Qt@NTO is
-	  compiled with small FD_SETSIZE.
+        * tests/QtReactor.cpp
+        * tests/QtReactor.h
+          Reduced number of socket handlers for QNX NTO as Qt@NTO is
+          compiled with small FD_SETSIZE.
 
-	* ace/config-qnx-rtp-62x.h
-	  Decreased FD_SETSIZE to 1000 to better follow QNX NTO limits.
+        * ace/config-qnx-rtp-62x.h
+          Decreased FD_SETSIZE to 1000 to better follow QNX NTO limits.
 
 Sat Jul 17 14:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -47,109 +66,109 @@ Sat Jul 17 12:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jul 17 01:34:44 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/README (ACE_HAS_QT):
-	Create section on ACE_HAS_QT and ACE_QTREACTOR_CLEAR_PENDING_EVENTS.
+        * ace/README (ACE_HAS_QT):
+        Create section on ACE_HAS_QT and ACE_QTREACTOR_CLEAR_PENDING_EVENTS.
 
-	* ace/QtReactor.cpp:
-	* ace/QtReactor.h:
-	Introduced ACE_QTREACTOR_CLEAR_PENDING_EVENTS switch to disable
-	calling ACE_Event_Handler::handle_* for handles without activity,
-	espacially for ACE_Acceptor::handle_input. see ace/README.
+        * ace/QtReactor.cpp:
+        * ace/QtReactor.h:
+        Introduced ACE_QTREACTOR_CLEAR_PENDING_EVENTS switch to disable
+        calling ACE_Event_Handler::handle_* for handles without activity,
+        espacially for ACE_Acceptor::handle_input. see ace/README.
 
-	* test/QtReactor_Test.cpp:
-	* test/QtReactor_Test.cpp:
-	Fixed bug related with bad interpretation of
-	ACE_Acceptor::make_svc_handler. Modified some ACE_DEBUG.
+        * test/QtReactor_Test.cpp:
+        * test/QtReactor_Test.cpp:
+        Fixed bug related with bad interpretation of
+        ACE_Acceptor::make_svc_handler. Modified some ACE_DEBUG.
 
 Fri Jul 16 16:37:31 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ChangeLog: "Do not look at lazer pointer with remaining eye".
+        * ChangeLog: "Do not look at lazer pointer with remaining eye".
 
-	  Thanks to Russ Noseworthy
-	  <j.russell.noseworthy@objectsciences.com> for this deep thought
-	  ;-)
+          Thanks to Russ Noseworthy
+          <j.russell.noseworthy@objectsciences.com> for this deep thought
+          ;-)
 
 Fri Jul 16 07:27:56 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/Makefile.am:
-	  Build UUIDTest.
+        * tests/Makefile.am:
+          Build UUIDTest.
 
-	* ace/Makefile.am:
-	  Added support for building UUID subset.
+        * ace/Makefile.am:
+          Added support for building UUID subset.
 
 Thu Jul 15 18:57:55 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/QtReactor_Test.cpp: Fixed acceptor bug for Windows Qt.
-	Added few debug messages.
+        * tests/QtReactor_Test.cpp: Fixed acceptor bug for Windows Qt.
+        Added few debug messages.
 
 Thu Jul 15 07:01:15 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
-	  Removed ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION and added
-	  ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION checks.
+        * configure.ac:
+        * m4/config_h.m4:
+          Removed ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION and added
+          ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION checks.
 
-	  These feature-test macros are used to set ACE_TEMPLATE_METHOD_-
-	  SPECIALIZATION and ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION as
-	  appropriate to accommodate the template specialization syntax
-	  required by different compilers.  The former is obsolete and
-	  has (mostly) been removed, the latter is used by TAO.
+          These feature-test macros are used to set ACE_TEMPLATE_METHOD_-
+          SPECIALIZATION and ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION as
+          appropriate to accommodate the template specialization syntax
+          required by different compilers.  The former is obsolete and
+          has (mostly) been removed, the latter is used by TAO.
 
 Wed Jul 14 10:10:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.h:
 
-	  Removed extraneous character that was inadvertently committed.
+          Removed extraneous character that was inadvertently committed.
 
 Tue Jul 13 22:51:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Shared_Malloc/Options.h (slave_name):
+        * examples/Shared_Malloc/Options.h (slave_name):
 
-	  Corrected return value of this method.  "const ACE_TCHAR *", not
-	  "const char *".
+          Corrected return value of this method.  "const ACE_TCHAR *", not
+          "const char *".
 
-	* examples/Shared_Malloc/Options.cpp:
+        * examples/Shared_Malloc/Options.cpp:
 
-	  Fixed mismatched wide string concatenation.
+          Fixed mismatched wide string concatenation.
 
 Tue Jul 13 06:21:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/APG/Processes/Spawn.cpp (doWork):
+        * examples/APG/Processes/Spawn.cpp (doWork):
 
-	  Fixed mismatched format specifier warning.
+          Fixed mismatched format specifier warning.
 
 Mon Jul 12 20:08:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.h:
 
-	  The sys_epoll interface was introduced in Linux kernel 2.5.45.
-	  Don't support backported versions since they appear to be
-	  buggy.  The obsolete ioctl()-based interface is no longer
-	  supported.  Issue a preprocessor error in those cases.
+          The sys_epoll interface was introduced in Linux kernel 2.5.45.
+          Don't support backported versions since they appear to be
+          buggy.  The obsolete ioctl()-based interface is no longer
+          supported.  Issue a preprocessor error in those cases.
 
 Mon Jul 12 19:51:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/APG/Reactor/Client.cpp (ACE_TMAIN):
-	* examples/APG/Streams/Answerer.cpp (get_outgoing_message):
-	* examples/APG/Streams/Command.h:
-	* examples/APG/Streams/CommandStream.cpp (open):
-	* examples/APG/Streams/CommandTask.cpp (svc):
-	* examples/APG/Streams/CommandTasks.cpp:
-	* examples/APG/Streams/MessageInfo.h:
-	* examples/APG/Streams/RecordingDevice_Text.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i:
-	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
-	* examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN):
-	* examples/Shared_Malloc/Options.h:
-	* examples/Shared_Malloc/Options.cpp:
-	* examples/Shared_Malloc/test_persistence.cpp (main):
-	* examples/Shared_Memory/test_MM.cpp (main):
-	* examples/Web_Crawler/HTTP_URL.cpp (send_request):
-	* examples/Web_Crawler/URL_Addr.cpp (set):
-	* examples/Web_Crawler/URL_Visitor.cpp (execute):
+        * examples/APG/Reactor/Client.cpp (ACE_TMAIN):
+        * examples/APG/Streams/Answerer.cpp (get_outgoing_message):
+        * examples/APG/Streams/Command.h:
+        * examples/APG/Streams/CommandStream.cpp (open):
+        * examples/APG/Streams/CommandTask.cpp (svc):
+        * examples/APG/Streams/CommandTasks.cpp:
+        * examples/APG/Streams/MessageInfo.h:
+        * examples/APG/Streams/RecordingDevice_Text.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
+        * examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN):
+        * examples/Shared_Malloc/Options.h:
+        * examples/Shared_Malloc/Options.cpp:
+        * examples/Shared_Malloc/test_persistence.cpp (main):
+        * examples/Shared_Memory/test_MM.cpp (main):
+        * examples/Web_Crawler/HTTP_URL.cpp (send_request):
+        * examples/Web_Crawler/URL_Addr.cpp (set):
+        * examples/Web_Crawler/URL_Visitor.cpp (execute):
 
-	  Addressed compile-time problems in "wchar" builds (generally
-	  incorrect conversion from wchar * to char * and/or vice versa).
+          Addressed compile-time problems in "wchar" builds (generally
+          incorrect conversion from wchar * to char * and/or vice versa).
 
 Mon Jul 12 18:29:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -162,9 +181,9 @@ Mon Jul 12 20:32:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * ace/Service_Config.cpp:
 
-	  Fixed a bug with this change "Tue Jul  6 11:59:53 2004
-	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" which
-	  prevented any of the entries in svc.conf files from being read.
+          Fixed a bug with this change "Tue Jul  6 11:59:53 2004
+          Balachandran Natarajan  <bala@dre.vanderbilt.edu>" which
+          prevented any of the entries in svc.conf files from being read.
 
 Sun Jul 11 20:26:17 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -173,19 +192,19 @@ Sun Jul 11 20:26:17 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jul 12 01:31:53 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/QtReactor_Test.cpp:
-	* tests/QtReactor_Test.h:
-	* tests/tests.mpc:
-	  New automatic test for testing QtReactor. This test may also
-	  serve  as an example of Qt and ACE integration.
+        * tests/QtReactor_Test.cpp:
+        * tests/QtReactor_Test.h:
+        * tests/tests.mpc:
+          New automatic test for testing QtReactor. This test may also
+          serve  as an example of Qt and ACE integration.
 
-	* ace/QtReactor.cpp:
-	* ace/QtReactor.h:
-	  Many bugfixes in QtReactor. QtReactor is operational now, though
-	  it should be rewritten to make it more efficient and improve the
-	  clarity of sources. Moreover, valgrind reports small memory leak
-	  in QtReactor_Test, though it's not clear now if the leak results
-	  from QtReactor or test code.
+        * ace/QtReactor.cpp:
+        * ace/QtReactor.h:
+          Many bugfixes in QtReactor. QtReactor is operational now, though
+          it should be rewritten to make it more efficient and improve the
+          clarity of sources. Moreover, valgrind reports small memory leak
+          in QtReactor_Test, though it's not clear now if the leak results
+          from QtReactor or test code.
 
 Sun Jul 11 16:48:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -194,12 +213,12 @@ Sun Jul 11 16:48:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jul 11 10:52:06 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/SOCK_Acceptor.cpp (shared_open): ACE_SOCK_Acceptor::shared_open()
-	  was binding its passive-mode socket to INADDR_ANY whenever a
- 	  wildcard is specified for the port.  Fixed this so that it uses
- 	  whatever the actual address is (which could very well still be
- 	  INADDR_ANY).  Thanks to Kobi Cohen-Arazi <kcarazi@finjan.com>
- 	  and Ed Mulholland <emulholl@atl.lmco.com> for this solution.
+        * ace/SOCK_Acceptor.cpp (shared_open): ACE_SOCK_Acceptor::shared_open()
+          was binding its passive-mode socket to INADDR_ANY whenever a
+          wildcard is specified for the port.  Fixed this so that it uses
+          whatever the actual address is (which could very well still be
+          INADDR_ANY).  Thanks to Kobi Cohen-Arazi <kcarazi@finjan.com>
+          and Ed Mulholland <emulholl@atl.lmco.com> for this solution.
 
 Sun Jul 11 06:33:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -209,97 +228,97 @@ Sun Jul 11 06:33:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jul 10 10:18:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.h:
-	* ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_SOCK_Stream.h:
+        * ace/SSL/SSL_Asynch_Stream.h:
 
-	  Clarified "context" parameter copying semantics.
+          Clarified "context" parameter copying semantics.
 
 Thu Jul 10 09:38:44 2004 Frank Hunleth <frank@hunleth.com>
 
-	* ace/config-openbsd.h:
+        * ace/config-openbsd.h:
 
-	  Added ACE_HAS_UCONTEXT_T for OpenBSD 3.5 and later.  Thanks to
- 	  J.T. Conklin <jtc@acorntoolworks.com> for sending the patch over
- 	  right after I upgraded to 3.5.
+          Added ACE_HAS_UCONTEXT_T for OpenBSD 3.5 and later.  Thanks to
+          J.T. Conklin <jtc@acorntoolworks.com> for sending the patch over
+          right after I upgraded to 3.5.
 
 Sat Jul 10 09:37:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ACE-INSTALL.html:
+        * ACE-INSTALL.html:
 
-	  Added information on MPC for users who build from anon cvs
- 	  repository.
+          Added information on MPC for users who build from anon cvs
+          repository.
 
 Fri Jul  9 23:45:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RB_Tree.h (ACE_RB_Tree_Base::allocator):
-	* ace/RB_Tree.inl:
+        * ace/RB_Tree.h (ACE_RB_Tree_Base::allocator):
+        * ace/RB_Tree.inl:
 
-	  This non-template class method is now inlined in the RB_Tree.h
-	  header rather than in RB_Tree.inl since that file may be
-	  included multiple times when inlining is disabled and on
-	  platforms where ACE_TEMPLATES_REQUIRE_SOURCE is defined.  In
-	  those platform/configuration combinations, multiple definitions
-	  of this method occured.  Placing the definition inline in the
-	  header avoids such errors.
+          This non-template class method is now inlined in the RB_Tree.h
+          header rather than in RB_Tree.inl since that file may be
+          included multiple times when inlining is disabled and on
+          platforms where ACE_TEMPLATES_REQUIRE_SOURCE is defined.  In
+          those platform/configuration combinations, multiple definitions
+          of this method occured.  Placing the definition inline in the
+          header avoids such errors.
 
 Fri Jul  9 21:23:13 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/RB_Tree.{h,inl,cpp}: Fixed a number of bugs pertaining to
-	  ACE_RB_Tree's failure to use its allocators correctly.  Thanks
- 	  to Lothar Werzinger <lothar@xcerla.com> for these fixes.
+        * ace/RB_Tree.{h,inl,cpp}: Fixed a number of bugs pertaining to
+          ACE_RB_Tree's failure to use its allocators correctly.  Thanks
+          to Lothar Werzinger <lothar@xcerla.com> for these fixes.
 
-	* ace/Global_Macros.h: Added macros for ACE_SOCK_DGRAM,
-	  ACE_SOCK_DGRAM_MCAST, and ACE_SOCK_DGRAM_BCAST so they will work
- 	  on compilers like MIPSPro v.7.41 that don't support template
- 	  typedefs.  Thanks to Brian Waltersdorf
- 	  <brian.j.waltersdorf@boeing.com> for reporting this and
- 	  suggesting a fix.
+        * ace/Global_Macros.h: Added macros for ACE_SOCK_DGRAM,
+          ACE_SOCK_DGRAM_MCAST, and ACE_SOCK_DGRAM_BCAST so they will work
+          on compilers like MIPSPro v.7.41 that don't support template
+          typedefs.  Thanks to Brian Waltersdorf
+          <brian.j.waltersdorf@boeing.com> for reporting this and
+          suggesting a fix.
 
 Thu Jul  8 16:00:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Timer_Queue_Adapters.h: If ACE_HAS_DEFERRED_TIMER_COMMANDS is
-	  set, #include "ace/Unbounded_Queue.h" and forward declare
-	  ACE_Command_Base, as these are needed later.
+        * ace/Timer_Queue_Adapters.h: If ACE_HAS_DEFERRED_TIMER_COMMANDS is
+          set, #include "ace/Unbounded_Queue.h" and forward declare
+          ACE_Command_Base, as these are needed later.
 
-	* examples/Bounded_Packet_Relay/Bounded_Packet_Relay.mpc:
-	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h: Moved
-	  the #define ACE_HAS_DEFERRED_TIMER_COMMANDS macro setting from the
-	  .h file to the .mpc file. Helps poor Visual Age C++ deal with it
-	  correctly when instantiating templates.
+        * examples/Bounded_Packet_Relay/Bounded_Packet_Relay.mpc:
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h: Moved
+          the #define ACE_HAS_DEFERRED_TIMER_COMMANDS macro setting from the
+          .h file to the .mpc file. Helps poor Visual Age C++ deal with it
+          correctly when instantiating templates.
 
-	* examples/Bounded_Packet_Relay/BPR_Drivers_T.cpp: Added #include
-	  "ace/OS_NS_string.h" to pick up ACE_OS::memset().
+        * examples/Bounded_Packet_Relay/BPR_Drivers_T.cpp: Added #include
+          "ace/OS_NS_string.h" to pick up ACE_OS::memset().
 
 Thu Jul  8 11:32:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace: Renamed config-aix-5.1.h to config-aix-5.x.h since it covers
-	  both AIX 5.1 and 5.2.
+        * ace: Renamed config-aix-5.1.h to config-aix-5.x.h since it covers
+          both AIX 5.1 and 5.2.
 
 Thu Jul  8 08:56:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ACE.mwc:
+        * ACE.mwc:
 
-	  A workspace file ACE alone.
+          A workspace file ACE alone.
 
 Thu Jul  8 01:09:32 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace: Renamed config-aix5.1.h to config-aix-5.1.h to be consistent
-	  with the other AIX config*.h files.
+        * ace: Renamed config-aix5.1.h to config-aix-5.1.h to be consistent
+          with the other AIX config*.h files.
 
 Wed Jul  7 21:26:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Dev_Poll_Reactor.h:
-	* ace/Dev_Poll_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.cpp:
 
-	  Integrated updates from Jaroslaw Nozderko
-	  <jaroslaw.nozderko@polkomtel.com.pl> that replace old Linux
-	  /dev/epoll based implementation to latest sys_epoll API.
+          Integrated updates from Jaroslaw Nozderko
+          <jaroslaw.nozderko@polkomtel.com.pl> that replace old Linux
+          /dev/epoll based implementation to latest sys_epoll API.
 
-	  Added missing header inclusions.
+          Added missing header inclusions.
 
-	* tests/Dev_Poll_Reactor_Test.cpp:
+        * tests/Dev_Poll_Reactor_Test.cpp:
 
-	  Added missing "ace/OS_NS_unistd.h" include.
+          Added missing "ace/OS_NS_unistd.h" include.
 
 Wed Jul  7 06:31:30 2004  Chad Elliott  <elliott_c@ociweb.com>
 
