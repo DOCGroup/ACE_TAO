@@ -1,3 +1,11 @@
+Fri Oct 10 11:08:02 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/run_tests.sh: 
+	  We remove the log file before running a test, we also check for
+	  the log file existance before running run_test.check on
+	  it. Thanks to Dean Clamons <dean@n5170a.nrl.navy.mil> for
+	  helping us with this.
+
 Fri Oct 10 01:46:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.13, released Fri Oct 10 01:46:07 1997.
