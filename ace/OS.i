@@ -7438,21 +7438,30 @@ ACE_OS::mmap (void *addr,
   if (*file_mapping == ACE_INVALID_HANDLE)
     *file_mapping = ::CreateFileMapping (file_handle,
                                          ACE_OS::default_win32_security_attributes (sa),
-                                         prot, 0, len, 0);
+                                         prot,
+                                         0,
+                                         len);
   if (*file_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
 
 # if defined (ACE_OS_EXTRA_MMAP_FLAGS)
   nt_flags |= ACE_OS_EXTRA_MMAP_FLAGS;
-# endif
+# endif /* ACE_OS_EXTRA_MMAP_FLAGS */
 
 # if !defined (ACE_HAS_WINCE)
-  void *addr_mapping = ::MapViewOfFileEx (*file_mapping, nt_flags, 0,
-                                          off, len, addr);
+  void *addr_mapping = ::MapViewOfFileEx (*file_mapping,
+                                          nt_flags,
+                                          0,
+                                          off,
+                                          len,
+                                          addr);
 # else
   ACE_UNUSED_ARG (addr);        // WinCE doesn't allow specifying <addr>.
-  void *addr_mapping = ::MapViewOfFile (*file_mapping, nt_flags, 0,
-                                        off, len);
+  void *addr_mapping = ::MapViewOfFile (*file_mapping,
+                                        nt_flags,
+                                        0,
+                                        off,
+                                        len);
 # endif /* ! ACE_HAS_WINCE */
 
   // Only close this down if we used the temporary.
@@ -7486,34 +7495,31 @@ ACE_OS::mmap (void *addr,
       (*file_mapping = ::shm_open (name,
                                    O_RDWR | O_CREAT | O_TRUNC,
                                    ACE_DEFAULT_FILE_PERMS)) == -1)
-    {
-      return MAP_FAILED;
-    }
+    return MAP_FAILED;
   else
     {
       // The size of the shared memory object must be explicitly set on LynxOS.
       const off_t filesize = ACE_OS::filesize (file_handle);
       if (::ftruncate (*file_mapping, filesize) == -1)
-        {
-          return MAP_FAILED;
-        }
+        return MAP_FAILED;
       else
         {
 # if defined (ACE_OS_EXTRA_MMAP_FLAGS)
           flags |= ACE_OS_EXTRA_MMAP_FLAGS;
-# endif
-          char *map = (char *) ::mmap ((ACE_MMAP_TYPE) addr, len,
-                                       prot, flags, *file_mapping, off);
+# endif /* ACE_OS_EXTRA_MMAP_FLAGS */
+          char *map = (char *) ::mmap ((ACE_MMAP_TYPE) addr,
+                                       len,
+                                       prot,
+                                       flags,
+                                       *file_mapping,
+                                       off);
           if (map == MAP_FAILED)
-            {
-              return MAP_FAILED;
-            }
+            return MAP_FAILED;
           else
-            {
-              // Finally, copy the file contents to the shared memory object.
-              return ::read (file_handle, map, (int) filesize) == filesize
-                ? map : MAP_FAILED;
-            }
+            // Finally, copy the file contents to the shared memory object.
+            return ::read (file_handle, map, (int) filesize) == filesize
+              ? map 
+              : MAP_FAILED;
         }
     }
 #elif !defined (ACE_LACKS_MMAP)
@@ -7521,11 +7527,14 @@ ACE_OS::mmap (void *addr,
 
 # if defined (ACE_OS_EXTRA_MMAP_FLAGS)
   flags |= ACE_OS_EXTRA_MMAP_FLAGS;
-# endif
-
-  file_mapping = file_mapping;
-  ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr, len,
-                                      prot, flags, file_handle, off),
+# endif /* ACE_OS_EXTRA_MMAP_FLAGS */
+  ACE_UNUSED_ARG (file_mapping);
+  ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr,
+                                      len,
+                                      prot,
+                                      flags,
+                                      file_handle,
+                                      off),
                      void *, MAP_FAILED);
 #else
   ACE_UNUSED_ARG (addr);
