@@ -914,7 +914,7 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
 {
   return TAO::Any_Impl_T<CORBA::TypeCode>::extract (
       any,
-      CORBA::TypeCode::_tao_any_destructor,
+      CORBA_TypeCode::_tao_any_destructor,
       CORBA::_tc_TypeCode,
       tc
     );
