@@ -1,3 +1,9 @@
+Tue Jul  9 13:09:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/AbstractBase.cpp:
+	* tao/ObjectReferenceTemplateC.cpp:
+	  Fixed BCB compile errors. Added missing .in().
+
 Tue Jul  9 08:56:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/ast/ast_argument.cpp:
