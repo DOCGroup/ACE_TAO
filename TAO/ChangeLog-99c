@@ -1,103 +1,108 @@
+Fri Aug 06 21:45:14 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/README: fixed
+          simplest collocation test example (it doesn't use -c).
+
 Fri Aug  6 21:29:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile:
-	  The Faults test does not compile under minimum corba
+        * tests/Makefile:
+          The Faults test does not compile under minimum corba
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	  Fixed warnings on single threaded environments.
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Fixed warnings on single threaded environments.
 
 Fri Aug  6 20:51:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Schedule/Schedule.h:
-	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
-	* orbsvcs/examples/RtEC/Schedule/svc.conf:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
-	  Fixed numerous problems with the propagation of scheduling
-	  information, this was the first breakthrough in the solution of
-	  [BUGID:30]
+        * orbsvcs/examples/RtEC/Schedule/Schedule.h:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+        * orbsvcs/examples/RtEC/Schedule/svc.conf:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
+          Fixed numerous problems with the propagation of scheduling
+          information, this was the first breakthrough in the solution of
+          [BUGID:30]
 
-	* tao/GIOP.cpp:
-	  For some reason now read() was returning with 0 and errno ==
-	  EWOULDBLOCK when the connection was closed, this fixes the
-	  recent time outs on the server shutdown for both the Latency and 
-	  the MT_Server test.
+        * tao/GIOP.cpp:
+          For some reason now read() was returning with 0 and errno ==
+          EWOULDBLOCK when the connection was closed, this fixes the
+          recent time outs on the server shutdown for both the Latency and
+          the MT_Server test.
 
 Fri Aug  6 19:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* docs/releasenotes/trader.html: changed code snippets in
-	  documentation to have ACE exception macros instead of TAO
-	  exception macros.
-	
+        * docs/releasenotes/trader.html: changed code snippets in
+          documentation to have ACE exception macros instead of TAO
+          exception macros.
+
 Fri Aug  6 18:31:31 1999  Mike Moran  <mm4@cs.wustl.edu>
 
-	* tests/Explicit_Event_Loop/
-	* tests/Explicit_Event_Loop/Makefile:
-	* tests/Explicit_Event_Loop/CHANGES:
-	* tests/Explicit_Event_Loop/README:
-	* tests/Explicit_Event_Loop/client.cpp:
-	* tests/Explicit_Event_Loop/run_test.pl:
-	* tests/Explicit_Event_Loop/server.cpp:
-	* tests/Explicit_Event_Loop/server.h:
-	* tests/Explicit_Event_Loop/time.idl:	
-	Added a simple test to use work_pending() and perform_work()
-	at the request of [BUGID:202].
-	
+        * tests/Explicit_Event_Loop/
+        * tests/Explicit_Event_Loop/Makefile:
+        * tests/Explicit_Event_Loop/CHANGES:
+        * tests/Explicit_Event_Loop/README:
+        * tests/Explicit_Event_Loop/client.cpp:
+        * tests/Explicit_Event_Loop/run_test.pl:
+        * tests/Explicit_Event_Loop/server.cpp:
+        * tests/Explicit_Event_Loop/server.h:
+        * tests/Explicit_Event_Loop/time.idl:
+        Added a simple test to use work_pending() and perform_work()
+        at the request of [BUGID:202].
+
 Fri Aug  6 17:10:33 1999  Pradeep Gore  <pradeep@ace.cs.wustl.edu>
 
-	* examples/Event_Comm/Consumer_Handler.cpp:
-	* examples/Event_Comm/Notifier_Handler.cpp:
-	* examples/Event_Comm/Notifier_Server.cpp:
-	Added missing code to activate the POA Manager.
-	Thanks to Hoang Duong <hduong@lycosmail.com> for reporting this.
+        * examples/Event_Comm/Consumer_Handler.cpp:
+        * examples/Event_Comm/Notifier_Handler.cpp:
+        * examples/Event_Comm/Notifier_Server.cpp:
+        Added missing code to activate the POA Manager.
+        Thanks to Hoang Duong <hduong@lycosmail.com> for reporting this.
 
 Fri Aug  6 16:30:30 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Borland/ChatClientWnd.cpp: Improved the printouts
-	  that are called to display which exceptions are thrown.  Thanks
- 	  to Christopher Kohlhoff <chris@kohlhoff.com> for contributing
- 	  this.
+        * examples/Borland/ChatClientWnd.cpp: Improved the printouts
+          that are called to display which exceptions are thrown.  Thanks
+          to Christopher Kohlhoff <chris@kohlhoff.com> for contributing
+          this.
 
 Fri Aug 06 14:24:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orbconf.h (TAO_DEFAULT_RESOURCE_FACTORY_ARGS): Replaced
-	  the obsolete option -ORBReactorLock with -ORBReactorType.
+        * tao/orbconf.h (TAO_DEFAULT_RESOURCE_FACTORY_ARGS): Replaced
+          the obsolete option -ORBReactorLock with -ORBReactorType.
 
 Thu Aug 05 15:48:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.dsp:
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* tao/TAO.dsp: Changed the default configuration to Win32 Debug so
-	  if anyone doesn't know what he is doing, he'll most likely to
-	  success.
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * tao/TAO.dsp: Changed the default configuration to Win32 Debug so
+          if anyone doesn't know what he is doing, he'll most likely to
+          success.
 
 Fri Aug 06 13:20:23 1999  Carlos O'Ryan  <coryan@JIG>
 
-	* tao/ORB_Core.cpp:
-	* tao/default_server.cpp:
-	  The thread per connection timeouts where not properly
-	  initialized by default. Thanks to Alexander Villatora
-	  <alex@cfx.com> for reporting this problem.
+        * tao/ORB_Core.cpp:
+        * tao/default_server.cpp:
+          The thread per connection timeouts where not properly
+          initialized by default. Thanks to Alexander Villatora
+          <alex@cfx.com> for reporting this problem.
 
-	* tao/IIOP_Connect.cpp:
-	  Added some debugging messages.
+        * tao/IIOP_Connect.cpp:
+          Added some debugging messages.
 
-	* performance-tests/Latency/Latency.dsw:
-	* performance-tests/Latency/st_client.dsp:
-	* performance-tests/Latency/st_server.dsp:
-	  Added missing project files.
+        * performance-tests/Latency/Latency.dsw:
+        * performance-tests/Latency/st_client.dsp:
+        * performance-tests/Latency/st_server.dsp:
+          Added missing project files.
 
-	* performance-tests/Latency/st_client.cpp:
-	  Added option to pace the requests.
+        * performance-tests/Latency/st_client.cpp:
+          Added option to pace the requests.
 
-	* tao/orbconf.h:
-	  Fixed a comment
+        * tao/orbconf.h:
+          Fixed a comment
 
 Fri Aug 06 11:03:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
