@@ -19,7 +19,7 @@
 
 #include "ace/Containers.h"
 
-class ACE_Object_Manager
+class ACE_Export ACE_Object_Manager
   // = TITLE
   //     Manager for ACE library services.
   //
