@@ -1,3 +1,9 @@
+Fri Aug 31 08:13:26 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/perltest2cpp.pl:
+
+          Added a -t option to set the timeout factor.
+
 Thu Aug 30 18:08:32 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-linux-common.h:

@@ -15,6 +15,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use strict;
 use FileHandle;
+use File::Basename;
 
 # ******************************************************************
 # Data Section
@@ -40,6 +41,7 @@ my($status)          = 0;
 my($lineCount)       = 0;
 my($needReadLine)    = 1;
 my($needReadFile)    = 1;
+my(%timeoutVars)     = ();
 
 my($UNDEFINED_VARIABLE)    = 1;
 my($UNKNOWN_VARIABLE_TYPE) = 2;
@@ -729,7 +731,11 @@ sub handleAssignment {
       if ($val =~ /Spawn/) {
         my($wait) = "";
         if ($val =~ /\((.*)\)/) {
-          $wait = "($1 * $timefactor)";
+          my($tout) = $1;
+          if ($tout =~ /^\d+$/ && $tout > $defaultTimeout) {
+            $defaultTimeout = $tout;
+          }
+          $wait = "($tout * $timefactor)";
         }
         my($spvar, $spval) = handleSpawn($val);
         $line = "$spvar$spval\n" . (" " x (2 * $indent)) .
@@ -1380,7 +1386,11 @@ sub handleIf {
       if ($var =~ /Spawn/) {
         my($wait) = "";
         if ($var =~ /\((.*)\)/) {
-          $wait = "($1 * $timefactor)";
+          my($tout) = $1;
+          if ($tout =~ /^\d+$/ && $tout > $defaultTimeout) {
+            $defaultTimeout = $tout;
+          }
+          $wait = "($tout * $timefactor)";
         }
         my($spvar, $spval) = handleSpawn($var);
         $newline = "$spvar$spval\n" . (" " x (2 * ($indent - 1))) .
@@ -1613,6 +1623,9 @@ sub handleSpawn {
 #    if (defined $declared{$var} && $declared{$var} != 0) {
 #      $var .= $declared{$var};
 #    }
+    if ($timeout =~ /^\d+$/ && $timeout > $defaultTimeout) {
+      $defaultTimeout = $timeout;
+    }
     my($time) = ($timeout ne "" ? "($timeout * $timefactor)" : "");
     if ($time eq "") {
       my($varfix) = $var;
@@ -1640,9 +1653,12 @@ sub handleWaitKill {
   }
   if ($line =~ /->.*Kill\s*\(([\w\$]*)\)/) {
     my($time) = $var . "Timeout";
-    my($val)  = ($1 eq "" ? $defaultTimeout : $1);
+    my($tout) = $1;
+    if ($tout =~ /^\d+$/ && $tout > $defaultTimeout) {
+      $defaultTimeout = $tout;
+    }
     if (!defined $declared{$time}) {
-      unshift(@cppbody, "static int $time = ($val * $timefactor);\n");
+      $timeoutVars{$time} = $tout;
       $declared{$time} = "%d";
       $decscope{$time} = -1;
     }
@@ -1930,12 +1946,46 @@ sub convertAngleToRead {
   return $line;
 }
 
+
+sub usageAndExit {
+  my($str) = shift;
+  if (defined $str) {
+    print "$str\n";
+  }
+  print "Usage: " . basename($0) . " [-t <time factor>] <input> <output>\n\n" .
+        "       -t <time factor>   The multiple to be applied to " .
+        "each timeout value.\n" .
+        "       <input>            Input perl script.\n" .
+        "       <output>           Output c++ file.\n";
+  exit(0);
+}
+
 # ******************************************************************
 # Main Section
 # ******************************************************************
 
-my($ifile)  = "run_test.pl";
-my($ofile)  = "-";
+my($ifile)   = "run_test.pl";
+my($ofile)   = "-";
+
+while(1) {
+  if ($ARGV[0] eq "-h") {
+    usageAndExit();
+  }
+  elsif ($ARGV[0] eq "-t") {
+    shift(@ARGV);
+    $timefactor = $ARGV[0];
+    if (!defined $timefactor || $timefactor !~ /^\d+$/) {
+      usageAndExit("Invalid timeout factor");
+    }
+  }
+  elsif ($ARGV[0] =~ /^\-/) {
+    usageAndExit("Unknown option: $ARGV[0]");
+  }
+  else {
+    last;
+  }
+  shift(@ARGV);
+}
 
 if (defined $ARGV[0]) {
   $ifile = $ARGV[0];
@@ -2168,6 +2218,15 @@ if (open($fh, $ifile)) {
       }
     }
     push(@cppbody, getMainEnding());
+
+    ## Put in the definition of the timeout's now that
+    ## the defaultTimeout is as large as it's going to get.
+    foreach my $timeout (sort keys %timeoutVars) {
+      my($val) = ($timeoutVars{$timeout} eq "" ? $defaultTimeout :
+                                                 $timeoutVars{$timeout});
+      unshift(@cppbody, "static int $timeout = ($val * $timefactor);\n");
+    }
+
     foreach my $line (@cppheader, @cppsubs, @cppbody) {
       print $oh $line;
     }
