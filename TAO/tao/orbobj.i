@@ -59,6 +59,8 @@ ACE_INLINE void
 CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
 {
   ACE_UNUSED_ARG (wait_for_completion);
+  
+  this->should_shutdown_ = CORBA::B_TRUE;
   return;
 }
 

@@ -1,3 +1,31 @@
+Wed Oct 22 20:02:39 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* README.sun: Added an explicit reminder at the top that the
+ 	information in this file is historical in nature and does not
+ 	necessarily apply to current reality.
+
+	* tao/orbobj.* (shutdown): Added code to the run() event loop so
+ 	that it will terminate when it finds a flag set.  This involved
+ 	adding the flag to the ORB's state and minimally implementing the
+ 	shutdown() method.  The shutdown method still does not honor the
+ 	"wait for completion" flag which can be passed to it, though.
+
+	* README: Updated the season from "summer" to "Fall" ;-) Also
+ 	added a note that warned people not to try to link TAO with a
+ 	version of ACE that's linked with another ORB library, e.g.,
+ 	liborbix.so.  Thanks to Steven Wohlever <wohlever@mitre.org> for
+ 	bringing this instructional omission to our attention.
+
+	* tao/tao_internals.cpp (fake_service_entries_i): Made the body of
+ 	this function conditional on the TAO_PLATFORM_SVC_CONF_FILE_NOTSUP
+ 	preprocessor definition since it doesn't need to exist in
+ 	platforms that grok the Service Configurator.  This will also
+ 	reduce the memory footprint :-).  Thanks to David Miron
+ 	<dxm@crapper.dsto.defence.gov.au> for pointing this out!
+
+	* tao/orb_core.cpp (TAO_ORB_Core): Removed explicit CTOR
+ 	initialization of reactor_ member.
+
 Wed Oct 22 19:37:22 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO IDL Compiler: Improvements made so that the server-side
@@ -44,11 +72,11 @@ Tue Oct 21 17:21:51 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Tue Oct 21 13:23:48 1997 Brian Mendel  <brian.r.mendel@boeing.com>
 
-        * tao/connect.i: Moved hash_i and compare_i template
+	* tao/connect.i: Moved hash_i and compare_i template
  	  specialization to Orb_Core.i.  Original code was left comment
  	  out until this mod is checked on all platforms.
 
-        * tao/Orb_Core.i: Added hash_i and compare_i code from connect.i.
+	* tao/Orb_Core.i: Added hash_i and compare_i code from connect.i.
 
 Tue Oct 21 03:23:29 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
@@ -62,10 +90,10 @@ Tue Oct 21 02:24:14 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Oct 20 23:42:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-        * TAO/boa: Changed BOA_init() to POA_init() to be
+	* TAO/boa: Changed BOA_init() to POA_init() to be
 	  more consistent...
 
-        * TAO_IDL/be/be_interface.cpp,
+	* TAO_IDL/be/be_interface.cpp,
           tests/TAO/Thruput_test/server.cpp,
 	  tests/TAO/Thruput_test/ttcpS.cpp,
 	  tests/TAO/RT_test/Task_Client.cpp,
