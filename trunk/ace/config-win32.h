@@ -180,7 +180,7 @@
 // the non-static object manager is prefered, therefore,
 // 2. Instantiate the non-static object manager yourself by either 1)
 //    call ACE::init () at the beginning and ACE::fini () at the end,
-//    _or_ 2) instantiate the ACE_Object_Manager in your CApplication
+//    _or_ 2) instantiate the ACE_Object_Manager in your CWinApp
 //    derived class.
 //
 // Optionally, you can #define
