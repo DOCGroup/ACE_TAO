@@ -1,5 +1,8 @@
 Tue Nov 11 20:45:26 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* tao/corbacom.h: Fixed the macro for TAO_SYSTEM_EXCEPTION so
+ 	  compilers don't whine about extra semi-colons.
+
 	* tao/iioporb.cpp (iiop_string_to_object): Added a cast of (char
  	  *) 0 to disambiguate one of the methods.
 
