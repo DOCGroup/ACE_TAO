@@ -1,3 +1,14 @@
+Wed Jun 02 15:17:24 1999    <alex@cs.wustl.edu>
+
+       * tests/NestedUpcall/Reactor/NestedUpcall.dsw
+       * tests/NestedUpcall/Reactor/mt-client.dsp
+
+       * tests/MT_Client/simple_client.dsp
+       * tests/MT_Client/MT_Client.dsw
+       * tests/MT_Client/server.dsp
+
+       Projec files for the new simple client and mt-client test.
+
 Wed Jun  2 14:49:36 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* tao/ORB.cpp (resolve_initial_references): Raised a
