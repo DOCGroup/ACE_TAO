@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../../../bin';
 require Process;
-require Uniqueid;
+require ACEutils;
 
 $nsport = 20000 + uniqueid ();
 $server_port = 0;
@@ -15,6 +15,7 @@ $sleeptime = 5;
 $exepref = "";
 $svnsflags = " -s -o $iorfile";
 $clnsflags = " -s -f $iorfile";
+$mcast = 0;
 $debug = "";
 $numflag = "";
 
@@ -40,6 +41,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "-mcast")
     {
+      $mcast = 1;
       $clnsflags = " -ORBnameserviceport $nsport";
       $svnsflags = " -ORBnameserviceport $nsport";
       last SWITCH;
@@ -77,17 +79,16 @@ $SV = Process::Create ($exepref."server".$Process::EXE_EXT,
                        $svnsflags);
 
 # Put in a wait between the server and client
-if ($svnsflags eq "")
+if ($mcast == 1)
 {
   sleep $sleeptime;
 }
 else 
 {
-  while (!(-e $iorfile))
-  { 
-    sleep 1;
-  }
+  waitforfile ($iorfile);
 }
+
+unlink 
 
 $status = system ($exepref."client".$Process::EXE_EXT.
                   $debug.
