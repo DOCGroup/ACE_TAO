@@ -1,3 +1,10 @@
+Wed Jan 19 11:23:41 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+
+          Use the new get_use_env() method which is part of the MPC change
+          from Wed Jan 19 11:20:42 2005.
+
 Wed Jan 19 08:28:11 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:
