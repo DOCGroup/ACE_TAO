@@ -17,10 +17,10 @@
 //
 // ============================================================================
 
-#include "ace/Arg_Shifter.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/corba.h"
 #include "Naming_Utils.h"
+#include "ace/Arg_Shifter.h"
 
 // Default constructor
 
