@@ -234,6 +234,7 @@ TAO_ConstantDef_i::value_i (ACE_ENV_SINGLE_ARG_DECL)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  safety.release ();
   return retval;
 }
 
