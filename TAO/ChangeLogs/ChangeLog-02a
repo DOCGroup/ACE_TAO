@@ -33,6 +33,9 @@ Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
           - Object_Adapter.cpp
           - Object_Adapter.h
           - Object_Adapter.i
+  
+          Thanks to Erik Johannes <ejohannes@oresis.com> for motivating
+ 	  this change.
 
 	* tests/Timed_Buffered_Oneways: New test for oneways with
 	  buffering and timing constraints.  The client sends is setup to
