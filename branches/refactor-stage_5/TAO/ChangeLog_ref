@@ -1,3 +1,64 @@
+Sun Aug 31 15:49:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Object_T.h:
+        * tao/Object_T.cpp:
+
+          New template files, for now containing a class to handle
+          _narrow() and _unchecked_narrow() generically.
+
+        * tao/TAO.dsp:
+
+          Added new files to project.
+
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+          New visitor specializing in the generation of arg traits
+          template class specializations. This functionality was
+          moved here from the be_visitor_traits visitor, which
+          now generates only Objref_Traits and Value_Traits for
+          non-defined forward declared interfaces, components,
+          valuetypes and eventtypes.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+
+          Added the above new files to the makefiles and project files.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+
+          - Changed generated code to call the appropriate templatized
+            static function for _narrow(), and removed generation of
+            _unchecked_narrow() and _tao_QueryInterface() altogether.
+            A side effect of this change is the removal of the 
+            environment/try block/catch block from CDR extraction operators
+            for interfaces.
+
+          - Moved generation of arg traits class specializations, and
+            the includes they need, from *C.h to *C.cpp (and to *S.cpp, if
+            either kind of collocation is supported).
+
+          - Cosmetic changes to the generated _tao_any_destructors.
+
 Sat Aug 30 09:53:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ORB_Core.cpp:
