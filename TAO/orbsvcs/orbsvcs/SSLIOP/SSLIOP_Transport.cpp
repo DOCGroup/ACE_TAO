@@ -68,11 +68,7 @@ TAO_SSLIOP_Transport::idle (void)
   return this->service_handler ()->idle ();
 }
 
-void
-TAO_SSLIOP_Transport::close_connection (void)
-{
-  this->service_handler ()->handle_close ();
-}
+
 
 ACE_HANDLE
 TAO_SSLIOP_Transport::handle (void)
@@ -503,6 +499,13 @@ TAO_SSLIOP_Client_Transport::send_request_header (
   return retval;
 }
 
+void
+TAO_SSLIOP_Client_Transport::close_connection (void)
+{
+  this->handler_->purge_entry ();
+  this->service_handler ()->handle_close ();
+}
+
 // *********************************************************************
 
 TAO_SSLIOP_Server_Transport::TAO_SSLIOP_Server_Transport (
@@ -528,4 +531,11 @@ TAO_SSL_SVC_HANDLER *
 TAO_SSLIOP_Server_Transport::service_handler (void)
 {
   return this->handler_;
+}
+
+void
+TAO_SSLIOP_Server_Transport::close_connection (void)
+{
+  this->handler_->purge_entry ();
+  this->service_handler ()->handle_close ();
 }
