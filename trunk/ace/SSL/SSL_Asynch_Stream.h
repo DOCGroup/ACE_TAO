@@ -87,6 +87,13 @@ public:
             const void *completion_key = 0,
             ACE_Proactor *proactor = 0);
 
+  /// NOTE: This method has been specifically put in place so that
+  /// compilers like the borland doesnt get confused between the above
+  /// open () call with the one in the ACE_Service_Handler, from which
+  /// this class is derived from..
+  void open (ACE_HANDLE new_handle,
+             ACE_Message_Block &message_block);
+
   int read (ACE_Message_Block &message_block,
             u_long num_bytes_to_read,
             const void *act = 0,

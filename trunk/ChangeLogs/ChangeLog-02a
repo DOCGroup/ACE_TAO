@@ -1,3 +1,11 @@
+Tue Jul 24 13:47:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/SSL/SSL_Asynch_Stream.h (ACE_SSL_Asynch_Stream): 
+	* ace/SSL/SSL_Asynch_Stream.cpp: Added a open () method that
+	  matches the signature of ACE_Service_Handler. This should fix
+	  the warnings in Borland builds that complain about hiding
+	  the virtual functions.
+
 Tue Jul 24 10:56:04 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/generate_doxygen.pl (TAO_DOCS):
