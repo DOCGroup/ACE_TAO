@@ -161,11 +161,11 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   this->orb_core_ = orb_core;
 
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_IIOP_CREATION_STRATEGY (this->orb_core_),
+                  TAO_UIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
-                  TAO_IIOP_CONCURRENCY_STRATEGY (this->orb_core_),
+                  TAO_UIOP_CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_UNIX_Addr addr;
