@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Endpoint_Selector_Factory.h"
+#include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 

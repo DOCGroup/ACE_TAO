@@ -15,16 +15,17 @@
 
 #ifndef TAO_ENDPOINT_H
 #define TAO_ENDPOINT_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
-#include "tao/orbconf.h"
+#include /**/ "ace/pre.h"
+#include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
 
 /**
  * @class TAO_Endpoint

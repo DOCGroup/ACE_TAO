@@ -15,16 +15,16 @@
 //=============================================================================
 #ifndef TAO_FAULT_TOLERANCE_SERVICE_H
 #define TAO_FAULT_TOLERANCE_SERVICE_H
+
 #include /**/ "ace/pre.h"
-
 #include "ace/SString.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 class ACE_Lock;
 class TAO_Service_Callbacks;

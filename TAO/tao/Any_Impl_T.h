@@ -18,11 +18,9 @@
 
 #include "tao/Any_Impl.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 namespace CORBA
 {

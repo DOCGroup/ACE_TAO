@@ -31,7 +31,6 @@
 
 #include "GIOPC.h"
 #include "Typecode.h"
-#include "ace/OS.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

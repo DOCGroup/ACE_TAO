@@ -431,7 +431,7 @@ SOURCE=.\IIOP_Endpoint.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\iiop_endpoints.cpp
+SOURCE=.\IIOP_EndpointsC.cpp
 # End Source File
 # Begin Source File
 
@@ -1403,7 +1403,7 @@ SOURCE=.\IIOP_Endpoint.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\iiop_endpoints.h
+SOURCE=.\IIOP_EndpointsC.h
 # End Source File
 # Begin Source File
 
@@ -2319,7 +2319,7 @@ SOURCE=.\IIOP_Endpoint.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\iiop_endpoints.i
+SOURCE=.\IIOP_EndpointsC.inl
 # End Source File
 # Begin Source File
 

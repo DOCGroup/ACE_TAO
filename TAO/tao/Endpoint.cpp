@@ -6,7 +6,9 @@
 #include "tao/Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Endpoint, "$Id$")
+ACE_RCSID (tao, 
+           Endpoint, 
+           "$Id$")
 
 
 TAO_Endpoint::~TAO_Endpoint (void)

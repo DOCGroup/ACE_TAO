@@ -7,7 +7,6 @@
 #include "Profile.h"
 #include "Transport_Connector.h"
 #include "Protocol_Factory.h"
-#include "Environment.h"
 #include "debug.h"
 
 #if !defined(__ACE_INLINE__)

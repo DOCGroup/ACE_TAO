@@ -15,6 +15,7 @@
 #define TAO_GIOP_MESSAGE_BASE_H
 
 #include /**/ "ace/pre.h"
+
 #include "tao/Pluggable_Messaging.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -245,9 +246,6 @@ protected:
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;
 };
-
-
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Base.i"

@@ -24,6 +24,7 @@ PUB_HDRS = \
   IIOP_Acceptor \
   IIOP_Connection_Handler \
   IIOP_Endpoint \
+  IIOP_EndpointsC \
   operation_details \
   Params \
   Marshal \
@@ -100,7 +101,6 @@ PLUGGABLE_PROTOCOLS_FILES = \
   Acceptor_Registry \
   Protocol_Factory \
   Acceptor_Filter \
-  iiop_endpoints \
   IIOP_Factory \
   IIOP_Lite_Factory \
   IIOP_Profile \
@@ -109,6 +109,7 @@ PLUGGABLE_PROTOCOLS_FILES = \
   IIOP_Acceptor \
   IIOP_Connection_Handler \
   IIOP_Endpoint \
+  IIOP_EndpointsC |
   IIOPC
 
 PLUGGABLE_MESSAGING_FILES = \

@@ -2,11 +2,12 @@
 
 #include "tao/Exclusive_TMS.h"
 #include "tao/Reply_Dispatcher.h"
-#include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/debug.h"
 #include "Transport.h"
 
-ACE_RCSID(tao, Exclusive_TMS, "$Id$")
+ACE_RCSID (tao, 
+           Exclusive_TMS, 
+           "$Id$")
 
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport),

@@ -33,13 +33,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/IOP_IORC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IOP_IORC.h"
 #include "tao/VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
