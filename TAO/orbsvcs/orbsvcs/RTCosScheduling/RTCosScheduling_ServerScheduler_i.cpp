@@ -672,7 +672,9 @@ RTCosScheduling_ServerScheduler_i::resources(
   ACE_OS::strncpy(key, "Node ", sizeof("Node "));
   ACE_OS::strcat(key, node_name);
 
+#ifndef ACE_LACKS_CLEARERR
   ACE_OS::clearerr(fp);
+#endif  /* !ACE_LACKS_CLEARERR */
   do
     {
       ACE_OS::fgets(line, BUF_MAX, fp);
@@ -689,7 +691,9 @@ RTCosScheduling_ServerScheduler_i::resources(
   while (ACE_OS::strncmp(line,key,ACE_OS::strlen(key)) != 0);
 
   /// Skip to the appropriate Task section of the node
+#ifndef ACE_LACKS_CLEARERR
   ACE_OS::clearerr(fp);
+#endif  /* !ACE_LACKS_CLEARERR */
   do
     {
       ACE_OS::fgets(line, BUF_MAX, fp);
