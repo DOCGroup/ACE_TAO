@@ -1,0 +1,17 @@
+// $Id$
+
+Telecom Log Service (TLS) Client example
+----------------------------------------
+This is a simple example example to show how to create a basic log and write events
+to the Log.
+
+To run this example:
+1) You need a running Naming Service, $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
+2) You need a running Log Service, $TAO_ROOT/orbsvcs/Logging_Service/Logging_Service
+3) ./tls_client
+
+The client locates the log service factory from the naming service.
+Then it creates a DsLogAdmin::BasicLog does the following operations:
+- writes records, query records, delete records.
+
+report bugs to D A Hanvey <d.hanvey@qub.ac.uk>

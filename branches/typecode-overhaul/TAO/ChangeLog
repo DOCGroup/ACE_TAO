@@ -1,0 +1,480 @@
+Thu Aug  5 20:20:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	  Changed custom build rules to use $(srcdir)/<input-file> so
+	  resulting makefiles will work on systems where make doesn't
+	  support VPATH.
+
+Thu Aug  5 07:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+          The client also has a servant, so we must specifiy also an
+          -ORBEndPoint for the client process. This fixes bugzilla bug
+          1899.
+
+Thu Aug  5 07:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+          Updated this script to use the PerlACE module, simplifies this
+          script a lot.
+
+Wed Aug  4 23:03:45 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp (Credentials):
+
+	  Older versions of OpenSSL didn't define the OpenSSL macro.  Use
+	  CRYPTO_free in OPENSSL_free isn't defined.
+
+Wed Aug  4 22:13:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.cpp
+	  (register_acquirer_factory):
+
+	  Release the String_var containing acquisition method Id  once
+	  the factory is successfully registered.  Memory management
+	  becomes the responsiblity of the CredentialsCurator.  Fixes a
+	  double deletion error.
+
+Wed Aug  4 21:23:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IIOP_Acceptor.h (BASE_ACCEPTOR, CREATION_STRATEGY):
+	  (CONCURRENCY_STRATEGY, ACCEPT_STRATEGY):
+	* tao/IIOP_Acceptor.cpp:
+
+	  Removed the "TAO_IIOP_" prefix from these typedefs.  It was
+	  redundant since these typedefs are already encapsulated within
+	  the TAO_IIOP_Acceptor class.
+
+	* tao/ORB_Table.cpp (get_orbs):
+
+	  Minor TAO coding convention update.
+
+Wed Aug  4 21:16:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp
+	  (ClientCredentials):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.cpp
+	  (OwnCredentials):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp
+	  (TargetCredentials):
+
+	  Explicitly qualify the namespace to which the Credentials base
+	  class belongs to work around MSVC++ 6 namespace brain damage.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open, close):
+	  (iiop_connect):
+
+	  Wrap calls to TAO::IIOP_SSL_Connector base class methods with
+	  the ACE_NESTED_CLASS macro to work around MSVC++ 6 namespace
+	  brain damage.
+
+Wed Aug  4 15:48:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_global.cpp (destroy):
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):
+
+	  Fixed memory leaks.
+
+Wed Aug  4 14:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl:
+          This test uses multiple clients, when a client timeouts, report
+          which client this is.
+
+Wed Aug  4 07:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMH/Sink_Server/Timer_Handler.h:
+        * examples/AMH/Sink_Server/Client_Task.cpp:
+          Removed old comments that just shouldn't be in the code anymore
+
+Tue Aug  3 17:08:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	  Removed duplicate rules for building CosEventComm and
+	  CosEventChannelAdmin IDL files.
+	  Changed to not install headers, at least for the time
+	  being.
+
+	* orbsvcs/FTRT_Event_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+	* orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+	* orbsvcs/FT_ReplicationManager/Makefile.am:
+	* orbsvcs/Fault_Detector/Makefile.am:
+	* orbsvcs/Fault_Notifier/Makefile.am:
+	* orbsvcs/LoadBalancer/Makefile.am:
+	* orbsvcs/Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+	* orbsvcs/Notify_Service/Makefile.am:
+	  New file.
+
+	* orbsvcs/Concurrency_Service/Makefile.am:
+	* orbsvcs/CosEvent_Service/Makefile.am:
+	* orbsvcs/Dump_Schedule/Makefile.am:
+	* orbsvcs/Event_Service/Makefile.am:
+	* orbsvcs/IFR_Service/Makefile.am:
+	* orbsvcs/LifeCycle_Service/Makefile.am:
+	* orbsvcs/Naming_Service/Makefile.am:
+	* orbsvcs/Scheduling_Service/Makefile.am:
+	* orbsvcs/Time_Service/Makefile.am:
+	* orbsvcs/Trading_Service/Makefile.am:
+	  Update, with a little help from MPC.
+
+	* orbsvcs/Makefile.am:
+	  Added Concurrency, CosEvent, Dump Schedule, Event, Fault
+	  Detector, Fault Notifier, FT Replication Manager, FTRT Event,
+	  IFR, LifeCycle, Load Balancer, Logging, Naming, Notify,
+	  Scheduling, Time, and Trading services to list of SUBDIRS.
+
+	* configure.ac:
+	  Added Concurrency, CosEvent, Dump Schedule, Event, Fault
+	  Detector, Fault Notifier, FT Replication Manager, FTRT Event,
+	  IFR, LifeCycle, Load Balancer, Logging, Naming, Notify,
+	  Scheduling, Time, and Trading service Makefile.am's to list of
+	  config files.
+
+Tue Aug  3 16:32:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Made the checking more strict for enqueueing abstract
+          interfaces to an internally used list - abstract
+          valuetypes and eventtypes were also getting put on it,
+          leading to generated code that wouldn't compile. Thanks to
+          Will Otte <wotte@dre.vanderbilt.edu> for pointing out
+          the problem.
+
+Tue Aug  3 13:10:04 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	  Update, with a little help from MPC.
+
+	* orbsvcs/Makefile.am:
+	  Added orbsvcs to list of SUBDIRS.
+
+	* configure.ac:
+	  Added orbsvcs/orbsvcs/Makefile to list of config files.
+
+Tue Aug  3 08:05:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/PSS/PSDL_Datastore.cpp:
+	  Fixed TAO_PSDL_Datastore::create_index_helper() where the
+	  ACE_NEW_RETURN macro was being ab/used for placement new.
+	  This caused problems for targets w/ACE_HAS_NOTHROW_NEW.
+	  I eliminated the error checks because this function can
+	  never called with a bad buffer pointer.
+
+	* orbsvcs/TAO_Service/Makefile.am:
+	  Update, with a little help from MPC.
+
+	* orbsvcs/PSS/Makefile.am:
+	  New file.
+
+	* orbsvcs/Makefile.am:
+	  Update with current MPC generated file, but enable only
+	  PSS and TAO_Service in SUBDIRS.
+
+	* Makefile.am:
+	  Added orbsvcs to SUBDIRS.
+
+	* configure.ac:
+	  Added orbsvcs/{,PSS/,TAO_Service/}Makefile to list of
+	  config files.
+
+Tue Aug  3 13:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AMH_Response_Handler.{h,cpp}:
+          Corrected the method name for decrementing the reference count
+          from decr_refcount to _remove_ref. The AMH Response Handler is
+          derived from TAO_Local_RefCounted_Object and this defines the
+          virtual method _remove_ref, we now had two methods where the
+          base method didn't know anything of the allocator. By overruling
+          we also get the derived _remove_ref and use the allocator
+          when needed. This fixes the crashing of the AMH Sink_Server
+          example in our daily builds.
+
+Tue Aug  3 08:34:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/be_extern.h:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/be_init.cpp:
+
+          Changes corresponding to those in TAO_IDL_BE, made in
+
+          Sun Aug  1 20:57:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+Mon Aug  2 14:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AMH_Response_Handler.cpp:
+          Removed incorrect ACE_INLINE, fixes linker errors in the builds
+
+Mon Aug  2 08:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Invocation.h:
+          Doxygen fix
+
+Mon Aug  2 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Cache_Manager.cpp (is_entry_idle):
+          Corrected method name in debug statement and instead of retrieving
+          the recycle_state three times, get it into a local variable and use
+          that for checking.
+
+Mon Aug  2 06:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
+          Fixed compile error due to SSLIOP Transport name change
+
+Sun Aug  1 23:41:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+	  Update after last change.  Fixes "make install" failure due to
+	  bad dependencies.
+
+Mon Aug  2 06:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AMH_Response_Handler.{h,cpp}:
+          Changed this class so that AMH Response Handlers can be allocated
+          with an allocator and when the reference count reaches zero we
+          look if we have an allocator, if so, release from the allocator,
+          else just delete
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
+          Changed the generation of the allocation of the AMH Response
+          Handler so that we use an allocator.
+
+Mon Aug  2 06:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.h:
+          Doxygen improvement
+
+Sun Aug  1 22:39:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/BiDir_GIOP.mpc:
+	* tao/Domain.mpc:
+	* tao/DynamicAny.mpc:
+	* tao/DynamicInterface.mpc:
+	* tao/IFR_Client.mpc:
+	* tao/IORInterceptor.mpc:
+	* tao/IORManipulation.mpc:
+	* tao/IORTable.mpc:
+	* tao/Messaging.mpc:
+	* tao/ObjRefTemplate.mpc:
+	* tao/PortableServer.mpc:
+	* tao/RTCORBA.mpc:
+	* tao/RTPortableServer.mpc:
+	* tao/RTScheduler.mpc:
+	* tao/SmartProxies.mpc:
+	* tao/Strategies.mpc:
+	* tao/TypeCodeFactory.mpc:
+	* tao/Utils.mpc:
+	* tao/Valuetype.mpc:
+	  Fix thinko.  When these files were moved from subdirectories, I
+	  first merged them into tao.mpc, which required explicit project
+	  names.  I didn't realize at that time that the precise name was
+	  significant.  This caused build failures due to bad dependencies.
+	  I've removed the explicit names since the projects have been
+	  split back into separate project files.
+
+Sun Aug  1 21:05:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+	  Add _LDFLAGS definitions with -version-number flag for FE and BE
+	  libraries.
+
+	* tao/Makefile.am:
+	  Update, with a little help from MPC.
+
+	* Makefile.am:
+	  Update.
+
+	* configure.ac:
+	  Added.  First cut at a new configure script with bits taken from
+	  ACE's configure.ac and the old TAO configure.in in the CVS Attic.
+
+Sun Aug  1 20:57:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/be/be_init.cpp:
+        * TAO_IDL/be_include/be_extern.h:
+        * TAO_IDL/include/idl_defines.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          - Fixed bugs in cleanup between iterations in processing eacj IDL
+            file in the list passed on the command line.
+
+          - Fixed bug in checking for recursive types.
+
+          - Fixed bug in eager calculation of the version segment of the
+            repository ID.
+
+          - Fixed bug in checking number of interfaces supported by a home.
+
+          - Added markers in existing bit vector to keep track of which
+            sequences of basic types have been referenced, and code to
+            update the markers.
+
+Sun Aug  1 16:32:56 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+	  Update, with a little help from MPC.
+
+	* TAO_IDL/ast/Makefile.am:
+	* TAO_IDL/be/Makefile.am:
+	* TAO_IDL/be_include/Makefile.am:
+	* TAO_IDL/driver/Makefile.am:
+	* TAO_IDL/fe/Makefile.am:
+	* TAO_IDL/include/Makefile.am:
+	* TAO_IDL/narrow/Makefile.am:
+	* TAO_IDL/util/Makefile.am:
+	  Remove stale Makefile.am's.
+
+Sun Aug  1 09:48:46 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/BiDir_GIOP/BiDir_GIOP.mpc:
+	* tao/Domain/Domain.mpc:
+	* tao/DynamicAny/DynamicAny.mpc:
+	* tao/DynamicInterface/DynamicInterface.mpc:
+	* tao/IFR_Client/IFR_Client.mpc:
+	* tao/IORInterceptor/IORInterceptor.mpc:
+	* tao/IORManipulation/IORManipulation.mpc:
+	* tao/IORTable/IORTable.mpc:
+	* tao/Messaging/Messaging.mpc:
+	* tao/ObjRefTemplate/ObjRefTemplate.mpc:
+	* tao/PortableServer/PortableServer.mpc:
+	* tao/RTCORBA/RTCORBA.mpc:
+	* tao/RTPortableServer/RTPortableServer.mpc:
+	* tao/RTScheduling/RTScheduler.mpc:
+	* tao/SmartProxies/SmartProxies.mpc:
+	* tao/Strategies/Strategies.mpc:
+	* tao/TypeCodeFactory/TypeCodeFactory.mpc:
+	* tao/Utils/Utils.mpc:
+	* tao/Valuetype/Valuetype.mpc:
+	  Move from here...
+
+	* tao/BiDir_GIOP.mpc:
+	* tao/Domain.mpc:
+	* tao/DynamicAny.mpc:
+	* tao/DynamicInterface.mpc:
+	* tao/IFR_Client.mpc:
+	* tao/IORInterceptor.mpc:
+	* tao/IORManipulation.mpc:
+	* tao/IORTable.mpc:
+	* tao/Messaging.mpc:
+	* tao/ObjRefTemplate.mpc:
+	* tao/PortableServer.mpc:
+	* tao/RTCORBA.mpc:
+	* tao/RTPortableServer.mpc:
+	* tao/RTScheduler.mpc:
+	* tao/SmartProxies.mpc:
+	* tao/Strategies.mpc:
+	* tao/TypeCodeFactory.mpc:
+	* tao/Utils.mpc:
+	* tao/Valuetype.mpc:
+	  ...to here.  Adapt as necessary to find source, inline, and
+	  template files.
+
+Sun Aug  1 17:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/QtTests/server.cpp:
+          Added missing include
+
+Sun Aug  1 17:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Banded_Connections/server.cpp:
+          When we get an exception, an internal corba error is handled
+          to look if it is an permission error and a specific minor code
+          is set, this fails on HPUX and then the test just uses ACE_ASSERT,
+          added some more code to get some specific feedback what the
+          retrieved minor code from the exception is
+
+Sun Aug  1 08:53:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/tao.mpc:
+	  Updated Header_Files, Inline_Files, and Template_Files so that
+	  generated project files will contain complete list for install.
+	  Suggested by Chad Elliot <elliot_c@ociweb.com>.
+
+Sun Aug  1 15:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.cpp:
+          Fixed conversion warning by adding missing .in()
+
+Sun Aug  1 15:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security/SL3_SecurityCurrent_Impl.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h:
+        * orbsvcs/orbsvcs/Security/SL3_CredentialsAcquirerFactory.h:
+        * orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h:
+        * orbsvcs/orbsvcs/Security/SL3_SecurityCurrent.h:
+          Fixed fuzz errors
+
+Sun Aug  1 15:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Wait_Strategy.h:
+        * tao/Strategies/SCIOP_Transport.h:
+        * tao/Valuetype/AbstractBase.h:
+          Doxygen improvement
+
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h:
+          Removed not needed forward declarations
+
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp:
+        * orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+        * orbsvcs/examples/Log/Event/Event_Supplier.cpp:
+        * orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
+        * orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
+          Fixed vc71 conversion warnings
+
+Sun Aug  1 08:16:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+	  Changed ftrtec_export.h to FtRtEvent/EventChannel/ftrtec_export.h
+	  in Header_Files.
+
+	* tao/tao.mpc:
+	* orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.mpc:
+	  Removed Auto_Functor.cpp from Template_Files.
+
+	* TAO_IDL/tao_idl.1: Update to reflect current file extensions.
+
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	  Changed group name from EventLog to DsEventLogAdmin.
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	  Changed group name from Log to DsLogAdmin.
+
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+	  Changed group name from Log to DsNotifyLogAdmin.
+
+Sun Aug  1 09:10:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ChangeLogs/ChangeLog-04a:
+
+	  Moved the contents to the new directory.
+
+Sat Jul 31 11:14:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * TAO version 1.4.2 released.
+
+Local Variables:
+add-log-time-format: current-time-string
+End:

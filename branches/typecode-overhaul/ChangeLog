@@ -1,0 +1,248 @@
+Thu Aug  5 13:17:26 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/ACE.cpp (sock_error): Changed the WSAEWOULDBLOCK message
+	  back to "resource temporarily unavailable" to be consistent with
+ 	  the UNIX error string.  Thanks to Boris Kaminer
+ 	  <boris_kaminer@mail.ru> for reporting this.
+	
+	* examples/NT_Service/ntsvc.{h,cpp}: Added a destructor to 
+	  Service that cancels the timer.  Thanks to Scott Harris
+ 	  <harris_s@ociweb.com> for this fix.
+
+	* ace/ACE.cpp (sock_error): Added support for WSAEISCONN.
+	  Thanks to Boris Kaminer <boris_kaminer@mail.ru> for reporting
+ 	  this.
+
+Thu Aug  5 07:45:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/config_h.m4:
+	  Replace some AH_TEMPLATE definitions.  ACE_CHECK_HAS_FUNCS and
+	  ACE_CHECK_LACKS_FUNCS provide autoheader templates themselves.
+
+	* configure.ac:
+	  Replace some calls to AC_CHECK_FUNC with ACE_CHECK_HAS_FUNCS or
+	  ACE_CHECK_LACKS_FUNC.
+
+	* m4/ace_headers.m4:
+	  New file, with ACE_CHECK_HAS_FUNCS and ACE_CHECK_LACKS_FUNCS
+	  autoconf macros.  These macros are similar to AC_CHECK_FUNCS,
+	  but define either ACE_HAS_<foo> or ACE_LACKS_<foo>.
+
+Thu Aug  5 09:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        The following changes are from Martin Corino <mcorino@remedy.nl>
+
+        * bin/mwc.pl:
+        * bin/mpc.pl:
+        * bin/depgen.pl:
+        * bin/cle.pl:
+          Added various changes to support autobuild MPC generation on
+          OpenVMS.
+
+Wed Aug  4 18:09:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+	* configure.ac:
+	  Support --with/without-tao flag to provide find grain
+	  control over TAO configuration.
+
+Wed Aug  4 16:19:40 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Global_Macros.h (ACE_CORBA_1, ACE_CORBA_2, ACE_CORBA_3):
+
+	  Marked these macros as deprecated, and removed the version of
+	  these macros that defined the obsolete "CORBA_foo" broken
+	  namespace workaround classes.
+
+Wed Aug  4 14:46:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+	* configure.ac:
+	  Configure TAO if TAO subdirectory is present.
+
+Wed Aug  4 16:33:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Select_Reactor_T.cpp:
+
+	  Fix for Bug 1893. Please see
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1893
+
+	  for details. Thanks to Alan L Batongbacal <alanlb at vt dot edu>
+	  for the patch.
+
+Wed Aug  4 08:31:43 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/config-linux-common.h: If the version of glibc
+	  is less than 2.1 add the ACE_HAS_NONCONST_MSGSND macro.  Thanks
+ 	  to Anand <anand@icmgworld.com> and Johnny Willemsen for this
+ 	  fix.
+
+Tue Aug  3 15:25:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl>.
+	* ace/Dev_Poll_Reactor.cpp (register_handler_i):
+
+	  Allow same handler to be registered with a different event,
+	  which is consistent with the other reactor implementations.
+
+Tue Aug  3 13:04:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Svc_Handler.h:
+	* ace/Svc_Handler.cpp:
+	  Add throw() exception specifier to no-throw version of class
+	  local operator new.  In addition to squelching warnings from
+	  gcc, this tells the compiler to check the return value before
+	  constructing the object.
+
+Tue Aug  3 08:55:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Condition_Recursive_Thread_Mutex.cpp:
+	* ace/Functor.inl:
+	* ace/config-borland-common.h:
+	* ace/config-g++-common.h:
+	* ace/config-hpux-11.00.h:
+	* ace/config-lite.h:
+	* ace/config-lynxos.h:
+	* ace/config-sunos5.5.h:
+	* ace/config-tandem-nsk-mips-v2.h:
+	* ace/config-win32-ghs.h:
+	  Remove vestigial traces of ACE_TEMPLATE_METHOD_SPECIALIZATION.
+
+Tue Aug  3 14:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Containers_T.cpp:
+          Fixed incorrect trace macro
+
+Tue Aug  3 08:22:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/config-aix-5.x.h:
+	  ace/OS_NS_dirent.inl (readdir_r): Added support for AIX and G++.
+	  Thanks to Raz Ben-Yehuda <raz.b@corigin.com>.
+
+Tue Aug  3 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Updated location of TAO vc6 static project files
+
+Tue Aug  3 06:19:06 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+
+          Added macros in a specific section for the bmake project type.
+
+Tue Aug  3 07:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Updated Borland templates to handle resource files in
+          subdirectories, this is needed for the moving of the mpc
+          files in TAO. Thanks to J.T. Conklin for making these
+          patches.
+
+Mon Aug  2 15:33:27 2004  Steve Huston  <shuston@riverace.com>
+
+        * ace/Containers_T.cpp (ACE_Fixed_Set_Iterator::remove()): Had to
+          qualify 'iterated_items_' with 'this->' to make it visible in this
+          class now that iterated_items_ is in an inherited class. This per
+          HP-UX aC++, citing [temp.dep], 14.6.2(3) in the C++ Standard.
+
+Mon Aug  2 15:20:37 2004  Steve Huston  <shuston@riverace.com>
+
+        * apps/JAWS3/jaws3/Event_Result.h: Added #include
+          "ace/os_include/os_stddef.h" to pick up size_t for platforms where
+          it's not defined by the compiler, such as Cygwin. Thanks to
+          Johnny Willemsen for reporting this.
+
+Mon Aug  2 08:55:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ace/Containers_T.h: The class ACE_Fixed_Set had some bugs in
+          it's interface declaration and also some in it's implementation:
+          1) typedef the wrong class for is constant iterator and
+          2) its method size() misbehave in certain circumstances where
+             elements were randomly deleted from a set object.
+          Moreover, the iterators of ACE_Fixed_Set has a lot of code in
+          common so the can be refactored to have a common abstract
+          ancestor with all the shared code.  Therefore, refactored the
+          three classes and fixed the bug on the size() method.  Thanks
+          to J. Abelardo Gutierrez <jabelardo@cantv.net> for these fixes.
+
+Mon Aug  2 09:06:39 2004  Steve Huston  <shuston@riverace.com>
+
+        * ace/os_include/os_signal.h: Removed the #include os_time.h - it's
+          not needed for anything in this header, and for some reason, it
+          introduces a type oddity on HP-UX - aC++ gets the idea there's a
+          tentative struct sigaction and doesn't match the real one, causing
+          compile errors in ACE_OS::sigaction().
+
+        * ace/OS_TLI.h: Removed stray '#'.
+
+        * ace/Signal.{h inl}: Removed the hack typedef ACE_SIGACTION that
+          was allegedly put in for an HP-UX C++ bug. It's not needed and is
+          causing further problems. #include "ace/os_include/os_signal.h"
+          to get the needed signal-related types.
+
+        * apps/JAWS3/jaws3/Event_Result.h: Changed #include "ace/OS.h" to
+          "ace/OS_NS_errno.h". Removing the "big hammer" OS.h stuff. This
+          fixes a compile error in OS_TLI.inl on HP-UX w/ aC++. Why? I
+          have no idea... there's something odd still about orders of
+          includes and/or preprocessor defs or something. This odd compile
+          error creeps up every once in a while and is always related to
+          fudging something somewhere (see fix above for signal...) but
+          this one doesn't have an apparant cause.
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Removed AREXTRA. It
+          was breaking static lib builds.
+
+Sun Aug  1 08:15:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+          Moved subdirectory configuration above call to AC_OUTPUT.
+
+        * ace/OS_Memory.h:
+          Provide ACE_nothrow and ACE_nothrow_t definitions for platforms
+          where definitions are not handled by special cases.
+
+        * configure.ac:
+        * m4/config_h.m4:
+          Added check for ACE_HAS_NEW_NOTHROW.
+
+Sun Aug  1 15:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/QoS/qos.mpc:
+          Also with bmake set macros += ACE_HAS_WINSOCK2_GQOS
+
+        * ace/Select_Reactor_Base.h:
+        * ace/Object_Manager_Base.cpp:
+        * ace/Object_Manager.cpp:
+        * ace/Global_Macros.h:
+        * ace/Dev_Poll_Reactor.h:
+          Doxygen improvements/fixes
+
+        * ace/config-openvms.h:
+          Removed commented out lines
+
+        * ace/CDR_Stream.h:
+          Changed to signature for the to_string methods from char to
+          ACE_CDR::char so that they match the implementation
+
+Sun Aug  1 09:07:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * ChangeLogs/ChangeLog-04a:
+
+          Moved contents from this file to a new file.
+
+Sat Jul 31 17:01:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * bin/generate_rel_manpages:
+
+          This is now executed at tao.dre for generating doxygen
+          documentation. The files are then scp'ed to the main website.
+
+Sat Jul 31 11:13:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * ACE version 5.4.2 released.
+
+Local Variables:
+add-log-time-format: current-time-string
+End:

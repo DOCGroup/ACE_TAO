@@ -1,0 +1,16 @@
+# $Id$
+
+Description:
+
+	This is a stress test for the ORB's Policy interfaces.  It
+randomly creates, removes, destroys or modifies the policy setting at
+the object, thread and ORB level.  The operations are performed
+concurrently, by threads.
+
+	The only output from this test is 'threads finished', anything
+else indicates a problem.
+
+How to run:
+	You can use the run_test.pl script to run it or:
+
+$ ./Manipulation
