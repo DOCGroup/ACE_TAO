@@ -6,111 +6,18 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "tao/corba.h"
-#include "objkeyC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "objkeyC.i"
 #endif // !defined INLINE
 
-// *************************************************************
-// class TAO::_tao_seq_Octet
-// *************************************************************
 
-// copy constructor
-TAO::_tao_seq_Octet::_tao_seq_Octet (const TAO::_tao_seq_Octet &seq)
-	: maximum_ (seq.maximum_),
-	  length_ (seq.length_),
-	  buffer_ (TAO::_tao_seq_Octet::allocbuf (seq.maximum_)),
-	  release_ (1) // we always own it
-{
-  for (CORBA::ULong i=0; i < seq.length_; i++)
-  	this->buffer_[i] = seq.buffer_[i];
-}
-
-// constructor for unbounded seq
-TAO::_tao_seq_Octet::_tao_seq_Octet(CORBA::ULong max )
-	: maximum_ (max),
-	  length_ (0),
-	  buffer_ (TAO::_tao_seq_Octet::allocbuf (max)),
-	  release_ (1) // owns
-{
-  
-}
-
-// constructor from data buffer
-TAO::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max, CORBA::ULong length, 
-	CORBA::Octet *value, CORBA::Boolean release)
-	: maximum_ (max),
-	  length_ (length),
-	  buffer_ (value),
-	  release_ (release) // ownership depends on release
-{
-  
-}
-
-// destructor
-TAO::_tao_seq_Octet::~_tao_seq_Octet (void)
-{
-  if (this->release_) // we own the buffer
-  {
-    TAO::_tao_seq_Octet::freebuf (this->buffer_);
-  }
-}
-
-// assignment operator
-TAO::_tao_seq_Octet& 
-TAO::_tao_seq_Octet::operator= (const TAO::_tao_seq_Octet &seq)
-{
-  if (this == &seq) return *this;
-  if (this->release_)
-  {
-    TAO::_tao_seq_Octet::freebuf (this->buffer_);
-  }
-  this->length_ = seq.length_;
-  this->maximum_ = seq.maximum_;
-  this->buffer_ = TAO::_tao_seq_Octet::allocbuf (seq.maximum_),
-  this->release_ = 1; // we always own it
-  for (CORBA::ULong i=0; i < seq.length_; i++)
-  	this->buffer_[i] = seq.buffer_[i];
-  return *this;
-}
-
-void
-TAO::_tao_seq_Octet::length (CORBA::ULong length)
-{
-  if (length > this->maximum_)
-    {
-      CORBA::Octet  *tmp = TAO::_tao_seq_Octet::allocbuf (length);
-      if (!tmp)
-    	return;
-      CORBA::ULong i;
-      // copy old buffer
-      for (i=0; i < this->length_; i++)
-	{
-	  tmp[i] = this->buffer_[i];
-	}
-      if (this->release_) // free old one if we own it
-	{
-	  TAO::_tao_seq_Octet::freebuf (this->buffer_);
-	}
-      //assign the newly reallocated buffer
-      this->buffer_ = tmp;
-      this->release_ = 1; //after reallocation, we own it
-      this->maximum_ = length;
-    }
-  this->length_ = length;
-}
-
-CORBA::Octet *
-TAO::_tao_seq_Octet::allocbuf (CORBA::ULong nelems)
-{
-  CORBA::Octet *buf = new CORBA::Octet[nelems]; // allocate from heap
-  return buf;
-}
+#if !defined (_TAO__TAO_SEQ_OCTET_CS_)
+#define _TAO__TAO_SEQ_OCTET_CS_
 
 static const CORBA::Long _oc_TAO__tao_seq_Octet[] =
 {
-  TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_octet,
 
   0,
@@ -118,14 +25,17 @@ static const CORBA::Long _oc_TAO__tao_seq_Octet[] =
 static CORBA::TypeCode _tc__tc_TAO__tao_seq_Octet (CORBA::tk_sequence, sizeof (_oc_TAO__tao_seq_Octet), (unsigned char *) &_oc_TAO__tao_seq_Octet, CORBA::B_FALSE);
 CORBA::TypeCode_ptr TAO::_tc__tao_seq_Octet = &_tc__tc_TAO__tao_seq_Octet;
 
+
+#endif // end #if !defined
+
 static const CORBA::Long _oc_TAO_ObjectKey[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   22, 0x49444c3a, 0x54414f2f, 0x4f626a65, 0x63744b65, 0x793a312e, 0x30000000,  // repository ID = IDL:TAO/ObjectKey:1.0
   10, 0x4f626a65, 0x63744b65, 0x79000000,  // name = ObjectKey
   CORBA::tk_sequence, // typecode kind
-  20, // encapsulation length
-  TAO_ENCAP_BYTE_ORDER, // byte order
+  12, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_octet,
 
   0,

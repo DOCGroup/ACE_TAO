@@ -6,52 +6,6 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (_TAO__TAO_SEQ_OCTET_CI_)
-#define _TAO__TAO_SEQ_OCTET_CI_
-
-ACE_INLINE void
-TAO::_tao_seq_Octet::freebuf (CORBA::Octet *seq)
-{
-  delete []seq;
-}
-
-//default constructor
-ACE_INLINE 
-TAO::_tao_seq_Octet::_tao_seq_Octet (void)
-	: maximum_ (0),
-	  length_ (0),
-	  buffer_ (0),
-	  release_ (0) // does not own
-{}
-
-ACE_INLINE CORBA::ULong
-TAO::_tao_seq_Octet::maximum (void) const
-{
-  return this->maximum_;
-}
-
-ACE_INLINE CORBA::ULong
-TAO::_tao_seq_Octet::length  (void) const
-{
-  return this->length_;
-}
-
-ACE_INLINE CORBA::Octet &
-TAO::_tao_seq_Octet::operator[] (CORBA::ULong index) // read/write
-{
-  return this->buffer_[index];
-}
-
-ACE_INLINE const CORBA::Octet &
-TAO::_tao_seq_Octet::operator[] (CORBA::ULong index) const // read
-{
-  return this->buffer_[index];
-}
-
-
-#endif // end #if !defined
-
-
 #if !defined (_TAO__TAO_SEQ_OCTET___VAR_CI_)
 #define _TAO__TAO_SEQ_OCTET___VAR_CI_
 
@@ -65,7 +19,7 @@ TAO::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constructor
 {}
 
 ACE_INLINE
-TAO::_tao_seq_Octet_var::_tao_seq_Octet_var (TAO::_tao_seq_Octet_ptr p)
+TAO::_tao_seq_Octet_var::_tao_seq_Octet_var (TAO::_tao_seq_Octet *p)
 	: ptr_ (p)
 {}
 
@@ -133,7 +87,7 @@ TAO::_tao_seq_Octet_var::operator TAO::_tao_seq_Octet &() const// cast
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA::Octet&
+ACE_INLINE CORBA::Octet &
 TAO::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -237,7 +191,7 @@ TAO::_tao_seq_Octet_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::Octet& 
+ACE_INLINE CORBA::Octet &
 TAO::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);

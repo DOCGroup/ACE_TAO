@@ -326,14 +326,6 @@ IIOP_Object::QueryInterface (REFIID riid,
   return TAO_NOERROR;
 }
 
-//TAO extensions
-const char *
-IIOP_Object::_get_name (CORBA::Environment &)
-{
-  // @@ We need access to the underlying buffer.
-  return (const char *) &(this->profile.object_key[0]);
-}
-
 // It will usually be used by the _bind call.
 //
 // Note that if the repository ID (typeID) is NULL, it will make
