@@ -1,3 +1,14 @@
+Wed Aug 25 14:45:06 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/Process_Manager_Test.cpp:
+
+	  Explicitly include "ace/Signal.h" to make declaration of
+	  ACE_Sig_Set class visible.
+
+	  return statement at end of multiple_children_sig_handler()
+	  function is never reached.  It was commented out to prevent
+	  compiler warnings.
+
 Wed Aug 25 13:34:07 1999  Narendra Ravi  <naren@cs.ualberta.ca>
 
         * ACE-INSTALL.html: added information about -j GNU make option.
