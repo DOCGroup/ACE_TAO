@@ -14,7 +14,7 @@ Thu May 17 23:15:29 2001  Ossama Othman  <ossama@uci.edu>
 	  used to get around the inability to call
 	  RequestInfo::arguments() in the
 	  receive_request_service_contexts() a interception point.  This
-	  allows the test to finally run to completion.
+	  allows the test to finally run to completion.  [Bug 726]
 
 Thu May 17 22:29:08 2001  Ossama Othman  <ossama@uci.edu>
 
