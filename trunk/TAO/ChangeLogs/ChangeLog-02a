@@ -1,3 +1,11 @@
+Sat Mar 30 14:01:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Transport_Cache_Manager.h:
+
+	  Reverted change that removed "tao/Connection_Purging_Strategy.h"
+	  include.  It is required since some inline methods in
+	  Transport_Cache_Manager.inl require a complete type.
+
 Sat Mar 30 13:38:10 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Resource_Factory.h:
