@@ -313,6 +313,9 @@ private:
   /// The POA that dispatches requests to the ReplicaLocator.
   PortableServer::POA_var poa_;
 
+  /// Mutex that provides synchronization.
+  TAO_SYNCH_MUTEX lock_;
+
   /// ObjectId to be used for the next ObjectGroup that is created.
   CORBA::ULong next_oid_;
 
@@ -327,7 +330,7 @@ private:
    * addition to another value that makes it unique to a given Load
    * Balancer.
    */
-  CORBA::ULong next_factory_num_;
+  CORBA::ULong next_fcid_;
 
 };
 
