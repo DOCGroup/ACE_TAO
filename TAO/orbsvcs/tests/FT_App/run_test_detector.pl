@@ -8,41 +8,43 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Purpose:
 #       To test the FaultDetectorFactory and FaultDetectors
 #
+# Command line options:
+#   --debug_build  use exes from this directory
+#        if not specified use exes from ./release
+#   -v  display test progress messages (repeating option increases verbosity
+#
 # Process being tested:
-#       Fault_Detector
-#         implements FaultDetectorFactory interface
-#         implements PullMonitorable interface
+#   Fault_Detector
+#     implements FaultDetectorFactory interface
+#     implements PullMonitorable interface
 #
 # Processes used in test:
-#       FT_Replica
-#           implements TestReplica interface.
-#           implements PullMonitorable.
-#       StubNotifier
-#           implements FaultNotifier interface (as a stub.)
-#           implements PullMonitorable.
-#           client for FaultDetectorFactory interface.
-#       FT_Client
-#           client for TestReplica interface.
-#           client for PullMonitorable.
+#   FT_Replica
+#     implements TestReplica interface.
+#     implements PullMonitorable.
+#   StubNotifier
+#     implements FaultNotifier interface (as a stub.)
+#     implements PullMonitorable.
+#     client for FaultDetectorFactory interface.
+#   FT_Client
+#     client for TestReplica interface.
+#     client for PullMonitorable.
 #
 # Test Scenario ( ***Test: marks behavior being tested):
-#   Phase 1:
 #     Start two FT_Replicas
 #       FT_Replicas write TestReplica IORs (FR#1 and FR#2) to files
 #     Start the Fault_Detector
 #       Fault_Detector writes its IOR (FDF) to a file
-#   Phase 2:
 #     Wait for IORs: FR#1, FR#2, and FDF
 #     Start the StubNotifier giving it IORS: FR#1, FR#2 and FDF
 #      StubNotifier calls FDF to create a FaultDetector
 #       for each Replica.
 #      StubNotifier writes FaultNotifier IOR (FN) to a file.
-#   Phase 3:
 #     Wait for IOR: FN
-#     Start FT_Client giving it IORS: FR#1 and FR#2. [1]
+#     Start FT_Client giving it IORS: FR#1 and FR#2.
 #       FT_Client interacts with FR#1.
 #       FT_Client asks FR#1 to fault.  It does so.
-#       FT_Client notices fault and switches to FR#2. [1]
+#       FT_Client notices fault and switches to FR#2.
 #       ***Test: FD#1 notices fault and notifies StubNotifier
 #       ***Test: FD#1 terminates
 #       FT_Client interacts with FR#2.
@@ -51,22 +53,21 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #       ***Test: FD#2 notices FR2 is gone, interprets this
 #         as a fault, and notifies StubNotifier.
 #       ***Test: FD#2 terminates.
+#     Shut down
 #       ***Test: FDF is idle, so it terminates.
 #       StubNotifier sees FDF terminate, so it terminates
-#     Phase 4:
+#     Cleanup
 #       Wait for all processes to terminate.
 #       Check termination status.
 #       Delete temp files.
 #
-# [1] Client mediated fault tolerance.  These points will
-#     change when IOGR support is available.
 use lib '../../../../bin';
 use PerlACE::Run_Test;
 
 ########################
 #command line options
 #set defaults:
-my($verbose) = 0;         # 1: report perl actions before executing them
+my($verbose) = 0;         # 1: report perl actions before executing them; 2 display settings from command line
 my($debug_builds) = 0;    # 0: use exes from Release directories
 my($simulated) = 1;       # 1: use "client simulated" fault tolerance
 
@@ -74,10 +75,6 @@ foreach $i (@ARGV) {
   if ($i eq "--debug_build")
   {
     $debug_builds = 1;
-  }
-  elsif ($i eq "--no_simulate")  # reverse this once we have FT ORB support
-  {
-    $simulated = 0;
   }
   elsif ($i eq "-v")
   {
@@ -126,14 +123,7 @@ my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_
 my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -f none -t $replica2_ior -l loc2 -i type1 -q");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "$rm_initref -o $detector_ior -q");
 my($NOT) = new PerlACE::Process (".$build_directory/ft_notifier", "-o $notifier_ior -q -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior");
-my($CL);
-if ($simulated) {
-  print "\nTEST: Preparing Client Mediated Fault Tolerance test.\n" if ($verbose);
-  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
-}else{
-  print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
-  $CL = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_iogr -c testscript");
-}
+my($CL) = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
 
 print "TEST: starting replica1 ". $REP1->CommandLine . "\n" if ($verbose);
 $REP1->Spawn ();
