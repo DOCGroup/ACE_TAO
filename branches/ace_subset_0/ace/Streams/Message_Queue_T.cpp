@@ -5,7 +5,7 @@
 
 // #include Message_Queue.h instead of Message_Queue_T.h to avoid
 // circular include problems.
-#include "ace/Message_Queue.h"
+#include "ace/Streams/Message_Queue.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -13,10 +13,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Queue_T.i"
+#include "ace/Streams/Message_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Notification_Strategy.h"
+#include "ace/Streams/Notification_Strategy.h"
 
 ACE_RCSID(ace, Message_Queue_T, "$Id$")
 

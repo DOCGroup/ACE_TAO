@@ -1,8 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/Handle_Set.h"
-#include "ace/Reactor.h"
+#include "ace/OS/Handle_Set.h"
+#include "ace/Demux/Reactor.h"
 /************************************************************/
 
 ACE_INLINE int

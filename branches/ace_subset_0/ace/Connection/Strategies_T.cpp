@@ -3,20 +3,20 @@
 #ifndef ACE_STRATEGIES_T_C
 #define ACE_STRATEGIES_T_C
 
-#include "ace/Strategies_T.h"
+#include "ace/Connection/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Repository.h"
-#include "ace/Synch.h"
-#include "ace/Service_Types.h"
-#include "ace/Thread_Manager.h"
-#include "ace/WFMO_Reactor.h"
+#include "ace/Svcconf/Service_Repository.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Svcconf/Service_Types.h"
+#include "ace/Threads/Thread_Manager.h"
+#include "ace/Demux/WFMO_Reactor.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Strategies_T.i"
+#include "ace/Connection/Strategies_T.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, Strategies_T, "$Id$")

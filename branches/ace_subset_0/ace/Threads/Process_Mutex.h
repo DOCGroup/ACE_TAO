@@ -30,10 +30,10 @@
 #  undef _ACE_USE_SV_SEM
 #endif /* _ACE_USE_SV_SEM */
 #if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_USES_MUTEX_FOR_PROCESS_MUTEX)
-#  include "ace/SV_Semaphore_Complex.h"
+#  include "ace/IPC/SV_Semaphore_Complex.h"
 #  define _ACE_USE_SV_SEM
 #else
-#  include "ace/Synch.h"
+#  include "ace/Threads/Synch.h"
 #endif /* ACE_HAS_SYSV_IPC && !ACE_USES_MUTEX_FOR_PROCESS_MUTEX */
 
 /**
@@ -187,7 +187,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Process_Mutex.inl"
+#include "ace/Threads/Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Object_Manager.h"
+#include "ace/Utils/Object_Manager.h"
 
 /**
  * @class ACE_Cleanup_Adapter
@@ -145,11 +145,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "Managed_Object.i"
+#include "ace/Utils/Templates/Managed_Object.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Managed_Object.cpp"
+#include "ace/Utils/Templates/Managed_Object.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -444,10 +444,10 @@ public:
 
 
 #if defined (__ACE_INLINE__)
-#include "Object_Manager.i"
+#include "ace/Utils/Object_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "Managed_Object.h"
+#include "ace/Utils/Templates/Managed_Object.h"
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)
 // We can't use the ACE_SVC_FACTORY_DECLARE macro here because this

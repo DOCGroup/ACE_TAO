@@ -7,7 +7,7 @@
 ACE_RCSID(ace, Message_Block_T, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Block_T.i"
+#include "ace/Utils/Templates/Message_Block_T.i"
 #endif /* __ACE_INLINE__ */
 
 template<class L>

@@ -71,7 +71,7 @@ protected:
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Recyclable.inl"
+#include "ace/Utils/Recyclable.inl"
 #endif /* __ACE_INLINE __ */
 
 #include "ace/post.h"

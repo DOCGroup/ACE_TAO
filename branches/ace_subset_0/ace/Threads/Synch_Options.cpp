@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ace/Synch_Options.h"
+#include "ace/Threads/Synch_Options.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Synch_Options.i"
+#include "ace/Threads/Synch_Options.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Synch_Options, "$Id$")

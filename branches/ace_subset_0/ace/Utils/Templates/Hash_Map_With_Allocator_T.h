@@ -14,7 +14,7 @@
 #define ACE_HASH_MAP_WITH_ALLOCATOR_T_H
 #include "ace/pre.h"
 
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Utils/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -86,11 +86,11 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Hash_Map_With_Allocator_T.i"
+#include "ace/Utils/Templates/Hash_Map_With_Allocator_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Hash_Map_With_Allocator_T.cpp"
+#include "ace/Utils/Templates/Hash_Map_With_Allocator_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

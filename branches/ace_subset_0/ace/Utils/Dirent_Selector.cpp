@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/OS.h"
-#include "ace/Dirent_Selector.h"
+#include "ace/OS/OS.h"
+#include "ace/Utils/Dirent_Selector.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Dirent_Selector.inl"
+#include "ace/Utils/Dirent_Selector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,

@@ -15,15 +15,15 @@
 #define ACE_FILECACHE_H
 #include "ace/pre.h"
 
-#include "ace/Mem_Map.h"
+#include "ace/Memory/Mem_Map.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/SString.h"
+#include "ace/Threads/Synch_T.h"
+#include "ace/Utils/Hash_Map_Manager.h"
+#include "ace/Utils/SString.h"
 
 enum ACE_Filecache_Flag
 {

@@ -1,12 +1,15 @@
 // Service_Repository.cpp
 // $Id$
 
-#include "ace/Service_Repository.h"
-#include "ace/Object_Manager.h"
+#include "ace/Svcconf/Service_Repository.h"
+#include "ace/Utils/Object_Manager.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Repository.i"
+#include "ace/Svcconf/Service_Repository.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Service_Repository, "$Id$")

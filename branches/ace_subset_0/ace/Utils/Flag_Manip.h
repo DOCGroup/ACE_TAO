@@ -40,7 +40,7 @@ class ACE_Export ACE_Flag_Manip
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "Flag_Manip.i"
+#include "ace/Utils/Flag_Manip.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

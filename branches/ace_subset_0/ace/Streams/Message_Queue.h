@@ -14,13 +14,13 @@
 #define ACE_MESSAGE_QUEUE_H
 #include "ace/pre.h"
 
-#include "ace/Message_Block.h"
+#include "ace/Utils/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/IO_Cntl_Msg.h"
+#include "ace/Utils/IO_Cntl_Msg.h"
 
 // Forward decls.
 class ACE_Notification_Strategy;
@@ -173,7 +173,7 @@ private:
 };
 
 // Include the templates here.
-#include "ace/Message_Queue_T.h"
+#include "ace/Streams/Message_Queue_T.h"
 
 #if defined (VXWORKS)
 # include /**/ <msgQLib.h>
@@ -516,7 +516,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Queue.i"
+#include "ace/Streams/Message_Queue.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

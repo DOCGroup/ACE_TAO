@@ -1,10 +1,10 @@
 // $Id$
-#include "ace/Configuration.h"
-#include "ace/Auto_Ptr.h"
+#include "ace/Utils/Configuration.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
 
 // Can remove this when import_config and export_config are removed from
 // ACE_Configuration. They're deprecated at ACE 5.2.
-#include "ace/Configuration_Import_Export.h"
+#include "ace/Utils/Configuration_Import_Export.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -1,7 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 ACE_INLINE int
 ACE_Dirent::open (const ACE_TCHAR *dirname) 
@@ -33,10 +35,14 @@ ACE_INLINE
 ACE_Dirent::ACE_Dirent (const ACE_TCHAR *dirname) 
   : dirp_ (0)
 {
+#ifdef ACE_SUBSET_0
   if (this->open (dirname) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"), 
                 ACE_LIB_TEXT ("Dirent::Dirent")));
+#else
+  this->open (dirname);
+#endif /* ACE_SUBSET_0 */
 }
 
 ACE_INLINE 

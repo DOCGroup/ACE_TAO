@@ -16,18 +16,18 @@
 #define ACE_WFMO_REACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Signal.h"
+#include "ace/IPC/Signal.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Timer_Queue.h"
-#include "ace/Event_Handler.h"
-#include "ace/Synch.h"
-#include "ace/Reactor_Impl.h"
-#include "ace/Message_Queue.h"
-#include "ace/Process_Mutex.h"
+#include "ace/Timer/Timer_Queue.h"
+#include "ace/Demux/Event_Handler.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Demux/Reactor_Impl.h"
+#include "ace/Streams/Message_Queue.h"
+#include "ace/Threads/Process_Mutex.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 // If we don't have WinSOCK2, we need these defined
@@ -1318,7 +1318,7 @@ private:
 #endif /* ACE_WIN32 */
 
 #if defined (__ACE_INLINE__)
-#include "ace/WFMO_Reactor.i"
+#include "ace/Demux/WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
 #include "ace/post.h"
 #endif /* ACE_WFMO_REACTOR_H */

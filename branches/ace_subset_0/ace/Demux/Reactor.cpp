@@ -1,21 +1,21 @@
 // $Id$
 
-#include "ace/Reactor.h"
-#include "ace/Reactor_Impl.h"
-#include "ace/Handle_Set.h"
+#include "ace/Demux/Reactor.h"
+#include "ace/Demux/Reactor_Impl.h"
+#include "ace/OS/Handle_Set.h"
 #if !defined (ACE_HAS_WINCE)
 #  if !defined (ACE_LACKS_ACE_SVCCONF)
-#    include "ace/Service_Config.h"
+#    include "ace/Svcconf/Service_Config.h"
 #  endif /* !ACE_LACKS_ACE_SVCCONF */
-#  include "ace/WFMO_Reactor.h"
-#  include "ace/Msg_WFMO_Reactor.h"
+#  include "ace/Demux/WFMO_Reactor.h"
+#  include "ace/Other/Msg_WFMO_Reactor.h"
 #endif /* ! ACE_HAS_WINCE */
-#include "ace/Select_Reactor.h"
-#include "ace/TP_Reactor.h"
-#include "ace/Object_Manager.h"
+#include "ace/Demux/Select_Reactor.h"
+#include "ace/Other/TP_Reactor.h"
+#include "ace/Utils/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Reactor.i"
+#include "ace/Demux/Reactor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Reactor, "$Id$")

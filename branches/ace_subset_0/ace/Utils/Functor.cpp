@@ -32,11 +32,11 @@
 #if !defined (ACE_FUNCTOR_C)
 #define ACE_FUNCTOR_C
 
-#include "ace/Functor_T.h"
-#include "ace/Functor.h"
+#include "ace/Utils/Functor_T.h"
+#include "ace/Utils/Functor.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Functor.i"
+#include "ace/Utils/Functor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Functor, "$Id$")

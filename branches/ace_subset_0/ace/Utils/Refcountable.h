@@ -51,7 +51,7 @@ protected:
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Refcountable.inl"
+#include "ace/Utils/Refcountable.inl"
 #endif /* __ACE_INLINE __ */
 
 #include "ace/post.h"

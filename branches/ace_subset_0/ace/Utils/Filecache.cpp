@@ -1,8 +1,11 @@
 // $Id$
 
-#include "ace/Filecache.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
+#include "ace/Utils/Filecache.h"
+#include "ace/Utils/Object_Manager.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, Filecache, "$Id$")
 
@@ -238,8 +241,9 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
       ACE_NEW_RETURN (handle,
                       ACE_Filecache_Object (filename, filelock, 0, mapit),
                       0);
-
+#ifdef ACE_SUBSET_0
       ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("   (%t) CVF: creating %s\n"), filename));
+#endif
 
       if (this->hash_.bind (filename, handle) == -1)
         {
@@ -362,7 +366,10 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
               filelock.release ();
           }
         }
+
+#ifdef ACE_SUBSET_0
       ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("   (%t) CVF: found %s\n"), filename));
+#endif
     }
 
   return handle;

@@ -1,15 +1,15 @@
 // $Id$
 
-#include "ace/Synch_T.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Dynamic.h"
-#include "ace/Object_Manager.h"
-#include "ace/Singleton.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Thread_Exit.h"
+#include "ace/Threads/Synch_T.h"
+#include "ace/Threads/Thread_Manager.h"
+#include "ace/Utils/Dynamic.h"
+#include "ace/Utils/Object_Manager.h"
+#include "ace/Utils/Templates/Singleton.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
+#include "ace/Threads/Thread_Exit.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Thread_Manager.i"
+#include "ace/Threads/Thread_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Thread_Manager, "$Id$")
@@ -26,6 +26,7 @@ ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = 0;
 int ACE_Thread_Manager::delete_thr_mgr_ = 0;
 #endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
+#ifdef ACE_SUBSET_0
 void
 ACE_Thread_Manager::dump (void)
 {
@@ -46,6 +47,7 @@ ACE_Thread_Manager::dump (void)
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif /* ACE_SUBSET_0 */
 
 ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
 {
