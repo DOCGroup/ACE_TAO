@@ -48,7 +48,7 @@ sleep $sleeptime;
 
 print STDERR "Starting Distributer\n";
 
-$distributer = $DI->SpawnWaitKill (60);
+$distributer = $DI->SpawnWaitKill (200);
 
 if ($distributer != 0) {
     print STDERR "ERROR: distributer returned $distributer\n";
