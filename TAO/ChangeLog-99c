@@ -1,3 +1,35 @@
+Mon May 10 21:54:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Makefile:
+	  Added the Event directory
+
+	* orbsvcs/tests/Event/Basic/Reconnect.h:
+	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
+	  Added new option to control the number of disconnections, fixed
+	  some minor problems. Removed execution of the regular test since 
+	  it will take too long to run thousands of consumers and
+	  suppliers.
+
+	* orbsvcs/tests/Event/lib/Driver.h:
+	* orbsvcs/tests/Event/lib/Driver.i:
+	* orbsvcs/tests/Event/lib/Driver.cpp:
+	  Fixed and cleaned up memory managment for tasks.
+	  Fixed computation of the Supplier QOS
+	  Fixed argument parsing
+	  Fixed throughput computation
+
+	* orbsvcs/tests/Event/lib/Supplier.cpp:
+	  Better error handling if the QoS is invalid
+
+	* orbsvcs/tests/Event/lib/Consumer.cpp:
+	  Fixed throughput computation
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	  Implemented reconnection of suppliers
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	  Fixed typo
+
 Mon May 10 19:44:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* Domain.pidl:

@@ -11,6 +11,8 @@
 
 ACE_RCSID(Event, EC_ProxyConsumer, "$Id$")
 
+typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
+
 TAO_EC_ProxyPushConsumer::
     TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* ec)
   : event_channel_ (ec),
@@ -98,8 +100,37 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
     ACE_CHECK;
 
     if (this->is_connected_i ())
-      ACE_THROW (RtecEventChannelAdmin::AlreadyConnected ());
+      {
+        if (this->event_channel_->supplier_reconnect () == 0)
+          ACE_THROW (RtecEventChannelAdmin::AlreadyConnected ());
 
+        // Re-connections are allowed, go ahead and disconnect the
+        // consumer...
+        this->supplier_ =
+          RtecEventComm::PushSupplier::_nil ();
+
+        this->filter_->unbind (this);
+        this->event_channel_->supplier_filter_builder ()->destroy (this->filter_);
+        this->filter_ = 0;
+
+        // @@ Please read the comments in EC_ProxySuppliers about
+        //     possible race conditions in this area...
+        TAO_EC_Unlock reverse_lock (*this->lock_);
+
+        {
+          ACE_GUARD_THROW_EX (
+              TAO_EC_Unlock, ace_mon, reverse_lock,
+              RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+          ACE_CHECK;
+
+          this->event_channel_->disconnected (this, ACE_TRY_ENV);
+          ACE_CHECK;
+        }
+
+        // What if a second thread connected us after this?
+        if (this->is_connected_i ())
+          return;
+      }
     this->supplier_ =
       RtecEventComm::PushSupplier::_duplicate (push_supplier);
     this->qos_ = qos;

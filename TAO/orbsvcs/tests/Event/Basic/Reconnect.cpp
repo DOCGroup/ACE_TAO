@@ -19,7 +19,8 @@ main (int argc, char *argv [])
 
 EC_Reconnect::EC_Reconnect (void)
   : allow_consumer_reconnect_ (0),
-    allow_supplier_reconnect_ (0)
+    allow_supplier_reconnect_ (0),
+    disconnections_ (1000)
 {
 }
 
@@ -29,7 +30,7 @@ EC_Reconnect::parse_args (int& argc, char* argv[])
   if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;
 
-  ACE_Get_Opt get_opt (argc, argv, "sc");
+  ACE_Get_Opt get_opt (argc, argv, "scd:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -41,6 +42,9 @@ EC_Reconnect::parse_args (int& argc, char* argv[])
           break;
         case 's':
           this->allow_supplier_reconnect_ = 1;
+          break;
+        case 'd':
+          this->disconnections_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
         case '?':
@@ -54,11 +58,25 @@ EC_Reconnect::parse_args (int& argc, char* argv[])
 }
 
 void
+EC_Reconnect::print_args (void) const
+{
+  this->EC_Driver::print_args ();
+
+  ACE_DEBUG ((LM_DEBUG, "EC_Reconnect: \n"
+              " consumer_reconnect = %d\n"
+              " supplier_reconnect = %d\n"
+              " disconnect_count = %d\n",
+              this->allow_consumer_reconnect_,
+              this->allow_supplier_reconnect_,
+              this->disconnections_));
+}
+
+void
 EC_Reconnect::print_usage (void)
 {
   this->EC_Driver::print_usage ();
 
-  ACE_DEBUG ((LM_DEBUG, "EC_Reconnect usage: [-s] [-c]\n"));
+  ACE_DEBUG ((LM_DEBUG, "EC_Reconnect usage: [-s] [-c] [-d disc]\n"));
 }
 
 void
@@ -69,23 +87,22 @@ EC_Reconnect::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
 }
 
 void
-EC_Reconnect::consumer_push (void* consumer_cookie,
-                             const RtecEventComm::EventSet& event,
-                             CORBA::Environment& ACE_TRY_ENV)
-{
-  this->EC_Driver::consumer_push (consumer_cookie,
-                                  event,
-                                  ACE_TRY_ENV);
-}
-
-void
 EC_Reconnect::execute_test (CORBA::Environment& ACE_TRY_ENV)
 {
   this->execute_consumer_test (ACE_TRY_ENV);
 
   this->execute_supplier_test (ACE_TRY_ENV);
 
-  // ?? this->EC_Driver::execute_test (ACE_TRY_ENV);
+  this->consumer_reconnect_.dump_results ("Reconnect", "consumer");
+
+  this->supplier_reconnect_.dump_results ("Reconnect", "supplier");
+
+  // this->EC_Driver::execute_test (ACE_TRY_ENV);
+}
+
+void
+EC_Reconnect::dump_results (void)
+{
 }
 
 void
@@ -97,7 +114,7 @@ EC_Reconnect::execute_consumer_test (CORBA::Environment& ACE_TRY_ENV)
 
   if (this->allow_consumer_reconnect_)
     {
-      for (int i = 0; i < this->burst_count_; ++i)
+      for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           this->consumers_[0]->connect (qos,
@@ -129,13 +146,20 @@ EC_Reconnect::execute_consumer_test (CORBA::Environment& ACE_TRY_ENV)
                                "Expected AlreadyConnected exception");
         }
       ACE_ENDTRY;
+      ACE_TRY_ENV.clear ();
 
-      for (int i = 0; i < this->burst_count_; ++i)
+      RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+        this->event_channel_->for_consumers (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           this->consumers_[0]->disconnect (ACE_TRY_ENV);
           ACE_CHECK;
-          this->consumers_[0]->connect (qos, shutdown_event_type,
+          this->consumers_[0]->connect (consumer_admin.in (),
+                                        qos,
+                                        shutdown_event_type,
                                         ACE_TRY_ENV);
           ACE_CHECK;
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
@@ -153,7 +177,7 @@ EC_Reconnect::execute_supplier_test (CORBA::Environment& ACE_TRY_ENV)
 
   if (this->allow_supplier_reconnect_)
     {
-      for (int i = 0; i < this->burst_count_; ++i)
+      for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           this->suppliers_[0]->connect (qos, shutdown_event_type,
@@ -183,13 +207,19 @@ EC_Reconnect::execute_supplier_test (CORBA::Environment& ACE_TRY_ENV)
                                "Expected AlreadyConnected exception");
         }
       ACE_ENDTRY;
+      ACE_TRY_ENV.clear ();
 
-      for (int i = 0; i < this->burst_count_; ++i)
+      RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
+        this->event_channel_->for_suppliers (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           this->suppliers_[0]->disconnect (ACE_TRY_ENV);
           ACE_CHECK;
-          this->suppliers_[0]->connect (qos,
+          this->suppliers_[0]->connect (supplier_admin.in (),
+                                        qos,
                                         shutdown_event_type,
                                         ACE_TRY_ENV);
           ACE_CHECK;

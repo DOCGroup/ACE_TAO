@@ -152,5 +152,5 @@ TAO_EC_Event_Channel::consumer_reconnect (void) const
 ACE_INLINE int
 TAO_EC_Event_Channel::supplier_reconnect (void) const
 {
-  return this->consumer_reconnect_;
+  return this->supplier_reconnect_;
 }
