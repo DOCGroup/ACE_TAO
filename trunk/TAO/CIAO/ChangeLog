@@ -2,15 +2,15 @@ Mon Jun  7 12:10:31 2004  Gan Deng <gan.dengg@vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
 	
-      The PortConnectionDescription structure a PortKind variable change the
-      code to make the connection decisions based on value of that variable.
-      Also change the connection fields values which will be passed to
-      finishLaunch() to make the NodeApplication work.
+          The PortConnectionDescription structure a PortKind variable change the
+          code to make the connection decisions based on value of that variable.
+          Also change the connection fields values which will be passed to
+          finishLaunch() to make the NodeApplication work.
       
-    * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
     
-      Change the definition type of the <plan_> variable from const reference
-      to just regular object mapped from IDL struct type.
+          Change the definition type of the <plan_> variable from const reference
+          to just regular object mapped from IDL struct type.
 
 Mon Jun  7 01:40:57 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
