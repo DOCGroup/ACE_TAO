@@ -20,7 +20,13 @@
 #if !defined (TAO_INTERP_H)
 #define TAO_INTERP_H
 
-class TAO_Export TAO_Interp
+// Useful typedefs.
+typedef size_t TAO_attribute_calculator (CDR *stream,
+                                         size_t &alignment,
+                                         CORBA::Environment &env);
+typedef CORBA::Boolean TAO_param_skip_rtn (CDR *);
+
+class TAO_Export TAO_IIOP_Interpreter
 {
   // = TITLE
   //   TAO's CORBA TypeCode interpreter, which traverses GIOP/IIOP
@@ -95,15 +101,143 @@ public:
   static void init_table (void);
   // Initialize TAO's TypeCode table.
 
+  static size_t calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
+                                                CDR *original_stream,
+                                                size_t &alignment,
+                                                CORBA::Environment &env);
+  // For a given typecode, figure out its size and alignment needs.
+  // This version is used mostly when traversing other typecodes, and
+  // follows these rules:
+  //
+  // - Some typecodes are illegal (can't be nested inside others);
+  // - Indirections are allowed;
+  // - The whole typecode (including TCKind enum) is in the stream
+  //
+  // When the routine returns, the stream has skipped this TypeCode.
+  //
+  // "size" is returned, "alignment" is an 'out' parameter.  If it is
+  // non-null, "tc" is initialized to hold the contents of the TypeCode;
+  // it depends on the contents of the original stream to be valid.
+  //
+  // XXX explore splitting apart returning the size/alignment data and
+  // the TypeCode initialization; union traversal would benefit a bit,
+  // but it would need more than that to make it as speedy as struct
+  // traversal.
+
+  // = Static visitor methods.
+  
+  // These methods manipulate CDR-encapsulated TypeCode parameter
+  // lists, calculating the size and alignment of the data type being
+  // described.  The TCKind value has always been removed from the CDR
+  // stream when these calculator routines get called.
+
+  static size_t calc_struct_and_except_attributes (CDR *stream,
+                                                   size_t &alignment,
+                                                   CORBA::Boolean is_exception,
+                                                   CORBA::Environment &env);
+  // Given typecode bytes for a structure (or exception), figure out
+  // its alignment and size; return size, alignment is an 'out'
+  // parameter.  Only "CORBA::tk_struct" (or "CORBA::tk_except") has
+  // been taken out of the stream parameter holding the bytes.
+  //
+  // We use a one-pass algorithm, calculating size and inter-element
+  // padding while recording the strongest alignment restriction.
+  // Then we correct the size to account for tail-padding.
+  //
+  // This routine recognizes that exceptions are just structs with
+  // some additional information.  Different environments may differ
+  // in what that additional information is, so this routine may need
+  // to be taught about compiler-specific representation of that
+  // additional "RTTI" data.
+
+  static size_t calc_struct_attributes (CDR *stream,
+                                        size_t &alignment,
+                                        CORBA::Environment &env);
+  // Calculate size and alignment for a structure.
 
 
-private:
+  static size_t calc_exception_attributes (CDR *stream,
+                                           size_t &alignment,
+                                           CORBA::Environment &env);
+  // Calculate size and alignment for an exception.
+
+
+  static size_t calc_union_attributes (CDR *stream,
+                                       size_t &alignment,
+                                       CORBA::Environment &env);
+  // Calculate size and alignment for a CORBA discriminated union.
+  //
+  // Note that this is really a two-element structure.  The first
+  // element is the discriminator; the second is the value.  All normal
+  // structure padding/alignment rules apply.  In particular, all arms
+  // of the union have the same initial address (adequately aligned for
+  // any of the members).
+
+
+  static size_t calc_alias_attributes (CDR *stream,
+                                       size_t &alignment,
+                                       CORBA::Environment &env);
+  // Calculate size and alignment for a typedeffed type.
+
+  static size_t calc_array_attributes (CDR *stream,
+                                       size_t &alignment,
+                                       CORBA::Environment &env);
+  // Calculate size and alignment of an array.  (All such arrays are
+  // described as single dimensional, even though the IDL definition
+  // may specify a multidimensional array ... such arrays are treated
+  // as nested single dimensional arrays.)
+
+  static CORBA::TypeCode::traverse_status
+  struct_traverse (CDR *stream,
+                   const void *value1,
+                   const void *value2,
+                   CORBA::TypeCode::traverse_status (_FAR *visit)
+                   (CORBA::TypeCode_ptr tc,
+                    const void *value1,
+                    const void *value2,
+                    void *context,
+                    CORBA::Environment &env),
+                   void *context,
+                   CORBA::Environment &env);
+  // Visit each of the elements of a structure.
+
+  static CORBA::Boolean match_value (CORBA::TCKind kind,
+                                     CDR *tc_stream,
+                                     const void *value,
+                                     CORBA::Environment &env);
+  // Cast the discriminant values to the right type and compare them.
+
+  static CORBA::TypeCode::traverse_status
+  union_traverse (CDR *stream,
+                  const void *value1,
+                  const void *value2,
+                  CORBA::TypeCode::traverse_status (_FAR *visit)
+                  (CORBA::TypeCode_ptr tc,
+                   const void *value1,
+                   const void *value2,
+                   void *context,
+                   CORBA::Environment &env),
+                  void *context,
+                  CORBA::Environment &env);
+    // Visit the two elements of the union: the discrminant, and then
+    // any specific value as indicated by the discriminant of value1.
+
+  static size_t
+  calc_key_union_attributes (CDR *stream,
+                             size_t &overall_alignment,
+                             size_t &discrim_size_with_pad,
+                             CORBA::Environment &env);
+
+  // = Utility routines that skip unneeded parameter lists.
+  static CORBA::Boolean skip_encapsulation (CDR *stream);
+  static CORBA::Boolean skip_long (CDR *stream);
+
   struct Table_Element
   {
     size_t size_;
     size_t alignment_;
-    attribute_calculator *calc_;
-    param_skip_rtn *skipper_;
+    TAO_attribute_calculator *calc_;
+    TAO_param_skip_rtn *skipper_;
   };
 
   static Table_Element table_[CORBA::TC_KIND_COUNT];

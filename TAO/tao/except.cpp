@@ -15,6 +15,11 @@
 #include "except.i"
 #endif /* __ACE_INLINE__ */
 
+// Static initializers.
+CORBA::TypeCode_ptr TAO_Exception::sys_exceptions[NUM_SYS_EXCEPTIONS];
+
+CORBA::ExceptionList TAO_Exception::system_exceptions;
+
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
   : type_ (tc),
     refcount_ (0)
@@ -158,17 +163,6 @@ CORBA_SystemException::_narrow (CORBA_Exception* exception)
     return ACE_dynamic_cast (CORBA_SystemException*,exception);
   return 0;
 }
-
-// Static initializers.
-
-const int TAO_Exception::NUM_SYS_EXCEPTIONS = 26; 
-
-// Preallocated tc buffer.
-const int TAO_Exception::TC_BUFLEN = 160;
-
-CORBA::TypeCode_ptr TAO_Exception::sys_exceptions[NUM_SYS_EXCEPTIONS];
-
-CORBA::ExceptionList TAO_Exception::system_exceptions;
 
 // Note that "buffer" holds the (unscoped) name originally, and is
 // then overwritten.
