@@ -1,3 +1,7 @@
+Thu Dec 26 09:14:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Makefile: Removed configure.in from the list of controlled files. 
+
 Thu Dec 26 07:36:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
         * include/makeinclude/platform_freebsd_pthread.GNU: Removed for
