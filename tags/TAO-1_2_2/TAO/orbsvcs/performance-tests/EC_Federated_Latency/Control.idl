@@ -1,0 +1,61 @@
+/**
+ * @file Control.idl
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ *
+ */
+
+#include "orbsvcs/RtecEventChannelAdmin.idl"
+
+module Control
+{
+  typedef sequence<unsigned long long> Samples;
+
+  /// Simple interface to control loopback Consumer/Supplier pairs in
+  /// the Peers
+  interface Loopback;
+
+  /**
+   * @brief Define the interface used to control the peers in the test
+   */
+  interface Peer
+  {
+    /// Obtain a reference to the Peer's event channel
+    readonly attribute RtecEventChannelAdmin::EventChannel channel;
+
+    /// Connect the peer to one remote event channel
+    void connect (in RtecEventChannelAdmin::EventChannel remote_channel);
+
+    /// Setup a Loopback object and return it
+    Loopback setup_loopback (in long experiment_id);
+
+    /// Run the test using the prescribed number of iterations
+    Samples run_experiment (in long experiment_id,
+                            in long iterations,
+                            out long gsf);
+
+    /// Shutdown the peer
+    void shutdown ();
+  };
+
+  /**
+   * This interface is used to destroy and disconnect loopback
+   * consumer/supplier pairs.
+   */
+  interface Loopback
+  {
+    /// Destroy the loopback objects
+    void destroy ();
+  };
+
+  /**
+   * @brief Define the interface used to coordinate the peers
+   */
+  interface Coordinator
+  {
+    /// A new peer has joined the test
+    oneway void join (in Peer the_peer);
+  };
+};
