@@ -1,3 +1,11 @@
+Tue Nov 18 16:37:21 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/IPC_SAP/DEV_SAP/reader/reader.cpp (main): Changed
+	  recv_n() to recv() so that the underlying Windows Read()
+ 	  function is called properly (recv_n() doesn't call this).
+  	  Thanks to Mike Gingell <mike.gingell@drdc-rddc.gc.ca> for
+ 	  reporting this.
+
 Tue Nov 18 16:22:45 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * etc/ciao.doxygen:
@@ -15,7 +23,6 @@ Tue Nov 18 16:14:29 2003  Steve Huston  <shuston@riverace.com>
 	* include/makeinclude/platform_hpux_aCC.GNU: Add preprocessor defs
 	  for threads ability to CPPFLAGS, not CCFLAGS. Thanks to Ossama
 	  Othman <ossama@dre.vanderbilt.edu> for this suggestion.
-
 
 Tue Nov 18 16:03:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
