@@ -28,6 +28,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// To force execution of the static constructor
+// that registers the dynamic service object.
+#include "Dynamic_Adapter_Impl.h"
+
 #include "Context.h"
 #include "tao/TAO_Server_Request.h"
 
