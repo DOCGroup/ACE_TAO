@@ -1,3 +1,9 @@
+Mon Feb 18 01:45:07 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * include/makeinclude/compiler.bor:
+        * include/makeinclude/make_flags.bor:
+          Added support for Borland C++Builder 6.
+
 Sun Feb 17 16:32:01 2002  Venkita  <venkita@cs.wustl.edu>
 
         * ACE version 5.2.2 released.
