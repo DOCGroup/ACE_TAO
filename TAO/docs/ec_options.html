@@ -300,8 +300,10 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-            consumer control policy to poll the state of the
-            consumers.
+            consumer control policy (set <EM>ECConsumerControl</EM> to 
+            <EM>reactive</EM>) to poll the state of the consumers. 
+            When set to 0 there is no polling but the
+            reactive strategy is in place.
           </TD>
         </TR>
 
@@ -311,8 +313,10 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-            supplier control policy to poll the state of the
-            suppliers.
+            supplier control policy (set <EM>ECSupplierControl</EM> to 
+            <EM>reactive</EM>) to poll the state of the suppliers.
+            When set to 0 there is no polling but the
+            reactive strategy is in place.
           </TD>
         </TR>
 
@@ -322,8 +326,9 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive
-            consumer control policy to detect a timeout when polling the state
-						of the consumers.
+            consumer control policy (set <EM>ECConsumerControl</EM> to 
+            <EM>reactive</EM>) to detect a timeout when polling the state
+            of the consumers.
           </TD>
         </TR>
 
@@ -333,8 +338,9 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive
-            supplier control policy to detect a timeout when polling the state
-						of the suppliers.
+            supplier control policy (set <EM>ECSupplierControl</EM> to 
+            <EM>reactive</EM>) to detect a timeout when polling the state 
+            of the suppliers.
           </TD>
         </TR>
 
