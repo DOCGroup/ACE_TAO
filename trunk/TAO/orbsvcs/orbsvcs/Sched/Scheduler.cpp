@@ -157,27 +157,27 @@ ACE_Scheduler::get_rt_info (Object_Name name,
       info_array[0] = rtinfo;
       // Bind the rtinfo to the name.
       if (info_collection_.bind (lookup, info_array) != 0)
-	{
-	  delete rtinfo;
-	  delete info_array;
-	  rtinfo = 0;
-	  return FAILED; // Error!
-	}
+        {
+          delete rtinfo;
+          delete info_array;
+          rtinfo = 0;
+          return FAILED; // Error!
+        }
       else
-	{
-	  // Register the array.
-	  status_t result = this->register_task (info_array, 1, handle);
-	  if (result == SUCCEEDED)
-	    {
-	      rtinfo->handle = handle;
-	      return ST_UNKNOWN_TASK; // Didn't find it, but made one!
-	    }
-	  else
-	    {
-	      rtinfo->handle = 0;
-	      return FAILED;
-	    }
-	}
+        {
+          // Register the array.
+          status_t result = this->register_task (info_array, 1, handle);
+          if (result == SUCCEEDED)
+            {
+              rtinfo->handle = handle;
+              return ST_UNKNOWN_TASK; // Didn't find it, but made one!
+            }
+          else
+            {
+              rtinfo->handle = 0;
+              return FAILED;
+            }
+        }
     }
 }
 
@@ -194,10 +194,10 @@ int ACE_Scheduler::number_of_dependencies(RT_Info& rt_info)
 }
 
 int ACE_Scheduler::add_dependency(RT_Info* rt_info,
-			      const Dependency_Info& d)
+                              const Dependency_Info& d)
 {
   ACE_DEBUG ((LM_DEBUG, "adding dependecy to: %s\n",
-	      (const char*)rt_info->entry_point));
+              (const char*)rt_info->entry_point));
   RtecScheduler::Dependency_Set& set = rt_info->dependencies;
   int l = set.length();
   set.length(l + 1);
@@ -220,7 +220,7 @@ void ACE_Scheduler::export(RT_Info& info, FILE* file)
                           info.handle,
                           ORBSVCS_Time::to_hrtime (info.worst_case_execution_time) / 1,
                           ORBSVCS_Time::to_hrtime (info.typical_execution_time) / 1,
-			  ORBSVCS_Time::to_hrtime (info.cached_execution_time) / 1,
+                          ORBSVCS_Time::to_hrtime (info.cached_execution_time) / 1,
                           info.period,
                           info.importance,
                           ORBSVCS_Time::to_hrtime (info.quantum) / 1,
@@ -247,30 +247,26 @@ void ACE_Scheduler::export(RT_Info& info, FILE* file)
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;
 
-  template class ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX>;
-  template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
-  template class ACE_Map_Manager<ACE_CString,
-				 ACE_Scheduler::RT_Info **,
-                                 ACE_SYNCH_MUTEX>;
-  template class ACE_Map_Iterator_Base<ACE_CString, ACE_Scheduler::RT_Info **,
-                                       ACE_SYNCH_MUTEX>;
-  template class ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
-                                  ACE_SYNCH_MUTEX>;
-  template class ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
-                                  ACE_SYNCH_MUTEX>;
-  template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
-  template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
+template class ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Manager<ACE_CString,
+                               ACE_Scheduler::RT_Info **,
+                               ACE_SYNCH_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_CString, ACE_Scheduler::RT_Info **,
+                                     ACE_SYNCH_MUTEX>;
+template class ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
+                                ACE_SYNCH_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
+                                        ACE_SYNCH_MUTEX>;
+template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
+template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>
 
 #pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Manager<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
