@@ -44,6 +44,8 @@ clone:
 	done
 
 RELEASE_FILES = TAO/ChangeLog \
+		TAO/INSTALL \
+		TAO/TAO-INSTALL.html \
 		TAO/COPYING \
 		TAO/COPYING.sun \
 		TAO/docs \
@@ -56,6 +58,9 @@ RELEASE_FILES = TAO/ChangeLog \
 		TAO/orbsvcs \
 		TAO/tests \
 		TAO/VERSION
+
+INSTALL:	TAO-INSTALL.html
+	lynx -dump $^ > $@
 
 #### If creating the "official" TAO release:
 #### 1) Check that the workspace is up-to-date, and bail out if not.
@@ -103,12 +108,12 @@ endif
 
 FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' -print
 
-cleanrelease:
+cleanrelease:	INSTALL
 	@$(TIMESTAMP) (make realclean; cd ..; \
 	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
 	 chmod a+r TAO.tar.gz; )
 
-release:
+release:	INSTALL
 	@$(TIMESTAMP) (cd ..; \
 	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
 	 chmod a+r TAO.tar.gz; )

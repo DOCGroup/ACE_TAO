@@ -43,15 +43,19 @@ Task_State::Task_State (int argc, char **argv)
     datatype_ (CB_OCTET),
     argc_ (argc),
     argv_ (argv),
+    thread_per_rate_ (0),
     global_jitter_array_ (0)
 {
   ACE_OS::strcpy (server_host_, "localhost");
-  ACE_Get_Opt opts (argc, argv, "h:n:t:p:d:");
+  ACE_Get_Opt opts (argc, argv, "h:n:t:p:d:r");
   int c;
   int datatype;
 
   while ((c = opts ()) != -1)
     switch (c) {
+    case 'r':
+      thread_per_rate_ = 1;
+      break;
     case 'd':
       datatype = ACE_OS::atoi (opts.optarg);
       switch (datatype)
@@ -146,7 +150,8 @@ Client::get_low_priority_latency (void)
 }
 
 int
-Client::get_latency (u_int thread_id) {
+Client::get_latency (u_int thread_id) 
+{
   return ts_->ave_latency_ [thread_id];
 }
 
@@ -191,66 +196,66 @@ Client::svc (void)
     thread_id = ts_->start_count_;
     ts_->start_count_++;
 
-#if defined (PRIORITY_INV_TEST)
-
-    if (thread_id == 0)
+    if (ts_->thread_per_rate_ == 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) Im the high priority client, my id is %d.\n",
-                    thread_id));
-        ::sprintf (ior,
-                   "iiop:1.0//%s:%d/Cubit00",
-                   ts_->server_host_,
-                   ts_->base_port_);
-        frequency = CB_HIGH_PRIORITY_RATE;
+        if (thread_id == 0)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) Im the high priority client, my id is %d.\n",
+                        thread_id));
+            ::sprintf (ior,
+                       "iiop:1.0//%s:%d/Cubit00",
+                       ts_->server_host_,
+                       ts_->base_port_);
+            frequency = CB_HIGH_PRIORITY_RATE;
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) Im a low priority client, my id is %d\n",
+                        thread_id));
+            ::sprintf (ior,
+                       "iiop:1.0//%s:%d/Cubit00",
+                       ts_->server_host_,
+                       ts_->base_port_ + thread_id);
+            frequency = CB_LOW_PRIORITY_RATE;
+          }
       }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) Im a low priority client, my id is %d\n",
-                    thread_id));
-        ::sprintf (ior,
-                   "iiop:1.0//%s:%d/Cubit00",
-                   ts_->server_host_,
-                   ts_->base_port_ + thread_id);
-        frequency = CB_LOW_PRIORITY_RATE;
-      }
-
-#else
+else
+  {
     switch (thread_id)
-    {
-    case CB_40HZ_CONSUMER:
+      {
+      case CB_40HZ_CONSUMER:
         ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
         ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_);
         frequency = CB_40HZ_CONSUMER_RATE;
         break;
-    case CB_20HZ_CONSUMER:
+      case CB_20HZ_CONSUMER:
         ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
         ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_+1);
         frequency = CB_20HZ_CONSUMER_RATE;
         break;
-    case CB_10HZ_CONSUMER:
+      case CB_10HZ_CONSUMER:
         ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
         ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_+2);
         frequency = CB_10HZ_CONSUMER_RATE;
         break;
-    case CB_5HZ_CONSUMER:
+      case CB_5HZ_CONSUMER:
         ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
         ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_+3);
         frequency = CB_5HZ_CONSUMER_RATE;
         break;
-    case CB_1HZ_CONSUMER:
+      case CB_1HZ_CONSUMER:
         ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, my id is %d.\n", thread_id));
         ::sprintf (ior, "iiop:1.0//%s:%d/Cubit00", ts_->server_host_, ts_->base_port_+4);
         frequency = CB_1HZ_CONSUMER_RATE;
         break;
-    default:
-      ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", thread_id));
-    }
-#endif /* defined (PRIORITY_INV_TEST) */
-
+      default:
+        ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", thread_id));
+      }
+  }
     ACE_DEBUG ((LM_DEBUG, "Using ior = %s\n", ior));
-
+    
     CORBA::Object_ptr objref = CORBA::Object::_nil ();
     CORBA::Environment env;
 

@@ -108,6 +108,9 @@ public:
   virtual MANAGED_TYPE managed_type (void);
   // return the managed type
 
+  virtual idl_bool unbounded (void) const;
+  // is this sequence bounded or not
+
   // =Scope management functions
   be_sequence *fe_add_sequence (be_sequence *);
 

@@ -150,7 +150,6 @@ extern TAO_Export int operator== (const TAO::ObjectKey &l,
 #include "tao/orb_core.i"
 #include "tao/corbacom.i"
 #include "tao/sequence.i"
-#include "tao/sequence_T.i"
 #include "tao/typecode.i"
 #include "tao/nvlist.i"
 #include "tao/any.i"

@@ -73,6 +73,28 @@ public:
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_root (be_root *node);
   virtual int visit_native (be_native *node);
+
+  virtual void be_node (be_decl *);
+  // save a node
+
+  virtual be_decl *be_node (void);
+  // return the saved node
+
+  virtual TAO_OutStream &stream (void);
+  // return reference to stream
+
+  virtual void stream (TAO_OutStream *);
+  // set the underlying stream
+
+protected:
+  be_visitor (void);
+  // constructor is protected
+
+  be_decl *node_;
+  // saved node
+
+  TAO_OutStream *os_;
+  // output stream
 };
 
 #endif // _BE_VISITOR_H

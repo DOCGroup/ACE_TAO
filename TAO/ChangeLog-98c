@@ -1,3 +1,7 @@
+Sat Jan 17 11:49:15 1998    <coryan@MILONGA>
+
+	* Merged changes from main_to_poa_merge_8 to main_to_poa_merge_9.
+
 Sat Jan 17 00:45:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA: Added new tests: Explicit_Activation_POA_Ids and
