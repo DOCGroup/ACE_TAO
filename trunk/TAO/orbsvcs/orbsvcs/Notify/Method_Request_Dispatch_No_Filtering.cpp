@@ -17,7 +17,7 @@ ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Dispatch_No_Filtering, "$Id$")
 #include "EventChannelFactory.h"
 #include "Notify_Service.h"
 
-TAO_NS_Method_Request_Dispatch_No_Filtering::TAO_NS_Method_Request_Dispatch_No_Filtering (TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier)
+TAO_NS_Method_Request_Dispatch_No_Filtering::TAO_NS_Method_Request_Dispatch_No_Filtering (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier)
   : TAO_NS_Method_Request_Event (event), proxy_supplier_ (proxy_supplier), refcountable_guard_ (*proxy_supplier)
 {
 }

@@ -10,11 +10,10 @@ ACE_RCSID(RT_Notify, TAO_NS_ThreadPool_Task, "$Id$")
 
 #include "tao/debug.h"
 #include "Properties.h"
-#include "Method_Request_Shutdown.h"
 #include "AdminProperties.h"
 
 TAO_NS_ThreadPool_Task::TAO_NS_ThreadPool_Task (void)
-  : msg_queue_ (*msg_queue ()), buffering_strategy_ (0), queue_length_ (0)
+  : buffering_strategy_ (0), shutdown_ (0)
 {
 }
 
@@ -26,18 +25,22 @@ TAO_NS_ThreadPool_Task::~TAO_NS_ThreadPool_Task ()
 int
 TAO_NS_ThreadPool_Task::init (int argc, char **argv)
 {
-  return this->ACE_Task<ACE_SYNCH>::init (argc, argv);
+  return this->ACE_Task<ACE_NULL_SYNCH>::init (argc, argv);
+}
+
+TAO_NS_Timer*
+TAO_NS_ThreadPool_Task::timer (void)
+{
+  return &this->timer_;
 }
 
 void
-TAO_NS_ThreadPool_Task::init (TAO_NS_AdminProperties& admin_properties)
+TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties_var& admin_properties  ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Worker_Task::init (admin_properties);
-}
+  ACE_NEW_THROW_EX (this->buffering_strategy_,
+                    TAO_NS_Buffering_Strategy (*msg_queue (), admin_properties, 1),
+                    CORBA::NO_MEMORY ());
 
-void
-TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties& admin_properties  ACE_ENV_ARG_DECL)
-{
   long flags = THR_NEW_LWP | THR_JOINABLE;
 
   flags |=
@@ -45,7 +48,7 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
     TAO_NS_PROPERTIES::instance()->sched_policy ();
 
   // Become an active object.
-  if (this->ACE_Task <ACE_SYNCH>::activate (flags,
+  if (this->ACE_Task <ACE_NULL_SYNCH>::activate (flags,
                                             tp_params.static_threads,
                                             0,
                                             ACE_THR_PRI_OTHER_DEF) == -1)
@@ -63,13 +66,6 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
 
         ACE_THROW (CORBA::BAD_PARAM ());
     }
-
-  // Store the admin properties...
-  this->queue_length_ = &admin_properties.queue_length ();
-
-  ACE_NEW_THROW_EX (this->buffering_strategy_,
-                                        TAO_NS_Buffering_Strategy (this->msg_queue_, admin_properties),
-                                        CORBA::NO_MEMORY ());
 }
 
 void
@@ -77,69 +73,78 @@ TAO_NS_ThreadPool_Task::exec (TAO_NS_Method_Request& method_request)
 {
   TAO_NS_Method_Request& request_copy = *method_request.copy ();
 
-  ACE_Time_Value tv;
-  this->buffering_strategy_->execute (request_copy, &tv);
+  if (this->buffering_strategy_->enqueue (request_copy) == -1)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
+                    "failed to enqueue\n"));
+    }
 }
 
 int
 TAO_NS_ThreadPool_Task::svc (void)
 {
-  int done = 0;
-  while (!done)
+  TAO_NS_Method_Request* method_request;
+
+  while (!shutdown_)
     {
       ACE_TRY_NEW_ENV
         {
-          ACE_Message_Block *mb;
-          if (this->getq (mb) == -1)
-            if (ACE_OS::last_error () == ESHUTDOWN)
-              return 0;
-            else
-              ACE_ERROR ((LM_ERROR,
-                          "EC (%P|%t) getq error in Dispatching Queue\n"));
+          ACE_Time_Value* dequeue_blocking_time = 0;
+          ACE_Time_Value earliest_time;
 
-          //(*this->queue_length_)--;
-          // To be Fixed
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "removing from queue, queue_length = %d\n",this->queue_length_->value () ));
-          TAO_NS_Method_Request *request =
-            ACE_dynamic_cast (TAO_NS_Method_Request*, mb);
-
-          int result = 0;
-
-          if (request != 0)
+          if (!this->timer_.timer_queue_->is_empty ())
             {
-              result = request->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              earliest_time = this->timer_.timer_queue_->earliest_time ();
+              dequeue_blocking_time = &earliest_time;
             }
 
-          ACE_Message_Block::release (mb);
+          // Dequeue 1 item
+          int result = buffering_strategy_->dequeue (method_request, dequeue_blocking_time);
 
-          if (result == -1)
-            done = 1;
+          if (result > 0)
+            {
+              method_request->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              ACE_Message_Block::release (method_request);
+            }
+          else if (errno == ETIME)
+            {
+              this->timer_.timer_queue_->expire ();
+            }
+          else if (result == -1)
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG, "ThreadPool_Task dequeue failed\n"));
+            }
         }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "EC (%P|%t) exception in dispatching queue");
+                               "ThreadPool_Task (%P|%t) exception in method request\n");
         }
       ACE_ENDTRY;
-    }
+    } /* while */
+
   return 0;
 }
 
 void
 TAO_NS_ThreadPool_Task::shutdown (void)
 {
-  this->msg_queue_.enqueue (new TAO_NS_Method_Request_Shutdown (this));
+  this->shutdown_ = 1;
 
-  // We can not wait for ourselves to quit
-  if (this->thr_mgr ())
-    {
-      if (this->thr_mgr ()->task () == this)
-        return;
-    }
+  this->buffering_strategy_->shutdown ();
 
-  this->wait ();
   return;
+}
+
+int
+TAO_NS_ThreadPool_Task::close (u_long /*flags*/)
+{
+  if (this->thr_count () == 0)
+    delete this;
+
+  return 0;
 }

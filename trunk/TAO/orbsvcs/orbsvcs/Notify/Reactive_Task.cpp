@@ -17,8 +17,20 @@ TAO_NS_Reactive_Task::~TAO_NS_Reactive_Task ()
 }
 
 void
+TAO_NS_Reactive_Task::shutdown (void)
+{
+  delete this; //TODO: Release via factory.
+}
+
+void
 TAO_NS_Reactive_Task::exec (TAO_NS_Method_Request& method_request)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   method_request.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+TAO_NS_Timer*
+TAO_NS_Reactive_Task::timer (void)
+{
+  return &this->timer_;
 }

@@ -144,10 +144,6 @@ TAO_NS_Builder::build_event_channel (TAO_NS_EventChannelFactory* ecf, const CosN
 
   ec->TAO_NS_Container::init (ecf->object_poa(), 0, ecf->object_poa(), ecf->object_poa());
 
-  // Create the default worker task.
-  TAO_NS_Reactive_Task* worker_task = new TAO_NS_Reactive_Task ();
-  ec->worker_task_own (worker_task);
-
   // proxy poa is set next.
   ec->init_collection (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ec_ret._retn ());
@@ -687,31 +683,6 @@ TAO_NS_Builder::build_push_consumer (TAO_NS_SupplierAdmin* sa ACE_ENV_ARG_DECL)
   ACE_CHECK_RETURN (proxy_ret._retn ());
 
   return proxy_ret._retn ();
-}
-
-void
-TAO_NS_Builder::apply_threadpool_qos (TAO_NS_Object& object, const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties& admin_properties ACE_ENV_ARG_DECL)
-{
-  // @@ TODO??: check if number of threads is 0, if so, set as reactive.
-
-  TAO_NS_ThreadPool_Task* worker_task;
-
-  ACE_NEW_THROW_EX (worker_task,
-                    TAO_NS_ThreadPool_Task (),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  worker_task->init (tp_params, admin_properties ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  object.worker_task_own (worker_task);
-}
-
-void
-TAO_NS_Builder::apply_threadpool_lane_qos (TAO_NS_Object& /*object*/, const NotifyExt::ThreadPoolLanesParams& /*tpl_params*/, TAO_NS_AdminProperties& /*admin_properties*/ ACE_ENV_ARG_DECL)
-{
-  // No lane support
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

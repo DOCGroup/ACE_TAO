@@ -73,8 +73,6 @@ OBJFILES = \
         $(OBJDIR)\QoSProperties.obj \
         $(OBJDIR)\Reactive_Task.obj \
         $(OBJDIR)\Refcountable.obj \
-        $(OBJDIR)\EventBatch.obj \
-        $(OBJDIR)\Method_Request_Dispatch_EventBatch.obj \
         $(OBJDIR)\SequenceProxyPushConsumer.obj \
         $(OBJDIR)\SequenceProxyPushSupplier.obj \
         $(OBJDIR)\SequencePushConsumer.obj \
@@ -99,7 +97,10 @@ OBJFILES = \
         $(OBJDIR)\Notify_Default_EMO_Factory.obj \
         $(OBJDIR)\Notify_Default_POA_Factory.obj \
         $(OBJDIR)\Notify_EventChannelFactory_i.obj \
-        $(OBJDIR)\Method_Request_Updates.obj
+        $(OBJDIR)\Method_Request_Updates.obj \
+        $(OBJDIR)\Timer_Queue \
+        $(OBJDIR)\Timer_Reactor \
+        $(OBJDIR)\Batch_Buffering_Strategy
 
 RESOURCE = $(OBJDIR)\CosNotification.res
 

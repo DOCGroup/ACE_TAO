@@ -24,10 +24,12 @@
 #include "../Property.h"
 #include "../Property_T.h"
 #include "../Consumer.h"
-#include "EventBatch.h"
+#include "../AdminProperties.h"
+#include "Batch_Buffering_Strategy.h"
 
 class TAO_NS_ProxySupplier;
 class TAO_NS_QoSProperties;
+class TAO_NS_Timer;
 
 /**
  * @class TAO_NS_SequencePushConsumer
@@ -45,7 +47,7 @@ public:
   ~TAO_NS_SequencePushConsumer ();
 
   /// Init the Consumer
-  void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer ACE_ENV_ARG_DECL);
+  void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer, TAO_NS_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
 
   /// Shutdown the consumer
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
@@ -63,10 +65,7 @@ public:
   virtual void push (const CosNotification::StructuredEvent & event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
-  // virtual void push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL);
-
-  /// Push Collection.
-  void push (const TAO_NS_Event_Collection event_collection ACE_ENV_ARG_DECL);
+  virtual void push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL);
 
   /// Override, Peer::qos_changed
   virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
@@ -80,8 +79,12 @@ protected:
   /// Schedule timer
   void schedule_timer (void);
 
+  /// Cancel timer
+  void cancel_timer (void);
+
+  ///= Protected Data Members
   /// The Pacing Interval
-  TAO_NS_Property_Time pacing_interval_;
+  ACE_Time_Value pacing_interval_;
 
   /// Timer Id.
   long timer_id_;
@@ -89,8 +92,17 @@ protected:
   /// The Consumer
   CosNotifyComm::SequencePushConsumer_var push_consumer_;
 
-  /// EventBatch
-  TAO_NS_EventBatch event_batch_;
+  /// The Message queue.
+  TAO_NS_Message_Queue msg_queue_;
+
+  /// The Buffering Strategy
+  TAO_NS_Batch_Buffering_Strategy* buffering_strategy_;
+
+  /// Max. batch size.
+  TAO_NS_Property_Long max_batch_size_;
+
+  /// The Timer Manager that we use.
+  TAO_NS_Timer* timer_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -44,7 +44,7 @@ TAO_NS_Proxy::types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_Even
 }
 
 CORBA::Boolean
-TAO_NS_Proxy::check_filters (TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+TAO_NS_Proxy::check_filters (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
 {
   // check if it passes the parent filter.
   CORBA::Boolean parent_val =

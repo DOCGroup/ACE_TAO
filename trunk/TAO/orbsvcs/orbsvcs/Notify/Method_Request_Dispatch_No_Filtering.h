@@ -32,7 +32,7 @@ class TAO_Notify_Export TAO_NS_Method_Request_Dispatch_No_Filtering  : public TA
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Dispatch_No_Filtering (TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier);
+  TAO_NS_Method_Request_Dispatch_No_Filtering (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier);
 
   /// Destructor
   ~TAO_NS_Method_Request_Dispatch_No_Filtering ();

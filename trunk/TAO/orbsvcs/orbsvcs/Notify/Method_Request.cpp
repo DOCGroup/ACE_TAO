@@ -8,7 +8,7 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_Method_Request, "$Id$")
 
-TAO_NS_Method_Request_Event::TAO_NS_Method_Request_Event (TAO_NS_Event_var& event)
+TAO_NS_Method_Request_Event::TAO_NS_Method_Request_Event (const TAO_NS_Event_var& event)
   :event_ (event)
 {
   // Set the parameters that affect queuing in the message queue.
@@ -49,4 +49,22 @@ TAO_NS_Method_Request_Event::TAO_NS_Method_Request_Event (TAO_NS_Event_var& even
 
 TAO_NS_Method_Request_Event::~TAO_NS_Method_Request_Event ()
 {
+}
+
+int
+TAO_NS_Method_Request_Event::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return -1;
+}
+
+TAO_NS_Method_Request*
+TAO_NS_Method_Request_Event::copy (void)
+{
+  return new TAO_NS_Method_Request_Event (this->event_);
+}
+
+const TAO_NS_Event_var&
+TAO_NS_Method_Request_Event::event (void)
+{
+  return this->event_;
 }

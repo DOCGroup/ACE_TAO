@@ -21,8 +21,11 @@
 
 #include "ace/Task.h"
 #include "ace/Message_Queue.h"
+#include "ace/Reactor.h"
+#include "AdminProperties.h"
 #include "Worker_Task.h"
 #include "Types.h"
+#include "Timer_Queue.h"
 
 class TAO_NS_Buffering_Strategy;
 
@@ -32,7 +35,7 @@ class TAO_NS_Buffering_Strategy;
  * @brief Implements a Thread Pool Worker Task.
  *
  */
-class TAO_Notify_Export TAO_NS_ThreadPool_Task : public TAO_NS_Worker_Task, ACE_Task<ACE_SYNCH>
+class TAO_Notify_Export TAO_NS_ThreadPool_Task : public TAO_NS_Worker_Task, ACE_Task<ACE_NULL_SYNCH>
 {
   friend class TAO_NS_Method_Request_Shutdown;
 
@@ -46,10 +49,10 @@ public:
   /// Call the base class init
   virtual int init (int argc, char **argv);
 
-  virtual void init(TAO_NS_AdminProperties&);
+  virtual int close (u_long flags);
 
   /// Activate the threadpool
-  void init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties& admin_properties ACE_ENV_ARG_DECL);
+  void init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
 
   /// Queue the request
   virtual void exec (TAO_NS_Method_Request& method_request);
@@ -60,20 +63,25 @@ public:
   /// Update QoS Properties.
   virtual void update_qos_properties (const TAO_NS_QoSProperties& qos_properties);
 
+  /// The object used by clients to register timers.
+  virtual TAO_NS_Timer* timer (void);
+
+  /// Access the Buffering Strategy.
+  TAO_NS_Buffering_Strategy* buffering_strategy (void);
+
 protected:
     /// task svc
   virtual int svc (void);
 
 private:
-  /// Message Queue
-  ACE_Message_Queue<ACE_SYNCH>& msg_queue_;
-
   /// The buffering strategy to use.
   TAO_NS_Buffering_Strategy* buffering_strategy_;
 
-  /// We need to decrement the event_count_ everytime we dequeue a command
-  /// object.
-  TAO_NS_Signal_Property_Long* queue_length_;
+  /// Shutdown
+  int shutdown_;
+
+  /// The Queue based timer.
+  TAO_NS_Timer_Queue timer_;
 };
 
 #if defined (__ACE_INLINE__)

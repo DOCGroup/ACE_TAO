@@ -22,6 +22,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/NotifyExtC.h"
+#include "AdminProperties.h"
 
 class TAO_NS_EventChannelFactory;
 class TAO_NS_EventChannel;
@@ -29,7 +30,6 @@ class TAO_NS_SupplierAdmin;
 class TAO_NS_ConsumerAdmin;
 class TAO_NS_FilterFactory;
 class TAO_NS_Object;
-class TAO_NS_AdminProperties;
 
 /**
  * @class TAO_NS_Builder
@@ -87,13 +87,6 @@ public:
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  ///= Helper Methods
-
-  /// Apply Threadpool QoS
-  virtual void apply_threadpool_qos (TAO_NS_Object& object, const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties& admin_properties ACE_ENV_ARG_DECL);
-
-  /// Apply ThreadpoolLanes QoS
-  virtual void apply_threadpool_lane_qos (TAO_NS_Object& object, const NotifyExt::ThreadPoolLanesParams& tpl_params, TAO_NS_AdminProperties& admin_properties ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

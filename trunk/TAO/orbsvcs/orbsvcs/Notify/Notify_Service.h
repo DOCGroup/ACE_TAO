@@ -67,6 +67,9 @@ protected:
   /// Apply ORB Scheduling policy to main thread and set its priority to the lowest available.
   void init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
+  /// Set event channel thread options.
+  void set_event_channel_threads (int threads);
+
   /// Set consumer admin thread options.
   void set_consumer_admin_threads (int threads);
 

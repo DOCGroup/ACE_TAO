@@ -41,7 +41,7 @@ class TAO_Notify_Export TAO_NS_FilterAdmin
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+  CORBA::Boolean match (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
