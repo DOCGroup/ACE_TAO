@@ -116,6 +116,7 @@ TAO_Server_Connection_Handler::activate (long flags,
                                          ACE_thread_t  thread_names[])
 {
   this->parent_ = TAO_ORB_Core_instance ();
+  this->thr_mgr (this->parent_->thr_mgr ());
   return TAO_SVC_HANDLER::activate (flags,
                                     n_threads,
                                     force_active,
