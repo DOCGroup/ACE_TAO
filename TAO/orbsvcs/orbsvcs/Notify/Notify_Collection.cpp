@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Notify_Collection.h"
-#include "Notify_Event.h"
+//#include "Notify_Event.h"
 #include "Notify_Listeners.h"
 
 ACE_RCSID(Notify, Notify_Collection, "$Id$")

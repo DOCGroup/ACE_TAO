@@ -27,6 +27,7 @@
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "notify_export.h"
+#include "Notify_Event.h"
 
 template<class PROXY> class TAO_ESF_Proxy_Collection;
 template<class T> class ACE_Unbounded_Set;
