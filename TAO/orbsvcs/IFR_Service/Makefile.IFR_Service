@@ -200,7 +200,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_Service_Utils.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -249,7 +249,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/ifr_service_export.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/ifr_service_export.h
 
 .obj/IFR_Service.o .obj/IFR_Service.so .shobj/IFR_Service.o .shobj/IFR_Service.so: IFR_Service.cpp IFR_Service.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -385,7 +385,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Encodable.h \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_Service_Utils.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Typecode.h \
  $(TAO_ROOT)/tao/Typecode.i \
@@ -434,14 +434,14 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/ifr_service_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/ComponentRepository_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/Repository_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/Container_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IRObject_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/ifr_service_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/Repository_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/Container_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IRObject_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BasicS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.i \
@@ -456,22 +456,22 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BaseS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_BasicS.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ExtendedC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.i \
  $(ACE_ROOT)/ace/Configuration.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -504,22 +504,22 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.i \
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_macro.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_macro.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactory_Loader.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/typecodefactory_export.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.i \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.h \
  $(TAO_ROOT)/tao/TypeCodeFactory/TypeCodeFactoryC.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_ComponentsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/Servant_Locator.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/IFR_Service/Options.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/Servant_Locator.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService/Options.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
