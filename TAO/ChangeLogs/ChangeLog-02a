@@ -1,3 +1,167 @@
+Thu Oct 12 14:24:03 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.cpp (open_default, open_i,
+	  extract_endpoint_version):
+
+	  Initialize major and minor endpoint versions to
+	  TAO_DEF_GIOP_MAJOR and TAO_DEF_GIOP_MINOR, respectively, instead
+	  of -1 so that a valid version is passed to pluggable protocol
+	  open() and/or open_default() methods.  This makes things less
+	  error prone, especially since initializing to -1 did not provide
+	  us with anything useful.
+
+	* docs/Options.html:
+
+	  Updated ORB option documentation in accordance with the changes
+	  made to the TAO_ORB_Core::init() method described below.
+
+	* tao/ORB_Core.cpp (init):
+
+	  Added warning message about the fact that the "-ORBPreconnect"
+	  option is obsolete, and that validate_connection() should be
+	  used instead.
+
+	  Removed support for the long obsolete
+	  "-ORB{Name,Trading,ImplRepo}ServiceIOR" options.  Their
+	  functionality is already provided by the standard -ORBInitRef
+	  ORB option.
+
+	* tao/Connector_Registry.h (connect):
+
+	  Removed the default value for the ACE_Time_Value pointer
+	  argument.  There is no reason why it should have a default value
+	  since TAO's invocation code always passes an ACE_Time_Value when
+	  calling connect(), even if that value is zero.
+
+	* tao/Connector_Registry.cpp (connect):
+	* tao/Pluggable.h (connect):
+	* tao/IIOP_Connector.h (connect):
+	* tao/IIOP_Connector.cpp (connect):
+	* tao/SHMIOP_Connector.h (connect):
+	* tao/SHMIOP_Connector.cpp (connect):
+	* tao/UIOP_Connector.h (connect):
+	* tao/UIOP_Connector.cpp (connect):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h (connect):
+
+	  Added CORBA::Environment argument to the connect() call to make
+	  it possible to throw exceptions within that method.  Most
+	  pluggable protocols may not need this argument, and can rely on
+	  the GIOP_Invocation class to figure out the appropriate exception
+	  to throw, if any.  However, the SSLIOP pluggable protocol may
+	  need to throw the CORBA::NO_PERMISSION exception when attempting
+	  to connect to an endpoint.
+
+	* tao/Invocation.cpp (start):
+
+	  Pass the CORBA::Environment variable ACE_TRY_ENV to the
+	  TAO_Connector_Registry::connect() call.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+
+	  Only allow connection to the insecure IIOP port if the endpoint
+	  explicitly allows it, i.e. if the Security::NoProtection
+	  security association bit is set in the
+	  SSLIOP::SSL::target_supports field.  The server will soon
+	  perform the same permission check, so this check is an
+	  optimization since a connection will not be established
+	  needlessly, i.e. rejected due to lack of permission.
+
+	  Removed the check that causes an attempt to connect to the
+	  insecure port if the SSL port is set to zero.  The SSL port will
+	  never be set to zero on the client side.  It will default to
+	  port 684, the IANA assigned port for IIOP over SSL.
+
+	  Note that it is still possible for the standard non-SSLIOP aware
+	  IIOP pluggable protocol to attempt to connect to the insecure
+	  port.  In that case, the server will have to prevent the
+	  connection, and subsequently the request, from completing.  This
+	  feature will be added soon.
+
+	  If the endpoint requires an insecure connection, i.e. the
+	  Security::NoProtection security association bit in the
+	  SSLIOP::SSL::target_requires field is enabled, then prevent an
+	  SSL connection from occuring.  This seems silly, but nothing
+	  appears to be in the spec that states this can't be done.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp (TAO_SSLIOP_Endpoint):
+
+	  Pass pointer to entire SSLIOP::SSL component so that its
+	  entire contents may be copied, not just the port.  This is
+	  particularly necessary to make it possible to keep track of the
+	  security associations corresponding to the given endpoint.  If
+	  the pointer is zero, then initialize the SSLIOP::SSL component
+	  with conservative security association options, and set the port
+	  to be the IANA assigned port for IIOP over SSL, 684.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i (ssl_port):
+
+	  Removed this method.  It is more useful to return the entire
+	  SSLIOP::SSL component in most cases, hence the newly added
+	  ssl_component() accessor described below.
+
+	  (ssl_component):
+
+	  Accessor method that returns a constant reference to the
+	  SSLIOP::SSL component associated with the given SSLIOP endpoint.
+	  In most cases, we need to check the "target_supports" and
+	  "target_requires" fields, not just the "port" field.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+
+	  The constructor now accepts an argument that sets the default
+	  value for the Security::NoProtection bit in the
+	  SSLIOP::SSL::target_supports field.  The need for this change
+	  will obviated once the security policy support is added.
+
+	  (create_mprofile, create_rt_mprofile):
+
+	  Pass pointer to the entire SSLIOP::SSL component, not just the
+	  port.  Its other fields are important for enforcing security.
+
+	  (verify_secure_configuration):
+
+	  New method that ensures neither the endpoint configuration nor
+	  the ORB configuration violate security measures.
+
+	  In order to support a secure connection, the SSLIOP::SSL tagged
+	  component must be embedded in the IOR.  This isn't possible if
+	  the user elects to disable standard profile components.
+	  Similarly, IIOP 1.0 does not support tagged components, which it
+	  makes it impossible to embed the SSLIOP::SSL tagged component
+	  within the IOR.  If the given object explicitly disallows
+	  insecure invocations and standard profile components are
+	  disabled, then return with an error since secure invocations
+	  cannot be supported without standard profile components.  Note
+	  that it isn't enough to support Security::NoProtection.
+	  Security::NoProtection must be required since "support" does not
+	  preclude the secure port from being used.
+
+	  (open, open_default):
+
+	  Call the newly added verify_secure_configuration() method prior
+	  to opening any endpoints to ensure that neither the endpoint
+	  configuration nor the ORB configuration violate security
+	  measures. 
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+
+	  The new "no_protection_" field is now used instead of the old
+	  "use_ssl_" field.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
+
+	  Deprecated the "-SSLDisable" option.  It has been superseded by
+	  the "-SSLNoProtection" option since it is better emphasizes the
+	  consequences of disabling SSL support, and since it is also
+	  applicable on the server side.
+
+	  (make_acceptor):
+
+	  Pass the newly added "no_protection_" field to the
+	  SSLIOP_Acceptor constructor.
+
 Thu Oct 12 15:29:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
@@ -105,7 +269,6 @@ Thu Oct 12 00:07:36 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	  Fixed problem with double checked locking. Thanks to Marina
 	  for noting that.
-
 
 Wed Oct 11 23:12:03 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 

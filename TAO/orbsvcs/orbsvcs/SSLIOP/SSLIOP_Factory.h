@@ -65,8 +65,11 @@ private:
   // Changing the version number can be used to provide backwards
   // compatibility with old clients.
 
-  int use_ssl_;
-  // Use SSL when establishing connections
+  int no_protection_;
+  // In the case of the server side, allow connections to the insecure
+  // IIOP port.
+  // In the case of the client side, connect to the insecure IIOP port
+  // instead of the secure IIOP over SSL port.
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_SSLIOP_Protocol_Factory)

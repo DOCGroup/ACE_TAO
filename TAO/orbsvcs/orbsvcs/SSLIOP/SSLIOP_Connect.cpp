@@ -161,7 +161,7 @@ TAO_SSLIOP_Server_Connection_Handler::open (void*)
       (void) addr.addr_to_string (client, sizeof (client));
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) IIOP connection from ")
+                  ACE_TEXT ("TAO (%P|%t) SSLIOP connection from ")
                   ACE_TEXT ("client <%s> on %d\n"),
                   client,
                   this->peer ().get_handle ()));
@@ -205,7 +205,7 @@ TAO_SSLIOP_Server_Connection_Handler::activate (long flags,
 
 int
 TAO_SSLIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
-                                                  ACE_Reactor_Mask rm)
+                                                    ACE_Reactor_Mask rm)
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
@@ -375,7 +375,7 @@ TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
 TAO_SSLIOP_Client_Connection_Handler::
 TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                       TAO_ORB_Core* orb_core,
-                                      CORBA::Boolean /* flag */,
+                                      CORBA::Boolean /* lite_flag */,
                                       void *arg)
   : TAO_SSLIOP_Handler_Base (t),
     transport_ (this, orb_core),
@@ -451,7 +451,7 @@ TAO_SSLIOP_Client_Connection_Handler::open (void *)
       (void) addr.addr_to_string (server, sizeof (server));
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) IIOP connection to server ")
+                  ACE_TEXT ("TAO (%P|%t) SSLIOP connection to server ")
                   ACE_TEXT ("<%s> on %d\n"),
                   server,
                   this->peer ().get_handle ()));

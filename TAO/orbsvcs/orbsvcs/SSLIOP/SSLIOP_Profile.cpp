@@ -21,12 +21,12 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr &addr,
                                         const TAO_ObjectKey &object_key,
                                         const TAO_GIOP_Version &version,
                                         TAO_ORB_Core *orb_core,
-                                        u_short ssl_port)
+                                        const SSLIOP::SSL *ssl_component)
   : TAO_IIOP_Profile (addr,
                       object_key,
                       version,
                       orb_core),
-  ssl_endpoint_ (ssl_port, 0)
+  ssl_endpoint_ (ssl_component, 0)
 {
   this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
 }
@@ -37,24 +37,24 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char* host,
                                         const ACE_INET_Addr &addr,
                                         const TAO_GIOP_Version &version,
                                         TAO_ORB_Core *orb_core,
-                                        u_short ssl_port)
+                                        const SSLIOP::SSL *ssl_component)
   : TAO_IIOP_Profile (host,
                       port,
                       object_key,
                       addr,
                       version,
                       orb_core),
-  ssl_endpoint_ (ssl_port, 0)
+  ssl_endpoint_ (ssl_component, 0)
 {
   this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
 }
 
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char *string,
                                         TAO_ORB_Core *orb_core,
-                                        u_short ssl_port,
+                                        const SSLIOP::SSL *ssl_component,
                                         CORBA::Environment &ACE_TRY_ENV)
   : TAO_IIOP_Profile (string, orb_core, ACE_TRY_ENV),
-    ssl_endpoint_ (ssl_port, 0)
+    ssl_endpoint_ (ssl_component, 0)
 {
   this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
 }
@@ -92,19 +92,17 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
   if (r != 1)
     return r;
 
-  // Attempt to decode ssl tagged component.  It may not be there if
-  // we are dealing with pure IIOP profile.
+  // Attempt to decode SSLIOP::SSL tagged component.  It may not be
+  // there if we are dealing with pure IIOP profile.
   int ssl_component_found = 0;
   IOP::TaggedComponent component;
   component.tag = SSLIOP::TAG_SSL_SEC_TRANS;
 
-  if (this->tagged_components ().get_component (component) == 0)
-      this->ssl_endpoint_.ssl_component_.port = 0;
-  else
+  if (this->tagged_components ().get_component (component))
     {
-      TAO_InputCDR cdr (
-                        ACE_reinterpret_cast (const char*,
-                                      component.component_data.get_buffer ()),
+      TAO_InputCDR cdr (ACE_reinterpret_cast (
+                          const char*,
+                          component.component_data.get_buffer ()),
                         component.component_data.length ());
       CORBA::Boolean byte_order;
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
