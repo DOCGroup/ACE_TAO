@@ -1,5 +1,14 @@
-Tue Dec 12 05:53:17 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+Tue Dec 12 09:52:00 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+    
+        * Well, it looks like we finally have a new president in the 
+	  US, yow!
+  
+Tue Dec 12 04:53:17 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Service_Config.{h,i}: Added an inequality operator.
+          Thanks to Mike Curtis <mccurry@my-deja.com> for pointing this
+ 	  out.
+	
 	* ace/Service_Config.cpp (process_commandline_directives): Changed
 	  a check for error values being -1 to being != 0 since process_directive()
 	  can return 
@@ -8,8 +17,9 @@ Tue Dec 12 05:53:17 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  2) and -1 on a certain ACE_NEW_RETURN call
 	  3) but always zero on success.
   
-          Thanks to Mike Curtis <mccurry@my-deja.com> for pointing this
- 	  out.
+          Thanks to Mike Curtis <mccurry@my-deja.com> and 
+	  Munagala Ramanath <Munagala.Ramanath@PostX.com>
+	  for pointing this out.
 
 Tue Dec 12 01:07:39 2000  Darrell Brunsch <brunsch@uci.edu>
 
