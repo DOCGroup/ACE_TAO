@@ -278,7 +278,7 @@ public:
 
   /// Send all the <message_block>s chained through their <next> and
   /// <cont> pointers.  This call uses the underlying OS gather-write
-  /// operationto reduce the domain-crossing penalty.
+  /// operation to reduce the domain-crossing penalty.
   static ssize_t send_n (ACE_HANDLE handle,
                          const ACE_Message_Block *message_block,
                          const ACE_Time_Value *timeout = 0,
@@ -294,6 +294,13 @@ public:
   static ssize_t write_n (ACE_HANDLE handle,
                           const void *buf,
                           size_t len,
+                          size_t *bytes_transferred = 0);
+
+  /// Write all the <message_block>s chained through their <next> and
+  /// <cont> pointers.  This call uses the underlying OS gather-write
+  /// operation to reduce the domain-crossing penalty.
+  static ssize_t write_n (ACE_HANDLE handle,
+                          const ACE_Message_Block *message_block,
                           size_t *bytes_transferred = 0);
 
   static ssize_t readv_n (ACE_HANDLE handle,
