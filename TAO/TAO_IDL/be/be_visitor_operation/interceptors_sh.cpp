@@ -56,7 +56,14 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
       << " : public TAO_ServerRequest_Info" << be_nl
       << "{" << be_nl
       << "public:"<< be_idt_nl
-      << "TAO_ServerRequest_Info_"<< node->flat_name () << " (" << be_idt_nl 
+    // Need to declare the stub as a friend so that it can access the 
+    // private members of the Request Info class.
+      << "friend class ";
+  be_decl *parent =
+    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+  *os << "POA_" << parent->full_name () << ";"<<be_nl;
+
+  *os << "TAO_ServerRequest_Info_"<< node->flat_name () << " (" << be_idt_nl 
       << "const char *  operation,"<< be_nl 
       << "IOP::ServiceContextList &service_context_list" << be_uidt;
 
@@ -114,12 +121,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
           << "ACE_THROW_SPEC ((CORBA::SystemException));"
           << be_uidt_nl << be_nl;
       os->indent ();
-      *os << "virtual char * received_exception_id ( "<< be_idt_nl 
-          <<"CORBA::Environment &ACE_TRY_ENV = "<< be_idt_nl
-          << "TAO_default_environment ())"<< be_uidt_nl
-          << "ACE_THROW_SPEC ((CORBA::SystemException));"
-          << be_uidt_nl << be_nl
-          << be_uidt_nl << "private:" <<be_nl;
+      *os << be_uidt_nl << "private:" <<be_nl;
 
       *os << "class TAO_ServerRequest_Info_"<< node->flat_name () 
           << " (const "<< "TAO_ServerRequest_Info_"<< node->flat_name ()
@@ -153,11 +155,41 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
         }
       delete visitor;
 
-      // I can create these on stack and return on demand
-      //  *os << be_nl << "Dynamic::ParameterList_var arguments_;" <<be_nl
-      //   << "Dynamic::ExceptionList_var exceptions_;" << be_nl
-     
       // Store the result for later use.
+      // generate the return type 
+      bt = be_type::narrow_from_decl (node->return_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // grab the right visitor to generate the return type if its not
+      // void since we cant have a private member to be of void type.
+      if (!this->void_return_type (bt))
+        {
+          *os << "void result (";
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (bt->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_cs::"
+                                 "visit_operation - "
+                                 "codegen for retval pre invoke failed\n"),
+                                -1);
+            }
+          os->indent ();
+          *os << "  result);" << be_uidt << be_uidt << be_uidt_nl
+              << " // update the result " << be_nl;
+        }
+      
+      // Generate the result data member
       // generate the return type 
 
       bt = be_type::narrow_from_decl (node->return_type ());
