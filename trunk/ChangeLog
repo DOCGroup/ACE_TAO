@@ -1,3 +1,31 @@
+Wed Sep 10 10:07:43 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/avstreams.mpb:
+        * bin/MakeProjectCreator/config/concurrency.mpb:
+        * bin/MakeProjectCreator/config/event.mpb:
+        * bin/MakeProjectCreator/config/ftorb.mpb:
+        * bin/MakeProjectCreator/config/ifrservice.mpb:
+        * bin/MakeProjectCreator/config/lifecycle.mpb:
+        * bin/MakeProjectCreator/config/loadbalancing.mpb:
+        * bin/MakeProjectCreator/config/naming.mpb:
+        * bin/MakeProjectCreator/config/notification.mpb:
+        * bin/MakeProjectCreator/config/property.mpb:
+        * bin/MakeProjectCreator/config/rtcorbaevent.mpb:
+        * bin/MakeProjectCreator/config/rtevent.mpb:
+        * bin/MakeProjectCreator/config/rtoldevent.mpb:
+        * bin/MakeProjectCreator/config/rtsched.mpb:
+        * bin/MakeProjectCreator/config/rtschedevent.mpb:
+        * bin/MakeProjectCreator/config/security.mpb:
+        * bin/MakeProjectCreator/config/time.mpb:
+        * bin/MakeProjectCreator/config/trading.mpb:
+
+          Change requires to tagchecks.  Using requires here was not
+          correct.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Use tagchecks even if comps is used.
+
 Wed Sep 10 08:04:25 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:

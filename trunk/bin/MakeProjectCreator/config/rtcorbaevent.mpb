@@ -1,6 +1,6 @@
 project : rtportableserver, rtevent {
-  after    += RTCORBAEvent
-  libs     += TAO_RTCORBAEvent
-  comps    += RTCORBAEvent
-  requires += RTCORBAEvent
+  after     += RTCORBAEvent
+  libs      += TAO_RTCORBAEvent
+  comps     += RTCORBAEvent
+  tagchecks += RTCORBAEvent
 }
