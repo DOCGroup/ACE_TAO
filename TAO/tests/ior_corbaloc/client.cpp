@@ -29,7 +29,6 @@ int main (int argc, char *argv [])
   ACE_TRY
     {
 
-
       IOR_corbaloc_Client_i client;
 
       int init_result;
