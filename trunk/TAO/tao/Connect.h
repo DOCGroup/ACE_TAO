@@ -45,7 +45,6 @@ class TAO_IIOP_Handler_Base : public TAO_SVC_HANDLER
 public:
   TAO_IIOP_Handler_Base (ACE_Thread_Manager *t);
   TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core);
-  TAO_IIOP_Handler_Base (ACE_Thread_Manager *t, int x, int y);
 
   virtual TAO_Transport *transport (void) = 0;
 };

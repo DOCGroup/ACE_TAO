@@ -42,31 +42,25 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (ACE_Thread_Manager *t)
-  : TAO_SVC_HANDLER (t)
-{
-}
-
 TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core)
   : TAO_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
 {
 }
 
-TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (ACE_Thread_Manager *t, int x, int y)
+TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (ACE_Thread_Manager *t)
   : TAO_SVC_HANDLER (t, 0, 0)
 {
 }
 
 // @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_IIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr (), 0, 0),
+  : TAO_IIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr ()),
     orb_core_ (TAO_ORB_Core_instance ())
 {
   iiop_transport_ = new TAO_IIOP_Server_Transport(this);
 }
 
 // @@ For pluggable protocols, added a reference to the corresponding transport obj.
-//@@    iiop_transport_(new TAO_IIOP_Transport(TAO_IOP_TAG_INTERNET_IOP, this))
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_IIOP_Handler_Base (orb_core),
     orb_core_ (orb_core)
@@ -685,7 +679,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 
 // @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_IIOP_Handler_Base (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t, 0, 0),
+  : TAO_IIOP_Handler_Base (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t),
     expecting_response_ (0),
     input_available_ (0)
 {

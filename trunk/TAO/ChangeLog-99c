@@ -1,3 +1,7 @@
+Mon Feb  1 15:33:59 1999  Fred Kuhns <fredk@cs.wuslt.edu>
+        * Updatet Connect.{h,cpp}, removed two unused args
+          TAO_IIOP_Handler_Base
+
 Mon Feb 01 13:55:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Custom_Marshal/Makefile: ran make depend.
