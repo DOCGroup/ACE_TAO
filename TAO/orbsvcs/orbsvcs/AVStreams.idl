@@ -645,7 +645,7 @@ module AVStreams
       // control, if one is required
       string go_to_listen(inout AVStreams::QoS the_qos,
                           in boolean is_mcast,
-                          in FlowEndPoint peer,
+                          in FlowProducer peer,
                           inout string flowProtocol)// syntax <flowProtocol>
         // The out value of flowProtocol contains SFP version
         // supported and all options including "Credit".
