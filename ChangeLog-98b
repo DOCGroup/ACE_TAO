@@ -1,3 +1,36 @@
+Thu Oct 22 19:48:20 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/index.html
+        Reformatted it via emacs to make it more readable when editing.
+        Added a comment pointing to Bob McWhirter's original FMM document
+        to make it easier to update the repository in the future.
+
+        * docs/tutorials/015/Client.h
+        * docs/tutorials/015/Client.cpp
+        * docs/tutorials/015/Server.h
+        * docs/tutorials/015/Server.cpp
+
+        Since Windows just *pretends* to have mixed-case names the cpp
+	files conflict with client.cpp and server.cpp.  I renamed these
+	files to:
+	
+        * docs/tutorials/015/Client_i.h
+        * docs/tutorials/015/Client_i.cpp
+        * docs/tutorials/015/Server_i.h
+        * docs/tutorials/015/Server_i.cpp
+
+	Which necessitated changes to
+        * docs/tutorials/015/client.cpp
+        * docs/tutorials/015/server.cpp
+        * docs/tutorials/015/Makefile.client
+        * docs/tutorials/015/Makefile.server
+        * docs/tutorials/015/Makefile
+        * docs/tutorials/015/combine.shar
+        * docs/tutorials/015/*.html
+
+        Thanks to Darrell Brunsch for catching this.
+
+
 Thu Oct 22 16:52:21 1998  Steve Huston  <shuston@riverace.com>
 
         * tests/Thread_Pool_Reactor_Test.(cpp h): Adjusted debug output to

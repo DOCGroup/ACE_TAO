@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-10-19 20:42 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 1998-10-22 19:58 EDT by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/015'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -12,7 +12,7 @@
 # length mode       name
 # ------ ---------- ------------------------------------------
 #    414 -rw-rw-r-- hdr
-#    411 -rw-rw-r-- bodies
+#    419 -rw-rw-r-- bodies
 #   1183 -rw-rw-r-- page01.pre
 #    194 -rw-rw-r-- page02.pre
 #    318 -rw-rw-r-- page03.pre
@@ -34,9 +34,9 @@
 #    281 -rw-rw-r-- page19.pre
 #    356 -rw-rw-r-- page20.pre
 #    151 -rw-rw-r-- page21.pre
-#   2551 -rw-rw-r-- page22.pre
-#    398 -rw-rw-r-- page04.pst
-#    609 -rw-rw-r-- page09.pst
+#   2567 -rw-rw-r-- page22.pre
+#    406 -rw-rw-r-- page04.pst
+#    617 -rw-rw-r-- page09.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -83,7 +83,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh02329; then
+if mkdir _sh18487; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -136,14 +136,14 @@ else
 #
 PAGE=2
 client.cpp
-Client.h
-Client.cpp
+Client_i.h
+Client_i.cpp
 #
 # The server application specific files
 #
 server.cpp
-Server.h
-Server.cpp
+Server_i.h
+Server_i.cpp
 Handler.h
 Handler.cpp
 #
@@ -168,19 +168,19 @@ Compressor.cpp
 Crypt.h
 Crypt.cpp
 SHAR_EOF
-  $shar_touch -am 1019163798 'bodies' &&
+  $shar_touch -am 1022195498 'bodies' &&
   chmod 0664 'bodies' ||
   $echo 'restore of' 'bodies' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'bodies:' 'MD5 check failed'
-e12e3d0a32a2930d5518e407a0a6b6bb  bodies
+a6c99d6567b0640ad524b196dc43647e  bodies
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
-    test 411 -eq "$shar_count" ||
-    $echo 'bodies:' 'original size' '411,' 'current size' "$shar_count!"
+    test 419 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '419,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page01.pre ==============
@@ -884,13 +884,13 @@ Here's the complete file list:
 <P>
 <LI><A HREF="Makefile.client">client Makefile</A>
 <LI><A HREF="client.cpp">client.cpp</A>
-<LI><A HREF="Client.h">Client.h</A>
-<LI><A HREF="Client.cpp">Client.cpp</A>
+<LI><A HREF="Client_i.h">Client_i.h</A>
+<LI><A HREF="Client_i.cpp">Client_i.cpp</A>
 <P>
 <LI><A HREF="Makefile.server">Server Makefile</A>
 <LI><A HREF="server.cpp">server.cpp</A>
-<LI><A HREF="Server.h">Server.h</A>
-<LI><A HREF="Server.cpp">Server.cpp</A>
+<LI><A HREF="Server_i.h">Server_i.h</A>
+<LI><A HREF="Server_i.cpp">Server_i.cpp</A>
 <LI><A HREF="Handler.h">Handler.h</A>
 <LI><A HREF="Handler.cpp">Handler.cpp</A>
 <P>
@@ -910,19 +910,19 @@ Here's the complete file list:
 <LI><A HREF="Crypt.h">Crypt.h</A>
 </UL>
 SHAR_EOF
-  $shar_touch -am 1019204198 'page22.pre' &&
+  $shar_touch -am 1022195898 'page22.pre' &&
   chmod 0664 'page22.pre' ||
   $echo 'restore of' 'page22.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page22.pre:' 'MD5 check failed'
-448ab5a481b51ec392aaac814a0bd005  page22.pre
+9eae1b08c2e061a68bfc1f3cbc2f59de  page22.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page22.pre'`"
-    test 2551 -eq "$shar_count" ||
-    $echo 'page22.pre:' 'original size' '2551,' 'current size' "$shar_count!"
+    test 2567 -eq "$shar_count" ||
+    $echo 'page22.pre:' 'original size' '2567,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pst ==============
@@ -940,25 +940,25 @@ For a quick look back:
 <UL>
 <LI><A HREF="Makefile.client">client Makefile</A>
 <LI><A HREF="client.cpp">client.cpp</A>
-<LI><A HREF="Client.h">Client.h</A>
-<LI><A HREF="Client.cpp">Client.cpp</A>
+<LI><A HREF="Client_i.h">Client_i.h</A>
+<LI><A HREF="Client_i.cpp">Client_i.cpp</A>
 </UL>
 <P>
 Now we'll move on and examine the server counter-part of our client.
 SHAR_EOF
-  $shar_touch -am 1019202198 'page04.pst' &&
+  $shar_touch -am 1022195698 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pst:' 'MD5 check failed'
-8fcb88614fd879307c71cea1d53e276f  page04.pst
+00419a8ab9a3ddae3261840b62afdc4a  page04.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pst'`"
-    test 398 -eq "$shar_count" ||
-    $echo 'page04.pst:' 'original size' '398,' 'current size' "$shar_count!"
+    test 406 -eq "$shar_count" ||
+    $echo 'page04.pst:' 'original size' '406,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page09.pst ==============
@@ -978,27 +978,27 @@ X
 <UL>
 <LI><A HREF="Makefile.server">Server Makefile</A>
 <LI><A HREF="server.cpp">server.cpp</A>
-<LI><A HREF="Server.h">Server.h</A>
-<LI><A HREF="Server.cpp">Server.cpp</A>
+<LI><A HREF="Server_i.h">Server_i.h</A>
+<LI><A HREF="Server_i.cpp">Server_i.cpp</A>
 <LI><A HREF="Handler.h">Handler.h</A>
 <LI><A HREF="Handler.cpp">Handler.cpp</A>
 </UL>
 <P>
 SHAR_EOF
-  $shar_touch -am 1019202198 'page09.pst' &&
+  $shar_touch -am 1022195698 'page09.pst' &&
   chmod 0664 'page09.pst' ||
   $echo 'restore of' 'page09.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page09.pst:' 'MD5 check failed'
-22cfa1a8dadd48fccc7ed0c82aeba842  page09.pst
+a96009f43a6fe8e6b52ffa923993a3e1  page09.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page09.pst'`"
-    test 609 -eq "$shar_count" ||
-    $echo 'page09.pst:' 'original size' '609,' 'current size' "$shar_count!"
+    test 617 -eq "$shar_count" ||
+    $echo 'page09.pst:' 'original size' '617,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh02329
+rm -fr _sh18487
 exit 0
