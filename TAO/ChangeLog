@@ -1,3 +1,9 @@
+Mon Sep 27 06:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Reverted some changes of Trevor below, messaging is dependent
+          on valuetype and no need to add valuetype twice
+
 Sun Sep 26 12:30:54 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
