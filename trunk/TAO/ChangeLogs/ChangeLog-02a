@@ -1,3 +1,22 @@
+Mon Dec 18 19:48:52 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/y.tab.cpp:
+
+          Modified the yacc file to check the type and value
+          of a constant when it is used later in the IDL file
+          as an array dim, a string bound, or a sequence bound.
+          In these cases, it must be a positive integer. Previous
+          behavior was to coerce the constant literal to an
+          unsigned long, truncate the fractional part, if any, and
+          let the C++ compiler output the error if the constant
+          value was 0. Thanks to Alexander Kogan <jk@kogan.nnov.ru> 
+          for reporting this bug.
+
+        * TAO_IDL/util/utl_err.cpp:
+
+          Fixed typos in error messages.
+
 Mon Dec 18 19:57:07 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/DomainS.h:
