@@ -8,8 +8,9 @@ Mon Mar 20 17:54:15 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Thanks to David Hauck <davidh@realtimeint.com> for first pointing
           this out, Shalabh Bhatnagar <shalabh_b@hotmail.com> for informing
-          me that it doesn't work on Win95, and <torsten_pf@geocities.com> 
-          for pointing out this doesn't work on Win98 either.
+          me that it doesn't work on Win95, and Torsten Pfuetzenreuter
+          <torsten_pf@geocities.com> for pointing out this doesn't work on 
+          Win98 either.
 
           [BUG 499]
 
