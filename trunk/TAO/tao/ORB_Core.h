@@ -70,14 +70,6 @@ class TAO_Profile;
 class TAO_GIOP_Invocation;
 
 class TAO_Endpoint_Selector_Factory;
-class TAO_Invocation_Endpoint_Selector;
-class TAO_Default_Endpoint_Selector;
-class TAO_Priority_Endpoint_Selector;
-class TAO_Bands_Endpoint_Selector;
-class TAO_Protocol_Endpoint_Selector;
-class TAO_Priority_Protocol_Selector;
-class TAO_Bands_Protocol_Selector;
-class TAO_Client_Priority_Policy_Selector;
 class TAO_Message_State_Factory;
 class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
@@ -454,18 +446,6 @@ public:
   //@}
 
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory (void);
-  TAO_Default_Endpoint_Selector *default_endpoint_selector (void);
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  TAO_Protocol_Endpoint_Selector *protocol_endpoint_selector (void);
-  TAO_Priority_Endpoint_Selector *priority_endpoint_selector (void);
-  TAO_Bands_Endpoint_Selector *bands_endpoint_selector (void);
-  TAO_Priority_Protocol_Selector *priority_protocol_selector (void);
-  TAO_Bands_Protocol_Selector *bands_protocol_selector (void);
-  TAO_Client_Priority_Policy_Selector *client_priority_policy_selector (void);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -1145,17 +1125,8 @@ protected:
   int open_called_;
 
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory_;
-  TAO_Default_Endpoint_Selector* default_endpoint_selector_;
 
 #if (TAO_HAS_RT_CORBA == 1)
-
-  TAO_Priority_Endpoint_Selector *priority_endpoint_selector_;
-  TAO_Bands_Endpoint_Selector *bands_endpoint_selector_;
-  TAO_Protocol_Endpoint_Selector *protocol_endpoint_selector_;
-  TAO_Priority_Protocol_Selector *priority_protocol_selector_;
-  TAO_Bands_Protocol_Selector *bands_protocol_selector_;
-  TAO_Client_Priority_Policy_Selector *client_priority_policy_selector_;
-
   /// Implementation of RTCORBA::RTORB interface.
   CORBA::Object_var rt_orb_;
 

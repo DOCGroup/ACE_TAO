@@ -23,6 +23,7 @@
 #include "GIOP_Utils.h"
 #include "ORB_Core.h"
 #include "Pluggable_Messaging_Utils.h"
+#include "Endpoint_Selector_Factory.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -197,8 +198,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // Initialize endpoint selection strategy.
   if (!this->is_selector_initialized_)
     {
-      this->orb_core_->endpoint_selector_factory ()->get_selector (this,
-                                                                   ACE_TRY_ENV);
+      this->endpoint_selector_ =
+        this->orb_core_->endpoint_selector_factory ()->get_selector (this,
+                                                                     ACE_TRY_ENV);
       ACE_CHECK;
 
       this->is_selector_initialized_ = 1;

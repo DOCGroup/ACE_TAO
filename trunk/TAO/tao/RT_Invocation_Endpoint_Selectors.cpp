@@ -204,8 +204,7 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
 {
   /// Narrow down to the right policy.
   RTCORBA::ClientProtocolPolicy_var cp_policy =
-    RTCORBA::ClientProtocolPolicy::_narrow (
-                                            invocation->endpoint_selection_state_.
+    RTCORBA::ClientProtocolPolicy::_narrow (invocation->endpoint_selection_state_.
                                             client_protocol_policy_,
                                             ACE_TRY_ENV);
   ACE_CHECK;

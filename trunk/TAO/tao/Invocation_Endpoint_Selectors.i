@@ -3,16 +3,6 @@
 
 // ****************************************************************
 
-ACE_INLINE
-TAO_Endpoint_Selector_Factory::TAO_Endpoint_Selector_Factory (void)
-{
-}
-
-ACE_INLINE
-TAO_Endpoint_Selector_Factory::~TAO_Endpoint_Selector_Factory (void)
-{
-}
-
 // ****************************************************************
 
 #if (TAO_HAS_RT_CORBA == 1)

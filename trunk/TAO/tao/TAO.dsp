@@ -339,6 +339,10 @@ SOURCE=.\Endpoint.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Endpoint_Selector_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Environment.cpp
 # End Source File
 # Begin Source File
@@ -680,6 +684,10 @@ SOURCE=.\Resource_Factory.cpp
 # Begin Source File
 
 SOURCE=.\RT_Current.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Endpoint_Selector_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -1052,6 +1060,10 @@ SOURCE=.\Encodable.h
 # Begin Source File
 
 SOURCE=.\Endpoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Endpoint_Selector_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1436,6 +1448,10 @@ SOURCE=.\Resource_Factory.h
 # Begin Source File
 
 SOURCE=.\RT_Current.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Endpoint_Selector_Factory.h
 # End Source File
 # Begin Source File
 

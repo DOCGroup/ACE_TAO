@@ -71,7 +71,7 @@ enum TAO_Invoke_Status
  */
 class TAO_Export TAO_GIOP_Invocation
 {
-  friend class TAO_Endpoint_Selector_Factory;
+  friend class RT_Endpoint_Selector_Factory;
   friend class TAO_Default_Endpoint_Selector;
   friend class TAO_Priority_Endpoint_Selector;
   friend class TAO_Bands_Endpoint_Selector;
@@ -151,16 +151,6 @@ public:
   /// Return PolicyList stored in \param inconsistent_policies_ and
   /// give up its ownership.  User must deallocate memory.
   CORBA::PolicyList *get_inconsistent_policies (void);
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  /// Get the protected variable <endpoint_selection_state_>
-  TAO_Endpoint_Selection_State get_endpoint_selection_state (void);
-
-  /// Get the pointer to stub.
-  TAO_Stub *get_stub (void);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   /**
    * Add the given object reference to the list of forward profiles.

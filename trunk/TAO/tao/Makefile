@@ -17,7 +17,7 @@ DIRS = \
   IORManipulation \
   IORTable \
   Strategies \
-  SmartProxies 
+  SmartProxies
 
 # These are headers for things which are exported and must be
 # installed.  (Currently not used).
@@ -236,7 +236,9 @@ ORB_CORE_FILES = \
   BiDir_Adapter \
   CodecFactory \
   CodecFactory_ORBInitializer \
-  CDR_Encaps_Codec
+  CDR_Encaps_Codec \
+  Endpoint_Selector_Factory \
+  RT_Endpoint_Selector_Factory
 
 DYNAMIC_ANY_FILES =
 
