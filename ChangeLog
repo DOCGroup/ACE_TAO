@@ -1,3 +1,8 @@
+Tue Apr 08 17:01:02 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* apps/mkcsregdb/mkcsregdb.dsp: Changed 'Use run time library'
+	  setting to fix error in Release configuration.
+
 Tue Apr  8 06:50:38 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/vc7.mpd:
