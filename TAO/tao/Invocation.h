@@ -82,6 +82,10 @@ class TAO_Export TAO_GIOP_Invocation
   friend class TAO_Client_Priority_Policy_Selector;
 
 public:
+  TAO_GIOP_Invocation (void);
+  // Default constructor. This should never get called, it is here
+  // only to appease older versions of g++.
+
   TAO_GIOP_Invocation (TAO_Stub *data,
                        const char *operation,
                        CORBA::ULong opname_len,
@@ -165,7 +169,7 @@ protected:
   TAO_Stub *stub_;
   // The object on which this invocation is going.
 
-  char buffer [ACE_CDR::DEFAULT_BUFSIZE];
+  char buffer_ [ACE_CDR::DEFAULT_BUFSIZE];
   // Buffer used for both the output and input CDR streams, this is
   // "safe" because we only one of the streams at a time.
 
@@ -242,6 +246,10 @@ class TAO_Export TAO_GIOP_Synch_Invocation : public TAO_GIOP_Invocation
   //    TAO_GIOP_Oneway_Invocation.
   //
 public:
+  TAO_GIOP_Synch_Invocation (void);
+  // Default constructor. This should never get called, it is here
+  // only to appease older versions of g++.
+
   TAO_GIOP_Synch_Invocation (TAO_Stub *stub,
                              const char *operation,
                              CORBA::ULong opname_len,

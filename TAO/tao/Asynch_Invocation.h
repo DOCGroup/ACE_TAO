@@ -44,6 +44,10 @@ class TAO_Export TAO_GIOP_Asynch_Invocation
   //    TAO_GIOP_DII_Deferred_Invocation.
   //
 public:
+  TAO_GIOP_Asynch_Invocation (void);
+  // Default constructor. This should never get called, it is here
+  // only to appease older versions of g++.
+
   TAO_GIOP_Asynch_Invocation (TAO_Stub *stub,
                               const char *operation,
                               CORBA::ULong opname_len,
