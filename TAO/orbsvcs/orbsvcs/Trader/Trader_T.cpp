@@ -307,14 +307,14 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
 
   TAO_TRY
     {
+      CORBA::TypeCode_var any_type = any_value.type ();
       CORBA::TCKind kind_1 =
-        TAO_Sequence_Extracter_Base::sequence_type (any_value.type(),
-						    TAO_TRY_ENV);
+        TAO_Sequence_Extracter_Base::sequence_type (any_type, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       CORBA::TCKind kind_2 =
         TAO_Sequence_Extracter_Base::sequence_type (this->typecode_,
-                                               TAO_TRY_ENV);
+                                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Ensure the sequence type of each sequence is the same.

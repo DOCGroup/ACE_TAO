@@ -62,7 +62,7 @@ public:
                                     CosTrading::Offer* offer);
   // Add an offer of type <type> and generate a CosTrading::OfferId
   // for it. Returns 0 on failure.
-  
+
   int remove_offer (const CosTrading::OfferId offer_id,
 		    CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalOfferId,

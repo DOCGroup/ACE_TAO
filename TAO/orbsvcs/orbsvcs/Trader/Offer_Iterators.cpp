@@ -143,7 +143,7 @@ void
 TAO_Offer_Iterator_Collection::
 add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter)
 {
-  if (offer_iter != CosTrading::OfferIterator::_nil ())
+  if (! CORBA::is_nil (offer_iter))
     this->iters_.enqueue_tail (offer_iter);
 }
 

@@ -94,7 +94,7 @@ query (const char *type,
   CosTrading::TraderName* trader_name = policies.starting_trader (env);
   TAO_CHECK_ENV_RETURN_VOID (env);
 
-  if (link_if != CosTrading::Link::_nil () && trader_name != 0)
+  if (! CORBA::is_nil (link_if) && trader_name != 0)
     {
       CosTrading::PolicySeq policies_to_forward;
       policies.copy_to_forward (policies_to_forward, *trader_name);
@@ -188,7 +188,7 @@ query (const char *type,
   TAO_CHECK_ENV_RETURN_VOID (env);
 
   // The following steps are only appropriate for a linked trader.
-  if (link_if != CosTrading::Link::_nil ())
+  if (! CORBA::is_nil (link_if))
     {
       // Determine if we should perform a federated query, and if so
       // construct a sequence of links to follow.
@@ -605,9 +605,9 @@ federated_query (const CosTrading::LinkNameSeq& links,
 
   for (int i = links.length () - 1; i >= 0; i--)
     {
-      CosTrading::OfferSeq* out_offers = 0;
-      CosTrading::OfferIterator* out_offer_iter = 0;
-      CosTrading::PolicyNameSeq* out_limits = 0;
+      CosTrading::OfferSeq_ptr out_offers = 0;
+      CosTrading::OfferIterator_ptr out_offer_iter = 0;
+      CosTrading::PolicyNameSeq_ptr out_limits = 0;
 
       TAO_TRY
         {
@@ -652,7 +652,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
           CosTrading::PolicyNameSeq_var out_limits_var (out_limits);
 
           // Add another iterator to the collection.
-          if (out_offer_iter != CosTrading::OfferIterator::_nil ())
+          if (! CORBA::is_nil (out_offer_iter))
             offer_iter_collection->add_offer_iterator (out_offer_iter);
 
           // Concatenate the limits applied.
@@ -1148,7 +1148,7 @@ resolve (const CosTrading::TraderName &name,
     this->trader_.trading_components ().link_if ();
 
   // Ensure that the link interface is supported.
-  if (link_if == CosTrading::Link::_nil ())
+  if (! CORBA::is_nil (link_if))
     return CosTrading::Register::_nil ();
 
   CosTrading::Link::LinkInfo_var link_info;
@@ -1179,7 +1179,7 @@ resolve (const CosTrading::TraderName &name,
   TAO_ENDTRY;
 
   // Ensure that the register pointer isn't nil.
-  if (remote_reg.ptr () == CosTrading::Register::_nil ())
+  if (! CORBA::is_nil (remote_reg.in ()))
     TAO_THROW_RETURN (CosTrading::Register::RegisterNotSupported (name),
                       CosTrading::Register::_nil ());
 
@@ -1229,7 +1229,7 @@ validate_properties (const char* type,
       // Obtain the type of the exported property.
       CORBA::TypeCode_var prop_type = prop_eval.property_type (prop_name);
 
-      if (prop_type == CORBA::TypeCode::_nil ())
+      if (CORBA::is_nil (prop_type.in ()))
         {
           // Offer cannot have a missing mandatory property.
           if (prop_types[i].mode ==
@@ -1555,7 +1555,7 @@ list_offers (CORBA::ULong how_many,
   TAO_THROW_SPEC ((CORBA::SystemException, CosTrading::NotImplemented))
 {
   // This method only applies when the register interface is implemented
-  if (CORBA::is_nil(this->trader_.trading_components().register_if()))
+  if (CORBA::is_nil (this->trader_.trading_components().register_if()))
     TAO_THROW (CosTrading::NotImplemented());
 
   TAO_Offer_Database<MAP_LOCK_TYPE>& type_map = this->trader_.offer_database ();
@@ -1632,7 +1632,7 @@ add_link (const char *name,
     TAO_THROW (CosTrading::Link::DuplicateLinkName (name));
 
   // Ensure the lookup_ptr isn't nil.
-  if (target == CosTrading::Lookup::_nil())
+  if (CORBA::is_nil (target))
     TAO_THROW (CosTrading::InvalidLookupRef (target));
 
   // Ensure that the default link behavior isn't stronger than the
