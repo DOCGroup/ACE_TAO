@@ -1,3 +1,13 @@
+Tue Oct 10 19:08:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DomainC.h:
+	* tao/DomainC.cpp:
+	* tao/PortableServer/DomainS.h:
+	* tao/PortableServer/DomainS.cpp:
+
+	  Fixed typos in DomainS.* and made cosmetic changes
+	  to all the above files.
+
 Tue Oct 10 08:50:07 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Exception.h:
