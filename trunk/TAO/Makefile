@@ -50,6 +50,7 @@ RELEASE_FILES = TAO/ChangeLog \
 		TAO/README \
 		TAO/README.sun \
 		TAO/tao \
+		TAO/TAO_IDL \
 		TAO/tests \
 		TAO/VERSION
 
