@@ -180,7 +180,7 @@ be_decl::compute_fullname (void)
             }
           i->next ();
         }
-	  delete i;
+      delete i;
     }
   return;
 }
