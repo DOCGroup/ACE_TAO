@@ -363,6 +363,7 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
   ACE_Time_Value timeout (SHORT_TIMEOUT);
+
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) running tests with notify pipe enabled")
               ASYS_TEXT (" and timeout = %d seconds\n"),
