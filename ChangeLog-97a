@@ -6,6 +6,35 @@ Sat Feb 08 15:19:50 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/IPC_SAP/{FILE,SPIPE}_SAP/client.cpp: declare "len" as
 	  ssize_t to avoid signed/unsigned comparison.
 
+Fri Feb  7 01:13:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i (select): Simplified Chris' fixes for the weird
+	  Linux select() semantics.
+
+	* ace/OS: Added a new accessor method called waiters() in
+ 	  ACE_cond_t that returns the number of waiters on the condition
+ 	  variable.  Thanks to Karlheinz for suggesting this.
+
+	* ace/OS: Changed all the ACE_cont_t, ACE_rwlock_t, etc. so that
+ 	  their fields are private, but made class ACE_OS a friend.
+  	  Applications should not be mucking with these fields since they
+ 	  may change.
+
+	* ace/OS.h: Fixed a minor typo where friend class ACE_rwlock_t
+ 	  should be friend class ACE_OS.  Thanks to Thilo Kielmann
+ 	  <kielmann@informatik.uni-siegen.de> for reporting this.
+
+	* ace/Log_Msg.cpp: Added a destructor to ACE_Log_Msg and changed
+ 	  ACE_TSS_cleanup so that it calls delete (ACE_Log_Msg *) ptr.
+  	  Thanks to Per Anderson <Per.Andersson@hfera.ericsson.se> for
+ 	  reporting this.
+
+	* tests/Map_Manager_Test.cpp: Create a file Map_Manager_Test_Key.h
+ 	  and move the class Key into the include file.  Include this *.h
+ 	  file in Map_Manager_Test.cpp.  This is needed for template
+ 	  generation on AIX.  Thanks to Chris Lahey <CLahey@cccis.com> for
+ 	  pointing this out.
+
 Fri Feb  7 17:29:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.cpp (set_sched_params): added support for POSIX
@@ -41,17 +70,6 @@ Fri Feb 07 13:56:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/Reactor/Multicast/server.cpp (Server_Events ctor):
 	  reordered initializers to match declaration order.
-
-Fri Feb  7 01:13:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/OS.h: Fixed a minor typo where friend class ACE_rwlock_t
- 	  should be friend class ACE_OS.  Thanks to Thilo Kielmann
- 	  <kielmann@informatik.uni-siegen.de> for reporting this.
-
-	* ace/Log_Msg.cpp: Added a destructor to ACE_Log_Msg and changed
- 	  ACE_TSS_cleanup so that it calls delete (ACE_Log_Msg *) ptr.
-  	  Thanks to Per Anderson <Per.Andersson@hfera.ericsson.se> for
- 	  reporting this.
 
 Fri Feb 07 05:08:51 1997    <irfan@cha-cha.cs.wustl.edu>
 
@@ -97,20 +115,6 @@ Fri Feb 07 05:08:51 1997    <irfan@cha-cha.cs.wustl.edu>
  	  visiable to NT. Also fixed ACE_OS::cond_timed_wait by returning
  	  the correct return value on a TIMEOUT. Also fixed typo in
  	  ACE_OS::sema_wait.	
-
-Fri Feb  7 01:13:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/OS.i (select): Simplified Chris' fixes for the weird
-	  Linux select() semantics.
-
-	* ace/OS: Added a new accessor method called waiters() in
- 	  ACE_cond_t that returns the number of waiters on the condition
- 	  variable.  Thanks to Karlheinz for suggesting this.
-
-	* ace/OS: Changed all the ACE_cont_t, ACE_rwlock_t, etc. so that
- 	  their fields are private, but made class ACE_OS a friend.
-  	  Applications should not be mucking with these fields since they
- 	  may change.
 
 Thu Feb  6 20:25:13 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
