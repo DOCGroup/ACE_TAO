@@ -1,3 +1,7 @@
+Sun Mar 18 13:24:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Cache_Entries.inl: Fixed a warning with TRUE_64  builds. 
+
 Sun Mar 18 10:40:32 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Static.dsp:
