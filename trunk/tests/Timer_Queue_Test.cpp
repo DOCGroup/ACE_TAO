@@ -16,7 +16,7 @@
 //      command line arguments are needed to run the test.
 //
 // = AUTHOR
-//    Prashant Jain and Douglas C. Schmidt
+//    Douglas C. Schmidt and Prashant Jain
 // 
 // ============================================================================
 
@@ -34,11 +34,20 @@ static int *timer_ids = 0;
 class Example_Handler : public ACE_Event_Handler
 {
 public:
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
+  {
+    ACE_ASSERT (mask == ACE_Event_Handler::TIMER_MASK);
+    return 0;
+  }
+
   virtual int handle_timeout (const ACE_Time_Value &,
 			      const void *arg)
   {
-    ACE_ASSERT ((int) arg == 42);
-    return 0;
+    ACE_ASSERT ((int) arg == 42 || (int) arg == 007);
+    if ((int) arg != 42)
+      return -1;
+    else
+      return 0;
   }
 };
 
@@ -63,13 +72,13 @@ test_functionality (ACE_Timer_Queue *tq)
 
   ACE_ASSERT (tq->expire () == 2);
 
-  ACE_ASSERT (tq->schedule (&eh, (const void *) 4, ACE_OS::gettimeofday
-			   ()) != -1);
-  ACE_ASSERT (tq->schedule (&eh, (const void *) 5, ACE_OS::gettimeofday
-			   ()) != -1);
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 4, ACE_OS::gettimeofday ()) != -1);
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 5, ACE_OS::gettimeofday ()) != -1);
   ACE_ASSERT (tq->cancel (&eh) == 2);
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (tq->expire () == 0);
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 007, ACE_OS::gettimeofday ()) != -1);
+  ACE_ASSERT (tq->expire () == 1);
 }
 
 static void
@@ -78,7 +87,7 @@ test_performance (ACE_Timer_Queue *tq,
 {
   Example_Handler eh;
   ACE_Profile_Timer timer;
-  int i;
+  size_t i;
 
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));

@@ -54,7 +54,7 @@ ACE_Reactor_Handler_Repository::handle_in_range (ACE_HANDLE handle)
   // Win32 due to the way that they implement SOCKET HANDLEs.
   if (handle != ACE_INVALID_HANDLE)
 #else /* !ACE_WIN32 */
-  if (handle >= 0 || handle < this->max_handlep1_)
+  if (handle >= 0 && handle < this->max_handlep1_)
 #endif /* ACE_WIN32 */
     return 1;
   else
@@ -177,7 +177,7 @@ ACE_Reactor_Handler_Repository::find (ACE_HANDLE handle,
     // is out of range, so keep it happy by defining i here . . .
     i = 0;
   
-  if (eh && index_p != 0)
+  if (eh != 0 && index_p != 0)
     *index_p = i;
   else
     errno = ENOENT;
@@ -1530,8 +1530,9 @@ ACE_Reactor::dispatch (int number_of_active_handles,
 	    {
 	      ACE_Sig_Handler::sig_pending (0);
 	      
-	      // If any HANDLES are activated as a result of signals they
-	      // should be dispatched since they may be time critical...
+	      // If any HANDLES in the <ready_set_> are activated as a
+	      // result of signals they should be dispatched since
+	      // they may be time critical...
 	      number_of_active_handles = this->any_ready (dispatch_set);
 	    }
 	  else

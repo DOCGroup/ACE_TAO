@@ -521,7 +521,7 @@ ACE_Log_Msg::log (const char *format_str,
 		    else
 		      {
 #if defined (ACE_WIN32)			
-			LPTSTR lpMsgBuf;
+			LPTSTR lpMsgBuf = 0;
  
 			::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 					 NULL,

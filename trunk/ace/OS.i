@@ -6412,20 +6412,4 @@ ACE_OS::thr_suspend (const ACE_Thread_ID &thr_id)
   return ACE_OS::thr_suspend (thr_id.handle ());
 }
 
-ACE_INLINE pid_t 
-ACE_OS::fork (const char *program_name)
-{
-  // ACE_TRACE ("ACE_OS::fork");
-#if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_NOTSUP_RETURN (pid_t (-1));
-#else
-  pid_t pid = ::fork ();
-
-  if (pid == 0)
-    ACE_LOG_MSG->sync (program_name);
-
-  return pid;
-#endif /* ACE_WIN32 */
-}
-
 #endif /* 0 */

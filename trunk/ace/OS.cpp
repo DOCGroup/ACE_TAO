@@ -2193,6 +2193,22 @@ siginfo_t::siginfo_t (ACE_HANDLE *handles)
 }
 #endif /* ACE_HAS_SIGINFO_T */
 
+pid_t
+ACE_OS::fork (const char *program_name)
+{
+  // ACE_TRACE ("ACE_OS::fork");
+#if defined (ACE_WIN32) || defined (VXWORKS)
+  ACE_NOTSUP_RETURN (pid_t (-1));
+#else
+  pid_t pid = ::fork ();
+
+  if (pid == 0)
+    ACE_LOG_MSG->sync (program_name);
+
+  return pid;
+#endif /* ACE_WIN32 */
+}
+
 // This is necessary to work around nasty problems with MVS C++.
 
 extern "C" void
