@@ -36,48 +36,30 @@ ACE_Stats_Value::fractional_field (void) const
 int
 ACE_Stats::sample (const ACE_INT32 value)
 {
-  if (overflow_)
-    {
-      // Had already overflowed.
-      return -1;
-    }
+  ++samples_;
+  if (samples_ == 0)
+    overflow_ = 1;
   else
     {
-      ++samples_;
-      if (samples_ == 0)
-        {
-          overflow_ = 1;
-          --samples_;
-          return -1;
-        }
-      else
-        {
-          ACE_UINT64 old_sum = sum_;
-          ACE_UINT64 old_sum_of_squares = sum_of_squares_;
+      ACE_UINT64 old_sum = sum_;
+      ACE_UINT64 old_sum_of_squares = sum_of_squares_;
 
-          sum_ += value;
-          sum_of_squares_ += value * value;
+      sum_ += value;
+      sum_of_squares_ += value * value;
 
-          // Overflow checks.
-          if ((value >= 0  ?  sum_ < old_sum  :  sum_ > old_sum)  ||
-              sum_of_squares_ < old_sum_of_squares)
-            {
-              overflow_ = 1;
-              --samples_;
-              sum_ = old_sum;
-              sum_of_squares_ = old_sum_of_squares;
-              return -1;
-            }
+      // Overflow checks.
+      if ((value >= 0  ?  sum_ < old_sum  :  sum_ > old_sum)  ||
+          sum_of_squares_ < old_sum_of_squares)
+        overflow_ = 1;
 
-          if (value < min_)
-            min_ = value;
+      if (value < min_)
+        min_ = value;
 
-          if (value > max_)
-            max_ = value;
-
-          return 0;
-        }
+      if (value > max_)
+        max_ = value;
     }
+
+  return overflow_ == 0  ?  0  :  -1;
 }
 
 void
