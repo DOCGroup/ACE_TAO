@@ -1,3 +1,17 @@
+Mon Nov 13 19:22:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
+
+        * tests/RTCORBA/Server_Protocol/server.conf:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+
+        * tests/RTCORBA/Server_Protocol/Server.dsp
+        * tests/RTCORBA/Server_Protocol/client.dsp
+
+	  Modified the perl script and the service conf file 
+	  to run only those tests wherein SHMIOP and UIOP are not made
+	  POA Server protocols. 
+
+	  Updated the project files to link TAO_Strategies.
+
 Mon Nov 13 20:44:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Invocation.cpp: Commented the line make_idle () call on the
@@ -21,16 +35,23 @@ Mon Nov 13 18:14:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
         * tests/RTCORBA/Server_Declared/Server.dsp
         * tests/RTCORBA/Server_Declared/client.dsp
 
-		  Updated to get it working. 
+	  Made minor changes to get the test running.
+	  Updated the project files to link TAO_Strategies.
+ 
 
 Mon Nov 13 18:00:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Client_Propagated/svc.conf:
         * tests/RTCORBA/Client_Propagated/run_test.pl:
 
-        * tests/RTCORBA/Client_Propagated/Client_Propagated.dsw
+        * tests/RTCORBA/Client_Propagated/client.dsp
+        * tests/RTCORBA/Client_Propagated/server.dsp
 
-		  Updated to get it working. 
+	  Modified the perl script and the service conf file 
+	  to run only those tests wherein SHMIOP and UIOP are not made
+	  POA Server protocols. 
+
+	  Updated the project files to link TAO_Strategies.
 
 Mon Nov 13 16:12:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
@@ -40,7 +61,8 @@ Mon Nov 13 16:12:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Client_Protocol/Client_Protocol.dsw
 
-		  Updated to get it working. 
+	  Was trying to load UIOP_Factory even on NT. Corrected it.
+	  Updated the project files to link TAO_Strategies.
 
 Mon Nov 13 17:40:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
