@@ -34,7 +34,7 @@ ACE_RCSID(Proactor, test_proactor, "$Id$")
 
 static char *host = 0;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
-static char *file = "make.log";
+static char *file = "test_proactor.cpp";
 static char *dump_file = "output";
 static int done = 0;
 static int initial_read_size = BUFSIZ;
