@@ -1,3 +1,11 @@
+Mon Jul  9 08:41:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/orbsvcs/tests/AVStreams/Makefile.bor
+        * tao/orbsvcs/tests/AVStreams/Pluggable/*.bor
+        * tao/orbsvcs/tests/AVStreams/Multicast/*.bor
+
+          Added BCB makefiles for the mentioned AVStreams test
+
 Sat Jul  7 19:44:55 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tao/Incoming_Message_Queue.inl (get_queued_data):
