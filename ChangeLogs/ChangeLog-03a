@@ -1,3 +1,26 @@
+Tue Jul 10 18:15:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/WFMO_Reactor.cpp (event_handling): Move the logic for
+          noticing that the wait timed out, but did not expire any
+          timers, into this function. Will remove it from Reactor.cpp,
+          to properly move the fix into handle_events() rather than
+          needing to call run_reactor_event_loop to get it right.
+        * ace/Select_Reactor_T.cpp - still need to add similar logic here.
+
+        * ace/config-sunos5.6.h: Re the following:
+          Mon Jul  2 15:26:32 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+          Replaced ACE_HAS_POSIX_SEM, and left ACE_LACKS_NAMED_POSIX_SEM out.
+          Solaris does indeed have POSIX semaphores in 2.6 and later, but
+          requires the changes to OS.i below to work right.
+
+        * ace/OS.h: For ACE_PROC_PRI_OTHER_MIN (and MAX), on HP-UX,
+          convert the HP-UX priority value to the POSIX range.
+
+        * ace/OS.i (ACE_OS::sema_init, named POSIX semaphore): On Solaris
+          and HP-UX, the name of a POSIX semaphore needs to start with
+          a slash (further restricted on Solaris). Enforce that here by
+          prepending a slash, or by chopping off parts of the name.
+
 Tue Jul 10 16:08:04 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU:
