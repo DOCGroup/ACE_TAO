@@ -40,7 +40,7 @@ Sat May 17 00:06:04 1997    <irfan@TWOSTEP>
 
 	  - Fixed the registration of SIGINT.
 
-	* apps/Gateway/Peer: Added Win32 makefiles.
+	* apps/Gateway/{Peer,Gateway}: Added Win32 makefiles.
 
 	* ace/ACE.cpp (read_adapter): Handle for the read_adapter should
  	  always be STDIN.
