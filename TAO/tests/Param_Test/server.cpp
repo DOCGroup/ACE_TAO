@@ -145,7 +145,7 @@ main (int argc, char *argv[])
                       str.in ()));
         }
 
-      FILE *ior_output_file = ACE_OS::fopen (ior_output_filename, "w");
+      ior_output_file = ACE_OS::fopen (ior_output_filename, "w");
 
       if (ior_output_file == 0)
         {

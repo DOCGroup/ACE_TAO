@@ -1,3 +1,10 @@
+Wed Apr  9 09:40:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Param_Test.server.cpp:
+        * tests/Portable_Interceptors/AMI/client.cpp:
+
+          Fixed warnings.
+
 Wed Apr  9 08:23:28 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/tao.mpc:
