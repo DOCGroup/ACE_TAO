@@ -154,11 +154,8 @@ extensively on the following platforms and compilers:
 	     into this problem.
 
 	  In addition, as noted below following the discussion of
-	  the g++ -fno-implicit-templates option,
-
-	. On VxWorks only, g++ (thru version 2.7.2, at least, distributed
-	  with Tornado 1.0.1/VxWorks 5.3.1), -fno-implicit-templates is
-	  broken.  In addition, -O2 is not supported on some targets.
+	  the g++ -fno-implicit-templates option, -fno-implicit-templates is
+	  broken.  And, -O2 is not supported on some targets.
 
 	. The current version of ACE, 4.3, has limited support for
 	  destroying static objects after program termination on
