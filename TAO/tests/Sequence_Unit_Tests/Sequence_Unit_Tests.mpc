@@ -33,6 +33,14 @@ project(*Object_Reference_Sequence_Element): taoexe, boost_unit_test {
   }
 }
 
+project(*Unbounded_Object_Reference_Sequence): taoexe, boost_unit_test {
+  exename = unbounded_object_reference_sequence_ut
+  Source_Files {
+    mock_reference.cpp
+    unbounded_object_reference_sequence_ut.cpp
+  }
+}
+
 project(*String_Sequence_Element): taoexe, boost_unit_test {
   exename = string_sequence_element_ut
   Source_Files {

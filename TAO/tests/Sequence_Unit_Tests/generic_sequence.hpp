@@ -149,11 +149,17 @@ public:
 
   void length(CORBA::ULong length)
   {
-    if (length < maximum_ || length < length_)
+    if (length <= maximum_ || length <= length_)
     {
       if (length_ < length)
       {
-        // TODO Not exception-safe...
+        // TODO This code does not provide the strong-exception
+        //      guarantee, but it does provide the weak-exception
+        //      guarantee.  The problem would appear when
+        //      initialize_range() raises an exception after several
+        //      elements have been modified.  One could argue that
+        //      this problem is irrelevant, as the elements already
+        //      modified are unreachable to conforming applications.
         element_traits::initialize_range(
             buffer_ + length_, buffer_ + length);
       }
