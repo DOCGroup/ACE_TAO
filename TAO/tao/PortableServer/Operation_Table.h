@@ -111,8 +111,8 @@ class TAO_PortableServer_Export TAO_Operation_Table
 {
 public:
   /**
-   * Uses <{opname}> to look up the skeleton function and pass it back
-   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
+   * Uses @a opname to look up the skeleton function and pass it back
+   * in @a skelfunc.  Returns non-negative integer on success, or -1
    * on failure.
    */
   virtual int find (const char *opname,
@@ -120,8 +120,8 @@ public:
                     const unsigned int length = 0) = 0;
 
   /**
-   * Uses <{opname}> to look up the collocated skeleton function and
-   * pass it back in <{cskelfunc}>.  Returns non-negative integer on
+   * Uses @a opname to look up the collocated skeleton function and
+   * pass it back in @a skelfunc.  Returns non-negative integer on
    * success, or -1 on failure.
    */
   virtual int find (const char *opname,
@@ -129,8 +129,8 @@ public:
                     TAO::Collocation_Strategy s,
                     const unsigned int length = 0) = 0;
 
-  /// Associate the skeleton <{skel_ptr}> with an operation named
-  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
+  /// Associate the skeleton @a skel_ptr with an operation named
+  /// @a opname.  Returns -1 on failure, 0 on success, 1 on duplicate.
   virtual int bind (const char *opname,
                     const TAO::Operation_Skeletons skel_ptr) = 0;
 
@@ -429,19 +429,19 @@ public:
                     const TAO::Operation_Skeletons skel_ptr);
 
 private:
-  // = Method that should defined by the subclasses. GPERF program
-  //   will generate this routine routines.
+  /// Method that should defined by the subclasses. GPERF program
+  /// will generate this routine routines.
   virtual const TAO_operation_db_entry* lookup (const char *str) = 0;
 };
 
 
-// Define a singleton instance of operation table parameters.
+/// Define a singleton instance of operation table parameters.
 typedef TAO_Singleton<TAO_Operation_Table_Parameters,
                       TAO_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_PARAMETERS;
 
 
-// Define a singleton instance of the operation table factory.
+/// Define a singleton instance of the operation table factory.
 typedef TAO_Singleton<TAO_Operation_Table_Factory,
                       TAO_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_FACTORY;
