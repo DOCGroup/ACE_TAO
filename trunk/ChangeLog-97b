@@ -1,3 +1,8 @@
+Tue Oct 21 02:49:15 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* TAO/tests/Thruput_test/server.cpp (main): Changed BOA_init()
+	  to POA_init().
+
 Tue Oct 21 07:14:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Svc_Conf_l.cpp: fixed compile warnings on g++.
