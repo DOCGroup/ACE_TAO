@@ -1847,8 +1847,76 @@ cin >> b;
                   ])
   ],,[AC_DEFINE([ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS])])
 
-dnl Check if we have working C++ explicit template destructors
+dnl Check to see how to call the explicit destructor on a template.
+dnl There are a few different possibilities:
+dnl   ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR (two cases):
+dnl     ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS: ~CLASS<PARAM>()
+dnl     (no other settings): ~CLASS()
+dnl   w/o ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR:
+dnl     CLASS<PARAM>::~CLASS()
+dnl
+dnl The first seems to be the most widely used form, although very few
+dnl hand-made configs have it set. Many compilers take all three forms.
+dnl The only one that seems to be less-used is #2 above, ~CLASS().
+dnl So, we check for the first two cases, and if neither of them work,
+dnl we assume the third (no config macros).
+
+ACE_CACHE_CHECK([to see if template destructor call takes template args],
+  [ace_cv_feature_explicit_template_des_takes_args],
+  [
+   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+
+class dyn
+{
+ public:
+   dyn () { }
+   ~dyn () { }
+};
+
+template <class T>
+class Base
+{
+ public:
+   Base () { }
+   virtual void f (void) { }
+   ~Base () { }
+};
+
+template <class T>
+class Derived
+{
+ public:
+   Derived ()
+     {
+      x_ = new Base<T> ();
+     }
+   virtual void f (void) { }
+   ~Derived () { x_->~Base<T> (); }
+ private:
+   Base<T> *x_;
+   T t_;
+};
+                  ]],[[
+                   Derived<dyn> *x = new Derived<dyn> ();
+
+                   x->f ();
+
+                   delete x;
+                   return 0;
+                  ]])],[
+                   ace_cv_feature_explicit_template_des_takes_args=yes
+                  ],[
+                   ace_cv_feature_explicit_template_des_takes_args=no
+                  ])
+  ],[
+      AC_DEFINE([ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS])
+      AC_DEFINE([ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR])
+    ],
+)
+
+dnl Check for the second form of C++ explicit template destructors
 dnl Thanks to Nanbor Wang <nanbor@cs.wustl.edu> for providing this test.
+if test "$ace_cv_feature_explicit_template_des_takes_args" = no; then
 ACE_CACHE_CHECK([for working C++ explicit template destructors],
   [ace_cv_feature_working_explicit_des],
   [
@@ -1897,6 +1965,7 @@ class Derived
                    ace_cv_feature_working_explicit_des=no
                   ])
   ],[AC_DEFINE([ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR])],)
+fi
 
 dnl Check for working C++ conversions
 ACE_CACHE_CHECK([for working C++ conversions],
