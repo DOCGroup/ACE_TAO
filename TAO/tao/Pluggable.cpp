@@ -248,6 +248,8 @@ TAO_Transport::start_request (TAO_ORB_Core *,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::INTERNAL ());
+
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 void
@@ -259,6 +261,8 @@ TAO_Transport::start_locate (TAO_ORB_Core *,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::INTERNAL ());
+
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 // *********************************************************************
