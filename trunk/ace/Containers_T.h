@@ -194,7 +194,7 @@ public:
 private:
   // = Initialization methods
   ACE_Node (const T &i, ACE_Node<T> *n);
-  ACE_Node (ACE_Node<T> *n = 0, int MS_SUCKS = 0);
+  ACE_Node (ACE_Node<T> *n = 0, int = 0);
   ACE_Node (const ACE_Node<T> &n);
 
   ACE_Node<T> *next_;
