@@ -246,9 +246,14 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
   const TAO_operation_db_entry *entry = lookup (opname,
                                                 length);
   if (entry == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("TAO_Perfect_Hash_Table:find failed\n")),
-                      -1);
+    {
+      skelfunc = 0; // insure that somebody can't call a wrong function!
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
+                         ACE_TEXT ("operation '%s' (length=%d) failed\n"),
+                         opname ? opname : "<null string>", length),
+                        -1);
+    }
 
   // Valid entry. Figure out the skel_ptr.
   skelfunc = entry->skel_ptr_;
