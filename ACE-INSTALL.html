@@ -1878,7 +1878,12 @@ builds using the same ACE source tree.  This idiom is supported by ACE
 using the $ACE_ROOT/bin/create_ace_build script or
 $ACE_ROOT/bin/clone.cpp program.
 
-To use build and use the clone program, perform the following steps:<P>
+To use build and use the clone program, first make sure there's a file
+called platform_macros.GNU that contains the correct platform-specific
+Makefile configurations in the $ACE_ROOT/include/makeinclude/
+directory, as well as making sure there's a $ACE_ROOT/ace/config.h
+file that includes the desired platform/compiler specific
+configuration header.  Then perform the following steps:<P>
 
 <pre>
 % cd $ACE_ROOT/bin
@@ -1887,13 +1892,9 @@ To use build and use the clone program, perform the following steps:<P>
 % rehash
 </pre><P>
 
-Then create a ./build subdirectory someplace, e.g., under $ACE_ROOT
-make sure there's a file called platform_macros.GNU that contains the
-correct platform-specific Makefile configurations in the
-$ACE_ROOT/include/makeinclude/ directory, as well as making sure
-there's a $ACE_ROOT/ace/config.h file that includes the desired
-platform/compiler specific configuration header.  Once this is done,
-then invoke the top-level Makefile with the ``clone'' target, e.g.:<P>
+Then create a ./build subdirectory someplace, e.g., under $ACE_ROOT.
+Once this is done, then invoke the top-level Makefile with the
+``clone'' target, e.g.:<P>
 
 <pre>
 % cd $ACE_ROOT
