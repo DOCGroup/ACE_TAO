@@ -1,3 +1,14 @@
+Sat Oct  6 16:04:29 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
+
+	* ace/RB_Tree.h: 
+	* ace/RB_Tree.i: 
+
+	  The operator new and delete were declared to be No-Op but were
+	  not implemented as such. This was breaking some builds. Now the
+	  operator are declared as private and they also have a no-op
+	  implementation. This should solve some linking error that were
+	  occurring.
+	
 Sat Oct  6 11:17:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Adrian Mercieca to the hallf of fame.
