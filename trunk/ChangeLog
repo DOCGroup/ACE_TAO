@@ -1,3 +1,9 @@
+Thu Feb  3 09:25:38 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Ensure that TAO_ROOT is set if it is a tao or a ciao project.
+
 Thu Feb 3 12:43:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:
@@ -30,21 +36,21 @@ Thu Feb 3 08:43:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * test/Proactor_Test_IPV6.cpp:
 
-	  Fixed incorrect logfile name in cases where this test is unsupported
-	  leading to falsely reported testfailures.
+          Fixed incorrect logfile name in cases where this test is unsupported
+          leading to falsely reported testfailures.
 
 Wed Feb  2 15:25:39 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_stdio.inl (vsprintf): Clarified the reason why ULONG_MAX
-	  doesn't always work with vswprintf(). glibc (at least newer versions
-	  such as 2.3) check the bounds of the buffer/size combination before
-	  attempting the operation.
+        * ace/OS_NS_stdio.inl (vsprintf): Clarified the reason why ULONG_MAX
+          doesn't always work with vswprintf(). glibc (at least newer versions
+          such as 2.3) check the bounds of the buffer/size combination before
+          attempting the operation.
 
 Wed Feb 02 08:57:23 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Added some comments and removed some old comments.
+          Added some comments and removed some old comments.
 
 Wed Feb  2 08:46:51 2005  Chad Elliott  <elliott_c@ociweb.com>
 
