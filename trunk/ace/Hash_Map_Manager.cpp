@@ -140,8 +140,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Manager (ACE_Alloca
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
 {
-  // Protect against double deletion in case the destructor also gets
-  // called.
+  // Protect against "double-deletion" in case the destructor also
+  // gets called.
   if (this->table_ != 0)
     {
       // Iterate through the entire map calling the destuctor of each
