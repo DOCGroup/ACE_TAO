@@ -64,72 +64,62 @@ Trading_Service::~Trading_Service (void)
 }
 
 int
-Trading_Service::init (int argc, char* argv[])
+Trading_Service::init (int argc, char* argv[], CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
-    {
-      this->orb_manager_.init (argc, argv, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+  this->orb_manager_.init (argc, argv, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-      if (this->parse_args (argc, argv) == -1)
-        return -1;
+  if (this->parse_args (argc, argv) == -1)
+    return -1;
 
-      CORBA::ORB_ptr orb = this->orb_manager_.orb ();
+  CORBA::ORB_ptr orb = this->orb_manager_.orb ();
 
-      // Create a Trader Object and set its Service Type Repository.
-      auto_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
-      this->trader_ = auto_trader;
-      TAO_Support_Attributes_i& sup_attr = this->trader_->support_attributes ();
-      TAO_Trading_Components_i& trd_comp = this->trader_->trading_components ();
-      sup_attr.type_repos (this->type_repos_._this (TAO_TRY_ENV));
-      TAO_CHECK_ENV;
+  // Create a Trader Object and set its Service Type Repository.
+  auto_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
+  this->trader_ = auto_trader;
+  TAO_Support_Attributes_i& sup_attr = this->trader_->support_attributes ();
+  TAO_Trading_Components_i& trd_comp = this->trader_->trading_components ();
+  sup_attr.type_repos (this->type_repos_._this (ACE_TRY_ENV));
+  ACE_CHECK_RETURN (-1);
 
       // The Spec says: return a reference to the Lookup interface
       // from the resolve_initial_references method.
-      CosTrading::Lookup_ptr lookup = trd_comp.lookup_if ();
-      this->ior_ = orb->object_to_string (lookup, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+  CosTrading::Lookup_ptr lookup = trd_comp.lookup_if ();
+  this->ior_ = orb->object_to_string (lookup, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-      // Dump the ior to a file.
-      if (this->ior_output_file_ != 0)
-        {
-          ACE_OS::fprintf (this->ior_output_file_, "%s", this->ior_.in ());
-          ACE_OS::fclose (this->ior_output_file_);
-        }
+  // Dump the ior to a file.
+  if (this->ior_output_file_ != 0)
+    {
+      ACE_OS::fprintf (this->ior_output_file_, "%s", this->ior_.in ());
+      ACE_OS::fclose (this->ior_output_file_);
+    }
 
-      if (this->federate_)
-        {
-          // Only become a multicast server if we're the only trader
-          // on the multicast network.
-          // @@ Could do other things. For example, every timeout
-          // period try to federate again, but let's not hardcode that
-          // policy.
-          if (this->bootstrap_to_federation () == -1)
-            this->init_multicast_server ();
-        }
-      else
+  if (this->federate_)
+    {
+      // Only become a multicast server if we're the only trader
+      // on the multicast network.
+      // @@ Could do other things. For example, every timeout
+      // period try to federate again, but let's not hardcode that
+      // policy.
+      if (this->bootstrap_to_federation (ACE_TRY_ENV) == -1)
         this->init_multicast_server ();
     }
-    TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Trading Service");
-    }
-  TAO_ENDTRY;
-
+  else
+    this->init_multicast_server ();
   return 0;
 }
 
 
 int
-Trading_Service::run (void)
+Trading_Service::run (CORBA::Environment &ACE_TRY_ENV)
 {
   int return_value;
-  CORBA::Environment TAO_IN_ENV;
   Trading_Shutdown trading_shutdown (*this);
 
   // Run the Trading Service.
-  return_value = this->orb_manager_.run (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+  return_value = this->orb_manager_.run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   return return_value;
 }
@@ -183,7 +173,7 @@ Trading_Service::init_multicast_server (void)
 }
 
 int
-Trading_Service::bootstrap_to_federation (void)
+Trading_Service::bootstrap_to_federation (CORBA::Environment &ACE_TRY_ENV)
 {
   // If all traders follow this strategy, it creates a complete graph
   // of all known traders on a multicast network.
@@ -199,87 +189,79 @@ Trading_Service::bootstrap_to_federation (void)
                        "Unable to link to other traders.\n"),
                       -1);
 
-  TAO_TRY
+  ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));
+  CosTrading::Lookup_var lookup_if =
+    CosTrading::Lookup::_narrow (trading_obj.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  ACE_DEBUG ((LM_DEBUG, "*** Obtaining the link interface.\n"));
+  CosTrading::Link_var link_if =  lookup_if->link_if (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  TAO_Trading_Components_i& trd_comp =
+    this->trader_->trading_components ();
+  CosTrading::Lookup_ptr our_lookup = trd_comp.lookup_if ();
+  CosTrading::Link_ptr our_link = trd_comp.link_if ();
+
+  ACE_DEBUG ((LM_DEBUG, "*** Linking found trader to self.\n"));
+  link_if->add_link (this->name_.in (),
+                     our_lookup,
+                     CosTrading::always,
+                     CosTrading::always,
+                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  ACE_DEBUG ((LM_DEBUG, "*** Linking self to found trader.\n"));
+  our_link->add_link ("Bootstrap",
+                      lookup_if.in (),
+                      CosTrading::always,
+                      CosTrading::always,
+                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  ACE_DEBUG ((LM_DEBUG, "*** Retrieving list of known linked traders.\n"));
+  CosTrading::LinkNameSeq_var link_name_seq =
+    link_if->list_links (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  ACE_DEBUG ((LM_DEBUG, "*** Linking self to all linked traders.\n"));
+  for (int i = link_name_seq->length () - 1; i >= 0; i--)
     {
-      ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));
-      CosTrading::Lookup_var lookup_if =
-        CosTrading::Lookup::_narrow (trading_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "*** Obtaining the link interface.\n"));
-      CosTrading::Link_var link_if =  lookup_if->link_if (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      TAO_Trading_Components_i& trd_comp =
-        this->trader_->trading_components ();
-      CosTrading::Lookup_ptr our_lookup = trd_comp.lookup_if ();
-      CosTrading::Link_ptr our_link = trd_comp.link_if ();
-
-      ACE_DEBUG ((LM_DEBUG, "*** Linking found trader to self.\n"));
-      link_if->add_link (this->name_.in (),
-                         our_lookup,
-                         CosTrading::always,
-                         CosTrading::always,
-                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "*** Linking self to found trader.\n"));
-      our_link->add_link ("Bootstrap",
-                          lookup_if.in (),
-                          CosTrading::always,
-                          CosTrading::always,
-                          TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "*** Retrieving list of known linked traders.\n"));
-      CosTrading::LinkNameSeq_var link_name_seq =
-        link_if->list_links (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "*** Linking self to all linked traders.\n"));
-      for (int i = link_name_seq->length () - 1; i >= 0; i--)
+      // Avoid linking to ourselves.
+      if (ACE_OS::strcmp (ACE_static_cast (const char*, link_name_seq[i]),
+                          this->name_.in ()) != 0)
         {
-          // Avoid linking to ourselves.
-          if (ACE_OS::strcmp (ACE_static_cast (const char*, link_name_seq[i]),
-                              this->name_.in ()) != 0)
-            {
-              ACE_DEBUG ((LM_DEBUG, "*** Getting info for link %s.\n",
-                          ACE_static_cast (const char*, link_name_seq[i])));
-              CosTrading::Link::LinkInfo_var link_info =
-                link_if->describe_link (link_name_seq[i], TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+          ACE_DEBUG ((LM_DEBUG, "*** Getting info for link %s.\n",
+                      ACE_static_cast (const char*, link_name_seq[i])));
+          CosTrading::Link::LinkInfo_var link_info =
+            link_if->describe_link (link_name_seq[i], ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
 
-              CosTrading::Lookup_ptr remote_lookup;
-              remote_lookup = link_info->target.in ();
+          CosTrading::Lookup_ptr remote_lookup;
+          remote_lookup = link_info->target.in ();
 
-              ACE_DEBUG ((LM_DEBUG, "*** Retrieving its link interface.\n"));
-              CosTrading::Link_var remote_link =
-                remote_lookup->link_if (TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+          ACE_DEBUG ((LM_DEBUG, "*** Retrieving its link interface.\n"));
+          CosTrading::Link_var remote_link =
+            remote_lookup->link_if (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
 
-              ACE_DEBUG ((LM_DEBUG, "*** Creating a link to me from it.\n"));
-              remote_link->add_link (this->name_.in (),
-                                     our_lookup,
-                                     CosTrading::always,
-                                     CosTrading::always,
-                                     TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+          ACE_DEBUG ((LM_DEBUG, "*** Creating a link to me from it.\n"));
+          remote_link->add_link (this->name_.in (),
+                                 our_lookup,
+                                 CosTrading::always,
+                                 CosTrading::always,
+                                 ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
 
-              ACE_DEBUG ((LM_DEBUG, "*** Creating a link to it from me.\n"));
-              our_link->add_link (link_name_seq[i],
-                                  remote_lookup,
-                                  CosTrading::always,
-                                  CosTrading::always,
-                                  TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-            }
+          ACE_DEBUG ((LM_DEBUG, "*** Creating a link to it from me.\n"));
+          our_link->add_link (link_name_seq[i],
+                              remote_lookup,
+                              CosTrading::always,
+                              CosTrading::always,
+                              ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
         }
     }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Trading Service");
-    }
-  TAO_ENDTRY;
 
   return 0;
 }
@@ -287,55 +269,55 @@ Trading_Service::bootstrap_to_federation (void)
 int
 Trading_Service::shutdown (void)
 {
-  CORBA::Environment TAO_IN_ENV;
-
-  if (this->trader_.get () != 0)
+  ACE_TRY_NEW_ENV
     {
-      TAO_Trading_Components_i& trd_comp
-        = this->trader_->trading_components ();
-      CosTrading::Link_ptr our_link = trd_comp.link_if ();
-
-      CosTrading::LinkNameSeq_var link_name_seq =
-        our_link->list_links (TAO_IN_ENV);
-
-      ACE_DEBUG ((LM_DEBUG, "*** Unlinking from federated traders.\n"));
-      for (int i = link_name_seq->length () - 1; i >= 0; i--)
+      if (this->trader_.get () != 0)
         {
-          TAO_TRY
+          TAO_Trading_Components_i& trd_comp
+            = this->trader_->trading_components ();
+          CosTrading::Link_ptr our_link = trd_comp.link_if ();
+
+          CosTrading::LinkNameSeq_var link_name_seq =
+            our_link->list_links (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          ACE_DEBUG ((LM_DEBUG, "*** Unlinking from federated traders.\n"));
+          for (int i = link_name_seq->length () - 1; i >= 0; i--)
             {
               ACE_DEBUG ((LM_DEBUG, "*** Describing the next link.\n"));
               CosTrading::Link::LinkInfo_var link_info =
-                our_link->describe_link (link_name_seq[i], TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-
+                our_link->describe_link (link_name_seq[i], ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+                  
               ACE_DEBUG ((LM_DEBUG, "*** Removing link to %s.\n",
                           ACE_static_cast (const char*, link_name_seq[i])));
-              our_link->remove_link (link_name_seq[i], TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-
+              our_link->remove_link (link_name_seq[i], ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+                  
               CosTrading::Lookup_ptr remote_lookup;
               remote_lookup = link_info->target.in ();
-
+                  
               ACE_DEBUG ((LM_DEBUG, "*** Retrieving its link interface.\n"));
               CosTrading::Link_var remote_link =
-                remote_lookup->link_if (TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-
+                remote_lookup->link_if (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+                  
               ACE_DEBUG ((LM_DEBUG, "*** Removing its link to us.\n"));
-
+                  
               if (this->bootstrapper_)
-                remote_link->remove_link ("Bootstrap", TAO_TRY_ENV);
+                remote_link->remove_link ("Bootstrap", ACE_TRY_ENV);
               else
-                remote_link->remove_link (this->name_.in (), TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+                remote_link->remove_link (this->name_.in (), ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
             }
-          TAO_CATCHANY
-            {
-              //              TAO_TRY_ENV.print_exception ("Trading Service");
-            }
-          TAO_ENDTRY;
         }
     }
+  ACE_CATCHANY
+    {
+      // ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Trading Service shutting down");
+    }
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -386,15 +368,28 @@ main (int argc, char** argv)
 {
   Trading_Service trader;
 
-  if (trader.init (argc, argv) != -1)
-    trader.run ();
-  else
+  ACE_TRY_NEW_ENV
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Failed to initialize the trader.\n"),
-                        -1);
-    }
+      int check = trader.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
+      if (check != -1)
+        {
+          trader.run (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Failed to initialize the trader.\n"),
+                            -1);
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Trading Service");
+    }
+  ACE_ENDTRY;
   return 0;
 }
 

@@ -139,9 +139,9 @@ const char* TT_Info::QUERIES[][3] =
 
 void
 TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
-                          CORBA::Boolean print_dynamic)
+                          CORBA::Boolean print_dynamic,
+                          CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Environment env;
   TAO_Property_Evaluator prop_eval (prop_seq);
 
   for (int length = prop_seq.length (), k = 0; k < length; k++)
@@ -150,15 +150,15 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
       CORBA::Any* value = 0;
       CORBA::TypeCode_ptr tc = 0;
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
-      TAO_TRY
+      ACE_TRY
         {
           CORBA::Boolean is_dynamic = prop_eval.is_dynamic_property (k);
-          TAO_CHECK_ENV;
+          ACE_TRY_CHECK;
 
           if (print_dynamic || ! is_dynamic)
             {
-              value = prop_eval.property_value(k, env);
-              TAO_CHECK_ENV;
+              value = prop_eval.property_value(k, ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
               tc = value->type ();
             }
@@ -167,15 +167,20 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
               ACE_DEBUG ((LM_DEBUG, "Dynamic Property\n"));
             }
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
+          // @@ Seth, don't pass the exceptions back?
           ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
+      ACE_CHECK;
 
       if (tc == 0)
         continue;
-      else if (tc->equal (TAO_Trader_Test::_tc_StringSeq, env))
+      int check = tc->equal (TAO_Trader_Test::_tc_StringSeq, ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (check)
         {
           TAO_Trader_Test::StringSeq* str_seq;
           (*value) >>= str_seq;
@@ -185,18 +190,24 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
-      else if (tc->equal (TAO_Trader_Test::_tc_ULongSeq, env))
-        {
-          TAO_Trader_Test::ULongSeq* ulong_seq;
-          (*value) >>= ulong_seq;
-
-          for (seq_length = ulong_seq->length (), i = 0; i < seq_length; i++)
-            ACE_DEBUG ((LM_DEBUG, "%d ", (*ulong_seq)[i]));
-
-          ACE_DEBUG ((LM_DEBUG, "\n"));
-        }
       else
-        CORBA::Any::dump (*value);
+        {
+          check = tc->equal (TAO_Trader_Test::_tc_ULongSeq, ACE_TRY_ENV);
+          ACE_CHECK;
+
+          if (check)
+            {
+              TAO_Trader_Test::ULongSeq* ulong_seq;
+              (*value) >>= ulong_seq;
+
+              for (seq_length = ulong_seq->length (), i = 0; i < seq_length; i++)
+                ACE_DEBUG ((LM_DEBUG, "%d ", (*ulong_seq)[i]));
+
+              ACE_DEBUG ((LM_DEBUG, "\n"));
+            }
+          else
+            CORBA::Any::dump (*value);
+        }
     }
 }
 
