@@ -43,14 +43,17 @@ Sig_Handler::Sig_Handler (void)
   // ACE_Event_Handler::NULL_MASK when registering this with the
   // ACE_Reactor (see below).
   this->handle_ = ACE_OS::open (ACE_DEV_NULL, O_WRONLY);
-  ACE_ASSERT (this->handle_ != -1);
+  ACE_ASSERT (this->handle_ != ACE_INVALID_HANDLE);
 
   // Register signal handler object.  Note that NULL_MASK is used to
   // keep the ACE_Reactor from calling us back on the "/dev/null"
   // descriptor.
   if (ACE_Reactor::instance ()->register_handler 
       (this, ACE_Event_Handler::NULL_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n%a",
+                "register_handler",
+                1));
 
   // Create a sigset_t corresponding to the signals we want to catch.
   ACE_Sig_Set sig_set;
@@ -60,11 +63,15 @@ Sig_Handler::Sig_Handler (void)
   sig_set.sig_add (SIGALRM);  
 
   // Register the signal handler object to catch the signals.
-  if (ACE_Reactor::instance ()->register_handler (sig_set, this) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
+  if (ACE_Reactor::instance ()->register_handler 
+      (sig_set, this) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n%a",
+                "register_handler",
+                1));
 }
 
-// Called by the ACE_Reactor to extract the fd.
+// Called by the ACE_Reactor to extract the handle.
 
 ACE_HANDLE
 Sig_Handler::get_handle (void) const
@@ -80,7 +87,8 @@ Sig_Handler::get_handle (void) const
 int 
 Sig_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) handling asynchonrous input...\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) handling asynchonrous input...\n"));
   return 0;
 }
 
@@ -90,7 +98,8 @@ Sig_Handler::handle_input (ACE_HANDLE)
 int 
 Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) closing down Sig_Handler...\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) closing down Sig_Handler...\n"));
   return 0;
 }
 
@@ -98,16 +107,18 @@ Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 // object.  In our simple example, we are simply catching SIGALRM,
 // SIGINT, and SIGQUIT.  Anything else is logged and ignored.
 //
-// There are several advantages to using this approach.  First, 
-// the behavior triggered by the signal is handled in the main event
-// loop, rather than in the signal handler.  Second, the ACE_Reactor's 
-// signal handling mechanism eliminates the need to use global signal 
-// handler functions and data. 
+// There are several advantages to using this approach.  First, the
+// behavior triggered by the signal is handled in the main event loop,
+// rather than in the signal handler.  Second, the ACE_Reactor's
+// signal handling mechanism eliminates the need to use global signal
+// handler functions and data.
 
 int
 Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) received signal %S\n",
+              signum));
 
   switch (signum)
     {
@@ -121,14 +132,19 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       // <Sig_Handler::handle_input> method from within its event
       // loop.
       return ACE_Reactor::instance ()->ready_ops 
-	(this->handle_, ACE_Event_Handler::READ_MASK, ACE_Reactor::ADD_MASK);
+	(this->handle_,
+         ACE_Event_Handler::READ_MASK,
+         ACE_Reactor::ADD_MASK);
     case SIGQUIT:
-      ACE_DEBUG ((LM_DEBUG, "(%t) %S: shutting down signal tester\n", signum));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) %S: shutting down signal tester\n",
+                  signum));
       ACE_Reactor::end_event_loop();
       break;
     default: 
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%t) %S: not handled, returning to program\n", signum));
+		  "(%t) %S: not handled, returning to program\n",
+                  signum));
       break;
     }
   return 0;
@@ -151,50 +167,64 @@ STDIN_Handler::STDIN_Handler (void)
   if (ACE::register_stdin_handler (this,
 				   ACE_Reactor::instance (),
 				   ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "register_stdin_handler"));
 
   // Register the STDIN_Handler to be dispatched once every <timeout>
   // seconds.
   else if (ACE_Reactor::instance ()->schedule_timer
-	   (this, 0, ACE_Time_Value (timeout), ACE_Time_Value (timeout)) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "schedule_timer", 1));
+	   (this,
+            0,
+            ACE_Time_Value (timeout),
+            ACE_Time_Value (timeout)) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n%a",
+                "schedule_timer",
+                1));
 }
 
 int 
 STDIN_Handler::handle_timeout (const ACE_Time_Value &tv,
 			       const void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) timeout occurred at %d sec, %d usec\n",
-	      tv.sec (), tv.usec ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) timeout occurred at %d sec, %d usec\n",
+	      tv.sec (),
+              tv.usec ()));
   return 0;
 }
 
-// Read from input descriptor and write to stdout descriptor.
+// Read from input handle and write to stdout handle.
 
 int 
 STDIN_Handler::handle_input (ACE_HANDLE handle)
 {
-  ssize_t n;
   char buf[BUFSIZ];
+  ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
 
-  switch (n = ACE_OS::read (handle, buf, sizeof buf))
+  switch (n)
     {
     case -1:
       if (errno == EINTR)
 	return 0;
         /* NOTREACHED */
       else
-	ACE_ERROR ((LM_ERROR, "%p\n", "read"));
+	ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "read"));
       /* FALLTHROUGH */
     case 0:
-      ACE_Reactor::end_event_loop();
+      ACE_Reactor::end_event_loop ();
       break;
     default:
       {
 	ssize_t result = ACE::write_n (ACE_STDOUT, buf, n);
 
 	if (result != n)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write"), 
+	  ACE_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             "write"), 
 			    result == -1 && errno == EINTR ? 0 : -1);
       }
     }
@@ -229,7 +259,9 @@ Message_Handler::Message_Handler (void)
   this->msg_queue ()->notification_strategy (&this->notification_strategy_);
 
   if (this->activate ())
-    ACE_ERROR ((LM_ERROR, "%p\n", "activate"));
+    ACE_ERROR ((LM_ERROR, 
+                "%p\n",
+                "activate"));
 }
 
 int
@@ -239,7 +271,9 @@ Message_Handler::svc (void)
     {
       ACE_Message_Block *mb;
 
-      ACE_NEW_RETURN (mb, ACE_Message_Block (1), 0);
+      ACE_NEW_RETURN (mb,
+                      ACE_Message_Block (1),
+                      0);
 
       mb->msg_priority (i);
       ACE_OS::sleep (1);
@@ -251,27 +285,36 @@ Message_Handler::svc (void)
       if (this->putq (mb) == -1)
 	{
 	  if (errno == ESHUTDOWN)
-	    ACE_ERROR_RETURN ((LM_ERROR, "(%t) queue is deactivated"), 0);
+	    ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%t) queue is deactivated"), 0);
 	  else
-	    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "putq"), -1);
+	    ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%t) %p\n",
+                               "putq"),
+                              -1);
 	}
     }
 
-  ACE_NOTREACHED(return 0);
+  ACE_NOTREACHED (return 0);
 }
 
 int
 Message_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Message_Handler::handle_input\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) Message_Handler::handle_input\n"));
 
   ACE_Message_Block *mb;
 
   if (this->getq (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "dequeue_head"));
+    ACE_ERROR ((LM_ERROR,
+                "(%t) %p\n",
+                "dequeue_head"));
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) priority = %d\n", mb->msg_priority ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) priority = %d\n",
+                  mb->msg_priority ()));
       mb->release ();
     }
 
@@ -309,6 +352,7 @@ main (int argc, char *argv[])
 
   // Wait for the thread to exit.
   ACE_Thread_Manager::instance ()->wait ();
-  ACE_DEBUG ((LM_DEBUG, "(%t) leaving main\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) leaving main\n"));
   return 0;
 }
