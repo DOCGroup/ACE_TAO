@@ -39,12 +39,10 @@ else
 # variables for parameters
 
 $nsmport = 10000 + $uid;
-$nsport = 0;
-$clport = 0; 
 
 sub name_server
 {
-  my $args = "-ORBport $nsport -ORBnameserviceport $nsmport -ORBobjrefstyle url";
+  my $args = "-ORBnameserviceport $nsmport";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."Naming_Service".$DIR_SEPARATOR.
              "Naming_Service".$Process::EXE_EXT;
 
@@ -53,7 +51,7 @@ sub name_server
 
 sub client
 {
-  my $args = "-ORBport $clport -ORBobjrefstyle url -ORBnameserviceport $nsmport";
+  my $args = "-ORBnameserviceport $nsmport";
   my $prog = "client".$Process::EXE_EXT;
     
   system ($prog." ".$args);
@@ -64,3 +62,6 @@ sleep $sleeptime;
 client ();
 
 $NS->Kill ();
+
+# @@ Capture any exit status from the processes.
+exit 0;
