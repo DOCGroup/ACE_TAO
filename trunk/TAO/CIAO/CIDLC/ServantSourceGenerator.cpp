@@ -547,10 +547,11 @@ namespace
                                  Traversal::EmitterData,
                                  EmitterBase
     {
-      ContextPortsEmitter (Context& c)
+      ContextPortsEmitter (Context& c, SemanticGraph::Component& scope)
         : EmitterBase (c),
           type_name_emitter_ (c.os ()),
-          simple_type_name_emitter_ (c.os ())
+          simple_type_name_emitter_ (c.os ()),
+          scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
@@ -562,7 +563,7 @@ namespace
         Traversal::UserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
-           << u.scoped_name ().scope_name ().simple_name () << "_Context::get_connection_"
+           << scope_.name () << "_Context::get_connection_"
            << u.name () << " (" << endl
            << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
            << STRS[EXCP_SNGL] << endl
@@ -577,7 +578,7 @@ namespace
            << "}" << endl;
 
         os << "void" << endl
-           << u.scoped_name ().scope_name ().simple_name () << "_Context::connect_"
+           << scope_.name () << "_Context::connect_"
            << u.name () << " (" << endl;
 
         Traversal::UserData::belongs (u, belongs_);
@@ -608,7 +609,7 @@ namespace
         Traversal::UserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
-           << u.scoped_name ().scope_name ().simple_name () << "_Context::disconnect_"
+           << scope_.name () << "_Context::disconnect_"
            << u.name () << " (" << endl
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_START] << endl
@@ -634,7 +635,7 @@ namespace
       traverse (SemanticGraph::Publisher& p)
       {
         os << "void" << endl
-           << p.scoped_name ().scope_name ().simple_name () << "_Context::push_"
+           << scope_.name () << "_Context::push_"
            << p.name () << " (" << endl;
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -688,7 +689,7 @@ namespace
            << "}" << endl;
 
         os << STRS[COMP_CK] << " *" << endl
-           << p.scoped_name ().scope_name ().simple_name () << "_Context::subscribe_"
+           << scope_.name () << "_Context::subscribe_"
            << p.name () << " (" << endl;
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -723,7 +724,7 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr" << endl
-           << p.scoped_name ().scope_name ().simple_name () << "_Context::unsubscribe_"
+           << scope_.name () << "_Context::unsubscribe_"
            << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck" << endl
            << STRS[ENV_SRC] << ")" << endl
@@ -764,7 +765,7 @@ namespace
       traverse (SemanticGraph::Emitter& e)
       {
         os << "void" << endl
-           << e.scoped_name ().scope_name ().simple_name () << "_Context::push_"
+           << scope_.name () << "_Context::push_"
            << e.name () << " (" << endl;
 
         Traversal::EmitterData::belongs (e, belongs_);
@@ -784,7 +785,7 @@ namespace
            << "}" << endl;
 
         os << "void" << endl
-           << e.scoped_name ().scope_name ().simple_name () << "_Context::connect_"
+           << scope_.name () << "_Context::connect_"
            << e.name () << " (" << endl;
 
         Traversal::EmitterData::belongs (e, belongs_);
@@ -811,7 +812,7 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr" << endl
-           << e.scoped_name ().scope_name ().simple_name () << "_Context::disconnect_"
+           << scope_.name () << "_Context::disconnect_"
            << e.name () << " (" << endl
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_START] << endl
@@ -838,6 +839,7 @@ namespace
       SimpleTypeNameEmitter simple_type_name_emitter_;
       Traversal::Belongs belongs_;
       Traversal::Belongs simple_belongs_;
+      SemanticGraph::Component& scope_;
     };
 
   public:
@@ -849,7 +851,14 @@ namespace
       // like the original hand-crafted examples, for easier checking.
       // This can be moved later to ServantEmitter::pre() or out on its own.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
 
         Traversal::Provider provider;
         defines.node_traverser (provider);
@@ -860,7 +869,7 @@ namespace
         FacetEmitter facet_emitter (ctx);
         belongs.node_traverser (facet_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << STRS[GLUE_NS]
@@ -993,11 +1002,19 @@ namespace
 
       // Generate Context class operations for receptacles and event sources.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
-        ContextPortsEmitter ports_emitter (ctx);
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        ContextPortsEmitter ports_emitter (ctx, t);
         defines.node_traverser (ports_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
       
       os << "// CIAO-specific." << endl << endl
@@ -1056,9 +1073,10 @@ namespace
     struct PublishesEmitter : Traversal::PublisherData,
                               EmitterBase
     {
-      PublishesEmitter (Context& c)
+      PublishesEmitter (Context& c, SemanticGraph::Component& scope)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ())
+          type_name_emitter_ (c.os ()),
+          scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
       }
@@ -1067,7 +1085,7 @@ namespace
       traverse (Type& p)
       {
         os << STRS[COMP_CK] << " *" << endl
-           << p.scoped_name ().scope_name ().simple_name ()
+           << scope_.name ()
            << "_Servant::subscribe_" << p.name () << " (" << endl;
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -1087,7 +1105,7 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr" << endl
-           << p.scoped_name ().scope_name ().simple_name ()
+           << scope_.name ()
            << "_Servant::unsubscribe_" << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck" << endl
            << STRS[ENV_SRC] << ")" << endl
@@ -1105,6 +1123,7 @@ namespace
     private:
       TypeNameEmitter type_name_emitter_;
       Traversal::Belongs belongs_;
+      SemanticGraph::Component& scope_;
     };
 
     struct UsesConnectEmitter : Traversal::UserData,
@@ -1176,9 +1195,10 @@ namespace
     struct UsesEmitter : Traversal::UserData,
                          EmitterBase
     {
-      UsesEmitter (Context& c)
+      UsesEmitter (Context& c, SemanticGraph::Component& scope)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ())
+          type_name_emitter_ (c.os ()),
+          scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
       }
@@ -1187,7 +1207,7 @@ namespace
       traverse (Type& p)
       {
         os << "void" << endl
-           << p.scoped_name ().scope_name ().simple_name () << "_Servant::connect_"
+           << scope_.name () << "_Servant::connect_"
            << p.name () << " (" << endl;
 
         Traversal::UserData::belongs (p, belongs_);
@@ -1208,7 +1228,7 @@ namespace
         Traversal::UserData::belongs (p, belongs_);
 
         os << "_ptr" << endl
-           << p.scoped_name ().scope_name ().simple_name () << "_Servant::disconnect_"
+           << scope_.name () << "_Servant::disconnect_"
            << p.name () << " (" << endl
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_START] << endl
@@ -1223,7 +1243,7 @@ namespace
         Traversal::UserData::belongs (p, belongs_);
 
         os << "_ptr" << endl
-           << p.scoped_name ().scope_name ().simple_name ()
+           << scope_.name ()
            << "_Servant::get_connection_" << p.name ()
            << " (" << endl
            << STRS[ENV_SNGL_SRC] << ")" << endl
@@ -1238,6 +1258,7 @@ namespace
     private:
       TypeNameEmitter type_name_emitter_;
       Traversal::Belongs belongs_;
+      SemanticGraph::Component& scope_;
     };
 
     struct ConsumesGetEmitter : Traversal::ConsumerData,
@@ -1327,9 +1348,10 @@ namespace
     struct EmitsEmitter : Traversal::EmitterData,
                           EmitterBase
     {
-      EmitsEmitter (Context& c)
+      EmitsEmitter (Context& c, SemanticGraph::Component& scope)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ())
+          type_name_emitter_ (c.os ()),
+          scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
       }
@@ -1338,7 +1360,7 @@ namespace
       traverse (Type& e)
       {
         os << "void" << endl
-           << e.scoped_name ().scope_name ().simple_name () << "_Servant::connect_"
+           << scope_.name () << "_Servant::connect_"
            << e.name () << " (" << endl;
 
         Traversal::EmitterData::belongs (e, belongs_);
@@ -1358,7 +1380,7 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr" << endl
-           << e.scoped_name ().scope_name ().simple_name () << "_Servant::disconnect_"
+           << scope_.name () << "_Servant::disconnect_"
            << e.name () << " (" << endl
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_START] << endl
@@ -1374,6 +1396,7 @@ namespace
     private:
       TypeNameEmitter type_name_emitter_;
       Traversal::Belongs belongs_;
+      SemanticGraph::Component& scope_;
     };
 
     struct ServantTypeNameEmitter : Traversal::Type
@@ -1391,8 +1414,6 @@ namespace
 
         if (!scope.simple ())
         {
-//          os << "_" << Name (scope.begin () + 1, scope.end ());
-          
           for (Name::Iterator i (scope.begin () + 1); i != scope.end (); ++i)
           {
             os << "_" << i->str ();
@@ -1409,12 +1430,13 @@ namespace
     struct FacetProvidesEmitter : Traversal::ProviderData,
                                   EmitterBase
     {
-      FacetProvidesEmitter (Context& c)
+      FacetProvidesEmitter (Context& c, SemanticGraph::Component& scope)
         : EmitterBase (c),
           type_name_emitter_ (c.os ()),
           simple_type_name_emitter_ (c.os ()),
           servant_type_name_emitter_ (c.os ()),
-          enclosing_type_name_emitter_ (c.os ())
+          enclosing_type_name_emitter_ (c.os ()),
+          scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
@@ -1428,7 +1450,7 @@ namespace
         Traversal::ProviderData::belongs (p, belongs_);
 
         os << "_ptr" << endl
-           << p.scoped_name ().scope_name ().simple_name ()
+           << scope_.name ()
            << "_Servant::provide_" << p.name () << " (" << endl
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
@@ -1520,15 +1542,17 @@ namespace
       Traversal::Belongs simple_belongs_;
       Traversal::Belongs servant_belongs_;
       Traversal::Belongs enclosing_belongs_;
+      SemanticGraph::Component& scope_;
     };
 
     struct ConsumesEmitter : Traversal::ConsumerData,
                              EmitterBase
     {
-      ConsumesEmitter (Context& c)
+      ConsumesEmitter (Context& c, SemanticGraph::Component& scope)
         : EmitterBase (c),
           type_name_emitter_ (c.os ()),
-          simple_type_name_emitter_ (c.os ())
+          simple_type_name_emitter_ (c.os ()),
+          scope_ (scope)
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
@@ -1537,7 +1561,7 @@ namespace
       virtual void
       traverse (Type& c)
       {
-        os << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+        os << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
@@ -1564,7 +1588,7 @@ namespace
            << "{"
            << "}" << endl;
 
-        os << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+        os << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
@@ -1579,7 +1603,7 @@ namespace
            << "}" << endl;
 
         os << "CORBA::Object_ptr" << endl
-           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+           << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
@@ -1593,7 +1617,7 @@ namespace
            << "}" << endl;
 
         os << "void" << endl
-           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+           << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
@@ -1618,7 +1642,7 @@ namespace
 
         os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
            << "void" << endl
-           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+           << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
@@ -1655,7 +1679,7 @@ namespace
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "Consumer_ptr" << endl
-           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::"
+           << scope_.name  () << "_Servant::"
            << "get_consumer_" << c.name () << " (" << endl
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
@@ -1663,13 +1687,13 @@ namespace
            << "if (CORBA::is_nil (this->consumes_" << c.name ()
            << "_.in ()))" << endl
            << "{"
-           << c.scoped_name ().scope_name ().simple_name  () << "_Servant::";
+           << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
         os << "Consumer_" << c.name ()
            << "_Servant *svt =" << endl
-           << "new " << c.scoped_name ().scope_name ().simple_name  ()
+           << "new " << scope_.name  ()
            << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
@@ -1720,6 +1744,7 @@ namespace
       SimpleTypeNameEmitter simple_type_name_emitter_;
       Traversal::Belongs belongs_;
       Traversal::Belongs simple_belongs_;
+      SemanticGraph::Component& scope_;
     };
 
   public:
@@ -1789,11 +1814,19 @@ namespace
 
       // Generate provides_<facet> operation.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
-        FacetProvidesEmitter provides_emitter (ctx);
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        FacetProvidesEmitter provides_emitter (ctx, t);
         defines.node_traverser (provides_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "// Operations for Navigation interface." << endl << endl;
@@ -1815,11 +1848,19 @@ namespace
 
       // Generate an IF block for each facet inside provide_facet().
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
         NavigationEmitter navigation_emitter (ctx);
         defines.node_traverser (navigation_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "ACE_THROW_RETURN (" << endl
@@ -1890,20 +1931,36 @@ namespace
 
       // Generate subscribe_* and unsubscribe_* operations.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
-        PublishesEmitter publishes_emitter (ctx);
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        PublishesEmitter publishes_emitter (ctx, t);
         defines.node_traverser (publishes_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       // Generate operations for nested Consumer classes.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
-        ConsumesEmitter consumes_emitter (ctx);
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        ConsumesEmitter consumes_emitter (ctx, t);
         defines.node_traverser (consumes_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << STRS[COMP_CK] << " *" << endl
@@ -1928,11 +1985,19 @@ namespace
 
       // Generate IF block in connect operation for each receptacle.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
         UsesConnectEmitter uses_emitter (ctx);
         defines.node_traverser (uses_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
@@ -1959,11 +2024,19 @@ namespace
 
       // Generate IF block in disconnect operation for each receptacle.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
         UsesDisconnectEmitter uses_emitter (ctx);
         defines.node_traverser (uses_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "ACE_THROW_RETURN (" << endl
@@ -2006,11 +2079,19 @@ namespace
 
       // Generate generic operations for receptacles.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
-        UsesEmitter uses_emitter (ctx);
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        UsesEmitter uses_emitter (ctx, t);
         defines.node_traverser (uses_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << STRS[COMP_ECB] << "_ptr" << endl
@@ -2030,11 +2111,19 @@ namespace
 
       // Generate an IF block in for each consumer in get_consumer().
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
         ConsumesGetEmitter consumes_emitter (ctx);
         defines.node_traverser (consumes_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "ACE_THROW_RETURN (" << endl
@@ -2112,11 +2201,19 @@ namespace
 
       // Generate an IF block in for each publisher in subscribe().
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
         PublishesSubscribeEmitter publishes_emitter (ctx);
         defines.node_traverser (publishes_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);" << endl
@@ -2144,11 +2241,19 @@ namespace
 
       // Generate an IF block in for each publisher in unsubscribe().
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
         PublishesUnsubscribeEmitter publishes_emitter (ctx);
         defines.node_traverser (publishes_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "ACE_THROW_RETURN (" << endl
@@ -2182,11 +2287,19 @@ namespace
 
       // Generate connect() and disconnect() for each emits declaration.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
-        EmitsEmitter emits_emitter (ctx);
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        EmitsEmitter emits_emitter (ctx, t);
         defines.node_traverser (emits_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
 
       os << "// Operations for CCMObject interface." << endl << endl;
@@ -2341,23 +2454,33 @@ namespace
 
       // Generate operations for all supported interfaces.
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits component_inherits;
+        component_inherits.node_traverser (component_emitter);
+        
         Traversal::Supports supports_;
+        component_emitter.edge_traverser (supports_);
+        component_emitter.edge_traverser (component_inherits);
+
         InterfaceEmitter interface_emitter (ctx);
         supports_.node_traverser (interface_emitter);
 
         Traversal::Defines defines;
-        Traversal::Inherits inherits;
+        Traversal::Inherits interface_inherits;
         interface_emitter.edge_traverser (defines);
-        interface_emitter.edge_traverser (inherits);
+        interface_emitter.edge_traverser (interface_inherits);
 
         AttributeEmitter<SemanticGraph::Component> attribute_emitter (ctx, t);
-        ReadOnlyAttributeEmitter<SemanticGraph::Component> read_only_attribute_emitter (ctx, t);
+        ReadOnlyAttributeEmitter<
+            SemanticGraph::Component
+          > read_only_attribute_emitter (ctx, t);
         defines.node_traverser (attribute_emitter);
         defines.node_traverser (read_only_attribute_emitter);
 
         OperationEmitter<SemanticGraph::Component> operation_emitter (ctx, t);
         defines.node_traverser (operation_emitter);
-        inherits.node_traverser (interface_emitter);
+        interface_inherits.node_traverser (interface_emitter);
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
@@ -2390,20 +2513,28 @@ namespace
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
 
-        supports (t, supports_);
+        component_emitter.traverse (t);
       }
 
       // Generate operations for component attributes.
       os << "// Component attribute operations." << endl << endl;
 
       {
+        Traversal::Component component_emitter;
+        
+        Traversal::Inherits inherits;
+        component_emitter.edge_traverser (inherits);
+        inherits.node_traverser (component_emitter);
+        
         Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+
         AttributeEmitter<SemanticGraph::Component> attribute_emitter (ctx, t);
         ReadOnlyAttributeEmitter<SemanticGraph::Component> read_only_attribute_emitter (ctx, t);
         defines.node_traverser (attribute_emitter);
         defines.node_traverser (read_only_attribute_emitter);
 
-        names (t, defines);
+        component_emitter.traverse (t);
       }
     }
 
@@ -2439,23 +2570,50 @@ namespace
     private:
       std::ostream& os;
     };
-
-    struct HomeOperationEmitter : Traversal::HomeFactory,
-                                  OperationEmitter<SemanticGraph::Home>,
-                                  Traversal::Home
+    
+    // HomeFactory and HomeFinder are tied to Operation in
+    // the front end. Since we want to treat them differently
+    // than regular operations in a home (we don't want to
+    // generate anything for base class factory operations,
+    // example), we use this class for regular home operations
+    // that overrides HomeFactory and HomeFinder traversals
+    // to do nothing.
+    struct HomeOperationEmitter : OperationEmitter<SemanticGraph::Home>,
+                                  Traversal::HomeFactory,
+                                  Traversal::HomeFinder
     {
       HomeOperationEmitter (Context& c, SemanticGraph::Home& home)
         : OperationEmitter<SemanticGraph::Home> (c, home)
       {}
 
       virtual void
+      traverse (SemanticGraph::HomeFactory&)
+      {
+      }
+
+      virtual void
+      traverse (SemanticGraph::HomeFinder&)
+      {
+      }
+    };
+
+    struct FactoryOperationEmitter : Traversal::HomeFactory,
+                                     Traversal::Home,
+                                     EmitterBase
+    {
+      FactoryOperationEmitter (Context& c, SemanticGraph::Home& home)
+        : EmitterBase (c),
+          scope_ (home)
+      {}
+      
+      virtual void
       returns (SemanticGraph::HomeFactory& hf)
       {
-        ReturnTypeNameEmitter manages_emitter (os);
-        Traversal::Manages manages_;
-        manages_.node_traverser (manages_emitter);
+        ReturnTypeNameEmitter returns_emitter (os);
+        Traversal::Returns returns_;
+        returns_.node_traverser (returns_emitter);
 
-        manages (scope_, manages_);
+        Traversal::HomeFactory::returns (hf, returns_);
 
         os << endl;
       }
@@ -2533,11 +2691,11 @@ namespace
         os << "ACE_CHECK_RETURN (";
 
         {
-          TypeNameEmitter manages_emitter (os);
-          Traversal::Manages manages_;
-          manages_.node_traverser (manages_emitter);
+          ReturnTypeNameEmitter returns_emitter (os);
+          Traversal::Returns returns_;
+          returns_.node_traverser (returns_emitter);
 
-          manages (scope_, manages_);
+          Traversal::HomeFactory::returns (hf, returns_);
         }
 
         os << "::_nil ());" << endl;
@@ -2553,11 +2711,11 @@ namespace
         os << "::CCM_";
 
         {
-          SimpleTypeNameEmitter name_emitter (os);
-          Traversal::Manages manages_;
-          manages_.node_traverser (name_emitter);
+          SimpleTypeNameEmitter returns_emitter (os);
+          Traversal::Returns returns_;
+          returns_.node_traverser (returns_emitter);
 
-          manages (scope_, manages_);
+          Traversal::HomeFactory::returns (hf, returns_);
         }
 
         os << "_var _ciao_comp =" << endl;
@@ -2573,11 +2731,11 @@ namespace
         os << "::CCM_";
 
         {
-          SimpleTypeNameEmitter name_emitter (os);
-          Traversal::Manages manages_;
-          manages_.node_traverser (name_emitter);
+          SimpleTypeNameEmitter returns_emitter (os);
+          Traversal::Returns returns_;
+          returns_.node_traverser (returns_emitter);
 
-          manages (scope_, manages_);
+          Traversal::HomeFactory::returns (hf, returns_);
         }
 
         os << "::_narrow (" << endl
@@ -2587,11 +2745,11 @@ namespace
         os << "ACE_CHECK_RETURN (";
 
         {
-          TypeNameEmitter manages_emitter (os);
-          Traversal::Manages manages_;
-          manages_.node_traverser (manages_emitter);
+          ReturnTypeNameEmitter returns_emitter (os);
+          Traversal::Returns returns_;
+          returns_.node_traverser (returns_emitter);
 
-          manages (scope_, manages_);
+          Traversal::HomeFactory::returns (hf, returns_);
         }
 
         os << "::_nil ());" << endl;
@@ -2608,6 +2766,9 @@ namespace
       {
         os << "," << endl;
       }
+
+    private:
+      SemanticGraph::Home& scope_;
     };
 
   public:
@@ -2634,10 +2795,18 @@ namespace
          << "{"
          << "}" << endl;
 
-      os << "// Home factory and other operations." << endl << endl;
+      os << "// Home operations." << endl << endl;
 
       {
+        Traversal::Home home_emitter;
+        
+        Traversal::Inherits inherits;
+        home_emitter.edge_traverser (inherits);
+        inherits.node_traverser (home_emitter);
+        
         Traversal::Defines defines;
+        home_emitter.edge_traverser (defines);
+
         HomeOperationEmitter home_operation_emitter (ctx, t);
         defines.node_traverser (home_operation_emitter);
 
@@ -2672,20 +2841,142 @@ namespace
         inout_belongs.node_traverser (inout_arg_emitter);
         out_belongs.node_traverser (out_arg_emitter);
 
-        names (t, defines);
+        home_emitter.traverse (t);
+      }
+
+      os << "// Home supported interface operations." << endl << endl;
+
+      {
+        Traversal::Home home_emitter;
+        
+        Traversal::Inherits home_inherits;
+        home_inherits.node_traverser (home_emitter);
+        home_emitter.edge_traverser (home_inherits);
+        
+        Traversal::Supports supports_;
+        home_emitter.edge_traverser (supports_);
+
+        InterfaceEmitter interface_emitter (ctx);
+        supports_.node_traverser (interface_emitter);
+
+        Traversal::Defines defines;
+        Traversal::Inherits interface_inherits;
+        interface_emitter.edge_traverser (defines);
+        interface_emitter.edge_traverser (interface_inherits);
+
+        AttributeEmitter<SemanticGraph::Home> attribute_emitter (ctx, t);
+        ReadOnlyAttributeEmitter<
+            SemanticGraph::Home
+          > read_only_attribute_emitter (ctx, t);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
+
+        OperationEmitter<SemanticGraph::Home> operation_emitter (ctx, t);
+        defines.node_traverser (operation_emitter);
+        interface_inherits.node_traverser (interface_emitter);
+
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        operation_emitter.edge_traverser (receives);
+        operation_emitter.edge_traverser (returns);
+        operation_emitter.edge_traverser (raises);
+
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+
+        INArgTypeNameEmitter in_arg_emitter (os);
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
+
+        home_emitter.traverse (t);
+      }
+      
+      os << "// Home factory operations." << endl << endl;
+
+      {
+        Traversal::Home home_emitter;
+        
+        Traversal::Inherits inherits;
+        home_emitter.edge_traverser (inherits);
+        inherits.node_traverser (home_emitter);
+        
+        Traversal::Defines defines;
+        home_emitter.edge_traverser (defines);
+        
+        FactoryOperationEmitter factory_operation_emitter (ctx, t);
+        defines.node_traverser (factory_operation_emitter);
+
+        Traversal::Receives receives;
+        Traversal::Belongs returns;
+        Traversal::Raises raises;
+        factory_operation_emitter.edge_traverser (receives);
+        factory_operation_emitter.edge_traverser (returns);
+        factory_operation_emitter.edge_traverser (raises);
+
+        ParameterEmitter<Traversal::InParameter> in_param (os);
+        ParameterEmitter<Traversal::InOutParameter> inout_param (os);
+        ParameterEmitter<Traversal::OutParameter> out_param (os);
+        receives.node_traverser (in_param);
+        receives.node_traverser (inout_param);
+        receives.node_traverser (out_param);
+
+        ReturnTypeNameEmitter return_type_emitter (os);
+        TypeNameEmitter type_name_emitter (os);
+        returns.node_traverser (return_type_emitter);
+        raises.node_traverser (type_name_emitter);
+
+        Traversal::Belongs in_belongs, inout_belongs, out_belongs;
+        in_param.edge_traverser (in_belongs);
+        inout_param.edge_traverser (inout_belongs);
+        out_param.edge_traverser (out_belongs);
+
+        INArgTypeNameEmitter in_arg_emitter (os);
+        INOUTArgTypeNameEmitter inout_arg_emitter (os);
+        OUTArgTypeNameEmitter out_arg_emitter (os);
+        in_belongs.node_traverser (in_arg_emitter);
+        inout_belongs.node_traverser (inout_arg_emitter);
+        out_belongs.node_traverser (out_arg_emitter);
+
+        home_emitter.traverse (t);
       }
 
       // Generate operations for component attributes.
       os << "// Home attribute operations." << endl << endl;
 
       {
+        Traversal::Home home_emitter;
+        
+        Traversal::Inherits inherits;
+        home_emitter.edge_traverser (inherits);
+        inherits.node_traverser (home_emitter);
+        
         Traversal::Defines defines;
+        home_emitter.edge_traverser (defines);
+        
         AttributeEmitter<SemanticGraph::Home> attribute_emitter (ctx, t);
         ReadOnlyAttributeEmitter<SemanticGraph::Home> read_only_attribute_emitter (ctx, t);
         defines.node_traverser (attribute_emitter);
         defines.node_traverser (read_only_attribute_emitter);
 
-        names (t, defines);
+        home_emitter.traverse (t);
       }
 
       os << "// Operations for keyless home interface." << endl << endl;
