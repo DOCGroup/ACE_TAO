@@ -1,67 +1,73 @@
+Fri Sep 18 08:39:13 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.i
+          ({consumer,supplier}_{ipaddr,name}): added ACE_CAST_CONST to please
+          Sun C++.  Thanks to Hans Rohnert for reporting this.
+
 Fri Sep 18 02:15:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.12 released.
 
 Fri Sep 18 00:11:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp: 
-	* TAO_IDL/be_include/be_interface.h: 
-	* TAO_IDL/be/be_interface.cpp: 	
-	
-	Used ACE::open_temp_file () instead of ACE_OS::open (). 
-	Commented out be_interface::cleanup_gperf_temp_file ().
-	
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be/be_interface.cpp:
+
+        Used ACE::open_temp_file () instead of ACE_OS::open ().
+        Commented out be_interface::cleanup_gperf_temp_file ().
+
 Thu Sep 17 23:47:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: 
-	  Added the correct template instantiations for IRIX 6.2
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+          Added the correct template instantiations for IRIX 6.2
 
-	* tao/ORB_Core.cpp: 
-	  Minor fix in argument parsing.
+        * tao/ORB_Core.cpp:
+          Minor fix in argument parsing.
 
 Thu Sep 17 22:52:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp: 
-	  For character constants we print the hex escape sequence if the
-	  character is not printable.
+        * TAO_IDL/be/be_sunsoft.cpp:
+          For character constants we print the hex escape sequence if the
+          character is not printable.
 
 Thu Sep 17 22:22:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/configurations.html: 
-	  Updated the section about homogenous configurations.
+        * docs/configurations.html:
+          Updated the section about homogenous configurations.
 
 Thu Sep 17 21:48:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll: 
-	* TAO_IDL/fe/lex.yy.cpp: 
-	  Added support for hex scape sequences for char constants.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+          Added support for hex scape sequences for char constants.
 
 Thu Sep 17 21:22:42 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO/tests/DynAny_Test/README.txt
-	  Updated and edited file.
+        * TAO/tests/DynAny_Test/README.txt
+          Updated and edited file.
 
 Thu Sep 17 18:52:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	* tao/GIOP.cpp: 
-	  We now use the iovec structure becauce ACE_IO_Vector has been
-	  deprecated.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * tao/GIOP.cpp:
+          We now use the iovec structure becauce ACE_IO_Vector has been
+          deprecated.
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Removed some debug messages.
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Removed some debug messages.
 
 Thu Sep 17 14:18:19 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO/tests/DynAny_Test/README.txt
-	  Added this new file.
+        * TAO/tests/DynAny_Test/README.txt
+          Added this new file.
 
 Thu Sep 17 09:04:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: 
-	  More fixes for HP-UX 10.2, we have to use ACE_OS::thr_equal()
-	  instead of operator==, thanks to Anne Blankert <anne@geodan.nl>
-	  for pointing out this problems.
+        * tao/ORB_Core.cpp:
+          More fixes for HP-UX 10.2, we have to use ACE_OS::thr_equal()
+          instead of operator==, thanks to Anne Blankert <anne@geodan.nl>
+          for pointing out this problems.
 
 Wed Sep 16 22:36:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
