@@ -44,10 +44,10 @@ typedef Reactor_Logging_Server<Logging_Acceptor_Ex>
 class Quit_Handler : public ACE_Event_Handler {
   friend class ace_dewarn_gplusplus;
 public:
-  Quit_Handler (ACE_Reactor *r): reactor_ (r) {}
+  Quit_Handler (ACE_Reactor *r) { reactor (r); }
 
   virtual int handle_exception (ACE_HANDLE) {
-    reactor_->end_reactor_event_loop ();
+    reactor ()->end_reactor_event_loop ();
     return -1; // Trigger call to handle_close() method.
   }
 
@@ -55,7 +55,6 @@ public:
   { delete this; return 0; }
 
 private:
-  ACE_Reactor *reactor_;
 
   // Private destructor ensures dynamic allocation.
   virtual ~Quit_Handler () {}
@@ -92,12 +91,10 @@ static void *controller (void *arg) {
 int main (int argc, char *argv[])
 {
   const size_t N_THREADS = 4;
-
-  size_t n_threads = argc > 1 ? atoi (argv[1]) : N_THREADS;
-
   ACE_TP_Reactor tp_reactor;
   ACE_Reactor reactor (&tp_reactor);
-  ACE_Reactor::instance (&reactor);
+  auto_ptr<ACE_Reactor> delete_instance
+    (ACE_Reactor::instance (&reactor));
 
   Server_Logging_Daemon *server;
   ACE_NEW_RETURN (server,
@@ -105,7 +102,7 @@ int main (int argc, char *argv[])
                     ACE_Reactor::instance ()),
                   1);
   ACE_Thread_Manager::instance ()->spawn_n
-    (n_threads, event_loop, ACE_Reactor::instance ());
+    (N_THREADS, event_loop, ACE_Reactor::instance ());
   ACE_Thread_Manager::instance ()->spawn
     (controller, ACE_Reactor::instance ());
   return ACE_Thread_Manager::instance ()->wait ();

@@ -97,6 +97,8 @@ public:
    * Note that this method can only be used by the singleton
    * <ACE_Reactor::instance>.  Thus, to run another reactor use
    * <ACE_Reactor::run_reactor_event_loop>.
+   *
+   * @deprecated Use ACE_Reactor::instance()->run_reactor_event_loop() instead
    */
   static int run_event_loop (void);
   static int run_alertable_event_loop (void);
@@ -108,6 +110,8 @@ public:
    * expires.  Note that this method can only be used by the singleton
    * <ACE_Reactor::instance>.  Thus, to run another reactor use
    * <ACE_Reactor::run_reactor_event_loop>.
+   *
+   * @deprecated Use ACE_Reactor::instance()->run_reactor_event_loop() instead
    */
   static int run_event_loop (ACE_Time_Value &tv);
   static int run_alertable_event_loop (ACE_Time_Value &tv);
@@ -119,6 +123,8 @@ public:
    * used by the singleton <ACE_Reactor::instance>.  Thus, to
    * terminate another reactor, use
    * <ACE_Reactor::end_reactor_event_loop>.
+   *
+   * @deprecated Use ACE_Reactor::instance()->end_reactor_event_loop() instead
    */
   static int end_event_loop (void);
 
@@ -127,6 +133,8 @@ public:
    * Note that this method can only be used by the singleton
    * <ACE_Reactor::instance>.  Thus, to check another reactor use
    * <ACE_Reactor::reactor_event_loop_done>.
+   *
+   * @deprecated Use ACE_Reactor::instance()->reactor_event_loop_done() instead
    */
   static int event_loop_done (void);
 
@@ -135,6 +143,9 @@ public:
    * <run_event_loop> method can be restarted.  Note that this method
    * can only be used by the singleton <ACE_Reactor::instance>.  Thus,
    * to reset another reactor use <ACE_Reactor::reset_reactor_event_loop>.
+   *
+   * @deprecated Use ACE_Reactor::instance()->reset_reactor_event_loop()
+   * instead
    */
   static void reset_event_loop (void);
 
