@@ -229,34 +229,27 @@ namespace ACE_RMCast
 
         Profile::Header hdr (id, size);
 
-        switch (hdr.id ())
-        {
-        case SN::id:
+        if (id == SN::id)
           {
             m->add (Profile_ptr (new SN (hdr, is)));
-            break;
           }
-        case Data::id:
+        else if (id == Data::id)
           {
             m->add (Profile_ptr (new Data (hdr, is)));
-            break;
           }
-        case NAK::id:
+        else if (id == NAK::id)
           {
             m->add (Profile_ptr (new NAK (hdr, is)));
-            break;
           }
-        case NRTM::id:
+        else if (id == NRTM::id)
           {
             m->add (Profile_ptr (new NRTM (hdr, is)));
-            break;
           }
-        default:
+        else
           {
             //cerr << 0 << "unknown profile id " << hdr.id () << endl;
             abort ();
           }
-        }
       }
 
       in_->recv (m);
