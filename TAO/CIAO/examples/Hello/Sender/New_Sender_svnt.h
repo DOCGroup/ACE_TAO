@@ -29,6 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// @@ Jai, is container base required?
 #include "ciao/Container_Base.h"
 #include "ciao/Swapping_Container.h"
 #include "ciao/Servant_Impl_T.h"
@@ -91,6 +92,8 @@ namespace Sender_Impl
 
   namespace CIAO_GLUE_Hello
   {
+    // @@ Jai, this is the actual component servant. Where is the
+    // servant that actually deploys this servant?
     class SENDER_SVNT_Export Sender_Servant
       : public virtual CIAO::Servant_Impl<
           POA_Hello::Sender,
@@ -201,7 +204,7 @@ namespace Sender_Impl
       ::Components::AlreadyConnected,
       ::Components::InvalidConnection));
 
-      // CIAO specific operations on the servant 
+      // CIAO specific operations on the servant
       CORBA::Object_ptr
       get_facet_executor (const char *name
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -221,6 +224,7 @@ namespace Sender_Impl
 
   namespace CIAO_GLUE_Hello
   {
+    // @@ Jai, where is the home servant for the swapping servant?
     class SENDER_SVNT_Export SenderHome_Servant
       : public virtual CIAO::Swapping_Servant_Impl<
           POA_Hello::SenderHome,
@@ -270,4 +274,3 @@ namespace Sender_Impl
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_GLUE_SESSION_SENDER_SVNT_H */
-

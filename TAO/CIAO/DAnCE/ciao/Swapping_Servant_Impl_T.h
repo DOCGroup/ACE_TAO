@@ -30,6 +30,7 @@
 
 namespace CIAO
 {
+  // @@  Jai, should it be a swapping servant or a Dynamic_Servant?
   class Swapping_Container;
 
   /**
@@ -40,8 +41,11 @@ namespace CIAO
    * This class implements operations
    * common to all generated home servants.
    */
-  template <typename BASE_SKEL, 
-            typename EXEC, 
+
+  // @@ Jai, is there any reason why you cannot share code between
+  // Servant_Impl_T  and here?
+  template <typename BASE_SKEL,
+            typename EXEC,
             typename EXEC_VAR,
             typename COMP,
             typename COMP_VAR,
@@ -56,9 +60,9 @@ namespace CIAO
   public:
     Swapping_Servant_Impl (EXEC * exe,
                        Swapping_Container * c);
-                       
+
     virtual ~Swapping_Servant_Impl (void);
-    
+
     // Operations for CCMHome interface.
 
     virtual void
@@ -66,7 +70,7 @@ namespace CIAO
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
-                       
+
     // Operations for keyless home interface.
 
     virtual ::Components::CCMObject_ptr
@@ -88,7 +92,7 @@ namespace CIAO
     _ciao_activate_component (COMP_EXEC *exe
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
     void
     _ciao_passivate_component (COMP *comp
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -119,4 +123,3 @@ namespace CIAO
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_SWAPPING_SERVANT_IMPL_T_H */
-   

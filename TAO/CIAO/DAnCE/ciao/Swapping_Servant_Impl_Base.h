@@ -35,6 +35,8 @@ namespace CIAO
    * Holds the non-template parts of its child class
    * Home_Servant_Impl.
    */
+  // @@ Jai, why are you inheriting from "home" here? What is the
+  // point?
   class CIAO_SERVER_Export Swapping_Servant_Impl_Base
     : public virtual POA_Components::CCMHome
   {

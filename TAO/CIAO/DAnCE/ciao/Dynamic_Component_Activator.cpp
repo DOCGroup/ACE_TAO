@@ -25,20 +25,24 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest))
   {
+
+    // @@ Jai, where is the implementation?
   }
 
   void
-  Dynamic_Component_Activator::etherealize (const PortableServer::ObjectId &,
-                                  PortableServer::POA_ptr ,
-                                  PortableServer::Servant ,
-                                  CORBA::Boolean ,
-                                  CORBA::Boolean
-                                  ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+  Dynamic_Component_Activator::etherealize (
+    const PortableServer::ObjectId &,
+    PortableServer::POA_ptr ,
+    PortableServer::Servant ,
+    CORBA::Boolean ,
+    CORBA::Boolean
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     /// Need to investigate what needs to be handled here..
   }
 
+  // @@ Jai, what is this update map supposed to be doing.
   void update_map (PortableServer::ObjectId &oid,
                    Dynamic_Component_Servant_Base* servant
                    ACE_ENV_ARG_DECL)
