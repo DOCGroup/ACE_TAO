@@ -3,6 +3,7 @@
 # Chorus 3.1b with GNU g++ 2.7.2
 
 CHORUS = 1
+CROSS-COMPILE = 1
 
 debug = 1
 optimize = 1
