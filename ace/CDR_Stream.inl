@@ -226,13 +226,11 @@ ACE_OutputCDR::write_ulonglong (const ACE_CDR::ULongLong &x)
   return this->write_8 (reinterpret_cast<const ACE_CDR::ULongLong*> (&x));
 }
 
-#if !defined (VXWORKS) || !defined (ghs)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_float (ACE_CDR::Float x)
 {
   return this->write_4 (reinterpret_cast<const ACE_CDR::ULong*> (&x));
 }
-#endif /* !VXWORKS || !ghs */
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_double (const ACE_CDR::Double &x)
@@ -624,13 +622,11 @@ ACE_InputCDR::read_ulonglong (ACE_CDR::ULongLong &x)
   return this->read_8 (reinterpret_cast<ACE_CDR::ULongLong*> (&x));
 }
 
-#if !defined (VXWORKS) || !defined (ghs)
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_float (ACE_CDR::Float &x)
 {
   return this->read_4 (reinterpret_cast<ACE_CDR::ULong*> (&x));
 }
-#endif /* !VXWORKS || !ghs */
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_double (ACE_CDR::Double &x)

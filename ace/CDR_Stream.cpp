@@ -1616,20 +1616,6 @@ ACE_InputCDR::reset_contents (void)
 
 // --------------------------------------------------------------
 
-#if defined (VXWORKS) && defined (ghs)
-ACE_CDR::Boolean
-ACE_OutputCDR::write_float (ACE_CDR::Float x)
-{
-  return this->write_4 (reinterpret_cast<const ACE_CDR::ULong*> (&x));
-}
-
-ACE_CDR::Boolean
-ACE_InputCDR::read_float (ACE_CDR::Float &x)
-{
-  return this->read_4 (reinterpret_cast<ACE_CDR::ULong*> (&x));
-}
-#endif /* VXWORKS && ghs */
-
 ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const ACE_CString &x)
 {
