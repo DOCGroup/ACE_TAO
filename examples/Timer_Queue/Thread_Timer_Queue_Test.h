@@ -140,7 +140,6 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *arg);
   // Call back hook.
-  virtual int cancelled (void);
 
 private:
   ACE_Time_Value expires_;

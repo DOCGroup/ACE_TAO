@@ -127,7 +127,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   </TR>
   <!-- <TR NAME="ORBsvcconf"> -->
   <tr>
-    <TD><CODE><A NAME="-ORBSvcConf">-ORBSvcConf</A></CODE> <EM>config file name</EM></TD>
+    <TD><CODE><A NAME="-ORBSvcConf">-ORBSvcConf</A></CODE> <EM>config filename</EM></TD>
     <TD>Specifies the name of the file from which it will read dynamic service configuration
         directives <EM>ala</EM> ACE's Service Configurator. By
         default, a service configurator-based application will look
@@ -135,9 +135,13 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   </TR>
   <tr>
     <TD><CODE>-ORBSvcConfDirective</CODE> <EM>directivestring</EM></TD>
-    <TD>Specifies a service configuration
-        directive, which is passed to ACE's Service Configurator.</TD>
+    <TD>Specifies a service configuration directive, which is passed to ACE's Service Configurator.</TD>
   </TR>
+  <tr>
+    <TD><CODE>-ORBServiceConfigLoggerKey</CODE> <EM>loggerkey string</EM></TD>
+    <TD>Specifies the logger key that is passed to ACE's Service Configurator.</TD>
+  </TR>
+
   <TR>
     <TD><CODE>-ORBDaemon</CODE></TD>
     <TD>Specifies that the ORB should <I>daemonize</I> itself.</TD>

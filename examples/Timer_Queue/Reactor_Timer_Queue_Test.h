@@ -69,7 +69,7 @@ public:
 
   int cancel_timer (void *argument);
   // Cancel a timer.  The (void *) will be mapped to the ID of the
-  // timer beiing cancelled.
+  // timer being cancelled.
 
   int list_timer (void *argument);
   // Dump the timers in the queue.  The argument is ignored.

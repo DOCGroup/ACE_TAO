@@ -6,12 +6,11 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
 //=============================================================================
-
 
 #ifndef ACE_OS_H
 #define ACE_OS_H
@@ -6022,8 +6021,8 @@ public:
   //@{ @name A set of wrappers for event demultiplexing and IPC.
   static int select (int width,
                      fd_set *rfds,
-                     fd_set *wfds,
-                     fd_set *efds,
+                     fd_set *wfds = 0,
+                     fd_set *efds = 0,
                      const ACE_Time_Value *tv = 0);
   static int select (int width,
                      fd_set *rfds,

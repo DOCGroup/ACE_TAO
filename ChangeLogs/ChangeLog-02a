@@ -1,3 +1,51 @@
+Tue Jun 12 11:07:18 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Synch_T.{h,i}: Added "const" to the locked() method.
+
+Mon Jun 11 21:06:43 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/SOCK_Connector_Test.cpp (find_another_host): Pre-increment,
+	  rather than post-increment, the candidate_count loop counter to
+ 	  avoid "off-by-one" errors.  Thanks to Scott Snyder
+ 	  <snyder@fnal.gov> for reporting this.
+
+	* ace/OS.h: Added some default values of 0 to the wr_fds and
+	  ex_fds parameters to ACE_OS::select().  This helps simplify for
+	  the "common case" and is consistent with what we show in our book ;-).
+
+	* ace/OS.i (read): Fixed a nasty bug where "count = len" should
+	  have been "count == len" in the PSOS arm of the code.  Thanks to
+ 	  James Maynard <James.Maynard@ot.com.au> for reporting this.
+
+Thu Jun  7 19:26:05 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Auto_Ptr.cpp: Instantiate the "alloc" template typedef explicitly.
+	  Thanks to Cristian Ferretti <cristian_ferretti@yahoo.com> for
+ 	  pointing this out.
+
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.{h,cpp}: Removed
+	  the unused cancelled() method.  Thanks to Ron Heald
+ 	  <rheald@nrao.edu> for reporting this.
+
+        * include/makeinclude/platform_irix6.x_sgic++.GNU,
+	* include/makeinclude/platform_osf1_4.0.GNU,
+        * ace/config-irix6.x-sgic++.h,
+        * ace/config-osf1-4.0.h,
+	* ace/Log_Msg.cpp: Added support for threads=0 on Tru64.  Thanks
+	  to Steve Vranyes <steve.vranyes@veritas.com> for contributing
+ 	  these fixes.
+
+	* ace/Timer_Wheel_T.cpp (expire): earliest_pos_ was never set in
+	  the expire() method, and maintains its value until another timer
+ 	  event is scheduled/cancelled/etc.  Thanks to Gil Rapaport
+ 	  <grapaport@comgates.co.il> for fixing this.
+
+Mon Jun  4 14:33:08 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Synch.h: Clarified that ACE_Event only supports "global naming" 
+	  on Win32.  Thanks to Jerry Thomas <jto@consegna.co.uk> for reporting
+ 	  this.
+
 Mon Jun 11 16:53:55 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.17 released.
@@ -7,6 +55,7 @@ Mon Jun 11 13:08:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* include/makeinclude/platform_tru64_kcc.GNU: Fixed a spurious
 	  newline in the file. Thanks to Scott Snyder <snyder@fnal.gov>
 	  for reporting this. 
+
 Sun Jun 10 16:03:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/run_test.lst: Time_Service_Test will not run in static
@@ -161,7 +210,8 @@ Fri Jun 08 07:01:59 2001  Ossama Othman  <ossama@uci.edu>
 Fri Jun 08 07:52:48 2001  Joe Hoffert <joeh@cs.wustl.edu>
 
         * Makefile: Removed PACE from the list of directories.
-          (There are problems on FreeBSD.)
+          (There are problems on FreeBSD.)  Thanks to cuma
+ 	  <cuma@dslab.csie.ncu.edu.tw> for reporting this.
 
 Wed Jun 06 10:16:39 2001  Steve Huston  <shuston@riverace.com>
 

@@ -102,15 +102,6 @@ Handler::handle_timeout (const ACE_Time_Value &current_time,
   return 0;
 }
 
-// The handler was cancelled, so we must delete this.
-
-int
-Handler::cancelled (void)
-{
-  delete this;
-  return 0;
-}
-
 Input_Task::Input_Task (Thread_Timer_Queue *queue,
                         Thread_Timer_Queue_Test_Driver &timer_queue_driver)
   : ACE_Task_Base (ACE_Thread_Manager::instance ()),

@@ -7,11 +7,19 @@ debug = 1
 exceptions = 1
 rtti = 1
 
+ifeq (,$(threads))
+  threads = 1
+endif
+
 CC              = cxx
 CXX             = $(CC)
-#### Note: -pthread uses POSIX threads.  If you want to use DCE threads
+#### Note: -thread uses POSIX threads.  If you want to use DCE threads
 ####       instead, change "-pthread" to "-threads".
-CFLAGS          += -pthread
+ifeq ($(threads),1)
+	CFLAGS          += -pthread
+else
+	CFLAGS          += -DACE_MT_SAFE=0
+endif
 
 #### These flags can only be used with cxx Version 6.0 and later.
 #### They are enabled by default; they can be disabled by settting

@@ -77,7 +77,6 @@ TAO_Internal::open_services (int &argc, char **argv)
 
           arg_shifter.consume_arg ();
         }
-
       else if (arg_shifter.cur_arg_strncasecmp ("-ORBDaemon") == 0)
         {
           // Be a daemon
@@ -89,10 +88,8 @@ TAO_Internal::open_services (int &argc, char **argv)
 
           arg_shifter.consume_arg ();
         }
-
       // Continue with flags that accept parameters.
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBSvcConfDirective")))
+      else if ((current_arg = arg_shifter.get_the_parameter ("-ORBSvcConfDirective")))
         {
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
@@ -106,19 +103,17 @@ TAO_Internal::open_services (int &argc, char **argv)
 
           arg_shifter.consume_arg ();
         }
-
-      else if ((current_arg =
-                arg_shifter.get_the_parameter ("-ORBSvcConf")))
+      else if ((current_arg = arg_shifter.get_the_parameter ("-ORBSvcConf")))
         {
           // Specify the name of the svc.conf file to be used.
 
           // Proceeds only if the configuration file exists.
-          FILE* conf_file;
-          if ((conf_file = ACE_OS::fopen (current_arg, "r")) == 0)
+          FILE *conf_file = ACE_OS::fopen (current_arg, "r");
+          if (conf_file == 0)
             {
-              // Assigning EINVAL to errno to make an exception thrown.
-              // calling code does not throw an exception if the errno
-              // is set to ENOENT for some reason.
+              // Assigning EINVAL to errno to make an exception
+              // thrown.  calling code does not throw an exception if
+              // the errno is set to ENOENT for some reason.
               errno = EINVAL;
 
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -129,9 +124,7 @@ TAO_Internal::open_services (int &argc, char **argv)
 
             }
           else
-            {
-              ACE_OS::fclose (conf_file);
-            }
+            ACE_OS::fclose (conf_file);
 
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
@@ -141,9 +134,15 @@ TAO_Internal::open_services (int &argc, char **argv)
 
           arg_shifter.consume_arg();
         }
-
-      // Can't interpret this argument.  Move on to the next
-      // argument.
+      else if ((current_arg = arg_shifter.get_the_parameter ("-ORBServiceConfigLoggerKey")))
+        {
+          svc_config_argv.add ("-k");
+ 
+          svc_config_argv.add (current_arg);
+ 
+          arg_shifter.consume_arg ();
+        }
+      // Can't interpret this argument.  Move on to the next argument.
       else
         // Any arguments that don't match are ignored so that the
         // caller can still use them.
