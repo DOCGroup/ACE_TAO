@@ -31,10 +31,15 @@ Fri May 18 00:36:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 		map.unbind ((*iter).ext_id_);
 	    }
 
-	    However, the following should be much faster:
+	  However, the following should be much faster:
 
-	    // Unbind in one swoop.
-	    map.unbind_all ();
+	  // Unbind in one swoop.
+	  map.unbind_all ();
+
+	  Another reason to add the unbind_all() is that the method is
+	  available on the other map_managers and that it is now easier to
+	  convert a hash map to a normal map and back without changing any
+	  real code.
 
 	* tests/Map_Manager_Test.cpp (test_map_manager): Added test for
 	  unbind.
