@@ -2733,9 +2733,14 @@ public:
 #undef getpwnam_r
 #endif /* ACE_HAS_BROKEN_R_ROUTINES */
 
+#if defined (difftime)
+#define ACE_DIFFTIME(t1, t0) difftime(t1,t0)
+#undef difftime
+#endif /* difftime */
+
   // = A set of wrappers for operations on time.
-  static time_t time (time_t *tloc);
   static double difftime (time_t t1, time_t t0);
+  static time_t time (time_t *tloc);
   static time_t mktime (struct tm *timeptr);
   static struct tm *localtime (const time_t *clock);
   static struct tm *localtime_r (const time_t *clock, struct tm *res);
