@@ -1,3 +1,10 @@
+Tue Feb  8 14:25:46 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-sunos5.5.h (ACE_HAS_TYPENAME_KEYWORD):
+
+	  According to ACE's configure script, Sun C++ 5.0 also supports
+	  the typename keyword.
+
 Tue Feb  8 16:17:21 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Thread_Manager.h: Added comment text to ACE_Thread_Manager::wait
