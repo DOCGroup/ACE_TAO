@@ -1,3 +1,10 @@
+Fri Aug  1 01:16:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/mfc/client.mpc:
+        * examples/mfc/server.mpc:
+          Added a verbatim tag that ifdef's out the entire Makefile on
+          non-Windows systems.
+
 Thu Jul 31 18:00:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
