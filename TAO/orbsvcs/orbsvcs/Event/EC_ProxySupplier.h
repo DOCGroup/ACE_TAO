@@ -115,7 +115,7 @@ public:
   /// Pushes to the consumer, verifies that it is connected and that it
   /// is not suspended.
   /**
-   * These methods take <consumer> argument  because during the time
+   * These methods take @a consumer argument  because during the time
    * the filters have been processing the event, this proxy's consumer
    * may have changed.
    */

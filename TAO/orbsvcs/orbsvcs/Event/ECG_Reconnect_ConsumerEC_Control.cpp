@@ -41,8 +41,8 @@ TAO_ECG_Reconnect_ConsumerEC_Control::try_reconnect (
       ACE_TRY_CHECK;
       if (!non_existent)
         {
-          is_consumer_ec_connected_ = 1;
-          gateway_->reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->reconnect(ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
@@ -59,6 +59,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::reconnect (
   ACE_TRY
     {
       is_consumer_ec_connected_ = 1;
+
       gateway_->reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -238,6 +239,10 @@ TAO_ECG_Reconnect_ConsumerEC_Control::event_channel_not_exist (
       //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
       //            "channel %x does not exists\n"));
       is_consumer_ec_connected_ = 0;
+
+      gateway->suspend_supplier_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       gateway->cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -272,6 +277,10 @@ TAO_ECG_Reconnect_ConsumerEC_Control::system_exception (
       //            "ECG_Reconnect_ConsumerControl(%P|%t) - "
       //            "channel %x does not exists system except\n"));
       is_consumer_ec_connected_ = 0;
+
+      gateway->suspend_supplier_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       gateway->cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
