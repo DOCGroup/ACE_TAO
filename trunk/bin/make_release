@@ -793,7 +793,8 @@ sub create_kit () {
   my $shell_cd = $install  ?  'cd'  :  'echo cd';
 
   (my $local_ace_tag = $ace_tag) =~ s|_|.|g;
-  (my $local_tao_tag = $tao_tag) =~ s|_|.|g;          
+  (my $local_tao_tag = $tao_tag) =~ s|_|.|g;
+  (my $local_ciao_tag = $ciao_tag) =~ s|_|.|g;
 
   # These files don't get LF->CRLF conversions done when making the zip.
   my $bin_files =
@@ -891,9 +892,9 @@ sub create_kit () {
         "$chmod 664 ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 && " .
         "$chgrp doc ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 && " .
         "$dispose ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 $dest &&" .
-        "$cp $dest/ACE+TAO+CIAO.zip $old_versions_dir/$local_ace_tag+$local_tao_tag.zip &&".
-        "$cp $dest/ACE+TAO+CIAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.gz &&".
-        "$cp $dest/ACE+TAO+CIAO.tar.bz2 $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.bz2; ";
+        "$cp $dest/ACE+TAO+CIAO.zip $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.zip &&".
+        "$cp $dest/ACE+TAO+CIAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.tar.gz &&".
+        "$cp $dest/ACE+TAO+CIAO.tar.bz2 $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.tar.bz2; ";
     $archives .= " ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 ";
   }
 
