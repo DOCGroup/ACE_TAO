@@ -75,7 +75,7 @@ public:
 
   /**
    * Sync @a len bytes of the memory region to the backing store
-   * starting at <this->base_addr_>.  If @a len == -1 then sync the
+   * starting at @c this->base_addr_.  If @a len == -1 then sync the
    * whole region.
    */
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
@@ -86,7 +86,7 @@ public:
 
   /**
    * Change the protection of the pages of the mapped region to <prot>
-   * starting at <this->base_addr_> up to @a len bytes.  If @a len == -1
+   * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
@@ -190,7 +190,7 @@ public:
   virtual int release (int destroy = 1);
 
   /// Sync the memory region to the backing store starting at
-  /// <this->base_addr_>.
+  /// @c this->base_addr_.
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
 
   /// Sync the memory region to the backing store starting at @a addr.
@@ -198,7 +198,7 @@ public:
 
   /**
    * Change the protection of the pages of the mapped region to <prot>
-   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
@@ -433,7 +433,7 @@ public:
   const void *base_addr_;
 
   /**
-   * Determines whether we set <base_addr_> or if mmap(2) selects it
+   * Determines whether we set @c base_addr_ or if mmap(2) selects it
    * FIRSTCALL_FIXED The base address from the first call to mmap
    *                 will be used for subsequent calls to mmap
    * ALWAYS_FIXED    The base address specified in base_addr will be
@@ -453,7 +453,7 @@ public:
   /// What the minimim bytes of the initial segment should be.
   off_t minimum_bytes_;
 
-  /// Any special flags that need to be used for <mmap>.
+  /// Any special flags that need to be used for @c mmap.
   u_int flags_;
 
   /**
@@ -473,7 +473,7 @@ public:
 /**
  * @class ACE_MMAP_Memory_Pool
  *
- * @brief Make a memory pool that is based on <mmap(2)>.  This
+ * @brief Make a memory pool that is based on @c mmap(2).  This
  * implementation allows memory to be shared between processes.
  */
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
@@ -496,10 +496,10 @@ public:
                               int &first_time);
 
   /**
-   * Acquire at least <nbytes> from the memory pool.  <rounded_bytes>
+   * Acquire at least @a nbytes from the memory pool. @a rounded_bytes
    * is the actual number of bytes allocated.  Also acquires an
    * internal semaphore that ensures proper serialization of
-   * <ACE_MMAP_Memory_Pool> initialization across processes.
+   * ACE_MMAP_Memory_Pool initialization across processes.
    */
   virtual void *acquire (size_t nbytes,
                          size_t &rounded_bytes);
@@ -508,10 +508,10 @@ public:
   virtual int release (int destroy = 1);
 
   /// Sync the memory region to the backing store starting at
-  /// <this->base_addr_>.
+  /// @c this->base_addr_.
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
 
-  /// Sync the memory region to the backing store starting at <addr_>.
+  /// Sync the memory region to the backing store starting at @a addr.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
@@ -521,8 +521,8 @@ public:
    */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
 
-  /// Change the protection of the pages of the mapped region to <prot>
-  /// starting at <addr> up to <len> bytes.
+  /// Change the protection of the pages of the mapped region to @a prot
+  /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
 #if defined (ACE_WIN32)
@@ -535,7 +535,7 @@ public:
 #endif /* ACE_WIN32 */
 
   /**
-   * Try to extend the virtual address space so that <addr> is now
+   * Try to extend the virtual address space so that @a addr is now
    * covered by the address mapping.  The method succeeds and returns
    * 0 if the backing store has adequate memory to cover this address.
    * Otherwise, it returns -1.  This method is typically called by a
@@ -560,12 +560,12 @@ protected:
   /// appropriate chunksize.
   virtual size_t round_up (size_t nbytes);
 
-  /// Compute the new <map_size> of the backing store and commit the
+  /// Compute the new @a map_size of the backing store and commit the
   /// memory.
   virtual int commit_backing_store_name (size_t rounded_bytes,
                                          off_t &map_size);
 
-  /// Memory map the file up to <map_size> bytes.
+  /// Memory map the file up to @a map_size bytes.
   virtual int map_file (off_t map_size);
 
   /// Handle SIGSEGV and SIGBUS signals to remap shared memory
@@ -585,7 +585,7 @@ protected:
    */
   void *base_addr_;
 
-  /// Must we use the <base_addr_> or can we let mmap(2) select it?
+  /// Must we use the @c base_addr_ or can we let mmap(2) select it?
   int use_fixed_addr_;
 
   /// Flags passed into <ACE_OS::mmap>.
@@ -737,7 +737,7 @@ protected:
 
   /**
    * Map portions or the entire pool into the local virtual address
-   * space.  To do this, we compute the new <file_offset> of the
+   * space.  To do this, we compute the new @c file_offset of the
    * backing store and commit the memory.
    */
   int map (int &firstTime, size_t appendBytes = 0);

@@ -299,12 +299,11 @@ public:
   void release (void);
 
   /**
-   * Set/get the <next_> pointer.  These are required by the
-   * ACE_Free_List.  ACE_INLINE is specified here because one version
-   * of g++ couldn't grok this code without it.
+   * Set/get the @c next_ pointer.  These are required by the
+   * ACE_Free_List.
    */
-  ACE_INLINE_FOR_GNUC void set_next (ACE_Thread_Descriptor *td);
-  ACE_INLINE_FOR_GNUC ACE_Thread_Descriptor *get_next (void) const;
+  void set_next (ACE_Thread_Descriptor *td);
+  ACE_Thread_Descriptor *get_next (void) const;
 
 private:
   /// Reset this thread descriptor.
@@ -323,7 +322,7 @@ private:
   /// Run the AT_Thread_Exit hooks.
   void do_at_exit (void);
 
-  /// terminate realize the cleanup process to thread termination
+  /// Terminate realize the cleanup process to thread termination
   void terminate (void);
 
   /// Thread_Descriptor is the ownership of ACE_Log_Msg if log_msg_!=0
@@ -336,14 +335,13 @@ private:
 
   /**
    * Stores the cleanup info for a thread.
-   * @@ Note, this should be generalized to be a stack of
-   * <ACE_Cleanup_Info>s.
+   * @note This should be generalized to be a stack of ACE_Cleanup_Info's.
    */
   ACE_Cleanup_Info cleanup_info_;
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-  /// Pointer to an <ACE_Thread_Manager> or NULL if there's no
-  /// <ACE_Thread_Manager>.
+  /// Pointer to an ACE_Thread_Manager or NULL if there's no
+  /// ACE_Thread_Manager>
   ACE_Thread_Manager* tm_;
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
@@ -403,8 +401,8 @@ public:
   typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
 #endif /* !__GNUG__ */
 
-  // These are the various states a thread managed by the
-  // <Thread_Manager> can be in.
+  /// These are the various states a thread managed by the
+  /// ACE_Thread_Manager can be in.
   enum
   {
     /// Uninitialized.
