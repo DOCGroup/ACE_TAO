@@ -1,3 +1,8 @@
+Tue Sep 10 04:10:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/Makefile:
+	  Do not build certain tests unless corba_messaging=1.
+
 Tue Sep 10 03:37:08 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
  
 	* tests/Connection_Timeout/Makefile:

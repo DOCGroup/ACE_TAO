@@ -4,23 +4,38 @@
 #
 #----------------------------------------------------------------------------
 
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+
 #----------------------------------------------------------------------------
 #       Local macros
 #----------------------------------------------------------------------------
 
+
 DIRS = \
-  Simple_Naming \
+  Simple_Naming
+
+ifeq ($(corba_messaging),1)
+DIRS += \
   EC_Multiple \
   EC_Throughput \
   EC_Mcast \
-  EC_Custom_Marshal \
+  EC_Custom_Marshal
+endif # corba_messaging
+
+DIRS += \
   Property \
   Sched \
   Sched_Conf \
-  Time \
+  Time
+
+ifeq ($(corba_messaging),1)
+DIRS += \
   Event \
-  CosEvent \
-  Concurrency \
+  CosEvent
+endif # corba_messaging
+
+DIRS += Concurrency \
   FaultTolerance \
   ImplRepo \
   Trading \
@@ -40,8 +55,6 @@ endif
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 
 ifeq ($(minimum_corba),0)
