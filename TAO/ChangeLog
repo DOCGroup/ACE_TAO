@@ -1,3 +1,14 @@
+Mon Aug  4 23:15:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/IFRService/Container_i.h:
+        * orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * tests/InterfaceRepo/IDL3_Test/test.idl:
+
+	  More testing and debugging of IFR valuetype support.
+
 Mon Aug  4 19:06:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * IFR_Service/ifr_adding_visitor.cpp:

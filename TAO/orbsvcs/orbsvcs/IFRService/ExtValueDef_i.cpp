@@ -661,7 +661,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
 
           status =
             this->repo_->config ()->open_section (initializer_key,
-                                                  stringified,
+                                                  "params",
                                                   0,
                                                   params_key);
 
