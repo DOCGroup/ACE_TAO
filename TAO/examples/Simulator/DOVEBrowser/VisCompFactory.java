@@ -34,6 +34,9 @@ class VisCompFactory {
       case Properties.PERSIAN:
         visCompName_ = "Persian"+visCompName_;
         break;
+      case Properties.MULTIDOUBLE:
+        visCompName_ = "MultiDouble"+visCompName_;
+        break;
       default: return null;
     }
     try {

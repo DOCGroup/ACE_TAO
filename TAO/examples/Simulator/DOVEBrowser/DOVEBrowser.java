@@ -51,7 +51,7 @@ public class DOVEBrowser {
             ++arg_index;
             use_queueing = true;
           }
-        else if ((args[arg_index].equals ("-ORBnameserviceior")) && 
+        else if ((args[arg_index].equals ("-nameserviceior")) && 
             (args.length > arg_index + 1)) 
           {
             System.out.println ("switch [" + args[arg_index] + "]");
@@ -61,7 +61,7 @@ public class DOVEBrowser {
             arg_index += 2;
           }
         // Set the name service port
-        else if ((args[arg_index].equals ("-ORBnameserviceport")) &&
+        else if ((args[arg_index].equals ("-nameserviceport")) &&
                  (args.length > arg_index + 1))
           {
             System.out.println ("switch [" + args[arg_index] + "]");

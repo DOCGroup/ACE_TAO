@@ -27,6 +27,7 @@ DOVE_BROWSER_JAVA = \
         CosNaming.java \
         TimeBase.java \
         RtecDefaultEventData.java \
+        RtecBase.java \
         RtecEventComm.java \
         RtecScheduler.java \
         RtecEventChannelAdmin.java \
@@ -57,7 +58,7 @@ ifeq ($(CROSS-COMPILE),)
          $(patsubst %.java,%.idl,$(DOVE_BROWSER_JAVA)) NavWeap.idl \
          Navigation.java NavigationH*.java \
          Weapons.java WeaponsH*.java *.class CosNaming PersianRecursion \
-         RtecEventChannelAdmin RtecEventComm RtecScheduler TimeBase \
+         RtecBase RtecEventChannelAdmin RtecEventComm RtecScheduler TimeBase \
          NavWeapTerminator*.java _*.java \
          EventPayloadH*.java RtecEventData*.java
 
