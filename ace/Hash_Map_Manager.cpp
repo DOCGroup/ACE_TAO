@@ -163,6 +163,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
       // Free table memory
       this->allocator_->free (this->table_);
       this->table_ = 0;
+      this->cur_size_ = 0;
     }
   return 0;
 }
