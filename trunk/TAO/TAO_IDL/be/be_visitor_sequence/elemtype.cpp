@@ -154,16 +154,16 @@ be_visitor_sequence_elemtype::visit_interface_fwd (be_interface_fwd *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
     {
-      *os << "TAO_Object_Manager<"
-          << bt->nested_type_name (this->ctx_->scope ()) << ","
-          << bt->nested_type_name (this->ctx_->scope (), "_var") << ">";
+      *os << "TAO_Object_Manager<";
+      *os << bt->nested_type_name (this->ctx_->scope ()) << ",";
+      *os << bt->nested_type_name (this->ctx_->scope (), "_var") << ">";
     }
   else
-    *os << "TAO_Object_Manager<"
-        << bt->name () << ","
-        << bt->name () << "_var>";
-
-  os->gen_endif_AHETI();
+    {
+      *os << "TAO_Object_Manager<";
+      *os << bt->name () << ",";
+      *os << bt->name () << "_var>";
+    }
 
   return 0;
 }
