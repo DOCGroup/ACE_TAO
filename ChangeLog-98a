@@ -1,5 +1,9 @@
 Fri Feb 27 15:47:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * ACE-INSTALL.html: added very useful information from
+          Chris Ryan <cryan@qualcomm.com> about build ACE with
+          NT/Tornado for VxWorks.
+
         * ace/config-chorus.h: use ACE_NEEDS_READV/WRITEV with GHS as well
           as with g++.
 
