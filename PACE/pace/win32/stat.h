@@ -51,7 +51,7 @@ extern "C" {
 
 #ifndef PACE_STAT
 #define PACE_STAT
-  typedef struct _stat pace_stat_s;
+  typedef struct stat pace_stat_s;
 #endif /* PACE_STAT */
 
 #if (PACE_HAS_POSIX_FS_UOF)
