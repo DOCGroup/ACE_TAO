@@ -97,10 +97,10 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
 }
 
 ACE_TPQ_Entry::ACE_TPQ_Entry (void)
-  : proxy_ (0),
+  : cond_var_ (lock_),
+    proxy_ (0),
     nesting_level_ (0),
-    sleep_hook_ (0),
-    cond_var_ (lock_)
+    sleep_hook_ (0)
 {
   ACE_TRACE ("ACE_TPQ_Entry::ACE_TPQ_Entry null const.");
 }
@@ -1081,9 +1081,10 @@ ACE_Token_Proxy::ACE_Token_Proxy (void)
 // Notice the token_ (0).  Do *not* copy the token pointer.  This must
 // be obtained through the token manager.  Also, we don't copy any
 // waiter info.  A copied Proxy does *not* inherit client_id.
-ACE_Token_Proxy::ACE_Token_Proxy (const ACE_Token_Proxy &p)
-: token_ (0),
-  waiter_ (this, 0)
+
+ACE_Token_Proxy::ACE_Token_Proxy (const ACE_Token_Proxy &)
+  : token_ (0),
+    waiter_ (this, 0)
 {
   ACE_TRACE ("ACE_Token_Proxy::ACE_Token_Proxy");
 }
@@ -1309,9 +1310,10 @@ ACE_Token_Proxy::handle_options (ACE_Synch_Options &options,
 }
 
 int 
-ACE_Token_Proxy::release (ACE_Synch_Options &options)
+ACE_Token_Proxy::release (ACE_Synch_Options &)
 {
   ACE_TRACE ("ACE_Token_Proxy::release");
+
   if (this->token_ == 0)
     {
       errno = ENOENT;

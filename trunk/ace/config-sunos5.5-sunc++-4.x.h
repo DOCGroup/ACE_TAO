@@ -8,7 +8,7 @@
 #define ACE_CONFIG_H
 
 #define ACE_HAS_UNICODE
-#define ACE_HAS_TEMPLATE_TYPEDEFS
+// #define ACE_HAS_TEMPLATE_TYPEDEFS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			

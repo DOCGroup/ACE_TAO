@@ -189,7 +189,7 @@ protected:
   TYPE type_;
   // This implementation only works for non-threading systems...
 #else
-  ACE_Mutex keylock_;
+  ACE_Thread_Mutex keylock_;
   // Avoid race conditions during initialization.
 
   int once_;

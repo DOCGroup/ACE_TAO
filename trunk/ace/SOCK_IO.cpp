@@ -33,6 +33,8 @@ ACE_SOCK_IO::recv (iovec *io_vec)
       return io_vec->iov_len;
     }
   else
+#else
+    io_vec = io_vec;
 #endif /* FIONREAD */
   // Could return ACE_NOTSUP_RETURN
     return 0; 

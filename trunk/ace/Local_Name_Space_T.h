@@ -192,7 +192,7 @@ private:
   ALLOCATOR *allocator_;
   // Pointer to the allocator
 
-  ACE_Name_Space_Map <ALLOCATOR>*name_space_map_;
+  ACE_Name_Space_Map <ALLOCATOR> *name_space_map_;
   // Pointer to the allocated map manager.
 
   ACE_Naming_Context::Context_Scope_Type ns_scope_;

@@ -144,11 +144,13 @@ template class ACE_Unbounded_Set_Iterator<ACE_WString>;
 template class ACE_Set_Node<ACE_WString>;
 template class ACE_Set_Node<ACE_Name_Binding>;
 template class ACE_Guard<ACE_RW_Process_Mutex>;
+template class ACE_Guard<ACE_Null_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Process_Mutex>;
+template class ACE_Read_Guard<ACE_Null_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
+template class ACE_Write_Guard<ACE_Null_Mutex>;
 template class ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
 #endif /* ACE_LOCAL_NAME_SPACE_C */

@@ -48,8 +48,8 @@ inline ssize_t
 ACE_TLI_Stream::send_n (const void *buf, size_t n, int flags) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send_n");
-  int  b_sent;
-  int  b_written;
+  size_t b_sent;
+  ssize_t b_written;
   
   for (b_sent = 0; b_sent < n; b_sent += b_written)
     if ((b_written = ACE_OS::t_snd (this->get_handle (), 
@@ -71,7 +71,7 @@ inline ssize_t
 ACE_TLI_Stream::recv_n (void *buf, size_t n, int *flags) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv_n");
-  ssize_t b_read = 0;
+  size_t b_read = 0;
   ssize_t b_recv = 0;
   int f = 0;
 

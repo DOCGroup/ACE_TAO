@@ -23,8 +23,8 @@ int
 ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream, 
 			      const ACE_UPIPE_Addr &addr, 
 			      ACE_Time_Value *timeout,
-			      const ACE_Addr &local_sap,
-			      int reuse_addr,
+			      const ACE_Addr & /* local_sap */,
+			      int /* reuse_addr */,
 			      int flags,
 			      int perms)
 {

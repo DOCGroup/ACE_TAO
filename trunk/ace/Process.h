@@ -19,13 +19,6 @@
 #define ACE_PROCESS_H
 
 #include "ace/OS.h"
-#include "ace/ARGV.h"
-#include "ace/ACE.h"
-#include "ace/Mem_Map.h"
-#include "ace/Svc_Handler.h"
-#include "ace/Synch.h"
-#include "ace/Acceptor.h"
-#include "ace/SOCK_Acceptor.h"
 
 class ACE_Export ACE_Process
 // = TITLE

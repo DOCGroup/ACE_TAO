@@ -18,13 +18,8 @@ ACE_Local_Memory_Pool::dump (void) const
   ACE_TRACE ("ACE_Local_Memory_Pool::dump");
 }
 
-ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const char *)
-{
-  ACE_TRACE ("ACE_Local_Memory_Pool::ACE_Local_Memory_Pool");
-}
-
-ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const OPTIONS &,
-					      const char *)
+ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const char *,
+					      const OPTIONS *)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::ACE_Local_Memory_Pool");
 }
@@ -108,32 +103,24 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
   return ACE_OS::mprotect (addr, len, prot);
 }
 
-ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const char *pool_name)
-  : base_addr_ (ACE_DEFAULT_BASE_ADDR),
-    flags_ (MAP_SHARED | MAP_FIXED),
-    write_each_page_ (1)
+ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const char *pool_name,
+					    const OPTIONS *options)
+  : base_addr_ (0),
+    flags_ (MAP_SHARED),
+    write_each_page_ (0)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
 
-  if (pool_name == 0)
-    // Only create a new unique filename for the backing store file
-    // if the user didn't supply one...
-    pool_name = ACE_DEFAULT_BACKING_STORE; // from "ace/OS.h"
-
-  ACE_OS::strncpy (this->backing_store_, pool_name, 
-		   sizeof this->backing_store_);
-
-  if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", this->backing_store_));
-}
-
-ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const OPTIONS &options,
-					    const char *pool_name)
-  : base_addr_ (options.use_fixed_addr_ ? options.base_addr_ : 0),
-    flags_ (MAP_SHARED | (options.use_fixed_addr_ ? MAP_FIXED : 0)),
-    write_each_page_ (options.write_each_page_)
-{
-  ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
+  // Only change the defaults if <options> != 0.
+  if (options)
+    {
+      if (options->use_fixed_addr_)
+	{
+	  this->base_addr_ = (void *) options->base_addr_;
+	  ACE_SET_BITS (flags_, MAP_FIXED);
+	}
+      this->write_each_page_ = options->write_each_page_;
+    }
 
   if (pool_name == 0)
     // Only create a new unique filename for the backing store file
@@ -335,15 +322,9 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Lite_MMAP_Memory_Pool)
 
-ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const char *pool_name)
-  : ACE_MMAP_Memory_Pool (pool_name)
-{
-  ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool");
-}
-
-ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const OPTIONS &options,
-						      const char *pool_name)
-  : ACE_MMAP_Memory_Pool (options, pool_name)
+ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const char *pool_name,
+						      const OPTIONS *options)
+  : ACE_MMAP_Memory_Pool (pool_name, options)
 {
   ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool");
 }
@@ -389,13 +370,8 @@ ACE_Sbrk_Memory_Pool::dump (void) const
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::dump");
 }
 
-ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const char *)
-{
-  ACE_TRACE ("ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool");
-}
-
-ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const OPTIONS &options,
-					    const char *)
+ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const char *,
+					    const OPTIONS *)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool");
 }
@@ -500,16 +476,8 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   return 0;
 }
 
-ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const OPTIONS &,
-						const char *)
-{
-  ACE_TRACE ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool");
-
-  if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Sig_Handler::register_handler"));
-}
-
-ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const char *)
+ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const char *,
+						const OPTIONS *)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool");
 
@@ -534,11 +502,8 @@ ACE_Shared_Memory_Pool::acquire (size_t nbytes,
   if (this->commit_backing_store (rounded_bytes, offset) == -1)
     return 0;
 
-  SHM_TABLE *st = (SHM_TABLE *) ACE_DEFAULT_BASE_ADDR;
-  void *new_memory = ((char *) ACE_DEFAULT_BASE_ADDR) + offset;
-
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d\n", nbytes, rounded_bytes));
-  return new_memory;
+  return ((char *) ACE_DEFAULT_BASE_ADDR) + offset;
 }
  
 // Ask system for initial chunk of shared memory.

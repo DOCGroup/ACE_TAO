@@ -23,8 +23,8 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
 			     ACE_Time_Value *timeout,
 			     const ACE_Addr &local_sap,
 			     int reuse_addr,
-			     int flags,
-			     int perms,
+			     int /* flags */,
+			     int /* perms */,
 			     int protocol_family, 
 			     int protocol)
 {

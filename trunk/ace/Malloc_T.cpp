@@ -14,14 +14,6 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_Malloc)
 
 template <class MALLOC>
-ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name,
-						      const char *lock_name)
-  : allocator_ (pool_name, lock_name)
-{ 
-  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
-}
-
-template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name)
   : allocator_ (pool_name)
 { 
@@ -161,23 +153,29 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name)
   this->open ();
 }
 
-template <ACE_MEM_POOL_1, class LOCK> 
+template <ACE_MEM_POOL_1, class LOCK>
 ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name,
-					const char *lock_name)
-  : memory_pool_ (pool_name),
+					      const char *lock_name, 
+					      const ACE_MEM_POOL_OPTIONS *options)
+  : memory_pool_ (pool_name, options),
     lock_ (lock_name)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc");
   this->open ();
 }
 
-  : memory_pool_ (options, pool_name),
-    lock_ (pool_name == 0 ? 0 : ACE::basename (pool_name, 
-					       ACE_DIRECTORY_SEPARATOR_CHAR))
+#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+template <ACE_MEM_POOL_1, class LOCK>
+ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name,
+					      const char *lock_name, 
+					      const void *options)
+  : memory_pool_ (pool_name, (const ACE_MEM_POOL_OPTIONS *) options),
+    lock_ (lock_name)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc");
   this->open ();
 }
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 // Clean up the resources allocated by ACE_Malloc.
 
@@ -215,7 +213,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::shared_malloc (size_t nbytes)
   // Begin the search starting at the place in the freelist 
   // where the last block was found. 
   ACE_Malloc_Header *prevp = this->cb_ptr_->freep_;
-  ACE_Malloc_Header *currp	= prevp->s_.next_block_;
+  ACE_Malloc_Header *currp = prevp->s_.next_block_;
   
   // Search the freelist to locate a block of the appropriate size.
 
@@ -284,7 +282,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::malloc (size_t nbytes)
 
 template <ACE_MEM_POOL_1, class LOCK> void *
 ACE_Malloc<ACE_MEM_POOL_2, LOCK>::calloc (size_t nbytes, 
-				    char initial_value)
+					  char initial_value)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::calloc");
   void *ptr = this->malloc (nbytes);
@@ -508,7 +506,7 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::dump (void) const
 
 template <ACE_MEM_POOL_1, class LOCK> 
 ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::ACE_Malloc_Iterator (ACE_Malloc<ACE_MEM_POOL_2, LOCK> &malloc, 
-							  const char *name)
+								const char *name)
   : malloc_ (malloc), 
     guard_ (malloc_.lock_),
     curr_ (0),

@@ -2,12 +2,15 @@
 // $Id$
 
 // The following configuration file is designed to work for SunOS 5.5
-// platforms using the GNU g++ compiler.
+// platforms using the GNU g++ compiler (version 2.7.2 or later).
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
 #define ACE_HAS_UNICODE
+
+// G++ doesn't support template typedefs fully (yet).
+// #define ACE_HAS_TEMPLATE_TYPEDEFS
 
 // Must specialize templates due to G++'s lame parameterized type
 // support...
@@ -126,7 +129,7 @@
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
 
-/* Turn off the following four defines if you want to disable threading. */
+/* Turn off the following five defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #define ACE_MT_SAFE
 
@@ -136,11 +139,12 @@
 // Platform supports POSIX pthreads *and* Solaris threads!
 #define ACE_HAS_STHREADS
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_SIGWAIT
-#define ACE_LACKS_CONDATTR_PSHARED
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+#define ACE_HAS_SIGWAIT
+#define ACE_LACKS_CONDATTR_PSHARED
 
 // Platform supports TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H

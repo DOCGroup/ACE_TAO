@@ -12,6 +12,9 @@
 #define HPUX
 #endif /* HPUX */
 
+// They forgot a const in the prototype of const_timewait...
+#define ACE_LACKS_CONST_TIMESPEC_PTR
+
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_STRRECVFD
 

@@ -29,16 +29,13 @@ class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
   //     This adds additional wrapper methods atop the <ACE_SOCK_IO> class.
 {
 public:
-  //= The following two methods use write and read system calls,
-  //= which are faster than the send and recv library functions
-  //= used by the following two methods.
+  //= The following two methods use write and read system calls.
   ssize_t send_n (const void *buf, int n) const;
   // Send n bytes, keep trying until n are sent.
   ssize_t recv_n (void *buf, int n) const;	      
   // Recv n bytes, keep trying until n are received.
 
-  // = The following two methods use the send and recv system
-  // = calls.
+  // = The following two methods use the send and recv system calls.
   ssize_t send_n (const void *buf, int n, int flags) const;
   // Send n bytes, keep trying until n are sent.
   ssize_t recv_n (void *buf, int n, int flags) const;	      

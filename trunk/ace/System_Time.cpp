@@ -71,10 +71,10 @@ ACE_System_Time::get_master_system_time (ACE_UINT32 &time_out)
 }
 
 // Synchronize local system time with the central time server using
-// specified mode.
+// specified mode (currently unimplemented).
 
 int 
-ACE_System_Time::sync_local_system_time (ACE_System_Time::Sync_Mode mode)
+ACE_System_Time::sync_local_system_time (ACE_System_Time::Sync_Mode)
 {
   ACE_TRACE ("ACE_System_Time::sync_local_system_time");
   return 0;

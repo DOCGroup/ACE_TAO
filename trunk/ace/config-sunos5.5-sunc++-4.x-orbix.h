@@ -121,7 +121,7 @@
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
 
-/* Turn off the following four defines if you want to disable threading. */
+/* Turn off the following five defines if you want to disable threading. */
 // Compile using multi-thread libraries.
 #define ACE_MT_SAFE
 
@@ -131,11 +131,12 @@
 // Platform supports POSIX pthreads *and* Solaris threads!
 #define ACE_HAS_STHREADS
 #define ACE_HAS_PTHREADS
-#define ACE_HAS_SIGWAIT
-#define ACE_LACKS_CONDATTR_PSHARED
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+#define ACE_HAS_SIGWAIT
+#define ACE_LACKS_CONDATTR_PSHARED
 
 // Reactor detects deadlock
 // #define ACE_REACTOR_HAS_DEADLOCK_DETECTION

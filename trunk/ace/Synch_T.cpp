@@ -310,7 +310,7 @@ ACE_TSS<TYPE>::ts_get (void) const
   if (this->once_ == 0)
     {
       // Insure that we are serialized!
-      ACE_GUARD_RETURN (ACE_Mutex, ace_mon, (ACE_Mutex &) this->keylock_, 0);
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->keylock_, 0);
 
       // Use the Double-Check pattern to make sure we only create the
       // key once!
@@ -365,7 +365,7 @@ template <class TYPE> TYPE *
 ACE_TSS<TYPE>::ts_object (void) const
 {
   // Ensure that we are serialized!
-  ACE_GUARD_RETURN (ACE_Mutex, ace_mon, (ACE_Mutex &) this->keylock_, 0);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->keylock_, 0);
 
   if (this->once_ == 0) // Return 0 if we've never been initialized.
     return 0;
@@ -384,7 +384,7 @@ template <class TYPE> TYPE *
 ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj) 
 {
   // Ensure that we are serialized!
-  ACE_GUARD_RETURN (ACE_Mutex, ace_mon, this->keylock_, 0);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
 
   if (this->once_ == 0) // Return 0 if we've never been initialized.
     return 0;

@@ -14,7 +14,7 @@ RANLIB          = /bin/true
 
 SOFLAGS = $(CPPFLAGS)
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-PRELIB  = (echo "main() { }" > gcctemp.c && \
+PRELIB  = (echo "int main() { return 0; }" > gcctemp.c && \
           $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
           $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(LIBS); \
           status=$$?; exit $$status)

@@ -120,6 +120,7 @@ ACE_HAS_WIN32_TRYLOCK			The Win32 platform support TryEnterCriticalSection()
 ACE_HAS_XLI 				Platform has the XLI version of TLI
 ACE_HAS_XT 				Platform has Xt and Motif
 ACE_HAS_YIELD_VOID_PTR			Platform requires pthread_yield() to take a NULL.
+ACE_LACKS_CONST_TIMESPEC_PTR		Platform forgot const in cond_timewait (e.g., HP/UX).
 ACE_LACKS_CONDATTR_PSHARED		Platform has no implementation of pthread_condattr_setpshared(), even though it supports pthreads!
 ACE_LACKS_MADVISE			Platform lacks madvise() (e.g., Linux)
 ACE_LACKS_MALLOC_H			Platform lacks malloc.h

@@ -11,7 +11,7 @@
 // Make life easier later on...
 
 typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LOCAL_NAME_SPACE;
-typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LIGHT_LOCAL_NAME_SPACE;
+typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LITE_LOCAL_NAME_SPACE;
 
 // The following Factory is used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the Name
@@ -53,7 +53,7 @@ ACE_Naming_Context::local (void)
 }    
 
 int
-ACE_Naming_Context::open (Context_Scope_Type scope_in, int light)
+ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 {
   ACE_TRACE ("ACE_Naming_Context::open");
   ACE_OS::hostname (this->hostname_, sizeof this->hostname_);
@@ -76,8 +76,8 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int light)
     }
   else // Use NODE_LOCAL or PROC_LOCAL name space.
     {
-      if (light)
-	ACE_NEW_RETURN (this->name_space_, LIGHT_LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
+      if (lite)
+	ACE_NEW_RETURN (this->name_space_, LITE_LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
       else
 	ACE_NEW_RETURN (this->name_space_, LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
 
@@ -104,14 +104,14 @@ ACE_Naming_Context::ACE_Naming_Context (void)
 }
 
 ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
-					int light)
+					int lite)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
   ACE_NEW (this->name_options_, ACE_Name_Options);
 
   // Initialize.
-  if (this->open (scope_in, light) == -1)
+  if (this->open (scope_in, lite) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Naming_Context::ACE_Naming_Context"));
 }
 

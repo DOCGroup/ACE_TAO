@@ -15,9 +15,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_CString)
 // Copy constructor.
 
 ACE_CString::ACE_CString (const ACE_CString &s)
-  : len_ (s.len_),
-    allocator_ (s.allocator_)
-     
+  : allocator_ (s.allocator_),
+    len_ (s.len_)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
@@ -51,8 +50,9 @@ ACE_CString::length (void) const
 // Default constructor.
 
 ACE_CString::ACE_CString (ACE_Allocator *allocator)
-  : len_ (0), rep_ (0),
-    allocator_ (allocator)
+  : allocator_ (allocator),
+    len_ (0), 
+    rep_ (0)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
 
@@ -197,8 +197,8 @@ ACE_SString::length (void) const
 // Copy constructor.
 
 ACE_SString::ACE_SString (const ACE_SString &s)
-  : len_ (s.len_),
-    allocator_ (s.allocator_)
+  : allocator_ (s.allocator_),
+    len_ (s.len_)
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
@@ -213,8 +213,10 @@ ACE_SString::ACE_SString (const ACE_SString &s)
 // Default constructor.
 
 ACE_SString::ACE_SString (ACE_Allocator *allocator)
-  : allocator_ (allocator), 
-    len_ (0), rep_ (0)
+  : allocator_ (allocator),
+    len_ (0), 
+    rep_ (0)
+    
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
@@ -275,7 +277,7 @@ ACE_SString::rep (char *s)
 // Constructor that actually copies memory.
 
 ACE_SString::ACE_SString (const char *s, 
-			    ACE_Allocator *allocator)
+			  ACE_Allocator *allocator)
   : allocator_ (allocator)
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
@@ -354,9 +356,9 @@ ACE_WString::dump (void) const
 // Default constructor.
 
 ACE_WString::ACE_WString (ACE_Allocator *allocator)
-  : len_ (0), 
-    rep_ (0),
-    allocator_ (allocator)
+  : allocator_ (allocator),
+    len_ (0),
+    rep_ (0)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 
@@ -497,8 +499,8 @@ ACE_WString::length (void) const
 // Copy constructor.
 
 ACE_WString::ACE_WString (const ACE_WString &s)
-: len_ (s.len_),
-  allocator_ (s.allocator_)
+  : allocator_ (s.allocator_),
+    len_ (s.len_)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
 

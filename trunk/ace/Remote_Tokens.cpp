@@ -138,13 +138,11 @@ ACE_Remote_Token_Proxy::initiate_connection (void)
 
 int
 ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
-				       ACE_Synch_Options &options)
+				       ACE_Synch_Options &)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::request_reply");
-  void    *buffer;
+  void *buffer;
   ssize_t length;
-
-//  request.dump ();
 
   if ((length = request.encode (buffer)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "encode failed"), -1);    
@@ -355,14 +353,14 @@ ACE_Remote_Token_Proxy::release (ACE_Synch_Options &options)
 }
 
 int 
-ACE_Remote_Token_Proxy::remove (ACE_Synch_Options &options)
+ACE_Remote_Token_Proxy::remove (ACE_Synch_Options &)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::remove");
   return 0;
 }
 
 void
-ACE_Remote_Token_Proxy::token_acquired (ACE_TPQ_Entry *e)
+ACE_Remote_Token_Proxy::token_acquired (ACE_TPQ_Entry *)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::token_acquired");
   ACE_DEBUG ((LM_DEBUG, "(%t) shadow token %s acquired\n",

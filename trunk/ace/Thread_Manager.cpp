@@ -148,11 +148,11 @@ ACE_Thread_Manager::open (size_t size)
 // Initialize the synchronization variables.
 
 ACE_Thread_Manager::ACE_Thread_Manager (size_t size)
-  : zero_cond_ (lock_),
+  : thr_table_ (0),
     max_table_size_ (0), 
-    thr_table_ (0),
     current_count_ (0),
-    grp_id_ (1)
+    grp_id_ (1),
+    zero_cond_ (lock_)
 {
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
   if (this->open (size) == -1)

@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Process.h"
+#include "ace/ARGV.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process.i"

@@ -168,6 +168,7 @@ private:
   // This method does the dirty work of actually calling ::mmap to map
   // the file into memory.
 
+  // = Disallow copying and assignment.
   ACE_Mem_Map (const ACE_Mem_Map &) {}
   void operator = (const ACE_Mem_Map &) {}
 };
