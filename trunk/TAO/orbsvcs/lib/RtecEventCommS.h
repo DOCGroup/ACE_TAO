@@ -46,42 +46,6 @@ public:
 
   };
 
-  class PullSupplier;
-  typedef PullSupplier *PullSupplier_ptr;
-  class PullSupplier : public virtual RtecEventComm::PullSupplier
-  {
-  protected:
-    PullSupplier (const char *obj_name = 0);
-    virtual ~PullSupplier (void);
-  public:
-    virtual RtecEventComm::Event pull ( CORBA::Environment &env) = 0; // pure virtual
-    static void pull_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-    virtual RtecEventComm::Event try_pull (CORBA::Boolean_out has_event,  CORBA::Environment &env) = 0; // pure virtual
-    static void try_pull_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-    virtual void disconnect_pull_supplier ( CORBA::Environment &env) = 0; // pure virtual
-    static void disconnect_pull_supplier_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-    static void _is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-  };
-
-  class PullConsumer;
-  typedef PullConsumer *PullConsumer_ptr;
-  class PullConsumer : public virtual RtecEventComm::PullConsumer
-  {
-  protected:
-    PullConsumer (const char *obj_name = 0);
-    virtual ~PullConsumer (void);
-  public:
-    virtual void disconnect_pull_consumer ( CORBA::Environment &env) = 0; // pure virtual
-    static void disconnect_pull_consumer_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-    static void _is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
-
-  };
-
 };
 
 

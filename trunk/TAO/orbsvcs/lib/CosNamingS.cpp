@@ -188,7 +188,7 @@ void POA_CosNaming::NamingContext::new_context_skel (CORBA::ServerRequest &_tao_
   CORBA::NVList_ptr 	 nvlist;
   POA_CosNaming::NamingContext_ptr 	 impl;
   CORBA::Any *result;
-  CORBA::Object_ptr retval;
+  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
   
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
@@ -197,8 +197,8 @@ void POA_CosNaming::NamingContext::new_context_skel (CORBA::ServerRequest &_tao_
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
   impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
-  retval = impl->new_context(_tao_environment);
-  result = new CORBA::Any (CosNaming::_tc_NamingContext, retval, 0); // ORB does not own
+  *retval = impl->new_context(_tao_environment);
+  result = new CORBA::Any (CosNaming::_tc_NamingContext, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -208,7 +208,7 @@ void POA_CosNaming::NamingContext::bind_new_context_skel (CORBA::ServerRequest &
   CORBA::NVList_ptr 	 nvlist;
   POA_CosNaming::NamingContext_ptr 	 impl;
   CORBA::Any *result;
-  CORBA::Object_ptr retval;
+  CORBA::Object_ptr *retval = new CORBA::Object_ptr;
   CosNaming::Name n;
   CORBA::NamedValue_ptr nv_n;
   CORBA::Any 	 any_n (CosNaming::_tc_Name, &n); // ORB does not own
@@ -221,8 +221,8 @@ void POA_CosNaming::NamingContext::bind_new_context_skel (CORBA::ServerRequest &
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
   impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
-  retval = impl->bind_new_context(n, _tao_environment);
-  result = new CORBA::Any (CosNaming::_tc_NamingContext, retval, 0); // ORB does not own
+  *retval = impl->bind_new_context(n, _tao_environment);
+  result = new CORBA::Any (CosNaming::_tc_NamingContext, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -273,9 +273,8 @@ void POA_CosNaming::NamingContext::list_skel (CORBA::ServerRequest &_tao_server_
   
 }
 
-void POA_CosNaming::NamingContext::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env)
+void POA_CosNaming::NamingContext::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (obj); // argument not used
   const CORBA::String type_id = "IDL:CosNaming/NamingContext:1.0"; // repository ID
   CORBA::NVList_ptr nvlist;
   CORBA::NamedValue_ptr nv;
@@ -394,9 +393,8 @@ void POA_CosNaming::BindingIterator::destroy_skel (CORBA::ServerRequest &_tao_se
   
 }
 
-void POA_CosNaming::BindingIterator::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env)
+void POA_CosNaming::BindingIterator::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (obj); // argument not used
   const CORBA::String type_id = "IDL:CosNaming/BindingIterator:1.0"; // repository ID
   CORBA::NVList_ptr nvlist;
   CORBA::NamedValue_ptr nv;

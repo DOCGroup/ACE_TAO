@@ -30,972 +30,972 @@ static const CORBA::Long _oc_CosNaming_NameComponent[] =
   2, // member count
     3, 0x69640000,  // name = id
     CORBA::tk_alias, // typecode kind for typedefs
-    48, // encapsulation length
+    56, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
       8, 0x49737472, 0x696e6700,  // name = Istring
       CORBA::tk_string, 
       0, // string length
-            5, 0x6b696e64, 0x0,  // name = kind
+          5, 0x6b696e64, 0x0,  // name = kind
+    CORBA::tk_alias, // typecode kind for typedefs
+    56, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+      8, 0x49737472, 0x696e6700,  // name = Istring
+      CORBA::tk_string, 
+      0, // string length
+      };
+static CORBA::TypeCode _tc__tc_CosNaming_NameComponent (CORBA::tk_struct, sizeof (_oc_CosNaming_NameComponent), (unsigned char *) &_oc_CosNaming_NameComponent, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::_tc_NameComponent = &_tc__tc_CosNaming_NameComponent;
+
+// *************************************************************
+// class CosNaming::_tao__seq_Name
+// *************************************************************
+
+// copy constructor
+CosNaming::_tao__seq_Name::_tao__seq_Name (const CosNaming::_tao__seq_Name &seq)
+	: maximum_ (seq.maximum_),
+	  length_ (seq.length_),
+	  buffer_ (CosNaming::_tao__seq_Name::allocbuf (seq.maximum_)),
+	  release_ (1) // we always own it
+{
+  for (CORBA::ULong i=0; i < seq.length_; i++)
+  	this->buffer_[i] = seq.buffer_[i];
+}
+
+// destructor
+CosNaming::_tao__seq_Name::~_tao__seq_Name (void)
+{
+  if (this->release_) // we own the buffer
+  {
+    CosNaming::_tao__seq_Name::freebuf (this->buffer_);
+  }
+}
+
+// assignment operator
+CosNaming::_tao__seq_Name& 
+CosNaming::_tao__seq_Name::operator= (const CosNaming::_tao__seq_Name &seq)
+{
+  if (this == &seq) return *this;
+  if (this->release_)
+  {
+    CosNaming::_tao__seq_Name::freebuf (this->buffer_);
+  }
+  this->length_ = seq.length_;
+  this->maximum_ = seq.maximum_;
+  this->buffer_ = CosNaming::_tao__seq_Name::allocbuf (seq.maximum_),
+  this->release_ =1; // we always own it
+  for (CORBA::ULong i=0; i < seq.length_; i++)
+  	this->buffer_[i] = seq.buffer_[i];
+  return *this;
+}
+
+void
+CosNaming::_tao__seq_Name::length (CORBA::ULong length)
+{
+  if (length > this->maximum_)
+  {
+    CosNaming::NameComponent *tmp = CosNaming::_tao__seq_Name::allocbuf (length);
+    if (tmp == 0)
+          return;
+    for (int i = 0; i < this->length_; ++i)
+    {
+      tmp[i] = this->buffer_[i];
+    }
+    if (this->release_)
+      CosNaming::_tao__seq_Name::freebuf (this->buffer_);
+    this->buffer_ = tmp;
+    this->release_ = 1;
+
+    this->length_ = length;
+this->maximum_ = length;
+  }
+}
+
+static const CORBA::Long _oc_CosNaming__tao__seq_Name[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_struct, // typecode kind
+  212, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
+    14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
+    2, // member count
+      3, 0x69640000,  // name = id
       CORBA::tk_alias, // typecode kind for typedefs
-      48, // encapsulation length
+      56, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
         8, 0x49737472, 0x696e6700,  // name = Istring
         CORBA::tk_string, 
         0, // string length
-            };
-    static CORBA::TypeCode _tc__tc_CosNaming_NameComponent (CORBA::tk_struct, sizeof (_oc_CosNaming_NameComponent), (unsigned char *) &_oc_CosNaming_NameComponent, CORBA::B_FALSE);
-    CORBA::TypeCode_ptr CosNaming::_tc_NameComponent = &_tc__tc_CosNaming_NameComponent;
+              5, 0x6b696e64, 0x0,  // name = kind
+      CORBA::tk_alias, // typecode kind for typedefs
+      56, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+        8, 0x49737472, 0x696e6700,  // name = Istring
+        CORBA::tk_string, 
+        0, // string length
+            0,
+};
+static CORBA::TypeCode _tc__tc_CosNaming__tao__seq_Name (CORBA::tk_sequence, sizeof (_oc_CosNaming__tao__seq_Name), (unsigned char *) &_oc_CosNaming__tao__seq_Name, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::_tc__tao__seq_Name = &_tc__tc_CosNaming__tao__seq_Name;
 
-// *************************************************************
-    // class CosNaming::_tao__seq_Name
-    // *************************************************************
+static const CORBA::Long _oc_CosNaming_Name[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
+  5, 0x4e616d65, 0x0,  // name = Name
+  CORBA::tk_sequence, // typecode kind
+  236, // encapsulation length
+  TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_struct, // typecode kind
+  212, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
+    14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
+    2, // member count
+      3, 0x69640000,  // name = id
+      CORBA::tk_alias, // typecode kind for typedefs
+      56, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+        8, 0x49737472, 0x696e6700,  // name = Istring
+        CORBA::tk_string, 
+        0, // string length
+              5, 0x6b696e64, 0x0,  // name = kind
+      CORBA::tk_alias, // typecode kind for typedefs
+      56, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+        8, 0x49737472, 0x696e6700,  // name = Istring
+        CORBA::tk_string, 
+        0, // string length
+            0,
+};
+static CORBA::TypeCode _tc__tc_CosNaming_Name (CORBA::tk_alias, sizeof (_oc_CosNaming_Name), (unsigned char *) &_oc_CosNaming_Name, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::_tc_Name = &_tc__tc_CosNaming_Name;
 
-    // copy constructor
-    CosNaming::_tao__seq_Name::_tao__seq_Name (const CosNaming::_tao__seq_Name &seq)
-    	: maximum_ (seq.maximum_),
-    	  length_ (seq.length_),
-    	  buffer_ (CosNaming::_tao__seq_Name::allocbuf (seq.maximum_)),
-    	  release_ (1) // we always own it
-    {
-      for (CORBA::ULong i=0; i < seq.length_; i++)
-      	this->buffer_[i] = seq.buffer_[i];
-    }
 
-    // destructor
-    CosNaming::_tao__seq_Name::~_tao__seq_Name (void)
-    {
-      if (this->release_) // we own the buffer
-      {
-        CosNaming::_tao__seq_Name::freebuf (this->buffer_);
-      }
-    }
+static const CORBA::Long _oc_CosNaming_BindingType[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67547970, 0x653a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingType:1.0
+  12, 0x42696e64, 0x696e6754, 0x79706500,  // name = BindingType
+  2, // member count
+    8, 0x6e6f626a, 0x65637400,  // name = nobject
+    9, 0x6e636f6e, 0x74657874, 0x0,  // name = ncontext
+};
+static CORBA::TypeCode _tc__tc_CosNaming_BindingType (CORBA::tk_enum, sizeof (_oc_CosNaming_BindingType), (unsigned char *) &_oc_CosNaming_BindingType, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::_tc_BindingType = &_tc__tc_CosNaming_BindingType;
 
-    // assignment operator
-    CosNaming::_tao__seq_Name& 
-    CosNaming::_tao__seq_Name::operator= (const CosNaming::_tao__seq_Name &seq)
-    {
-      if (this == &seq) return *this;
-      if (this->release_)
-      {
-        CosNaming::_tao__seq_Name::freebuf (this->buffer_);
-      }
-      this->length_ = seq.length_;
-      this->maximum_ = seq.maximum_;
-      this->buffer_ = CosNaming::_tao__seq_Name::allocbuf (seq.maximum_),
-      this->release_ =1; // we always own it
-      for (CORBA::ULong i=0; i < seq.length_; i++)
-      	this->buffer_[i] = seq.buffer_[i];
-      return *this;
-    }
-
-    void
-    CosNaming::_tao__seq_Name::length (CORBA::ULong length)
-    {
-      if (length > this->maximum_)
-      {
-        CosNaming::NameComponent *tmp = CosNaming::_tao__seq_Name::allocbuf (length);
-        if (tmp == 0)
-                  return;
-        for (int i = 0; i < this->length_; ++i)
-        {
-          tmp[i] = this->buffer_[i];
-        }
-        if (this->release_)
-          CosNaming::_tao__seq_Name::freebuf (this->buffer_);
-        this->buffer_ = tmp;
-        this->release_ = 1;
-
-        this->length_ = length;
-this->maximum_ = length;
-      }
-    }
-
-    static const CORBA::Long _oc_CosNaming__tao__seq_Name[] =
-    {
+static const CORBA::Long _oc_CosNaming_Binding[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Binding:1.0
+  8, 0x42696e64, 0x696e6700,  // name = Binding
+  2, // member count
+    13, 0x62696e64, 0x696e675f, 0x6e616d65, 0x0,  // name = binding_name
+    CORBA::tk_alias, // typecode kind for typedefs
+    280, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
+      5, 0x4e616d65, 0x0,  // name = Name
+      CORBA::tk_sequence, // typecode kind
+      236, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
             CORBA::tk_struct, // typecode kind
-      196, // encapsulation length
+      212, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
         14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
         2, // member count
           3, 0x69640000,  // name = id
           CORBA::tk_alias, // typecode kind for typedefs
-          48, // encapsulation length
+          56, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
             26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
             8, 0x49737472, 0x696e6700,  // name = Istring
             CORBA::tk_string, 
             0, // string length
-                        5, 0x6b696e64, 0x0,  // name = kind
+                      5, 0x6b696e64, 0x0,  // name = kind
+          CORBA::tk_alias, // typecode kind for typedefs
+          56, // encapsulation length
+            TAO_ENCAP_BYTE_ORDER, // byte order
+            26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+            8, 0x49737472, 0x696e6700,  // name = Istring
+            CORBA::tk_string, 
+            0, // string length
+                        0,
+    13, 0x62696e64, 0x696e675f, 0x74797065, 0x0,  // name = binding_type
+    CORBA::tk_enum, // typecode kind
+    88, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67547970, 0x653a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingType:1.0
+    12, 0x42696e64, 0x696e6754, 0x79706500,  // name = BindingType
+    2, // member count
+      8, 0x6e6f626a, 0x65637400,  // name = nobject
+      9, 0x6e636f6e, 0x74657874, 0x0,  // name = ncontext
+};
+static CORBA::TypeCode _tc__tc_CosNaming_Binding (CORBA::tk_struct, sizeof (_oc_CosNaming_Binding), (unsigned char *) &_oc_CosNaming_Binding, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::_tc_Binding = &_tc__tc_CosNaming_Binding;
+
+// *************************************************************
+// class CosNaming::_tao__seq_BindingList
+// *************************************************************
+
+// copy constructor
+CosNaming::_tao__seq_BindingList::_tao__seq_BindingList (const CosNaming::_tao__seq_BindingList &seq)
+	: maximum_ (seq.maximum_),
+	  length_ (seq.length_),
+	  buffer_ (CosNaming::_tao__seq_BindingList::allocbuf (seq.maximum_)),
+	  release_ (1) // we always own it
+{
+  for (CORBA::ULong i=0; i < seq.length_; i++)
+  	this->buffer_[i] = seq.buffer_[i];
+}
+
+// destructor
+CosNaming::_tao__seq_BindingList::~_tao__seq_BindingList (void)
+{
+  if (this->release_) // we own the buffer
+  {
+    CosNaming::_tao__seq_BindingList::freebuf (this->buffer_);
+  }
+}
+
+// assignment operator
+CosNaming::_tao__seq_BindingList& 
+CosNaming::_tao__seq_BindingList::operator= (const CosNaming::_tao__seq_BindingList &seq)
+{
+  if (this == &seq) return *this;
+  if (this->release_)
+  {
+    CosNaming::_tao__seq_BindingList::freebuf (this->buffer_);
+  }
+  this->length_ = seq.length_;
+  this->maximum_ = seq.maximum_;
+  this->buffer_ = CosNaming::_tao__seq_BindingList::allocbuf (seq.maximum_),
+  this->release_ =1; // we always own it
+  for (CORBA::ULong i=0; i < seq.length_; i++)
+  	this->buffer_[i] = seq.buffer_[i];
+  return *this;
+}
+
+void
+CosNaming::_tao__seq_BindingList::length (CORBA::ULong length)
+{
+  if (length > this->maximum_)
+  {
+    CosNaming::Binding *tmp = CosNaming::_tao__seq_BindingList::allocbuf (length);
+    if (tmp == 0)
+          return;
+    for (int i = 0; i < this->length_; ++i)
+    {
+      tmp[i] = this->buffer_[i];
+    }
+    if (this->release_)
+      CosNaming::_tao__seq_BindingList::freebuf (this->buffer_);
+    this->buffer_ = tmp;
+    this->release_ = 1;
+
+    this->length_ = length;
+this->maximum_ = length;
+  }
+}
+
+static const CORBA::Long _oc_CosNaming__tao__seq_BindingList[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_struct, // typecode kind
+  476, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Binding:1.0
+    8, 0x42696e64, 0x696e6700,  // name = Binding
+    2, // member count
+      13, 0x62696e64, 0x696e675f, 0x6e616d65, 0x0,  // name = binding_name
+      CORBA::tk_alias, // typecode kind for typedefs
+      280, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
+        5, 0x4e616d65, 0x0,  // name = Name
+        CORBA::tk_sequence, // typecode kind
+        236, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+                CORBA::tk_struct, // typecode kind
+        212, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+          32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
+          14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
+          2, // member count
+            3, 0x69640000,  // name = id
             CORBA::tk_alias, // typecode kind for typedefs
-            48, // encapsulation length
+            56, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
               8, 0x49737472, 0x696e6700,  // name = Istring
               CORBA::tk_string, 
               0, // string length
-                                  0,
-        };
-        static CORBA::TypeCode _tc__tc_CosNaming__tao__seq_Name (CORBA::tk_sequence, sizeof (_oc_CosNaming__tao__seq_Name), (unsigned char *) &_oc_CosNaming__tao__seq_Name, CORBA::B_FALSE);
-        CORBA::TypeCode_ptr CosNaming::_tc__tao__seq_Name = &_tc__tc_CosNaming__tao__seq_Name;
+                          5, 0x6b696e64, 0x0,  // name = kind
+            CORBA::tk_alias, // typecode kind for typedefs
+            56, // encapsulation length
+              TAO_ENCAP_BYTE_ORDER, // byte order
+              26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+              8, 0x49737472, 0x696e6700,  // name = Istring
+              CORBA::tk_string, 
+              0, // string length
+                              0,
+      13, 0x62696e64, 0x696e675f, 0x74797065, 0x0,  // name = binding_type
+      CORBA::tk_enum, // typecode kind
+      88, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67547970, 0x653a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingType:1.0
+      12, 0x42696e64, 0x696e6754, 0x79706500,  // name = BindingType
+      2, // member count
+        8, 0x6e6f626a, 0x65637400,  // name = nobject
+        9, 0x6e636f6e, 0x74657874, 0x0,  // name = ncontext
+    0,
+};
+static CORBA::TypeCode _tc__tc_CosNaming__tao__seq_BindingList (CORBA::tk_sequence, sizeof (_oc_CosNaming__tao__seq_BindingList), (unsigned char *) &_oc_CosNaming__tao__seq_BindingList, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::_tc__tao__seq_BindingList = &_tc__tc_CosNaming__tao__seq_BindingList;
 
-        static const CORBA::Long _oc_CosNaming_Name[] =
-        {
+static const CORBA::Long _oc_CosNaming_BindingList[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x674c6973, 0x743a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingList:1.0
+  12, 0x42696e64, 0x696e674c, 0x69737400,  // name = BindingList
+  CORBA::tk_sequence, // typecode kind
+  500, // encapsulation length
+  TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_struct, // typecode kind
+  476, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Binding:1.0
+    8, 0x42696e64, 0x696e6700,  // name = Binding
+    2, // member count
+      13, 0x62696e64, 0x696e675f, 0x6e616d65, 0x0,  // name = binding_name
+      CORBA::tk_alias, // typecode kind for typedefs
+      280, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
+        5, 0x4e616d65, 0x0,  // name = Name
+        CORBA::tk_sequence, // typecode kind
+        236, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+                CORBA::tk_struct, // typecode kind
+        212, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
-          23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
-          5, 0x4e616d65, 0x0,  // name = Name
-          CORBA::tk_sequence, // typecode kind
-          212, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-                    CORBA::tk_struct, // typecode kind
-          196, // encapsulation length
+          32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
+          14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
+          2, // member count
+            3, 0x69640000,  // name = id
+            CORBA::tk_alias, // typecode kind for typedefs
+            56, // encapsulation length
+              TAO_ENCAP_BYTE_ORDER, // byte order
+              26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+              8, 0x49737472, 0x696e6700,  // name = Istring
+              CORBA::tk_string, 
+              0, // string length
+                          5, 0x6b696e64, 0x0,  // name = kind
+            CORBA::tk_alias, // typecode kind for typedefs
+            56, // encapsulation length
+              TAO_ENCAP_BYTE_ORDER, // byte order
+              26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+              8, 0x49737472, 0x696e6700,  // name = Istring
+              CORBA::tk_string, 
+              0, // string length
+                              0,
+      13, 0x62696e64, 0x696e675f, 0x74797065, 0x0,  // name = binding_type
+      CORBA::tk_enum, // typecode kind
+      88, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67547970, 0x653a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingType:1.0
+      12, 0x42696e64, 0x696e6754, 0x79706500,  // name = BindingType
+      2, // member count
+        8, 0x6e6f626a, 0x65637400,  // name = nobject
+        9, 0x6e636f6e, 0x74657874, 0x0,  // name = ncontext
+    0,
+};
+static CORBA::TypeCode _tc__tc_CosNaming_BindingList (CORBA::tk_alias, sizeof (_oc_CosNaming_BindingList), (unsigned char *) &_oc_CosNaming_BindingList, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::_tc_BindingList = &_tc__tc_CosNaming_BindingList;
+
+CosNaming::NamingContext_ptr CosNaming::NamingContext::_duplicate (CosNaming::NamingContext_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->AddRef ();
+  
+  return obj;
+} // end of _duplicate
+
+CosNaming::NamingContext_ptr CosNaming::NamingContext::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+{
+  if (CORBA::is_nil (obj)) return CosNaming::NamingContext::_nil ();
+  if (obj->_is_a ("IDL:CosNaming/NamingContext:1.0", env))
+  {
+    STUB_Object *istub;
+    CosNaming::NamingContext_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+      return CosNaming::NamingContext::_nil ();
+    
+    obj->Release (); // need this since QueryIntf bumped our refcount
+    new_obj = new CosNaming::NamingContext (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
+  return CosNaming::NamingContext::_nil (); // _narrow failed
+} // end of _narrow
+
+CosNaming::NamingContext_ptr CosNaming::NamingContext::_nil (void)
+{
+  return (CosNaming::NamingContext_ptr)NULL;
+} // end of _nil
+
+CosNaming::NamingContext_ptr CosNaming::NamingContext::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
+{
+  CORBA::Object_ptr objref = CORBA::Object::_nil ();
+  IIOP_Object *data = new IIOP_Object (host, port, key);
+  if (!data) return CosNaming::NamingContext::_nil ();
+  // get the object_ptr using Query Interface
+  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != NOERROR)
+  {
+  	env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+  	return CosNaming::NamingContext::_nil ();
+  }
+  data->Release (); // QueryInterface had bumped up our count
+  if (CORBA::is_nil (objref))
+  	return CosNaming::NamingContext::_nil ();
+  else // narrow it
+  	return CosNaming::NamingContext::_narrow (objref, env);
+}
+
+
+static const CORBA::Long _oc_CosNaming_NamingContext_NotFoundReason[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  47, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x4e6f7446, 0x6f756e64, 0x52656173, 0x6f6e3a31, 0x2e300000,  // repository ID = IDL:CosNaming/NamingContext/NotFoundReason:1.0
+  15, 0x4e6f7446, 0x6f756e64, 0x52656173, 0x6f6e0000,  // name = NotFoundReason
+  3, // member count
+    13, 0x6d697373, 0x696e675f, 0x6e6f6465, 0x0,  // name = missing_node
+    12, 0x6e6f745f, 0x636f6e74, 0x65787400,  // name = not_context
+    11, 0x6e6f745f, 0x6f626a65, 0x63740000,  // name = not_object
+};
+static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_NotFoundReason (CORBA::tk_enum, sizeof (_oc_CosNaming_NamingContext_NotFoundReason), (unsigned char *) &_oc_CosNaming_NamingContext_NotFoundReason, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_NotFoundReason = &_tc__tc_CosNaming_NamingContext_NotFoundReason;
+
+static const CORBA::Long _oc_CosNaming_NamingContext_NotFound[] =
+{
+  0, // byte order
+  41, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x4e6f7446, 0x6f756e64, 0x3a312e30, 0x0,  // repository ID = IDL:CosNaming/NamingContext/NotFound:1.0
+  9, 0x4e6f7446, 0x6f756e64, 0x0,  // name = NotFound
+  2, // member count
+    4, 0x77687900,  // name = why
+    CORBA::tk_enum, // typecode kind
+    132, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    47, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x4e6f7446, 0x6f756e64, 0x52656173, 0x6f6e3a31, 0x2e300000,  // repository ID = IDL:CosNaming/NamingContext/NotFoundReason:1.0
+    15, 0x4e6f7446, 0x6f756e64, 0x52656173, 0x6f6e0000,  // name = NotFoundReason
+    3, // member count
+      13, 0x6d697373, 0x696e675f, 0x6e6f6465, 0x0,  // name = missing_node
+      12, 0x6e6f745f, 0x636f6e74, 0x65787400,  // name = not_context
+      11, 0x6e6f745f, 0x6f626a65, 0x63740000,  // name = not_object
+    13, 0x72657374, 0x5f6f665f, 0x6e616d65, 0x0,  // name = rest_of_name
+    CORBA::tk_alias, // typecode kind for typedefs
+    280, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
+      5, 0x4e616d65, 0x0,  // name = Name
+      CORBA::tk_sequence, // typecode kind
+      236, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+            CORBA::tk_struct, // typecode kind
+      212, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
+        14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
+        2, // member count
+          3, 0x69640000,  // name = id
+          CORBA::tk_alias, // typecode kind for typedefs
+          56, // encapsulation length
             TAO_ENCAP_BYTE_ORDER, // byte order
-            32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
-            14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
-            2, // member count
-              3, 0x69640000,  // name = id
-              CORBA::tk_alias, // typecode kind for typedefs
-              48, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                8, 0x49737472, 0x696e6700,  // name = Istring
-                CORBA::tk_string, 
-                0, // string length
-                                5, 0x6b696e64, 0x0,  // name = kind
-                CORBA::tk_alias, // typecode kind for typedefs
-                48, // encapsulation length
-                  TAO_ENCAP_BYTE_ORDER, // byte order
-                  26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                  8, 0x49737472, 0x696e6700,  // name = Istring
-                  CORBA::tk_string, 
-                  0, // string length
-                                              0,
-            };
-            static CORBA::TypeCode _tc__tc_CosNaming_Name (CORBA::tk_alias, sizeof (_oc_CosNaming_Name), (unsigned char *) &_oc_CosNaming_Name, CORBA::B_FALSE);
-            CORBA::TypeCode_ptr CosNaming::_tc_Name = &_tc__tc_CosNaming_Name;
+            26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+            8, 0x49737472, 0x696e6700,  // name = Istring
+            CORBA::tk_string, 
+            0, // string length
+                      5, 0x6b696e64, 0x0,  // name = kind
+          CORBA::tk_alias, // typecode kind for typedefs
+          56, // encapsulation length
+            TAO_ENCAP_BYTE_ORDER, // byte order
+            26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+            8, 0x49737472, 0x696e6700,  // name = Istring
+            CORBA::tk_string, 
+            0, // string length
+                        0,
+};
+static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_NotFound (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_NotFound), (unsigned char *) &_oc_CosNaming_NamingContext_NotFound, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_NotFound = &_tc__tc_CosNaming_NamingContext_NotFound;
 
-            
-            static const CORBA::Long _oc_CosNaming_BindingType[] =
-            {
-              TAO_ENCAP_BYTE_ORDER, // byte order
-              30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67547970, 0x653a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingType:1.0
-              12, 0x42696e64, 0x696e6754, 0x79706500,  // name = BindingType
-              2, // member count
-                8, 0x6e6f626a, 0x65637400,  // name = nobject
-                9, 0x6e636f6e, 0x74657874, 0x0,  // name = ncontext
-            };
-            static CORBA::TypeCode _tc__tc_CosNaming_BindingType (CORBA::tk_enum, sizeof (_oc_CosNaming_BindingType), (unsigned char *) &_oc_CosNaming_BindingType, CORBA::B_FALSE);
-            CORBA::TypeCode_ptr CosNaming::_tc_BindingType = &_tc__tc_CosNaming_BindingType;
+static const CORBA::Long _oc_CosNaming_NamingContext_CannotProceed[] =
+{
+  0, // byte order
+  46, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x43616e6e, 0x6f745072, 0x6f636565, 0x643a312e, 0x30000000,  // repository ID = IDL:CosNaming/NamingContext/CannotProceed:1.0
+  14, 0x43616e6e, 0x6f745072, 0x6f636565, 0x64000000,  // name = CannotProceed
+  2, // member count
+    4, 0x63787400,  // name = cxt
+    CORBA::tk_objref, // typecode kind
+    68, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578743a, 0x312e3000,  // repository ID = IDL:CosNaming/NamingContext:1.0
+    14, 0x4e616d69, 0x6e67436f, 0x6e746578, 0x74000000,  // name = NamingContext,
+    13, 0x72657374, 0x5f6f665f, 0x6e616d65, 0x0,  // name = rest_of_name
+    CORBA::tk_alias, // typecode kind for typedefs
+    280, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
+      5, 0x4e616d65, 0x0,  // name = Name
+      CORBA::tk_sequence, // typecode kind
+      236, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+            CORBA::tk_struct, // typecode kind
+      212, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
+        14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
+        2, // member count
+          3, 0x69640000,  // name = id
+          CORBA::tk_alias, // typecode kind for typedefs
+          56, // encapsulation length
+            TAO_ENCAP_BYTE_ORDER, // byte order
+            26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+            8, 0x49737472, 0x696e6700,  // name = Istring
+            CORBA::tk_string, 
+            0, // string length
+                      5, 0x6b696e64, 0x0,  // name = kind
+          CORBA::tk_alias, // typecode kind for typedefs
+          56, // encapsulation length
+            TAO_ENCAP_BYTE_ORDER, // byte order
+            26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
+            8, 0x49737472, 0x696e6700,  // name = Istring
+            CORBA::tk_string, 
+            0, // string length
+                        0,
+};
+static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_CannotProceed (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_CannotProceed), (unsigned char *) &_oc_CosNaming_NamingContext_CannotProceed, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_CannotProceed = &_tc__tc_CosNaming_NamingContext_CannotProceed;
 
-            static const CORBA::Long _oc_CosNaming_Binding[] =
-            {
-              TAO_ENCAP_BYTE_ORDER, // byte order
-              26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Binding:1.0
-              8, 0x42696e64, 0x696e6700,  // name = Binding
-              2, // member count
-                13, 0x62696e64, 0x696e675f, 0x6e616d65, 0x0,  // name = binding_name
-                CORBA::tk_alias, // typecode kind for typedefs
-                248, // encapsulation length
-                  TAO_ENCAP_BYTE_ORDER, // byte order
-                  23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
-                  5, 0x4e616d65, 0x0,  // name = Name
-                  CORBA::tk_sequence, // typecode kind
-                  212, // encapsulation length
-                  TAO_ENCAP_BYTE_ORDER, // byte order
-                                    CORBA::tk_struct, // typecode kind
-                  196, // encapsulation length
-                    TAO_ENCAP_BYTE_ORDER, // byte order
-                    32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
-                    14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
-                    2, // member count
-                      3, 0x69640000,  // name = id
-                      CORBA::tk_alias, // typecode kind for typedefs
-                      48, // encapsulation length
-                        TAO_ENCAP_BYTE_ORDER, // byte order
-                        26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                        8, 0x49737472, 0x696e6700,  // name = Istring
-                        CORBA::tk_string, 
-                        0, // string length
-                                                5, 0x6b696e64, 0x0,  // name = kind
-                        CORBA::tk_alias, // typecode kind for typedefs
-                        48, // encapsulation length
-                          TAO_ENCAP_BYTE_ORDER, // byte order
-                          26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                          8, 0x49737472, 0x696e6700,  // name = Istring
-                          CORBA::tk_string, 
-                          0, // string length
-                                                                      0,
-                      13, 0x62696e64, 0x696e675f, 0x74797065, 0x0,  // name = binding_type
-                      CORBA::tk_enum, // typecode kind
-                      88, // encapsulation length
-                      TAO_ENCAP_BYTE_ORDER, // byte order
-                      30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67547970, 0x653a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingType:1.0
-                      12, 0x42696e64, 0x696e6754, 0x79706500,  // name = BindingType
-                      2, // member count
-                        8, 0x6e6f626a, 0x65637400,  // name = nobject
-                        9, 0x6e636f6e, 0x74657874, 0x0,  // name = ncontext
-                  };
-                  static CORBA::TypeCode _tc__tc_CosNaming_Binding (CORBA::tk_struct, sizeof (_oc_CosNaming_Binding), (unsigned char *) &_oc_CosNaming_Binding, CORBA::B_FALSE);
-                  CORBA::TypeCode_ptr CosNaming::_tc_Binding = &_tc__tc_CosNaming_Binding;
+static const CORBA::Long _oc_CosNaming_NamingContext_InvalidName[] =
+{
+  0, // byte order
+  44, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x496e7661, 0x6c69644e, 0x616d653a, 0x312e3000,  // repository ID = IDL:CosNaming/NamingContext/InvalidName:1.0
+  12, 0x496e7661, 0x6c69644e, 0x616d6500,  // name = InvalidName
+  0, // member count
+};
+static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_InvalidName (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_InvalidName), (unsigned char *) &_oc_CosNaming_NamingContext_InvalidName, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_InvalidName = &_tc__tc_CosNaming_NamingContext_InvalidName;
 
-// *************************************************************
-                  // class CosNaming::_tao__seq_BindingList
-                  // *************************************************************
+static const CORBA::Long _oc_CosNaming_NamingContext_AlreadyBound[] =
+{
+  0, // byte order
+  45, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x416c7265, 0x61647942, 0x6f756e64, 0x3a312e30, 0x0,  // repository ID = IDL:CosNaming/NamingContext/AlreadyBound:1.0
+  13, 0x416c7265, 0x61647942, 0x6f756e64, 0x0,  // name = AlreadyBound
+  0, // member count
+};
+static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_AlreadyBound (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_AlreadyBound), (unsigned char *) &_oc_CosNaming_NamingContext_AlreadyBound, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_AlreadyBound = &_tc__tc_CosNaming_NamingContext_AlreadyBound;
 
-                  // copy constructor
-                  CosNaming::_tao__seq_BindingList::_tao__seq_BindingList (const CosNaming::_tao__seq_BindingList &seq)
-                  	: maximum_ (seq.maximum_),
-                  	  length_ (seq.length_),
-                  	  buffer_ (CosNaming::_tao__seq_BindingList::allocbuf (seq.maximum_)),
-                  	  release_ (1) // we always own it
-                  {
-                    for (CORBA::ULong i=0; i < seq.length_; i++)
-                    	this->buffer_[i] = seq.buffer_[i];
-                  }
+static const CORBA::Long _oc_CosNaming_NamingContext_NotEmpty[] =
+{
+  0, // byte order
+  41, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x4e6f7445, 0x6d707479, 0x3a312e30, 0x0,  // repository ID = IDL:CosNaming/NamingContext/NotEmpty:1.0
+  9, 0x4e6f7445, 0x6d707479, 0x0,  // name = NotEmpty
+  0, // member count
+};
+static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_NotEmpty (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_NotEmpty), (unsigned char *) &_oc_CosNaming_NamingContext_NotEmpty, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_NotEmpty = &_tc__tc_CosNaming_NamingContext_NotEmpty;
 
-                  // destructor
-                  CosNaming::_tao__seq_BindingList::~_tao__seq_BindingList (void)
-                  {
-                    if (this->release_) // we own the buffer
-                    {
-                      CosNaming::_tao__seq_BindingList::freebuf (this->buffer_);
-                    }
-                  }
+static const TAO_Param_Data CosNaming_NamingContext_bind_paramdata [] = 
+{
+  {CORBA::_tc_void, PARAM_RETURN, 0},
+  {CosNaming::_tc_Name, PARAM_IN, 0},
+  {CORBA::_tc_Object, PARAM_IN, 0}
+};
 
-                  // assignment operator
-                  CosNaming::_tao__seq_BindingList& 
-                  CosNaming::_tao__seq_BindingList::operator= (const CosNaming::_tao__seq_BindingList &seq)
-                  {
-                    if (this == &seq) return *this;
-                    if (this->release_)
-                    {
-                      CosNaming::_tao__seq_BindingList::freebuf (this->buffer_);
-                    }
-                    this->length_ = seq.length_;
-                    this->maximum_ = seq.maximum_;
-                    this->buffer_ = CosNaming::_tao__seq_BindingList::allocbuf (seq.maximum_),
-                    this->release_ =1; // we always own it
-                    for (CORBA::ULong i=0; i < seq.length_; i++)
-                    	this->buffer_[i] = seq.buffer_[i];
-                    return *this;
-                  }
+static const TAO_Call_Data CosNaming_NamingContext_bind_calldata = 
+{"bind", 1, 3, CosNaming_NamingContext_bind_paramdata, 0, 0};
 
-                  void
-                  CosNaming::_tao__seq_BindingList::length (CORBA::ULong length)
-                  {
-                    if (length > this->maximum_)
-                    {
-                      CosNaming::Binding *tmp = CosNaming::_tao__seq_BindingList::allocbuf (length);
-                      if (tmp == 0)
-                                              return;
-                      for (int i = 0; i < this->length_; ++i)
-                      {
-                        tmp[i] = this->buffer_[i];
-                      }
-                      if (this->release_)
-                        CosNaming::_tao__seq_BindingList::freebuf (this->buffer_);
-                      this->buffer_ = tmp;
-                      this->release_ = 1;
+void  CosNaming::NamingContext::bind (const CosNaming::Name & n, CORBA::Object_ptr  obj, CORBA::Environment &env)
+{
+  STUB_Object *istub;
 
-                      this->length_ = length;
-this->maximum_ = length;
-                    }
-                  }
-
-                  static const CORBA::Long _oc_CosNaming__tao__seq_BindingList[] =
-                  {
-                    TAO_ENCAP_BYTE_ORDER, // byte order
-                                        CORBA::tk_struct, // typecode kind
-                    444, // encapsulation length
-                      TAO_ENCAP_BYTE_ORDER, // byte order
-                      26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Binding:1.0
-                      8, 0x42696e64, 0x696e6700,  // name = Binding
-                      2, // member count
-                        13, 0x62696e64, 0x696e675f, 0x6e616d65, 0x0,  // name = binding_name
-                        CORBA::tk_alias, // typecode kind for typedefs
-                        248, // encapsulation length
-                          TAO_ENCAP_BYTE_ORDER, // byte order
-                          23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
-                          5, 0x4e616d65, 0x0,  // name = Name
-                          CORBA::tk_sequence, // typecode kind
-                          212, // encapsulation length
-                          TAO_ENCAP_BYTE_ORDER, // byte order
-                                                    CORBA::tk_struct, // typecode kind
-                          196, // encapsulation length
-                            TAO_ENCAP_BYTE_ORDER, // byte order
-                            32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
-                            14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
-                            2, // member count
-                              3, 0x69640000,  // name = id
-                              CORBA::tk_alias, // typecode kind for typedefs
-                              48, // encapsulation length
-                                TAO_ENCAP_BYTE_ORDER, // byte order
-                                26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                                8, 0x49737472, 0x696e6700,  // name = Istring
-                                CORBA::tk_string, 
-                                0, // string length
-                                                                5, 0x6b696e64, 0x0,  // name = kind
-                                CORBA::tk_alias, // typecode kind for typedefs
-                                48, // encapsulation length
-                                  TAO_ENCAP_BYTE_ORDER, // byte order
-                                  26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                                  8, 0x49737472, 0x696e6700,  // name = Istring
-                                  CORBA::tk_string, 
-                                  0, // string length
-                                                                                              0,
-                              13, 0x62696e64, 0x696e675f, 0x74797065, 0x0,  // name = binding_type
-                              CORBA::tk_enum, // typecode kind
-                              88, // encapsulation length
-                              TAO_ENCAP_BYTE_ORDER, // byte order
-                              30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67547970, 0x653a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingType:1.0
-                              12, 0x42696e64, 0x696e6754, 0x79706500,  // name = BindingType
-                              2, // member count
-                                8, 0x6e6f626a, 0x65637400,  // name = nobject
-                                9, 0x6e636f6e, 0x74657874, 0x0,  // name = ncontext
-                                                    0,
-                        };
-                        static CORBA::TypeCode _tc__tc_CosNaming__tao__seq_BindingList (CORBA::tk_sequence, sizeof (_oc_CosNaming__tao__seq_BindingList), (unsigned char *) &_oc_CosNaming__tao__seq_BindingList, CORBA::B_FALSE);
-                        CORBA::TypeCode_ptr CosNaming::_tc__tao__seq_BindingList = &_tc__tc_CosNaming__tao__seq_BindingList;
-
-                        static const CORBA::Long _oc_CosNaming_BindingList[] =
-                        {
-                          TAO_ENCAP_BYTE_ORDER, // byte order
-                          30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x674c6973, 0x743a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingList:1.0
-                          12, 0x42696e64, 0x696e674c, 0x69737400,  // name = BindingList
-                          CORBA::tk_sequence, // typecode kind
-                          460, // encapsulation length
-                          TAO_ENCAP_BYTE_ORDER, // byte order
-                                                    CORBA::tk_struct, // typecode kind
-                          444, // encapsulation length
-                            TAO_ENCAP_BYTE_ORDER, // byte order
-                            26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Binding:1.0
-                            8, 0x42696e64, 0x696e6700,  // name = Binding
-                            2, // member count
-                              13, 0x62696e64, 0x696e675f, 0x6e616d65, 0x0,  // name = binding_name
-                              CORBA::tk_alias, // typecode kind for typedefs
-                              248, // encapsulation length
-                                TAO_ENCAP_BYTE_ORDER, // byte order
-                                23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
-                                5, 0x4e616d65, 0x0,  // name = Name
-                                CORBA::tk_sequence, // typecode kind
-                                212, // encapsulation length
-                                TAO_ENCAP_BYTE_ORDER, // byte order
-                                                                CORBA::tk_struct, // typecode kind
-                                196, // encapsulation length
-                                  TAO_ENCAP_BYTE_ORDER, // byte order
-                                  32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
-                                  14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
-                                  2, // member count
-                                    3, 0x69640000,  // name = id
-                                    CORBA::tk_alias, // typecode kind for typedefs
-                                    48, // encapsulation length
-                                      TAO_ENCAP_BYTE_ORDER, // byte order
-                                      26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                                      8, 0x49737472, 0x696e6700,  // name = Istring
-                                      CORBA::tk_string, 
-                                      0, // string length
-                                                                            5, 0x6b696e64, 0x0,  // name = kind
-                                      CORBA::tk_alias, // typecode kind for typedefs
-                                      48, // encapsulation length
-                                        TAO_ENCAP_BYTE_ORDER, // byte order
-                                        26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                                        8, 0x49737472, 0x696e6700,  // name = Istring
-                                        CORBA::tk_string, 
-                                        0, // string length
-                                                                                                                0,
-                                    13, 0x62696e64, 0x696e675f, 0x74797065, 0x0,  // name = binding_type
-                                    CORBA::tk_enum, // typecode kind
-                                    88, // encapsulation length
-                                    TAO_ENCAP_BYTE_ORDER, // byte order
-                                    30, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67547970, 0x653a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingType:1.0
-                                    12, 0x42696e64, 0x696e6754, 0x79706500,  // name = BindingType
-                                    2, // member count
-                                      8, 0x6e6f626a, 0x65637400,  // name = nobject
-                                      9, 0x6e636f6e, 0x74657874, 0x0,  // name = ncontext
-                                                                0,
-                              };
-                              static CORBA::TypeCode _tc__tc_CosNaming_BindingList (CORBA::tk_alias, sizeof (_oc_CosNaming_BindingList), (unsigned char *) &_oc_CosNaming_BindingList, CORBA::B_FALSE);
-                              CORBA::TypeCode_ptr CosNaming::_tc_BindingList = &_tc__tc_CosNaming_BindingList;
-
-                              CosNaming::NamingContext_ptr CosNaming::NamingContext::_duplicate (CosNaming::NamingContext_ptr obj)
-                              {
-                                if (!CORBA::is_nil (obj))
-                                  obj->AddRef ();
-                                
-                                return obj;
-                              } // end of _duplicate
-                              
-                              CosNaming::NamingContext_ptr CosNaming::NamingContext::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
-                              {
-                                if (CORBA::is_nil (obj)) return CosNaming::NamingContext::_nil ();
-                                if (obj->_is_a ("IDL:CosNaming/NamingContext:1.0", env))
-                                {
-                                  STUB_Object *istub;
-                                  CosNaming::NamingContext_ptr new_obj; // to be returned 
-                                  if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                    return CosNaming::NamingContext::_nil ();
-                                  
-                                  obj->Release (); // need this since QueryIntf bumped our refcount
-                                  new_obj = new CosNaming::NamingContext (istub); // construct obj ref using the stub object
-                                  return new_obj;
-                                } // end of if
-                                return CosNaming::NamingContext::_nil (); // _narrow failed
-                              } // end of _narrow
-                              
-                              CosNaming::NamingContext_ptr CosNaming::NamingContext::_nil (void)
-                              {
-                                return (CosNaming::NamingContext_ptr)NULL;
-                              } // end of _nil
-                              
-                              CosNaming::NamingContext_ptr CosNaming::NamingContext::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-                              {
-                                CORBA::Object_ptr objref = CORBA::Object::_nil ();
-                                IIOP_Object *data = new IIOP_Object (host, port, key);
-                                if (!data) return CosNaming::NamingContext::_nil ();
-                                // get the object_ptr using Query Interface
-                                if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != NOERROR)
-                                {
-                                	env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                	return CosNaming::NamingContext::_nil ();
-                                }
-                                data->Release (); // QueryInterface had bumped up our count
-                                if (CORBA::is_nil (objref))
-                                	return CosNaming::NamingContext::_nil ();
-                                else // narrow it
-                                	return CosNaming::NamingContext::_narrow (objref, env);
-                              }
-
-                              
-                              static const CORBA::Long _oc_CosNaming_NamingContext_NotFoundReason[] =
-                              {
-                                TAO_ENCAP_BYTE_ORDER, // byte order
-                                47, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x4e6f7446, 0x6f756e64, 0x52656173, 0x6f6e3a31, 0x2e300000,  // repository ID = IDL:CosNaming/NamingContext/NotFoundReason:1.0
-                                15, 0x4e6f7446, 0x6f756e64, 0x52656173, 0x6f6e0000,  // name = NotFoundReason
-                                3, // member count
-                                  13, 0x6d697373, 0x696e675f, 0x6e6f6465, 0x0,  // name = missing_node
-                                  12, 0x6e6f745f, 0x636f6e74, 0x65787400,  // name = not_context
-                                  11, 0x6e6f745f, 0x6f626a65, 0x63740000,  // name = not_object
-                              };
-                              static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_NotFoundReason (CORBA::tk_enum, sizeof (_oc_CosNaming_NamingContext_NotFoundReason), (unsigned char *) &_oc_CosNaming_NamingContext_NotFoundReason, CORBA::B_FALSE);
-                              CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_NotFoundReason = &_tc__tc_CosNaming_NamingContext_NotFoundReason;
-
-                              static const CORBA::Long _oc_CosNaming_NamingContext_NotFound[] =
-                              {
-                                0, // byte order
-                                41, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x4e6f7446, 0x6f756e64, 0x3a312e30, 0x0,  // repository ID = IDL:CosNaming/NamingContext/NotFound:1.0
-                                9, 0x4e6f7446, 0x6f756e64, 0x0,  // name = NotFound
-                                2, // member count
-                                  4, 0x77687900,  // name = why
-                                  CORBA::tk_enum, // typecode kind
-                                  132, // encapsulation length
-                                  TAO_ENCAP_BYTE_ORDER, // byte order
-                                  47, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x4e6f7446, 0x6f756e64, 0x52656173, 0x6f6e3a31, 0x2e300000,  // repository ID = IDL:CosNaming/NamingContext/NotFoundReason:1.0
-                                  15, 0x4e6f7446, 0x6f756e64, 0x52656173, 0x6f6e0000,  // name = NotFoundReason
-                                  3, // member count
-                                    13, 0x6d697373, 0x696e675f, 0x6e6f6465, 0x0,  // name = missing_node
-                                    12, 0x6e6f745f, 0x636f6e74, 0x65787400,  // name = not_context
-                                    11, 0x6e6f745f, 0x6f626a65, 0x63740000,  // name = not_object
-                                  13, 0x72657374, 0x5f6f665f, 0x6e616d65, 0x0,  // name = rest_of_name
-                                  CORBA::tk_alias, // typecode kind for typedefs
-                                  248, // encapsulation length
-                                    TAO_ENCAP_BYTE_ORDER, // byte order
-                                    23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
-                                    5, 0x4e616d65, 0x0,  // name = Name
-                                    CORBA::tk_sequence, // typecode kind
-                                    212, // encapsulation length
-                                    TAO_ENCAP_BYTE_ORDER, // byte order
-                                                                        CORBA::tk_struct, // typecode kind
-                                    196, // encapsulation length
-                                      TAO_ENCAP_BYTE_ORDER, // byte order
-                                      32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
-                                      14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
-                                      2, // member count
-                                        3, 0x69640000,  // name = id
-                                        CORBA::tk_alias, // typecode kind for typedefs
-                                        48, // encapsulation length
-                                          TAO_ENCAP_BYTE_ORDER, // byte order
-                                          26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                                          8, 0x49737472, 0x696e6700,  // name = Istring
-                                          CORBA::tk_string, 
-                                          0, // string length
-                                                                                    5, 0x6b696e64, 0x0,  // name = kind
-                                          CORBA::tk_alias, // typecode kind for typedefs
-                                          48, // encapsulation length
-                                            TAO_ENCAP_BYTE_ORDER, // byte order
-                                            26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                                            8, 0x49737472, 0x696e6700,  // name = Istring
-                                            CORBA::tk_string, 
-                                            0, // string length
-                                                                                                                            0,
-                                    };
-                                    static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_NotFound (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_NotFound), (unsigned char *) &_oc_CosNaming_NamingContext_NotFound, CORBA::B_FALSE);
-                                    CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_NotFound = &_tc__tc_CosNaming_NamingContext_NotFound;
-
-                                    static const CORBA::Long _oc_CosNaming_NamingContext_CannotProceed[] =
-                                    {
-                                      0, // byte order
-                                      46, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x43616e6e, 0x6f745072, 0x6f636565, 0x643a312e, 0x30000000,  // repository ID = IDL:CosNaming/NamingContext/CannotProceed:1.0
-                                      14, 0x43616e6e, 0x6f745072, 0x6f636565, 0x64000000,  // name = CannotProceed
-                                      2, // member count
-                                        4, 0x63787400,  // name = cxt
-                                        CORBA::tk_objref, // typecode kind
-                                        68, // encapsulation length
-                                        TAO_ENCAP_BYTE_ORDER, // byte order
-                                        32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578743a, 0x312e3000,  // repository ID = IDL:CosNaming/NamingContext:1.0
-                                        14, 0x4e616d69, 0x6e67436f, 0x6e746578, 0x74000000,  // name = NamingContext,
-                                        13, 0x72657374, 0x5f6f665f, 0x6e616d65, 0x0,  // name = rest_of_name
-                                        CORBA::tk_alias, // typecode kind for typedefs
-                                        248, // encapsulation length
-                                          TAO_ENCAP_BYTE_ORDER, // byte order
-                                          23, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d653a31, 0x2e300000,  // repository ID = IDL:CosNaming/Name:1.0
-                                          5, 0x4e616d65, 0x0,  // name = Name
-                                          CORBA::tk_sequence, // typecode kind
-                                          212, // encapsulation length
-                                          TAO_ENCAP_BYTE_ORDER, // byte order
-                                                                                    CORBA::tk_struct, // typecode kind
-                                          196, // encapsulation length
-                                            TAO_ENCAP_BYTE_ORDER, // byte order
-                                            32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d65436f, 0x6d706f6e, 0x656e743a, 0x312e3000,  // repository ID = IDL:CosNaming/NameComponent:1.0
-                                            14, 0x4e616d65, 0x436f6d70, 0x6f6e656e, 0x74000000,  // name = NameComponent
-                                            2, // member count
-                                              3, 0x69640000,  // name = id
-                                              CORBA::tk_alias, // typecode kind for typedefs
-                                              48, // encapsulation length
-                                                TAO_ENCAP_BYTE_ORDER, // byte order
-                                                26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                                                8, 0x49737472, 0x696e6700,  // name = Istring
-                                                CORBA::tk_string, 
-                                                0, // string length
-                                                                                                5, 0x6b696e64, 0x0,  // name = kind
-                                                CORBA::tk_alias, // typecode kind for typedefs
-                                                48, // encapsulation length
-                                                  TAO_ENCAP_BYTE_ORDER, // byte order
-                                                  26, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4973, 0x7472696e, 0x673a312e, 0x30000000,  // repository ID = IDL:CosNaming/Istring:1.0
-                                                  8, 0x49737472, 0x696e6700,  // name = Istring
-                                                  CORBA::tk_string, 
-                                                  0, // string length
-                                                                                                                                              0,
-                                          };
-                                          static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_CannotProceed (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_CannotProceed), (unsigned char *) &_oc_CosNaming_NamingContext_CannotProceed, CORBA::B_FALSE);
-                                          CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_CannotProceed = &_tc__tc_CosNaming_NamingContext_CannotProceed;
-
-                                          static const CORBA::Long _oc_CosNaming_NamingContext_InvalidName[] =
-                                          {
-                                            0, // byte order
-                                            44, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x496e7661, 0x6c69644e, 0x616d653a, 0x312e3000,  // repository ID = IDL:CosNaming/NamingContext/InvalidName:1.0
-                                            12, 0x496e7661, 0x6c69644e, 0x616d6500,  // name = InvalidName
-                                            0, // member count
-                                          };
-                                          static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_InvalidName (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_InvalidName), (unsigned char *) &_oc_CosNaming_NamingContext_InvalidName, CORBA::B_FALSE);
-                                          CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_InvalidName = &_tc__tc_CosNaming_NamingContext_InvalidName;
-
-                                          static const CORBA::Long _oc_CosNaming_NamingContext_AlreadyBound[] =
-                                          {
-                                            0, // byte order
-                                            45, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x416c7265, 0x61647942, 0x6f756e64, 0x3a312e30, 0x0,  // repository ID = IDL:CosNaming/NamingContext/AlreadyBound:1.0
-                                            13, 0x416c7265, 0x61647942, 0x6f756e64, 0x0,  // name = AlreadyBound
-                                            0, // member count
-                                          };
-                                          static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_AlreadyBound (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_AlreadyBound), (unsigned char *) &_oc_CosNaming_NamingContext_AlreadyBound, CORBA::B_FALSE);
-                                          CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_AlreadyBound = &_tc__tc_CosNaming_NamingContext_AlreadyBound;
-
-                                          static const CORBA::Long _oc_CosNaming_NamingContext_NotEmpty[] =
-                                          {
-                                            0, // byte order
-                                            41, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578742f, 0x4e6f7445, 0x6d707479, 0x3a312e30, 0x0,  // repository ID = IDL:CosNaming/NamingContext/NotEmpty:1.0
-                                            9, 0x4e6f7445, 0x6d707479, 0x0,  // name = NotEmpty
-                                            0, // member count
-                                          };
-                                          static CORBA::TypeCode _tc__tc_CosNaming_NamingContext_NotEmpty (CORBA::tk_struct, sizeof (_oc_CosNaming_NamingContext_NotEmpty), (unsigned char *) &_oc_CosNaming_NamingContext_NotEmpty, CORBA::B_FALSE);
-                                          CORBA::TypeCode_ptr CosNaming::NamingContext::_tc_NotEmpty = &_tc__tc_CosNaming_NamingContext_NotEmpty;
-
-                                          static const TAO_Param_Data CosNaming_NamingContext_bind_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_void, PARAM_RETURN, 0},
-                                            {CosNaming::_tc_Name, PARAM_IN, 0},
-                                            {CORBA::_tc_Object, PARAM_IN, 0}
-                                          };
-
-                                          static const TAO_Call_Data CosNaming_NamingContext_bind_calldata = 
-                                          {"bind", 1, 3, CosNaming_NamingContext_bind_paramdata, 0, 0};
-
-                                          void  CosNaming::NamingContext::bind (const CosNaming::Name & n, CORBA::Object_ptr  obj, CORBA::Environment &env)
-                                          {
-                                            STUB_Object *istub;
-
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_bind_calldata, 0, &n, &obj);
-                                            return; // no value
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_bind_calldata, 0, &n, &obj);
+  return; // no value
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_NamingContext_rebind_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_void, PARAM_RETURN, 0},
-                                            {CosNaming::_tc_Name, PARAM_IN, 0},
-                                            {CORBA::_tc_Object, PARAM_IN, 0}
-                                          };
+static const TAO_Param_Data CosNaming_NamingContext_rebind_paramdata [] = 
+{
+  {CORBA::_tc_void, PARAM_RETURN, 0},
+  {CosNaming::_tc_Name, PARAM_IN, 0},
+  {CORBA::_tc_Object, PARAM_IN, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_NamingContext_rebind_calldata = 
-                                          {"rebind", 1, 3, CosNaming_NamingContext_rebind_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_NamingContext_rebind_calldata = 
+{"rebind", 1, 3, CosNaming_NamingContext_rebind_paramdata, 0, 0};
 
-                                          void  CosNaming::NamingContext::rebind (const CosNaming::Name & n, CORBA::Object_ptr  obj, CORBA::Environment &env)
-                                          {
-                                            STUB_Object *istub;
+void  CosNaming::NamingContext::rebind (const CosNaming::Name & n, CORBA::Object_ptr  obj, CORBA::Environment &env)
+{
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_rebind_calldata, 0, &n, &obj);
-                                            return; // no value
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_rebind_calldata, 0, &n, &obj);
+  return; // no value
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_NamingContext_bind_context_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_void, PARAM_RETURN, 0},
-                                            {CosNaming::_tc_Name, PARAM_IN, 0},
-                                            {CosNaming::_tc_NamingContext, PARAM_IN, 0}
-                                          };
+static const TAO_Param_Data CosNaming_NamingContext_bind_context_paramdata [] = 
+{
+  {CORBA::_tc_void, PARAM_RETURN, 0},
+  {CosNaming::_tc_Name, PARAM_IN, 0},
+  {CosNaming::_tc_NamingContext, PARAM_IN, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_NamingContext_bind_context_calldata = 
-                                          {"bind_context", 1, 3, CosNaming_NamingContext_bind_context_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_NamingContext_bind_context_calldata = 
+{"bind_context", 1, 3, CosNaming_NamingContext_bind_context_paramdata, 0, 0};
 
-                                          void  CosNaming::NamingContext::bind_context (const CosNaming::Name & n, CosNaming::NamingContext_ptr  nc, CORBA::Environment &env)
-                                          {
-                                            STUB_Object *istub;
+void  CosNaming::NamingContext::bind_context (const CosNaming::Name & n, CosNaming::NamingContext_ptr  nc, CORBA::Environment &env)
+{
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_bind_context_calldata, 0, &n, &nc);
-                                            return; // no value
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_bind_context_calldata, 0, &n, &nc);
+  return; // no value
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_NamingContext_rebind_context_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_void, PARAM_RETURN, 0},
-                                            {CosNaming::_tc_Name, PARAM_IN, 0},
-                                            {CosNaming::_tc_NamingContext, PARAM_IN, 0}
-                                          };
+static const TAO_Param_Data CosNaming_NamingContext_rebind_context_paramdata [] = 
+{
+  {CORBA::_tc_void, PARAM_RETURN, 0},
+  {CosNaming::_tc_Name, PARAM_IN, 0},
+  {CosNaming::_tc_NamingContext, PARAM_IN, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_NamingContext_rebind_context_calldata = 
-                                          {"rebind_context", 1, 3, CosNaming_NamingContext_rebind_context_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_NamingContext_rebind_context_calldata = 
+{"rebind_context", 1, 3, CosNaming_NamingContext_rebind_context_paramdata, 0, 0};
 
-                                          void  CosNaming::NamingContext::rebind_context (const CosNaming::Name & n, CosNaming::NamingContext_ptr  nc, CORBA::Environment &env)
-                                          {
-                                            STUB_Object *istub;
+void  CosNaming::NamingContext::rebind_context (const CosNaming::Name & n, CosNaming::NamingContext_ptr  nc, CORBA::Environment &env)
+{
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_rebind_context_calldata, 0, &n, &nc);
-                                            return; // no value
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_rebind_context_calldata, 0, &n, &nc);
+  return; // no value
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_NamingContext_resolve_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_Object, PARAM_RETURN, 0},
-                                            {CosNaming::_tc_Name, PARAM_IN, 0}
-                                          };
+static const TAO_Param_Data CosNaming_NamingContext_resolve_paramdata [] = 
+{
+  {CORBA::_tc_Object, PARAM_RETURN, 0},
+  {CosNaming::_tc_Name, PARAM_IN, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_NamingContext_resolve_calldata = 
-                                          {"resolve", 1, 2, CosNaming_NamingContext_resolve_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_NamingContext_resolve_calldata = 
+{"resolve", 1, 2, CosNaming_NamingContext_resolve_paramdata, 0, 0};
 
-                                          CORBA::Object_ptr  CosNaming::NamingContext::resolve (const CosNaming::Name & n, CORBA::Environment &env)
-                                          {
-                                            CORBA::Object_ptr retval;
-                                            STUB_Object *istub;
+CORBA::Object_ptr  CosNaming::NamingContext::resolve (const CosNaming::Name & n, CORBA::Environment &env)
+{
+  CORBA::Object_ptr retval;
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return 0;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_resolve_calldata, &retval, &n);
-                                            return retval;
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return 0;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_resolve_calldata, &retval, &n);
+  return retval;
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_NamingContext_unbind_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_void, PARAM_RETURN, 0},
-                                            {CosNaming::_tc_Name, PARAM_IN, 0}
-                                          };
+static const TAO_Param_Data CosNaming_NamingContext_unbind_paramdata [] = 
+{
+  {CORBA::_tc_void, PARAM_RETURN, 0},
+  {CosNaming::_tc_Name, PARAM_IN, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_NamingContext_unbind_calldata = 
-                                          {"unbind", 1, 2, CosNaming_NamingContext_unbind_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_NamingContext_unbind_calldata = 
+{"unbind", 1, 2, CosNaming_NamingContext_unbind_paramdata, 0, 0};
 
-                                          void  CosNaming::NamingContext::unbind (const CosNaming::Name & n, CORBA::Environment &env)
-                                          {
-                                            STUB_Object *istub;
+void  CosNaming::NamingContext::unbind (const CosNaming::Name & n, CORBA::Environment &env)
+{
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_unbind_calldata, 0, &n);
-                                            return; // no value
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_unbind_calldata, 0, &n);
+  return; // no value
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_NamingContext_new_context_paramdata [] = 
-                                          {
-                                            {CosNaming::_tc_NamingContext, PARAM_RETURN, 0}
-                                          };
+static const TAO_Param_Data CosNaming_NamingContext_new_context_paramdata [] = 
+{
+  {CosNaming::_tc_NamingContext, PARAM_RETURN, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_NamingContext_new_context_calldata = 
-                                          {"new_context", 1, 1, CosNaming_NamingContext_new_context_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_NamingContext_new_context_calldata = 
+{"new_context", 1, 1, CosNaming_NamingContext_new_context_paramdata, 0, 0};
 
-                                          CosNaming::NamingContext_ptr  CosNaming::NamingContext::new_context (CORBA::Environment &env)
-                                          {
-                                            CORBA::Object_ptr retval = CORBA::Object::_nil ();
-                                            STUB_Object *istub;
+CosNaming::NamingContext_ptr  CosNaming::NamingContext::new_context (CORBA::Environment &env)
+{
+  CORBA::Object_ptr retval = CORBA::Object::_nil ();
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return CosNaming::NamingContext::_nil ();
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_new_context_calldata, &retval);
-                                            return CosNaming::NamingContext::_narrow (retval, env);
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return CosNaming::NamingContext::_nil ();
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_new_context_calldata, &retval);
+  return CosNaming::NamingContext::_narrow (retval, env);
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_NamingContext_bind_new_context_paramdata [] = 
-                                          {
-                                            {CosNaming::_tc_NamingContext, PARAM_RETURN, 0},
-                                            {CosNaming::_tc_Name, PARAM_IN, 0}
-                                          };
+static const TAO_Param_Data CosNaming_NamingContext_bind_new_context_paramdata [] = 
+{
+  {CosNaming::_tc_NamingContext, PARAM_RETURN, 0},
+  {CosNaming::_tc_Name, PARAM_IN, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_NamingContext_bind_new_context_calldata = 
-                                          {"bind_new_context", 1, 2, CosNaming_NamingContext_bind_new_context_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_NamingContext_bind_new_context_calldata = 
+{"bind_new_context", 1, 2, CosNaming_NamingContext_bind_new_context_paramdata, 0, 0};
 
-                                          CosNaming::NamingContext_ptr  CosNaming::NamingContext::bind_new_context (const CosNaming::Name & n, CORBA::Environment &env)
-                                          {
-                                            CORBA::Object_ptr retval = CORBA::Object::_nil ();
-                                            STUB_Object *istub;
+CosNaming::NamingContext_ptr  CosNaming::NamingContext::bind_new_context (const CosNaming::Name & n, CORBA::Environment &env)
+{
+  CORBA::Object_ptr retval = CORBA::Object::_nil ();
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return CosNaming::NamingContext::_nil ();
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_bind_new_context_calldata, &retval, &n);
-                                            return CosNaming::NamingContext::_narrow (retval, env);
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return CosNaming::NamingContext::_nil ();
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_bind_new_context_calldata, &retval, &n);
+  return CosNaming::NamingContext::_narrow (retval, env);
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_NamingContext_destroy_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_void, PARAM_RETURN, 0}
-                                          };
+static const TAO_Param_Data CosNaming_NamingContext_destroy_paramdata [] = 
+{
+  {CORBA::_tc_void, PARAM_RETURN, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_NamingContext_destroy_calldata = 
-                                          {"destroy", 1, 1, CosNaming_NamingContext_destroy_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_NamingContext_destroy_calldata = 
+{"destroy", 1, 1, CosNaming_NamingContext_destroy_paramdata, 0, 0};
 
-                                          void  CosNaming::NamingContext::destroy (CORBA::Environment &env)
-                                          {
-                                            STUB_Object *istub;
+void  CosNaming::NamingContext::destroy (CORBA::Environment &env)
+{
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_destroy_calldata, 0);
-                                            return; // no value
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_destroy_calldata, 0);
+  return; // no value
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_NamingContext_list_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_void, PARAM_RETURN, 0},
-                                            {CORBA::_tc_ulong, PARAM_IN, 0},
-                                            {CosNaming::_tc_BindingList, PARAM_OUT, 0},
-                                            {CosNaming::_tc_BindingIterator, PARAM_OUT, 0}
-                                          };
+static const TAO_Param_Data CosNaming_NamingContext_list_paramdata [] = 
+{
+  {CORBA::_tc_void, PARAM_RETURN, 0},
+  {CORBA::_tc_ulong, PARAM_IN, 0},
+  {CosNaming::_tc_BindingList, PARAM_OUT, 0},
+  {CosNaming::_tc_BindingIterator, PARAM_OUT, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_NamingContext_list_calldata = 
-                                          {"list", 1, 4, CosNaming_NamingContext_list_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_NamingContext_list_calldata = 
+{"list", 1, 4, CosNaming_NamingContext_list_paramdata, 0, 0};
 
-                                          void  CosNaming::NamingContext::list (CORBA::ULong how_many, CosNaming::BindingList_out bl, CosNaming::BindingIterator_out  bi, CORBA::Environment &env)
-                                          {
-                                            STUB_Object *istub;
+void  CosNaming::NamingContext::list (CORBA::ULong how_many, CosNaming::BindingList_out bl, CosNaming::BindingIterator_out  bi, CORBA::Environment &env)
+{
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_NamingContext_list_calldata, 0, &how_many, &bl, &bi);
-                                            return; // no value
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_NamingContext_list_calldata, 0, &how_many, &bl, &bi);
+  return; // no value
+  
 }
 
-                                          static const CORBA::Long _oc_CosNaming_NamingContext[] =
-                                          {
-                                            TAO_ENCAP_BYTE_ORDER, // byte order
-                                            32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578743a, 0x312e3000,  // repository ID = IDL:CosNaming/NamingContext:1.0
-                                            14, 0x4e616d69, 0x6e67436f, 0x6e746578, 0x74000000,  // name = NamingContext,
-                                          };
-                                          static CORBA::TypeCode _tc__tc_CosNaming_NamingContext (CORBA::tk_objref, sizeof (_oc_CosNaming_NamingContext), (unsigned char *) &_oc_CosNaming_NamingContext, CORBA::B_FALSE);
-                                          CORBA::TypeCode_ptr CosNaming::_tc_NamingContext = &_tc__tc_CosNaming_NamingContext;
+static const CORBA::Long _oc_CosNaming_NamingContext[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  32, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4e61, 0x6d696e67, 0x436f6e74, 0x6578743a, 0x312e3000,  // repository ID = IDL:CosNaming/NamingContext:1.0
+  14, 0x4e616d69, 0x6e67436f, 0x6e746578, 0x74000000,  // name = NamingContext,
+};
+static CORBA::TypeCode _tc__tc_CosNaming_NamingContext (CORBA::tk_objref, sizeof (_oc_CosNaming_NamingContext), (unsigned char *) &_oc_CosNaming_NamingContext, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::_tc_NamingContext = &_tc__tc_CosNaming_NamingContext;
 
-                                          CosNaming::BindingIterator_ptr CosNaming::BindingIterator::_duplicate (CosNaming::BindingIterator_ptr obj)
-                                          {
-                                            if (!CORBA::is_nil (obj))
-                                              obj->AddRef ();
-                                            
-                                            return obj;
-                                          } // end of _duplicate
-                                          
-                                          CosNaming::BindingIterator_ptr CosNaming::BindingIterator::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
-                                          {
-                                            if (CORBA::is_nil (obj)) return CosNaming::BindingIterator::_nil ();
-                                            if (obj->_is_a ("IDL:CosNaming/BindingIterator:1.0", env))
-                                            {
-                                              STUB_Object *istub;
-                                              CosNaming::BindingIterator_ptr new_obj; // to be returned 
-                                              if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                                return CosNaming::BindingIterator::_nil ();
-                                              
-                                              obj->Release (); // need this since QueryIntf bumped our refcount
-                                              new_obj = new CosNaming::BindingIterator (istub); // construct obj ref using the stub object
-                                              return new_obj;
-                                            } // end of if
-                                            return CosNaming::BindingIterator::_nil (); // _narrow failed
-                                          } // end of _narrow
-                                          
-                                          CosNaming::BindingIterator_ptr CosNaming::BindingIterator::_nil (void)
-                                          {
-                                            return (CosNaming::BindingIterator_ptr)NULL;
-                                          } // end of _nil
-                                          
-                                          CosNaming::BindingIterator_ptr CosNaming::BindingIterator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
-                                          {
-                                            CORBA::Object_ptr objref = CORBA::Object::_nil ();
-                                            IIOP_Object *data = new IIOP_Object (host, port, key);
-                                            if (!data) return CosNaming::BindingIterator::_nil ();
-                                            // get the object_ptr using Query Interface
-                                            if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != NOERROR)
-                                            {
-                                            	env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                            	return CosNaming::BindingIterator::_nil ();
-                                            }
-                                            data->Release (); // QueryInterface had bumped up our count
-                                            if (CORBA::is_nil (objref))
-                                            	return CosNaming::BindingIterator::_nil ();
-                                            else // narrow it
-                                            	return CosNaming::BindingIterator::_narrow (objref, env);
-                                          }
+CosNaming::BindingIterator_ptr CosNaming::BindingIterator::_duplicate (CosNaming::BindingIterator_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->AddRef ();
+  
+  return obj;
+} // end of _duplicate
 
-                                          static const TAO_Param_Data CosNaming_BindingIterator_next_one_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_boolean, PARAM_RETURN, 0},
-                                            {CosNaming::_tc_Binding, PARAM_OUT, 0}
-                                          };
+CosNaming::BindingIterator_ptr CosNaming::BindingIterator::_narrow (CORBA::Object_ptr obj, CORBA::Environment &env)
+{
+  if (CORBA::is_nil (obj)) return CosNaming::BindingIterator::_nil ();
+  if (obj->_is_a ("IDL:CosNaming/BindingIterator:1.0", env))
+  {
+    STUB_Object *istub;
+    CosNaming::BindingIterator_ptr new_obj; // to be returned 
+    if (obj->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+      return CosNaming::BindingIterator::_nil ();
+    
+    obj->Release (); // need this since QueryIntf bumped our refcount
+    new_obj = new CosNaming::BindingIterator (istub); // construct obj ref using the stub object
+    return new_obj;
+  } // end of if
+  return CosNaming::BindingIterator::_nil (); // _narrow failed
+} // end of _narrow
 
-                                          static const TAO_Call_Data CosNaming_BindingIterator_next_one_calldata = 
-                                          {"next_one", 1, 2, CosNaming_BindingIterator_next_one_paramdata, 0, 0};
+CosNaming::BindingIterator_ptr CosNaming::BindingIterator::_nil (void)
+{
+  return (CosNaming::BindingIterator_ptr)NULL;
+} // end of _nil
 
-                                          CORBA::Boolean  CosNaming::BindingIterator::next_one (CosNaming::Binding_out b, CORBA::Environment &env)
-                                          {
-                                            CORBA::Boolean retval;
-                                            STUB_Object *istub;
-
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return retval;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_BindingIterator_next_one_calldata, &retval, &b);
-                                            return retval;
-                                            
+CosNaming::BindingIterator_ptr CosNaming::BindingIterator::_bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env)
+{
+  CORBA::Object_ptr objref = CORBA::Object::_nil ();
+  IIOP_Object *data = new IIOP_Object (host, port, key);
+  if (!data) return CosNaming::BindingIterator::_nil ();
+  // get the object_ptr using Query Interface
+  if (data->QueryInterface (IID_CORBA_Object, (void **)&objref) != NOERROR)
+  {
+  	env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+  	return CosNaming::BindingIterator::_nil ();
+  }
+  data->Release (); // QueryInterface had bumped up our count
+  if (CORBA::is_nil (objref))
+  	return CosNaming::BindingIterator::_nil ();
+  else // narrow it
+  	return CosNaming::BindingIterator::_narrow (objref, env);
 }
 
-                                          static const TAO_Param_Data CosNaming_BindingIterator_next_n_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_boolean, PARAM_RETURN, 0},
-                                            {CORBA::_tc_ulong, PARAM_IN, 0},
-                                            {CosNaming::_tc_BindingList, PARAM_OUT, 0}
-                                          };
+static const TAO_Param_Data CosNaming_BindingIterator_next_one_paramdata [] = 
+{
+  {CORBA::_tc_boolean, PARAM_RETURN, 0},
+  {CosNaming::_tc_Binding, PARAM_OUT, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_BindingIterator_next_n_calldata = 
-                                          {"next_n", 1, 3, CosNaming_BindingIterator_next_n_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_BindingIterator_next_one_calldata = 
+{"next_one", 1, 2, CosNaming_BindingIterator_next_one_paramdata, 0, 0};
 
-                                          CORBA::Boolean  CosNaming::BindingIterator::next_n (CORBA::ULong how_many, CosNaming::BindingList_out bl, CORBA::Environment &env)
-                                          {
-                                            CORBA::Boolean retval;
-                                            STUB_Object *istub;
+CORBA::Boolean  CosNaming::BindingIterator::next_one (CosNaming::Binding_out b, CORBA::Environment &env)
+{
+  CORBA::Boolean retval;
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return retval;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_BindingIterator_next_n_calldata, &retval, &how_many, &bl);
-                                            return retval;
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return retval;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_BindingIterator_next_one_calldata, &retval, &b);
+  return retval;
+  
 }
 
-                                          static const TAO_Param_Data CosNaming_BindingIterator_destroy_paramdata [] = 
-                                          {
-                                            {CORBA::_tc_void, PARAM_RETURN, 0}
-                                          };
+static const TAO_Param_Data CosNaming_BindingIterator_next_n_paramdata [] = 
+{
+  {CORBA::_tc_boolean, PARAM_RETURN, 0},
+  {CORBA::_tc_ulong, PARAM_IN, 0},
+  {CosNaming::_tc_BindingList, PARAM_OUT, 0}
+};
 
-                                          static const TAO_Call_Data CosNaming_BindingIterator_destroy_calldata = 
-                                          {"destroy", 1, 1, CosNaming_BindingIterator_destroy_paramdata, 0, 0};
+static const TAO_Call_Data CosNaming_BindingIterator_next_n_calldata = 
+{"next_n", 1, 3, CosNaming_BindingIterator_next_n_paramdata, 0, 0};
 
-                                          void  CosNaming::BindingIterator::destroy (CORBA::Environment &env)
-                                          {
-                                            STUB_Object *istub;
+CORBA::Boolean  CosNaming::BindingIterator::next_n (CORBA::ULong how_many, CosNaming::BindingList_out bl, CORBA::Environment &env)
+{
+  CORBA::Boolean retval;
+  STUB_Object *istub;
 
-                                            if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
-                                            {
-                                              env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
-                                              return;
-                                              }
-                                            this->Release (); // QueryInterface has bumped up our refcount
-                                            istub->do_call (env, &CosNaming_BindingIterator_destroy_calldata, 0);
-                                            return; // no value
-                                            
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return retval;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_BindingIterator_next_n_calldata, &retval, &how_many, &bl);
+  return retval;
+  
 }
 
-                                          static const CORBA::Long _oc_CosNaming_BindingIterator[] =
-                                          {
-                                            TAO_ENCAP_BYTE_ORDER, // byte order
-                                            34, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67497465, 0x7261746f, 0x723a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingIterator:1.0
-                                            16, 0x42696e64, 0x696e6749, 0x74657261, 0x746f7200,  // name = BindingIterator,
-                                          };
-                                          static CORBA::TypeCode _tc__tc_CosNaming_BindingIterator (CORBA::tk_objref, sizeof (_oc_CosNaming_BindingIterator), (unsigned char *) &_oc_CosNaming_BindingIterator, CORBA::B_FALSE);
-                                          CORBA::TypeCode_ptr CosNaming::_tc_BindingIterator = &_tc__tc_CosNaming_BindingIterator;
+static const TAO_Param_Data CosNaming_BindingIterator_destroy_paramdata [] = 
+{
+  {CORBA::_tc_void, PARAM_RETURN, 0}
+};
+
+static const TAO_Call_Data CosNaming_BindingIterator_destroy_calldata = 
+{"destroy", 1, 1, CosNaming_BindingIterator_destroy_paramdata, 0, 0};
+
+void  CosNaming::BindingIterator::destroy (CORBA::Environment &env)
+{
+  STUB_Object *istub;
+
+  if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
+  {
+    env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
+    return;
+    }
+  this->Release (); // QueryInterface has bumped up our refcount
+  istub->do_call (env, &CosNaming_BindingIterator_destroy_calldata, 0);
+  return; // no value
+  
+}
+
+static const CORBA::Long _oc_CosNaming_BindingIterator[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  34, 0x49444c3a, 0x436f734e, 0x616d696e, 0x672f4269, 0x6e64696e, 0x67497465, 0x7261746f, 0x723a312e, 0x30000000,  // repository ID = IDL:CosNaming/BindingIterator:1.0
+  16, 0x42696e64, 0x696e6749, 0x74657261, 0x746f7200,  // name = BindingIterator,
+};
+static CORBA::TypeCode _tc__tc_CosNaming_BindingIterator (CORBA::tk_objref, sizeof (_oc_CosNaming_BindingIterator), (unsigned char *) &_oc_CosNaming_BindingIterator, CORBA::B_FALSE);
+CORBA::TypeCode_ptr CosNaming::_tc_BindingIterator = &_tc__tc_CosNaming_BindingIterator;
 

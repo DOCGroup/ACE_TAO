@@ -282,9 +282,8 @@ void POA_RtecScheduler::Scheduler::compute_scheduling_skel (CORBA::ServerRequest
   
 }
 
-void POA_RtecScheduler::Scheduler::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env)
+void POA_RtecScheduler::Scheduler::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (obj); // argument not used
   const CORBA::String type_id = "IDL:RtecScheduler/Scheduler:1.0"; // repository ID
   CORBA::NVList_ptr nvlist;
   CORBA::NamedValue_ptr nv;

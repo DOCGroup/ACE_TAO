@@ -12,16 +12,6 @@ POA_RtecEventChannelAdmin::ProxyPushConsumer::~ProxyPushConsumer (void)
 }
 // skeleton destructor
 ACE_INLINE
-POA_RtecEventChannelAdmin::ProxyPullSupplier::~ProxyPullSupplier (void)
-{
-}
-// skeleton destructor
-ACE_INLINE
-POA_RtecEventChannelAdmin::ProxyPullConsumer::~ProxyPullConsumer (void)
-{
-}
-// skeleton destructor
-ACE_INLINE
 POA_RtecEventChannelAdmin::ProxyPushSupplier::~ProxyPushSupplier (void)
 {
 }
