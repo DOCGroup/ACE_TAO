@@ -110,7 +110,7 @@ TAO_None_Sync_Strategy::send (TAO_Transport &transport,
                 }
             }
 
-          size_t total_length = queued_message->total_length ();
+          ssize_t total_length = queued_message->total_length ();
 
           // If successful in sending the complete queued message.
           if (result == total_length)
