@@ -1,3 +1,7 @@
+Tue Dec 25 12:55:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* Updated all dependencies.
+
 Tue Dec 25 09:30:14 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Get_Opt_Test.cpp: Make the "test_args" parameter to 
