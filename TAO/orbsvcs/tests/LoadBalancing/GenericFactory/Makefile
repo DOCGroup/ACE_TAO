@@ -70,7 +70,8 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp TestC.h $(TAO_ROOT)/tao/corba.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -99,7 +100,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -250,8 +252,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -262,7 +264,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/TestC.o .obj/TestC.so .shobj/TestC.o .shobj/TestC.so: TestC.cpp TestC.h $(TAO_ROOT)/tao/corba.h \
+.obj/TestC.o .obj/TestC.so .shobj/TestC.o .shobj/TestC.so: TestC.cpp TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -291,7 +294,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -442,8 +446,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -587,7 +591,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -738,7 +743,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -926,7 +932,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1241,7 +1248,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1525,8 +1533,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  TestS_T.h TestS_T.i TestS_T.cpp TestS.i
 
-.obj/Basic.o .obj/Basic.so .shobj/Basic.o .shobj/Basic.so: Basic.cpp Basic.h $(ACE_ROOT)/ace/pre.h TestS.h \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+.obj/Basic.o .obj/Basic.so .shobj/Basic.o .shobj/Basic.so: Basic.cpp Basic.h TestS.h TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1554,7 +1563,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1705,7 +1715,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1722,6 +1733,121 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i
+ TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLoadBalancingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging.h \
+ $(TAO_ROOT)/tao/Messaging/messaging_export.h \
+ $(TAO_ROOT)/tao/Messaging/MessagingC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_SyncScope_PolicyC.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
+ $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_RT_PolicyC.i \
+ $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.h \
+ $(TAO_ROOT)/tao/Messaging/Messaging_No_ImplC.i \
+ $(TAO_ROOT)/tao/Messaging/MessagingC.i \
+ $(TAO_ROOT)/tao/Messaging/TAO_ExtC.h \
+ $(TAO_ROOT)/tao/Messaging/TAO_ExtC.i \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/Messaging/Twoway_Asynch_Invocation.h \
+ $(TAO_ROOT)/tao/Messaging/Asynch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Messaging/Asynch_Timeout_Handler.h \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.h \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(ACE_ROOT)/ace/Recyclable.h \
+ $(ACE_ROOT)/ace/Recyclable.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/DLL.h \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/XML_Svc_Conf.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher_Base.i \
+ $(TAO_ROOT)/tao/Messaging/Asynch_Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.h \
+ $(TAO_ROOT)/tao/Invocation.h \
+ $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+ $(TAO_ROOT)/tao/operation_details.h \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
+ $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/Invocation.i \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i \
+ $(TAO_ROOT)/tao/Messaging/Twoway_Asynch_Invocation.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLoadBalancingC.i \
+ LB_server.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
