@@ -1,3 +1,10 @@
+2004-06-25  turkaye  <turkaye@lambada.isis.vanderbilt.edu>
+
+	* DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+
+          Fixed compilation problems with VC6.  Varibles defined in for loop
+          remain persistant out of scope of the for loop.
+
 Fri Jun 25 10:51:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantHeaderGenerator.cpp:

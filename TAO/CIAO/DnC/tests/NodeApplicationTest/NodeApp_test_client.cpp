@@ -85,40 +85,46 @@ main (int argc, char *argv[])
       // This is what we will get back, a sequence of compoent object refs.
       Deployment::ComponentInfos_var comp_info;
 
-      for (CORBA::ULong i = 0; i < comp_num; ++i)
-      {
-	Deployment::ImplementationInfo info;
+      CORBA::ULong i;
+      for (i = 0; i < comp_num; ++i)
+        {
+          Deployment::ImplementationInfo info;
 
-	std::stringstream tmp;
-        tmp << "NodeAppTest_RoundTrip:" << i;
+          std::stringstream tmp;
+          tmp << "NodeAppTest_RoundTrip:" << i;
 
-	// Add the names and entry points of each of the DLLs
-	info.component_instance_name = CORBA::string_dup (tmp.str ().c_str ());
-	info.executor_dll = CORBA::string_dup ("NodeAppTest_RoundTrip_exec");
-	info.executor_entrypt = CORBA::string_dup ("createRoundTripHome_Impl");
-	info.servant_dll = CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
-	info.servant_entrypt = CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
+          // Add the names and entry points of each of the DLLs
+          info.component_instance_name =
+            CORBA::string_dup (tmp.str ().c_str ());
+          info.executor_dll = CORBA::string_dup ("NodeAppTest_RoundTrip_exec");
+          info.executor_entrypt =
+            CORBA::string_dup ("createRoundTripHome_Impl");
+          info.servant_dll =
+            CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
+          info.servant_entrypt =
+            CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
 
-	//Now add the info into the infos
-	infos[i] = info;
-      }
+          //Now add the info into the infos
+          infos[i] = info;
+        }
 
       // For debug purpose.
-      for (CORBA::ULong i = 0; i < comp_num; ++i)
-      {
-	Deployment::ImplementationInfo info;
+      for (i = 0; i < comp_num; ++i)
+        {
+          Deployment::ImplementationInfo info;
 
-	std::stringstream tmp;
-        tmp << "NodeAppTest_RoundTrip:" << i;
+          std::stringstream tmp;
+          tmp << "NodeAppTest_RoundTrip:" << i;
 
-	// Add the names and entry points of each of the DLLs
-	ACE_DEBUG ((LM_DEBUG, "The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
-		    infos[i].component_instance_name.in (),
-		    infos[i].executor_dll.in (),
-		    infos[i].executor_entrypt.in (),
-		    infos[i].servant_dll.in (),
-		    infos[i].servant_entrypt.in () ));
-      }
+          // Add the names and entry points of each of the DLLs
+          ACE_DEBUG ((LM_DEBUG,
+            "The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+            infos[i].component_instance_name.in (),
+            infos[i].executor_dll.in (),
+            infos[i].executor_entrypt.in (),
+            infos[i].servant_dll.in (),
+            infos[i].servant_entrypt.in () ));
+        }
 
       ACE_DEBUG ((LM_DEBUG, "Try installing Homes and Components\n"));
 
@@ -127,20 +133,20 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // store the component refs
-      for (CORBA::ULong i = 0; i < comp_num; ++i)
-      {
-	comp_list.push_back (NodeAppTest::NodeAppTest_RoundTrip::_narrow
-			     (comp_info[i].component_ref));
-	ACE_TRY_CHECK;
+      for (i = 0; i < comp_num; ++i)
+        {
+          comp_list.push_back (NodeAppTest::NodeAppTest_RoundTrip::_narrow
+                               (comp_info[i].component_ref));
+          ACE_TRY_CHECK;
 
-	if (CORBA::is_nil (comp_list[i].in ()))
-	{
-	  ACE_ERROR_RETURN ((LM_DEBUG,
-			     "Nil RoundTripHome reference: %s \n",
-			     comp_info[i].component_instance_name.in ()),
-			    1);
-	}
-      }
+          if (CORBA::is_nil (comp_list[i].in ()))
+            {
+              ACE_ERROR_RETURN ((LM_DEBUG,
+                                 "Nil RoundTripHome reference: %s \n",
+                                 comp_info[i].component_instance_name.in ()),
+                                1);
+            }
+        }
 
       ACE_DEBUG ((LM_DEBUG, "Installation finished successfully.\n"));
 
@@ -151,23 +157,28 @@ main (int argc, char *argv[])
       // Invoke Operation on the components
       ACE_DEBUG ((LM_DEBUG, "Try cube_long operation on the Interface \n"));
 
-      for (CORBA::ULong i = 0; i < comp_num; ++i)
-      {
+      for (i = 0; i < comp_num; ++i)
+        {
 
-	CORBA::Long input = i;
+          CORBA::Long input = i;
 
-	CORBA::Long output =
-	  (comp_list[i])->cube_long (input ACE_ENV_ARG_PARAMETER);
+          CORBA::Long output =
+            (comp_list[i])->cube_long (input ACE_ENV_ARG_PARAMETER);
 
-	if (input*input*input == output)
-	  ACE_DEBUG ((LM_DEBUG, "Retrun values matched!! on Component: %d \n", i));
-
-	else
-	{
-	  ACE_DEBUG ((LM_DEBUG, "Return values did not match: on Component: %d \n", i));
-	  exit (1);
-	}
-      }
+          if (input*input*input == output)
+	    {
+	      ACE_DEBUG ((LM_DEBUG,
+			  "Return values matched!! on Component: %d \n",
+			  i));
+	    }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+			  "Return values did not match: on Component: %d \n",
+			  i));
+              exit (1);
+            }
+        }
 
       ACE_DEBUG ((LM_DEBUG, "Try removing everything\n"));
       comserv->remove ();
