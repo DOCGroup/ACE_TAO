@@ -144,6 +144,10 @@ if ($debug) {
 
 }
 
+sub mydie {
+  unlink $disable_file;
+  die $_ . "\n";
+}
 
 sub report_errors {
   # First clear the lock, so the next execution works...
@@ -153,7 +157,7 @@ sub report_errors {
   local $to = $ADMIN;
 
   open (MAIL, "|".$MAIL.' -s [AUTO_COMPILE] '.$to)
-    || die "Cannot open mail pipe for: $_\n";
+    || mydie "Cannot open mail pipe for: $_\n";
 
   print MAIL 'The following message is brought to you by: ', "\n";
   print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
@@ -172,7 +176,7 @@ sub report_errors {
   # Now send the complete log to bugzilla...
   local $bugs = 'bugzilla'.'@cs.wustl.edu';
   open (MAIL, "|".$MAIL.' -s AUTO_COMPILE_LOG='.$LOG_NAME.' '.$bugs)
-    || die "Cannot open mail pipe for: $LOG_NAME\n";
+    || mydie "Cannot open mail pipe for: $LOG_NAME\n";
 
   print MAIL 'This is the log for: ', "\n";
   print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
@@ -224,7 +228,7 @@ close (DISABLE)
     || die "cannot close disable file";
 
 open(LOG, '>' . $LOGFILE)
-    || die "cannot open log file";
+    || mydie "cannot open log file";
 
 LOG->autoflush ();
 
@@ -235,13 +239,13 @@ LOG->autoflush ();
 #}
 
 chdir($CHECKOUT)
-    || die "Cannot chdir to $CHECKOUT";
+    || mydie "Cannot chdir to $CHECKOUT";
 
 if ($dont_update == 0) {
   $date = localtime;
   print LOG "$CMD: starting checkout at ", $date, "\n";
   open(CVS, "cvs -q checkout -P $MODULE 2>&1 |")
-    || die "cannot start checkout of $MODULE";
+    || mydie "cannot start checkout of $MODULE";
 
   $conflicts = 0;
   while (<CVS>) {
@@ -251,32 +255,32 @@ if ($dont_update == 0) {
     print LOG $_;
   }
   close(CVS)
-    || die "error while checking out $MODULE";
+    || mydie "error while checking out $MODULE";
   $date = localtime;
   print LOG "$CMD: checkout finished at ", $date, "\n";
 
   if ($conflicts != 0) {
-    die "conflicts on checkout";
+    mydie "conflicts on checkout";
   }
 }
 
 chdir($MODULE)
-    || die "cannot chdir to $MODULE";
+    || mydie "cannot chdir to $MODULE";
 
 $date = localtime;
 print LOG "$CMD: starting clone at ", $date, "\n";
 open(CLONE, "perl bin/create_ace_build -a -v $BUILD 2>&1 |")
-    || die "cannot clone directory";
+    || mydie "cannot clone directory";
 while(<CLONE>) {
     print LOG $_;
 }
 close(CLONE)
-    || die "error while cloning ACE_ROOT";
+    || mydie "error while cloning ACE_ROOT";
 $date = localtime;
 print LOG "$CMD: clone finished at ", $date, "\n";
 
 chdir('build/' . $BUILD)
-    || die "cannot chdir to $BUILD";
+    || mydie "cannot chdir to $BUILD";
 
 @failures = ();
 
@@ -286,7 +290,7 @@ if ($pre_realclean) {
     print LOG "$CMD: =============================================\n";
     print LOG "$CMD: make realclean in $i started at ", $date, "\n";
     open(MAKE, "make -k $MAKEFLAGS -C $i realclean 2>&1 |")
-      || die "cannot start make in $i";
+      || mydie "cannot start make in $i";
 
     while (<MAKE>) {
       # Ignore errors....
@@ -306,7 +310,7 @@ foreach $i (@BUILD_LIST) {
     print LOG "$CMD: =============================================\n";
     print LOG "$CMD: make for $i started at ", $date, "\n";
     open(MAKE, "make -k $MAKEFLAGS -C $i 2>&1 |")
-	|| die "cannot start make for $i";
+	|| mydie "cannot start make for $i";
 
     local $current_dir = $i;
     local $last_error = "";
@@ -369,7 +373,7 @@ if ($dont_run == 0) {
     local $subdir =
 	$CHECKOUT .'/'. $MODULE .'/build/'. $BUILD .'/'. $directory;
     chdir ($subdir)
-	|| die "cannot chdir to $subdir";
+	|| mydie "cannot chdir to $subdir";
 
     $run_error = 0;
     if (open(RUN, "perl $program 2>&1 |") == 0) {
@@ -429,11 +433,11 @@ if ($#failures >= 0) {
 }
 
 close(LOG)
-    || die "cannot close LOGFILE";
+    || mydie "cannot close LOGFILE";
 
 print HIST "$STATUS\n";
 close(HIST)
-    || die "cannot close history file";
+    || mydie "cannot close history file";
 
 unlink $disable_file
     || die "cannot unlink disable file";
