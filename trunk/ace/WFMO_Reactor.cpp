@@ -2194,6 +2194,13 @@ ACE_WFMO_Reactor_Notify::notify_handle (void)
 }
 
 int
+ACE_WFMO_Reactor_Notify::read_notify_pipe (ACE_HANDLE ,
+                                           ACE_Notification_Buffer &)
+{
+  return 0;
+}
+
+int
 ACE_WFMO_Reactor_Notify::dispatch_notify (ACE_HANDLE )
 {
   return 0;
