@@ -433,7 +433,7 @@ CORBA_ORB::resolve_service (const char *service_name,
                             ACE_Time_Value *timeout,
                             CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA_Object_ptr return_value = CORBA_Object::_nil ();
+  CORBA_Object_var return_value = CORBA_Object::_nil ();
 
   // First check to see if we've already initialized this.
   if (this->name_service_ != CORBA_Object::_nil ())
@@ -454,13 +454,10 @@ CORBA_ORB::resolve_service (const char *service_name,
 
       if (name_service_ior.length () != 0)
         {
-          this->name_service_ =
+          return_value =
             this->string_to_object (name_service_ior.c_str (),
                                     ACE_TRY_ENV);
-
-          // check for errors
-          if (ACE_TRY_ENV.exception () != 0)
-            this->name_service_ = CORBA_Object::_nil ();
+          ACE_CHECK_RETURN (CORBA_Object::_nil ());
         }
       else
         {
@@ -480,24 +477,25 @@ CORBA_ORB::resolve_service (const char *service_name,
                 port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
             }
 
-          this->name_service_ =
+          return_value =
             this->multicast_to_service (service_name,
                                         port,
                                         timeout,
                                         ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA_Object::_nil ());
         }
+      this->name_service_ = return_value.ptr ();
     }
 
   // Return ior.
-  return_value = this->name_service_;
-  return CORBA_Object::_duplicate (return_value);
+  return CORBA_Object::_duplicate (return_value._retn ());
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA_Object_ptr return_value = CORBA_Object::_nil ();
+  CORBA_Object_var return_value = CORBA_Object::_nil ();
 
   // First check to see if we've already initialized this.
   if (this->trading_service_ != CORBA_Object::_nil ())
@@ -518,12 +516,9 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
 
       if (trading_service_ior.length () != 0)
         {
-          this->trading_service_ =
+          return_value =
             this->string_to_object (trading_service_ior.c_str (), ACE_TRY_ENV);
-
-          // check for errors
-          if (ACE_TRY_ENV.exception () != 0)
-            this->trading_service_ = CORBA_Object::_nil ();
+          ACE_CHECK_RETURN (CORBA_Object::_nil ());
         }
       else
         {
@@ -543,16 +538,17 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
                 port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
             }
 
-          this->trading_service_ =
+          return_value =
             this->multicast_to_service ("TradingService",
                                         port,
                                         timeout,
                                         ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA_Object::_nil ());
         }
+      this->trading_service_ = return_value.ptr ();
     }
 
-  return_value = this->trading_service_;
-  return CORBA_Object::_duplicate (return_value);
+  return CORBA_Object::_duplicate (return_value._retn ());
 }
 
 CORBA_Object_ptr
@@ -771,7 +767,7 @@ CORBA_ORB::multicast_to_service (const char * service_name,
   char buf[BUFSIZ + 1];
 
   // Use UDP multicast to locate the  service.
-  CORBA_Object_ptr return_value =
+  CORBA_Object_var return_value =
     CORBA_Object::_nil ();
 
   if (this->multicast_query (buf,
@@ -780,26 +776,24 @@ CORBA_ORB::multicast_to_service (const char * service_name,
                              timeout) == 0)
     {
       // Convert IOR to an object reference.
-      CORBA_Object_ptr objectified_ior =
+      return_value =
         this->string_to_object ((CORBA::String) buf,
                                 ACE_TRY_ENV);
 
-      // Check for errors.
-      if (ACE_TRY_ENV.exception () == 0)
-        return_value = objectified_ior;
+      ACE_CHECK_RETURN (CORBA_Object::_nil ());
     }
 
   // Return ior.
-  return return_value;
+  return return_value._retn ();
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (const char *name,
-                                       CORBA_Environment &TAO_IN_ENV)
+                                       CORBA_Environment &ACE_TRY_ENV)
 {
   return this->resolve_initial_references (name,
                                            0,
-                                           TAO_IN_ENV);
+                                           ACE_TRY_ENV);
 }
 
 CORBA_Object_ptr
@@ -940,6 +934,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   this->orb_core_->acceptor_registry ()->make_mprofile (key, mp);
 
+  // @@ Ossama, Fred:  Why do we need this ACE_CHECK_RETURN here?
   ACE_CHECK_RETURN (stub);
 
   ACE_NEW_THROW_EX (stub,
@@ -980,51 +975,51 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
 
 CORBA_DynAny_ptr
 CORBA_ORB::create_dyn_any       (const CORBA_Any& any,
-                                 CORBA::Environment& env)
+                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  return TAO_DynAny_i::create_dyn_any (any, env);
+  return TAO_DynAny_i::create_dyn_any (any, ACE_TRY_ENV);
 }
 
 CORBA_DynAny_ptr
 CORBA_ORB::create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& env)
+                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  return TAO_DynAny_i::create_dyn_any (tc, env);
+  return TAO_DynAny_i::create_dyn_any (tc, ACE_TRY_ENV);
 }
 
 CORBA_DynStruct_ptr
 CORBA_ORB::create_dyn_struct    (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& env)
+                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  return TAO_DynAny_i::create_dyn_struct (tc, env);
+  return TAO_DynAny_i::create_dyn_struct (tc, ACE_TRY_ENV);
 }
 
 CORBA_DynSequence_ptr
 CORBA_ORB::create_dyn_sequence  (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& env)
+                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  return TAO_DynAny_i::create_dyn_sequence (tc, env);
+  return TAO_DynAny_i::create_dyn_sequence (tc, ACE_TRY_ENV);
 }
 
 CORBA_DynArray_ptr
 CORBA_ORB::create_dyn_array     (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& env)
+                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  return TAO_DynAny_i::create_dyn_array (tc, env);
+  return TAO_DynAny_i::create_dyn_array (tc, ACE_TRY_ENV);
 }
 
 CORBA_DynUnion_ptr
 CORBA_ORB::create_dyn_union     (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& env)
+                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  return TAO_DynAny_i::create_dyn_union (tc, env);
+  return TAO_DynAny_i::create_dyn_union (tc, ACE_TRY_ENV);
 }
 
 CORBA_DynEnum_ptr
 CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
-                                 CORBA::Environment& env)
+                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  return TAO_DynAny_i::create_dyn_enum (tc, env);
+  return TAO_DynAny_i::create_dyn_enum (tc, ACE_TRY_ENV);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -1334,10 +1329,8 @@ CORBA::ORB_init (int &argc,
 // Objref stringification.
 CORBA::String
 CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
-  env.clear ();
-
   // Application writer controls what kind of objref strings they get,
   // maybe along with other things, by how they initialize the ORB.
 
@@ -1413,9 +1406,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
         // @@ This should be some sort of default prefix, not
         // hardcoded to IIOP!! FRED
 
-      CORBA::String buf =
-        obj->_stubobj ()->profile_in_use ()->to_string (env);
-      return buf;
+      return obj->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
     }
 }
 
@@ -1431,12 +1422,12 @@ CORBA_ORB::string_to_object (const char *str,
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
-    obj = this->file_string_to_object (str + sizeof file_prefix - 1,
-                                       ACE_TRY_ENV);
+    return this->file_string_to_object (str + sizeof file_prefix - 1,
+                                        ACE_TRY_ENV);
   else if (ACE_OS::strncmp (str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
-    obj = this->ior_string_to_object (str + sizeof ior_prefix - 1,
+    return this->ior_string_to_object (str + sizeof ior_prefix - 1,
                                       ACE_TRY_ENV);
   else
     {
@@ -1447,29 +1438,32 @@ CORBA_ORB::string_to_object (const char *str,
       // of profiles and tell the MProfile object to allocate enough memory
       // to hold them all.
 
-      if (this->orb_core_->connector_registry ()->make_mprofile (str,
-                                                                 mprofile,
-                                                                 ACE_TRY_ENV)
-          != 0)
+      int retv = this->orb_core_->connector_registry ()->make_mprofile (str,
+                                                                        mprofile,
+                                                                        ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
+      if (retv != 0)
         {
           ACE_THROW_RETURN (CORBA::INITIALIZE (), CORBA::Object::_nil ());
         }
 
       // Now make the TAO_Stub.
       TAO_Stub *data;
-      ACE_NEW_RETURN (data,
-                      TAO_Stub ((char *) 0, mprofile, this->orb_core_),
-                      CORBA::Object::_nil ());
+      ACE_NEW_THROW_EX (data,
+                        TAO_Stub ((char *) 0, mprofile, this->orb_core_),
+                        CORBA::INITIALIZE ());
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       // Create the CORBA level proxy.
       TAO_ServantBase *servant = this->_get_collocated_servant (data);
 
       // This will increase the ref_count on data by one
-      ACE_NEW_RETURN (obj,
-                      CORBA_Object (data,
-                                    servant,
-                                    servant != 0),
-                      CORBA::Object::_nil ());
+      ACE_NEW_THROW_EX (obj,
+                        CORBA_Object (data,
+                                      servant,
+                                      servant != 0),
+                        CORBA::INITIALIZE ());
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
 
   return obj;

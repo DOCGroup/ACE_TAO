@@ -108,11 +108,11 @@ TAO_Stub::TAO_Stub (char *repository_id,
 //    can get different values, depending on the profile_in_use!!
 CORBA::ULong
 TAO_Stub::hash (CORBA::ULong max,
-                CORBA::Environment &env)
+                CORBA::Environment &ACE_TRY_ENV)
 {
   // we rely on the profile object to has it's address info
   if (profile_in_use_)
-    return profile_in_use_->hash (max, env);
+    return profile_in_use_->hash (max, ACE_TRY_ENV);
   ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) hash called on a null profile!\n"), 0);
 }
 
@@ -336,7 +336,10 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
               // (ASG) will do 03/22/98.
               // @@ IMHO this should be handled in the stub
               // (coryan)
-              switch (pdp->tc->kind (TAO_IN_ENV))
+              CORBA::TCKind kind = pdp->tc->kind (ACE_TRY_ENV);
+              ACE_CHECK;
+
+              switch (kind)
                 {
                 case CORBA::tk_string:
                   {
