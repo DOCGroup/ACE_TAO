@@ -59,9 +59,17 @@ namespace TAO
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
+    // This auto_ptr is required when interceptors are called. If any
+    // of the interceptors throws an exception or returns with an
+    // error we need to delete the reply handler.
+    auto_ptr<TAO_Asynch_Reply_Dispatcher_Base> safe_rd (this->rd_);
+
     s =
       this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (s != TAO_INVOKE_FAILURE)
+      safe_rd.release ();
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
@@ -92,12 +100,20 @@ namespace TAO
         ACE_TRY_CHECK;
 
 #if TAO_HAS_INTERCEPTORS == 1
+        // This auto_ptr is required when interceptors are called. If any
+        // of the interceptors throws an exception or returns with an
+        // error we need to delete the reply handler.
+        auto_ptr<TAO_Asynch_Reply_Dispatcher_Base> safe_rd2 (this->rd_);
+
         // Nothing great on here. If we get a restart during send or a
         // proper send, we are supposed to call receiver_other ()
         // interception point. So we do that here
         Invocation_Status tmp =
           this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
+
+        if (tmp != TAO_INVOKE_FAILURE)
+          safe_rd2.release ();
 
         // We got an error during the interception.
         if (s == TAO_INVOKE_SUCCESS && tmp != TAO_INVOKE_SUCCESS)
@@ -161,3 +177,23 @@ namespace TAO
     return s;
   }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class auto_ptr<TAO_Asynch_Reply_Dispatcher_Base>;
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+template class ACE_Auto_Basic_Ptr<TAO_Asynch_Reply_Dispatcher_Base>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate auto_ptr<TAO_Asynch_Reply_Dispatcher_Base>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Asynch_Reply_Dispatcher_Base>
+#  endif  /* ACE_LACKS_AUTO_PTR */
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
