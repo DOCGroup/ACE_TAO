@@ -30,8 +30,8 @@ TAO_FILE_Parser::match_prefix (const char *ior_string) const
 
 CORBA::Object_ptr
 TAO_FILE_Parser::parse_string (const char *ior,
-                              CORBA::ORB_ptr orb,
-                              CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::ORB_ptr orb,
+                               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Skip the prefix, we know it is there because this method in only
@@ -65,6 +65,7 @@ TAO_FILE_Parser::parse_string (const char *ior,
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object;
 }
