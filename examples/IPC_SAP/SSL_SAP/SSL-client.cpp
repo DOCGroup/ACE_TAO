@@ -336,7 +336,7 @@ Options::twoway_client_test (void *)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
                         ACE_TEXT ("recv")));
-            result = -1;
+            result = size_t (-1);
             break;
           }
 
