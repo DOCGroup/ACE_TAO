@@ -1297,7 +1297,7 @@ public:
   /// Signal *all* waiting threads.
   int broadcast (void);
 
-  /// Returns a reference to the underlying mutex_;
+  /// Returns a reference to the underlying mutex;
   ACE_Thread_Mutex &mutex (void);
 
   /// Dump the state of an object.
@@ -1422,6 +1422,12 @@ public:
    * the mutex recursively.
    */
   int get_nesting_level (void);
+
+  /// Returns a reference to the recursive mutex;
+  ACE_recursive_thread_mutex_t &mutex (void);
+
+  /// Returns a reference to the recursive mutex's internal mutex;
+  ACE_thread_mutex_t &get_nesting_mutex (void);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -1755,6 +1761,124 @@ public:
   int tryacquire_read (void) { return 0; }
   int tryacquire (void) { return 0; }
   void dump (void) const {}
+};
+
+/**
+ * @class ACE_recursive_mutex_state
+ *
+ * @brief Stores the state of the recursive mutex before setting it to
+ * "non-owner" state in the constructor.  The destructor then restores
+ * the state of the mutex. 
+ */
+class ACE_recursive_mutex_state
+{
+public:
+  /// Save the <mutex> and then <reset()> it.
+  ACE_recursive_mutex_state (ACE_Recursive_Thread_Mutex &mutex);
+
+  /// Restore the <mutex> to its original state saved by the
+  /// constructor.  
+  ~ACE_recursive_mutex_state (void);
+
+private:
+  /// Reset the <mutex> to be "unlocked".
+  int reset (ACE_recursive_thread_mutex_t &mutex);
+
+  /// Save the state of <mutex>.
+  int save (ACE_recursive_thread_mutex_t &mutex);
+
+  /// Restore the state of <mutex> to a previously saved value.
+  int restore (ACE_recursive_thread_mutex_t &mutex);
+
+  ACE_Recursive_Thread_Mutex &mutex_;
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  // On windows the mutex is a CRITICAL_SECTION, so just save
+  // everything!
+  size_t lock_count_;
+  size_t recursion_count_;
+  HANDLE owning_thread_;
+  HANDLE lock_semaphore_;
+#else
+  // Store the important state of a recursive mutex.
+  int nesting_level_;
+  ACE_thread_t owner_id_;
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
+};
+
+template <class ACE_LOCK>
+class ACE_Condition;
+
+ACE_TEMPLATE_SPECIALIZATION
+/**
+ * @class ACE_Condition<ACE_Recursive_Thread_Mutex>
+ * 
+ * @brief ACE_Condition template specialization written using
+ *  @a ACE_Recursive_Thread_Mutex.  This allows threads to block until
+ *  shared data changes state using recursive mutexes. 
+ */
+class ACE_Export ACE_Condition<ACE_Recursive_Thread_Mutex>
+{
+public:
+  /// Initialize the condition variable with a recursive mutex.
+  ACE_Condition (ACE_Recursive_Thread_Mutex &m);
+
+  /// Implicitly destroy the condition variable.
+  ~ACE_Condition (void);
+
+  /**
+   * Explicitly destroy the condition variable.  Note that only one
+   * thread should call this method since it doesn't protect against
+   * race conditions.
+   */
+  int remove (void);
+
+  /**
+   * Block on condition, or until absolute time-of-day has passed.  If
+   * abstime == 0 use "blocking" <wait> semantics.  Else, if <abstime>
+   * != 0 and the call times out before the condition is signaled
+   * <wait> returns -1 and sets errno to ETIME.
+   */
+  int wait (const ACE_Time_Value *abstime = 0);
+
+  /**
+   * Block on condition or until absolute time-of-day has passed.  If
+   * abstime == 0 use "blocking" wait() semantics on the recursive @a mutex
+   * passed as a parameter (this is useful if you need to store the
+   * <Condition> in shared memory).  Else, if <abstime> != 0 and the
+   * call times out before the condition is signaled <wait> returns -1
+   * and sets errno to ETIME.
+   */
+  int wait (ACE_Recursive_Thread_Mutex &mutex,
+            const ACE_Time_Value *abstime = 0); 
+
+  /// Signal one waiting thread.
+  int signal (void);
+
+  /// Signal *all* waiting threads.
+  int broadcast (void);
+
+  /// Returns a reference to the underlying mutex;
+  ACE_Recursive_Thread_Mutex &mutex (void);
+
+private:
+  /// A normal (i.e., non-recursive) condition variable.
+  ACE_cond_t cond_;
+
+  /// Reference to the recursive mutex.
+  ACE_Recursive_Thread_Mutex &mutex_;
+
+  // = Prevent assignment and initialization.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition<ACE_Recursive_Thread_Mutex> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Condition (const ACE_Condition<ACE_Recursive_Thread_Mutex> &))
+};
+
+class ACE_Export ACE_Condition_Recursive_Thread_Mutex 
+  : public ACE_Condition<ACE_Recursive_Thread_Mutex>
+{        
+public:
+  /// Initialize the condition variable with a recursive mutex.
+  ACE_Condition_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex &m):
+    ACE_Condition<ACE_Recursive_Thread_Mutex> (m) {}
 };
 
 #if defined (ACE_LEGACY_MODE)

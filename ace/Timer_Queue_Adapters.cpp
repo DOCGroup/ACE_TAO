@@ -175,7 +175,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::~ACE_Thread_Timer_Queue_Adapter (void)
     }
 }
 
-template<class TQ> ACE_SYNCH_MUTEX &
+template<class TQ> ACE_Recursive_Thread_Mutex &
 ACE_Thread_Timer_Queue_Adapter<TQ>::mutex (void)
 {
   return this->mutex_;
@@ -188,7 +188,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
      const ACE_Time_Value &future_time,
      const ACE_Time_Value &interval)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
 
   long result = this->timer_queue_->schedule (handler, act, future_time, interval);
   this->condition_.signal ();
@@ -199,7 +199,7 @@ template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
                                             const void **act)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
 
   int result = this->timer_queue_->cancel (timer_id, act);
   condition_.signal ();
@@ -209,7 +209,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 template<class TQ> void
 ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, guard, this->mutex_);
 
   this->active_ = 0;
   this->condition_.signal ();
@@ -218,7 +218,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->mutex_, -1);
 
   this->thr_id_ = ACE_Thread::self ();
 
@@ -229,7 +229,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
   //       is a bug in the Solaris header files and has nothing to do with
   //       ACE.
 # if !defined (ACE_LACKS_PTHREAD_CANCEL)
-  ACE_PTHREAD_CLEANUP_PUSH (&this->condition_.mutex ());
+  ACE_PTHREAD_CLEANUP_PUSH (&this->condition_.mutex ().get_nesting_mutex ());
 # endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   while (this->active_)
@@ -271,10 +271,8 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
   ACE_PTHREAD_CLEANUP_POP (0);
 # endif /* ACE_LACKS_PTHREAD_CANCEL */
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("terminating dispatching thread\n")));
   return 0;
 }
-
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 
@@ -289,8 +287,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::enqueue_command (ACE_Command_Base *cmd,
                                                      COMMAND_ENQUEUE_POSITION pos)
 {
   // Serialize access to the command queue.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    this->command_mutex_, -1);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->command_mutex_, -1);
 
   if (pos == ACE_Thread_Timer_Queue_Adapter<TQ>::TAIL)
     return command_queue_.enqueue_tail (cmd);
@@ -305,8 +302,7 @@ template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::dispatch_commands (void)
 {
   // Serialize access to the command queue.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    this->command_mutex_, -1);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, this->command_mutex_, -1);
 
   // loop through the enqueued commands
   ACE_Command_Base *cmd = 0;

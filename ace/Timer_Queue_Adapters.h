@@ -143,7 +143,7 @@ public:
   virtual void deactivate (void);
 
   /// Access the locking mechanism, useful for iteration.
-  ACE_SYNCH_MUTEX &mutex (void);
+  ACE_Recursive_Thread_Mutex &mutex (void);
 
   /// @deprecated Access the implementation queue, useful for iteration.
   /// Use the method that returns a pointer instead
@@ -209,16 +209,16 @@ private:
   /// didn't create it, then we don't delete it).
   int delete_timer_queue_;
 
+  /// The mutual exclusion mechanism that is required to use the
+  /// <condition_>.
+  ACE_SYNCH_RECURSIVE_MUTEX mutex_;
+
   /**
    * The dispatching thread sleeps on this condition while waiting to
    * dispatch the next timer; it is used to wake it up if there is a
    * change on the timer queue.
    */
-  ACE_SYNCH_CONDITION condition_;
-
-  /// The mutual exclusion mechanism that is required to use the
-  /// <condition_>.
-  ACE_SYNCH_MUTEX mutex_;
+  ACE_SYNCH_RECURSIVE_CONDITION condition_;
 
   /// When deactivate is called this variable turns to false and the
   /// dispatching thread is signalled, to terminate its main loop.

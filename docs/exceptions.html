@@ -298,7 +298,7 @@ macros.
             exception support.  You can not access the caught
             exception within the <code>ACE_CATCHALL</code> block.</p>
 
-        <li><P>Use <code>ACE_RETHROW</code> to rethrow the same exception
+        <li><P>Use <code>ACE_RE_THROW</code> to rethrow the same exception
             within a <code>ACE_CATCH</code> or
             <code>ACE_CATCHANY</code> block.
             </p>
@@ -385,7 +385,7 @@ macros discussed here.
         {
           // error handling.
           // then rethow the exception.
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
       ACE_CHECK;

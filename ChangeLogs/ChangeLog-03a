@@ -1,3 +1,35 @@
+Wed Jun 19 06:50:54 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/run_test.lst:
+	* tests/Makefile.bor:
+	* tests/Makefile: Added the new Recursive_Condition_Test.
+
+	* ACE/Timer_Queue_Adapters.{h,cpp}: Enhanced 
+	  ACE_Thread_Timer_Queue_Adapter so it uses the new
+	  ACE_Condition<ACE_Recursive_Thread_Mutex>.  Thanks to
+	  Stephen Howard <stephen.e.howard@lmco.com> for
+	  suggesting this.
+
+	* ace/Synch_T.h: Added a new RECURSIVE_CONDITION trait in
+	  ACE_NULL_SYNCH and ACE_MT_SYNCH.
+  
+	* ace/Synch_T.h: Added a #define for ACE_SYNCH_RECURSIVE_CONDITION 
+	  so that we can parameterize it based on threads vs. non-threads.
+
+	* docs/exceptions.html: Updated document to use ACE_RE_THROW
+	  instead of the deprecated ACE_RETHROW macro.  Thanks to
+	  Andy Ling <Andy.Ling@Quantel.Com> for reporting this.
+
+	* ace/Timer_Queue_Adapters.h: Changed the order in which
+	  the condition variable and mutex are defined to ensure the
+	  mutex is initialized before we pass it to condition_'s 
+	  constructor.
+
+	* ace/Synch.cpp:
+  	* ace/Atomic_Op.i: Replaced ACE_TEMPLATE_SPECIALIZATION with
+	  ACE_TEMPLATE_METHOD_SPECIALIZATION so this will compile correctly
+	  on certain (broken) compilers, such as SunC++ 6.1.
+
 Wed Jun 19 14:25:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp (handle_socket_events): Couple of small
@@ -30,6 +62,12 @@ Wed Jun 19 11:57:02 2002  Carlos O'Ryan  <coryan@atdesk.com>
 	  Disable TAO/tests/Nested_Upcall_Crash on minimum_corba builds.
 
 Tue Jun 18 14:29:26 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Synch.{h,i}: Added a new template specialization of ACE_Condition<>
+	  that supports recursive mutexes used in conjunction with ACE
+ 	  condition variables.  Thanks to Michael Lindner
+ 	  <mikel@attmail.com> and Mike Vitalo <mvitalo@sprynet.com> for
+ 	  contributing this.
 
 	* ace/SOCK_Dgram_Mcast.cpp: Reverted the file to the previous version
 	  since somehow things got messed up...

@@ -85,6 +85,7 @@ BIN =   Aio_Platform_Test \
         Reactor_Performance_Test \
         Reactor_Timer_Test \
         Reader_Writer_Test \
+        Recursive_Condition_Test \
         Recursive_Mutex_Test \
 	Refcounted_Auto_Ptr_Test \
         Reverse_Lock_Test \
