@@ -1,8 +1,13 @@
+Sat Mar 07 08:29:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/orb_core.cpp (TAO_Default_Reactor ctor and dtor): removed
+          inline qualifiers.
+
 Fri Mar  6 17:56:25 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* Aloha: I bid fond farewall to Team TAO for now.  Thanks for the
  	fun times!
-	
+
 	* tests/NestedUpcall/server.cpp: Integrated new stuff.
 
 	* tests/NestedUpcall/client.cpp: Called new 'stop' method.
