@@ -1,3 +1,16 @@
+Fri Aug 01 14:37:23 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tao/Object_KeyC.h:
+        * tao/Object_KeyC.cpp:
+          
+          Changed tao_encode_sequence_to_string and 
+          decode_string_to_sequence methods to use '%' instead of '\'
+          for escaping. Restricted unescaped characters to those
+          permitted in a URI by RFC 2396.
+          
+          Thanks to Dan Halbert <halbert@bbn.com> for reporting the
+          problem. This closes Bug #1330.
+
 Fri Aug  1 13:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}:

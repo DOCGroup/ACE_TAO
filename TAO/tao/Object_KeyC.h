@@ -131,6 +131,7 @@ TAO_NAMESPACE  TAO
         TAO_Unbounded_Sequence<CORBA::Octet> &seq,
         const char *str
       );
+    static int is_legal (u_char & c);
 
   };
 
