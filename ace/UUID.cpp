@@ -1,5 +1,6 @@
 //$Id$
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 #include "ace/UUID.h"
 
 UUID_node::UUID_node (void)

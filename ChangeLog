@@ -1,3 +1,9 @@
+Tue Jul 22 10:29:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.cpp: Fixed compile error; #elif should be #else.
+	* ace/UUID.cpp: Added #include "ace/Log_Msg.h" to pick up the necessary
+	  things for doing logging (ACE_DEBUG, etc.).
+
 Tue Jul 22 06:01:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Select_Reactor_T.cpp:
