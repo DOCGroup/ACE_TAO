@@ -12,7 +12,7 @@ Individual README files in the respective directories explain these applications
 
                 This example explains registering an adapter activator for a POA and also the find_POA operation.
 
-        . Default_Servant:
+        . Default_Servant 
 
 
         . Generic_Servant
@@ -21,7 +21,7 @@ Individual README files in the respective directories explain these applications
                 availabale, which can be used for testing POA applications.
                 The client program in this library is used for testing the Explicit_Activation example.
 
-        . On_Demand_Activation
+        . On_Demand_Activation 
 
 
 
@@ -29,8 +29,6 @@ Individual README files in the respective directories explain these applications
 
                 This example does not work as of now. It will be fixed soon. This application explains
                 various operations involved in the explicit activation of objects.
-
-        . Explicit_Activation_POA_Ids:
-
-
-        .
+                < It compiles. At run, _narrow() of the client raises exception. >
+        
+        
