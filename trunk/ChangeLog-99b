@@ -1,9 +1,43 @@
+Tue Aug 17 20:02:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/WFMO_Reactor.h,
+        * ace/WFMO_Reactor.cpp,
+        * ace/XtReactor.h,
+        * ace/XtReactor.cpp,
+        * ace/TkReactor.h,
+        * ace/TkReactor.cpp,
+        * ace/FlReactor.h,
+        * ace/FlReactor.cpp,
+        * ace/Select_Reactor_T.h,
+        * ace/Select_Reactor_T.cpp,
+        * ace/Reactor_Impl.h,
+	* ace/Reactor.h,
+  	* ace/Reactor.cpp:
+	  Exposed the new reset_interval() method Darrell added to all the
+ 	  Timer mechanisms via a method in each of these Reactor's called
+ 	  reset_timer_interval().
+
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Wheel_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Wheel_T.cpp:
+          Changed the return values of <reset_interval> to be (1)
+ 	  consistent (i.e., to return a value through all paths in the
+ 	  method) and (2) to return -1 on failure and 0 on success.
+	  Also replaced a number of C-style casts with
+	  ACE_reinterpret_casts.
+	
 Tue Aug 17 20:51:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/TP_Reactor.h:
 	* ace/TP_Reactor.cpp:
-	  The TP Reactor also experiments a performance hit if signal
-	  masking is enabled.
+	  The TP Reactor also experiences a performance hit if signal
+	  masking is enabled.  Therefore, we can now make this optional.
 
 Tue Aug 17 19:10:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
