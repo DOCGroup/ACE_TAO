@@ -188,4 +188,4 @@ template class ACE_Thread_Strategy<TAO_Server_Connection_Handler>;
 #pragma instantiate ACE_Thread_Strategy<TAO_Server_Connection_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-ACE_SVC_FACTORY_DEFINE (TAO_Default_Server_Strategy_Factory)
+ACE_FACTORY_DEFINE (TAO, TAO_Default_Server_Strategy_Factory)
