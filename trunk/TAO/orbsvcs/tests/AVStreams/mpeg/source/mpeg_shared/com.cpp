@@ -24,22 +24,22 @@
  *         email: scen@cse.ogi.edu
  */
 
-#include <stdio.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <string.h>
-#include <netdb.h>
-#include <ctype.h>
-#include <sys/select.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <arpa/inet.h>
-#include <sys/un.h>
-#include <time.h>
-#include <sys/time.h>
+// #include <stdio.h>   
+// #include <errno.h>   
+// #include <stdlib.h>  
+// #include <sys/types.h>
+// #include <unistd.h>  
+// #include <string.h>  
+// #include <netdb.h>   
+// #include <ctype.h>   
+// #include <sys/select.h>
+// #include <sys/socket.h>
+// #include <netinet/in.h>
+// #include <netinet/tcp.h>
+// #include <arpa/inet.h>
+// #include <sys/un.h>  
+// #include <time.h>    
+// #include <sys/time.h>
 #include "include/common.h"
 #include "fileio.h"
 #include "routine.h"
