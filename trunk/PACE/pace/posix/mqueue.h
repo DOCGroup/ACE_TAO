@@ -16,7 +16,12 @@
 #ifndef PACE_MQUEUE_H_POSIX
 #define PACE_MQUEUE_H_POSIX
 
-#include <mqueue.h>
+#if PACE_LINUX
+# include "pace/emulation/mqueue.h"
+#else
+# include <mqueue.h>
+#endif /* PACE_LINUX */
+
 #include "pace/signal.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
@@ -25,12 +30,20 @@ extern "C" {
 
 #ifndef PACE_MQD_T
 #define PACE_MQD_T
-typedef mqd_t pace_mqd_t;
+# if PACE_LINUX
+  typedef pace_emu_mqd_t pace_mqd_t;
+# else
+  typedef mqd_t pace_mqd_t;
+# endif /* PACE_LINUX */
 #endif /* PACE_MQD_T */
 
 #ifndef PACE_MQ_ATTR
 #define PACE_MQ_ATTR
-typedef struct mq_attr pace_mq_attr;
+# if PACE_LINUX
+  typedef struct pace_emu_mq_attr pace_mq_attr;
+# else
+  typedef struct mq_attr pace_mq_attr;
+# endif /* PACE_LINUX */
 #endif /* PACE_MQ_ATTR */
 
 #if defined (PACE_HAS_CPLUSPLUS)

@@ -217,8 +217,14 @@ int
 pace_pthread_condattr_getpshared (const pace_pthread_condattr_t * attr,
                                   int * pshared)
 {
-  return pthread_condattr_getpshared (PACE_NONCONST_ARG_CAST (pace_pthread_condattr_t *) attr,
-                                      pshared);
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (attr);
+  PACE_UNUSED_ARG (pshared);
+  return -1;
+#else
+  return pthread_condattr_getpshared (PACE_NONCONST_ARG_CAST (pace_pthread_condattr_t *) attr, pshared);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
@@ -233,7 +239,14 @@ int
 pace_pthread_condattr_setpshared (pace_pthread_condattr_t * attr,
                                  int pshared)
 {
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (attr);
+  PACE_UNUSED_ARG (pshared);
+  return -1;
+#else
   return pthread_condattr_setpshared (attr, pshared);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
@@ -325,11 +338,16 @@ int
 pace_pthread_mutex_getprioceiling (pace_pthread_mutex_t * mutex,
                                    int * prioceiling)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (mutex);
+  PACE_UNUSED_ARG (prioceiling);
+  return -1;
+#elif PACE_LYNXOS
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 #else  /* ! PACE_LYNXOS */
   return pthread_mutex_getprioceiling (mutex, prioceiling);
-#endif /* ! PACE_LYNXOS */
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
@@ -353,11 +371,17 @@ pace_pthread_mutex_setprioceiling (pace_pthread_mutex_t * mutex,
                                    int prioceiling,
                                    int * old_ceiling)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (mutex);
+  PACE_UNUSED_ARG (prioceiling);
+  PACE_UNUSED_ARG (old_ceiling);
+  return -1;
+#elif PACE_LYNXOS
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 #else  /* ! PACE_LYNXOS */
   return pthread_mutex_setprioceiling (mutex, prioceiling, old_ceiling);
-#endif /* ! PACE_LYNXOS */
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
@@ -386,7 +410,14 @@ int
 pace_pthread_mutexattr_getprioceiling (pace_pthread_mutexattr_t * attr,
                                        int * prioceiling)
 {
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (attr);
+  PACE_UNUSED_ARG (prioceiling);
+  return -1;
+#else
   return pthread_mutexattr_getprioceiling (attr, prioceiling);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
@@ -394,8 +425,14 @@ int
 pace_pthread_mutexattr_getprotocol (const pace_pthread_mutexattr_t * attr,
                                     int * protocol)
 {
-  return pthread_mutexattr_getprotocol (PACE_NONCONST_ARG_CAST (pace_pthread_mutexattr_t *) attr,
-                                        protocol);
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (attr);
+  PACE_UNUSED_ARG (protocol);
+  return -1;
+#else
+  return pthread_mutexattr_getprotocol (PACE_NONCONST_ARG_CAST (pace_pthread_mutexattr_t *) attr, protocol);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
@@ -403,7 +440,14 @@ int
 pace_pthread_mutexattr_setprioceiling (pace_pthread_mutexattr_t * attr,
                                        int prioceiling)
 {
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (attr);
+  PACE_UNUSED_ARG (prioceiling);
+  return -1;
+#else
   return pthread_mutexattr_setprioceiling (attr, prioceiling);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
@@ -411,7 +455,14 @@ int
 pace_pthread_mutexattr_setprotocol (pace_pthread_mutexattr_t * attr,
                                     int protocol)
 {
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (attr);
+  PACE_UNUSED_ARG (protocol);
+  return -1;
+#else
   return pthread_mutexattr_setprotocol (attr, protocol);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
@@ -419,8 +470,14 @@ int
 pace_pthread_mutexattr_getpshared (const pace_pthread_mutexattr_t * attr,
                                    int * pshared)
 {
-  return pthread_mutexattr_getpshared (PACE_NONCONST_ARG_CAST (pace_pthread_mutexattr_t *) attr,
-                                       pshared);
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (attr);
+  PACE_UNUSED_ARG (pshared);
+  return -1;
+#else
+  return pthread_mutexattr_getpshared (PACE_NONCONST_ARG_CAST (pace_pthread_mutexattr_t *) attr, pshared);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
@@ -435,7 +492,14 @@ int
 pace_pthread_mutexattr_setpshared (pace_pthread_mutexattr_t * attr,
                                    int pshared)
 {
+#if PACE_LINUX
+  errno = ENOSYS;
+  PACE_UNUSED_ARG (attr);
+  PACE_UNUSED_ARG (pshared);
+  return -1;
+#else
   return pthread_mutexattr_setpshared (attr, pshared);
+#endif /* PACE_LINUX */
 }
 
 PACE_INLINE
