@@ -1,3 +1,10 @@
+Thu Nov 14 10:57:47 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* ace/OS.h (ace_timezone):
+
+	  Fixed broken implementation for Linux.  Call tzset() and then
+	  return the global "timezone" variable instead.  [Bug 1359]
+
 Thu Nov 14 12:19:51 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
