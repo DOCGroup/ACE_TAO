@@ -1,17 +1,24 @@
+Wed Mar 03 11:31:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added guideline to try to limit
+          the length of source code lines to less than 80 characters.
+          And, reverted to the previous version of the file.  The
+          last version was apparently committed by mistake.
+
 Wed Mar  3 09:35:20 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Memory_Pool.cpp (handle_signal): Added a check to see if the
-	  current mapping is up to date so that faults caused by other
-	  mappings will be passed on.  Thanks to
-	  Joseph Weihs <joseph-w@Orbotech.COM> for reporting this and for
-	  providing a fix.
+        * ace/Memory_Pool.cpp (handle_signal): Added a check to see if the
+          current mapping is up to date so that faults caused by other
+          mappings will be passed on.  Thanks to
+          Joseph Weihs <joseph-w@Orbotech.COM> for reporting this and for
+          providing a fix.
 
 Wed Mar  3 05:48:24 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/ACE.cpp (fork): Added an extra pair of parens within the
- 	  WIFE*() macros to work around GCC bugs.  Thanks to Alexandre
- 	  Karev <Alexandre.Karev@cern.ch> and Andre Folkers
- 	  <folkers@informatik.mu-leubeck.de> for reporting this.
+        * ace/ACE.cpp (fork): Added an extra pair of parens within the
+          WIFE*() macros to work around GCC bugs.  Thanks to Alexandre
+          Karev <Alexandre.Karev@cern.ch> and Andre Folkers
+          <folkers@informatik.mu-leubeck.de> for reporting this.
 
 Tue Mar  2 22:50:18 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
