@@ -175,7 +175,7 @@ run_client (u_short port,
 
   if (connector.connect (stream, to_server.get_remote_addr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"), ACE_TEXT ("connect_client")),
+                       ACE_TEXT ("%p\n"), ACE_TEXT ("connector.connect()")),
                       -1);
 
   ACE_TCHAR buf[MAXPATHLEN];
@@ -190,7 +190,7 @@ run_client (u_short port,
       if (stream.send (buf, slen) < slen)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("In connect_client, send")));
+                      ACE_TEXT ("In stream.send()")));
           status = -1;
           break;
         }
@@ -198,13 +198,13 @@ run_client (u_short port,
       if (stream.recv (buf, MAXPATHLEN) == -1)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("In connect_client, recv")));
+                      ACE_TEXT ("stream.recv()")));
           status = -1;
           break;
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("connect_client, got echo %s\n"),
+                  ACE_TEXT ("run_client(), got echo %s\n"),
                   buf));
     }
 
@@ -278,6 +278,7 @@ test_reactive (const ACE_TCHAR *prog,
                                                 &sport) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
 #else
+  ACE_UNUSED_ARG (connect_client);
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s -p%d -r"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_REACTIVE_CONNECTIONS,
@@ -362,6 +363,7 @@ test_concurrent (const ACE_TCHAR *prog,
                                                 &sport) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));
 #else
+  ACE_UNUSED_ARG (connect_client);
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s -p%d -m"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_MT_CONNECTIONS,
