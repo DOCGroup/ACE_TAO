@@ -17,7 +17,7 @@ use Cwd;
 use Env qw(ACE_ROOT PATH);
 
 ################################################################################
-if (!getopts ('ac:ds:t') || $opt_h) {
+if (!getopts ('ac:dos:t') || $opt_h) {
     print "auto_run_tests.pl [-a] [-c config] [-h] [-s sandbox] [-o] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";

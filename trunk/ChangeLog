@@ -1,3 +1,7 @@
+Wed Apr 16 11:34:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/auto_run_tests.pl: Fixed a typo.
+
 Wed Apr 16 08:41:27 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SString.h:
