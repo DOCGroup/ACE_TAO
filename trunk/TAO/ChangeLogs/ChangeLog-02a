@@ -1,7 +1,13 @@
+Mon Jan 31 19:44:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          More tweaking to get the templates to compile on every
+          platform.
+
 Mon Jan 31 21:32:14 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Event/lib/ECTest.dsp:
-	  Add the new files to the MSVC project file.
+        * orbsvcs/tests/Event/lib/ECTest.dsp:
+          Add the new files to the MSVC project file.
 
 Mon Jan 31 19:32:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
