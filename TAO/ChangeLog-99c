@@ -1,3 +1,26 @@
+Wed Jan 27 21:59:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  Added a new entry to the TAO_ORBSVCS macro, Event2, right now it
+	  is disabled by default.
+	  The makefile add a -DTAO_ORBSVCS_HAS_* for each entry in the
+	  TAO_ORBSVCS list.
+
+	* orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: 
+	  Use the TAO_ORBSVCS_HAS_* macros to instantiate only the needed
+	  templates.
+
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i: 
+	  A variable was not properly initialized.
+
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp: 
+	  Added missing template instantiations
+
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	  It can create an instance of the new EC for testing purposes.
+
 Wed Jan 27 19:59:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 

@@ -13,6 +13,8 @@
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/Module_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Null_Factory.h"
 #include "ECT_Throughput.h"
 
 ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
@@ -37,7 +39,8 @@ ECT_Throughput::ECT_Throughput (void)
     event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
     pid_file_name_ (0),
     active_count_ (0),
-    reactive_ec_ (0)
+    reactive_ec_ (0),
+    new_ec_ (0)
 {
 }
 
@@ -83,7 +86,8 @@ ECT_Throughput::run (int argc, char* argv[])
                   "  supplier Event A = <%d>\n"
                   "  supplier Event B = <%d>\n"
                   "  pid file name = <%s>\n"
-                  "  remote EC = <%d>\n",
+                  "  remote EC = <%d>\n"
+                  "  new EC = <%d>\n",
 
                   this->n_consumers_,
                   this->n_suppliers_,
@@ -95,7 +99,9 @@ ECT_Throughput::run (int argc, char* argv[])
                   this->event_b_,
 
                   this->pid_file_name_?this->pid_file_name_:"nil",
-                  this->reactive_ec_) );
+                  this->reactive_ec_,
+                  this->new_ec_
+                  ) );
 
       if (this->pid_file_name_ != 0)
         {
@@ -174,21 +180,49 @@ ECT_Throughput::run (int argc, char* argv[])
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 
-      // We pick the right module factory according to the command
-      // line options
-      TAO_Default_Module_Factory default_module_factory;
-      TAO_Reactive_Module_Factory reactive_module_factory;
+      // The factories must be destroyed *after* the EC, hence the
+      // auto_ptr declarations must go first....
+      auto_ptr<TAO_Module_Factory> module_factory;
+      auto_ptr<TAO_EC_Factory> ec_factory;
 
-      TAO_Module_Factory* module_factory = &default_module_factory;
-      if (this->reactive_ec_)
-        module_factory = &reactive_module_factory;
+      auto_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl;
+      if (this->new_ec_ == 0)
+        {
 
-      // Register Event_Service with Naming Service.
-      ACE_EventChannel ec_impl (1,
-                                ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                module_factory);
+          if (this->reactive_ec_ == 1)
+            {
+              module_factory = 
+                auto_ptr<TAO_Module_Factory> (new TAO_Reactive_Module_Factory);
+            }
+          else
+            {
+              module_factory = 
+                auto_ptr<TAO_Module_Factory> (new TAO_Default_Module_Factory);
+            }
+          
+          // Create the EC
+          ec_impl = 
+            auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
+                (new ACE_EventChannel (1,
+                                       ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+                                       module_factory.get ()));
+        }
+      else
+        {
+          ec_factory = 
+            auto_ptr<TAO_EC_Factory>(new TAO_EC_Null_Factory (root_poa.in ()));
+          
+          TAO_EC_Event_Channel* ec = 
+            new TAO_EC_Event_Channel (ec_factory.get ());
+          ec->activate (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          ec_impl =
+            auto_ptr<POA_RtecEventChannelAdmin::EventChannel> (ec);
+        }
+
       RtecEventChannelAdmin::EventChannel_var channel =
-        ec_impl._this (TAO_TRY_ENV);
+        ec_impl->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       poa_manager->activate (TAO_TRY_ENV);
@@ -231,10 +265,10 @@ ECT_Throughput::run (int argc, char* argv[])
       {
         // Deactivate the EC
         PortableServer::POA_var poa =
-          ec_impl._default_POA (TAO_TRY_ENV);
+          ec_impl->_default_POA (TAO_TRY_ENV);
         TAO_CHECK_ENV;
         PortableServer::ObjectId_var id =
-          poa->servant_to_id (&ec_impl, TAO_TRY_ENV);
+          poa->servant_to_id (ec_impl.get (), TAO_TRY_ENV);
         TAO_CHECK_ENV;
         poa->deactivate_object (id.in (), TAO_TRY_ENV);
         TAO_CHECK_ENV;
@@ -392,7 +426,7 @@ ECT_Throughput::dump_results (void)
 int
 ECT_Throughput::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dc:s:u:n:t:b:h:p:r");
+  ACE_Get_Opt get_opt (argc, argv, "dc:s:u:n:t:b:h:p:m:r");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -400,9 +434,37 @@ ECT_Throughput::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'r':
+          this->new_ec_ = 0;
           this->reactive_ec_ = 1;
           break;
 
+        case 'm':
+          if (ACE_OS::strcasecmp (get_opt.optarg, "rt") == 0)
+            {
+              this->new_ec_ = 0;
+              this->reactive_ec_ = 0;
+            }
+          else if (ACE_OS::strcasecmp (get_opt.optarg, "st") == 0)
+            {
+              this->new_ec_ = 0;
+              this->reactive_ec_ = 1;
+            }
+          else if (ACE_OS::strcasecmp (get_opt.optarg, "new") == 0)
+            {
+              this->new_ec_ = 1;
+              this->reactive_ec_ = 1;
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Unknown mode <%s> "
+                          "default is rt\n",
+                          get_opt.optarg));
+              this->new_ec_ = 0;
+              this->reactive_ec_ = 0;
+            }
+          break;
+	  
         case 'c':
           this->n_consumers_ = ACE_OS::atoi (get_opt.optarg);
           break;
@@ -525,3 +587,27 @@ ECT_Throughput::parse_args (int argc, char *argv [])
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;
+template class auto_ptr<POA_RtecScheduler::Scheduler>;
+template class ACE_Auto_Basic_Ptr<POA_RtecEventChannelAdmin::EventChannel>;
+template class auto_ptr<POA_RtecEventChannelAdmin::EventChannel>;
+template class ACE_Auto_Basic_Ptr<TAO_Module_Factory>;
+template class auto_ptr<TAO_Module_Factory>;
+template class ACE_Auto_Basic_Ptr<TAO_EC_Factory>;
+template class auto_ptr<TAO_EC_Factory>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>
+#pragma instantiate auto_ptr<POA_RtecScheduler::Scheduler>
+#pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecEventChannelAdmin::EventChannel>
+#pragma instantiate auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Module_Factory>
+#pragma instantiate auto_ptr<TAO_Module_Factory>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_EC_Factory>
+#pragma instantiate auto_ptr<TAO_EC_Factory>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
