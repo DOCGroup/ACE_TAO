@@ -7,14 +7,16 @@ ACE_RCSID(Stack_Recursion,
           Sender,
           "$Id$")
 
-Sender::Sender (void)
+Sender::Sender (CORBA::ORB_ptr orb)
   :  message_count_ (0)
   ,  byte_count_ (0)
+  ,  orb_ (CORBA::ORB::_duplicate (orb))
+  ,  is_done_ (0)
 {
 }
 
 void
-Sender::dump_results ()
+Sender::dump_results (void)
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
   ACE_DEBUG ((LM_DEBUG,
@@ -22,6 +24,12 @@ Sender::dump_results ()
               "Total bytes = %d\n",
               this->message_count_,
               this->byte_count_));
+}
+
+int
+Sender::is_done (void) const
+{
+  return this->is_done_;
 }
 
 CORBA::Boolean
@@ -61,4 +69,19 @@ Sender::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
+}
+
+void
+Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (this->is_done_ == 0)
+    {
+      ACE_GUARD (ACE_SYNCH_MUTEX,
+                 ace_mon,
+                 this->mutex_);
+
+      if (this->is_done_ == 0)
+        this->is_done_ = 1;
+    }
 }

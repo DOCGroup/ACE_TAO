@@ -25,10 +25,13 @@ class Sender
 {
 public:
   /// Constructor
-  Sender (void);
+  Sender (CORBA::ORB_ptr orb);
 
   /// Print out the results
   void dump_results (void);
+
+  /// Get the status of the flag..
+  int is_done (void) const;
 
   // = The skeleton methods
   virtual CORBA::Boolean get_data (CORBA::ULong size,
@@ -42,10 +45,16 @@ public:
   virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   ACE_SYNCH_MUTEX mutex_;
   CORBA::ULong message_count_;
   CORBA::ULong byte_count_;
+  CORBA::ORB_var orb_;
+
+  int is_done_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
