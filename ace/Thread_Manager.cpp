@@ -1266,6 +1266,20 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 {
   ACE_TRACE ("ACE_Thread_Manager::exit");
 
+#if defined (ACE_WIN32)
+  if (do_thr_exit)
+    {
+      // On Win32, if we really wants to exit from a thread, we must
+      // first  clean up the thread specific storage.  By doing so,
+      // ACE_Thread_Manager::exit will be called again with
+      // do_thr_exit = 0 and cleaning up the ACE_Cleanup_Info (but not
+      // exiting the thread.)  After the following call returns, we
+      // are safe to exit this thread.
+      delete ACE_Thread_Exit::instance ();
+      ACE_Thread::exit (status);
+    }
+#endif /* ACE_WIN32 */
+
   ACE_Cleanup_Info cleanup_info;
 
   // Just hold onto the guard while finding this thread's id and
@@ -1749,7 +1763,7 @@ ACE_Thread_Control::~ACE_Thread_Control (void)
 {
   ACE_TRACE ("ACE_Thread_Control::~ACE_Thread_Control");
 
-#if defined (ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS) || defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS) || defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32)
   this->exit (this->status_, 0);
 #else
   this->exit (this->status_, 1);

@@ -2557,7 +2557,12 @@ ACE_OS::thr_exit (void *status)
 # elif defined (ACE_HAS_WTHREADS)
     // Can't call it here because on NT, the thread is exited
     // directly by ACE_Thread_Adapter::invoke ().
-    // ACE_TSS_Cleanup::instance ()->exit (status);
+    //   ACE_TSS_Cleanup::instance ()->exit (status);
+
+    ACE_OS::cleanup_tss (0 /* not main thread */);
+    // @@ How can I tell if this is the main thread or not?
+
+    ::ExitThread ((DWORD) status);
 # elif defined (VXWORKS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);
