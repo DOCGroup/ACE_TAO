@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACE dynamic library"=.\ace\ace_dll.dsp - Package Owner=<4>
+Project: "ACE DLL"=.\ace\ace_dll.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ACE static library"=.\ace\ace_lib.dsp - Package Owner=<4>
+Project: "ACE LIB"=.\ace\ace_lib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -75,7 +75,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TAO"=.\TAO\tao\TAO.dsp - Package Owner=<4>
+Project: "TAO DLL"=.\TAO\tao\TAO.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -83,14 +83,11 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ACE dynamic library
-    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TAO Static"=.\TAO\tao\TAO_Static.dsp - Package Owner=<4>
+Project: "TAO LIB"=.\TAO\tao\TAO_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -98,9 +95,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ACE static library
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -115,6 +109,96 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ACE dynamic library
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_BE_DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL Compiler Static"=.\TAO\TAO_IDL\tao_idl_static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_BE_LIB
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_LIB
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_BE_DLL"=.\TAO\TAO_IDL\TAO_IDL_BE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_BE_LIB"=.\TAO\TAO_IDL\TAO_IDL_BE_LIB.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_LIB
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_FE_DLL"=.\TAO\TAO_IDL\TAO_IDL_FE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gperf_lib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_FE_LIB"=.\TAO\TAO_IDL\TAO_IDL_FE_LIB.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE LIB
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name gperf
@@ -191,3 +275,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
