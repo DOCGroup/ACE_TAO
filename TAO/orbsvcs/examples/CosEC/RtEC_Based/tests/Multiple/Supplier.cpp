@@ -131,10 +131,8 @@ Supplier::run (void)
   ACE_TRY
     {
       // Create an Any type to pass to the Cos EC.
-      CORBA::Any cany;
-      cany <<= CORBA::Long (50);
-      const CORBA::Any *any;
-      cany >>= any;
+      CORBA::Any any;
+      any <<= CORBA::Long (50);
 
       this->open (this->cos_ec_
                   ACE_ENV_ARG_PARAMETER);
@@ -151,7 +149,7 @@ Supplier::run (void)
            count != 0;
            count--)
         {
-          this->send_event (*any
+          this->send_event (any
                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }

@@ -1,3 +1,8 @@
+Mon Apr 07 14:11:02 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier:
+	  Corrected the code to populate the Any data with a payload. 
+	
 Mon Apr  7 11:56:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root.cpp (visit_root):
