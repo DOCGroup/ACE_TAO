@@ -395,8 +395,9 @@ public:
   /// Normalizes data in the top-level <Message_Block> to align with the base,
   /// i.e., it "shifts" the data pointed to by <rd_ptr> down to the <base> and
   /// then readjusts <rt_ptr> to point to <base> and <wr_ptr> to point
-  /// to <base> + the length of the moved data.
-  void crunch (void);
+  /// to <base> + the length of the moved data.  Returns -1 and does
+  /// nothing if the <rd_ptr> is > <wr_ptr>, else 0 on success.
+  int crunch (void);
 
   /// Resets the Message Block data to contain nothing, i.e., sets the
   /// read and write pointers to align with the base.
