@@ -47,8 +47,11 @@ public:
   /// Destructor
   ~TAO_NS_Proxy ();
 
-  /// Init
-  void init (TAO_NS_Admin *admin ACE_ENV_ARG_DECL);
+  /// Activate
+  virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+
+  /// Deactivate
+  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Obtain the Proxy's subscribed types.
   void subscribed_types (TAO_NS_EventTypeSeq& subscribed_types ACE_ENV_ARG_DECL);

@@ -19,6 +19,18 @@ TAO_Notify_StructuredPushSupplier::~TAO_Notify_StructuredPushSupplier ()
 }
 
 void
+TAO_Notify_StructuredPushSupplier::name (ACE_CString& name)
+{
+  this->name_ = name;
+}
+
+const ACE_CString&
+TAO_Notify_StructuredPushSupplier::name (void)
+{
+  return this->name_;
+}
+
+void
 TAO_Notify_StructuredPushSupplier::init
    (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED)
 {
@@ -29,6 +41,25 @@ CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr
 TAO_Notify_StructuredPushSupplier::get_proxy_consumer (void)
 {
   return proxy_consumer_.in ();
+}
+
+
+void
+TAO_Notify_StructuredPushSupplier::connect (CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr proxy, CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL)
+{
+  // Activate the supplier with the default_POA_.
+  CosNotifyComm::StructuredPushSupplier_var supplier_ref =
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  proxy->connect_structured_push_supplier (supplier_ref.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+  // Give ownership to POA.
+  this->_remove_ref ();
+
+  // save the proxy
+  this->proxy_consumer_ = CosNotifyChannelAdmin::StructuredProxyPushConsumer::_duplicate (proxy);
+  this->proxy_consumer_id_ = proxy_id;
 }
 
 void

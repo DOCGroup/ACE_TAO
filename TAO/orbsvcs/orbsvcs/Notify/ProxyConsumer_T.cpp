@@ -10,7 +10,7 @@
 #include "ProxyConsumer_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_ProxyConsumer_T, "$id$")
+ACE_RCSID(Notify, TAO_NS_ProxyConsumer_T, "$Id$")
 
 #include "Event_Manager.h"
 

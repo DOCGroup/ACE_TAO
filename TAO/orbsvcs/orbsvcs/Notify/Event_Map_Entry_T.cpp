@@ -9,7 +9,7 @@
 #include "Event_Map_Entry_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Event_Map_Entry_T, "$id$")
+ACE_RCSID(Notify, TAO_NS_Event_Map_Entry_T, "$Id$")
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Properties.h"

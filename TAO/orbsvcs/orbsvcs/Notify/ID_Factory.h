@@ -35,7 +35,7 @@ public:
   TAO_NS_ID_Factory (void);
 
   /// Destructor
-  ~TAO_NS_ID_Factory ();  
+  ~TAO_NS_ID_Factory ();
 
   TAO_NS_Object::ID id (void);
 

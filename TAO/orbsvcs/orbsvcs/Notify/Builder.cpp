@@ -42,7 +42,8 @@ class TAO_NS_Proxy_Builder_T
 {
 public:
   PROXY_PTR
-  build (PARENT *parent, CosNotifyChannelAdmin::ProxyID_out proxy_id ACE_ENV_ARG_DECL)
+  build (PARENT *parent, CosNotifyChannelAdmin::ProxyID_out proxy_id
+         , const CosNotification::QoSProperties & initial_qos ACE_ENV_ARG_DECL)
   {
     PROXY_VAR proxy_ret;
 
@@ -55,6 +56,9 @@ public:
     PortableServer::ServantBase_var servant (proxy);
 
     proxy->init (parent ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (proxy_ret._retn ());
+
+    proxy->set_qos (initial_qos ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (proxy_ret._retn ());
 
     CORBA::Object_var obj = proxy->activate (proxy ACE_ENV_ARG_PARAMETER);
@@ -284,30 +288,31 @@ TAO_NS_Builder::build_supplier_admin (TAO_NS_EventChannel* ec, CosNotifyChannelA
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_NS_Builder::build_proxy(TAO_NS_SupplierAdmin* sa
-                                                  , CosNotifyChannelAdmin::ClientType ctype
-                                                  , CosNotifyChannelAdmin::ProxyID_out proxy_id
-                                                  ACE_ENV_ARG_DECL)
+                            , CosNotifyChannelAdmin::ClientType ctype
+                            , CosNotifyChannelAdmin::ProxyID_out proxy_id
+                            , const CosNotification::QoSProperties & initial_qos
+                            ACE_ENV_ARG_DECL)
 {
   switch (ctype)
     {
     case CosNotifyChannelAdmin::ANY_EVENT:
       {
         TAO_NS_ProxyPushConsumer_Builder pb;
-        return pb.build (sa, proxy_id ACE_ENV_ARG_PARAMETER);
+        return pb.build (sa, proxy_id, initial_qos ACE_ENV_ARG_PARAMETER);
       }
     break;
 
     case CosNotifyChannelAdmin::STRUCTURED_EVENT:
       {
         TAO_NS_StructuredProxyPushConsumer_Builder pb;
-        return pb.build (sa, proxy_id ACE_ENV_ARG_PARAMETER);
+        return pb.build (sa, proxy_id, initial_qos ACE_ENV_ARG_PARAMETER);
       }
     break;
 
     case CosNotifyChannelAdmin::SEQUENCE_EVENT:
      {
        TAO_NS_SequenceProxyPushConsumer_Builder pb;
-       return pb.build (sa, proxy_id ACE_ENV_ARG_PARAMETER);
+       return pb.build (sa, proxy_id, initial_qos ACE_ENV_ARG_PARAMETER);
      }
       break;
 
@@ -321,6 +326,7 @@ CosNotifyChannelAdmin::ProxySupplier_ptr
 TAO_NS_Builder::build_proxy(TAO_NS_ConsumerAdmin* ca
                             , CosNotifyChannelAdmin::ClientType ctype
                             , CosNotifyChannelAdmin::ProxyID_out proxy_id
+                            , const CosNotification::QoSProperties & initial_qos
                             ACE_ENV_ARG_DECL)
 {
   switch (ctype)
@@ -328,21 +334,21 @@ TAO_NS_Builder::build_proxy(TAO_NS_ConsumerAdmin* ca
     case CosNotifyChannelAdmin::ANY_EVENT:
       {
         TAO_NS_ProxyPushSupplier_Builder pb;
-        return pb.build (ca, proxy_id ACE_ENV_ARG_PARAMETER);
+        return pb.build (ca, proxy_id, initial_qos ACE_ENV_ARG_PARAMETER);
       }
       break;
 
     case CosNotifyChannelAdmin::STRUCTURED_EVENT:
       {
         TAO_NS_StructuredProxyPushSupplier_Builder pb;
-        return pb.build (ca, proxy_id ACE_ENV_ARG_PARAMETER);
+        return pb.build (ca, proxy_id, initial_qos ACE_ENV_ARG_PARAMETER);
       }
     break;
 
     case CosNotifyChannelAdmin::SEQUENCE_EVENT:
       {
         TAO_NS_SequenceProxyPushSupplier_Builder pb;
-        return pb.build (ca, proxy_id ACE_ENV_ARG_PARAMETER);
+        return pb.build (ca, proxy_id, initial_qos ACE_ENV_ARG_PARAMETER);
       }
       break;
 
@@ -359,7 +365,9 @@ TAO_NS_Builder::build_proxy (TAO_NS_ConsumerAdmin* ca ACE_ENV_ARG_DECL)
 
   TAO_NS_CosEC_ProxyPushSupplier_Builder pb;
 
-  return pb.build (ca, proxy_id ACE_ENV_ARG_PARAMETER);
+  CosNotification::QoSProperties initial_qos;
+
+  return pb.build (ca, proxy_id, initial_qos ACE_ENV_ARG_PARAMETER);
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
@@ -369,7 +377,9 @@ TAO_NS_Builder::build_proxy (TAO_NS_SupplierAdmin* sa ACE_ENV_ARG_DECL)
 
   TAO_NS_CosEC_ProxyPushConsumer_Builder pb;
 
-  return pb.build (sa, proxy_id ACE_ENV_ARG_PARAMETER);
+  CosNotification::QoSProperties initial_qos;
+
+  return pb.build (sa, proxy_id, initial_qos ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -409,7 +419,7 @@ TAO_NS_Builder::apply_thread_pool_concurrency (TAO_NS_Object& object, const Noti
 }
 
 void
-TAO_NS_Builder::apply_lane_concurrency (TAO_NS_Object& /*object*/, const NotifyExt::ThreadPoolLanesParams& /*tpl_params*/ ACE_ENV_ARG_DECL)
+TAO_NS_Builder::apply_lane_concurrency (TAO_NS_Object& object, const NotifyExt::ThreadPoolLanesParams& /*tpl_params*/ ACE_ENV_ARG_DECL)
 {
   // No lane support
   ACE_THROW (CORBA::NO_IMPLEMENT ());

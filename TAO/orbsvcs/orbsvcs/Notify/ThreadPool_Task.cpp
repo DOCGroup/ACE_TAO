@@ -6,7 +6,7 @@
 #include "ThreadPool_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_ThreadPool_Task, "$Id$")
+ACE_RCSID(Notify, TAO_NS_ThreadPool_Task, "$Id$")
 
 #include "tao/debug.h"
 #include "Properties.h"

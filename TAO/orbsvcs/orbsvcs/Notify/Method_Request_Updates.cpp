@@ -6,7 +6,7 @@
 #include "Method_Request_Updates.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Method_Request_Updates, "$id$")
+ACE_RCSID(Notify, TAO_NS_Method_Request_Updates, "$Id$")
 
 #include "tao/debug.h"
 #include "Proxy.h"

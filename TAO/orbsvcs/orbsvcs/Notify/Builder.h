@@ -80,6 +80,7 @@ public:
   build_proxy (TAO_NS_SupplierAdmin* sa
                , CosNotifyChannelAdmin::ClientType ctype
                , CosNotifyChannelAdmin::ProxyID_out proxy_id
+               , const CosNotification::QoSProperties & initial_qos
                ACE_ENV_ARG_DECL);
 
   /// Build ProxySupplier.
@@ -87,6 +88,7 @@ public:
   build_proxy (TAO_NS_ConsumerAdmin* ca
                , CosNotifyChannelAdmin::ClientType ctype
                , CosNotifyChannelAdmin::ProxyID_out proxy_id
+               , const CosNotification::QoSProperties & initial_qos
                ACE_ENV_ARG_DECL);
 
   /// Build CosEC style ProxySupplier.

@@ -11,7 +11,7 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
-ACE_RCSID(RT_Notify, TAO_CosNotify_Service, "$Id$")
+ACE_RCSID(Notify, TAO_CosNotify_Service, "$Id$")
 
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)
   : factory_ (0)

@@ -15,7 +15,7 @@
 #include "Container_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Container_T, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Container_T, "$Id$")
 
 template<class TYPE>
 TAO_NS_Container_T<TYPE>::TAO_NS_Container_T (void)

@@ -47,10 +47,18 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_StructuredPushConsumer : public POA_CosN
   void init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
   // Saves the POA ref.
 
+  // Accessor to set/get our name.
+  void name (ACE_CString& name);
+  const ACE_CString& name (void);
+
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
   // Activates this servant with the POA supplied in init.
   // Creates a new proxy supplier via the <consumer_admin> supplied and connects
   // to it.
+
+  void connect (CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr proxy, CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
+  // Activates this servant with the POA supplied in init.
+  /// Connect to given proxy
 
   virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.
@@ -65,6 +73,13 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_StructuredPushConsumer : public POA_CosN
   virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 protected:
   // = Data Members
+
+  /// Lock to serialize access to data members.
+  TAO_SYNCH_MUTEX lock_;
+
+  /// My name.
+  ACE_CString name_;
+
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
   // The proxy that we are connected to.
 

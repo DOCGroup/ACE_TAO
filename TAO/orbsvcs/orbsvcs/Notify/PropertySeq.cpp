@@ -6,7 +6,7 @@
 #include "PropertySeq.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_PropertySeq, "$id$")
+ACE_RCSID(Notify, TAO_NS_PropertySeq, "$Id$")
 
 TAO_NS_PropertySeq::TAO_NS_PropertySeq (void)
 {

@@ -17,7 +17,7 @@
 #include "Find_Worker_T.h"
 #include "Seq_Worker_T.h"
 
-ACE_RCSID(RT_Notify, TAO_NS_EventChannel, "$Id$")
+ACE_RCSID(Notify, TAO_NS_EventChannel, "$Id$")
 
 typedef TAO_NS_Find_Worker_T<TAO_NS_ConsumerAdmin
                              , CosNotifyChannelAdmin::ConsumerAdmin

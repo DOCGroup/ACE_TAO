@@ -32,8 +32,7 @@ TAO_NS_ProxySupplier::~TAO_NS_ProxySupplier ()
 void
 TAO_NS_ProxySupplier::init (TAO_NS_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Proxy::init (consumer_admin ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  TAO_NS_Object::init (consumer_admin);
 
   this->consumer_admin_ = consumer_admin;
 

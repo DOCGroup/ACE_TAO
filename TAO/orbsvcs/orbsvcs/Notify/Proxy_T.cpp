@@ -9,7 +9,7 @@
 #include "Proxy_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Proxy_T, "$id$")
+ACE_RCSID(Notify, TAO_NS_Proxy_T, "$Id$")
 
 template <class SERVANT_TYPE>
 TAO_NS_Proxy_T<SERVANT_TYPE>::TAO_NS_Proxy_T (void)

@@ -8,7 +8,7 @@
 #include "Refcountable.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Refcountable, "$Id$")
+ACE_RCSID(Notify, TAO_NS_Refcountable, "$Id$")
 
 TAO_NS_Refcountable::TAO_NS_Refcountable (void)
   :refcount_ (1)

@@ -1,4 +1,5 @@
 /* -*- C++ -*- $Id$ */
+
 #include "FilterAdmin.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 
