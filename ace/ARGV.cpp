@@ -10,7 +10,7 @@
 #include "ace/ARGV.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_ALLOC_HOOK_DEFINE(ACE_ARGV)
+ACE_ALLOC_HOOK_DEFINE (ACE_ARGV)
 
 void
 ACE_ARGV::dump (void) const
@@ -28,13 +28,15 @@ ACE_ARGV::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// Creates this->argv_ out of this->buf_.  New memory is allocated
-// for each element of the array.  This is used by the array-to-string
-// style constructor and for creating this->argv_ when in iterative mode.
+// Creates this->argv_ out of this->buf_.  New memory is allocated for
+// each element of the array.  This is used by the array-to-string
+// style constructor and for creating this->argv_ when in iterative
+// mode.
+
 void
-ACE_ARGV::string_to_array()
+ACE_ARGV::string_to_array (void)
 {
-  ACE_TRACE("ACE_ARGV::string_to_array");
+  ACE_TRACE ("ACE_ARGV::string_to_array");
 
   // Reset the number of arguments
   this->argc_ = 0;
@@ -132,8 +134,7 @@ ACE_ARGV::string_to_array()
 }
 
 
-
-ACE_ARGV::ACE_ARGV (char buf[], 
+ACE_ARGV::ACE_ARGV (const char buf[],
 		    int substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     state_ (TO_PTR_ARRAY),
@@ -144,15 +145,15 @@ ACE_ARGV::ACE_ARGV (char buf[],
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV char[] to char *[]");
 
-  if ((buf == 0) || (buf[0]==0))
+  if (buf == 0 || buf[0] == 0)
     return;
 
   // Make an internal copy of the string
-  ACE_NEW(this->buf_, char[ACE_OS::strlen(buf) + 1]);
-  ACE_OS::strcpy(this->buf_, buf);
+  ACE_NEW (this->buf_, char[ACE_OS::strlen (buf) + 1]);
+  ACE_OS::strcpy (this->buf_, buf);
 
   // Create this->argv_ 
-  this->string_to_array();
+  this->string_to_array ();
 }
 
 ACE_ARGV::ACE_ARGV (char *argv[],
@@ -220,7 +221,7 @@ ACE_ARGV::ACE_ARGV (char *argv[],
   *end = '\0';
 }
 
-ACE_ARGV::ACE_ARGV(int substitute_env_args)
+ACE_ARGV::ACE_ARGV (int substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     state_ (ITERATIVE),
     argc_ (0),
@@ -230,11 +231,11 @@ ACE_ARGV::ACE_ARGV(int substitute_env_args)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV Iterative");
 
-  // Nothing to do yet -- the user puts in arguments via add()
+  // Nothing to do yet -- the user puts in arguments via add ()
 };
 
 int
-ACE_ARGV::add(const char *next_arg)
+ACE_ARGV::add (const char *next_arg)
 {
   // Only allow this to work in the "iterative" verion -- the
   // ACE_ARGVs created with the one argument constructor.
@@ -242,24 +243,23 @@ ACE_ARGV::add(const char *next_arg)
     return -1;
 
   // Put the new argument at the end of the queue
-  if (this->queue_.enqueue_tail ((char *)next_arg) < 0) {
-    ACE_ERROR ((LM_ERROR, "Can't add more to ARGV queue"));
-    return -1;
-  }
+  if (this->queue_.enqueue_tail ((char *) next_arg) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Can't add more to ARGV queue"), -1);
 
-  this->length_ += ACE_OS::strlen(next_arg);
+  this->length_ += ACE_OS::strlen (next_arg);
 
   this->argc_++;
 
-  // Wipe argv_ and buf_ away so that they will be recreated if
-  // the user calls argv() or buf().
-  if (this->argv_ != 0) {
-    for (int i = 0; this->argv_[i] != 0; i++)
-      ACE_OS::free ((void *) this->argv_[i]);
+  // Wipe argv_ and buf_ away so that they will be recreated if the
+  // user calls argv () or buf ().
+  if (this->argv_ != 0) 
+    {
+      for (int i = 0; this->argv_[i] != 0; i++)
+	ACE_OS::free ((void *) this->argv_[i]);
 
-    delete [] this->argv_;
-    this->argv_ = 0;
-  }
+      delete [] this->argv_;
+      this->argv_ = 0;
+    }
 
   delete [] this->buf_;
   this->buf_ = 0;
@@ -285,7 +285,7 @@ ACE_ARGV::~ACE_ARGV (void)
 // "iterative" mode.
 
 int
-ACE_ARGV::create_buf_from_queue(void)
+ACE_ARGV::create_buf_from_queue (void)
 {
   ACE_TRACE ("ACE_ARGV::create_buf_from_queue");
 
@@ -295,35 +295,35 @@ ACE_ARGV::create_buf_from_queue(void)
 
   delete [] this->buf_;
 
-  ACE_NEW_RETURN(this->buf_, char[this->length_ + this->argc_], -1);
+  ACE_NEW_RETURN (this->buf_, char[this->length_ + this->argc_], -1);
 
   // Get an iterator over the queue
-  ACE_Unbounded_Queue_Iterator<char *> iter(this->queue_);
+  ACE_Unbounded_Queue_Iterator<char *> iter (this->queue_);
 
   char **arg;
   char *ptr = this->buf_;
   size_t len;
   int more = 0;
 
-  while (!iter.done()) {
+  while (!iter.done ()) 
+    {
+      // Get next argument from the queue
+      iter.next (arg);
 
-    // Get next argument from the queue
-    iter.next(arg);
+      more = iter.advance ();
 
-    more = iter.advance();
+      len = ACE_OS::strlen (*arg);
 
-    len = ACE_OS::strlen(*arg);
+      // Copy the argument into buf_
+      ACE_OS::memcpy ((void *) ptr, (const void *) (*arg), len);
 
-    // Copy the argument into buf_
-    ACE_OS::memcpy((void *)ptr, (const void *)(*arg), len);
+      // Move the pointer down
+      ptr += len;
 
-    // Move the pointer down
-    ptr += len;
-
-    // Put in an argument separating space
-    if (more != 0) 
-      *ptr++ = ' ';
-  }
+      // Put in an argument separating space
+      if (more != 0) 
+	*ptr++ = ' ';
+    }
 
   // Put in the null terminator
   *ptr = 0;
