@@ -5499,7 +5499,7 @@ public:
   // structures for TSS keys.
 
 #if defined (CHORUS)
-  KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
+  static KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
   // This is used to map an actor's id into a KnCap for killing and
   // waiting actors.
 #endif /* CHORUS */
