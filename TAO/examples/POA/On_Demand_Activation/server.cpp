@@ -65,36 +65,36 @@ write_iors_to_file (const char *first_ior,
 
   FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
   FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
-  
-  if (output_file_1 == 0 || 
+
+  if (output_file_1 == 0 ||
       output_file_2 == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s\n", 
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s\n",
                        ior_output_file_1,
-                       ior_output_file_2), 
+                       ior_output_file_2),
                       -1);
 
   int result = ACE_OS::fprintf (output_file_1,
-				"%s", 
+				"%s",
 				first_ior);
   if (result <= 0
       || ACE_static_cast(size_t,result) != ACE_OS::strlen (first_ior))
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_OS::fprintf failed while writing %s to %s\n",
                        first_ior,
                        ior_output_file_1),
                       -1);
-  
+
   result = ACE_OS::fprintf (output_file_2,
-                            "%s", 
+                            "%s",
                             second_ior);
   if (result <= 0
       || ACE_static_cast(size_t,result) != ACE_OS::strlen (second_ior))
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_OS::fprintf failed while writing %s to %s\n",
                        second_ior,
                        ior_output_file_2),
                       -1);
-  
+
   ACE_OS::fclose (output_file_1);
   ACE_OS::fclose (output_file_2);
 
@@ -104,8 +104,6 @@ write_iors_to_file (const char *first_ior,
 int
 main (int argc, char **argv)
 {
-  //  CORBA::Environment env;
-
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
@@ -117,7 +115,7 @@ main (int argc, char **argv)
       int result = parse_args (argc, argv);
       if (result != 0)
         return result;
-  
+
       // Get an Object reference to RootPOA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
@@ -141,7 +139,7 @@ main (int argc, char **argv)
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID, ACE_TRY_ENV);
       ACE_TRY_CHECK;
- 
+
       // Lifespan Policy
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT, ACE_TRY_ENV);
@@ -201,7 +199,7 @@ main (int argc, char **argv)
           policy->destroy (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      
+
 
       MyFooServantActivator servant_activator_impl (orb.in ());
       PortableServer::ServantActivator_var servant_activator =
@@ -213,7 +211,7 @@ main (int argc, char **argv)
 
       first_poa->set_servant_manager (servant_activator.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Create a reference with user created ID in firstPOA which uses
       // the MyFooServantActivator.
 
@@ -224,7 +222,7 @@ main (int argc, char **argv)
         first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-  
+
       MyFooServantLocator servant_locator_impl (orb.in ());
       PortableServer::ServantLocator_var servant_locator =
         servant_locator_impl._this (ACE_TRY_ENV);
@@ -235,7 +233,7 @@ main (int argc, char **argv)
       // secondPOA.
       second_poa->set_servant_manager (servant_locator.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Try to create a reference with user created ID in second_poa
       // which uses MyFooServantLocator.
 
@@ -246,16 +244,16 @@ main (int argc, char **argv)
         second_poa->create_reference_with_id (second_foo_oid.in (),
                                               "IDL:Foo:1.0", ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Invoke object_to_string on the references created in firstPOA and
       // secondPOA.
 
-      CORBA::String_var first_foo_ior = 
+      CORBA::String_var first_foo_ior =
         orb->object_to_string (first_foo.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-  
-      CORBA::String_var second_foo_ior = 
+
+      CORBA::String_var second_foo_ior =
         orb->object_to_string (second_foo.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -292,7 +290,6 @@ main (int argc, char **argv)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }
-
