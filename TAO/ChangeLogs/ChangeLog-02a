@@ -1,25 +1,41 @@
+Fri Aug 18 17:46:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/GIOP_Server_Request.h (TAO_GIOP_ServerRequest): Added a
+	  parameter which has a pointer to the  TAO_Transport, as one of
+	  the arguments in the constructor. One of the constructors
+	  already had this. The second did not. The second constructor is
+	  used when the TAO server receives the LocateRequest messages
+	  from a client. In that case TAO was trying to send a reply using
+	  the null transport that was causing server to core dump. But
+	  there exists one more problem with the tao_send_reply () method
+	  when a TAO server receives a LocateRequest message. This needs
+	  fixing and I need some info from Bruce Trask for that.
+
 Fri Aug 18 15:20:50 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
 	  Corrected ACE_RCSID string.
-	* orbsvcs/tests/Notify/Basic/Makefile: 
-	* orbsvcs/tests/Notify/Basic/README: 
+	* orbsvcs/tests/Notify/Basic/Makefile:
+	* orbsvcs/tests/Notify/Basic/README:
 	  Updated.
 
 	  Added 2 new tests:
 	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
 	* orbsvcs/tests/Notify/Basic/IdAssignment.h:
 	  Checks if id's are assigned correctly to EC and admin objects.
-	
-	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp: 
+
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
 	* orbsvcs/tests/Notify/Basic/LifeCycleTest.h:
 	  Creates and destroys EC and admin objects.
 
 Fri Aug 18 15:07:51 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
-	
+
 	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection.cpp:
 	  Temporarily reverted changes causing VxWorks warnings.
-	
+
 Fri Aug 18 13:33:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
@@ -28,7 +44,7 @@ Fri Aug 18 13:33:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Added check for imported node to generation of OBV
 	  class. A valuetype from one IDL file #included in another
 	  was getting its OBV class generated in each set of
-	  generated files. Thanks to Jean-Christophe Dubois 
+	  generated files. Thanks to Jean-Christophe Dubois
 	  <jcd@one.com> for reporting this bug.
 
 Fri Aug 18 10:20:22 2000  Priyanka Gontla  <pgontla@ece.uci.edu>

@@ -888,6 +888,7 @@ TAO_GIOP_Message_Lite::
                                              tmp_key,
                                              "_non_existent",
                                              dummy_output,
+                                             transport,
                                              orb_core,
                                              version,
                                              parse_error);

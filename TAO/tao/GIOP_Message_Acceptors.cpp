@@ -196,7 +196,7 @@ TAO_GIOP_Message_Acceptors::
       *this->output_ << object_ptr;
 
       int result = this->send_message (transport,
-                                   *this->output_);
+                                       *this->output_);
 
       if (result == -1)
       {
@@ -409,6 +409,7 @@ TAO_GIOP_Message_Acceptors::
                                              tmp_key,
                                              "_non_existent",
                                              dummy_output,
+                                             transport,
                                              orb_core,
                                              version,
                                              parse_error);

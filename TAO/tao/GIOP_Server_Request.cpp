@@ -91,6 +91,7 @@ TAO_GIOP_ServerRequest::
                             TAO_ObjectKey &object_key,
                             const ACE_CString &operation,
                             TAO_OutputCDR &output,
+                            TAO_Transport *transport,
                             TAO_ORB_Core *orb_core,
                             const TAO_GIOP_Version & /*version*/,
                             int &parse_error)
@@ -98,6 +99,7 @@ TAO_GIOP_ServerRequest::
         operation_ (operation),
         incoming_ (0),
         outgoing_ (&output),
+        transport_ (transport),
         response_expected_ (response_expected),
         sync_with_server_ (0),
         lazy_evaluation_ (0),
@@ -380,8 +382,8 @@ TAO_GIOP_ServerRequest::exception_type (void)
   return this->exception_type_;
 }
 
-void										
-TAO_GIOP_ServerRequest::send_no_exception_reply ()
+void
+TAO_GIOP_ServerRequest::send_no_exception_reply (void)
 {
   // Construct our reply generator
   TAO_Pluggable_Reply_Params reply_params;
@@ -424,8 +426,8 @@ TAO_GIOP_ServerRequest::send_no_exception_reply ()
 }
 
 
-void 
-TAO_GIOP_ServerRequest::tao_send_reply()
+void
+TAO_GIOP_ServerRequest::tao_send_reply(void)
 {
 
 
@@ -445,7 +447,7 @@ TAO_GIOP_ServerRequest::tao_send_reply()
     }
 }
 
-void 
+void
 TAO_GIOP_ServerRequest::tao_send_reply_exception(CORBA::Exception& ex)
 {
   int result = 0;
