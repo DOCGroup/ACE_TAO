@@ -152,7 +152,7 @@ Events_Test::create_EC (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   /****************************************************************/
-
+  /*
   CosNotification::AdminProperties admin(2);
   admin.length (2);
 
@@ -164,10 +164,10 @@ Events_Test::create_EC (CORBA::Environment &ACE_TRY_ENV)
   admin[1].name =
     CORBA::string_dup(CosNotification::MaxConsumers);
 
-  admin[1].value <<= (CORBA::Long)1;
+  admin[1].value <<= (CORBA::Long)2;
 
   ec_->set_admin (admin, ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK;*/
 
   /****************************************************************/
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
@@ -180,7 +180,7 @@ Events_Test::on_event_received (void)
 
   ACE_DEBUG ((LM_DEBUG, "event count = #%d\n", this->result_count_.value ()));
 
-  if (this->result_count_ == this->event_count_)
+  if (this->result_count_ == 2*this->event_count_)
     {
       ACE_DECLARE_NEW_CORBA_ENV;
       this->end_test (ACE_TRY_ENV);
@@ -242,7 +242,7 @@ Events_Test::run_test (CORBA::Environment &ACE_TRY_ENV)
 void
 Events_Test::end_test (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->shutdown (ACE_TRY_ENV);
+  this->shutdown (ACE_TRY_ENV); // break out of run
 }
 
 int
@@ -253,7 +253,7 @@ Events_Test::check_results (void)
   this->ec_->destroy (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (this->result_count_ == this->event_count_)
+  if (this->result_count_ == 2*this->event_count_)
     {
       ACE_DEBUG ((LM_DEBUG, "Events test success\n"));
       return 0;

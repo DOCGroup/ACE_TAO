@@ -57,13 +57,17 @@ Subscribe::run (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   if (g_result_count != EVENT_COUNT) // if we still need to wait for events, run the orb.
-    this->orb_->run (ACE_TRY_ENV);
+    { // if we still need to wait for events, run the orb.
+      while (!this->done_)
+        if (this->orb_->work_pending ())
+          this->orb_->perform_work ();
+    }
 }
 
 void
 Subscribe::done (void)
 {
-  this->orb_->shutdown ();
+  this->done_ = 1;
 }
 
 void

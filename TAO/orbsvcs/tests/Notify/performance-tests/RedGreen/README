@@ -47,21 +47,21 @@ RUNNING THE TEST:
 Test 1
 ------
 
-run $TAO_ROOT/orbsvcs/Notify_Service -ORBsvcconf reactive.conf
+run $TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -ORBsvcconf reactive.conf
 run RedGreen_Test 
 
 
 Test 2
 ------
 
-run $TAO_ROOT/orbsvcs/Notify_Service -ORBsvcconf lookup.conf
+run $TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -ORBsvcconf lookup.conf
 run RedGreen_Test 
 
 
 Test 3
 ------
 
-run $TAO_ROOT/orbsvcs/Notify_Service -ORBsvcconf listener.conf
+run $TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -ORBsvcconf listener.conf
 run RedGreen_Test 
 
 

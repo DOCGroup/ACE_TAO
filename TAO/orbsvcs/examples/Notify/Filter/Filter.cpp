@@ -15,6 +15,7 @@ ACE_RCSID(Filter, Filter, "$Id$")
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> g_result_count = 0;
 
 FilterClient::FilterClient (void)
+  :done_ (0)
 {
   g_result_count = 0;
   // No-Op.
@@ -61,13 +62,17 @@ FilterClient::run (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   if (g_result_count != EVENTS_EXPECTED_TO_RECEIVE)
-    this->orb_->run ();// if we still need to wait for events, run the orb.
+    { // if we still need to wait for events, run the orb.
+      while (!this->done_)
+        if (this->orb_->work_pending ())
+          this->orb_->perform_work ();
+    }
 }
 
 void
 FilterClient::done (void)
 {
-  this->orb_->shutdown ();
+  this->done_ = 1;
 }
 
 void
