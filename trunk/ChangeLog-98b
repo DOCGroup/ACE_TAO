@@ -1,3 +1,14 @@
+Thu Jun 18 18:46:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Timeprobe.h: 
+	* ace/Timeprobe_T.h: 
+	* ace/Timeprobe_T.cpp: 
+	  Added methods to print the absolute values, this can be used to
+	  mix the results of several processes: por example on Sparcs the
+	  high-res timer is a CPU register so the value is consistent
+	  across processes, there are some potential problems with
+	  multiple CPUs, but that's not our case.
+
 Thu Jun 18 16:25:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Threads/task_five.cpp (main): Extracted out the body of

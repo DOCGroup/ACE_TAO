@@ -64,6 +64,9 @@ public:
   void print_times (void);
   // Print the time probes. 
 
+  void print_absolute_times (void);
+  // Print the time probes. 
+
   void reset (void);
   // Reset the slots.  All old time probes will be lost.
 

@@ -134,6 +134,39 @@ ACE_Timeprobe<ACE_LOCK>::print_times (void)
     }
 }
 
+template <class ACE_LOCK> void
+ACE_Timeprobe<ACE_LOCK>::print_absolute_times (void)
+{
+  ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+
+  // Sort the event descriptions
+  this->sort_event_descriptions_i ();
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\nACE_Timeprobe; %d timestamps were recorded:\n",
+              this->current_size_));
+
+  if (this->current_size_ == 0)
+    return;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\n%-50.50s %8.8s %13.13s\n\n",
+              "Event",
+              "thread",
+              "stamp"));
+
+  for (u_long i = 0; i < this->current_size_; i++)
+    {
+      char buf[64];
+      ACE_OS::sprintf (buf, "%llu", this->timeprobes_[i].time_);
+      ACE_DEBUG ((LM_DEBUG,
+                  "%-50.50s %8.8x %13.13s\n",
+                  this->find_description_i (i),
+                  this->timeprobes_[i].thread_,
+                  buf));
+    }
+}
+
 template <class ACE_LOCK> const char *
 ACE_Timeprobe<ACE_LOCK>::find_description_i (u_long i)
 {
