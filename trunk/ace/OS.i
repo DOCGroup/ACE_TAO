@@ -5537,7 +5537,7 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 {
   // ACE_TRACE ("ACE_OS::thr_setcancelstate");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   int old;
   old = pthread_setcancel (new_state);
@@ -5566,7 +5566,11 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
   ACE_UNUSED_ARG (new_state);
   ACE_UNUSED_ARG (old_state);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
+  ACE_UNUSED_ARG (new_state);
+  ACE_UNUSED_ARG (old_state);
+  ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (new_state);
   ACE_UNUSED_ARG (old_state);
@@ -5712,13 +5716,14 @@ ACE_OS::thr_testcancel (void)
 {
   // ACE_TRACE ("ACE_OS::thr_testcancel");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   ::pthread_testcancel ();
 # elif defined (ACE_HAS_STHREADS)
 # elif defined (ACE_HAS_WTHREADS)
 # elif defined (VXWORKS)
+# else
   // no-op:  can't use ACE_NOTSUP_RETURN because there is no return value
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
 #endif /* ACE_HAS_THREADS */
 }
