@@ -33,7 +33,6 @@ TAO_NAMESPACE  POA_TAO_IOP
     TAO_IOR_Manipulation (void);
 
   public:
-    TAO_IOR_Manipulation (const TAO_IOR_Manipulation& rhs);
     virtual ~TAO_IOR_Manipulation (void);
 
 
@@ -117,6 +116,8 @@ TAO_NAMESPACE  POA_TAO_IOP
         TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList
       )) = 0;
 
+  private:
+    ACE_UNIMPLEMENTED_FUNC (TAO_IOR_Manipulation (const TAO_IOR_Manipulation& rhs))
   };
 
 

@@ -426,6 +426,10 @@ SOURCE=.\Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Profile.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.cpp
 # End Source File
 # Begin Source File
@@ -910,6 +914,10 @@ SOURCE=.\Priority_Mapping.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Profile.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.h
 # End Source File
 # Begin Source File
@@ -1235,6 +1243,10 @@ SOURCE=.\Pool_Per_Endpoint.i
 # Begin Source File
 
 SOURCE=.\Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
 
