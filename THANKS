@@ -61,8 +61,9 @@ Gabriele Trombetti <gabtromb at isis dot vanderbilt dot edu>
 Emre Turkay <turkaye at dre dot vanderbilt dot edu>
 Nanbor Wang <nanbor at cs dot wustl dot edu>
 Seth Widoff <sbw1 at cs dot wustl dot edu>
+Jules White <jules at dre dot vanderbilt dot edu>
 Torben Worm <tworm at cs dot wustl dot edu>
-Gabriele Trombetti <gabtromb at isis dot vanderbilt dot edu>
+
 
 I would also like to thank all the following people who have also
 contributed to ACE and TAO over the years:
@@ -1914,7 +1915,7 @@ Roger Sala <Roger dot Sala at gd-ais dot com>
 Raz Ben-Yehuda <raz dot b at corigin dot com>
 Geo Sebastian <geosebastian at onmobile dot com>
 Simon Massey  <simon.massey@prismtechnologies.com>
-Jules White <jules@dre.vanderbilt.edu>
+Rich Shapiro <rshapiro at bbn dot com> 
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
