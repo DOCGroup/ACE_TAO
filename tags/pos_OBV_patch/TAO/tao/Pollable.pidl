@@ -1,0 +1,54 @@
+//
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   Policy.pidl
+//
+// = DESCRIPTION
+//   This file was used to generate the code in Pollable{C,S,S_T}.{h,i,cpp}
+//   The code is then hand-crafted to compile it inside the ORB, avoid
+//   cyclic dependencies and enforce the locality constraints on
+//   certain objects.
+//
+// ================================================================
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  interface PollableSet;
+
+  interface Pollable {
+    boolean is_ready(in unsigned long timeout);
+
+    PollableSet create_pollable_set( );
+  };
+
+  interface DIIPollable : Pollable { };
+
+  interface PollableSet {
+
+    exception NoPossiblePollable { };
+    exception UnknownPollable { };
+
+    DIIPollable create_dii_pollable();
+
+    void add_pollable(in Pollable potential );
+
+    Pollable poll(in unsigned long timeout)
+      raises( NoPossiblePollable );
+
+    void remove(in Pollable potential )
+      raises( UnknownPollable );
+
+    unsigned short number_left( );
+  };
+
+};
+
+#pragma prefix ""

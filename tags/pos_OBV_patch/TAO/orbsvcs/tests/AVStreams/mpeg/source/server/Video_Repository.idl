@@ -1,0 +1,32 @@
+// ============================================================================
+// $Id$
+//
+// = FILENAME 
+//    Video_Repository.idl
+// 
+// = DESCRIPTION  
+//   Data Structures used by the Video_Repository to describe movies in
+//   the Video Repository.
+// 
+// = AUTHORS
+//    Seth Widoff <sbw1@cs.wustl.edu>
+//
+// ============================================================================
+
+module TAO_VR
+{
+  struct Movie
+  {
+    string name_;
+    string audio_filename_;
+    string video_filename_;                        
+    string description_;
+    //    string movie_format_;
+    //    unsigned long filesize_;
+    //    unsigned long duration_;
+    //    unsigned long framerate_;
+    //    unsigned long framesize_;    
+  };
+
+  typedef sequence<Movie> Movie_Info;
+};
