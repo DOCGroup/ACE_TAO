@@ -6,6 +6,8 @@ Sun Aug 30 07:44:54 1998  David L. Levine  <levine@cs.wustl.edu>
           with Sun CC on SunOS 5.5.  That removes all use of ACE_HAS_RTTI
           from ACE.
 
+        * netsvcs/lib/Name_Handler.h: added #include of ace/Singleton.h.
+
 Sun Aug 30 00:14:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Service_Object.cpp (fini): Make sure to check the
