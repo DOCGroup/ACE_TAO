@@ -35,7 +35,6 @@
 
 #include "tao/corbafwd.h"
 #include "tao/IOPC.h"
-#include "tao/Union.h"
 #include "tao/Object_KeyC.h"
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
@@ -144,7 +143,7 @@ TAO_NAMESPACE  GIOP
   class TargetAddress;
   class TargetAddress_var;
   
-  class TAO_Export TargetAddress: public TAO_Base_Union 
+  class TAO_Export TargetAddress
   {
   public:
     TargetAddress (void); // default constructor
@@ -186,14 +185,8 @@ TAO_NAMESPACE  GIOP
   void _reset (CORBA::Short, CORBA::Boolean);
   // Frees any allocated storage
 
-  virtual void *_discriminant (void);
-  // returns pointer to the discriminant
-
-  virtual void _reset (void);
+  void _reset (void);
   // calls the above reset with finalize=1
-
-  virtual void *_access (CORBA::Boolean flag);
-  // accesses the right data member. Also will allocate on TRUE flag
 
 }; // GIOP::TargetAddress
 

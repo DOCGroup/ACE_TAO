@@ -70,6 +70,7 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -208,15 +209,14 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -233,12 +233,16 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -345,7 +349,6 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -369,13 +372,13 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceS_T.i \
@@ -415,6 +418,7 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -554,15 +558,14 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -579,12 +582,16 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -691,7 +698,6 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -756,6 +762,7 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -894,15 +901,14 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -919,12 +925,16 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1031,7 +1041,6 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1065,7 +1074,6 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingDynamicS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Service_Type_Repository.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -1073,10 +1081,11 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
 
 .obj/Criteria_Evaluator.o .obj/Criteria_Evaluator.so .shobj/Criteria_Evaluator.o .shobj/Criteria_Evaluator.so: Criteria_Evaluator.cpp Criteria_Evaluator.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -1215,15 +1224,14 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1240,12 +1248,16 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1352,7 +1364,6 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1360,12 +1371,12 @@ LifeCycle_Service: $(addprefix $(VDIR),$(LIFECYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

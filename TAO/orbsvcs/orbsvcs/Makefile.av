@@ -390,7 +390,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -401,8 +400,8 @@ AVSVC_COMPONENTS:
  Property/property_export.h CosPropertyServiceC.i \
  CosPropertyServiceS_T.h CosPropertyServiceS_T.i \
  CosPropertyServiceS_T.cpp CosPropertyServiceS.i AVStreamsC.h \
- AV/AV_export.h AVStreamsC.i AVStreamsS_T.h AVStreamsS_T.i \
- AVStreamsS_T.cpp AVStreamsS.i
+ AVStreamsC.i AVStreamsS_T.h AVStreamsS_T.i AVStreamsS_T.cpp \
+ AVStreamsS.i
 
 .obj/Null_MediaCtrlS.o .obj/Null_MediaCtrlS.so .shobj/Null_MediaCtrlS.o .shobj/Null_MediaCtrlS.so: Null_MediaCtrlS.cpp Null_MediaCtrlS.h \
  Null_MediaCtrlC.h \
@@ -689,7 +688,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -984,7 +982,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1278,7 +1275,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1286,7 +1282,7 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- AV/AV_export.h CosPropertyServiceC.h Property/property_export.h \
+ CosPropertyServiceC.h Property/property_export.h \
  CosPropertyServiceC.i AVStreamsC.i
 
 .obj/Null_MediaCtrlC.o .obj/Null_MediaCtrlC.so .shobj/Null_MediaCtrlC.o .shobj/Null_MediaCtrlC.so: Null_MediaCtrlC.cpp Null_MediaCtrlC.h \
@@ -1573,7 +1569,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1867,7 +1862,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2215,7 +2209,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2552,7 +2545,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2948,7 +2940,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3330,7 +3321,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3711,7 +3701,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4091,7 +4080,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4432,7 +4420,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4814,7 +4801,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5194,7 +5180,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5540,7 +5525,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5884,7 +5868,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6318,7 +6301,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6721,7 +6703,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7059,7 +7040,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7437,7 +7417,6 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \

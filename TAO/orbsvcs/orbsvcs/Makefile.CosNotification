@@ -382,7 +382,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -679,7 +678,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -690,13 +688,12 @@ realclean: clean
  Notify/notify_export.h CosNotificationC.i CosNotificationS_T.h \
  CosNotificationS_T.i CosNotificationS_T.cpp CosNotificationS.i \
  CosNotifyFilterS.h CosNotifyCommS.h CosEventCommS.h CosEventCommC.h \
- CosEvent/event_export.h CosEventCommC.i CosEventCommS_T.h \
- CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
- CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
- CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i \
- CosNotifyFilterC.h CosNotifyFilterC.i CosNotifyFilterS_T.h \
- CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp CosNotifyFilterS.i \
- CosEventChannelAdminS.h CosEventChannelAdminC.h \
+ CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
+ CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i \
+ CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
+ CosNotifyCommS.i CosNotifyFilterC.h CosNotifyFilterC.i \
+ CosNotifyFilterS_T.h CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp \
+ CosNotifyFilterS.i CosEventChannelAdminS.h CosEventChannelAdminC.h \
  CosEventChannelAdminC.i CosEventChannelAdminS_T.h \
  CosEventChannelAdminS_T.i CosEventChannelAdminS_T.cpp \
  CosEventChannelAdminS.i CosNotifyChannelAdminC.h \
@@ -989,7 +986,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -999,11 +995,10 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  Notify/notify_export.h CosNotificationC.i CosNotificationS_T.h \
  CosNotificationS_T.i CosNotificationS_T.cpp CosNotificationS.i \
- CosEventCommS.h CosEventCommC.h CosEvent/event_export.h \
- CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
- CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i \
- CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
- CosNotifyCommS.i
+ CosEventCommS.h CosEventCommC.h CosEventCommC.i CosEventCommS_T.h \
+ CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
+ CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
+ CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i
 
 .obj/CosNotifyFilterS.o .obj/CosNotifyFilterS.so .shobj/CosNotifyFilterS.o .shobj/CosNotifyFilterS.so: CosNotifyFilterS.cpp CosNotifyFilterS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1290,7 +1285,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1300,13 +1294,12 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  Notify/notify_export.h CosNotificationC.i CosNotificationS_T.h \
  CosNotificationS_T.i CosNotificationS_T.cpp CosNotificationS.i \
- CosEventCommS.h CosEventCommC.h CosEvent/event_export.h \
- CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
- CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i \
- CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
- CosNotifyCommS.i CosNotifyFilterC.h CosNotifyFilterC.i \
- CosNotifyFilterS_T.h CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp \
- CosNotifyFilterS.i
+ CosEventCommS.h CosEventCommC.h CosEventCommC.i CosEventCommS_T.h \
+ CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
+ CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h \
+ CosNotifyCommS_T.i CosNotifyCommS_T.cpp CosNotifyCommS.i \
+ CosNotifyFilterC.h CosNotifyFilterC.i CosNotifyFilterS_T.h \
+ CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp CosNotifyFilterS.i
 
 .obj/CosNotificationC.o .obj/CosNotificationC.so .shobj/CosNotificationC.o .shobj/CosNotificationC.so: CosNotificationC.cpp CosNotificationC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1592,7 +1585,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1887,7 +1879,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1896,10 +1887,9 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
- CosNotifyFilterC.h CosNotifyCommC.h CosEventCommC.h \
- CosEvent/event_export.h CosEventCommC.i CosNotifyCommC.i \
- CosNotifyFilterC.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
- CosNotifyChannelAdminC.i
+ CosNotifyFilterC.h CosNotifyCommC.h CosEventCommC.h CosEventCommC.i \
+ CosNotifyCommC.i CosNotifyFilterC.i CosEventChannelAdminC.h \
+ CosEventChannelAdminC.i CosNotifyChannelAdminC.i
 
 .obj/CosNotifyCommC.o .obj/CosNotifyCommC.so .shobj/CosNotifyCommC.o .shobj/CosNotifyCommC.so: CosNotifyCommC.cpp CosNotifyCommC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2185,7 +2175,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2194,8 +2183,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
- CosEventCommC.h CosEvent/event_export.h CosEventCommC.i \
- CosNotifyCommC.i
+ CosEventCommC.h CosEventCommC.i CosNotifyCommC.i
 
 .obj/CosNotifyFilterC.o .obj/CosNotifyFilterC.so .shobj/CosNotifyFilterC.o .shobj/CosNotifyFilterC.so: CosNotifyFilterC.cpp CosNotifyFilterC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2481,7 +2469,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2490,8 +2477,8 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  Notify/notify_export.h CosNotifyCommC.h CosNotificationC.h \
- CosNotificationC.i CosEventCommC.h CosEvent/event_export.h \
- CosEventCommC.i CosNotifyCommC.i CosNotifyFilterC.i
+ CosNotificationC.i CosEventCommC.h CosEventCommC.i CosNotifyCommC.i \
+ CosNotifyFilterC.i
 
 .obj/Notify_Types.o .obj/Notify_Types.so .shobj/Notify_Types.o .shobj/Notify_Types.so: Notify/Notify_Types.cpp Notify/Notify_Types.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2778,7 +2765,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2791,7 +2777,6 @@ realclean: clean
  CosNotificationC.h \
  CosNotificationC.i \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i
@@ -3085,7 +3070,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3103,7 +3087,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -3423,7 +3406,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3446,7 +3428,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -3785,7 +3766,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3803,7 +3783,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -4129,7 +4108,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4142,7 +4120,6 @@ realclean: clean
  CosNotificationC.h \
  CosNotificationC.i \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
@@ -4473,7 +4450,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4491,7 +4467,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -4824,7 +4799,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4842,7 +4816,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -5173,7 +5146,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5191,7 +5163,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -5519,7 +5490,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5537,7 +5507,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -5865,7 +5834,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5883,7 +5851,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -6210,7 +6177,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6228,7 +6194,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -6559,7 +6524,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6577,7 +6541,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -6908,7 +6871,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6926,7 +6888,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -7256,7 +7217,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7274,7 +7234,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -7599,7 +7558,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7624,7 +7582,6 @@ realclean: clean
  CosNotificationS.i \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -7949,7 +7906,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7965,7 +7921,6 @@ realclean: clean
  CosNotificationS.i \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -8296,7 +8251,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8599,7 +8553,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8617,7 +8570,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -8937,7 +8889,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8955,7 +8906,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -9276,7 +9226,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -9294,7 +9243,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -9616,7 +9564,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -9634,7 +9581,6 @@ realclean: clean
  CosNotifyCommS.h \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -9955,7 +9901,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -9980,7 +9925,6 @@ realclean: clean
  CosNotificationS.i \
  CosEventCommS.h \
  CosEventCommC.h \
- CosEvent/event_export.h \
  CosEventCommC.i \
  CosEventCommS_T.h \
  CosEventCommS_T.i \
@@ -10287,7 +10231,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
