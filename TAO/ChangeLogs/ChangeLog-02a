@@ -1,3 +1,11 @@
+Thu Feb 28 20:25:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* tests/Makefile (DIRS):
+
+	  Conditionally compile tests that require the TAO_Messaging
+	  library on the "corba_messaging" make variable.  Fixes compile
+	  and link-time errors in builds that disable CORBA Messaging.
+
 Thu Feb 28 19:59:45 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/Makefile:
