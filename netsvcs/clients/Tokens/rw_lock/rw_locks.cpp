@@ -194,7 +194,6 @@ parse_args (int argc, char *argv[])
 			     "[-d debug]\n"
 			     "[-s sleep during writes]\n"
 			     "[-t <threads>\n", 1), -1);
-	  break;
 	}
     }
 

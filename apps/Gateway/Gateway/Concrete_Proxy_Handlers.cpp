@@ -490,10 +490,8 @@ Thr_Consumer_Proxy::svc (void)
       for (ACE_Message_Block *mb = 0; 
 	   this->msg_queue ()->dequeue_head (mb) != -1; 
 	   )
-	{
-	  if (this->send (mb) == -1)
-	    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "send failed"));
-	}
+	if (this->send (mb) == -1)
+	  ACE_ERROR ((LM_ERROR, "(%t) %p\n", "send failed"));
 
       ACE_ASSERT (errno == ESHUTDOWN);
 
@@ -517,6 +515,7 @@ Thr_Consumer_Proxy::svc (void)
 	}
     }
 
+  /* NOTREACHED */
   return 0;
 }
 
