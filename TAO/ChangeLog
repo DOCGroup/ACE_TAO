@@ -1,3 +1,8 @@
+Mon Jun 21 07:18:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+          Added missing includes for Tru64 no online build
+
 Mon Jun 21 23:25:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
