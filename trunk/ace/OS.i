@@ -1706,12 +1706,7 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
 #   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m),
-                                       ace_result_), int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (::pthread_mutex_destroy (m), int, -1);
-#     endif /* !ACE_USE_ADAPT_RETVAL */
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m),
                                        ace_result_), int, -1);
@@ -1751,12 +1746,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
 #   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), ace_result_),
-                     int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (pthread_mutex_lock (m), int, -1);
-#     endif /* !ACE_USE_ADAPT_RETVAL */
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), ace_result_),
                      int, -1);
@@ -1844,10 +1834,6 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
 #   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), ace_result_),
-                     int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
   int status = pthread_mutex_trylock (m);
   if (status == 1)
     status = 0;
@@ -1856,7 +1842,6 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
     errno = EBUSY;
   }
   return status;
-#     endif /* !ACE_USE_ADAPT_RETVAL */
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), ace_result_),
                      int, -1);
@@ -1972,12 +1957,7 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
 #   if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6))
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), ace_result_),
-                     int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (pthread_mutex_unlock (m), int, -1);
-#     endif /* !ACE_USE_ADAPT_RETVAL */
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), ace_result_),
                      int, -1);
@@ -2140,11 +2120,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
 #     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#       if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_destroy (cv), ace_result_), int, -1);
-#       else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (::pthread_cond_destroy (cv), int, -1);
-#       endif /* !ACE_USE_ADAPT_RETVAL */
 #     else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_destroy (cv), ace_result_), int, -1);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
@@ -2221,12 +2197,7 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
 #     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#       if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_signal (cv),ace_result_),
-                     int, -1);
-#       else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (::pthread_cond_signal (cv), int, -1);
-#       endif /* !ACE_USE_ADAPT_RETVAL */
 #     else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_signal (cv),ace_result_),
                      int, -1);
@@ -2247,13 +2218,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
 #     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#       if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_broadcast (cv),
-                                       ace_result_),
-                     int, -1);
-#       else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (::pthread_cond_broadcast (cv), int, -1);
-#       endif /* !ACE_USE_ADAPT_RETVAL */
 #     else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_broadcast (cv),
                                        ace_result_),
@@ -2277,7 +2242,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // ACE_TRACE ("ACE_OS::cond_wait");
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
-#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6) && !defined (ACE_USE_ADAPT_RETVAL)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::pthread_cond_wait (cv, external_mutex), int, -1);
 #     else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_wait (cv, external_mutex), ace_result_),
@@ -2309,7 +2274,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
 #   if defined (ACE_HAS_PTHREADS)
 
-#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6) && !defined (ACE_USE_ADAPT_RETVAL)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   if (timeout == 0)
     ACE_OSCALL (::pthread_cond_wait (cv, external_mutex),
                 int, -1, result);
@@ -5522,12 +5487,7 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#     if defined(ACE_USE_ADAPT_RETVAL)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_getspecific (key, data), ace_result_),
-                       int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL) */
     return pthread_getspecific(key, data);
-#     endif /* !ACE_USE_ADAPT_RETVAL */
 #   else /* this is ACE_HAS_PTHREADS_DRAFT7 or STD */
     *data = ::pthread_getspecific (key);
 #   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
@@ -5675,11 +5635,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#     if defined(ACE_USE_ADAPT_RETVAL)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_getspecific (key, data), ace_result_), int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
-        return ::pthread_getspecific (key, data);
-#     endif /* !ACE_USE_ADAPT_RETVAL */
+      return ::pthread_getspecific (key, data);
 #   else /* this is Draft 7 or STD */
       *data = pthread_getspecific (key);
 #   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
@@ -5735,12 +5691,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 # elif defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (thr_id);
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (waiter_id, status), ace_result_),
-                     int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (::pthread_join (waiter_id, status), int, -1);
-#     endif /* !ACE_USE_ADAPT_RETVAL */
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (waiter_id, status), ace_result_),
                      int, -1);
@@ -5780,12 +5731,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
                      int, -1);
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (thr_handle, status), ace_result_),
-                     int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (::pthread_join (thr_handle, status), int, -1);
-#     endif /* ACE_USE_ADAPT_RETVAL */
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (thr_handle, status), ace_result_),
                      int, -1);
@@ -5881,13 +5827,7 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
   return 0;
 #   elif defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_UNUSED_ARG(old_type);
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setintrtype (new_type),
-                                       ace_result_),
-                     int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (pthread_setintrtype (new_type), int, -1);
-#     endif /* ACE_USE_ADAPT_RETVAL */
 #   else /* this is draft 7 or std */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setcanceltype (new_type,
                                                                 old_type),
@@ -5913,13 +5853,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel (thr_id),
-                                       ace_result_),
-                     int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (::pthread_cancel (thr_id), int, -1);
-#     endif /* ACE_USE_ADAPT_RETVAL */
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel (thr_id),
                                        ace_result_),
@@ -6043,12 +5977,7 @@ ACE_OS::thr_sigsetmask (int how,
   // modifies the calling thread's mask only.  If this is not so for your
   // platform, define ACE_LACKS_PTHREAD_THR_SIGSETMASK.
 #   elif defined(ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigprocmask (how, nsm, osm),
-                                       ace_result_), int, -1);
-#     else /* ACE_USE_ADAPT_RETVAL */
   ACE_OSCALL_RETURN (::sigprocmask (how, nsm, osm), int, -1);
-#     endif /* !ACE_USE_ADAPT_RETVAL */
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
                                        ace_result_), int, -1);
@@ -6239,21 +6168,12 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   result = ::pthread_setprio(thr_id, prio);
   return (result == -1 ? -1 : 0);
 #   elif defined (ACE_HAS_PTHREADS_DRAFT6)
-#     if defined(ACE_USE_ADAPT_RETVAL)
-  pthread_attr_t  attr;
-  if (pthread_getschedattr(thr_id, &attr) != 0)
-    return -1;
-  if (pthread_attr_setprio (attr, prio) != 0)
-    return -1;
-  return pthread_setschedattr(thr_id, attr);
-#     else /* ACE_USE_ADAPT_RETVAL */
   pthread_attr_t  attr;
   if (pthread_getschedattr(thr_id, &attr) == -1)
     return -1;
   if (pthread_attr_setprio (attr, prio) == -1)
     return -1;
   return pthread_setschedattr(thr_id, attr);
-#     endif /* !ACE_USE_ADAPT_RETVAL */
 #   else
   struct sched_param param;
   int policy = 0;
@@ -7599,7 +7519,7 @@ ACE_OS::mmap (void *addr,
           else
             // Finally, copy the file contents to the shared memory object.
             return ::read (file_handle, map, (int) filesize) == filesize
-              ? map
+              ? map 
               : MAP_FAILED;
         }
     }
