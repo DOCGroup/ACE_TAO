@@ -24,6 +24,9 @@
 #include "ace/Active_Map_Manager.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Synch.h"
+#include "ace/Hash_Cache_Map_Manager_T.h"
+#include "ace/Caching_Strategies_T.h"
+#include "ace/Pair_T.h"
 
 ACE_RCSID(tests, Map_Manager_Test, "$Id$")
 
@@ -47,6 +50,262 @@ typedef ACE_Hash_Map_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> HAS
 typedef ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX> HASH_REVERSE_ITERATOR;
 typedef ACE_Hash_Map_Entry <TYPE, TYPE> HASH_ENTRY;
 typedef ACE_Active_Map_Manager <TYPE> ACTIVE_MAP_MANAGER;
+
+typedef ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> 
+        HASH_CACHE_MAP_MANAGER;
+
+typedef ACE_Cache_Map_Manager <TYPE, TYPE, ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> 
+        CACHE_MAP_MANAGER;
+
+static void
+test_cache_map_manager (size_t table_size,
+                        size_t iterations,
+                        int test_iterators)
+{
+  CACHE_MAP_MANAGER map (table_size);
+  TYPE i;
+  TYPE j;
+  ssize_t k;
+
+  for (i = 0; i < iterations; i++)
+    ACE_ASSERT (map.bind (i, i) != -1);
+
+  if (test_iterators)
+    {
+      {
+        i = 0;
+
+        CACHE_MAP_MANAGER::ITERATOR end = map.end ();
+
+        for (CACHE_MAP_MANAGER::ITERATOR iter = map.begin ();
+             iter != end;
+             ++iter)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%d|%d|%d)"),
+                        i,
+                        (*iter).first (),
+                        (*iter).second ()));
+            ++i;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("\n")));
+        ACE_ASSERT (i == iterations);
+      }
+
+      
+      {
+        k = iterations - 1;
+
+        CACHE_MAP_MANAGER::REVERSE_ITERATOR rend = map.rend ();
+
+        for (CACHE_MAP_MANAGER::REVERSE_ITERATOR iter = map.rbegin ();
+             iter != rend;
+             ++iter)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%d|%d|%d)"),
+                        k,
+                        (*iter).first (),
+                        (*iter).second ()));
+            k--;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("\n")));
+        ACE_ASSERT (k == -1);
+      }
+
+     
+      {
+        i = 0;
+
+        CACHE_MAP_MANAGER::iterator end = map.end ();
+
+        for (CACHE_MAP_MANAGER::iterator iter = map.begin ();
+             iter != end;
+             ++iter)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%d|%d|%d)"),
+                        i,
+                        (*iter).first (),
+                        (*iter).second ()));
+            ++i;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("\n")));
+        ACE_ASSERT (i == iterations);
+      }
+
+      
+      {
+        k = iterations - 1;
+
+        CACHE_MAP_MANAGER::reverse_iterator rend = map.rend ();
+
+        for (CACHE_MAP_MANAGER::reverse_iterator iter = map.rbegin ();
+             iter != rend;
+             ++iter)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%d|%d|%d)"),
+                        k,
+                        (*iter).first (),
+                        (*iter).second ()));
+            k--;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("\n")));
+        ACE_ASSERT (k == -1);
+      }
+
+       
+    }
+
+  for (i = 0; i < iterations; ++i)
+    {
+      ACE_ASSERT (map.find (i, j) != -1);
+      ACE_ASSERT (i == j);
+    }
+
+  size_t remaining_entries = iterations;
+  for (i = 0; i < iterations; ++i)
+    {
+      ACE_ASSERT (map.unbind (i) != -1);
+      --remaining_entries;
+      ACE_ASSERT (map.current_size () == remaining_entries);
+    }
+    
+}
+
+static void
+test_hash_cache_map_manager (size_t table_size,
+                             size_t iterations,
+                             int test_iterators)
+{
+  HASH_CACHE_MAP_MANAGER map (table_size);
+  TYPE i;
+  TYPE j;
+  ssize_t k;
+
+  for (i = 0; i < iterations; i++)
+    ACE_ASSERT (map.bind (i, i) != -1);
+
+  if (test_iterators)
+    {
+      {
+        i = 0;
+
+        HASH_CACHE_MAP_MANAGER::ITERATOR end = map.end ();
+
+        for (HASH_CACHE_MAP_MANAGER::ITERATOR iter = map.begin ();
+             iter != end;
+             ++iter)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%d|%d|%d)"),
+                        i,
+                        (*iter).first (),
+                        (*iter).second ()));
+            ++i;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("\n")));
+        ACE_ASSERT (i == iterations);
+      }
+
+      
+      {
+        k = iterations - 1;
+
+        HASH_CACHE_MAP_MANAGER::REVERSE_ITERATOR rend = map.rend ();
+
+        for (HASH_CACHE_MAP_MANAGER::REVERSE_ITERATOR iter = map.rbegin ();
+             iter != rend;
+             ++iter)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%d|%d|%d)"),
+                        k,
+                        (*iter).first (),
+                        (*iter).second ()));
+            k--;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("\n")));
+        ACE_ASSERT (k == -1);
+      }
+
+     
+      {
+        i = 0;
+
+        HASH_CACHE_MAP_MANAGER::iterator end = map.end ();
+
+        for (HASH_CACHE_MAP_MANAGER::iterator iter = map.begin ();
+             iter != end;
+             ++iter)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%d|%d|%d)"),
+                        i,
+                        (*iter).first (),
+                        (*iter).second ()));
+            ++i;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("\n")));
+        ACE_ASSERT (i == iterations);
+      }
+
+      
+      {
+        k = iterations - 1;
+
+        HASH_CACHE_MAP_MANAGER::reverse_iterator rend = map.rend ();
+
+        for (HASH_CACHE_MAP_MANAGER::reverse_iterator iter = map.rbegin ();
+             iter != rend;
+             ++iter)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%d|%d|%d)"),
+                        k,
+                        (*iter).first (),
+                        (*iter).second ()));
+            k--;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("\n")));
+        ACE_ASSERT (k == -1);
+      }
+
+      
+    }
+
+  for (i = 0; i < iterations; ++i)
+    {
+      ACE_ASSERT (map.find (i, j) != -1);
+      ACE_ASSERT (i == j);
+    }
+
+  size_t remaining_entries = iterations;
+  for (i = 0; i < iterations; ++i)
+    {
+      ACE_ASSERT (map.unbind (i) != -1);
+      --remaining_entries;
+      ACE_ASSERT (map.current_size () == remaining_entries);
+    }
+}
+
 
 static void
 test_active_map_manager (size_t table_size,
@@ -624,6 +883,19 @@ main (int argc, ASYS_TCHAR *argv[])
             test_iterators,
             ASYS_TEXT ("Active_Map_Manager"));
 
+  // Test the <ACE_Cache_Map_Manager>.
+  run_test (&test_cache_map_manager,
+            table_size,
+            iterations,
+            test_iterators,
+            ASYS_TEXT ("Cache_Map_Manager"));
+
+  // Test the <ACE_Hash_Cache_Map_Manager>.
+  run_test (&test_hash_cache_map_manager,
+            table_size,
+            iterations,
+            test_iterators,
+            ASYS_TEXT ("Hash_Cache_Map_Manager"));
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;
   return 0;
@@ -647,6 +919,10 @@ template class ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
 template class ACE_Map_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
 template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
 template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>;
+template class ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >;
+template class ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >;
+template class ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> ;
+template class ACE_Cache_Map_Manager <TYPE, TYPE, ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> ;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
@@ -665,4 +941,8 @@ template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>;
 #pragma instantiate ACE_Map_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>
+#pragma instantiate ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >
+#pragma instantiate ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >
+#pragma instantiate ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> 
+#pragma instantiate ACE_Cache_Map_Manager <TYPE, TYPE, ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
