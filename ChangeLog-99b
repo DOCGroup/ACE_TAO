@@ -1,3 +1,11 @@
+Tue Aug 24 12:19:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile:
+	  Updated dependencies
+
+	* performance-tests/TCP/tcp_test.cpp:
+	  Fixed argument parsing.
+
 Tue Aug 24 10:37:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/cvslog (find_changelogs): one more time: append /$file
