@@ -184,8 +184,8 @@ ACE_OS::rmdir (const char *path)
 
   return (int) result;
 
-#elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (::rmdir ((char *) path), int, -1);
+#elif defined (ACE_HAS_NONCONST_RMDIR)
+  ACE_OSCALL_RETURN (::rmdir (const_cast <char *> (path)), int, -1);
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
@@ -551,13 +551,11 @@ ACE_OS::getgid (void)
 # endif /* VXWORKS || ACE_PSOS */
 }
 
-#if !defined (ACE_WIN32)
-
 ACE_INLINE int
 ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
 {
   ACE_OS_TRACE ("ACE_OS::getopt");
-#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY)
+#if defined (VXWORKS) || defined (ACE_PSOS) || defined (INTEGRITY) || defined (ACE_WIN32)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   ACE_UNUSED_ARG (optstring);
@@ -566,21 +564,6 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_OSCALL_RETURN (::getopt (argc, argv, optstring), int, -1);
 # endif /* VXWORKS */
 }
-
-#else /* ACE_WIN32 */
-
-ACE_INLINE int
-ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_UNUSED_ARG (optstring);
-
-  ACE_OS_TRACE ("ACE_OS::getopt");
-  ACE_NOTSUP_RETURN (-1);
-}
-
-#endif /* !ACE_WIN32 */
 
 ACE_INLINE pid_t
 ACE_OS::getpgid (pid_t pid)
