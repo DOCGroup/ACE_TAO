@@ -276,7 +276,7 @@ WFMO_Reactor_Test, Timer_Cancellation_Test</ul>
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:j.parsons@vanderbilt.edu">Jeff Parsons</a>
-<p>Current status: (As of November 19, 2003.)
+<p>Current status: (As of July 6, 2004.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -618,6 +618,14 @@ interface or a valuetype (never inlined) are not affected by the option.
 Generation of explicit template instantiations is now off by default. The
 option -GT turns it on. If turned on, the generated explicit instantiations
 are guarded by the same #ifdef preprocessor directives as before.
+</li>
+
+<li>
+The mechanism for processing multiple IDL files in a single execution has
+changed. Instead of spawning a separate process for each IDL file, the
+IDL compiler now processes the files sequentially in a single process.
+Note that, for each file, execution of the preprocessor spawns a new 
+process, as it always has.
 </li>
 </ul>
 
