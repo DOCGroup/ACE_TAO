@@ -210,7 +210,7 @@ Client::test_get_all_property_names (CORBA::Environment &ACE_TRY_ENV)
   // The extra ptr's and out's required to avoind SunnCC's warning
   // when foo.out () is passed to a funtion.
   CosPropertyService::PropertyNames_var names_var;
-  CosPropertyService::PropertyNames_ptr names_ptr = 0;
+  CosPropertyService::PropertyNames     *names_ptr = 0;
   CosPropertyService::PropertyNames_out names_out (names_ptr);
 
   CosPropertyService::PropertyNamesIterator_var iterator_var;
@@ -282,7 +282,7 @@ Client::test_get_properties (CORBA::Environment &ACE_TRY_ENV)
   // value is false and type is tc_void then that name is not there in
   // the PropertySet.
   CosPropertyService::PropertyNames_var names;
-  CosPropertyService::PropertyNames_ptr names_ptr;
+  CosPropertyService::PropertyNames     *names_ptr;
 
   ACE_NEW_RETURN (names_ptr,
                   CosPropertyService::PropertyNames,
@@ -297,7 +297,7 @@ Client::test_get_properties (CORBA::Environment &ACE_TRY_ENV)
   //names [2] = CORBA::string_dup ("no_property");
 
 
-  CosPropertyService::Properties_ptr properties_ptr = 0;
+  CosPropertyService::Properties *properties_ptr = 0;
   CosPropertyService::Properties_out properties_out (properties_ptr);
 
   // Get the properties.
@@ -497,7 +497,7 @@ Client::test_get_all_properties (CORBA::Environment &ACE_TRY_ENV)
   CORBA::ULong how_many = 1;
 
   // Helper variables to avoid SunCC warnings.
-  CosPropertyService::Properties_ptr properties_ptr = 0;
+  CosPropertyService::Properties *properties_ptr = 0;
   CosPropertyService::Properties_out properties_out (properties_ptr);
   CosPropertyService::PropertiesIterator_ptr iterator_ptr = 0;
   CosPropertyService::PropertiesIterator_out iterator_out (iterator_ptr);
