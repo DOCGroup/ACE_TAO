@@ -1,3 +1,11 @@
+Thu Oct 30 09:28:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h: 
+
+	  Forward declared CORBA::Environment to get around build problems
+	  in static builds.
+
 Thu Oct 30 10:44:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Makefile.bor:
