@@ -1,3 +1,9 @@
+Wed Mar 21 09:26:38 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/posix/socket.h:
+          Added typedef of pace_socklen_t to int for Solaris 5.6. Thanks
+          to Lu Yunhai <luyunhai@huawei.com> for this solution.
+
 Mon Mar 19 16:56:47 2001  Luther Baker  <luther@cs.wustl.edu>
 
         * pace/win32/unistd.c:
