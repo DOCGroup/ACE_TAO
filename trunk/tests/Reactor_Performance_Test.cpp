@@ -124,7 +124,7 @@ Read_Handler::handle_input (ACE_HANDLE handle)
         }
     }
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 // Handle connection shutdown.
