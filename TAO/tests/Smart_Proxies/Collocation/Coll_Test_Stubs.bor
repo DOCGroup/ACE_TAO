@@ -4,12 +4,12 @@
 
 NAME = Coll_Test_Stubs
 
-TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -Gd \
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -Gsp -Gd \
 	-Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export \
 	-Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h
 
 OBJFILES = \
-	$(OBJDIR)\DiamondC.obj
+        $(OBJDIR)\DiamondC.obj
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SMARTPROXIES_CFLAGS) \
 	-DMY_Stub_HAS_DLL=1 -DMY_Stub_BUILD_DLL=1

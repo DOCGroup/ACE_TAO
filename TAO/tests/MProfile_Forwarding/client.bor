@@ -1,28 +1,25 @@
-
 #
-# Makefile for building the Leader_Followers test
+# Makefile for building the MProfile_Forwarding client
 #
 
 NAME = client
 
-TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
-	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\testS.obj \
+	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\client.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
-	$(TAO_STRATEGIES_CFLAGS) \
-	$(TAO_PORTABLESERVER_CFLAGS)
+        $(TAO_PORTABLESERVER_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
-	$(TAO_STRATEGIES_LIB) \
-	$(TAO_PORTABLESERVER_LIB)
+        $(TAO_PORTABLESERVER_LIB)
 
 IDLFILES = \
         $(IDLDIR)\test.idl
@@ -37,6 +34,5 @@ IDLDIR = .
 # IDL Build rules
 #
 
-$(IDLDIR)\testC.cpp $(IDLDIR)\testS.cpp: $(IDLDIR)\test.idl
+$(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
 	$(TAO_IDL) $**
-

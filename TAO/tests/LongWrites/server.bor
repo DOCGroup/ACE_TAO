@@ -1,16 +1,17 @@
 
 #
-# Makefile for building the Leader_Followers test
+# Makefile for building the LongWrites server test
 #
 
-NAME = client
+NAME = server
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\testS.obj \
-	$(OBJDIR)\client.obj
+        $(OBJDIR)\coordinator.obj \
+	$(OBJDIR)\server.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
