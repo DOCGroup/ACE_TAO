@@ -1,5 +1,16 @@
-Tue Oct 22 16:26:56 2002  Rich Seibel  <seibel_r@ociweb.com>
+Wed Oct 23 17:20:18 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
+	* ace/Service_Object.{h,cpp} (suspend, resume, fini):
+	  Changed return value from void to int so that the
+	  return value of the contained ACE_Service_Type could be
+	  propagated.
+
+	* ace/Service_Repository.cpp (suspend, resume, fini):
+	  Changed to propagate the return value from the 
+	  ACE_Service_Type instead of always 0.
+
+Tue Oct 22 16:26:56 2002  Rich Seibel  <seibel_r@ociweb.com>
+	
         * ace/Basic_Types.h:
           Added a test for _BYTE_ORDER, same as BYTE_ORDER and
           __BYTE_ORDER.  VxWorks defines this.  Also note, compilers
