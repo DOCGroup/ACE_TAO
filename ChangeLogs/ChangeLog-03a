@@ -1,3 +1,44 @@
+Mon Feb 21 16:23:03 2000  Ossama Othman  <ossama@uci.edu>
+
+	Thanks to Rich Seibel <seibel_r@ociweb.com> for providing the
+	highly detailed feedback that led to the following changes/fixes:
+
+	* THANKS:
+
+	  Added Rich Seibel <seibel_r@ociweb.com> to the list of
+	  contributors.
+
+	* acconfig.h (ACE_HAS_IOMANIP_NO_H):
+
+	  Removed this macro since it isn't used anywhere.
+
+	  (ACE_LACKS_SETREGID_PROTO, ACE_LACKS_SETREUID_PROTO):
+
+	  These should have been ACE_LACKS_SETREGID_PROTOTYPE, and
+	  ACE_LACKS_SETREUID_PROTOTYPE, respectively.
+
+	* configure.in (ACE_HAS_IOMANIP_NO_H):
+
+	  Removed the test for this macro.  It isn't used anywhere.
+
+	  (ACE_HAS_SIZET_SOCKET_LEN):
+
+	  Only test for this macro if ACE_HAS_SOCKLEN_T isn't defined.
+
+	  (ACE_LACKS_SETREGID_PROTO, ACE_LACKS_SETREUID_PROTO):
+
+	  These should have been ACE_LACKS_SETREGID_PROTOTYPE, and
+	  ACE_LACKS_SETREUID_PROTOTYPE, respectively.
+
+	  Added "-U_BSD_SOURCE" to list of macros to undefine for each of
+	  the tests for these macros.  Defining "_BSD_SOURCE" on some
+	  platforms may make the prototypes corresponding to the above
+	  macros visible, so we need to explicitly undefine it.
+
+	* ace/config-linux-common.h (ACE_HAS_PROCFS):
+
+	  Corrected typo.  This macro should have been ACE_HAS_PROC_FS.
+
 Mon Feb 21 16:19:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/OS.h:
