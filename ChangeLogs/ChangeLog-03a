@@ -1,3 +1,13 @@
+Wed Aug 29 07:08:23 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Makefile
+	* ace/Bound_Ptr.{h,i}
+  	* tests/Bound_Ptr_Test.cpp
+    	* examples/Smart_Pointer: Added a pair of new smart pointer classes,
+	  ACE_Strong_Bound_Ptr and ACE_Weak_Bound_Ptr.  Thanks to
+ 	  Christopher Kohlhoff <chris@kohlhoff.com> for contributing
+ 	  these.
+
 Tue Aug 28 17:51:19 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.pl: If a test has log files associated with the
