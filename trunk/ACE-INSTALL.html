@@ -135,12 +135,16 @@ HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> and SCO UNIX
 using the GNU G++
      2.7.2 compiler. <P>
 
-<DT> <B> SGI IRIX 5.x </B> <BR><BR>
+<DT> <B> SGI IRIX 5.x and 6.x </B> <BR><BR>
 
-<DD> ACE builds fine using the SGI C++ and GNU GCC compilers for
-	  IRIX 5.x.  I haven't tried this on IRIX 6.x, but I assume 
-	  that will work too.  If anyone can get ACE working with 
-	  IRIX 6.x pthreads please let me know.<P>
+<DD> ACE used to build fine using the SGI C++ and GNU GCC compilers for
+	  IRIX 5.x.
+	  It has been ported to IRIX 6.x using the SGI MipsPro 7.1 C++
+	  compiler;
+	  be aware that in IRIX 6.2 there is a number of patches that
+	  have to be installed and exceptions appear to fail with the
+	  O32 ABI.
+	  Please check the config files for the details.<P>
 
 <DT> <B> HP-UX 9.x and 10.x </B> <BR><BR>
 

@@ -41,6 +41,6 @@ BUILD=SUNCC
 LOGDIR=$HOME/head/ACE_wrappers/build/$BUILD/auto_compile
 
 # Who do we send email when compilation (or anything else) fails.
-ADMIN="coryan@cs.wustl.edu"
+ADMIN=PUT_YOUR_ADDRESS_HERE ; echo "You must edit this file" ; exit 0
 
 exec /pkg/gnu/bin/perl $HOME/bin/auto_compile $CHECKOUT $BUILD $LOGDIR $ADMIN
