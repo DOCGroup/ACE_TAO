@@ -48,10 +48,6 @@ IDL_FILES += \
         CosEventComm \
         CosEventChannelAdmin
 
-IDL_FILES+= \
-        CosTrading \
-        CosTradingRepos
-
 CPP_SRCS += \
         Notify/Notify_EventChannelFactory_i \
         Notify/Notify_EventChannel_i \
@@ -91,15 +87,6 @@ CPP_SRCS += \
 	Notify/Notify_Buffering_Strategy \
 	Notify/Notify_MT_Worker_Task \
 	Notify/Notify_Command
-
-CPP_SRCS += \
-        Trader/Interpreter \
-        Trader/Constraint_Visitors \
-        Trader/Constraint_Nodes \
-        Trader/Constraint_l \
-        Trader/Constraint_y \
-        Trader/Interpreter_Utils_T \
-        Trader/Interpreter_Utils
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
