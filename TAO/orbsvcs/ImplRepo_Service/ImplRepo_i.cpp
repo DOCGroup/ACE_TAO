@@ -274,6 +274,8 @@ ImplRepo_i::start_server_i (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find startup info for server <%s>\n",
                   server));
+      // @@ Darrell: this is not listed in the throw spec, it is bound
+      // to give trouble.
       ACE_THROW (ImplementationRepository::Administration::NotFound ());
       ACE_CHECK;
     }
@@ -286,6 +288,8 @@ ImplRepo_i::start_server_i (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find startup info for server <%s>\n",
                   server));
+      // @@ Darrell: this is not listed in the throw spec, it is bound
+      // to give trouble.
       ACE_THROW (ImplementationRepository::Administration::NotFound ());
       ACE_CHECK;
     }
@@ -373,6 +377,8 @@ ImplRepo_i::start_server_i (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find startup info for server <%s>\n",
                   server));
+      // @@ Darrell: this is not listed in the throw spec, it is bound
+      // to give trouble.
       ACE_THROW (ImplementationRepository::Administration::NotFound ());
       ACE_CHECK;
     }
@@ -392,6 +398,8 @@ ImplRepo_i::start_server_i (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find ServerObject IOR for server <%s>\n",
                   server));
+      // @@ Darrell: this is not listed in the throw spec, it is bound
+      // to give trouble.
       ACE_THROW (ImplementationRepository::Administration::NotFound ());
     }
 
@@ -414,6 +422,8 @@ ImplRepo_i::start_server_i (const char *server,
           ACE_ERROR ((LM_ERROR,
                       "Error: Invalid ServerObject IOR: <%s>\n",
                       server_object_ior.c_str ()));
+      // @@ Darrell: this is not listed in the throw spec, it is bound
+      // to give trouble.
           ACE_THROW (ImplementationRepository::Administration::NotFound ());
         }
     }
