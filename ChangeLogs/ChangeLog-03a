@@ -1,5 +1,8 @@
 Wed Aug 29 07:08:23 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* tests/run_tests.lst: 
+	* tests/Makefile
+	* tests/Makefile.bor
 	* ace/Makefile
 	* ace/Bound_Ptr.{h,i}
   	* tests/Bound_Ptr_Test.cpp
