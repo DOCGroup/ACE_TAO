@@ -1,4 +1,4 @@
-Tue Aug 25 11:03:12 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+Tue Aug 25 11:03:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/union_ci.cpp: 
 	* TAO_IDL/be/be_visitor_union/union_cs.cpp: 
