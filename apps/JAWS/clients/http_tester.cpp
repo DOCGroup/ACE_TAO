@@ -1,7 +1,6 @@
 // http_tester.cc sumedh@cs.wustl.edu
 #include "client.h"
 
-
 int Client_Parameters::tcp_nodelay;
 int Client_Parameters::sockbufsiz;
 Stats *Client_Parameters::stats;
@@ -113,7 +112,11 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
 }
 
 
-main(int argc, char **argv) {
+main(int argc, char **argv) 
+{
+  // This will set the global scale factor if the ACE_SCALE_FACTOR
+  // environment variable is set.
+  ACE_High_Res_Timer::get_env_global_scale_factor ();
 
   if(argc < 3) {
     cerr << "Usage: " << argv[0] << " infile outfile " << endl;
