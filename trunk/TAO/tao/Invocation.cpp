@@ -111,6 +111,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
+  TAO_MINIMAL_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
 
   // First try to bind to the appropriate address.  We do that here
   // since we may get forwarded to a different objref in the course of
@@ -318,7 +319,6 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
                              CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
   if (this->transport_ == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
