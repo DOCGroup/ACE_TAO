@@ -259,6 +259,101 @@ SOURCE=.\ACE.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ACE_Flag_Manip.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Handle_Ops.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Init.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Lib_Find.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Sock_Connect.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Activation_Queue.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -1551,6 +1646,44 @@ SOURCE=.\Malloc.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Malloc_Allocator.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Malloc_Instantiations.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Map.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -2102,6 +2235,25 @@ SOURCE=.\Parse_Node.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PI_Malloc.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pipe.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -2578,6 +2730,25 @@ SOURCE=.\Service_Object.cpp
 # Begin Source File
 
 SOURCE=.\Service_Repository.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Templates.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
@@ -3299,6 +3470,25 @@ SOURCE=.\Template_Instantiations.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Test_and_Set.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Thread.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -3999,6 +4189,26 @@ SOURCE=.\ACE_export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ACE_Flag_Manip.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Handle_Ops.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Init.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Lib_Find.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Sock_Connect.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ace_wchar.h
 # End Source File
 # Begin Source File
@@ -4387,6 +4597,10 @@ SOURCE=.\Malloc.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Malloc_Allocator.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Malloc_Base.h
 # End Source File
 # Begin Source File
@@ -4543,6 +4757,10 @@ SOURCE=.\Parse_Node.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PI_Malloc.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pipe.h
 # End Source File
 # Begin Source File
@@ -4676,6 +4894,10 @@ SOURCE=.\Service_Object.h
 # Begin Source File
 
 SOURCE=.\Service_Repository.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Templates.h
 # End Source File
 # Begin Source File
 
@@ -4856,6 +5078,10 @@ SOURCE=.\Task.h
 # Begin Source File
 
 SOURCE=.\Task_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Test_and_Set.h
 # End Source File
 # Begin Source File
 
@@ -5048,6 +5274,26 @@ SOURCE=.\Acceptor.i
 # Begin Source File
 
 SOURCE=.\ACE.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Flag_Manip.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Handle_Ops.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Init.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Lib_Find.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ACE_Sock_Connect.i
 # End Source File
 # Begin Source File
 
@@ -5343,6 +5589,10 @@ SOURCE=.\Malloc.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Malloc_Allocator.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Malloc_T.i
 # End Source File
 # Begin Source File
@@ -5460,6 +5710,10 @@ SOURCE=.\Pair_T.i
 # Begin Source File
 
 SOURCE=.\Parse_Node.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PI_Malloc.i
 # End Source File
 # Begin Source File
 
@@ -5696,6 +5950,10 @@ SOURCE=.\Task.i
 # Begin Source File
 
 SOURCE=.\Task_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Test_and_Set.i
 # End Source File
 # Begin Source File
 

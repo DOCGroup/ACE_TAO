@@ -1,3 +1,10 @@
+Thu Oct 12 19:38:00 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/ace_dll.dsp:
+
+	  Added new files introduced by Priyanka's footprint reduction
+	  effort.
+
 Thu Oct 12 18:19:46 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/Makefile: 
