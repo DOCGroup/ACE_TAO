@@ -1,3 +1,9 @@
+Tue Nov 19 20:46:35 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * examples/SAXPrint/Print_Handler.cpp (warning):
+
+          Missed syncing the function prototypes last time.
+
 Tue Nov 19 20:18:09 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * parser/parser/Parser.h:
