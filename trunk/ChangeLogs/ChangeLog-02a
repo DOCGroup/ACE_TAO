@@ -1,9 +1,16 @@
+Fri Dec 15 09:22:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Connection/non_blocking/Makefile:
+          Fixed dependencies between the binaries and the library
+          generated in this directory, otherwise parallel builds can
+          fail.
+
 Thu Dec 14 10:36:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/auto_run_tests.lst:
         * tests/run_test.lst:
 
-          Converted to the new PerlACE::ConfigList style of .lst 
+          Converted to the new PerlACE::ConfigList style of .lst
           files (can now say stuff like "Test: MSVC !Borland")
 
         * bin/auto_run_tests.pl:
@@ -12,12 +19,12 @@ Thu Dec 14 10:36:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Changed to use PerlACE::ConfigList.
 
-	  [Bug 729]
+          [Bug 729]
 
         * bin/ACEutils.pm:
 
           Made sure it would eat the -Config option so it will not
-          be a problem if old run_test.pl's don't get updated 
+          be a problem if old run_test.pl's don't get updated
           immediately.
 
         * bin/msvc_auto_compile.pl:
