@@ -28,6 +28,10 @@ Fri Apr 04 12:28:40 1997  David L. Levine  <levine@cs.wustl.edu>
 	  <make@cs.tu-berlin.de> for figuring this out and cranking out
 	  the code.
 
+	* ace/IOStream.h: specify template parameter (ACE_IOStream<STREAM>)
+	  to ACE_OPERATOR{G,P}_SET macros.  Thanks to Chuck Gehr
+	  <gehr@sweng.stortek.com> for providing this fix.
+
 Thu Apr  3 22:17:53 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Registry.cpp: Changed STRING_SEPARATOR from Istring to
