@@ -10,6 +10,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 #include "tao/CDR.h"
+#include "tao/GIOP_Message_State.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Generator_Parser_12.inl"
@@ -34,6 +35,15 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   // First the request id
   msg << opdetails.request_id ();
 
+#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
+  static int counter = 2;
+  static size_t skip_length;
+
+  if (counter)
+    {
+      -- counter;
+#endif
+
   const CORBA::Octet response_flags = opdetails.response_flags ();
 
   // Here are the Octet values for different policies
@@ -47,6 +57,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   // We have not implemented the policy INV_NO_RESPONSE for DII.
   if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
     msg << CORBA::Any::from_octet (3);
+
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
   else if (response_flags == CORBA::Octet (Messaging::SYNC_NONE)
@@ -63,6 +74,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
     // Return after dispatching servant.
     msg << CORBA::Any::from_octet (3);
+
   else
     // Until more flags are defined by the OMG.
     return 0;
@@ -71,7 +83,6 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   CORBA::Octet reserved[3] = {0, 0, 0};
 
   msg.write_octet_array (reserved, 3);
-
   if (this->marshall_target_spec (spec,
                                   msg) == 0)
     return 0;
@@ -86,9 +97,18 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   // We align the pointer only if the operation has arguments.
   if (opdetails.argument_flag ()
       && msg.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
-    {
-      return 0;
+    return 0;
+
+#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
+  // Header length of the message
+  skip_length = msg.total_length ();
     }
+  else
+    {
+      // Skip message to the right location
+      msg.skip_from_start (skip_length);
+    }
+#endif
 
   return 1;
 }
@@ -125,12 +145,22 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
     TAO_Pluggable_Reply_Params_Base &reply
     ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
   )
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+
   // Write the request ID
   output.write_ulong (reply.request_id_);
 
-   // Write the reply status
+#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
+  static bool once = true;
+  static size_t skip_length;
+
+  if (once)
+    {
+      once = false;
+#endif
+
+  // Write the reply status
   if (reply.reply_status_ ==
       TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM)
     {
@@ -182,6 +212,17 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
           return 0;
         }
     }
+
+#if defined (TAO_HAS_NO_HEADER_REMARSHALL)
+
+  // Header length of the message
+  skip_length = output.total_length ();
+    }
+  else
+    {
+      output.skip_from_start(skip_length);
+    }
+#endif
   return 1;
 }
 
