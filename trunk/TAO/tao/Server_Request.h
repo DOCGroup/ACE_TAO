@@ -160,6 +160,9 @@ public:
                         ...) = 0;
   // marshal outgoing parameters
 
+  virtual void dsi_marshal (CORBA::Environment &env) = 0;
+  // marshal outgoing parameters. Used by DSI
+
   virtual void init_reply (CORBA::Environment &env) = 0;
   // Start a Reply message.
 
@@ -229,9 +232,7 @@ public:
   // marshal outgoing parameters and return value. This is used by the SSI
   // i.e., by the IDL compiler generated skeletons.
 
-  virtual void dsi_marshal (CORBA::Environment &env,
-                            const TAO_Call_Data_Skel *info,
-                            ...);
+  virtual void dsi_marshal (CORBA::Environment &env);
   // does the marshaling of outgoing parameters and is used by the DSI based
   // scheme
 
@@ -263,7 +264,7 @@ private:
   CORBA::ULong reqid_;
   // request ID
 
-  CORBA::Boolean response_expected__;
+  CORBA::Boolean response_expected_;
   // is it oneway or twoway
 
   CORBA::NVList_ptr params_;
