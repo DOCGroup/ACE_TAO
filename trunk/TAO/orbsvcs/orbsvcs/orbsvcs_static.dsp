@@ -86,6 +86,18 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp"
 # Begin Source File
 
+SOURCE=.\AV\AVStreams_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AVStreamsC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AVStreamsS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\BCU.cpp
 # End Source File
 # Begin Source File
@@ -179,14 +191,6 @@ SOURCE=.\CosPropertyServiceC.cpp
 # Begin Source File
 
 SOURCE=.\CosPropertyServiceS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTimeBaseC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosTimeBaseS.cpp
 # End Source File
 # Begin Source File
 
@@ -314,6 +318,10 @@ SOURCE=.\Event\EC_UDP_Admin.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\Endpoint_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Naming\Entries.cpp
 # End Source File
 # Begin Source File
@@ -387,6 +395,14 @@ SOURCE=.\Naming\Naming_Context.cpp
 # Begin Source File
 
 SOURCE=.\Naming\Naming_Utils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Null_MediaCtrlC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Null_MediaCtrlS.cpp
 # End Source File
 # Begin Source File
 
@@ -494,6 +510,18 @@ SOURCE=.\Trader\Service_Type_Repository.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\sfp.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\sfpC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\sfpS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sched\Strategy_Scheduler.cpp
 # End Source File
 # Begin Source File
@@ -519,6 +547,14 @@ SOURCE=.\Time\TAO_UTO.cpp
 # Begin Source File
 
 SOURCE=.\Time_Utilities.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS.cpp
 # End Source File
 # Begin Source File
 
