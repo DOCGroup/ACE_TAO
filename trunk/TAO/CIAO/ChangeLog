@@ -1,3 +1,9 @@
+Tue Apr 20 21:37:26 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * Dnc/Config_Handlers/Config_Handlers.mpc:
+          Changed the file to generate shared library rathern than an
+          executable.
+
 Tue Apr 20 20:29:37 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * Dnc/Config_Handlers/Config_Handers.mpc:
