@@ -403,12 +403,12 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                     // must always be negative. See the CORBA spec for details.
                     continue_decoding = (offset < 0);
                   }
-                
+
                 // Slava Galperin <galperin@teknowledge.com> clarifies
                 // this:
-		// CORBA Spec says:
-		// 
-		// The encoding of such an indirection is as a
+                // CORBA Spec says:
+                //
+                // The encoding of such an indirection is as a
                 // TypeCode with a TCKind value that has the special
                 // value 2^32 -1 (0xffffffff, all ones). Such
                 // typecodes have a single (simple) parameter, which
@@ -416,9 +416,9 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 // simple parameter. (This means that an offset of
                 // negative four (-4) is illegal because it will be
                 // self-indirecting.)
-		// (CORBA V2.2 CDR Transfer Syntax February 1998 page 13-17)
-		// 
-		// This apparently assumes offset from the <em>
+                // (CORBA V2.2 CDR Transfer Syntax February 1998 page 13-17)
+                //
+                // This apparently assumes offset from the <em>
                 // beginning </em> of the simple parameter.
                 // [Right, because otherwise the value -8 would be
                 // illegal]
@@ -661,7 +661,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
                 IIOP_Object (type_hint),
                 CORBA::TypeCode::TRAVERSE_STOP);
 
- 
+
         // return code will be -1 if an error occurs
         // otherwise 0 for stop (can't read this profile type or version)
         // and 1 for continue.
@@ -671,13 +671,11 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
           case -1:
             objdata->_decr_refcnt ();
             return CORBA::TypeCode::TRAVERSE_STOP;
-            break;
           case 0:
             objdata->type_id = (const char *) 0;
             objdata->_decr_refcnt ();
             objdata = 0;
             continue;
-            break;
           case 1:
           default:
             // all other return values indicate success
@@ -685,7 +683,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
         }
 
     }
-            
+
   if (objdata == 0)
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
@@ -828,39 +826,39 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                         {
                           CORBA_Object_ptr object;
                           retval = stream->decode (param, &object, 0, env);
-			  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-			      && env.exception () == 0)
-			    {
-			      // The representation of a base
-			      // CORBA::Object is a little different.
-			      // @@ TODO maybe equivalent() is the right
-			      // method here.
-			      CORBA::Boolean is_corba_object =
-				param->equal (CORBA::_tc_Object, env);
-			      if (env.exception () == 0)
-				{
-				  if (is_corba_object == 0)
-				    {
-				      TAO_Object_Field* field =
-					ACE_reinterpret_cast (TAO_Object_Field *,
-							      ACE_const_cast (void *, data));
-				      field->_downcast (object, env);
-				      // The size of this field is different...
-				      size = sizeof(TAO_Object_Field_T<CORBA_Object>);
-				    }
-				  else
-				    {
-				      CORBA_Object_ptr* tmp =
-					ACE_reinterpret_cast(CORBA_Object_ptr*,
-							     ACE_const_cast(void*,data));
-				      *tmp = object;
-				    }
-				}
-			      else
-				{
-				  retval = CORBA::TypeCode::TRAVERSE_STOP;
-				}
-			    }
+                          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+                              && env.exception () == 0)
+                            {
+                              // The representation of a base
+                              // CORBA::Object is a little different.
+                              // @@ TODO maybe equivalent() is the right
+                              // method here.
+                              CORBA::Boolean is_corba_object =
+                                param->equal (CORBA::_tc_Object, env);
+                              if (env.exception () == 0)
+                                {
+                                  if (is_corba_object == 0)
+                                    {
+                                      TAO_Object_Field* field =
+                                        ACE_reinterpret_cast (TAO_Object_Field *,
+                                                              ACE_const_cast (void *, data));
+                                      field->_downcast (object, env);
+                                      // The size of this field is different...
+                                      size = sizeof(TAO_Object_Field_T<CORBA_Object>);
+                                    }
+                                  else
+                                    {
+                                      CORBA_Object_ptr* tmp =
+                                        ACE_reinterpret_cast(CORBA_Object_ptr*,
+                                                             ACE_const_cast(void*,data));
+                                      *tmp = object;
+                                    }
+                                }
+                              else
+                                {
+                                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                                }
+                            }
                         }
                         break;
 
@@ -1180,7 +1178,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                       TAO_Unbounded_Sequence<CORBA::Octet>* seq2 =
                         ACE_dynamic_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, seq);
                       seq2->replace (bounds, stream->start ());
-		      seq2->mb ()->wr_ptr (seq2->mb ()->rd_ptr () + bounds);
+                      seq2->mb ()->wr_ptr (seq2->mb ()->rd_ptr () + bounds);
                       stream->skip_bytes (bounds);
                       return CORBA::TypeCode::TRAVERSE_CONTINUE;
                     }
