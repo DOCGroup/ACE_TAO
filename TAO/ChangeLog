@@ -1,3 +1,72 @@
+Wed Jul 23 18:03:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO/TAO_IDL/tao_idl.cpp:
+        * TAO/TAO_IDL/ast/ast_attribute.cpp:
+        * TAO/TAO_IDL/ast/ast_component.cpp:
+        * TAO/TAO_IDL/ast/ast_constant.cpp:
+        * TAO/TAO_IDL/ast/ast_enum.cpp:
+        * TAO/TAO_IDL/ast/ast_eventtype.cpp:
+        * TAO/TAO_IDL/ast/ast_exception.cpp:
+        * TAO/TAO_IDL/ast/ast_expression.cpp:
+        * TAO/TAO_IDL/ast/ast_factory.cpp:
+        * TAO/TAO_IDL/ast/ast_home.cpp:
+        * TAO/TAO_IDL/ast/ast_interface.cpp:
+        * TAO/TAO_IDL/ast/ast_module.cpp:
+        * TAO/TAO_IDL/ast/ast_operation.cpp:
+        * TAO/TAO_IDL/ast/ast_structure.cpp:
+        * TAO/TAO_IDL/ast/ast_union.cpp:
+        * TAO/TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO/TAO_IDL/driver/drv_preproc.cpp:
+        * TAO/TAO_IDL/util/utl_err.cpp:
+        * TAO/TAO_IDL/util/utl_identifier.cpp:
+        * TAO/TAO_IDL/util/utl_scope.cpp:
+        * TAO/TAO_IDL/util/utl_string.cpp:
+        * TAO/docs/tutorials/Quoter/AMI/Handler_i.cpp:
+        * TAO/docs/tutorials/Quoter/AMI/client.cpp:
+        * TAO/docs/tutorials/Quoter/AMI/server.cpp:
+        * TAO/docs/tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
+        * TAO/docs/tutorials/Quoter/Event_Service/Stock_Factory_i.cpp:
+        * TAO/docs/tutorials/Quoter/Event_Service/client.cpp:
+        * TAO/docs/tutorials/Quoter/Event_Service/server.cpp:
+        * TAO/docs/tutorials/Quoter/Naming_Service/client.cpp:
+        * TAO/docs/tutorials/Quoter/Naming_Service/server.cpp:
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp:
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/client.cpp:
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/server.cpp:
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.cpp:
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Client/client.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Impl-Repo/client.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Persistent/client.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Server/server.cpp:
+        * TAO/examples/Simple/grid/Grid_Client_i.cpp:
+        * TAO/examples/Simulator/Event_Supplier/Event_Con.cpp:
+        * TAO/orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
+        * TAO/orbsvcs/IFR_Service/tao_ifr.cpp:
+        * TAO/orbsvcs/PSS/Dump_Visitor.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+        * TAO/orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * TAO/orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/server.cpp:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tests/Bug_1361_Regression/shutdown.cpp:
+        * TAO/tests/CodeSets/simple/client.cpp:
+        * TAO/tests/CodeSets/simple/server.cpp:
+        * TAO/tests/IDL_Test/main.cpp:
+        * TAO/tests/MProfile/client.cpp:
+        * TAO/tests/MT_BiDir/Sender_i.cpp:
+          Added #include "ace/streams.h" due to refactoring in ACE that
+          removed "ace/streams.h" from "ace/String_Base.cpp" which is a
+          template file indirectly included in every file using
+          ACE_[C|T|W]String, which turns out to most in TAO.
+
 Wed Jul 23 09:04:06 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * tao/Exception.h

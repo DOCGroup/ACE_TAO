@@ -22,6 +22,7 @@
 #include "pragmaS.h"
 #include "unionC.h"
 #include "repo_id_modC.h"
+#include "ace/streams.h"
 
 class hello_i : public virtual POA_hello
 {

@@ -33,8 +33,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
+#include "ace/streams.h"
 
-#include <limits.h>
+#include "ace/os_include/os_limits.h"
 
 ACE_RCSID(Event_Supplier, Event_Con, "$Id$")
 

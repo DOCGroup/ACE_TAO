@@ -23,6 +23,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/streams.h"
 
 // Constructor
 NContextExt_Client_i::NContextExt_Client_i (void)

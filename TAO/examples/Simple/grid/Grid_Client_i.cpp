@@ -3,6 +3,7 @@
 #include "Grid_Client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/streams.h"
 
 // This is the interface program that accesses the remote object
 

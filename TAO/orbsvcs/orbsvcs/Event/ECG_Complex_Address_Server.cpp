@@ -2,6 +2,7 @@
 
 #include "ECG_Complex_Address_Server.h"
 #include "ace/SString.h"
+#include "ace/streams.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_Complex_Address_Server.i"

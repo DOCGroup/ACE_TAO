@@ -4,6 +4,7 @@
 
 // Include the generated names....
 #include "QuoterC.h"
+#include "ace/streams.h"
 
 int main (int argc, char* argv[])
 {
