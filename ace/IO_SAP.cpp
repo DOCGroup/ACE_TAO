@@ -32,7 +32,7 @@ ACE_IO_SAP::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// Cache for the process ID. 
+// Cache for the process ID.
 pid_t ACE_IO_SAP::pid_ = 0;
 
 int
@@ -75,7 +75,6 @@ ACE_IO_SAP::enable (int value) const
 #else  // <==
       ACE_NOTSUP_RETURN (-1);
 #endif /* SIGIO <== */
-      break;
     case ACE_NONBLOCK:
       if (ACE::set_flags (this->handle_,
                           ACE_NONBLOCK) == -1)
@@ -105,7 +104,7 @@ ACE_IO_SAP::disable (int value) const
 #if defined (F_SETOWN)
       if (ACE_OS::fcntl (this->handle_,
                          F_SETOWN, 0) == -1)
-	return -1;
+        return -1;
       break;
 #else
       ACE_NOTSUP_RETURN (-1);
@@ -119,7 +118,7 @@ ACE_IO_SAP::disable (int value) const
                          F_SETOWN,
                          0) == -1
           || ACE::clr_flags (this->handle_, FASYNC) == -1)
-	return -1;
+        return -1;
       break;
 #else
       ACE_NOTSUP_RETURN (-1);
@@ -130,7 +129,7 @@ ACE_IO_SAP::disable (int value) const
     case ACE_NONBLOCK:
       if (ACE::clr_flags (this->handle_,
                           ACE_NONBLOCK) == -1)
-	return -1;
+        return -1;
       break;
     default:
       return -1;
@@ -138,7 +137,6 @@ ACE_IO_SAP::disable (int value) const
   return 0;
 #else
   ACE_UNUSED_ARG (value);
-  ACE_NOTSUP_RETURN (-1); 
+  ACE_NOTSUP_RETURN (-1);
 #endif /* !ACE_WIN32 */
 }
-
