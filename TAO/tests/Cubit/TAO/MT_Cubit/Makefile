@@ -57,6 +57,7 @@ svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 client:	$(addprefix $(VDIR),$(CUBIT_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
+clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
