@@ -49,9 +49,6 @@ server:	$(addprefix $(VDIR),$(logger_SERVER_OBJS))
 client:	$(addprefix $(VDIR),$(logger_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-realclean: clean
-	-/bin/rm -rf loggerC.* loggerS.* 
-
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 

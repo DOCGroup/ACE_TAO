@@ -68,7 +68,7 @@ initiator: $(addprefix $(VDIR),$(NESTEDUPCALLS_INITIATOR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf Triangle_TestS.* Triangle_TestC.*
+	-/bin/rm -rf Triangle_TestS.* Triangle_TestC.* Triangle_TestS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
