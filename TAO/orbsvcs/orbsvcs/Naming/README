@@ -40,3 +40,14 @@ The class structure described above makes it easy to:
 
 
 PERSISTENCE
+
+The first version of Persistent Naming implementation is here!
+It is based on the memory-mapped files.  Directions on how to use the
+Persistent version of the Naming Service can be found in
+TAO/orbsvcs/Naming_Service/README (by using a command-line option).
+
+The current set of classes implementing persistent version of the
+Naming Service will be restructured for one of the upcoming releases
+(to factor out commonality, get rid of unnecessary generality, etc.),
+at which time more documentation will be available in this README file
+and in the source code.
