@@ -16,7 +16,7 @@ project(BBN_UAV_stub): ciao_client {
   }
 }
 
-project(BBN_UAV_svnt) : ciao_servant {
+project(BBN_UAV_svnt) : ciao_server {
   after +=  BBN_UAV_stub
   sharedname  = BBN_UAV_svnt
   libs    += BBN_UAV_stub 
@@ -24,18 +24,8 @@ project(BBN_UAV_svnt) : ciao_servant {
   idlflags  +=  -Wb,export_macro=BBN_UAV_SVNT_Export -Wb,export_include=BBN_UAV_svnt_export.h
   dynamicflags = BBN_UAV_SVNT_BUILD_DLL
 
-  CIDL_Files {
-    BBN_UAV.cidl
-  }
-
-  IDL_Files {
-    BBN_UAVE.idl
-  }
-
   Source_Files {
-    BBN_UAVEC.cpp
     BBN_UAVS.cpp
-    BBN_UAV_svnt.cpp
   }
 }
 
