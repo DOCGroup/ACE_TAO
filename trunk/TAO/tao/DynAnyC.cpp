@@ -45,20 +45,14 @@ CORBA_DynAny_ptr CORBA_DynAny::_narrow (CORBA::Object_ptr obj,
   if (!obj->_is_a ("IDL:/CORBA_DynAny:1.0", env))
     return CORBA_DynAny::_nil ();
 
+  STUB_Object* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
       || obj->_servant ()->_downcast ("IDL:/CORBA_DynAny:1.0") == 0)
     {
-      STUB_Object* stub = obj->_stubobj ();
-      stub->_incr_refcnt ();
-      CORBA_DynAny_ptr new_obj = new CORBA_DynAny (stub);
-      return new_obj;
-    } // end of if
-
-  STUB_Object *stub = obj->_servant ()->_create_stub (env);
-
-  if (env.exception () != 0)
-    return CORBA_DynAny::_nil ();
+      return new CORBA_DynAny (stub);
+    }
 
   void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynAny:1.0");
   return new POA_CORBA::_tao_collocated_DynAny (
@@ -706,20 +700,14 @@ CORBA_DynEnum_ptr CORBA_DynEnum::_narrow (CORBA::Object_ptr obj,
   if (!obj->_is_a ("IDL:/CORBA_DynEnum:1.0", env))
     return CORBA_DynEnum::_nil ();
 
+  STUB_Object* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
       || obj->_servant ()->_downcast ("IDL:/CORBA_DynEnum:1.0") == 0)
     {
-      STUB_Object* stub = obj->_stubobj ();
-      stub->_incr_refcnt ();
-      CORBA_DynEnum_ptr new_obj = new CORBA_DynEnum (stub);
-      return new_obj;
-    } // end of if
-
-  STUB_Object *stub = obj->_servant ()->_create_stub (env);
-
-  if (env.exception () != 0)
-    return CORBA_DynEnum::_nil ();
+      return new CORBA_DynEnum (stub);
+    }
 
   void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynEnum:1.0");
   return new POA_CORBA::_tao_collocated_DynEnum (
@@ -1004,21 +992,15 @@ CORBA_DynStruct_ptr CORBA_DynStruct::_narrow (CORBA::Object_ptr obj,
   if (!obj->_is_a ("IDL:/CORBA_DynStruct:1.0", env))
     return CORBA_DynStruct::_nil ();
 
+  STUB_Object* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
       || obj->_servant ()->_downcast ("IDL:/CORBA_DynStruct:1.0") == 0
       )
     {
-      STUB_Object* stub = obj->_stubobj ();
-      stub->_incr_refcnt ();
-      CORBA_DynStruct_ptr new_obj = new CORBA_DynStruct (stub);
-      return new_obj;
+      return new CORBA_DynStruct (stub);
     } // end of if
-
-  STUB_Object *stub = obj->_servant ()->_create_stub (env);
-
-  if (env.exception () != 0)
-    return CORBA_DynStruct::_nil ();
 
   void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynStruct:1.0");
   return new POA_CORBA::_tao_collocated_DynStruct (
@@ -1119,20 +1101,14 @@ CORBA_DynUnion_ptr CORBA_DynUnion::_narrow (CORBA::Object_ptr obj,
                    env))
     return CORBA_DynUnion::_nil ();
 
+  STUB_Object* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
       || obj->_servant ()->_downcast ("IDL:/CORBA_DynUnion:1.0") == 0)
     {
-      STUB_Object* stub = obj->_stubobj ();
-      stub->_incr_refcnt ();
-      CORBA_DynUnion_ptr new_obj = new CORBA_DynUnion (stub);
-      return new_obj;
+      return new CORBA_DynUnion (stub);
     } // end of if
-
-  STUB_Object *stub = obj->_servant ()->_create_stub (env);
-
-  if (env.exception () != 0)
-    return CORBA_DynUnion::_nil ();
 
   void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynUnion:1.0");
   return new POA_CORBA::_tao_collocated_DynUnion (
@@ -1334,20 +1310,14 @@ CORBA_DynSequence_ptr CORBA_DynSequence::_narrow (CORBA::Object_ptr obj,
                    env))
     return CORBA_DynSequence::_nil ();
 
+  STUB_Object* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
       || obj->_servant ()->_downcast ("IDL:/CORBA_DynSequence:1.0") == 0)
     {
-      STUB_Object* stub = obj->_stubobj ();
-      stub->_incr_refcnt ();
-      CORBA_DynSequence_ptr new_obj = new CORBA_DynSequence (stub);
-      return new_obj;
+      return new CORBA_DynSequence (stub);
     } // end of if
-  STUB_Object *stub = obj->_servant ()->_create_stub (env);
-
-  if (env.exception () != 0)
-    return CORBA_DynSequence::_nil ();
-
   void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynSequence:1.0");
   return new POA_CORBA::_tao_collocated_DynSequence (
     ACE_reinterpret_cast (POA_CORBA::DynSequence_ptr,
@@ -1449,20 +1419,14 @@ CORBA_DynArray_ptr CORBA_DynArray::_narrow (CORBA::Object_ptr obj,
                    env))
     return CORBA_DynArray::_nil ();
 
+  STUB_Object* stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
       || !obj->_servant ()
       || obj->_servant ()->_downcast ("IDL:/CORBA_DynArray:1.0") == 0)
     {
-      STUB_Object* stub = obj->_stubobj ();
-      stub->_incr_refcnt ();
-      CORBA_DynArray_ptr new_obj = new CORBA_DynArray (stub);
-      return new_obj;
+      return new CORBA_DynArray (stub);
     } // end of if
-
-  STUB_Object *stub = obj->_servant ()->_create_stub (env);
-
-  if (env.exception () != 0)
-    return CORBA_DynArray::_nil ();
 
   void* servant = obj->_servant ()->_downcast ("IDL:/CORBA_DynArray:1.0");
   return new POA_CORBA::_tao_collocated_DynArray (
