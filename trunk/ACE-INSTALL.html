@@ -556,8 +556,8 @@ make: *** [libACE.so] Error 8
 
       In addition, as noted <A HREF="#g++">below</A> following the
       discussion of the g++ -fno-implicit-templates option,
-      -fno-implicit-templates is broken.  And, -O2 is not supported on
-      some targets.<P>
+      -fno-implicit-templates is broken for x86 targets.  And, -O2
+      is not supported on some targets.<P>
 
       Please note that ACE uses one of the spare fields in the Wind
       River task control block, spare4, for thread- specific storage.
@@ -760,8 +760,9 @@ If you use the GNU GCC g++ compiler please note the following:
       helping to find and implement these solutions.<P>
 
   <LI>On VxWorks only, g++ (thru version 2.7.2, distributed
-      with Tornado 1.0.1/VxWorks 5.3.1), -fno-implicit-templates is
-      broken.  In addition, -O2 is not supported on some targets.<P>
+      with Tornado 1.0.1/VxWorks 5.3.1), for x86 targets,
+      -fno-implicit-templates is broken.  In addition, -O2
+      is not supported on some targets.<P>
 </UL>
 
 
