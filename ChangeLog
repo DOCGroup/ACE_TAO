@@ -1,3 +1,11 @@
+Thu Aug  7 21:47:25 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Kokyu.h: Included Dispatcher_Impl.h header file instead of
+	  forward declaring Dispatcher_Impl. This was causing compile
+	  errors/warnings in some builds. 
+
+	* Kokyu/Makefile: Updated dependencies.
+
 Thu Aug 07 16:36:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/MakeProjectCreator/config/qt-min.mpb: Added a minimal Qt
