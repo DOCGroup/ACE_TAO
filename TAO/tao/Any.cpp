@@ -34,6 +34,10 @@
 
 #include "tao/corba.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/Any.i"
+#endif /* ! __ACE_INLINE__ */
+
 CORBA::TypeCode_ptr
 CORBA_Any::type (void) const
 {

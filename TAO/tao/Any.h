@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -64,8 +65,8 @@ public:
   // Default constructor.
 
   CORBA_Any (CORBA::TypeCode_ptr type,
-	     void *value = 0,
-	     CORBA::Boolean any_owns_data = CORBA::B_FALSE);
+             void *value = 0,
+             CORBA::Boolean any_owns_data = CORBA::B_FALSE);
   // Constructor. The any_owns_data flag determines if the Any owns the value
 
   CORBA_Any (const CORBA_Any &a);
@@ -159,7 +160,7 @@ public:
   {
     from_string (char* s,
                  CORBA::ULong b,
-		 CORBA::Boolean nocopy = CORBA::B_FALSE);
+                 CORBA::Boolean nocopy = CORBA::B_FALSE);
     char *val_;
     CORBA::ULong bound_;
     CORBA::Boolean nocopy_;
@@ -246,15 +247,15 @@ public:
   // parameter, two forms of the replace method are provided.
 
   void replace (CORBA::TypeCode_ptr type,
-		const void *value,
-		CORBA::Boolean any_owns_data,
-		CORBA::Environment &env);
+                const void *value,
+                CORBA::Boolean any_owns_data,
+                CORBA::Environment &env);
   // Replace the current typecode and data with the specified one -
   // unsafe.
 
   void replace (CORBA::TypeCode_ptr type,
-		const void *value,
-		CORBA::Environment &env);
+                const void *value,
+                CORBA::Environment &env);
   // Replace the current typecode and data with the specified one -
   // unsafe. This uses a default value for the "any_owns_data" parameter
 
@@ -381,5 +382,9 @@ private:
   void operator= (const CORBA_Any_var &);
   // assignment from _var disallowed
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/Any.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_ANY_H */

@@ -260,4 +260,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (STUB_Object &operator = (const STUB_Object &))
 };
 
+#if defined (__ACE_INLINE__)
+# include "tao/Stub.i"
+#endif /* __ACE_INLINE__ */
+
 #endif /* TAO_STUB_H */

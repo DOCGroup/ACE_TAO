@@ -14,6 +14,10 @@
 
 #include "tao/corba.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/Typecode.i"
+#endif /* ! __ACE_INLINE__ */
+
 // Just fetch the 'kind' field out of the typecode.
 void *
 CORBA_TypeCode::operator new (size_t s)
@@ -30,12 +34,12 @@ CORBA_TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 }
 
 CORBA_Bounds::CORBA_Bounds (void)
-  : CORBA_UserException (CORBA::_tc_Bounds) 
+  : CORBA_UserException (CORBA::_tc_Bounds)
 {
 }
 
 CORBA_BadKind::CORBA_BadKind (void)
-  : CORBA_UserException (CORBA::_tc_BadKind) 
+  : CORBA_UserException (CORBA::_tc_BadKind)
 {
 }
 

@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -11,8 +12,6 @@
 // = AUTHOR
 //     Chris Cleeland
 //
-// = VERSION
-//     $Id$
 // ============================================================================
 
 #if !defined (TAO_ORB_CORE_H)
@@ -21,15 +20,15 @@
 #  include "tao/corba.h"
 
 typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
-	TAO_CONNECTOR;
+        TAO_CONNECTOR;
 
 typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
-	                            ACE_SOCK_CONNECTOR,
-				    ACE_SYNCH_RW_MUTEX>
+                                    ACE_SOCK_CONNECTOR,
+                                    ACE_SYNCH_RW_MUTEX>
         TAO_CACHED_CONNECT_STRATEGY;
 
 typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
-	TAO_NULL_CREATION_STRATEGY;
+        TAO_NULL_CREATION_STRATEGY;
 
 typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
         TAO_NULL_ACTIVATION_STRATEGY;
@@ -52,9 +51,9 @@ class TAO_Export TAO_ORB_Core
   //    model).
   friend class CORBA_ORB;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
-					 char * const*,
-					 const char *,
-					 CORBA::Environment &);
+                                         char * const*,
+                                         const char *,
+                                         CORBA::Environment &);
 public:
   // = Initialization and termination methods.
   TAO_ORB_Core (void);
@@ -410,6 +409,10 @@ private:
   typedef ACE_TSS_Singleton<App_Allocated, ACE_SYNCH_MUTEX>
           TSS_APP_ALLOCATED;
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/ORB_Core.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_FACTORY_DECLARE (TAO, TAO_Resource_Factory)
 
