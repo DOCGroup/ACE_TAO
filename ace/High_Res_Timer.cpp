@@ -104,8 +104,11 @@ ACE_High_Res_Timer::global_scale_factor ()
 #         if defined (ACE_WIN32)
             ACE_High_Res_Timer::global_scale_factor (
               ACE_High_Res_Timer::get_registry_scale_factor ());
-#         elif defined (linux)
-            // Get the BogoMIPS from /proc.
+#         elif defined (linux) && (__alpha__)
+            // Get the BogoMIPS from /proc.  It works fine on
+            // Alpha and Pentium Pro.  For other CPUs, it will
+            // be necessary to interpret the BogoMips, as described
+            // in the BogoMips mini-HOWTO.
             FILE *cpuinfo;
             if ((cpuinfo = ACE_OS::fopen ("/proc/cpuinfo", "r")))
               {
@@ -124,7 +127,7 @@ ACE_High_Res_Timer::global_scale_factor ()
                   }
                 ACE_OS::fclose (cpuinfo);
               }
-#         endif /* ! ACE_WIN32 && ! linux */
+#         endif /* ! ACE_WIN32 && ! (linux && __alpha__) */
 
           if (ACE_High_Res_Timer::global_scale_factor_ == 1u)
             // Failed to retrieve CPU speed from system, so calculate it.
