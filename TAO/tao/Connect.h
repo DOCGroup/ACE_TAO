@@ -151,12 +151,18 @@ public:
   // Called when a a response from a twoway invocation is available.
 
 protected:
+  ACE_SYNCH_CONDITION* cond_response_available (TAO_ORB_Core* orb_core);
+  // Return the cond_response_available, initializing it if necessary.
 
+protected:
   ACE_thread_t calling_thread_;
   // the thread ID of the thread we were running in.
 
   ACE_SYNCH_CONDITION* cond_response_available_;
   // wait on reponse if the leader-follower model is active
+
+  TAO_ORB_Core* orb_core_;
+  // The ORB core where we are executing a request.
 };
 
 // ****************************************************************
