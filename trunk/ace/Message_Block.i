@@ -270,6 +270,32 @@ ACE_Message_Block::msg_deadline_time (const ACE_Time_Value &dt)
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 }
 
+ACE_INLINE void
+ACE_Message_Block::access_allocators (ACE_Allocator *& allocator_strategy,
+                                      ACE_Allocator *& data_block_allocator,
+                                      ACE_Allocator *& message_block_allocator)
+{
+  allocator_strategy =
+    this->data_block_->allocator_strategy_;
+  data_block_allocator =
+    this->data_block_->data_block_allocator_;
+  message_block_allocator =
+    this->message_block_allocator_;
+}
+
+ACE_INLINE void
+ACE_Message_Block::reset_allocators (ACE_Allocator *allocator_strategy,
+                                     ACE_Allocator *data_block_allocator,
+                                     ACE_Allocator *message_block_allocator)
+{
+  this->data_block_->allocator_strategy_ =
+    allocator_strategy;
+  this->data_block_->data_block_allocator_ =
+    data_block_allocator;
+  this->message_block_allocator_ =
+    message_block_allocator;
+}
+
 ACE_INLINE char *
 ACE_Message_Block::base (void) const
 {
