@@ -1,22 +1,26 @@
 Thu Sep 17 22:33:00 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/index.html
-	  docs/tutorials/templates.html
-	
-	  Added templates.html to discuss issues surrounding manual vs
-	  automatic template instantiation.
+        * docs/tutorials/index.html
+          docs/tutorials/templates.html
+
+          Added templates.html to discuss issues surrounding manual vs
+          automatic template instantiation.
 
 Thu Sep 17 20:01:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/tests.dsw:
-	* tests/version_tests.dsw:
-	* tests/[version_tests/]High_Res_Timer_Test.dsp:
-	* tests/[version_tests/]DLList_Test.dsp: Added new project files.
+        * tests/tests.dsw:
+        * tests/version_tests.dsw:
+        * tests/[version_tests/]High_Res_Timer_Test.dsp:
+        * tests/[version_tests/]DLList_Test.dsp: Added new project files.
 
 Thu Sep 17 19:27:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (TSS_base,some ACE_PSOS_Time_t functions):
           removed ACE_INLINE.
+
+        * examples/Shared_Malloc/test_malloc.cpp (gen_size): cast
+          &seed to unsigned long first, to avoid warning about
+          narrowing on Alphas (cxx/DU 4.0).
 
 Thu Sep 17 18:51:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -153,7 +157,7 @@ Thu Sep 17 09:23:01 1998  Carlos O'Ryan  <coryan@JIG>
 Thu Sep 17 08:41:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * examples/Shared_Malloc/test_malloc.cpp:
-          Fixed soem problems with my changes to rand_r()
+          Fixed some problems with my changes to rand_r()
 
         * ace/Containers.i:
           Resurrected this file to avoid problems with dependencies in
