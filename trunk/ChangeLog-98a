@@ -1,3 +1,11 @@
+Tue Jan 06 17:19:13 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/Containers.{h,cpp} (ACE_Unbounded_Set[_Iterator]):  Added
+	  STL-styled iterator functions.  Changed the internal
+	  representation of ACE_Unbounded_Set within iterators from a
+	  reference to a pointer.  We need this to compare if two
+	  iterators are refering to the same set or not.
+
 Tue Jan  6 14:11:54 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* tests/Reader_Writer_Test.cpp: 
