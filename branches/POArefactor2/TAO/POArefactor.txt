@@ -1,3 +1,8 @@
+Fri Dec  3 14:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h:
+          Include PortableServer.h instead of PortableServerC.h
+
 Fri Dec  3 10:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:

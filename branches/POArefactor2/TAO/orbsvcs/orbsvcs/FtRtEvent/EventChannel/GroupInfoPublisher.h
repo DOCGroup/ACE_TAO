@@ -14,7 +14,7 @@
 #define GROUPINFOPUBLISHER_H
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "ace/Vector_T.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
