@@ -167,6 +167,8 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
                   begin,
                   size);
 
+  this->byte_order_ = cdr.byte_order ();
+
   // Get character translators.
   this->char_translator_ = cdr.char_translator();
   this->wchar_translator_ = cdr.wchar_translator();
