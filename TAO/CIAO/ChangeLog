@@ -1,3 +1,15 @@
+Fri May 28 10:18:45 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Fixed warnings resulting from non usage of .in () while
+          assigning to a _ptr from a _var.
+
+        * DnC/DomaiinApplicationManager/DomainApplicationManager_Impl.inl:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+
+          Created file for storing inline functions
+
 Thu May 27 22:16:26 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedEDE.idl:
