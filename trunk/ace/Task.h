@@ -92,7 +92,8 @@ public:
 			int force_active = 0,
 			long priority = ACE_DEFAULT_THREAD_PRIORITY,
 			int grp_id = -1,
-			ACE_Task_Base *task = 0); 
+			ACE_Task_Base *task = 0,
+			ACE_hthread_t thread_handles[] = 0);
   // Turn the task into an active object, i.e., having <n_threads> of
   // control, all running at the <priority> level (see below) with the same
   // <grp_id>, all of which invoke <Task::svc>.  Returns -1 if failure
@@ -119,6 +120,11 @@ public:
   // explicit value is given, it is used.  Note that actual priority
   // values are EXTREMEMLY implementation-dependent, and are probably
   // best avoided.
+  //
+  // If <thread_handles> != 0 it is assumed to be an array of <n>
+  // thread_handles that will be assigned the values of the thread
+  // handles being spawned.  Returns -1 on failure (<errno> will
+  // explain...), otherwise returns the group id of the threads.
 
   virtual int wait (void);
   // Wait for all threads running in this task to exit.

@@ -316,7 +316,8 @@ ACE_Thread_Manager::spawn_n (size_t n,
 			     long flags,
 			     long priority,
 			     int grp_id,
-			     ACE_Task_Base *task)
+			     ACE_Task_Base *task,
+			     ACE_hthread_t thread_handles[])
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -328,8 +329,16 @@ ACE_Thread_Manager::spawn_n (size_t n,
     {
       // @@ What should happen if this fails?! e.g., should we try to
       // cancel the other threads that we've already spawned or what?
-      if (this->spawn_i (func, args, flags, 0, 0, priority, grp_id, 
-			 0, 0, task) == -1)
+      if (this->spawn_i (func,
+			 args,
+			 flags,
+			 0,
+			 thread_handles == 0 ? 0 : &thread_handles[i], 
+			 priority,
+			 grp_id, 
+			 0,
+			 0,
+			 task) == -1)
 	return -1;
     }
 
