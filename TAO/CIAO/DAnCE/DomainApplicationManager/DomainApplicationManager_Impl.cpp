@@ -1,9 +1,10 @@
 // $Id$
 
 #include "DomainApplicationManager_Impl.h"
+#include "NodeManager/NodeDaemonC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
-#include "NodeManager/NodeDaemonC.h"
+#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
@@ -579,7 +580,7 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
 
           ::Deployment::NodeManager_var my_node_manager =
              (entry->int_id_).node_manager_;
-          
+
           // Since we have the first arg is not used by NM anyway.
           my_node_manager->destroyManager (0 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
