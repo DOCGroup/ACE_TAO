@@ -64,7 +64,7 @@ private:
 
   /// Helps count the length of the <obj_addr_list> and the number of
   /// individual <obj_addr> in the <obj_addr_list>.
-  virtual void parse_string_count_helper (const char * &corbaloc_name,
+  virtual void parse_string_count_helper (const char * corbaloc_name,
                                           CORBA::ULong &addr_list_length,
                                           CORBA::ULong &count_addr
                                           TAO_ENV_ARG_DECL_NOT_USED)
