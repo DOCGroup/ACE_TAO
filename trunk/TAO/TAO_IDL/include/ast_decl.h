@@ -77,6 +77,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scoped_name.h"
 #include "idl_narrow.h"
 
+// Needed to recognize ACE_OSTREAM_TYPE, and for BCB it's
+// not included in ace/OS.h, so we include it here.
+#if defined (__BORLANDC__)
+# include "ace/streams.h"
+#endif
+
 // This is for AIX w/IBM C++
 class Identifier;
 
