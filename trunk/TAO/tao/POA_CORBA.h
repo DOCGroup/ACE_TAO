@@ -1791,11 +1791,6 @@ private:
   };
 
 #endif /* ! defined TAO_HAS_MINIMUM_CORBA */
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
 };
 
 #if defined(_MSC_VER)
