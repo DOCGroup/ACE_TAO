@@ -7026,6 +7026,10 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #   define ASYS_INLINE inline
 # endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+# if !defined (ACE_HAS_MINIMAL_ACE_OS)
+#   include "ace/Trace.h"
+# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE
@@ -7035,10 +7039,8 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 # if !defined (ACE_HAS_MINIMAL_ACE_OS)
-# include "ace/Trace.h"
-
-// These need to come here to avoid problems with circular dependencies.
-# include "ace/Log_Msg.h"
+    // This needs to come here to avoid problems with circular dependencies.
+#   include "ace/Log_Msg.h"
 # endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 // The following are some insane macros that are useful in cases when
