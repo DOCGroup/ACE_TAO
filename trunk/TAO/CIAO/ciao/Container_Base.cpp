@@ -174,31 +174,6 @@ namespace CIAO
     ACE_CHECK;
   }
 
-  CORBA::Object_ptr
-  Session_Container::install_servant (PortableServer::Servant p,
-                                      Container::OA_Type t
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    PortableServer::POA_ptr tmp = 0;
-
-    if (t == Container::Component)
-      tmp = this->component_poa_.in ();
-    else
-      tmp = this->facet_cons_poa_.in ();
-
-    PortableServer::ObjectId_var oid
-      = tmp->activate_object (p
-                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    CORBA::Object_var objref
-      = tmp->id_to_reference (oid.in ()
-                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    return objref._retn ();
-  }
 
   CORBA::Object_ptr
   Session_Container::install_component (PortableServer::Servant p,
@@ -222,11 +197,6 @@ namespace CIAO
   }
 
 
-  //@@ Apparently we need to be cautious when handling the exception
-  //   thrown here. We should make sure that new DnC interfaces
-  //   NodeApplication/NodeApplicationManager etc will cache the new
-  //   exceptions--> rethrow of new exceptions is needed.
-  //                                            --Tao
   Components::CCMHome_ptr
   Session_Container::ciao_install_home (const char *exe_dll_name,
                                         const char *exe_entrypt,
