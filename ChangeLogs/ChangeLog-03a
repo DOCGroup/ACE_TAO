@@ -7,6 +7,7 @@ Sun Dec 16 16:42:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
         * examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
         * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
 
           Made these examples compiling when ACE_USES_WCHAR is set
 

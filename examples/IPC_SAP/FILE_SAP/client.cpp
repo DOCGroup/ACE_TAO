@@ -8,7 +8,7 @@
 ACE_RCSID(FILE_SAP, client, "$Id$")
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 3 || argc > 3)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -16,7 +16,7 @@ main (int argc, char *argv[])
                        argv[0]),
                       1);
 
-  char *readback = new char[::strlen (argv[1]) + 1];
+  ACE_TCHAR *readback = new ACE_TCHAR[ACE_OS::strlen (argv[1]) + 1];
 
   ACE_FILE_Info fileinfo;
   ACE_FILE_IO cli_file;
