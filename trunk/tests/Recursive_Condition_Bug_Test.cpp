@@ -14,7 +14,7 @@
 //      specialization when combined with the
 //      ACE_Thread_Timer_Queue_Adapter on Win32 and Posix pthreads.
 //      It was added to test for bugs with the ACE_OS recursive
-//      condition implementation.  
+//      condition implementation.
 //
 // = AUTHOR
 //    Leonid Kvetnyi <leonidk@nice.com> and
@@ -28,12 +28,14 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
 
-ACE_RCSID(tests, Recursive_Condition_Bug_Test, "$Id$")
-
-// Number of iterations for the performance tests. 
-static int max_iterations = 30;
+ACE_RCSID (tests,
+           Recursive_Condition_Bug_Test,
+           "$Id$")
 
 #if defined (ACE_HAS_THREADS)
+
+// Number of iterations for the performance tests.
+static int max_iterations = 30;
 
 typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap> Thread_Timer_Queue;
 
@@ -69,7 +71,7 @@ public:
                              ACE_TEXT ("schedule failed")),
                             -1);
 
-        ACE_DEBUG ((LM_INFO, 
+        ACE_DEBUG ((LM_INFO,
                     ACE_TEXT ("(%t) %d iteration(s) remain\n"),
                     max_iterations));
       }
@@ -158,7 +160,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   if (-1 == task.putq (mb))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"), 
+                       ACE_TEXT ("(%t) %p\n"),
                        ACE_TEXT ("putq")),
                       -1);
 
