@@ -1,3 +1,7 @@
+Fri Aug 31 11:40:31 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/MEM_Stream_Test.(cpp h): Fixed single-threaded builds.
+
 Fri Aug 31 08:13:26 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/perltest2cpp.pl:
