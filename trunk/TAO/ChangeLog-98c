@@ -1,3 +1,19 @@
+1998-12-06  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+	added the following files for the implementation of
+	the Cos Event Channel - 
+	* orbsvcs/orbsvcs/CosEventChannelAdmin.idl	
+	* orbsvcs/orbsvcs/CosEventComm.idl
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.h		
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp	
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h		
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp	
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h 
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp 
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp 
+
 1998-12-06  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the TAO_THROW
