@@ -343,9 +343,7 @@ Subscribe_StructuredPushConsumer::push_structured_event (const CosNotification::
   const char* type_name =
     notification.header.fixed_header.event_type.type_name;
 
-  ACE_DEBUG ((LM_DEBUG, "Structured Subscribe Consumer %d received event,
-domain = %s, type =  %s\n",
-              this->proxy_supplier_id_, domain_name, type_name));
+  ACE_DEBUG ((LM_DEBUG, "Structured Subscribe Consumer %d received event, domain = %s, type =  %s\n", this->proxy_supplier_id_, domain_name, type_name));
 }
 
 void
