@@ -29,8 +29,7 @@ ACE/TAO Configuration Project
 11.	Write documentation on how to maintain the Autoconf and Automake files.
 	HOWTOs/tutorials on how to use Auto{conf,make} and libtool would be
 	good, too.
-12.	Implement remaining configure script options (e.g. --enable-optimize,
-	--with-orbix).
+12.	Implement remaining configure script options (e.g. --enable-optimize).
 13.	Make sure all of the ACE feature macros are supported by the configure
 	script.
 14.	Modify ace/Makefile.am and tao/Makefile.am so that the template
@@ -171,9 +170,6 @@ ACE/TAO Configuration Project
 /* Use the semaphore implementation of ACE_Message_Queue rather than the
    emulated condition variable (NT and VxWorks). */
 #undef ACE_HAS_OPTIMIZED_MESSAGE_QUEUE
-
-/* Platform has Orbix CORBA implementation */
-#undef ACE_HAS_ORBIX
 
 /* Purify'ing.  Defined on command line. */
 #undef ACE_HAS_PURIFY

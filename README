@@ -110,11 +110,6 @@ following class categories:
                 -- Components for managing dynamically allocation
                    of shared and local memory;
 
-        . CORBA integration
-                -- Integrates ACE with CORBA implementations
-                   (such as single-threaded and multi-threaded
-                   Orbix and Visibroker for C++).
-
 ----------------------------------------
 
 Distributed Services and Components
