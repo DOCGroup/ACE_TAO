@@ -536,8 +536,7 @@ ACE_OS::chdir (const char *path)
 {
   ACE_TRACE ("ACE_OS::chdir");
 #   if defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::chdir ((char *) path), ace_result_),
-                     int, -1);
+  ACE_OSCALL_RETURN (::chdir (ACE_const_cast (char *, path)), int, -1);
 
 #elif defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (path);
@@ -1071,9 +1070,7 @@ ACE_OS::unlink (const char *path)
 {
   ACE_TRACE ("ACE_OS::unlink");
 # if defined (VXWORKS)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::unlink ((char *) path),
-                                                   ace_result_),
-                       int, -1);
+    ACE_OSCALL_RETURN (::unlink (ACE_const_cast (char *, path)), int, -1);
 # elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
     ACE_OSCALL_RETURN (::remove_f ((char *) path), int , -1);
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_C_LIBRARY)
@@ -2824,7 +2821,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   return result;
 #   elif defined (VXWORKS)
   int result;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::semDelete (s->sema_), result), int, -1, result);
+  ACE_OSCALL (::semDelete (s->sema_), int, -1, result);
   s->sema_ = 0;
   return result;
 #   endif /* ACE_HAS_STHREADS */
@@ -3080,7 +3077,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
   ACE_OSCALL (ACE_ADAPT_RETVAL (::sm_v (s->sema_), result), int, -1, result);
   return result;
 #   elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semGive (s->sema_), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (::semGive (s->sema_), int, -1);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (s);
@@ -3323,7 +3320,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
                                 int, -1, result);
   return result;
 #   elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, WAIT_FOREVER), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (::semTake (s->sema_, WAIT_FOREVER), int, -1);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (s);
@@ -6210,7 +6207,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 # elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_resume (target_thread), ace_result_), int, -1);
 # elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskResume (target_thread), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (::taskResume (target_thread), int, -1);
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
@@ -6302,7 +6299,7 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   // passing a 0 in the second argument does not alter task priority, third arg gets existing one
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_setpri (thr_id, 0, (u_long *) &prio), ace_result_), int, -1);
 # elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPriorityGet (thr_id, &prio), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (::taskPriorityGet (thr_id, &prio), int, -1);
 # else
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (prio);
@@ -6917,8 +6914,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   if (tid == ERROR)
     return -1;
   else
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::kill (tid, signum), ace_result_),
-                       int, -1);
+    ACE_OSCALL_RETURN (::kill (tid, signum), int, -1);
 
 # else /* This should not happen! */
   ACE_UNUSED_ARG (thr_id);
@@ -7054,9 +7050,7 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
                                        ace_result_),
                      int, -1);
 # elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPrioritySet (thr_id, prio),
-                                       ace_result_),
-                     int, -1);
+  ACE_OSCALL_RETURN (::taskPrioritySet (thr_id, prio), int, -1);
 # else
   // For example, platforms that support Pthreads but LACK_SETSCHED.
   ACE_UNUSED_ARG (thr_id);
@@ -7095,7 +7089,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 # elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::t_suspend (target_thread), ace_result_), int, -1);
 # elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskSuspend (target_thread), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (::taskSuspend (target_thread), int, -1);
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
@@ -10069,8 +10063,7 @@ ACE_OS::ioctl (ACE_HANDLE handle, int cmd, void *val)
   ACE_SOCKET sock = (ACE_SOCKET) handle;
   ACE_SOCKCALL_RETURN (::ioctlsocket (sock, cmd, (u_long *) val), int, -1);
 #elif defined (VXWORKS)
-  // This may not work very well...
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ioctl (handle, cmd, (int) val), ace_result_),
+  ACE_OSCALL_RETURN (::ioctl (handle, cmd, ACE_reinterpret_cast (int, val)),
                      int, -1);
 #elif defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, (char *) val), int, -1);
