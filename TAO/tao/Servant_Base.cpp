@@ -135,8 +135,6 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
     }
   else
     {
-      servant_orb = stub->orb_core ()->orb ();
-
       PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
@@ -149,6 +147,8 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
       // Increment the reference count since <object> will zap its
       // stub object on deletion.
       stub->_incr_refcnt ();
+
+      servant_orb = stub->orb_core ()->orb ();
     }
 
   stub->servant_orb (servant_orb);
