@@ -13,6 +13,10 @@ Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-sunos5.5-sunc++-4.x.h,config-sunos5.5-g++.h:
           removed, because config-sunos5.5.h should be used instead.
 
+        * performance-tests/Misc/basic_perf.cpp (iteration_time):
+          added static cast 0 to ACE_hrtime_t to please g++
+          on VxWorks (which uses ACE_U_LongLong for ACE_hrtime_t).
+
 Tue Oct 20 07:09:31 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.2.x.h: Added ACE_HAS_GPERF.
