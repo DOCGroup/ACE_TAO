@@ -37,6 +37,7 @@ Test_Nested_Struct::Test_Nested_Struct (void)
 Test_Nested_Struct::~Test_Nested_Struct (void)
 {
   CORBA::string_free (this->opname_);
+  this->opname_ = 0;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -98,38 +99,49 @@ Test_Nested_Struct::add_args (CORBA::NVList_ptr param_list,
 			      CORBA::NVList_ptr retval,
 			      CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_Nested_Struct, (void *) &this->in_, 0);
-  CORBA::Any inout_arg (Param_Test::_tc_Nested_Struct, &this->inout_.inout (), 0);
-  CORBA::Any out_arg (Param_Test::_tc_Nested_Struct, this->out_.out (), 0);
+  CORBA::Any in_arg (Param_Test::_tc_Nested_Struct,
+                     (void *) &this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (Param_Test::_tc_Nested_Struct,
+                        &this->inout_.inout (),
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (Param_Test::_tc_Nested_Struct,
+                      0,//this->dii_out_,
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
+  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
+  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
   // add return value
-  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Nested_Struct,
-                                                  &this->ret_,
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_Nested_Struct,
+                                            0,//this->dii_ret_,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 
 CORBA::Boolean
-Test_Nested_Struct::check_validity (void)
+Test_Nested_Struct::check_validity_engine (Param_Test::Nested_Struct the_in,
+                                           Param_Test::Nested_Struct the_inout,
+                                           Param_Test::Nested_Struct the_out,
+                                           Param_Test::Nested_Struct the_ret)
 {
   CORBA::Boolean flag = 0;
-  if ((this->in_.vs.seq.length () == this->inout_->vs.seq.length ()) &&
-      (this->in_.vs.seq.length () == this->out_->vs.seq.length ()) &&
-      (this->in_.vs.seq.length () == this->ret_->vs.seq.length ()))
+  if ((the_in.vs.seq.length () == the_inout.vs.seq.length ()) &&
+      (the_in.vs.seq.length () == the_out.vs.seq.length ()) &&
+      (the_in.vs.seq.length () == the_ret.vs.seq.length ()))
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_.vs.seq.length () && flag; i++)
+      for (CORBA::ULong i=0; i < the_in.vs.seq.length () && flag; i++)
         {
-          if (ACE_OS::strcmp (this->in_.vs.seq[i], this->inout_->vs.seq[i]) ||
-              ACE_OS::strcmp (this->in_.vs.seq[i], this->out_->vs.seq[i]) ||
-              ACE_OS::strcmp (this->in_.vs.seq[i], this->ret_->vs.seq[i]))
+          if (ACE_OS::strcmp (the_in.vs.seq[i], the_inout.vs.seq[i]) ||
+              ACE_OS::strcmp (the_in.vs.seq[i], the_out.vs.seq[i]) ||
+              ACE_OS::strcmp (the_in.vs.seq[i], the_ret.vs.seq[i]))
             // not equal
             flag = 0;
         }
@@ -138,17 +150,27 @@ Test_Nested_Struct::check_validity (void)
 }
 
 CORBA::Boolean
+Test_Nested_Struct::check_validity (void)
+{
+  return check_validity_engine (this->in_,
+                                this->inout_.in (),
+                                this->out_.in (),
+                                this->ret_.in ()); 
+}
+
+CORBA::Boolean
 Test_Nested_Struct::check_validity (CORBA::Request_ptr req)
 {
+
   CORBA::Environment env;
-  this->inout_ = new Param_Test::Nested_Struct (*(Param_Test::Nested_Struct *)
-                                                req->arguments ()->item
-                                                (1, env)->value ()->value ());
-  this->out_ = new Param_Test::Nested_Struct (*(Param_Test::Nested_Struct *) req->arguments
-                                              ()->item (2, env)->value ()->value ());
-  this->ret_ = new Param_Test::Nested_Struct (*(Param_Test::Nested_Struct *)req->result
-                                              ()->value ()->value ());
-  return this->check_validity ();
+
+  *req->arguments ()->item (2, env)->value () >>= this->dii_out_;
+  *req->result ()->value () >>= this->dii_ret_;
+
+  return this->check_validity_engine (this->in_,
+                                      this->inout_.in (),
+                                      *this->dii_out_,
+                                      *this->dii_ret_);
 }
 
 void
