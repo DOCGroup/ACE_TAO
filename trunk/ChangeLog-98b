@@ -1,3 +1,16 @@
+Sun May 10 01:51:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Renamed ACE_OS::Time_To_The_Beginning to
+	  ACE_OS::FILETIME_to_timval_skew. 
+
+	* ace/OS.cpp: Found the problem in ACE_OS::ctime_r.  An internal
+	  compiler bug (?) caused the bug.  The solution: move the format
+	  string out as a const string instead of putting it in sprintf
+	  directly.  Weird.
+
+	* ace/Log_Record.{h,cpp}: Made priority_name_ and its access
+	  function CE friendly.
+
 Sat May  9 20:09:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.h: Changed the type of lock used by

@@ -25,11 +25,18 @@
 #include "ace/Object_Manager.h"
 
 #if defined (ACE_HAS_WINCE)
-const wchar_t *ACE_OS::day_of_week_name[] = {L"Sun", L"Mon", L"Tue", L"Wed",
-                                             L"Thr", L"Fri", L"Sat"};
-const wchar_t *ACE_OS::month_name[] = {L"Jan", L"Feb", L"Mar", L"Apr",
-                                       L"May", L"Jun", L"Jul", L"Aug",
-                                       L"Sep", L"Oct", L"Nov", L"Dec" };
+const wchar_t *ACE_OS::day_of_week_name[] = {__TEXT ("Sun"), __TEXT ("Mon"),
+                                             __TEXT ("Tue"), __TEXT ("Wed"),
+                                             __TEXT ("Thr"), __TEXT ("Fri"),
+                                             __TEXT ("Sat")};
+const wchar_t *ACE_OS::month_name[] = {__TEXT ("Jan"), __TEXT ("Feb"),
+                                       __TEXT ("Mar"), __TEXT ("Apr"),
+                                       __TEXT ("May"), __TEXT ("Jun"),
+                                       __TEXT ("Jul"), __TEXT ("Aug"),
+                                       __TEXT ("Sep"), __TEXT ("Oct"),
+                                       __TEXT ("Nov"), __TEXT ("Dec") };
+
+static const ASYS_TCHAR *fmtstr = __TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
 #endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
@@ -68,8 +75,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 // 
 // In the beginning (Jan. 1, 1601), there was no time and no computer.
 // And Bill said: "Let there be time," and there was time....
-const DWORDLONG ACE_Time_Value::Time_To_The_Beginning
-                                             = 0x019db1ac8aa4100i64;
+const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew = 0x19db1ded53e8000i64;
 
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 {
@@ -82,13 +88,12 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   //  Initializes the ACE_Time_Value object from a Win32 FILETIME
   ULARGE_INTEGER _100ns = {file_time.dwLowDateTime,
                            file_time.dwHighDateTime};
-  _100ns.QuadPart -= Time_To_The_Beginning;
+  _100ns.QuadPart -= ACE_Time_Value::FILETIME_to_timval_skew;
 
   // Convert 100ns units to seconds;
   this->tv_.tv_sec = long (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = long ((_100ns.QuadPart -
-                             (this->tv_.tv_sec * (10000 * 1000))) / 10);
+  this->tv_.tv_usec = long ((_100ns.QuadPart % (10000 * 1000)) / 10);
 }
 
 // Returns the value of the object as a Win32 FILETIME.
@@ -97,9 +102,8 @@ ACE_Time_Value::operator FILETIME () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator FILETIME");
   ULARGE_INTEGER _100ns;
-  _100ns.QuadPart = ((DWORDLONG) this->tv_.tv_sec * (1000 * 1000) +
-                      this->tv_.tv_usec)
-                     * 10 + Time_To_The_Beginning;
+ _100ns.QuadPart = ((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
+                    this->tv_.tv_usec * 10) + ACE_Time_Value::FILETIME_to_timval_skew;
   FILETIME file_time;
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
@@ -691,7 +695,7 @@ ACE_OS::mktemp (wchar_t *s)
     return 0;
   else
     {
-      wchar_t *xxxxxx = ACE_OS::strstr (s, L"XXXXXX");
+      wchar_t *xxxxxx = ACE_OS::strstr (s, __TEXT ("XXXXXX"));
 
       if (xxxxxx == 0)
         // the template string doesn't contain "XXXXXX"!
@@ -707,15 +711,15 @@ ACE_OS::mktemp (wchar_t *s)
           // condition if multiple threads in a process use the same
           // template).  This appears to match the behavior of the
           // Solaris 2.5 mktemp().
-          ACE_OS::sprintf (xxxxxx, L"%05d%c", getpid (), unique_letter);
+          ACE_OS::sprintf (xxxxxx, __TEXT ("%05d%c"), getpid (), unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
               if (++unique_letter <= L'z')
-                ACE_OS::sprintf (xxxxxx, L"%05d%c", getpid (), unique_letter);
+                ACE_OS::sprintf (xxxxxx, __TEXT ("%05d%c"), getpid (), unique_letter);
               else
                 {
                   // maximum of 26 unique files per template, per process
-                  ACE_OS::sprintf (xxxxxx, L"%s", L"");
+                  ACE_OS::sprintf (xxxxxx, __TEXT ("%s"), L"");
                   return s;
                 }
             }
@@ -3267,10 +3271,10 @@ ACE_OS::socket_init (int version_high, int version_low)
       if (error != 0)
 #if defined (ACE_HAS_WINCE)
         {
-          wchar_t fmt[] = L"%s failed, WSAGetLastError returned %d";
+          wchar_t fmt[] = __TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
-          ACE_OS::sprintf (buf, fmt, L"WSAStartup", error);
-          ::MessageBox (NULL, buf, L"WSAStartup failed!", MB_OK);
+          ACE_OS::sprintf (buf, fmt, __TEXT ("WSAStartup"), error);
+          ::MessageBox (NULL, buf, __TEXT ("WSAStartup failed!"), MB_OK);
         }
 #else
         cerr << "WSAStartup failed, WSAGetLastError returned " << error << endl;
@@ -3296,10 +3300,10 @@ ACE_OS::socket_fini (void)
         {
           int error = ::WSAGetLastError ();
 #if defined (ACE_HAS_WINCE)
-          wchar_t fmt[] = L"%s failed, WSAGetLastError returned %d";
+          wchar_t fmt[] = __TEXT ("%s failed, WSAGetLastError returned %d");
           wchar_t buf[80];  // @@ Eliminate magic number.
-          ACE_OS::sprintf (buf, fmt, L"WSACleanup", error);
-          ::MessageBox (NULL, buf , L"WSACleanup failed!", MB_OK);
+          ACE_OS::sprintf (buf, fmt, __TEXT ("WSACleanup"), error);
+          ::MessageBox (NULL, buf , __TEXT ("WSACleanup failed!"), MB_OK);
 #else
           cerr << "WSACleanup failed, WSAGetLastError returned " << error << endl;
 #endif /* ACE_HAS_WINCE */
@@ -3585,16 +3589,33 @@ ACE_OS::ctime_r (const time_t *clock,
   // buflen must be at least 26 wchar_t long.
   if (buflen < 26)              // Again, 26 is a magic number.
     return 0;
-  CTime frz (*clock);
+  // This is really stupid, converting FILETIME to timeval back and
+  // forth.  It assumes FILETIME and DWORDLONG are the same structure
+  // internally.
+  ULARGE_INTEGER _100ns;
+  _100ns.QuadPart = (DWORDLONG) *clock * 10000 * 1000
+                     + ACE_Time_Value::FILETIME_to_timval_skew;
+  FILETIME file_time;
+  file_time.dwLowDateTime = _100ns.LowPart;
+  file_time.dwHighDateTime = _100ns.HighPart;
 
-  ACE_OS::sprintf (buf, L"%3s %3s %02d %02d:%02d:%02d %04d\n",
-                   ACE_OS::day_of_week_name[frz.GetDayOfWeek ()],
-                   ACE_OS::month_name[frz.GetMonth ()],
-                   frz.GetDay (),
-                   frz.GetHour (),
-                   frz.GetMinute (),
-                   frz.GetSecond (),
-                   frz.GetYear ());
+#if 1
+  FILETIME localtime;
+  SYSTEMTIME systime;
+  FileTimeToLocalFileTime (&file_time, &localtime);
+  FileTimeToSystemTime (&localtime, &systime);
+#else
+  SYSTEMTIME systime;
+  FileTimeToSystemTime ((FILETIME *) &file_time, &systime);
+#endif /* 0 */
+  ACE_OS::sprintf (buf, fmtstr,
+                   ACE_OS::day_of_week_name[systime.wDayOfWeek],
+                   ACE_OS::month_name[systime.wMonth - 1],
+                   systime.wDay,
+                   systime.wHour,
+                   systime.wMinute,
+                   systime.wSecond,
+                   systime.wYear);
   return buf;
 }
 #endif /* ACE_HAS_WINCE */
