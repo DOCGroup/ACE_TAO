@@ -113,6 +113,10 @@ SOURCE=.\Time_DateS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\Time_Date.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Time_Date_i.h
 # End Source File
 # Begin Source File

@@ -113,7 +113,25 @@ public:
       number_of_replies--;
     };
 
- 
+   void foo_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
+                  CORBA::Environment &ACE_TRY_ENV)
+    {
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Callback method <foo_excep> called: \n"));
+      ACE_TRY
+        {
+          excep_holder->raise_foo ();
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Catched exception:");
+        }
+      ACE_ENDTRY;
+    };
+
+
   ~Handler (void) {};
 };
 
