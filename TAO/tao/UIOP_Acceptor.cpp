@@ -36,6 +36,8 @@ ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_UNIX_IOP),
     base_acceptor_ (),
+    creation_strategy_ (0),
+    concurrency_strategy_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
     unlink_on_close_ (1)
@@ -48,6 +50,9 @@ TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
   // close() is called to ensure that the rendezvous point is removed
   // from the filesystem.
   this->close ();
+
+  delete this->creation_strategy_;
+  delete this->concurrency_strategy_;
 }
 
 int
@@ -155,11 +160,23 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 {
   this->orb_core_ = orb_core;
 
+  ACE_NEW_RETURN (this->creation_strategy_,
+                  TAO_IIOP_CREATION_STRATEGY (this->orb_core_),
+                  -1);
+
+  ACE_NEW_RETURN (this->concurrency_strategy_,
+                  TAO_IIOP_CONCURRENCY_STRATEGY (this->orb_core_),
+                  -1);
+
   ACE_UNIX_Addr addr;
 
   this->rendezvous_point (addr, rendezvous);
 
-  if (this->base_acceptor_.open (orb_core, addr) != 0)
+  if (this->base_acceptor_.open (addr,
+                                 this->orb_core_->reactor (),
+                                 this->creation_strategy_,
+                                 0,
+                                 this->concurrency_strategy_) == -1)
     {
       // Don't unlink an existing rendezvous point since it may be in
       // use by another UIOP server/client.
@@ -236,13 +253,25 @@ TAO_UIOP_Acceptor::endpoint_count (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
+template class ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
+template class ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -79,7 +79,9 @@ public:
   CORBA::ULong endpoint_count (void);
   // return the number of profiles this will generate
 
-  typedef TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler,ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
+  typedef TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
+  typedef TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
+  typedef TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CONCURRENCY_STRATEGY;
 
 private:
   int open_i (TAO_ORB_Core *orb_core, const char *rendezvous);
@@ -92,6 +94,10 @@ private:
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to its base class.
+
+  TAO_UIOP_CREATION_STRATEGY *creation_strategy_;
+  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
+  // Acceptor strategies.
 
   TAO_GIOP_Version version_;
   // The GIOP version for this endpoint
