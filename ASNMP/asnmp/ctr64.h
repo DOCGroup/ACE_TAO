@@ -43,7 +43,7 @@
 // a single entity. This type has is available in SNMPv2 but
 // may be used anywhere where needed.
 //
-class ACE_Export Counter64: public  SnmpSyntax
+class ASNMP_Export Counter64: public  SnmpSyntax
   // = TITLE
   //     Defines the member functions for the Counter64 concrete class
   //     This class implements RFC 1902 64 bit Counter Object.

@@ -40,7 +40,7 @@
 #define MAX_VBS 25
 #include "asnmp/vb.h"         // include Vb class definition
 
-class ACE_Export Pdu
+class ASNMP_Export Pdu
   // = TITLE
   //      Protocol Data Unit (PDU) concrete class. An abstraction of the
   //      data packet used to by two SNMP sessions to communicate.

@@ -46,7 +46,7 @@
 //
 
 // 32 bit unsigned integer class
-class ACE_Export SnmpUInt32: public SnmpSyntax
+class ASNMP_Export SnmpUInt32: public SnmpSyntax
   // = TITLE
   //      Implement RFC 1920 Unsigned Integer SMI datatype
 {
@@ -93,7 +93,7 @@ class ACE_Export SnmpUInt32: public SnmpSyntax
 
 
 // 32 bit signed integer class
-class ACE_Export SnmpInt32: public SnmpSyntax
+class ASNMP_Export SnmpInt32: public SnmpSyntax
 {
   // = TITLE
   //      Implement RFC 1902 32 bit Integer SMI data object

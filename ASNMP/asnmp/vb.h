@@ -63,7 +63,7 @@
 // The vb class keeps its own memory for objects and does not
 // utilize pointers to external data structures.
 //
-class ACE_Export Vb
+class ASNMP_Export Vb
   // = TITLE
   //      Implement the concrete Variable Bindings aka Varbind
   //      composite type. Varbinds hold 1 Oid and 1 Value (Any SMI value)
