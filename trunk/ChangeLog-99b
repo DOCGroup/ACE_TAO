@@ -1,3 +1,8 @@
+Mon Oct 11 17:35:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-kcc-common.h: Added
+	  ACE_HAS_STD_TEMPLATE_SPECIALIZATION for KCC.
+
 Mon Oct 11 12:05:31 1999  Wei Chiang <wei.chiang@nokia.com>
 
         * ace/Signal.cpp (ACE_Sig_Action ctors),
