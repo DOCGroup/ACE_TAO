@@ -704,7 +704,7 @@ ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::ACE_Hash_Addr (const ADDR_T &a, SVC_HANDLER 
   (void) this->hash ();
 }
 
-template<class ADDR_T, class SVC_HANDLER> size_t
+template<class ADDR_T, class SVC_HANDLER> u_long
 ACE_Hash_Addr<ADDR_T,SVC_HANDLER>::hash (void) const
 {
   // In doing the check below, we take chance of paying a performance

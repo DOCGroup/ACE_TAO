@@ -528,7 +528,7 @@ public:
 		 SVC_HANDLER *sh = 0);
   // Pre-compute hash value.
 
-  size_t hash (void) const;		
+  u_long hash (void) const;		
   // Computes and returns hash value.  This "caches" the hash value to
   // improve performance.
 
@@ -550,7 +550,7 @@ private:
   // performs the non-cached hash computation.  It should typically be
   // specialized.
 
-  size_t hash_value_;		
+  u_long hash_value_;		
   // Pre-computed hash-value.
 
   SVC_HANDLER *svc_handler_;
