@@ -1,3 +1,16 @@
+Fri Jun  9 15:20:11 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Invocation.cpp (location_forward):
+
+	  Do not copy the TAO_MProfile passed to
+	  TAO_Stub::add_forward_profiles() since that method already
+	  copies it.  This fixes a memory leak.
+	  Reported by Sangwoo Jin <swjinjin@sei.co.kr>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i (disconnect):
+
+	  Fixed unused argument warning.
+
 Fri Jun 09 15:45:01 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp
