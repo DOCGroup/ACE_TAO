@@ -7,10 +7,8 @@ project(* sequence server): server, strategies {
   }
 }
 
-project(* sequence client): server, strategies {
+project(* sequence client): server, strategies, dynamicinterface {
   exename  = client
-  after += DynamicInterface
-  libs    += TAO_DynamicInterface
   avoids  += minimum_corba
 
   Source_Files {

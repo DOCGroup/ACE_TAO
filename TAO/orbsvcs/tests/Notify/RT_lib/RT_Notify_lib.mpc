@@ -1,7 +1,4 @@
-project: orbsvcslib, notify, rtcorba, rtportableserver {
-
-  after    += TAO_NotifyTests
-  libs       += TAO_NotifyTests
+project: orbsvcslib, notify, rtcorba, rtportableserver, notifytest {
 
   sharedname = TAO_RT_NotifyTests
 
