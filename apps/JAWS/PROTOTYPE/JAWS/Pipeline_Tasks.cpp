@@ -52,9 +52,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>;
 template class ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
 #pragma instantiate ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
