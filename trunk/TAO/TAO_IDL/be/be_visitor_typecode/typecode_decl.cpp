@@ -54,9 +54,8 @@ be_visitor_typecode_decl::visit_type (be_type *node)
       if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
         *os << "TAO_NAMESPACE_STORAGE_CLASS ";
       else
-        *os << "static " << idl_global->export_macro () << " ";
-      *os << "CORBA::TypeCode_ptr "
-          << node->tc_name ()->last_component () << ";\n\n";
+        *os << "static CORBA::TypeCode_ptr "
+            << node->tc_name ()->last_component () << ";\n\n";
     }
   else
     {
