@@ -14,7 +14,6 @@ ACE_RCSID (PortableServer,
 
 #include "tao/StringSeqC.h"
 
-#include "tao/IORInterceptor/IORInfoC.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
 #include "tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.h"
