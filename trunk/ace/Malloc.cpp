@@ -25,7 +25,6 @@ ACE_Allocator *ACE_Allocator::allocator_ = 0;
 // only delete it safely if we created it!)
 int ACE_Allocator::delete_allocator_ = 0;
 
-
 void
 ACE_Control_Block::dump (void) const
 {
