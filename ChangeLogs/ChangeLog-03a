@@ -1,3 +1,12 @@
+Sat Jun  9 07:16:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/QoS/QoS_Session_Impl.cpp:
+	  Do not hard code the max sdu size.  This should be a
+	  configurable parameter through the ACE_Flow_Spec::max_sdu_size.  
+
+	  This change was made by Craig Rodrigues
+	  <crodrigu@bbn.com>. Just checking in the changes for him.
+
 Fri Jun 08 08:17:15 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
