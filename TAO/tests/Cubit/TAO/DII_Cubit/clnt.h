@@ -83,9 +83,6 @@ private:
   void cube_struct_dii (void);
   // Cube the numbers in a struct
 
-  void simple_DII_cube_struct (void);
-  // Simple test for DII: call "cube_struct". 
-
   // private member variables.
 
   int argc_;
@@ -123,4 +120,16 @@ private:
 
   const char *TAO_arg_ior_;
   // pointer to object reference string.
+
+  char *cubit_key_;
+  // Key of the obj ref to be retrieved via the factory.
+
+  char *hostname_;
+  // Hostname of server.
+
+  CORBA::ULong portnum_;
+  // default port number of server.
+
+  char buf_[BUFSIZ];
+  // buffer for temporary use
 };
