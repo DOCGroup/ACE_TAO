@@ -23,7 +23,7 @@ SERVER_OBJS = UDP_Client_i.o server.o UDP_i.o $(IDL_SRC:.cpp=.o)
 
 BUILD = $(BIN)
 VBIN = $(BIN:%=%$(VAR))
-TAO_IDLFLAGS += -Ge 1
+TAO_IDLFLAGS += -Ge 1 -Sp -Sd
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
