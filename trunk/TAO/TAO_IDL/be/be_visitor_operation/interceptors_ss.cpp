@@ -455,7 +455,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     {
       *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
           << "CORBA::Any *result_any ="  << be_idt_nl
-          << "TAO_RequestInfo_Util::make_any (0, ACE_TRY_ENV);"
+          << "TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);"
           << be_uidt_nl
           << "ACE_CHECK_RETURN (0);" << be_nl
           << be_nl
