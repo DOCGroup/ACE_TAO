@@ -151,10 +151,15 @@ $(ACE_ROOT)/ace/Multihomed_INET_Addr.h                     ADDED
 $(ACE_ROOT)/ace/Multihomed_INET_Addr.i                     ADDED
 $(ACE_ROOT)/ace/Multihomed_INET_Addr.cpp                   ADDED
 
+$(ACE_ROOT)/bin/PerlACE/Process_Unix.pm                    MODIFIED
+$(ACE_ROOT)/bin/PerlACE/Process_Win32.pm                   MODIFIED
+
 $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU         MODIFIED
 $(ACE_ROOT)/include/makeinclude/platform_linux.GNU         MODIFIED
 
+$(ACE_ROOT)/tests/Makefile                                 MODIFIED
 $(ACE_ROOT)/tests/Multihomed_INET_Addr_Test.cpp            ADDED
+$(ACE_ROOT)/tests/run_test.lst                             MODIFIED
 
 $(ACE_ROOT)/performance-tests/SCTP/THANKS                  ADDED
 $(ACE_ROOT)/performance-tests/SCTP/README                  ADDED
