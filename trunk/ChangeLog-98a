@@ -14,7 +14,7 @@ Fri Dec  5 00:37:54 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 	* ace/Name_Proxy.h:
 	* ace/Local_Name_Space_T.h: Corrected erroneous comments.  These
 	  files all contain incorrect filename info in the preambles which
-	  makes erroneous auto-generated man pages.
+	  make erroneous auto-generated man pages.
 
 Fri Dec 05 00:00:53 1997    <irfan@TWOSTEP>
 
