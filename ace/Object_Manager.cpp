@@ -250,20 +250,22 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 {
   if (instance_ == 0)
     {
-      // Store the address of the instance so that instance () doesn't
-      // allocate a new one when called.
-      instance_ = this;
-
       // Construct the ACE_Service_Config's signal handler.
       ACE_NEW (ace_service_config_sig_handler_,
                ACE_Sig_Adapter (&ACE_Service_Config::handle_signal));
       ACE_Service_Config::signal_handler (ace_service_config_sig_handler_);
-
-      init ();
     }
-  // else if instance_ was not 0, then then another
-  // ACE_Object_Manager has already been instantiated.  Don't do
-  // anything, so that it will own all ACE_Object_Manager resources.
+  // else Instance_ was not 0, so then another ACE_Object_Manager has
+  // already been instantiated.  Because this might be the non-static
+  // instance (with ACE_HAS_NONSTATIC_OBJECT_MANAGER), use it and leak
+  // the old one.  We can't destroy it, because the application might
+  // be using some of its resources, via static constructors.
+
+  // Store the address of the instance so that instance () doesn't
+  // allocate a new one when called.
+  instance_ = this;
+
+  init ();
 }
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
