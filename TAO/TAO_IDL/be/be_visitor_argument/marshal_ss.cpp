@@ -80,13 +80,12 @@ int be_visitor_args_marshal_ss::visit_array (be_array *node)
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
       os->indent ();
-      *os << "_tao_forany_" << arg->local_name ();
+      *os << arg->local_name ();
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
       if (node->size_type () == be_type::VARIABLE)
         {
-          //          *os << "_tao_ptr_" << arg->local_name ();
           *os << arg->local_name () << ".inout ()";
         }
       else

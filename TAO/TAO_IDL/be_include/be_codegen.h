@@ -35,10 +35,11 @@ class TAO_CodeGen
   //
 public:
 
-  // define all the code generation states. The first letter C/S of the suffix stands
-  // for client/server-side and the second letter H/I/S stands for
-  // header/inline/impl file. These are used to denote the state or the context
-  // of code generation we are in and serves to produce the right kind of
+  // define all the code generation states.
+  // The first letter C/S of the suffix stands for client/server-side
+  // The second letter H/I/S stands for header/inline/impl file.
+  // These are used to denote the state or the context of code
+  // generation we are in and serves to produce the right kind of
   // visitor for us
 
   enum CG_STATE
