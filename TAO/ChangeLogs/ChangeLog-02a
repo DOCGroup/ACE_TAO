@@ -1,3 +1,24 @@
+Fri Nov 10 10:14:50 2000  Priyanka Gontla <pgontla@ece.uci.edu>
+
+    	* TAO/tests/RTCORBA/server_protocol/run_test.pl
+	  Modified the options to not load UIOP and SHMIOP in the case 
+          where no config file is used.
+
+	* TAO/tests/Leader_Followers/client.dsp :
+	* TAO/tests/Leader_Followers/server.dsp :
+	* TAO/tests/NestedUpcall/Simple/client.dsp :
+	* TAO/tests/NestedUpcall/Simple/server.dsp :
+	* TAO/tests/Param_Test/anyop.dsp :
+	* TAO/tests/Param_Test/client.dsp :
+	* TAO/tests/Param_Test/server.dsp :
+        * TAO/tests/RTCORBA/Server_Protocol/client.dsp
+	* TAO/tests/RTCORBA/server_protocol/server.dsp
+
+	* TAO/performace_tests/Cubit/TAO/IDL_Cuibt/client.dsp
+	* TAO/performace_tests/Cubit/TAO/IDL_Cuibt/server.dsp
+
+	  Updated to link TAO_Strategies library.
+
 Fri Nov 10 10:14:04 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Connection_Cache_Manager.cpp:
