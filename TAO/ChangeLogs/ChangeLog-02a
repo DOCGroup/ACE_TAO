@@ -1,3 +1,15 @@
+Thu Jan 11 20:50:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp: 
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Pluggable.i:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Changed
+	  the place when the sockets were put in non-blocking
+	  mode. Setting the socket to non-blocking mode at connection
+	  initialisation results in poor performance when a RW strategy is
+	  used in the client side. 
+
 Thu Jan 11 15:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_State.cpp:
