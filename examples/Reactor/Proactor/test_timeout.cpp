@@ -30,7 +30,8 @@ class Timeout_Handler : public ACE_Handler
   //     Generic timeout handler.
 {
 public:
-  Timeout_Handler (void) 
+  Timeout_Handler (void)
+    : start_time_ (ACE_OS::gettimeofday ())
     { 
     }
 
@@ -41,13 +42,16 @@ public:
       ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n", 
 		  ++count_,
 		  (char *) arg,
-		  tv.sec ()));
+		  (tv - this->start_time_).sec ()));
       // Sleep for a while
       ACE_OS::sleep (4);
     }
   
 private:
   ACE_Atomic_Op <ACE_Thread_Mutex, int> count_;
+  
+  ACE_Time_Value start_time_;
+  // Starting time of the test.
 };
 
 class Worker : public ACE_Task <ACE_NULL_SYNCH>
@@ -75,17 +79,17 @@ main (int, char *[])
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
   if (ACE_Proactor::instance ()->schedule_timer (handler,
-						       (void *) "Foo",
-						       ACE_Time_Value::zero,
-						       foo_tv) == -1)
+                                                 (void *) "Foo",
+                                                 ACE_Time_Value::zero,
+                                                 foo_tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
   if (ACE_Proactor::instance ()->schedule_timer (handler,
-						       (void *) "Bar",
-						       ACE_Time_Value::zero,
-						       bar_tv) == -1)
+                                                 (void *) "Bar",
+                                                 ACE_Time_Value::zero,
+                                                 bar_tv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   Worker worker;
