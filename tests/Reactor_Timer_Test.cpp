@@ -15,7 +15,7 @@
 //      command line arguments are needed to run the test.
 //
 // = AUTHOR
-//    Prashant Jain and Doug C. Schmidt
+//    Prashant Jain and Douglas C. Schmidt
 // 
 // ============================================================================
 
