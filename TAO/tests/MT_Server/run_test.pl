@@ -23,13 +23,13 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 }
 
 $CL1 = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
-			. " -k file://$iorfile"
+			" -k file://$iorfile"
 			. " -i 100");
 $CL2 = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
-			. " -k file://$iorfile"
+			" -k file://$iorfile"
 			. " -i 100");
 $CL3 = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
-			. " -k file://$iorfile"
+			" -k file://$iorfile"
 			. " -i 100");
 
 $client1 = $CL1->TimedWait (60);
