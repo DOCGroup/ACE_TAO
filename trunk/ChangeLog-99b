@@ -1,3 +1,10 @@
+Mon Oct 11 12:05:31 1999  Wei Chiang <wei.chiang@nokia.com>
+
+        * ace/Signal.cpp (ACE_Sig_Action ctors),
+          ace/Select_Reactor_T.cpp (register_handler,remove_handler):
+          disabled signal-related operations for platforms that
+          #define ACE_LACKS_UNIX_SIGNALS, including Chorus.
+
 Mon Oct 11 10:15:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: suppress some Purify warnings.  Purify
