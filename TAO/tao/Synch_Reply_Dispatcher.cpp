@@ -57,6 +57,8 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   // dispatcher is used because the request must be re-sent.
   //this->message_state_.reset (0);
 
+  // Steal the buffer so that no copying is done.
+  this->reply_cdr_.steal_from (params.input_cdr_);
 
   /*if (&this->message_state_ != message_state)
     {
@@ -64,7 +66,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
       // receive the event, possibly because it is muxing multiple
       // requests over the same connection.
 
-      // Steal the buffer so that no copying is done.
+       // Steal the buffer so that no copying is done.
       this->message_state_.cdr.steal_from (message_state->cdr);
 
       // There is no need to copy the other fields!
