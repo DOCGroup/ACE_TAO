@@ -1,3 +1,10 @@
+Sat Nov  8 13:15:41 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/except.cpp (print_exception): Fixed a strange format code in
+ 	  print_exception that was causing a seg fault.  What the heck
+ 	  does %#lx mean?  Thanks to Mark L Boriack <mark@vtcibm4a> for
+ 	  reporting this.
+
 Fri Nov 07 21:23:35 1997    <coryan@MILONGA>
 
 	* tao/orb_core.h: 

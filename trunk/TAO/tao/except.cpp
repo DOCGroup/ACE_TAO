@@ -449,7 +449,7 @@ CORBA::Environment::print_exception (const char *info,
 
       ACE_DEBUG ((LM_ERROR, "(%P|%t) system exception, ID '%s'\n", id));
       ACE_DEBUG ((LM_ERROR,
-		  "(%P|%t) minor code = %#lx, completed = %s",
+		  "(%P|%t) minor code = %d, completed = %s",
 		  x2->minor (),
                   (x2->completion () == CORBA::COMPLETED_YES) ? "YES" :
                   (x2->completion () == CORBA::COMPLETED_NO) ? "NO" :
