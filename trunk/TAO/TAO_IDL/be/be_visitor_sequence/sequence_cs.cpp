@@ -98,10 +98,11 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
     }
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_sequence_base_template_args visitor (&ctx,node);
+  //ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
+  //be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
-  if (bt->accept (visitor) == -1)
+  if (bt->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_cs::"
@@ -109,7 +110,7 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
                          "base type visit failed\n"),
                         -1);
     }
-  delete visitor;
+  //delete visitor;
 
   // find out if the sequence is of a managed type and if it is bounded or not
   if (node->managed_type () == be_sequence::MNG_STRING)
