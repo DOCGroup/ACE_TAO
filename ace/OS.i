@@ -1085,22 +1085,18 @@ ACE_OS::strcasecmp (const char *s, const char *t)
   // equal.
   int result = 0;
 
-  if (strlen(s) != strlen(t))
-    {
-      result = 1;
-    }
+  if (ACE_OS::strlen (s) != ACE_OS::strlen (t))
+    result = 1;
    else
      {
-       while (*s != '\0' && *t != '\0')
-         {
-           if (tolower (*s) != tolower (*t))
-             {
-               result = ((tolower (*s) < tolower (*t)) ? -1 : 1);
-               break;
-             }
-
-           ++s; ++t;
-         }
+       for (;
+            *s != '\0' && *t != '\0';
+            ++s; ++t)
+         if (tolower (*s) != tolower (*t))
+           {
+             result = ((tolower (*s) < tolower (*t)) ? -1 : 1);
+             break;
+           }
      }
 
    return result; // == 0 for match, else 1
