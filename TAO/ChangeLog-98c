@@ -1,3 +1,22 @@
+Sat Mar 14 02:17:34 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/*.*:
+	I've hammered out a number of errors from the initial port:
+	the Trading Service compiles on Solaris.
+
+	* orbsvcs/orbsvcs/Makefile:
+	I've added all the necessary additions to the Makefile for the
+	Trading Service. The makefile will perform the compilation when
+	the 'trader' flag is set to 1 on the command line.
+
+	* orbsvcs/Trading_Service/Makefile:
+	* orbsvcs/Trading_Service/trader.cpp:
+	trader.cpp instantiates a Trader object and registers its Lookup
+	interface with the bootstrapped Naming Service. All the Trader
+	interfaces are implicitly activated in the Trader class. In the
+	future we'll want to have the Trading Service bootstrappable
+	through the resolve_initial_references method. 
+
 Sat Mar 14 00:36:30 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp (define_property): 
