@@ -182,13 +182,15 @@ Mpeg_Svc_Handler::handle_connection (ACE_HANDLE)
                               -INET_SOCKET_BUFFER_SIZE); 
         */
                
-        this->vs_.init (this->peer ().get_handle (),
-                        this->dgram_.get_handle (),
-                        Mpeg_Global::rttag,
-                        -INET_SOCKET_BUFFER_SIZE);
+        ACE_NEW_RETURN (this->vs_,
+                        Video_Server (this->peer ().get_handle (),
+                                      this->dgram_.get_handle (),
+                                      Mpeg_Global::rttag,
+                                      -INET_SOCKET_BUFFER_SIZE),
+                        -1);
 
-        // enters the 
-        result = this->vs_.run ();
+        // enters the Video_Server run method
+        result = this->vs_->run ();
 
         if (result != 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -364,7 +366,7 @@ AV_Server::on_exit_routine (void)
   if (Mpeg_Global::parentpid != ACE_OS::getpid ()) 
     {
       ACE_DEBUG ((LM_DEBUG, 
-                  "(%P|%t) exiting"));
+                  "(%P|%t) Process is exiting\n"));
       return;
     }
   
@@ -382,7 +384,7 @@ AV_Server::clear_child (int sig)
   int status;
   
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Reaping the children"));
+              "(%P|%t) Reaping the children\n"));
   // reap the children
   while ((pid = ACE_OS::waitpid (-1, 
                                  &status, 

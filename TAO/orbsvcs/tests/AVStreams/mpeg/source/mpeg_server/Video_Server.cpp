@@ -154,7 +154,8 @@ fast_play_send (void)
 // %% this should *not* register itself,but it should
 // be registered by the Video_Server::run, alongwith
 // the remaining  handlers.
-Video_Sig_Handler::Video_Sig_Handler (void)
+Video_Sig_Handler::Video_Sig_Handler (Video_Control_Handler *vch)
+  : vch_ (vch)
 {
 }
 
@@ -238,17 +239,16 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       // Handle the timeout
       Video_Timer_Global::timerHandler (SIGALRM);
       // send the frame..
-      switch (VIDEO_SINGLETON::instance ()->state)
+      switch (this->vch_->get_state ()->get_state ())
         {
-          // %% you probably dont need to use instance here
-        case Video_Global::VIDEO_PLAY:
+        case Video_Control_State::VIDEO_PLAY:
           play_send ();
           break;
-        case Video_Global::VIDEO_FAST_FORWARD:
+        case Video_Control_State::VIDEO_FAST_FORWARD:
           // this handles the forward play case!
           fast_play_send ();
           break;
-        case Video_Global::VIDEO_FAST_BACKWARD:
+        case Video_Control_State::VIDEO_FAST_BACKWARD:
           // this handles the backward play case!
           fast_play_send ();
           break;
@@ -267,8 +267,10 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 
 // Video_Data_Handler methods
 
-Video_Data_Handler::Video_Data_Handler (int video_data_fd)
-  :data_handle_ (video_data_fd)
+Video_Data_Handler::Video_Data_Handler (int video_data_fd,
+                                        Video_Control_Handler *vch)
+  : data_handle_ (video_data_fd),
+    vch_ (vch)
 {
 }
 
@@ -283,14 +285,14 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
 {
   fprintf (stderr,"Video_Data_Handler::handle_input ()\n");
   
-  switch (VIDEO_SINGLETON::instance ()->state)
+  switch (this->vch_->get_state ()->get_state ())
     {
-    case Video_Global::VIDEO_PLAY:
+    case Video_Control_State::VIDEO_PLAY:
       GetFeedBack ();
       play_send (); // simulating the for loop in playvideo () in vs.cpp
       break;
-    case Video_Global::VIDEO_FAST_FORWARD:
-    case Video_Global::VIDEO_FAST_BACKWARD:
+    case Video_Control_State::VIDEO_FAST_FORWARD:
+    case Video_Control_State::VIDEO_FAST_BACKWARD:
       GetFeedBack ();
       fast_play_send (); // simulating the for loop in fast_play
       break;
@@ -301,8 +303,11 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
 // Video_Control_Handler methods
 
 Video_Control_Handler::Video_Control_Handler (int control_fd)
-  :control_handle_ (control_fd)
+  : control_handle_ (control_fd),
+    state_  (VIDEO_CONTROL_WAITING_STATE::instance ())
+  // start off in the waiting state (i.e. waiting for commands)
 {
+  VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->set_video_control_handler (this);
 }
 
 ACE_HANDLE
@@ -314,113 +319,40 @@ Video_Control_Handler::get_handle (void) const
 int
 Video_Control_Handler::handle_input (ACE_HANDLE handle)
 {
-  unsigned char tmp;
-  int result;
-
-  if (handle == ACE_INVALID_HANDLE )
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Video_Control_Handler::handle_input () got invalid handle\n"));
-      ACE_Reactor::instance ()->end_event_loop ();
-      return 1;
-    }
-    
-  if (VIDEO_SINGLETON::instance ()->state == Video_Global::VIDEO_PLAY)
-    {
-      fprintf (stderr,"Video_Control_Handler::handle_input () \n");
-
-      result = Video_Server::CmdRead((char *)&tmp, 1);
-      if (result != 0)
-        return result;
-        
-      if (tmp == CmdCLOSE) {
-        ACE_Reactor::instance ()->end_event_loop ();
-        return 0;
-        //    exit (0);
-      }
-      else if (tmp == CmdSTOP) {
-        VIDEO_SINGLETON::instance ()->cmd = tmp;
-        /*
-          fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSTOP. . .\n");
-        */
-        result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
-        if (result != 0)
-          return result;
-#ifdef NeedByteOrderConversion
-        VIDEO_SINGLETON::instance ()->cmdsn = ntohl(VIDEO_SINGLETON::instance ()->cmdsn);
-#endif
-        Video_Timer_Global::StopTimer();
-        
-        VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
-        // We need to call the read_cmd of the Video_Server to simulate
-        // the control going to a switch..
-        Video_Server::read_cmd ();
-        return 0;
-      }
-      else if (tmp == CmdSPEED)
-        {
-          SPEEDpara para;
-          /*
-            fprintf(stderr, "VS: VIDEO_SINGLETON::Instance ()->CmdSPEED. . .\n");
-          */
-          result = Video_Server::CmdRead((char *)&para, sizeof(para));
-          if (result != 0)
-            return result;
-#ifdef NeedByteOrderConversion
-          para.sn = ntohl(para.sn);
-          para.usecPerFrame = ntohl(para.usecPerFrame);
-          para.framesPerSecond = ntohl(para.framesPerSecond);
-          para.sendPatternGops = ntohl(para.sendPatternGops);
-          para.frameRateLimit1000 = ntohl(para.frameRateLimit1000);
-#endif
-          VIDEO_SINGLETON::instance ()->frameRateLimit = para.frameRateLimit1000 / 1000.0;
-          VIDEO_SINGLETON::instance ()->sendPatternGops = para.sendPatternGops;
-          VIDEO_SINGLETON::instance ()->currentUPF = para.usecPerFrame;
-          VIDEO_SINGLETON::instance ()->addedUPF = 0;
-          memcpy(VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
-          Video_Timer_Global::TimerSpeed ();
-        }
-      else
-        {
-          fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->cmd=%d while expect STOP/SPEED.\n", tmp);
-          VIDEO_SINGLETON::instance ()->normalExit = 0;
-          ACE_Reactor::instance ()->end_event_loop ();
-          return 1;
-        }
-      play_send ();// simulating the for loop in vs.cpp
-    }
-  else if ((VIDEO_SINGLETON::instance ()->state ==
-           Video_Global::VIDEO_FAST_FORWARD) ||
-           (VIDEO_SINGLETON::instance ()->state ==
-           Video_Global::VIDEO_FAST_BACKWARD ))
-    {
-      result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
-      if (result != 0)
-        return result;
-      if (VIDEO_SINGLETON::instance ()->cmd == CmdCLOSE) {
-        ACE_Reactor::instance ()->end_event_loop ();
-        return 0;
-        //	exit(0);
-      }
-      else if (VIDEO_SINGLETON::instance ()->cmd != CmdSTOP) {
-	fprintf(stderr, "VS error: VIDEO_SINGLETON::instance ()->cmd=%d while STOP is expected.\n", VIDEO_SINGLETON::instance ()->cmd);
-	VIDEO_SINGLETON::instance ()->normalExit = 0;
-        ACE_Reactor::instance ()->end_event_loop ();
-        return 1;
-        //	exit(1);
-      }
-      result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmdsn, sizeof(int));
-      if (result != 0 )
-        return result;
-#ifdef NeedByteOrderConversion
-      VIDEO_SINGLETON::instance ()->cmdsn = ntohl(VIDEO_SINGLETON::instance ()->cmdsn);
-#endif
-      Video_Timer_Global::StopTimer();
-      VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
-      Video_Server::read_cmd ();
-      return 0;
-    }
+  return this->state_->handle_input (handle);
+  // state pattern
 }
+
+Video_Control_State *
+Video_Control_Handler::get_state (void)
+{
+  return this->state_;
+}
+
+void
+Video_Control_Handler::change_state (Video_Control_State *state)
+{
+  this->state_ = state;
+}
+
+// ----------------------------------------------------------------------
+
+Video_Control_Handler_Instance::Video_Control_Handler_Instance (void)
+{
+}
+
+void
+Video_Control_Handler_Instance::set_video_control_handler (Video_Control_Handler *h)
+{
+  this->video_control_handler_ = h;
+}
+
+Video_Control_Handler *
+Video_Control_Handler_Instance::get_video_control_handler (void)
+{
+  return this->video_control_handler_;
+}
+// ----------------------------------------------------------------------
 
 // Video_Server methods
 
@@ -433,6 +365,9 @@ Video_Server::Video_Server (int ctr_fd,
                             int data_fd,
                             int rttag,
                             int max_pkt_size)
+  : data_handler_ (0),
+    control_handler_ (0),
+    sig_handler_ (0)
 {
   this->init (ctr_fd,
               data_fd,
@@ -455,11 +390,22 @@ Video_Server::init (int ctr_fd,
 {
   this->reactor_ = ACE_Reactor::instance ();
 
-  // %% new the sig handler also here
-  // %% use ACE_NEW_RETURN
-  this->data_handler_ = new Video_Data_Handler (data_fd);
-  this->control_handler_ = new Video_Control_Handler (ctr_fd);
-  this->sig_handler_ = new Video_Sig_Handler ();
+  ACE_NEW_RETURN (this->control_handler_, 
+                  Video_Control_Handler (ctr_fd),
+                  -1);
+
+  // %% this->control_handler_->set_state 
+  //  (VIDEO_CONTROL_WAITING_STATE::instance ();
+  
+
+  ACE_NEW_RETURN (this->data_handler_ ,
+                  Video_Data_Handler (data_fd,
+                                      this->control_handler_),
+                  -1);
+
+  ACE_NEW_RETURN (this->sig_handler_, 
+                  Video_Sig_Handler (this->control_handler_),
+                  -1);
 
   int result;
 
@@ -539,88 +485,11 @@ Video_Server::run (void)
                        "failed!\n"),
                       -1);
 
-  // Read the first command and do the init for that command
-  // typicallly play...
-  // %% this shouldnt be handling any commands eventually..
-  return this->read_cmd ();
-}
-
-// this is currently called by several people
-// (1) is Video_Server::run, to handle the *first* command
-// (2..n) to handle one command
-
-// %%
-// this should be probably renamed to handle_command, and
-// should be the *only* place where we do a switch
-// on the command
-int
-Video_Server::read_cmd (void)
-{
-  int result;
-    
-  fprintf(stderr, "VS: waiting for a new command...\n");
-    
-  VIDEO_SINGLETON::instance ()->precmd = VIDEO_SINGLETON::instance ()->cmd;
-  result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
-  if (result != 0)
-    {
-      cerr << result;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) VideoServer "),
-                        result);
-    }
-  fprintf(stderr, "VS got VIDEO_SINGLETON::instance ()->cmd %d\n", VIDEO_SINGLETON::instance ()->cmd);
-    
-  VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
-  switch (VIDEO_SINGLETON::instance ()->cmd)
-    {
-    case CmdPOSITION:
-    case CmdPOSITIONrelease:
-      result = Video_Server::position ();
-      if (result != 0)
-        return result;
-      break;
-    case CmdSTEP:
-      result = Video_Server::step_video ();
-      if (result != 0)
-        return result;
-      break;
-    case CmdFF:
-      VIDEO_SINGLETON::instance ()->state = Video_Global::VIDEO_FAST_FORWARD;
-      Video_Server::fast_forward ();
-      break;
-    case CmdFB:
-      VIDEO_SINGLETON::instance ()->state = Video_Global::VIDEO_FAST_BACKWARD;
-      Video_Server::fast_backward ();
-      break;
-    case CmdPLAY:
-      VIDEO_SINGLETON::instance ()->state = Video_Global::VIDEO_PLAY;
-      result = Video_Server::play ();
-      break;
-    case CmdCLOSE:
-      VIDEO_SINGLETON::instance ()->normalExit =1;
-      ACE_Reactor::instance ()->end_event_loop ();
-      break;
-    case CmdSTATstream:
-      Video_Server::stat_stream ();
-      break;
-    case CmdSTATsent:
-      Video_Server::stat_sent ();
-      break;
-    default:
-      ACE_DEBUG ((LM_DEBUG, 
-                  "(%P|%t) Video_Server: Unknown command %d",
-                  VIDEO_SINGLETON::instance ()->cmd));
-      VIDEO_SINGLETON::instance ()->normalExit = 0;
-      return -1;
-    }
-  // one command was handled successfully
   return 0;
 }
 
-// %% rename this ?
 int
-Video_Server::play (void)
+Video_Server::init_play (void)
 {
   int result;
 
@@ -910,7 +779,6 @@ Video_Server::position (void)
   CheckGroupRange(pos_para.nextGroup);
   VIDEO_SINGLETON::instance ()->cmdsn = pos_para.sn;
   result = SendPacket(VIDEO_SINGLETON::instance ()->numS>1 || pos_para.nextGroup == 0, pos_para.nextGroup, 0, 0);
-  Video_Server::read_cmd ();
   return result;
 }
 
@@ -962,7 +830,6 @@ Video_Server::step_video()
   }
   
   if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo();
-  Video_Server::read_cmd ();
   return 0;
 }
 
@@ -1028,7 +895,6 @@ Video_Server::stat_stream(void)
     CmdWrite((char *)&type, 1);
     CmdWrite((char *)&size, 2);
   }
-  Video_Server::read_cmd ();
   return 0;
 }
 
@@ -1043,7 +909,6 @@ Video_Server::stat_sent(void)
   for (i = 0; i < (VIDEO_SINGLETON::instance ()->numF + 7) / 8; i++)
     CmdWrite((char *)&zeroByte, 1);
 #endif
-  Video_Server::read_cmd ();
   return 0;
 }
 

@@ -147,7 +147,6 @@ Video_Global::Video_Global ()
 
   fast_preGroup = -1;
   fast_preHeader= -1;
-  state = INVALID;
 }
 
 void
