@@ -81,6 +81,7 @@ CONTROLLED_FILES = \
         performance-tests \
         tests \
 	Kokyu \
+	protocols \
         websvcs
 
 RELEASE_FILES = \
@@ -89,8 +90,7 @@ RELEASE_FILES = \
         ACE_wrappers/GNUmake* \
         ACE_wrappers/*.dsw \
         ACE_wrappers/*.sln \
-        ACE_wrappers/*.bor \
-        ACE_wrappers/man
+        ACE_wrappers/*.bor
 
 AUTOCONF_RELEASE_FILES = \
 	$(RELEASE_FILES) \
