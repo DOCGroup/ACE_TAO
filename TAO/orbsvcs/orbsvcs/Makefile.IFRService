@@ -119,11 +119,10 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/AbstractInterfaceDef_i.o .obj/AbstractInterfaceDef_i.o .obj/AbstractInterfaceDef_i.o .obj/AbstractInterfaceDef_i.o: IFRService/AbstractInterfaceDef_i.cpp \
+.obj/AbstractInterfaceDef_i.o .obj/AbstractInterfaceDef_i.so .shobj/AbstractInterfaceDef_i.o .shobj/AbstractInterfaceDef_i.so: IFRService/AbstractInterfaceDef_i.cpp \
  IFRService/AbstractInterfaceDef_i.h IFRService/InterfaceDef_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -155,8 +154,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -336,11 +334,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/AliasDef_i.o .obj/AliasDef_i.o .obj/AliasDef_i.o .obj/AliasDef_i.o: IFRService/AliasDef_i.cpp IFRService/AliasDef_i.h \
+.obj/AliasDef_i.o .obj/AliasDef_i.so .shobj/AliasDef_i.o .shobj/AliasDef_i.so: IFRService/AliasDef_i.cpp IFRService/AliasDef_i.h \
  IFRService/TypedefDef_i.h IFRService/Contained_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -371,8 +369,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -553,10 +550,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/Servant_Factory.h
 
-.obj/ArrayDef_i.o .obj/ArrayDef_i.o .obj/ArrayDef_i.o .obj/ArrayDef_i.o: IFRService/ArrayDef_i.cpp IFRService/ArrayDef_i.h \
+.obj/ArrayDef_i.o .obj/ArrayDef_i.so .shobj/ArrayDef_i.o .shobj/ArrayDef_i.so: IFRService/ArrayDef_i.cpp IFRService/ArrayDef_i.h \
  IFRService/IDLType_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -588,8 +584,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -769,11 +764,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/Servant_Factory.h
 
-.obj/AttributeDef_i.o .obj/AttributeDef_i.o .obj/AttributeDef_i.o .obj/AttributeDef_i.o: IFRService/AttributeDef_i.cpp \
+.obj/AttributeDef_i.o .obj/AttributeDef_i.so .shobj/AttributeDef_i.o .shobj/AttributeDef_i.so: IFRService/AttributeDef_i.cpp \
  IFRService/AttributeDef_i.h IFRService/Contained_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -804,8 +799,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -986,11 +980,11 @@ realclean: clean
  IFRService/IDLType_i.h IFRService/ExceptionDef_i.h \
  IFRService/Servant_Factory.h
 
-.obj/ComponentDef_i.o .obj/ComponentDef_i.o .obj/ComponentDef_i.o .obj/ComponentDef_i.o: IFRService/ComponentDef_i.cpp \
+.obj/ComponentDef_i.o .obj/ComponentDef_i.so .shobj/ComponentDef_i.o .shobj/ComponentDef_i.so: IFRService/ComponentDef_i.cpp \
  IFRService/Repository_i.h IFRService/Container_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1021,8 +1015,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1207,11 +1200,10 @@ realclean: clean
  IFRService/IFR_ComponentsS_T.h IFRService/IFR_ComponentsS_T.i \
  IFRService/IFR_ComponentsS_T.cpp IFRService/IFR_ComponentsS.i
 
-.obj/ComponentRepository_i.o .obj/ComponentRepository_i.o .obj/ComponentRepository_i.o .obj/ComponentRepository_i.o: IFRService/ComponentRepository_i.cpp \
+.obj/ComponentRepository_i.o .obj/ComponentRepository_i.so .shobj/ComponentRepository_i.o .shobj/ComponentRepository_i.so: IFRService/ComponentRepository_i.cpp \
  IFRService/ComponentRepository_i.h IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -1243,8 +1235,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1427,11 +1418,11 @@ realclean: clean
  IFRService/IFR_ComponentsS_T.h IFRService/IFR_ComponentsS_T.i \
  IFRService/IFR_ComponentsS_T.cpp IFRService/IFR_ComponentsS.i
 
-.obj/ConstantDef_i.o .obj/ConstantDef_i.o .obj/ConstantDef_i.o .obj/ConstantDef_i.o: IFRService/ConstantDef_i.cpp \
+.obj/ConstantDef_i.o .obj/ConstantDef_i.so .shobj/ConstantDef_i.o .shobj/ConstantDef_i.so: IFRService/ConstantDef_i.cpp \
  IFRService/ConstantDef_i.h IFRService/Contained_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1462,8 +1453,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1643,11 +1633,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/IDLType_i.h IFRService/Servant_Factory.h
 
-.obj/ConsumesDef_i.o .obj/ConsumesDef_i.o .obj/ConsumesDef_i.o .obj/ConsumesDef_i.o: IFRService/ConsumesDef_i.cpp \
+.obj/ConsumesDef_i.o .obj/ConsumesDef_i.so .shobj/ConsumesDef_i.o .shobj/ConsumesDef_i.so: IFRService/ConsumesDef_i.cpp \
  IFRService/Repository_i.h IFRService/Container_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1678,8 +1668,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1859,12 +1848,12 @@ realclean: clean
  IFRService/ConsumesDef_i.h IFRService/EventDef_i.h \
  IFRService/Contained_i.h
 
-.obj/Contained_i.o .obj/Contained_i.o .obj/Contained_i.o .obj/Contained_i.o: IFRService/Contained_i.cpp \
+.obj/Contained_i.o .obj/Contained_i.so .shobj/Contained_i.o .shobj/Contained_i.so: IFRService/Contained_i.cpp \
  IFRService/concrete_classes.h IFRService/ComponentRepository_i.h \
  IFRService/Repository_i.h IFRService/Container_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1895,8 +1884,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2098,10 +2086,9 @@ realclean: clean
  IFRService/AbstractInterfaceDef_i.h IFRService/LocalInterfaceDef_i.h \
  IFRService/Servant_Factory.h
 
-.obj/Container_i.o .obj/Container_i.o .obj/Container_i.o .obj/Container_i.o: IFRService/Container_i.cpp IFRService/Repository_i.h \
+.obj/Container_i.o .obj/Container_i.so .shobj/Container_i.o .shobj/Container_i.so: IFRService/Container_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -2133,8 +2120,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2314,10 +2300,9 @@ realclean: clean
  IFRService/InterfaceDef_i.h IFRService/Contained_i.h \
  IFRService/IDLType_i.h IFRService/Servant_Factory.h
 
-.obj/EmitsDef_i.o .obj/EmitsDef_i.o .obj/EmitsDef_i.o .obj/EmitsDef_i.o: IFRService/EmitsDef_i.cpp IFRService/Repository_i.h \
+.obj/EmitsDef_i.o .obj/EmitsDef_i.so .shobj/EmitsDef_i.o .shobj/EmitsDef_i.so: IFRService/EmitsDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -2349,8 +2334,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2530,11 +2514,11 @@ realclean: clean
  IFRService/EmitsDef_i.h IFRService/EventDef_i.h \
  IFRService/Contained_i.h
 
-.obj/EnumDef_i.o .obj/EnumDef_i.o .obj/EnumDef_i.o .obj/EnumDef_i.o: IFRService/EnumDef_i.cpp IFRService/EnumDef_i.h \
+.obj/EnumDef_i.o .obj/EnumDef_i.so .shobj/EnumDef_i.o .shobj/EnumDef_i.so: IFRService/EnumDef_i.cpp IFRService/EnumDef_i.h \
  IFRService/TypedefDef_i.h IFRService/Contained_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2565,8 +2549,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2747,10 +2730,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/Servant_Factory.h
 
-.obj/EventDef_i.o .obj/EventDef_i.o .obj/EventDef_i.o .obj/EventDef_i.o: IFRService/EventDef_i.cpp IFRService/Repository_i.h \
+.obj/EventDef_i.o .obj/EventDef_i.so .shobj/EventDef_i.o .shobj/EventDef_i.so: IFRService/EventDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -2782,8 +2764,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2962,11 +2943,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/EventDef_i.h IFRService/Contained_i.h
 
-.obj/ExceptionDef_i.o .obj/ExceptionDef_i.o .obj/ExceptionDef_i.o .obj/ExceptionDef_i.o: IFRService/ExceptionDef_i.cpp \
+.obj/ExceptionDef_i.o .obj/ExceptionDef_i.so .shobj/ExceptionDef_i.o .shobj/ExceptionDef_i.so: IFRService/ExceptionDef_i.cpp \
  IFRService/ExceptionDef_i.h IFRService/Contained_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2997,8 +2978,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3178,10 +3158,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/IDLType_i.h IFRService/Servant_Factory.h
 
-.obj/FactoryDef_i.o .obj/FactoryDef_i.o .obj/FactoryDef_i.o .obj/FactoryDef_i.o: IFRService/FactoryDef_i.cpp IFRService/Repository_i.h \
+.obj/FactoryDef_i.o .obj/FactoryDef_i.so .shobj/FactoryDef_i.o .shobj/FactoryDef_i.so: IFRService/FactoryDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -3213,8 +3192,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3394,10 +3372,9 @@ realclean: clean
  IFRService/FactoryDef_i.h IFRService/OperationDef_i.h \
  IFRService/Contained_i.h
 
-.obj/FinderDef_i.o .obj/FinderDef_i.o .obj/FinderDef_i.o .obj/FinderDef_i.o: IFRService/FinderDef_i.cpp IFRService/Repository_i.h \
+.obj/FinderDef_i.o .obj/FinderDef_i.so .shobj/FinderDef_i.o .shobj/FinderDef_i.so: IFRService/FinderDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -3429,8 +3406,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3610,10 +3586,9 @@ realclean: clean
  IFRService/FinderDef_i.h IFRService/OperationDef_i.h \
  IFRService/Contained_i.h
 
-.obj/FixedDef_i.o .obj/FixedDef_i.o .obj/FixedDef_i.o .obj/FixedDef_i.o: IFRService/FixedDef_i.cpp IFRService/Repository_i.h \
+.obj/FixedDef_i.o .obj/FixedDef_i.so .shobj/FixedDef_i.o .shobj/FixedDef_i.so: IFRService/FixedDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -3645,8 +3620,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3825,10 +3799,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/FixedDef_i.h IFRService/IDLType_i.h
 
-.obj/HomeDef_i.o .obj/HomeDef_i.o .obj/HomeDef_i.o .obj/HomeDef_i.o: IFRService/HomeDef_i.cpp IFRService/Repository_i.h \
+.obj/HomeDef_i.o .obj/HomeDef_i.so .shobj/HomeDef_i.o .shobj/HomeDef_i.so: IFRService/HomeDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -3860,8 +3833,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4046,10 +4018,10 @@ realclean: clean
  IFRService/IFR_ComponentsS_T.h IFRService/IFR_ComponentsS_T.i \
  IFRService/IFR_ComponentsS_T.cpp IFRService/IFR_ComponentsS.i
 
-.obj/IDLType_i.o .obj/IDLType_i.o .obj/IDLType_i.o .obj/IDLType_i.o: IFRService/IDLType_i.cpp IFRService/IDLType_i.h \
+.obj/IDLType_i.o .obj/IDLType_i.so .shobj/IDLType_i.o .shobj/IDLType_i.so: IFRService/IDLType_i.cpp IFRService/IDLType_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4080,8 +4052,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4251,7 +4222,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  IFRService/ifr_service_export.h
 
-.obj/IFR_BaseS.o .obj/IFR_BaseS.o .obj/IFR_BaseS.o .obj/IFR_BaseS.o: IFRService/IFR_BaseS.cpp IFRService/IFR_BaseS.h \
+.obj/IFR_BaseS.o .obj/IFR_BaseS.so .shobj/IFR_BaseS.o .shobj/IFR_BaseS.so: IFRService/IFR_BaseS.cpp IFRService/IFR_BaseS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -4283,8 +4254,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4574,7 +4544,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IFR_BasicS.o .obj/IFR_BasicS.o .obj/IFR_BasicS.o .obj/IFR_BasicS.o: IFRService/IFR_BasicS.cpp IFRService/IFR_BasicS.h \
+.obj/IFR_BasicS.o .obj/IFR_BasicS.so .shobj/IFR_BasicS.o .shobj/IFR_BasicS.so: IFRService/IFR_BasicS.cpp IFRService/IFR_BasicS.h \
  $(ACE_ROOT)/ace/pre.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -4606,8 +4576,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4901,9 +4870,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IFR_ComponentsS.o .obj/IFR_ComponentsS.o .obj/IFR_ComponentsS.o .obj/IFR_ComponentsS.o: IFRService/IFR_ComponentsS.cpp \
- IFRService/IFR_ComponentsS.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/IFR_ComponentsS.o .obj/IFR_ComponentsS.so .shobj/IFR_ComponentsS.o .shobj/IFR_ComponentsS.so: IFRService/IFR_ComponentsS.cpp \
+ IFRService/IFR_ComponentsS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_ExtendedS.h IFRService/IFR_BasicS.h \
  IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
@@ -4936,8 +4904,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5239,9 +5206,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IFR_ExtendedS.o .obj/IFR_ExtendedS.o .obj/IFR_ExtendedS.o .obj/IFR_ExtendedS.o: IFRService/IFR_ExtendedS.cpp \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/IFR_ExtendedS.o .obj/IFR_ExtendedS.so .shobj/IFR_ExtendedS.o .shobj/IFR_ExtendedS.so: IFRService/IFR_ExtendedS.cpp \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -5273,8 +5239,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5572,9 +5537,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IFR_Service_Utils.o .obj/IFR_Service_Utils.o .obj/IFR_Service_Utils.o .obj/IFR_Service_Utils.o: IFRService/IFR_Service_Utils.cpp \
- IFRService/IFR_Service_Utils.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/IFR_Service_Utils.o .obj/IFR_Service_Utils.so .shobj/IFR_Service_Utils.o .shobj/IFR_Service_Utils.so: IFRService/IFR_Service_Utils.cpp \
+ IFRService/IFR_Service_Utils.h $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5603,8 +5567,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5865,8 +5828,7 @@ realclean: clean
  IOR_Multicast.h \
  svc_utils_export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -5926,7 +5888,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/default_ports.h
 
-.obj/IFR_Service_Loader.o .obj/IFR_Service_Loader.o .obj/IFR_Service_Loader.o .obj/IFR_Service_Loader.o: IFRService/IFR_Service_Loader.cpp \
+.obj/IFR_Service_Loader.o .obj/IFR_Service_Loader.so .shobj/IFR_Service_Loader.o .shobj/IFR_Service_Loader.so: IFRService/IFR_Service_Loader.cpp \
  IFRService/IFR_Service_Loader.h \
  $(TAO_ROOT)/tao/Object_Loader.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -5958,8 +5920,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6129,11 +6090,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Argv_Type_Converter.h \
  $(ACE_ROOT)/ace/Argv_Type_Converter.inl
 
-.obj/InterfaceDef_i.o .obj/InterfaceDef_i.o .obj/InterfaceDef_i.o .obj/InterfaceDef_i.o: IFRService/InterfaceDef_i.cpp \
+.obj/InterfaceDef_i.o .obj/InterfaceDef_i.so .shobj/InterfaceDef_i.o .shobj/InterfaceDef_i.so: IFRService/InterfaceDef_i.cpp \
  IFRService/InterfaceDef_i.h IFRService/Container_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6164,8 +6125,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6347,9 +6307,8 @@ realclean: clean
  IFRService/AttributeDef_i.h IFRService/OperationDef_i.h \
  IFRService/Servant_Factory.h
 
-.obj/IRObject_i.o .obj/IRObject_i.o .obj/IRObject_i.o .obj/IRObject_i.o: IFRService/IRObject_i.cpp IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/IRObject_i.o .obj/IRObject_i.so .shobj/IRObject_i.o .shobj/IRObject_i.so: IFRService/IRObject_i.cpp IFRService/IRObject_i.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -6381,8 +6340,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6552,11 +6510,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.cpp \
  IFRService/ifr_service_export.h
 
-.obj/LocalInterfaceDef_i.o .obj/LocalInterfaceDef_i.o .obj/LocalInterfaceDef_i.o .obj/LocalInterfaceDef_i.o: IFRService/LocalInterfaceDef_i.cpp \
+.obj/LocalInterfaceDef_i.o .obj/LocalInterfaceDef_i.so .shobj/LocalInterfaceDef_i.o .shobj/LocalInterfaceDef_i.so: IFRService/LocalInterfaceDef_i.cpp \
  IFRService/LocalInterfaceDef_i.h IFRService/InterfaceDef_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -6588,8 +6545,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6769,10 +6725,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/ModuleDef_i.o .obj/ModuleDef_i.o .obj/ModuleDef_i.o .obj/ModuleDef_i.o: IFRService/ModuleDef_i.cpp IFRService/ModuleDef_i.h \
+.obj/ModuleDef_i.o .obj/ModuleDef_i.so .shobj/ModuleDef_i.o .shobj/ModuleDef_i.so: IFRService/ModuleDef_i.cpp IFRService/ModuleDef_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -6804,8 +6759,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6984,11 +6938,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/NativeDef_i.o .obj/NativeDef_i.o .obj/NativeDef_i.o .obj/NativeDef_i.o: IFRService/NativeDef_i.cpp IFRService/NativeDef_i.h \
+.obj/NativeDef_i.o .obj/NativeDef_i.so .shobj/NativeDef_i.o .shobj/NativeDef_i.so: IFRService/NativeDef_i.cpp IFRService/NativeDef_i.h \
  IFRService/TypedefDef_i.h IFRService/Contained_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7019,8 +6973,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7200,11 +7153,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/OperationDef_i.o .obj/OperationDef_i.o .obj/OperationDef_i.o .obj/OperationDef_i.o: IFRService/OperationDef_i.cpp \
+.obj/OperationDef_i.o .obj/OperationDef_i.so .shobj/OperationDef_i.o .shobj/OperationDef_i.so: IFRService/OperationDef_i.cpp \
  IFRService/OperationDef_i.h IFRService/Contained_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7235,8 +7188,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7417,10 +7369,9 @@ realclean: clean
  IFRService/IDLType_i.h IFRService/ExceptionDef_i.h \
  IFRService/Servant_Factory.h
 
-.obj/Options.o .obj/Options.o .obj/Options.o .obj/Options.o: IFRService/Options.cpp IFRService/Options.h \
+.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: IFRService/Options.cpp IFRService/Options.h \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -7445,8 +7396,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -7485,8 +7435,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- IFRService/ifr_service_export.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
+ IFRService/ifr_service_export.h $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
@@ -7537,11 +7486,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/PrimaryKeyDef_i.o .obj/PrimaryKeyDef_i.o .obj/PrimaryKeyDef_i.o .obj/PrimaryKeyDef_i.o: IFRService/PrimaryKeyDef_i.cpp \
+.obj/PrimaryKeyDef_i.o .obj/PrimaryKeyDef_i.so .shobj/PrimaryKeyDef_i.o .shobj/PrimaryKeyDef_i.so: IFRService/PrimaryKeyDef_i.cpp \
  IFRService/Repository_i.h IFRService/Container_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7572,8 +7521,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7752,11 +7700,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/PrimaryKeyDef_i.h IFRService/Contained_i.h
 
-.obj/PrimitiveDef_i.o .obj/PrimitiveDef_i.o .obj/PrimitiveDef_i.o .obj/PrimitiveDef_i.o: IFRService/PrimitiveDef_i.cpp \
+.obj/PrimitiveDef_i.o .obj/PrimitiveDef_i.so .shobj/PrimitiveDef_i.o .shobj/PrimitiveDef_i.so: IFRService/PrimitiveDef_i.cpp \
  IFRService/Repository_i.h IFRService/Container_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7787,8 +7735,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7967,11 +7914,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/PrimitiveDef_i.h IFRService/IDLType_i.h
 
-.obj/ProvidesDef_i.o .obj/ProvidesDef_i.o .obj/ProvidesDef_i.o .obj/ProvidesDef_i.o: IFRService/ProvidesDef_i.cpp \
+.obj/ProvidesDef_i.o .obj/ProvidesDef_i.so .shobj/ProvidesDef_i.o .shobj/ProvidesDef_i.so: IFRService/ProvidesDef_i.cpp \
  IFRService/Repository_i.h IFRService/Container_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8002,8 +7949,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8182,11 +8128,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/ProvidesDef_i.h IFRService/Contained_i.h
 
-.obj/PublishesDef_i.o .obj/PublishesDef_i.o .obj/PublishesDef_i.o .obj/PublishesDef_i.o: IFRService/PublishesDef_i.cpp \
+.obj/PublishesDef_i.o .obj/PublishesDef_i.so .shobj/PublishesDef_i.o .shobj/PublishesDef_i.so: IFRService/PublishesDef_i.cpp \
  IFRService/Repository_i.h IFRService/Container_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8217,8 +8163,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8398,10 +8343,9 @@ realclean: clean
  IFRService/PublishesDef_i.h IFRService/EventDef_i.h \
  IFRService/Contained_i.h
 
-.obj/Repository_i.o .obj/Repository_i.o .obj/Repository_i.o .obj/Repository_i.o: IFRService/Repository_i.cpp IFRService/Repository_i.h \
+.obj/Repository_i.o .obj/Repository_i.so .shobj/Repository_i.o .shobj/Repository_i.so: IFRService/Repository_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -8433,8 +8377,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8626,18 +8569,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- IFRService/Servant_Factory.h \
- $(TAO_ROOT)/tao/ORB.h \
+ IFRService/Servant_Factory.h $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/objectid.h \
  $(TAO_ROOT)/tao/ORB.i
 
-.obj/SequenceDef_i.o .obj/SequenceDef_i.o .obj/SequenceDef_i.o .obj/SequenceDef_i.o: IFRService/SequenceDef_i.cpp \
+.obj/SequenceDef_i.o .obj/SequenceDef_i.so .shobj/SequenceDef_i.o .shobj/SequenceDef_i.so: IFRService/SequenceDef_i.cpp \
  IFRService/SequenceDef_i.h IFRService/IDLType_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8668,8 +8610,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8849,7 +8790,7 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/Servant_Factory.h
 
-.obj/Servant_Factory.o .obj/Servant_Factory.o .obj/Servant_Factory.o .obj/Servant_Factory.o: IFRService/Servant_Factory.cpp \
+.obj/Servant_Factory.o .obj/Servant_Factory.so .shobj/Servant_Factory.o .shobj/Servant_Factory.so: IFRService/Servant_Factory.cpp \
  IFRService/Servant_Factory.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -8880,8 +8821,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9089,7 +9029,7 @@ realclean: clean
  IFRService/ExceptionDef_i.h IFRService/ModuleDef_i.h \
  IFRService/AbstractInterfaceDef_i.h IFRService/LocalInterfaceDef_i.h
 
-.obj/Servant_Locator.o .obj/Servant_Locator.o .obj/Servant_Locator.o .obj/Servant_Locator.o: IFRService/Servant_Locator.cpp \
+.obj/Servant_Locator.o .obj/Servant_Locator.so .shobj/Servant_Locator.o .shobj/Servant_Locator.so: IFRService/Servant_Locator.cpp \
  IFRService/Servant_Locator.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -9120,8 +9060,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9305,10 +9244,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl
 
-.obj/StringDef_i.o .obj/StringDef_i.o .obj/StringDef_i.o .obj/StringDef_i.o: IFRService/StringDef_i.cpp IFRService/Repository_i.h \
+.obj/StringDef_i.o .obj/StringDef_i.so .shobj/StringDef_i.o .shobj/StringDef_i.so: IFRService/StringDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -9340,8 +9278,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9520,11 +9457,11 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/StringDef_i.h IFRService/IDLType_i.h
 
-.obj/StructDef_i.o .obj/StructDef_i.o .obj/StructDef_i.o .obj/StructDef_i.o: IFRService/StructDef_i.cpp IFRService/StructDef_i.h \
+.obj/StructDef_i.o .obj/StructDef_i.so .shobj/StructDef_i.o .shobj/StructDef_i.so: IFRService/StructDef_i.cpp IFRService/StructDef_i.h \
  IFRService/TypedefDef_i.h IFRService/Contained_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -9555,8 +9492,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9737,11 +9673,10 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/Servant_Factory.h
 
-.obj/tmplinst.o .obj/tmplinst.o .obj/tmplinst.o .obj/tmplinst.o: IFRService/tmplinst.cpp IFRService/concrete_classes.h \
+.obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: IFRService/tmplinst.cpp IFRService/concrete_classes.h \
  IFRService/ComponentRepository_i.h IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -9773,8 +9708,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9975,10 +9909,9 @@ realclean: clean
  IFRService/ExceptionDef_i.h IFRService/ModuleDef_i.h \
  IFRService/AbstractInterfaceDef_i.h IFRService/LocalInterfaceDef_i.h
 
-.obj/TypedefDef_i.o .obj/TypedefDef_i.o .obj/TypedefDef_i.o .obj/TypedefDef_i.o: IFRService/TypedefDef_i.cpp IFRService/Repository_i.h \
+.obj/TypedefDef_i.o .obj/TypedefDef_i.so .shobj/TypedefDef_i.o .shobj/TypedefDef_i.so: IFRService/TypedefDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -10010,8 +9943,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10191,11 +10123,11 @@ realclean: clean
  IFRService/TypedefDef_i.h IFRService/Contained_i.h \
  IFRService/IDLType_i.h
 
-.obj/UnionDef_i.o .obj/UnionDef_i.o .obj/UnionDef_i.o .obj/UnionDef_i.o: IFRService/UnionDef_i.cpp IFRService/UnionDef_i.h \
+.obj/UnionDef_i.o .obj/UnionDef_i.so .shobj/UnionDef_i.o .shobj/UnionDef_i.so: IFRService/UnionDef_i.cpp IFRService/UnionDef_i.h \
  IFRService/TypedefDef_i.h IFRService/Contained_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -10226,8 +10158,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10408,10 +10339,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/Servant_Factory.h
 
-.obj/UsesDef_i.o .obj/UsesDef_i.o .obj/UsesDef_i.o .obj/UsesDef_i.o: IFRService/UsesDef_i.cpp IFRService/Repository_i.h \
+.obj/UsesDef_i.o .obj/UsesDef_i.so .shobj/UsesDef_i.o .shobj/UsesDef_i.so: IFRService/UsesDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -10443,8 +10373,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10623,11 +10552,10 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/UsesDef_i.h IFRService/Contained_i.h
 
-.obj/ValueBoxDef_i.o .obj/ValueBoxDef_i.o .obj/ValueBoxDef_i.o .obj/ValueBoxDef_i.o: IFRService/ValueBoxDef_i.cpp \
+.obj/ValueBoxDef_i.o .obj/ValueBoxDef_i.so .shobj/ValueBoxDef_i.o .shobj/ValueBoxDef_i.so: IFRService/ValueBoxDef_i.cpp \
  IFRService/ValueBoxDef_i.h IFRService/TypedefDef_i.h \
  IFRService/Contained_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -10659,8 +10587,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10841,10 +10768,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/Servant_Factory.h
 
-.obj/ValueDef_i.o .obj/ValueDef_i.o .obj/ValueDef_i.o .obj/ValueDef_i.o: IFRService/ValueDef_i.cpp IFRService/Repository_i.h \
+.obj/ValueDef_i.o .obj/ValueDef_i.so .shobj/ValueDef_i.o .shobj/ValueDef_i.so: IFRService/ValueDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -10876,8 +10802,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11057,11 +10982,11 @@ realclean: clean
  IFRService/ValueDef_i.h IFRService/Contained_i.h \
  IFRService/IDLType_i.h
 
-.obj/ValueMemberDef_i.o .obj/ValueMemberDef_i.o .obj/ValueMemberDef_i.o .obj/ValueMemberDef_i.o: IFRService/ValueMemberDef_i.cpp \
+.obj/ValueMemberDef_i.o .obj/ValueMemberDef_i.so .shobj/ValueMemberDef_i.o .shobj/ValueMemberDef_i.so: IFRService/ValueMemberDef_i.cpp \
  IFRService/Repository_i.h IFRService/Container_i.h \
  IFRService/IRObject_i.h IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
- IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
+ $(ACE_ROOT)/ace/pre.h IFRService/IFR_BasicS.h \
+ IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -11092,8 +11017,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11272,10 +11196,9 @@ realclean: clean
  $(TAO_ROOT)/tao/CORBA_String.inl \
  IFRService/ValueMemberDef_i.h IFRService/Contained_i.h
 
-.obj/WstringDef_i.o .obj/WstringDef_i.o .obj/WstringDef_i.o .obj/WstringDef_i.o: IFRService/WstringDef_i.cpp IFRService/Repository_i.h \
+.obj/WstringDef_i.o .obj/WstringDef_i.so .shobj/WstringDef_i.o .shobj/WstringDef_i.so: IFRService/WstringDef_i.cpp IFRService/Repository_i.h \
  IFRService/Container_i.h IFRService/IRObject_i.h \
- IFRService/IFR_ExtendedS.h \
- $(ACE_ROOT)/ace/pre.h \
+ IFRService/IFR_ExtendedS.h $(ACE_ROOT)/ace/pre.h \
  IFRService/IFR_BasicS.h IFRService/IFR_BaseS.h \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.h \
  $(TAO_ROOT)/tao/IFR_Client/ifr_client_export.h \
@@ -11307,8 +11230,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
