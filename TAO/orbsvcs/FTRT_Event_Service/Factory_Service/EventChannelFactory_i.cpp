@@ -37,19 +37,19 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 {
 
   ACE_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
-  FILE* file;
+  FILE* file = 0;
   char *id_str=0, *prog=0;
 
   ACE_TRY {
 
   file = fopen(conf_file, "r");
-  if (file == NULL)
+  if (file == 0)
     ACE_TRY_THROW (FT::NoFactory());
 
   ACE_Read_Buffer read_buf(file);
 
-  while ((id_str = read_buf.read(' ')) != NULL &&
-    (prog = read_buf.read('\n')) != NULL) {
+  while ((id_str = read_buf.read(' ')) != 0 &&
+    (prog = read_buf.read('\n')) != 0) {
       id_str[strlen(id_str)-1] = '\0';
       if (strcmp(id_str, type_id) == 0) {
         return create_process(prog, the_criteria, factory_creation_id);
