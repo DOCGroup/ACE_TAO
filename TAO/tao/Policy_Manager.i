@@ -1,5 +1,6 @@
 // $Id$
 
+
 ACE_INLINE
 TAO_Policy_Manager_Impl::TAO_Policy_Manager_Impl (void)
   :  relative_roundtrip_timeout_ (0),

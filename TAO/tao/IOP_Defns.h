@@ -13,7 +13,7 @@
 //    the Interoperability model specified by the CORBA spec.
 //    
 // = AUTHOR
-//     Balachandran  Natarajan <bala@cs.wustl.edu>
+//    Taken from the old GIOP.h file. Not sure of the author
 // ============================================================================
 #ifndef _TAO_IOP_DEFN_H_
 #define _TAO_IOP_DEFN_H_

@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -24,6 +25,7 @@
 
 // BALA Temporrary inclusion
 #include "tao/GIOP_Utils.h"
+#include "tao/operation_details.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -82,12 +84,9 @@ public:
                             int twoway,
                             ACE_Time_Value *max_wait_time);
 
-  CORBA::Boolean 
-    send_request_header (const IOP::ServiceContextList &svc_ctx,  
-                         CORBA::ULong request_id,
-                         CORBA::Octet response_flags,
+  virtual CORBA::Boolean 
+  send_request_header (TAO_Operation_Details &opdetails,
                          TAO_Target_Specification &spec,
-                         const char* opname,
                          TAO_OutputCDR &msg);
   
 protected:
@@ -129,7 +128,7 @@ public:
   
   virtual void start_locate (TAO_ORB_Core *orb_core,
                              TAO_Target_Specification &spec,
-                             CORBA::ULong request_id,
+                             TAO_Operation_Details &opdetails,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -144,12 +143,9 @@ public:
                                    ACE_Time_Value *max_time_value = 0);
   virtual int register_handler (void);
 
-  CORBA::Boolean 
-  send_request_header (const IOP::ServiceContextList &svc_ctx,  
-                       CORBA::ULong request_id,
-                       CORBA::Octet response_flags,
+  virtual CORBA::Boolean 
+  send_request_header (TAO_Operation_Details &opdetails,
                        TAO_Target_Specification &spec,
-                       const char* opname,
                        TAO_OutputCDR &msg);  
 
   void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);

@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -23,7 +24,7 @@
 
 #include "tao/Pluggable.h"
 
-// BALA Temporrary inclusion
+
 //#include "tao/Pluggable_Messaging.h"
 #include "tao/GIOP_Utils.h"
 //#include "tao/target_identifier.h"
@@ -88,23 +89,16 @@ public:
                             ACE_Time_Value *max_wait_time);
 
   
-  CORBA::Boolean 
-  send_request_header (const IOP::ServiceContextList &svc_ctx,  
-                       CORBA::ULong request_id,
-                       CORBA::Octet response_flags,
+  virtual CORBA::Boolean 
+  send_request_header (TAO_Operation_Details &opdetails,
                        TAO_Target_Specification &spec,
-                       const char* opname,
                        TAO_OutputCDR &msg);
   
-
 protected:
   TAO_UIOP_Handler_Base *handler_;
   // the connection service handler used for accessing lower layer
   // communication protocols.
 
-  TAO_Pluggable_Message_Factory *giop_factory_;
-  // The message_factor instance specific for this particular
-  // transport protocol.  
 };
 
 class TAO_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
@@ -140,7 +134,7 @@ public:
 
   virtual void start_locate (TAO_ORB_Core *orb_core,
                              TAO_Target_Specification &spec,
-                             CORBA::ULong request_id,
+                             TAO_Operation_Details &opdetails,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -156,12 +150,9 @@ public:
   // Register the handler with the reactor. This will be called by the
   // Wait Strategy if Reactor is used  for that strategy.
 
-  CORBA::Boolean 
-  send_request_header (const IOP::ServiceContextList &svc_ctx,  
-                       CORBA::ULong request_id,
-                       CORBA::Octet response_flags,
+  virtual CORBA::Boolean 
+  send_request_header (TAO_Operation_Details &opdetail,
                        TAO_Target_Specification &spec,
-                       const char* opname,
                        TAO_OutputCDR &msg);
   
   void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);

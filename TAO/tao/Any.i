@@ -1,9 +1,9 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
 
+// $Id$
 // Insertion from special types.
 
-ACE_INLINE 
+ACE_INLINE
 void
 CORBA_Any::replace (CORBA::TypeCode_ptr type,
                     const void *value,
@@ -17,18 +17,22 @@ CORBA_Any::replace (CORBA::TypeCode_ptr type,
                  ACE_TRY_ENV);
 }
 
-ACE_INLINE 
-CORBA::Boolean
+ACE_INLINE CORBA::Boolean
 CORBA_Any::any_owns_data (void) const
 {
   return (this->any_owns_data_ != 0 && this->value_ != 0);
 }
 
-ACE_INLINE 
-ACE_Message_Block*
+ACE_INLINE ACE_Message_Block*
 CORBA_Any::_tao_get_cdr (void) const
 {
   return this->cdr_;
+}
+
+ACE_INLINE int
+CORBA_Any::_tao_byte_order (void) const
+{
+  return this->byte_order_;
 }
 
 ACE_INLINE
@@ -37,11 +41,6 @@ CORBA_Any::to_object::to_object (CORBA_Object_out obj)
 {
 }
 
-ACE_INLINE int
-CORBA_Any::_tao_byte_order (void) const
-{
-  return this->byte_order_;
-}
 // *************************************************************
 // Inline operations for class CORBA_Any_var
 // *************************************************************

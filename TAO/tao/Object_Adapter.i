@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 ACE_INLINE
 TAO_POA_Current::TAO_POA_Current (void)
 {

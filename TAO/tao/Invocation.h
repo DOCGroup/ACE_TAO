@@ -39,6 +39,7 @@
 #include "tao/Any.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/TAOC.h"
+#include "tao/operation_details.h"
 
 struct TAO_Exception_Data;
 class TAO_Profile;
@@ -73,6 +74,7 @@ class TAO_Export TAO_GIOP_Invocation
 public:
   TAO_GIOP_Invocation (TAO_Stub *data,
                        const char *operation,
+                       CORBA::ULong opname_len,
                        TAO_ORB_Core* orb_core);
   // Constructor.
 
@@ -146,15 +148,14 @@ protected:
   TAO_Stub *stub_;
   // The object on which this invocation is going.
 
-  const char *opname_;
-  // Name of the operation being invoked.
-
-  CORBA::ULong request_id_;
-  // Request ID of this operation.
-
   char buffer [ACE_CDR::DEFAULT_BUFSIZE];
   // Buffer used for both the output and input CDR streams, this is
   // "safe" because we only one of the streams at a time.
+
+  TAO_Operation_Details  op_details_;
+  // The relevant operation detail
+  
+  TAO_Target_Specification target_spec_;
 
   TAO_OutputCDR out_stream_;
   // Stream into which the response is placed.
@@ -167,10 +168,6 @@ protected:
 
   TAO_Profile *profile_;
   // This invocation is using this transport, may change...
-
-  IOP::ServiceContextList service_info_;
-  // The ServiceContextList sent to the server side.  Only valid
-  // when sending a request.
 
   ACE_Time_Value max_wait_time_value_;
   ACE_Time_Value *max_wait_time_;
@@ -194,6 +191,7 @@ class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
 public:
   TAO_GIOP_Twoway_Invocation (TAO_Stub *data,
                               const char *operation,
+                              CORBA::ULong opname_len,
                               TAO_ORB_Core* orb_core);
   // Constructor.
 
@@ -244,6 +242,7 @@ class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation
 public:
   TAO_GIOP_Oneway_Invocation (TAO_Stub *data,
                               const char *operation,
+                              CORBA::ULong opname_len,
                               TAO_ORB_Core* orb_core);
   // Constructor.
 

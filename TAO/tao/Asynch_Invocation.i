@@ -11,11 +11,13 @@ ACE_INLINE
 TAO_GIOP_Twoway_Asynch_Invocation::
 TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
                                    const char *operation,
+				   CORBA::ULong opname_len,
                                    TAO_ORB_Core *orb_core,
                                    const TAO_Reply_Handler_Skeleton &reply_handler_skel,
                                    Messaging::ReplyHandler_ptr reply_handler_ptr)
   : TAO_GIOP_Invocation (stub,
                          operation,
+			 opname_len,
                          orb_core),
     rd_ (0)
 {
@@ -44,6 +46,7 @@ TAO_GIOP_DII_Deferred_Invocation (TAO_Stub *stub,
                                   const CORBA::Request_ptr req)
   : TAO_GIOP_Invocation (stub,
                          req->operation (),
+			 ACE_OS::strlen (req->operation ()),
                          orb_core),
     rd_ (0)
 {

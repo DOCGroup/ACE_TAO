@@ -84,7 +84,7 @@ class TAO_Export TAO_SHMIOP_Connector : public TAO_Connector
   //
 public:
   // = Initialization and termination methods.
-  TAO_SHMIOP_Connector (void);
+  TAO_SHMIOP_Connector (CORBA::Boolean flag = 0);
   // Constructor.
 
   // = The TAO_Connector methods, please check the documentation on
@@ -197,6 +197,8 @@ private:
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for SHMIOP.
 
+  CORBA::Boolean lite_flag_;
+  // Do we need to use a GIOP_Lite for sending messages?
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
   // Cached connect strategy.

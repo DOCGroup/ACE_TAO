@@ -29,7 +29,7 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/Pluggable.h"
-#include "tao/GIOP.h"
+#include "tao/GIOP_Utils.h"
 
 // Forward decls.
 class TAO_SHMIOP_Handler_Base;
@@ -81,6 +81,10 @@ public:
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_wait_time);
+  virtual CORBA::Boolean 
+  send_request_header (TAO_Operation_Details &opdetails,
+                       TAO_Target_Specification &spec,
+                       TAO_OutputCDR &msg);
 
 protected:
   TAO_SHMIOP_Handler_Base *handler_;
@@ -114,13 +118,14 @@ public:
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
   virtual void start_request (TAO_ORB_Core *orb_core,
-                              const TAO_Profile *profile,
+                              TAO_Target_Specification & /*spec */,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             const TAO_Profile *profile,
-                             CORBA::ULong request_id,
+                             TAO_Target_Specification &spec,
+                             TAO_Operation_Details &opdetails,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -133,9 +138,20 @@ public:
                                    ACE_Time_Value *max_time_value = 0);
   virtual int register_handler (void);
 
+  virtual CORBA::Boolean 
+  send_request_header (TAO_Operation_Details &opdetails,
+                       TAO_Target_Specification &spec,
+                       TAO_OutputCDR &msg);
+  
+  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
+  // Initialising the messaging object
 private:
   TAO_SHMIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
+  
+  TAO_Pluggable_Messaging_Interface *client_mesg_factory_;
+  // The message_factor instance specific for this particular
+  // transport protocol.
 };
 
 // ****************************************************************
@@ -158,6 +174,9 @@ public:
 
   ~TAO_SHMIOP_Server_Transport (void);
   // Default destructor
+  
+  void messaging_init (TAO_Pluggable_Messaging_Interface *mesg);
+  // Initialising the messaging object
 
   TAO_SHMIOP_Server_Connection_Handler *server_handler_;
   // Pointer to the corresponding connection handler.
@@ -165,6 +184,9 @@ public:
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
+private:
+  TAO_Pluggable_Messaging_Interface *server_mesg_factory_;
+  // This would be server side messaging protocol  
 };
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

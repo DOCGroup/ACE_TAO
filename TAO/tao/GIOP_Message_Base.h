@@ -52,7 +52,7 @@ public:
   // Reads input from the transport 
   
   virtual CORBA::Boolean 
-  write_message_header (const TAO_Pluggable_Connector_Params &params,
+  write_message_header (const TAO_Operation_Details &opdetails,
                         TAO_Pluggable_Header_Type header_type,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &msg);
@@ -119,11 +119,8 @@ private:
   // of the GIOP classes that are active. 
 
   virtual CORBA::Boolean 
-  write_request_header (const IOP::ServiceContextList& svc_ctx,
-                        CORBA::ULong request_id,
-                        CORBA::Octet response_flags,
+  write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
-                        const char* opname,
                         TAO_OutputCDR &msg) = 0;
   // Write the GIOP request header in to <msg>
   
