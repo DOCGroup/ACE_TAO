@@ -52,7 +52,7 @@ public:
    * object to indicate an error condition.
    */
   virtual TAO_Service_Callbacks* activate_services (TAO_ORB_Core *orb)
-    ACE_THROW_SPEC (()) = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
 };
 
