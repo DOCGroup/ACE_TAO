@@ -178,7 +178,7 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
           int type = ACE_OS::rand_r (seed) % 4;
           if (type == 0)
             {
-              TimeBase::TimeT value;
+              TimeBase::TimeT value = 0;
               any <<= value;
 
               policy_type =
@@ -202,7 +202,7 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
             }
           else // type == 3 (or something else)
             {
-              Messaging::SyncScope value;
+              Messaging::SyncScope value = 0;
               any <<= value;
 
               policy_type =

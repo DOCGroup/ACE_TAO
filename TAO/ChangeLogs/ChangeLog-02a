@@ -1,3 +1,11 @@
+Fri May 12 16:33:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Policies/Manipulation.dsp:
+          Fixed problewms with the dsp file.
+
+        * tests/Policies/Manipulation.cpp:
+          Initialize some variables before using them.
+
 Fri May 12 14:36:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Policy_Manager.h:
