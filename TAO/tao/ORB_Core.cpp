@@ -2361,7 +2361,7 @@ TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
   CORBA::ULong index = 0;
   // Index for ObjectIdList members.
 
-  // Iterate over TAO's "built-in" initial references.
+  // Iterate over the registered initial references.
   for (index = 0; index < initial_services_size; ++index)
     list[index] = initial_services[index];
 
