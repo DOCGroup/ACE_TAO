@@ -282,7 +282,7 @@ TAO_DynUnion_i::next (CORBA::Environment &env)
 
   ++this->index_;
 
-  if (!CORBA::is_nil (this->member_))
+  if (!CORBA::is_nil (this->member_.in ()))
     this->member_->destroy (env);
 
   this->member_ =
@@ -301,7 +301,7 @@ TAO_DynUnion_i::seek (CORBA::Long index,
 
   this->index_ = index;
 
-  if (!CORBA::is_nil (this->member_))
+  if (!CORBA::is_nil (this->member_.in ()))
     this->member_->destroy (env);
 
   this->member_ =
@@ -319,7 +319,7 @@ TAO_DynUnion_i::rewind (CORBA::Environment &env)
 
   this->index_ = 0;
 
-  if (!CORBA::is_nil (this->member_))
+  if (!CORBA::is_nil (this->member_.in ()))
     this->member_->destroy (env);
 
   this->member_ =
@@ -1353,7 +1353,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
   CORBA_Any disc_any (disc_tc,
                       cdr.start ());
 
-  if (!CORBA::is_nil (this->discriminator_))
+  if (!CORBA::is_nil (this->discriminator_.in()))
     this->discriminator_->destroy (env);
 
   // Set the discriminator holder.
@@ -1409,7 +1409,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
                                                       env),
                             cdr.start ());
 
-      if (!CORBA::is_nil (this->member_))
+      if (!CORBA::is_nil (this->member_.in ()))
         this->member_->destroy (env);
 
       this->member_ = TAO_DynAny_i::create_dyn_any (member_any,
