@@ -14,6 +14,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
   // JAWS_Data_Block should contain an INET_Addr and an IO
   JAWS_IO_Handler *handler = data->io_handler ();
   JAWS_Dispatch_Policy *policy = data->policy ();
+  JAWS_Pipeline_Handler *task = handler->task ();
 
   // data->policy ()->update (handler);
 
@@ -31,6 +32,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
       ACE_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_OK");
       // At this point need to move to the next task in the pipeline!
       // The framework should automatically call the next stage.
+      data->task (task);
       break;
     case JAWS_IO_Handler::ACCEPT_ERROR:
       result = -1;
@@ -38,7 +40,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
       // Should recycle the thread
       break;
     default:
-      result = -1;
+      result = 1;
       ACE_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_IDLE");
       // Should mean that the IO is asynchronous, and the word isn't out
       // yet.

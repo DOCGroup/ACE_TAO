@@ -1,6 +1,7 @@
 // $Id$
 
 #include "JAWS/Concurrency.h"
+#include "JAWS/IO_Handler.h"
 #include "JAWS/Pipeline.h"
 #include "JAWS/Policy.h"
 #include "JAWS/Data_Block.h"
@@ -22,7 +23,12 @@ JAWS_Concurrency_Base::svc (void)
 
   for (;;)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb;  // The message queue element
+
+      JAWS_Data_Block *db;           // Contains the task list
+      JAWS_Dispatch_Policy *policy;  // Contains task policies
+      JAWS_IO_Handler *handler;      // Keeps the state of the task
+      JAWS_Pipeline_Handler *task;   // The task itself
 
       // At this point we could set a timeout value so that the
       // threading strategy can delete a thread if there is nothing to
@@ -36,21 +42,45 @@ JAWS_Concurrency_Base::svc (void)
       if (result == -1 || mb == 0)
         break;
 
+      db = ACE_dynamic_cast (JAWS_Data_Block *, mb->data_block ());
+      policy = db->policy ();
+      handler = db->io_handler ();
+      task = handler->task ();
+
       do
         {
-          JAWS_Data_Block *db;
-          JAWS_Pipeline_Task *task;
-
-          db = ACE_dynamic_cast (JAWS_Data_Block *, mb->data_block ());
           task = db->task ();
+
+          while (task != 0)
+            {
+              result = task->put (mb);
+              switch (result)
+                {
+                case 0:
+                  // everything went fine, take the next task
+                  // task = task->next ();
+                  break;
+                case 1:
+                  // need to wait for an asynchronous event
+                  // I don't know how to do this yet, so pretend it's
+                  // an error
+                  result = -1;
+                  break;
+                default:
+                  // definately something wrong.
+                  ACE_ERROR ((LM_ERROR, "%p\n",
+                              "JAWS_Concurrency_Base::svc"));
+                  break;
+                }
+
+              if (result == -1)
+                break;
+            }
 
           // Use a NULL task to make the thread recycle now
           if (task == 0)
             break;
 
-          result = task->put (mb);
-          if (result == -1)
-            ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc"));
         }
       while (result == 0);
     }
