@@ -1,3 +1,12 @@
+Wed Nov 10 15:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * tao/PortableServer/ServantRetentionStrategyRetain.{h,cpp}:
+          Derive the Retain strategy from the NonRetain case, this reduces the
+          code duplication between these strategies a lot. Thanks to Carlos
+          for the proposal to change this. In case the Retain strategy can't
+          find the needed info in the aom, he will ask the NonRetain
+
 Wed Nov 10 14:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Upcall.h:

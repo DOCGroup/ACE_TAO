@@ -20,9 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Active_Object_Map.h"
-#include "Servant_Location.h"
-#include "ServantRetentionStrategy.h"
+#include "ServantRetentionStrategyNonRetain.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -33,7 +31,7 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export Retain_Servant_Retention_Strategy :
-       public virtual ServantRetentionStrategy
+       public virtual Non_Retain_Servant_Retention_Strategy
     {
     public:
       Retain_Servant_Retention_Strategy (void);
@@ -201,8 +199,6 @@ namespace TAO
       TAO_Active_Object_Map *active_object_map_;
       CORBA::ULong waiting_servant_deactivation_;
       CORBA::Boolean etherealize_objects_;
-      RequestProcessingStrategy *request_processing_strategy_;
-      TAO_POA* poa_;
     };
   }
 }

@@ -117,11 +117,11 @@ namespace TAO
       virtual
       PortableServer::Servant
       locate_servant (const char *operation,
-                        const PortableServer::ObjectId &system_id,
-                         TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                           TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                           int &wait_occurred_restart_call
-                           ACE_ENV_ARG_DECL);
+                      const PortableServer::ObjectId &system_id,
+                      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+                      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
+                      int &wait_occurred_restart_call
+                      ACE_ENV_ARG_DECL);
 
       virtual
       void
@@ -138,7 +138,7 @@ namespace TAO
       virtual
       PortableServer::ObjectId *
       servant_to_id (PortableServer::Servant servant
-                          ACE_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy));
@@ -175,7 +175,7 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall);
 
-    private:
+    protected:
       TAO_POA *poa_;
       RequestProcessingStrategy *request_processing_strategy_;
     };
