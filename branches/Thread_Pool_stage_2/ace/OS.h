@@ -2479,13 +2479,15 @@ struct sockaddr_un {
 #     define THR_SCHED_FIFO          0
 #     define THR_SCHED_RR            0
 #     define THR_SCHED_DEFAULT       0
+#     define THR_INHERIT_SCHED       0
+#     define THR_EXPLICIT_SCHED      0
+#     define THR_SCHED_IO            0
+#     define THR_SCOPE_SYSTEM        0
+#     define THR_SCOPE_PROCESS       0
 #     define USYNC_THREAD            0
 #     define USYNC_PROCESS           1 /* It's all global on VxWorks
                                           (without MMU option). */
 #     if defined (ACE_HAS_PACE)
-#     define THR_INHERIT_SCHED       0
-#     define THR_EXPLICIT_SCHED      0
-#     define THR_SCHED_IO            0
 #     define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #     define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
 #     define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
@@ -2510,8 +2512,6 @@ struct sockaddr_un {
 #     if !defined (ACE_THR_PRI_OTHER_MAX)
 #       define ACE_THR_PRI_OTHER_MAX (long) ACE_PROC_PRI_OTHER_MAX
 #     endif /* !ACE_THR_PRI_OTHER_MAX */
-#     define THR_SCOPE_SYSTEM        0
-#     define THR_SCOPE_PROCESS       0
 #     endif /* ACE_HAS_PACE */
 
 #     if !defined (ACE_DEFAULT_SYNCH_TYPE)
