@@ -174,7 +174,7 @@ ifneq (,$(findstring LifeCycle,$(TAO_ORBSVCS)))
 endif # LifeCycle
 
 ifneq (,$(findstring Trader,$(TAO_ORBSVCS)))
-  IDL_SRCS += CosTrading
+  IDL_SRCS += CosTrading CosTradingDynamic CosTradingRepos
   TAO_ORBSVCS_SRCS += \
         Trader/Constraint_Interpreter \
         Trader/Constraint_Nodes \

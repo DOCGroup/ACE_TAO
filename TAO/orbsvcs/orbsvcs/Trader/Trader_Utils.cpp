@@ -457,8 +457,19 @@ construct_dynamic_prop (const char* name,
 
   TAO_TRY
     {
-      dp_struct->eval_if = this->_this (TAO_TRY_ENV);
+      if (this->prop_.in () == CosTradingDynamic::DynamicPropEval::_nil ())
+        {
+          this->prop_ = this->_this (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          this->_remove_ref (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+      
+      dp_struct->eval_if =
+        CosTradingDynamic::DynamicPropEval::_duplicate (this->prop_.in ());
       TAO_CHECK_ENV;
+      
       dp_struct->returned_type = CORBA::TypeCode::_duplicate (returned_type);
       dp_struct->extra_info = extra_info;
     }
@@ -469,6 +480,30 @@ construct_dynamic_prop (const char* name,
   TAO_ENDTRY;
 
   return dp_struct;
+}
+
+void
+TAO_Dynamic_Property::destroy (void)
+{
+  TAO_TRY
+    {
+      if (this->prop_.in () != CosTradingDynamic::DynamicPropEval::_nil ())
+        {
+          PortableServer::POA_var poa = this->_default_POA (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          
+          PortableServer::ObjectId_var id =
+            poa->servant_to_id (this, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          
+          poa->deactivate_object (id.in (), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
+    }
+  TAO_CATCHANY
+    {
+    }
+  TAO_ENDTRY;  
 }
 
   // *************************************************************
