@@ -3,14 +3,14 @@
 // $Id$
 
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (void)
   : acceptor_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                               int reuse_addr,
                                               int protocol_family,
@@ -27,7 +27,7 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
   this->set_handle (this->acceptor_.get_handle ());
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                               ACE_Protocol_Info *protocolinfo,
                                               ACE_SOCK_GROUP g,
@@ -50,7 +50,7 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
   this->set_handle (this->acceptor_.get_handle ());
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SSL_SOCK_Acceptor::open (const ACE_Addr &local_sap,
                              int reuse_addr,
                              int protocol_family,
@@ -70,7 +70,7 @@ ACE_SSL_SOCK_Acceptor::open (const ACE_Addr &local_sap,
   return 0;
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SSL_SOCK_Acceptor::close (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::close ()");

@@ -299,9 +299,9 @@ protected:
 
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "SSL_SOCK_Stream.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

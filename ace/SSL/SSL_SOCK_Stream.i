@@ -4,7 +4,7 @@
 
 #include "ace/OS_NS_errno.h"
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 {
   if (this->ssl_ == 0 || fd == ACE_INVALID_HANDLE)
@@ -20,7 +20,7 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
     }
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::send_i (const void *buf,
                              size_t n,
                              int flags) const
@@ -82,7 +82,7 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
   return -1;
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::send (const void *buf,
                            size_t n,
                            int flags) const
@@ -90,7 +90,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   return this->send_i (buf, n, flags);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::recv_i (void *buf,
                              size_t n,
                              int flags,
@@ -191,7 +191,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   return -1;
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n,
                            int flags) const
@@ -199,7 +199,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
   return this->recv_i (buf, n, flags, 0);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::send (const void *buf,
                            size_t n) const
 {
@@ -208,7 +208,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   return this->send_i (buf, n, 0);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n) const
 {
@@ -217,7 +217,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
   return this->recv_i (buf, n, 0, 0);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::send (const void *buf,
                            size_t len,
                            const ACE_Time_Value *timeout) const
@@ -226,7 +226,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   return this->send (buf, len, 0, timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n,
                            const ACE_Time_Value *timeout) const
@@ -235,35 +235,35 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
   return this->recv (buf, n, 0, timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::recv_n (void *buf, int buf_size) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_n");
   return this->recv_n (buf, buf_size, 0);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SSL_SOCK_Stream::send_n (const void *buf, int len) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send_n");
   return this->send_n (buf, len, 0);
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SSL_SOCK_Stream::close_reader (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close_reader");
   return this->stream_.close_reader ();
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SSL_SOCK_Stream::close_writer (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close_writer");
   return this->stream_.close_writer ();
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_SSL_SOCK_Stream::close (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close");
@@ -305,14 +305,14 @@ ACE_SSL_SOCK_Stream::close (void)
   return -1;
 }
 
-ASYS_INLINE ACE_SOCK_Stream &
+ACE_INLINE ACE_SOCK_Stream &
 ACE_SSL_SOCK_Stream::peer (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::peer");
   return this->stream_;
 }
 
-ASYS_INLINE SSL *
+ACE_INLINE SSL *
 ACE_SSL_SOCK_Stream::ssl (void) const
 {
   return this->ssl_;
