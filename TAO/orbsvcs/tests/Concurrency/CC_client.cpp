@@ -14,7 +14,7 @@
 //      This file contains the main function for the test.
 //
 // = AUTHORS
-//	Torben Worm <tworm@cs.wustl.edu>
+//      Torben Worm <tworm@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -354,18 +354,19 @@ CC_Client::print_usage (void)
 int
 CC_Client::init_naming_service (void)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       ACE_NEW_RETURN (naming_service_,
-                      CC_naming_service (this->orb_, TAO_TRY_ENV),
+                      CC_naming_service (this->orb_, ACE_TRY_ENV),
                       -1);
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
@@ -376,14 +377,15 @@ CC_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet",
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -406,15 +408,15 @@ CC_Client::init (int argc, char **argv)
 
           CORBA::Object_var factory_object =
             this->orb_->string_to_object (this->cc_factory_key_,
-                                          TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                                          ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
 #if 0
           // The test cannot currently run without the naming service.
           this->factory_ =
             CosConcurrencyControl::LockSetFactory::_narrow
-            (factory_object.in (), TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+            (factory_object.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (this->factory_.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -428,12 +430,12 @@ CC_Client::init (int argc, char **argv)
                   "Factory received OK\n"));
 
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("CC_Client::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "CC_Client::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
