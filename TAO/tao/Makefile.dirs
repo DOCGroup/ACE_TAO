@@ -8,9 +8,9 @@
 MAKEFILE = Makefile.dirs
 
 DIRS = \
-  IORInterceptor \
   Valuetype \
   ObjRefTemplate \
+  IORInterceptor \
   PortableServer \
   DynamicAny \
   BiDir_GIOP \
