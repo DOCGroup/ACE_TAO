@@ -19,6 +19,7 @@
 #if !defined (PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H)
 #define PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 
+#include "helper.h"
 #include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -70,13 +71,6 @@ protected:
   void print_sequence (const Param_Test::StructSeq &s);
   // print individual sequence
 private:
-  // called by the 2 public versions of check_validity
-  CORBA::Boolean
-  Test_Struct_Sequence::check_validity_engine (const Param_Test::StructSeq &the_in,
-                                               const Param_Test::StructSeq &the_inout,
-                                               const Param_Test::StructSeq &the_out,
-                                               const Param_Test::StructSeq &the_ret);
-
  char *opname_;
   // operation name
 
@@ -92,12 +86,6 @@ private:
 
   Param_Test::StructSeq_var ret_;
   // return value
-
-  Param_Test::StructSeq dii_out_;
-  // DII out parameter
-
-  Param_Test::StructSeq dii_ret_;
-  // DII return value
 };
 
 #endif /* PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H */

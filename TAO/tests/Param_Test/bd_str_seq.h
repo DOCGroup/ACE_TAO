@@ -19,6 +19,7 @@
 #if !defined (PARAM_TEST_BOUNDED_STRING_SEQUENCE_H)
 #define PARAM_TEST_BOUNDED_STRING_SEQUENCE_H
 
+#include "helper.h"
 #include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -63,14 +64,6 @@ public:
   // print all the values
 
 private:
-  // called by the 2 public versions of check_validity
-  CORBA::Boolean
-  Test_Bounded_String_Sequence::check_validity_engine 
-            (const Param_Test::Bounded_StrSeq &the_in,
-             const Param_Test::Bounded_StrSeq &the_inout,
-             const Param_Test::Bounded_StrSeq &the_out,
-             const Param_Test::Bounded_StrSeq &the_ret);
-
   char *opname_;
   // operation name
 
@@ -85,12 +78,6 @@ private:
 
   Param_Test::Bounded_StrSeq_var ret_;
   // return value
-
-  Param_Test::Bounded_StrSeq dii_out_;
-  // DII out parameter
-
-  Param_Test::Bounded_StrSeq dii_ret_;
-  // DII return value
 };
 
 #endif /* PARAM_TEST_BOUNDED_STRING_SEQUENCE_H */

@@ -19,6 +19,7 @@
 #if !defined (PARAM_TEST_UNBOUNDED_LONG_SEQUENCE_H)
 #define PARAM_TEST_UNBOUNDED_LONG_SEQUENCE_H
 
+#include "helper.h"
 #include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -63,13 +64,6 @@ public:
   // print all the values
 
 private:
-  // called by the 2 public versions of check_validity
-  CORBA::Boolean
-  Test_Long_Sequence::check_validity_engine (const Param_Test::Long_Seq &the_in,
-                                             const Param_Test::Long_Seq &the_inout,
-                                             const Param_Test::Long_Seq &the_out,
-                                             const Param_Test::Long_Seq &the_ret);
-
   char *opname_;
   // operation name
 
@@ -84,12 +78,6 @@ private:
 
   Param_Test::Long_Seq_var ret_;
   // return value
-
-  Param_Test::Long_Seq dii_out_;
-  // DII out parameter
-
-  Param_Test::Long_Seq dii_ret_;
-  // DII return value
 };
 
 #endif /* PARAM_TEST_UNBOUNDED_LONG_SEQUENCE_H */
