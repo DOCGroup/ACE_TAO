@@ -30,7 +30,7 @@
 
 ACE_RCSID(tests, Malloc_Test, "Malloc_Test.cpp,v 4.22 1999/12/13 22:24:42 nanbor Exp")
 
-#if !defined (__Lynx__) && defined (ACE_HAS_PROCESS_SPAWN)
+#if defined (ACE_HAS_PROCESS_SPAWN)
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> MALLOC;
@@ -461,4 +461,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* ! __Lynx__  &&  ACE_HAS_PROCESS_SPAWN */
+#endif /* ACE_HAS_PROCESS_SPAWN */
