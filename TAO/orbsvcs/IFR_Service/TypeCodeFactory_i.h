@@ -196,6 +196,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
+  // Finds a legal default label value.
+  void compute_default_label (CORBA::TCKind kind,
+                              CORBA::ULong skip_slot,
+                              const IR::UnionMemberSeq &members,
+                              TAO_OutputCDR &cdr);
+
   // Prohibited
   TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src);
   TAO_TypeCodeFactory_i &operator= (const TAO_TypeCodeFactory_i &src);
