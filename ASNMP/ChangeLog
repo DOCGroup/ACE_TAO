@@ -1,3 +1,22 @@
+Mon Dec  8 14:33:59 CST 1997
+      * Thanks to Eric Newton's <ecn@smart.net> continued patches
+         Version 1.7 has fixes for: agent, base library
+       Fix to the response type fixes the interoperability with CMU snmp on
+       linux. (and SNMP Research as well)
+
+        Initialize member of Pdu: output_
+        Send responses as response messages
+        Deallocate and reset the io_vec
+
+       The transaction object didn't initialize the io_vec used to receive
+       a packet when it was used for an agent transaction.
+ 
+       Cleans up a warning about using a const object from a previous
+       patch.
+ 
+       Removes the transaction object from the Reactor.
+ 
+
 Sun Nov 30 17:49:12 CST 1997 Mike MacFaden  <mrm@tango.cs.wustl.edu>
       * Thanks to Eric Newton's <ecn@smart.net> apply patches: 
      Removed G++ warnings:
