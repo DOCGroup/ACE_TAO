@@ -173,7 +173,6 @@ Consumer_Handler::handle_output (ACE_HANDLE)
                           this->get_handle (),
                           this->connection_id ()));
 
-
               if (ACE_Reactor::instance ()->cancel_wakeup
                   (this, ACE_Event_Handler::WRITE_MASK) == -1)
                 ACE_ERROR ((LM_ERROR,
