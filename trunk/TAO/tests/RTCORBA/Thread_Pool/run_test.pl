@@ -79,37 +79,37 @@ for $test (@configurations)
             goto kill_server;
 	}
     }
-  
-  for $test (@configurations)
-  {
-      print STDERR "\n*************************************************************\n";
-      print STDERR "$test->{description}\n";
-      print STDERR "*************************************************************\n\n";
-      
-      run_clients ("-k file://$test->{file}", $number_of_clients);
   }
-    
-    print STDERR "\n************************\n";
-    print STDERR "Shutting down the server\n";
-    print STDERR "************************\n\n";
-    
-    run_clients ("-k file://$configurations[0]->{file} -i 0 -x", 1);
-    
-  kill_server:
-    
-    $server = $SV->WaitKill (5);
   
-    if ($server != 0) 
-    {
-        print STDERR "ERROR: server returned $server\n";
-        $status = 1;
-    }
-    
-    for $test (@configurations)
-    {
-        unlink $test->{file};
-    }
-}
+for $test (@configurations)
+  {
+    print STDERR "\n*************************************************************\n";
+    print STDERR "$test->{description}\n";
+    print STDERR "*************************************************************\n\n";
+      
+    run_clients ("-k file://$test->{file}", $number_of_clients);
+  }
+
+print STDERR "\n************************\n";
+print STDERR "Shutting down the server\n";
+print STDERR "************************\n\n";
+
+run_clients ("-k file://$configurations[0]->{file} -i 0 -x", 1);
+
+kill_server:
+
+$server = $SV->WaitKill (5);
+
+if ($server != 0) 
+  {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+  }
+
+for $test (@configurations)
+  {
+    unlink $test->{file};
+  }
 
 exit $status
 

@@ -1,3 +1,8 @@
+Wed Jul 31 17:53:40 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\RTCORBA\Thread_Pool\run_test.pl (run_clients): Fixed an
+	  error in the script which was causing unnecessary test failures.
+
 Wed Jul 31 16:40:52 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
