@@ -58,14 +58,14 @@ sub client
 }
 
 # Options for all simple tests recognized by the 'client' program.
-@opts = ("-s -ORBnameserviceior file://$iorfile",
+@opts = ("-s -ORBInitRef NameService=file://$iorfile",
          "-s -ORBnameserviceport $ns_multicast_port",
-         "-t -ORBnameserviceior file://$iorfile",
-         "-i -ORBnameserviceior file://$iorfile",
-         "-e -ORBnameserviceior file://$iorfile",
-         "-y -ORBnameserviceior file://$iorfile",
-         "-p $persistent_ior_file -ORBnameserviceior file://$iorfile",
-         "-c file://$persistent_ior_file -ORBnameserviceior file://$iorfile");
+         "-t -ORBInitRef NameService=file://$iorfile",
+         "-i -ORBInitRef NameService=file://$iorfile",
+         "-e -ORBInitRef NameService=file://$iorfile",
+         "-y -ORBInitRef NameService=file://$iorfile",
+         "-p $persistent_ior_file -ORBInitRef NameService=file://$iorfile",
+         "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile");
 
 @server_opts = ("", "", "", "", "", "",
                 "-ORBEndpoint iiop://localhost:$ns_orb_port -f $persistent_log_file",
@@ -115,7 +115,7 @@ open (STDERR, ">&STDOUT") or die "can't redirect stderror: $!";
 
 name_server ();
 
-client ("-ORBnameserviceior file://$iorfile", "-m15");
+client ("-ORBInitRef NameService=file://$iorfile", "-m15");
 
 close (STDERR);
 close (STDOUT);

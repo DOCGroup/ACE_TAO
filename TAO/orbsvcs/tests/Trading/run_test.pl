@@ -26,12 +26,12 @@ if (ACE::waitforfile_timed ($ior, $sleeptime) == -1) {
 }
 
 $E = Process::Create ($EXEPREFIX."export_test".$EXE_EXT,
-		      "-ORBTradingServiceIOR file://$ior");
+		      "-ORBInitRef TradingService=file://$ior");
 
 sleep $sleeptime;
 
 $I = Process::Create ($EXEPREFIX."import_test".$EXE_EXT,
-		      "-ORBTradingServiceIOR file://$ior");
+		      "-ORBInitRef TradingService=file://$ior");
 
 if ($I->TimedWait (60) == -1) {
   $status = 1;
