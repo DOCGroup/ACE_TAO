@@ -478,7 +478,9 @@ CORBA_Any::~CORBA_Any (void)
     {
       //      (void) deep_free (type_, value_, 0, 0, env);
       DEEP_FREE (type_, value_, 0, env);
-      delete value_;
+      // TODO: This crashes the server on NT, apparently the previous
+      // DEEP_FREE does the job and make the delete operator uneeded.
+      // delete value_;
     }
 
   if (type_) 

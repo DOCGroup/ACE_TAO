@@ -1556,7 +1556,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << bt->nested_type_name (bif, "_ptr") << " ";
@@ -1567,6 +1566,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name () << "_ptr ";
@@ -1591,17 +1591,12 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << bt->nested_type_name (bif, "_ptr") << " &";
                 }
                 break;
-              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
-                {
-                  *os << arg->local_name () << ", ";
-                }
-                break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name () << "_ptr &";
@@ -1628,7 +1623,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << bt->nested_type_name (bif, "_out") << " ";
@@ -1639,6 +1633,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << "_out, ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name () << "_out ";
@@ -1675,7 +1670,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
-                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                     {
                       *os << "const " << bt->nested_type_name (bif) << " &";
                     }
@@ -1685,6 +1679,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+		  case TAO_CodeGen::TAO_ARGUMENT_SH:
                   default:
                     {
                       *os << "const " << bt->name () << " &";
@@ -1709,7 +1704,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
-                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                     {
                       *os << "const " << bt->nested_type_name (bif) << " &";
                     }
@@ -1719,6 +1713,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+		  case TAO_CodeGen::TAO_ARGUMENT_SH:
                   default:
                     {
                       *os << bt->name () << " &";
@@ -1743,7 +1738,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
-                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                     {
                       *os << bt->nested_type_name (bif, "_out") << " ";
                     }
@@ -1753,6 +1747,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+		  case TAO_CodeGen::TAO_ARGUMENT_SH:
                   default:
                     {
                       *os << bt->name () << "_out ";
@@ -1783,7 +1778,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
-                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                     {
                       *os << bt->nested_type_name (bif, "_ptr") << " ";
                     }
@@ -1793,6 +1787,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+		  case TAO_CodeGen::TAO_ARGUMENT_SH:
                   default:
                     {
                       *os << bt->name () << "_ptr ";
@@ -1817,7 +1812,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
-                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                     {
                       *os << bt->nested_type_name (bif, "_ptr") << " &";
                     }
@@ -1827,6 +1821,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+		  case TAO_CodeGen::TAO_ARGUMENT_SH:
                   default:
                     {
                       *os << bt->name () << "_ptr &";
@@ -1854,7 +1849,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
-                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                     {
                       *os << bt->nested_type_name (bif, "_out") << " ";
                     }
@@ -1864,6 +1858,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << "_out, ";
                     }
                     break;
+		  case TAO_CodeGen::TAO_ARGUMENT_SH:
                   default:
                     {
                       *os << bt->name () << "_out ";
@@ -1894,7 +1889,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
-                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                     {
                       *os << bt->nested_type_name (bif);
                     }
@@ -1904,6 +1898,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                   default:
                     {
                       *os << bt->name ();
@@ -1928,7 +1923,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
-                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                     {
                       *os << bt->nested_type_name (bif) << " &";
                     }
@@ -1938,6 +1932,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                   default:
                     {
                       *os << bt->name () << " &";
@@ -1962,7 +1957,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
-                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                     {
                       *os << bt->nested_type_name (bif, "_out");
                     }
@@ -1972,6 +1966,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << arg->local_name () << ", ";
                     }
                     break;
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
                   default:
                     {
                       *os << bt->name () << "_out";
@@ -2060,7 +2055,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   *os << bt->nested_type_name (bif, "_out");
                 }
@@ -2070,6 +2064,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name () << "_out";
@@ -2101,7 +2096,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << "const " << bt->nested_type_name (bif);
@@ -2112,6 +2106,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << "const " << bt->name ();
@@ -2142,7 +2137,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   if (bt->size_type () == be_decl::VARIABLE)
@@ -2160,6 +2154,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name ();
@@ -2190,7 +2185,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << bt->nested_type_name (bif, "_out") << " ";
@@ -2201,6 +2195,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name () << "_out";
@@ -2234,7 +2229,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << "const " << bt->nested_type_name (bif) << " &";
@@ -2245,6 +2239,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << "const " << bt->name () << " &";
@@ -2271,7 +2266,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << bt->nested_type_name (bif) << " &";
@@ -2282,6 +2276,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name () << " &";
@@ -2326,7 +2321,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << bt->nested_type_name (bif, "_out") << " ";
@@ -2340,6 +2334,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name () << "_out";
@@ -2372,7 +2367,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << bt->nested_type_name (bif);
@@ -2383,6 +2377,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name ();
@@ -2409,7 +2404,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << bt->nested_type_name (bif) << " &";
@@ -2420,6 +2414,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name () << " &";
@@ -2446,7 +2441,6 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
-              case TAO_CodeGen::TAO_ARGUMENT_SH:
                 {
                   // to keep the MSVC++ compiler happy
                   *os << bt->nested_type_name (bif, "_out") << " ";
@@ -2457,6 +2451,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << arg->local_name () << ", ";
                 }
                 break;
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
               default:
                 {
                   *os << bt->name () << "_out";
