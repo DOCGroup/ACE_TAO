@@ -1,5 +1,8 @@
 Fri Jun 26 21:24:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Cubit/TAO/Makefile: Removed DII_Cubit for now until
+	  Jeff fixes it.
+
         * orbsvcs/tests/Logger: Rename clnt.{cpp,h} and svc.cpp to
           client.{cpp,h} and server.cpp to be more consistent with other
           naming schemes in TAO.
