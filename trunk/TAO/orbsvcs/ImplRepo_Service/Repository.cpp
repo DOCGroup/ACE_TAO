@@ -229,6 +229,14 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString, Server_Info *,ACE_Hash
 template class ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 
+#if defined(__SUNPRO_CC) && (__SUNPRO_CC == 0x500)
+// This template is already defined in TAO, but Sun/CC 5.0 is broken
+template class ACE_Equal_To<ACE_CString>;
+#endif /* __SUNPRO_CC */
+// Instantiate for ACE_WString because ACE_TString can be either
+// ACE_CString or ACE_WString.
+template class ACE_Equal_To<ACE_WString>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<ACE_TString, Server_Info *>
@@ -236,5 +244,13 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Server_Info *,ACE_H
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
+
+#if defined(__SUNPRO_CC) && (__SUNPRO_CC == 0x500)
+// This template is already defined in TAO, but Sun/CC 5.0 is broken
+#pragma instantiate ACE_Equal_To<ACE_CString>
+#endif /* __SUNPRO_CC */
+// Instantiate for ACE_WString because ACE_TString can be either
+// ACE_CString or ACE_WString.
+#pragma instantiate ACE_Equal_To<ACE_WString>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
