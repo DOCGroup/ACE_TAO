@@ -1,3 +1,15 @@
+Sat Jun 20 16:51:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/FILE_Addr.cpp: Cleaned up the code a bit to be more
+ 	  consistent.  Thanks to Chris Healey for suggesting this.
+
+	* ace/FILE_Addr.cpp (ACE_FILE_Addr): Removed the memset() in the
+ 	  constructor since this is overkill...
+
+	* ace/ACE.cpp (send_n): Fixed a dump cut&paste bug in the timed
+ 	  version of send_n().  Thanks to Chris Healey
+ 	  <chealey@entera.com> for reporting this.
+
 Sat Jun 20 14:58:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/indent_macros.perl: Instead of hardcoding perl's location in
