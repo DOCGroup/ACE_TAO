@@ -1,3 +1,18 @@
+Mon Dec 14 08:08:32 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+
+	  The generated code was using inline functions such as allocbuf
+	  and freebuf before their implementation. Some compilers were
+	  issuing lots of warnings. Thanks to David Levine for sending me
+	  a log of these warnings. In addition, when we use these static
+	  methods, we now use their fully scoped name to avoid any
+	  conflicts and/or ambiguities.
+	
 Sun Dec 13 08:32:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Trading/Service_Type_Exporter.cpp (remove_all_types):
@@ -12,7 +27,7 @@ Sun Dec 13 08:32:04 1998  David L. Levine  <levine@cs.wustl.edu>
           when the export_test first tries to remove them. Updated the
           expected output in the README file to reflect the change.
 
-Sat Dec 12 11:29:38 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+Sat Dec 12 11:29:38 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
           TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
