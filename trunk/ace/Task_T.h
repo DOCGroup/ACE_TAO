@@ -22,9 +22,9 @@
 #include "ace/Task.h"
 
 // Forward decls...
-template <ACE_SYNCH_1> class ACE_Module;
+template <ACE_SYNCH_DECL> class ACE_Module;
 
-template <ACE_SYNCH_1>
+template <ACE_SYNCH_DECL>
 class ACE_Task : public ACE_Task_Base
   // = TITLE
   //    Primary interface for application message processing, as well 
@@ -34,12 +34,12 @@ class ACE_Task : public ACE_Task_Base
   //    This class serves as the basis for passive and active objects
   //    in ACE.  
 {
-friend class ACE_Module<ACE_SYNCH_2>;
+friend class ACE_Module<ACE_SYNCH_USE>;
 friend class ACE_Module_Type;
 public:
   // = Initialization/termination methods.
   ACE_Task (ACE_Thread_Manager *thr_mgr = 0, 
-	    ACE_Message_Queue<ACE_SYNCH_2> *mq = 0);
+	    ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0);
   // Initialize a Task, supplying a thread manager and a message
   // queue.  If the user doesn't supply a ACE_Message_Queue pointer
   // then we'll allocate one dynamically.  Otherwise, we'll use the
@@ -48,10 +48,10 @@ public:
   virtual ~ACE_Task (void);	
   // Destructor.
 
-  ACE_Message_Queue<ACE_SYNCH_2> *msg_queue (void);
+  ACE_Message_Queue<ACE_SYNCH_USE> *msg_queue (void);
   // Gets the message queue associated with this task.
 
-  void msg_queue (ACE_Message_Queue<ACE_SYNCH_2> *);
+  void msg_queue (ACE_Message_Queue<ACE_SYNCH_USE> *);
   // Sets the message queue associated with this task.
 
 public: // Should be protected: 
@@ -81,16 +81,16 @@ public: // Should be protected:
   // with the Task, else returns 0.
 
   // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
-  ACE_Task<ACE_SYNCH_2> *next (void);
+  ACE_Task<ACE_SYNCH_USE> *next (void);
   // Get next Task pointer.
-  void next (ACE_Task<ACE_SYNCH_2> *);
+  void next (ACE_Task<ACE_SYNCH_USE> *);
   // Set next Task pointer.
 
-  ACE_Task<ACE_SYNCH_2> *sibling (void);
+  ACE_Task<ACE_SYNCH_USE> *sibling (void);
   // Return the Task's sibling if there's one associated with the
   // Task's Module, else returns 0.
 
-  ACE_Module<ACE_SYNCH_2> *module (void) const;
+  ACE_Module<ACE_SYNCH_USE> *module (void) const;
   // Return the Task's Module if there is one, else returns 0.
 
   int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL); 
@@ -103,16 +103,16 @@ public: // Should be protected:
   void water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds, size_t);
   // Manipulate watermarks.
 
-  ACE_Message_Queue<ACE_SYNCH_2> *msg_queue_;	
+  ACE_Message_Queue<ACE_SYNCH_USE> *msg_queue_;	
   // List of messages on the ACE_Task..
 
   int delete_msg_queue_;
   // 1 if should delete Message_Queue, 0 otherwise.
 
-  ACE_Module<ACE_SYNCH_2> *mod_;		
+  ACE_Module<ACE_SYNCH_USE> *mod_;		
   // Back-pointer to the enclosing module.
 
-  ACE_Task<ACE_SYNCH_2> *next_;
+  ACE_Task<ACE_SYNCH_USE> *next_;
   // Pointer to adjacent ACE_Task.
 
   void dump (void) const;

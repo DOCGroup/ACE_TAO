@@ -19,8 +19,8 @@
 #if !defined (ACE_STREAM_MODULES)
 #define ACE_STREAM_MODULES
 
-template <ACE_SYNCH_1>
-class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_2>
+template <ACE_SYNCH_DECL>
+class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE>
   // = TITLE
   //    Standard module that acts as the head of a ustream.
 {
@@ -54,8 +54,8 @@ private:
   // Performs canonical flushing at the ACE_Stream Head.
 };
 
-template <ACE_SYNCH_1>
-class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_2>
+template <ACE_SYNCH_DECL>
+class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_USE>
   // = TITLE
   //    Standard module that acts as the head of a ustream.
 {
@@ -89,8 +89,8 @@ private:
   // Performs canonical flushing at the ACE_Stream tail.
 };
 
-template <ACE_SYNCH_1>
-class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_2>
+template <ACE_SYNCH_DECL>
+class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_USE>
   // = TITLE
   //    Standard module that acts as a "no op", simply passing on all
   //    data to its adjacent neighbor.

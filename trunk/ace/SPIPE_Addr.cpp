@@ -32,7 +32,8 @@ ACE_SPIPE_Addr::set_addr (void *addr, int len)
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (void)
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {
-  (void) ACE_OS::memset ((void *) &this->SPIPE_addr_, 0, 
+  (void) ACE_OS::memset ((void *) &this->SPIPE_addr_, 
+                         0, 
 			 sizeof this->SPIPE_addr_);
 }
 
@@ -52,15 +53,26 @@ ACE_SPIPE_Addr::string_to_addr (const char *addr)
   return this->set (ACE_WIDE_STRING (addr));
 }
 
-/* Copy constructor. */
+int
+ACE_SPIPE_Addr::set (const ACE_SPIPE_Addr &sa)
+{
+  this->base_set (sa.get_type (), sa.get_size ());
+
+  if (sa.get_type () == AF_ANY)
+    (void) ACE_OS::memset ((void *) &this->SPIPE_addr_,
+                           0,
+                           sizeof this->SPIPE_addr_);
+  else
+    (void) ACE_OS::memcpy ((void *) &this->SPIPE_addr_, (void *)
+                           &sa.SPIPE_addr_,
+                           sa.get_size ()); 
+}
+
+// Copy constructor.
 
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa)
-  : ACE_Addr (AF_SPIPE,
-	      sizeof this->SPIPE_addr_.gid_ + sizeof this->SPIPE_addr_.uid_
-	      + ACE_OS::strlen (this->SPIPE_addr_.rendezvous_) + 1)
 {
-  (void) ACE_OS::memcpy ((void *) &this->SPIPE_addr_, (void *)
-			 &sa.SPIPE_addr_, sa.get_size ()); 
+  this->set (sa);
 }
 
 int
@@ -69,7 +81,7 @@ ACE_SPIPE_Addr::set (LPCTSTR addr,
 		     uid_t uid)
 {
   int len = sizeof (this->SPIPE_addr_.uid_);
-  len += sizeof(this->SPIPE_addr_.gid_);
+  len += sizeof (this->SPIPE_addr_.gid_);
 
 #if defined (ACE_WIN32)
   TCHAR *colonp = ACE_OS::strchr (addr, ':');
@@ -97,11 +109,12 @@ ACE_SPIPE_Addr::set (LPCTSTR addr,
   ACE_OS::strcpy(this->SPIPE_addr_.rendezvous_, temp) ;
 
 #else
-  this->ACE_Addr::base_set (AF_SPIPE, ACE_OS::strlen (addr) + len);
-  ACE_OS::strncpy (this->SPIPE_addr_.rendezvous_, addr,
+  this->ACE_Addr::base_set (AF_SPIPE,
+                            ACE_OS::strlen (addr) + len);
+  ACE_OS::strncpy (this->SPIPE_addr_.rendezvous_,
+                   addr,
 		   sizeof this->SPIPE_addr_.rendezvous_);
 #endif
-
   this->SPIPE_addr_.gid_ = gid == 0 ? ACE_OS::getgid () : gid;
   this->SPIPE_addr_.uid_ = uid == 0 ? ACE_OS::getuid () : uid;
   return 0;

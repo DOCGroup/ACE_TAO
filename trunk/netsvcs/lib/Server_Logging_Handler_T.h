@@ -28,8 +28,8 @@
 #include "Base_Optimizer.h"
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
-template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LOG_MESSAGE_RECEIVER>
-class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>
+template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LOG_MESSAGE_RECEIVER>
+class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>
 {
   // = TITLE
   //    Product object created by an <ACE_Server_Logging_Acceptor_T>.  An

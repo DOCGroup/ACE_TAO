@@ -17,13 +17,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Stream)
 
 // Give some idea of what the heck is going on in a stream!
 
-template <ACE_SYNCH_1> void
-ACE_Stream<ACE_SYNCH_2>::dump (void) const
+template <ACE_SYNCH_DECL> void
+ACE_Stream<ACE_SYNCH_USE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::dump");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, "-------- module links --------\n"));
 
-  for (ACE_Module<ACE_SYNCH_2> *mp = this->stream_head_; 
+  for (ACE_Module<ACE_SYNCH_USE> *mp = this->stream_head_; 
        ; 
        mp = mp->next ())
     {
@@ -34,7 +34,7 @@ ACE_Stream<ACE_SYNCH_2>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, "-------- writer links --------\n"));
 
-  ACE_Task<ACE_SYNCH_2> *tp;
+  ACE_Task<ACE_SYNCH_USE> *tp;
 
   for (tp = this->stream_head_->writer (); 
        ; 
@@ -62,10 +62,10 @@ ACE_Stream<ACE_SYNCH_2>::dump (void) const
     }
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::push (ACE_Module<ACE_SYNCH_2> *new_top)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::push (ACE_Module<ACE_SYNCH_USE> *new_top)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::push");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::push");
   if (this->push_module  (new_top, 
 			  this->stream_head_->next (), 
 			  this->stream_head_) == -1)
@@ -74,27 +74,27 @@ ACE_Stream<ACE_SYNCH_2>::push (ACE_Module<ACE_SYNCH_2> *new_top)
     return 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::put");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::put");
   return this->stream_head_->writer ()->put (mb, tv);
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream<ACE_SYNCH_2>::get (ACE_Message_Block *&mb, ACE_Time_Value *tv)
+template <ACE_SYNCH_DECL> int 
+ACE_Stream<ACE_SYNCH_USE>::get (ACE_Message_Block *&mb, ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::get");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::get");
   return this->stream_head_->reader ()->getq (mb, tv);
 }
 
 // Return the "top" ACE_Module in a ACE_Stream, skipping over the
 // stream_head.
 
-template <ACE_SYNCH_1> int 
-ACE_Stream<ACE_SYNCH_2>::top (ACE_Module<ACE_SYNCH_2> *&m)
+template <ACE_SYNCH_DECL> int 
+ACE_Stream<ACE_SYNCH_USE>::top (ACE_Module<ACE_SYNCH_USE> *&m)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::top");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::top");
   if (this->stream_head_->next () == this->stream_tail_)
     return -1;
   else
@@ -107,17 +107,17 @@ ACE_Stream<ACE_SYNCH_2>::top (ACE_Module<ACE_SYNCH_2> *&m)
 // Remove the "top" ACE_Module in a ACE_Stream, skipping over the
 // stream_head.
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::pop (int flags)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::pop (int flags)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::pop");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::pop");
   if (this->stream_head_->next () == this->stream_tail_)
     return -1;
   else
     {
       // Skip over the ACE_Stream head.
-      ACE_Module<ACE_SYNCH_2> *top_mod = this->stream_head_->next ();
-      ACE_Module<ACE_SYNCH_2> *new_top = top_mod->next ();
+      ACE_Module<ACE_SYNCH_USE> *top_mod = this->stream_head_->next ();
+      ACE_Module<ACE_SYNCH_USE> *new_top = top_mod->next ();
 
       this->stream_head_->next (new_top);
 
@@ -126,7 +126,7 @@ ACE_Stream<ACE_SYNCH_2>::pop (int flags)
       top_mod->close (flags);
 
       // Don't delete the Module unless the flags request this.
-      if (flags != ACE_Module<ACE_SYNCH_2>::M_DELETE_NONE)
+      if (flags != ACE_Module<ACE_SYNCH_USE>::M_DELETE_NONE)
 	delete top_mod;
 
       this->stream_head_->writer ()->next (new_top->writer ());
@@ -138,14 +138,14 @@ ACE_Stream<ACE_SYNCH_2>::pop (int flags)
 // Remove a named ACE_Module from an arbitrary place in the
 // ACE_Stream.
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::remove (const char *name, 
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::remove (const char *name, 
 				 int flags)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::remove");
-  ACE_Module<ACE_SYNCH_2> *prev = 0;
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::remove");
+  ACE_Module<ACE_SYNCH_USE> *prev = 0;
 
-  for (ACE_Module<ACE_SYNCH_2> *mod = this->stream_head_; 
+  for (ACE_Module<ACE_SYNCH_USE> *mod = this->stream_head_; 
        mod != 0; 
        mod = mod->next ())
     if (ACE_OS::strcmp (mod->name (), name) == 0)
@@ -156,7 +156,7 @@ ACE_Stream<ACE_SYNCH_2>::remove (const char *name,
 	  prev->link (mod->next ());
 
 	// Don't delete the Module unless the flags request this.
-	if (flags != ACE_Module<ACE_SYNCH_2>::M_DELETE_NONE)
+	if (flags != ACE_Module<ACE_SYNCH_USE>::M_DELETE_NONE)
 	  {
 	    // Close down the module and release the memory.
 	    mod->close (flags);
@@ -171,11 +171,11 @@ ACE_Stream<ACE_SYNCH_2>::remove (const char *name,
   return -1;
 }
 
-template <ACE_SYNCH_1> ACE_Module<ACE_SYNCH_2> *
-ACE_Stream<ACE_SYNCH_2>::find (const char *name)
+template <ACE_SYNCH_DECL> ACE_Module<ACE_SYNCH_USE> *
+ACE_Stream<ACE_SYNCH_USE>::find (const char *name)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::find");
-  for (ACE_Module<ACE_SYNCH_2> *mod = this->stream_head_; 
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::find");
+  for (ACE_Module<ACE_SYNCH_USE> *mod = this->stream_head_; 
        mod != 0; 
        mod = mod->next ())
     if (ACE_OS::strcmp (mod->name (), name) == 0)
@@ -186,16 +186,16 @@ ACE_Stream<ACE_SYNCH_2>::find (const char *name)
 
 // Actually push a module onto the stack...
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::push_module (ACE_Module<ACE_SYNCH_2> *new_top, 
-				      ACE_Module<ACE_SYNCH_2> *current_top, 
-				      ACE_Module<ACE_SYNCH_2> *head)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::push_module (ACE_Module<ACE_SYNCH_USE> *new_top, 
+				      ACE_Module<ACE_SYNCH_USE> *current_top, 
+				      ACE_Module<ACE_SYNCH_USE> *head)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::push_module");
-  ACE_Task<ACE_SYNCH_2> *nt_reader = new_top->reader ();
-  ACE_Task<ACE_SYNCH_2> *nt_writer = new_top->writer ();
-  ACE_Task<ACE_SYNCH_2> *ct_reader = 0;
-  ACE_Task<ACE_SYNCH_2> *ct_writer = 0;
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::push_module");
+  ACE_Task<ACE_SYNCH_USE> *nt_reader = new_top->reader ();
+  ACE_Task<ACE_SYNCH_USE> *nt_writer = new_top->writer ();
+  ACE_Task<ACE_SYNCH_USE> *ct_reader = 0;
+  ACE_Task<ACE_SYNCH_USE> *ct_writer = 0;
 
   if (current_top)
     {
@@ -225,37 +225,37 @@ ACE_Stream<ACE_SYNCH_2>::push_module (ACE_Module<ACE_SYNCH_2> *new_top,
 }
 
 #if 0
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::open (void *a, 
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::open (void *a, 
 			       ACE_Multiplexor &muxer, 
-			       ACE_Module<ACE_SYNCH_2> *head)
+			       ACE_Module<ACE_SYNCH_USE> *head)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::open");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::open");
   this->stream_head_ = head == 0
-    ? new ACE_Module<ACE_SYNCH_2> ("ACE_Stream_Head", 
-			       new ACE_Stream_Head<ACE_SYNCH_2>, 
-			       new ACE_Stream_Head<ACE_SYNCH_2>, a) : head;
+    ? new ACE_Module<ACE_SYNCH_USE> ("ACE_Stream_Head", 
+			       new ACE_Stream_Head<ACE_SYNCH_USE>, 
+			       new ACE_Stream_Head<ACE_SYNCH_USE>, a) : head;
   this->stream_tail_ = 0;
   return muxer.link_from_below (this->stream_head_);
 }
 #endif 
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::open (void *a, 
-			       ACE_Module<ACE_SYNCH_2> *head, 
-			       ACE_Module<ACE_SYNCH_2> *tail)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::open (void *a, 
+			       ACE_Module<ACE_SYNCH_USE> *head, 
+			       ACE_Module<ACE_SYNCH_USE> *tail)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::open");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::open");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  ACE_Task<ACE_SYNCH_2> *h1 = 0, *h2 = 0;
-  ACE_Task<ACE_SYNCH_2> *t1 = 0, *t2 = 0;
+  ACE_Task<ACE_SYNCH_USE> *h1 = 0, *h2 = 0;
+  ACE_Task<ACE_SYNCH_USE> *t1 = 0, *t2 = 0;
 
   if (head == 0)
     {
-      h1 = new ACE_Stream_Head<ACE_SYNCH_2>;
-      h2 = new ACE_Stream_Head<ACE_SYNCH_2>;
-      head = new ACE_Module<ACE_SYNCH_2> ("ACE_Stream_Head", 
+      h1 = new ACE_Stream_Head<ACE_SYNCH_USE>;
+      h2 = new ACE_Stream_Head<ACE_SYNCH_USE>;
+      head = new ACE_Module<ACE_SYNCH_USE> ("ACE_Stream_Head", 
 					  h1, h2, 
 					  a,
 					  M_DELETE);
@@ -263,9 +263,9 @@ ACE_Stream<ACE_SYNCH_2>::open (void *a,
 
   if (tail == 0)
     {
-      t1 = new ACE_Stream_Tail<ACE_SYNCH_2>;
-      t2 = new ACE_Stream_Tail<ACE_SYNCH_2>;
-      tail = new ACE_Module<ACE_SYNCH_2> ("ACE_Stream_Tail", 
+      t1 = new ACE_Stream_Tail<ACE_SYNCH_USE>;
+      t2 = new ACE_Stream_Tail<ACE_SYNCH_USE>;
+      tail = new ACE_Module<ACE_SYNCH_USE> ("ACE_Stream_Tail", 
 					  t1, t2, 
 					  a,
 					  M_DELETE);
@@ -298,10 +298,10 @@ ACE_Stream<ACE_SYNCH_2>::open (void *a,
     return 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::close (int flags)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::close (int flags)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::close");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
   if (this->stream_head_ != 0 
@@ -338,11 +338,11 @@ ACE_Stream<ACE_SYNCH_2>::close (int flags)
   return 0;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream<ACE_SYNCH_2>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
+template <ACE_SYNCH_DECL> int 
+ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
 				  void *a)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::control");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::control");
   ACE_IO_Cntl_Msg ioc (cmd);
 
   ACE_Message_Block *db = 0;
@@ -391,15 +391,15 @@ ACE_Stream<ACE_SYNCH_2>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
 // on the fact that the Stream head and Stream tail are non-NULL...
 // This must be called with locks held.
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::link_i (ACE_Stream<ACE_SYNCH_2> &us)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::link_i (ACE_Stream<ACE_SYNCH_USE> &us)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::link_i");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::link_i");
   this->linked_us_ = &us;
   // Make sure the other side is also linked to us!
   us.linked_us_ = this;
 
-  ACE_Module<ACE_SYNCH_2> *my_tail = this->stream_head_;
+  ACE_Module<ACE_SYNCH_USE> *my_tail = this->stream_head_;
 
   if (my_tail == 0)
     return -1;
@@ -408,7 +408,7 @@ ACE_Stream<ACE_SYNCH_2>::link_i (ACE_Stream<ACE_SYNCH_2> &us)
   while (my_tail->next () != this->stream_tail_)
     my_tail = my_tail->next ();
 
-  ACE_Module<ACE_SYNCH_2> *other_tail = us.stream_head_;
+  ACE_Module<ACE_SYNCH_USE> *other_tail = us.stream_head_;
 
   if (other_tail == 0)
     return -1;
@@ -423,10 +423,10 @@ ACE_Stream<ACE_SYNCH_2>::link_i (ACE_Stream<ACE_SYNCH_2> &us)
   return 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::link (ACE_Stream<ACE_SYNCH_2> &us)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::link (ACE_Stream<ACE_SYNCH_USE> &us)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::link");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::link");
   
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -435,16 +435,16 @@ ACE_Stream<ACE_SYNCH_2>::link (ACE_Stream<ACE_SYNCH_2> &us)
 
 // Must be called with locks held...
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::unlink_i (void)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::unlink_i (void)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::unlink_i");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::unlink_i");
 
   // Only try to unlink if we are in fact still linked!
 
   if (this->linked_us_ != 0)
     {
-      ACE_Module<ACE_SYNCH_2> *my_tail = this->stream_head_;
+      ACE_Module<ACE_SYNCH_USE> *my_tail = this->stream_head_;
 
       // Only relink if we still exist!
       if (my_tail)
@@ -457,7 +457,7 @@ ACE_Stream<ACE_SYNCH_2>::unlink_i (void)
 	  my_tail->writer ()->next (this->stream_tail_->writer ());
 	}
 
-      ACE_Module<ACE_SYNCH_2> *other_tail = 
+      ACE_Module<ACE_SYNCH_USE> *other_tail = 
 	this->linked_us_->stream_head_;
 
       // Only fiddle with the other side if it in fact still remains.
@@ -480,55 +480,55 @@ ACE_Stream<ACE_SYNCH_2>::unlink_i (void)
     return -1;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::unlink (void)
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::unlink (void)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::unlink");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::unlink");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
   return this->unlink_i ();
 }
 
-template <ACE_SYNCH_1>
-ACE_Stream<ACE_SYNCH_2>::ACE_Stream (void * a, 
-				     ACE_Module<ACE_SYNCH_2> *head, 
-				     ACE_Module<ACE_SYNCH_2> *tail)
+template <ACE_SYNCH_DECL>
+ACE_Stream<ACE_SYNCH_USE>::ACE_Stream (void * a, 
+				     ACE_Module<ACE_SYNCH_USE> *head, 
+				     ACE_Module<ACE_SYNCH_USE> *tail)
   : linked_us_ (0),
     final_close_ (this->lock_)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::ACE_Stream");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::ACE_Stream");
   if (this->open (a, head, tail) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_Stream<ACE_SYNCH_2>::open (%s, %s)\n", 
+    ACE_ERROR ((LM_ERROR, "ACE_Stream<ACE_SYNCH_USE>::open (%s, %s)\n", 
 	       head->name (), tail->name ()));
 }
 
 #if 0
-ACE_Stream<ACE_SYNCH_2>::ACE_Stream (void *a, 
+ACE_Stream<ACE_SYNCH_USE>::ACE_Stream (void *a, 
 				     ACE_Multiplexor &muxer, 
-				     ACE_Module<ACE_SYNCH_2> *head)
+				     ACE_Module<ACE_SYNCH_USE> *head)
   : linked_us_ (0),
     final_close_ (this->lock_)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::ACE_Stream");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::ACE_Stream");
   if (this->open (a, muxer, head) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_Stream<ACE_SYNCH_2>::open (%s, %s)\n", 
+    ACE_ERROR ((LM_ERROR, "ACE_Stream<ACE_SYNCH_USE>::open (%s, %s)\n", 
 		head->name ()));
 }
 #endif 
 
-template <ACE_SYNCH_1>
-ACE_Stream<ACE_SYNCH_2>::~ACE_Stream (void)
+template <ACE_SYNCH_DECL>
+ACE_Stream<ACE_SYNCH_USE>::~ACE_Stream (void)
 {
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::~ACE_Stream");
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::~ACE_Stream");
 
   if (this->stream_head_ != 0)
     this->close ();
 }
 
-template <ACE_SYNCH_1>
-ACE_Stream_Iterator<ACE_SYNCH_2>::ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_2> &sr)
+template <ACE_SYNCH_DECL>
+ACE_Stream_Iterator<ACE_SYNCH_USE>::ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_USE> &sr)
   : next_ (sr.stream_head_)
 {
-  ACE_TRACE ("ACE_Stream_Iterator<ACE_SYNCH_2>::ACE_Stream_Iterator");
+  ACE_TRACE ("ACE_Stream_Iterator<ACE_SYNCH_USE>::ACE_Stream_Iterator");
 }
 
 #endif /* ACE_STREAM_C */

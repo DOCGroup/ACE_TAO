@@ -34,21 +34,23 @@ ACE_UNIX_Addr::dump (void) const
 ACE_UNIX_Addr::ACE_UNIX_Addr (void)
   : ACE_Addr (AF_UNIX, sizeof this->unix_addr_)
 {
-  (void) ACE_OS::memset ((void *) &this->unix_addr_, 0, sizeof this->unix_addr_);
+  (void) ACE_OS::memset ((void *) &this->unix_addr_,
+                         0,
+                         sizeof this->unix_addr_);
 }
 
 int
 ACE_UNIX_Addr::set (const ACE_UNIX_Addr &sa)
 {
-  size_t size = sa.get_size ();
+  this->base_set (sa.get_type (), sa.get_size ());
 
-  // Add one extra byte to account for the NUL at the end of the
-  // pathname.
-  if (size < sizeof this->unix_addr_)
-    size = sa.get_size () + 1;
-
-  this->unix_addr_.sun_family = AF_UNIX;
-  ACE_OS::strcpy (this->unix_addr_.sun_path, sa.unix_addr_.sun_path);
+  if (sa.get_type () == AF_ANY)
+    (void) ACE_OS::memset ((void *) &this->unix_addr_,
+                           0,
+                           sizeof this->unix_addr_);
+  else
+    ACE_OS::strcpy (this->unix_addr_.sun_path,
+                    sa.unix_addr_.sun_path);
   return 0;
 }
 
@@ -93,7 +95,7 @@ ACE_UNIX_Addr::set (const char rendezvous_point[])
   this->ACE_Addr::base_set (AF_UNIX, 
 			    sizeof this->unix_addr_ -
 			    sizeof (this->unix_addr_.sun_path) +
-			    ACE_OS::strlen (this->unix_addr_.sun_path) );
+			    ACE_OS::strlen (this->unix_addr_.sun_path));
   return 0;
 }
 

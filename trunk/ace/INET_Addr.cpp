@@ -66,7 +66,8 @@ ACE_INET_Addr::ACE_INET_Addr (void)
   : ACE_Addr (AF_INET, sizeof this->inet_addr_)
 {
   // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  (void) ACE_OS::memset ((void *) &this->inet_addr_, 0,
+  (void) ACE_OS::memset ((void *) &this->inet_addr_, 
+                         0,
 			 sizeof this->inet_addr_);
 }
 
@@ -74,10 +75,19 @@ int
 ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
-  this->ACE_Addr::base_set (AF_INET, sizeof this->inet_addr_);
-  (void) ACE_OS::memcpy ((void *) &this->inet_addr_,
-			 (void *) &sa.inet_addr_,
-			 sizeof this->inet_addr_);
+
+  this->ACE_Addr::base_set (sa.get_type (), sa.get_size ());
+
+  if (sa.get_type () == AF_ANY)
+    // Ugh, this is really a base class, so don't copy it.
+    (void) ACE_OS::memset ((void *) &this->inet_addr_, 
+                           0,
+                           sizeof this->inet_addr_);
+  else
+    // It's ok to make the copy.
+    (void) ACE_OS::memcpy ((void *) &this->inet_addr_,
+                           (void *) &sa.inet_addr_,
+                           sizeof this->inet_addr_);
   return 0;
 }
 

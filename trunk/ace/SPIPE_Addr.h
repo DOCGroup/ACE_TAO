@@ -35,6 +35,9 @@ public:
   ACE_SPIPE_Addr (LPCTSTR rendezvous_point, gid_t = 0, uid_t = 0);
   // Create a ACE_SPIPE_Addr from a rendezvous point in the file system.
 
+  int set (const ACE_SPIPE_Addr &sa);
+  // Acts like a copy constructor...
+
   int set (LPCTSTR rendezvous_point, gid_t = 0, uid_t = 0);
   // Create a ACE_SPIPE_Addr from a rendezvous point in the file system.
 

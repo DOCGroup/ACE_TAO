@@ -13,51 +13,51 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Head)
 
-template <ACE_SYNCH_1> 
-ACE_Stream_Head<ACE_SYNCH_2>::ACE_Stream_Head (void) 
+template <ACE_SYNCH_DECL> 
+ACE_Stream_Head<ACE_SYNCH_USE>::ACE_Stream_Head (void) 
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::ACE_Stream_Head");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::ACE_Stream_Head");
 }
 
-template <ACE_SYNCH_1> 
-ACE_Stream_Head<ACE_SYNCH_2>::~ACE_Stream_Head (void) 
+template <ACE_SYNCH_DECL> 
+ACE_Stream_Head<ACE_SYNCH_USE>::~ACE_Stream_Head (void) 
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::~ACE_Stream_Head");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::~ACE_Stream_Head");
 }
 
-template <ACE_SYNCH_1> void
-ACE_Stream_Head<ACE_SYNCH_2>::dump (void) const
+template <ACE_SYNCH_DECL> void
+ACE_Stream_Head<ACE_SYNCH_USE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::dump");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::dump");
 }
 
 // ACE_Module that act as the head and tail of a Stream.
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Head<ACE_SYNCH_2>::open (void *)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Head<ACE_SYNCH_USE>::open (void *)
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::open");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::open");
   return 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Head<ACE_SYNCH_2>::close (u_long)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Head<ACE_SYNCH_USE>::close (u_long)
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::close");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::close");
   return 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Head<ACE_SYNCH_2>::svc (void)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Head<ACE_SYNCH_USE>::svc (void)
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::svc");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::svc");
   return -1;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Head<ACE_SYNCH_2>::control (ACE_Message_Block *mb)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Head<ACE_SYNCH_USE>::control (ACE_Message_Block *mb)
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::control");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::control");
   ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd;
 
@@ -76,10 +76,10 @@ ACE_Stream_Head<ACE_SYNCH_2>::control (ACE_Message_Block *mb)
 
 // Performs canonical flushing at the ACE_Stream Head.
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Head<ACE_SYNCH_2>::canonical_flush (ACE_Message_Block *mb)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Head<ACE_SYNCH_USE>::canonical_flush (ACE_Message_Block *mb)
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::canonical_flush");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::canonical_flush");
   char *cp = mb->rd_ptr ();
 
   if (ACE_BIT_ENABLED (*cp, ACE_Task_Flags::ACE_FLUSHR))
@@ -95,11 +95,11 @@ ACE_Stream_Head<ACE_SYNCH_2>::canonical_flush (ACE_Message_Block *mb)
   return 0;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream_Head<ACE_SYNCH_2>::put (ACE_Message_Block *mb, 
+template <ACE_SYNCH_DECL> int 
+ACE_Stream_Head<ACE_SYNCH_USE>::put (ACE_Message_Block *mb, 
 				   ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::put");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::put");
   int res = 0;
 
   if (mb->msg_type () == ACE_Message_Block::MB_IOCTL
@@ -122,17 +122,17 @@ ACE_Stream_Head<ACE_SYNCH_2>::put (ACE_Message_Block *mb,
     }
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream_Head<ACE_SYNCH_2>::init (int, char *[])
+template <ACE_SYNCH_DECL> int 
+ACE_Stream_Head<ACE_SYNCH_USE>::init (int, char *[])
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::init");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::init");
   return 0;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream_Head<ACE_SYNCH_2>::info (char **strp, size_t length) const
+template <ACE_SYNCH_DECL> int 
+ACE_Stream_Head<ACE_SYNCH_USE>::info (char **strp, size_t length) const
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::info");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::info");
   const char *name = this->name ();
   
   if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
@@ -142,58 +142,58 @@ ACE_Stream_Head<ACE_SYNCH_2>::info (char **strp, size_t length) const
   return ACE_OS::strlen (name);
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream_Head<ACE_SYNCH_2>::fini (void)
+template <ACE_SYNCH_DECL> int 
+ACE_Stream_Head<ACE_SYNCH_USE>::fini (void)
 {
-  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_2>::fini");
+  ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE>::fini");
   return 0;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Tail)
 
-template <ACE_SYNCH_1> 
-ACE_Stream_Tail<ACE_SYNCH_2>::ACE_Stream_Tail (void) 
+template <ACE_SYNCH_DECL> 
+ACE_Stream_Tail<ACE_SYNCH_USE>::ACE_Stream_Tail (void) 
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::ACE_Stream_Tail");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::ACE_Stream_Tail");
 }
 
-template <ACE_SYNCH_1> 
-ACE_Stream_Tail<ACE_SYNCH_2>::~ACE_Stream_Tail (void) 
+template <ACE_SYNCH_DECL> 
+ACE_Stream_Tail<ACE_SYNCH_USE>::~ACE_Stream_Tail (void) 
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::~ACE_Stream_Tail");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::~ACE_Stream_Tail");
 }
 
-template <ACE_SYNCH_1> void
-ACE_Stream_Tail<ACE_SYNCH_2>::dump (void) const
+template <ACE_SYNCH_DECL> void
+ACE_Stream_Tail<ACE_SYNCH_USE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::dump");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::dump");
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Tail<ACE_SYNCH_2>::open (void *)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Tail<ACE_SYNCH_USE>::open (void *)
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::open");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::open");
   return 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Tail<ACE_SYNCH_2>::close (u_long)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Tail<ACE_SYNCH_USE>::close (u_long)
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::close");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::close");
   return 0;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Tail<ACE_SYNCH_2>::svc (void)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Tail<ACE_SYNCH_USE>::svc (void)
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::svc");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::svc");
   return -1;
 }
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Tail<ACE_SYNCH_2>::control (ACE_Message_Block *mb)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Tail<ACE_SYNCH_USE>::control (ACE_Message_Block *mb)
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::control");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::control");
   ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd;
   
@@ -217,10 +217,10 @@ ACE_Stream_Tail<ACE_SYNCH_2>::control (ACE_Message_Block *mb)
 
 // Perform flush algorithm as though we were the driver.
 
-template <ACE_SYNCH_1> int
-ACE_Stream_Tail<ACE_SYNCH_2>::canonical_flush (ACE_Message_Block *mb)
+template <ACE_SYNCH_DECL> int
+ACE_Stream_Tail<ACE_SYNCH_USE>::canonical_flush (ACE_Message_Block *mb)
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::canonical_flush");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::canonical_flush");
   char *cp = mb->rd_ptr ();
 
   if (ACE_BIT_ENABLED (*cp, ACE_Task_Flags::ACE_FLUSHW))
@@ -240,11 +240,11 @@ ACE_Stream_Tail<ACE_SYNCH_2>::canonical_flush (ACE_Message_Block *mb)
   return 0;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream_Tail<ACE_SYNCH_2>::put (ACE_Message_Block *mb, 
+template <ACE_SYNCH_DECL> int 
+ACE_Stream_Tail<ACE_SYNCH_USE>::put (ACE_Message_Block *mb, 
 				   ACE_Time_Value *)
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::put");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::put");
 
   if (this->is_writer ())
     {
@@ -261,17 +261,17 @@ ACE_Stream_Tail<ACE_SYNCH_2>::put (ACE_Message_Block *mb,
   return -1;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream_Tail<ACE_SYNCH_2>::init (int, char *[])
+template <ACE_SYNCH_DECL> int 
+ACE_Stream_Tail<ACE_SYNCH_USE>::init (int, char *[])
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::init");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::init");
   return 0;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream_Tail<ACE_SYNCH_2>::info (char **strp, size_t length) const
+template <ACE_SYNCH_DECL> int 
+ACE_Stream_Tail<ACE_SYNCH_USE>::info (char **strp, size_t length) const
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::info");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::info");
   const char *name = this->name ();
   
   if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
@@ -281,74 +281,74 @@ ACE_Stream_Tail<ACE_SYNCH_2>::info (char **strp, size_t length) const
   return ACE_OS::strlen (name);
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Stream_Tail<ACE_SYNCH_2>::fini (void)
+template <ACE_SYNCH_DECL> int 
+ACE_Stream_Tail<ACE_SYNCH_USE>::fini (void)
 {
-  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_2>::fini");
+  ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE>::fini");
   return 0;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thru_Task)
 
-template <ACE_SYNCH_1> 
-ACE_Thru_Task<ACE_SYNCH_2>::ACE_Thru_Task (void) 
+template <ACE_SYNCH_DECL> 
+ACE_Thru_Task<ACE_SYNCH_USE>::ACE_Thru_Task (void) 
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::ACE_Thru_Task");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::ACE_Thru_Task");
 }
 
-template <ACE_SYNCH_1> 
-ACE_Thru_Task<ACE_SYNCH_2>::~ACE_Thru_Task (void) 
+template <ACE_SYNCH_DECL> 
+ACE_Thru_Task<ACE_SYNCH_USE>::~ACE_Thru_Task (void) 
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::~ACE_Thru_Task");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::~ACE_Thru_Task");
 }
 
-template <ACE_SYNCH_1> void
-ACE_Thru_Task<ACE_SYNCH_2>::dump (void) const
+template <ACE_SYNCH_DECL> void
+ACE_Thru_Task<ACE_SYNCH_USE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::dump");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::dump");
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Thru_Task<ACE_SYNCH_2>::open (void *)
+template <ACE_SYNCH_DECL> int 
+ACE_Thru_Task<ACE_SYNCH_USE>::open (void *)
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::open");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::open");
   return 0; 
 }
 
-template <ACE_SYNCH_1> int
-ACE_Thru_Task<ACE_SYNCH_2>::close (u_long)
+template <ACE_SYNCH_DECL> int
+ACE_Thru_Task<ACE_SYNCH_USE>::close (u_long)
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::close");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::close");
   return 0; 
 }
 
-template <ACE_SYNCH_1> int
-ACE_Thru_Task<ACE_SYNCH_2>::svc (void)
+template <ACE_SYNCH_DECL> int
+ACE_Thru_Task<ACE_SYNCH_USE>::svc (void)
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::svc");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::svc");
   return -1;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Thru_Task<ACE_SYNCH_2>::put (ACE_Message_Block *msg, 
+template <ACE_SYNCH_DECL> int 
+ACE_Thru_Task<ACE_SYNCH_USE>::put (ACE_Message_Block *msg, 
 				 ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::put");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::put");
   return this->put_next (msg, tv);
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Thru_Task<ACE_SYNCH_2>::init (int, char *[])
+template <ACE_SYNCH_DECL> int 
+ACE_Thru_Task<ACE_SYNCH_USE>::init (int, char *[])
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::init");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::init");
   return 0;
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Thru_Task<ACE_SYNCH_2>::info (char **strp, 
+template <ACE_SYNCH_DECL> int 
+ACE_Thru_Task<ACE_SYNCH_USE>::info (char **strp, 
 				  size_t length) const
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::info");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::info");
   const char *name = this->name ();
   
   if (*strp == 0 && (*strp = ACE_OS::strdup (name)) == 0)
@@ -358,10 +358,10 @@ ACE_Thru_Task<ACE_SYNCH_2>::info (char **strp,
   return ACE_OS::strlen (name);
 }
 
-template <ACE_SYNCH_1> int 
-ACE_Thru_Task<ACE_SYNCH_2>::fini (void)
+template <ACE_SYNCH_DECL> int 
+ACE_Thru_Task<ACE_SYNCH_USE>::fini (void)
 {
-  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_2>::fini");
+  ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE>::fini");
   return 0;
 }
 
