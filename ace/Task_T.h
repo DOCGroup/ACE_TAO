@@ -58,23 +58,32 @@ public:
 public: // Should be protected:
   // = Message queue manipulation methods.
 
+  // = Enqueue and dequeue methods.
+
+  // For the following five method if <timeout> == 0, the caller will
+  // block until action is possible, else will wait until the absolute
+  // time specified in *<timeout> elapses).  These calls will return,
+  // however, when queue is closed, deactivated, when a signal occurs,
+  // or if the time specified in timeout elapses, (in which case errno
+  // = EWOULDBLOCK).
+
   int putq (ACE_Message_Block *, ACE_Time_Value *tv = 0);
-  // Insert message into the message list.
+  // Insert message into the message queue.
 
   int getq (ACE_Message_Block *&mb, ACE_Time_Value *tv = 0);
-  // Extract the first message from the list (blocking).
+  // Extract the first message from the queue (blocking).
 
   int ungetq (ACE_Message_Block *, ACE_Time_Value *tv = 0);
   // Return a message to the queue.
-
-  int can_put (ACE_Message_Block *);
-  // Tests whether we can enqueue a message without blocking.
 
   int reply (ACE_Message_Block *, ACE_Time_Value *tv = 0);
   // Turn the message around and send it back down the Stream.
 
   int put_next (ACE_Message_Block *msg, ACE_Time_Value *tv = 0);
   // Transfer message to the adjacent ACE_Task in a ACE_Stream.
+
+  int can_put (ACE_Message_Block *);
+  // Tests whether we can enqueue a message without blocking.
 
   // = ACE_Task utility routines to identify names et al.
   const ASYS_TCHAR *name (void) const;
@@ -105,7 +114,7 @@ public: // Should be protected:
   // Manipulate watermarks.
 
   ACE_Message_Queue<ACE_SYNCH_USE> *msg_queue_;
-  // List of messages on the ACE_Task..
+  // Queue of messages on the ACE_Task..
 
   int delete_msg_queue_;
   // 1 if should delete Message_Queue, 0 otherwise.
