@@ -1,3 +1,26 @@
+Fri Mar  5 03:25:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-psos-{diab,tm}.h: Removed
+	  ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE.  It is no longer
+	  needed.
+
+	* ace/Synch_T.{h,i}: One would assume compilers are smart enough
+	  to treat _all_ in-class functions as inline.  Not for template
+	  member functions.  This is true at least for SunCC, egcs, gcc,
+	  and MSVC.  These functions seems to impose extra overhead.
+	  After removing the in-class definitions for ACE_Guard, the cost
+	  of using ACE_Guard is now as good as using
+	  ACE_Thread_Mutex_Guard (which, by the way, is depricated.)  So,
+	  there's no need for a ACE_THREAD_MUTEX_GUARD class.  Afterall,
+	  the "ACE Way[TM]" of defining inline functions is the "Right
+	  Way[TM]".  The motto of the change is, always put inline
+	  functions in .i files (even for template specialization)
+	  otherwise, they'll become regular functions.
+
+	  Thanks to Andy Marchewka <AndyM@who.net> for noticing the
+	  performance differences between ACE_Thread_Mutex_Guard and (old)
+	  ACE_Guard.
+
 Thu Mar  4 12:26:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Message_Queue_Notifications_Test.cpp (svc): Made increment
