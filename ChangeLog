@@ -1,37 +1,44 @@
+Thu Feb 17 08:32:08 2005  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+          Fix compile errors when TSS Emulation is enabled.
+          de-templatize the Thread_Safe_Instance object to avoid fighting
+          template instantiation issues now.
+
 Wed Feb 16 17:10:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.cpp (thr_key_detach, thr_keycreate):
+        * ace/OS_NS_Thread.cpp (thr_key_detach, thr_keycreate):
 
-	  Removed "ACE_UNUSED_ARG" macro calls for non-existent "inst"
-	  parameter.
+          Removed "ACE_UNUSED_ARG" macro calls for non-existent "inst"
+          parameter.
 
 Wed Feb 16 17:04:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/rmcast.mpb:
-	* protocols/ace/RMCast/RMCast.mpc:
+        * bin/MakeProjectCreator/config/rmcast.mpb:
+        * protocols/ace/RMCast/RMCast.mpc:
 
-	  The RMCast protocol implementation currently requires thread
-	  support.  Updated these MPC files accordingly.
+          The RMCast protocol implementation currently requires thread
+          support.  Updated these MPC files accordingly.
 
-	* protocols/ace/RMCast/Protocol.h (NAK):
+        * protocols/ace/RMCast/Protocol.h (NAK):
 
-	  Since "NAK" is now a class instead of struct, public inheritance
-	  must be explicitly specified.  Fixes compile-time errors related
-	  to inaccessible members in the "Profile" base class.
+          Since "NAK" is now a class instead of struct, public inheritance
+          must be explicitly specified.  Fixes compile-time errors related
+          to inaccessible members in the "Profile" base class.
 
 Wed Feb 16 18:31:28 2005  Steve Huston  <shuston@riverace.com>
 
-	* protocols/ace/RMCast/Acknowledge.cpp:
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Socket.cpp:
-	  Fixed some constructs to make MSVC6 happy. Primarily, MSVC6 won't
-	  allow type& var (ref). Must be type& var = ref.
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Socket.cpp:
+          Fixed some constructs to make MSVC6 happy. Primarily, MSVC6 won't
+          allow type& var (ref). Must be type& var = ref.
 
-	* protocols/ace/RMCast/Protocol.h: Changed struct NAK to class NAK to
-	  make MSVC6 happy.
+        * protocols/ace/RMCast/Protocol.h: Changed struct NAK to class NAK to
+          make MSVC6 happy.
 
-	  MSVC6 is still not completely happy, but someone with more insight as
-	  to the intentions here will need to take a look.
+          MSVC6 is still not completely happy, but someone with more insight as
+          to the intentions here will need to take a look.
 
 Wed Feb 16 16:18:45 2005  Dale Wilson  <wilson_d@ociweb.com>
 
