@@ -1,3 +1,13 @@
+Wed Jul 15 21:16:19 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.{dsp,dsw}:
+	* orbsvcs/tests/Trading/Trading.dsw:
+	* orbsvcs/tests/Trading/Colocated_Test.dsp:
+	* orbsvcs/tests/Trading/Export_Test.dsp:
+	* orbsvcs/tests/Trading/Import_Test.dsp:
+	* orbsvcs/tests/Trading/TradingLib.dsp:
+	  Project files for the Trading service for MSVC.
+
 Wed Jul 15 20:12:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Changed the warnings that occur when 
@@ -63,7 +73,7 @@ Wed Jul 15 12:11:01 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 Wed Jul 15 11:44:57 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/CosPropertyService/Makefile: Removed STL stuff and
-	did a make depend.
+	  did a make depend.
 
 Wed Jul 15 10:55:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -100,16 +110,16 @@ Tue Jul 14 21:25:19 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
         * orbsvcs/tests/Trading/colocated_test.cpp:
         * orbsvcs/tests/Trading/export_test.cpp:
         * orbsvcs/tests/Tradingimport_test.cpp:
-        These tests now copmile with egcs. In addition, Added modify and
-        withdraw_using_constraint tests, and the "quiet" flag, which will
-        staunch the usual barrage of output by not printing the contents
-        of offers and service types.
+          These tests now copmile with egcs. In addition, Added modify and
+          withdraw_using_constraint tests, and the "quiet" flag, which will
+          staunch the usual barrage of output by not printing the contents
+          of offers and service types.
 
         * orbsvcs/Trading_Service/Trading_Service.cpp: compiles with
-        egcs.
+          egcs.
 
         * orbsvcs/orbsvcs/Trader/*.*: Compiles with egcs. Improved the
-        modify method.
+          modify method.
 
 Tue Jul 14 19:15:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -158,12 +168,12 @@ Tue Jul 14 13:30:01 1998  Chris Gill  <cdgill@cs.wustl.edu>
         * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp
           orbsvcs/orbsvcs/Event/RT_Task.h:
 
-        Added conditional compilation logic to cause EC to use dynamic queues
-        with appropriate dispatching strategies when the MUF, EDF, or MLF
-        strategies are defined.  This is a temporary measure to allow
-        testing of the EC performance with the dynamic queues, and will
-        be relaced with a better configuration mechanism, based on the results
-        of the off-line scheduling run, in the very near future.
+          Added conditional compilation logic to cause EC to use dynamic queues
+          with appropriate dispatching strategies when the MUF, EDF, or MLF
+          strategies are defined.  This is a temporary measure to allow
+          testing of the EC performance with the dynamic queues, and will
+          be relaced with a better configuration mechanism, based on the results
+          of the off-line scheduling run, in the very near future.
 
 Tue Jul 14 12:00:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -330,13 +340,13 @@ Mon Jul 13 11:49:29 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
         * tao/Marshall.i: Now setting freed string pointer to zero.
 
         * tao/deep_free.cpp: Although the struct fields were being freed,
-        the memory for the struct itself wasn't. Note: other types may
-        also have this problem.
+          the memory for the struct itself wasn't. Note: other types may
+          also have this problem.
 
 Sun Jul 12 19:47:34 1998  Seth Widoff  <sbw1@cs.wustl.edu>
 
         * docs/releasenotes/trader.html:
-        Finished the initial draft of the Trading Service documentation.
+          Finished the initial draft of the Trading Service documentation.
 
 Sun Jul 12 13:45:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
@@ -455,16 +465,16 @@ Fri Jul 10 17:03:11 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
         * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
         * orbsvcs/orbsvcs/Trader/Trader_T.h:
         * orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
-        Addressed a number of memory leaks in the Trading
-        Service. However, typecodes still leak oodles of memory.
+          Addressed a number of memory leaks in the Trading
+          Service. However, typecodes still leak oodles of memory.
 
         * orbsvcs/Trading_Service/Trading_Service.cpp:
-        Cleans self up properly after catching SIGINT.
+          Cleans self up properly after catching SIGINT.
 
         * orbsvcs/tests/Trading/TT_Info.cpp:
         * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
         * orbsvcs/tests/Trading/export_test.cpp:
-        Aesthetic changes.
+          Aesthetic changes.
 
 Fri Jul 10 16:35:21 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
