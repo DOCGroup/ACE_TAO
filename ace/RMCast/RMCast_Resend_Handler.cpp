@@ -7,7 +7,7 @@
 # include "RMCast_Resend_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Resend_Handler, "$Id$")
+ACE_RCSID(RMCast, RMCast_Resend_Handler, "$Id$")
 
 ACE_RMCast_Resend_Handler::~ACE_RMCast_Resend_Handler (void)
 {

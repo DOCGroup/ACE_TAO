@@ -9,7 +9,7 @@
 # include "RMCast_Resend_Worker.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Resend_Worker, "$Id$")
+ACE_RCSID(RMCast, RMCast_Resend_Worker, "$Id$")
 
 int
 ACE_RMCast_Resend_Worker::work (ACE_UINT32 const & key,

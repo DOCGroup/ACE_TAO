@@ -13,7 +13,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/arpa/os_inet.h"
 
-ACE_RCSID(ace, RMCast_UDP_Proxy, "$Id$")
+ACE_RCSID(RMCast, RMCast_UDP_Proxy, "$Id$")
 
 ACE_RMCast_UDP_Proxy::ACE_RMCast_UDP_Proxy (ACE_RMCast_IO_UDP *io_udp,
                                             const ACE_INET_Addr &addr)

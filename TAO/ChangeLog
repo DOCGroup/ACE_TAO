@@ -1,3 +1,23 @@
+Wed Jan  5 14:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/AMI/FL_Callback/Progress_i.{h,cpp,i}:
+        * examples/AMI/FL_Callback/Peer_i.{h,cpp,i}:
+        * tests/FL_Cube/test_i/{h,cpp,i}:
+        * tests/Object_Loader/Loader.{h,cpp,i}:
+        * tests/Object_Loader/Test_i.{h,cpp,i}:
+        * tests/QtTests/test_i.{h,cpp,i}:
+        * tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.i:
+        * tests/Timeout/test_i.{h,cpp,i}:
+        * tests/Xt_Stopwatch/test_i.{h,cpp,i}:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.{h,cpp,i}:
+        * orbsvcs/tests/Notify/lib/Supplier_T.{h,cpp,i}:
+        * orbsvcs/tests/Notify/lib/Peer_T.{h,cpp,i}:
+        * orbsvcs/tests/Notify/lib/Consumer_T.{h,cpp,i}:
+          Removed i file and updated h/cpp file.
+
+        * orbsvcs/tests/EC_Throughput/Makefile.am:
+          Updated for changes above
+
 Wed Jan  5 13:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/ValueFactory.{h,cpp,inl}:

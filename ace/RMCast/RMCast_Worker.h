@@ -21,10 +21,6 @@ public:
                     ITEM const & item) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-#include "RMCast_Worker.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "RMCast_Worker.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
