@@ -1,5 +1,6 @@
 // $Id$
 
+//==============================================================
 /**
  * @file Node_Daemon.cpp
  *
@@ -16,6 +17,7 @@
  * @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  * @author Tao Lu <lu@dre.vanderbilt.edu>
  */
+//===============================================================
 
 #include "NodeDaemon_Impl.h"
 #include "ciao/Server_init.h"
@@ -29,7 +31,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const char *ior_file_name_ = "daemon.ior";
+const char *ior_file_name_ = "nodedaemon.ior";
 char *default_svcconf_ = 0;
 char *svcconf_config_ = 0;
 
@@ -50,7 +52,7 @@ parse_args (int argc, char *argv[])
        write_to_ior_ = 1;
       break;
 
-      case 'c':  // get the default svc.conf filename for ComponentServer
+      case 'c':  // get the default svc.conf filename
         default_svcconf_ = get_opts.opt_arg ();
       break;
 
@@ -177,28 +179,20 @@ main (int argc, char *argv[])
       adapter->bind ("NodeManager", str.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Now register daemon with IOR table and write its IOR.
-      str = orb->object_to_string (daemon.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      adapter->bind ("CIAO_NodeDaemon", str.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       if (write_to_ior_)
-       write_IOR (str.in ());
+        write_IOR (str.in ());
       else if (register_with_ns_)
-       {
-         char name [100];
-         if (ACE_OS::hostname (name, 100) == -1)
-          {
-            ACE_DEBUG ((LM_DEBUG, "gethostname call failed! \n"));
-            exit (1);
-          }
+        {
+          char name [100];
+          if (ACE_OS::hostname (name, 100) == -1)
+            {
+              ACE_DEBUG ((LM_DEBUG, "gethostname call failed! \n"));
+              exit (1);
+            }
 
-         // Register this name with the Naming Service
-         register_with_ns (name, orb.in (), daemon.in ());
-       }
+          // Register this name with the Naming Service
+          register_with_ns (name, orb.in (), daemon.in ());
+        }
 
       ACE_DEBUG ((LM_INFO, "CIAO_NodeDaemon IOR: %s\n", str.in ()));
 
