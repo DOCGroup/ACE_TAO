@@ -162,6 +162,7 @@ libACE_Utils_la_SOURCES = \
   Containers.cpp \
   Dirent.cpp \
   Dynamic.cpp \
+  Dynamic_Service_Base.cpp \
   Filecache.cpp \
   Functor.cpp \
   Get_Opt.cpp \
@@ -541,6 +542,7 @@ HEADER_FILES = \
   Dump_T.h \
   Dynamic.h \
   Dynamic_Service.h \
+  Dynamic_Service_Base.h \
   Env_Value_T.h \
   Event_Handler.h \
   Event_Handler_T.h \
@@ -695,7 +697,6 @@ HEADER_FILES = \
   Select_Reactor_Base.h \
   Select_Reactor_T.h \
   Service_Config.h \
-  Service_Loader.h \
   Service_Manager.h \
   Service_Object.h \
   Service_Repository.h \
@@ -802,7 +803,6 @@ INLINE_FILES = \
   Auto_Ptr.i \
   Based_Pointer_T.i \
   Basic_Types.i \
-  CDR_Base.i \
   CDR_Stream.i \
   CORBA_Handler.i \
   Cache_Map_Manager_T.i \
@@ -818,6 +818,7 @@ INLINE_FILES = \
   Dirent.i \
   Dynamic.i \
   Dynamic_Service.i \
+  Dynamic_Service_Base.i \
   Env_Value_T.i \
   Event_Handler.i \
   Event_Handler_T.i \
@@ -921,7 +922,6 @@ INLINE_FILES = \
   Select_Reactor_Base.i \
   Select_Reactor_T.i \
   Service_Config.i \
-  Service_Loader.i \
   Service_Manager.i \
   Service_Object.i \
   Service_Repository.i \
