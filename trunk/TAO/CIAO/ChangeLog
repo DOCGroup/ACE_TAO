@@ -1,3 +1,20 @@
+Thu Aug 12 11:35:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ciao/Servant_Impl_T.cpp:
+	* DAnCE/ciao/Servant_Impl_T.h:
+
+	  Propogating the changes from "Mon Aug  9 11:38:04 2004  Jeff
+	  Parsons <j.parsons@vanderbilt.edu>"  to DAnCE. 
+	  
+	* DAnCE/tests/Config_Handlers/Handler_Test.cpp:
+	* DAnCE/tests/Config_Handlers/Handler_Test.h:
+
+	  Cleaned up things so that it is more portable.
+	
+	* DAnCE/tests/Config_Handlers/handler_test.mpb:
+	  
+	  Put Handler_Test as a template file. 
+
 Thu Aug 12 16:20:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/tests/Config_Handlers/Handler_Test.cpp:
