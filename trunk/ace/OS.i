@@ -4008,7 +4008,11 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   *sig = ::sigwait (set);
   return *sig;
 #else /* ACE_HAS_SETKIND_NP */
-  errno = ::sigwait (set, sig);
+  #if defined(DIGITAL_UNIX)
+    errno = ::__sigwaitd10 (set, sig);
+  #else
+    errno = ::sigwait (set, sig);
+  #endif
   if (errno == -1)
     return -1;
   else
