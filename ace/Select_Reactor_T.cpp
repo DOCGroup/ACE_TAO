@@ -509,16 +509,37 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
+  // First try to open the Reactor with the user supplied or
+  // hard-coded default.
   if (this->open (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::DEFAULT_SIZE,
                   0,
                   sh,
                   tq,
                   disable_notify_pipe,
                   notify) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Select_Reactor_T::open ")
-                ACE_TEXT ("failed inside ACE_Select_Reactor_T::CTOR")));
+    {
+      // The hard-coded default Reactor size failed, so attempt to
+      // determine the size at run-time by checking the process file
+      // descriptor limit on platforms that support this feature.
+
+      // Deallocate resources from previous open() call.
+      (void) this->close ();
+
+      // Set the default reactor size to be the current limit on the
+      // number of file descriptors available to the process.  This
+      // size is not necessarily the maximum limit.
+      if (this->open (ACE::max_handles (),
+                     0,
+                     sh,
+                     tq,
+                     disable_notify_pipe,
+                     notify) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ACE_Select_Reactor_T::open ")
+                    ACE_TEXT ("failed inside ")
+                    ACE_TEXT ("ACE_Select_Reactor_T::CTOR")));
+    }
 }
 
 // Initialize ACE_Select_Reactor_T.

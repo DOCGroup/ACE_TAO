@@ -171,23 +171,6 @@
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 
-#if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
-#  include <linux/version.h>
-
-// Macro used to compute LINUX_VERSION_CODE in <linux/version.h>
-// header.  Older kernels didn't define this macro.
-#  ifndef KERNEL_VERSION
-#    define KERNEL_VERSION(a,b,c) (((a) << 16) + ((b) << 8) + (c))
-#  endif
-
-// Pre-2.2.x kernels limited the maximum number of file descriptors
-// for non-root processes to 256.
-#  if LINUX_VERSION_CODE < KERNEL_VERSION (2,2,0)
-#    define ACE_DEFAULT_SELECT_REACTOR_SIZE 256
-#  endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,2,0) */
-
-#endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
-
 #define ACE_HAS_GETPAGESIZE 1
 
 // Platform lacks POSIX prototypes for certain System V functions
