@@ -8,12 +8,12 @@ NAME = UCS4_UTF16
 
 OBJFILES = \
 	$(OBJDIR)\WUCS4_UTF16_Factory.obj \
-	$(OBJDIR)\WUCS4_UTF16_Translator.obj
+        $(OBJDIR)\WUCS4_UTF16.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
-	-DOLT_BUILD_DLL=1
+        -DUCS4_UTF16_BUILD_DLL=1
 
 
 LIBFILES = \
