@@ -1,3 +1,10 @@
+Tue Apr 06 00:12:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/DSI/Database_i.cpp (_is_a): Added back the code
+	  that Bala had commented out.  I am not sure why Bala had
+	  commented this out, but without this code, the application does
+	  not work.
+
 Mon Apr  5 21:34:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include/ast_expression.h:
@@ -7,7 +14,7 @@ Mon Apr  5 21:34:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_sunsoft.cpp:
 	* TAO_IDL/util/utl_global.cpp:
 	  We can now define constants (in .idl files) of type
-	  long long, unsigned long long and wchar. This has been 
+	  long long, unsigned long long and wchar. This has been
 	  made easier by the fact that the CORBA basic types are
 	  now defined in ACE. Still need more ACE/TAO support in
 	  order to do long double and wide strings, though. All
@@ -16,9 +23,9 @@ Mon Apr  5 21:34:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon Apr  5 16:26:32 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): 
-	  Fixed the handle_input () that handles the multicast to 
-	  work for both Naming and Trading Service. Thanks to 
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input):
+	  Fixed the handle_input () that handles the multicast to
+	  work for both Naming and Trading Service. Thanks to
           James CE Johnson <jcej@tragus.org> for reporting this.
 
 Mon Apr 05 09:59:26 1999  David L. Levine  <levine@cs.wustl.edu>

@@ -20,7 +20,7 @@ DatabaseImpl::Entry::~Entry (void)
 {
 }
 
-void 
+void
 DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request,
                              CORBA::Environment &ACE_TRY_ENV)
 {
@@ -30,31 +30,31 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request,
   ACE_TRY
     {
       // Narrow the object reference to a POA Current reference
-      PortableServer::Current_var poa_current = 
+      PortableServer::Current_var poa_current =
         PortableServer::Current::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // The servant determines the key associated with thex database entry
       // represented by self
-      PortableServer::ObjectId_var oid = 
+      PortableServer::ObjectId_var oid =
         poa_current->get_object_id (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Now convert the id into a string
-      CORBA::String_var key = 
+      CORBA::String_var key =
         PortableServer::ObjectId_to_string (oid.in ());
-      
+
       // Get the operation name for this request
       const char *operation = request->operation ();
-      
+
       if (ACE_OS::strcmp (operation, "_is_a") == 0)
         this->_is_a (request, ACE_TRY_ENV);
-          
+
       else
         {
           ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
           return;
-        }    
+        }
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -65,7 +65,7 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request,
   ACE_CHECK;
 }
 
-void 
+void
 DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
                             CORBA::Environment &ACE_TRY_ENV)
 {
@@ -76,20 +76,20 @@ DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
 
   ACE_TRY
     {
-      // CORBA::NamedValue_ptr named_value_1 = list->add_value ("value", 
-      //                                                     any_1, 
-      //                                                     CORBA::ARG_IN, 
-      //                                                     ACE_TRY_ENV);
-      //ACE_TRY_CHECK;
+      CORBA::NamedValue_ptr named_value_1 = list->add_value ("value",
+                                                             any_1,
+                                                             CORBA::ARG_IN,
+                                                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       request->arguments (list,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       char *value;
       CORBA::Any_ptr ap = list->item (0, ACE_TRY_ENV)->value ();
       *ap >>= value;
-      
+
       CORBA::Boolean result;
       if (!ACE_OS::strcmp (value, "IDL:Database/Employee:1.0") ||
           !ACE_OS::strcmp (value, "IDL:Database/Entry:1.0") ||
@@ -97,11 +97,11 @@ DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
         result = 1;
       else
         result = 0;
-  
+
       CORBA::Any result_any;
       CORBA::Any::from_boolean from_boolean (result);
       result_any <<= from_boolean;
-      
+
       request->set_result (result_any, ACE_TRY_ENV);
     }
   ACE_CATCHANY
@@ -112,7 +112,7 @@ DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
   ACE_CHECK;
 }
 
-CORBA::RepositoryId 
+CORBA::RepositoryId
 DatabaseImpl::Entry::_primary_interface (const PortableServer::ObjectId &/*oid*/,
                                          PortableServer::POA_ptr ,
                                          CORBA::Environment &)
@@ -120,7 +120,7 @@ DatabaseImpl::Entry::_primary_interface (const PortableServer::ObjectId &/*oid*/
   return 0;
 }
 
-PortableServer::POA_ptr 
+PortableServer::POA_ptr
 DatabaseImpl::Entry::_default_POA (CORBA::Environment &)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
@@ -148,26 +148,26 @@ DatabaseImpl::Agent::create_entry (const char *key,
                                    const Database::NVPairSequence &initial_attributes,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  // Create a new entry in the database:  
+  // Create a new entry in the database:
   if (ACE_OS::strcmp (entry_type, "Employee") != 0 ||
       initial_attributes.length () != 2)
     {
-      ACE_THROW_RETURN (Database::Unknown_Type (), 
+      ACE_THROW_RETURN (Database::Unknown_Type (),
                         Database::Entry::_nil ());
     }
-  
+
   char *name = 0;
   CORBA::Long id = 0;
 
-  const Database::NamedValue &first = initial_attributes[0];    
-  const Database::NamedValue &second = initial_attributes[1];    
+  const Database::NamedValue &first = initial_attributes[0];
+  const Database::NamedValue &second = initial_attributes[1];
   if (ACE_OS::strcmp (first.name.in (), "name") != 0 ||
       ACE_OS::strcmp (second.name.in (), "id") != 0)
     {
-      ACE_THROW_RETURN (Database::Unknown_Type (), 
+      ACE_THROW_RETURN (Database::Unknown_Type (),
                         Database::Entry::_nil ());
     }
-      
+
   first.value >>= name;
   second.value >>= id;
 
@@ -183,24 +183,24 @@ DatabaseImpl::Agent::create_entry (const char *key,
                                                                 repository_id.in (),
                                                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (Database::Entry::_nil ()) ;
-  Database::Entry_var entry = Database::Entry::_narrow (obj.in (), 
+  Database::Entry_var entry = Database::Entry::_narrow (obj.in (),
                                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (Database::Entry::_nil ());
-  
+
   return entry._retn ();
 }
 
-Database::Entry_ptr 
+Database::Entry_ptr
 DatabaseImpl::Agent::find_entry (const char *key,
                                  const char *entry_type,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
   if (ACE_OS::strcmp (entry_type, "Employee") != 0)
     {
-      ACE_THROW_RETURN (Database::Unknown_Type (), 
+      ACE_THROW_RETURN (Database::Unknown_Type (),
                         Database::Entry::_nil ());
     }
-  
+
   void *temp;
   Database::Entry_var entry;
   if (DATABASE::instance ()->find (key, temp) == 0)
@@ -216,29 +216,29 @@ DatabaseImpl::Agent::find_entry (const char *key,
                                                                     repository_id.in (),
                                                                     ACE_TRY_ENV);
       ACE_CHECK_RETURN (Database::Entry::_nil ());
-      
-      entry = Database::Entry::_narrow (obj.in (), 
+
+      entry = Database::Entry::_narrow (obj.in (),
                                         ACE_TRY_ENV);
       ACE_CHECK_RETURN (Database::Entry::_nil ());
     }
   else
     {
-      ACE_THROW_RETURN (Database::Unknown_Key (), 
+      ACE_THROW_RETURN (Database::Unknown_Key (),
                         Database::Entry::_nil ());
     }
   return entry._retn ();
 }
 
-void 
+void
 DatabaseImpl::Agent::destroy_entry (const char *key,
                                     const char *entry_type,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   if (ACE_OS::strcmp (entry_type, "Employee") != 0)
     {
-      ACE_THROW (Database::Unknown_Type ()); 
+      ACE_THROW (Database::Unknown_Type ());
     }
-  
+
   void *temp;
   if (DATABASE::instance ()->unbind (key, temp) == 0)
     {
@@ -247,11 +247,11 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
     }
   else
     {
-      ACE_THROW (Database::Unknown_Key ()); 
+      ACE_THROW (Database::Unknown_Key ());
     }
 }
 
-PortableServer::POA_ptr 
+PortableServer::POA_ptr
 DatabaseImpl::Agent::_default_POA (CORBA::Environment &)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
@@ -261,14 +261,14 @@ char *
 DatabaseImpl::entry_type_to_repository_id (const char *entry_type)
 {
   static const char *prefix = "IDL:Database/";
-  static int prefix_length = ACE_OS::strlen (prefix); 
+  static int prefix_length = ACE_OS::strlen (prefix);
   static const char *suffix = ":1.0";
-  static int suffix_length = ACE_OS::strlen (prefix); 
+  static int suffix_length = ACE_OS::strlen (prefix);
 
-  int len = 
-    prefix_length + 
-    ACE_OS::strlen (entry_type) + 
-    suffix_length +     
+  int len =
+    prefix_length +
+    ACE_OS::strlen (entry_type) +
+    suffix_length +
     1;
 
   char *result = CORBA::string_alloc (len);
@@ -280,26 +280,26 @@ DatabaseImpl::entry_type_to_repository_id (const char *entry_type)
   return result;
 }
 
-DatabaseImpl::Employee::Employee (const char* name, 
-                                  CORBA::Long id) 
+DatabaseImpl::Employee::Employee (const char* name,
+                                  CORBA::Long id)
   : id_ (id),
     name_ (0)
 {
   this->name (name);
 }
 
-DatabaseImpl::Employee::~Employee (void) 
-{ 
-  DATABASE::instance ()->free (this->name_); 
+DatabaseImpl::Employee::~Employee (void)
+{
+  DATABASE::instance ()->free (this->name_);
 }
 
 const char *
 DatabaseImpl::Employee::name (void) const
-{ 
-  return this->name_; 
+{
+  return this->name_;
 }
 
-void 
+void
 DatabaseImpl::Employee::name (const char* name)
 {
   DATABASE::instance ()->free (this->name_);
@@ -307,16 +307,16 @@ DatabaseImpl::Employee::name (const char* name)
   ACE_OS::strcpy (this->name_, name);
 }
 
-CORBA::Long 
-DatabaseImpl::Employee::id (void) const 
-{ 
-  return this->id_; 
+CORBA::Long
+DatabaseImpl::Employee::id (void) const
+{
+  return this->id_;
 }
 
-void 
+void
 DatabaseImpl::Employee::id (CORBA::Long id)
-{ 
-  this->id_ = id; 
+{
+  this->id_ = id;
 }
 
 void *
@@ -325,10 +325,10 @@ DatabaseImpl::Employee::operator new (size_t size)
   return DATABASE::instance ()->malloc (size);
 }
 
-void 
-DatabaseImpl::Employee::operator delete (void *pointer) 
-{ 
-  DATABASE::instance ()->free (pointer); 
+void
+DatabaseImpl::Employee::operator delete (void *pointer)
+{
+  DATABASE::instance ()->free (pointer);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -340,4 +340,3 @@ template class ACE_Singleton<DatabaseImpl::Simpler_Malloc, ACE_Null_Mutex>;
 #pragma instantiate ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Singleton<DatabaseImpl::Simpler_Malloc, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
