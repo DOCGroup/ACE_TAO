@@ -41,7 +41,9 @@ ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
     timeout = (ACE_Time_Value *) options.time_value ();
 
   // Initiate the connection.
-  return this->connector_.connect (this->peer_, remote_addr, timeout);
+  return this->connector_.connect (this->peer_,
+                                   remote_addr,
+                                   timeout);
 }
 
 // Establish binding with the ACE_Name Server at remote_addr.
@@ -52,7 +54,9 @@ ACE_Name_Proxy::ACE_Name_Proxy (const ACE_INET_Addr &remote_addr,
   ACE_TRACE ("ACE_Name_Proxy::ACE_Name_Proxy");
   if (this->open (remote_addr, options) == -1
       && options[ACE_Synch_Options::USE_TIMEOUT] && errno != EWOULDBLOCK)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Name_Proxy::ACE_Name_Proxy")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Name_Proxy::ACE_Name_Proxy")));
 }
  
 // Obtain underlying handle.
@@ -68,28 +72,39 @@ int
 ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
 {
   ACE_TRACE ("ACE_Name_Proxy::request_reply");
-  void    *buffer;
-  ssize_t length;
+  void *buffer;
+  ssize_t length = length = request.encode (buffer);
  
-  if ((length = request.encode (buffer)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("encode failed")), -1);
+  if (length == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("encode failed")),
+                      -1);
  
   // Transmit request via a blocking send.
  
   if (this->peer_.send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("send_n failed")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("send_n failed")),
+                      -1);
   else
     {
       ACE_Name_Reply reply;
  
       // Receive reply via blocking read.
  
-      if (this->peer_.recv_n (&reply, sizeof reply) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("recv failed")), -1);
- 
+      if (this->peer_.recv_n (&reply,
+                              sizeof reply) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("recv failed")),
+                          -1);
       else if (reply.decode () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("decode failed")), -1);
- 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("decode failed")),
+                          -1);
       errno = int (reply.errnum ());
       return reply.status ();
     }
@@ -100,16 +115,21 @@ ACE_Name_Proxy::send_request (ACE_Name_Request &request)
 {
   ACE_TRACE ("ACE_Name_Proxy::send_request");
   void *buffer;
-  ssize_t length;
+  ssize_t length = request.encode (buffer);
  
-  if ((length = request.encode (buffer)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("encode failed")), -1);
+  if (length == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("encode failed")),
+                      -1);
  
   // Transmit request via a blocking send.
  
   else if (this->peer_.send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("send_n failed")), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("send_n failed")),
+                      -1);
   return 0;
 }
 
@@ -117,19 +137,23 @@ int
 ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
 {
   ACE_TRACE ("ACE_Name_Proxy::recv_reply");
-  // Read the first 4 bytes to get the length of the message
-  // This implementation assumes that the first 4 bytes are
-  // the length of the message.
+  // Read the first 4 bytes to get the length of the message This
+  // implementation assumes that the first 4 bytes are the length of
+  // the message.
   ssize_t n = this->peer_.recv ((void *) &reply, sizeof (ACE_UINT32));
 
   switch (n)
     {
     case -1:
       // FALLTHROUGH 
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("****************** recv_reply returned -1\n")));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("****************** recv_reply returned -1\n")));
     default:
-      ACE_ERROR ((LM_ERROR, "%p got %d bytes, expected %d bytes\n",
-		  "recv failed", n, sizeof (ACE_UINT32)));
+      ACE_ERROR ((LM_ERROR,
+                  "%p got %d bytes, expected %d bytes\n",
+		  "recv failed",
+                  n,
+                  sizeof (ACE_UINT32)));
       // FALLTHROUGH 
     case 0:
       // We've shutdown unexpectedly
@@ -150,14 +174,18 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
         if (n != ssize_t (length - sizeof (ACE_UINT32)))
           {
             ACE_ERROR ((LM_ERROR, "%p expected %d, got %d\n",
-			"invalid length", length, n));
+			"invalid length",
+                        length,
+                        n));
             return -1;
           }
 
         // Decode the request into host byte order.
         if (reply.decode () == -1)
           {
-            ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("decode failed")));
+            ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT ("%p\n"),
+                        ASYS_TEXT ("decode failed")));
             return -1;
           }
       }  

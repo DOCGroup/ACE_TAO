@@ -172,11 +172,6 @@ class ACE_Export ACE_Token_Reply
   //   This class is implemented to minimize data copying.  
   //   In particular, all marshaling is done in situ...
 public:
-  enum Constants
-  {
-    ACE_SUCCESS = 0 // this MUST be zero!!!
-  };
-
   ACE_Token_Reply (void);
   // Default constructor.
 

@@ -38,7 +38,6 @@ public:
   {
     // Request message types.
     TIME_UPDATE = 01,
-    FAILURE = 05,
 
     // Class-specific constant values.
     MAX_TIME_LEN = MAXPATHLEN + 1

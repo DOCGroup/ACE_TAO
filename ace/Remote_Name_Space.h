@@ -118,7 +118,6 @@ public:
   // Dump the state of the object.
 
 private:
-
   ACE_Name_Proxy ns_proxy_;
   // Interface to Name server process for NET_LOCAL namespace.
 };

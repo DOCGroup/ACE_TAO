@@ -36,7 +36,7 @@ class ACE_Export ACE_Name_Request
 public:
   enum Constants
   {
-    /* Request message types. */
+    // Request message types.
     BIND = 01,
     REBIND = 02,
     RESOLVE = 03,
@@ -186,11 +186,7 @@ class ACE_Export ACE_Name_Reply
 public:
   enum Constants
   {
-    /* Reply message types. */
-    ACE_SUCCESS = 1, // Reply for successful operation.
-    ACE_FAILURE = 2, // Reply for failed operation.
-
-    /* Class-specific constant values. */
+    // Class-specific constant values.
     MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 
@@ -213,8 +209,8 @@ public:
   void msg_type (ACE_UINT32);
 
   // = Set/get the status of the reply (0 == success, -1 == failure).
-  ACE_UINT32 status (void) const;
-  void status (ACE_UINT32);
+  ACE_INT32 status (void) const;
+  void status (ACE_INT32);
 
   // = Set/get the errno of a failed reply.
   ACE_UINT32 errnum (void) const;
@@ -237,13 +233,13 @@ private:
     ACE_UINT32 length_;
     // Length of entire reply.
 
-    ACE_UINT32 type_;
-    // Type of the reply (i.e., <SUCCESS> or <FAILURE>).
+    ACE_INT32 type_;
+    // Type of the reply, i.e., success (0) or failure (-1).
 
     ACE_UINT32 errno_;
-    // Indicates why error occurred if <this->type_> == <FAILURE>.
-    // Typical reasons include:
-    //   <ETIME> (if the client timed out after waiting for the name).
+    // Indicates why error occurred if <this->type_> == failure (-1).
+    // Typical reasons include: <ETIME> (if the client timed out after
+    // waiting for the name).
   };
 
   Transfer transfer_;
