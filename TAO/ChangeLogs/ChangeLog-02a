@@ -12,7 +12,7 @@ Sat Apr 29 15:24:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  with TAO_TWOWAY_RESPONSE_FLAG. This will indicate a regular two
 	  way operation in TAO.
 	
-	* tao/corbafwd.h: Adde the macro TAO_TWOWAY_RESPONSE_FLAG.
+	* tao/corbafwd.h: Added the macro TAO_TWOWAY_RESPONSE_FLAG.
 
 Sat Apr 29 12:54:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
