@@ -1,5 +1,10 @@
 Mon Jun 22 11:32:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
+        * TAO/docs/releasenotes/index.html: Added documentation
+	  about the changes in the TAO IDL compiler.
+
+Mon Jun 22 11:32:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
 	* TAO_IDL/be/{be_helper.h, be_sequence.h}: see comment below,
 	  only the declarations were added.
 
