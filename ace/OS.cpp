@@ -1652,15 +1652,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   if (result != -1)
     {
+      // This is the Solaris implementation of pthreads, where
+      // ACE_thread_t and ACE_hthread_t are the same.
+      *thr_handle = *thr_id;
+
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
 	{
 	  // Set the priority of the new thread and then let it
 	  // continue, but only if the user didn't start it suspended
 	  // in the first place!
-	  ACE_OS::thr_setprio (*thr_handle, priority);
+	  ACE_OS::thr_setprio (*thr_id, priority);
 
 	  if (start_suspended == 0)
-	    ACE_OS::thr_continue (*thr_handle);
+	    ACE_OS::thr_continue (*thr_id);
 	}
     }
   return result;
