@@ -32,8 +32,9 @@ ACE_RCSID(be_visitor_valuetype, any_op_cs, "$Id$")
 // stubs file
 // ***************************************************************************
 
-be_visitor_valuetype_any_op_cs::be_visitor_valuetype_any_op_cs
-(be_visitor_context *ctx)
+be_visitor_valuetype_any_op_cs::be_visitor_valuetype_any_op_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_valuetype (ctx)
 {
 }

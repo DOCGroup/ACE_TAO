@@ -48,7 +48,5 @@
 #include "be_visitor_valuetype/valuetype_init_ci.h"
 #include "be_visitor_valuetype/valuetype_init_cs.h"
 #include "be_visitor_valuetype/valuetype_init_arglist_ch.h"
-#include "be_visitor_valuetype/any_op_ch.h"
-#include "be_visitor_valuetype/any_op_cs.h"
 
 #endif /* TAO_BE_VISITOR_VALUETYPE_H */
