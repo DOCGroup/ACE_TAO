@@ -50,7 +50,7 @@ static const char *ior = "file://test.ior";
 enum LEVEL {ORB_LEVEL, THREAD_LEVEL, OBJECT_LEVEL};
 
 // Default is OBJECT level.
-static LEVEL level = OBJECT;
+static LEVEL level = OBJECT_LEVEL;
 
 // Default iterations.
 static CORBA::ULong iterations = 100;

@@ -6,7 +6,6 @@ ACE_OS_Thread_Descriptor::flags (void) const
   return flags_;
 }
 
-
 ACE_INLINE
 ACE_OS_Thread_Descriptor::ACE_OS_Thread_Descriptor (long flags)
   : flags_ (flags)
@@ -25,7 +24,7 @@ ACE_Base_Thread_Adapter::set_log_msg_hooks (
   ACE_Base_Thread_Adapter::inherit_log_msg_hook_   = inherit_hook;
   ACE_Base_Thread_Adapter::close_log_msg_hook_     = close_hook;
   ACE_Base_Thread_Adapter::sync_log_msg_hook_      = sync_hook;
-  ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_ = thr_desc_hook;
+  ACE_Base_Thread_Adapter::thr_desc_log_msg_hook_  = thr_desc_hook;
 }
 
 ACE_INLINE ACE_THR_C_FUNC
