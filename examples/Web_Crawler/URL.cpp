@@ -2,7 +2,7 @@
 
 #include "URL.h"
 
-ACE_RCSID(HTTP_1.1_Client, URL, "$Id$")
+ACE_RCSID(Web_Crawler, URL, "$Id$")
 
 Mem_Map_Stream &
 URL::stream (void)

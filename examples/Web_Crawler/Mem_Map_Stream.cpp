@@ -5,7 +5,7 @@
 #include "Options.h"
 #include "Mem_Map_Stream.h"
 
-ACE_RCSID(HTTP_1.1_Client, Mem_Map_Stream, "$Id$")
+ACE_RCSID(Web_Crawler, Mem_Map_Stream, "$Id$")
 
 ACE_SOCK_Stream &
 Mem_Map_Stream::stream (void)

@@ -13,7 +13,7 @@
 #include "Caching_Strategies_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(HTTP_1.1_Client, Caching_Strategies_T, "$Id$")
+ACE_RCSID(Web_Crawler, Caching_Strategies_T, "$Id$")
 
 template<class CONTAINER> int
 ACE_LRU_Caching_Strategy<CONTAINER>::clear_cache (CONTAINER &container) 

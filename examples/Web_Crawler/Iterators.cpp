@@ -3,7 +3,7 @@
 #include "Options.h"
 #include "Iterators.h"
 
-ACE_RCSID(HTTP_1.1_Client, Iterators, "$Id$")
+ACE_RCSID(Web_Crawler, Iterators, "$Id$")
 
 URL_Iterator::~URL_Iterator (void)
 {

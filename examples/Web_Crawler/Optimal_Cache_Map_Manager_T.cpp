@@ -18,7 +18,7 @@
 #include "Optimal_Cache_Map_Manager_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(HTTP_1.1_Client, Optimal_Cache_Map_Manager_T, "$Id$")
+ACE_RCSID(Web_Crawler, Optimal_Cache_Map_Manager_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Pair)
 
