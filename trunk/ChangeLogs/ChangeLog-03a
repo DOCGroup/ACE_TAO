@@ -1,7 +1,61 @@
+Sat Oct 06 23:06:41 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i, close):
+
+	  Removed the do/while(SSL_pending()) loop.  Its introduction into
+	  the code was a bit misguided.  There is no need to flush the SSL
+	  buffer before returning to the Reactor's event loop since the
+	  code now sends a notification to the Reactor to force the
+	  Reactor to invoke the event handler before waiting in the event
+	  loop.  This fixes some SSL protocol errors that manifested
+	  during multithreaded SSL communication.  [Bug 943]
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+
+	  It is no longer necessary to call SSL_accept()/connect() to
+	  flush the SSL buffer before running the Reactor's event loop
+	  since the Reactor is notified that it should call the
+	  appropriate event handler before blocking on select() for
+	  WaitForMultipleObjects(), for example.
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (reactor, handler):
+
+	  New methods to set the Reactor and event handler associated with
+	  the ACE_SSL_SOCK_Stream.  If each of these is set, then the
+	  Reactor will be notified if data is still pending in the SSL
+	  buffer.
+
+	  (~ACE_SSL_SOCK_Stream):
+
+	  Uninlined the destructor.  There is no need for it to be
+	  inlined, and doing so only caused unnecessary code bloat.
+
+	* ace/SSL/SSL_SOCK_Stream.h (notify, reactor, handler):
+
+	  Added these new method declarations, in addition to the
+	  corresponding attributes.
+
+	  Updated documentation.
+
+	* ace/SSL/SSL_SOCK_Stream.i (notify):
+
+	  Method that pushes the event handler on to the Reactor's
+	  notification pipe when necessary.  Invoked by recv_i() and
+	  send_i().
+
+	* ace/SSL/SSL_SOCK_Acceptor.h:
+	* ace/SSL/SSL_SOCK_Connector.h:
+	* ace/SSL/SSL_Accept_Handler.h:
+	* ace/SSL/SSL_Connect_Handler.h:
+
+	  Updated documentation.
+
 Sat Oct  6 16:04:29 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 
-	* ace/RB_Tree.h: 
-	* ace/RB_Tree.i: 
+	* ace/RB_Tree.h:
+	* ace/RB_Tree.i:
 
 	  The operator new and delete were declared to be No-Op but were
 	  not implemented as such. This was breaking some builds. Now the
