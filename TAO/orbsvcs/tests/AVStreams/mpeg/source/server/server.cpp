@@ -463,9 +463,12 @@ AV_Server::~AV_Server (void)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) remove_handler for acceptor failed\n"));
 
-  //  TAO_ORB_Core_instance ()->reactor ()->remove_handler
-  //    (&this->signal_handler_,
-  //     ACE_Event_Handler::NULL_MASK);
+  if (TAO_ORB_Core_instance ()->reactor ()->remove_handler
+      (&this->signal_handler_,
+       ACE_Event_Handler::NULL_MASK) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) remove_handler for sig_handler failed\n"));
+
 }
 
 int
