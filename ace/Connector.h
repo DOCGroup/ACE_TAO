@@ -146,7 +146,10 @@ public:
   // certain permissions.
 
   virtual int cancel (SVC_HANDLER *svc_handler);
-  // Cancel a <svc_handler> that was started asynchronously.
+  // Cancel a <svc_handler> that was started asynchronously. Note that
+  // this is the only case when the Connector does not actively close
+  // the <svc_handler>. It is left up to the caller of <cancel> to
+  // decide the fate of the <svc_handler>.
 
   ACE_PEER_CONNECTOR &connector (void) const;
   // Return the underlying PEER_CONNECTOR object.
