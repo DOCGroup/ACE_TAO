@@ -4207,6 +4207,12 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 }
 # endif /* ACE_HAS_SIG_C_FUNC */
 
+// For use by ACE_OS::exit ().
+extern "C"
+{
+  typedef void (*ACE_EXIT_HOOK) ();
+}
+
 # if defined (ACE_WIN32)
 // Default WIN32 structured exception handler.
 int ACE_SEH_Default_Exception_Selector (void *);
@@ -5677,8 +5683,21 @@ public:
   static int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
   // Low-level interface to priocntl (2).
 
-# if defined (ACE_WIN32)
 private:
+  static ACE_EXIT_HOOK exit_hook_;
+  // Function that is called by ACE_OS::exit (), if non-null.
+
+  static ACE_EXIT_HOOK set_exit_hook (ACE_EXIT_HOOK exit_hook) {
+    ACE_EXIT_HOOK old_hook = exit_hook_;
+    exit_hook_ = exit_hook;
+    return old_hook;
+  }
+  // For use by ACE_Object_Manager only, to register its exit hook..
+
+  friend class ACE_Object_Manager;
+  // Allow the ACE_Object_Manager to call set_exit_hook.
+
+# if defined (ACE_WIN32)
 #   if defined (ACE_HAS_WINCE)
   static const wchar_t *day_of_week_name[7];
   static const wchar_t *month_name[12];

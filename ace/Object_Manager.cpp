@@ -38,8 +38,8 @@ ACE_RCSID(ace, Object_Manager, "$Id$")
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
 #endif /* ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS */
 
-// Static data.
-ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
+// Singleton pointer.
+static ACE_Object_Manager *ACE_Object_Manager_instance_ = 0;
 
 int ACE_Object_Manager::starting_up_ = 1;
 
@@ -113,6 +113,14 @@ extern "C" ACE_Export
 ACE_Service_Object *
 _make_ACE_Service_Manager (ACE_Service_Object_Exterminator *);
 
+extern "C"
+void
+ACE_Object_Manager_Internal_Exit_Hook ()
+{
+  if (ACE_Object_Manager_instance_)
+    ACE_Object_Manager_instance_->fini ();
+}
+
 ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 {
   // Define the static services.  This macro call creates static
@@ -179,7 +187,7 @@ ACE_Object_Manager::init (void)
     {
       initialized_ = 1;
 
-      if (instance_ == 0)
+      if (ACE_Object_Manager_instance_ == 0)
         {
           // Allocate the ACE_Object_Manager instance on the heap.  Assume
           // that the application will call fini () to destroy it.
@@ -209,7 +217,8 @@ ACE_Object_Manager::init (void)
                                 ACE_TOKEN_INVARIANTS_CREATION_LOCK)
         ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
                                 ACE_TSS_CLEANUP_LOCK)
-#       if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#       if defined (ACE_HAS_TSS_EMULATION) && \
+           defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
                                   ACE_TSS_BASE_LOCK)
 #       endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
@@ -218,7 +227,7 @@ ACE_Object_Manager::init (void)
       // Do this after the allocation of ACE_STATIC_OBJECT_LOCK.  It
       // shouldn't matter, but just in case
       // ACE_Static_Object_Lock::instance () gets changed . . .
-      ACE_NEW_RETURN (instance_->registered_objects_,
+      ACE_NEW_RETURN (ACE_Object_Manager_instance_->registered_objects_,
                       ACE_Unbounded_Queue<ACE_Cleanup_Info>, -1);
 
       // Hooks for preallocated objects and arrays provided by application.
@@ -227,24 +236,28 @@ ACE_Object_Manager::init (void)
 
 #     if defined (ACE_HAS_TSS_EMULATION)
         // Initialize the main thread's TS storage.
-        ACE_TSS_Emulation::tss_open (instance_->ts_storage_);
+        ACE_TSS_Emulation::tss_open (
+          ACE_Object_Manager_instance_->ts_storage_);
 #     endif /* ACE_HAS_TSS_EMULATION */
 
       // Open Winsock (no-op on other platforms).
       ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
-      ACE_NEW_RETURN (instance_->preallocations_,
+      ACE_NEW_RETURN (ACE_Object_Manager_instance_->preallocations_,
         ACE_Object_Manager_Preallocations, -1);
 
       // Open the main thread's ACE_Log_Msg.
       (void) ACE_LOG_MSG;
 
-      ACE_NEW_RETURN (instance_->default_mask_,
+      ACE_NEW_RETURN (ACE_Object_Manager_instance_->default_mask_,
         ACE_Sig_Set (1), -1);
+
+      // Register the exit hook, for use by ACE_OS::exit ().
+      ACE_OS::set_exit_hook (ACE_Object_Manager_Internal_Exit_Hook);
 
       // Finally, indicate that the ACE_Object_Manager instance has
       // been constructed.
-      instance_->starting_up_ = 0;
+      ACE_Object_Manager_instance_->starting_up_ = 0;
 
       return 0;
     } else {
@@ -256,7 +269,8 @@ ACE_Object_Manager::init (void)
 int
 ACE_Object_Manager::fini (void)
 {
-  if (instance_ == 0  ||  instance_->shutting_down_ == 1)
+  if (ACE_Object_Manager_instance_ == 0  || \
+      ACE_Object_Manager_instance_->shutting_down_ == 1)
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
     return -1;
@@ -267,7 +281,7 @@ ACE_Object_Manager::fini (void)
   // First, indicate that the ACE_Object_Manager instance is (being)
   // destroyed.  If an object tries to register after this, it will be
   // refused.
-  instance_->shutting_down_ = 1;
+  ACE_Object_Manager_instance_->shutting_down_ = 1;
 
   ACE_Trace::stop_tracing ();
 
@@ -279,8 +293,9 @@ ACE_Object_Manager::fini (void)
 
   // Call all registered cleanup hooks, in reverse order of
   // registration.
-  while (instance_->registered_objects_ &&
-         instance_->registered_objects_->dequeue_head (info) != -1)
+  while (ACE_Object_Manager_instance_->registered_objects_ &&
+         ACE_Object_Manager_instance_->registered_objects_->
+           dequeue_head (info) != -1)
     {
       if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
         // The object is an ACE_Cleanup.
@@ -303,8 +318,8 @@ ACE_Object_Manager::fini (void)
   // Close down Winsock (no-op on other platforms).
   ACE_OS::socket_fini ();
 
-  delete instance_->preallocations_;
-  instance_->preallocations_ = 0;
+  delete ACE_Object_Manager_instance_->preallocations_;
+  ACE_Object_Manager_instance_->preallocations_ = 0;
 
   // Close the ACE_Allocator.
   ACE_Allocator::close_singleton ();
@@ -343,7 +358,8 @@ ACE_Object_Manager::fini (void)
                                     ACE_TOKEN_INVARIANTS_CREATION_LOCK)
     ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
                                     ACE_TSS_CLEANUP_LOCK)
-#     if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#     if defined (ACE_HAS_TSS_EMULATION) && \
+         defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
                                       ACE_TSS_BASE_LOCK)
 #     endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
@@ -354,14 +370,14 @@ ACE_Object_Manager::fini (void)
   ACE_Static_Object_Lock::cleanup_lock ();
 #endif /* ACE_HAS_THREADS */
 
-  delete instance_->default_mask_;
-  instance_->default_mask_ = 0;
+  delete ACE_Object_Manager_instance_->default_mask_;
+  ACE_Object_Manager_instance_->default_mask_ = 0;
 
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
-  if (instance_->dynamically_allocated_)
+  if (ACE_Object_Manager_instance_->dynamically_allocated_)
     {
-      delete instance_;
-      instance_ = 0;
+      delete ACE_Object_Manager_instance_;
+      ACE_Object_Manager_instance_ = 0;
     }
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
@@ -376,11 +392,11 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   , default_mask_ (0)
   , ace_service_config_sig_handler_ (0)
 {
-  if (instance_ == 0)
+  if (ACE_Object_Manager_instance_ == 0)
     {
       // Store the address of the instance so that instance () doesn't
       // allocate a new one when called.
-      instance_ = this;
+      ACE_Object_Manager_instance_ = this;
 
       // Construct the ACE_Service_Config's signal handler.
       ACE_NEW (ace_service_config_sig_handler_,
@@ -389,7 +405,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 
       init ();
     }
-  // else if instance_ was not 0, then then another
+  // else if ACE_Object_Manager_instance_ was not 0, then then another
   // ACE_Object_Manager has already been instantiated.
   // Don't do anything, so that it will own all
   // ACE_Object_Manager resources.
@@ -402,12 +418,12 @@ ACE_Object_Manager::instance (void)
   // instances, or before any other threads have been created in
   // the process.  So, it's not thread safe.
 
-  if (instance_ == 0)
+  if (ACE_Object_Manager_instance_ == 0)
     {
       ACE_Object_Manager *instance_pointer;
 
       ACE_NEW_RETURN (instance_pointer, ACE_Object_Manager, 0);
-      ACE_ASSERT (instance_pointer == instance_);
+      ACE_ASSERT (instance_pointer == ACE_Object_Manager_instance_);
 
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
       instance_pointer->dynamically_allocated_ = 1;
@@ -417,7 +433,7 @@ ACE_Object_Manager::instance (void)
     }
   else
     {
-      return instance_;
+      return ACE_Object_Manager_instance_;
     }
 }
 
@@ -445,7 +461,7 @@ ACE_Object_Manager::at_exit_i (void *object,
                                void *param)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-    *instance_->internal_lock_, -1));
+    *ACE_Object_Manager_instance_->internal_lock_, -1));
 
   if (shutting_down ())
     {
@@ -902,8 +918,8 @@ ACE_Object_Manager_Destroyer::~ACE_Object_Manager_Destroyer (void)
   if (ACE_OS::thr_equal (ACE_OS::thr_self (),
                          saved_main_thread_id_))
     {
-      delete ACE_Object_Manager::instance_;
-      ACE_Object_Manager::instance_ = 0;
+      delete ACE_Object_Manager_instance_;
+      ACE_Object_Manager_instance_ = 0;
     }
   // else if this destructor is not called by the main thread, then do
   // not delete the ACE_Object_Manager.  That causes problems, on
