@@ -138,8 +138,6 @@ IFR_DII_Client::find_interface_def (CORBA::Environment &ACE_TRY_ENV)
 void 
 IFR_DII_Client::get_operation_def (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::String_var op_name;
-
   // What operation(s) does this interface contain?
   IR_ContainedSeq_var operations = 
     this->target_def_->contents (dk_Operation,
@@ -246,10 +244,10 @@ IFR_DII_Client::invoke_and_display (CORBA::Environment &ACE_TRY_ENV)
     {
       CORBA::NVList_ptr args = this->req_->arguments ();
 
-      char *artist = 0;
+      const char *artist = 0;
       *args->item (0)->value () >>= artist;
 
-      char *title = 0;
+      const char *title = 0;
       *args->item (1)->value () >>= title;
 
       CORBA::Float price = 0.0f;
