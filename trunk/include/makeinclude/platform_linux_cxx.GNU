@@ -32,12 +32,8 @@ MATHLIB         = -lm
 OCFLAGS         += -O4
 PIC             =
 ARFLAGS         = rsuv
-# When libraries are archived, a hash index is automatically created
-# so there is no need for ranlib
 RANLIB          = @true
-SOFLAGS         = -shared $(ACELIB) \
-                  `echo cxx_repository/*.o | fgrep '*' > /dev/null || \
-                  echo 'cxx_repository/*.o'`
+SOFLAGS         = -shared $(ACELIB)
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 

@@ -1,124 +1,131 @@
+Mon Feb 14 16:52:24 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux_cxx.GNU:
+          no longer need to explicitly link all of the
+          template instantiation files into shared libs.
+          -shared works properly with T6.3-003.
+
 Mon Feb 14 12:21:01 2000  Chad Elliott  <elliott_c@ociweb.com>
 
-	* ace/config-hpux-11.x-hpc++.h
+        * ace/config-hpux-11.x-hpc++.h
 
-	  Added a conditional include for the KCC common include file.
-	  Modified the values of ACE_HAS_EXCEPTIONS and
-	  ACE_LACKS_LINEBUFFERED_STREAMBUF to match those of the KCC
-	  common header.  This will not affect non-KCC builds on HP.
+          Added a conditional include for the KCC common include file.
+          Modified the values of ACE_HAS_EXCEPTIONS and
+          ACE_LACKS_LINEBUFFERED_STREAMBUF to match those of the KCC
+          common header.  This will not affect non-KCC builds on HP.
 
-	* include/makeinclude/platform_hpux_kcc.GNU
+        * include/makeinclude/platform_hpux_kcc.GNU
 
-	  Added this file for building on HPUX with KCC.
+          Added this file for building on HPUX with KCC.
 
-	* include/makeinclude/platform_sunos5_kcc.GNU
+        * include/makeinclude/platform_sunos5_kcc.GNU
 
-	  Modified to allow building static libraries.
+          Modified to allow building static libraries.
 
-	* include/makeinclude/platform_linux_kcc.GNU
+        * include/makeinclude/platform_linux_kcc.GNU
 
-	  Modified to allow building static libraries.
+          Modified to allow building static libraries.
 
 Mon Feb 14 08:43:31 2000  Ossama Othman  <ossama@uci.edu>
 
-	* acconfig.h:
+        * acconfig.h:
 
-	  Changed ACE_HAS_POSITION_INDEPENDENT_MALLOC macro to
-	  ACE_HAS_POSITION_INDEPENDENT_POINTERS since the name changed in
-	  ACE as well.
+          Changed ACE_HAS_POSITION_INDEPENDENT_MALLOC macro to
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS since the name changed in
+          ACE as well.
 
-	* configure.in (AC_LANG_CPLUSPLUS):
+        * configure.in (AC_LANG_CPLUSPLUS):
 
-	  Set the test language to C++ earlier in the configure script to
-	  make sure all tests are done using the C++ compiler.
+          Set the test language to C++ earlier in the configure script to
+          make sure all tests are done using the C++ compiler.
 
-	  (ACE_CONFIGURATION_OPTIONS, ACE_COMPILATION_OPTIONS):
+          (ACE_CONFIGURATION_OPTIONS, ACE_COMPILATION_OPTIONS):
 
-	  Moved configure script option macros to new `m4/ace.m4' M4
-	  macros file.
+          Moved configure script option macros to new `m4/ace.m4' M4
+          macros file.
 
-	  (ACE_TEMPLATES_REQUIRE_SOURCE,
-	   ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION,
-	   ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA):
+          (ACE_TEMPLATES_REQUIRE_SOURCE,
+           ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION,
+           ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA):
 
-	  Overhauled the tests for these macros.  Since there may be a
-	  tight dependency between some of these macros, the
-	  ACE_TEMPLATES_REQUIRE_SOURCE test also tests if either of the
-	  other two macros are required.  This fixes a problem that was
-	  occurring with Sun C++ 5.0.
+          Overhauled the tests for these macros.  Since there may be a
+          tight dependency between some of these macros, the
+          ACE_TEMPLATES_REQUIRE_SOURCE test also tests if either of the
+          other two macros are required.  This fixes a problem that was
+          occurring with Sun C++ 5.0.
 
-	  Corrected a syntax error in the previous
-	  ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA test, which is now part of
-	  the ACE_TEMPLATES_REQUIRE_SOURCE test.
+          Corrected a syntax error in the previous
+          ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA test, which is now part of
+          the ACE_TEMPLATES_REQUIRE_SOURCE test.
 
-	  (ACE_TEMPLATES_REQUIRE_PRAGMA):
+          (ACE_TEMPLATES_REQUIRE_PRAGMA):
 
-	  Added a test for this macro.  It is only run if the
-	  ACE_TEMPLATES_REQUIRE_SOURCE test failed.  This should improve
-	  AIX support.
+          Added a test for this macro.  It is only run if the
+          ACE_TEMPLATES_REQUIRE_SOURCE test failed.  This should improve
+          AIX support.
 
-	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS, ACE_COMPILATION_OPTIONS):
+        * m4/ace.m4 (ACE_CONFIGURATION_OPTIONS, ACE_COMPILATION_OPTIONS):
 
-	  Moved all configure script command line option macros to this
-	  file and placed them in the above M4 macros.  This makes things
-	  a bit cleaner, and it also allows other macros to AC_REQUIRE the
-	  above macros.
+          Moved all configure script command line option macros to this
+          file and placed them in the above M4 macros.  This makes things
+          a bit cleaner, and it also allows other macros to AC_REQUIRE the
+          above macros.
 
-	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
 
-	  Made this macro depend on ACE_COMPILATION_OPTIONS
-	  (i.e. AC_REQUIRE it).
+          Made this macro depend on ACE_COMPILATION_OPTIONS
+          (i.e. AC_REQUIRE it).
 
-	  Moved more compiler specific variable settings from configure.in
-	  to this macro.
+          Moved more compiler specific variable settings from configure.in
+          to this macro.
 
 Sun Feb 13 11:17:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_multiple_mallocs.cpp:
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
-	* tests/Malloc_Test.cpp: Changed
-	  ACE_HAS_POSITION_INDEPENDENT_MALLOC to
-	  ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+        * tests/Malloc_Test.cpp: Changed
+          ACE_HAS_POSITION_INDEPENDENT_MALLOC to
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS.
 
 Sat Feb 12 20:35:23 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp (initialize):
-	  Zapped several temporary variables that were causing warnings
- 	  when ACE_ASSERT is disabled.  Thanks to David Levine for
- 	  reporting this.
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp (initialize):
+          Zapped several temporary variables that were causing warnings
+          when ACE_ASSERT is disabled.  Thanks to David Levine for
+          reporting this.
 
 Sat Feb 12 17:06:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/Thread_Manager.cpp (ACE_Thread_Exit): Removed member
-	  <status_> and its accessors.  They don't seem to be used
-	  anywhere in ACE and can't be accessed by users.  Thanks to
-	  "Elias Sreih" <sealstd1@nortelnetworks.com> for noticing this.
+        * ace/OS.h:
+        * ace/Thread_Manager.cpp (ACE_Thread_Exit): Removed member
+          <status_> and its accessors.  They don't seem to be used
+          anywhere in ACE and can't be accessed by users.  Thanks to
+          "Elias Sreih" <sealstd1@nortelnetworks.com> for noticing this.
 
 Sat Feb 12 15:15:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/README (ACE_HAS_POSITION_INDEPENDENT_POINTERS): Renamed
-	  the depricated ACE_HAS_POSITION_INDEPENDENT_MALLOC to
-	  ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+        * ace/README (ACE_HAS_POSITION_INDEPENDENT_POINTERS): Renamed
+          the depricated ACE_HAS_POSITION_INDEPENDENT_MALLOC to
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS.
 
-	* ace/OS.h: Made ACE_HAS_POSITION_INDEPENDENT_POINTERS=1 the default
-	  if it is not defined already.  If you don't want the support of
-	  position independent pointers (which means you don't care about
-	  position independent malloc,)  define
-	  ACE_HAS_POSITION_INDEPENDENT_POINTERS to 0.
+        * ace/OS.h: Made ACE_HAS_POSITION_INDEPENDENT_POINTERS=1 the default
+          if it is not defined already.  If you don't want the support of
+          position independent pointers (which means you don't care about
+          position independent malloc,)  define
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS to 0.
 
-	* ace/MEM_SAP.h:
-	* ace/MEM_SAP.cpp:
-	* ace/Malloc.h:
-	* ace/Malloc.cpp:
-	* ace/Malloc.i:
-	* ace/Malloc_T.i:
-	* ace/Memory_Pool.cpp: Changed ACE_HAS_POSITION_INDEPENDENT_MALLOC
-	  to ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.cpp:
+        * ace/Malloc.h:
+        * ace/Malloc.cpp:
+        * ace/Malloc.i:
+        * ace/Malloc_T.i:
+        * ace/Memory_Pool.cpp: Changed ACE_HAS_POSITION_INDEPENDENT_MALLOC
+          to ACE_HAS_POSITION_INDEPENDENT_POINTERS.
 
-	* ace/config-sunos5.5.h:
-	* ace/config-win32-common.h: Removed depricated
-	  ACE_HAS_POSITION_INDEPENDENT_MALLOC.
+        * ace/config-sunos5.5.h:
+        * ace/config-win32-common.h: Removed depricated
+          ACE_HAS_POSITION_INDEPENDENT_MALLOC.
 
 Sat Feb 12 14:40:20 2000  David L. Levine  <levine@cs.wustl.edu>
 
