@@ -1,3 +1,11 @@
+Wed Jun 09 11:02:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/default_resource.cpp (init): -ORBReactorType handling and
+	  selection of Reactor was incorrect.  Correct behavior is that
+	  "null" should select TAO_REACTOR_SELECT_ST and "token" should
+	  select TAO_REACTOR_SELECT_MT.  Thanks to Phil Mesnier
+	  <mesnier_p@ociweb.com> for reporting this bug.
+
 Wed Jun  9 10:32:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Fixed a bug that
