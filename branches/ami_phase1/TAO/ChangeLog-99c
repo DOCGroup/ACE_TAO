@@ -1,3 +1,10 @@
+Fri May 28 11:58:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Wait_Strategy.cpp:
+ 	What value you return from <handle_input> of the Reactor really 
+	matters. Changed the return value from 1 to 0 and it works. I need
+	to figure out when to return what.
+
 Thu May 27 17:53:39 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	  Fixed the problem with making Nested Upcalls. Got the
