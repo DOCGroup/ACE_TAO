@@ -1597,7 +1597,7 @@ TAO_NAMESPACE  CORBA
     InterfaceDefSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         InterfaceDefSeq,
         InterfaceDefSeq_var,
         TAO_Object_Manager<
@@ -1794,7 +1794,7 @@ TAO_NAMESPACE  CORBA
     ValueDefSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         ValueDefSeq,
         ValueDefSeq_var,
         TAO_Object_Manager<
@@ -1945,7 +1945,7 @@ TAO_NAMESPACE  CORBA
     AbstractInterfaceDefSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         AbstractInterfaceDefSeq,
         AbstractInterfaceDefSeq_var,
         TAO_Object_Manager<
@@ -2050,7 +2050,7 @@ TAO_NAMESPACE  CORBA
     LocalInterfaceDefSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         LocalInterfaceDefSeq,
         LocalInterfaceDefSeq_var,
         TAO_Object_Manager<
@@ -2155,7 +2155,7 @@ TAO_NAMESPACE  CORBA
     ExtInterfaceDefSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         ExtInterfaceDefSeq,
         ExtInterfaceDefSeq_var,
         TAO_Object_Manager<
@@ -2260,7 +2260,7 @@ TAO_NAMESPACE  CORBA
     ExtValueDefSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         ExtValueDefSeq,
         ExtValueDefSeq_var,
         TAO_Object_Manager<
@@ -2365,7 +2365,7 @@ TAO_NAMESPACE  CORBA
     ExtAbstractInterfaceDefSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         ExtAbstractInterfaceDefSeq,
         ExtAbstractInterfaceDefSeq_var,
         TAO_Object_Manager<
@@ -2470,7 +2470,7 @@ TAO_NAMESPACE  CORBA
     ExtLocalInterfaceDefSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         ExtLocalInterfaceDefSeq,
         ExtLocalInterfaceDefSeq_var,
         TAO_Object_Manager<
@@ -2529,7 +2529,7 @@ TAO_NAMESPACE  CORBA
     ContainedSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         ContainedSeq,
         ContainedSeq_var,
         TAO_Object_Manager<
@@ -3006,7 +3006,7 @@ TAO_NAMESPACE  CORBA
     EnumMemberSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         EnumMemberSeq,
         EnumMemberSeq_var,
         TAO_SeqElem_String_Manager

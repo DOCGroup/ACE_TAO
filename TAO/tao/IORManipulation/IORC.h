@@ -559,7 +559,7 @@ TAO_NAMESPACE  TAO_IOP
       IORList_var;
 
     typedef
-      TAO_Seq_Out_T<
+      TAO_MngSeq_Out_T<
           IORList,
           IORList_var,
           TAO_Pseudo_Object_Manager<

@@ -26,18 +26,19 @@
 #define _TAO_IDL_ORIG_OBJECTREFERENCETEMPLATEC_H_
 
 #include "ace/pre.h"
-#include "OctetSeqC.h"
+#include "tao/OctetSeqC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "StringSeqC.h"
-#include "ValueBase.h"
-#include "Exception.h"
-#include "Any_T.h"
-#include "Value_VarOut_T.h"
-#include "Seq_VarOut_T.h"
+#include "tao/StringSeqC.h"
+#include "tao/ValueBase.h"
+#include "tao/Exception.h"
+#include "tao/Any_T.h"
+#include "tao/Value_VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
 
 
 #if defined (TAO_EXPORT_MACRO)
@@ -298,7 +299,7 @@ TAO_NAMESPACE  PortableInterceptor
     ObjectReferenceTemplateSeq_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         ObjectReferenceTemplateSeq,
         ObjectReferenceTemplateSeq_var,
         TAO_Valuetype_Manager<

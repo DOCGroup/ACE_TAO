@@ -37,6 +37,8 @@
 #include "tao/Any_T.h"
 #include "tao/Sequence.h"
 #include "tao/VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

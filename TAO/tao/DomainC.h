@@ -612,7 +612,7 @@ TAO_NAMESPACE  CORBA
     DomainManagerList_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         DomainManagerList,
         DomainManagerList_var,
         TAO_Object_Manager<

@@ -40,7 +40,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
-#include "tao/Seq_VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
 #include "tao/Sequence_T.h"
 
 #if defined (TAO_EXPORT_MACRO)

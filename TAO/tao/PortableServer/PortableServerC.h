@@ -131,7 +131,7 @@ TAO_NAMESPACE  PortableServer
     POAList_var;
 
   typedef
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         POAList,
         POAList_var,
         TAO_Object_Manager<
