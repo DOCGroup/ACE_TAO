@@ -52,7 +52,7 @@ main (int argc, char *argv[])
           default:
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Usage: %s ")
-                               ACE_TEXT ("[-k ReplicaIOR] ")
+                               ACE_TEXT ("[-k HasherIOR] ")
                                ACE_TEXT ("[-t timeout (msecs)] ")
                                ACE_TEXT ("[-i iterations] ")
                                ACE_TEXT ("\n"),
@@ -64,9 +64,7 @@ main (int argc, char *argv[])
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      Hasher_var hasher =
-        Hasher::_unchecked_narrow (obj.in (),
-                                   ACE_TRY_ENV);
+      Hasher_var hasher = Hasher::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hasher.in ()))
@@ -74,7 +72,7 @@ main (int argc, char *argv[])
                            ACE_TEXT ("Invalid replica IOR.\n")),
                           -1);
 
-      run_test (iterations, timeout, hasher.in (), ACE_TRY_ENV);
+      ::run_test (iterations, timeout, hasher.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_TRY_ENV);
@@ -82,7 +80,7 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception");
     }
   ACE_ENDTRY;
 
