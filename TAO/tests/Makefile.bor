@@ -49,6 +49,7 @@ DIRS = \
 	Nested_Event_Loop \
         NestedUpcall \
         Object_Loader \
+        Objref_Sequence_Test \
 	OctetSeq \
 	Oneway_Buffering \
         Oneways_Invoking_Twoways \
