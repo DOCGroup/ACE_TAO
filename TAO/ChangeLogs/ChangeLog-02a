@@ -1,3 +1,10 @@
+Sun Feb 18 16:56:33 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/Makefile.BE:
+	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+	Added -I(TAO_ROOT)/tao to LDFLAGS to remove warnings under cxx on
+	Tru64.
+
 Sun Feb 18 16:28:45 2001  Chris Gill  <cdgill@cs.wustl.edu>
 
         * examples/Simulator/DOVEBrowser/NS_Resolve.java: removed
