@@ -177,7 +177,9 @@ public:
 
   static int end_event_loop (void);
   // Instruct the <ACE_Proactor::instance> to terminate its event
-  // loop.
+  // loop. 
+  // This method wakes up all the threads blocked on waiting for
+  // completions and end the event loop.
 
   static int event_loop_done (void);
   // Report if the <ACE_Proactor::instance> event loop is finished.
@@ -382,6 +384,12 @@ public:
   // largest signal number from the signal mask of the Proactor.
 
 protected:
+
+  static int post_wakeup_completions (int how_many);
+  // Post <how_many> completions to the completion port so that all
+  // threads can wake up. This is used in conjunction with the
+  // <run_event_loop>. 
+
   virtual void implementation (ACE_Proactor_Impl *implementation);
   // Set the implementation class.
 
@@ -413,6 +421,9 @@ protected:
 
   static sig_atomic_t end_event_loop_;
   // Terminate the proactor event loop.
+
+  static sig_atomic_t event_loop_thread_count_;
+  // Number of threads in the event loop.
 
 private:
   ACE_Proactor (const ACE_Proactor &);
