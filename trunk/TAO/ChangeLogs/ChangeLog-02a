@@ -1,3 +1,8 @@
+Wed Apr 24 19:06:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile: Updated
+	  dependencies.  
+
 Tue Apr 23 15:44:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
