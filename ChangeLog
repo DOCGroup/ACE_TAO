@@ -1,13 +1,30 @@
+Mon Sep 23 12:05:38 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          For GNU, NMake and Borland projects, create a workspace per
+          project file.
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/GHSWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Remove trailing whitespace.
+
 Sun Sep 22 08:49:41 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Svc_Handler.cpp (flush_i): Don't flush the queued messages
-	  if the connection fails.  Thanks to Andrew Finnell
- 	  <andrew@activesol.net> for this fix.
+        * ace/Svc_Handler.cpp (flush_i): Don't flush the queued messages
+          if the connection fails.  Thanks to Andrew Finnell
+          <andrew@activesol.net> for this fix.
 
 Sat Sep 21 23:05:56 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/subst_env.pl: Improved conversion to different coding
-	  styles. Thanks to Oliver Kellog for suggesting this.
+        * bin/subst_env.pl: Improved conversion to different coding
+          styles. Thanks to Oliver Kellog for suggesting this.
 
 Fri Sep 20 13:52:23 2002  Chad Elliott  <elliott_c@ociweb.com>
 

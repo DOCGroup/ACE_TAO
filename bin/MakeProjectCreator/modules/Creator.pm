@@ -315,7 +315,7 @@ sub get_relative {
 
 
 sub windows_crlf {
-  my($self) = shift; 
+  my($self) = shift;
   if ($^O eq 'MSWin32') {
     return "\n";
   }

@@ -29,6 +29,12 @@ sub workspace_file_name {
 }
 
 
+sub workspace_per_project {
+  my($self) = shift;
+  return 1;
+}
+
+
 sub pre_workspace {
   my($self) = shift;
   my($fh)   = shift;

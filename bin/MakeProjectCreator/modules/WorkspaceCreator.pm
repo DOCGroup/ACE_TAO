@@ -80,7 +80,16 @@ sub parse_line {
           $self->generate_defaults();
 
           ## End of project; Have subclass write out the file
-          $self->write_workspace();
+          ## Generate the project files
+          my($gstat, $generator) = $self->generate_project_files();
+          if ($gstat) {
+            $self->write_workspace($generator);
+          }
+          else {
+            $errorString = "ERROR: Unable to " .
+                           "generate all of the project files";
+            $status = 0;
+          }
 
           $self->{'workspace_name'} = undef;
           $self->{'projects'}       = [];
@@ -220,35 +229,45 @@ sub get_workspace_name {
 
 
 sub write_workspace {
-  my($self) = shift;
+  my($self)      = shift;
+  my($generator) = shift;
+  my($status)    = 1;
+  my($fh)        = new FileHandle();
+  my($name)      = $self->transform_file_name($self->workspace_file_name());
+  my($dir)       = dirname($name);
 
-  ## Generate the project files
-  my($status, $generator) = $self->generate_project_files();
-  if ($status) {
-    my($fh)   = new FileHandle();
-    my($name) = $self->transform_file_name($self->workspace_file_name());
-    my($dir)  = dirname($name);
-
-    if ($dir ne ".") {
-      mkpath($dir, 0, 0777);
-    }
-    if (open($fh, ">$name")) {
-      $self->pre_workspace($fh);
-      $self->write_comps($fh, $generator);
-      $self->post_workspace($fh);
-      close($fh);
-    }
-    else {
-      print STDERR "ERROR: Unable to open $name for output\n";
-      $status = 0;
-    }
+  if ($dir ne ".") {
+    mkpath($dir, 0, 0777);
+  }
+  if (open($fh, ">$name")) {
+    $self->pre_workspace($fh);
+    $self->write_comps($fh, $generator);
+    $self->post_workspace($fh);
+    close($fh);
   }
   else {
-    print STDERR "ERROR: Unable to generate all of the project files\n";
+    print STDERR "ERROR: Unable to open $name for output\n";
     $status = 0;
   }
 
   return $status;
+}
+
+
+sub save_project_info {
+  my($self)     = shift;
+  my($gen)      = shift;
+  my($gpi)      = shift;
+  my($dir)      = shift;
+  my($projects) = shift;
+  my($pi)       = shift;
+  my($c)        = 0;
+  foreach my $pj (@$gen) {
+    my($full) = ($dir ne "." ? "$dir/" : "") . $pj;
+    push(@$projects, $full);
+    $$pi{$full} = $$gpi[$c];
+    $c++;
+  }
 }
 
 
@@ -278,16 +297,31 @@ sub generate_project_files {
       ## Get the individual project information and
       ## generated file name(s)
       $gen = $generator->get_files_written();
+
+      ## If we need to generate a workspace file per project
+      ## then we generate a temporary project info and projects
+      ## array and call write_project().
+      if ($dir ne "." && $self->workspace_per_project()) {
+        my(%perpi)       = ();
+        my(@perprojects) = ();
+        my($gpi)         = $generator->get_project_info();
+        $self->save_project_info($gen, $gpi, $dir, \@perprojects, \%perpi);
+
+        ## Set our per project information
+        $self->{'projects'}     = \@perprojects;
+        $self->{'project_info'} = \%perpi;
+
+        ## Write our per project workspace
+        $self->write_workspace();
+
+        ## Reset our project information to empty
+        $self->{'projects'}     = [];
+        $self->{'project_info'} = {};
+      }
       chdir($cwd);
     }
     my($gpi) = $generator->get_project_info();
-    my($c) = 0;
-    foreach my $pj (@$gen) {
-      my($full) = ($dir ne "." ? "$dir/" : "") . $pj;
-      push(@projects, $full);
-      $pi{$full} = $$gpi[$c];
-      $c++;
-    }
+    $self->save_project_info($gen, $gpi, $dir, \@projects, \%pi);
   }
 
   $self->{'projects'}     = \@projects;
@@ -372,7 +406,7 @@ sub sort_dependencies {
 
 
 sub project_creator {
-  my($self) = shift; 
+  my($self) = shift;
   my($str)  = "$self";
 
   ## NOTE: If the subclassed WorkspaceCreator name prefix does not
@@ -402,6 +436,12 @@ sub project_creator {
 sub workspace_file_name {
   my($self) = shift;
   return "";
+}
+
+
+sub workspace_per_project {
+  my($self) = shift;
+  return 0;
 }
 
 

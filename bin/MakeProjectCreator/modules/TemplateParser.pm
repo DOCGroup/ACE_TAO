@@ -171,7 +171,7 @@ sub adjust_value {
         foreach my $part (@$parts) {
           if ($part ne $$val[1] && $part ne "") {
             $value .= "$part ";
-          }                   
+          }
         }
         $value =~ s/^\s+//;
         $value =~ s/\s+$//;
@@ -274,8 +274,8 @@ sub relative {
         }
         $start += length($whole);
       }
-    }  
-  }    
+    }
+  }
 
   return $value;
 }
@@ -657,7 +657,7 @@ sub handle_flag_overrides {
 
 ## Given a line that starts with an identifier, we split
 ## then name from the possible value stored inside ()'s and
-## we stop looking at the line when we find the %> ending 
+## we stop looking at the line when we find the %> ending
 sub split_name_value {
   my($self)   = shift;
   my($line)   = shift;
