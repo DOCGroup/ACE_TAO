@@ -1,4 +1,3 @@
-// FILE_Addr.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -14,10 +13,11 @@ ACE_FILE_Addr::ACE_FILE_Addr (void)
   : ACE_Addr (AF_FILE, sizeof this->filename_)
 {
   (void) ACE_OS::memset ((void *) &this->filename_,
-			 0,
+                         0,
                          sizeof this->filename_);
 }
 
+int
 ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
 {
   this->base_set (sa.get_type (), sa.get_size ());
@@ -45,8 +45,8 @@ ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
 {
   if (this != &sa)
     (void) ACE_OS::memcpy ((void *) &this->filename_,
-			   (void *) &sa.filename_,
-			   sa.get_size ());
+                           (void *) &sa.filename_,
+                           sa.get_size ());
   return *this;
 }
 
@@ -81,8 +81,8 @@ int
 ACE_FILE_Addr::addr_to_string (char *s, size_t len) const
 {
   ACE_OS::strncpy (s,
-		   ACE_MULTIBYTE_STRING (this->filename_),
-		   len);
+                   ACE_MULTIBYTE_STRING (this->filename_),
+                   len);
   return 0;
 }
 
@@ -95,4 +95,3 @@ ACE_FILE_Addr::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "filename_ = %s", this->filename_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-
