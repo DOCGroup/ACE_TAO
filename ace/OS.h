@@ -1,4 +1,5 @@
 /* -*- C++ -*- */
+// $Id$
 
 // ============================================================================
 //
@@ -1891,6 +1892,9 @@ typedef DWORD ACE_id_t;
 typedef int ACE_pri_t;
 
 // Dynamic loading-related types - used for dlopen and family.
+#if !defined(RTLD_LAZY)
+# define RTLD_LAZY 1
+#endif /* !RTLD_LAZY */
 typedef HINSTANCE ACE_SHLIB_HANDLE;
 const int ACE_DEFAULT_SHLIB_MODE = 0;
 
@@ -2197,6 +2201,9 @@ extern "C" int sigwait (sigset_t *set);
 /* Also define a default 'mode' for loading a library - the names and values */
 /* differ between OSes, so if you write code that uses the mode, be careful */
 /* of the platform differences. */
+#if !defined(RTLD_LAZY)
+# define RTLD_LAZY 1
+#endif /* !RTLD_LAZY */
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 # include /**/ <dlfcn.h>
   typedef void *ACE_SHLIB_HANDLE;
@@ -2209,13 +2216,7 @@ extern "C" int sigwait (sigset_t *set);
 # endif /* HP aC++ vs. HP C++ */
   typedef shl_t ACE_SHLIB_HANDLE;
   const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
-# if !defined(RTLD_LAZY)
-#   define RTLD_LAZY 1
-# endif /* !RTLD_LAZY */
 #else
-# if !defined(RTLD_LAZY)
-#   define RTLD_LAZY 1
-# endif /* !RTLD_LAZY */
   typedef void *ACE_SHLIB_HANDLE;
   const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
@@ -2384,10 +2385,6 @@ struct sigaction
   sigset_t sa_mask;
 };
 #endif /* ACE_LACKS_SIGACTION */
-
-#if !defined (RTLD_LAZY)
-#define RTLD_LAZY 1
-#endif /* RTLD_LAZY */
 
 // This one exists only to please Service_Config.h and
 // Service_Manager.cpp
