@@ -144,6 +144,11 @@ public:
   ACE_INET_Addr &addr (void);
   // Accessors for the local address on which we're listening.
 
+  int inherit_from_parent_thread (TAO_ORB_Core *p);
+  // A spawned thread needs to inherit some properties/objects from
+  // the spawning thread in order to serve requests.  Return 0 if
+  // it successfully inherits from the parent, -1 otherwise.
+
   // = Access to Factories.
   //
   // These factories are not thread-specific, and are presented here
