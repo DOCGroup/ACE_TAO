@@ -1,3 +1,19 @@
+Mon Aug  6 19:58:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/config-hpux-11.00.h: Added #define for ACE_HAS_TERM_IOCTLS.
+	  Thanks to Torbjorn Backstrom <torbjorn.k.backstrom@volvo.com>
+ 	  for reporting this.
+	
+	* ace/OS.h: Added a #include for <sys/modem.h> for HP/UX.  Thanks
+	  to Torbjorn Backstrom <torbjorn.k.backstrom@volvo.com> for
+ 	  reporting this.
+
+Mon Aug  6 12:51:35 2001  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Synch.h (ACE_Null_Mutex>): Fixed a cut&paste error
+	  where acquire_write() should be acquire_read().  Thanks to
+ 	  Russell Mora <rd.mora@router.econz.co.nz> for fixing this.
+
 Mon Aug 06 17:17:33 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Service_Config.cpp:

@@ -1719,9 +1719,9 @@ public:
   ACE_Read_Guard (ACE_Null_Mutex &m, int blocked)
     : ACE_Guard<ACE_Null_Mutex> (m, blocked) {}
 
-  int acquire_write (void) { return 0; }
+  int acquire_read (void) { return 0; }
   int acquire (void) { return 0; }
-  int tryacquire_write (void) { return 0; }
+  int tryacquire_read (void) { return 0; }
   int tryacquire (void) { return 0; }
   void dump (void) const {}
 };

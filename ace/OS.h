@@ -3904,6 +3904,9 @@ extern "C"
 #     else  /* ! __QNX__ */
 #       include /**/ <sys/termios.h>
 #     endif /* ! __QNX__ */
+#     if defined (HPUX)
+#       include <sys/modem.h>
+#     endif /* HPUX */
 #   endif /* ACE_HAS_TERM_IOCTLS */
 
 #if !defined (VMIN)
