@@ -1,4 +1,5 @@
 // $Id$
+
 // ===========================================================================
 //
 // = LIBRARY
@@ -20,7 +21,6 @@
 //
 // = AUTHOR
 //    Steve Huston <shuston@riverace.com>
-//    Brian Buesker <bbuesker@qualcomm.com> - Modified to run over IPv6 as well
 //
 // ============================================================================
 
@@ -31,6 +31,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
+
+ACE_RCSID(tests, SOCK_Send_Recv_Test, "$Id$")
 
 // Change to non-zero if test fails
 static int Test_Result = 0;
@@ -54,14 +56,8 @@ client (void *arg)
 {
   ACE_INET_Addr *remote_addr = ACE_reinterpret_cast (ACE_INET_Addr *,
                                                      arg);
-#if defined (ACE_HAS_IPV6)
-  ACE_INET_Addr server_addr (remote_addr->get_port_number (),
-                             ACE_IPV6_LOCALHOST);
-#else
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_LOCALHOST);
-#endif /*ACE_HAS_IPV6*/
-
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
@@ -328,7 +324,7 @@ spawn (void)
   ACE_INET_Addr server_addr;
 
   // Bind listener to any port and then find out what the port was.
-  if (peer_acceptor.open (ACE_Addr::sap_any, 0, AF_INET6) == -1
+  if (peer_acceptor.open (ACE_Addr::sap_any) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
@@ -392,11 +388,9 @@ spawn (void)
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("SOCK_Send_Recv_Test_IPv6"));
+  ACE_START_TEST (ACE_TEXT ("SOCK_Send_Recv_Test"));
 
-#if defined (ACE_HAS_IPV6)
   spawn ();
-#endif /* ACE_HAS_IPV6 */
 
   ACE_END_TEST;
   return Test_Result;
