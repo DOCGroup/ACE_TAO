@@ -537,12 +537,6 @@ public:
   virtual idl_bool obv_support (void);
   // check if OBV (Valuetype) support is enabled
 
-  virtual void compiled_marshaling (idl_bool);
-  // enable compiled marshaling support
-
-  virtual idl_bool compiled_marshaling (void);
-  // check if we use compiled marshaling
-
   virtual void gen_impl_files (idl_bool);
   //enable generation of implementation files
 
@@ -739,9 +733,6 @@ private:
 
   idl_bool obv_opt_accessor_;
   // do we optimize valuetype accessors?
-
-  idl_bool compiled_marshaling_;
-  // do we support compiled marshaling?
 
   idl_bool gen_impl_files_;
   // are we generating implementation files?

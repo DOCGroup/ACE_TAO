@@ -151,15 +151,11 @@ int be_visitor_args_vardecl_ss::visit_interface (be_interface *node)
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
       os->indent ();
-      *os << bt->name () << "_var " << arg->local_name () << ";" << be_nl;
-      *os << "CORBA::Object_var _tao_base_var_" << arg->local_name ()
-          << ";\n";
+      *os << bt->name () << "_var " << arg->local_name () << ";\n";
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
       *os << bt->name () << "_var "
-          << arg->local_name () << ";" << be_nl;
-      *os << "CORBA::Object_var _tao_base_var_"
           << arg->local_name () << ";\n";
       break;
     }
@@ -183,15 +179,11 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
       os->indent ();
-      *os << bt->name () << "_var " << arg->local_name () << ";" << be_nl;
-      *os << "CORBA::Object_var _tao_base_var_" << arg->local_name ()
-          << ";\n";
+      *os << bt->name () << "_var " << arg->local_name () << ";\n";
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
       *os << bt->name () << "_var "
-          << arg->local_name () << ";" << be_nl;
-      *os << "CORBA::Object_var _tao_base_var_"
           << arg->local_name () << ";\n";
       break;
     }
@@ -201,14 +193,60 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
 
 #ifdef IDL_HAS_VALUETYPE
 
-int be_visitor_args_vardecl_ss::visit_valuetype (be_valuetype *)
+int be_visitor_args_vardecl_ss::visit_valuetype (be_valuetype *node)
 {
-  return -1;
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      os->indent ();
+      *os << bt->name () << "_var " << arg->local_name () << ";\n";
+      break;
+    case AST_Argument::dir_OUT:
+      os->indent ();
+      *os << bt->name () << "_var "
+          << arg->local_name () << ";\n";
+      break;
+    }
+  return 0;
 }
 
-int be_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *)
+int be_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  return -1;
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
+                                                         // node
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  switch (this->direction ())
+    {
+    case AST_Argument::dir_IN:
+    case AST_Argument::dir_INOUT:
+      os->indent ();
+      *os << bt->name () << "_var " << arg->local_name () << ";\n";
+      break;
+    case AST_Argument::dir_OUT:
+      os->indent ();
+      *os << bt->name () << "_var "
+          << arg->local_name () << ";\n";
+      break;
+    }
+  return 0;
 }
 
 #endif /* IDL_HAS_VALUETYPE */
@@ -426,136 +464,3 @@ int be_visitor_args_vardecl_ss::visit_typedef (be_typedef *node)
 }
 
 
-// ************************************************************************
-// Visitor to generate code for argument variable declaration for compiled
-// marshaling. This provides only the overriden methods. The rest is handled by
-// the base class that works for interpretiveskeletons.
-// ************************************************************************
-
-be_compiled_visitor_args_vardecl_ss::
-be_compiled_visitor_args_vardecl_ss (be_visitor_context *ctx)
-  : be_visitor_args_vardecl_ss (ctx)
-{
-}
-
-be_compiled_visitor_args_vardecl_ss::~be_compiled_visitor_args_vardecl_ss (void)
-{
-}
-
-int be_compiled_visitor_args_vardecl_ss::visit_interface (be_interface *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  // if the current type is an alias, use that
-  be_type *bt;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      os->indent ();
-      *os << bt->name () << "_var " << arg->local_name () << ";\n";
-      break;
-    case AST_Argument::dir_OUT:
-      os->indent ();
-      *os << bt->name () << "_var "
-          << arg->local_name () << ";\n";
-      break;
-    }
-  return 0;
-}
-
-int be_compiled_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  // if the current type is an alias, use that
-  be_type *bt;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      os->indent ();
-      *os << bt->name () << "_var " << arg->local_name () << ";\n";
-      break;
-    case AST_Argument::dir_OUT:
-      os->indent ();
-      *os << bt->name () << "_var "
-          << arg->local_name () << ";\n";
-      break;
-    }
-  return 0;
-}
-
-
-#ifdef IDL_HAS_VALUETYPE
-
-int be_compiled_visitor_args_vardecl_ss::visit_valuetype (be_valuetype *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  // if the current type is an alias, use that
-  be_type *bt;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      os->indent ();
-      *os << bt->name () << "_var " << arg->local_name () << ";\n";
-      break;
-    case AST_Argument::dir_OUT:
-      os->indent ();
-      *os << bt->name () << "_var "
-          << arg->local_name () << ";\n";
-      break;
-    }
-  return 0;
-}
-
-int
-be_compiled_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  // if the current type is an alias, use that
-  be_type *bt;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-    case AST_Argument::dir_INOUT:
-      os->indent ();
-      *os << bt->name () << "_var " << arg->local_name () << ";\n";
-      break;
-    case AST_Argument::dir_OUT:
-      os->indent ();
-      *os << bt->name () << "_var "
-          << arg->local_name () << ";\n";
-      break;
-    }
-  return 0;
-}
-
-#endif /* IDL_HAS_VALUETYPE */

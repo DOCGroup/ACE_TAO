@@ -84,35 +84,4 @@ public:
 
 };
 
-// ************************************************************
-// Operation visitor for return type variable declaration in the server
-// skeleton using compiled marshaling. This one overrides 2 methods of the base
-// class
-// ************************************************************
-
-class be_compiled_visitor_operation_rettype_vardecl_ss :
-  public be_visitor_operation_rettype_vardecl_ss
-{
-  //
-  // = TITLE
-  //   be_compiled_visitor_operation_rettype_vardecl_ss
-  //
-  // = DESCRIPTION
-  //   This is a visitor to generate a variable declaration ofr an operation
-  //   return type in the server skeleton using compiled marshaling
-  //
-public:
-  be_compiled_visitor_operation_rettype_vardecl_ss (be_visitor_context *ctx);
-  // constructor
-
-  ~be_compiled_visitor_operation_rettype_vardecl_ss (void);
-  // destructor
-
-  virtual int visit_interface (be_interface *node);
-  // visit an interface node
-
-  virtual int visit_interface_fwd (be_interface_fwd *node);
-  // visit an interface fwd node
-};
-
 #endif /* _BE_VISITOR_OPERATION_RETTYPE_VARDECL_SS_H_ */
