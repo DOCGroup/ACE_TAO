@@ -1,3 +1,11 @@
+Wed Aug 12 17:43:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MsgQueue_Notifications_Test.cpp: The watermark test which
+	  uses cv's signaling to notify other threads is also merged into
+	  this file. 
+
+	* tests/MsgQueue_Water_Mark_Test.{dsp,cpp}: Removed.
+
 Wed Aug 12 17:12:57 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* APC.DSP:
