@@ -105,8 +105,10 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
     value_ (0),
     destructor_ (0)
 {
-  ACE_NEW (this->cdr_, ACE_Message_Block);
-  ACE_CDR::consolidate (this->cdr_, mb);
+  ACE_NEW (this->cdr_, 
+           ACE_Message_Block);
+  ACE_CDR::consolidate (this->cdr_, 
+                        mb);
 }
 
 // Copy constructor for "Any".
@@ -118,17 +120,25 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
     destructor_ (0)
 {
   if (!CORBA::is_nil (src.type_.in ()))
-    this->type_ =
-      CORBA::TypeCode::_duplicate (src.type_.in ());
+    {
+      this->type_ = CORBA::TypeCode::_duplicate (src.type_.in ());
+    }
   else
-    this->type_ =
-      CORBA::TypeCode::_duplicate (CORBA::_tc_null);
+    {
+      this->type_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
+    }
 
   // CDR stream always contains encoded object, if any holds anything
   // at all.
   this->byte_order_ = src.byte_order_;
-  ACE_NEW (this->cdr_, ACE_Message_Block);
-  ACE_CDR::consolidate (this->cdr_, src.cdr_);
+
+  if (src.cdr_ != 0)
+    {
+      ACE_NEW (this->cdr_, 
+               ACE_Message_Block);
+      ACE_CDR::consolidate (this->cdr_, 
+                            src.cdr_);
+    }
 
   // No need to copy src's value_.  We can always get that from cdr.
 }
@@ -167,12 +177,15 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
   this->byte_order_ = src.byte_order_;
 
-  ACE_NEW_RETURN (this->cdr_,
-                  ACE_Message_Block,
-                  *this);
+  if (src.cdr_ != 0)
+    {
+      ACE_NEW_RETURN (this->cdr_,
+                      ACE_Message_Block,
+                      *this);
 
-  ACE_CDR::consolidate (this->cdr_,
-                        src.cdr_);
+      ACE_CDR::consolidate (this->cdr_,
+                            src.cdr_);
+    }
 
   return *this;
 }
