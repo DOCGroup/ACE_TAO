@@ -1,3 +1,9 @@
+Tue May 18 22:03:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU,platform_osf1_cxx.GNU:
+          removed suppression of warning 9 (nested comment not allowed) on
+          Digital Unix 5.0 and later.
+
 Tue May 18 15:01:39 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: Added #include "ace/SString.h" to catch def for
@@ -5,15 +11,15 @@ Tue May 18 15:01:39 1999  Steve Huston  <shuston@riverace.com>
 
 Tue May 18 13:30:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/rules.nested.GNU: FOR is not an excutable on
-	  Win32, therefore, we must bring in the command processor in to
-	  use FOR.  Thanks to David Hooker <DHooker@uniview.net> for
-	  reporting the bug.
+        * include/makeinclude/rules.nested.GNU: FOR is not an excutable on
+          Win32, therefore, we must bring in the command processor in to
+          use FOR.  Thanks to David Hooker <DHooker@uniview.net> for
+          reporting the bug.
 
 Tue May 18 11:46:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/FILE_Connector.h: Changed the default perms from 0 to
- 	  ACE_DEFAULT_FILE_PERMS.
+        * ace/FILE_Connector.h: Changed the default perms from 0 to
+          ACE_DEFAULT_FILE_PERMS.
 
 Tue May 18 11:28:32 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -23,13 +29,13 @@ Tue May 18 11:28:32 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Tue May 18 11:00:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task_T: Moved the ACE_Buffered_Task logic out of the Task
- 	  abstraction since it doesn't belong there.
+        * ace/Task_T: Moved the ACE_Buffered_Task logic out of the Task
+          abstraction since it doesn't belong there.
 
-	* ace/Makefile: Regenerated the dependencies.
+        * ace/Makefile: Regenerated the dependencies.
 
-	* ace/FlReactor.cpp: We should be including <FL/Fl.h> rather than
- 	  "FL/Fl.h".
+        * ace/FlReactor.cpp: We should be including <FL/Fl.h> rather than
+          "FL/Fl.h".
 
 Tue May 18 10:42:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
