@@ -1,3 +1,8 @@
+Tue Aug 26 09:55:19 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Kokyu_defs.{cpp,h,i}: Added operator != for ConfigInfo to
+	  satisfy RH71_Explicit_Templates build. 
+
 Tue Aug 26 09:21:44 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
