@@ -345,24 +345,24 @@ namespace
       write_belongs_.node_traverser (write_type_name_emitter_);
       read_belongs_.node_traverser (read_type_name_emitter_);
     }
-    
+
     virtual void name (SemanticGraph::ReadWriteAttribute& a)
     {
       os << scope_.name () << "_Servant::" << a.name ();
     }
-    
+
     virtual void traverse (SemanticGraph::ReadWriteAttribute& a)
     {
       // Does nothing here, overridden for facet attributes.
       this->pre (a);
-    
+
       Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
 
       os << endl;
-      
+
       // Overridden for facet attributes.
       this->name (a);
-      
+
       os << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
@@ -370,15 +370,15 @@ namespace
          << "return this->executor_->" << a.name () << " (" << endl
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl;
-         
+
       // Does nothing here, overridden for facet attributes.
       this->pre (a);
 
       os << "void" << endl;
-      
+
       // Overridden for facet attributes.
       this->name (a);
-      
+
        os << " (" << endl;
 
       Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
@@ -392,7 +392,7 @@ namespace
          << STRS[ENV_ARG] << ");" << endl
          << "}" << endl;
     }
-    
+
   protected:
     T& scope_;
 
@@ -421,19 +421,19 @@ namespace
     {
       os << scope_.name () << "_Servant::" << a.name ();
     }
-    
+
     virtual void traverse (SemanticGraph::ReadAttribute& a)
     {
       // Does nothing here, overridden for facet attributes.
       this->pre (a);
-    
+
       Traversal::ReadAttribute::belongs (a, read_belongs_);
 
       os << endl;
-      
+
       // Overridden for facet attributes.
       this->name (a);
-      
+
       os << " (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
@@ -442,7 +442,7 @@ namespace
          << STRS[ENV_SNGL_ARG] << ");" << endl
          << "}" << endl;
     }
-    
+
   protected:
     T& scope_;
 
@@ -458,16 +458,16 @@ namespace
       : EmitterBase (c)
     {
     }
-    
-    struct FacetOperationEmitter 
+
+    struct FacetOperationEmitter
       : OperationEmitter<SemanticGraph::UnconstrainedInterface>
     {
-      FacetOperationEmitter (Context& c, 
+      FacetOperationEmitter (Context& c,
                              SemanticGraph::UnconstrainedInterface& i)
         : OperationEmitter<SemanticGraph::UnconstrainedInterface> (c, i)
       {}
-      
-      virtual void 
+
+      virtual void
       pre (Type&)
       {
         os << "template <typename T>" << endl;
@@ -480,52 +480,52 @@ namespace
            << scope_.name () << "_Servant_T<T>::" << o.name ();
       }
     };
-    
-    struct FacetAttributeEmitter 
+
+    struct FacetAttributeEmitter
       : AttributeEmitter<SemanticGraph::Interface>
     {
       FacetAttributeEmitter (Context& c, SemanticGraph::Interface& i)
         : AttributeEmitter<SemanticGraph::Interface> (c, i)
       {}
 
-      virtual void 
+      virtual void
       pre (SemanticGraph::ReadWriteAttribute&)
       {
         os << "template <typename T>" << endl;
       }
-      
-      virtual void 
+
+      virtual void
       name (SemanticGraph::ReadWriteAttribute& a)
       {
         os << scope_.name () << "_Servant_T<T>::" << a.name ();
       }
     };
-    
-    struct FacetReadOnlyAttributeEmitter 
+
+    struct FacetReadOnlyAttributeEmitter
       : ReadOnlyAttributeEmitter<SemanticGraph::Interface>
     {
       FacetReadOnlyAttributeEmitter (Context& c, SemanticGraph::Interface& i)
         : ReadOnlyAttributeEmitter<SemanticGraph::Interface> (c, i)
       {}
 
-      virtual void 
+      virtual void
       pre (SemanticGraph::ReadAttribute&)
       {
         os << "template <typename T>" << endl;
       }
-      
-      virtual void 
+
+      virtual void
       name (SemanticGraph::ReadAttribute& a)
       {
         os << scope_.name () << "_Servant_T<T>::" << a.name ();
       }
     };
-    
+
     virtual void
     traverse (UnconstrainedInterface& i)
     {
       if (i.context ().count ("facet_src_gen")) return;
-    
+
       // Open a namespace.
       os << STRS[GLUE_NS]
          << regex::perl_s (i.scoped_name ().scope_name ().str (),
@@ -633,7 +633,7 @@ namespace
 
       // Close the CIAO_GLUE namespace.
       os << "}" << endl;
-      
+
       i.context ().set ("facet_src_gen", true);
     }
   };
@@ -745,19 +745,23 @@ namespace
            << STRS[ENV_SNGL_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
-           << u.scoped_name () << "Connections_var retv;"
+           << u.scoped_name () << "Connections *tmp_retv;"
            << "ACE_NEW_RETURN (" << endl
-           << "retv.out ()," << endl
+           << "tmp_retv," << endl
            << u.scoped_name () << "Connections (this->ciao_uses_"
            << u.name () << "_.current_size ())," << endl
-           << "0);" << endl;
-           
+           << "0);" << endl << endl
+           << u.scoped_name () << "Connections_var retv"
+           << " = tmp_retv ;" << endl
+           << "retv->length (this->ciao_uses_" << u.name ()
+           << "_.current_size ());" << endl;
+
         os << "CORBA::ULong i = 0;" << endl;
-        
+
         os << "for (ACE_Active_Map_Manager< " << endl;
-           
+
         Traversal::MultiUserData::belongs (u, belongs_);
-        
+
         os << "_var>::iterator iter =" << endl
            << "       this->ciao_uses_" << u.name () << "_.begin ();"
            << "     iter != this->ciao_uses_" << u.name () << "_.end ();"
@@ -766,23 +770,23 @@ namespace
            << "ACE_Active_Map_Manager< " << endl;
 
         Traversal::MultiUserData::belongs (u, belongs_);
-        
+
         os << "_var>::ENTRY & entry = *iter;" << endl
            << "retv[i].objref = ";
-        
+
         Traversal::MultiUserData::belongs (u, belongs_);
-        
+
         os << "::_narrow (" << endl
            << "entry.int_id_.in ()" << endl
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK_RETURN (0);" << endl;
-           
+
         os << "ACE_NEW_RETURN (" << endl
            << "retv[i++].ck," << endl
            << "CIAO::Map_Key_Cookie (entry.ext_id_)," << endl
            << "0);" << endl
            << "}" << endl;
-           
+
         os << "return retv._retn ();" << endl
            << "}" << endl;
 
@@ -805,28 +809,28 @@ namespace
            << "}" << endl;
 
         Traversal::MultiUserData::belongs (u, belongs_);
-        
+
         os << "_var conn = ";
 
         Traversal::MultiUserData::belongs (u, belongs_);
-        
+
         os << "::_duplicate (c);"
            << "ACE_Active_Map_Manager_Key key;" << endl;
-        
-        os << "if (this->ciao_uses_" << u.name () 
+
+        os << "if (this->ciao_uses_" << u.name ()
            << "_.bind (conn.in (), key) == -1)" << endl
            << "{"
            << "ACE_THROW_RETURN (" << STRS[EXCP_IC] << " (), 0);" << endl
            << "}" << endl;
-           
+
         os << "conn._retn ();" << endl;
-        
+
         os << "Components::Cookie_var retv;"
            << "ACE_NEW_RETURN (" << endl
            << "retv.out ()," << endl
            << "CIAO::Map_Key_Cookie (key)," << endl
            << "0);" << endl;
-           
+
         os << "return retv._retn ();" << endl
            << "}" << endl;
 
@@ -841,34 +845,34 @@ namespace
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
            << "{";
-           
+
         Traversal::MultiUserData::belongs (u, belongs_);
-        
+
         os << "_var retv;"
            << "ACE_Active_Map_Manager_Key key;" << endl;
-        
+
         os << "if (ck == 0 || ! CIAO::Map_Key_Cookie::extract (ck, key))"
            << endl
            << "{"
            << "ACE_THROW_RETURN (" << endl
            << STRS[EXCP_IC] << " ()," << endl;
-           
+
         Traversal::MultiUserData::belongs (u, belongs_);
-        
+
         os << "::_nil ());" << endl
            << "}" << endl;
-           
+
         os << "if (this->ciao_uses_" << u.name ()
            << "_.unbind (key, retv) != 0)" << endl
            << "{"
            << "ACE_THROW_RETURN (" << endl
            << STRS[EXCP_IC] << " ()," << endl;
-           
+
         Traversal::MultiUserData::belongs (u, belongs_);
-        
+
         os << "::_nil ());" << endl
            << "}" << endl;
-           
+
         os << "return retv._retn ();" << endl
            << "}" << endl;
       }
@@ -1052,7 +1056,7 @@ namespace
 
         Traversal::EmitterData::belongs (e, belongs_);
 
-	os << "Consumer::_duplicate (c);" << endl
+        os << "Consumer::_duplicate (c);" << endl
            << "}" << endl;
 
         Traversal::EmitterData::belongs (e, belongs_);
@@ -1313,7 +1317,7 @@ namespace
         os << "if (ACE_OS::strcmp (emitter_name, \""
            << t.name () << "\") == 0)" << endl
            << "{";
-           
+
         Traversal::EmitterData::belongs (t, belongs_);
 
         os << "Consumer_var _ciao_consumer =" << endl;
@@ -2150,21 +2154,21 @@ namespace
       traverse (Type& c)
       {
         os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
-        
+
         Traversal::ConsumerData::belongs (c, belongs_);
-        
+
         os << "_init," << endl;
-        
+
         Traversal::ConsumerData::belongs (c, belongs_);
-        
+
         os << ");" << endl;
       }
-      
+
     private:
       TypeNameEmitter type_name_emitter_;
       Traversal::Belongs belongs_;
     };
-    
+
     struct PortTablePopulator : Traversal::ProviderData,
                                 Traversal::UserData,
                                 Traversal::PublisherData,
@@ -2176,7 +2180,7 @@ namespace
         : EmitterBase (c)
       {
       }
-      
+
       virtual void
       traverse (SemanticGraph::Provider& p)
       {
@@ -2184,27 +2188,27 @@ namespace
            << "  this->provide_" << p.name () << " (" << endl
            << "  " << STRS[ENV_SNGL_ARG] << ");"
            << "ACE_CHECK;" << endl;
-           
+
         os << "this->add_facet (" << endl
            << "\"" << p.name () << "\"," << endl
            << "obj_var.in ());" << endl;
       }
-      
+
       virtual void
       traverse (SemanticGraph::User& u)
       {
       }
-      
+
       virtual void
       traverse (SemanticGraph::Publisher& p)
       {
       }
-      
+
       virtual void
       traverse (SemanticGraph::Emitter& p)
       {
       }
-      
+
       virtual void
       traverse (SemanticGraph::Consumer& p)
       {
@@ -2212,7 +2216,7 @@ namespace
            << "  this->get_consumer_" << p.name () << " (" << endl
            << "  " << STRS[ENV_SNGL_ARG] << ");"
            << "ACE_CHECK;" << endl;
-           
+
         os << "this->add_consumer (" << endl
            << "\"" << p.name () << "\"," << endl
            << "ec_base_var.in ());" << endl;
@@ -2256,7 +2260,7 @@ namespace
          << STRS[ENV_ARG] << ");"
          << "ACE_TRY_CHECK;"
          << "}" << endl
-         << "this->populate_port_tables (" << STRS[ENV_SNGL_ARG] 
+         << "this->populate_port_tables (" << STRS[ENV_SNGL_ARG]
          << ");"
          << "ACE_TRY_CHECK;"
          << "}"
@@ -2617,7 +2621,7 @@ namespace
          << "{"
          << "ACE_THROW (::CORBA::BAD_PARAM ());" << endl
          << "}" << endl;
-         
+
       // Generate an IF block for each 'emits' declaration.
       {
         Traversal::Component component_emitter;
@@ -2923,8 +2927,8 @@ namespace
          << t.name () << "_Servant::ciao_activate (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{";     
-         
+         << "{";
+
       // Generate the macro to register a value factory for each
       // eventtype consumed.
       {
@@ -3072,10 +3076,10 @@ namespace
 
         component_emitter.traverse (t);
       }
-      
-      os << "// Private method to populate the port tables." 
+
+      os << "// Private method to populate the port tables."
          << endl << endl;
-      
+
       os << "void" << endl
          << t.name () << "_Servant::populate_port_tables (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
@@ -3083,7 +3087,7 @@ namespace
          << "{"
          << "::CORBA::Object_var obj_var;"
          << "::Components::EventConsumerBase_var ec_base_var;" << endl;
-         
+
       {
         Traversal::Component component_emitter;
 
@@ -3093,13 +3097,13 @@ namespace
 
         Traversal::Defines defines;
         component_emitter.edge_traverser (defines);
-        
+
         PortTablePopulator port_table_populator (ctx);
         defines.node_traverser (port_table_populator);
-        
+
         component_emitter.traverse (t);
       }
-         
+
       os << "}" << endl;
     }
 
