@@ -70,11 +70,10 @@ TAO_Linear_OpTable::lookup (const CORBA_String &opname)
   for (CORBA_ULong i;
        i < this->next_;
        i++)
-    {
-      if (!ACE_OS::strncmp (opname,
-			    this->tbl_[i].opname, ACE_OS::strlen (opname)))
-	return this->tbl_[i].skel_ptr;
-    }
+    if (!ACE_OS::strncmp (opname,
+			  this->tbl_[i].opname, ACE_OS::strlen (opname)))
+      return this->tbl_[i].skel_ptr;
+
   return 0;  // not found
 }
 
