@@ -123,6 +123,9 @@
 // C++ Exception Specification ignored
 #pragma warning(disable:4290)
 
+# pragma warning(disable:4231)
+// Disable warning of using Microsoft Extension.
+
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
 // With the MSVC7 compiler there is a new 'feature' when a base-class is a

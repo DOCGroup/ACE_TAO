@@ -1,3 +1,13 @@
+Wed Dec 18 11:38:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-msvc-7.h: Added pragma prefix to disable
+	  warning of using Microsoft extension.
+
+	* ace/Timeprobe.h: Removed MSVC specific disabling and re-enabling
+	  of warning of using Microsoft entension.  We already do this
+	  through all the MSVC config files and there's no point of doing
+	  this again here.
+
 Mon Dec 16 16:34:23 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.i: Applied the following patch from Eugene Alterman
