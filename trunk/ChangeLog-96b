@@ -1,14 +1,70 @@
+Sun Nov 24 12:30:45 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Began adding support for WinSock 2.0.  Thanks to Luca for
+ 	  this.
+
+	* ace/UPIPE_{Acceptor,Connector,Stream}: Updated the UPIPE
+ 	  components so that they keep a reference count that keeps track
+ 	  of the number of "owners" (which should always be 2 -- one for
+ 	  the connector-side and one for the acceptor-side).  By keeping
+ 	  this count, we can ensure that we don't close down the
+ 	  underlying ACE_Stream until both sides have called close().
+  	  This will remove a nasty bug that was lurking in some of the
+ 	  tests.
+
+	* ace/Message_Block.h: Added a new copy() method that assumes the
+ 	  buf passed in is a NUL-terminated string.
+
+	* tests/UPIPE_SAP_Test.cpp: Modified this test so that threads
+ 	  exit in a well-defined order.  This should prevent problems on
+ 	  Win32.
+
+	* ace/OS.i: Changed SIGNAL_SAFE_OS_CALLS to
+ 	  ACE_HAS_SIGNAL_SAFE_OS_CALLS to be consistent...
+
+	* ace/config-vxworks*.h: Removed the SIGNAL_SAFE_OS_CALLS #define
+ 	  from the VxWorks config files.  There's no need to use this by
+ 	  default.
+
+	* ace/Event_Handler: Moved all the default implementations of the
+ 	  virtual methods in ACE_Event_Handler from the *.i file to the
+ 	  *.cpp and made them no longer be inlines.  This will fix some
+ 	  problems with some compilers (e.g., MSVC++ 4.1) and is also more
+ 	  reasonable since there's really no purpose for inlining these
+ 	  virtual functions since they are rarely called.  Thanks to James
+ 	  Michael Dwyer <jdwyer@knox.edu> for reporting this problem.
+
+Sat Nov 23 12:39:03 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf.y: Changed the parser so that it accepts DLL
+ 	  pathnames that lack *.dll or *.so suffixes.  This is necessary
+ 	  so that we can automatically append the correct suffix depending
+ 	  on the platform.  Thanks to Tilo Christ
+ 	  <christ@swl.fh-heilbronn.de> for suggesting this.
+
+	* ace/Makefile: Updated the Makefile so that it will automatically
+ 	  insert the appropriate so that conditions for include of
+ 	  ace/OS.h can be checked correctly.
+
+Fri Nov 22 18:12:49 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i (thr_sigsetmask): DCE threads (at least as implemented
+ 	  by Digital) have no means for setting the signal mask on a
+ 	  per-thread basis.  Therefore, modified the code so that it
+ 	  correctly returns ACE_NOTSUP_RETURN(-1) for DCEthreads.  Thanks
+ 	  to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+ 	  chasing this down.
+
+	* performance-tests/Synch-Benchmarks/synch_driver.cpp (run_test):
+ 	  Fixed this implementation so that it will shut down correctly
+ 	  when a signal occurs or a timeout occurs (whichever comes
+ 	  first).
+
 Fri Nov 22 08:02:39 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace.{mdp,mak}: Changed ace.mak so that it links with the
  	  non-debug version of Microsoft's multithreaded dll when compiled
  	  with the release option
-
-Wed Nov 20 10:32:52 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
-
-	* tests: Mutex_Test.cpp Priority_Buffer_Test.cpp
-	  Reader_Writer_Test.cpp Thread_Pool_Test.cpp were changed
-	  slightly to remove some compile time warnings. 
 
 Thu Nov 21 10:37:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -48,7 +104,9 @@ Thu Nov 21 10:37:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  <make@cs.tu-berlin.de> for this suggestion!
 
 	* ace/OS.cpp: Added support for AfxBeginThread in
- 	  ACE_OS::thr_create().  Thanks to Matthias Kerkhoff
+ 	  ACE_OS::thr_create() and ACE_OS::exit().  Now ACE should work
+ 	  with MFC when you give the THR_USE_AFX flag to
+ 	  ACE_OS::thr_create()!  Thanks to Matthias Kerkhoff
  	  <make@cs.tu-berlin.de> for this!
 
 	* ace/Malloc_T.cpp (avail_chunks): Changed the return value to
@@ -101,15 +159,23 @@ Thu Nov 21 10:37:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  proves that he's a macho man, not a boy ;-)
 
 Thu Nov 21 08:12:51 1996  David L. Levine  <levine@cs.wustl.edu>
+
 	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU:
  	  put back the LD definition
 
 	* include/makeinclude/platform_osf1_4.0_g++.GNU:
  	  added LD definition to work with latest wrapper_macros.GNU
 
+Wed Nov 20 10:32:52 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests: Mutex_Test.cpp Priority_Buffer_Test.cpp
+ 	  Reader_Writer_Test.cpp Thread_Pool_Test.cpp were changed
+ 	  slightly to remove some compile time warnings.
+
 Wed Nov 20 21:35:28 1996  David L. Levine  <levine@cs.wustl.edu>
+
 	* ace/Svc_Conf_l.cpp:  added #include of ace/config.h so that
- 	  conditions for include of ace/OS.h can be checked
+ 	  conditions for include of ace/OS.h can be checked.
 
 Wed Nov 20 02:38:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

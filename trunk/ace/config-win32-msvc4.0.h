@@ -43,8 +43,21 @@
 #include /**/ <windows.h>  // if he's not doing MFC, snag this
 #endif
 
+// Define the following two macros if you're compiling with WinSock 2.0.
+// #define ACE_HAS_WINSOCK2
+// #define ACE_WSOCK_VERSION 2, 0
+
+// Undefine the following macro if you're compiling with WinSock 2.0.
+// Version 1.1 of WinSock
+#define ACE_WSOCK_VERSION 1, 1
+
 // Needed for timeval.
-#include /**/ <winsock.h> 
+#if defined (ACE_HAS_WINSOCK2)
+#include /**/ <winsock2.h>
+#include "ace/ws2tcpip.h"
+#else
+#include /**/ <winsock.h>
+#endif /* ACE_HAS_WINSOCK2 */
 
 #define ACE_HAS_UNICODE
 #define ACE_HAS_STL
@@ -71,8 +84,6 @@
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
-// Version 1.1 of WinSock
-#define ACE_WSOCK_VERSION 1, 1
 #define ACE_LACKS_RECVMSG
 #define ACE_LACKS_SENDMSG
 

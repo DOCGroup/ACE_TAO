@@ -407,12 +407,12 @@ ACE_TSS_Cleanup::exit (void *status)
 
 #if defined (ACE_HAS_MFC)	
   // allow CWinThread-destructor to be invoked from AfxEndThread
-  // _endthreadex() will be called from AfxEndThread so don't exit the
+  // _endthreadex will be called from AfxEndThread so don't exit the
   // thread now if we are running an MFC thread.
-  // if (ACE_BIT_DISABLED (flags, THR_USE_AFX))
+  CWinThread *pThread = ::AfxGetThread ();
+  if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
 #endif /* ACE_HAS_MFC */
-  ::_endthreadex ((DWORD) status);
-
+    ::_endthreadex ((DWORD) status);
 #if 0 
   ::ExitThread ((DWORD) status);
 #endif 

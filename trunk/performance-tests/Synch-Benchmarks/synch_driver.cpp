@@ -20,33 +20,18 @@ public:
 private:
   void run_test (void);
 
-  virtual int handle_signal (int signum
-#if defined (ACE_HAS_SIGINFO_T)
-, siginfo_t * = 0, ucontext_t * = 0
-#endif /* ACE_HAS_SIGINFO_T */
-);
-  
   int n_lwps_;
   int orig_n_lwps_;
+  ACE_Sig_Adapter done_;
 };
-
-int
-Benchmark_Test::handle_signal (int signum
-#if defined (ACE_HAS_SIGINFO_T)
-, siginfo_t *, ucontext_t *
-#endif /* ACE_HAS_SIGINFO_T */
-)
-{
-  ACE_DEBUG ((LM_DEBUG, "caught %S, shutting down the test%a\n", signum, 1));
-  return 0;
-}
 
 Benchmark_Test::Benchmark_Test (void)
   : ACE_Service_Config (1), // Do not load default services
     n_lwps_ (0), 
-    orig_n_lwps_ (0) 
+    orig_n_lwps_ (0),
+    done_ (ACE_Sig_Handler_Ex (ACE_Service_Config::end_reactor_event_loop))
 {
-  ACE_Service_Config::reactor ()->register_handler (SIGINT, this);
+  ACE_Service_Config::reactor ()->register_handler (SIGINT, &this->done_);
 }
 
 void
@@ -63,9 +48,11 @@ Benchmark_Test::run_test (void)
   ACE_DEBUG ((LM_DEBUG, "starting timer\n"));
   options.start_timer ();
 
-  ACE_OS::select (0, 0, 0, 0, &timeout);
+  // Use Reactor as a timer (which can be interrupted by a signal).
+  ACE_Service_Config::run_reactor_event_loop (timeout);
+
   options.stop_timer ();
-  ACE_DEBUG ((LM_DEBUG, "stopping timer\n"));
+  ACE_DEBUG ((LM_DEBUG, "\nstopping timer\n"));
 
   // Stop thread(s) from making any further progress.
   ACE_Service_Config::thr_mgr ()->suspend_all (); 

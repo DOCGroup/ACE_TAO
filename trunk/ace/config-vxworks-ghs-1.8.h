@@ -40,7 +40,6 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UTSNAME_T
 #define ACE_MT_SAFE
-#define SIGNAL_SAFE_OS_CALLS
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
