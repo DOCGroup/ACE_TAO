@@ -1,3 +1,11 @@
+Fri Jun 26 10:43:02 EET DST 1998 Wei Chiang <wei.chiang@ntc.nokia.com>
+
+	* ace/CLASSIX/CLASSIX_OS.cpp:
+	ACE_CLASSIX_OS::ACE_CLASSIX_OS()
+	After created an CLASSIX reactor as an actor-wide sinleton reactor,
+	delete the original reator singleton, if any.
+
+
 Fri Jun 26 02:18:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Synch-Benchmarks/Benchmark[_Base].{h,cpp}:
@@ -86,6 +94,7 @@ Wed Jun 24 10:02:14 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           David for this info.
 
         * ace/CLASSIX: Reran "make depend."
+
 
 Wed Jun 24 13:34:32 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 
