@@ -82,9 +82,11 @@ Event_Supplier::start_generating_events (void)
     }
 
   CORBA::Any any;
+
   do
   {
-    // Insert the event data
+
+  // Insert the event data
     this->insert_event_data (any,
                              schedule_iter);
 
@@ -268,7 +270,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         navigation_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
         navigation_.overhead = (double) (ACE_OS::rand() % 10);
 
-        data.replace (_tc_Navigation, &navigation_, 1, TAO_TRY_ENV);
+        data.replace (_tc_Navigation, &navigation_, 0, TAO_TRY_ENV);
       }
       else if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
                (strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
@@ -302,7 +304,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         weapons_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
         weapons_.overhead = (double) (ACE_OS::rand() % 10);
 
-        data.replace (_tc_Weapons, &weapons_, 1, TAO_TRY_ENV);
+        data.replace (_tc_Weapons, &weapons_, 0, TAO_TRY_ENV);
       }
       else {
         ACE_ERROR ((LM_ERROR,
