@@ -16,30 +16,30 @@ Mon Apr 12 14:19:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Apr 12 14:09:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-        * tao/Servant_Base.h :
-        * tao/Server_Request.i :
-        * tao/Operation_Table.h :
-        * tao/Servant_Base.cpp:
-        * tao/Server_Request.cpp :
-        * tao/Operation_Table.cpp : Committed again the changes related to
-        Removing strlen calculation for the Operation Name from the
-        critical path. Length as it is obtained during demarshalling is
-        stored in the IIOP_Request object and passed to the Perfect Hash's
-        find operation. ACE_CString is used to store the operation as
-        opposed char *. Thanks to Irfan for suggesting this change.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp,
+        * tao/Servant_Base.h,
+        * tao/Server_Request.i,
+        * tao/Operation_Table.h,
+        * tao/Servant_Base.cpp,
+        * tao/Server_Request.cpp,
+        * tao/Operation_Table.cpp: Committed again the changes related to
+ 	  Removing strlen calculation for the Operation Name from the
+ 	  critical path. Length as it is obtained during demarshalling is
+ 	  stored in the IIOP_Request object and passed to the Perfect
+ 	  Hash's find operation. ACE_CString is used to store the
+ 	  operation as opposed char *. Thanks to Irfan for suggesting this
+ 	  change.
 
 Mon Apr 12 13:41:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/Timeprobe.h:
-        * tao/Connect.cpp:
+        * tao/Timeprobe.h,
+        * tao/Connect.cpp,
         * tao/Invocation.cpp:
-          Added four new timeprobes to measure client outgoing
-          process time and server process time. Whereas the
-          pluggable protocols timeprobes were a subset of the
-          regular timeprobes, these are a disjoint set. If both
-          the pluggable and minimal timeprobes macros are
-          uncommented in Timeprobe.h, pluggable will override.
+          Added four new timeprobes to measure client outgoing process
+ 	  time and server process time. Whereas the pluggable protocols
+ 	  timeprobes were a subset of the regular timeprobes, these are a
+ 	  disjoint set. If both the pluggable and minimal timeprobes
+ 	  macros are uncommented in Timeprobe.h, pluggable will override.
 
 Mon Apr 12 12:37:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
