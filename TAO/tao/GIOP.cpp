@@ -935,7 +935,7 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
                                   TAO_OutputCDR &output,
                                   const TAO_GIOP_Version &version)
 {
-  CORBA::ULong request_id;
+  CORBA::ULong request_id = 0;
   CORBA::ULong response_required = 0;
   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
   ACE_TRY
