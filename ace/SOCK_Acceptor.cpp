@@ -108,19 +108,23 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
     return -1;
   else
     {
+      // On Win32 the third parameter to <accept> must be a NULL
+      // pointer if we want to ignore the client's address.
+      int *len_ptr = 0;
       sockaddr *addr = 0;
       int len = 0;
 
       if (remote_addr != 0)
 	{
 	  len = remote_addr->get_size ();
+          len_ptr = &len;
 	  addr = (sockaddr *) remote_addr->get_addr ();
 	}
 
       do
 	new_stream.set_handle (ACE_OS::accept (this->get_handle (),
 					       addr,
-					       &len));
+					       len_ptr));
       while (new_stream.get_handle () == ACE_INVALID_HANDLE 
 	     && restart != 0
 	     && errno == EINTR
@@ -155,19 +159,23 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
     return -1;
   else
     {
-      sockaddr *addr = 0;
+      // On Win32 the third parameter to <accept> must be a NULL
+      // pointer if we want to ignore the client's address.
+      int *len_ptr = 0;
       int len = 0;
+      sockaddr *addr = 0;
 
       if (remote_addr != 0)
 	{
 	  len = remote_addr->get_size ();
+          len_ptr = &len;
 	  addr = (sockaddr *) remote_addr->get_addr ();
 	}
 
       do
 	new_stream.set_handle (ACE_OS::accept (this->get_handle (),
 					       addr,
-					       &len,
+					       len_ptr,
 					       qos_params));
       while (new_stream.get_handle () == ACE_INVALID_HANDLE 
 	     && restart != 0
