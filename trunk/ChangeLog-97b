@@ -49,6 +49,9 @@ Thu Sep 18 16:30:24 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Semaphore_Test: protected declarations of test_timeout_count
 	  and timeouts because they're not used on Solaris.
 
+	* netsvcs/lib/Client_Logging_Handler.cpp: added template
+	  instantiations.
+
 Thu Sep 18 09:04:40 1997    <irfan@TWOSTEP>
 
 	* ace/Dynamic: Changed the way ACE_Dynamic worked. Instead of
