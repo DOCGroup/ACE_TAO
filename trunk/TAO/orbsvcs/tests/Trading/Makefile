@@ -35,7 +35,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 LSRC    = $(addsuffix .cpp,$(FILES))
 LIBS    = -lorbsvcs -lTAO
-LDLIBS  = -lTTest -lorbsvcs -lTAO
+LDLIBS  = -lorbsvcs -lTAO
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
@@ -63,16 +63,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .PRECIOUS: TTestS.cpp TTestS.h TTestC.cpp TTestC.h
 
 ifneq ($(BIN),)
-ifeq ($(SHLIB), $(findstring $(SHLIB), $(BUILD)))
-$(BIN): $(SHLIB)
-endif
-ifeq ($(LIB), $(findstring $(LIB), $(BUILD)))
-$(BIN): $(LIB)
-endif
+  ifeq ($(SHLIB), $(findstring $(SHLIB), $(BUILD)))
+    $(BIN): $(SHLIB)
+  endif
+  ifeq ($(LIB), $(findstring $(LIB), $(BUILD)))
+    $(BIN): $(LIB)
+  endif
 endif # BIN
-
-clean:
-	-$(RM) *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-$(RM) $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) TTestS_T.*
