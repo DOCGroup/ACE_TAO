@@ -1,3 +1,11 @@
+Sun May 25 06:04:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_Dirent.cpp:
+        * ace/ace_wchar.h:
+          Added defines for ACE_TEXT_File_Attributes for both
+          ACE_USES_WCHAR and !ACE_USES_WCHAR and changed the call in
+          OS_Dirent.cpp to use the new macro.
+
 Sat May 24 17:21:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Service_Configurator/Misc/Makefile:
