@@ -1,3 +1,7 @@
+Sat Oct 31 17:49:18 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.38 released.
+
 Sat Oct 31 17:14:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* performance-tests/Demux/CodeGen/gen_names.cpp: Cleaned up the
