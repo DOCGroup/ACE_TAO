@@ -1,3 +1,14 @@
+Mon May  1 16:51:07 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/msvc_auto_compile.pl: 
+          
+          Now gets the current directory for the default of ACE_ROOT 
+          instead of using ".".  Also only tries compiling files ending
+          with dsp, not just ones with .dsp in their name (like *.dsp.bak).
+          Finally, added a print_status options (-s) that will output
+          status messages to STDERR, so you can see how much far it has
+          progressed when you are redirecting stdout to a file.
+
 Mon May 01 12:41:39 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.cpp (close_i): Restored freeing of the
