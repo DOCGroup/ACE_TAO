@@ -7,8 +7,8 @@
 ACE_RCSID(Supplier, Supplier_Input_Handler, "$Id$")
 
 Supplier_Input_Handler::Supplier_Input_Handler ()
-  : notifier_ (0),
-    handle_ (0)
+  : handle_ (0),
+    notifier_ (0)
 {
   // No-Op.
 }
