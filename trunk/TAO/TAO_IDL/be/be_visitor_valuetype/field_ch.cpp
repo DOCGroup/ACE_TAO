@@ -129,33 +129,33 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
       // now use this array as a "type" for the subsequent declarator
       os->indent (); // start from current indentation
       // the set method
-      *os << pre_op() << "void " << ub->local_name () << " ("
+      *os << pre_op () << "void " << ub->local_name () << " ("
           << "_" << bt->local_name () << ")"
-          << post_op() << "    // set" << be_nl;
+          << post_op () << "    // set" << be_nl;
       // the get method
-      *os << pre_op() << "const _" << bt->local_name ()
+      *os << pre_op () << "const _" << bt->local_name ()
           << "_slice * " << ub->local_name ()
-          << " (void) const" << post_op() << be_nl;
-      *os << pre_op() << "_" << bt->local_name ()
+          << " (void) const" << post_op () << be_nl;
+      *os << pre_op () << "_" << bt->local_name ()
           << "_slice * " << ub->local_name ()
-          << " (void)" << post_op();
+          << " (void)" << post_op ();
     }
   else
     {
       // now use this array as a "type" for the subsequent declarator
       os->indent (); // start from current indentation
       // the set method
-      *os << pre_op() << "void " << ub->local_name () << " ("
-          << bt->nested_type_name (bu) << ")" << post_op() << "    // set"
+      *os << pre_op () << "void " << ub->local_name () << " ("
+          << bt->name () << ")" << post_op () << "    // set"
           << be_nl;
       // the get method
       *os << pre_op()
-          << bt->nested_type_name (bu, "_slice *") << " " << ub->local_name ()
-          << " (void)" << post_op() << be_nl;
+          << bt->name () << "_slice *" << ub->local_name ()
+          << " (void)" << post_op () << be_nl;
       // the get (read/write) method
-      *os << pre_op() << "const "
-          << bt->nested_type_name (bu, "_slice *") << " " << ub->local_name ()
-          << " (void) const" << post_op() << "\n\n";
+      *os << pre_op () << "const "
+          << bt->name () << "_slice *" << ub->local_name ()
+          << " (void) const" << post_op () << "\n\n";
     }
 
   return 0;
@@ -221,12 +221,12 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
   // now use this enum as a "type" for the subsequent declarator
   os->indent (); // start from current indentation
   // the set method
-  *os << pre_op() << "void " << ub->local_name () << " ("
-      << bt->nested_type_name (bu) << ")" << post_op() << "    // set"
+  *os << pre_op () << "void " << ub->local_name () << " ("
+      << bt->name () << ")" << post_op () << "    // set"
       << be_nl;
   // the get method
-  *os << pre_op() << bt->nested_type_name (bu) << " " << ub->local_name ()
-      << " (void) const" << post_op() << "     // get method\n\n";
+  *os << pre_op () << bt->name () << " " << ub->local_name ()
+      << " (void) const" << post_op () << "     // get method\n\n";
 
   return 0;
 }
@@ -260,11 +260,11 @@ be_visitor_valuetype_field_ch::visit_interface (be_interface *node)
   os->indent (); // start from current indentation
   // set method
   *os << pre_op() << "void " << ub->local_name () << " ("
-      << bt->nested_type_name (bu, "_ptr")
+      << bt->name () << "_ptr"
       << ")" << post_op() << "    // set" << be_nl;
   // get method
   *os << pre_op()
-      << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
+      << bt->name () << "_ptr " << ub->local_name ()
       << " (void) const" << post_op() << "     // get method\n\n";
   return 0;
 }
@@ -297,13 +297,13 @@ be_visitor_valuetype_field_ch::visit_interface_fwd (be_interface_fwd *node)
 
   os->indent (); // start from current indentation
   // set method
-  *os << pre_op() << "void " << ub->local_name () << " ("
-      << bt->nested_type_name (bu, "_ptr")
-      << ")" << post_op() << "    // set" << be_nl;
+  *os << pre_op () << "void " << ub->local_name () << " ("
+      << bt->name () << "_ptr"
+      << ")" << post_op () << "    // set" << be_nl;
   // get method
-  *os << pre_op()
-      << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
-      << " (void) const" << post_op() << "     // get method\n\n";
+  *os << pre_op ()
+      << bt->name () << "_ptr " << ub->local_name ()
+      << " (void) const" << post_op () << "     // get method\n\n";
   return 0;
 }
 
@@ -335,13 +335,13 @@ be_visitor_valuetype_field_ch::visit_valuetype (be_valuetype *node)
 
   os->indent (); // start from current indentation
   // set method
-  *os << pre_op() << "void " << ub->local_name () << " ("
-      << bt->nested_type_name (bu, "*")
-      << ")" << post_op() << "    // set" << be_nl;
+  *os << pre_op () << "void " << ub->local_name () << " ("
+      << bt->name () << " *"
+      << ")" << post_op () << "    // set" << be_nl;
   // get method
-  *os << pre_op()
-      << bt->nested_type_name (bu, "*") << " " << ub->local_name ()
-      << " (void) const" << post_op() << "     // get method\n\n";
+  *os << pre_op ()
+      << bt->name () << " *" << ub->local_name ()
+      << " (void) const" << post_op () << "     // get method\n\n";
   return 0;
 }
 
@@ -373,13 +373,13 @@ be_visitor_valuetype_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   os->indent (); // start from current indentation
   // set method
-  *os << pre_op() << "void " << ub->local_name () << " ("
-      << bt->nested_type_name (bu, "*")
-      << ")" << post_op() << "    // set" << be_nl;
+  *os << pre_op () << "void " << ub->local_name () << " ("
+      << bt->name () << " *"
+      << ")" << post_op () << "    // set" << be_nl;
   // get method
-  *os << pre_op()
-      << bt->nested_type_name (bu, "*") << " " << ub->local_name ()
-      << " (void) const" << post_op() << "     // get method\n\n";
+  *os << pre_op ()
+      << bt->name () << " *" << ub->local_name ()
+      << " (void) const" << post_op () << "     // get method\n\n";
   return 0;
 }
 
@@ -413,38 +413,38 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_pseudo:
       // set method
-      *os << pre_op() << "void " << ub->local_name () << " ("
-          << bt->nested_type_name (bu, "_ptr") << ")"
-          << post_op() << "    // set" << be_nl;
+      *os << pre_op () << "void " << ub->local_name () << " ("
+          << bt->name () << "_ptr)"
+          << post_op () << "    // set" << be_nl;
         // get method
-      *os << pre_op()
-          << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
-          << " (void) const" << post_op() << "     // get method\n\n";
+      *os << pre_op ()
+          << bt->name () << "_ptr " << ub->local_name ()
+          << " (void) const" << post_op () << "     // get method\n\n";
       break;
     case AST_PredefinedType::PT_any:
       // set method
-      *os << pre_op() << "void " << ub->local_name () << " ("
-          << bt->nested_type_name (bu) << ")"
-          << post_op() << "    // set" << be_nl;
+      *os << pre_op () << "void " << ub->local_name () << " ("
+          << bt->name () << ")"
+          << post_op () << "    // set" << be_nl;
       // get method (read-only)
-      *os << pre_op() << "const " << bt->nested_type_name (bu) << " "
+      *os << pre_op () << "const " << bt->name () << " "
           << ub->local_name () << " (void) const"
-          << post_op() << "     // get method\n\n";
+          << post_op () << "     // get method\n\n";
       // get method (read/write)
-      *os << pre_op() << bt->nested_type_name (bu) << " "
+      *os << pre_op () << bt->name () << " "
           << ub->local_name () << " (void)"
-          << post_op() << "     // get method\n\n";
+          << post_op () << "     // get method\n\n";
       break;
     case AST_PredefinedType::PT_void:
       break;
     default:
       // set method
-      *os << pre_op() << "void " << ub->local_name () << " ("
-          << bt->nested_type_name (bu) << ")"
-          << post_op() << "    // set" << be_nl;
+      *os << pre_op () << "void " << ub->local_name () << " ("
+          << bt->name () << ")"
+          << post_op () << "    // set" << be_nl;
       // get method
-      *os << pre_op() << bt->nested_type_name (bu) << " " << ub->local_name ()
-          << " (void) const" << post_op() << "     // get method\n\n";
+      *os << pre_op () << bt->name () << " " << ub->local_name ()
+          << " (void) const" << post_op () << "     // get method\n\n";
     }
   return 0;
 }
@@ -522,17 +522,17 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
 
   os->indent ();
   // set method
-  *os << pre_op() << "void " << ub->local_name () << " (const "
-      << bt->nested_type_name (bu) << " &)"
-      << post_op() << "    // set" << be_nl;
+  *os << pre_op () << "void " << ub->local_name () << " (const "
+      << bt->name () << " &)"
+      << post_op () << "    // set" << be_nl;
   // read-only
-  *os << pre_op() << "const " << bt->nested_type_name (bu) << " &"
+  *os << pre_op () << "const " << bt->name () << " &"
       << ub->local_name  () << " (void) const"
-      << post_op() << "     // get method (read only)" << be_nl;
+      << post_op () << "     // get method (read only)" << be_nl;
   // read/write
-  *os << pre_op() << bt->nested_type_name (bu) << " &" << ub->local_name ()
+  *os << pre_op () << bt->name () << " &" << ub->local_name ()
       << " (void)"
-      << post_op() << "     // get method (read/write only)\n\n";
+      << post_op () << "     // get method (read/write only)\n\n";
 
   return 0;
 }
@@ -561,30 +561,30 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
   // three methods to set the string value
   if (node->width () == sizeof (char))
     {
-      *os << pre_op()
+      *os << pre_op ()
           << "void " << ub->local_name () << " (char *)"
-          << post_op() << "     // set" << be_nl;
-      *os << pre_op()
+          << post_op () << "     // set" << be_nl;
+      *os << pre_op ()
           << "void " << ub->local_name () << " (const char *)"
-          << post_op() << "     // set" << be_nl;
-      *os << pre_op()
+          << post_op () << "     // set" << be_nl;
+      *os << pre_op ()
           << "void " << ub->local_name () << " (const CORBA::String_var&)"
-          << post_op() << "     // set" << be_nl;
+          << post_op () << "     // set" << be_nl;
       //get method
-      *os << pre_op() << "const char *" << ub->local_name ()
-          << " (void) const" << post_op() << "     // get method\n\n";
+      *os << pre_op () << "const char *" << ub->local_name ()
+          << " (void) const" << post_op () << "     // get method\n\n";
     }
   else
     {
-      *os << pre_op()
+      *os << pre_op ()
           << "void " << ub->local_name () << " (CORBA::WChar *)"
-          << post_op() << "     // set" << be_nl;
-      *os << pre_op()
+          << post_op () << "     // set" << be_nl;
+      *os << pre_op ()
           << "void " << ub->local_name () << " (const CORBA::WChar *)"
-          << post_op() << "     // set" << be_nl;
-      *os << pre_op()
+          << post_op () << "     // set" << be_nl;
+      *os << pre_op ()
           << "void " << ub->local_name () << " (const CORBA::WString_var&)"
-          << post_op() << "     // set" << be_nl;
+          << post_op () << "     // set" << be_nl;
       //get method
       *os << pre_op() << "const CORBA::WChar *" << ub->local_name ()
           << " (void) const" << post_op() << "     // get method\n\n";
@@ -651,16 +651,16 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
     }
   os->indent ();
   // set method
-  *os << pre_op() << "void " << ub->local_name () << " (const "
-      << bt->nested_type_name (bu) << " &)"
-      << post_op() << "    // set" << be_nl;
+  *os << pre_op () << "void " << ub->local_name () << " (const "
+      << bt->name () << " &)"
+      << post_op () << "    // set" << be_nl;
     // read-only
-  *os << pre_op() << "const " << bt->nested_type_name (bu) << " &";
+  *os << pre_op () << "const " << bt->name () << " &";
   *os << ub->local_name  () << " (void) const"
-      << post_op() << "     // get method (read only)" << be_nl
+      << post_op () << "     // get method (read only)" << be_nl
     // read/write
-      << pre_op() << bt->nested_type_name (bu) << " &" << ub->local_name ()
-      << " (void)" << post_op() << "     // get method (read/write only)\n\n";
+      << pre_op () << bt->name () << " &" << ub->local_name ()
+      << " (void)" << post_op () << "     // get method (read/write only)\n\n";
 
   return 0;
 }
@@ -749,17 +749,17 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
     }
   os->indent ();
   // set method
-  *os << pre_op() << "void " << ub->local_name () << " (const "
-      << bt->nested_type_name (bu) << " &)"
-      << post_op() << "    // set" << be_nl;
+  *os << pre_op () << "void " << ub->local_name () << " (const "
+      << bt->name () << " &)"
+      << post_op () << "    // set" << be_nl;
     // read-only
-  *os << pre_op() << "const " << bt->nested_type_name (bu) << " &"
+  *os << pre_op () << "const " << bt->name () << " &"
       << ub->local_name  () << " (void) const"
-      << post_op() << "     // get method (read only)"
+      << post_op () << "     // get method (read only)"
       << be_nl;
     // read/write
-  *os << pre_op() << bt->nested_type_name (bu) << " &" << ub->local_name ()
-      << " (void)" << post_op() << "     // get method (read/write only)\n\n";
+  *os << pre_op () << bt->name () << " &" << ub->local_name ()
+      << " (void)" << post_op () << "     // get method (read/write only)\n\n";
 
   return 0;
 }
