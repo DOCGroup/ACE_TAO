@@ -22,11 +22,10 @@
 // ============================================================================
 
 #if !defined (TAO_SVRRQST_H)
-#  define TAO_SVRRQST_H
+#define TAO_SVRRQST_H
 
-#  include "ace/OS.h"
-
-#  include "tao/cdr.h"
+#include "ace/OS.h"
+#include "tao/cdr.h"
 
 void CORBA_release (CORBA_ServerRequest_ptr req);
 CORBA_Boolean CORBA_is_nil (CORBA_ServerRequest_ptr req);

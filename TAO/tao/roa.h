@@ -27,7 +27,6 @@
 class ACE_Svc_Export ROA;
 typedef ROA* ROA_ptr;
 
-
 extern "C" const IID IID_ROA;
 
 class ACE_Svc_Export ROA : public CORBA_BOA

@@ -34,7 +34,7 @@ IIOP_Object::IIOP_Object (char *repository_id)
 
 ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id,
-			  IIOP::ProfileBody& a_profile)
+			  const IIOP::ProfileBody &a_profile)
   : STUB_Object (repository_id),
     profile (a_profile),
     fwd_profile (0),
