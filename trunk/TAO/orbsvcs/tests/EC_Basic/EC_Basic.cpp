@@ -127,9 +127,9 @@ ECB_Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "EC_Basic: start supplier_id_test\n"));
 
       ECB_SupplierID_Test supplier_id_test;
-      supplier_id_test.run (this->orb_,
-                            local_ec,
-                            scheduler,
+      supplier_id_test.run (this->orb_.in (),
+                            local_ec.in (),
+                            scheduler.in (),
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -142,9 +142,9 @@ ECB_Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "EC_Basic: start correlation_test\n"));
 
       ECB_Correlation_Test correlation_test;
-      correlation_test.run (this->orb_,
-                            local_ec,
-                            scheduler,
+      correlation_test.run (this->orb_.in (),
+                            local_ec.in (),
+                            scheduler.in (),
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
