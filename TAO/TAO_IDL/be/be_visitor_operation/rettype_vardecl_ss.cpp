@@ -180,7 +180,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_string (be_string *node)
 
   os->indent ();
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "CORBA::String_var _tao_retval;\n";
     }

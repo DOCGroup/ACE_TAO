@@ -731,7 +731,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
   this->op_name (bu, 
                  os);
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "::" << ub->local_name () << " (char *val)";
     }
@@ -756,7 +756,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
                  os);
   *os << "::" << ub->local_name ();
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << " (const char *val)" << be_nl;
     }
@@ -773,7 +773,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
       << bu->field_pd_prefix () << ub->local_name () << bu->field_pd_postfix ()
       << " = ";
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "CORBA::string_dup (val);" << be_uidt_nl;
     }
@@ -791,7 +791,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
                  os);
   *os << "::" << ub->local_name ();
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << " (const CORBA::String_var &val)" << be_nl;
     }
@@ -805,7 +805,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   *os << "// set the value" << be_nl;
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "CORBA::String_var " << ub->local_name ();
     }
@@ -823,7 +823,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
   *os << "}" << be_nl;
 
   // get method
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << this->pre_op () << "const char *" << be_nl;
     }

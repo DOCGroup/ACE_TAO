@@ -609,7 +609,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
             }
           else
             {
-              if (node->width () == sizeof (char))
+              if (node->width () == (long) sizeof (char))
                 {
                   *os << "CORBA::Any::to_string (";
                 }
@@ -652,7 +652,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
               break;
             case AST_Argument::dir_INOUT:
             case AST_Argument::dir_OUT:
-              if (node->width () == sizeof (char))
+              if (node->width () == (long) sizeof (char))
                 {
                   *os << "CORBA::Any::from_string ((char *)";
                 }

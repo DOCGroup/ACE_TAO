@@ -701,7 +701,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   *os << "// accessor to set the member" << be_nl
       << "ACE_INLINE void" << be_nl;
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << bu->name () << "::" << ub->local_name () << " (char *val)";
     }
@@ -744,7 +744,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       << "ACE_INLINE void" << be_nl
       << bu->name () << "::" << ub->local_name ();
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << " (const char *val)" << be_nl << "{\n";
     }
@@ -779,7 +779,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   *os << "// set the value" << be_nl
       << "this->u_." << ub->local_name () << "_ = ";
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "CORBA::string_dup (val);" << be_uidt_nl << "}\n\n";
     }
@@ -793,7 +793,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       << "ACE_INLINE void" << be_nl
       << bu->name () << "::" << ub->local_name ();
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << " (const CORBA::String_var &val)" << be_nl;
     }
@@ -827,7 +827,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   *os << "// set the value" << be_nl;
 
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "CORBA::String_var " << ub->local_name ();
     }
@@ -842,7 +842,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   *os << "}\n\n";
 
   // get method
-  if (node->width () == sizeof (char))
+  if (node->width () == (long) sizeof (char))
     {
       *os << "ACE_INLINE const char *" << be_nl;
     }
