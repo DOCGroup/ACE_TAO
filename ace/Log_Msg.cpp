@@ -71,6 +71,10 @@ public:
   static ACE_Thread_Mutex *get_lock (void);
 
 #if defined (VXWORKS)
+  // For keeping track of the number of tasks, so we know when to
+  // add or delete the task delete hook.
+  static u_int task_count_;
+
   static void atexit (WIND_TCB *);
 #else
   static void atexit (void);
@@ -84,13 +88,13 @@ public:
 private:
   static ACE_Thread_Mutex *lock_;
 
+#if !defined (VXWORKS)
   // Holds a list of all <ACE_Log_Msg> instances.  <instances_>
   // requires global construction/destruction.  If that's a problem,
   // could change it to a pointer and allocate it dynamically when
   // lock_ is allocated.
-#if !defined (VXWORKS)
   static ACE_Log_Msg_Set instances_;
-#endif /* VXWORKS */
+#endif /* ! VXWORKS */
 };
 
 #if defined (ACE_HAS_SIG_C_FUNC)
@@ -117,15 +121,24 @@ ACE_Log_Msg_Manager::get_lock (void)
 }
 
 #if defined (VXWORKS)
+u_int ACE_Log_Msg_Manager::task_count_ = 0;
+
 void
 ACE_Log_Msg_Manager::atexit (WIND_TCB *tcb)
 {
-  // The task is exiting, so its ACE_Log_Msg instance.
+  // The task is exiting, so delete its ACE_Log_Msg instance.
   delete (ACE_Log_Msg *) tcb->spare1;
 
-  // Ugly, ugly, but don't know a better way.
-  delete ACE_Log_Msg_Manager::lock_;
-  ACE_Log_Msg_Manager::lock_ = 0;
+  // If this is the last task to exit from the program, then delete the task
+  // delete hook. Also, delete the global lock_.
+  if (--task_count_ == 0)
+    {
+      ::taskDeleteHookDelete ((FUNCPTR) ACE_Log_Msg_Manager::atexit);
+
+      // Ugly, ugly, but don't know a better way.
+      delete ACE_Log_Msg_Manager::lock_;
+      ACE_Log_Msg_Manager::lock_ = 0;
+    }
 }
 #else
 ACE_Log_Msg_Set ACE_Log_Msg_Manager::instances_;
@@ -238,8 +251,11 @@ ACE_Log_Msg::instance (void)
       // thread-safe.
       ACE_Log_Msg_Manager::get_lock ();
 
-      // Register cleanup handler.
-      ::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::atexit);
+      if (ACE_Log_Msg_Manager::task_count_++ == 0)
+        {
+          // Register cleanup handler, just once, for all tasks.
+          ::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::atexit);
+        }
 
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage, i.e., in the task control block.
