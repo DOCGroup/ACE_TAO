@@ -107,7 +107,7 @@ MIF_Scheduler::create_segment_scheduling_parameter (CORBA::Short importance)
 
   
 void 
-MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &guid,
+MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &/*guid*/,
 					     const char *,
 					     CORBA::Policy_ptr sched_policy,
 					     CORBA::Policy_ptr
@@ -168,10 +168,10 @@ MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 }
 
 void 
-MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &guid,
-					  const char *name,
+MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/*guid*/,
+					  const char */*name*/,
 					  CORBA::Policy_ptr sched_policy,
-					  CORBA::Policy_ptr implicit_sched_param
+					  CORBA::Policy_ptr /*implicit_sched_param*/
 					  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
@@ -303,9 +303,9 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr
 void 
 MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr,
 				RTScheduling::Current::IdType_out guid_out,
-				CORBA::String_out name,
-				CORBA::Policy_out sched_param,
-				CORBA::Policy_out implicit_sched_param
+				CORBA::String_out /*name*/,
+				CORBA::Policy_out /*sched_param*/,
+				CORBA::Policy_out /*implicit_sched_param*/
 				ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableInterceptor::ForwardRequest))

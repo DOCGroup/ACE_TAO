@@ -90,7 +90,7 @@ Thread_Task::activate_task (RTScheduling::Current_ptr current,
 int
 Thread_Task::svc (void)
 {
-  static count = 0;
+  static int count = 0;
   count++;
 
   const char * name = 0;
