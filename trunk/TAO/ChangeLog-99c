@@ -1,16 +1,15 @@
 Thu Feb 18 20:07:10 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_factory.cpp: 
-	Added missing context states in the TAO_Compiled_Visitor_Factory
-	for servant implementation files
-	Thanks to Mason Taube <taube@westcon.prc.com> for bringing it to
-	our notice
+	  Added missing context states in the TAO_Compiled_Visitor_Factory
+ 	  for servant implementation files Thanks to Mason Taube
+ 	  <taube@westcon.prc.com> for bringing it to our notice.
 
 Thu Feb 18 17:28:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/dynany_test/Makefile:
-	  Fixed a line that needed to start with a tab. Thanks
-	  to Håkan Källberg for reporting this.
+	* TAO/tests/dynany_test/Makefile: Fixed a line that needed to
+ 	  start with a tab. Thanks to Hakan Kallberg <hk@simulina.se> for
+ 	  reporting this.
 
 Thu Feb 18 00:50:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
