@@ -23,7 +23,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-#include "ace/Synch.h"
+
+#ifdef ACE_HAS_THREADS
+# include "ace/os_include/os_pthread.h"
+#endif  /* ACE_HAS_THREADS */
 
 #include <openssl/ssl.h>
 

@@ -13,6 +13,8 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
+#include "ace/OS_NS_errno.h"
 
 #include <openssl/x509.h>
 #include <openssl/err.h>
