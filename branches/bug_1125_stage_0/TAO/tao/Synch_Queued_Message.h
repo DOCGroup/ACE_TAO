@@ -51,7 +51,8 @@ public:
    * @param alloc The allocator that is used to allocate objects of
    *        this type.
    */
-  TAO_Synch_Queued_Message (const ACE_Message_Block *contents;
+  TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
+                            ACE_Allocator *alloc = 0);
 
 
 
@@ -67,6 +68,7 @@ public:
   virtual int all_data_sent (void) const;
   virtual void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const;
   virtual void bytes_transferred (size_t &byte_count);
+  virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);
   virtual void destroy (void);
   //@}
 

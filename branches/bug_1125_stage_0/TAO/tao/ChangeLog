@@ -1,3 +1,18 @@
+Sun Jul 14 10:49:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Queued_Message.h:
+	* tao/Queued_Message.cpp: Added an argument in the constructor to
+	  pass an allocator. Added a pure virtual method, clone () to the
+	  interface. 
+	
+	* tao/Synch_Queued_Message.h:
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Asynch_Queued_Message.h:
+	* tao/Asynch_Queued_Message.cpp: Implemented the method clone (). 
+
+	* tao/Incoming_Mesage_Queue.cpp: Fixed a typo in a print
+	  statement.
+
 Fri Jul 12 14:10:14 2002   Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.h: 
