@@ -642,23 +642,6 @@ TAO_POA::teardown_servant_lock (PortableServer::Servant servant)
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
-ACE_INLINE TAO_POA_Current_Impl *
-TAO_POA_Current::implementation (void)
-{
-  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
-}
-
-ACE_INLINE TAO_POA_Current_Impl *
-TAO_POA_Current::implementation (TAO_POA_Current_Impl *new_current)
-{
-  TAO_ORB_Core_TSS_Resources *tss =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ();
-
-  TAO_POA_Current_Impl *old = tss->poa_current_impl_;
-  tss->poa_current_impl_ = new_current;
-  return old;
-};
-
 ACE_INLINE void
 TAO_POA_Current_Impl::POA_impl (TAO_POA *impl)
 {
