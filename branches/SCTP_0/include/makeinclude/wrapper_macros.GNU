@@ -59,6 +59,10 @@
 #                   an application that is linked with ACE to extract _exactly_ what it
 #                   needs from the library, resulting in a smaller executable.
 #                   Setting this to 1 overrides debug to 0.
+#  sctp             Build support for TAO SCIOP and for ACE SCTP
+#                   wrapper-facades. The sctp macro should be set to a string
+#                   value representing a particular SCTP implementation. 
+#                   Recognized values include: openss7
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -120,6 +124,9 @@
 #  PLATFORM_RAPI_CPPFLAGS   Platform CPP options for RAPI
 #  PLATFORM_RAPI_LDFLAGS    Platform LD options for RAPI
 #  PLATFORM_RAPI_LIBS       Platform libraries required with RAPI
+#  PLATFORM_SCTP_CPPFLAGS   Platform CPP options required for SCTP
+#  PLATFORM_SCTP_LDFLAGS    Platform LD options required for SCTP
+#  PLATFORM_SCTP_LIBS       Platform libraries required for SCTP
 #  PRELINK      Executable to precede linking, such as quantify
 #  PURELINK     If set, contains purify executable as well as all options
 #  PURE_CACHE_BASE_DIR
@@ -455,6 +462,13 @@ ifneq ($(rapi),)
   LIBS += $(PLATFORM_RAPI_LIBS)
   LDFLAGS += $(PLATFORM_RAPI_LDFLAGS)
 endif # rapi
+
+# if any sctp implementation is present then add
+ifneq ($(sctp),)
+ CPPFLAGS += -DACE_HAS_SCTP $(PLATFORM_SCTP_CPPFLAGS)
+ LDFLAGS  += $(PLATFORM_SCTP_LDFLAGS)
+ LIBS     += $(PLATFORM_SCTP_LIBS)
+endif
 
 ifeq ($(ace_with_gl),0)
   override ace_with_gl =
