@@ -158,6 +158,7 @@ sub new {
   $self->{'defaulted'}             = {};
   $self->{'custom_types'}          = {};
   $self->{'parents_read'}          = {};
+  $self->{'inheritance_tree'}      = {};
   $self->{'feature_parser'}        = new FeatureParser($gfeature, $feature);
   $self->{'convert_slashes'}       = $self->convert_slashes();
   $self->{'sort_files'}            = $self->sort_files();
@@ -288,9 +289,30 @@ sub begin_project {
         if ($status) {
           if (!defined $self->{'parents_read'}->{$file}) {
             $self->{'parents_read'}->{$file} = 1;
-            ## Begin reading the parent
+
+            ## Push the base project file onto the parent stack
             push(@{$self->{'reading_parent'}}, $file);
+
+            ## Collect up some information about the inheritance tree
+            my($tree) = basename($self->get_current_input());
+            $tree =~ s/\.[^\.]+//;
+            if (!defined $self->{'inheritance_tree'}->{$tree}) {
+              $self->{'inheritance_tree'}->{$tree} = {};
+            }
+            my($hash) = $self->{'inheritance_tree'}->{$tree};
+            foreach my $p (@{$self->{'reading_parent'}}) {
+              my($cpy) = basename($p);
+              $cpy =~ s/\.[^\.]+$//;
+              if (!defined $$hash{$cpy}) {
+                $$hash{$cpy} = {};
+              }
+              $hash = $$hash{$cpy};
+            }
+
+            ## Begin reading the parent
             $status = $self->parse_file($file);
+
+            ## Take the base project file off of the parent stack
             pop(@{$self->{'reading_parent'}});
 
             if (!$status) {
@@ -413,6 +435,7 @@ sub parse_line {
             $self->{'type_specific_assign'} = {};
             $self->{'flag_overrides'}       = {};
             $self->{'parents_read'}         = {};
+            $self->{'inheritance_tree'}     = {};
             $self->reset_generating_types();
           }
         }
@@ -2153,8 +2176,8 @@ sub check_features {
   }
 
   if ($info && !$status) {
-    print "Skipping " . $self->get_assignment('project_name') .
-          " (" . $self->get_current_input() . "), it $why.\n";
+    $self->diagnostic("Skipping " . $self->get_assignment('project_name') .
+                      " (" . $self->get_current_input() . "), it $why.");
   }
 
   return $status;
@@ -2324,6 +2347,12 @@ sub write_project {
 sub get_project_info {
   my($self) = shift;
   return $self->{'project_info'};
+}
+
+
+sub get_inheritance_tree {
+  my($self) = shift;
+  return $self->{'inheritance_tree'};
 }
 
 

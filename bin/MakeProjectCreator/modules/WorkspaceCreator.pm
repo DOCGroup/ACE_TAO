@@ -925,6 +925,30 @@ sub array_contains {
 }
 
 
+sub indirect_depdency {
+  my($self)   = shift;
+  my($ccheck) = shift;
+  my($cfile)  = shift;
+
+  if (defined $self->{'project_info'}->{$ccheck}) {
+    if ($self->{'project_info'}->{$ccheck}->[1] =~ /$cfile/) {
+      return 1;
+    }
+    else {
+      my($deps) = $self->create_array(
+                           $self->{'project_info'}->{$ccheck}->[1]);
+      foreach my $dep (@$deps) {
+        if ($self->indirect_depdency($dep, $cfile)) {
+          return 1;
+        }
+      }
+    }
+  }
+
+  return 0;
+}
+
+
 sub add_implicit_project_dependencies {
   my($self)      = shift;
   my($creator)   = shift;
@@ -944,6 +968,9 @@ sub add_implicit_project_dependencies {
   my(@pflkeys) = keys %{$self->{'project_file_list'}};
   foreach my $key (@pflkeys) {
     foreach my $ikey (@pflkeys) {
+      ## Not the same project and
+      ## The same directory and
+      ## We've not already added a dependency to this project
       if ($key ne $ikey &&
           ($self->{'project_file_list'}->{$key}->[1] eq
            $self->{'project_file_list'}->{$ikey}->[1]) &&
@@ -954,6 +981,8 @@ sub add_implicit_project_dependencies {
                       $self->{'project_file_list'}->{$key}->[2],
                       $self->{'project_file_list'}->{$ikey}->[2],
                       \@over)) {
+          ## The project contains shared source files, so we need to
+          ## look into adding an implicit inter-project dependency.
           $save{$ikey} = $self->{'project_file_list'}->{$ikey}->[2];
           $self->{'project_file_list'}->{$ikey}->[2] = \@over;
           if (defined $bidir{$key}) {
@@ -985,8 +1014,7 @@ sub add_implicit_project_dependencies {
           ## that we were going to append the dependency value, then
           ## ignore the generated dependency.  It is redundant and
           ## quite possibly wrong.
-          if (defined $self->{'project_info'}->{$ccheck} &&
-              $self->{'project_info'}->{$ccheck}->[1] !~ /$cfile/) {
+          if (!$self->indirect_depdency($ccheck, $cfile)) {
             ## Append the dependency
             $self->{'project_info'}->{$file}->[1] .= " $append";
           }

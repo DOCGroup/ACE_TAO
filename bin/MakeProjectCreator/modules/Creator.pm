@@ -133,19 +133,17 @@ sub parse_file {
   my($status, $errorString) = $self->read_file($input);
 
   if (!$status) {
-    print STDERR $self->getcwd() .
-                 "/$input: line " . $self->get_line_number() .
-                 ":\n";
-    $self->error($errorString);
+    $self->error($errorString,
+                 $self->getcwd() .
+                 "/$input: line " . $self->get_line_number() . ':');
   }
   elsif ($status && $self->{$self->{'type_check'}}) {
     ## If we are at the end of the file and the type we are looking at
     ## is still defined, then we have an error
-    print STDERR $self->getcwd() .
-                 "/$input: line " . $self->get_line_number() .
-                 ":\n";
     $self->error("Did not " .
-                 "find the end of the $self->{'grammar_type'}");
+                 "find the end of the $self->{'grammar_type'}",
+                 $self->getcwd() .
+                 "/$input: line " . $self->get_line_number() . ':');
     $status = 0;
   }
   $self->set_line_number($oline);

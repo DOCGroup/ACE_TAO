@@ -1,3 +1,29 @@
+Wed Feb 18 13:51:28 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/FeatureParser.pm:
+        * bin/MakeProjectCreator/modules/OutputMessage.pm:
+        * bin/MakeProjectCreator/modules/Parser.pm:
+
+          Make all of the error and diagnostic messages go through the
+          OutputMessage module.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Made inheritance hierarchy information available to the project
+          creator subclasses.
+
+        * bin/MakeProjectCreator/modules/Version.pm:
+
+          Increment the version number.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Fixed a problem with the implict inter-project dependency
+          generation code.  It now looks at indirect project dependency to
+          avoid adding inter-project dependencies when they are not needed.
+          This fixes [BUGID 1653].
+
 Wed Feb 18 11:36:44 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bmake.mpd:
