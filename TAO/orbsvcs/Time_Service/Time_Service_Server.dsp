@@ -52,7 +52,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /out:"Release/server.exe" /libpath:"..\..\tao" /libpath:"..\orbsvcs" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\orbsvcs" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Time_Service_Server - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /out:"server.exe" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\orbsvcs" /libpath:"..\..\..\ace"
+# ADD LINK32 aced.lib taod.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\orbsvcs" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
@@ -89,10 +89,6 @@ LINK32=link.exe
 # PROP Default_Filter "cpp"
 # Begin Source File
 
-SOURCE=.\IR_Helper.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Server_i.cpp
 # End Source File
 # Begin Source File
@@ -103,10 +99,6 @@ SOURCE=.\Time_Service_Server.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h"
-# Begin Source File
-
-SOURCE=.\IR_Helper.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\Server_i.h

@@ -23,7 +23,7 @@
 
 #include "tao/TAO.h"
 #include "airplane_i.h"
-#include "IR_Helper.h"
+#include "orbsvcs/IR_Helper.h"
 
 class Airplane_Server_i
 {

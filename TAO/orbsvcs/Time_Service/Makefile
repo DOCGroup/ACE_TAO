@@ -18,8 +18,7 @@ PROG_SRCS = \
         Time_Service_Server.cpp \
         Time_Service_Clerk.cpp \
         Clerk_i.cpp \
-        Server_i.cpp \
-        IR_Helper.cpp \
+        Server_i.cpp 
 
 SRC = $(PROG_SRCS)
 

@@ -27,8 +27,7 @@ PROG_SRCS = \
             nestea_server.cpp \
             nestea_client_i.cpp \
             nestea_server_i.cpp \
-            nestea_i.cpp \
-            IR_Helper.cpp
+            nestea_i.cpp
 
 SRC=$(IDL_SRC) $(PROG_SRCS)
 
@@ -41,8 +40,7 @@ AIRPLANE_SERVER_OBJS =  AirplaneC.o \
                         AirplaneS.o \
                         airplane_server.o \
                         airplane_server_i.o \
-                        airplane_i.o \
-                        IR_Helper.o
+                        airplane_i.o
 
 NESTEA_CLIENT_OBJS =  NesteaC.o \
                       NesteaS.o \
@@ -53,8 +51,7 @@ NESTEA_SERVER_OBJS =  NesteaC.o \
                       NesteaS.o \
                       nestea_server.o \
                       nestea_server_i.o \
-                      nestea_i.o \
-                      IR_Helper.o
+                      nestea_i.o
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
