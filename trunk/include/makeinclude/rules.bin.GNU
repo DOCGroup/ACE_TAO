@@ -9,6 +9,8 @@
 VOBJS = \
   $(subst .cpp,.$(OBJEXT),$(foreach file,$(SRC),$(VDIR)$(notdir $(file))))
 
+VLDLIBS := $(LDLIBS) $(ACELIB) $(LIBS)
+
 ifeq ($(CHORUSLINK),true)
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
 	$(LINK.cc) $(CC_OUTPUT_FLAG) $@ $^   $(VLDLIBS) $(LDFLAGS) $(POSTLINK)
