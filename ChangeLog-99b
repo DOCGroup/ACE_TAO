@@ -1,5 +1,10 @@
 Tue Jun 15 17:41:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/SOCK_Dgram_Mcast: Added initial support for the Win2K
+ 	  QoS-enabled multicast features.  The current implementation
+ 	  hasn't been tested, and probably doesn't work, but we're still
+ 	  designing the API at this point.
+	  
 	* ace/OS: Added a new wrapper for WSASocket(), which is needed for
 	  all the new GQoS stuff.
 
