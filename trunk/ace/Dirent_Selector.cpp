@@ -23,6 +23,8 @@ ACE_Dirent_Selector::ACE_Dirent_Selector (void)
 
 ACE_Dirent_Selector::~ACE_Dirent_Selector (void)
 {
+  // Free up any allocated resources.
+  this->close();
 }
 
 int
@@ -49,5 +51,6 @@ ACE_Dirent_Selector::close (void)
     }
 
   ACE_OS::free (this->namelist_);
+  this->namelist_ = 0;
   return 0;
 }

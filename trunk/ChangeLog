@@ -1,3 +1,12 @@
+Mon Jun 14 09:22:53 2004  Patrick Bennett  <patrick.bennett@inin.com>
+
+        * ace/Dirent_Selector.cpp:
+          ACE_Dirent_Selector destructor now calls internal close() method.
+          Previously, the memory allocated by ACE_Dirent_Selector would be
+          leaked upon clean destruction or exception unwind unless close()
+          was explicitly called.
+
+
 Mon Jun 14 14:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/POSIX_Proactor.cpp:
