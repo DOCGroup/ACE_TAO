@@ -71,7 +71,12 @@ TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
 int
 TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 {
-  return this->parse_args (argc, argv);
+  if ((this->parse_args (argc, argv) == 0)
+      && (reactive_strategy_.open (ACE_Reactor::instance()) == 0)
+      && (threaded_strategy_.open (ACE_Thread_Manager::instance(), this->thread_flags_) == 0))
+    return 0;
+  else
+    return -1;
 }
 
 int

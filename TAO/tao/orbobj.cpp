@@ -25,6 +25,7 @@
 #endif /* 0 */
 
 #include "tao/corba.h"
+#include "ace/Dynamic_Service.h"
 
 extern void __TC_init_table (void);
 extern void __TC_init_standard_exceptions (CORBA::Environment &env);
@@ -45,10 +46,9 @@ DEFINE_GUID (IID_CORBA_ORB,
 DEFINE_GUID (IID_STUB_Object,
 	     0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-TAO_Client_Strategy_Factory &
+TAO_Client_Strategy_Factory *
 CORBA_ORB::client_factory (void)
 {
-#if 0 // XXXASG: Broken code
   if (client_factory_ == 0)
     {
       // Look in the service repository for an instance.
@@ -62,21 +62,19 @@ CORBA_ORB::client_factory (void)
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
       // platforms.  
-      ACE_NEW (client_factory_, TAO_Default_Client_Strategy_Factory);
+      ACE_NEW_RETURN (client_factory_, TAO_Default_Client_Strategy_Factory, 0);
 
       client_factory_from_service_config_ = CORBA::B_FALSE;
       // @@ At this point we need to register this with the
       // Service_Repository in order to get it cleaned up properly.
       // But, for now we let it leak.
     }
-#endif /* 0 */  
-  return *client_factory_;
+  return client_factory_;
 }
 
-TAO_Server_Strategy_Factory &
+TAO_Server_Strategy_Factory *
 CORBA_ORB::server_factory (void)
 {
-#if 0 // XXASG Broken code
   if (server_factory_ == 0)
     {
       // Look in the service repository for an instance.
@@ -91,15 +89,14 @@ CORBA_ORB::server_factory (void)
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
       // platforms.
-      ACE_NEW (server_factory_, TAO_Default_Server_Strategy_Factory);
+      ACE_NEW_RETURN (server_factory_, TAO_Default_Server_Strategy_Factory, 0);
 
       server_factory_from_service_config_ = CORBA::B_FALSE;
       // @@ At this point we need to register this with the
       // Service_Repository in order to get it cleaned up properly.
       // But, for now we let it leak.
     }
-#endif /* 0 */  
-  return *server_factory_;
+  return server_factory_;
 }
 
 ULONG __stdcall
@@ -205,18 +202,22 @@ CORBA::ORB_init (int &argc,
 
           argvec_shift (argc, &argv[i], 2);
         }
-      else if (ACE_OS::strcmp (argv[i], "-OAdaemon") == 0)
+      else if (ACE_OS::strcmp (argv[i], "-ORBdaemon") == 0)
         {
           // Be a daemon
           svc_config_argv[svc_config_argc++] = "-b";
 
           argvec_shift (argc, &argv[i], 1);
         }
-      else if (ACE_OS::strcmp (argv[i], "-d") == 0)
+      else if (ACE_OS::strcmp (argv[i], "-ORBdebug") == 0)
         {
           // Turn on debugging
           svc_config_argv[svc_config_argc++] = "-d";
           argvec_shift (argc, &argv[i], 1);
+        }
+      else
+        {
+          i++;
         }
     }
 
@@ -428,7 +429,15 @@ CORBA_ORB::BOA_init (int &argc,
 #endif /* ROA_NEEDS_REQ_KEY */
     
   ACE_NEW_RETURN (rp, ROA (this, env), 0);
+  params->oa (rp);
 
   return rp;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
+template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
+#pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
+#endif

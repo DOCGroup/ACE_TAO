@@ -1,3 +1,27 @@
+Sat Aug 16 01:11:56 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbobj.cpp: Options parsed by the ORB are now
+	-ORBsvcconf <filename>    specifies the service configurator
+ 	                          file to be used
+	-ORBdaemon                turn this into a daemon
+	-ORBdebug                 turns debugging on in the service
+	                          configurator
+
+	BOA_init() now sets the itself in the TAO_OA_Parameters singleton.
+
+	* tao/orbobj.*: Changed client_factory(), server_factory(), and
+ 	params() to return pointers rather than references.
+
+	* tao/{roa,giop}.cpp: Updated code that uses the
+ 	CORBA::ORB::client_factory() to deal with the fact that it now
+ 	returns a pointer rather than a reference.
+
+	* tao/default_server.cpp (init): This method now properly
+ 	initializes the contained reactive and threaded strategies so that
+ 	they're actually usable!
+
+	* tao/connect.cpp: Added #endif comments.
+
 Wed Aug 13 17:42:39 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/*: Converted to the CORBA:: namespace.
