@@ -1,3 +1,14 @@
+Tue May 25 12:17:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/Performance/Connect.dsp:
+	* orbsvcs/tests/Event/Performance/Throughput.dsp:
+	* orbsvcs/tests/Event/lib/ECTest.dsp:
+	  Fixed configuration for Win32/Release
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added new files to the TAO project
+
 Tue May 25 12:07:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Makefile:
