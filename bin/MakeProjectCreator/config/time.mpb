@@ -1,6 +1,6 @@
 project : naming {
-  after    += CosTime
-  libs     += TAO_CosTime
-  comps    += Time
-  requires += Time
+  after     += CosTime
+  libs      += TAO_CosTime
+  comps     += Time
+  tagchecks += Time
 }

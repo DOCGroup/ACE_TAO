@@ -86,7 +86,6 @@ ACELIB =
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
 <%if(!exename)%>
-<%if(comps)%>
 
 <%if(compname)%>
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
@@ -133,7 +132,6 @@ else
   all: require_warning
 endif
 <%endfor%>
-<%else%>
 
 <%if(tagname)%>
 ifeq (,$(<%tagname%>))
@@ -198,7 +196,6 @@ else
 endif
 <%endfor%>
 endif
-<%endif%>
 <%endif%>
 <%endif%>
 
