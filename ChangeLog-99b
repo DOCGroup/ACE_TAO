@@ -1,3 +1,8 @@
+Tue Nov 23 11:34:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Malloc_Test.cpp (myallocator): Applied ACE_TEXT to several
+	  malloc argument.  Thanks to Ivan Murphy for reporting this.
+
 Tue Nov 23 11:06:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/CDR_File_Test.cpp (run_test): Changed <filename> to
