@@ -38,6 +38,9 @@ public:
   double get_number_of_computations (void);
   // Gets the number of computations the thread was able to perform.
 
+  void computation (void);
+  // this is the actual "computation" being performed.
+
   int done_;
   // Indicates whether we're done.
 
