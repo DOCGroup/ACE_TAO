@@ -457,7 +457,7 @@ u_char * asn1::build_sequence( u_char *data,
   *data++ = (u_char)((length >> 8) & 0xFF);
   *data++ = (u_char)(length & 0xFF);
   return data;
-};
+}
 
 /*
  * parse_length - interprets the length of the current object.
