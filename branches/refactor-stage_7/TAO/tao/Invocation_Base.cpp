@@ -2,6 +2,8 @@
 #include "Stub.h"
 #include "operation_details.h"
 #include "ORB_Core.h"
+#include "Typecode.h"
+#include "DynamicC.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "RequestInfo_Util.h"

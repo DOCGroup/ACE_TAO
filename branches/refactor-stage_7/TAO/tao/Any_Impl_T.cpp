@@ -4,9 +4,11 @@
 #define TAO_ANY_IMPL_T_C
 
 #include "tao/Any_Impl_T.h"
+#include "tao/Any.h"
 #include "tao/Marshal.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
+
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 

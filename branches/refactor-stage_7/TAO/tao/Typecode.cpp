@@ -13,19 +13,15 @@
 // construction.
 
 #include "Typecode.h"
-#include "Environment.h"
 #include "Any.h"
-#include "Any_Impl.h"
-#include "Exception.h"
 #include "Marshal.h"
 #include "CORBA_String.h"
 #include "CDR.h"
 #include "debug.h"
 #include "Any_Unknown_IDL_Type.h"
+#include "ORB_Constants.h"
 
-#include "ace/Malloc_Base.h"
 #include "ace/Null_Mutex.h"
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
     || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -36,11 +32,9 @@
 # include "tao/Typecode.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Typecode,
            "$Id$")
-
 
 // Typecodes essentially consist of just the CDR octets that get
 // marshaled and unmarshaled, and this code knows how to parse those
@@ -56,7 +50,10 @@ CORBA::TypeCode::Bounds*
 CORBA::TypeCode::Bounds::_downcast (CORBA::Exception *ex)
 {
   if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0"))
-    return ACE_dynamic_cast (CORBA::TypeCode::Bounds*, ex);
+    {
+      return ACE_dynamic_cast (CORBA::TypeCode::Bounds*, ex);
+    }
+
   return 0;
 }
 
@@ -2222,13 +2219,13 @@ CORBA::TypeCode::private_member_type (CORBA::ULong slot
         // The ith entry will have the typecode of the ith guy.
         {
           // Skip member label.
-          CORBA::TypeCode::traverse_status status =
+          TAO::traverse_status status =
             TAO_Marshal_Object::perform_skip (disc_tc,
                                               &stream
                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-          if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
+          if (status != TAO::TRAVERSE_CONTINUE
               || !stream.skip_string ())  // skip the name
             {
               ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
@@ -2515,13 +2512,13 @@ CORBA::TypeCode::private_member_name (CORBA::ULong slot
             for (CORBA::ULong i = 0; i < mcount; ++i)
               {
                 // The ith entry will have the name of the ith member.
-                CORBA::TypeCode::traverse_status status =
+                TAO::traverse_status status =
                   TAO_Marshal_Object::perform_skip (disc_tc,
                                                     &stream
                                                     ACE_ENV_ARG_PARAMETER);
                 ACE_CHECK_RETURN (0);
 
-                if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                if (status != TAO::TRAVERSE_CONTINUE)
                   ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
 
                 // skip typecode for member
@@ -2719,7 +2716,7 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (retval != TAO::TRAVERSE_CONTINUE)
         {
           return 0;
         }
@@ -2762,7 +2759,7 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+          if (retval != TAO::TRAVERSE_CONTINUE)
             {
               return 0;
             }
@@ -2778,7 +2775,7 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+          if (retval != TAO::TRAVERSE_CONTINUE)
             {
               return 0;
             }
@@ -3767,6 +3764,27 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
     }
   ACE_ENDTRY;
   return 1;
+}
+
+CORBA::Boolean 
+operator<< (TAO_OutputCDR &strm, const CORBA::TCKind &_tao_enumval)
+{
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
+}
+
+CORBA::Boolean 
+operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
+{
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+
+  if (_tao_result == 1)
+    {
+      _tao_enumval = ACE_static_cast (CORBA::TCKind, _tao_temp);
+    }
+
+  return _tao_result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

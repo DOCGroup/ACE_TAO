@@ -1,4 +1,5 @@
 #include "GIOP_Message_Generator_Parser_12.h"
+#include "GIOPC.h"
 #include "GIOP_Utils.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "operation_details.h"

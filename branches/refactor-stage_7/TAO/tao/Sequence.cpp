@@ -1,9 +1,13 @@
 // $Id$
 
-#include "tao/Sequence.h"
-#include "ace/Message_Block.h"
+#include "Sequence.h"
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+# include "ace/Message_Block.h"
+#endif /* (TAO_NO_COPY_OCTET_SEQUENCES == 1) */
+
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
+#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Sequence.i"
@@ -48,11 +52,11 @@ check_bounds(
 {
   // TODO use hook
   if(tao_idx >= tao_max)
-  {
-    ACE_ERROR((LM_ERROR,
-                  "Access error in TAO_Sequence file=%s, line=%u, "
-                  "idx=%u, max=%u\n",
-                  filename, lineno, tao_idx, tao_max));
+    {
+      ACE_ERROR((LM_ERROR,
+                    "Access error in TAO_Sequence file=%s, line=%u, "
+                    "idx=%u, max=%u\n",
+                    filename, lineno, tao_idx, tao_max));
   }
 }
 
@@ -676,6 +680,7 @@ TAO_Unbounded_WString_Sequence::replace (CORBA::ULong maximum,
   this->buffer_ = data;
   this->release_ = release;
 }
+
 // ****************************************************************
 
 TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (
@@ -699,9 +704,9 @@ TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       if (rhs.mb_ == 0)
         {
-          ACE_OS::memcpy (tmp1,
-                          tmp2,
-                          this->length_);
+          ACE_OS_String::memcpy (tmp1,
+                                 tmp2,
+                                 this->length_);
         }
       else
         {
@@ -709,16 +714,16 @@ TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (
 
           for (const ACE_Message_Block *i = rhs.mb_; i != 0; i = i->cont ())
             {
-              ACE_OS::memcpy (tmp1 + offset,
-                              i->rd_ptr (),
-                              i->length ());
+              ACE_OS_String::memcpy (tmp1 + offset,
+                                     i->rd_ptr (),
+                                     i->length ());
 
               offset += i->length ();
             }
         }
 #else /* (TAO_NO_COPY_OCTET_SEQUENCES == 0) */
       ACE_OS::memcpy (tmp1, tmp2, this->length_);
-#endif /* (TAO_NO_COPY_OCTET_SEQUENCES == 0) */
+#endif /* (TAO_NO_COPY_OCTET_SEQUENCES == 1) */
 
       this->buffer_ = tmp1;
     }
@@ -785,9 +790,9 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (
   // tmp1[i] = tmp2[i];
   if (rhs.mb_ == 0)
     {
-      ACE_OS::memcpy (tmp1,
-                      tmp2,
-                      this->length_);
+      ACE_OS_String::memcpy (tmp1,
+                             tmp2,
+                             this->length_);
     }
   else
     {
@@ -795,9 +800,9 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (
 
       for (const ACE_Message_Block *i = rhs.mb_; i != 0; i = i->cont ())
         {
-          ACE_OS::memcpy (tmp1 + offset,
-                          i->rd_ptr (),
-                          i->length ());
+          ACE_OS_String::memcpy (tmp1 + offset,
+                                 i->rd_ptr (),
+                                 i->length ());
           offset += i->length ();
         }
     }
@@ -897,7 +902,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
       //   buffer comes from a CDR stream.
       //
       result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
-      ACE_OS::memcpy (result, this->buffer_, this->length_);
+      ACE_OS_String::memcpy (result, this->buffer_, this->length_);
     }
   else if (this->release_ != 0)
     {
@@ -961,7 +966,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
 
       // Get the base pointer of the incoming message block
       char * start = ACE_ptr_align_binary (mb->base (),
-                                          ACE_CDR::MAX_ALIGNMENT);
+                                           ACE_CDR::MAX_ALIGNMENT);
 
       // Get the read and write displacements in the incoming stream
       size_t rd_pos = mb->rd_ptr () - start;

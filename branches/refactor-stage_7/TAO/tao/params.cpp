@@ -1,15 +1,14 @@
 
 #include "tao/params.h"
+#include "tao/orbconf.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/params.i"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            params,
            "$Id$")
-
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : endpoints_list_ (),
@@ -28,7 +27,9 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     single_read_optimization_ (1)
 {
   for (int i = 0; i <= TAO_NO_OF_MCAST_SERVICES; ++i)
-    this->service_port_[i] = 0;
+    {
+      this->service_port_[i] = 0;
+    }
 }
 
 TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
@@ -69,7 +70,9 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
       for (size_t j = 0; j != length; ++j)
         {
           if (endpoints[j] == endpoints_delimiter)
-            endpoints_count++;
+            {
+              endpoints_count++;
+            }
         }
 
       int begin = 0;
@@ -102,7 +105,9 @@ TAO_ORB_Parameters::parse_endpoints (ACE_CString &endpoints,
               // Insert endpoint into list
             }
           else
-            status = -1;  // Error: invalid URL style endpoint set
+            {
+              status = -1;  // Error: invalid URL style endpoint set
+            }
 
           begin = end + 1;
           end = endpoints.find (endpoints_delimiter, begin);

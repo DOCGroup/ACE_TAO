@@ -51,6 +51,8 @@
 #include "tao/PICurrent.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
 #include "tao/PortableServer/ServerInterceptorAdapter.h"
+#include "tao/Typecode.h"
+#include "tao/DynamicC.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"

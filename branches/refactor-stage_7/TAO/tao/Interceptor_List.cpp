@@ -3,9 +3,7 @@
 // $Id$
 
 #include "tao/Interceptor_List.h"
-#include "tao/CORBA_String.h"
-
-#include "ace/Dynamic_Service.h"
+#include "tao/ORB_Constants.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Interceptor_List.inl"

@@ -3,10 +3,6 @@
 #include "tao/IIOP_Lite_Factory.h"
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Connector.h"
-#include "tao/IOP_IORC.h"
-
-#include "ace/Dynamic_Service.h"
-#include "ace/Get_Opt.h"
 
 ACE_RCSID (tao, 
            IIOP_Factory, 

@@ -7,6 +7,8 @@
 #include "ace/Auto_Ptr.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
+#include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID (tao,
            Messaging,

@@ -30,8 +30,8 @@
 
 
 #include "StringSeqC.h"
-#include "CDR.h"
 #include "Any_Dual_Impl_T.h"
+#include "Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

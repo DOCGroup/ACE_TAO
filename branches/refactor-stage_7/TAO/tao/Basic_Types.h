@@ -74,7 +74,15 @@ namespace CORBA
 
   class WString_var;
   class WString_out;
+
+  class TypeCode;
+  typedef TypeCode *TypeCode_ptr;
+
+  class Any;
 };
+
+class TAO_InputCDR;
+class TAO_OutputCDR;
 
 #include "ace/post.h"
 

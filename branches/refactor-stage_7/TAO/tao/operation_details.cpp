@@ -1,9 +1,9 @@
 //$Id$
 #include "operation_details.h"
 #include "Stub.h"
-#include "Argument.h"
+#include "Typecode.h"
+#include "ORB_Constants.h"
 #include "DynamicC.h"
-#include "ace/streams.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.i"

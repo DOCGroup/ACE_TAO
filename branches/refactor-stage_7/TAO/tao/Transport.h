@@ -18,13 +18,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include "Transport_Cache_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "Incoming_Message_Queue.h"
 

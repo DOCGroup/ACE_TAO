@@ -2,7 +2,6 @@
 // $Id$
 
 #include "tao/Argument.h"
-#include "tao/DynamicC.h"
 
 TAO::Argument::~Argument (void)
 {

@@ -20,14 +20,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Policy_ForwardC.h"
+#include "tao/IOP_IORC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CORBA_methods.h"
+#include "tao/Policy_ForwardC.h"
 #include "tao/Pseudo_VarOut_T.h"
-#include "tao/IOP_IORC.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 
@@ -47,6 +48,29 @@ namespace CORBA
 {
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
+
+  class ImplementationDef;
+  typedef ImplementationDef *ImplementationDef_ptr;
+
+  class Context;
+  typedef Context *Context_ptr;
+  
+  class Request;
+  typedef Request *Request_ptr;
+
+  class NVList;
+  typedef NVList *NVList_ptr;
+
+  class NamedValue;
+  typedef NamedValue * NamedValue_ptr;
+
+  typedef ULong Flags;
+
+  class ExceptionList;
+  typedef ExceptionList *ExceptionList_ptr;
+
+  class ContextList;
+  typedef ContextList *ContextList_ptr;
 
   class Object;
   typedef Object *Object_ptr;

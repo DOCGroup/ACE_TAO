@@ -24,15 +24,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/orbconf.h"
+#include "tao/Basic_Types.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Synch_Traits.h"
-
-
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -41,6 +41,17 @@
 
 namespace CORBA
 {
+  typedef ULong Flags;
+
+  class NVList;
+  typedef NVList *NVList_ptr;
+
+  class ContextList;
+  typedef ContextList *ContextList_ptr;
+
+  class Context;
+  typedef Context *Context_ptr;
+
   TAO_NAMESPACE_INLINE_FUNCTION void release (ContextList_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ContextList_ptr);
 

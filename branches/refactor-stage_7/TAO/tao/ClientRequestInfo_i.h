@@ -36,6 +36,12 @@ namespace TAO
   class Invocation_Base;
 }
 
+namespace CORBA
+{
+  class AbstractBase;
+  typedef AbstractBase *AbstractBase_ptr;
+}
+
 /**
  * @class TAO_ClientRequestInfo_i
  *

@@ -90,38 +90,6 @@
 
 #endif /* end #if !defined */
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::DuplicateName>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::DuplicateName>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::InvalidName>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::InvalidName>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
@@ -153,7 +121,7 @@ CORBA::Boolean operator<< (
       // Now marshal the members (if any).
       if (
         (strm << _tao_aggregate.forward.in ()) &&
-        (strm << CORBA::Any::from_boolean (_tao_aggregate.permanent))
+        (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.permanent))
        )
         {
           return 1;
@@ -178,7 +146,7 @@ CORBA::Boolean operator>> (
   // Demarshal the members.
   if (
     (strm >> _tao_aggregate.forward.out ()) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.permanent))
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.permanent))
   )
     {
       return 1;

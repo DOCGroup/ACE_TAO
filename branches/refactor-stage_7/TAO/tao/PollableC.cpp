@@ -30,11 +30,7 @@
 
 
 #include "PollableC.h"
-#include "tao/Stub.h"
-#include "tao/Invocation_Adapter.h"
-#include "tao/Basic_Arguments.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Special_Basic_Arguments.h"
+#include "ace/OS.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

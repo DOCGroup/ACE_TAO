@@ -39,6 +39,7 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Special_Basic_Arguments.h"
 #include "tao/Var_Size_Argument_T.h"
+#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

@@ -15,15 +15,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
+
 class TAO_Reply_Dispatcher;
 class TAO_Transport;
 class TAO_Pluggable_Reply_Params;
+class ACE_Lock;
 
 /**
  * @class TAO_Transport_Mux_Strategy
@@ -45,7 +48,7 @@ public:
 
   /// Generate and return an unique request id for the current
   /// invocation.
-  virtual CORBA::ULong request_id (void)  = 0;
+  virtual CORBA::ULong request_id (void) = 0;
 
   // = Bind and Find methods for the <Request ID, ReplyDispatcher>
   //   pairs.

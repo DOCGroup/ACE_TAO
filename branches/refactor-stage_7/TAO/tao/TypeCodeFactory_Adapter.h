@@ -14,7 +14,6 @@
 #define TAO_TYPECODEFACTORY_ADAPTER_H
 
 #include /**/ "ace/pre.h"
-
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,7 +22,6 @@
 
 #include "tao/Exception.h"
 #include "tao/OBV_Constants.h"
-#include "tao/corbafwd.h"
 
 namespace CORBA
 {

@@ -8,6 +8,7 @@
 #include "Transport_Connector.h"
 #include "Protocol_Factory.h"
 #include "debug.h"
+#include "ORB_Constants.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"

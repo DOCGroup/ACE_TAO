@@ -13,19 +13,15 @@
 
 #ifndef TAO_REMOTE_INVOCATION_H
 #define TAO_REMOTE_INVOCATION_H
-#include "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "ace/pre.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Invocation_Base.h"
-
-#include "ace/CORBA_macros.h"
-
-
 
 class TAO_Operation_Details;
 class TAO_Target_Specification;
@@ -40,8 +36,6 @@ namespace TAO
 {
   class Profile_Transport_Resolver;
   class Argument;
-
-
 
   /**
    * @class Remote_Invocation
@@ -76,8 +70,9 @@ namespace TAO
 
   protected:
     Profile_Transport_Resolver &resolver_;
-
   };
 }
+
+#include "ace/post.h"
 
 #endif /*TAO_REMOTE_INVOCATION_H*/

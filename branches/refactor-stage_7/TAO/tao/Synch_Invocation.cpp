@@ -9,9 +9,10 @@
 #include "operation_details.h"
 #include "Pluggable_Messaging.h"
 #include "Wait_Strategy.h"
-#include "Messaging_SyncScopeC.h"
-#include "TAOC.h"
 #include "debug.h"
+#include "ORB_Constants.h"
+
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID (tao,
            Synch_Invocation,

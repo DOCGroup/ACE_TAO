@@ -15,13 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include "PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PortableInterceptorC.h"
 #include "LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.

@@ -14,7 +14,8 @@
 #define TAO_OPERATION_DETAILS_H
 
 #include /**/ "ace/pre.h"
-#include "corbafwd.h"
+
+#include "Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,16 +26,12 @@
 
 struct TAO_Exception_Data;
 
-namespace CORBA
-{
-  class Exception;
-}
-
 namespace Dynamic
 {
   class ParameterList;
   class ExceptionList;
 }
+
 namespace TAO
 {
   class Argument;

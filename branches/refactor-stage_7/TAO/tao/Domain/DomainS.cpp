@@ -46,6 +46,7 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Special_Basic_Arguments.h"
 #include "tao/PortableInterceptor.h"
+#include "tao/DynamicC.h"
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
 #include "tao/PICurrent.h"

@@ -12,22 +12,30 @@
 
 #ifndef TAO_VALUEFACTORY_H
 #define TAO_VALUEFACTORY_H
+
 #include /**/ "ace/pre.h"
 
 #include "valuetype_export.h"
-#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Value_VarOut_T.h"
+
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
+
 #include "ace/Synch_T.h"
 
 namespace CORBA
 {
+  class AbstractBase;
+  typedef AbstractBase *AbstractBase_ptr;
+
+  class ValueBase;
+  
   class ValueFactoryBase;
-  struct tao_ValueFactoryBase_life;
 
   extern TAO_Valuetype_Export void add_ref (ValueFactoryBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueFactoryBase *);
@@ -55,7 +63,7 @@ namespace CORBA
 
     // Not pure virtual because this will be overridden only by valuetypes
     // that support an abstract interface.
-    virtual CORBA::AbstractBase * create_for_unmarshal_abstract (void);
+    virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract (void);
 
   private:
     CORBA::ULong _tao_reference_count_;

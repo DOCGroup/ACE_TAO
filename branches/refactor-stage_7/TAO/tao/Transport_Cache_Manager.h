@@ -12,17 +12,18 @@
 
 #ifndef TAO_CONNECTION_CACHE_MANAGER_H
 #define TAO_CONNECTION_CACHE_MANAGER_H
-#include /**/ "ace/pre.h"
 
-#include "tao/Cache_Entries.h"
+#include /**/ "ace/pre.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Null_Mutex.h"
+
+#include "tao/Cache_Entries.h"
+#include "tao/orbconf.h"
 
 class ACE_Handle_Set;
 class TAO_Connection_Handler;
@@ -53,18 +54,19 @@ typedef ACE_Unbounded_Set<TAO_Connection_Handler*> TAO_Connection_Handler_Set;
 class TAO_Export TAO_Transport_Cache_Manager
 {
 public:
-
   // Some useful typedef's
   typedef ACE_Hash_Map_Manager_Ex <TAO_Cache_ExtId,
                                    TAO_Cache_IntId,
                                    ACE_Hash<TAO_Cache_ExtId>,
                                    ACE_Equal_To<TAO_Cache_ExtId>,
-                                   ACE_Null_Mutex> HASH_MAP;
+                                   ACE_Null_Mutex>
+    HASH_MAP;
 
   typedef HASH_MAP::iterator HASH_MAP_ITER;
 
   typedef ACE_Hash_Map_Entry <TAO_Cache_ExtId,
-                              TAO_Cache_IntId> HASH_MAP_ENTRY;
+                              TAO_Cache_IntId> 
+    HASH_MAP_ENTRY;
 
   typedef TAO_Condition<TAO_SYNCH_MUTEX> CONDITION;
 
@@ -126,7 +128,6 @@ public:
   HASH_MAP &map (void);
 
 private:
-
   /// Associate <ext_id> with <int_id>. Grabs the lock and calls the
   /// implementation function bind_i.
   int bind (TAO_Cache_ExtId &ext_id,
@@ -170,7 +171,6 @@ private:
   void mark_invalid_i (HASH_MAP_ENTRY *&);
 
 private:
-
   /**
    * This is called by the bind () call when a bind fails with a
    * available entry. When a new connection is created in TAO with an
@@ -213,8 +213,8 @@ private:
 
   /// Is the wakeup useful todo some work?
   int is_wakeup_useful (TAO_Cache_ExtId &extid);
-private:
 
+private:
   /// The percentage of the cache to purge at one time
   int percent_;
 
@@ -248,4 +248,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_CONNECTION_CACHE_MANAGER_H*/

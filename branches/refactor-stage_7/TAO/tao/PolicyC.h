@@ -39,7 +39,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Policy_ForwardC.h"
 #include "tao/Exception.h"
 
 #if defined (TAO_EXPORT_MACRO)

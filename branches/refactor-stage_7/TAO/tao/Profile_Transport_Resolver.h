@@ -13,16 +13,17 @@
 
 #ifndef TAO_PROFILE_TRANSPORT_RESOLVER_H
 #define TAO_PROFILE_TRANSPORT_RESOLVER_H
-#include "ace/pre.h"
 
-#include "tao/Exception.h"
+#include "ace/pre.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/CORBA_macros.h"
-#include "ace/Global_Macros.h"
+
+#include "tao/Exception.h"
 
 class TAO_Stub;
 class TAO_Profile;
@@ -37,6 +38,9 @@ namespace CORBA
   class Environment;
   class Object;
   class PolicyList;
+
+  class Object;
+  typedef Object *Object_ptr;
 }
 
 namespace TAO
@@ -164,4 +168,5 @@ namespace TAO
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /*TAO_PROFILE_TRANSPORT_RESOLVER_H*/

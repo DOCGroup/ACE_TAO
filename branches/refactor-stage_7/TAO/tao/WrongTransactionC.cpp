@@ -34,6 +34,7 @@
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/Any_Dual_Impl_T.h"
+#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -91,7 +92,8 @@ void CORBA::WrongTransaction::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::WrongTransaction *
 CORBA::WrongTransaction::_downcast (CORBA::Exception *_tao_excp)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", _tao_excp->_rep_id ()))
+  if (!ACE_OS_String::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", 
+                              _tao_excp->_rep_id ()))
     {
       return ACE_dynamic_cast (WrongTransaction *, _tao_excp);
     }

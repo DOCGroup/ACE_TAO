@@ -4,6 +4,7 @@
 #define TAO_BASIC_ARGUMENT_T_C
 
 #include "tao/Basic_Argument_T.h"
+#include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Basic_Argument_T.inl"

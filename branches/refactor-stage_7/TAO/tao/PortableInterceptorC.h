@@ -39,7 +39,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DynamicC.h"
 #include "Messaging_SyncScopeC.h"
 #include "IOPC.h"
 #include "PolicyC.h"
@@ -66,6 +65,15 @@
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
+
+// Hand crafted, keeps DynamicC.h and Typecode.h out of header files.
+namespace Dynamic
+{
+  class ParameterList;
+  class ExceptionList;
+  typedef CORBA::StringSeq ContextList;
+  typedef CORBA::StringSeq RequestContext;
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_ch.cpp:63
@@ -1841,14 +1849,6 @@ namespace PortableInterceptor
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORBInitializer;
-
-  /// Hand-crafted addition.
-  /// Register an ORBInitializer with the global ORBInitializer
-  /// table.
-  TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
-      ORBInitializer_ptr init
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
-    );
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66

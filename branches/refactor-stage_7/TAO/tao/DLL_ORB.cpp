@@ -4,6 +4,7 @@
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
+#include "tao/CORBA_methods.h"
 
 #include "ace/ARGV.h"
 
@@ -32,21 +33,24 @@ TAO_DLL_ORB::init (int /*argc*/, ACE_TCHAR *argv[])
   // This class is deprecated.  See the class documentation in
   // DLL_ORB.h for details explaining why this is so.
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_WARNING,
-                ACE_LIB_TEXT ("TAO (%P|%t) - The TAO_DLL_ORB class is ")
-                ACE_LIB_TEXT ("deprecated.  See the class documentation\n")
-                ACE_LIB_TEXT ("TAO (%P|%t) - `tao/DLL_ORB.h' for details ")
-                ACE_LIB_TEXT ("explaining why this is so.\n")));
-
+    {
+      ACE_DEBUG ((LM_WARNING,
+                  ACE_LIB_TEXT ("TAO (%P|%t) - The TAO_DLL_ORB class is ")
+                  ACE_LIB_TEXT ("deprecated.  See the class documentation\n")
+                  ACE_LIB_TEXT ("TAO (%P|%t) - `tao/DLL_ORB.h' for details ")
+                  ACE_LIB_TEXT ("explaining why this is so.\n")));
+    }
 
   // Make sure TAO's singleton manager is initialized, and set to not
   // register itself with the ACE_Object_Manager since it is under the
   // control of the Service Configurator.
   int register_with_object_manager = 0;
 
-  if (TAO_Singleton_Manager::instance ()->init (
-        register_with_object_manager) == -1)
-    return -1;  // No exceptions yet.
+  if (TAO_Singleton_Manager::instance ()->init (register_with_object_manager)
+        == -1)
+    {
+      return -1;  // No exceptions yet.
+    }
 
   ACE_TRY_NEW_ENV
     {

@@ -2,8 +2,6 @@
 #include "Remote_Invocation.h"
 #include "Profile.h"
 #include "Profile_Transport_Resolver.h"
-#include "target_specification.h"
-#include "IOP_IORC.h"
 #include "Stub.h"
 #include "Transport.h"
 #include "operation_details.h"
@@ -63,7 +61,9 @@ namespace TAO
             pfile->create_tagged_profile ();
 
         if (tp)
-          target_spec.target_specifier (*tp);
+          {
+            target_spec.target_specifier (*tp);
+          }
         }
         break;
 
@@ -72,7 +72,6 @@ namespace TAO
       // IOP::IOR info, the call would create the info and return the
       // index that we need.
       CORBA::ULong index = 0;
-
       IOP::IOR *ior_info = 0;
       int retval =
         this->resolver_.stub ()->create_ior_info (ior_info,
@@ -88,6 +87,7 @@ namespace TAO
                           ACE_TEXT ("TAO (%P|%t) Error in finding index for \n")
                           ACE_TEXT ("IOP::IOR \n")));
             }
+
           return;
         }
 
@@ -122,7 +122,9 @@ namespace TAO
                                    ACE_ENV_ARG_DECL)
   {
     if (this->details_.marshal_args (out_stream) == false)
-      ACE_THROW (CORBA::MARSHAL ());
+      {
+        ACE_THROW (CORBA::MARSHAL ());
+      }
 
     return;
   }
@@ -144,22 +146,25 @@ namespace TAO
     if (retval == -1)
       {
         if (errno == ETIME)
-        {
-          ACE_THROW_RETURN (
-              CORBA::TIMEOUT (
-                  CORBA::SystemException::_tao_minor_code (
-                      TAO_TIMEOUT_SEND_MINOR_CODE,
-                      errno
+          {
+            ACE_THROW_RETURN (
+                CORBA::TIMEOUT (
+                    CORBA::SystemException::_tao_minor_code (
+                        TAO_TIMEOUT_SEND_MINOR_CODE,
+                        errno
+                      ),
+                    CORBA::COMPLETED_NO
                     ),
-                  CORBA::COMPLETED_NO
-                  ),
-              TAO_INVOKE_FAILURE
-              );
-        }
+                TAO_INVOKE_FAILURE
+                );
+          }
+
         if (TAO_debug_level > 2)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) Remote_Invocation::send_message - ")
-                      ACE_TEXT ("failure while sending message \n")));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) Remote_Invocation::send_message")
+                        ACE_TEXT (" - failure while sending message \n")));
+          }
 
         // Close the transport and all the associated stuff along with
         // it.
@@ -169,7 +174,6 @@ namespace TAO
       }
 
     this->resolver_.stub ()->set_valid_profile ();
-
     return TAO_INVOKE_SUCCESS;
   }
 }

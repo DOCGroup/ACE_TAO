@@ -23,6 +23,9 @@ namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
+
+  class AbstractBase;
+  typedef AbstractBase *AbstractBase_ptr;
 }
 
 namespace TAO

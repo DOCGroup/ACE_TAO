@@ -2,6 +2,7 @@
 
 #include "Default_Stub_Factory.h"
 #include "Stub.h"
+#include "ORB_Constants.h"
 
 ACE_RCSID (tao, 
            TAO_Default_Stub_Factory, 

@@ -30,9 +30,8 @@
 
 
 #include "Messaging_PolicyValueC.h"
-#include "Stub.h"
-#include "Typecode.h"
 #include "Any_Dual_Impl_T.h"
+#include "Typecode.h"
 #include "ORB_Core.h"
 
 #if defined (__BORLANDC__)

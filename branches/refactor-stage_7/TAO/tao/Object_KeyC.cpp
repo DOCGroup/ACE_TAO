@@ -30,11 +30,7 @@
 
 
 #include "Object_KeyC.h"
-#include "Stub.h"
-#include "Invocation_Adapter.h"
 #include "ORB_Core.h"
-#include "ace/ACE.h"
-
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

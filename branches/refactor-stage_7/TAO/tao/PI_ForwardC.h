@@ -33,13 +33,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "OctetSeqC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "OctetSeqC.h"
 #include "StringSeqC.h"
 
 #if defined (TAO_EXPORT_MACRO)

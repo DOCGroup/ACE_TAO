@@ -15,13 +15,16 @@
 
 #ifndef TAO_REPLY_DISPATCHER_H
 #define TAO_REPLY_DISPATCHER_H
+
 #include /**/ "ace/pre.h"
-#include "tao/corbafwd.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
 
 // Forward Declarations.
 class TAO_GIOP_Message_State;
@@ -89,4 +92,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_REPLY_DISPATCHER_H */

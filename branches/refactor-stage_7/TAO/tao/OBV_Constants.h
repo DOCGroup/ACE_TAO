@@ -8,7 +8,7 @@
  *
  *  Constants related to valuetypes, but also used by type codes.
  *
- *  @author  Jeff Parsons
+ *  @author Jeff Parsons
  */
 //=============================================================================
 
@@ -23,19 +23,22 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-
 namespace CORBA
 {
-  typedef CORBA::Short Visibility;
-  typedef CORBA::Short_out Visibility_out;
+  typedef Short Visibility;
+  typedef Short_out Visibility_out;
 
-  extern TAO_Export const CORBA::Short PRIVATE_MEMBER;
-  extern TAO_Export const CORBA::Short PUBLIC_MEMBER;
+  const Visibility PRIVATE_MEMBER = 0;
+  const Visibility PUBLIC_MEMBER  = 1;
 
-  typedef CORBA::Short ValueModifier;
-  typedef CORBA::Short_out ValueModifier_out;
-};
+  typedef Short ValueModifier;
+  typedef Short_out ValueModifier_out;
+
+  const ValueModifier VM_NONE        = 0;
+  const ValueModifier VM_CUSTOM      = 1;
+  const ValueModifier VM_ABSTRACT    = 2;
+  const ValueModifier VM_TRUNCATABLE = 3;
+}
 
 #include /**/ "ace/post.h"
 

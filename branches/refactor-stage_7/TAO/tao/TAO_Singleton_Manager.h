@@ -18,16 +18,14 @@
 #define TAO_SINGLETON_MANAGER_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/TAO_Export.h"
-#include "tao/orbconf.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
-
+#include "tao/TAO_Export.h"
+#include "tao/orbconf.h"
 
 #if defined (ACE_HAS_EXCEPTIONS)
 typedef void (*TAO_unexpected_handler)(void);
@@ -64,7 +62,6 @@ class TAO_Export TAO_Singleton_Manager : public ACE_Object_Manager_Base
   friend void TAO_Singleton_Manager_cleanup_destroyer (void *, void *);
 
 public:
-
   /// Explicitly initialize.
   virtual int init (void);
 
@@ -105,7 +102,6 @@ public:
       /// This enum value must be last!
       TAO_PREALLOCATED_OBJECTS
     };
-
 
   /// Accesses a default signal set used, for example, in
   /// ACE_Sig_Guard methods.
@@ -164,7 +160,6 @@ public:
 #endif /* ACE_HAS_EXCEPTIONS */
 
 private:
-
   /// Force allocation on the heap.
   //@{
   TAO_Singleton_Manager (void);
@@ -182,7 +177,6 @@ private:
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
 
 private:
-
   /// Singleton instance pointer.
   static TAO_Singleton_Manager *instance_;
 
@@ -218,7 +212,6 @@ private:
    */
   TAO_unexpected_handler old_unexpected_;
 #endif  /* ACE_HAS_EXCEPTIONS */
-
 };
 
 #if defined (__ACE_INLINE__)

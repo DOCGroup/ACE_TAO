@@ -16,9 +16,10 @@
 
 #ifndef TAO_SHMIOP_PROFILE_H
 #define TAO_SHMIOP_PROFILE_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -129,4 +130,5 @@ private:
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_SHMIOP_PROFILE_H */

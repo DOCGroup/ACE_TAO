@@ -6,6 +6,9 @@
 #include "ExceptionList.h"
 #include "Request.h"
 #include "DII_Reply_Dispatcher.h"
+
+#include "tao/DynamicC.h"
+#include "tao/Typecode.h"
 #include "tao/operation_details.h"
 #include "tao/RequestInfo_Util.h"
 #include "tao/Invocation_Utils.h"

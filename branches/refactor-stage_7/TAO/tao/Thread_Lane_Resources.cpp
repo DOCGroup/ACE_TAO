@@ -6,15 +6,14 @@ ACE_RCSID (tao,
            Thread_Lane_Resources, 
            "$Id$")
 
-#include "tao/ORB_Core.h"
 #include "tao/Acceptor_Registry.h"
-#include "tao/Transport_Cache_Manager.h"
+#include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Transport.h"
 #include "tao/Connector_Registry.h"
-#include "ace/Reactor.h"
 
+#include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Thread_Lane_Resources.i"

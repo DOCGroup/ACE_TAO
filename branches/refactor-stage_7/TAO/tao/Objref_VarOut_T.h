@@ -15,13 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/varbase.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
+#include "tao/Basic_Types.h"
+#include "tao/varbase.h"
 
 class TAO_OutputCDR;
 

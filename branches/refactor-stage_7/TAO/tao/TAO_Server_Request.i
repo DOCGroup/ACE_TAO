@@ -32,9 +32,13 @@ TAO_ServerRequest::operation (const char *operation,
                               int release)
 {
   if (length == 0)
-    this->operation_.set (operation, release);
+    {
+      this->operation_.set (operation, release);
+    }
   else
-    this->operation_.set (operation, length, release);
+    {
+      this->operation_.set (operation, length, release);
+    }
 }
 
 ACE_INLINE size_t
@@ -72,13 +76,6 @@ TAO_ServerRequest::sync_with_server (CORBA::Boolean sync_flag)
 {
   this->sync_with_server_ = sync_flag;
 }
-
-/*ACE_INLINE CORBA::Principal_ptr
-TAO_ServerRequest::principal (void) const
-{
-return this->requesting_principal_.ptr ();
-}
-*/
 
 ACE_INLINE TAO::ObjectKey &
 TAO_ServerRequest::object_key (void)

@@ -2,11 +2,12 @@
 #include "BiDirGIOP.h"
 #include "BiDir_Policy_i.h"
 
+#include "tao/ORB_Constants.h"
+#include "tao/Any.h"
 
 ACE_RCSID (BiDir_GIOP,
            BiDir_PolicyFactory,
            "$Id$")
-
 
 CORBA::Policy_ptr
 TAO_BiDir_PolicyFactory::create_policy (
@@ -22,7 +23,7 @@ TAO_BiDir_PolicyFactory::create_policy (
     {
       BiDirPolicy::BidirectionalPolicyValue val;
 
-      // Extract the value from the any
+      // Extract the value from the any.
       value >>= val;
 
       ACE_NEW_THROW_EX (policy,

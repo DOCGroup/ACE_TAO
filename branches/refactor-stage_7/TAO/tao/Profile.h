@@ -30,16 +30,13 @@ class TAO_Stub;
 class TAO_Endpoint;
 class TAO_ORB_Core;
 
-
 namespace CORBA
 {
   /// Forward declaration of PolicyList
   class PolicyList;
-}
 
-namespace TAO
-{
-  class Refcounted_ObjectKey;
+  class TypeCode;
+  typedef TypeCode *TypeCode_ptr;
 }
 
 /**
@@ -340,6 +337,17 @@ private:
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;
 };
+
+// A helper class to handle the various kinds of octet sequences used
+// inside the ORB.
+
+typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
+
+TAO_Export CORBA::Boolean
+operator<< (TAO_OutputCDR&, const TAO_opaque&);
+
+TAO_Export CORBA::Boolean
+operator>> (TAO_InputCDR&, TAO_opaque&);
 
 /**
  * @class TAO_Unknown_Profile

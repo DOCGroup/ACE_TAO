@@ -3,6 +3,10 @@
 #include "DII_Arguments.h"
 
 #include "tao/NVList.h"
+#include "tao/Any_Impl.h"
+#include "tao/Exception.h"
+#include "tao/CDR.h"
+#include "tao/Typecode.h"
 #include "tao/DynamicC.h"
 
 ACE_RCSID (DynamicInterface,
@@ -20,8 +24,7 @@ namespace TAO
   {
     ACE_TRY_NEW_ENV
       {
-        if (this->x_ !=0 &&
-            this->x_->value ()->impl ())
+        if (this->x_ !=0 && this->x_->value ()->impl ())
           {
             this->x_->value ()->impl ()->_tao_decode (cdr
                                                       ACE_ENV_ARG_PARAMETER);
@@ -34,8 +37,7 @@ namespace TAO
       }
     ACE_ENDTRY;
 
-    this->byte_order_ =
-      cdr.byte_order ();
+    this->byte_order_ = cdr.byte_order ();
 
     return 1;
   }

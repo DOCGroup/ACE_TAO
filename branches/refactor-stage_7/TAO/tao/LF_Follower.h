@@ -12,16 +12,18 @@
 
 #ifndef TAO_LF_FOLLOWER_H
 #define TAO_LF_FOLLOWER_H
-#include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
-#include "tao/TAO_Export.h"
-#include "ace/Condition_Thread_Mutex.h"
+#include /**/ "ace/pre.h"
 #include "ace/Intrusive_List_Node.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Condition_Thread_Mutex.h"
+#include "ace/Synch_Traits.h"
+
+#include "tao/TAO_Export.h"
 
 class TAO_Leader_Follower;
 
@@ -35,7 +37,8 @@ class TAO_Leader_Follower;
  * loop should be implemented by this class.
  *
  */
-class TAO_Export TAO_LF_Follower : public ACE_Intrusive_List_Node<TAO_LF_Follower>
+class TAO_Export TAO_LF_Follower 
+  : public ACE_Intrusive_List_Node<TAO_LF_Follower>
 {
 public:
   /// Constructor
@@ -66,4 +69,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_LF_FOLLOWER_H */

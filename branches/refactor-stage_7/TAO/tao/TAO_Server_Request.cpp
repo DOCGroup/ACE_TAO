@@ -1,18 +1,11 @@
 // $Id$
 
 #include "TAO_Server_Request.h"
-#include "CDR.h"
-#include "Environment.h"
-#include "Principal.h"
 #include "ORB_Core.h"
 #include "Timeprobe.h"
 #include "debug.h"
-#include "Pluggable_Messaging_Utils.h"
 #include "Pluggable_Messaging.h"
-
-// @@ Should not be included. But, for the timebeing.
 #include "GIOP_Utils.h"
-
 #include "Transport.h"
 
 #if !defined (__ACE_INLINE__)

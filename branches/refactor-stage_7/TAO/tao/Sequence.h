@@ -15,15 +15,19 @@
 #define TAO_SEQUENCE_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Managed_Types.h"
-#include "ace/CORBA_macros.h"
+#include "orbconf.h"
+
+namespace CORBA
+{
+  class Object;
+}
 
 class ACE_Message_Block;
 

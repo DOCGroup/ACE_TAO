@@ -2,8 +2,9 @@
 
 #include "DLL_Parser.h"
 #include "Object_Loader.h"
-#include "tao/Object.h"
-#include "tao/Environment.h"
+#include "Object.h"
+#include "Environment.h"
+#include "ORB_Constants.h"
 
 #include "ace/Dynamic_Service.h"
 

@@ -9,9 +9,7 @@
 #include "Codeset_Manager.h"
 #include "Connector_Registry.h"
 #include "Transport_Connector.h"
-#include "Object.h"
 #include "Endpoint.h"
-
 
 #if !defined (__ACE_INLINE__)
 # include "Profile_Transport_Resolver.inl"
@@ -37,18 +35,24 @@ namespace TAO
   Profile_Transport_Resolver::~Profile_Transport_Resolver (void)
   {
     if (this->profile_)
-      this->profile_->_decr_refcnt ();
+      {
+        this->profile_->_decr_refcnt ();
+      }
 
     if (this->transport_)
       {
         this->transport_->remove_reference ();
 
         if (this->is_released_ == false)
-          this->transport_->make_idle ();
+          {
+            this->transport_->make_idle ();
+          }
       }
 
     if (this->inconsistent_policies_)
-      delete this->inconsistent_policies_;
+      {
+        delete this->inconsistent_policies_;
+      }
   }
 
   void
@@ -67,7 +71,9 @@ namespace TAO
         this->profile_ = p;
 
         if (tmp)
-          (void) tmp->_decr_refcnt ();
+          {
+            (void) tmp->_decr_refcnt ();
+          }
     }
   }
 
@@ -90,32 +96,42 @@ namespace TAO
     ACE_CHECK;
 
     if (this->transport_ == 0)
-      ACE_THROW (CORBA::INTERNAL ());
+      {
+        ACE_THROW (CORBA::INTERNAL ());
+      }
 
     const TAO_GIOP_Message_Version& version =
       this->profile_->version ();
 
     // Initialize the messaging object
-    if (this->transport_->messaging_init (version.major,
-                                          version.minor) == -1)
-      ACE_THROW (CORBA::INTERNAL (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          EINVAL),
-                        CORBA::COMPLETED_NO));
+    if (this->transport_->messaging_init (version.major, version.minor) == -1)
+      {
+        ACE_THROW (CORBA::INTERNAL (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO));
+      }
 
-    if (!this->transport_->is_tcs_set())
-      this->stub_->orb_core ()->codeset_manager()->
-        set_tcs (*this->profile_,*this->transport_);
+    if (!this->transport_->is_tcs_set ())
+      {
+        TAO_Codeset_Manager *tcm = 
+          this->stub_->orb_core ()->codeset_manager ();
+        tcm->set_tcs (*this->profile_, *this->transport_);
+      }
   }
 
   bool
-  Profile_Transport_Resolver::try_connect (TAO_Transport_Descriptor_Interface *desc,
-                                           ACE_Time_Value *max_time_value
-                                           ACE_ENV_ARG_DECL)
+  Profile_Transport_Resolver::try_connect (
+      TAO_Transport_Descriptor_Interface *desc,
+       ACE_Time_Value *max_time_value
+       ACE_ENV_ARG_DECL
+     )
   {
     TAO_Connector_Registry *conn_reg =
-      this->stub_->orb_core ()->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->stub_->orb_core ()->connector_registry (
+                                    ACE_ENV_SINGLE_ARG_PARAMETER
+                                  );
     ACE_CHECK_RETURN (false);
 
     if (conn_reg == 0)
@@ -137,36 +153,42 @@ namespace TAO
     ACE_Time_Value *max_wait_time = 0;
 
     if (is_conn_timeout == true)
-      max_wait_time = &connection_timeout;
+      {
+        max_wait_time = &connection_timeout;
+      }
     else
-      max_wait_time = max_time_value;
+      {
+        max_wait_time = max_time_value;
+      }
 
-   // Obtain a connection.
-   this->transport_ =
-     conn_reg->get_connector (desc->endpoint ()->tag ())->connect (
-       this,
-       desc,
-       max_wait_time
-       ACE_ENV_ARG_PARAMETER);
-   ACE_CHECK_RETURN (false);
+    // Obtain a connection.
+    this->transport_ =
+      conn_reg->get_connector (desc->endpoint ()->tag ())->connect (
+        this,
+        desc,
+        max_wait_time
+        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (false);
 
-   // A timeout error occurred
-   // If the user has set a roundtrip timeout policy, then throw a
-   // timeout exception, else just fall through and return false to
-   // look at the next endpoint
-   if (this->transport_ == 0 && errno == ETIME && is_conn_timeout == false)
-     {
-       ACE_THROW_RETURN (CORBA::TIMEOUT (
-           CORBA::SystemException::_tao_minor_code (
-                TAO_TIMEOUT_CONNECT_MINOR_CODE,
-                errno),
-           CORBA::COMPLETED_NO),
-                         false);
-     }
-   else if (this->transport_ == 0)
-     return false;
+    // A timeout error occurred
+    // If the user has set a roundtrip timeout policy, then throw a
+    // timeout exception, else just fall through and return false to
+    // look at the next endpoint
+    if (this->transport_ == 0 && errno == ETIME && is_conn_timeout == false)
+      {
+        ACE_THROW_RETURN (CORBA::TIMEOUT (
+            CORBA::SystemException::_tao_minor_code (
+                 TAO_TIMEOUT_CONNECT_MINOR_CODE,
+                 errno),
+            CORBA::COMPLETED_NO),
+            false);
+      }
+    else if (this->transport_ == 0)
+      {
+        return false;
+      }
 
-   return true;
+    return true;
   }
 
   bool

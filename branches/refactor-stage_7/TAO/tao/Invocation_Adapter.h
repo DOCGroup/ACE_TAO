@@ -11,9 +11,9 @@
 //=============================================================================
 #ifndef TAO_INVOCATION_ADAPTER_H
 #define TAO_INVOCATION_ADAPTER_H
-#include "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "ace/pre.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,9 +21,9 @@
 
 // @NOTE: Do not include any headers unncessarily here.
 #include "ace/CORBA_macros.h"
-#include "ace/Global_Macros.h"
-#include "tao/Invocation_Utils.h"
 
+#include "tao/TAO_Export.h"
+#include "tao/Invocation_Utils.h"
 
 struct TAO_Exception_Data;
 class TAO_Operation_Details;
@@ -33,8 +33,7 @@ class ACE_Time_Value;
 namespace  CORBA
 {
   class Object;
-  class Environment;
-  class SystemException;
+  typedef Object *Object_ptr;
 }
 
 namespace TAO
@@ -94,7 +93,7 @@ namespace TAO
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
      */
-    Invocation_Adapter (CORBA::Object *target,
+    Invocation_Adapter (CORBA::Object_ptr target,
                         Argument **args,
                         int arg_number,
                         char *operation,
@@ -175,20 +174,20 @@ namespace TAO
     virtual Invocation_Status invoke_remote_i (
         TAO_Stub *,
         TAO_Operation_Details &op,
-        CORBA::Object *&effective_target,
+        CORBA::Object_ptr &effective_target,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
 
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
-        CORBA::Object *&effective_target,
+        CORBA::Object_ptr &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
 
     virtual Invocation_Status invoke_oneway (
         TAO_Operation_Details &op,
-        CORBA::Object *&effective_target,
+        CORBA::Object_ptr &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
@@ -203,7 +202,7 @@ namespace TAO
   protected:
 
     /// The target object on which this invocation is carried out.
-    CORBA::Object *target_;
+    CORBA::Object_ptr target_;
 
     /// Array of arguments for this operation
     Argument **args_;

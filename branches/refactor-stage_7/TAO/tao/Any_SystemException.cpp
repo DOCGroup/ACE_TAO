@@ -7,8 +7,9 @@
 #include "Environment.h"
 #include "Marshal.h"
 #include "CORBA_String.h"
-#include "ace/Auto_Ptr.h"
+#include "Typecode.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 

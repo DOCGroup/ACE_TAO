@@ -16,6 +16,7 @@
 
 #ifndef TAO_REMOTE_OBJECT_PROXY_BROKER_H
 #define TAO_REMOTE_OBJECT_PROXY_BROKER_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Object_Proxy_Broker.h"
@@ -23,7 +24,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 namespace TAO
 {
@@ -66,7 +66,6 @@ namespace TAO
 // -----------------------------------------------------
 
 TAO::Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker (void);
-
 
 #include /**/ "ace/post.h"
 

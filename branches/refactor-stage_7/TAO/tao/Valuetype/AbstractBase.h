@@ -15,8 +15,8 @@
 #define TAO_ABSTRACTBASE_H
 
 #include /**/ "ace/pre.h"
+
 #include "valuetype_export.h"
-#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +29,6 @@
 #include "tao/Arg_Traits_T.h"
 #include "tao/Objref_VarOut_T.h"
 
-
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 
@@ -40,6 +39,11 @@ class TAO_Abstract_ServantBase;
 
 namespace CORBA
 {
+  class ValueBase;
+
+  class AbstractBase;
+  typedef AbstractBase *AbstractBase_ptr;
+
   extern TAO_Valuetype_Export Boolean is_nil (AbstractBase_ptr);
   extern TAO_Valuetype_Export void release (AbstractBase_ptr);
 

@@ -2,8 +2,6 @@
 #include "IIOP_Acceptor.h"
 #include "IIOP_Connector.h"
 
-#include "IOPC.h"
-
 ACE_RCSID (tao,
            IIOP_Factory,
            "$Id$")

@@ -16,13 +16,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IFR_Client_Adapter.h"
+#include "ifr_client_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ifr_client_export.h"
+#include "tao/IFR_Client_Adapter.h"
+
 #include "ace/Service_Config.h"
 
 /**

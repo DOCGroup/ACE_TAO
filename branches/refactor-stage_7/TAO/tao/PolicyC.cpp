@@ -30,15 +30,12 @@
 
 
 #include "PolicyC.h"
-#include "tao/Stub.h"
+#include "Typecode.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
+#include "Tao/Any_Dual_Impl_T.h"
 #include "tao/Basic_Arguments.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Var_Size_Argument_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

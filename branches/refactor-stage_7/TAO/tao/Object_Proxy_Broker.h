@@ -20,21 +20,23 @@
 #define TAO_OBJECT_PROXY_BROKER_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 namespace CORBA
 {
-  class Environment;
-  class Exception;
   class InterfaceDef;
+
+  class Object;
+  typedef Object *Object_ptr;
 }
+
 namespace TAO
 {
   /**
@@ -59,7 +61,7 @@ namespace TAO
   virtual CORBA::Boolean _non_existent (CORBA::Object_ptr target
                                         ACE_ENV_ARG_DECL) = 0;
 
-  virtual CORBA::InterfaceDef* _get_interface (
+  virtual CORBA::InterfaceDef *_get_interface (
       CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     ) = 0;
@@ -68,9 +70,7 @@ namespace TAO
                                             ACE_ENV_ARG_DECL) = 0;
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
   };
-
 }
 
 #include /**/ "ace/post.h"

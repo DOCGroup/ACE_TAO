@@ -16,14 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/MProfile.h"
-#include "tao/ORB.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 
 #if defined (HPUX) && defined (IOR)
@@ -37,11 +36,9 @@ class TAO_RelativeRoundtripTimeoutPolicy;
 class TAO_Client_Priority_Policy;
 class TAO_Sync_Scope_Policy;
 class TAO_Buffering_Constraint_Policy;
-
 class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
 class TAO_Policy_Set;
-
 class TAO_Profile;
 
 /// Forward declaration for ObjectKey
@@ -49,6 +46,7 @@ namespace TAO
 {
   class ObjectKey;
 }
+
 // Function pointer returning a pointer to CORBA::Exception. This is used to
 // describe the allocator for user-defined exceptions that are used internally
 // by the interpreter.
@@ -442,7 +440,6 @@ protected:
 class TAO_Export TAO_Stub_Auto_Ptr
 {
 public:
-
   // = Initialization and termination methods.
   /* explicit */ TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
   TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
@@ -457,7 +454,6 @@ public:
   TAO_Stub *operator-> () const;
 
 protected:
-
   TAO_Stub *p_;
 
 };

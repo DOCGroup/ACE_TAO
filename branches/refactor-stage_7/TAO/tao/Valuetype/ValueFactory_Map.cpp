@@ -6,11 +6,9 @@
 # include "ValueFactory_Map.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            ValueFactory_Map,
            "$Id$")
-
 
 TAO_ValueFactory_Map::TAO_ValueFactory_Map (void)
   : map_ (TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE)

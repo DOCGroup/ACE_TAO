@@ -24,7 +24,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "Context.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +34,6 @@
 // that registers the dynamic service object.
 #include "Dynamic_Adapter_Impl.h"
 
-#include "Context.h"
 #include "tao/TAO_Server_Request.h"
 
 namespace CORBA

@@ -17,13 +17,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+//#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Singleton_Manager.h"
 #include "tao/TAO_Singleton.h"
 #include "tao/Environment.h"
 #include "tao/Policy_Manager.h"

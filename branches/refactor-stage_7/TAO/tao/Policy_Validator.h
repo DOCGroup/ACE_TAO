@@ -14,19 +14,25 @@
 
 #ifndef TAO_POLICY_VALIDATOR_H
 #define TAO_POLICY_VALIDATOR_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
-#include "tao/Policy_ForwardC.h"
+#include /**/ "ace/pre.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 // Forward declarations.
 class TAO_Policy_Set;
 class TAO_ORB_Core;
+
+namespace CORBA
+{
+  typedef ULong PolicyType;
+}
 
 /**
  * @class TAO_Policy_Validator
@@ -98,4 +104,5 @@ private:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_POLICY_VALIDATOR_H_ */

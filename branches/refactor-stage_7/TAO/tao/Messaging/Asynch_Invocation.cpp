@@ -1,6 +1,7 @@
 //$Id$
 #include "Asynch_Invocation.h"
 #include "Asynch_Reply_Dispatcher.h"
+
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/operation_details.h"
@@ -8,13 +9,8 @@
 #include "tao/Transport.h"
 #include "tao/Muxed_TMS.h"
 #include "tao/Pluggable_Messaging.h"
+#include "tao/ORB_Constants.h"
 
-/*
-
-#include "Stub.h"
-
-#include "TAOC.h"
-*/
 ACE_RCSID (tao,
            Synch_Invocation,
            "$Id$")

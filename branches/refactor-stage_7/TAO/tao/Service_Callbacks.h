@@ -15,20 +15,29 @@
 
 #ifndef TAO_SERVICE_CALLBACK_H
 #define TAO_SERVICE_CALLBACK_H
+
 #include /**/ "ace/pre.h"
-
-#include "tao/IOPC.h"
-
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 class TAO_Profile;
 class TAO_MProfile;
 class TAO_GIOP_Invocation;
 class TAO_ServerRequest;
 class TAO_Message_State_Factory;
+class TAO_Stub;
+
+namespace CORBA
+{
+  class Object;
+  typedef Object *Object_ptr;
+}
 
 /**
  * @class TAO_Service_Callbacks
@@ -86,10 +95,10 @@ public:
                                        ACE_ENV_ARG_DECL);
 };
 
-
 #if defined (__ACE_INLINE__)
 # include "tao/Service_Callbacks.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_SERVICE_CALLBACK_H*/

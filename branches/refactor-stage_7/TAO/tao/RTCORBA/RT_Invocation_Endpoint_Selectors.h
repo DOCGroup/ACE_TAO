@@ -17,17 +17,20 @@
 
 #ifndef TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
-
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
-#include "RTCORBA.h"
+#include "rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/orbconf.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
+#include "RTCORBA.h"
 
 #include "tao/Invocation_Endpoint_Selectors.h"
 
@@ -73,4 +76,5 @@ protected:
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H */

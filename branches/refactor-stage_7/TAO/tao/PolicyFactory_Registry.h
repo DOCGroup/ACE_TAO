@@ -14,17 +14,35 @@
 #define TAO_POLICY_FACTORY_REGISTRY_H
 
 #include /**/ "ace/pre.h"
-
-#include "corbafwd.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PortableInterceptorC.h"
-#include "Policy_ForwardC.h"
 #include "ace/Map_Manager.h"
-#include "ace/Null_Mutex.h"
+#include "ace/CORBA_macros.h"
+
+#include "TAO_Export.h"
+#include "Basic_Types.h"
+//#include "PortableInterceptorC.h"
+//#include "Policy_ForwardC.h"
+
+namespace CORBA
+{
+  typedef ULong PolicyType;
+
+  class Policy;
+  typedef Policy *Policy_ptr;
+
+  class Any;
+}
+
+namespace PortableInterceptor
+{
+  class PolicyFactory;
+  typedef PolicyFactory *PolicyFactory_ptr;
+}
 
 class TAO_ORB_Core;
 
@@ -49,10 +67,10 @@ public:
    * point a lock has already been acquired.  In short, the table is
    * only modified during ORB bootstrap-time.
    */
-  typedef ACE_Map_Manager<
-    CORBA::PolicyType,
-    PortableInterceptor::PolicyFactory_ptr,
-    ACE_Null_Mutex> TABLE;
+  typedef ACE_Map_Manager<CORBA::PolicyType,
+                          PortableInterceptor::PolicyFactory_ptr,
+                          ACE_Null_Mutex>
+    TABLE;
 
 public:
 

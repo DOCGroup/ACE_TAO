@@ -3,6 +3,8 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Valuetype_Adapter.h"
 #include "tao/ORB_Core.h"
+#include "tao/Marshal.h"
+#include "tao/Typecode.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -37,14 +39,14 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
       TAO_InputCDR input (this->cdr_,
                           this->byte_order_);
 
-      CORBA::TypeCode::traverse_status status =
+      TAO::traverse_status status =
         TAO_Marshal_Object::perform_append (this->type_,
                                             &input,
                                             &cdr
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (status != TAO::TRAVERSE_CONTINUE)
         {
           return 0;
         }
@@ -95,13 +97,13 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
   char *begin = cdr.rd_ptr ();
 
   // Skip over the next argument.
-  CORBA::TypeCode::traverse_status status =
+  TAO::traverse_status status =
     TAO_Marshal_Object::perform_skip (this->type_,
                                       &cdr
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if (status != TAO::TRAVERSE_CONTINUE)
     {
       ACE_THROW (CORBA::MARSHAL ());
     }

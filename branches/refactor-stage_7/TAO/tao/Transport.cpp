@@ -3,8 +3,7 @@
 
 #include "Transport.h"
 
-#include "Exception.h"
-#include "ORB_Core.h"
+#include "LF_Follower.h"
 #include "Leader_Follower.h"
 #include "Client_Strategy_Factory.h"
 #include "Wait_Strategy.h"
@@ -16,15 +15,12 @@
 #include "Synch_Queued_Message.h"
 #include "Asynch_Queued_Message.h"
 #include "Flushing_Strategy.h"
-#include "Transport_Cache_Manager.h"
 #include "Thread_Lane_Resources.h"
-#include "debug.h"
 #include "Resume_Handle.h"
-#include "ace/Message_Block.h"
-#include "ace/Reactor.h"
-
 #include "Codeset_Manager.h"
 #include "Codeset_Translator_Factory.h"
+
+#include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Transport.inl"
@@ -50,13 +46,16 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
               DUMP_IOV_PREFIX ", "
               "sending %d buffers\n",
               id, location, iovcnt));
+
   for (int i = 0; i != iovcnt && 0 < current_transfer; ++i)
     {
       size_t iov_len = iov[i].iov_len;
 
       // Possibly a partially sent iovec entry.
       if (current_transfer < iov_len)
-        iov_len = current_transfer;
+        {
+          iov_len = current_transfer;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - "
@@ -67,6 +66,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
                   iov_len));
 
       size_t len;
+
       for (size_t offset = 0; offset < iov_len; offset += len)
         {
           ACE_TCHAR header[1024];
@@ -77,8 +77,12 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
                            id, location, offset, iov_len);
 
           len = iov_len - offset;
+
           if (len > 512)
-            len = 512;
+            {
+              len = 512;
+            }
+
           ACE_HEX_DUMP ((LM_DEBUG,
                          ACE_static_cast(char*,iov[i].iov_base) + offset,
                          len,
@@ -86,6 +90,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
         }
       current_transfer -= iov_len;
     }
+
   ACE_DEBUG ((LM_DEBUG,
               "TAO (%P|%t) - "
               DUMP_IOV_PREFIX ", "
@@ -183,7 +188,9 @@ TAO_Transport::register_handler (void)
   ACE_Reactor *r = this->orb_core_->reactor ();
 
   if (r == this->event_handler_i ()->reactor ())
-    return 0;
+    {
+      return 0;
+    }
 
   // Set the flag in the Connection Handler and in the Wait Strategy
   // @@Maybe we should set these flags after registering with the
@@ -203,13 +210,16 @@ TAO_Transport::generate_locate_request (
 {
   if (this->messaging_object ()->generate_locate_request_header (opdetails,
                                                                  spec,
-                                                                 output) == -1)
+                                                                 output)
+       == -1)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Transport[%d]::generate_locate_request, "
-                    "error while marshalling the LocateRequest header\n",
-                    this->id ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::generate_locate_request, "
+                      "error while marshalling the LocateRequest header\n",
+                      this->id ()));
+        }
 
       return -1;
     }
@@ -226,18 +236,24 @@ TAO_Transport::generate_request_header (
   // codeset service context is only supposed to be sent in the first request
   // on a particular connection.
   if (this->first_request_)
-    this->orb_core ()->codeset_manager ()->
-      generate_service_context (opdetails, *this);
+    {
+      this->orb_core ()->codeset_manager ()->generate_service_context (
+                                                 opdetails, 
+                                                 *this
+                                               );
+    }
 
   if (this->messaging_object ()->generate_request_header (opdetails,
                                                           spec,
                                                           output) == -1)
     {
       if (TAO_debug_level > 0)
+        {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) - Transport[%d]::generate_request_header, "
-                    "error while marshalling the Request header\n",
-                    this->id()));
+                      "(%P|%t) - Transport[%d]::generate_request_header, "
+                      "error while marshalling the Request header\n",
+                      this->id()));
+        }
 
       return -1;
     }
@@ -272,6 +288,7 @@ TAO_Transport::make_idle (void)
                   "TAO (%P|%t) - Transport[%d]::make_idle\n",
                   this->id ()));
     }
+
   return this->transport_cache_manager ().make_idle (this->cache_map_entry_);
 }
 
@@ -340,6 +357,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
   synch_message.push_back (this->head_, this->tail_);
 
   int n = this->drain_queue_i ();
+
   if (n == -1)
     {
       synch_message.remove_from_list (this->head_, this->tail_);
@@ -405,9 +423,10 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
     this->send_synch_message_helper_i (synch_message,
                                        max_wait_time);
 
-  if (n == -1 ||
-      n == 1)
-    return n;
+  if (n == -1 || n == 1)
+    {
+      return n;
+    }
 
   ACE_ASSERT (n == 0);
 
@@ -432,9 +451,11 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
                                                &synch_message,
                                                max_wait_time);
   }
+
   if (result == -1)
     {
       synch_message.remove_from_list (this->head_, this->tail_);
+
       if (errno == ETIME)
         {
           if (this->head_ == &synch_message)
@@ -501,9 +522,10 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
     this->send_synch_message_helper_i (synch_message,
                                        max_wait_time);
 
-  if (n == -1 ||
-      n == 1)
-    return n;
+  if (n == -1 || n == 1)
+    {
+      return n;
+    }
 
   ACE_ASSERT (n == 0);
 
@@ -542,6 +564,7 @@ TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_mess
 {
   // @@todo: Need to send timeouts for writing..
   int n = this->drain_queue_i ();
+
   if (n == -1)
     {
       synch_message.remove_from_list (this->head_, this->tail_);
@@ -622,7 +645,9 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
 
   /// This is the only legal ACT in the current configuration....
   if (act != &this->current_deadline_)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->flush_timer_pending ())
     {
@@ -634,6 +659,7 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
         this->orb_core ()->flushing_strategy ();
       (void) flushing_strategy->schedule_output (this);
     }
+
   return 0;
 }
 
@@ -641,7 +667,6 @@ int
 TAO_Transport::drain_queue (void)
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
   int retval = this->drain_queue_i ();
 
   if (retval == 1)
@@ -700,8 +725,12 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
                       "error during %p\n",
                       this->id (), "send()"));
         }
+
       if (errno == EWOULDBLOCK)
-        return 0;
+        {
+          return 0;
+        }
+
       return -1;
     }
 
@@ -716,6 +745,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
                   "byte_count = %d, head_is_empty = %d\n",
                   this->id(), byte_count, (this->head_ == 0)));
     }
+
   return 1;
 }
 
@@ -730,6 +760,7 @@ TAO_Transport::drain_queue_i (void)
 
   // We loop over all the elements in the queue ...
   TAO_Queued_Message *i = this->head_;
+
   while (i != 0)
     {
       // ... each element fills the iovector ...
@@ -750,8 +781,11 @@ TAO_Transport::drain_queue_i (void)
                           "helper retval = %d\n",
                           this->id (), retval));
             }
+
           if (retval != 1)
-            return retval;
+            {
+              return retval;
+            }
 
           i = this->head_;
           continue;
@@ -764,8 +798,7 @@ TAO_Transport::drain_queue_i (void)
 
   if (iovcnt != 0)
     {
-      int retval =
-        this->drain_queue_helper (iovcnt, iov);
+      int retval = this->drain_queue_helper (iovcnt, iov);
 
           if (TAO_debug_level > 4)
             {
@@ -774,8 +807,11 @@ TAO_Transport::drain_queue_i (void)
                           "helper retval = %d\n",
                           this->id (), retval));
             }
+
       if (retval != 1)
-        return retval;
+        {
+          return retval;
+        }
     }
 
   if (this->head_ == 0)
@@ -787,6 +823,7 @@ TAO_Transport::drain_queue_i (void)
           reactor->cancel_timer (this->flush_timer_id_);
           this->reset_flush_timer ();
         }
+
       return 1;
     }
 
@@ -837,6 +874,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
   // First let's compute the size of the queue:
   size_t msg_count = 0;
   size_t total_bytes = 0;
+
   for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
     {
       msg_count++;
@@ -868,6 +906,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
         {
           reactor->cancel_timer (this->flush_timer_id_);
         }
+
       this->flush_timer_id_ =
         reactor->schedule_timer (&this->transport_timer_,
                                  &this->current_deadline_,
@@ -944,9 +983,13 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   int queue_empty = (this->head_ == 0);
 
   if (!queue_empty)
-    try_sending_first = 0;
+    {
+      try_sending_first = 0;
+    }
   else if (stub->sync_strategy ().must_queue (queue_empty))
-    try_sending_first = 0;
+    {
+      try_sending_first = 0;
+    }
 
   ssize_t n;
 
@@ -959,6 +1002,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       // ... in this case we must try to send the message first ...
 
       size_t total_length = message_block->total_length ();
+
       if (TAO_debug_level > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -1017,7 +1061,9 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       // ... part of the data was sent, need to figure out what piece
       // of the message block chain must be queued ...
       while (message_block != 0 && message_block->length () == 0)
-        message_block = message_block->cont ();
+        {
+          message_block = message_block->cont ();
+        }
 
       // ... at least some portion of the message block chain should
       // remain ...
@@ -1138,6 +1184,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
   ACE_CDR::mb_align (&message_block);
 
   size_t recv_size = 0;
+
   if (this->orb_core_->orb_params ()->single_read_optimization ())
     {
       recv_size =
@@ -1157,7 +1204,9 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // If there is an error return to the reactor..
   if (n <= 0)
-    return n;
+    {
+      return n;
+    }
 
   if (TAO_debug_level > 2)
     {
@@ -1219,7 +1268,9 @@ TAO_Transport::parse_consolidate_messages (ACE_Message_Block &block,
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
   if (this->parse_incoming_messages (block) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Check whether we have a complete message for processing
   ssize_t missing_data = this->missing_data (block);
@@ -1296,10 +1347,12 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
 {
   // Check whether the last message in the queue is complete..
   if (this->incoming_message_queue_.is_tail_complete () == 0)
-    return this->consolidate_message_queue (incoming,
-                                            missing_data,
-                                            rh,
-                                            max_wait_time);
+    {
+      return this->consolidate_message_queue (incoming,
+                                              missing_data,
+                                              rh,
+                                              max_wait_time);
+    }
 
   if (TAO_debug_level > 4)
     {
@@ -1321,9 +1374,7 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
 
   // As this used for transports where things are available in one
   // shot this looping should not create any problems.
-  for (ssize_t bytes = missing_data;
-       bytes != 0;
-       bytes -= n)
+  for (ssize_t bytes = missing_data; bytes != 0; bytes -= n)
     {
       // .. do a read on the socket again.
       n = this->recv (incoming.wr_ptr (),
@@ -1396,7 +1447,9 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
       this->incoming_message_queue_.enqueue_tail (qd);
 
       if (this->incoming_message_queue_.is_head_complete ())
-        return this->process_queue_head (rh);
+        {
+          return this->process_queue_head (rh);
+        }
 
       return 0;
     }
@@ -1446,15 +1499,13 @@ TAO_Transport::consolidate_fragments (TAO_Queued_Data *qd,
       tqd->more_fragments_ = qd->more_fragments_;
       tqd->missing_data_ = qd->missing_data_;
 
-      if (this->messaging_object ()->consolidate_fragments (tqd,
-                                                            qd) == -1)
-        return -1;
-
+      if (this->messaging_object ()->consolidate_fragments (tqd, qd) == -1)
+        {
+          return -1;
+        }
 
       TAO_Queued_Data::release (qd);
-
       this->incoming_message_queue_.enqueue_tail (tqd);
-
       this->process_queue_head (rh);
     }
   else
@@ -1578,10 +1629,12 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
         this->incoming_message_queue_.dequeue_tail ();
 
       if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Transport[%d]::consolidate_message_queue, "
-                    "trying recv, again\n",
-                    this->id ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::consolidate_message_queue, "
+                      "trying recv, again\n",
+                      this->id ()));
+        }
 
       // Try to do a read again. If we have some luck it would be
       // great..
@@ -1590,14 +1643,19 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
                               max_wait_time);
 
       if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Transport[%d]::consolidate_message_queue, "
-                    "recv retval [%d]\n",
-                    this->id (),
-                    n));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::consolidate_message_queue, "
+                      "recv retval [%d]\n",
+                      this->id (),
+                      n));
+        }
+
       // Error...
       if (n < 0)
-        return n;
+        {
+          return n;
+        }
 
       // If we get a EWOULDBLOCK ie. n==0, we should anyway put the
       //  message in queue before returning..
@@ -1613,7 +1671,9 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
       // Any way as we have come this far and are about to return,
       // just try to process a message if it is there in the queue.
       if (this->incoming_message_queue_.is_head_complete ())
-        return this->process_queue_head (rh);
+        {
+          return this->process_queue_head (rh);
+        }
 
       return 0;
     }
@@ -1643,9 +1703,10 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
     {
       // If we have a node in the tail, checek to see whether it needs
       // consolidation. If so, just consolidate it.
-      if (this->messaging_object ()->consolidate_node (tail,
-                                                       incoming) == -1)
-        return -1;
+      if (this->messaging_object ()->consolidate_node (tail, incoming) == -1)
+        {
+          return -1;
+        }
 
       // .. put the tail back in queue..
       this->incoming_message_queue_.enqueue_tail (tail);
@@ -1701,6 +1762,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   TAO_Pluggable_Message_Type t =  qd->msg_type_;
 
   int result = 0;
+
   if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
     {
       if (TAO_debug_level > 0)
@@ -1891,9 +1953,10 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
         }
 
       // Process the message...
-      if (this->process_parsed_messages (qd,
-                                         rh) == -1)
-        return -1;
+      if (this->process_parsed_messages (qd, rh) == -1)
+        {
+          return -1;
+        }
 
       // Delete the Queued_Data..
       TAO_Queued_Data::release (qd);
@@ -1908,14 +1971,14 @@ int
 TAO_Transport::notify_reactor (void)
 {
   if (!this->ws_->is_registered ())
-    return 0;
+    {
+      return 0;
+    }
 
-  ACE_Event_Handler *eh =
-    this->event_handler_i ();
+  ACE_Event_Handler *eh = this->event_handler_i ();
 
   // Get the reactor associated with the event handler
-  ACE_Reactor *reactor =
-    this->orb_core ()->reactor ();
+  ACE_Reactor *reactor = this->orb_core ()->reactor ();
 
   if (TAO_debug_level > 0)
     {

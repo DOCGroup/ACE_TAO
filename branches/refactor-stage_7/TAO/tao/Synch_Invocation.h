@@ -13,15 +13,15 @@
 
 #ifndef TAO_SYNCH_INVOCATION_H
 #define TAO_SYNCH_INVOCATION_H
+
 #include "ace/pre.h"
+#include "tao/Remote_Invocation.h"
 
 #include "tao/Remote_Invocation.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Global_Macros.h"
 
 class TAO_Operation_Details;
 class TAO_Synch_Reply_Dispatcher;
@@ -38,7 +38,7 @@ namespace TAO
 {
   class Profile_Transport_Resolver;
 
-  class TAO_Export Synch_Twoway_Invocation: protected Remote_Invocation
+  class TAO_Export Synch_Twoway_Invocation : protected Remote_Invocation
   {
   public:
     Synch_Twoway_Invocation (CORBA::Object_ptr otarget,
@@ -87,7 +87,7 @@ namespace TAO
 
   };
 
-  class TAO_Export Synch_Oneway_Invocation: protected Synch_Twoway_Invocation
+  class TAO_Export Synch_Oneway_Invocation : protected Synch_Twoway_Invocation
   {
   public:
     Synch_Oneway_Invocation (CORBA::Object_ptr otarget,
@@ -116,6 +116,6 @@ namespace TAO
   };
 }
 
-
 #include "ace/post.h"
+
 #endif /*TAO_SYNCH_INVOCATION_H*/

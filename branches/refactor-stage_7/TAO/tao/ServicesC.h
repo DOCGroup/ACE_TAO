@@ -39,7 +39,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CDR.h"
 #include "tao/VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)

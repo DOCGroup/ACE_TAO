@@ -1,10 +1,14 @@
 // $Id$
 
 #include "BiDir_Policy_i.h"
+
 #include "tao/Stub.h"
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
-ACE_RCSID(TAO, BiDir_Policy_i, "$Id$")
+ACE_RCSID (TAO, 
+           BiDir_Policy_i, 
+           "$Id$")
 
 
 

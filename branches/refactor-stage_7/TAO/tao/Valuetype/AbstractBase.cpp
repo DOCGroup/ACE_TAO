@@ -12,7 +12,6 @@
 # include "AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (Valuetype,
            AbstractBase,
            "$Id$")

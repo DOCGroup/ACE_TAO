@@ -16,9 +16,10 @@
 
 #ifndef TAO_UIOP_LITE_FACTORY_H
 #define TAO_UIOP_LITE_FACTORY_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 
 # if TAO_HAS_UIOP == 1
 
@@ -83,4 +84,5 @@ ACE_FACTORY_DECLARE (TAO_Strategies, TAO_UIOP_Lite_Protocol_Factory)
 # endif  /* TAO_HAS_UIOP == 1 */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_UIOP_LITE_FACTORY_H */

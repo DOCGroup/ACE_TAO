@@ -19,13 +19,12 @@
 //
 // ============================================================================
 
-#include "tao/Marshal.h"
-#include "tao/CDR.h"
 #include "tao/Environment.h"
-#include "tao/Any.h"
 #include "tao/debug.h"
 #include "tao/Valuetype_Adapter.h"
 #include "tao/ORB_Core.h"
+#include "tao/Typecode.h"
+#include "tao/Marshal.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -39,15 +38,15 @@ ACE_RCSID (tao,
 // components.  "context" is the marshaling stream on which to encode
 // the data value.
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
                                TAO_InputCDR *src,
                                TAO_OutputCDR *dest
                                ACE_ENV_ARG_DECL)
 {
   CORBA::Boolean continue_append = 1;
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation
+  TAO::traverse_status retval =
+    TAO::TRAVERSE_CONTINUE; // status of encode operation
 
   switch (tc->kind_)
     {
@@ -83,13 +82,13 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
       continue_append = dest->append_wchar (*src);
       break;
     default:
-      retval = CORBA::TypeCode::TRAVERSE_STOP;
+      retval = TAO::TRAVERSE_STOP;
       // we are not a primitive type
     }
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+  if (retval == TAO::TRAVERSE_CONTINUE
       && continue_append == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((
@@ -99,10 +98,10 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
 
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
                          TAO_InputCDR *src,
                          TAO_OutputCDR *dest
@@ -114,22 +113,22 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
   if (!(*src >> elem_tc.inout ()))
     ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_MAYBE),
-                      CORBA::TypeCode::TRAVERSE_STOP);
+                      TAO::TRAVERSE_STOP);
 
   if (!(*dest << elem_tc.in ()))
     ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_MAYBE),
-                      CORBA::TypeCode::TRAVERSE_STOP);
+                      TAO::TRAVERSE_STOP);
 
   // append the data
-  CORBA::TypeCode::traverse_status retval =
+  TAO::traverse_status retval =
     TAO_Marshal_Object::perform_append (elem_tc.in (),
                                         src,
                                         dest
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if (retval != TAO::TRAVERSE_CONTINUE)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -137,21 +136,21 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
 
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                         CORBA::COMPLETED_MAYBE),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+                        TAO::TRAVERSE_STOP);
     }
 
   return retval;
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                               TAO_InputCDR *src,
                               TAO_OutputCDR *dest
                               ACE_ENV_ARG_DECL)
 {
   CORBA::Boolean continue_append = 1;
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
+  TAO::traverse_status retval =
+    TAO::TRAVERSE_CONTINUE;
   CORBA::ULong kind;
 
   // Decode the "kind" field of the typecode from the src for further
@@ -185,7 +184,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                                                       src,
                                                       dest
                                                        ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+                ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
               }
             break;
 
@@ -198,7 +197,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                                                       src,
                                                       dest
                                                        ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+                ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
               }
             break;
 
@@ -226,39 +225,42 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                   TAO_Marshal_Object::perform_append (TC_opaque,
                                                       src,
                                                       dest
-                                                       ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+                                                      ACE_ENV_ARG_PARAMETER);
+                ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
               }
             } // end of switch
         }
       else // bad kind_ value to be decoded
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO_Marshal_TypeCode: ")
-                        ACE_TEXT ("Bad kind_ value in CDR stream\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO_Marshal_TypeCode: ")
+                          ACE_TEXT ("Bad kind_ value in CDR stream\n")));
+            }
 
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                            CORBA::TypeCode::TRAVERSE_STOP);
+                            TAO::TRAVERSE_STOP);
         }
     }
 
-  if ((continue_append == 1) &&
-      (retval == CORBA::TypeCode::TRAVERSE_CONTINUE))
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  if (continue_append == 1 && retval == TAO::TRAVERSE_CONTINUE)
+    {
+      return TAO::TRAVERSE_CONTINUE;
+    }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((
-        LM_DEBUG,
-        ACE_TEXT ("TAO_Marshal_TypeCode::append detected error\n")
-      ));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO_Marshal_TypeCode::append detected error\n")));
+    }
 
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Principal::append (CORBA::TypeCode_ptr,
                                TAO_InputCDR *src,
                                TAO_OutputCDR *dest
@@ -271,7 +273,7 @@ TAO_Marshal_Principal::append (CORBA::TypeCode_ptr,
                                               ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest
@@ -322,7 +324,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
       CORBA::Octet* body = 0;
       ACE_NEW_RETURN (body,
                       CORBA::Octet[length],
-                      CORBA::TypeCode::TRAVERSE_STOP);
+                      TAO::TRAVERSE_STOP);
       continue_append =
         (CORBA::Boolean) (src->read_octet_array (body, length)
                           ? dest->write_octet_array (body, length)
@@ -331,7 +333,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
     }
 
   if (continue_append == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((
@@ -341,41 +343,41 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
 
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest
                             ACE_ENV_ARG_DECL)
 {
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
+  TAO::traverse_status retval =
+    TAO::TRAVERSE_CONTINUE;
   CORBA::TypeCode_var param;
 
   // Number of fields in the struct.
   int member_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   for (int i = 0;
-       i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
+       i < member_count && retval == TAO::TRAVERSE_CONTINUE;
        i++)
     {
       // get member type
       param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
       retval =
         TAO_Marshal_Object::perform_append (param.in (),
                                             src,
                                             dest
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
     }
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  if (retval == TAO::TRAVERSE_CONTINUE)
+    return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -383,10 +385,10 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
 
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest
@@ -394,11 +396,11 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 {
   CORBA::TypeCode_var discrim_tc =
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   CORBA::ULong kind =
     discrim_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   // Save the discriminator value in a temporary variable...
   CORBA::Short short_v;
@@ -416,7 +418,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       {
         if (!src->read_short (short_v)
             || !dest->write_short (short_v))
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
       }
       break;
 
@@ -424,7 +426,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       {
         if (!src->read_ushort (ushort_v)
             || !dest->write_ushort (ushort_v))
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
       }
       break;
 
@@ -432,7 +434,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       {
         if (!src->read_long (long_v)
             || !dest->write_long (long_v))
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
       }
       break;
 
@@ -440,7 +442,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       {
         if (!src->read_ulong (ulong_v)
             || !dest->write_ulong (ulong_v))
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
       }
       break;
 
@@ -448,7 +450,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       {
         if (!src->read_ulong (enum_v)
             || !dest->write_ulong (enum_v))
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
       }
       break;
 
@@ -456,7 +458,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       {
         if (!src->read_char (char_v)
             || !dest->write_char (char_v))
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
       }
       break;
 
@@ -464,7 +466,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       {
         if (!src->read_wchar (wchar_v)
             || !dest->write_wchar (wchar_v))
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
       }
       break;
 
@@ -472,17 +474,17 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       {
         if (!src->read_boolean (boolean_v)
             || !dest->write_boolean (boolean_v))
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
       }
       break;
 
     default:
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      return TAO::TRAVERSE_STOP;
     }
 
   CORBA::ULong member_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   const CORBA::ULong null_member = ~ACE_static_cast (CORBA::ULong, 0U);
 
@@ -495,7 +497,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
     {
       CORBA::Any_var any = tc->member_label (i
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
       CORBA::Octet o;
 
@@ -503,11 +505,11 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
         {
           CORBA::ULong default_index =
             tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
           if (i != default_index)
             ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                              CORBA::TypeCode::TRAVERSE_STOP);
+                              TAO::TRAVERSE_STOP);
           // Found the default branch, save its position and continue
           // trying to find the current value...
           default_member = i;
@@ -607,7 +609,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
           break;
 
         default:
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
         }
     }
 
@@ -620,7 +622,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
           // Good, use the default to append...
           CORBA::TypeCode_var member_tc =
             tc->member_type (default_member ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
           return TAO_Marshal_Object::perform_append (member_tc.in (),
                                                      src,
                                                      dest
@@ -630,20 +632,20 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
       // If we're here, we have an implicit default case, and we
       // should just return without appending anything, since no
       // union member was marshaled in the first place.
-      return CORBA::TypeCode::TRAVERSE_CONTINUE;
+      return TAO::TRAVERSE_CONTINUE;
     }
 
   // If we found the member successfully then just use that one...
   CORBA::TypeCode_var member_tc =
     tc->member_type (current_member ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
   return TAO_Marshal_Object::perform_append (member_tc.in (),
                                              src,
                                              dest
                                               ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_String::append (CORBA::TypeCode_ptr,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest
@@ -661,7 +663,7 @@ TAO_Marshal_String::append (CORBA::TypeCode_ptr,
 
   continue_append = dest->append_string (*src);
   if (continue_append == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -669,10 +671,10 @@ TAO_Marshal_String::append (CORBA::TypeCode_ptr,
 
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               TAO_InputCDR *src,
                               TAO_OutputCDR *dest
@@ -697,12 +699,12 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
           ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")
         ));
       ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        CORBA::TypeCode::TRAVERSE_STOP);
+                        TAO::TRAVERSE_STOP);
     }
 
   if (bounds == 0)
     {
-      return CORBA::TypeCode::TRAVERSE_CONTINUE;
+      return TAO::TRAVERSE_CONTINUE;
     }
 
   if (continue_append)
@@ -710,13 +712,13 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
       // Get element typecode.
       CORBA::TypeCode_var tc2 =
         tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-      CORBA::TypeCode::traverse_status retval =
-        CORBA::TypeCode::TRAVERSE_CONTINUE;
+      TAO::traverse_status retval =
+        TAO::TRAVERSE_CONTINUE;
 
       CORBA::TCKind kind = tc2->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
       switch (kind)
         {
@@ -727,7 +729,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::OCTET_ALIGN, buf) == 0)
               {
                 if (src->read_octet_array ((ACE_CDR::Octet*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -738,7 +740,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::OCTET_ALIGN, buf) == 0)
               {
                 if (src->read_boolean_array ((ACE_CDR::Boolean*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -749,7 +751,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::OCTET_ALIGN, buf) == 0)
               {
                 if (src->read_char_array ((ACE_CDR::Char*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -760,7 +762,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::SHORT_ALIGN, buf) == 0)
               {
                 if (src->read_short_array ((ACE_CDR::Short*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -771,7 +773,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::SHORT_ALIGN, buf) == 0)
               {
                 if (src->read_ushort_array ((ACE_CDR::UShort*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -782,7 +784,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::SHORT_ALIGN, buf) == 0)
               {
                 if (src->read_wchar_array ((ACE_CDR::WChar*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -793,7 +795,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::LONG_ALIGN, buf) == 0)
               {
                 if (src->read_long_array ((ACE_CDR::Long*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -804,7 +806,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::LONG_ALIGN, buf) == 0)
               {
                 if (src->read_ulong_array ((ACE_CDR::ULong*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -815,7 +817,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::LONG_ALIGN, buf) == 0)
               {
                 if (src->read_float_array ((ACE_CDR::Float*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -826,7 +828,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::LONGLONG_ALIGN, buf) == 0)
               {
                 if (src->read_double_array ((ACE_CDR::Double*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -837,7 +839,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::LONGLONG_ALIGN, buf) == 0)
               {
                 if (src->read_longlong_array ((ACE_CDR::LongLong*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -848,7 +850,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::LONGLONG_ALIGN, buf) == 0)
               {
                 if (src->read_ulonglong_array ((ACE_CDR::ULongLong*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
@@ -859,25 +861,25 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
                               ACE_CDR::LONGDOUBLE_ALIGN, buf) == 0)
               {
                 if (src->read_longdouble_array ((ACE_CDR::LongDouble*)buf, bounds) == 0)
-                  retval = CORBA::TypeCode::TRAVERSE_STOP;
+                  retval = TAO::TRAVERSE_STOP;
               }
           }
           break;
 
         default:
-          while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+          while (bounds-- && retval == TAO::TRAVERSE_CONTINUE)
             {
               retval = TAO_Marshal_Object::perform_append (tc2.in (),
                                                            src,
                                                            dest
                                                             ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+              ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
             }
           break;
         }// end of switch
 
-      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-        return CORBA::TypeCode::TRAVERSE_CONTINUE;
+      if (retval == TAO::TRAVERSE_CONTINUE)
+        return TAO::TRAVERSE_CONTINUE;
     }
   // error exit
   if (TAO_debug_level > 0)
@@ -887,10 +889,10 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
       ));
 
   ACE_THROW_RETURN (CORBA::MARSHAL (),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest
@@ -898,19 +900,19 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
 {
   // retrieve the bounds of the array
   CORBA::ULong bounds = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   // get element typecode
   CORBA::TypeCode_var tc2 = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   // For CORBA basic types, the copy can be optimized
   CORBA::TCKind kind = tc2->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   // Return status.
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
+  TAO::traverse_status retval =
+    TAO::TRAVERSE_CONTINUE;
 
   switch (kind)
     {
@@ -921,7 +923,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::OCTET_ALIGN, buf) == 0)
           {
             if (src->read_octet_array ((ACE_CDR::Octet*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -932,7 +934,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::OCTET_ALIGN, buf) == 0)
           {
             if (src->read_boolean_array ((ACE_CDR::Boolean*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -943,7 +945,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::OCTET_ALIGN, buf) == 0)
           {
             if (src->read_char_array ((ACE_CDR::Char*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -954,7 +956,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::SHORT_ALIGN, buf) == 0)
           {
             if (src->read_short_array ((ACE_CDR::Short*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -965,7 +967,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::SHORT_ALIGN, buf) == 0)
           {
             if (src->read_ushort_array ((ACE_CDR::UShort*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -976,7 +978,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::SHORT_ALIGN, buf) == 0)
           {
             if (src->read_wchar_array ((ACE_CDR::WChar*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -987,7 +989,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::LONG_ALIGN, buf) == 0)
           {
             if (src->read_long_array ((ACE_CDR::Long*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -998,7 +1000,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::LONG_ALIGN, buf) == 0)
           {
             if (src->read_ulong_array ((ACE_CDR::ULong*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -1009,7 +1011,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::LONG_ALIGN, buf) == 0)
           {
             if (src->read_float_array ((ACE_CDR::Float*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -1020,7 +1022,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::LONGLONG_ALIGN, buf) == 0)
           {
             if (src->read_double_array ((ACE_CDR::Double*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -1031,7 +1033,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::LONGLONG_ALIGN, buf) == 0)
           {
             if (src->read_longlong_array ((ACE_CDR::LongLong*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -1042,7 +1044,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::LONGLONG_ALIGN, buf) == 0)
           {
             if (src->read_ulonglong_array ((ACE_CDR::ULongLong*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
@@ -1053,23 +1055,23 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                           ACE_CDR::LONGDOUBLE_ALIGN, buf) == 0)
           {
             if (src->read_longdouble_array ((ACE_CDR::LongDouble*)buf, bounds) == 0)
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
+              retval = TAO::TRAVERSE_STOP;
           }
       }
       break;
     default:
-      while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      while (bounds-- && retval == TAO::TRAVERSE_CONTINUE)
         {
           retval = TAO_Marshal_Object::perform_append (tc2.in (),
                                                        src,
                                                        dest
                                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
         }
       break;
     }// end of switch
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if (retval == TAO::TRAVERSE_CONTINUE)
     return retval;
 
   // error exit
@@ -1078,10 +1080,10 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                 ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")));
 
   ACE_THROW_RETURN (CORBA::MARSHAL (),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest
@@ -1092,28 +1094,28 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
   CORBA::Boolean continue_append = 1;
 
   // Status of decode operation.
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
+  TAO::traverse_status retval =
+    TAO::TRAVERSE_CONTINUE;
 
   tc2 = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   retval = TAO_Marshal_Object::perform_append (tc2.in (),
                                                src,
                                                dest
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+  if (retval == TAO::TRAVERSE_CONTINUE
       && continue_append == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Alias::append detected error\n")));
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
 // Decode exception For exceptions, the "hidden" type ID near the
@@ -1123,14 +1125,14 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
 // established.
 //
 // NOTE: This is asymmetric with respect to encoding exceptions.
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
                             TAO_InputCDR *src,
                             TAO_OutputCDR *dest
                             ACE_ENV_ARG_DECL)
 {
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
+  TAO::traverse_status retval =
+    TAO::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_append = 1;
   CORBA::TypeCode_var param;
 
@@ -1139,14 +1141,14 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
 
   // Number of fields in the struct.
   int member_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   for (int i = 0; i < member_count
-         && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+         && retval == TAO::TRAVERSE_CONTINUE
          && continue_append == 1; i++)
     {
       param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
       retval = TAO_Marshal_Object::perform_append (param.in (),
                                                    src,
@@ -1154,19 +1156,19 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
                                                     ACE_ENV_ARG_PARAMETER);
     }
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+  if (retval == TAO::TRAVERSE_CONTINUE
       && continue_append == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Except::append detected error\n")));
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
                              TAO_InputCDR *src,
                              TAO_OutputCDR *dest
@@ -1185,24 +1187,24 @@ TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
   continue_append = dest->append_wstring (*src);
 
   if (continue_append == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_WString::append detected error\n")));
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }
 
-CORBA::TypeCode::traverse_status
+TAO::traverse_status
 TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
                            TAO_InputCDR *src,
                            TAO_OutputCDR *dest
                            ACE_ENV_ARG_DECL)
 {
-  CORBA::TypeCode::traverse_status retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
+  TAO::traverse_status retval =
+    TAO::TRAVERSE_CONTINUE;
   CORBA::TypeCode_var param;
 
   // Use the same method to append our base valuetype.
@@ -1219,7 +1221,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
       if (!src->read_ulong (value_tag) ||
           !dest->write_ulong (value_tag))
         {
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
         }
 
       TAO_Valuetype_Adapter *adapter =
@@ -1230,7 +1232,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
       if (adapter == 0)
         {
           ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            CORBA::TypeCode::TRAVERSE_STOP);
+                            TAO::TRAVERSE_STOP);
         }
 
       if (value_tag == 0) // Null value type pointer.
@@ -1246,13 +1248,13 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
       else
         {
           //@@ boris: VT CDR
-          return CORBA::TypeCode::TRAVERSE_STOP;
+          return TAO::TRAVERSE_STOP;
         }
     }
 
   // Handle our base valuetype if any.
   param = tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   if (param->kind () != CORBA::tk_null)
     {
@@ -1260,9 +1262,9 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
                              src,
                              dest
                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-      if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (retval != TAO::TRAVERSE_CONTINUE)
         {
           return retval;
         }
@@ -1270,26 +1272,26 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
 
   // Number of fields in the struct.
   int member_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   for (int i = 0;
-       i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
+       i < member_count && retval == TAO::TRAVERSE_CONTINUE;
        i++)
     {
       // get member type
       param = tc->member_type (i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
       retval =
         TAO_Marshal_Object::perform_append (param.in (),
                                             src,
                                             dest
                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
     }
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  if (retval == TAO::TRAVERSE_CONTINUE)
+    return TAO::TRAVERSE_CONTINUE;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -1297,5 +1299,5 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
 
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
-                    CORBA::TypeCode::TRAVERSE_STOP);
+                    TAO::TRAVERSE_STOP);
 }

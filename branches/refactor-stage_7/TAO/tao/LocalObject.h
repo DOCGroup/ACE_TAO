@@ -21,19 +21,18 @@
 #define TAO_CORBA_LOCALOBJECT_H
 
 #include /**/ "ace/pre.h"
-
-#include "Object.h"
+#include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#include "ace/Thread_Mutex.h"
+#include "Object.h"
 
 namespace CORBA
 {
   class LocalObject;
+  typedef LocalObject *LocalObject_ptr;
   typedef TAO_Pseudo_Var_T<LocalObject> LocalObject_var;
   typedef TAO_Pseudo_Out_T<LocalObject, LocalObject_var> LocalObject_out;
 
@@ -254,4 +253,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_CORBA_LOCALOBJECT_H */

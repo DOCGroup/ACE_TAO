@@ -4,34 +4,23 @@
 #include "default_server.h"
 #include "default_client.h"
 #include "default_resource.h"
-
-#include "Adapter.h"
 #include "IIOP_Factory.h"
 #include "MCAST_Parser.h"
 #include "CORBANAME_Parser.h"
 #include "CORBALOC_Parser.h"
 #include "FILE_Parser.h"
 #include "DLL_Parser.h"
-#include "StringSeqC.h"
 #include "ORB_Core.h"
-#include "Object_Loader.h"
-
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
 #include "Default_Protocols_Hooks.h"
 #include "Default_Thread_Lane_Resources_Manager.h"
 #include "Default_Collocation_Resolver.h"
-
-#include "ace/Dynamic_Service.h"
-#include "ace/Service_Config.h"
-#include "ace/Service_Repository.h"
-#include "ace/Object_Manager.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Env_Value_T.h"
-#include "ace/Argv_Type_Converter.h"
-
 #include "debug.h"
 
+#include "ace/Dynamic_Service.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (tao,
            TAO_Internal,
@@ -78,7 +67,9 @@ TAO_Internal::open_services (int &argc, ACE_TCHAR **argv)
   ACE_CString argv0 = "";
 
   if (argc > 0 && argv != 0)
-    argv0 = ACE_TEXT_ALWAYS_CHAR(argv[0]);
+    {
+      argv0 = ACE_TEXT_ALWAYS_CHAR(argv[0]);
+    }
 
   CORBA::ULong len = 0;
   svc_config_argv.length (1);
@@ -98,8 +89,12 @@ TAO_Internal::open_services (int &argc, ACE_TCHAR **argv)
     if (value != 0)
       {
         TAO_debug_level = ACE_OS::atoi (value);
+
         if (TAO_debug_level <= 0)
-          TAO_debug_level = 1;
+          {
+            TAO_debug_level = 1;
+          }
+
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_debug_level == %d"), TAO_debug_level));
       }
@@ -169,6 +164,7 @@ TAO_Internal::open_services (int &argc, ACE_TCHAR **argv)
 
           // Proceeds only if the configuration file exists.
           FILE *conf_file = ACE_OS::fopen (current_arg, ACE_LIB_TEXT("r"));
+
           if (conf_file == 0)
             {
               // Assigning EINVAL to errno to make an exception
@@ -184,7 +180,9 @@ TAO_Internal::open_services (int &argc, ACE_TCHAR **argv)
 
             }
           else
-            ACE_OS::fclose (conf_file);
+            {
+              ACE_OS::fclose (conf_file);
+            }
 
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
@@ -206,9 +204,11 @@ TAO_Internal::open_services (int &argc, ACE_TCHAR **argv)
         }
       // Can't interpret this argument.  Move on to the next argument.
       else
-        // Any arguments that don't match are ignored so that the
-        // caller can still use them.
-        arg_shifter.ignore_arg ();
+        {
+          // Any arguments that don't match are ignored so that the
+          // caller can still use them.
+          arg_shifter.ignore_arg ();
+        }
     }
 
   int svc_config_argc = svc_config_argv.length ();
@@ -245,9 +245,12 @@ TAO_Internal::open_services_i (int &argc,
 
   if (TAO_Internal::service_open_count_++ == 0)
     {
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Resource_Factory);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Client_Strategy_Factory);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Server_Strategy_Factory);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_Default_Resource_Factory);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_Default_Client_Strategy_Factory);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_Default_Server_Strategy_Factory);
 
       // Configure the IIOP factory. You do *NOT*
       // need modify this code to add your own protocol, instead
@@ -258,19 +261,30 @@ TAO_Internal::open_services_i (int &argc,
       //
       // where PN is the name of your protocol and LIB is the base
       // name of the shared library that implements the protocol.
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_IIOP_Protocol_Factory);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_IIOP_Protocol_Factory);
 
       // add descriptor to list of static objects.
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_MCAST_Parser);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_CORBANAME_Parser);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_FILE_Parser);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_DLL_Parser);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Stub_Factory);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Protocols_Hooks);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_Default_Collocation_Resolver);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_MCAST_Parser);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_CORBANAME_Parser);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_CORBALOC_Parser);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_FILE_Parser);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_DLL_Parser);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_Default_Stub_Factory);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_Default_Protocols_Hooks);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
+      ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_Default_Collocation_Resolver);
 
       int result = 0;
 
@@ -279,44 +293,79 @@ TAO_Internal::open_services_i (int &argc,
             // Copy command line parameter not to use original.
             ACE_Argv_Type_Converter command_line(argc, argv);
 
-            result = ACE_Service_Config::open (command_line.get_argc(),
-                                               command_line.get_TCHAR_argv(),
-                                               ACE_DEFAULT_LOGGER_KEY,
-                                               0, // Don't ignore static services.
-                                               ignore_default_svc_conf_file);
+            result = 
+              ACE_Service_Config::open (command_line.get_argc(),
+                                        command_line.get_TCHAR_argv(),
+                                        ACE_DEFAULT_LOGGER_KEY,
+                                        0, // Don't ignore static services.
+                                        ignore_default_svc_conf_file);
         }
 
       // If available, allow the Adapter Factory to setup.
       ACE_Service_Object *adapter_factory =
-        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (TAO_ORB_Core::poa_factory_name ().c_str());
+        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
+            TAO_ORB_Core::poa_factory_name ().c_str()
+          );
+
       if (adapter_factory != 0)
-        adapter_factory->init (0, 0);
+        {
+          adapter_factory->init (0, 0);
+        }
 
       // Handle RTCORBA library special case.  Since RTCORBA needs
       // its init method call to register several hooks, call it here
       // if it hasn't already been called.
       ACE_Service_Object *rt_loader =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("RT_ORB_Loader");
+
       if (rt_loader != 0)
+        {
           rt_loader->init (0, 0);
+        }
 
       ACE_Service_Object *rtscheduler_loader =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("RTScheduler_Loader");
+
       if (rtscheduler_loader != 0)
-	rtscheduler_loader->init (0, 0);
+        {
+	        rtscheduler_loader->init (0, 0);
+        }
       
       // @@ What the heck do these things do and do we need to avoid
       // calling them if we're not invoking the svc.conf file?
       if (TAO_Internal::resource_factory_args_ != 0)
-        ACE_Service_Config::process_directive (ACE_TEXT_CHAR_TO_TCHAR(TAO_Internal::resource_factory_args_));
+        {
+          ACE_Service_Config::process_directive (
+              ACE_TEXT_CHAR_TO_TCHAR (
+                  TAO_Internal::resource_factory_args_
+                )
+            );
+        }
+
       if (TAO_Internal::client_strategy_factory_args_ != 0)
-        ACE_Service_Config::process_directive (ACE_TEXT_CHAR_TO_TCHAR(TAO_Internal::client_strategy_factory_args_));
+        {
+          ACE_Service_Config::process_directive (
+              ACE_TEXT_CHAR_TO_TCHAR (
+                  TAO_Internal::client_strategy_factory_args_
+                )
+            );
+        }
+
       if (TAO_Internal::server_strategy_factory_args_ != 0)
-        ACE_Service_Config::process_directive (ACE_TEXT_CHAR_TO_TCHAR(TAO_Internal::server_strategy_factory_args_));
+        {
+          ACE_Service_Config::process_directive (
+              ACE_TEXT_CHAR_TO_TCHAR (
+                  TAO_Internal::server_strategy_factory_args_
+                )
+            );
+        }
+
       return result;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 TAO_Internal::TAO_Internal (void)

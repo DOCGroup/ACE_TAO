@@ -2,7 +2,10 @@
 #include "DII_Invocation_Adapter.h"
 #include "DII_Invocation.h"
 #include "DII_Reply_Dispatcher.h"
+
 #include "tao/Exception.h"
+#include "tao/ORB_Constants.h"
+
 #include "ace/os_include/os_errno.h"
 
 ACE_RCSID (tao,

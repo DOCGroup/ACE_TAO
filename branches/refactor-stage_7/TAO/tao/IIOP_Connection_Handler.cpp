@@ -3,6 +3,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Endpoint.h"
+#include "tao/IIOPC.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"

@@ -16,16 +16,16 @@
 
 #ifndef RT_ENDPOINT_UTILS_H
 #define RT_ENDPOINT_UTILS_H
+
 #include /**/ "ace/pre.h"
 
 #include "rtcorba_export.h"
 
-#include "tao/corbafwd.h"
-#include "tao/Policy_ForwardC.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Policy_ForwardC.h"
 
 class TAO_GIOP_Invocation;
 
@@ -59,4 +59,5 @@ private:
 };
 
 #include /**/ "ace/post.h"
+
 #endif  /* RT_ENDPOINT_UTILS_H */
