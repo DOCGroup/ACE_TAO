@@ -1,3 +1,13 @@
+Tue Apr 29 14:27:19 1997    <harrison@samba.cs.wustl.edu>
+
+	* OS.h: Added ACE_HAS_SVC_DLL.  If you write a library and
+	  want it to use ACE_Svc_Export, this will cause those macros
+	  to build dlls.  If you want your ACE service to be a static
+	  library, comment out this line.  As far as I know, the only
+	  reason to have a library be an ACE "service" is to leverage
+	  the ACE_Svc_Export macros.  It's just as easy to define your
+	  own export macros.
+
 Tue Apr 29 00:58:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Commented out ACE_TRACE calls in constructors in
