@@ -67,13 +67,6 @@ public:
 
   // Need to do is_equivalent and hash also here
 
-  virtual CORBA::Policy_ptr service_create_policy (
-      CORBA::PolicyType policy,
-      const CORBA::Any &val,
-      CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Create a CORBA::Policy from CORBA::Policy
-
   virtual void service_context_list (TAO_Stub *&stub,
                                      IOP::ServiceContextList &service_list,
                                      CORBA::Boolean restart,

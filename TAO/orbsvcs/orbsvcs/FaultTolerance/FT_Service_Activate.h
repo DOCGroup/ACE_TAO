@@ -47,6 +47,9 @@ public:
   virtual ~TAO_FT_Service_Activate (void);
   // The destructor
 
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+  // Initializes object when dynamic linking occurs.
+
   virtual TAO_Service_Callbacks *activate_services (TAO_ORB_Core *orb)
     ACE_THROW_SPEC (());
   // Create and activate the service callbacks into the orb.

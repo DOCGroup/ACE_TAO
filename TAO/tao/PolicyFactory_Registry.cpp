@@ -3,14 +3,13 @@
 // $Id$
 
 #include "tao/PolicyFactory_Registry.h"
-#include "tao/ORB_Core.h"
+#include "tao/corbafwd.h"
 
 ACE_RCSID(tao, PolicyFactory_Registry, "$Id$")
 
 
-TAO_PolicyFactory_Registry::TAO_PolicyFactory_Registry (TAO_ORB_Core *orb_core)
-  : orb_core_ (orb_core),  // @@ Should go away (including orb_core arg)
-    factories_ ()
+TAO_PolicyFactory_Registry::TAO_PolicyFactory_Registry (void)
+  : factories_ ()
 {
 }
 
@@ -71,19 +70,9 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
     {
       /// Policy factory corresponding to given policy type does not
       /// exist in policy factory map.
-
-//       ACE_THROW_RETURN (
-//         CORBA::PolicyError (BAD_POLICY_TYPE),  // @@ Right exception?
-//         CORBA::Policy::_nil ());
-
-      // @@ This should go away once the FT team is done switching
-      //    over to policy factories.  Once that is done, uncomment
-      //    the above exception throw code.
-      // Call up the loaded services through the ORB_Core to see whether
-      // they can create the Policy object for the type we have.
-      return this->orb_core_->service_create_policy (type,
-                                                     value,
-                                                     ACE_TRY_ENV);
+      ACE_THROW_RETURN (
+                        CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),  // @@ Right exception?
+         CORBA::Policy::_nil ());
     }
 
   return policy_factory->create_policy (type,
