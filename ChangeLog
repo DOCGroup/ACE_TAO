@@ -1,3 +1,14 @@
+Mon Feb  9 13:58:30 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/GNUObjectGenerator.pm:
+
+          Fixed a bug where cpp files in subdirectories would have the wrong
+          target name generated in the dependencies.
+
+        * bin/DependencyGenerator/Preprocessor.pm:
+
+          Removed an unnecessary directory in the include search path.
+
 Mon Feb  9 10:31:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/Preprocessor.pm:
