@@ -54,7 +54,8 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
     return;
 
   size_t newsize =
-    ACE_CDR::first_size (ACE_CDR::total_length (src, 0));
+    ACE_CDR::first_size (ACE_CDR::total_length (src, 0)
+                         + ACE_CDR::MAX_ALIGNMENT);
   dst->size (newsize);
 
   // We must copy the contents of <src> into the new buffer, but
@@ -503,6 +504,8 @@ ACE_OutputCDR::write_array (const void *x,
                             size_t align,
                             ACE_CDR::ULong length)
 {
+  if (length == 0)
+    return 1;
   char *buf;
   if (this->adjust (size * length, align, buf) == 0)
     {
@@ -804,6 +807,8 @@ ACE_InputCDR::read_array (void* x,
                           size_t align,
                           ACE_CDR::ULong length)
 {
+  if (length == 0)
+    return 1;
   char* buf;
   if (this->adjust (size * length, align, buf) == 0)
     {
