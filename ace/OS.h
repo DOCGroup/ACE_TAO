@@ -2245,6 +2245,10 @@ struct sigaction
 #define ENOTSUP ENOSYS  /* Operation not supported      . */
 #endif /* !ENOTSUP */
 
+#if !defined (WNOHANG)
+#define WNOHANG 42
+#endif
+
 #if !defined (EDEADLK)
 #define EDEADLK 1000 /* Some large number.... */
 #endif /* !ENOTSUP */
