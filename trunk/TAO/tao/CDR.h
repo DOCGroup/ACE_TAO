@@ -173,6 +173,13 @@ public:
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 TAO_ORB_Core* orb_core = 0);
 
+  /// Create an input stream from an ACE_Data_Block
+  TAO_InputCDR (ACE_Data_Block *data,
+                size_t read_pointer_position,
+                size_t write_pointer_position,
+                int byte_order = ACE_CDR_BYTE_ORDER,
+                TAO_ORB_Core* orb_core = 0);
+
   /**
    * Make a copy of the current stream state, but does not copy the
    * internal buffer; so the same stream can be read multiple times
