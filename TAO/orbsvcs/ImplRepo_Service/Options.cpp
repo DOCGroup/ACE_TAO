@@ -497,8 +497,9 @@ Options::load_registry_options (ACE_ARGV &orb_options)
       if (this->debug () > 1) 
         {
           ACE_DEBUG ((LM_DEBUG, "Could not open Registry Key, skipping\n"));
-          return 0;
         }
+
+      return 0;
     }
 
   DWORD dwType = 0;
