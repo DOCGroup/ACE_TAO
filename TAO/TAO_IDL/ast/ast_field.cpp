@@ -83,34 +83,34 @@ ACE_RCSID(ast, ast_field, "$Id$")
 
 // Default constructor.
 AST_Field::AST_Field (void)
-         : pd_field_type (0), 
+         : pd_field_type (0),
            pd_visibility (vis_NA)
 {
 }
 
 // To be used when constructing an AST_Field node.
-AST_Field::AST_Field (AST_Type *ft, 
-                      UTL_ScopedName *n, 
+AST_Field::AST_Field (AST_Type *ft,
+                      UTL_ScopedName *n,
                       UTL_StrList *p,
                       Visibility vis)
-  : AST_Decl (AST_Decl::NT_field, 
-              n, 
+  : AST_Decl (AST_Decl::NT_field,
+              n,
               p),
-    pd_field_type (ft), 
+    pd_field_type (ft),
     pd_visibility (vis)
 {
 }
 
 // To be used when constructing a node of a subclass of AST_Field.
-AST_Field::AST_Field (AST_Decl::NodeType nt, 
+AST_Field::AST_Field (AST_Decl::NodeType nt,
                       AST_Type *ft,
-                      UTL_ScopedName *n, 
-                      UTL_StrList *p, 
+                      UTL_ScopedName *n,
+                      UTL_StrList *p,
                       Visibility vis)
-  : AST_Decl (nt, 
-              n, 
+  : AST_Decl (nt,
+              n,
               p),
-    pd_field_type (ft), 
+    pd_field_type (ft),
     pd_visibility (vis)
 {
 }
@@ -123,7 +123,7 @@ AST_Field::~AST_Field (void)
 
 // Dump this AST_Field node to the ostream o.
 void
-AST_Field::dump (ostream &o)
+AST_Field::dump (ACE_OSTREAM_TYPE &o)
 {
   switch (this->pd_visibility)
     {

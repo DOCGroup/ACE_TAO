@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -79,12 +79,12 @@ AST_Root::AST_Root (void)
 {
 }
 
-AST_Root::AST_Root (UTL_ScopedName *n, 
+AST_Root::AST_Root (UTL_ScopedName *n,
                     UTL_StrList *p)
-	: AST_Decl (AST_Decl::NT_module, 
-              n, 
+        : AST_Decl (AST_Decl::NT_module,
+              n,
               p),
-	  UTL_Scope (AST_Decl::NT_module)
+          UTL_Scope (AST_Decl::NT_module)
 {
 }
 
@@ -173,7 +173,7 @@ AST_Root::fe_add_array (AST_Array *t)
 
 // Dump this AST_Root node to the ostream o.
 void
-AST_Root::dump (ostream &o)
+AST_Root::dump (ACE_OSTREAM_TYPE &o)
 {
   UTL_Scope::dump (o);
 }

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -80,18 +80,18 @@ AST_UnionBranch::AST_UnionBranch (void)
 {
 }
 
-AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll, 
+AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
                                   AST_Type *ft,
-				                          UTL_ScopedName *n, 
+                                                          UTL_ScopedName *n,
                                   UTL_StrList *p)
-  : AST_Field (AST_Decl::NT_union_branch, 
-               ft, 
-               n, 
+  : AST_Field (AST_Decl::NT_union_branch,
+               ft,
+               n,
                p),
-	  AST_Decl (AST_Decl::NT_union_branch, 
-              n, 
+          AST_Decl (AST_Decl::NT_union_branch,
+              n,
               p),
-	  pd_ll (ll)
+          pd_ll (ll)
 {
 }
 
@@ -103,7 +103,7 @@ AST_UnionBranch::~AST_UnionBranch (void)
 
 // Dump this AST_UnionBranch node to the ostream o.
 void
-AST_UnionBranch::dump (ostream &o)
+AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
 {
   for (unsigned long i = 0; i < this->label_list_length (); ++i)
     {
@@ -129,7 +129,7 @@ AST_UnionBranch::label (unsigned long index)
 {
   unsigned long i = 0;
   UTL_LabellistActiveIterator iter (this->pd_ll);
-  
+
   for (; !iter.is_done (); iter.next ())
     {
       if (i == index)

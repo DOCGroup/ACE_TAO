@@ -75,32 +75,32 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ACE_RCSID(ast, ast_string, "$Id$")
 // Constructor(s) and destructor.
 AST_String::AST_String (void)
- : pd_max_size (0), 
+ : pd_max_size (0),
    pd_width (sizeof (char))
 {
 }
 
 AST_String::AST_String (AST_Expression *ms)
  : AST_Decl (AST_Decl::NT_string,
-		         new UTL_ScopedName (new Identifier ("string"),
-					                       0),
-		         0,
+                         new UTL_ScopedName (new Identifier ("string"),
+                                                               0),
+                         0,
              I_TRUE),
-	 pd_max_size (ms),
+         pd_max_size (ms),
    pd_width (sizeof (char))
 {
 }
 
-AST_String::AST_String (AST_Expression *ms, 
+AST_String::AST_String (AST_Expression *ms,
                         long wide)
- : AST_Decl (wide == (long) sizeof (char) 
-                ? AST_Decl::NT_string 
+ : AST_Decl (wide == (long) sizeof (char)
+                ? AST_Decl::NT_string
                 : AST_Decl::NT_wstring,
-		         new UTL_ScopedName (wide == (long) sizeof (char)
-					                          ? new Identifier ("string")
-					                          : new Identifier ("wstring"),
-					                       0),
-		         0,
+                         new UTL_ScopedName (wide == (long) sizeof (char)
+                                                                  ? new Identifier ("string")
+                                                                  : new Identifier ("wstring"),
+                                                               0),
+                         0,
              I_TRUE),
     pd_max_size (ms),
     pd_width (wide)
@@ -115,7 +115,7 @@ AST_String::~AST_String (void)
 
 // Dump this AST_String node to the ostream o.
 void
-AST_String::dump(ostream &o)
+AST_String::dump(ACE_OSTREAM_TYPE &o)
 {
   o << "string <";
   this->pd_max_size->dump (o);

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -78,18 +78,18 @@ ACE_RCSID(ast, ast_predefined_type, "$Id$")
 
 // Constructor(s).
 AST_PredefinedType::AST_PredefinedType (void)
-	: pd_pt (PT_long)
+        : pd_pt (PT_long)
 {
 }
 
-AST_PredefinedType::AST_PredefinedType (PredefinedType t, 
+AST_PredefinedType::AST_PredefinedType (PredefinedType t,
                                         UTL_ScopedName *n,
-				                                UTL_StrList *p)
- : AST_Decl (AST_Decl::NT_pre_defined, 
-             n, 
+                                                                UTL_StrList *p)
+ : AST_Decl (AST_Decl::NT_pre_defined,
+             n,
              p,
              I_TRUE),
-	 pd_pt (t)
+         pd_pt (t)
 {
 }
 
@@ -101,7 +101,7 @@ AST_PredefinedType::~AST_PredefinedType (void)
 
 // Dump this AST_PredefinedType node to the ostream o.
 void
-AST_PredefinedType::dump (ostream &o)
+AST_PredefinedType::dump (ACE_OSTREAM_TYPE &o)
 {
   AST_Decl::dump (o);
 }

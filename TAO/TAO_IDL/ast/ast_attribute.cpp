@@ -87,14 +87,14 @@ AST_Attribute::AST_Attribute (idl_bool ro,
                               UTL_StrList *p,
                               idl_bool local,
                               idl_bool abstract)
-  : AST_Field (AST_Decl::NT_attr, 
-               ft, 
-               n, 
+  : AST_Field (AST_Decl::NT_attr,
+               ft,
+               n,
                p),
-    AST_Decl (AST_Decl::NT_attr, 
-              n, 
+    AST_Decl (AST_Decl::NT_attr,
+              n,
               p),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract),
     pd_readonly (ro)
 {
@@ -108,9 +108,9 @@ AST_Attribute::~AST_Attribute (void)
 
 // Dump this AST_Attribute to the ostream o.
 void
-AST_Attribute::dump (ostream &o)
+AST_Attribute::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << (this->pd_readonly == I_TRUE ? "readonly" : "") 
+  o << (this->pd_readonly == I_TRUE ? "readonly" : "")
     << " attribute ";
   AST_Field::dump (o);
 }

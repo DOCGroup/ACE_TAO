@@ -78,7 +78,7 @@ ACE_RCSID(ast, ast_sequence, "$Id$")
 // Constructor(s) and destructor.
 AST_Sequence::AST_Sequence (void)
  : pd_max_size (0),
-	 pd_base_type (0)
+         pd_base_type (0)
 {
 }
 
@@ -138,7 +138,7 @@ AST_Sequence::in_recursion (AST_Type *node)
                         0);
     }
 
-  if (!ACE_OS::strcmp (node->full_name (), 
+  if (!ACE_OS::strcmp (node->full_name (),
                        type->full_name ()))
     {
       // They match.
@@ -155,7 +155,7 @@ AST_Sequence::in_recursion (AST_Type *node)
 
 // Dump this AST_Sequence node to the ostream o.
 void
-AST_Sequence::dump (ostream &o)
+AST_Sequence::dump (ACE_OSTREAM_TYPE &o)
 {
   o << "sequence <";
   this->pd_base_type->dump (o);
