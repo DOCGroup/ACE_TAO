@@ -162,7 +162,9 @@ ACE_Sched_Params::priority_max (const Policy policy,
             return ACE_THR_PRI_FIFO_MAX;
           case ACE_SCHED_RR:
             return ACE_THR_PRI_RR_MAX;
-          case ACE_SCHED_OTHER:
+#if !defined (CHORUS)   // SCHED_OTHRE and SCHED_RR have same value
+           case ACE_SCHED_OTHER:
+#endif /* CHORUS */
           default:
             return ACE_THR_PRI_OTHER_MAX;
         }
