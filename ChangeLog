@@ -1,3 +1,15 @@
+Sat May  8 00:10:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* apps/JAWS3/jaws3/Concurrency.h:
+
+	  Use the "ACE_SYNCH" trait instead of "ACE_MT_SYNCH".  Doing so
+	  allows the JAWS3 library to build in a single threaded
+	  environment.  Fixes single-threaded build compile-time errors.
+
+	* ace/Synch_Traits.h:
+
+	  Corrected doxygen documentation.
+
 Fri May  7 15:59:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Kokyu/tests/DSRT_MIF/MIF.cpp (svc):
