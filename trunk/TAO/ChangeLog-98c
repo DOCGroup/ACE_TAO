@@ -1,3 +1,13 @@
+Tue Jan  5 17:44:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/DynAnyC.h
+	* tao/DynAnyC.i
+	* tao/DynSequence_i.h: 
+	* tao/DynStruct_i.h: 
+	  Removed some other uses of ACE_Array in favor of ACE_Array_Base,
+	  in these cases there was no need for the operator== and/or
+	  operator!=
+
 Tue Jan 05 15:40:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (init_orb):

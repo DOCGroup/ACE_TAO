@@ -107,18 +107,6 @@ CORBA_DynAny_var::operator-> (void) const
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::Boolean
-CORBA_DynAny_var::operator== (const CORBA_DynAny_var &rhs)
-{
-  return this->ptr_ == rhs.ptr_;
-}
-
-ACE_INLINE CORBA::Boolean
-CORBA_DynAny_var::operator!= (const CORBA_DynAny_var &rhs)
-{
-  return this->ptr_ != rhs.ptr_;
-}
-
 ACE_INLINE CORBA_DynAny_ptr
 CORBA_DynAny_var::in (void) const
 {
