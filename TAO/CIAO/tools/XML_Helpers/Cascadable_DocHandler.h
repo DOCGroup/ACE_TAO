@@ -15,6 +15,7 @@
 #include /**/ "ace/pre.h"
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/common/XMLReader.h"
+#include "XML_Helpers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -65,7 +66,7 @@ namespace CIAO
      * @sa ACEXML_DefaultHandler
      * @sa DocHandler_Context
      */
-    class Cascadable_DocHandler : public ACEXML_DefaultHandler
+    class  CIAO_XML_HELPERS_Export Cascadable_DocHandler : public ACEXML_DefaultHandler
     {
     public:
       /**
@@ -202,7 +203,7 @@ namespace CIAO
      *
      * @brief This DocHandler ignore and skip over a specific tag.
      */
-    class Skip_DocHandler : public Cascadable_DocHandler
+    class CIAO_XML_HELPERS_Export Skip_DocHandler : public Cascadable_DocHandler
     {
     public:
       /// Constructor.
