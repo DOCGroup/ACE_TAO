@@ -11,42 +11,21 @@ void traverse_package (Deployment::PackageConfiguration* &pc,
                        Deployment::DeploymentPlan &plan,
                        REF_MAP &ref_map, REF_MAP &primary_ref_map)
 {
-  // @@ (OO) The three loops in this function are nested, meaning that
-  //         performance will be O(n^3).  On top of that, each of the
-  //         loops makes function calls that execute nested loops
-  //         themselves, potentially increasing the execution time by
-  //         several additonal orders of magnitude (e.g. O(n^6).  Is
-  //         this really the only way to implement the required
-  //         functionality?  This is really only a problem if the sets
-  //         being traversed are large.
-
-  // @@ (OO) The "continue loop" condition portion of the for
-  //         statement is executed during each loop iteration.  To
-  //         improve performance execute it only once outside the
-  //         for-loop.
-
   // traverse the package configuration structure to get to the
   // BasePackage which consists of assemblies.
   //
-  for (CORBA::ULong x = 0; x < pc->basePackage.length (); ++x)
+  CORBA::ULong bp_len = pc->basePackage.length ();
+  for (CORBA::ULong x = 0; x < bp_len; ++x)
     {
-      // @@ (OO) The "continue loop" condition portion of the for
-      //         statement is executed during each loop iteration.  To
-      //         improve performance execute it only once outside the
-      //         for-loop.
-      for (CORBA::ULong y = 0;
-           y < pc->basePackage[x].implementation.length (); ++y)
+      CORBA::ULong impl_len = pc->basePackage[x].implementation.length ();
+      for (CORBA::ULong y = 0; y < impl_len; ++y)
         {
-          // @@ (OO) The "continue loop" condition portion of the for
-          //         statement is executed during each loop iteration.  To
-          //         improve performance execute it only once outside the
-          //         for-loop.
-
           // traverse the .cpd file and get to the referenced .cid file
           //
           Deployment::ComponentImplementationDescription cid =
             pc->basePackage[x].implementation[y].referencedImplementation;
-          for (CORBA::ULong z = 0; z < cid.assemblyImpl.length (); ++z)
+          CORBA::ULong assembly_len = cid.assemblyImpl.length ();
+          for (CORBA::ULong z = 0; z < assembly_len; ++z)
             {
               // traverse the .cid file and get to each
               // of the "assemblyImpl" tags.
@@ -69,12 +48,14 @@ void traverse_assembly (Deployment::ComponentAssemblyDescription &assembly,
   // traverse the assembly (ComponentAssemblyDescription) and
   // processes the instances and the connection within the assembly.
   //
-  for (CORBA::ULong k = 0; k < assembly.instance.length (); ++k)
+  CORBA::ULong ins_len = assembly.instance.length ();
+  for (CORBA::ULong k = 0; k < ins_len; ++k)
     {
       Deployment::SubcomponentInstantiationDescription ins =
         assembly.instance[k];
       const char* in_name = ins.name;
-      for (CORBA::ULong l = 0; l < plan.instance.length (); ++l)
+      CORBA::ULong plan_ins_len = plan.instance.length ();
+      for (CORBA::ULong l = 0; l < plan_ins_len; ++l)
         {
           const char* plan_name = plan.instance[l].name;
           if (strcmp (plan_name, in_name) == 0)
@@ -84,7 +65,8 @@ void traverse_assembly (Deployment::ComponentAssemblyDescription &assembly,
             }
         }
     }
-  for (CORBA::ULong m = 0; m < assembly.connection.length (); ++m)
+  CORBA::ULong assembly_conn_len = assembly.connection.length ();
+  for (CORBA::ULong m = 0; m < assembly_conn_len; ++m)
     {
       Deployment::AssemblyConnectionDescription
          assembly_connection = assembly.connection[m];
@@ -107,9 +89,8 @@ void traverse_assembly_connection (Deployment::ComponentAssemblyDescription
   //
   CORBA::ULong con_length (plan.connection.length ());
   plan.connection.length (con_length + 1);
-  for (CORBA::ULong n = 0;
-       n < assembly_connection.internalEndpoint.length ();
-       ++n)
+  CORBA::ULong iepe_len = assembly_connection.internalEndpoint.length ();
+  for (CORBA::ULong n = 0; n < iepe_len; ++n)
     {
       CORBA::ULong iep_len (plan.connection[con_length].
                             internalEndpoint.length ());
@@ -121,8 +102,8 @@ void traverse_assembly_connection (Deployment::ComponentAssemblyDescription
       CORBA::ULong ins_ref = assembly_connection.internalEndpoint[n].
                              instanceRef;
       const char* ins_name = assembly.instance[ins_ref].name;
-      for (CORBA::ULong w = 0; w < plan.instance.length ();
-           ++w)
+      CORBA::ULong plan_ins_len = plan.instance.length ();
+      for (CORBA::ULong w = 0; w < plan_ins_len; ++w)
         {
           const char* pl_name = plan.instance[w].name;
           if (strcmp (pl_name, ins_name) == 0)
@@ -146,7 +127,8 @@ void traverse_interface (Deployment::SubcomponentInstantiationDescription
   // traverse the InterfaceDescription of the instance and get information
   // about the portkind of the port.
   //
-  for (CORBA::ULong m = 0; m < instance.package.length (); ++m)
+  CORBA::ULong pack_len = instance.package.length ();
+  for (CORBA::ULong m = 0; m < pack_len; ++m)
     {
       Deployment::ComponentPackageDescription
         package = instance.package[m];
@@ -154,7 +136,9 @@ void traverse_interface (Deployment::SubcomponentInstantiationDescription
       Deployment::ComponentInterfaceDescription
         cid = package.realizes;
 
-      for (CORBA::ULong n = 0; n < cid.port.length (); ++n)
+      CORBA::ULong port_len = cid.port.length ();
+
+      for (CORBA::ULong n = 0; n < port_len; ++n)
         {
           const char* main_port_name = cid.port[n].name;
           const char* port_name = pspe.portName;
@@ -179,12 +163,15 @@ void traverse_assembly_instance (Deployment::
   //
   ART_REF_MAP art_ref_map;
 
-  for (CORBA::ULong m = 0; m < instance.package.length (); ++m)
+  CORBA::ULong pack_len = instance.package.length ();
+
+  for (CORBA::ULong m = 0; m < pack_len; ++m)
     {
       Deployment::ComponentPackageDescription
         package = instance.package[m];
+      CORBA::ULong pack_impl_len = package.implementation.length ();
 
-      for (CORBA::ULong n = 0; n < package.implementation.length (); ++n)
+      for (CORBA::ULong n = 0; n < pack_impl_len; ++n)
         {
           Deployment::PackagedComponentImplementation
             impl = package.implementation[n];
@@ -192,9 +179,10 @@ void traverse_assembly_instance (Deployment::
           plan.implementation.length (impl_length + 1);
           plan.implementation[impl_length].name = plan.instance[l].name;
           plan.instance[l].implementationRef = impl_length;
+          CORBA::ULong mono_impl_len = 
+            impl.referencedImplementation.monolithicImpl.length ();
 
-          for (CORBA::ULong p = 0;
-               p < impl.referencedImplementation.monolithicImpl.length (); ++p)
+          for (CORBA::ULong p = 0; p < mono_impl_len; ++p)
             {
               Deployment::MonolithicImplementationDescription
                 mid = impl.referencedImplementation.monolithicImpl[p];
@@ -216,7 +204,8 @@ void update_artifacts (Deployment::MonolithicImplementationDescription &mid,
                        ART_REF_MAP &art_ref_map,
                        Deployment::MonolithicDeploymentDescription &mdd)
 {
-  for (CORBA::ULong q = 0; q < mid.primaryArtifact.length (); ++q)
+  CORBA::ULong prim_art_len = mid.primaryArtifact.length ();
+  for (CORBA::ULong q = 0; q < prim_art_len; ++q)
     {
       Deployment::ImplementationArtifactDescription
         pack_iad = mid.primaryArtifact[q].referencedArtifact;
@@ -259,8 +248,8 @@ void update_common_artifact_and_art_ref (Deployment::
                                          InstanceDeploymentDescription
                                          &instance)
 {
-  for (CORBA::ULong g = 0;
-       g < pack_iad.dependsOn.length (); ++g)
+  CORBA::ULong deps_len = pack_iad.dependsOn.length ();
+  for (CORBA::ULong g = 0; g < deps_len; ++g)
     {
       ACE_TString dep_name =
          (const char*)pack_iad.dependsOn[g].name;
@@ -307,8 +296,9 @@ void update_impl_config_property (Deployment::PackagedComponentImplementation
                                   InstanceDeploymentDescription
                                   &instance)
 {
-  for (CORBA::ULong x = 0;
-       x < impl.referencedImplementation.configProperty.length (); ++x)
+  CORBA::ULong pro_len = 
+    impl.referencedImplementation.configProperty.length ();
+  for (CORBA::ULong x = 0; x < pro_len; ++x)
     {
       CORBA::ULong impl_pro_len (mid.execParameter.length ());
       mid.execParameter.length (impl_pro_len + 1);
@@ -334,7 +324,8 @@ void update_artifact_location (Deployment::ImplementationArtifactDescription
                                Deployment::ArtifactDeploymentDescription
                                &plan_artifact)
 {
-  for (CORBA::ULong e = 0; e < pack_iad.location.length (); ++e)
+  CORBA::ULong loc_len = pack_iad.location.length ();
+  for (CORBA::ULong e = 0; e < loc_len; ++e)
     {
       CORBA::ULong art_loc_len (plan_artifact.location.length ());
       plan_artifact.location.length (art_loc_len + 1);
@@ -347,8 +338,8 @@ void update_artifact_property (Deployment::ImplementationArtifactDescription
                                Deployment::ArtifactDeploymentDescription
                                &plan_artifact)
 {
-  for (CORBA::ULong f = 0;
-       f < pack_iad.execParameter.length (); ++f)
+  CORBA::ULong para_len = pack_iad.execParameter.length ();
+  for (CORBA::ULong f = 0; f < para_len; ++f)
     {
       CORBA::ULong art_pro_len (plan_artifact.execParameter.length ());
       plan_artifact.execParameter.length (art_pro_len + 1);

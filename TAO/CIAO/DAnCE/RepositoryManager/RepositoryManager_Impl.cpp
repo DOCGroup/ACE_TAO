@@ -2,29 +2,20 @@
 // $Id$
 
 #include "RepositoryManager_Impl.h"
+#include "Repository_Manager_conf.h"
 #include "Config_Handlers/TPD_Handler.h"
 
 CIAO::RepositoryManager_Impl::RepositoryManager_Impl
    (CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate  (orb)),
-    poa_ (PortableServer::POA::_duplicate (poa))
-  // @@ (OO) The default size for an ACE_Hash_Map_Mapanger is quiet
-  //         large.  The maximum size of an ACE_Hash_Map_Manager is
-  //         also fixed, i.e. it does not grow dynamically on demand.
-  //         Make sure the default size of component_map_ is
-  //         appropriate for your needs.  You may also want to make
-  //         the size configurable at compile-time, at least.
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    pc_table_ (MAX_PACKAGES)
 {
 }
 
 CIAO::RepositoryManager_Impl::RepositoryManager_Impl ()
-  // @@ (OO) The default size for an ACE_Hash_Map_Mapanger is quiet
-  //         large.  The maximum size of an ACE_Hash_Map_Manager is
-  //         also fixed, i.e. it does not grow dynamically on demand.
-  //         Make sure the default size of component_map_ is
-  //         appropriate for your needs.  You may also want to make
-  //         the size configurable at compile-time, at least.
+  : pc_table_ (MAX_PACKAGES)
 {
 }
 
@@ -32,14 +23,11 @@ CIAO::RepositoryManager_Impl::~RepositoryManager_Impl ()
 {
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 void
 CIAO::RepositoryManager_Impl::
 installPackage (const char* installation_name,
                 const char* location
-                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NameExists,
                    Deployment::PackageError))
@@ -89,8 +77,9 @@ installPackage (const char* installation_name,
       CIAO::Config_Handler::PC_Handler pc_handler (pc_doc,
                                                    DOMNodeFilter::SHOW_ELEMENT |
                                                    DOMNodeFilter::SHOW_TEXT);
-      pc_handler.process_PackageConfiguration (this->pc_);
-      this->pc_table_.bind (installation_name, &(pc_));
+      Deployment::PackageConfiguration pc;
+      pc_handler.process_PackageConfiguration (pc);
+      this->pc_table_.bind (installation_name, &(pc));
     }
   catch (CORBA::Exception& ex)
     {
@@ -121,123 +110,87 @@ installPackage (const char* installation_name,
     }
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 void
 CIAO::RepositoryManager_Impl::
 createPackage (const char*,
                const Deployment::PackageConfiguration&,
                const char*,
                CORBA::Boolean
-               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
-  // @@ (OO) It appears that you should be throwing a
-  //         CORBA::NO_IMPLEMENT exception here.  Please confirm.
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 Deployment::PackageConfiguration*
 CIAO::RepositoryManager_Impl::
 findPackageByName (const char* name
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
 {
   Deployment::PackageConfiguration* pc = 0;
   if (pc_table_.find (name, pc) == 0)
     {
-      // @@ (OO) It appears that you should be returning a
-      //         duplicated/copied version of the found
-      //         PackageConfiguration.
-      return pc;
+      Deployment::PackageConfiguration* dup_pc = pc;
+      return dup_pc;
     }
-
-  // @@ (OO) It appears that you should be throwing a
-  //         Deployment::NoSuchName exception here.  Please confirm.
-  return 0;
+  else
+    {
+      ACE_THROW (Deployment::NoSuchName ());
+    }
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 Deployment::PackageConfiguration*
 CIAO::RepositoryManager_Impl::
 findPackageByUUID (const char*
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
 {
-  // @@ (OO) It appears that you should be throwing a
-  //         CORBA::NO_IMPLEMENT exception here.  Please confirm.
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 CORBA::StringSeq*
 CIAO::RepositoryManager_Impl::
 findNamesByType (const char*
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ (OO) It appears that you should returning a sequence of length
-  //         zero.  Please confirm.
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 CORBA::StringSeq*
 CIAO::RepositoryManager_Impl::
-getAllNames (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+getAllNames (ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ (OO) It appears that you should returning a sequence of length
-  //         zero.  Please confirm.
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 CORBA::StringSeq*
 CIAO::RepositoryManager_Impl::
-getAllTypes (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+getAllTypes (ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ (OO) It appears that you should returning a sequence of length
-  //         zero.  Please confirm.
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 void
 CIAO::RepositoryManager_Impl::
 deletePackage (const char*
-               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
 {
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 void
-CIAO::RepositoryManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO::RepositoryManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ (OO) Wrong emulated exception argument.  Use
-  //         ACE_ENV_ARG_PARAMETER instead.
-  this->orb_->shutdown (1 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  this->orb_->shutdown (1 ACE_ENV_SINGLE_ARG_PARAMETER);
 }
