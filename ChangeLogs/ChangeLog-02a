@@ -1,16 +1,33 @@
+Thu Nov  9 08:51:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/rules.local.GNU:
+          It seems like I cannot get the rules to create the .obj and
+          .shobj directories right.  This last iteration seems to be
+          happier, it works fine with parallel builds, it works fine for
+          static and shared libraries, it does not recompile everything
+          just because the .obj or .shobj directories changed, it creates
+          the Templates.DB file when needed.
+          The only problem that I'm aware off is that it can potentially
+          produce a warning on parallel builds: two separate rules can try
+          to create the .obj directory simultaneously, adding a dependency
+          to have only one rule do it results in full-recompilations when
+          a .obj directory is modified for whatever reason.
+          I'm using ACE_NUL_STDERR to avoid such warnings, and it seems to
+          work correctly.
+
 Thu Nov  9 10:14:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* include/makeinclude/ace_flags.bor:
+        * include/makeinclude/ace_flags.bor:
 
-	  Added the line
+          Added the line
 
-	  TAO_DYNAMICINTERFACE_LIB = 
-	    $(CORE_BINDIR)\TAO_DynamicInterface$(LIB_DECORATOR).lib
+          TAO_DYNAMICINTERFACE_LIB =
+            $(CORE_BINDIR)\TAO_DynamicInterface$(LIB_DECORATOR).lib
 
-	  that I had overlooked when doing the BCB makefile changes
-	  related to the DynamicInterface library. Thanks to
-	  Johnny Willemsen <Johnny.Willemsen@meco.nl> for sending
-	  in the patch.
+          that I had overlooked when doing the BCB makefile changes
+          related to the DynamicInterface library. Thanks to
+          Johnny Willemsen <Johnny.Willemsen@meco.nl> for sending
+          in the patch.
 
 
 Wed Nov  8 16:11:11 2000  Carlos O'Ryan  <coryan@uci.edu>
