@@ -192,25 +192,28 @@ string_emulation_test (void)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok_r\n")));
 
     char *strtok_r1 = "A string of tokens";
+    char *strtok_r2;
+
 
     ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (strtok_r1, 
                                                                 " ", 
-                                                                &strtok_r1),
+                                                                &strtok_r2),
                                        "A") == 0);
-    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (strtok_r1, 
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0, 
                                                                 " ", 
-                                                                &strtok_r1),
+                                                                &strtok_r2),
                                        "string") == 0);
-    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (strtok_r1,
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0,
                                                                 " ", 
-                                                                &strtok_r1),
+                                                                &strtok_r2),
                                        "of") == 0);
-    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (strtok_r1,
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0,
                                                                 " ", 
-                                                                &strtok_r1),
+                                                                &strtok_r2),
                                        "tokens") == 0);
-    ACE_ASSERT (ACE_OS_String::strtok_r (strtok_r1, " ", &strtok_r1) == 0);
+    ACE_ASSERT (ACE_OS_String::strtok_r (0, " ", &strtok_r2) == 0);
 
+    // ========================================================================
     // Test itoa
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing itoa\n")));
 
