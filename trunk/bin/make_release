@@ -38,14 +38,19 @@ my $long_usage="   -? option prints this message\n" .
 $ENV{'SIGNATURE'} ||
   die "$0: must set your SIGNATURE environment variable\n";
 
-&can_run('perl -V') ||
-  die "$0: perl should be in your path\n";
+my $perl_path = '/pkg/gnu/bin/perl';
+&can_run($perl_path.' -V') ||
+  die "$0: perl path is incorrect, please fix the script\n";
 
-&can_run('dot -V') ||
-  die "$0: dot should be in your path\n";
+my $dot_path = '/project/doc/pkg/gv1.5/bin';
+&can_run($dot_path.'/dot -V') ||
+  die "$0: dot path is incorrect, please fix the script\n";
 
-&can_run('doxygen --version | grep -q 1.2.3') ||
-  die "$0: doxygen should be in your path\n";
+my $doxy_path = '/project/doc/pkg/doxygen-1.2.3/bin';
+my $doxy_version = '1.2.3';
+&can_run($doxy_path.'/doxygen --version | grep -q '.$doxy_version) ||
+  die "$0: doxygen path or version incorrect, please fix the script\n";
+$ENV{'PATH'} = $ENV{'PATH'}.':'.$doxy_path;
 
 my $hostname;
 chomp ($hostname = $ENV{'HOSTNAME'}  ||  `uname -n`);
@@ -275,7 +280,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
         die "$0: unable to mkdir $stage_dir/ACE_wrappers/man/man3\n";
     }
     if ($generate_man_pages) {
-      &ex ("cd ACE_wrappers && bin/generate_doxygen.pl -is_release -exclude_tao")
+      &ex ("cd ACE_wrappers && bin/generate_doxygen.pl -is_release -exclude_tao -perl_path $perl_path -dot_path $dot_path")
 	&& die "$0: failed to generate ACE man pages in $stage_dir\n";
       &ex ("cd ACE_wrappers/man && catman -w -M .")
 	&& die "$0: failed to generate man page index in $stage_dir\n";
@@ -292,7 +297,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
           "$stage_dir/ACE_wrappers/TAO\n";
 
     if ($generate_man_pages) {
-      &ex ("cd ACE_wrappers && bin/generate_doxygen.pl -is_release -exclude_ace")
+      &ex ("cd ACE_wrappers && bin/generate_doxygen.pl -is_release -exclude_ace -perl_path $perl_path -dot_path $dot_path")
 	&& die "$0: failed to generate TAO man pages in $stage_dir\n";
     }
   }
@@ -634,7 +639,7 @@ sub diff () {
 sub create_kit () {
 
   #### Create kits with group write permission.
-  umask 2;
+  umask 002;
 
   my $dest = $install  ?  "$export_dir"  :  'created';
   my $dispose = $install  ?  "$mv"  :  'echo';
@@ -671,21 +676,32 @@ sub create_kit () {
           "$gzip -9 > ACE.tar.gz && " .
         "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
-        "$chmod 664 ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip && " .
-        "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip && " .
-        "$dispose ACE.zip ACE-lib.zip $dest && " .
-        "$dispose ACE.tar.gz ACE-lib.tar.gz $dest; ";
-      $archives = " ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip ";
+	"$find ACE_wrappers/html $release_filter | $cpio -o -H tar | " .
+	  "$gzip -9 > ACE-html.tar.gz && ".
+	"$find ACE_wrappers/html $release_filter | $egrep $bin_files | " .
+	  "zip ACE-html.zip -q9@ &&" .
+	"$find ACE_wrappers/html $release_filter | $egrep -v $bin_files | " .
+	  "zip ACE-html.zip -qlg9@ &&" .
+        "$chmod 664 ACE.tar.gz ACE-lib.tar.gz ".
+	  "ACE.zip ACE-lib.zip ACE-html.zip && " .
+        "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ".
+	  "ACE.zip ACE-lib.zip ACE-html.zip && " .
+        "$dispose ACE.zip ACE-lib.zip ACE-html.zip $dest && " .
+        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz $dest; ";
+      $archives = " ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz ".
+	          "ACE.zip ACE-lib.zip ACE-html.zip";
     } else {
       $build_command =
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE.tar.gz && " .
         "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
-        "$chmod 664 ACE.tar.gz ACE-lib.tar.gz && " .
-        "$chgrp doc ACE.tar.gz ACE-lib.tar.gz && " .
-        "$dispose ACE.tar.gz ACE-lib.tar.gz $dest; ";
-      $archives = " ACE.tar.gz ACE-lib.tar.gz ";
+	"$find ACE_wrappers/html $release_filter | $cpio -o -H tar | " .
+	  "$gzip -9 > ACE-html.tar.gz && ".
+        "$chmod 664 ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz && " .
+        "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz && " .
+        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz $dest; ";
+      $archives = " ACE.tar.gz ACE-lib.tar.gz TAO-html.tar.gz ";
     }
   }
 

@@ -67,7 +67,7 @@
 
 /// TAO features that should be documented too
 #define TAO_HAS_RT_CORBA 1
-#define TAO_HAS_MINIMUM_CORBA 1
+#define TAO_HAS_MINIMUM_CORBA 0
 #define TAO_HAS_AMI 1
 #define TAO_HAS_INTERFACE_REPOSITORY 1
 #define TAO_HAS_INTERCEPTORS 1
