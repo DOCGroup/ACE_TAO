@@ -1,27 +1,35 @@
+Fri Mar 23 08:47:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * apps/Gateway/Gateway/Options.cpp:
+          Explicitly #include Log_Msg.h, on platforms that do not define
+          ACE_TEMPLATES_REQUIRE_SOURCE the header file is not implicitly
+          included.  This should fix compilation problems on Tru64/CXX and
+          SunCC/4.2
+
 Fri Mar 23 06:34:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/New_Fail_Test.cpp: Fixed a stupid warning in g++,
-	  No_AMI_Messaging  builds. Surprising that it showed up only in
-	  this build. 
+        * tests/New_Fail_Test.cpp: Fixed a stupid warning in g++,
+          No_AMI_Messaging  builds. Surprising that it showed up only in
+          this build.
 
 Thu Mar 22 21:33:37 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/INET_Addr.h: VxWorks' inet_ntoa doesn't behave like most
- 	others, and our use was causing memory leaks.  VxWorks prefers
- 	that you use its own inet_ntoa_b, which takes the buffer to fill
- 	as an argument.  Thus, for VxWorks, added a data member char buf
- 	of the appropriate length so that get_host_addr can use
-	inet_ntoa_b to fill that in.
-	
+        others, and our use was causing memory leaks.  VxWorks prefers
+        that you use its own inet_ntoa_b, which takes the buffer to fill
+        as an argument.  Thus, for VxWorks, added a data member char buf
+        of the appropriate length so that get_host_addr can use
+        inet_ntoa_b to fill that in.
+
         * ace/INET_Addr.i (get_host_addr): For VxWorks only, changed this
-	to use the preferred inet_ntoa_b.  This eliminate memory leaks
-	under VxWorks.  Thanks to Erik Johannes <ejohannes@oresis.com> for 
-	the suggested fix.
+        to use the preferred inet_ntoa_b.  This eliminate memory leaks
+        under VxWorks.  Thanks to Erik Johannes <ejohannes@oresis.com> for
+        the suggested fix.
 
 Wed Mar 21 19:20:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* apps/Gateway/Peer/Peer.cpp (nonblk_put): Fixed a compile error
-	  in g++.
+        * apps/Gateway/Peer/Peer.cpp (nonblk_put): Fixed a compile error
+          in g++.
 
 Wed Mar 21 17:28:26 2001  Steve Huston  <shuston@riverace.com>
 
@@ -104,18 +112,18 @@ Wed Mar 21 12:08:35 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Mar 21 13:33:58 2001  Ossama Othman  <ossama@uci.edu>
 
-	* examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
 
-	  Patched this file so that the example actually works.  It now
-	  correctly interacts with the SSL client in this example.  Thanks
-	  to Defang Zhou <dzhou@inktomi.com> for contributing the
-	  patch/changes necessary to make it work.
+          Patched this file so that the example actually works.  It now
+          correctly interacts with the SSL client in this example.  Thanks
+          to Defang Zhou <dzhou@inktomi.com> for contributing the
+          patch/changes necessary to make it work.
 
 Wed Mar 21 07:23:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/SOCK_Connector_Test.cpp (find_another_host): Make the
-	  test a bit more resilent against errors with gethostbyname().
-  	  Thanks to Lu Yunhai <luyunhai@huawei.com> for this fix.
+        * tests/SOCK_Connector_Test.cpp (find_another_host): Make the
+          test a bit more resilent against errors with gethostbyname().
+          Thanks to Lu Yunhai <luyunhai@huawei.com> for this fix.
 
 Tue Mar 20 17:31:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -125,10 +133,10 @@ Tue Mar 20 17:31:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Mar 20 18:17:24 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.i: Fixed the USYNC_PROCESS arm of CreateMutex() in
-	  ACE_OS::mutex_init() so that it calls
- 	  ACE_OS::set_errno_to_last_error().  Thanks to Ram Ben-Yakir
- 	  <Ram@bandwiz.com> for reporting this.
+        * ace/OS.i: Fixed the USYNC_PROCESS arm of CreateMutex() in
+          ACE_OS::mutex_init() so that it calls
+          ACE_OS::set_errno_to_last_error().  Thanks to Ram Ben-Yakir
+          <Ram@bandwiz.com> for reporting this.
 
 Tue Mar 20 01:33:24 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -197,14 +205,14 @@ Sun Mar 18 22:12:16 2001  Ossama Othman  <ossama@uci.edu>
 
 Sun Mar 18 09:46:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/New_Fail_Test.cpp: Fixed warnings in g++.
+        * tests/New_Fail_Test.cpp: Fixed warnings in g++.
 
 Sun Mar 18 08:31:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* apps/Gateway/Gateway,
-  	* apps/Gateway/Peer: Added a number of fixes to the Gateway and Peer
-	  applications.  Thanks to Lu Yunhai <luyunhai@huawei.com> for
- 	  contributing these.
+        * apps/Gateway/Gateway,
+        * apps/Gateway/Peer: Added a number of fixes to the Gateway and Peer
+          applications.  Thanks to Lu Yunhai <luyunhai@huawei.com> for
+          contributing these.
 
 Sun Mar 18 08:31:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
