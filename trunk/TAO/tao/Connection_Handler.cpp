@@ -405,19 +405,32 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
 
     // The Reactor must not be null, otherwise something else is
     // horribly broken.
-    ACE_Reactor * reactor = this->transport()->orb_core()->reactor ();
-    ACE_ASSERT(reactor != 0);
+    ACE_Reactor * eh_reactor = eh->reactor ();
+    ACE_ASSERT(eh_reactor != 0);
 
-    {
-      ACE_Reactor * orb_core_reactor = this->orb_core_->reactor ();
-      ACE_ASSERT(reactor == orb_core_reactor);
+    // These checks are valid as long as the ORB_Core is not
+    // shutdown. It is good to have these checks and they are valid
+    // for most of the cases. Please see below for exceptions
+    if (this->orb_core_->has_shutdown () == 0)
+      {
+        // The exception when these are not valid is for RTCORBA. With
+        // RTCORBA on, you can threads in different lanes creating
+        // handlers and registering them with reactor in those
+        // respective lanes. These threads could then even go away
+        // leaving the task of reclaiming these resources to the main
+        // thread. For the main thread that takes the responsibility
+        // of finalizing () the lanes and the pools, the calls and
+        // comparison make no sense.
+        ACE_Reactor * orb_core_reactor = this->orb_core_->reactor ();
+        ACE_ASSERT (eh_reactor == orb_core_reactor);
 
-      ACE_Reactor * eh_reactor = eh->reactor ();
-      ACE_ASSERT(eh_reactor == 0 || eh_reactor == reactor);
+        ACE_Reactor * reactor =
+          this->transport()->orb_core()->reactor ();
+        ACE_ASSERT (reactor == 0 || eh_reactor == reactor);
 
-      ACE_UNUSED_ARG (orb_core_reactor);
-      ACE_UNUSED_ARG (eh_reactor);
-    }
+        ACE_UNUSED_ARG (orb_core_reactor);
+        ACE_UNUSED_ARG (reactor);
+      }
 
     if (TAO_debug_level)
       {
@@ -427,9 +440,9 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
                      handle));
       }
     int r =
-      reactor->remove_handler (handle,
-                               (ACE_Event_Handler::ALL_EVENTS_MASK
-                                | ACE_Event_Handler::DONT_CALL));
+      eh_reactor->remove_handler (handle,
+                                  (ACE_Event_Handler::ALL_EVENTS_MASK
+                                   | ACE_Event_Handler::DONT_CALL));
     if(r == -1 && TAO_debug_level)
       {
         ACE_ERROR ((LM_ERROR,
@@ -447,7 +460,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
                      "close_connection, cancel all timers and refcount [%d]\n",
                      handle, reference_count_));
       }
-    r = reactor->cancel_timer (eh);
+    r = eh_reactor->cancel_timer (eh);
     if (r == -1 && TAO_debug_level)
       {
         ACE_ERROR ((LM_ERROR,
