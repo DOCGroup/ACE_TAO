@@ -32,10 +32,6 @@ Reactor_Logging_Server<ACCEPTOR>::Reactor_Logging_Server
 
 
 class Quit_Handler : public ACE_Event_Handler {
-private:
-  // Private destructor ensures dynamic allocation.
-  virtual ~Quit_Handler ();
-
 public:
   Quit_Handler (ACE_Reactor *r)
     : ACE_Event_Handler (r) {
@@ -66,6 +62,7 @@ public:
 
 class Logging_Event_Handler_WFMO : public Logging_Event_Handler_Ex
 {
+public:
   Logging_Event_Handler_WFMO (ACE_Reactor *r)
     : Logging_Event_Handler_Ex (r) {}
 
@@ -80,6 +77,11 @@ class Logging_Event_Handler_WFMO : public Logging_Event_Handler_Ex
 
 class Logging_Acceptor_WFMO : public Logging_Acceptor_Ex
 {
+public:
+  // Simple constructor to pass ACE_Reactor to base class.
+  Logging_Acceptor_WFMO (ACE_Reactor *r = ACE_Reactor::instance ())
+    : Logging_Acceptor_Ex (r) {};
+
   virtual int handle_input (ACE_HANDLE) {
     Logging_Event_Handler_WFMO *peer_handler = 0;
     ACE_NEW_RETURN (peer_handler,
