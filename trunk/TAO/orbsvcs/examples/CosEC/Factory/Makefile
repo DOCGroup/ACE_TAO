@@ -40,15 +40,6 @@ CLIENT_OBJS = \
 BIN2 = factory \
 	factoryclient
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
-  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-    BIN = $(BIN2)
-  endif # Naming
-endif # CosEvent
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -56,6 +47,18 @@ endif # CosEvent
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
+  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+    ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+      BIN = $(BIN2)
+    endif # ACE_HAS_GNUG_PRE_2_8
+  endif # Naming
+endif # CosEvent
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

@@ -14,7 +14,7 @@ endif # ! TAO_ROOT
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-override TAO_IDLFLAGS +=\
+TAO_IDLFLAGS +=\
  -Wb,export_macro=RTCORBA_COMMON_Export \
  -Wb,export_include=rtcorba_common_export.h \
  -Ge 1

@@ -1,3 +1,35 @@
+Tue Nov 28 15:56:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Load_Balancing/Makefile:
+        * examples/Load_Balancing_persistent/Makefile:
+        * examples/Logging/Makefile:
+        * examples/POA/Generic_Servant/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+        * tests/Exposed_Policies/Makefile:
+	  Don't use override with TAO_IDLFLAGS because sometimes they are
+	  set globally, for example to set the location of gperf.
+
+        * TAO_IDL/Makefile.BE:
+	  Update dependencies
+
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/examples/CosEC/Factory/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
+        * orbsvcs/examples/CosEC/Simple/Makefile:
+        * orbsvcs/examples/RtEC/MCast/Makefile:
+        * orbsvcs/examples/RtEC/Simple/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Event/lib/Makefile:
+	  The RT event service and the CosEvent service fail to compiler
+	  under gcc-2.7.2, thus their tests and examples should be
+	  disabled too.
+
 Tue Nov 28 12:03:34 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/MessagingC.cpp:

@@ -1735,7 +1735,22 @@ realclean: clean
  be_include/be_visitor_interface/interceptors_ch.h \
  be_include/be_visitor_interface/interceptors_cs.h \
  be_include/be_visitor_interface/interceptors_sh.h \
- be_include/be_visitor_interface/interceptors_ss.h be_include/be.h \
+ be_include/be_visitor_interface/interceptors_ss.h \
+ be_include/be_visitor_interface/proxy_brokers_ch.h \
+ be_include/be_visitor_interface/base_proxy_broker_ch.h \
+ be_include/be_visitor_interface/remote_proxy_broker_ch.h \
+ be_include/be_visitor_interface/remote_proxy_broker_cs.h \
+ be_include/be_visitor_interface/strategized_proxy_broker_sh.h \
+ be_include/be_visitor_interface/strategized_proxy_broker_ss.h \
+ be_include/be_visitor_interface/proxy_impls_ch.h \
+ be_include/be_visitor_interface/base_proxy_impl_ch.h \
+ be_include/be_visitor_interface/remote_proxy_impl_ch.h \
+ be_include/be_visitor_interface/remote_proxy_impl_cs.h \
+ be_include/be_visitor_interface/thru_poa_proxy_impl_sh.h \
+ be_include/be_visitor_interface/thru_poa_proxy_impl_ss.h \
+ be_include/be_visitor_interface/direct_proxy_impl_sh.h \
+ be_include/be_visitor_interface/direct_proxy_impl_ss.h \
+ be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
@@ -5820,6 +5835,20 @@ realclean: clean
  be_include/be_visitor_interface/interceptors_cs.h \
  be_include/be_visitor_interface/interceptors_sh.h \
  be_include/be_visitor_interface/interceptors_ss.h \
+ be_include/be_visitor_interface/proxy_brokers_ch.h \
+ be_include/be_visitor_interface/base_proxy_broker_ch.h \
+ be_include/be_visitor_interface/remote_proxy_broker_ch.h \
+ be_include/be_visitor_interface/remote_proxy_broker_cs.h \
+ be_include/be_visitor_interface/strategized_proxy_broker_sh.h \
+ be_include/be_visitor_interface/strategized_proxy_broker_ss.h \
+ be_include/be_visitor_interface/proxy_impls_ch.h \
+ be_include/be_visitor_interface/base_proxy_impl_ch.h \
+ be_include/be_visitor_interface/remote_proxy_impl_ch.h \
+ be_include/be_visitor_interface/remote_proxy_impl_cs.h \
+ be_include/be_visitor_interface/thru_poa_proxy_impl_sh.h \
+ be_include/be_visitor_interface/thru_poa_proxy_impl_ss.h \
+ be_include/be_visitor_interface/direct_proxy_impl_sh.h \
+ be_include/be_visitor_interface/direct_proxy_impl_ss.h \
  be_include/be_visitor_interface_fwd.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ch.h \
  be_include/be_visitor_interface_fwd/interface_fwd_ci.h \
@@ -5900,6 +5929,12 @@ realclean: clean
  be_include/be_visitor_operation/interceptors_exceptlist.h \
  be_include/be_visitor_operation/interceptors_info_rettype.h \
  be_include/be_visitor_operation/interceptors_result.h \
+ be_include/be_visitor_operation/base_proxy_impl_ch.h \
+ be_include/be_visitor_operation/proxy_impl_xh.h \
+ be_include/be_visitor_operation/inv_arglist.h \
+ be_include/be_visitor_operation/remote_proxy_impl_cs.h \
+ be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h \
+ be_include/be_visitor_operation/direct_proxy_impl_ss.h \
  be_include/be_visitor_root.h be_include/be_visitor_root/root.h \
  be_include/be_visitor_root/root_ch.h \
  be_include/be_visitor_root/root_ci.h \
@@ -7856,6 +7891,20 @@ realclean: clean
  be_include/be_visitor_interface/interceptors_cs.h \
  be_include/be_visitor_interface/interceptors_sh.h \
  be_include/be_visitor_interface/interceptors_ss.h \
+ be_include/be_visitor_interface/proxy_brokers_ch.h \
+ be_include/be_visitor_interface/base_proxy_broker_ch.h \
+ be_include/be_visitor_interface/remote_proxy_broker_ch.h \
+ be_include/be_visitor_interface/remote_proxy_broker_cs.h \
+ be_include/be_visitor_interface/strategized_proxy_broker_sh.h \
+ be_include/be_visitor_interface/strategized_proxy_broker_ss.h \
+ be_include/be_visitor_interface/proxy_impls_ch.h \
+ be_include/be_visitor_interface/base_proxy_impl_ch.h \
+ be_include/be_visitor_interface/remote_proxy_impl_ch.h \
+ be_include/be_visitor_interface/remote_proxy_impl_cs.h \
+ be_include/be_visitor_interface/thru_poa_proxy_impl_sh.h \
+ be_include/be_visitor_interface/thru_poa_proxy_impl_ss.h \
+ be_include/be_visitor_interface/direct_proxy_impl_sh.h \
+ be_include/be_visitor_interface/direct_proxy_impl_ss.h \
  be/be_visitor_interface/interface.cpp \
  be/be_visitor_interface/interface_ch.cpp \
  be/be_visitor_interface/interface_ci.cpp \
@@ -7881,7 +7930,21 @@ realclean: clean
  be/be_visitor_interface/interceptors_ch.cpp \
  be/be_visitor_interface/interceptors_cs.cpp \
  be/be_visitor_interface/interceptors_sh.cpp \
- be/be_visitor_interface/interceptors_ss.cpp
+ be/be_visitor_interface/interceptors_ss.cpp \
+ be/be_visitor_interface/base_proxy_broker_ch.cpp \
+ be/be_visitor_interface/proxy_brokers_ch.cpp \
+ be/be_visitor_interface/remote_proxy_broker_ch.cpp \
+ be/be_visitor_interface/remote_proxy_broker_cs.cpp \
+ be/be_visitor_interface/strategized_proxy_broker_sh.cpp \
+ be/be_visitor_interface/strategized_proxy_broker_ss.cpp \
+ be/be_visitor_interface/proxy_impls_ch.cpp \
+ be/be_visitor_interface/base_proxy_impl_ch.cpp \
+ be/be_visitor_interface/remote_proxy_impl_ch.cpp \
+ be/be_visitor_interface/remote_proxy_impl_cs.cpp \
+ be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp \
+ be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp \
+ be/be_visitor_interface/direct_proxy_impl_sh.cpp \
+ be/be_visitor_interface/direct_proxy_impl_ss.cpp
 
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
  include/idl.h \
@@ -8261,6 +8324,12 @@ realclean: clean
  be_include/be_visitor_operation/interceptors_exceptlist.h \
  be_include/be_visitor_operation/interceptors_info_rettype.h \
  be_include/be_visitor_operation/interceptors_result.h \
+ be_include/be_visitor_operation/base_proxy_impl_ch.h \
+ be_include/be_visitor_operation/proxy_impl_xh.h \
+ be_include/be_visitor_operation/inv_arglist.h \
+ be_include/be_visitor_operation/remote_proxy_impl_cs.h \
+ be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h \
+ be_include/be_visitor_operation/direct_proxy_impl_ss.h \
  be/be_visitor_valuetype/field_ch.cpp \
  be/be_visitor_valuetype/field_ci.cpp \
  be/be_visitor_valuetype/field_cs.cpp \
@@ -8773,6 +8842,12 @@ realclean: clean
  be_include/be_visitor_operation/interceptors_exceptlist.h \
  be_include/be_visitor_operation/interceptors_info_rettype.h \
  be_include/be_visitor_operation/interceptors_result.h \
+ be_include/be_visitor_operation/base_proxy_impl_ch.h \
+ be_include/be_visitor_operation/proxy_impl_xh.h \
+ be_include/be_visitor_operation/inv_arglist.h \
+ be_include/be_visitor_operation/remote_proxy_impl_cs.h \
+ be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h \
+ be_include/be_visitor_operation/direct_proxy_impl_ss.h \
  be/be_visitor_operation/operation.cpp \
  be/be_visitor_operation/arglist.cpp \
  be/be_visitor_operation/argument.cpp \
@@ -8830,7 +8905,13 @@ realclean: clean
  be/be_visitor_operation/interceptors_ss.cpp \
  be/be_visitor_operation/interceptors_exceptlist.cpp \
  be/be_visitor_operation/interceptors_info_rettype.cpp \
- be/be_visitor_operation/interceptors_result.cpp
+ be/be_visitor_operation/interceptors_result.cpp \
+ be/be_visitor_operation/base_proxy_impl_ch.cpp \
+ be/be_visitor_operation/proxy_impl_xh.cpp \
+ be/be_visitor_operation/inv_arglist.cpp \
+ be/be_visitor_operation/remote_proxy_impl_cs.cpp \
+ be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp \
+ be/be_visitor_operation/direct_proxy_impl_ss.cpp
 
 .obj/be_visitor_root.o .obj/be_visitor_root.so .shobj/be_visitor_root.o .shobj/be_visitor_root.so: be/be_visitor_root.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
