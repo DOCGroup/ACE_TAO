@@ -1,3 +1,17 @@
+Wed Apr 17 14:46:30 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/ORT/Makefile (.PRECIOUS, realclean):
+
+	  Corrected name of IDL files.  The proper stubs and skeletons
+	  actually get cleaned now.
+
+	  Removed bogus "sum_server" IDL source from the list of generated
+	  and cleaned files.
+
+	* tests/ORT/README:
+
+	  Clarified some comments.
+
 Wed Apr 17 14:25:47 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Messaging_SyncScope.pidl:
