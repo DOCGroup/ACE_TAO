@@ -54,6 +54,8 @@ Thu Sep 07 14:06:40 2000  Ossama Othman  <ossama@uci.edu>
 	  incremented after each loop iteration, so the loop ran
 	  endlessly, which in turn caused _decr_refcnt() to be called on
 	  an ORB Core that was destroyed in a previous loop iteration.
+	  This problem also prevented other registered ORBs from being
+	  destroyed properly.
 
 	* tao/Adapter.cpp (~TAO_Adapter_Registry):
 
