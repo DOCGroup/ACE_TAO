@@ -1,7 +1,15 @@
+Thu Apr 26 12:30:19 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Containers_T.h Updated documentation for
+	  ACE_DLList_*Iterator's on the use of method
+	  <advance_and_remove>.  Users are responsible for release
+	  (free'ing) the returned element.  Thanks to Rachel G. Smith
+	  <Rachel_G_Smith@raytheon.com> for motivating the change.
+
 Thu Apr 26 07:58:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Prevented the BiDirectional tests from
-	  running in the Minimum nightly builds. 
+	  running in the Minimum nightly builds.
 
 Thu Apr 26 07:48:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
