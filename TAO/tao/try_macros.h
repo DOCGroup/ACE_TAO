@@ -37,6 +37,7 @@
 #define TAO_TRY_MACROS_H
 
 #include "tao/orbconf.h"
+#include "ace/CORBA_macros.h"
 
 // Define a local enviroment variable...
 #define TAO_IN_ENV  _env
