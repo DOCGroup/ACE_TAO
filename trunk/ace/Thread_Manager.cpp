@@ -1260,7 +1260,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
             td->cleanup_info_.cleanup_hook_ = 0;
           }
 
-#if !defined (VXWORKS)
+#if !defined (VXWORKS) && !defined (CHORUS)
         // Threads created with THR_DAEMON shouldn't exist here, but
         // just to be safe, let's put it here.
 
@@ -1271,7 +1271,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
             td->thr_state_ = ACE_THR_TERMINATED;
             this->terminated_thr_queue_.enqueue_tail (*td);
           }
-#endif /* ! VXWORKS */
+#endif /* ! VXWORKS && ! CHORUS */
 
         // Remove thread descriptor from the table.
         this->remove_thr (td, 0);
@@ -1341,14 +1341,16 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
     // Release the guard, giving other threads a chance to run.
   }
 
-#if !defined (VXWORKS)
-    ACE_Thread_Descriptor item;
+#if !defined (VXWORKS) && ! defined (CHORUS)
+  // @@ VxWorks doesn't support thr_join (yet.)  We are working
+  //on our implementation.   Chorus'es thr_join seems broken.
+  ACE_Thread_Descriptor item;
 
-    while (this->terminated_thr_queue_.dequeue_head (item) == 0)
-      if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
-          || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
-        ACE_Thread::join (item.thr_handle_);
-#endif /* VXWORKS */
+  while (this->terminated_thr_queue_.dequeue_head (item) == 0)
+    if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
+        || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
+      ACE_Thread::join (item.thr_handle_);
+#endif /* ! VXWORKS && ! CHORUS */
 #else
   ACE_UNUSED_ARG (timeout);
 #endif /* ACE_HAS_THREADS */
