@@ -292,7 +292,14 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "return this->base_proxy_->_stubobj ();"<< be_uidt_nl
           << "}"<< be_nl << be_nl;
 
+      // Implement the <stubobj> method of the base class
+      os->indent ();
+      *os << "TAO_Stub *"<<be_nl;
+      *os << scope->full_name ();
 
+      // Only if there exists any nesting "::" is needed!
+      if (node->is_nested ())
+        *os << "::";
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
       *os << "_stubobj (void)"<<be_nl
           << "{" << be_idt_nl
