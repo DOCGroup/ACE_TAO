@@ -29,11 +29,14 @@
 
       <UL>
 	<li>Got rid of need to have compile in TSS ORB Core
-	(<code>-DTAO_HAS_TSS_ORBCORE</code>).  Create an Resource
-	Factory Factory which is consulted for the pointers which go
-	into TAO_ORB_Core instances.  Thus, it is the only place that
-	needs to know whether the items should be global or held in
-	TSS.</li>
+	(<code>-DTAO_HAS_TSS_ORBCORE</code>).  This is accomplished by
+	having a Resource Factory (<code>TAO_Resource_Factory</code>)
+	singleton which the ORB Core consults in order to get pointers
+	to resources.  The Resource Factory can be configured to
+	return pointers from thread-specific storage, or
+	process-global storage.  By doing this, the ORB Core is
+	shielded from ever having to know whether or not its resources
+	are global or not.</li>
 
 	<li>Made all command-line like options look like the
 	standard-professed options, i.e., <b>-ORBxxx</b> or
@@ -138,7 +141,7 @@
 	status (first cut at this already there--needs to be checked
 	out).</LI>
 
-	<LI>Put README file in multiCubit test.</li>
+	<LI>Added README file to multiCubit test.</li>
         </UL>
 
       Ongoing Work:
@@ -147,11 +150,14 @@
 	<LI>Verify ACE & TAO on Linux.</LI>
 
 	<LI>Use Purify to eliminate straggling problems.</LI>
+
         </UL>
 
       Current Work:
 
         <UL>
+	<LI>Clean up the internals and analyze for performance bottlenecks using Quantify.</LI>
+
 	<LI>
 	  <p>
 	    Verify that, in the ORB-per-thread concurrency model, it's
@@ -181,11 +187,21 @@
 	pass in a comma-separated list of <em>host:port</em>
 	destinations using the <code>CORBA::ORB_init()</code>
 	interface.</LI>
+
+	<LI>Support new concurrency models, e.g.,
+	Thread-per-Request.</LI>
+
         </UL>
 
       Future work:
       <UL>
 	<li>Remove <code>_FAR</code> from all code.</li>
+
+        <li>Update ORB Patterns paper to reflect the latest TAO has to
+        offer.  Specifically, sections on the Abstract Factory and
+        Concurrency strategies need to be updated, and the entire
+        paper needs to be reviewed for accuracy w.r.t the current
+        TAO.</li>
 
 	<li>Make the section in <a
 	href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
@@ -194,25 +210,6 @@
 
 	<li>Improve the <code>Service Configurator</code> service
 	entry faking on VxWorks.</li>
-
-	<LI>There is a bug in the ORB-per-thread concurrency model
-	caused by its use of the ACE Service Configurator. The bug is
-	understood, and a patch is being readied and should be
-	released no later than October 3rd.</LI>
-
-	<LI>The ORB-per-thread model is not yet integrated with the
-	other concurrency models; it must be selected at <I>compile
-	time</I> rather than run time.  In order to use it, one must
-	add <TT>-DTAO_HAS_TSS_ORBCORE</TT> to the compile line in both
-	the library (<TT>$(TAO_ROOT)/tao</TT>) and the application
-	(<I>e.g.</I>, <TT>$(TAO_ROOT)/tests/multiCubit</TT>). Future
-	releases of TAO will fix this restriction so that all
-	threading models are available at run-time.</LI>
-
-	<LI>Support new concurrency models, e.g.,
-	Thread-per-Request.</LI>
-
-	<LI>Clean up the internals and analyze for performance bottlenecks using Quantify.</LI>
 
 	<LI>Integrate the <A HREF="#poa">POA</A> implementation.</LI>
 
