@@ -28,7 +28,7 @@
 #include "../Simple_util.h"
 #include "Event_TypesC.h"
 
-double random_number (double min, double max);
+CORBA::Float random_number (double min, double max);
 
 class Checkpoint_Client_i
 {
