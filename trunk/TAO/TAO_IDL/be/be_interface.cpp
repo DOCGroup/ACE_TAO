@@ -610,12 +610,9 @@ int be_interface::gen_server_skeletons (void)
   ss->indent ();
   *ss << "void " << this->full_skel_name () <<
     "::_is_a_skel (CORBA::ServerRequest &req, " <<
-    "CORBA::Object_ptr obj, CORBA::Environment &env)" << nl;
+    "CORBA::Object_ptr /* obj */, CORBA::Environment &env)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
-  // the obj parameter is not used in this case. Hence we must use the
-  // ACE_UNUSED_ARG macro
-  *ss << "ACE_UNUSED_ARG (obj); // argument not used" << nl;
   *ss << "const CORBA::String type_id = \"" << this->repoID () <<
     "\"; // repository ID" << nl;
   *ss << "CORBA::NVList_ptr nvlist;" << nl;
