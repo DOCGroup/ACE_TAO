@@ -1,3 +1,15 @@
+Sat Feb 12 00:27:45 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Changed to conditionally define
+	  ACE_DEFAULT_TEMP_DIR_ENV according to whether the unicode is
+	  supported or not.
+
+	* ace/MEM_SAP.h:
+	* ace/MEM_SAP.cpp:
+	* ace/MEM_Acceptor.cpp (accept):
+	* ace/MEM_Connector.cpp (connect): Made UNICODE friendly.  Thanks
+	  to Steve for reporting the problem.
+
 Fri Feb 11 13:26:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_Acceptor.cpp (accept): Changed to use
