@@ -7,12 +7,12 @@
 // Constructor.
 
 TAO_UTO::TAO_UTO (TimeBase::TimeT time,
-		  TimeBase::InaccuracyT inaccuracy,
-		  TimeBase::TdfT tdf)
+                  TimeBase::InaccuracyT inaccuracy,
+                  TimeBase::TdfT tdf)
 {
   this->attr_utc_time_.time = time;
   this->attr_utc_time_.inacchi = inaccuracy / 2;
-  this->attr_utc_time_.inacclo = (CORBA::ULong)(inaccuracy - (inaccuracy/2));
+  this->attr_utc_time_.inacclo = ACE_U64_TO_U32 (inaccuracy - (inaccuracy/2));
   this->attr_utc_time_.tdf = tdf;
 }
 
@@ -68,55 +68,55 @@ TAO_UTO::absolute_time (CORBA::Environment &env)
 
 CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
-		       CosTime::UTO_ptr uto,
-		       CORBA::Environment &env)
+                       CosTime::UTO_ptr uto,
+                       CORBA::Environment &env)
 {
   TAO_TRY
     {
       if (comparison_type == CosTime::MidC)
-	{
-	  if (this->time (TAO_TRY_ENV) == uto->time (TAO_TRY_ENV))
-	    {
-	      TAO_CHECK_ENV;
-	      return CosTime::TCEqualTo;
-	    }
-	  else if (this->time (TAO_TRY_ENV) > uto->time (TAO_TRY_ENV))
-	    {
-	      TAO_CHECK_ENV;
-	      return CosTime::TCGreaterThan;
-	    }
-	  else
-	    return CosTime::TCLessThan;
-	}
+        {
+          if (this->time (TAO_TRY_ENV) == uto->time (TAO_TRY_ENV))
+            {
+              TAO_CHECK_ENV;
+              return CosTime::TCEqualTo;
+            }
+          else if (this->time (TAO_TRY_ENV) > uto->time (TAO_TRY_ENV))
+            {
+              TAO_CHECK_ENV;
+              return CosTime::TCGreaterThan;
+            }
+          else
+            return CosTime::TCLessThan;
+        }
       else if (this->time (TAO_TRY_ENV) == uto->time (TAO_TRY_ENV))
-	{
-	  TAO_CHECK_ENV;
-	  if (this->inaccuracy (TAO_TRY_ENV) == 0 && uto->inaccuracy (TAO_TRY_ENV) == 0)
-	    {
-	      TAO_CHECK_ENV;
-	      return CosTime::TCEqualTo;
-	    }
-	}
+        {
+          TAO_CHECK_ENV;
+          if (this->inaccuracy (TAO_TRY_ENV) == 0 && uto->inaccuracy (TAO_TRY_ENV) == 0)
+            {
+              TAO_CHECK_ENV;
+              return CosTime::TCEqualTo;
+            }
+        }
       else
-	{
-	  if (this->time (TAO_TRY_ENV) > uto->time (TAO_TRY_ENV))
-	    {
-	      TAO_CHECK_ENV;
-	      if (this->time (TAO_TRY_ENV) - this->inaccuracy (TAO_TRY_ENV)
-		  > uto->time (TAO_TRY_ENV) - uto->inaccuracy (TAO_TRY_ENV))
-		{
-		  TAO_CHECK_ENV;
-		  return CosTime::TCGreaterThan;
-		}
-	    }
-	  else if (this->time (TAO_TRY_ENV) + this->inaccuracy (TAO_TRY_ENV)
-		   < uto->time (TAO_TRY_ENV) - uto->inaccuracy (TAO_TRY_ENV))
+        {
+          if (this->time (TAO_TRY_ENV) > uto->time (TAO_TRY_ENV))
+            {
+              TAO_CHECK_ENV;
+              if (this->time (TAO_TRY_ENV) - this->inaccuracy (TAO_TRY_ENV)
+                  > uto->time (TAO_TRY_ENV) - uto->inaccuracy (TAO_TRY_ENV))
+                {
+                  TAO_CHECK_ENV;
+                  return CosTime::TCGreaterThan;
+                }
+            }
+          else if (this->time (TAO_TRY_ENV) + this->inaccuracy (TAO_TRY_ENV)
+                   < uto->time (TAO_TRY_ENV) - uto->inaccuracy (TAO_TRY_ENV))
 
-	    {
-	      TAO_CHECK_ENV;
-	      return CosTime::TCLessThan;
-	    }
-	}
+            {
+              TAO_CHECK_ENV;
+              return CosTime::TCLessThan;
+            }
+        }
 
     }
   TAO_CATCHANY
@@ -136,24 +136,24 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 
 CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
-			   CORBA::Environment &_env)
+                           CORBA::Environment &_env)
 {
   TAO_TIO *tio = 0;
 
   TAO_TRY
     {
       if (this->time (TAO_TRY_ENV) > uto->time (TAO_TRY_ENV))
-	ACE_NEW_THROW_RETURN (tio,
-			      TAO_TIO (uto->time (TAO_TRY_ENV),
-				       this->time (TAO_TRY_ENV)),
-			      CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			      CosTime::TIO::_nil ());
+        ACE_NEW_THROW_RETURN (tio,
+                              TAO_TIO (uto->time (TAO_TRY_ENV),
+                                       this->time (TAO_TRY_ENV)),
+                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+                              CosTime::TIO::_nil ());
       else
-	ACE_NEW_THROW_RETURN (tio,
-			      TAO_TIO (this->time (TAO_TRY_ENV),
-				       uto->time (TAO_TRY_ENV)),
-			      CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			      CosTime::TIO::_nil ());
+        ACE_NEW_THROW_RETURN (tio,
+                              TAO_TIO (this->time (TAO_TRY_ENV),
+                                       uto->time (TAO_TRY_ENV)),
+                              CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+                              CosTime::TIO::_nil ());
       TAO_CHECK_ENV;
 
     }
@@ -178,18 +178,18 @@ TAO_UTO::interval (CORBA::Environment &_env)
   TAO_TRY
     {
       TimeBase::TimeT lower =
-	this->time (TAO_TRY_ENV) - this->inaccuracy (TAO_TRY_ENV);
+        this->time (TAO_TRY_ENV) - this->inaccuracy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       TimeBase::TimeT upper =
-	this->time (TAO_TRY_ENV) + this->inaccuracy (TAO_TRY_ENV);
+        this->time (TAO_TRY_ENV) + this->inaccuracy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_NEW_THROW_RETURN (tio,
-			    TAO_TIO (lower,
-				     upper),
-			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			    CosTime::TIO::_nil ());
+                            TAO_TIO (lower,
+                                     upper),
+                            CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+                            CosTime::TIO::_nil ());
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
