@@ -1,3 +1,8 @@
+Sun Nov 18 13:32:10 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/md5c.c (MD5Init): Converted to ISO/ANSI C
+	  prototype to remove KAI C++ warning.
+
 Sat Nov 17 13:22:21 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/Invocation_Endpoint_Selectors.cpp:
