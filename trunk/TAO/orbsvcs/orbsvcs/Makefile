@@ -20,6 +20,8 @@ TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_ex
 IDL_FILES = \
 	CosNamingC \
 	CosNamingS \
+	CosLifeCycleC \ 
+	CosLifeCycleS \
 	CosConcurrencyControlC\
 	CosConcurrencyControlS\
 	CosTimeBaseC \
@@ -44,13 +46,6 @@ IDL_FILES += \
 	Null_MediaCtrlS \
 	Null_MediaCtrlC
 endif
-
-# Lifecycle Service stuff
-ifdef lifecycle
-IDL_FILES += \
-	CosLifeCycleS \
-	CosLifeCycleC
-endif # lifecycle
 
 ifdef trader
 
