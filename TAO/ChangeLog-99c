@@ -1,3 +1,17 @@
+Tue Sep 21 13:51:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynAny_i.cpp:
+	  Added call to unalias() before checking TCKind in
+	  insert operations for string, object, TypeCode and
+	  Any.
+
+	* ORB.cpp:
+	  Replaced no-op in body of create_named_value with
+	  a simple call to ACE_NEW.
+
+	  Thanks to Phillipe Merle <Philippe.Merle@lifl.fr> for
+	  sending in both these fixes.
+
 Tue Sep 21 12:10:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.cpp:
