@@ -1,3 +1,9 @@
+Wed Jun  9 20:40:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.cpp:
+	  Added new methods to support message reassembly in GIOP 1.1
+
 Wed Jun  9 15:32:37 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* ace/Message_Queue_T: Added a lock() accessor method so that
