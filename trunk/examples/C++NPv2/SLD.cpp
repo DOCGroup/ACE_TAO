@@ -14,8 +14,8 @@ typedef Reactor_Logging_Server_Adapter<Logging_Acceptor>
 ACE_FACTORY_DEFINE (SLD, Server_Logging_Daemon)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Reactor_Logging_Server_Adapter<Logging_Acceptor_Ex>;
+template class Reactor_Logging_Server_Adapter<Logging_Acceptor>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Reactor_Logging_Server_Adapter<Logging_Acceptor_Ex>
+#pragma instantiate Reactor_Logging_Server_Adapter<Logging_Acceptor>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
