@@ -1,3 +1,8 @@
+Wed Apr 11 16:32:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/SimplePerformance/Makefile: Added
+	  proper libs for linking.
+
 Wed Apr 11 16:21:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp: Fixed template
