@@ -60,6 +60,23 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
           HREF="http://www.cs.wustl.edu/~schmidt/HICSS-97.ps.gz">interpretive IIOP protocol
           engine</A>.  </LI>
 
+      <LI> Include files are handled properly. So are the definitions
+          used inside the include files that are used in the currently
+          parsed files. </LI>
+
+      <LI> The problems arising due to public virtual inheritance when
+          casting from an interface class to CORBA::Object_ptr has
+          been solved. We do this casting inside the stubs/skeletons
+          rather than first converting an interface class pointer to a
+          void*, storing it in an Any, and casting it to
+          CORBA::Object_ptr in the encode/decode methods. The casting
+          inside the stubs/skeletons work because the compiler has
+          knowledge of both types. </LI>
+
+      <LI> IN, INOUT, and OUT object reference parameters are now
+          supported properly. We think the same approach should work
+          for sequences, structs, and unions. </LI>
+
     </UL>
 
   <P> Known bugs:
@@ -80,9 +97,6 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
                   C++ Exceptions. Instead we use the alternative
                   mapping that uses CORBA::Environment. </LI>
 
-              <LI>
-                  Some problems noticed when IDL files are included
-                  and definitions from included files are used.</LI>
             </UL>
         </LI>
       </UL>
@@ -272,8 +286,8 @@ Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and
 
       <li> Service handlers obtained from the caching connector are
       now cleaned up.  The application needs to be able to signal that
-      it's not using it any longer, and, when the application encounters 
-      an error, needs to effectively close down that connection for good 
+      it's not using it any longer, and, when the application encounters
+      an error, needs to effectively close down that connection for good
       so that a new connection can be initiated. <br>
 
       Added the ability for a Svc_Handler to
@@ -289,8 +303,8 @@ Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and
       strategy acts as a consular to the Svc_Handler, preparing it for
       the tough times ahead when the Svc_Handler will be recycled. <br>
 
-      Added new class ACE_NOOP_Concurrency_Strategy.  It implements 
-      a no-op activation strategy in order to avoid calling open on 
+      Added new class ACE_NOOP_Concurrency_Strategy.  It implements
+      a no-op activation strategy in order to avoid calling open on
       a recycled svc_handler multiple times. <br>
 
       ACE_Cached_Connect_Strategy now
