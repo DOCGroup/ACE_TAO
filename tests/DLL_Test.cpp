@@ -23,8 +23,13 @@
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
 
-#define OBJ_SUFFIX ACE_DLL_SUFFIX
-#define OBJ_PREFIX ACE_TEXT("./") ACE_DLL_PREFIX
+#if defined (ACE_WIN32) && defined (_DEBUG) 
+# define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
+#else /* ACE_WIN32 && _DEBUG */
+# define OBJ_SUFFIX ACE_DLL_SUFFIX
+#endif /* ACE_WIN32 && _DEBUG */
+
+#define OBJ_PREFIX ACE_TEXT ("./") ACE_DLL_PREFIX
 
 ACE_TCHAR const *
 cdecl_decoration (ACE_TCHAR const *func_name)
