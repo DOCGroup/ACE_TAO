@@ -94,7 +94,7 @@ public:
 
   // Remoce handler from client set.
   void remove (AIO_Input_Handler *ih)
-    { clients_.remove (ih); return; }
+  { clients_.remove (ih); }
 
 protected:
   // Service handler factory method.
@@ -212,7 +212,6 @@ void AIO_Output_Handler::open
   no_sigpipe.register_action (SIGPIPE, 0);
   can_write_ = 1;
   start_write (0);
-  return;
 }
 
 void AIO_Output_Handler::start_write (ACE_Message_Block *mblk) {
@@ -226,7 +225,6 @@ void AIO_Output_Handler::start_write (ACE_Message_Block *mblk) {
     else
       ungetq (mblk);
   }
-  return;
 }
 
 void AIO_Output_Handler::handle_read_stream
@@ -236,7 +234,6 @@ void AIO_Output_Handler::handle_read_stream
   writer_.cancel ();
   can_write_ = 0;
   CLD_CONNECTOR::instance ()->reconnect ();
-  return;
 }
 
 // ??? Are partial writes possible with async writes?
@@ -252,7 +249,6 @@ void AIO_Output_Handler::handle_write_stream
     else start_write (&mblk);
   }
   else ungetq (&mblk);
-  return;
 }
 
 /******************************************************/
@@ -273,56 +269,37 @@ void AIO_Input_Handler::open
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (mblk_);
   reader_.read (*mblk_, LOG_HEADER_SIZE);
-  return;
 }
 
 void AIO_Input_Handler::handle_read_stream
-  (const ACE_Asynch_Read_Stream::Result &result) {
-  if (!result.success () ||
-      result.bytes_transferred () == 0) {
+    (const ACE_Asynch_Read_Stream::Result &result) {
+  if (!result.success () || result.bytes_transferred () == 0) 
     delete this;
-    return;
-  }
-
-  // Try again if not all requested bytes received.
-  if (result.bytes_transferred () < result.bytes_to_read ()) {
+  else if (result.bytes_transferred () < result.bytes_to_read ()) 
     reader_.read (*mblk_, result.bytes_to_read () -
-                          result.bytes_transferred ());
-    return;
-  }
-
-  // All bytes requested are complete. If we read 8, it's the header,
-  // else it's the payload.
-  if (mblk_->length () == LOG_HEADER_SIZE) {
-    // Create a CDR stream to parse the header.
+                  result.bytes_transferred ());
+  else if (mblk_->length () == LOG_HEADER_SIZE) {
     ACE_InputCDR cdr (mblk_);
 
-    // Extract the byte-order and use helper methods to
-    // disambiguate octet, booleans, and chars.
     ACE_CDR::Boolean byte_order;
     cdr >> ACE_InputCDR::to_boolean (byte_order);
-
-    // Set the byte-order on the stream...
     cdr.reset_byte_order (byte_order);
 
-    // Extract the length
     ACE_CDR::ULong length;
     cdr >> length;
 
-    // Ensure there's sufficient room for log record payload.
     mblk_->size (length + LOG_HEADER_SIZE);
     reader_.read (*mblk_, length);
-    return;
+  } 
+  else {
+    if (OUTPUT_HANDLER::instance ()->put (mblk_) == -1) 
+      mblk_->release ();
+
+    ACE_NEW_NORETURN
+      (mblk_, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
+    ACE_CDR::mb_align (mblk_);
+    reader_.read (*mblk_, LOG_HEADER_SIZE);
   }
-
-  if (OUTPUT_HANDLER::instance ()->put (mblk_) == -1)
-    mblk_->release ();
-
-  ACE_NEW_NORETURN
-    (mblk_, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
-  ACE_CDR::mb_align (mblk_);
-  reader_.read (*mblk_, LOG_HEADER_SIZE);
-  return;
 }
 
 /********************************************************/
@@ -333,7 +310,6 @@ void AIO_CLD_Acceptor::close (void) {
   AIO_Input_Handler **ih;
   while (iter.next (ih))
     delete *ih;
-  return;
 }
 
 AIO_Input_Handler * AIO_CLD_Acceptor::make_handler (void) {
@@ -418,13 +394,11 @@ void AIO_CLD_Connector::handle_connect
       retry_delay_ = MAX_RETRY_DELAY;
     proactor ()->schedule_timer (*this, 0, delay);
   }
-  return;
 }
 
 void AIO_CLD_Connector::handle_time_out
 (const ACE_Time_Value&, const void *) {
   connect (remote_addr_);
-  return;
 }
 
 /******************************************************/

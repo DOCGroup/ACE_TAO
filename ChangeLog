@@ -1,3 +1,8 @@
+Mon Jun  3 06:21:57 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Removed 
+	  unnecessary 'return;' calls.
+
 Mon Jun  3 07:23:56 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* Framework_Component_DLL.bor:  Fixed typo.
