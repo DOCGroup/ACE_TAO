@@ -61,7 +61,7 @@ TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any
 
   if (equivalent)
     {
-      CORBA_Any_ptr any = dyn_any->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA_Any_var any = dyn_any->to_any (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       this->from_any (*any
