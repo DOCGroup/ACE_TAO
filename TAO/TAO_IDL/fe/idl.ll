@@ -317,11 +317,11 @@ idl_parse_line_and_file(char *buf)
       h[i] = '\0';
       idl_global->set_filename(new String(h));
     }
-  idl_global->set_in_main_file(
-    (idl_global->filename()->compare(idl_global->real_filename())) ?
-    I_TRUE :
-    I_FALSE
-  );
+  int in_main_file = I_FALSE;
+  if (idl_global->filename()->compare(idl_global->real_filename())
+      || idl_global->filename()->compare(idl_global->main_filename()))
+    in_main_file = I_TRUE;
+  idl_global->set_in_main_file(in_main_file);
   /*
    * If it's an import file store the stripped name for the BE to use
    */
