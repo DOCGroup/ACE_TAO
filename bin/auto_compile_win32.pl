@@ -75,8 +75,8 @@ sub Build_Config
         ($Project_File, $Project_Name) = split /,\s*/, $Bname;
         chdir ("$ENV{ACE_ROOT}/$Project_Dir");
         $Status =
-            system "msdev.com $Project_File /MAKE \"$Project_Name - $Config\"\n";
-        print "$Status = msdev.com $Project_File /MAKE \"$Project_Name - $Config\"\n";
+            system "msdev.com $Project_File /MAKE \"$Project_Name - $Config\" /USEENV /REBUILD /Y3";
+#        print "$Status = msdev.com $Project_File /MAKE \"$Project_Name - $Config\"\n";
         if ($Ignore_error == 0)
         {
             return if $Status != 0;
