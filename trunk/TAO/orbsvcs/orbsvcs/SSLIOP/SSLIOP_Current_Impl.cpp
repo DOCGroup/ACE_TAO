@@ -51,6 +51,9 @@ TAO_SSLIOP_Current_Impl::get_attributes (
   if (this->ssl_ == 0)
     return safe_attribute_list._retn ();
 
+  // @@ @todo If the Security::AttributeTypeList length is zero, then
+  //          return all of the attributes.
+
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       const Security::AttributeType &attribute = attributes[i];
