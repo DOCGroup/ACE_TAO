@@ -14,7 +14,6 @@
 
 #include "ace/Service_Config.h"
 #include "ace/XML_Svc_Conf.h"
-#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Config.i"
@@ -24,7 +23,7 @@ ACE_RCSID (ace,
            Service_Config,
            "$Id$")
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Service_Config)
+ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
 void
 ACE_Service_Config::dump (void) const

@@ -1,9 +1,10 @@
 // -*- C++ -*-
 
-#include "ace/Svc_Conf.h"
+#include "ace/Svc_Conf_Lexer_Guard.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#include "ace/Svc_Conf_Lexer_Guard.h"
+
+#include "ace/Svc_Conf.h"
 
 ACE_RCSID (ace,
            Svc_Conf_Lexer_Guard,
