@@ -53,10 +53,10 @@ Wed Jan 19 10:01:57 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           the empty struct *_tag (used as a template parameter)
           was not being declared for the typedef of the array, along
           with the *_slice, *_var, *_out, and *_forany typedefs.
-          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> and 
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> and
           Thomas Groth <groth.th@nord-com.net> for reporting the bug
           and submitting the example IDL that demonstrated the problem.
-        
+
         * tests/IDL_Test/array.idl:
 
           Added the submitted IDL mentioned above to the IDL test
