@@ -1,3 +1,8 @@
+Fri Aug 31 15:27:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Bound_Ptr.i: Fixed a problem with Sun CC42 builds. Used 1
+	  instead of true.
+
 Fri Aug 31 14:57:42 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/MEM_Stream_Test.cpp: Fixed usage of ACE_SYNCH meta-class

@@ -421,7 +421,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::null (void) const
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
   if (COUNTER::object_was_deleted (this->counter_))
-    return true;
+    return 1;
 
   return this->ptr_ == 0;
 }
