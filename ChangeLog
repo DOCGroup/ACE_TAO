@@ -1,3 +1,9 @@
+Mon Jan  3 14:38:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* netsvcs/lib/Makefile.am:
+
+	  Install header files.
+
 Mon Jan  3 14:34:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Makefile.am:
