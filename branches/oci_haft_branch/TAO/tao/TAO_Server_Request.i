@@ -201,4 +201,19 @@ TAO_ServerRequest::rs_pi_current (void)
 {
   return this->rs_pi_current_;
 }
+
+ACE_INLINE int
+TAO_ServerRequest::got_result (void)
+{
+  if (this->result_seq_.ptr () == 0)
+    return 0;
+
+  return 1;
+}
+
+ACE_INLINE void
+TAO_ServerRequest::result_seq (CORBA::OctetSeq &ocs)
+{
+  this->result_seq_ = ocs;
+}
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
