@@ -1,3 +1,18 @@
+Sat Dec 29 11:57:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Default_Constants.h: A new header file that houses some of
+	  the constants that are used widely by ACE and applications based
+	  on ACE. The motivation for this one is the same as that of
+	  creating Global_Macros.h. 
+	
+	* ace/Global_Macros.h: Moved some constant definitions from this
+	  file to Default_Constants.h.
+
+	* ace/OS.h: Moved some constant definitions out of this
+	  file. There are some more that needs moving and will be done
+	  over a period of time hopefully. 
+	  
+
 Sat Dec 29 06:31:50 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.cpp (test_concurrent): Added an
