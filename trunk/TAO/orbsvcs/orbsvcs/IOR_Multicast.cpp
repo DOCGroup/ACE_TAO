@@ -75,7 +75,8 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   if (retcode == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Received multicast.\n"));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Received multicast.\n"));
 
   // @@ validate data string received is from a valid client here
   // @@ Probably not needed
@@ -101,14 +102,14 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                                 ACE_OS::strlen (this->ior_) + 1,
                                 remote_addr,
                                 0);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) ior_: <%s>\n"
-                  " sent through port %u.\n"
-                  "retcode=%d\n",
-                  this->ior_,
-                  remote_addr.get_port_number (),
-                  retcode));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "(%P|%t) ior_: <%s>\n"
+		    " sent through port %u.\n"
+		    "retcode=%d\n",
+		    this->ior_,
+		    remote_addr.get_port_number (),
+		    retcode));
 
       if (retcode == -1)
         return -1;

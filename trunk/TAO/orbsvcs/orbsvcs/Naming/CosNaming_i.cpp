@@ -151,10 +151,11 @@ NS_NamingContext::bind (const CosNaming::Name& n,
           return;
         }
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "bound: <%s,%s>\n",
-                  n[0].id.in () == 0? "nil" : n[0].id.in (),
-                  n[0].kind.in () == 0? "nil" : n[0].kind.in () ));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "bound: <%s,%s>\n",
+		    n[0].id.in () == 0? "nil" : n[0].id.in (),
+		    n[0].kind.in () == 0? "nil" : n[0].kind.in () ));
     }
 }
 
@@ -360,10 +361,11 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
       return CORBA::Object::_nil ();
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Trying to resolve <%s,%s>\n",
-              n[0].id.in () == 0? "nil" : n[0].id.in (),
-              n[0].kind.in () == 0? "nil" : n[0].kind.in ()));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Trying to resolve <%s,%s>\n",
+		n[0].id.in () == 0? "nil" : n[0].id.in (),
+		n[0].kind.in () == 0? "nil" : n[0].kind.in ()));
 
   // Resolve the first component of the name.
   NS_ExtId name (n[0].id, n[0].kind);
@@ -406,11 +408,12 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
       return cont->resolve (rest_of_name, _env);
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Resolved <%s,%s> to %08.8x\n",
-              n[0].id.in () == 0? "nil" : n[0].id.in (),
-              n[0].kind.in () == 0? "nil" : n[0].kind.in (),
-              item));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Resolved <%s,%s> to %08.8x\n",
+		n[0].id.in () == 0? "nil" : n[0].id.in (),
+		n[0].kind.in () == 0? "nil" : n[0].kind.in (),
+		item));
 
   // If the name we had to resolve was simple, we just need to return
   // the result.
