@@ -1,8 +1,47 @@
+Fri Jun  4 17:19:44 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe.ccd:
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe.cpd:
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe_Exec.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe_Stub.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe_Svnt.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Domain.cdd:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS.ccd:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS.cpd:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS_Exec.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS_Stub.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS_Svnt.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/HUDisplay.cdp:
+        * DnC/tests/Config_Handlers/HUDisplay/HUDisplay.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/HUDisplay.cpd:
+        * DnC/tests/Config_Handlers/HUDisplay/HUDisplay.pcd:
+        * DnC/tests/Config_Handlers/HUDisplay/Libraries.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay.ccd:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay.cpd:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay_Exec.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay_Stub.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay_Svnt.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer.ccd:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer.cpd:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer_Exec.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer_Stub.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer_Svnt.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/package.tpd:
+
+          Moved the descriptor files needed to test BasicSP from my
+          homepage to the CVS repository. The Config_Handlers should be
+          able to build a tree starting from package.tpd. Not sure, if it
+          works that way now.
+
 Fri Jun  4 15:54:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Cosmetic and other minor changes to generated code.
 
 Fri Jun  4 15:38:18 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
@@ -14,7 +53,7 @@ Fri Jun  4 15:38:18 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
           "string portName" and "CCMComponentPortKind kind". We feel the
           old one in DnC spec is not well defined and make the run-time
           thing harder.
-          
+
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
 
@@ -23,21 +62,21 @@ Fri Jun  4 15:38:18 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Fri Jun  4 15:32:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/tests/NodeApplicationTest/RoundTripEI.idl:
-	  Removed this file.
+        * DnC/tests/NodeApplicationTest/RoundTripEI.idl:
+          Removed this file.
 
-	* DnC/tests/NodeApplicationTest/RoundTrip_exec.h:
-	* DnC/tests/NodeApplicationTest/RoundTrip_exec.cpp:
-	* DnC/tests/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
-	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
-	  Changed these files to get the get_all_facets test working.
-	  Note: I have changed the component implementation to the new
-	  executor mapping that Boris proposed. It's not a must in this
-	  example but we can use it later as a tutorial for our users.
+        * DnC/tests/NodeApplicationTest/RoundTrip_exec.h:
+        * DnC/tests/NodeApplicationTest/RoundTrip_exec.cpp:
+        * DnC/tests/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
+        * DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
+          Changed these files to get the get_all_facets test working.
+          Note: I have changed the component implementation to the new
+          executor mapping that Boris proposed. It's not a must in this
+          example but we can use it later as a tutorial for our users.
 
-	* DnC/tests/NodeApplicationTest/run_test_ex.pl:
-	* DnC/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
-	  Added these two files to test the get_all_facets function.
+        * DnC/tests/NodeApplicationTest/run_test_ex.pl:
+        * DnC/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+          Added these two files to test the get_all_facets function.
 
 Fri Jun  4 15:02:15 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -88,9 +127,9 @@ Fri Jun  4 11:37:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jun  4 11:40:18 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/DnC_Dump.cpp:
+        * DnC/Config_Handlers/DnC_Dump.cpp:
 
-	Clean-up of the unused, commented out code sections.
+        Clean-up of the unused, commented out code sections.
 
 Fri Jun  4 11:31:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -100,17 +139,17 @@ Fri Jun  4 11:31:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Fri Jun  4 11:22:46 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/ciao/Deployment_Core.idl:
-	* DnC/ciao/Deployment.idl:
-	  Changed the connection struct definition to better suite our
-	  needs.
+        * DnC/ciao/Deployment_Core.idl:
+        * DnC/ciao/Deployment.idl:
+          Changed the connection struct definition to better suite our
+          needs.
 
 Fri Jun  4 11:19:45 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/DnC_Dump.cpp:
+        * DnC/Config_Handlers/DnC_Dump.cpp:
 
-	Fixed the dump function for Deployment::SubcomponentPortEndpoint.
-	Prints out the instanceRef.
+        Fixed the dump function for Deployment::SubcomponentPortEndpoint.
+        Prints out the instanceRef.
 
 Fri Jun  4 10:46:42 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -120,13 +159,13 @@ Fri Jun  4 10:46:42 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Fri Jun  4 09:53:14 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/tckind_names.h:
-	* DnC/Config_Handlers/tckind_names.cpp:
-	* DnC/Config_Handlers/DnC_Dump.cpp:
+        * DnC/Config_Handlers/tckind_names.h:
+        * DnC/Config_Handlers/tckind_names.cpp:
+        * DnC/Config_Handlers/DnC_Dump.cpp:
 
-	Deleted the files which initially written for dumping out the
-	ComponentPropertyDescription::type.  It is handled as a big
-	switch section in DnC_Dump.cpp.
+        Deleted the files which initially written for dumping out the
+        ComponentPropertyDescription::type.  It is handled as a big
+        switch section in DnC_Dump.cpp.
 
 Fri Jun  4 09:52:28 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -141,18 +180,18 @@ Fri Jun  4 09:52:28 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Thu Jun  3 17:28:49 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
-	  Formatted the output a bit to make the message more reflective.
+        * DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+          Formatted the output a bit to make the message more reflective.
 
-	* DnC/ciao/CCM_Core.mpc:
-	  Moved the callback implementation from deployment servant to
-	  stub.
+        * DnC/ciao/CCM_Core.mpc:
+          Moved the callback implementation from deployment servant to
+          stub.
 
 Thu Jun  3 16:25:58 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/DnC_Dump.cpp:
+        * DnC/Config_Handlers/DnC_Dump.cpp:
 
-	Added the dump code for ComponentPropertyDescription::type (CORBA::TypeCode).
+        Added the dump code for ComponentPropertyDescription::type (CORBA::TypeCode).
 
 Thu Jun  3 16:15:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -170,11 +209,11 @@ Thu Jun  3 16:10:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jun  3 16:07:35 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/DnC_Dump.h:
-	* DnC/Config_Handlers/DnC_Dump.cpp:
+        * DnC/Config_Handlers/DnC_Dump.h:
+        * DnC/Config_Handlers/DnC_Dump.cpp:
 
-	Added the methods required to dump referenced values
-	correctly. Dump functions are chaged accordingly.
+        Added the methods required to dump referenced values
+        correctly. Dump functions are chaged accordingly.
 
 Thu Jun  3 14:19:31 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -235,147 +274,147 @@ Thu Jun  3 10:51:32 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Wed Jun  2 23:26:41 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/CompImplDesc_Handler.h:
-	* DnC/Config_Handlers/DnC_Dump.h:
-	* DnC/ExecutionManager/ExecutionManager.mpc:
-	* DnC/ExecutionManager/ExecutionManager_Impl.h:
-	* DnC/NodeApplication/NodeApplication.mpc:
-	* DnC/NodeApplicationManager/NodeApplicationManager.mpc:
-	* DnC/NodeManager/NodeDaemon.mpc:
-	* DnC/NodeManager/NodeDaemon_Impl.cpp:
-	* DnC/RepositoryManager/RepositoryManager.mpc:
-	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
-	* DnC/tests/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
-	* DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
-	* DnC/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
-	* DnC/tests/NodeApplicationTest/run_test_simple.pl:
+        * DnC/Config_Handlers/CompImplDesc_Handler.h:
+        * DnC/Config_Handlers/DnC_Dump.h:
+        * DnC/ExecutionManager/ExecutionManager.mpc:
+        * DnC/ExecutionManager/ExecutionManager_Impl.h:
+        * DnC/NodeApplication/NodeApplication.mpc:
+        * DnC/NodeApplicationManager/NodeApplicationManager.mpc:
+        * DnC/NodeManager/NodeDaemon.mpc:
+        * DnC/NodeManager/NodeDaemon_Impl.cpp:
+        * DnC/RepositoryManager/RepositoryManager.mpc:
+        * DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
+        * DnC/tests/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
+        * DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DnC/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * DnC/tests/NodeApplicationTest/run_test_simple.pl:
 
-	  Updated these files to make it work with the new directory
-	  structure.
+          Updated these files to make it work with the new directory
+          structure.
 
-	  Now, Let me explain the issue.
-	  When I started implement the new DnC spec I was forced to change
-	  some of the CIAO core implementations. The one very important
-	  CIAO session container implementation is changed but not
-	  significantly. However because we use MPC templates extensively
-	  in CIAO some of the legacy mpb files is causing some trouble. I
-	  catched this mistake when I was actually using some of the newly
-	  provided functionalities in the conatainer, the red light
-	  showed itself as a run time relocation error.
+          Now, Let me explain the issue.
+          When I started implement the new DnC spec I was forced to change
+          some of the CIAO core implementations. The one very important
+          CIAO session container implementation is changed but not
+          significantly. However because we use MPC templates extensively
+          in CIAO some of the legacy mpb files is causing some trouble. I
+          catched this mistake when I was actually using some of the newly
+          provided functionalities in the conatainer, the red light
+          showed itself as a run time relocation error.
 
-	  Another driving force of these change is from CIDLC. Since in
-	  the generated code ciao/*** is used as the include file name,
-	  there is no way that I can make the new container implementation
-	  link with the servant project of the component implementation.
+          Another driving force of these change is from CIDLC. Since in
+          the generated code ciao/*** is used as the include file name,
+          there is no way that I can make the new container implementation
+          link with the servant project of the component implementation.
 
 Wed Jun  2 23:21:37 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/ciao/CCM_Base.idl:
-	* DnC/ciao/CCM_Component.idl:
-	* DnC/ciao/CCM_Container.idl:
-	* DnC/ciao/CCM_Container_Ex.idl:
-	* DnC/ciao/CCM_Core.mpc:
-	* DnC/ciao/CCM_Event.idl:
-	* DnC/ciao/CCM_Transaction.idl:
-	* DnC/ciao/CIAO_Client_Export.h:
-	* DnC/ciao/CIAO_Container_Export.h:
-	* DnC/ciao/CIAO_Server_Export.h:
-	* DnC/ciao/CIAO_Value.idl:
-	* DnC/ciao/CIAO_common.h:
-	* DnC/ciao/CVS:
-	* DnC/ciao/Client_init.cpp:
-	* DnC/ciao/Client_init.h:
-	* DnC/ciao/Components.idl:
-	* DnC/ciao/ComponentsC.h:
-	* DnC/ciao/ComponentsS.h:
-	* DnC/ciao/Container_Base.cpp:
-	* DnC/ciao/Container_Base.h:
-	* DnC/ciao/Container_Base.inl:
-	* DnC/ciao/Container_Base.pidl:
-	* DnC/ciao/Cookies.cpp:
-	* DnC/ciao/Cookies.h:
-	* DnC/ciao/Cookies.inl:
-	* DnC/ciao/CosPersistentState.idl:
-	* DnC/ciao/Deployment.idl:
-	* DnC/ciao/Deployment_Core.idl:
-	* DnC/ciao/Deployment_stub_export.h:
-	* DnC/ciao/Deployment_svnt_export.h:
-	* DnC/ciao/NodeApp_CB_Impl.cpp:
-	* DnC/ciao/NodeApp_CB_Impl.h:
-	* DnC/ciao/NodeApplication_CallBack.idl:
-	* DnC/ciao/NodeApplication_Impl.cpp:
-	* DnC/ciao/NodeApplication_Impl.h:
-	* DnC/ciao/NodeApplication_Impl.inl:
-	* DnC/ciao/Server_init.cpp:
-	* DnC/ciao/Server_init.h:
-	* DnC/ciao/Version.h:
+        * DnC/ciao/CCM_Base.idl:
+        * DnC/ciao/CCM_Component.idl:
+        * DnC/ciao/CCM_Container.idl:
+        * DnC/ciao/CCM_Container_Ex.idl:
+        * DnC/ciao/CCM_Core.mpc:
+        * DnC/ciao/CCM_Event.idl:
+        * DnC/ciao/CCM_Transaction.idl:
+        * DnC/ciao/CIAO_Client_Export.h:
+        * DnC/ciao/CIAO_Container_Export.h:
+        * DnC/ciao/CIAO_Server_Export.h:
+        * DnC/ciao/CIAO_Value.idl:
+        * DnC/ciao/CIAO_common.h:
+        * DnC/ciao/CVS:
+        * DnC/ciao/Client_init.cpp:
+        * DnC/ciao/Client_init.h:
+        * DnC/ciao/Components.idl:
+        * DnC/ciao/ComponentsC.h:
+        * DnC/ciao/ComponentsS.h:
+        * DnC/ciao/Container_Base.cpp:
+        * DnC/ciao/Container_Base.h:
+        * DnC/ciao/Container_Base.inl:
+        * DnC/ciao/Container_Base.pidl:
+        * DnC/ciao/Cookies.cpp:
+        * DnC/ciao/Cookies.h:
+        * DnC/ciao/Cookies.inl:
+        * DnC/ciao/CosPersistentState.idl:
+        * DnC/ciao/Deployment.idl:
+        * DnC/ciao/Deployment_Core.idl:
+        * DnC/ciao/Deployment_stub_export.h:
+        * DnC/ciao/Deployment_svnt_export.h:
+        * DnC/ciao/NodeApp_CB_Impl.cpp:
+        * DnC/ciao/NodeApp_CB_Impl.h:
+        * DnC/ciao/NodeApplication_CallBack.idl:
+        * DnC/ciao/NodeApplication_Impl.cpp:
+        * DnC/ciao/NodeApplication_Impl.h:
+        * DnC/ciao/NodeApplication_Impl.inl:
+        * DnC/ciao/Server_init.cpp:
+        * DnC/ciao/Server_init.h:
+        * DnC/ciao/Version.h:
 
-	  Added these files to replace the files in the old DnC/Core directory.
+          Added these files to replace the files in the old DnC/Core directory.
 
 Wed Jun  2 22:55:57 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Core/CCM_Base.idl:
-	* DnC/Core/CCM_BaseS.cpp:
-	* DnC/Core/CCM_BaseS.h:
-	* DnC/Core/CCM_Component.idl:
-	* DnC/Core/CCM_ComponentS.cpp:
-	* DnC/Core/CCM_ComponentS.h:
-	* DnC/Core/CCM_Container.idl:
-	* DnC/Core/CCM_ContainerS.cpp:
-	* DnC/Core/CCM_Container_Ex.idl:
-	* DnC/Core/CCM_Container_ExS.cpp:
-	* DnC/Core/CCM_Core.mpc:
-	* DnC/Core/CCM_Event.idl:
-	* DnC/Core/CCM_EventS.cpp:
-	* DnC/Core/CCM_EventS.h:
-	* DnC/Core/CCM_Transaction.idl:
-	* DnC/Core/CCM_TransactionS.cpp:
-	* DnC/Core/CIAO_Client_Export.h:
-	* DnC/Core/CIAO_Container_Export.h:
-	* DnC/Core/CIAO_Server_Export.h:
-	* DnC/Core/CIAO_Value.idl:
-	* DnC/Core/CIAO_ValueS.cpp:
-	* DnC/Core/CIAO_ValueS.h:
-	* DnC/Core/CIAO_common.h:
-	* DnC/Core/Client_init.cpp:
-	* DnC/Core/Client_init.h:
-	* DnC/Core/Components.idl:
-	* DnC/Core/Container_Base.cpp:
-	* DnC/Core/Container_Base.h:
-	* DnC/Core/Container_Base.inl:
-	* DnC/Core/Container_Base.pidl:
-	* DnC/Core/Cookies.cpp:
-	* DnC/Core/Cookies.h:
-	* DnC/Core/Cookies.inl:
-	* DnC/Core/CosPersistentState.idl:
-	* DnC/Core/CosPersistentStateS.cpp:
-	* DnC/Core/Deployment.idl:
-	* DnC/Core/DeploymentS.cpp:
-	* DnC/Core/Deployment_Core.idl:
-	* DnC/Core/Deployment_stub_export.h:
-	* DnC/Core/Deployment_svnt_export.h:
-	* DnC/Core/GNUmakefile:
-	* DnC/Core/GNUmakefile.CIAO_Client:
-	* DnC/Core/GNUmakefile.CIAO_Container:
-	* DnC/Core/GNUmakefile.CIAO_Server:
-	* DnC/Core/GNUmakefile.Deployment_stub:
-	* DnC/Core/GNUmakefile.Deployment_svnt:
-	* DnC/Core/NodeApp_CB_Impl.cpp:
-	* DnC/Core/NodeApp_CB_Impl.h:
-	* DnC/Core/NodeApplication_CallBack.idl:
-	* DnC/Core/NodeApplication_Impl.cpp:
-	* DnC/Core/NodeApplication_Impl.h:
-	* DnC/Core/NodeApplication_Impl.inl:
-	* DnC/Core/Object_Set_T.cpp:
-	* DnC/Core/Object_Set_T.h:
-	* DnC/Core/Object_Set_T.inl:
-	* DnC/Core/Server_init.cpp:
-	* DnC/Core/Server_init.h:
-	* DnC/Core/Version.h:
-	* DnC/Core/:
+        * DnC/Core/CCM_Base.idl:
+        * DnC/Core/CCM_BaseS.cpp:
+        * DnC/Core/CCM_BaseS.h:
+        * DnC/Core/CCM_Component.idl:
+        * DnC/Core/CCM_ComponentS.cpp:
+        * DnC/Core/CCM_ComponentS.h:
+        * DnC/Core/CCM_Container.idl:
+        * DnC/Core/CCM_ContainerS.cpp:
+        * DnC/Core/CCM_Container_Ex.idl:
+        * DnC/Core/CCM_Container_ExS.cpp:
+        * DnC/Core/CCM_Core.mpc:
+        * DnC/Core/CCM_Event.idl:
+        * DnC/Core/CCM_EventS.cpp:
+        * DnC/Core/CCM_EventS.h:
+        * DnC/Core/CCM_Transaction.idl:
+        * DnC/Core/CCM_TransactionS.cpp:
+        * DnC/Core/CIAO_Client_Export.h:
+        * DnC/Core/CIAO_Container_Export.h:
+        * DnC/Core/CIAO_Server_Export.h:
+        * DnC/Core/CIAO_Value.idl:
+        * DnC/Core/CIAO_ValueS.cpp:
+        * DnC/Core/CIAO_ValueS.h:
+        * DnC/Core/CIAO_common.h:
+        * DnC/Core/Client_init.cpp:
+        * DnC/Core/Client_init.h:
+        * DnC/Core/Components.idl:
+        * DnC/Core/Container_Base.cpp:
+        * DnC/Core/Container_Base.h:
+        * DnC/Core/Container_Base.inl:
+        * DnC/Core/Container_Base.pidl:
+        * DnC/Core/Cookies.cpp:
+        * DnC/Core/Cookies.h:
+        * DnC/Core/Cookies.inl:
+        * DnC/Core/CosPersistentState.idl:
+        * DnC/Core/CosPersistentStateS.cpp:
+        * DnC/Core/Deployment.idl:
+        * DnC/Core/DeploymentS.cpp:
+        * DnC/Core/Deployment_Core.idl:
+        * DnC/Core/Deployment_stub_export.h:
+        * DnC/Core/Deployment_svnt_export.h:
+        * DnC/Core/GNUmakefile:
+        * DnC/Core/GNUmakefile.CIAO_Client:
+        * DnC/Core/GNUmakefile.CIAO_Container:
+        * DnC/Core/GNUmakefile.CIAO_Server:
+        * DnC/Core/GNUmakefile.Deployment_stub:
+        * DnC/Core/GNUmakefile.Deployment_svnt:
+        * DnC/Core/NodeApp_CB_Impl.cpp:
+        * DnC/Core/NodeApp_CB_Impl.h:
+        * DnC/Core/NodeApplication_CallBack.idl:
+        * DnC/Core/NodeApplication_Impl.cpp:
+        * DnC/Core/NodeApplication_Impl.h:
+        * DnC/Core/NodeApplication_Impl.inl:
+        * DnC/Core/Object_Set_T.cpp:
+        * DnC/Core/Object_Set_T.h:
+        * DnC/Core/Object_Set_T.inl:
+        * DnC/Core/Server_init.cpp:
+        * DnC/Core/Server_init.h:
+        * DnC/Core/Version.h:
+        * DnC/Core/:
 
-	  Removed all these files to avoid the suite the change of the
-	  directory. Note: now DnC/Core is replaced by DnC/ciao.
+          Removed all these files to avoid the suite the change of the
+          directory. Note: now DnC/Core is replaced by DnC/ciao.
 
 Wed Jun  2 21:54:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -386,55 +425,55 @@ Wed Jun  2 21:54:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun  2 19:22:29 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* ChangeLog:
+        * ChangeLog:
 
-	  Forgot to add change description for the previous change.
+          Forgot to add change description for the previous change.
 
 Wed Jun  2 19:07:01 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* ciao/CIAO_Client_Export.h:
-	* ciao/CIAO_Container_Export.h:
-	* ciao/CIAO_Export.h:
-	* ciao/CIAO_Server_Export.h:
-	* examples/OEP/BasicSP/BasicSP_stub_export.h:
-	* examples/OEP/BasicSP/BasicSP_svnt_export.h:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec_export.h:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_stub_export.h:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_exec_export.h:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_stub_export.h:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_svnt_export.h:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec_export.h:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_stub_export.h:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
-	* examples/OEP/BasicSP/EC/EC_exec_export.h:
-	* examples/OEP/BasicSP/EC/EC_stub_export.h:
-	* examples/OEP/BasicSP/EC/EC_svnt_export.h:
-	* tools/Segment_Timer/Segment_Timer_Export.h:
-	* tools/Simple_Component_Server/Simple_Server_Stub_Export.h:
-	* tools/XML_Helpers/XML_Helpers_Export.h:
+        * ciao/CIAO_Client_Export.h:
+        * ciao/CIAO_Container_Export.h:
+        * ciao/CIAO_Export.h:
+        * ciao/CIAO_Server_Export.h:
+        * examples/OEP/BasicSP/BasicSP_stub_export.h:
+        * examples/OEP/BasicSP/BasicSP_svnt_export.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec_export.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub_export.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt_export.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+        * examples/OEP/BasicSP/EC/EC_exec_export.h:
+        * examples/OEP/BasicSP/EC/EC_stub_export.h:
+        * examples/OEP/BasicSP/EC/EC_svnt_export.h:
+        * tools/Segment_Timer/Segment_Timer_Export.h:
+        * tools/Simple_Component_Server/Simple_Server_Stub_Export.h:
+        * tools/XML_Helpers/XML_Helpers_Export.h:
 
-	  Regenerated these files with -s option to take care of static
-	  builds on Windows.
+          Regenerated these files with -s option to take care of static
+          builds on Windows.
 
 Wed Jun  2 18:57:29 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Core/NodeApplication_Impl.cpp:
-	  Fixed a few bugs inside.
+        * DnC/Core/NodeApplication_Impl.cpp:
+          Fixed a few bugs inside.
 
-	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
-	* DnC/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
-	* DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
-	* DnC/tests/NodeApplicationTest/run_test.pl:
-	* DnC/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
+        * DnC/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DnC/tests/NodeApplicationTest/run_test.pl:
+        * DnC/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
 
-	  Added a test to do a more complete test on NodeApplication.
-	  Please note that there is a name change of files. The mpc file
-	  explains very thing.
+          Added a test to do a more complete test on NodeApplication.
+          Please note that there is a name change of files. The mpc file
+          explains very thing.
 
-	* DnC/Core/Client_init.cpp:
-	  I made the default value for debug_level 1, later we should
-	  reverse the change.
+        * DnC/Core/Client_init.cpp:
+          I made the default value for debug_level 1, later we should
+          reverse the change.
 
 Wed Jun  2 18:37:24 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -502,11 +541,11 @@ Wed Jun  2 11:51:57 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Wed Jun  2 10:31:27 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/tests/Config_Handlers/handler_test.mpb:
-	* DnC/Config_Handlers/Config_Handlers.mpc:
-	  Updated these two file to make it compile with working on the
-	  system like Debian or RedHat which have the pre-build binary
-	  installed instead of xerces source.
+        * DnC/tests/Config_Handlers/handler_test.mpb:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+          Updated these two file to make it compile with working on the
+          system like Debian or RedHat which have the pre-build binary
+          installed instead of xerces source.
 
 Wed Jun  2 00:48:30 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -521,8 +560,8 @@ Wed Jun  2 00:48:30 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Tue Jun  1 18:13:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Core/NodeApplication_Impl.cpp:
-	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DnC/Core/NodeApplication_Impl.cpp:
+        * DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
           Updated these two files to fix the bug related to nil ();
 
 Tue Jun  1 18:09:19 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
@@ -590,16 +629,16 @@ Tue Jun  1 15:08:13 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Tue Jun  1 14:48:01 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
-	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.inl:
-	  Updated the class to cooperate with NodeManager.
-	  There is some memory management and lifecycle of object issue
-	  solved by this update. Basically speaking, since NodeManager is
-	  a daemon (running forever if nothing went wrong) we have to make
-	  sure that the NodeApplicationManager will be actually destroyed
-	  when its not needed any more. This update enables us to do this
-	  and prevented us from hacking the OMG IDL file.
+        * DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DnC/NodeApplicationManager/NodeApplicationManager_Impl.inl:
+          Updated the class to cooperate with NodeManager.
+          There is some memory management and lifecycle of object issue
+          solved by this update. Basically speaking, since NodeManager is
+          a daemon (running forever if nothing went wrong) we have to make
+          sure that the NodeApplicationManager will be actually destroyed
+          when its not needed any more. This update enables us to do this
+          and prevented us from hacking the OMG IDL file.
 
 Tue Jun  1 12:36:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -628,10 +667,10 @@ Tue Jun  1 12:36:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Tue Jun  1 12:09:18 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
-	  Changed the init method to return a objectRef of
-	  the NodeApplicationManager to make NodeManager happy.
+        * DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
+          Changed the init method to return a objectRef of
+          the NodeApplicationManager to make NodeManager happy.
 
 Tue Jun  1 11:40:29 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
@@ -661,17 +700,17 @@ Tue Jun  1 10:49:49 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Tue Jun  1 10:41:49 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
-	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.inl:
-	  Finished the NodeApplicationManager except the connection
-	  part.
+        * DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DnC/NodeApplicationManager/NodeApplicationManager_Impl.inl:
+          Finished the NodeApplicationManager except the connection
+          part.
 
 Tue Jun  1 10:16:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/DomainApplicationManager/DomainApplicationManager_Export.h
+        * DnC/DomainApplicationManager/DomainApplicationManager_Export.h
 
-	  Added this file for Windows to export library.
+          Added this file for Windows to export library.
 
 
 Tue Jun  1 10:12:46 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
@@ -686,10 +725,10 @@ Tue Jun  1 10:12:46 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Tue Jun  1 10:01:25 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/OEP/BasicSP/BMDevice/BMDevice.cidl:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED.cidl:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.cidl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.cidl:
 
-	  Included BasicSP.idl to fix problems during static linking.
+          Included BasicSP.idl to fix problems during static linking.
 
 Tue Jun  1 00:42:56 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -720,11 +759,11 @@ Mon May 31 18:50:28 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
           Made changes to fix some testing errors.
 
 Mon May 31 18:27:47 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
-	 * tools/Segment_Timer/Segment_Timer.h:
-	 * tools/static_configurator/Static_Configurator.cpp:
+         * tools/Segment_Timer/Segment_Timer.h:
+         * tools/static_configurator/Static_Configurator.cpp:
 
-	   Made some fixes related to DLL exports to get rid of
-	   build errors on Windows.
+           Made some fixes related to DLL exports to get rid of
+           build errors on Windows.
 
 Mon May 31 18:25:30 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -782,22 +821,22 @@ Mon May 31 16:33:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May 31 16:19:17 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/NodeApplicationManager/NodeApplicationManager.mpc:
-	  Updated this file.
+        * DnC/NodeApplicationManager/NodeApplicationManager.mpc:
+          Updated this file.
 
-	* DnC/NodeApplicationManager/CIAO_NAM_Export.h:
-	  Added this export file.
+        * DnC/NodeApplicationManager/CIAO_NAM_Export.h:
+          Added this export file.
 
-	* DnC/NodeApplicationManager/NodeApplicationManager.cpp:
-	  Removed this file since NodeApplicationManager will be
-	  collocated with NodeManager.
+        * DnC/NodeApplicationManager/NodeApplicationManager.cpp:
+          Removed this file since NodeApplicationManager will be
+          collocated with NodeManager.
 
-	* DnC/NodeApplicationManager/CIAO_NodeApplicationManager.idl:
-	  Removed this file since I have moved this into deployment_svnt
-	  project.
+        * DnC/NodeApplicationManager/CIAO_NodeApplicationManager.idl:
+          Removed this file since I have moved this into deployment_svnt
+          project.
 
-	* DnC/Core/NodeApplication_Impl.cpp:
-	  Changed from 0 to CORBA::Object::_nil () as return value.
+        * DnC/Core/NodeApplication_Impl.cpp:
+          Changed from 0 to CORBA::Object::_nil () as return value.
 
 Mon May 31 15:18:25 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -812,24 +851,24 @@ Mon May 31 15:18:25 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Mon May 31 14:48:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/DomainApplicationManager/DomainApplicationManager.mpc:
-	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager.mpc:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
 
-	  Added export library thing for Windows.
+          Added export library thing for Windows.
 
 
 Mon May 31 13:35:15 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/Config_Handlers/Config_Handlers.mpc:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
 
-	  Added the missing dependency library to the mpc file, which
+          Added the missing dependency library to the mpc file, which
           is CIAO_Server library.
 
 Mon May 31 13:10:15 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/DomainApplicationManager/DomainApplicationManager.mpc:
+        * DnC/DomainApplicationManager/DomainApplicationManager.mpc:
 
-	  Added necessary dependency libraries to the mpc file, which
+          Added necessary dependency libraries to the mpc file, which
           causes build probelm under Windows.
 
         * DnC/DomainApplication/DomainApplication_Impl.h
@@ -841,19 +880,19 @@ Mon May 31 13:10:15 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Mon May 31 11:00:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Core/NodeApplication_Impl.cpp:
-	  Fixed one bug of the refence count of Component instance
-	  objectRef.
+        * DnC/Core/NodeApplication_Impl.cpp:
+          Fixed one bug of the refence count of Component instance
+          objectRef.
 
 Mon May 31 00:40:25 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Core/NodeApplication_Impl.cpp:
-	* DnC/Core/NodeApplication_Impl.h:
+        * DnC/Core/NodeApplication_Impl.cpp:
+        * DnC/Core/NodeApplication_Impl.h:
 
-	  Added component/home removal functionality.
-	  Also added a install method which will be called by
-	  NodeApplicationManager to install everything which belong
-	  to the NodeApplication.
+          Added component/home removal functionality.
+          Also added a install method which will be called by
+          NodeApplicationManager to install everything which belong
+          to the NodeApplication.
 
 Sun May 30 17:47:10 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -905,15 +944,15 @@ Sun May 30 15:43:24 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Sun May 30 14:36:21 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/NodeApplication/NodeApplication.mpc:
-	* DnC/NodeApplication/NodeApplication.cpp:
-	* DnC/Core/Container_Base.h:
-	* DnC/Core/Container_Base.cpp:
-	* DnC/Core/Deployment_Core.idl:
-	* DnC/Core/NodeApplication_Impl.h:
-	* DnC/Core/NodeApplication_Impl.cpp:
+        * DnC/NodeApplication/NodeApplication.mpc:
+        * DnC/NodeApplication/NodeApplication.cpp:
+        * DnC/Core/Container_Base.h:
+        * DnC/Core/Container_Base.cpp:
+        * DnC/Core/Deployment_Core.idl:
+        * DnC/Core/NodeApplication_Impl.h:
+        * DnC/Core/NodeApplication_Impl.cpp:
 
-	Updateed those files to finish home creation part.
+        Updateed those files to finish home creation part.
 
 Sat May 29 15:25:22 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -973,41 +1012,41 @@ Thu May 27 22:16:26 2004  Tao Lu  <lu@dre.vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp:
         * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
 
-	  Removed these files from the Repo. Please be careful when you
-	  commit files and please double check EVEN you have done make
-	  realclean!
+          Removed these files from the Repo. Please be careful when you
+          commit files and please double check EVEN you have done make
+          realclean!
 
 
 Thu May 27 22:14:18 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/static_configurator/Static_Configurator.mpc:
-	* tools/static_configurator/Static_Configurator.h:
-	* tools/static_configurator/Static_Configurator.cpp:
-	* tools/static_configurator/Static_Assembly_Visitors.cpp:
-	* tools/static_configurator/Static_Assembly_Parser.cpp:
+        * tools/static_configurator/Static_Configurator.mpc:
+        * tools/static_configurator/Static_Configurator.h:
+        * tools/static_configurator/Static_Configurator.cpp:
+        * tools/static_configurator/Static_Assembly_Visitors.cpp:
+        * tools/static_configurator/Static_Assembly_Parser.cpp:
 
-	  Made changes related to performance measurement of static
-	  configuration mechanisms.
+          Made changes related to performance measurement of static
+          configuration mechanisms.
 
-	* tools/Segment_Timer/Segment_Timer_Export.h:
-	* tools/Segment_Timer/Segment_Timer.{cpp,h,mpc}:
-	* tools/Segment_Timer/README:
+        * tools/Segment_Timer/Segment_Timer_Export.h:
+        * tools/Segment_Timer/Segment_Timer.{cpp,h,mpc}:
+        * tools/Segment_Timer/README:
 
-	  Adding segment timer files. This class is used in the
-	  performance measurements of static and dynamic configurations.
+          Adding segment timer files. This class is used in the
+          performance measurements of static and dynamic configurations.
 
-	* tools/RTComponentServer/RTComponentServer.mpc:
-	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
-	* tools/Assembly_Deployer/Assembly_Manager.cpp:
-	* tools/Assembly_Deployer/Assembly_Impl.cpp:
-	* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+        * tools/RTComponentServer/RTComponentServer.mpc:
+        * tools/Assembly_Deployer/Assembly_Visitors.cpp:
+        * tools/Assembly_Deployer/Assembly_Manager.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.cpp:
+        * tools/Assembly_Deployer/Assembly_Deployer.mpc:
 
-	  Made changes related to performance measurement of dynamic
-	  configuration mechanisms.
+          Made changes related to performance measurement of dynamic
+          configuration mechanisms.
 
 Thu May 27 18:39:10 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
 
           Redefine the Hash map to make all the artifacts (NodeManager,
@@ -1017,19 +1056,19 @@ Thu May 27 18:39:10 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Thu May 27 17:45:26 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/tests/Config_Handlers/handler_test.mpb:
+        * DnC/tests/Config_Handlers/handler_test.mpb:
 
-	  Added reqires dnc to stop the noise on the scoreboard.
+          Added reqires dnc to stop the noise on the scoreboard.
 
 Thu May 27 22:10:27 2004  Emre Turkay <turkaye@dre.vanderbilt.edu>
-	* DnC/Core/Deployment.idl:
+        * DnC/Core/Deployment.idl:
 
-	Added DeploymentPlan::UUID.
+        Added DeploymentPlan::UUID.
 
 Thu May 27 22:02:21 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
-	* DnC/Config_Handlers/Plan_Handler.cpp:
+        * DnC/Config_Handlers/Plan_Handler.cpp:
 
-	Added handler for DeploymentPlan::UUID
+        Added handler for DeploymentPlan::UUID
 
 Thu May 27 16:42:26 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -1043,7 +1082,7 @@ Thu May 27 16:42:26 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Thu May 27 16:38:19 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* DnC/Deployment.xsd: Added UUID element to deploymentPlan.
+        * DnC/Deployment.xsd: Added UUID element to deploymentPlan.
 
 
 Thu May 27 13:03:02 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
@@ -1090,7 +1129,7 @@ Thu May 27 11:02:47 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Wed May 26 17:08:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
 
           Changed the member functions signature in accordance with the
@@ -1099,7 +1138,7 @@ Wed May 26 17:08:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Wed May 26 16:24:54 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/Core/Deployment.idl
+        * DnC/Core/Deployment.idl
 
           Modified the IDL interface of the DomainApplicationManager,
           which now integrates the functionality of both
@@ -1108,7 +1147,7 @@ Wed May 26 16:24:54 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Wed May 26 11:33:11 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/Core/CCM_Core.mpc
+        * DnC/Core/CCM_Core.mpc
 
           Added necessary library (TAO_Valuetype) to the Deployment_stub
           project. Removed the unnecessary Deployment_CoreC.cpp file which
@@ -1116,27 +1155,27 @@ Wed May 26 11:33:11 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Wed May 26 11:15:23 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/Core/NodeApplication_Impl.cpp
+        * DnC/Core/NodeApplication_Impl.cpp
 
           Fixed linking errors because the "start" method on the
           NodeApplication used a wrong function signature.
 
 Wed May 26 11:06:23 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/DomainApplicationManager/DomainApplicationManager.mpc
+        * DnC/DomainApplicationManager/DomainApplicationManager.mpc
         * DnC/DomainApplicationManager/Deployment_Configuration.inl
 
           Added these two files.
 
 Wed May 26 11:03:23 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/Core/CCM_Core.mpc
+        * DnC/Core/CCM_Core.mpc
 
           Fixed typo in this mpc file.
 
 Wed May 26 10:14:23 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.*
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.*
 
           Fixed the compiling errors. More functinality will be
           added soon.
@@ -1149,65 +1188,65 @@ Wed May 26 10:14:23 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Tue May 25 22:40:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Core/NodeApp_CB_Impl.cpp:
-	* DnC/Core/NodeApp_CB_Impl.h:
-	* DnC/Core/NodeApplication_CallBack.idl:
-	  Added these files for NodeApplication callback interface.
+        * DnC/Core/NodeApp_CB_Impl.cpp:
+        * DnC/Core/NodeApp_CB_Impl.h:
+        * DnC/Core/NodeApplication_CallBack.idl:
+          Added these files for NodeApplication callback interface.
 
-	* DnC/Core/CCM_Core.mpc:
-	  Updated the file to reflect above changes.
+        * DnC/Core/CCM_Core.mpc:
+          Updated the file to reflect above changes.
 
 Tue May 25 13:05:35 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Deployment.idl:
-	* DnC/Property.idl:
-	* DnC/Deployment.mpc:
-	* DnC/Deployment_stub_export.h:
-	* DnC/Deployment_stub_export.h:
-	* DnC/Core/Container_Impl.h:
-	* DnC/Core/Container_Impl.inl:
-	* DnC/Core/Container_Impl.cpp:
-	* DnC/Core/CCM_Deplyment.idl:
+        * DnC/Deployment.idl:
+        * DnC/Property.idl:
+        * DnC/Deployment.mpc:
+        * DnC/Deployment_stub_export.h:
+        * DnC/Deployment_stub_export.h:
+        * DnC/Core/Container_Impl.h:
+        * DnC/Core/Container_Impl.inl:
+        * DnC/Core/Container_Impl.cpp:
+        * DnC/Core/CCM_Deplyment.idl:
 
-     	  Removed these files. Everything is moved into the DnC/Core
-	  directory, also the Deployment.idl is splited into
-	  Deployment.idl and Deployment_Core.idl. The first one contains
-	  information needed for DnC runtime except NodeApplication.
-	  The latter file combines the old Container with NodeApplication.
+          Removed these files. Everything is moved into the DnC/Core
+          directory, also the Deployment.idl is splited into
+          Deployment.idl and Deployment_Core.idl. The first one contains
+          information needed for DnC runtime except NodeApplication.
+          The latter file combines the old Container with NodeApplication.
 
-	* DnC/Core/Deployment.idl:
-	* DnC/Core/Deployment_Core.mpc:
-	* DnC/Core/Deployment_stub_export.h:
-	* DnC/Core/Deployment_stub_export.h:
-	* DnC/Core/NodeApplication_Impl.h:
-	* DnC/Core/NodeApplication_Impl.inl:
-	* DnC/Core/NodeApplication_Impl.cpp:
-	  Added these files.
+        * DnC/Core/Deployment.idl:
+        * DnC/Core/Deployment_Core.mpc:
+        * DnC/Core/Deployment_stub_export.h:
+        * DnC/Core/Deployment_stub_export.h:
+        * DnC/Core/NodeApplication_Impl.h:
+        * DnC/Core/NodeApplication_Impl.inl:
+        * DnC/Core/NodeApplication_Impl.cpp:
+          Added these files.
 
-	* DnC/Core/CCM_Core.mpc:
-	  This file updated to reflect the chages above.
+        * DnC/Core/CCM_Core.mpc:
+          This file updated to reflect the chages above.
 
-	  The idea is to use the old container as the NodeApplication and
-	  the ComponentServer. This implies that new process will be
-	  spawned upon new NodeApplication is created.
+          The idea is to use the old container as the NodeApplication and
+          the ComponentServer. This implies that new process will be
+          spawned upon new NodeApplication is created.
 
-	  In turn the NodeApplicationManager will be collocated with
-	  NodeManager.
+          In turn the NodeApplicationManager will be collocated with
+          NodeManager.
 
-	  These changes give us advantages for implementing the spec in an
-	  effecient way without inccuring much confilicts with the Spec.
+          These changes give us advantages for implementing the spec in an
+          effecient way without inccuring much confilicts with the Spec.
 
 
 Tue May 25 12:06:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
-	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
-	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.{cpp,h}:
-	* tests/RTCCM/Priority_Test/Controllers/Rate_Controller.{cpp,h}:
+        * tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+        * tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+        * tests/RTCCM/Priority_Test/Controllers/Controller_exec.{cpp,h}:
+        * tests/RTCCM/Priority_Test/Controllers/Rate_Controller.{cpp,h}:
 
-	  Fixed compile errors regarding pure virtual functions not being
-	  implemented. Added empty method definitions for ciao_preactivate
-	  and ciao_postactivate.
+          Fixed compile errors regarding pure virtual functions not being
+          implemented. Added empty method definitions for ciao_preactivate
+          and ciao_postactivate.
 
 Tue May 25 12:08:48 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -1217,15 +1256,15 @@ Tue May 25 12:08:48 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Tue May 25 12:02:52 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* DnC/Deployment.xsd:
+        * DnC/Deployment.xsd:
 
-	  Initial set of "normalization" changes.
+          Initial set of "normalization" changes.
 
 
         * DnC/Deployment.xsd.orig:
         * DnC/XMI.xsd.orig:
 
-	  Added backup copies.
+          Added backup copies.
 
 Mon May 24 14:13:51 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
@@ -1240,11 +1279,11 @@ Mon May 24 14:13:51 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
 Mon May 24 21:18:07 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/Hello/descriptors/run_test_remote.pl:
-	* examples/Hello/descriptors/run_test_default.pl:
+        * examples/Hello/descriptors/run_test_remote.pl:
+        * examples/Hello/descriptors/run_test_default.pl:
 
-	  Updated the test script since Assembly_Deployer takes
-	  two more command line options.
+          Updated the test script since Assembly_Deployer takes
+          two more command line options.
 
 Mon May 24 19:44:32 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -1322,16 +1361,16 @@ Thu May 20 23:29:54 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Thu May 20 19:28:20 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Core/CCM_Core.mpc
-	* DnC/Core/CCM_Deployment.idl
-	* DnC/Core/ComponentServer_Impl.cpp
-	* DnC/Core/ComponentServer_Impl.h
-	* DnC/Core/ComponentServer_Impl.inl
-	* DnC/Core/Container_Impl.cpp
-	* DnC/Core/Container_Impl.h
+        * DnC/Core/CCM_Core.mpc
+        * DnC/Core/CCM_Deployment.idl
+        * DnC/Core/ComponentServer_Impl.cpp
+        * DnC/Core/ComponentServer_Impl.h
+        * DnC/Core/ComponentServer_Impl.inl
+        * DnC/Core/Container_Impl.cpp
+        * DnC/Core/Container_Impl.h
 
-	  Removed the ComponentInstallation interfaces.
-	  Now the CORE of new CIAO should be fixed.
+          Removed the ComponentInstallation interfaces.
+          Now the CORE of new CIAO should be fixed.
 
 Thu May 20 18:54:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -1341,57 +1380,57 @@ Thu May 20 18:54:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Thu May 20 14:44:48 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCCM/DiffServ/Controller/Controller.cpp:
+        * tests/RTCCM/DiffServ/Controller/Controller.cpp:
 
-	  No RT-isms necessary anymore.
+          No RT-isms necessary anymore.
 
 Thu May 20 14:31:20 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCCM/DiffServ/descriptors/rtsvc.conf:
+        * tests/RTCCM/DiffServ/descriptors/rtsvc.conf:
 
-	  This file is no longer needed.
+          This file is no longer needed.
 
-	* tests/RTCCM/DiffServ/descriptors/run_test.pl:
+        * tests/RTCCM/DiffServ/descriptors/run_test.pl:
 
-	  No need to specify rtsvc.conf file.
+          No need to specify rtsvc.conf file.
 
-	* tools/RTComponentServer/RTComponentServer.cpp (main):
+        * tools/RTComponentServer/RTComponentServer.cpp (main):
 
-	  No need to check that multiple priorities are supported.  Some
-	  servers can do with one priority.
+          No need to check that multiple priorities are supported.  Some
+          servers can do with one priority.
 
 Thu May 20 13:40:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCCM/DiffServ/Sender/Sender.mpc:
-	* tests/RTCCM/DiffServ/Sender/Custom_Network_Priority_Mapping.cpp:
+        * tests/RTCCM/DiffServ/Sender/Sender.mpc:
+        * tests/RTCCM/DiffServ/Sender/Custom_Network_Priority_Mapping.cpp:
 
-	  Simply refer to the same files in TAO/tests/RTCORBA/Diffserv
-	  instead of making a copy here.
+          Simply refer to the same files in TAO/tests/RTCORBA/Diffserv
+          instead of making a copy here.
 
-	* tests/RTCCM/DiffServ/Receiver/Receiver_exec.cpp:
-	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
-	* tests/RTCCM/DiffServ/descriptors/run_test.pl:
+        * tests/RTCCM/DiffServ/Receiver/Receiver_exec.cpp:
+        * tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
+        * tests/RTCCM/DiffServ/descriptors/run_test.pl:
 
-	  Minor fixes.
+          Minor fixes.
 
 Thu May 20 11:34:33 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tools/ComponentServer/ComponentServer.cpp:
-	* tools/Assembly_Deployer/Assembly_Deployer.cpp:
+        * tools/ComponentServer/ComponentServer.cpp:
+        * tools/Assembly_Deployer/Assembly_Deployer.cpp:
 
-	  Added missing include file.
+          Added missing include file.
 
-	* tests/RTCCM/DiffServ/descriptors/run_test.pl:
+        * tests/RTCCM/DiffServ/descriptors/run_test.pl:
 
-	  Added new assembly deployer option.
+          Added new assembly deployer option.
 
-	* tests/RTCCM/DiffServ/descriptors/rtsvc.conf:
+        * tests/RTCCM/DiffServ/descriptors/rtsvc.conf:
 
-	  Added FIFO scheduling option.
+          Added FIFO scheduling option.
 
-	* tests/RTCCM/DiffServ/Controller/Controller.cpp (svc):
+        * tests/RTCCM/DiffServ/Controller/Controller.cpp (svc):
 
-	  Minor fixes.
+          Minor fixes.
 
 Thu May 20 10:36:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
@@ -1436,51 +1475,51 @@ Thu May 20 10:36:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
         * DnC/Core/Server_init.h
         * DnC/Core/Version.h
 
-	 Finished refactoring the Core part of CIAO.
+         Finished refactoring the Core part of CIAO.
 
 Wed May 19 15:15:21 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCCM\DiffServ:
+        * tests\RTCCM\DiffServ:
 
-	  Added a new DiffServ test. This test is similar to the
-	  RTCORBA/DiffServ test but uses components instead of a client
-	  and server.
+          Added a new DiffServ test. This test is similar to the
+          RTCORBA/DiffServ test but uses components instead of a client
+          and server.
 
-	  Here are the new files:
+          Here are the new files:
 
-	  - Controller/Controller.cpp
-	  - Controller/Controller.mpc
-	  - Receiver/Receiver.cidl
-	  - Receiver/Receiver.idl
-	  - Receiver/Receiver.mpc
-	  - Receiver/Receiver_exec.cpp
-	  - Receiver/Receiver_exec.h
-	  - Receiver/Receiver_exec_export.h
-	  - Receiver/Receiver_stub_export.h
-	  - Receiver/Receiver_svnt_export.h
-	  - Sender/Custom_Network_Priority_Mapping.cpp
-	  - Sender/Custom_Network_Priority_Mapping.h
-	  - Sender/Sender.cidl
-	  - Sender/Sender.idl
-	  - Sender/Sender.mpc
-	  - Sender/Sender_exec.cpp
-	  - Sender/Sender_exec.h
-	  - Sender/Sender_exec_export.h
-	  - Sender/Sender_stub_export.h
-	  - Sender/Sender_svnt_export.h
-	  - common/DiffServ.idl
-	  - common/DiffServ.mpc
-	  - common/DiffServ_stub_export.h
-	  - common/DiffServ_svnt_export.h
-	  - descriptors/CIAO_Installation_Data.ini
-	  - descriptors/Receiver.csd
-	  - descriptors/Receiver.ssd
-	  - descriptors/Sender.csd
-	  - descriptors/Sender.ssd
-	  - descriptors/default.cad
-	  - descriptors/remote.cad
-	  - descriptors/rtsvc.conf
-	  - descriptors/test.dat
+          - Controller/Controller.cpp
+          - Controller/Controller.mpc
+          - Receiver/Receiver.cidl
+          - Receiver/Receiver.idl
+          - Receiver/Receiver.mpc
+          - Receiver/Receiver_exec.cpp
+          - Receiver/Receiver_exec.h
+          - Receiver/Receiver_exec_export.h
+          - Receiver/Receiver_stub_export.h
+          - Receiver/Receiver_svnt_export.h
+          - Sender/Custom_Network_Priority_Mapping.cpp
+          - Sender/Custom_Network_Priority_Mapping.h
+          - Sender/Sender.cidl
+          - Sender/Sender.idl
+          - Sender/Sender.mpc
+          - Sender/Sender_exec.cpp
+          - Sender/Sender_exec.h
+          - Sender/Sender_exec_export.h
+          - Sender/Sender_stub_export.h
+          - Sender/Sender_svnt_export.h
+          - common/DiffServ.idl
+          - common/DiffServ.mpc
+          - common/DiffServ_stub_export.h
+          - common/DiffServ_svnt_export.h
+          - descriptors/CIAO_Installation_Data.ini
+          - descriptors/Receiver.csd
+          - descriptors/Receiver.ssd
+          - descriptors/Sender.csd
+          - descriptors/Sender.ssd
+          - descriptors/default.cad
+          - descriptors/remote.cad
+          - descriptors/rtsvc.conf
+          - descriptors/test.dat
 
 Tue May 18 23:20:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -1534,195 +1573,195 @@ Tue May 18 00:54:00 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Mon May 17 22:15:11 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* docs/index.html:
-	* docs/EnvVars.html:
+        * docs/index.html:
+        * docs/EnvVars.html:
 
-	  Left over files from RTCIAO-tests branch merge. Thanks to
-	  Nanbor for pointing this out.
+          Left over files from RTCIAO-tests branch merge. Thanks to
+          Nanbor for pointing this out.
 
 Mon May 17 21:07:25 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/static_configurator/Static_Assembly_Visitors.h:
-	* tools/static_configurator/Static_Configurator.cpp:
-	* tools/static_configurator/Static_Configurator.mpc:
+        * tools/static_configurator/Static_Assembly_Visitors.h:
+        * tools/static_configurator/Static_Configurator.cpp:
+        * tools/static_configurator/Static_Configurator.mpc:
 
-	  Fixed some compile errors because of a typo.
+          Fixed some compile errors because of a typo.
 
 Mon May 17 19:29:43 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/RTComponentServer/RTServer_Impl.cpp:
-	* tools/RTComponentServer/RTServer_Impl.h:
-	* tools/RTComponentServer/RTServer_Impl.inl: Added extra
-	  parameters to RTContainer_Impl, RTSession_Container and
-	  ComponentServer_Impl ctors for static configuration.
+        * tools/RTComponentServer/RTServer_Impl.cpp:
+        * tools/RTComponentServer/RTServer_Impl.h:
+        * tools/RTComponentServer/RTServer_Impl.inl: Added extra
+          parameters to RTContainer_Impl, RTSession_Container and
+          ComponentServer_Impl ctors for static configuration.
 
-	* tools/static_configurator/Static_Assembly.h:
-	* tools/static_configurator/Static_Assembly_Visitors.cpp:
-	* tools/static_configurator/Static_Assembly_Visitors.h:
-	* tools/static_configurator/Static_Configurator.cpp:
-	* tools/static_configurator/Static_Configurator.h:
-	* tools/static_configurator/Static_Configurator.mpc:
+        * tools/static_configurator/Static_Assembly.h:
+        * tools/static_configurator/Static_Assembly_Visitors.cpp:
+        * tools/static_configurator/Static_Assembly_Visitors.h:
+        * tools/static_configurator/Static_Configurator.cpp:
+        * tools/static_configurator/Static_Configurator.h:
+        * tools/static_configurator/Static_Configurator.mpc:
 
-	  Changes to statically parse .rtcad files and generate main
-	  driver for static RTCCM applications.
+          Changes to statically parse .rtcad files and generate main
+          driver for static RTCCM applications.
 
 Mon May 17 16:16:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	Merging RTCIAO-tests branch to the main trunk. This branch
-	contained the RTCCM tests from Nanbor (nanbor@txcorp.com).
+        Merging RTCIAO-tests branch to the main trunk. This branch
+        contained the RTCCM tests from Nanbor (nanbor@txcorp.com).
 
-	* ciao/CIAO_common.h:
-	* ciao/Client_init.cpp: Minor modifications to CIAO core. Addition
-	  of CIAO_debug_level.
+        * ciao/CIAO_common.h:
+        * ciao/Client_init.cpp: Minor modifications to CIAO core. Addition
+          of CIAO_debug_level.
 
-	* ciao/ComponentInstallation_Impl.cpp:
-	* ciao/ServerActivator_Impl.cpp:
-	* ciao/ServerActivator_Impl.h: Addition of extra command line
-	  flags to be passed on to the component server during its spawning.
+        * ciao/ComponentInstallation_Impl.cpp:
+        * ciao/ServerActivator_Impl.cpp:
+        * ciao/ServerActivator_Impl.h: Addition of extra command line
+          flags to be passed on to the component server during its spawning.
 
-	* tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
-	* tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
-	* tests/RTCCM/Priority_Test/descriptors/Worker.ssd:
-	* tests/RTCCM/Priority_Test/descriptors/CIAO_Installation_Data.ini:
-	* tests/RTCCM/Priority_Test/descriptors/Controller.csd:
-	* tests/RTCCM/Priority_Test/descriptors/Controller.ssd:
-	* tests/RTCCM/Priority_Test/descriptors/RTsvc.conf:
-	* tests/RTCCM/Priority_Test/descriptors/svcmap.dat:
-	* tests/RTCCM/Priority_Test/descriptors/test.dat:
-	* tests/RTCCM/Priority_Test/descriptors/test.rtd:
-	* tests/RTCCM/Priority_Test/descriptors/basic-remote.cad:
-	* tests/RTCCM/Priority_Test/descriptors/basic_remote.pl:
-	* tests/RTCCM/Priority_Test/descriptors/basic_rt.rtd:
-	* tests/RTCCM/Priority_Test/descriptors/basic_test.pl:
-	* tests/RTCCM/Priority_Test/descriptors/bench.conf:
-	* tests/RTCCM/Priority_Test/descriptors/Controller25.csd:
-	* tests/RTCCM/Priority_Test/descriptors/Controller50.csd:
-	* tests/RTCCM/Priority_Test/descriptors/Controller75.csd:
-	* tests/RTCCM/Priority_Test/descriptors/demo-25.cad:
-	* tests/RTCCM/Priority_Test/descriptors/demo-50.cad:
-	* tests/RTCCM/Priority_Test/descriptors/demo.cad:
-	* tests/RTCCM/Priority_Test/descriptors/no-rt-3rates.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rate_test.pl:
-	* tests/RTCCM/Priority_Test/descriptors/remote.dat:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-high-dec.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-high-inc.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-low-dec.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-low-inc.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-mid-dec.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-mid-inc.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rates-dec.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rates-inc.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rates-laned-dec.cad:
-	* tests/RTCCM/Priority_Test/descriptors/rt-3rates-laned-inc.cad:
-	* tests/RTCCM/Priority_Test/descriptors/shared_rt.rtd:
+        * tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
+        * tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
+        * tests/RTCCM/Priority_Test/descriptors/Worker.ssd:
+        * tests/RTCCM/Priority_Test/descriptors/CIAO_Installation_Data.ini:
+        * tests/RTCCM/Priority_Test/descriptors/Controller.csd:
+        * tests/RTCCM/Priority_Test/descriptors/Controller.ssd:
+        * tests/RTCCM/Priority_Test/descriptors/RTsvc.conf:
+        * tests/RTCCM/Priority_Test/descriptors/svcmap.dat:
+        * tests/RTCCM/Priority_Test/descriptors/test.dat:
+        * tests/RTCCM/Priority_Test/descriptors/test.rtd:
+        * tests/RTCCM/Priority_Test/descriptors/basic-remote.cad:
+        * tests/RTCCM/Priority_Test/descriptors/basic_remote.pl:
+        * tests/RTCCM/Priority_Test/descriptors/basic_rt.rtd:
+        * tests/RTCCM/Priority_Test/descriptors/basic_test.pl:
+        * tests/RTCCM/Priority_Test/descriptors/bench.conf:
+        * tests/RTCCM/Priority_Test/descriptors/Controller25.csd:
+        * tests/RTCCM/Priority_Test/descriptors/Controller50.csd:
+        * tests/RTCCM/Priority_Test/descriptors/Controller75.csd:
+        * tests/RTCCM/Priority_Test/descriptors/demo-25.cad:
+        * tests/RTCCM/Priority_Test/descriptors/demo-50.cad:
+        * tests/RTCCM/Priority_Test/descriptors/demo.cad:
+        * tests/RTCCM/Priority_Test/descriptors/no-rt-3rates.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rate_test.pl:
+        * tests/RTCCM/Priority_Test/descriptors/remote.dat:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-high-dec.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-high-inc.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-low-dec.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-low-inc.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-mid-dec.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rate-rt-mid-inc.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rates-dec.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rates-inc.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rates-laned-dec.cad:
+        * tests/RTCCM/Priority_Test/descriptors/rt-3rates-laned-inc.cad:
+        * tests/RTCCM/Priority_Test/descriptors/shared_rt.rtd:
 
-	  New files for running the test.
+          New files for running the test.
 
-	* tests/RTCCM/Priority_Test/Priority_Test.mpc:
-	* tests/RTCCM/Priority_Test/Workers/Worker.mpc:
-	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:  Manually
-	  changed the generated MPC files as the "depends" keyword is
-	  depricated by "after" in MPC, and the dependencies is broken in
-	  earlier changes in MPC generator scripts.
+        * tests/RTCCM/Priority_Test/Priority_Test.mpc:
+        * tests/RTCCM/Priority_Test/Workers/Worker.mpc:
+        * tests/RTCCM/Priority_Test/Controllers/Controller.mpc:  Manually
+          changed the generated MPC files as the "depends" keyword is
+          depricated by "after" in MPC, and the dependencies is broken in
+          earlier changes in MPC generator scripts.
 
-	* tests/RTCCM/Priority_Test/Priority_Test.idl: Changed the use of
-	  "unsigned long" type to "long".  CIDL compiler doesn't seem to
-	  support unsigned long yet.
+        * tests/RTCCM/Priority_Test/Priority_Test.idl: Changed the use of
+          "unsigned long" type to "long".  CIDL compiler doesn't seem to
+          support unsigned long yet.
 
-	* tests/RTCCM/Priority_Test/Workers/Worker.idl: Fixed a typo.
+        * tests/RTCCM/Priority_Test/Workers/Worker.idl: Fixed a typo.
 
-	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
-	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.h:
-	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
-	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.h:  Fixed a
-	  couple of compilation errors and changed some operation
-	  signatures to match the interface change in Priority_Test.idl.
+        * tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+        * tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.h:
+        * tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+        * tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.h:  Fixed a
+          couple of compilation errors and changed some operation
+          signatures to match the interface change in Priority_Test.idl.
 
-	* tests/RTCCM/Priority_Test/Priority_Test.idl:
-	* tests/RTCCM/Priority_Test/Controllers/Controller.cidl:
-	* tests/RTCCM/Priority_Test/Controllers/Controller.idl:
-	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:
-	* tests/RTCCM/Priority_Test/Controllers/ControllerEI.idl:
-	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.cpp:
-	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.h:
-	* tests/RTCCM/Priority_Test/Controllers/Controller_exec_export.h:
-	* tests/RTCCM/Priority_Test/Controllers/Controller_stub_export.h:
-	* tests/RTCCM/Priority_Test/Controllers/Controller_svnt_export.h:
-	* tests/RTCCM/Priority_Test/Controllers/Pulser.cpp:
-	* tests/RTCCM/Priority_Test/Controllers/Pulser.h:
-	* tests/RTCCM/Priority_Test/Controllers/Rate_Controller.h:
-	* tests/RTCCM/Priority_Test/Controllers/Rate_Controller.cpp:
-	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
-	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.h:
-	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
-	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.h:
-	* tests/RTCCM/Priority_Test/Workers/README:
-	* tests/RTCCM/Priority_Test/Workers/Worker.cidl:
-	* tests/RTCCM/Priority_Test/Workers/Worker.idl:
-	* tests/RTCCM/Priority_Test/Workers/Worker.mpc:
-	* tests/RTCCM/Priority_Test/Workers/WorkerEI.idl:
-	* tests/RTCCM/Priority_Test/Workers/Worker_exec_export.h:
-	* tests/RTCCM/Priority_Test/Workers/Worker_stub_export.h:
-	* tests/RTCCM/Priority_Test/Workers/Worker_svnt_export.h:
-	* tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
-	* tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
-	* tests/RTCCM/Priority_Test/descriptors/Worker.ssd:
+        * tests/RTCCM/Priority_Test/Priority_Test.idl:
+        * tests/RTCCM/Priority_Test/Controllers/Controller.cidl:
+        * tests/RTCCM/Priority_Test/Controllers/Controller.idl:
+        * tests/RTCCM/Priority_Test/Controllers/Controller.mpc:
+        * tests/RTCCM/Priority_Test/Controllers/ControllerEI.idl:
+        * tests/RTCCM/Priority_Test/Controllers/Controller_exec.cpp:
+        * tests/RTCCM/Priority_Test/Controllers/Controller_exec.h:
+        * tests/RTCCM/Priority_Test/Controllers/Controller_exec_export.h:
+        * tests/RTCCM/Priority_Test/Controllers/Controller_stub_export.h:
+        * tests/RTCCM/Priority_Test/Controllers/Controller_svnt_export.h:
+        * tests/RTCCM/Priority_Test/Controllers/Pulser.cpp:
+        * tests/RTCCM/Priority_Test/Controllers/Pulser.h:
+        * tests/RTCCM/Priority_Test/Controllers/Rate_Controller.h:
+        * tests/RTCCM/Priority_Test/Controllers/Rate_Controller.cpp:
+        * tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+        * tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.h:
+        * tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+        * tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.h:
+        * tests/RTCCM/Priority_Test/Workers/README:
+        * tests/RTCCM/Priority_Test/Workers/Worker.cidl:
+        * tests/RTCCM/Priority_Test/Workers/Worker.idl:
+        * tests/RTCCM/Priority_Test/Workers/Worker.mpc:
+        * tests/RTCCM/Priority_Test/Workers/WorkerEI.idl:
+        * tests/RTCCM/Priority_Test/Workers/Worker_exec_export.h:
+        * tests/RTCCM/Priority_Test/Workers/Worker_stub_export.h:
+        * tests/RTCCM/Priority_Test/Workers/Worker_svnt_export.h:
+        * tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
+        * tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
+        * tests/RTCCM/Priority_Test/descriptors/Worker.ssd:
 
-	  New files for test Worker components.
+          New files for test Worker components.
 
-	* tests/RTCCM/Priority_Test/Priority_Test.idl:
-	* tests/RTCCM/Priority_Test/Priority_Test.mpc:
-	* tests/RTCCM/Priority_Test/Priority_Test_stub_export.h:
-	* tests/RTCCM/Priority_Test/Priority_Test_svnt_export.h:
+        * tests/RTCCM/Priority_Test/Priority_Test.idl:
+        * tests/RTCCM/Priority_Test/Priority_Test.mpc:
+        * tests/RTCCM/Priority_Test/Priority_Test_stub_export.h:
+        * tests/RTCCM/Priority_Test/Priority_Test_svnt_export.h:
 
-	  Added files for RTCCM Priority_Test project.
+          Added files for RTCCM Priority_Test project.
 
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
-	* examples/OEP/BasicSP/EC/EC_exec.cpp:
-	* examples/OEP/BasicSP/EC/client.cpp:
-	* examples/OEP/BasicSP/EC/controller.cpp:
-	* examples/OEP/Display/GPS/GPS_exec.cpp:
-	* examples/OEP/Display/GPS/GPS_tracing_exec.cpp:
-	* examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
-	* examples/OEP/Display/RateGen/RateGen_exec.cpp:
-	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-	* performance-tests/Benchmark/RoundTripServer/LatencyTest.cpp:
-	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/OEP/BasicSP/EC/EC_exec.cpp:
+        * examples/OEP/BasicSP/EC/client.cpp:
+        * examples/OEP/BasicSP/EC/controller.cpp:
+        * examples/OEP/Display/GPS/GPS_exec.cpp:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.cpp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+        * examples/OEP/Display/RateGen/RateGen_exec.cpp:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+        * performance-tests/Benchmark/RoundTripServer/LatencyTest.cpp:
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
 
-	  Added CIAO::debug_level to facilitate conditional printing of
-	  debug messages.
+          Added CIAO::debug_level to facilitate conditional printing of
+          debug messages.
 
-	* performance-tests/Benchmark/RoundTripClient/run_test.pl:
-	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
+        * performance-tests/Benchmark/RoundTripClient/run_test.pl:
+        * performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
 
-	  Setting CIAO_ROOT if not already set.
+          Setting CIAO_ROOT if not already set.
 
-	* tools/Assembly_Deployer/Assembly_Deployer.cpp:
-	* tools/Assembly_Deployer/Assembly_Impl.cpp:
-	* tools/Assembly_Deployer/Assembly_Impl.h:
-	* tools/Assembly_Deployer/Assembly_Impl.inl:
-	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
-	* tools/RTComponentServer/ComponentServer_Task.cpp:
-	* tools/RTComponentServer/RTConfig_Manager.cpp:
-	* tools/ServerActivator/ServerActivator.cpp:
-	* tools/XML_Helpers/Assembly_Handlers.cpp:
-	* tools/XML_Helpers/RTConfig_Handlers.cpp:
-	* tools/XML_Helpers/Svcconf_Handler.cpp:
+        * tools/Assembly_Deployer/Assembly_Deployer.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.h:
+        * tools/Assembly_Deployer/Assembly_Impl.inl:
+        * tools/Assembly_Deployer/Assembly_Visitors.cpp:
+        * tools/RTComponentServer/ComponentServer_Task.cpp:
+        * tools/RTComponentServer/RTConfig_Manager.cpp:
+        * tools/ServerActivator/ServerActivator.cpp:
+        * tools/XML_Helpers/Assembly_Handlers.cpp:
+        * tools/XML_Helpers/RTConfig_Handlers.cpp:
+        * tools/XML_Helpers/Svcconf_Handler.cpp:
 
-	  Minor changes including adding CIAO::debug_level.
+          Minor changes including adding CIAO::debug_level.
 
-	* tools/ComponentServer/ComponentServer.cpp: Changes to run
-	  component server in SCHED_FIFO class.
+        * tools/ComponentServer/ComponentServer.cpp: Changes to run
+          component server in SCHED_FIFO class.
 
-	* tools/Daemon/CIAO_Daemon.cpp: Added command line processing for
-	  extra command-line argument for component server process.
+        * tools/Daemon/CIAO_Daemon.cpp: Added command line processing for
+          extra command-line argument for component server process.
 
-	* tools/XML_Helpers/XMLHelpers.mpc: Added ciao_client to the base
-	  project list so as to link in the CIAO::debug_level feature.
+        * tools/XML_Helpers/XMLHelpers.mpc: Added ciao_client to the base
+          project list so as to link in the CIAO::debug_level feature.
 
 Mon May 17 19:01:36 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
@@ -1890,11 +1929,11 @@ Thu May 13 13:10:35 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Wed May 12 20:05:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/handcrafted/BasicSP_EC/EC/client.cpp:
+        * examples/handcrafted/BasicSP_EC/EC/client.cpp:
 
-	  Corrected case of header file in #include directive.
-	  "ace/Streams.h" -> "ace/streams.h".  Blame it on MS Windows case
-	  insenstivity.  :-)
+          Corrected case of header file in #include directive.
+          "ace/Streams.h" -> "ace/streams.h".  Blame it on MS Windows case
+          insenstivity.  :-)
 
 Wed May 12 15:52:29 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -2003,9 +2042,9 @@ Tue May 11 12:51:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Tue May 11 12:25:39 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Fixed bug in home operation emitter.
+          Fixed bug in home operation emitter.
 
 Tue May 11 11:17:25 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -2020,18 +2059,18 @@ Tue May 11 11:17:25 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Tue May 11 10:45:55 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL3/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL3/Parser.cpp:
-	* CCF/CCF/IDL3/Parser.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Uses.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Uses.hpp:
-	* CCF/CCF/IDL3/SemanticGraph/Component.cpp:
-	* CCF/CCF/IDL3/SemanticGraph/Component.hpp:
-	* CCF/CCF/IDL3/Traversal/Component.hpp:
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CCF/CCF/IDL3/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL3/Parser.cpp:
+        * CCF/CCF/IDL3/Parser.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Uses.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Uses.hpp:
+        * CCF/CCF/IDL3/SemanticGraph/Component.cpp:
+        * CCF/CCF/IDL3/SemanticGraph/Component.hpp:
+        * CCF/CCF/IDL3/Traversal/Component.hpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Support for uses multiple.
+          Support for uses multiple.
 
 Tue May 11 01:47:27 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
 
@@ -2169,74 +2208,74 @@ Sun May  9 14:07:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Sun May  9 13:06:48 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Deployment.mpc:
-	* DnC/Config_Handlers/Config_Handlers.mpc:
-	  Added requries += dnc to avoid unintentional build of DnC
+        * DnC/Deployment.mpc:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+          Added requries += dnc to avoid unintentional build of DnC
           directory.
 
 Sun May  9 09:08:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.h:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.h:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.h:
-	* examples/OEP/BasicSP/EC/EC_exec.cpp:
-	* examples/OEP/BasicSP/EC/EC_exec.h:
-	* examples/OEP/Display/GPS/GPS_exec.cpp:
-	* examples/OEP/Display/GPS/GPS_exec.h:
-	* examples/OEP/Display/GPS/GPS_tracing_exec.cpp:
-	* examples/OEP/Display/GPS/GPS_tracing_exec.h:
-	* examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
-	* examples/OEP/Display/NavDisplay/NavDisplay_exec.h:
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
-	* examples/OEP/Display/RateGen/RateGen_exec.cpp:
-	* examples/OEP/Display/RateGen/RateGen_exec.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.h:
+        * examples/OEP/BasicSP/EC/EC_exec.cpp:
+        * examples/OEP/BasicSP/EC/EC_exec.h:
+        * examples/OEP/Display/GPS/GPS_exec.cpp:
+        * examples/OEP/Display/GPS/GPS_exec.h:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.cpp:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.h:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+        * examples/OEP/Display/RateGen/RateGen_exec.cpp:
+        * examples/OEP/Display/RateGen/RateGen_exec.h:
 
-	  More fixes to the executors.
+          More fixes to the executors.
 
 Sun May  9 07:46:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ciao/CCM_Component.idl:
-	* ciao/CCM_Container.idl:
+        * ciao/CCM_Component.idl:
+        * ciao/CCM_Container.idl:
 
-	  Added CIAO specific operations ciao_practivate () and
-	  ciao_postactivate () which would allow the deployment
-	  infrastructure to invoke them before and after ccm_activate
-	  (). There are more elegant methods to do this, but for want of
-	  time we will just stick to this. We can revisit this later if
-	  needed. There is a need for such things in some projects that we
-	  are working on to initialize a few things upfront and tear them
-	  later. The downside of this is that the executors need to
-	  implement ciao_preactivate () and ciao_postactivate (). I think
-	  there is a good idea to avoid that. We will visit that soon.
+          Added CIAO specific operations ciao_practivate () and
+          ciao_postactivate () which would allow the deployment
+          infrastructure to invoke them before and after ccm_activate
+          (). There are more elegant methods to do this, but for want of
+          time we will just stick to this. We can revisit this later if
+          needed. There is a need for such things in some projects that we
+          are working on to initialize a few things upfront and tear them
+          later. The downside of this is that the executors need to
+          implement ciao_preactivate () and ciao_postactivate (). I think
+          there is a good idea to avoid that. We will visit that soon.
 
- 	* CIDLC/ServantHeaderGenerator.cpp:
-	* CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
 
-	  Added code generation for ciao_preactivate () and
-	  ciao_postactivate ().
+          Added code generation for ciao_preactivate () and
+          ciao_postactivate ().
 
-	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.cpp:
 
-	  Cosmetic fix.
+          Cosmetic fix.
 
-	* tools/Assembly_Deployer/Assembly_Visitors.h:
+        * tools/Assembly_Deployer/Assembly_Visitors.h:
 
-	  Added a typedef for the iterator in the CIAO::Assembly_Context
-	  struct.
+          Added a typedef for the iterator in the CIAO::Assembly_Context
+          struct.
 
-	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
+        * tools/Assembly_Deployer/Assembly_Visitors.cpp:
 
-	  Iterate over the CCMObject references and call preactivate,
-	  activate and postactivate on all of them one after another.
+          Iterate over the CCMObject references and call preactivate,
+          activate and postactivate on all of them one after another.
 
-	* examples/Hello/Receiver/Receiver_exec.cpp:
-	* examples/Hello/Receiver/Receiver_exec.h:
-	* examples/Hello/Sender/Sender_exec.cpp:
-	* examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/Receiver/Receiver_exec.h:
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/Sender/Sender_exec.h:
 
           Added the preactivate and postactivate calls.
 
@@ -2323,9 +2362,9 @@ Fri May  7 17:19:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri May  7 14:46:54 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* GNUmakefile:
+        * GNUmakefile:
 
-	  Removed this GNUmakefile.  It must now be generated by MPC.
+          Removed this GNUmakefile.  It must now be generated by MPC.
 
 Fri May  7 13:17:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -2338,12 +2377,12 @@ Fri May  7 13:17:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Fri May  7 12:53:34 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CCF/CCF/CIDL/CIDL.mpc:
-	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
-	* CCF/CCF/CompilerElements/CompilerElements.mpc:
-	* CCF/CCF/IDL2/IDL2.mpc:
-	* CCF/CCF/IDL3/IDL3.mpc:
-	Fixed a bug for using MPC to build CCF.
+        * CCF/CCF/CIDL/CIDL.mpc:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+        * CCF/CCF/CompilerElements/CompilerElements.mpc:
+        * CCF/CCF/IDL2/IDL2.mpc:
+        * CCF/CCF/IDL3/IDL3.mpc:
+        Fixed a bug for using MPC to build CCF.
 
 Fri May  7 12:44:42 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -2362,9 +2401,9 @@ Thu May  6 16:20:00 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Mon May  3 23:04:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* CIAO-INSTALL.html:
+        * CIAO-INSTALL.html:
 
-	  Corrected typo.
+          Corrected typo.
 
 Mon May  3 23:17:31 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -2394,25 +2433,25 @@ Mon May  3 22:44:09 2004  George Edwards  <g.edwards@vanderbilt.edu>
 
 Mon May  3 00:00:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile*:
+        * Makefile*:
 
-	  Removed all Makefiles.  GNUmakefiles must now be generated by
-	  MPC.
+          Removed all Makefiles.  GNUmakefiles must now be generated by
+          MPC.
 
 Sat May  1 22:37:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile:
-	* GNUmakefile:
+        * Makefile:
+        * GNUmakefile:
 
-	  Renamed "Makefile" to "GNUmakefile" to make it obvious to
-	  users that GNU Make is required to parse the file.
+          Renamed "Makefile" to "GNUmakefile" to make it obvious to
+          users that GNU Make is required to parse the file.
 
 Fri Apr 30 17:46:09 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Implemented supporting of forward declared interfaces.
-	  Also some minor tweaking for Intel C++.
+          Implemented supporting of forward declared interfaces.
+          Also some minor tweaking for Intel C++.
 
 Fri Apr 30 13:08:04 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
@@ -2471,55 +2510,55 @@ Thu Apr 29 17:47:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Thu Apr 29 06:13:23 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
-	* DnC/Deployment.idl:
-	  struct ComponentImplementationDescription: Added new field called
-	  infoProperty of type Properties (Issue 5967).
+        * DnC/Deployment.idl:
+          struct ComponentImplementationDescription: Added new field called
+          infoProperty of type Properties (Issue 5967).
 
-	  struct ImplementationRequirement: added a new struct (Issue 6392)
+          struct ImplementationRequirement: added a new struct (Issue 6392)
 
-	* Dnc/ConfigHandlers/CompImplDesc_Handler.cpp:
-	  Fixed compilation errors due to incorrect naming usage of a typedef.
+        * Dnc/ConfigHandlers/CompImplDesc_Handler.cpp:
+          Fixed compilation errors due to incorrect naming usage of a typedef.
 
 Mon Apr 26 23:40:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ciao/Cookies.cpp:
-	* ciao/Cookies.h:
-	* ciao/Cookies.inl:
+        * ciao/Cookies.cpp:
+        * ciao/Cookies.h:
+        * ciao/Cookies.inl:
 
-	  Subtle changes to improve interoperability.
+          Subtle changes to improve interoperability.
 
-	  Problem: We, for some unknown reason, created a proprietary
-	  cookie called  CIAO::Map_Key_Cookie (which inherited from an IDL
-	  type CIAO::Cookie) and used that as a concrete implementation of
-	  Components::Cookie.
+          Problem: We, for some unknown reason, created a proprietary
+          cookie called  CIAO::Map_Key_Cookie (which inherited from an IDL
+          type CIAO::Cookie) and used that as a concrete implementation of
+          Components::Cookie.
 
-	  Context: Though this would work, this breaks interoperability
-	  when the Cookies are send on the wire. The remote target tries
-	  to unmarshal the CIAO::Cookie valuetype as a Component::Cookie
-	  which fails miserably.
+          Context: Though this would work, this breaks interoperability
+          when the Cookies are send on the wire. The remote target tries
+          to unmarshal the CIAO::Cookie valuetype as a Component::Cookie
+          which fails miserably.
 
-	  Solution: Deprecate this proprietary IDL type CIAO::Cookie and
-	  make Map_Key_Cookie inherit directly from Component::Cookie.
+          Solution: Deprecate this proprietary IDL type CIAO::Cookie and
+          make Map_Key_Cookie inherit directly from Component::Cookie.
 
-	  Made some changes to the interface to return a bool instead of
-	  an int.
+          Made some changes to the interface to return a bool instead of
+          an int.
 
-	* ciao/CIAO_Value.idl:
+        * ciao/CIAO_Value.idl:
 
-	  Added note for deprecation.
+          Added note for deprecation.
 
- 	* CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
 
-	  The call to Map_Key_Cookie::extract () should check for a false
-	  instead of -1.
+          The call to Map_Key_Cookie::extract () should check for a false
+          instead of -1.
 
-	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.cpp:
 
-  	  The call to Map_Key_Cookie::extract () should check for a false
-	  instead of -1.
+          The call to Map_Key_Cookie::extract () should check for a false
+          instead of -1.
 
-	  Thanks to Ed Mulholland and Jacques Kerner for reporting the
-	  problem.
+          Thanks to Ed Mulholland and Jacques Kerner for reporting the
+          problem.
 
 Mon Apr 26 17:35:29 2004  George Edwards  <g.edwards@vanderbilt.edu>
 
@@ -2565,7 +2604,7 @@ Mon Apr 26 11:50:48 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Mon Apr 26 08:57:37 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
-	* DnC/Config_Handlers/Config_Handlers.mpc:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
           Added Cap_Handler.cpp
           Added CompIntrDesc_Handler.cpp
           Added CompPortDesc_Handler.cpp
@@ -2573,26 +2612,26 @@ Mon Apr 26 08:57:37 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
           Added IR_Handler.cpp
           Added NIA_Handler.cpp
 
-	* DnC/Config_handlers/SR_Handler.cpp:
-	  Included SP_Handler.h
-	  Fixed undefined variables and conversion from string to long
+        * DnC/Config_handlers/SR_Handler.cpp:
+          Included SP_Handler.h
+          Fixed undefined variables and conversion from string to long
 
-	* DnC/Config_handlers/Node_Handler.cpp:
-	  Fixed errors arising out of using same name for variables of
-	  different types in the same scope (one defined in the parameter
-	  and another as a loop variable).
+        * DnC/Config_handlers/Node_Handler.cpp:
+          Fixed errors arising out of using same name for variables of
+          different types in the same scope (one defined in the parameter
+          and another as a loop variable).
 
-	  Fixed errors in type coversion.
+          Fixed errors in type coversion.
 
-	* DnC/Config_handlers/Resource_Handler.cpp:
-	  Fixed errors in type coversion.
+        * DnC/Config_handlers/Resource_Handler.cpp:
+          Fixed errors in type coversion.
 
-	* DnC/Config_handlers/MID_Handler.cpp:
-	  Fixed an error due to incorrect number of parameters
+        * DnC/Config_handlers/MID_Handler.cpp:
+          Fixed an error due to incorrect number of parameters
 
-	* DnC/Config_handlers/DP_Handler.cpp:
-	  Fixed an error due to incorrect number of parameters and
-	  incorrect file name inclusion.
+        * DnC/Config_handlers/DP_Handler.cpp:
+          Fixed an error due to incorrect number of parameters and
+          incorrect file name inclusion.
 
 
 Mon Apr 26 14:04:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -2609,7 +2648,7 @@ Mon Apr 26 09:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Apr 25 07:42:06 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
-	* DnC/Config_Handlers/Config_Handlers.mpc:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
           Added Bridge_Handler.cpp
           Added Domain_Handler.cpp
           Added IC_Handler.cpp
@@ -2638,73 +2677,73 @@ Sat Apr 24 23:43:13 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Sat Apr 24 23:13:56 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
-	* DnC/Deployment.idl:
-	  struct ComponentPackageReference: Added two new fields called
-	  requiredUUID and requiredName of type string (Issue 6047).
+        * DnC/Deployment.idl:
+          struct ComponentPackageReference: Added two new fields called
+          requiredUUID and requiredName of type string (Issue 6047).
 
-	* DnC/Config_Handler/SPE_Handler.h:
-	* DnC/Config_Handler/SPE_Handler.cpp:
-	* DnC/Config_Handler/ACD_Handler.h:
-	* DnC/Config_Handler/ACD_Handler.cpp:
-	* DnC/Config_Handler/APM_Handler.h:
-	* DnC/Config_Handler/APM_Handler.cpp:
-	* DnC/Config_Handler/MID_Handler.h:
-	* DnC/Config_Handler/MID_Handler.cpp:
-	  Enclosed these into the CIAO namespace
+        * DnC/Config_Handler/SPE_Handler.h:
+        * DnC/Config_Handler/SPE_Handler.cpp:
+        * DnC/Config_Handler/ACD_Handler.h:
+        * DnC/Config_Handler/ACD_Handler.cpp:
+        * DnC/Config_Handler/APM_Handler.h:
+        * DnC/Config_Handler/APM_Handler.cpp:
+        * DnC/Config_Handler/MID_Handler.h:
+        * DnC/Config_Handler/MID_Handler.cpp:
+          Enclosed these into the CIAO namespace
 
-	  Removed needless copies by having the parent (caller) provide
-	  the memory for the child (callee) to populate it.
+          Removed needless copies by having the parent (caller) provide
+          the memory for the child (callee) to populate it.
 
-	  Other cosmetic changes, fixing typos.
+          Other cosmetic changes, fixing typos.
 
-	* DnC/Config_Handler/PC_Handler.cpp:
-	* DnC/Config_Handler/PCI_Handler.cpp:
-	  Fixed undefined variables.
+        * DnC/Config_Handler/PC_Handler.cpp:
+        * DnC/Config_Handler/PCI_Handler.cpp:
+          Fixed undefined variables.
 
-	* DnC/Config_Handler/CAD_Handler.h:
-	* DnC/Config_Handler/CAD_Handler.cpp:
-	  XML handlers for the ComponentAssemblyDescription artifact of
-	  the Component Data Model.
+        * DnC/Config_Handler/CAD_Handler.h:
+        * DnC/Config_Handler/CAD_Handler.cpp:
+          XML handlers for the ComponentAssemblyDescription artifact of
+          the Component Data Model.
 
-	* DnC/Config_Handler/SID_Handler.h:
-	* DnC/Config_Handler/SID_Handler.cpp:
-	  XML handlers for the ComponentPackageReference artifact of
-	  the Component Data Model.
+        * DnC/Config_Handler/SID_Handler.h:
+        * DnC/Config_Handler/SID_Handler.cpp:
+          XML handlers for the ComponentPackageReference artifact of
+          the Component Data Model.
 
-	* DnC/Config_Handler/CPR_Handler.h:
-	* DnC/Config_Handler/CPR_Handler.cpp:
-	  XML handlers for the ComponentPackageReference artifact of
-	  the Component Data Model.
+        * DnC/Config_Handler/CPR_Handler.h:
+        * DnC/Config_Handler/CPR_Handler.cpp:
+          XML handlers for the ComponentPackageReference artifact of
+          the Component Data Model.
 
-	* DnC/Config_Handler/SPR_Handler.h:
-	* DnC/Config_Handler/SPR_Handler.cpp:
-	  XML handlers for the SubcomponentPropertyReference artifact of
-	  the Component Data Model.
+        * DnC/Config_Handler/SPR_Handler.h:
+        * DnC/Config_Handler/SPR_Handler.cpp:
+          XML handlers for the SubcomponentPropertyReference artifact of
+          the Component Data Model.
 
-	* DnC/Config_Handler/CompImplDesc_Handler.h:
-	* DnC/Config_Handler/CompImplDesc_Handler.cpp:
-	  XML handlers for the ComponentImplementationDescription artifact of
-	  the Component Data Model.
+        * DnC/Config_Handler/CompImplDesc_Handler.h:
+        * DnC/Config_Handler/CompImplDesc_Handler.cpp:
+          XML handlers for the ComponentImplementationDescription artifact of
+          the Component Data Model.
 
-	* DnC/Config_Handler/DP_Handler.cpp:
+        * DnC/Config_Handler/DP_Handler.cpp:
           Renamed included file CID_Handler.h to CompIntfDesc_Handler.h
-	  since there was a name clash.
+          since there was a name clash.
 
-	* DnC/Config_Handler/Config_Handlers.mpc:
-	  Fixed the CONFIG_HANDLER_BUILD_DLL typo
-	  Added ACD_Handler.cpp
-	  Added APM_Handler.cpp
-	  Added CAD_Handler.cpp
-	  Added MID_Handler.cpp
-	  Added SPE_Handler.cpp
-	  Added CompImplDesc_Handler.cpp
-	  Added CompPkgDesc_Handler.cpp
-	  Added PC_Handler.cpp
-	  Added PCI_Handler.cpp
-	  Added SID_Handler.cpp
-	  Added CPR_Handler.cpp
-	  Added SPR_Handler.cpp
-	  Reincluded DP_Handler.cpp
+        * DnC/Config_Handler/Config_Handlers.mpc:
+          Fixed the CONFIG_HANDLER_BUILD_DLL typo
+          Added ACD_Handler.cpp
+          Added APM_Handler.cpp
+          Added CAD_Handler.cpp
+          Added MID_Handler.cpp
+          Added SPE_Handler.cpp
+          Added CompImplDesc_Handler.cpp
+          Added CompPkgDesc_Handler.cpp
+          Added PC_Handler.cpp
+          Added PCI_Handler.cpp
+          Added SID_Handler.cpp
+          Added CPR_Handler.cpp
+          Added SPR_Handler.cpp
+          Reincluded DP_Handler.cpp
 
 Sat Apr 24 22:25:55 2004  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -2723,7 +2762,7 @@ Sat Apr 24 21:22:48 2004  George Edwards <g.edwards@vanderbilt.edu>
         * DnC/Config_Handlers/CompPkgDesc_Handler.cpp:
 
           Added new handlers for PackageConfiguration and
-	  ComponentPackageDescription.
+          ComponentPackageDescription.
 
 Sat Apr 24 16:02:03 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -2801,118 +2840,118 @@ Fri Apr 23 19:45:53 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Fri Apr 23 10:57:26 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
-	* DnC/Deployment.idl:
-	  struct ConnectionResourceDeploymentDescription: Added a new struct
-	  and corresponding unbounded sequence (Issue 6392).
+        * DnC/Deployment.idl:
+          struct ConnectionResourceDeploymentDescription: Added a new struct
+          and corresponding unbounded sequence (Issue 6392).
 
-	  struct PlanSubcomponentPropertyReference: Replaced instanceRef
-	  field with a field called instance of type
-	  InstanceDeploymentDescription.
+          struct PlanSubcomponentPropertyReference: Replaced instanceRef
+          field with a field called instance of type
+          InstanceDeploymentDescription.
 
-	  struct PlanSubcomponentPortEndpoint: Replaced instanceRef and
-	  kind fields with a field called instance of type
-	  InstanceDeploymentDescription.
+          struct PlanSubcomponentPortEndpoint: Replaced instanceRef and
+          kind fields with a field called instance of type
+          InstanceDeploymentDescription.
 
-	  struct PlanConnectionDescription: Added a field called
-	  deployedResource of type ConnectionResourceDeploymentDescriptions.
+          struct PlanConnectionDescription: Added a field called
+          deployedResource of type ConnectionResourceDeploymentDescriptions.
 
-	* DnC/Config_Handler/IRDD_Handler.h:
-	* DnC/Config_Handler/IRDD_Handler.cpp:
-	  XML handlers for the InstanceResourceDeploymentDescription artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/IRDD_Handler.h:
+        * DnC/Config_Handler/IRDD_Handler.cpp:
+          XML handlers for the InstanceResourceDeploymentDescription artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/IDD_Handler.h:
-	* DnC/Config_Handler/IDD_Handler.cpp:
-	  XML handlers for the InstanceDeploymentDescription artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/IDD_Handler.h:
+        * DnC/Config_Handler/IDD_Handler.cpp:
+          XML handlers for the InstanceDeploymentDescription artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/IRDD_Handler.h:
-	* DnC/Config_Handler/IRDD_Handler.cpp:
-	  XML handlers for the ConnectionResourceDeploymentDescription artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/IRDD_Handler.h:
+        * DnC/Config_Handler/IRDD_Handler.cpp:
+          XML handlers for the ConnectionResourceDeploymentDescription artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/PCD_Handler.h:
-	* DnC/Config_Handler/PCD_Handler.cpp:
-	  XML handlers for the PlanConnectionDescription artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/PCD_Handler.h:
+        * DnC/Config_Handler/PCD_Handler.cpp:
+          XML handlers for the PlanConnectionDescription artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/PSPE_Handler.h:
-	* DnC/Config_Handler/PSPE_Handler.cpp:
-	  XML handlers for the PlanSubcomponentPortEndpoint artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/PSPE_Handler.h:
+        * DnC/Config_Handler/PSPE_Handler.cpp:
+          XML handlers for the PlanSubcomponentPortEndpoint artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/PPM_Handler.h:
-	* DnC/Config_Handler/PPM_Handler.cpp:
-	  XML handlers for the PlanPropertyMapping artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/PPM_Handler.h:
+        * DnC/Config_Handler/PPM_Handler.cpp:
+          XML handlers for the PlanPropertyMapping artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/PSPR_Handler.h:
-	* DnC/Config_Handler/PSPR_Handler.cpp:
-	  XML handlers for the PlanSubcomponentPropertyReference artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/PSPR_Handler.h:
+        * DnC/Config_Handler/PSPR_Handler.cpp:
+          XML handlers for the PlanSubcomponentPropertyReference artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/Config_Handlers.mpc:
-	  Added IDD_Handler.cpp
-	  Added IRDD_Handler.cpp
-	  Added CRDD_Handler.cpp
-	  Added PCD_Handler.cpp
-	  Added PSPE_Handler.cpp
-	  Added PPM_Handler.cpp
-	  Added PSPR_Handler.cpp
+        * DnC/Config_Handler/Config_Handlers.mpc:
+          Added IDD_Handler.cpp
+          Added IRDD_Handler.cpp
+          Added CRDD_Handler.cpp
+          Added PCD_Handler.cpp
+          Added PSPE_Handler.cpp
+          Added PPM_Handler.cpp
+          Added PSPR_Handler.cpp
 
 Fri Apr 23 04:40:12 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
-	* DnC/Deployment.idl:
-	  struct DeploymentPlan: Added a field called infoProperty of type
-	  Properties (Issue 5967)
+        * DnC/Deployment.idl:
+          struct DeploymentPlan: Added a field called infoProperty of type
+          Properties (Issue 5967)
 
-	  struct ArtifactDeploymentDescription: Added a field called
-	  deployedResource of type ResourceDeploymentDescriptions
-	  (Issue 6392)
+          struct ArtifactDeploymentDescription: Added a field called
+          deployedResource of type ResourceDeploymentDescriptions
+          (Issue 6392)
 
-	  struct ArtifactDeploymentDescription: Changed the field type for
-	  location from string to CORBA::StringSeq (Issue 5957, 6053).
+          struct ArtifactDeploymentDescription: Changed the field type for
+          location from string to CORBA::StringSeq (Issue 5957, 6053).
 
-	  struct ArtifactDeploymentDescription: Moved it around to
-	  overcome forward declarations.
+          struct ArtifactDeploymentDescription: Moved it around to
+          overcome forward declarations.
 
-	  struct MonolithicDeploymentDescription: Changed the field name
-	  from artifactRef to artifact and changed its type from
-	  CORBA::ULongSeq to ArtifactDeploymentDescriptions (Issue 5957)
+          struct MonolithicDeploymentDescription: Changed the field name
+          from artifactRef to artifact and changed its type from
+          CORBA::ULongSeq to ArtifactDeploymentDescriptions (Issue 5957)
 
-	  struct ResourceDeploymentDescription: Added a new struct and
-	  corresponding unbounded sequence (Issue 6392).
+          struct ResourceDeploymentDescription: Added a new struct and
+          corresponding unbounded sequence (Issue 6392).
 
-	  enum ResourceUsageKind: Added a new enum (Issue 6392).
+          enum ResourceUsageKind: Added a new enum (Issue 6392).
 
-	  struct InstanceResourceDeploymentDescription: Added a new struct
-	  and corresponding unbounded sequence (Issue 6392).
+          struct InstanceResourceDeploymentDescription: Added a new struct
+          and corresponding unbounded sequence (Issue 6392).
 
-	* DnC/Config_Handler/DP_Handler.h:
-	* DnC/Config_Handler/DP_Handler.cpp:
-	  Added handling of "infoProperty" (Issue 5967)
-	  Other cosmetic changes, such as fixed usage of an undefined
-	  variable
+        * DnC/Config_Handler/DP_Handler.h:
+        * DnC/Config_Handler/DP_Handler.cpp:
+          Added handling of "infoProperty" (Issue 5967)
+          Other cosmetic changes, such as fixed usage of an undefined
+          variable
 
-	* DnC/Config_Handler/ADD_Handler.h:
-	* DnC/Config_Handler/ADD_Handler.cpp:
-	  XML handlers for the ArtifactDeploymentDescription artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/ADD_Handler.h:
+        * DnC/Config_Handler/ADD_Handler.cpp:
+          XML handlers for the ArtifactDeploymentDescription artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/MDD_Handler.h:
-	* DnC/Config_Handler/MDD_Handler.cpp:
-	  XML handlers for the MonolithicDeploymentDescription artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/MDD_Handler.h:
+        * DnC/Config_Handler/MDD_Handler.cpp:
+          XML handlers for the MonolithicDeploymentDescription artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/RDD_Handler.h:
-	* DnC/Config_Handler/RDD_Handler.cpp:
-	  XML handlers for the ResourceDeploymentDescription artifact of
-	  the Execution Model.
+        * DnC/Config_Handler/RDD_Handler.h:
+        * DnC/Config_Handler/RDD_Handler.cpp:
+          XML handlers for the ResourceDeploymentDescription artifact of
+          the Execution Model.
 
-	* DnC/Config_Handler/Config_Handlers.mpc:
-	  Added ADD_Handler.cpp
-	  Added MDD_Handler.cpp
-	  Added RDD_Handler.cpp
+        * DnC/Config_Handler/Config_Handlers.mpc:
+          Added ADD_Handler.cpp
+          Added MDD_Handler.cpp
+          Added RDD_Handler.cpp
 
 Thu Apr 22 22:18:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2925,18 +2964,18 @@ Thu Apr 22 22:18:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Apr 22 21:32:39 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
-	* DnC/Deployment.idl:
-	  Added a "string UUID;" field (Issue 6047) to the DeploymentPlan
-	  structure. The spec shows UUID as an attribute, which serves as
-	  the unique identfier of a plan. However, the spec does not
-	  include it in the IDL nor the schema. I decided to add it for now.
+        * DnC/Deployment.idl:
+          Added a "string UUID;" field (Issue 6047) to the DeploymentPlan
+          structure. The spec shows UUID as an attribute, which serves as
+          the unique identfier of a plan. However, the spec does not
+          include it in the IDL nor the schema. I decided to add it for now.
 
-	* DnC/Config_Handler/DP_Handler.h:
-	* DnC/Config_Handler/DP_Handler.cpp:
-	  XML handlers for the DeploymentPlan artifact of the Execution Model.
+        * DnC/Config_Handler/DP_Handler.h:
+        * DnC/Config_Handler/DP_Handler.cpp:
+          XML handlers for the DeploymentPlan artifact of the Execution Model.
 
-	* DnC/Config_Handler/Config_Handlers.mpc:
-	  Added DP_Handler.cpp
+        * DnC/Config_Handler/Config_Handlers.mpc:
+          Added DP_Handler.cpp
 
 Thu Apr 22 15:36:14 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -3013,17 +3052,17 @@ Wed Apr 21 12:33:11 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Wed Apr 21 10:53:50 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/Deployment.idl:
+        * DnC/Deployment.idl:
 
-	 Fixed the error in the "struct SubcomponentPortEndpoint"
+         Fixed the error in the "struct SubcomponentPortEndpoint"
          definition in the IDL file.
 
 Wed Apr 21 10:33:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Deployment.idl:
-	* DnC/DnC_*:
+        * DnC/Deployment.idl:
+        * DnC/DnC_*:
 
-	Switched back the the OMG IDL DnC file.
+        Switched back the the OMG IDL DnC file.
 
 Tue Apr 20 21:37:26 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -3039,16 +3078,16 @@ Tue Apr 20 20:29:37 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Tue Apr 20 17:11:35 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples\Hello\Sender\Sender_exec.h (Sender_Impl):
+        * examples\Hello\Sender\Sender_exec.h (Sender_Impl):
 
-	  The second constructor also needed the same fix.
+          The second constructor also needed the same fix.
 
 Tue Apr 20 15:50:07 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples\Hello\Sender\Sender_exec.h (Sender_Impl):
+        * examples\Hello\Sender\Sender_exec.h (Sender_Impl):
 
           <message_> was getting initialized properly causing a crash
-	  later in the execution.
+          later in the execution.
 
 Mon Apr 19 18:04:11 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
@@ -3080,15 +3119,15 @@ Mon Apr 19 14:50:11 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
 
 Thu Apr 15 18:13:29 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* CIAO-INSTALL.html (HREF):
+        * CIAO-INSTALL.html (HREF):
 
-	  Fixed link to binary files.
+          Fixed link to binary files.
 
 Mon Apr 12 14:40:32 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* docs/index.html:
+        * docs/index.html:
 
-	  fixed a broken link.
+          fixed a broken link.
 
 Fri Apr 02 13:41:09 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
@@ -3096,9 +3135,9 @@ Fri Apr 02 13:41:09 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
 Fri Apr  2 13:05:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  Updated with the latest developments just prior to BFO.
+          Updated with the latest developments just prior to BFO.
 
 Wed Mar 31 23:03:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3110,9 +3149,9 @@ Wed Mar 31 23:03:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Mar 31 17:59:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tools/static_configurator/Static_Configurator.mpc:
+        * tools/static_configurator/Static_Configurator.mpc:
 
-	  Fixed fuzz warnings.
+          Fixed fuzz warnings.
 
 Mon Mar 29 11:00:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3124,21 +3163,21 @@ Mon Mar 29 11:00:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Mar 28 23:51:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO/CIAO/tools/RTComponentServer/Makefile.RTComponentServer:
+        * TAO/CIAO/tools/RTComponentServer/Makefile.RTComponentServer:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* TAO/CIAO/tools/RTComponentServer/RTConfig_Manager.h:
+        * TAO/CIAO/tools/RTComponentServer/RTConfig_Manager.h:
 
-	  Removed inclusion of Functor.h.
+          Removed inclusion of Functor.h.
 
 Mon Mar 29 05:46:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO/CIAO/tools/RTComponentServer/Makefile.RTComponentServer:
+        * TAO/CIAO/tools/RTComponentServer/Makefile.RTComponentServer:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* TAO/CIAO/tools/RTComponentServer/RTConfig_Manager.h:
+        * TAO/CIAO/tools/RTComponentServer/RTConfig_Manager.h:
 
 
 
@@ -3165,12 +3204,12 @@ Tue Mar 23 14:34:06 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Mar 16 11:22:44 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* docs/static_ciao_contents.html:
-	* docs/static_config_example.html:
-	* docs/index.html:
+        * docs/static_ciao_contents.html:
+        * docs/static_config_example.html:
+        * docs/index.html:
 
-	  Fixed webpage for unnecessary whitespace characters. Fixed links
-	  to images. Thanks to Tao Lu for pointing out.
+          Fixed webpage for unnecessary whitespace characters. Fixed links
+          to images. Thanks to Tao Lu for pointing out.
 
 Tue Mar 16 10:34:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3183,47 +3222,47 @@ Tue Mar 16 10:34:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Mar 16 10:36:21 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CIAO-INSTALL.html:
+        * CIAO-INSTALL.html:
 
-	  Added the support for CIDL with MPC on Linux.
+          Added the support for CIDL with MPC on Linux.
 
 Tue Mar 16 10:52:21 2004  Venkita Subramonian  <venkita@harry.cs.wustl.edu>
 
-	* docs/static_config_example.html:
-	* docs/static_ciao_contents.html:
-	* docs/static_ciao_toc.html:
+        * docs/static_config_example.html:
+        * docs/static_ciao_contents.html:
+        * docs/static_ciao_toc.html:
 
-	  Made some modifications to include an example run.
+          Made some modifications to include an example run.
 
-	* docs/index.html:
+        * docs/index.html:
 
-	  Added link from the CIAO main page to the static config
-	  documentation.
+          Added link from the CIAO main page to the static config
+          documentation.
 
 Sun Mar 14 00:23:02 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CCF/CCF/CIDL/CIDL.mpc:
-	* CCF/CCF/IDL2/IDL2.mpc:
-	* CCF/CCF/IDL3/IDL3.mpc:
-	* CCF/CCF/CIDL/CodeGenerationKit.mpc:
-	* CCF/CCF/CIDL/CompilerElements.mpc:
+        * CCF/CCF/CIDL/CIDL.mpc:
+        * CCF/CCF/IDL2/IDL2.mpc:
+        * CCF/CCF/IDL3/IDL3.mpc:
+        * CCF/CCF/CIDL/CodeGenerationKit.mpc:
+        * CCF/CCF/CIDL/CompilerElements.mpc:
 
-	  Removed the * to disable the duplicated words in the
-	  project/makefile.
+          Removed the * to disable the duplicated words in the
+          project/makefile.
 
 Sun Mar 14 00:16:46 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CIDLC/CIDLC.mpc:
+        * CIDLC/CIDLC.mpc:
 
-	  Removed the * to disable the duplicated words in the
-	  project/makefile.
+          Removed the * to disable the duplicated words in the
+          project/makefile.
 
 Mon Mar 15 10:14:16 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/cidlc.cpp:
+        * CIDLC/cidlc.cpp:
 
-	  Temporary fix for the wrong return code in CIDL compiler.
-	  Thanks to Gary Duzan <gduzan@bbn.com> for reporting this.
+          Temporary fix for the wrong return code in CIDL compiler.
+          Thanks to Gary Duzan <gduzan@bbn.com> for reporting this.
 
 Fri Mar 12 11:03:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3236,34 +3275,34 @@ Fri Mar 12 11:03:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Mar 11 16:30:45 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
 
-	  Added support for bounded string and wstring.
+          Added support for bounded string and wstring.
 
-	* CCF/Documentation/TODO:
+        * CCF/Documentation/TODO:
 
-	  Reflected new achievement.
+          Reflected new achievement.
 
-	* CIDLC/cidlc.cpp:
+        * CIDLC/cidlc.cpp:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
 2004-03-11  Venkita Subramonian  <venkita@harry.cs.wustl.edu>
 
-	* ciao/Container_Base.cpp: Removed an ACE_DEBUG statement which
-	got in by mistake.
+        * ciao/Container_Base.cpp: Removed an ACE_DEBUG statement which
+        got in by mistake.
 
 Wed Mar 10 14:59:19 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* docs/static_ciao_toc.html:
-	* docs/static_ciao_contents.html:
-	* docs/static_ciao_index.html: Updated documentation. Renamed
-	  static_ciao.html to static_ciao_contents.html.
+        * docs/static_ciao_toc.html:
+        * docs/static_ciao_contents.html:
+        * docs/static_ciao_index.html: Updated documentation. Renamed
+          static_ciao.html to static_ciao_contents.html.
 
 Wed Mar 10 12:36:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3279,37 +3318,37 @@ Wed Mar 10 12:36:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Mar  9 23:18:22 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/static_configurator/Static_Assembly_Parser.cpp:
+        * tools/static_configurator/Static_Assembly_Parser.cpp:
 
-	  Made a minor fix to eliminate unnecessary command line option
-	  processing.
+          Made a minor fix to eliminate unnecessary command line option
+          processing.
 
-	* tools/static_configurator/README: Added this file.
+        * tools/static_configurator/README: Added this file.
 
 Tue Mar  9 22:48:10 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* docs/static_ciao.html:
-	* docs/imgs/ciao-static1.jpg:
-	* docs/imgs/ciao-static2.jpg:
-	* docs/imgs/ciao-dynamic1.jpg:
-	* docs/imgs/ciao-dynamic2.jpg:
-	* docs/imgs/ciao-static-vs-dynamic.jpg: Added documentation for
-	  CIAO static configuration.
+        * docs/static_ciao.html:
+        * docs/imgs/ciao-static1.jpg:
+        * docs/imgs/ciao-static2.jpg:
+        * docs/imgs/ciao-dynamic1.jpg:
+        * docs/imgs/ciao-dynamic2.jpg:
+        * docs/imgs/ciao-static-vs-dynamic.jpg: Added documentation for
+          CIAO static configuration.
 
 Mon Mar  8 14:57:39 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Added inclusion of the source file when compiling with
-	  --lem-force-all option.
+          Added inclusion of the source file when compiling with
+          --lem-force-all option.
 
 Mon Mar  8 13:54:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  Added a NEWS file which tracks user visible changes between
-	  every beta. Thanks to Olli Savia and Gary Duzan for motivating
-	  this.
+          Added a NEWS file which tracks user visible changes between
+          every beta. Thanks to Olli Savia and Gary Duzan for motivating
+          this.
 
 Wed Mar  3 14:30:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3323,9 +3362,9 @@ Wed Mar  3 14:30:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Mar  2 19:50:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* DnC/Node/NodeApplicationManager_Impl.h:
+        * DnC/Node/NodeApplicationManager_Impl.h:
 
-	  Added @@Tao comments.
+          Added @@Tao comments.
 
 Tue Mar  2 15:08:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3344,28 +3383,28 @@ Tue Mar  2 15:08:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Mar  2 01:34:18 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * DnC/Node:
-	* DnC/Node/NodeApplication_Impl.h:
-	* DnC/Node/NodeApplication_Impl.h:
+        * DnC/Node/NodeApplication_Impl.h:
+        * DnC/Node/NodeApplication_Impl.h:
 
-	  Added the prototype definition files of
-	  NodeApplication and NodeApplicationManager.
+          Added the prototype definition files of
+          NodeApplication and NodeApplicationManager.
 
 Sun Feb 29 20:57:40 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/static_configurator/Static_Configurator.h:
-	* tools/static_configurator/Static_Configurator.cpp:
-	* tools/static_configurator/Static_Assembly_Parser.cpp: Fixed
-	  compile errors in builds with native exceptions disabled.
+        * tools/static_configurator/Static_Configurator.h:
+        * tools/static_configurator/Static_Configurator.cpp:
+        * tools/static_configurator/Static_Assembly_Parser.cpp: Fixed
+          compile errors in builds with native exceptions disabled.
 
-	* tools/static_configurator/Static_Assembly_Visitors.cpp: Fixed
-	  compile errors in gcc 3.3.2. Thanks to Bala for pointing out.
+        * tools/static_configurator/Static_Assembly_Visitors.cpp: Fixed
+          compile errors in gcc 3.3.2. Thanks to Bala for pointing out.
 
 Sat Feb 28 15:42:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tools/static_configurator/Static_Assembly_Visitors.cpp:
+        * tools/static_configurator/Static_Assembly_Visitors.cpp:
 
-	  Fixed a couple of small errors. But this file still doeasn't
-	  compile with gcc 3.3.2. Sending Venkita note.
+          Fixed a couple of small errors. But this file still doeasn't
+          compile with gcc 3.3.2. Sending Venkita note.
 
 Fri Feb 27 11:35:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3376,124 +3415,124 @@ Fri Feb 27 11:35:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Feb 26 14:21:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIAOTAO.mwc:
+        * CIAOTAO.mwc:
 
-	  An mwc file for CIAO with its dependencies on ACE+TAO. Folks can
-	  now run $ACE_ROOT/bin/mwc.pl CIAOTAO.mwc in $CIAO_ROOT and
-	  invoke "make" from $CIAO_ROOT. Thanks to Brian Mendel and Ed
-	  Mulholland for motivating this.
+          An mwc file for CIAO with its dependencies on ACE+TAO. Folks can
+          now run $ACE_ROOT/bin/mwc.pl CIAOTAO.mwc in $CIAO_ROOT and
+          invoke "make" from $CIAO_ROOT. Thanks to Brian Mendel and Ed
+          Mulholland for motivating this.
 
 Tue Feb 24 18:00:44 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Deployment.idl:          Removed
-	* DnC/DnC_Deployment.idl
-	* DnC/DnC_Element.idl
-	* DnC/DnC_Resource.idl
+        * DnC/Deployment.idl:          Removed
+        * DnC/DnC_Deployment.idl
+        * DnC/DnC_Element.idl
+        * DnC/DnC_Resource.idl
 
-	  Deployment.idl is splited into 3 parts now.
+          Deployment.idl is splited into 3 parts now.
 
 Mon Feb 23 15:04:26 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/ServantHeaderGenerator.cpp:
-	* CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
 
-	  Added generation of a top-level namespaces with the name
-	  derived from composition. Plus all the necessary modifications
-	  in generated code to adopt this scheme.
+          Added generation of a top-level namespaces with the name
+          derived from composition. Plus all the necessary modifications
+          in generated code to adopt this scheme.
 
 Mon Feb 23 13:54:19 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CIDLC/CIDLC.vcproj:
+        * CIDLC/CIDLC.vcproj:
 
-	Added ".\Literals.cpp" into the project.
+        Added ".\Literals.cpp" into the project.
 
 Mon Feb 23 13:34:20 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CIDLC/CIDLC.vcproj:
+        * CIDLC/CIDLC.vcproj:
 
-	  Reversed the change.
+          Reversed the change.
 
 Thu Feb 19 11:07:35 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* docs/index.html:
+        * docs/index.html:
 
-	  Added the parts listing area. Added a few relative links.
+          Added the parts listing area. Added a few relative links.
 
 Wed Feb 18 13:05:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/SemanticGraph/Name.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.cpp:
 
-	  Added missing header inclusion.
+          Added missing header inclusion.
 
 Wed Feb 18 10:43:54 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* docs/index.html:
+        * docs/index.html:
 
-	 Added the tutorial section in this file.
+         Added the tutorial section in this file.
 
 Wed Feb 18 10:11:42 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CCF/CCF/CIDL/CIDL.mpc:
-	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
-	* CCF/CCF/CompilerElements/CompilerElements.mpc:
-	* CCF/CCF/IDL2/IDL2.mpc:
-	* CCF/CCF/IDL3/IDL3.mpc:
+        * CCF/CCF/CIDL/CIDL.mpc:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+        * CCF/CCF/CompilerElements/CompilerElements.mpc:
+        * CCF/CCF/IDL2/IDL2.mpc:
+        * CCF/CCF/IDL3/IDL3.mpc:
 
-	  Changed these MPC files to specify the output lib path.
+          Changed these MPC files to specify the output lib path.
 
 Wed Feb 18 14:05:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CCF/CCF/CCF.mwc:
-	  Removed this file, it has an error and is not needed.
+        * CCF/CCF/CCF.mwc:
+          Removed this file, it has an error and is not needed.
 
 Tue Feb 17 01:18:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* examples/Hello/Receiver/Receiver_exec.cpp:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
-	* examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
-	* examples/OEP/Display/RateGen/RateGen_exec.cpp:
-	* examples/OEP/Display/RateGen/client.cpp:
-	* examples/OEP/Display/RateGen/controller.cpp:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
+        * examples/OEP/Display/RateGen/RateGen_exec.cpp:
+        * examples/OEP/Display/RateGen/client.cpp:
+        * examples/OEP/Display/RateGen/controller.cpp:
 
-	  Fixed the code for exception safety when exceptions are
-	  disabled. I don't claim that I have caught everything, but
-	  should have most of the problems. Another pass is required to fix
-	  the remaining problems.
+          Fixed the code for exception safety when exceptions are
+          disabled. I don't claim that I have caught everything, but
+          should have most of the problems. Another pass is required to fix
+          the remaining problems.
 
 Mon Feb 16 20:01:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* CIDLC/CIDLC.mwc:
+        * CIDLC/CIDLC.mwc:
 
-	  Added the mpc files from CCF in there. This will make it easier
-	  for the users. Users just need to go to $CIAO_ROOT/CIDLC and
-	  type mwc.pl CIDLC.mwc and then a make. They need not go to go
-	  and build CCF specifically. But this has a hitch that Tao needs
-	  to fix. The CCF libraries should be installed in $CIAO_ROOT/lib
-	  for this to work fine. Tao has accepted to fix this.
+          Added the mpc files from CCF in there. This will make it easier
+          for the users. Users just need to go to $CIAO_ROOT/CIDLC and
+          type mwc.pl CIDLC.mwc and then a make. They need not go to go
+          and build CCF specifically. But this has a hitch that Tao needs
+          to fix. The CCF libraries should be installed in $CIAO_ROOT/lib
+          for this to work fine. Tao has accepted to fix this.
 
-	* CIDLC/Literals.cpp:
-	* CIDLC/Literals.hpp:
-	* CIDLC/ServantHeaderGenerator.cpp:
-	* CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
 
-	  Bunch of wrong environment macro usage. This should fix the
-	  problems that Brian Mendel reported. Thanks to Brian for
-	  reporting this.
+          Bunch of wrong environment macro usage. This should fix the
+          problems that Brian Mendel reported. Thanks to Brian for
+          reporting this.
 
-	  These fixes wouldn't have taken so long. The CIDLC linking takes
-	  a really really long time!
+          These fixes wouldn't have taken so long. The CIDLC linking takes
+          a really really long time!
 
-	* examples/Hello/Receiver/Receiver_exec.cpp:
-	* examples/Hello/Sender/Sender_exec.cpp:
-	* examples/Hello/Sender/starter.cpp:
-	* examples/OEP/BasicSP/EC/EC_exec.cpp:
-	* examples/OEP/BasicSP/EC/client.cpp:
-	* examples/OEP/BasicSP/EC/controller.cpp:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/Sender/starter.cpp:
+        * examples/OEP/BasicSP/EC/EC_exec.cpp:
+        * examples/OEP/BasicSP/EC/client.cpp:
+        * examples/OEP/BasicSP/EC/controller.cpp:
 
-	  Fixes to the executor code to get it compiling on platforms with
-	  exceptions disabled.
+          Fixes to the executor code to get it compiling on platforms with
+          exceptions disabled.
 
 Mon Feb 16 16:32:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -3502,96 +3541,96 @@ Mon Feb 16 16:32:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Feb 13 11:51:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Added generation of file caption to local executor mapping.
+          Added generation of file caption to local executor mapping.
 
-	* CIDLC/ServantHeaderGenerator.cpp:
-	* CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
 
-	  Fixed bug in name generation when decalartions are in file
-	  scope.
+          Fixed bug in name generation when decalartions are in file
+          scope.
 
-	* CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/DescriptorGenerator.cpp:
 
           Fixed inconsistent tags.
 
-	* CIDLC/Literals.cpp:
-	* CIDLC/Literals.hpp:
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
 
-	  Split literals into header and source.
+          Split literals into header and source.
 
-	* CIDLC/CIDLC.mpc:
-	* CIDLC/CIDLC.vcproj:
-	* CIDLC/Makefile:
-	* CIDLC/Makefile.alt:
+        * CIDLC/CIDLC.mpc:
+        * CIDLC/CIDLC.vcproj:
+        * CIDLC/Makefile:
+        * CIDLC/Makefile.alt:
 
-	  Added Literals.cpp
+          Added Literals.cpp
 
 Thu Feb 12 17:40:33 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CIDLC/CIDLC.mwc:
-	* CIDLC/CIDLC.mpc:
+        * CIDLC/CIDLC.mwc:
+        * CIDLC/CIDLC.mpc:
 
-	  Updated these two files.
-	  Note: Only linux with boost/utility installed as package/rpm is
-	  tested.
+          Updated these two files.
+          Note: Only linux with boost/utility installed as package/rpm is
+          tested.
 
 Thu Feb 12 11:00:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CIAO-INSTALL.html
-	* CCF/CCF/CIDL/CIDL.mpc
-	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
-	* CCF/CCF/CompilerElements/CompilerElements.mpc
-	* CCF/CCF/IDL2/IDL2.mpc
-	* CCF/CCF/IDL3/IDL3.mpc
+        * CIAO-INSTALL.html
+        * CCF/CCF/CIDL/CIDL.mpc
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
+        * CCF/CCF/CompilerElements/CompilerElements.mpc
+        * CCF/CCF/IDL2/IDL2.mpc
+        * CCF/CCF/IDL3/IDL3.mpc
 
-	  Updated these files to set the static linkage.
+          Updated these files to set the static linkage.
 
 Thu Feb 12 10:31:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CCF/CCF/CCF.mwc:
+        * CCF/CCF/CCF.mwc:
 
-	  Added this workspace file.
+          Added this workspace file.
 
 Wed Feb 11 19:17:54 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CIAO-INSTALL.html:
+        * CIAO-INSTALL.html:
 
-	  Added this file for CIAO install/build instructions.
+          Added this file for CIAO install/build instructions.
 
 Wed Feb 11 12:05:59 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Updated URLs to the Boost website. Fixed incorrect build
-	  instruction for Windows.
+          Updated URLs to the Boost website. Fixed incorrect build
+          instruction for Windows.
 
 Wed Feb 11 11:36:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Hello/descriptors/run_test_debug.pl:
+        * examples/Hello/descriptors/run_test_debug.pl:
 
-	  A new script that uses -ORBdebuglevel while running the
-	  component server.
+          A new script that uses -ORBdebuglevel while running the
+          component server.
 
- 	* examples/Hello/step-by-step.html:
+        * examples/Hello/step-by-step.html:
 
-	  Added a pointer to the above script.
+          Added a pointer to the above script.
 
-	  Thanks to Gary Duzan <gduzan@bbn.com> and Praveen Sharma
-	  <psharma@bbn.com> for motivating this.
+          Thanks to Gary Duzan <gduzan@bbn.com> and Praveen Sharma
+          <psharma@bbn.com> for motivating this.
 
 Tue Feb 10 18:15:59 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Fixed bugs and updated links.
+          Fixed bugs and updated links.
 
 Tue Feb 10 16:44:33 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CIDLC/CIDLC.vcproj:
+        * CIDLC/CIDLC.vcproj:
 
-	  Changed the include path.
+          Changed the include path.
 
 Tue Feb 10 16:28:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3609,46 +3648,46 @@ Tue Feb 10 16:28:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Feb 10 14:54:48 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* ciao/Container_Impl.h:
-	* ciao/Container_Base.h: Changes to fix compile errors by adding
-	  default arguments for static configuration related paramters in
-	  the constructor.
+        * ciao/Container_Impl.h:
+        * ciao/Container_Base.h: Changes to fix compile errors by adding
+          default arguments for static configuration related paramters in
+          the constructor.
 
 
 Tue Feb 10 11:35:47 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* DnC/Deployment.idl:
+        * DnC/Deployment.idl:
 
-	  Added this file for the new DnC spec.
+          Added this file for the new DnC spec.
 
 Tue Feb 10 10:41:48 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/static_configurator/Static_Assembly_Visitors.{cpp,h}:
-	* tools/static_configurator/Static_Assembly_Parser.cpp:
-	* tools/static_configurator/Static_Assembly.h: Offline static
-	  configuration parser to parse XML files into an intermediate C++
-	  header file which will be included by the online configuration
-	  engine.
+        * tools/static_configurator/Static_Assembly_Visitors.{cpp,h}:
+        * tools/static_configurator/Static_Assembly_Parser.cpp:
+        * tools/static_configurator/Static_Assembly.h: Offline static
+          configuration parser to parse XML files into an intermediate C++
+          header file which will be included by the online configuration
+          engine.
 
-	* tools/static_configurator/Static_Configurator.mpc:
-	* tools/static_configurator/Static_Configurator.{h,cpp}: Online
-	  configuration engine that reads the intermediate table created
-	  by the offline parser. This is responsible for creating
-	  component servers, homes, containers, components and
-	  establishing connections between components.
+        * tools/static_configurator/Static_Configurator.mpc:
+        * tools/static_configurator/Static_Configurator.{h,cpp}: Online
+          configuration engine that reads the intermediate table created
+          by the offline parser. This is responsible for creating
+          component servers, homes, containers, components and
+          establishing connections between components.
 
-	* ciao/Container_Base.{h,cpp}: Modifications for static
-	  configuration. While installing a home, instead of loading the
-	  entry point symbol from a DLL, the entry point function pointer
-	  is obtained from a hashmap which is passed to the
-	  container. This hashmap contains the name of the entry point and
-	  the entry point function pointer.
+        * ciao/Container_Base.{h,cpp}: Modifications for static
+          configuration. While installing a home, instead of loading the
+          entry point symbol from a DLL, the entry point function pointer
+          is obtained from a hashmap which is passed to the
+          container. This hashmap contains the name of the entry point and
+          the entry point function pointer.
 
-	* ciao/Container_Impl.{h,cpp,inl}:
-	* ciao/ComponentServer_Impl.{h,cpp,inl}: Changed constructor
-	  signatures to add a flag for static configuration and a hashmap
-	  containing the static entry function pointers. These are
-	  defaulted to 0.
+        * ciao/Container_Impl.{h,cpp,inl}:
+        * ciao/ComponentServer_Impl.{h,cpp,inl}: Changed constructor
+          signatures to add a flag for static configuration and a hashmap
+          containing the static entry function pointers. These are
+          defaulted to 0.
 
 Fri Feb  6 15:54:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3663,35 +3702,35 @@ Fri Feb  6 15:54:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Feb  6 14:49:48 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CIDLC/CIDLC.mpc:
-	* CCF/CCF/CIDL/CIDL.mpc
-	* CCF/CCF/IDL2/IDL2.mpc
-	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
-	* CCF/CCF/CompilerElements/CompilerElements.mpc
-	* CCF/CCF/IDL3/IDL3.mpc
+        * CIDLC/CIDLC.mpc:
+        * CCF/CCF/CIDL/CIDL.mpc
+        * CCF/CCF/IDL2/IDL2.mpc
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
+        * CCF/CCF/CompilerElements/CompilerElements.mpc
+        * CCF/CCF/IDL3/IDL3.mpc
 
-	  Added reqires cidl in these mpc files. By default
-	  cidl is not turned on, so MPC won't generate makefiles.
+          Added reqires cidl in these mpc files. By default
+          cidl is not turned on, so MPC won't generate makefiles.
 
 Thu Feb  5 12:58:14 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
-	* CIDLC/README.html:
+        * CCF/Documentation/Build.html:
+        * CIDLC/README.html:
 
-	  Updated all URLs to point to the 'central location'.
+          Updated all URLs to point to the 'central location'.
 
 Wed Feb  4 14:58:05 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* ./CIDLC/CIDLC.mpc:
-	* ./CCF/CCF/CIDL/CIDL.mpc
-	* ./CCF/CCF/IDL2/IDL2.mpc
-	* ./CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
-	* ./CCF/CCF/CompilerElements/CompilerElements.mpc
-	* ./CCF/CCF/IDL3/IDL3.mpc
+        * ./CIDLC/CIDLC.mpc:
+        * ./CCF/CCF/CIDL/CIDL.mpc
+        * ./CCF/CCF/IDL2/IDL2.mpc
+        * ./CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
+        * ./CCF/CCF/CompilerElements/CompilerElements.mpc
+        * ./CCF/CCF/IDL3/IDL3.mpc
 
-	  Added these mpc files to build CIDLC compiler.
-	  The libpath of Boost and Utility is not fixed yet.
-	  Need to test all the mpc files on both Linux/Windows.
+          Added these mpc files to build CIDLC compiler.
+          The libpath of Boost and Utility is not fixed yet.
+          Need to test all the mpc files on both Linux/Windows.
 
 Wed Feb  4 13:58:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3736,48 +3775,48 @@ Wed Feb  4 13:58:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tools/XML_Helpers/XMLHelpers.mpc:
         * tools/XML_Helpers/XML_Utils.h:
 
-		- Removed all include paths except TAO_ROOT and CIAO_ROOT
-		  for C++ and IDL compilers, from MPC files.
+                - Removed all include paths except TAO_ROOT and CIAO_ROOT
+                  for C++ and IDL compilers, from MPC files.
 
-		- Modified includes in source and header files as necessary,
-		  per the above changes.
+                - Modified includes in source and header files as necessary,
+                  per the above changes.
 
-		- Added missing ACE_ROOT/ace includes.
+                - Added missing ACE_ROOT/ace includes.
 
-		- Made other modifications as necessary to MPC files to
-		  eliminate build errors.
+                - Made other modifications as necessary to MPC files to
+                  eliminate build errors.
 
 Mon Feb  2 20:07:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tools/XML_Helpers/Makefile.XML_Helpers:
+        * tools/XML_Helpers/Makefile.XML_Helpers:
 
-	  Removed RTConfiguration_Stub.cpp and included
-	  RTConfigurationC.cpp for compilation.
+          Removed RTConfiguration_Stub.cpp and included
+          RTConfigurationC.cpp for compilation.
 
 Mon Feb  2 20:00:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tools/XML_Helpers/RTConfiguration.idl:
+        * tools/XML_Helpers/RTConfiguration.idl:
 
-	  Include RTCORBA_include.pidl instead of RTCORBA.pidl.
+          Include RTCORBA_include.pidl instead of RTCORBA.pidl.
 
-	* tools/XML_Helpers/RTConfiguration_Stubs.cpp:
+        * tools/XML_Helpers/RTConfiguration_Stubs.cpp:
 
-	  Removed the hacks in this file since they are no longer
-	  necessary.
+          Removed the hacks in this file since they are no longer
+          necessary.
 
-	* tools/XML_Helpers/XMLHelpers.mpc:
+        * tools/XML_Helpers/XMLHelpers.mpc:
 
-	  Changed the order of inheritance to get the libraries in the
-	  right order.
+          Changed the order of inheritance to get the libraries in the
+          right order.
 
           All these should fix a problem reported by Diego Sevilla Ruiz
           and as always thanks to him for reporting it.
 
 Sat Jan 31 18:26:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tools/XML_Helpers/RTConfiguration.idl:
+        * tools/XML_Helpers/RTConfiguration.idl:
 
-	  Appended "tao" to the path for RTCORBA.pidl.
+          Appended "tao" to the path for RTCORBA.pidl.
 
 Thu Jan 29 14:03:42 2004  Chad Elliott  <elliott_c@ociweb.com>
 
