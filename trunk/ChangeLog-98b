@@ -1,3 +1,7 @@
+Tue Jul 21 12:34:11 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/config-lynxos.h: Defined ACE_HAS_AIO_CALLS.
+
 Mon Jul 20 19:35:21 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.1.x.h: Added ACE_LACKS_RLIMIT.  Thanks to Zheng
