@@ -1,3 +1,14 @@
+Sun Dec 19 23:25:33 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:  Changed an instance
+          where I was assigning a string literal to a char *.  This was
+          causing a warning on suncc 5.
+
+        * orbsvcs/Time_Service/Server_i.cpp: Forgot a ACE_TRY_CHECK after
+          orb->run.  Decided to remove the ACE_TRY block and just use
+          the ACE_CHECK_RETURN macro instead (main will catch it and
+          print out a message anyway.  
+
 Sun Dec 19 17:36:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
@@ -9,7 +20,6 @@ Sun Dec 19 17:36:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp: Added missing
 	  template instantiations. 
-	
 
 Sun Dec 19 10:05:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
