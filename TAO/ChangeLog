@@ -58,8 +58,8 @@ Wed Sep  3 20:25:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
 	* orbsvcs/tests/Concurrency/lex.CC_command.cpp:
 
-	  Corrected broken "$Id$" RCS ID keywords.  "$id$" -> "$Id$".
-	  Fixes "fuzz" build errors.
+	  Corrected broken "Id" RCS ID keywords.  "id" -> "Id".  Fixes
+	  "fuzz" build errors.
 
 Wed Sep  3 17:37:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
