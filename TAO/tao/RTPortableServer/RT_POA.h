@@ -40,6 +40,8 @@
 #endif /* _MSC_VER */
 
 class TAO_Thread_Pool;
+class TAO_Thread_Lane;
+class TAO_PriorityBandedConnectionPolicy;
 
 class TAO_RTPortableServer_Export TAO_RT_POA :
   public virtual RTPortableServer::POA,
@@ -298,7 +300,11 @@ protected:
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
+                                TAO_PriorityBandedConnectionPolicy *priority_bands,
                                 CORBA::Environment &ACE_TRY_ENV);
+
+  int lane_required (TAO_Thread_Lane *lane,
+                     TAO_PriorityBandedConnectionPolicy *priority_bands);
 
   TAO_Thread_Pool *thread_pool_;
 

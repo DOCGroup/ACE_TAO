@@ -131,55 +131,24 @@ void
 TAO_RT_POA::valid_priority (RTCORBA::Priority priority,
                             CORBA_Environment &ACE_TRY_ENV)
 {
-  // Make sure <priority> matches our resource configuration:
-  // 1. If Priority Banded Connections are set, <priority> must match
-  //    one of the bands.
-  // 2. If no Priority Banded Connections are set, at least one server
-  //    endpoint must provide service at the specified <priority>.
-
-  // @@ RT CORBA Subsetting: optimize out locks.
-  CORBA::Policy_var policy =
-    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
-
-  RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
-    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy.in (),
-                                                        ACE_TRY_ENV);
-  ACE_CHECK;
-
-  TAO_PriorityBandedConnectionPolicy *bands_policy =
-    ACE_dynamic_cast (TAO_PriorityBandedConnectionPolicy *,
-                      priority_bands.in ());
-
-  if (bands_policy != 0)
-    // Case 1.
+  // If this POA is using a thread pool with lanes, make sure the
+  // priority matches one of the thread lanes.
+  if (this->thread_pool_ != 0 &&
+      this->thread_pool_->with_lanes ())
     {
-      RTCORBA::PriorityBands &bands =
-        bands_policy->priority_bands_rep ();
+      TAO_Thread_Lane **lanes =
+        this->thread_pool_->lanes ();
 
-      for (CORBA::ULong i = 0; i < bands.length (); ++i)
+      for (CORBA::ULong i = 0;
+           i != this->thread_pool_->number_of_lanes ();
+           ++i)
         {
-          if (priority <= bands[i].high
-              && priority >= bands[i].low)
+          if (lanes[i]->lane_priority () == priority)
             return;
         }
-    }
-  else
-    // Case 2.
-    {
-      TAO_Acceptor_Registry *ar =
-        TAO_POA_RT_Policy_Validator::extract_acceptor_registry (this->orb_core_,
-                                                                this->thread_pool_);
 
-      for (TAO_Acceptor **a = ar->begin ();
-           a != ar->end ();
-           ++a)
-        {
-          if ((*a)->priority () == priority)
-            return;
-        }
+      ACE_THROW (CORBA::BAD_PARAM ());
     }
-
-  ACE_THROW (CORBA::BAD_PARAM ());
 }
 
 void
@@ -212,31 +181,39 @@ TAO_RT_POA::validate_policies (CORBA::Environment &ACE_TRY_ENV)
   // observed.
 }
 
-size_t
-TAO_RT_POA::endpoint_count (void)
-{
-  size_t profile_count = 0;
-
-  TAO_Thread_Lane **lanes =
-    this->thread_pool_->lanes ();
-
-  for (CORBA::ULong i = 0;
-       i != this->thread_pool_->number_of_lanes ();
-       ++i)
-    profile_count +=
-      lanes[i]->resources ().acceptor_registry ().endpoint_count ();
-
-  return profile_count;
-}
-
 TAO_Stub *
-TAO_RT_POA::create_stub_object (const TAO_ObjectKey &object_key,
-                                const char *type_id,
-                                CORBA::PolicyList *policy_list,
-                                TAO_Acceptor_Filter *filter,
-                                CORBA::Environment &ACE_TRY_ENV)
+TAO_RT_POA::key_to_stub_i (const TAO_ObjectKey &object_key,
+                           const char *type_id,
+                           CORBA::Short priority,
+                           CORBA_Environment &ACE_TRY_ENV)
 {
-  if (this->thread_pool_ == 0)
+  // Client exposed policies.
+  CORBA::PolicyList_var client_exposed_policies =
+    this->client_exposed_policies (priority,
+                                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Server protocol policy.
+  CORBA::Policy_var protocol =
+    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+
+  RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
+    RTCORBA::ServerProtocolPolicy::_narrow (protocol.in (),
+                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  TAO_ServerProtocolPolicy *server_protocol =
+    ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
+                      server_protocol_policy.in ());
+
+  // Filter for server protocol.
+  TAO_Server_Protocol_Acceptor_Filter filter (server_protocol->protocols_rep ());
+
+  // If this POA is using the default thread pool or a thread pool
+  // without lanes, create the IOR with the acceptors in the thread
+  // pool.
+  if (this->thread_pool_ == 0 ||
+      !this->thread_pool_->with_lanes ())
     {
       TAO_Acceptor_Registry *acceptor_registry =
         TAO_POA_RT_Policy_Validator::extract_acceptor_registry (this->orb_core_,
@@ -245,12 +222,69 @@ TAO_RT_POA::create_stub_object (const TAO_ObjectKey &object_key,
       return
         this->TAO_POA::create_stub_object (object_key,
                                            type_id,
-                                           policy_list,
-                                           filter,
+                                           client_exposed_policies._retn (),
+                                           &filter,
                                            *acceptor_registry,
                                            ACE_TRY_ENV);
     }
 
+  // If this POA has the SERVER_DECLARED policy, create the IOR with
+  // the acceptors in the only thread lane that matches the priority
+  // of the object.
+  if (this->cached_policies_.priority_model () ==
+      TAO_POA_Cached_Policies::SERVER_DECLARED)
+    {
+      TAO_Thread_Lane **lanes =
+        this->thread_pool_->lanes ();
+
+      for (CORBA::ULong i = 0;
+           i != this->thread_pool_->number_of_lanes ();
+           ++i)
+        {
+          if (lanes[i]->lane_priority () == priority)
+            return this->TAO_POA::create_stub_object (object_key,
+                                                      type_id,
+                                                      client_exposed_policies._retn (),
+                                                      &filter,
+                                                      lanes[i]->resources ().acceptor_registry (),
+                                                      ACE_TRY_ENV);
+        }
+
+      ACE_ASSERT (0);
+    }
+
+  // If this POA has the CLIENT_PROPAGATED policy, create the IOR with
+  // the acceptors in the thread lanes that matches the bands in this
+  // POA.  If there are no bands, all the thread lanes are used.
+  CORBA::Policy_var bands =
+    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
+
+  RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
+    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in (),
+                                                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  TAO_PriorityBandedConnectionPolicy *priority_bands_i =
+    ACE_dynamic_cast (TAO_PriorityBandedConnectionPolicy *,
+                      priority_bands.in ());
+
+
+  return this->create_stub_object (object_key,
+                                   type_id,
+                                   client_exposed_policies._retn (),
+                                   &filter,
+                                   priority_bands_i,
+                                   ACE_TRY_ENV);
+}
+
+TAO_Stub *
+TAO_RT_POA::create_stub_object (const TAO_ObjectKey &object_key,
+                                const char *type_id,
+                                CORBA::PolicyList *policy_list,
+                                TAO_Acceptor_Filter *filter,
+                                TAO_PriorityBandedConnectionPolicy *priority_bands,
+                                CORBA::Environment &ACE_TRY_ENV)
+{
   int error = 0;
 
   // Count the number of endpoints.
@@ -279,16 +313,20 @@ TAO_RT_POA::create_stub_object (const TAO_ObjectKey &object_key,
          !error;
        ++i)
     {
-      TAO_Acceptor_Registry &acceptor_registry =
-        lanes[i]->resources ().acceptor_registry ();
+      if (this->lane_required (lanes[i],
+                               priority_bands))
+        {
+          TAO_Acceptor_Registry &acceptor_registry =
+            lanes[i]->resources ().acceptor_registry ();
 
-      result =
-        filter->fill_mprofile (object_key,
-                               mprofile,
-                               acceptor_registry.begin (),
-                               acceptor_registry.end ());
-      if (result == -1)
-        error = 1;
+          result =
+            filter->fill_mprofile (object_key,
+                                   mprofile,
+                                   acceptor_registry.begin (),
+                                   acceptor_registry.end ());
+          if (result == -1)
+            error = 1;
+        }
     }
 
   if (!error)
@@ -322,101 +360,43 @@ TAO_RT_POA::create_stub_object (const TAO_ObjectKey &object_key,
                                         ACE_TRY_ENV);
 }
 
-TAO_Stub *
-TAO_RT_POA::key_to_stub_i (const TAO_ObjectKey &key,
-                           const char *type_id,
-                           CORBA::Short priority,
-                           CORBA_Environment &ACE_TRY_ENV)
+size_t
+TAO_RT_POA::endpoint_count (void)
 {
-  CORBA::PolicyList_var client_exposed_policies =
-    this->client_exposed_policies (priority,
-                                   ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  size_t profile_count = 0;
 
-  TAO_Stub *data = 0;
+  TAO_Thread_Lane **lanes =
+    this->thread_pool_->lanes ();
 
-  CORBA::Policy_var protocol =
-    this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+  for (CORBA::ULong i = 0;
+       i != this->thread_pool_->number_of_lanes ();
+       ++i)
+    profile_count +=
+      lanes[i]->resources ().acceptor_registry ().endpoint_count ();
 
-  RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
-    RTCORBA::ServerProtocolPolicy::_narrow (protocol.in (),
-                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  return profile_count;
+}
 
-  TAO_ServerProtocolPolicy *server_protocol =
-    ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
-                      server_protocol_policy.in ());
+int
+TAO_RT_POA::lane_required (TAO_Thread_Lane *lane,
+                           TAO_PriorityBandedConnectionPolicy *priority_bands)
+{
+  if (priority_bands == 0)
+    return 1;
 
+  RTCORBA::PriorityBands &bands =
+    priority_bands->priority_bands_rep ();
 
-  // If the POA has RTCORBA::SERVER_DECLARED priority model
-  // then regardless of the fact that there are or that there
-  // are not bands then we need to pass only one endpoint that
-  // is either the one associated to the bands to which the
-  // server belongs, or the one associated to the server priority.
-  //
-  // If the POA has  RTCORBA::CLIENT_EXPOSED, than all endpoints
-  // should be passed.
-
-  if (this->cached_policies_.priority_model ()
-      == TAO_POA_Cached_Policies::SERVER_DECLARED)
+  for (CORBA::ULong i = 0;
+       i < bands.length ();
+       ++i)
     {
-      CORBA::Policy_var bands =
-        this->policies ().get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
-
-      RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
-        = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in (),
-                                                            ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      TAO_PriorityBandedConnectionPolicy *priority_bands_i =
-        ACE_dynamic_cast (TAO_PriorityBandedConnectionPolicy *,
-                          priority_bands.in ());
-
-      if (priority_bands_i != 0)
-        {
-          TAO_Bands_Acceptor_Filter
-            filter (server_protocol->protocols_rep (),
-                    priority_bands_i->priority_bands_rep());
-
-          data =
-            this->create_stub_object (key,
-                                      type_id,
-                                      client_exposed_policies._retn (),
-                                      &filter,
-                                      ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
-        }
-      else
-        {
-          RTCORBA::Priority object_priority =
-            this->cached_policies_.server_priority () > priority ?
-                this->cached_policies_.server_priority () : priority;
-          TAO_Priority_Acceptor_Filter filter (server_protocol->protocols_rep (),
-                                               object_priority);
-
-          data =
-            this->create_stub_object (key,
-                                      type_id,
-                                      client_exposed_policies._retn (),
-                                      &filter,
-                                      ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
-        }
-    }
-  else
-    {
-      // Client propagated.
-      TAO_Server_Protocol_Acceptor_Filter filter (server_protocol->protocols_rep ());
-      data =
-        this->create_stub_object (key,
-                                  type_id,
-                                  client_exposed_policies._retn (),
-                                  &filter,
-                                  ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      if (bands[i].low <= lane->lane_priority () &&
+          bands[i].high >= lane->lane_priority ())
+        return 1;
     }
 
-  return data;
+  return 0;
 }
 
 CORBA::PolicyList *

@@ -1110,9 +1110,9 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // active in this POA (there is a servant bound to it in the Active
   // Object Map), the ObjectAlreadyActive exception is raised.
   int priorities_match = 1;
-  if (is_user_id_in_map (id,
-                         priority,
-                         priorities_match))
+  if (this->is_user_id_in_map (id,
+                               priority,
+                               priorities_match))
     {
       ACE_THROW (PortableServer::POA::ObjectAlreadyActive ());
     }
