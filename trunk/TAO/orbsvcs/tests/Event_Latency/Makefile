@@ -26,14 +26,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-#### compiler-specific options
-ifeq ($(CXX),g++)
-  CCFLAGS += -pedantic
-else
-ifeq ($(CXX),CC)
-endif
-endif
-
 ifdef quantify
   CCFLAGS += -Dquantify
   CPPFLAGS += -I/pkg/purify/quantify-2.1-solaris2

@@ -7,7 +7,7 @@ BIN = Event_Sup Event_Con
 BUILD = $(BIN)
 
 
-IDL_SRC	= NavWeapC.cpp 
+IDL_SRC	= NavWeapC.cpp
 
 EVENT_TEST_SRCS= \
 	Event_Sup.cpp Event_Con.cpp $(IDL_SRC)
@@ -29,14 +29,6 @@ include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-#### compiler-specific options
-ifeq ($(CXX),g++)
-  CCFLAGS += -pedantic
-else
-ifeq ($(CXX),CC)
-endif
-endif
 
 #### Local rules and variables...
 
