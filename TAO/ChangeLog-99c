@@ -1,4 +1,7 @@
-Tue Jul 27 13:57:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Jul 27 14:28:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* version_tests.dsw: Event_Service was missing from the
+	  workspace.
 
 	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed broken custome build
 	  setting and updated source file lists.
