@@ -1,3 +1,13 @@
+Mon Jul 12 16:59:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h: Updated comments regarding how to re-enable
+	  the deprecated TAO try macros and moved the comments to make
+	  them more obvious.  Thanks to Carlos and Phil Y. Wang
+	  <yhwang@cs.columbia.edu> for reporting this.
+
+	* tao/Exceptions.h: Moved the macro definition of TAO_RAISE from
+	  <try_macros.h> to here.  It's really an TAO-specific macros.
+
 Mon Jul 12 16:10:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/orbconf.h: only use TAO_USE_SEQUENCE_TEMPLATES on _UNICOS.
