@@ -1,3 +1,16 @@
+Thu Oct 28 07:03:28 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
+        * examples/Reactor/Misc/pingpong.cpp:
+
+          Added #include "ace/OS_NS_unistd.h" for ACE_OS::read,
+          ACE_OS::unlink, ACE_OS::getpid and ACE_OS::fork.
+
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+
+          Added #include "ace/OS_Memory.h" for ACE_NEW_RETURN.
+
 Thu Oct 28 11:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/dsp2dsp.pl:
