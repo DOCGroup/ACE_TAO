@@ -1,0 +1,6 @@
+// $Id$
+
+workspace {
+  ./Config_Handlers
+  Deployment.mpc
+}
