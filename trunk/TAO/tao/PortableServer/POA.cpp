@@ -743,7 +743,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       TAO_POA *child_poa = (*iterator).int_id_;
 
       /// Get the adapter template related to the ChildPOA
-      const PortableInterceptor::ObjectReferenceTemplate *child_at =
+      PortableInterceptor::ObjectReferenceTemplate *child_at =
         child_poa->get_adapter_template ();
 
       /// Add it to the sequence of object reference templates that
@@ -3661,11 +3661,11 @@ TAO_POA::establish_components (PortableInterceptor::IORInfo *info
 
   /// All the establish_components methods are invoked. Now, call the
   /// components_established method on all the IOR Interceptors.
-  for (size_t i = 0; i < interceptor_count; ++i)
+  for (size_t j = 0; j < interceptor_count; ++j)
     {
       ACE_TRY
         {
-          interceptors[i]->components_established (
+          interceptors[j]->components_established (
             info
             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
