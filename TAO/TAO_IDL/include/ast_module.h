@@ -85,9 +85,12 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Module();
-  AST_Module(UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_Module() {}
+  AST_Module ();
+
+  AST_Module (UTL_ScopedName *n, 
+              UTL_StrList *p);
+
+  virtual ~AST_Module (void);
 
   // Narrowing
   DEF_NARROW_METHODS2(AST_Module, AST_Decl, UTL_Scope);

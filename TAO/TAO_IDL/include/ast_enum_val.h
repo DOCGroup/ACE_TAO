@@ -84,9 +84,12 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_EnumVal();
-  AST_EnumVal(unsigned long v, UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_EnumVal() {}
+  AST_EnumVal ();
+  AST_EnumVal (unsigned long v, 
+               UTL_ScopedName *n, 
+               UTL_StrList *p);
+
+  virtual ~AST_EnumVal (void);
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_EnumVal, AST_Constant);

@@ -81,39 +81,44 @@ ACE_RCSID(ast, ast_string, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_String::AST_String()
-	  : pd_max_size(0), pd_width(1)
+AST_String::AST_String ()
+ : pd_max_size (0), 
+   pd_width (1)
 {
 }
 
-AST_String::AST_String(AST_Expression *ms)
-	  : AST_Decl(AST_Decl::NT_string,
-		     new UTL_ScopedName(new Identifier("string",1,0,I_FALSE),
-					NULL),
-		     NULL),
-	    pd_max_size(ms),
-            pd_width(sizeof(char))
+AST_String::AST_String (AST_Expression *ms)
+ : AST_Decl (AST_Decl::NT_string,
+		         new UTL_ScopedName (new Identifier ("string", 1, 0, I_FALSE),
+					                       NULL),
+		         NULL),
+	 pd_max_size (ms),
+   pd_width (sizeof (char))
 {
 }
 
-AST_String::AST_String(AST_Expression *ms, 
-                       long wide)
-	  : AST_Decl (wide == sizeof (char) 
-                  ? AST_Decl::NT_string 
-                  : AST_Decl::NT_wstring,
-		            new UTL_ScopedName (wide == sizeof (char)
-					                            ? new Identifier ("string",
-                                                        1,
-                                                        0,
-                                                        I_FALSE)
-					                            : new Identifier ("wstring",
-                                                        1,
-                                                        0,
-                                                        I_FALSE),
-					                          NULL),
-		            NULL),
-      pd_max_size(ms),
-      pd_width(wide)
+AST_String::AST_String (AST_Expression *ms, 
+                        long wide)
+ : AST_Decl (wide == sizeof (char) 
+                ? AST_Decl::NT_string 
+                : AST_Decl::NT_wstring,
+		         new UTL_ScopedName (wide == sizeof (char)
+					                          ? new Identifier ("string",
+                                                      1,
+                                                      0,
+                                                      I_FALSE)
+					                          : new Identifier ("wstring",
+                                                      1,
+                                                      0,
+                                                      I_FALSE),
+					                        NULL),
+		          NULL),
+    pd_max_size(ms),
+    pd_width(wide)
+{
+}
+
+AST_String::~AST_String (void)
 {
 }
 

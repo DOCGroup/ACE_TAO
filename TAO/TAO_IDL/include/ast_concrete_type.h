@@ -83,9 +83,12 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_ConcreteType();
-  AST_ConcreteType(AST_Decl::NodeType nt, UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_ConcreteType() {}
+  AST_ConcreteType ();
+  AST_ConcreteType (AST_Decl::NodeType nt, 
+                    UTL_ScopedName *n, 
+                    UTL_StrList *p);
+
+  virtual ~AST_ConcreteType (void);
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_ConcreteType, AST_Type);

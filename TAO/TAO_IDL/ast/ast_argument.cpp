@@ -117,6 +117,10 @@ AST_Argument::AST_Argument(Direction d, AST_Type *ft, UTL_ScopedName *n,
 {
 }
 
+AST_Argument::~AST_Argument (void)
+{
+}
+
 /*
  * Private operations
  */

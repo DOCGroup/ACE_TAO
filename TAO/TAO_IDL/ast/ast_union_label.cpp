@@ -82,18 +82,23 @@ ACE_RCSID(ast, ast_union_label, "$Id$")
 /*
  * Constructor(s)
  */
-AST_UnionLabel::AST_UnionLabel()
-	      : pd_label_kind(UL_default),
-		pd_label_val(NULL)
+AST_UnionLabel::AST_UnionLabel ()
+ : pd_label_kind (UL_default),
+	pd_label_val (NULL)
 {
 }
 
-AST_UnionLabel::AST_UnionLabel(UnionLabel lk, AST_Expression *lv)
-	       : pd_label_kind(lk),
-		 pd_label_val(lv)
+AST_UnionLabel::AST_UnionLabel (UnionLabel lk, 
+                                AST_Expression *lv)
+ : pd_label_kind (lk),
+	pd_label_val (lv)
 {
     if (lv != NULL)
-      lv->evaluate(AST_Expression::EK_const);
+      lv->evaluate (AST_Expression::EK_const);
+}
+
+AST_UnionLabel::~AST_UnionLabel (void)
+{
 }
 
 /*

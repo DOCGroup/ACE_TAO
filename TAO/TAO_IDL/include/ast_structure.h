@@ -91,10 +91,16 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Structure();
-  AST_Structure(UTL_ScopedName *n, UTL_StrList *p);
-  AST_Structure(AST_Decl::NodeType nt, UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_Structure() {}
+  AST_Structure ();
+
+  AST_Structure (UTL_ScopedName *n, 
+                 UTL_StrList *p);
+
+  AST_Structure (AST_Decl::NodeType nt, 
+                 UTL_ScopedName *n, 
+                 UTL_StrList *p);
+
+  virtual ~AST_Structure (void);
 
   // Narrowing
   DEF_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope);

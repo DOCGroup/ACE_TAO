@@ -123,6 +123,10 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
 {
 }
 
+AST_Field::~AST_Field (void)
+{
+}
+
 /*
  * Private operations
  */

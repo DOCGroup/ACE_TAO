@@ -84,9 +84,12 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Sequence();
-  AST_Sequence(AST_Expression *max_size, AST_Type *bt);
-  virtual ~AST_Sequence() {}
+  AST_Sequence ();
+
+  AST_Sequence (AST_Expression *max_size, 
+                AST_Type *bt);
+
+  virtual ~AST_Sequence (void);
 
   // Data Accessors
   AST_Expression *max_size();

@@ -90,9 +90,13 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Union();
-  AST_Union(AST_ConcreteType *disc_type, UTL_ScopedName *n, UTL_StrList *p);
-  virtual ~AST_Union() {}
+  AST_Union ();
+
+  AST_Union (AST_ConcreteType *disc_type, 
+             UTL_ScopedName *n, 
+             UTL_StrList *p);
+
+  virtual ~AST_Union (void);
 
   // Data Accessors
   AST_ConcreteType *disc_type();

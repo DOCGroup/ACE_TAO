@@ -80,14 +80,15 @@ ACE_RCSID(ast, ast_module, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_Module::AST_Module()
+AST_Module::AST_Module ()
 {
 }
 
-AST_Module::AST_Module(UTL_ScopedName *n, UTL_StrList *p)
-         : AST_Decl(AST_Decl::NT_module, n, p),
-           UTL_Scope(AST_Decl::NT_module),
-           pd_has_nested_valuetype (0)
+AST_Module::AST_Module (UTL_ScopedName *n, 
+                        UTL_StrList *p)
+ : AST_Decl (AST_Decl::NT_module, n, p),
+   UTL_Scope(AST_Decl::NT_module),
+   pd_has_nested_valuetype (0)
 {
   static int CORBA_module_added = 0;
 
@@ -138,6 +139,10 @@ AST_Module::AST_Module(UTL_ScopedName *n, UTL_StrList *p)
 # endif /* IDL_HAS_VALUETYPE */
       CORBA_module_added = 1;
     }
+}
+
+AST_Module::~AST_Module (void)
+{
 }
 
 /*

@@ -86,10 +86,15 @@ AST_Enum::AST_Enum()
 {
 }
 
-AST_Enum::AST_Enum(UTL_ScopedName *n, UTL_StrList *p)
+AST_Enum::AST_Enum (UTL_ScopedName *n, 
+                    UTL_StrList *p)
        : AST_Decl(AST_Decl::NT_enum, n, p),
 	 UTL_Scope(AST_Decl::NT_enum),
 	 pd_enum_counter(0)
+{
+}
+
+AST_Enum::~AST_Enum (void)
 {
 }
 

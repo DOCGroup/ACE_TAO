@@ -93,44 +93,46 @@ AST_Expression::fill_definition_details()
 /*
  * An AST_Expression denoting a symbolic name
  */
-AST_Expression::AST_Expression(UTL_ScopedName *nm)
-	      : pd_ec(EC_symbol),
-		pd_ev(NULL),
-		pd_v1(NULL),
-		pd_v2(NULL),
-		pd_n(nm)
+AST_Expression::AST_Expression (UTL_ScopedName *nm)
+	      : pd_ec (EC_symbol),
+		pd_ev (NULL),
+		pd_v1 (NULL),
+		pd_v2 (NULL),
+		pd_n (nm)
 {
-  fill_definition_details();
+  fill_definition_details ();
 }
 
 /*
  * An AST_Expression denoting a type coercion from another AST_Expression
  */
-AST_Expression::AST_Expression(AST_Expression *v, ExprType t)
-	      : pd_ec(EC_none),
-		pd_ev(NULL),
-		pd_v1(NULL),
-		pd_v2(NULL),
-		pd_n(NULL)
+AST_Expression::AST_Expression (AST_Expression *v, 
+                                ExprType t)
+	: pd_ec (EC_none),
+		pd_ev (NULL),
+		pd_v1 (NULL),
+		pd_v2 (NULL),
+		pd_n (NULL)
 {
-  fill_definition_details();
+  fill_definition_details ();
 
-  pd_ev = v->coerce(t);
+  pd_ev = v->coerce (t);
   if (pd_ev == NULL)
-    idl_global->err()->coercion_error(v, t);
+    idl_global->err ()->coercion_error (v, t);
 }
 
 /*
  * An AST_Expression denoting a binary expression combination from
  * two other AST_Expressions
  */
-AST_Expression::AST_Expression(ExprComb c, AST_Expression *ev1,
+AST_Expression::AST_Expression (ExprComb c, 
+                                AST_Expression *ev1,
 			       AST_Expression *ev2)
-	      : pd_ec(c),
-		pd_ev(NULL),
-		pd_v1(ev1),
-		pd_v2(ev2),
-		pd_n(NULL)
+  : pd_ec (c),
+		pd_ev (NULL),
+		pd_v1 (ev1),
+		pd_v2 (ev2),
+		pd_n (NULL)
 {
   fill_definition_details();
 }
@@ -337,6 +339,10 @@ AST_Expression::AST_Expression(char *sv)
   pd_ev = new AST_ExprValue;
   pd_ev->et = EV_wstring;
   pd_ev->u.wstrval = sv;
+}
+
+AST_Expression::~AST_Expression (void)
+{
 }
 
 /*

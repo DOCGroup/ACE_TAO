@@ -84,17 +84,22 @@ AST_Structure::AST_Structure()
 {
 }
 
-AST_Structure::AST_Structure(UTL_ScopedName *n, UTL_StrList *p)
-	     : AST_Decl(AST_Decl::NT_struct, n, p),
-	       UTL_Scope(AST_Decl::NT_struct)
+AST_Structure::AST_Structure (UTL_ScopedName *n, 
+                              UTL_StrList *p)
+ : AST_Decl (AST_Decl::NT_struct, n, p),
+	 UTL_Scope (AST_Decl::NT_struct)
 {
 }
 
-AST_Structure::AST_Structure(AST_Decl::NodeType nt,
-			     UTL_ScopedName *n,
-			     UTL_StrList *p)
-	     : AST_Decl(nt, n, p),
-	       UTL_Scope(nt)
+AST_Structure::AST_Structure (AST_Decl::NodeType nt,
+			                        UTL_ScopedName *n,
+			                        UTL_StrList *p)
+ : AST_Decl(nt, n, p),
+	 UTL_Scope(nt)
+{
+}
+
+AST_Structure::~AST_Structure (void)
 {
 }
 

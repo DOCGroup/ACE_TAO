@@ -84,12 +84,13 @@ public:
   // Operations
 
   // Constructor(s)
-  AST_Attribute();
-  AST_Attribute(idl_bool readonly,
-                AST_Type *ft,
-                UTL_ScopedName *n,
-                UTL_StrList *p);
-  virtual ~AST_Attribute() {}
+  AST_Attribute ();
+  AST_Attribute (idl_bool readonly,
+                 AST_Type *ft,
+                 UTL_ScopedName *n,
+                 UTL_StrList *p);
+
+  virtual ~AST_Attribute (void);
 
   // Data Accessors
   idl_bool readonly();

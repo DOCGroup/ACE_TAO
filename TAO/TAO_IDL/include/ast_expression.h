@@ -182,7 +182,8 @@ public:
   AST_Expression(UTL_String     *s);
   AST_Expression(char           *s);
   AST_Expression(UTL_ScopedName *n);
-  virtual ~AST_Expression () {}
+
+  virtual ~AST_Expression (void);
 
   // Data Accessors
   UTL_Scope *defined_in();

@@ -79,12 +79,18 @@ ACE_RCSID(ast, ast_type, "$Id$")
 /*
  * Constructor(s) and destructor
  */
-AST_Type::AST_Type()
+AST_Type::AST_Type ()
 {
 }
 
-AST_Type::AST_Type(AST_Decl::NodeType nt, UTL_ScopedName *n, UTL_StrList *p)
-	: AST_Decl(nt, n, p)
+AST_Type::AST_Type (AST_Decl::NodeType nt, 
+                    UTL_ScopedName *n, 
+                    UTL_StrList *p)
+	: AST_Decl (nt, n, p)
+{
+}
+
+AST_Type::~AST_Type (void)
 {
 }
 
