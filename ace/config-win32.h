@@ -174,9 +174,10 @@
 // either:
 //
 // 1. Using static object manager (as described above).
-// 2. Instantiate Object Manager in your CApplication derived class
-//    and define ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.
-//
+// 2. #define ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER in your
+//    ace/config.h, _and_ either 1) call ACE::init () at the beginning
+//    and ACE::fini () at the end, _or_ 2) instantiate the
+//    ACE_Object_Manager in your CApplication derived class.
 //
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 # define ACE_HAS_NONSTATIC_OBJECT_MANAGER
