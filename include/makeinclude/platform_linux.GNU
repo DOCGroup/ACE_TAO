@@ -3,25 +3,85 @@
 # According to Bryon G. Rigg <bgrigg@opus.bcbnet.com>, this file
 # should allow ACE to be built on Linux.
 
-debug = 1
-optimize = 1
+# debug = 1
+# optimize = 1
+
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(optimize))
+  optimize = 1
+endif
+ifeq (,$(threads))
+  threads = 1
+endif
+ifeq ($(threads),0)
+  CFLAGS += -DACE_MT_SAFE=0
+endif # threads
+
+ifeq ($(threads),1)
+   xt_reactor =0
+   fl_reactor =0
+   PLATFORM_XT_CPPFLAGS=
+   PLATFORM_XT_LIBS=-lXt  
+   PLATFORM_XT_LDFLAGS=
+
+   PLATFORM_FL_CPPFLAGS=
+   PLATFORM_FL_LIBS=-lfltk
+   PLATFORM_FL_LDFLAGS=
+
+   PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
+   PLATFORM_X11_LIBS=-lX11
+   PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
+
+   PLATFORM_GL_CPPFLAGS=
+   PLATFORM_GL_LIBS=-lGL
+   PLATFORM_GL_LDFLAGS= 
+
+   PLATFORM_AIO_SUPPORT := \
+   $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
+endif
 
 CC      = gcc
 CXX     = g++
 CFLAGS  += -W -Wall -Wpointer-arith -pipe
+ifeq ($(threads),1)
+    CFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
+               $(PLATFORM_AIO_SUPPORT)
+endif # threads
+
 CCFLAGS += $(CFLAGS) -fno-implicit-templates
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
 LIBS    += -ldl
+
+ifeq ($(threads),1) 
+  LIBS += -lpthread
+  ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
+    LIBS += -lrt
+  endif
+endif 
+
 OCFLAGS += -O3
 PIC     = -fPIC
 AR      = ar
 ARFLAGS = rsuv
 RANLIB  = @true
 SOFLAGS = $(CPPFLAGS) -shared
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
+          $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true
+
+# Added line below to support "Executable Shared Object" files (as
+# needed by the service configurator).
+# Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
+ifeq ($(threads),1) 
+    ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
+    ifndef PRELIB
+       PRELIB = @true
+    endif # ! PRELIB
+endif
 
 #### GNU gas has a string limit of 4096 characters.  On Alphas,
 #### builds will fail due to running over that limit.  There are
