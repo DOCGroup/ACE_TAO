@@ -13,6 +13,9 @@ Tue Oct 14 08:02:20 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
 	  assignments in "if" conditionals to avoid g++ warnings.
 
+	* ace/Malloc.cpp,Reactor.cpp,Service_Repository.cpp: added
+	  #include "ace/Object_Manager.h" for ACE_Static_Object_Lock.
+
 	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp (handle_timeout):
 	  removed declaration of unused arg "tv".
 
