@@ -72,8 +72,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DsLogAdmin_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "_MBCS" /D "_USRDLL" /D "TAO_ORBSVCS_HAS_NAMING" /D "WIN32" /D "_WINDOWS" /D "TAO_LOG_BUILD_DLL" /FD /c
-# SUBTRACT CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "_MBCS" /D "_USRDLL" /D "TAO_ORBSVCS_HAS_NAMING" /D "WIN32" /D "_WINDOWS" /D "TAO_LOG_BUILD_DLL" /FR /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -83,8 +82,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_CosTradingd.lib TAO_Svc_Utilsd.lib TAOd.lib aced.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_DsLogAdmind.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# SUBTRACT LINK32 /profile
+# ADD LINK32 TAO_DynamicAnyd.lib TAO_Svc_Utilsd.lib TAOd.lib aced.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_DsLogAdmind.dll" /pdbtype:sept /libpath:"..\..\tao\DynamicAny" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "DsLogAdmin - Win32 MFC Debug"
 
@@ -175,6 +174,14 @@ SOURCE=.\DsLogAdminS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DsLogNotificationC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log\Iterator_i.cpp
 # End Source File
 # Begin Source File
@@ -192,6 +199,10 @@ SOURCE=.\Log\Log_i.cpp
 # Begin Source File
 
 SOURCE=.\Log\LogMgr_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\LogNotification.cpp
 # End Source File
 # Begin Source File
 
@@ -223,6 +234,18 @@ SOURCE=.\DsLogAdminS_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DsLogNotificationC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log\Iterator_i.h
 # End Source File
 # Begin Source File
@@ -244,6 +267,10 @@ SOURCE=.\Log\Log_i.h
 # Begin Source File
 
 SOURCE=.\Log\LogMgr_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\LogNotification.h
 # End Source File
 # Begin Source File
 
@@ -348,6 +375,57 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotification.idl
+
+!IF  "$(CFG)" == "DsLogAdmin - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "DsLogAdmin - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\DsLogNotification.idl
+InputName=DsLogNotification
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log\log_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "DsLogAdmin - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "DsLogAdmin - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -363,6 +441,18 @@ SOURCE=.\DsLogAdminS.i
 # Begin Source File
 
 SOURCE=.\DsLogAdminS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS_T.i
 # End Source File
 # End Group
 # Begin Group "Template Files"
@@ -392,6 +482,10 @@ SOURCE=.\DsLogAdminS_T.cpp
 
 !ENDIF 
 
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogNotificationS_T.cpp
 # End Source File
 # End Group
 # Begin Group "Resource Files"
