@@ -22,6 +22,7 @@ CONTROLLED_FILES = TAO/COPYING* \
 		   TAO/TAO_IDL \
 		   TAO/VERSION \
 		   TAO/docs \
+		   TAO/NEWS \
 		   TAO/examples \
 		   TAO/orbsvcs \
 		   TAO/performance-tests \
