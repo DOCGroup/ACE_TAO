@@ -680,6 +680,8 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_ptr param;
   CORBA::Long size, alignment;
 
+  void *start_addr = (void *)data;
+
   // number of fields in the struct
   int member_count = tc->member_count (env);
 
@@ -699,7 +701,9 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
 		  alignment = param->alignment (env);
 		  if (env.exception () == 0)
 		    {
-		      data = ptr_align_binary (data, alignment);
+		      data = (const void *)((ptr_arith_t) ptr_align_binary (data, alignment) +
+                        (ptr_arith_t) ptr_align_binary (start_addr, alignment) -
+                        (ptr_arith_t) start_addr);
 		      switch (param->kind_)
 			{
 			case CORBA::tk_null:

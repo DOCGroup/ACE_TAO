@@ -1,3 +1,9 @@
+Wed Jan 21 19:38:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/encode.cpp, decode.cpp: Fixed alignment problem. Done only
+	in Marshal_Struct for the time being. Details of this fix will be
+	inserted later.
+
 Wed Jan 21 16:27:58 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* Makefile: Updated this to use the new release.pl file below.
@@ -10,7 +16,7 @@ Wed Jan 21 16:27:58 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Wed Jan 21 15:38:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Makefile: 
+	* orbsvcs/Event_Service/Makefile:
 	  Removed GPlot_File from the list, it does not compile on
 	  Solaris/g++, but it is not needed.
 
