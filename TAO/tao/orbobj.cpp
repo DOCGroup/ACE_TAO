@@ -229,6 +229,7 @@ CORBA::ORB_init (int &argc,
   // XXXASG - compiler doesn't like this
   char **svc_config_argv; // @@ Should this be a data member?
   // Probably, but there's no object in which to scope it.
+
   int svc_config_argc = 0;
   ACE_NEW_RETURN (svc_config_argv, char *[argc + 1], 0);
 
@@ -313,8 +314,11 @@ CORBA::ORB_init (int &argc,
 #endif	/* DEBUG */
 
   ACE_INET_Addr rendezvous;
+  // @@ Don't use magic #'s like 128.  Final an appropriate symbolic
+  // constant.  
   char hbuf[128];
-  // create a INET_Addr
+
+  // Create a INET_Addr.
   if (ACE_OS::strlen (host) == 0)
     {
       // hostname not provided, so use the default
@@ -344,10 +348,9 @@ CORBA::ORB_init (int &argc,
   // makes it always use URL-style stringified objrefs, where the
   // hostname and TCP port number are explicit (and the whole objref
   // is readable by mortals).
-  CORBA::Boolean	use_ior;
+  CORBA::Boolean use_ior;
 
-  if (orb_name != 0
-      && ACE_OS::strcmp (orb_name, "internet") == 0)
+  if (orb_name != 0 && ACE_OS::strcmp (orb_name, "internet") == 0)
     use_ior = CORBA::B_FALSE;
   else
     use_ior = CORBA::B_TRUE;
@@ -365,6 +368,9 @@ CORBA::ORB_init (int &argc,
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   // Call various internal initialization routines.
+  // @@ Why are these names prefixed with "__"?  Shouldn't they be in
+  // a class someplace, or at least have the word "TAO" in front of
+  // them? 
   __TC_init_table ();
   TAO_Marshal::initialize ();
   __TC_init_standard_exceptions (env);
@@ -375,16 +381,31 @@ CORBA::ORB_init (int &argc,
   // Initialize the Service Configurator
   TAO_Internal::open_services (svc_config_argc, svc_config_argv);
 
+  // Open the <Strategy_Connector>.
+  this->connector_.open (TAO_ORB_Core_instance ()->reactor (),
+			 &this->null_creation_strategy_,
+			 &this->caching_connect_strategy_,
+#if defined (TAO_HAS_CLIENT_CONCURRENCY)
+			 this->concurrency_strategy_ ()
+#else
+		   0
+#endif /* TAO_HAS_CLIENT_CONCURRENCY */
+		   );
+
   // Inititalize the "ORB" pseudo-object now.
   IIOP_ORB_ptr the_orb = 0;
   ACE_NEW_RETURN (the_orb, IIOP_ORB, 0);
 
-  TAO_ORB_Core_instance()->orb(the_orb);
+  // Install the ORB * into the ORB Core instance.  Note that if we're
+  // running with a "thread-per-rate" concurrency model this ORB *
+  // will be located in thread-specific storage.
+  TAO_ORB_Core_instance ()->orb (the_orb);
+
   // @@ Seems like the following should happen inside the ORB Core,
   // not at this level.  Do we really need this stuff?  What is the
   // alternative format (other than IOR)?  --cjc
   the_orb->use_omg_ior_format (CORBA::Boolean (use_ior));
-  the_orb->params()->addr(rendezvous);
+  the_orb->params ()->addr (rendezvous);
   
   return the_orb;
 }
@@ -552,12 +573,25 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   return 0;
 }
 
+#define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 template class ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Creation_Strategy<TAO_Client_Connection_Handler>;
+template class ACE_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+//template class TAO_HASH_ADDR;
+template class ACE_Hash_Map_Entry<TAO_HASH_ADDR, TAO_Client_Connection_Handler *>;
+template class ACE_Hash_Map_Manager<TAO_HASH_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_RW_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
 #pragma instantiate ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Creation_Strategy<TAO_Client_Connection_Handler>
+#pragma instantiate ACE_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
+//#pragma instantiate TAO_HASH_ADDR
+#pragma instantiate ACE_Hash_Map_Entry<TAO_HASH_ADDR, TAO_Client_Connection_Handler *>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_HASH_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
