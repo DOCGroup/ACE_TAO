@@ -2023,7 +2023,7 @@ namespace
     }
 
     virtual void
-    traverse (ComponentDefPtr const& c)
+    post (ComponentDefPtr const& c)
     {
       os << "// Operations for CCMObject interface." << endl << endl;
 
