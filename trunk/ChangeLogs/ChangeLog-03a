@@ -1,3 +1,8 @@
+Thu Feb 13 12:43:27 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* bin/auto_run_tests.lst:
+	  Added TAO/examples/RTCORBA/Activity/run_test.pl to this list.
+
 Thu Feb 13 07:36:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* THANKS: Added Dmitri Belogaj to the hall of fame.

@@ -1,3 +1,29 @@
+Thu Feb 13 12:43:27 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* examples/RTCORBA/Activity/Periodic_Task.h:
+	* examples/RTCORBA/Activity/Thread_Task.cpp:
+	* examples/RTCORBA/Activity/Thread_Task.h:
+	  Added missing code to convert CORBA priority to native priority
+	  when activating the thread task.
+	
+	  Made the following changes to get the example running in the
+	  autobuilds:
+	* examples/RTCORBA/Activity/run_test.pl:
+	  This runs a simple test of the activity example. This test is
+	  meant to be run in non-root mode.
+	* examples/RTCORBA/Activity/Activity.cpp:
+	* examples/RTCORBA/Activity/Activity.h:
+	  - Added code to obtain the Priority Mapping Manager.
+	  - Added a "-Started_Flag <file_name> " option. When an activity instance
+	  completes its setup, it generates a file to signal the perl
+	  script that it has finished initialization.  
+	* examples/RTCORBA/Activity/README:
+	  Added a new section on the new command-line option.
+	* examples/RTCORBA/Activity/server.conf:
+	* examples/RTCORBA/Activity/client.conf:
+	  These conf files are read by run_test.pl to make a sanity check
+	  on the activity program.
+
 Thu Feb 13 10:30:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp:

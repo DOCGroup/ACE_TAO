@@ -1,4 +1,4 @@
-
+//$Id$
 =================== RT CORBA capabilities demo =================== 
 
 Table of contents
@@ -109,7 +109,14 @@ JobName = job_10
 -Iter = 20 iterations
 -Load = 1000 
 
-3. Running the example
+4. Command-Line Options
+----------------------
+-Started_Flag <file_name> : When a particular activity instance has
+finished bootstrapping, it will create a file specified by <file_name>
+to signal that it has started. This allows scripts to synchronize when
+other instances of activity can be started.
+
+4. Running the example
 ----------------------
 
 a). The activated Jobs are registered with a Naming service, so we need an NS running

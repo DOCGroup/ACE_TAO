@@ -14,6 +14,7 @@
 #define PERIODIC_TASK_H
 
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Task.h"
 #include "JobC.h"
 #include "activity_export.h"
@@ -39,7 +40,7 @@ class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
   int init_task (ACE_Arg_Shifter& arg_shifter);
 
   /// Activate this task, synch on the given barrier.
-  virtual int activate_task (ACE_Barrier* barrier) = 0;
+  virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping) = 0;
 
   /// Dump the stats collected.
   void dump_stats (ACE_TCHAR* msg);

@@ -20,6 +20,7 @@
 #include "ace/Sched_Params.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "activity_export.h"
 
 class ACE_Barrier;
@@ -87,6 +88,10 @@ public:
   /// Check if we should process exit
   void check_ifexit (void);
 
+  /// Create a file whose name is specified in the -Started_Flag <file_name> argument at startup.
+  /// This file flags that the Activity has finished its bootstrapping step.
+  void create_started_flag_file (int argc, char *argv[] ACE_ENV_ARG_DECL);
+
   /// = Data members
 
   /// The Builder object.
@@ -117,6 +122,9 @@ public:
 
   /// A naming context.
   CosNaming::NamingContextExt_var naming_;
+
+  /// The Priority Mapping helper.
+  RTCORBA::PriorityMapping *priority_mapping_;
 
   /// Count the number of periodic tasks active.
   int active_task_count_;
