@@ -61,6 +61,9 @@ public:
   Sender (void);
   // Constructor
 
+  ~Sender (void);
+  // Constructor
+
   int init (int argc,
             char **argv
             ACE_ENV_ARG_DECL_NOT_USED);
@@ -114,4 +117,7 @@ private:
 
   TAO_AV_Protocol_Object *protocol_object_;
   // Protocol object corresponding to the transport protocol selected.
+
+  ACE_INET_Addr *src_addr_;
+  ACE_INET_Addr *dest_addr_;
 };
