@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Message_Block.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #include "ace/ACE.h"
@@ -36,51 +36,51 @@ class ACE_Export ACE_Message_Block
   //     enable efficient manipulation of arbitrarily-large messages
   //     without much incurring memory copying overhead.  Here are the
   //     main characteristics of an <ACE_Message_Block>:
-  // 
+  //
   //     1. Contains a pointer to a reference-counted
   //     <ACE_Data_Block>, which in turn points to the actual data
   //     buffer.  This allows very flexible and efficient sharing of
   //     data by multiple <ACE_Message_Block>s.
   //
   //     2. One or more <ACE_Message_Blocks> can be linked to form a
-  //     ``fragment chain.''  
+  //     ``fragment chain.''
   //
   //     3. <ACE_Message_Blocks> can be linked together by <prev_> and
   //     <next_> pointers to form a queue of messages (e.g., this is how
-  //     <ACE_Message_Queue> works).  
+  //     <ACE_Message_Queue> works).
 {
   friend class ACE_Data_Block;
-public:  
+public:
   enum ACE_Message_Type
   {
-    // = Data and protocol messages (regular and priority) 
-    MB_DATA     = 0x01, // regular data 
-    MB_PROTO    = 0x02, // protocol control 
+    // = Data and protocol messages (regular and priority)
+    MB_DATA     = 0x01, // regular data
+    MB_PROTO    = 0x02, // protocol control
 
-    // = Control messages (regular and priority) 
-    MB_BREAK    = 0x03, // line break 
-    MB_PASSFP   = 0x04, // pass file pointer 
-    MB_EVENT    = 0x05, // post an event to an event queue 
-    MB_SIG      = 0x06, // generate process signal 
-    MB_IOCTL    = 0x07, // ioctl; set/get params 
-    MB_SETOPTS  = 0x08, // set various stream head options 
+    // = Control messages (regular and priority)
+    MB_BREAK    = 0x03, // line break
+    MB_PASSFP   = 0x04, // pass file pointer
+    MB_EVENT    = 0x05, // post an event to an event queue
+    MB_SIG      = 0x06, // generate process signal
+    MB_IOCTL    = 0x07, // ioctl; set/get params
+    MB_SETOPTS  = 0x08, // set various stream head options
 
-    // = Control messages (high priority; go to head of queue) 
-    MB_IOCACK   = 0x81, // acknowledge ioctl 
-    MB_IOCNAK   = 0x82, // negative ioctl acknowledge 
-    MB_PCPROTO  = 0x83, // priority proto message 
-    MB_PCSIG    = 0x84, // generate process signal 
-    MB_READ     = 0x85, // generate read notification 
-    MB_FLUSH    = 0x86, // flush your queues 
-    MB_STOP     = 0x87, // stop transmission immediately 
-    MB_START    = 0x88, // restart transmission after stop 
-    MB_HANGUP   = 0x89, // line disconnect 
-    MB_ERROR    = 0x8a, // fatal error used to set u.u_error 
-    MB_PCEVENT  = 0x8b, // post an event to an event queue 
+    // = Control messages (high priority; go to head of queue)
+    MB_IOCACK   = 0x81, // acknowledge ioctl
+    MB_IOCNAK   = 0x82, // negative ioctl acknowledge
+    MB_PCPROTO  = 0x83, // priority proto message
+    MB_PCSIG    = 0x84, // generate process signal
+    MB_READ     = 0x85, // generate read notification
+    MB_FLUSH    = 0x86, // flush your queues
+    MB_STOP     = 0x87, // stop transmission immediately
+    MB_START    = 0x88, // restart transmission after stop
+    MB_HANGUP   = 0x89, // line disconnect
+    MB_ERROR    = 0x8a, // fatal error used to set u.u_error
+    MB_PCEVENT  = 0x8b, // post an event to an event queue
 
     // Message class masks
-    MB_NORMAL	= 0x00, // Normal priority messages 
-    MB_PRIORITY = 0x80, // High priority control messages 
+    MB_NORMAL	= 0x00, // Normal priority messages
+    MB_PRIORITY = 0x80, // High priority control messages
     MB_USER	= 0x200 // User-defined control messages
   };
 
@@ -106,9 +106,9 @@ public:
   // Note that the <size> of the <Message_Block> will be <size>, but
   // the <length> will be 0 until <wr_ptr> is set.
 
-  ACE_Message_Block (size_t size, 
-		     ACE_Message_Type type = MB_DATA, 
-		     ACE_Message_Block *cont = 0, 
+  ACE_Message_Block (size_t size,
+		     ACE_Message_Type type = MB_DATA,
+		     ACE_Message_Block *cont = 0,
 		     const char *data = 0,
 		     ACE_Allocator *allocator_strategy = 0,
 		     ACE_Lock *locking_strategy = 0,
@@ -131,9 +131,9 @@ public:
   // <size> of the <Message_Block> will be <size>, but the <length>
   // will be 0 until <wr_ptr> is set.
 
-  int init (size_t size, 
-	    ACE_Message_Type type = MB_DATA, 
-	    ACE_Message_Block *cont = 0, 
+  int init (size_t size,
+	    ACE_Message_Type type = MB_DATA,
+	    ACE_Message_Block *cont = 0,
 	    const char *data = 0,
 	    ACE_Allocator *allocator_strategy = 0,
 	    ACE_Lock *locking_strategy = 0,
@@ -212,7 +212,7 @@ public:
   // is useful if you want to eliminate lots of checks for NULL
   // pointers before calling <release> on them.  Returns <mb>.
 
-  // = Operations on Message data 
+  // = Operations on Message data
 
   int copy (const char *buf, size_t n);
   // Copies <n> bytes from <buf> into the Message_Block starting at
@@ -229,7 +229,7 @@ public:
 
 #if 0
   void base (char *data,
-	     size_t size, 
+	     size_t size,
 	     Message_Flags = DONT_DELETE);
   // Set message data (doesn't reallocate).
 #endif /* 0 */
@@ -254,9 +254,9 @@ public:
 
   // = Message length is wr_ptr() - rd_ptr ().
   size_t length (void) const;
-  // Get the length of the message 
+  // Get the length of the message
   void length (size_t n);
-  // Set the length of the message 
+  // Set the length of the message
 
   // = Message size is the total amount of space alloted.
   size_t size (void) const;
@@ -305,7 +305,7 @@ public:
 
 private:
   // = Internal initialization methods.
-  ACE_Message_Block (size_t size, 
+  ACE_Message_Block (size_t size,
 		     ACE_Message_Type type,
 		     ACE_Message_Block *cont,
 		     const char *data,
@@ -319,34 +319,34 @@ private:
   ACE_Message_Block *release_i (ACE_Lock *lock);
   // Internal release implementation
 
-  int init_i (size_t size, 
+  int init_i (size_t size,
 	      ACE_Message_Type type,
 	      ACE_Message_Block *cont,
 	      const char *data,
 	      ACE_Allocator *allocator_strategy,
 	      ACE_Lock *locking_strategy,
 	      Message_Flags flags,
-	      u_long priority, 
+	      u_long priority,
 	      ACE_Data_Block *db);
   // Perform the actual initialization.
 
-  char *rd_ptr_;	
+  char *rd_ptr_;
   // Pointer to beginning of next read.
 
-  char *wr_ptr_;	
+  char *wr_ptr_;
   // Pointer to beginning of next write.
 
-  u_long priority_;	
+  u_long priority_;
   // Priority of message.
 
   // = Links to other ACE_Message_Block *s.
-  ACE_Message_Block *cont_;	
+  ACE_Message_Block *cont_;
   // Pointer to next message block in the chain.
 
-  ACE_Message_Block *next_;	
+  ACE_Message_Block *next_;
   // Pointer to next message in the list.
 
-  ACE_Message_Block *prev_;	
+  ACE_Message_Block *prev_;
   // Pointer to previous message in the list.
 
   ACE_Data_Block *data_block_;
@@ -374,10 +374,10 @@ public:
   // = Initialization and termination methods.
   ACE_Data_Block (void);
   // Default "do-nothing" constructor.
-  
+
   ACE_Data_Block (size_t size,
 		  ACE_Message_Block::ACE_Message_Type msg_type,
-		  const char *msg_data, 
+		  const char *msg_data,
 		  ACE_Allocator *allocator_strategy,
 		  ACE_Lock *locking_strategy,
 		  ACE_Message_Block::Message_Flags flags);
@@ -397,7 +397,7 @@ public:
 
 #if 0
   void base (char *data,
-	     size_t size, 
+	     size_t size,
 	     Message_Flags = DONT_DELETE);
   // Set message data pointer (doesn't reallocate).
 #endif /* 0 */
@@ -449,20 +449,20 @@ public:
 private:
   ACE_Data_Block *release_i (void);
   // Internal release implementation
-  
-  ACE_Message_Block::ACE_Message_Type type_;		
+
+  ACE_Message_Block::ACE_Message_Type type_;
   // Type of message.
 
-  size_t cur_size_;	
+  size_t cur_size_;
   // Current size of message block.
 
-  size_t max_size_;	
+  size_t max_size_;
   // Total size of buffer.
 
-  ACE_Message_Block::Message_Flags flags_; 	
+  ACE_Message_Block::Message_Flags flags_;
   // Misc flags (e.g., DONT_DELETE and USER_FLAGS).
 
-  char *base_;	
+  char *base_;
   // Pointer to beginning of message payload.
 
   // = Strategies.
