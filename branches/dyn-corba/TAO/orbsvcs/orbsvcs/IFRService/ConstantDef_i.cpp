@@ -3,6 +3,7 @@
 
 #include "ConstantDef_i.h"
 #include "Repository_i.h"
+#include "IFR_Service_Utils.h"
 #include "IDLType_i.h"
 #include "ace/Auto_Ptr.h"
 
@@ -106,7 +107,8 @@ TAO_ConstantDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "type_path",
                                             type_path);
 
-  TAO_IDLType_i *impl = this->path_to_idltype (type_path);
+  TAO_IDLType_i *impl = TAO_IFR_Service_Utils::path_to_idltype (type_path,
+                                                                this->repo_);
 
   return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -132,8 +134,10 @@ TAO_ConstantDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "type_path",
                                             type_path);
 
-  CORBA::Object_var obj = this->path_to_ir_object (type_path
-                                                   ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::path_to_ir_object (type_path,
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
   return CORBA::IDLType::_narrow (obj.in ()
@@ -159,7 +163,7 @@ TAO_ConstantDef_i::type_def_i (CORBA::IDLType_ptr type_def
                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  char *type_path = this->reference_to_path (type_def);
+  char *type_path = TAO_IFR_Service_Utils::reference_to_path (type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "type_path",

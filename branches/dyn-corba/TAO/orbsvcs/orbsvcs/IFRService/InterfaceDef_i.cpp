@@ -5,6 +5,8 @@
 #include "Repository_i.h"
 #include "AttributeDef_i.h"
 #include "OperationDef_i.h"
+#include "IFR_Service_Utils.h"
+#include "IFR_Service_Utils_T.h"
 
 ACE_RCSID (IFRService, 
            InterfaceDef_i, 
@@ -48,22 +50,31 @@ TAO_InterfaceDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our members.
-  TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->TAO_Container_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  // This will get rid of the repo ids, which Contained_i::destroy()'s
+  // These will get rid of the repo ids, which Contained_i::destroy()'s
   // call to remove_section (recursive = 1) will not get, and also
   // destroy the attribute's anonymous type, if any.
-  this->destroy_special ("attrs" 
-                         ACE_ENV_ARG_PARAMETER);
+
+  TAO_IFR_Generic_Utils::destroy_special<TAO_AttributeDef_i> (
+      "attrs",
+      this->repo_,
+      this->section_key_
+      ACE_ENV_ARG_PARAMETER
+    );
   ACE_CHECK;
 
-  this->destroy_special ("ops" 
-                         ACE_ENV_ARG_PARAMETER);
+  TAO_IFR_Generic_Utils::destroy_special<TAO_OperationDef_i> (
+      "ops",
+      this->repo_,
+      this->section_key_
+      ACE_ENV_ARG_PARAMETER
+    );
   ACE_CHECK;
 
   // Destroy ourself.
-  TAO_Contained_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->TAO_Contained_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -127,7 +138,7 @@ TAO_InterfaceDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 
   for (i = 0; i < length; ++i)
     {
-      base_path = this->reference_to_path (bases[i]);
+      base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,
@@ -163,7 +174,6 @@ TAO_InterfaceDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
-
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "id",
                                             id);
@@ -221,8 +231,10 @@ TAO_InterfaceDef_i::base_interfaces_i (ACE_ENV_SINGLE_ARG_DECL)
       ACE_TString path;
       path_queue.dequeue_head (path);
 
-      CORBA::Object_var obj = this->path_to_ir_object (path
-                                                       ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = 
+        TAO_IFR_Service_Utils::path_to_ir_object (path,
+                                                  this->repo_
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[i] = CORBA::InterfaceDef::_narrow (obj.in ()
@@ -280,9 +292,7 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
                                           0);
 
   CORBA::ULong length = base_interfaces.length ();
-
   ACE_Configuration_Section_Key inherited_key;
-
   this->repo_->config ()->open_section (this->section_key_,
                                         "inherited",
                                         1,
@@ -295,7 +305,8 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      inherited_path = this->reference_to_path (base_interfaces[i]);
+      inherited_path = 
+        TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i].in ());
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            inherited_path,
@@ -309,13 +320,17 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
       ACE_CHECK;
 
       // None of these names can clash with any we may already have.
-      if (TAO_Container_i::name_exists (name.in ()))
-        {
-          return;
-        }
+      TAO_Container_i::tmp_name_holder_ = name.in ();
+      TAO_IFR_Service_Utils::name_exists (&TAO_Container_i::same_as_tmp_name,
+                                          this->section_key_,
+                                          this->repo_,
+                                          this->def_kind ()
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (inherited_key,
-                                                this->int_to_string (i),
+                                                stringified,
                                                 inherited_path);
     }
 }
@@ -344,11 +359,13 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id
       return 1;
     }
 
-  CORBA::String_var id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_TString id;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "id",
+                                            id);
 
   // Is it our type?
-  if (ACE_OS::strcmp (id.in (), interface_id) == 0)
+  if (ACE_OS::strcmp (id.fast_rep (), interface_id) == 0)
     {
       return 1;
     }
@@ -366,7 +383,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      base_path = this->reference_to_path (bases[i]);
+      base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,
@@ -454,9 +471,10 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       for (u_int j = 0; j < count; ++j)
         {
           ACE_Configuration_Section_Key op_key;
+          char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
           status =
             this->repo_->config ()->open_section (ops_key,
-                                                  this->int_to_string (j),
+                                                  stringified,
                                                   0,
                                                   op_key);
 
@@ -504,9 +522,10 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       for (u_int j = 0; j < count; ++j)
         {
           ACE_Configuration_Section_Key attr_key;
+          char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
           status =
             this->repo_->config ()->open_section (attrs_key,
-                                                  this->int_to_string (j),
+                                                  stringified,
                                                   0,
                                                   attr_key);
 
@@ -528,8 +547,8 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       TAO_AttributeDef_i attr (this->repo_);
       attr.section_key (key);
 
-      fifd->attributes[i] = 
-        attr.make_description (ACE_ENV_SINGLE_ARG_PARAMETER);
+      attr.make_description (fifd->attributes[i]
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -549,7 +568,7 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
 
   for (i = 0; i < length; ++i)
     {
-      base_path = this->reference_to_path (bases[i]);
+      base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            base_path,
@@ -606,46 +625,33 @@ TAO_InterfaceDef_i::create_attribute_i (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Boolean bad_params = this->pre_exist (id,
-                                               name
-                                               ACE_ENV_ARG_PARAMETER);
+  // This will throw an exception if a name clash is found.
+  // create_common() will check for all other errors.
+  this->check_inherited (name,
+                         CORBA::dk_Attribute
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
 
-  if (bad_params)
-    {
-      return CORBA::AttributeDef::_nil ();
-    }
-
-  bad_params = this->check_inherited_attrs (name
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
-
-  if (bad_params)
-    {
-      return CORBA::AttributeDef::_nil ();
-    }
-
-  ACE_Configuration_Section_Key attrs_key;
-
-  // Create/open section for attributes.
-  this->repo_->config ()->open_section (this->section_key_,
-                                        "attrs",
-                                        1,
-                                        attrs_key);
-
+  TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
 
   // Common to all IR objects created in CORBA::Container.
-  ACE_TString path = this->create_common (attrs_key,
+  ACE_TString path = 
+    TAO_IFR_Service_Utils::create_common (CORBA::dk_Interface,
+                                          CORBA::dk_Attribute,
+                                          this->section_key_,
                                           new_key,
+                                          this->repo_,
                                           id,
                                           name,
+                                          &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "attrs\\",
-                                          CORBA::dk_Attribute);
+                                          "attrs\\"
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
 
   // Store the path to the attribute's type definition.
-  char *type_path = this->reference_to_path (type);
+  char *type_path = TAO_IFR_Service_Utils::reference_to_path (type);
 
   this->repo_->config ()->set_string_value (new_key,
                                             "type_path",
@@ -656,75 +662,12 @@ TAO_InterfaceDef_i::create_attribute_i (
                                              "mode",
                                              mode);
 
-  // Create the set and/or get operations for this attribute.
-  this->create_attr_ops (id,
-                         name,
-                         version,
-                         type,
-                         mode
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
-
-#if 0 // CCM specific.
-
-  CORBA::ULong i = 0;
-
-  CORBA::ULong length = get_exceptions.length ();
-
-  if (length > 0)
-    {
-      // Open a section for the 'get' exceptions.
-      ACE_Configuration_Section_Key get_excepts_key;
-
-      this->repo_->config ()->open_section (new_key,
-                                            "get_excepts",
-                                            1,
-                                            get_excepts_key);
-      char *get_except_path = 0;
-
-      // Store the paths to the 'get' exceptions.
-      for (i = 0; i < length; ++i)
-        {
-          get_except_path =
-            this->reference_to_path (get_exceptions[i]);
-
-          this->repo_->config ()->set_string_value (get_excepts_key,
-                                                    this->int_to_string (i),
-                                                    get_except_path);
-        }
-    }
-
-  length = put_exceptions.length ();
-
-  if (length > 0)
-    {
-      // Open a section for the 'put' exceptions.
-      ACE_Configuration_Section_Key put_excepts_key;
-      this->repo_->config ()->open_section (new_key,
-                                            "put_excepts",
-                                            1,
-                                            put_excepts_key);
-      char *put_except_path = 0;
-
-      // Store the paths to the 'put' exceptions.
-      for (i = 0; i < length; ++i)
-        {
-          put_except_path =
-            this->reference_to_path (put_exceptions[i]);
-
-          this->repo_->config ()->set_string_value (put_excepts_key,
-                                                    this->int_to_string (i),
-                                                    put_except_path);
-        }
-    }
-
-#endif /* CCM specific. */
-
   // Create the object reference.
   CORBA::Object_var obj =
-    this->create_objref (CORBA::dk_Attribute,
-                         path.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
+    TAO_IFR_Service_Utils::create_objref (CORBA::dk_Attribute,
+                                          path.c_str (),
+                                          this->repo_
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
 
   CORBA::AttributeDef_var retval =
@@ -775,38 +718,36 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Boolean bad_params = this->pre_exist (id,
-                                               name
-                                               ACE_ENV_ARG_PARAMETER);
+  // This will throw an exception if a name clash is found.
+  // create_common() will check for all other errors.
+  this->check_inherited (name,
+                         CORBA::dk_Operation
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::OperationDef::_nil ());
 
-  if (bad_params)
-    {
-      return CORBA::OperationDef::_nil ();
-    }
-
-  ACE_Configuration_Section_Key ops_key;
-
-  // Create/open section for attributes.
-  this->repo_->config ()->open_section (this->section_key_,
-                                        "ops",
-                                        1,
-                                        ops_key);
-
+  TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
 
   // Common to all IR objects created in CORBA::Container.
-  ACE_TString path = this->create_common (ops_key,
+  ACE_TString path = 
+    TAO_IFR_Service_Utils::create_common (CORBA::dk_Interface,
+                                          CORBA::dk_Operation,
+                                          this->section_key_,
                                           new_key,
+                                          this->repo_,
                                           id,
                                           name,
+                                          &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          "ops\\",
-                                          CORBA::dk_Operation);
+                                          "ops\\"
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::AttributeDef::_nil ());
 
   // Get the TypeCode for the return type.
-  ACE_TString result_path (this->reference_to_path (result));
-  TAO_IDLType_i *result_impl = this->path_to_idltype (result_path);
+  ACE_TString result_path (TAO_IFR_Service_Utils::reference_to_path (result));
+  TAO_IDLType_i *result_impl = 
+    TAO_IFR_Service_Utils::path_to_idltype (result_path,
+                                            this->repo_);
 
   CORBA::TypeCode_var rettype = 
     result_impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -861,8 +802,9 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
             }
 
           ACE_Configuration_Section_Key param_key;
+          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (params_key,
-                                                this->int_to_string (i),
+                                                stringified,
                                                 1,
                                                 param_key);
 
@@ -870,7 +812,9 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
                                                     "name",
                                                     params[i].name.in ());
           type_path =
-            this->reference_to_path (params[i].type_def.in ());
+            TAO_IFR_Service_Utils::reference_to_path (
+                params[i].type_def.in ()
+              );
 
           this->repo_->config ()->set_string_value (param_key,
                                                     "type_path",
@@ -906,10 +850,11 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
       for (i = 0; i < length; ++i)
         {
           type_path = 
-            this->reference_to_path (exceptions[i]);
+            TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
+          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (excepts_key,
-                                                    this->int_to_string (i),
+                                                    stringified,
                                                     type_path);
         }
     }
@@ -928,17 +873,19 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
 
       for (i = 0; i < length; ++i)
         {
+          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (contexts_key,
-                                                    this->int_to_string (i),
+                                                    stringified,
                                                     contexts[i].in ());
         }
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
-    this->create_objref (CORBA::dk_Operation,
-                         path.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
+    TAO_IFR_Service_Utils::create_objref (CORBA::dk_Operation,
+                                          path.c_str (),
+                                          this->repo_
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::OperationDef::_nil ());
 
   CORBA::OperationDef_var retval =
@@ -1077,116 +1024,26 @@ TAO_InterfaceDef_i::interface_contents (
     }
 }
 
-void
-TAO_InterfaceDef_i::destroy_special (const char *sub_section
-                                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+int
+TAO_InterfaceDef_i::name_clash (const char *name)
 {
-  ACE_Configuration_Section_Key sub_key;
-  int status =
-    this->repo_->config ()->open_section (this->section_key_,
-                                          sub_section,
-                                          0,
-                                          sub_key);
-
-  if (status == 0)
+  ACE_TRY_NEW_ENV
     {
-      ACE_TString section_name;
-      int index = 0;
-
-      while (this->repo_->config ()->enumerate_sections (sub_key,
-                                                         index++,
-                                                         section_name)
-              == 0)
-        {
-          ACE_Configuration_Section_Key member_key;
-          this->repo_->config ()->open_section (sub_key,
-                                                section_name.c_str (),
-                                                0,
-                                                member_key);
-
-          if (ACE_OS::strcmp (sub_section, "attrs") == 0)
-            {
-              TAO_AttributeDef_i attr (this->repo_);
-              attr.section_key (member_key);
-
-              attr.destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
-            }
-          else
-            {
-              TAO_OperationDef_i op (this->repo_);
-              op.section_key (member_key);
-
-              op.destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
-            }
-        }
+      TAO_Container_i::tmp_name_holder_ = name;
+      TAO_IFR_Service_Utils::name_exists (&TAO_Container_i::same_as_tmp_name,
+                                          TAO_IFR_Service_Utils::tmp_key_,
+                                          TAO_IFR_Service_Utils::repo_,
+                                          CORBA::dk_Interface
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
-}
-
-void
-TAO_InterfaceDef_i::create_attr_ops (const char *id,
-                                     const char *name,
-                                     const char *version,
-                                     CORBA::IDLType_ptr type,
-                                     CORBA::AttributeMode mode
-                                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_CString the_get_name ("_get_");
-  ACE_CString start (id);
-  int pos = start.find (name);
-  ACE_CString piece (start.substr (pos));
-  ACE_CString the_get_id (start.substr (0, pos) + the_get_name + piece);
-  the_get_name += name;
-
-  CORBA::ParDescriptionSeq params (0);
-  CORBA::ExceptionDefSeq excepts (0);
-  CORBA::ContextIdSeq contexts (0);
-
-  CORBA::OperationDef_var the_get_op =
-    this->create_operation_i (the_get_id.c_str (),
-                              the_get_name.c_str (),
-                              version,
-                              type,
-                              CORBA::OP_NORMAL,
-                              params,
-                              excepts,
-                              contexts
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (mode == CORBA::ATTR_NORMAL)
+  ACE_CATCHANY
     {
-      ACE_CString the_set_name ("_set_");
-      ACE_CString the_set_id (start.substr (0, pos) + the_set_name + piece);
-      the_set_name += name;
-
-      CORBA::PrimitiveDef_var rettype =
-        this->repo_->get_primitive (CORBA::pk_void
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      params.length (1);
-
-      params[0].name = name;
-      params[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
-      params[0].type_def = CORBA::IDLType::_duplicate (type);
-      params[0].mode = CORBA::PARAM_IN;
-
-      CORBA::OperationDef_var the_set_op =
-        this->create_operation_i (the_set_id.c_str (),
-                                  the_set_name.c_str (),
-                                  version,
-                                  rettype.in (),
-                                  CORBA::OP_NORMAL,
-                                  params,
-                                  excepts,
-                                  contexts
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      return 1;
     }
+  ACE_ENDTRY;
+  
+  return 0;
 }
 
 void
@@ -1292,8 +1149,9 @@ TAO_InterfaceDef_i::inherited_attributes (
 
           for (u_int j = 0; j < count; ++j)
             {
+              char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
               this->repo_->config ()->open_section (attrs_key,
-                                                    this->int_to_string (j),
+                                                    stringified,
                                                     0,
                                                     attr_key);
 
@@ -1343,8 +1201,9 @@ TAO_InterfaceDef_i::inherited_operations (
 
           for (u_int j = 0; j < count; ++j)
             {
+              char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
               this->repo_->config ()->open_section (ops_key,
-                                                    this->int_to_string (j),
+                                                    stringified,
                                                     0,
                                                     op_key);
 
@@ -1354,35 +1213,43 @@ TAO_InterfaceDef_i::inherited_operations (
     }
 }
 
-CORBA::Boolean
-TAO_InterfaceDef_i::check_inherited_attrs (const char *name
-                                           ACE_ENV_ARG_DECL)
+void
+TAO_InterfaceDef_i::check_inherited (const char *name,
+                                     CORBA::DefinitionKind kind
+                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
 
-  this->inherited_attributes (key_queue);
+  switch (kind)
+  {
+    case CORBA::dk_Attribute:
+      this->inherited_attributes (key_queue);
+      break;
+    case CORBA::dk_Operation:
+      this->inherited_operations (key_queue);
+      break;
+    default:
+      break;
+  }
 
   size_t size = key_queue.size ();
-  ACE_Configuration_Section_Key attr_key;
-  ACE_TString attr_name;
+  ACE_Configuration_Section_Key inherited_key;
+  ACE_TString inherited_name;
 
   for (u_int i = 0; i < size; ++i)
     {
-      key_queue.dequeue_head (attr_key);
+      key_queue.dequeue_head (inherited_key);
 
-      this->repo_->config ()->get_string_value (attr_key,
+      this->repo_->config ()->get_string_value (inherited_key,
                                                 "name",
-                                                attr_name);
+                                                inherited_name);
 
-      if (attr_name == name)
+      if (inherited_name == name)
         {
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (5,
-                                              CORBA::COMPLETED_NO),
-                            1);
+          ACE_THROW (CORBA::BAD_PARAM (5,
+                                       CORBA::COMPLETED_NO));
         }
     }
-
-  return 0;
 }
 

@@ -63,7 +63,6 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Remove the repository entry.
 
   virtual void destroy_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -193,25 +192,12 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Gathers the attributes and operations of all the ancestors.
+  
+  static int name_clash (const char *name);
+  // Called from TAO_IFR_Service_Utils::name_exists() when we
+  // are in a list of supported interfaces.
 
 private:
-  void destroy_special (
-      const char *sub_section
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Removed the repo ids of our attributes and operations from
-  // the flat repo ids section of the repository.
-
-  void create_attr_ops (const char *id,
-                        const char *name,
-                        const char *version,
-                        CORBA::IDLType_ptr type,
-                        CORBA::AttributeMode mode
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Create set and/or get operations for an attribute.
-
   void base_interfaces_recursive (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue
@@ -231,8 +217,9 @@ private:
   // Depth-first traversal of the inheritance tree to get all the
   // operations.
 
-  CORBA::Boolean check_inherited_attrs (const char *name
-                                        ACE_ENV_ARG_DECL)
+  void check_inherited (const char *name,
+                        CORBA::DefinitionKind kind
+                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // When creating a new attribute, check for a clash with an inherited
   // attribute name.

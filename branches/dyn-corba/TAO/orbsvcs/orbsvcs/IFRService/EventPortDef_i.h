@@ -48,10 +48,10 @@ class TAO_IFRService_Export TAO_EventPortDef_i
   //
 public:
   TAO_EventPortDef_i (TAO_Repository_i *repo);
-  // Constructor
+  /// Constructor
 
   virtual ~TAO_EventPortDef_i (void);
-  // Destructor
+  /// Destructor
 
   virtual CORBA::ComponentIR::EventDef_ptr event (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -86,6 +86,21 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// This can be the same for the three derived classes, so it is
+  /// implemented here.
+
+  virtual CORBA::Contained::Description *describe (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
+
+  virtual CORBA::Contained::Description *describe_i (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

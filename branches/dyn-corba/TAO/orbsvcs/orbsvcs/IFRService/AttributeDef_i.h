@@ -122,7 +122,8 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::AttributeDescription make_description (
+  void make_description (
+      CORBA::AttributeDescription &ad
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));

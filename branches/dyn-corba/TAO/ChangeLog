@@ -1,3 +1,83 @@
+Thu Feb 20 15:48:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService.dsp:
+        * orbsvcs/orbsvcs/Makefile.IFRService
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConsumesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConsumesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.h:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * orbsvcs/orbsvcs/IFRService/EmitsDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EmitsDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAbstractInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
+
+	  A start on completing the implementation of the CCM-related
+          additions to the IFR spec.
+
+        * tests/AMI/AMI_Test_Server.dsp:
+        * tests/AMI_Buffering/admin.dsp:
+        * tests/AMI_Buffering/client.dsp:
+        * tests/AMI_Buffering/server.dsp:
+        * tests/AMI_Timeouts/client.dsp:
+        * tests/AMI_Timeouts/server.dsp:
+        * tests/IDL_Test/idl_test.dsp:
+        * tests/OBV/Any/client.dsp:
+        * tests/OBV/Any/server.dsp:
+        * tests/OBV/Factory/client.dsp:
+        * tests/OBV/Factory/server.dsp:
+        * tests/OBV/Forward/client.dsp:
+        * tests/OBV/Forward/server.dsp:
+        * tests/OBV/TC_Alignment/client.dsp:
+        * tests/OBV/TC_Alignment/server.dsp:
+        * tests/Param_Test/anyop.cpp:
+        * tests/Param_Test/anyop.dsp:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/server.dsp:
+
+	  Tests in which RTTI had to be turned on in the MSVC
+	  project to build without warnings, due to the new
+	  Any implementation. This is not a complete list, just
+	  the ones I have had occasion to run so far.
+
 Sun Feb  9 21:53:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:

@@ -39,7 +39,9 @@ CPP_SRCS += \
         IFRService/AliasDef_i \
         IFRService/ArrayDef_i \
         IFRService/AttributeDef_i \
+	IFRService/ComponentContainer_i \
         IFRService/ComponentDef_i \
+	IFRService/ComponentModule_i \
         IFRService/ComponentRepository_i \
         IFRService/ConstantDef_i \
         IFRService/ConsumesDef_i \
@@ -48,7 +50,13 @@ CPP_SRCS += \
         IFRService/EmitsDef_i \
         IFRService/EnumDef_i \
         IFRService/EventDef_i \
+	IFRService/EventPortDef_i \
         IFRService/ExceptionDef_i \
+	IFRService/ExtAbstractInterfaceDef_i \
+	IFRService/ExtAttributeDef_i \
+	IFRService/ExtInterfaceDef_i \
+	IFRService/ExtLocalInterfaceDef_i \
+	IFRService/ExtValueDef_i \
         IFRService/FactoryDef_i \
         IFRService/FinderDef_i \
         IFRService/FixedDef_i \
@@ -60,6 +68,7 @@ CPP_SRCS += \
         IFRService/IFR_ExtendedS \
         IFRService/IFR_Service_Utils \
         IFRService/IFR_Service_Loader \
+	IFRService/InterfaceAttrExtension_i \
         IFRService/InterfaceDef_i \
         IFRService/IRObject_i \
         IFRService/LocalInterfaceDef_i \
@@ -67,7 +76,6 @@ CPP_SRCS += \
         IFRService/NativeDef_i \
         IFRService/OperationDef_i \
         IFRService/Options \
-        IFRService/PrimaryKeyDef_i \
         IFRService/PrimitiveDef_i \
         IFRService/ProvidesDef_i \
         IFRService/PublishesDef_i \

@@ -334,6 +334,14 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+    
+  static int name_clash (const char *name);
+  // Called from TAO_IFR_Service_Utils::name_exists() when we
+  // are a base valuetype.
+    
+private:
+  void fill_vm_seq (CORBA::ValueMemberSeq &vm_seq
+                    ACE_ENV_ARG_DECL);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

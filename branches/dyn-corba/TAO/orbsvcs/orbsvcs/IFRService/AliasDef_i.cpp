@@ -3,6 +3,7 @@
 
 #include "AliasDef_i.h"
 #include "Repository_i.h"
+#include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 
@@ -59,7 +60,9 @@ TAO_AliasDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "original_type",
                                             original_type);
 
-  TAO_IDLType_i *impl = this->path_to_idltype (original_type);
+  TAO_IDLType_i *impl = 
+    TAO_IFR_Service_Utils::path_to_idltype (original_type,
+                                            this->repo_);
 
   CORBA::TypeCode_var tc = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
@@ -91,8 +94,10 @@ TAO_AliasDef_i::original_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "original_type",
                                             original_type);
 
-  CORBA::Object_var obj = this->path_to_ir_object (original_type
-                                                   ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::path_to_ir_object (original_type,
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
   return CORBA::IDLType::_narrow (obj.in ()
@@ -119,7 +124,7 @@ TAO_AliasDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *original_type =
-    this->reference_to_path (original_type_def);
+    TAO_IFR_Service_Utils::reference_to_path (original_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "original_type",

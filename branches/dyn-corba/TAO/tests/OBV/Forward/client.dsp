@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../../../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -130,13 +130,13 @@ SOURCE=.\TreeBase.idl
 !IF  "$(CFG)" == "Forward Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__FACTO="..\..\..\..\bin\Release\tao_idl.exe"  
+USERDEP__TREEB="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TreeBase.idl
 InputName=TreeBase
 
 BuildCmds= \
-  ..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -168,13 +168,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Forward Client - Win32 Debug"
 
-USERDEP__FACTO="..\..\..\..\bin\tao_idl.exe"  
+USERDEP__TREEB="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TreeBase.idl
 InputName=TreeBase
 
 BuildCmds= \
-  ..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -214,13 +214,13 @@ SOURCE=.\TreeController.idl
 !IF  "$(CFG)" == "Forward Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__FACTO="..\..\..\..\bin\Release\tao_idl.exe"  
+USERDEP__TREEC="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TreeController.idl
 InputName=TreeController
 
 BuildCmds= \
-  ..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -252,13 +252,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Forward Client - Win32 Debug"
 
-USERDEP__FACTO="..\..\..\..\bin\tao_idl.exe"  
+USERDEP__TREEC="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TreeController.idl
 InputName=TreeController
 
 BuildCmds= \
-  ..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -298,13 +298,13 @@ SOURCE=.\TreeNode.idl
 !IF  "$(CFG)" == "Forward Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__FACTO="..\..\..\..\bin\Release\tao_idl.exe"  
+USERDEP__TREEN="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TreeNode.idl
 InputName=TreeNode
 
 BuildCmds= \
-  ..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -336,13 +336,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Forward Client - Win32 Debug"
 
-USERDEP__FACTO="..\..\..\..\bin\tao_idl.exe"  
+USERDEP__TREEN="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\TreeNode.idl
 InputName=TreeNode
 
 BuildCmds= \
-  ..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -78,39 +78,9 @@ public:
   // Plug in the section key.
 
 protected:
-  char *int_to_string (CORBA::ULong number);
-  // Convert an unsigned int to a string of its hex form.
-
   void update_key (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Set our key from the object ID via POACurrent.
-
-  char *reference_to_path (CORBA::IRObject_ptr obj);
-  // Converison from IR Object reference to key location path.
-
-  CORBA::DefinitionKind path_to_def_kind (ACE_TString &path);
-  // Conversion from key location path to CORBA::DefinitionKind.
-
-  CORBA::DefinitionKind reference_to_def_kind (CORBA::IRObject_ptr obj);
-  // Conversion from IR Object reference to CORBA::DefinitionKind.
-
-  TAO_IDLType_i *path_to_idltype (ACE_TString &path);
-  // Converion from key location path to IDLType.
-
-  TAO_Contained_i *path_to_contained (ACE_TString &path);
-  // Converion from key location path to IDLType.
-
-  TAO_Container_i *path_to_container (ACE_TString &path);
-  // Converion from key location path to IDLType.
-
-  CORBA::Object_ptr path_to_ir_object (ACE_TString &path
-                                       ACE_ENV_ARG_DECL);
-  // Conversion from key location path to IR Object reference.
-
-  CORBA::Object_ptr create_objref (CORBA::DefinitionKind def_kind,
-                                   const char *obj_id
-                                   ACE_ENV_ARG_DECL);
-  // Can be called from the above method or directly from a derived class.
 
 protected:
   TAO_Repository_i *repo_;
@@ -118,13 +88,6 @@ protected:
 
   ACE_Configuration_Section_Key section_key_;
   // Our ACE_Configuration section key.
-
-  ACE_Configuration_Section_Key tmp_key_;
-  // To hold a key created by one method for another method to use.
-
-private:
-  char *oid_to_string (PortableServer::ObjectId &oid);
-  // Used by a couple of the above methods.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

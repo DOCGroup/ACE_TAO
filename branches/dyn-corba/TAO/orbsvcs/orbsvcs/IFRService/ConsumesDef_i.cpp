@@ -28,23 +28,3 @@ TAO_ConsumesDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return CORBA::dk_Consumes;
 }
 
-CORBA::Contained::Description *
-TAO_ConsumesDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_READ_GUARD_RETURN (0);
-
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-CORBA::Contained::Description *
-TAO_ConsumesDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */ )
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // TODO
-  return 0;
-}
-

@@ -6,6 +6,7 @@
 #include "Repository_i.h"
 #include "IDLType_i.h"
 #include "Options.h"
+#include "IFR_Service_Utils.h"
 
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
@@ -92,9 +93,11 @@ TAO_Repository_i::lookup_id_i (const char *search_id
   CORBA::DefinitionKind def_kind =
     ACE_static_cast (CORBA::DefinitionKind, kind);
 
-  CORBA::Object_var obj = this->create_objref (def_kind,
-                                               path.c_str ()
-                                               ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::create_objref (def_kind,
+                                          path.c_str (),
+                                          this->repo_
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Contained::_nil ());
 
   return CORBA::Contained::_narrow (obj.in ()
@@ -199,13 +202,15 @@ TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc
       // An ExceptionDef is not an IDLType.
       if (kind == CORBA::tk_except)
         {
-          TAO_ExceptionDef_i impl (this);
+          TAO_ExceptionDef_i impl (this->repo_);
           impl.section_key (key);
           return impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
         }
       else
         {
-          TAO_IDLType_i *impl = this->path_to_idltype (path);
+          TAO_IDLType_i *impl = 
+            TAO_IFR_Service_Utils::path_to_idltype (path,
+                                                    this);
           impl->section_key (key);
           return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
         }
@@ -222,9 +227,11 @@ TAO_Repository_i::get_primitive (CORBA::PrimitiveKind kind
 
   obj_id += this->pkind_to_string (kind);
 
-  CORBA::Object_var obj = this->create_objref (CORBA::dk_Primitive,
-                                               obj_id.c_str ()
-                                               ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::create_objref (CORBA::dk_Primitive,
+                                          obj_id.c_str (),
+                                          this->repo_
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::PrimitiveDef::_nil ());
 
   return CORBA::PrimitiveDef::_narrow (obj.in ()
@@ -252,7 +259,7 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound
                                     "count",
                                     count);
 
-  char *name = this->int_to_string (count++);
+  char *name = TAO_IFR_Service_Utils::int_to_string (count++);
   this->config_->set_integer_value (this->strings_key_,
                                     "count",
                                     count);
@@ -280,9 +287,11 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound
   ACE_TString obj_id ("strings\\");
   obj_id += name;
 
-  CORBA::Object_var obj = this->create_objref (CORBA::dk_String,
-                                               obj_id.c_str ()
-                                               ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::create_objref (CORBA::dk_String,
+                                          obj_id.c_str (),
+                                          this->repo_
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::StringDef::_nil ());
 
   return CORBA::StringDef::_narrow (obj.in ()
@@ -310,7 +319,7 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound
                                     "count",
                                     count);
 
-  char *name = this->int_to_string (count++);
+  char *name = TAO_IFR_Service_Utils::int_to_string (count++);
   this->config_->set_integer_value (this->wstrings_key_,
                                     "count",
                                     count);
@@ -338,8 +347,10 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound
   ACE_TString obj_id ("wstrings\\");
   obj_id += name;
 
-  CORBA::Object_var obj = this->create_objref (CORBA::dk_Wstring,
-                                               obj_id.c_str ()
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::create_objref (CORBA::dk_Wstring,
+                                               obj_id.c_str (),
+                                               this->repo_
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::WstringDef::_nil ());
 
@@ -371,7 +382,7 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
                                     "count",
                                     count);
 
-  char *name = this->int_to_string (count++);
+  char *name = TAO_IFR_Service_Utils::int_to_string (count++);
   this->config_->set_integer_value (this->sequences_key_,
                                     "count",
                                     count);
@@ -399,7 +410,7 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
                                    name);
 
   char *element_path =
-    this->reference_to_path (element_type);
+    TAO_IFR_Service_Utils::reference_to_path (element_type);
 
   // To get key to element type.
   this->config_->set_string_value (new_key,
@@ -410,9 +421,11 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
   ACE_TString obj_id ("sequences\\");
   obj_id += name;
 
-  CORBA::Object_var obj = this->create_objref (CORBA::dk_Sequence,
-                                               obj_id.c_str ()
-                                               ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::create_objref (CORBA::dk_Sequence,
+                                          obj_id.c_str (),
+                                          this->repo_
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::SequenceDef::_nil ());
 
   return CORBA::SequenceDef::_narrow (obj.in ()
@@ -443,7 +456,7 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
                                     "count",
                                     count);
 
-  char *name = this->int_to_string (count++);
+  char *name = TAO_IFR_Service_Utils::int_to_string (count++);
   this->config_->set_integer_value (this->arrays_key_,
                                     "count",
                                     count);
@@ -471,7 +484,7 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
                                    name);
 
   char *element_path =
-    this->reference_to_path (element_type);
+    TAO_IFR_Service_Utils::reference_to_path (element_type);
 
   // To get key to element type.
   this->config_->set_string_value (new_key,
@@ -482,9 +495,11 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
   ACE_TString obj_id ("arrays\\");
   obj_id += name;
 
-  CORBA::Object_var obj = this->create_objref (CORBA::dk_Array,
-                                               obj_id.c_str ()
-                                               ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::create_objref (CORBA::dk_Array,
+                                          obj_id.c_str (),
+                                          this->repo_
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ArrayDef::_nil ());
 
   return CORBA::ArrayDef::_narrow (obj.in ()
@@ -1128,6 +1143,7 @@ TAO_Repository_i::num_pkinds (void) const
   return sizeof (TAO_Repository_i::TAO_IFR_primitive_kinds) / sizeof (char*);
 }
 
+// For debugging use only.
 void
 TAO_Repository_i::shutdown (void)
 {
