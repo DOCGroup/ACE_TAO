@@ -5959,6 +5959,7 @@ SOURCE=.\CosNotification.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__COSNO="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosNotification.idl
 InputName=CosNotification
@@ -5997,6 +5998,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__COSNO="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosNotification.idl
 InputName=CosNotification
@@ -6160,6 +6162,7 @@ SOURCE=.\CosNotifyChannelAdmin.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__COSNOT="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosNotifyChannelAdmin.idl
 InputName=CosNotifyChannelAdmin
@@ -6198,6 +6201,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__COSNOT="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosNotifyChannelAdmin.idl
 InputName=CosNotifyChannelAdmin
@@ -6361,6 +6365,7 @@ SOURCE=.\CosNotifyComm.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__COSNOTI="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosNotifyComm.idl
 InputName=CosNotifyComm
@@ -6399,6 +6404,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__COSNOTI="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosNotifyComm.idl
 InputName=CosNotifyComm
@@ -6562,6 +6568,7 @@ SOURCE=.\CosNotifyFilter.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__COSNOTIF="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosNotifyFilter.idl
 InputName=CosNotifyFilter
@@ -6600,6 +6607,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__COSNOTIF="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\CosNotifyFilter.idl
 InputName=CosNotifyFilter
@@ -7591,6 +7599,7 @@ SOURCE=.\DsLogAdmin.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__DSLOG="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\DsLogAdmin.idl
 InputName=DsLogAdmin
