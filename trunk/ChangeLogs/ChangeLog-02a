@@ -1,9 +1,17 @@
+Fri Apr 13 12:05:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp: Borland C++ has problem cleaning up
+	  the static Atomic_Op object in Echo_Handler in the right order.
+	  Made that an ACE_Singleton and re-organized the test a big.
+	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for reporting and
+	  suggesting the fix.   [Bug 862]
+
 Fri Apr 13 05:30:04 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Malloc_T.{h,i}: Added support for one of the calloc() methods
 	  to ACE_Cached_Allocator.  Thanks to Rachel G Smith
  	  <Rachel_G_Smith@raytheon.com> for motivating this change.
-	
+
 	* ace/Malloc_Allocator.h: Updated the comments for ACE_New_Allocator
 	  to indicate that the calloc() methods are also supported.
   	  Thanks to Rachel G Smith <Rachel_G_Smith@raytheon.com> for
@@ -57,17 +65,17 @@ Thu Apr 12 13:06:27 2001 Joel Sherrill <joel@OARcorp.com>
        	* include/makeinclude/Makefile.rtems: Replaced debug version
 	  with real version that queries RTEMS application Makefile
 	  infrastructure.
-  
-        * include/makeinclude/platform_rtems.x_g++.GNU: Added 
+
+        * include/makeinclude/platform_rtems.x_g++.GNU: Added
           --no-print-directory option to all invocations of recursive
  	  make to determine information from Makefile.rtems.  This
  	  avoids getting the "entering/exiting directory" messages
  	  included in the results.
-	
-        * ACE-RTEMS.README: Added requirement to configure C++ 
+
+        * ACE-RTEMS.README: Added requirement to configure C++
           support in RTEMS.  Updated to reflect also compiling for mc68360
  	  target.
-	
+
 Wed Apr 11 20:36:36 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Synch/proc_sema.cpp (main): Fixd an assigning string
