@@ -12,12 +12,12 @@
 // = DESCRIPTION
 //      This is a simple test that illustrates the possibility to integrate
 //      ACE to the X Main Loop. This program uses ACE_XtReactor class to
-//      schedule three additional event sources: 
-//	1. Events from button "Stop Test" (registed with XtAddCallback)
-//	2. Events from button "Press Me" (registed with XtAddCallback)
-//	3. Events from X timer (registed with XtAppAddTimeOut)
-//	4. Events from ACE timer (registed with ACE_XtReactor::schedule_timer)
-//	5. Events from the TCP/IP channel using ACE_Acceptor
+//      schedule three additional event sources:
+//      1. Events from button "Stop Test" (registed with XtAddCallback)
+//      2. Events from button "Press Me" (registed with XtAddCallback)
+//      3. Events from X timer (registed with XtAppAddTimeOut)
+//      4. Events from ACE timer (registed with ACE_XtReactor::schedule_timer)
+//      5. Events from the TCP/IP channel using ACE_Acceptor
 //      No command line arguments are needed to run the test.
 //
 // = AUTHOR
@@ -68,11 +68,11 @@ static int count3 = 0;
 static XtIntervalId timer;
 
 // Callback for "Stop Test" buton - quit the program.
-void 
+void
 Quit (Widget, XtPointer, XtPointer)
-{  
+{
   ACE_OS::exit (0);
-} 
+}
 
 static void *
 client (void *)
@@ -80,10 +80,10 @@ client (void *)
   char buf[100];
   size_t mes_len;
   ACE_OS::sleep (1);
- 
+
   ACE_DEBUG ((LM_DEBUG,
               " (%P) Client: Starting...\n"));
- 
+
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connector;
   sprintf (buf, "Client: the life was good!");
@@ -137,7 +137,7 @@ inc_count (Widget, XtPointer client_data, XtPointer)
            count2,
            count3);
   XtVaSetValues ((Widget) client_data,
-                 XmNlabelString, 
+                 XmNlabelString,
                  XmStringCreateLocalized (new_string),
                  NULL);
 }
@@ -270,7 +270,7 @@ main (int argc, char *argv[])
                  XtNlabel,
                  "Stop Test",
                  NULL);
-  
+
   //"Press Me" button
   PressMe = XmCreatePushButton (digits_rc,
  (char *) "PressMe",
@@ -292,32 +292,32 @@ main (int argc, char *argv[])
   children[ac++] = lbl;
   XtManageChildren (children, ac);
   XtManageChild (digits_rc);
-  
+
   //Register callback for "Stop Test" button
   XtAddCallback (goodbye, XmNactivateCallback, Quit, 0);
-  
+
   //Register callback for "Press Me" button
   XtAddCallback (PressMe,
                  XmNactivateCallback,
                  inc_count,
                  (XtPointer) lbl);
-  
+
   //Register callback for X Timer
   timer = XtAppAddTimeOut (app_context,
                            1000,
                            inc_tmo,
                            (XtPointer) lbl);
-  
+
   XtRealizeWidget (topLevel);
 
   // It will perform X Main Loop
-  ACE_XtReactor reactor (app_context); 
+  ACE_XtReactor reactor (app_context);
 
   ACE_Reactor r (&reactor);
 
   //Event Handler for ACE Timer.
-  EV_handler evh; 
-  
+  EV_handler evh;
+
   ACE_Acceptor <Connection_Handler, ACE_SOCK_ACCEPTOR> acceptor;
 
   if (acceptor.open (ACE_INET_Addr ((u_short) SERV_TCP_PORT),
@@ -335,12 +335,14 @@ main (int argc, char *argv[])
                        " (%P|%t) can't register with reactor\n"),
                       -1);
 
-  ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client, 
+  ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
                                           NULL,
                                           THR_NEW_LWP | THR_DETACHED);
 
   XtAppMainLoop (XtWidgetToApplicationContext (topLevel));
 #else
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR_RETURN ((LM_ERROR,
                      "Xt not supported on this platform\n"),
                     -1);
