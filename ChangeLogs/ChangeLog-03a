@@ -1,3 +1,10 @@
+Sat Feb  1 13:14:08 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile.am (TEMPLATE_FILES):
+
+	  Added missing "Templates_Instantiations.cpp" file to this list.
+	  Fixes builds from a source tree created by "make dist".
+
 Sat Feb  1 12:44:52 2003  Ossama Othman  <ossama@uci.edu>
 
 	* Makefile.am (EXTRA_DIST):
