@@ -67,6 +67,18 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
+  unsigned int opt_to_mask (const char *optarg);
+  // Obtain the bit mask representation of the specified test
+
+  void enable_test (unsigned int mask);
+  // Enable the specified test.
+
+  void disable_test (unsigned int mask);
+  // Disable the specified test.
+
+  int check_enabled (unsigned int mask) const;
+  // Check if the specified test has been enabled.
+
   void print_stats (const char *call_name,
                     ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
   // Prints the time stats.
@@ -114,12 +126,6 @@ private:
                       CORBA::Environment &ACE_TRY_ENV);
   // Cube a sequence <l> is the length of the sequence.
 
-  int run_void (CORBA::Environment &ACE_TRY_ENV);
-  // This method runs only the cube_void() test.
-
-  int run_oneway (CORBA::Environment &ACE_TRY_ENV);
-  // This method runs only the cube_oneway() test.
-
   int shutdown_server (int do_shutdown,
                        CORBA::Environment &ACE_TRY_ENV);
   // Invoke the method with <do_shutdown> != 0 to shutdown the server.
@@ -163,11 +169,11 @@ private:
   ACE_HANDLE f_handle_;
   // File handle to read the IOR.
 
-  int only_void_;
-  // Run only the cube_void() test.
+  unsigned int test_enable_bitset_;
+  // Bitset that determines which tests get run.
 
-  int only_oneway_;
-  // Run only the cube_oneway() test.
+  unsigned int test_disable_bitset_;
+  // Bitset that determines which tests do not get run.
 
   int testing_collocation_;
   // We are running the collocation test.
