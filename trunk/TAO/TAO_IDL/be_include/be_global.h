@@ -20,6 +20,8 @@
 #ifndef _BE_GLOBAL_H
 #define _BE_GLOBAL_H
 
+class be_interface;
+
 // Defines a class containing all back end global data.
 
 class TAO_IDL_BE_Export BE_GlobalData
@@ -336,6 +338,10 @@ public:
 
   virtual void destroy (void);
   // Cleanup function.
+
+  ACE_Unbounded_Queue<be_interface *> non_local_interfaces;
+  // Used in the generation of declarations for
+  // xxx_Proxy_Broker_Factory_function_pointer.
 
 private:
   size_t changing_standard_include_files_;
