@@ -153,6 +153,13 @@ public:
   // Build a CDR stream with an initial buffer, it will *not* remove
   // <data>, since it did not allocated it.
 
+  TAO_OutputCDR (ACE_Message_Block *data,
+		 int byte_order = TAO_ENCAP_BYTE_ORDER,
+		 TAO_Marshal_Factory *f =
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+  // Build a CDR stream with an initial Message_Block chain, it will *not*
+  // remove <data>, since it did not allocate it.
+
   ~TAO_OutputCDR (void);
   // destructor
 
@@ -202,6 +209,30 @@ public:
 				    CORBA::ULong length);
   CORBA_Boolean write_longdouble_array (const CORBA::LongDouble* x,
 					CORBA::ULong length);
+
+  // = We have one method per basic IDL type....
+  // They return CORBA::B_FALSE on failure and CORBA::B_TRUE on success.
+  CORBA_Boolean append_boolean (TAO_InputCDR &);
+  CORBA_Boolean append_char (TAO_InputCDR &);
+  CORBA_Boolean append_wchar (TAO_InputCDR &);
+  CORBA_Boolean append_octet (TAO_InputCDR &);
+  CORBA_Boolean append_short (TAO_InputCDR &);
+  CORBA_Boolean append_ushort (TAO_InputCDR &);
+  CORBA_Boolean append_long (TAO_InputCDR &);
+  CORBA_Boolean append_ulong (TAO_InputCDR &);
+  CORBA_Boolean append_longlong (TAO_InputCDR &);
+  CORBA_Boolean append_ulonglong (TAO_InputCDR &);
+  CORBA_Boolean append_float (TAO_InputCDR &);
+  CORBA_Boolean append_double (TAO_InputCDR &);
+  CORBA_Boolean append_longdouble (TAO_InputCDR &);
+  CORBA_Boolean append_wstring (TAO_InputCDR &);
+  CORBA_Boolean append_string (TAO_InputCDR &);
+
+  CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                           TAO_InputCDR *src,
+                                           CORBA::Environment &env);
+  // Append the contents of the CDR stream based on information
+  // described by <tc>; returning any errors in <env>.
 
   // @@ TODO: do we want a special method to write an array of
   // strings and wstrings?
@@ -332,6 +363,12 @@ public:
   // Create an input stream from an arbitrary buffer, care must be
   // exercised wrt alignment, because this contructor will *not* work
   // if the buffer is unproperly aligned.
+
+  TAO_InputCDR (ACE_Message_Block *data,
+		int byte_order = TAO_ENCAP_BYTE_ORDER,
+		TAO_Marshal_Factory *f =
+                TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+  // Create an input stream from an ACE_Message_Block
 
   TAO_InputCDR (const TAO_InputCDR& rhs);
   TAO_InputCDR& operator= (const TAO_InputCDR& rhs);

@@ -171,7 +171,8 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
       == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       // Let the Any maintain a pointer to the CDR stream
-      any->value_ = (ACE_Message_Block *) stream->start ();
+      any->value_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
+                                                  stream->start ());
       any->any_owns_data_ = 1;
       elem_tc->AddRef ();
       any->type_ = elem_tc;
@@ -415,7 +416,7 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
                       CORBA::TypeCode::TRAVERSE_CONTINUE);
       (*pp)->id.length (len);
 
-      continue_decoding = 
+      continue_decoding =
 	stream->read_octet_array ((*pp)->id.get_buffer (), len);
     }
 

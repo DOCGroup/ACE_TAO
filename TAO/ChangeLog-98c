@@ -1,3 +1,48 @@
+Wed Apr 15 15:59:58 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO/tao/append.cpp: Added a bunch of methods that take a CDR
+	stream and append it to another CDR stream while maintaining the
+	alignment. These functions use exactly the same logic as that used
+	by the encode, skip, decode, deep_free, and deep_copy methods.
+
+	* TAO/tao/any.cpp: When we reset the contents, we set value_ to 0
+
+	* TAO/tao/CDR.{h, i, cpp}: Added a constructor to the
+	TAO_OutputCDR and TAO_InputCDR to take an ACE_Message_Block as
+	input. In addition, added the "append" methods that append one CDR
+	to other while maintaining the alignment.
+
+	* TAO/tao/Exception.{h, i, cpp}: Added the definition and
+	implementation of the CORBA::ExceptionList class according to the
+	CORBA v2.2 (Feb 98). This required a few changes in the
+	Exception.cpp file while initializing the list of system
+	exceptions.
+
+	* TAO/tao/{GIOP, IIOP_Object}.cpp: Changes required due the new
+	definition of ExceptionList
+
+	* TAO/tao/Marshal.h: Added the append methods on all classes.
+
+	* TAO/tao/ORB.h: Chnaged the definition of ExceptionList from
+	typedef to TAO_Unbounded_Object_Sequence<TypeCode_ptr> to using
+	the new defintion.
+
+	* TAO/tao/Typecode.{h, cpp}: Moved the defintions of Bounds and
+	BadKind inside the TypeCode class. This is where it belongs.
+
+	* TAO/tao/decode.cpp: In Any::decode, we set the value_ data
+	member of Any to a duplicated ACE_Message_Block.
+
+	* TAO/tao/encode.cpp: Changed the implementation of Any::encode
+	such that if the Any owns the data, then the value_ which is an
+	ACE_Message_Block that holds a CDR stream gets appended to the
+	destination CDR. Otherwise, the value is literally encoded into
+	the destination CDR.
+
+	* TAO/tao/skip.cpp: Added WString::skip. In addition, we had
+	forgotten to pass the address of the discriminant_val to the
+	decoder inside the Union::skip function.
+
 Wed Apr 15 12:19:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/deep_copy.cpp (deep_copy): We need a return if no error was
@@ -5,7 +50,7 @@ Wed Apr 15 12:19:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Apr 15 09:28:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Stub.h: 
+	* tao/Stub.h:
 	  A field was declared <const CORBA::TypeCode_ptr*>, this field is
 	  needed to initialize a Sequence that requires a
 	  <CORBA::TypeCode**> parameter.  The careful reader will notice

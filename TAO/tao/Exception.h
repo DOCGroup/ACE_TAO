@@ -283,9 +283,52 @@ public:
     // Preallocated tc buffer.
   };
 
-  static CORBA::TypeCode_ptr sys_exceptions[NUM_SYS_EXCEPTIONS];
+  static CORBA::TypeCode_ptr sys_exceptions [NUM_SYS_EXCEPTIONS];
 
   static CORBA::ExceptionList system_exceptions;
+};
+
+// ExceptionList definition taken from CORBA v2.2 Feb 1998
+class CORBA_ExceptionList
+{
+  // =TITLE
+  //   CORBA_ExceptionList
+  // =DESCRIPTION
+  //   Maintains a list of TypeCodes for Exceptions
+public:
+
+  CORBA_ExceptionList (void);
+  // constructor
+
+  CORBA_ExceptionList (CORBA::ULong len,
+                       CORBA::TypeCode_ptr *tc_list);
+  // constructor - initialize given a length and an array of TypeCodes
+
+  ~CORBA_ExceptionList (void);
+  // destructor
+
+  CORBA::ULong count ();
+  // return the number of elements
+
+  void add (CORBA::TypeCode_ptr tc);
+  // add a TypeCode to the list
+
+  void add_consume (CORBA::TypeCode_ptr tc);
+  // add and consume a TypeCode to the list
+
+  CORBA::TypeCode_ptr item (CORBA::ULong index, CORBA::Environment &env);
+  // return the typecode at index i. Raises the "Bounds" exception
+
+  void remove (CORBA::ULong index, CORBA::Environment &env);
+  // remove the typecode at index i. Raises the "Bounds" exception
+
+private:
+  // not allowed
+  CORBA_ExceptionList (const CORBA_ExceptionList &);
+  CORBA_ExceptionList &operator= (const CORBA_ExceptionList &);
+
+  ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;
+  // internal list of typecodes
 };
 
 #if defined (__ACE_INLINE__)

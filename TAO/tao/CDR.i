@@ -767,3 +767,130 @@ operator>> (TAO_InputCDR& cdr, CORBA::Char &x)
   return cdr;
 }
 #endif /* 0 */
+
+// ***************************************************************************
+// We must define these methods here because they use the "read_*" inlined
+// methods of the TAO_InputCDR class
+// ***************************************************************************
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_boolean (TAO_InputCDR &stream)
+{
+  CORBA::Boolean x;
+  return (stream.read_boolean (x) ? this->write_boolean (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_char (TAO_InputCDR &stream)
+{
+  CORBA::Char x;
+  return (stream.read_char (x) ? this->write_char (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_wchar (TAO_InputCDR &stream)
+{
+  CORBA::WChar x;
+  return (stream.read_wchar (x) ? this->write_wchar (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_octet (TAO_InputCDR &stream)
+{
+  CORBA::Octet x;
+  return (stream.read_octet (x) ? this->write_octet (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_short (TAO_InputCDR &stream)
+{
+  CORBA::Short x;
+  return (stream.read_short (x) ? this->write_short (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_ushort (TAO_InputCDR &stream)
+{
+  CORBA::UShort x;
+  return (stream.read_ushort (x) ? this->write_ushort (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_long (TAO_InputCDR &stream)
+{
+  CORBA::Long x;
+  return (stream.read_long (x) ? this->write_long (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_ulong (TAO_InputCDR &stream)
+{
+  CORBA::ULong x;
+  return (stream.read_ulong (x) ? this->write_ulong (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_longlong (TAO_InputCDR &stream)
+{
+  CORBA::LongLong x;
+  return (stream.read_longlong (x) ? this->write_longlong (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_ulonglong (TAO_InputCDR &stream)
+{
+  CORBA::ULongLong x;
+  return (stream.read_ulonglong (x) ? this->write_ulonglong (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_float (TAO_InputCDR &stream)
+{
+  CORBA::Float x;
+  return (stream.read_float (x) ? this->write_float (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_double (TAO_InputCDR &stream)
+{
+  CORBA::Double x;
+  return (stream.read_double (x) ? this->write_double (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_longdouble (TAO_InputCDR &stream)
+{
+  CORBA::LongDouble x;
+  return (stream.read_longdouble (x) ? this->write_longdouble (x) : 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_string (TAO_InputCDR &stream)
+{
+  char *x;
+  CORBA::Boolean flag = (stream.read_string (x) ? this->write_string (x) : 0);
+  CORBA::string_free (x);
+  return flag;
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::append_wstring (TAO_InputCDR &stream)
+{
+  CORBA::WChar *x;
+  CORBA::Boolean flag = (stream.read_wstring (x) ? this->write_wstring (x) : 0);
+  CORBA::wstring_free (x);
+  return flag;
+}
+
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_OutputCDR::append (CORBA::TypeCode_ptr tc,
+                       TAO_InputCDR *src,
+                       CORBA::Environment &env)
+{
+  TAO_Marshal_Object *mobj =
+    this->factory_->make_marshal_object (tc, env);
+
+  if (env.exception() == 0 && mobj != 0)
+    return mobj->append (tc, src, this, env);
+  return CORBA::TypeCode::TRAVERSE_STOP;
+}

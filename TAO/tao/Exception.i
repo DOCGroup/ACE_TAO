@@ -43,3 +43,19 @@ CORBA::Exception_ptr CORBA_Environment::exception (void) const
 {
   return this->exception_;
 }
+
+ACE_INLINE
+CORBA_ExceptionList::CORBA_ExceptionList (void)
+{
+}
+
+ACE_INLINE
+CORBA_ExceptionList::~CORBA_ExceptionList (void)
+{
+}
+
+ACE_INLINE CORBA::ULong
+CORBA_ExceptionList::count (void)
+{
+  return (CORBA::ULong) this->tc_list_.size ();
+}

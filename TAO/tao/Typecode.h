@@ -23,24 +23,6 @@
 // Forward decl.
 class TAO_InputCDR;
 
-// Two "user exceptions" are defined for manipulating TypeCodes. These
-// two classes are really to be defined inside the TypeCode class.
-// @@ Andy, can you please explain why they aren't defined there?
-
-//extern CORBA::TypeCode_ptr CORBA::_tc_Bounds;
-class CORBA_Bounds : public CORBA_UserException
-{
-public:
-  CORBA_Bounds (void);
-};
-
-//extern CORBA::TypeCode_ptr CORBA::_tc_BadKind;
-class CORBA_BadKind : public CORBA_UserException
-{
-public:
-  CORBA_BadKind (void);
-};
-
 // A TypeCode describes data.  This one's as thin a wrapper around CDR
 // octet sequences as is practical.  There are guesses here about how
 // the OMG C++ mapping and CORBA 2.0 IFR specification will interact.
@@ -52,6 +34,7 @@ public:
 class TC_Private_State;
 
 class TAO_Export CORBA_TypeCode
+{
   // = TITLE
   //   The CORBA TypeCode class. It maintains the in-memory
   //   representation of any OMG CORBA IDL data type.
@@ -70,16 +53,24 @@ class TAO_Export CORBA_TypeCode
   //   THREADING NOTE: Typecodes are readonly data structures, and the
   //   only mutual exclusion relates to reference counting and
   //   construction.
-{
 public:
+
+  // Two "user exceptions" are defined for manipulating TypeCodes. These
+  // two classes are defined inside the TypeCode class.
+  class Bounds : public CORBA_UserException
+  {
+  public:
+    Bounds (void);
+  };
+
+  class BadKind : public CORBA_UserException
+  {
+  public:
+    BadKind (void);
+  };
+
   void operator delete (void*);
   // Help debug free-non-heap-memory problems.
-
-  typedef CORBA_Bounds Bounds;
-  typedef CORBA_BadKind BadKind;
-  // As per the spec, these two exception classes are supposed to be
-  // nested inside the TypeCode class. Since we are trying to avoid
-  // nesting of classes, we use the above typedef.
 
   static CORBA::TypeCode_ptr _duplicate (CORBA::TypeCode_ptr tc);
   // Duplicates i.e., increments ref count.

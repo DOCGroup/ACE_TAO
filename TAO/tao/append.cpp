@@ -6,31 +6,38 @@
 //    TAO
 //
 // = FILENAME
-//    skip.cpp
+//    append.cpp
 //
 // = DESCRIPTION
-//   Code for skipping different data types
-//
-//   Data types encoded as CDR streams need to be skipped when they are part of
-//   an Any.
+//   Appends a CDR stream to another CDR stream. Due to the stringent alignment
+//   requirements, it is not possible to simply append or memcpy. Instead we go
+//   thru the same CDR encoding rules
 //
 // = AUTHOR
-//     Aniruddha Gokhale
+//     Copyright 1994-1995 by Sun Microsystems Inc.
+//     and Aniruddha Gokhale
 //
 // ============================================================================
 
 #include "tao/corba.h"
 
+extern CORBA::TypeCode TC_opaque;
+
+// Encode instances of arbitrary data types based only on typecode.
+// "data" points to the data type; if it's not a primitve data type,
+// the TypeCode interpreter is used to recursively encode its
+// components.  "context" is the marshaling stream on which to encode
+// the data value.
+
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
-                             void *context,
-                             CORBA::Environment &env)
+TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest,
+                               CORBA::Environment &env)
 {
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
-  // status of skip operation
-  CORBA::TypeCode::traverse_status   retval =
-    CORBA::TypeCode::TRAVERSE_CONTINUE;
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
+  CORBA::TypeCode::traverse_status retval =
+    CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation
 
   switch (tc->kind_)
     {
@@ -39,103 +46,106 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
       break;
     case CORBA::tk_short:
     case CORBA::tk_ushort:
-      continue_decoding = stream->skip_short ();
+      continue_append = dest->append_short (*src);
       break;
     case CORBA::tk_long:
     case CORBA::tk_ulong:
     case CORBA::tk_float:
     case CORBA::tk_enum:
-      continue_decoding = stream->skip_long ();
+      continue_append = dest->append_long (*src);
       break;
     case CORBA::tk_double:
     case CORBA::tk_longlong:
     case CORBA::tk_ulonglong:
-      continue_decoding = stream->skip_longlong ();
+      continue_append = dest->append_double (*src);
       break;
     case CORBA::tk_boolean:
-      continue_decoding = stream->skip_boolean ();
+      continue_append = dest->append_boolean (*src);
       break;
     case CORBA::tk_char:
     case CORBA::tk_octet:
-      continue_decoding = stream->skip_char ();
+      continue_append = dest->append_octet (*src);
       break;
     case CORBA::tk_longdouble:
-      continue_decoding = stream->skip_longdouble ();
+      continue_append = dest->append_longdouble (*src);
       break;
     case CORBA::tk_wchar:
-      continue_decoding = stream->skip_wchar ();
+      continue_append = dest->append_wchar (*src);
       break;
     default:
       retval = CORBA::TypeCode::TRAVERSE_STOP;
       // we are not a primitive type
     }
+
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_decoding == CORBA::B_TRUE)
+      && continue_append == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Primitive::skip detected error");
+      dmsg ("TAO_Marshal_Primitive::encode detected error");
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
 
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Any::skip (CORBA::TypeCode_ptr,
-                         void *context,
+TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
+                         TAO_InputCDR *src,
+                         TAO_OutputCDR *dest,
                          CORBA::Environment &env)
 {
   // Typecode of the element that makes the Any.
   CORBA::TypeCode_ptr elem_tc;
 
-  // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
-
-  // Status of encode operation.
+  // Status of append operation.
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-  // first retrieve the TypeCode for the element so that we can skip the value
-  // based on this typecode
-  if (stream->decode (CORBA::_tc_TypeCode,
-                      &elem_tc,
-                      0,
-                      env) == CORBA::TypeCode::TRAVERSE_CONTINUE)
+  // Decode the typecode description for the element so that we can append the
+  // data appropriately
+  if ((retval = src->decode (CORBA::_tc_TypeCode,
+                             &elem_tc,
+                             0,
+                             env))
+      == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      if (env.exception () == 0)
-        retval = stream->skip (elem_tc, env);
-      else
-        retval = CORBA::TypeCode::TRAVERSE_STOP;
+      // encode the typecode
+      retval = dest->encode (CORBA::_tc_TypeCode, &elem_tc, 0, env);
+      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+        // append the data
+        retval = dest->append (elem_tc, src, env);
+    }
+  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    {
+      CORBA::release (elem_tc);
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      dmsg ("TAO_Marshal_Any::append detected error");
     }
   return retval;
 }
 
 CORBA::TypeCode::traverse_status
-TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
-                            void *context,
-                            CORBA::Environment  &env)
+TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
+                              TAO_InputCDR *src,
+                              TAO_OutputCDR *dest,
+                              CORBA::Environment  &env)
 {
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-
-  // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
-
-  // Typecode to be decoded.
-  CORBA::TypeCode_ptr *tcp;
-
-  // Typecode kind.
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
+  CORBA::TypeCode::traverse_status retval =
+    CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::ULong kind;
 
-  // Decode the "kind" field of the typecode from the stream
-  continue_decoding = stream->read_ulong (kind);
+  // Decode the "kind" field of the typecode from the src for further
+  // use. However, also write it back into the destination
+  continue_append = (src->read_ulong (kind) ? dest->write_ulong (kind) : 0);
 
-  if (continue_decoding == CORBA::B_TRUE)
+  if (continue_append == CORBA::B_TRUE)
     {
       // Typecodes with empty parameter lists all have preallocated
       // constants.  We use those to reduce memory consumption and
       // heap access ... also, to speed things up!
-      if ((kind < CORBA::TC_KIND_COUNT) ||
-          (kind == ~(CORBA::ULong)0))
+      if ((kind < CORBA::TC_KIND_COUNT)
+          || (kind == ~(CORBA::ULong)0))
         {
           // Either a non-constant typecode or an indirected typecode.
           switch (kind)
@@ -143,21 +153,21 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
               // Need special handling for all kinds of typecodes that
               // have nonempty parameter lists ...
             default:
-              // simple typecodes, nothing to do
+              // nothing to de done
               break;
             case CORBA::tk_string:
             case CORBA::tk_wstring:
               {
-                // skip the bounds
-                continue_decoding = stream->skip_ulong ();
+                // read and write the bounds
+                retval = dest->append (CORBA::_tc_long, src, env);
               }
             break;
 
-            // Indirected typecodes, illegal at "top level".
+            // Indirected typecodes, illegal at "top level"
             case ~0:
               {
-                // skip the long indicating the encapsulation offset,
-                continue_decoding = stream->skip_long ();
+                // read and write the negative offset
+                retval = dest->append (CORBA::_tc_long, src, env);
               }
             break;
 
@@ -172,14 +182,8 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
             case CORBA::tk_alias:
             case CORBA::tk_except:
               {
-                CORBA::ULong length;
-
-                // get the encapsulation length
-                continue_decoding = stream->read_ulong (length);
-                if (!continue_decoding)
-                  break;
-                // skip the encapsulation
-                continue_decoding = stream->skip_bytes (length);
+                // write the encapsulation i.e., octet sequence
+                retval = dest->append (&TC_opaque, src, env);
               }
             } // end of switch
         }
@@ -191,12 +195,13 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
         }
     }
 
-  if (continue_decoding == CORBA::B_TRUE)
+  if ((continue_append == CORBA::B_TRUE) &&
+      (retval == CORBA::TypeCode::TRAVERSE_CONTINUE))
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::skip detected error");
+      dmsg ("TAO_Marshal_TypeCode::append detected error");
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -204,49 +209,26 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
 // Encode Principal.
 
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
-                               void *context,
+TAO_Marshal_Principal::append (CORBA::TypeCode_ptr,
+                               TAO_InputCDR *src,
+                               TAO_OutputCDR *dest,
                                CORBA::Environment &env)
 {
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-
-  // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
-
-  // specifies the number of bytes in the Principal
-  CORBA::ULong len;
-
-  continue_decoding = stream->read_ulong (len);
-  if (len > 0 && continue_decoding)
-    {
-      continue_decoding = stream->skip_bytes (len);
-    }
-
-  if (continue_decoding == CORBA::B_TRUE)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-  else
-    {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Principal::skip detected error");
-      return CORBA::TypeCode::TRAVERSE_STOP;
-    }
+  // write the octet sequence representing the Principal
+  return dest->append (&TC_opaque, src, env);
 }
 
 CORBA::TypeCode::traverse_status
-TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
-                          void *context,
-                          CORBA::Environment &env)
+TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
+                            TAO_InputCDR *src,
+                            TAO_OutputCDR *dest,
+                            CORBA::Environment &env)
 {
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
 
-  // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
-  // return status
-  CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
-
-  // First, skip the type hint. This will be the type_id encoded in an
+  // First, append the type hint. This will be the type_id encoded in an
   // object reference.
-  stream->skip_string ();
+  dest->append_string (*src);
 
   // Read the profiles, discarding all until an IIOP profile comes by.
   // Once we see an IIOP profile, ignore any further ones.
@@ -256,76 +238,42 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
   // dynamically loaded from shared libraries via ORB_init (), and we
   // just need to be able to access such preloaded libraries here as
   // we unmarshal objrefs.
-  CORBA::ULong profiles = 0;
 
-  // get the count of profiles that follow
-  continue_decoding = stream->read_ulong (profiles);
+  CORBA::ULong profiles;
 
-  while (profiles-- != 0 && continue_decoding)
-      {
-        CORBA::ULong tag;
+  // get the count of profiles that follow. This will tell us the length of the
+  // sequence
+  continue_append = (src->read_ulong (profiles) ?
+                     dest->write_ulong (profiles) : 0);
 
-        // get the profile ID tag
-        if ( (continue_decoding = stream->read_ulong (tag)) == CORBA::B_FALSE)
-	  continue;
+  // No profiles means a NIL objref.
+  while (profiles-- != 0 && continue_append)
+    {
+      CORBA::ULong tag;
 
-        if (tag != TAO_IOP_TAG_INTERNET_IOP)
-          {
-            continue_decoding = stream->skip_string ();
-            continue;
-          }
+      // get the profile ID tag
+      if ((continue_append = (src->read_ulong (tag) ?
+                              dest->write_ulong (tag) : 0))
+          == CORBA::B_FALSE)
+        continue;
 
-        // OK, we've got an IIOP profile.  It's going to be
-        // encapsulated ProfileData.  Create a new decoding stream and
-        // context for it, and tell the "parent" stream that this data
-        // isn't part of it any more.
-
-	CORBA::ULong encap_len;
-        // ProfileData is encoded as a sequence of octet. So first get
-        // the length of the sequence.
-        // Create the decoding stream from the encapsulation in the
-        // buffer, and skip the encapsulation.
-	if ( (continue_decoding = stream->read_ulong (encap_len)) == CORBA::B_FALSE)
-	  continue;
-
-        TAO_InputCDR str (*stream, encap_len);
-
-	continue_decoding =
-	  str.good_bit ()
-	  && stream->skip_bytes (encap_len);
-
-	if (!continue_decoding)
-	  continue;
-
-        // Read and verify major, minor versions, ignoring IIOP
-        // profiles whose versions we don't understand.
-        //
-        // XXX this doesn't actually go back and skip the whole
-        // encapsulation...
-        if (!(str.skip_octet ()
-              && str.skip_octet ()))
+      if (tag != TAO_IOP_TAG_INTERNET_IOP)
+        {
+          continue_append = dest->append_string (*src);
           continue;
+        }
 
-        // skip host and port
-        if (!str.skip_string ()
-            || !str.skip_ushort ())
-          {
-            env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-            dmsg ("error decoding IIOP host/port");
-            return CORBA::TypeCode::TRAVERSE_STOP;
-          }
+      // OK, we've got an IIOP profile.  It's going to be
+      // encapsulated ProfileData.  Create a new decoding stream and
+      // context for it, and tell the "parent" stream that this data
+      // isn't part of it any more.
 
-        // ... and object key.
-        if (str.skip (&TC_opaque,
-                      env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-          {
-            env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-            return CORBA::TypeCode::TRAVERSE_STOP;
-          }
-      }
+      // ProfileData is encoded as an encapsulated sequence of octets.
+      continue_append = (dest->append (&TC_opaque, src, env) ==
+                         CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+    }
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_decoding == CORBA::B_TRUE)
+  if (continue_append == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -337,13 +285,14 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
 
 // Decode structs.
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
-                            void *context,
+TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
+                            TAO_InputCDR *src,
+                            TAO_OutputCDR *dest,
                             CORBA::Environment &env)
 {
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
   CORBA::TypeCode_ptr param;
 
   // Number of fields in the struct.
@@ -351,13 +300,15 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
 
   if (env.exception () == 0)
     for (int i = 0; i < member_count
-           && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
+           && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+           && continue_append == CORBA::B_TRUE;
          i++)
       {
+        // get member type
         param = tc->member_type (i, env);
         if (env.exception () == 0)
           {
-            retval = stream->skip (param, env);
+            retval = dest->append (param, src, env);
           }
         else
           return CORBA::TypeCode::TRAVERSE_STOP;
@@ -365,7 +316,8 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
   else
     return CORBA::TypeCode::TRAVERSE_STOP;
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+      && continue_append == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -377,13 +329,11 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
 
 // Encode unions.
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
-                         void *context,
-                         CORBA::Environment &env)
+TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
+                           TAO_InputCDR *src,
+                           TAO_OutputCDR *dest,
+                           CORBA::Environment &env)
 {
-  // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
-
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
@@ -397,17 +347,20 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_ptr default_tc = 0;
   CORBA::Boolean discrim_matched = CORBA::B_FALSE;
 
-  // get the discriminator type which will enable us to skip the discriminator
-  // value
+  // get the discriminator type
   discrim_tc = tc->discriminator_type (env);
 
   if (env.exception () == 0)
     {
       // decode the discriminator value
-      retval = stream->decode (discrim_tc, &discrim_val, 0, env);
+      retval = src->decode (discrim_tc, &discrim_val, 0, env);
       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-              // now get ready to skip the actual union value
+          // write the discriminant back to the dest
+          retval = dest->encode (discrim_tc, &discrim_val, 0, env);
+          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+            {
+              // now get ready to marshal the actual union value
               default_index = tc->default_index (env);
 
               if (env.exception () == 0)
@@ -420,7 +373,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                       // member_type. If none match, check if default exists
                       // and marshal accordingly. Otherwise it is an error.
 
-                      for (i = 0; i < member_count; i++)
+                      for (i = 0; member_count-- != 0; i++)
                         {
                           member_label = tc->member_label (i, env);
                           if (env.exception () == 0)
@@ -471,7 +424,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                     default_tc = member_tc;
                                   if (discrim_matched)
                                     // marshal according to the matched typecode
-                                    return stream->skip (member_tc, env);
+                                    return dest->append (member_tc, src, env);
                                 }
                               else
                                 {
@@ -487,7 +440,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                         } // end of for loop
                       // we are here only if there was no match
                       if (default_tc)
-                        return stream->skip (default_tc, env);
+                        return dest->append (default_tc, src, env);
                       else
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                     }
@@ -502,6 +455,12 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
                   return CORBA::TypeCode::TRAVERSE_STOP;
                 }
+            }
+          else
+            {
+              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+              return CORBA::TypeCode::TRAVERSE_STOP;
+            }
         }
       else
         {
@@ -518,14 +477,12 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
 
 // decode string
 CORBA::TypeCode::traverse_status
-TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
-                          void *context,
-                          CORBA::Environment &env)
+TAO_Marshal_String::append (CORBA::TypeCode_ptr,
+                            TAO_InputCDR *src,
+                            TAO_OutputCDR *dest,
+                            CORBA::Environment &env)
 {
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-  // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
-
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
 
   // On decode, omit the check against specified string bounds, and
   // cope with illegal "zero length" strings (all lengths on the wire
@@ -535,13 +492,13 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
   // don't generate messages that fail to comply with protocol specs,
   // but we will accept them when it's clear how to do so.
 
-  continue_decoding = stream->skip_string ();
-  if (continue_decoding == CORBA::B_TRUE)
+  continue_append = dest->append_string (*src);
+  if (continue_append == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::skip detected error");
+      dmsg ("TAO_Marshal_TypeCode::append detected error");
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -549,12 +506,12 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
 // Decode sequence.
 
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
-                            void *context,
-                            CORBA::Environment &env)
+TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
+                              TAO_InputCDR *src,
+                              TAO_OutputCDR *dest,
+                              CORBA::Environment &env)
 {
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
   // Return status.
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -567,42 +524,42 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
   // here, on the "be gracious in what you accept" principle.  We
   // don't generate illegal sequences (i.e. length > bounds).
 
-  continue_decoding = stream->read_ulong (bounds);
+  continue_append = (src->read_ulong (bounds) ?
+                     dest->write_ulong (bounds) : 0);
 
-  if (continue_decoding)
+  if (continue_append)
     {
-      // No point decoding an empty sequence.
-      if (bounds > 0)
-        {
-          // Get element typecode.
-          tc2 = tc->content_type (env);
+      // Get element typecode.
+      tc2 = tc->content_type (env);
 
-          if (env.exception () == 0)
+      if (env.exception () == 0)
+        {
+          // For those aggregate types whose size is
+          // constant, we compute it only once.
+          while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
             {
-              while (bounds-- && continue_decoding == CORBA::B_TRUE)
-                {
-                  continue_decoding = stream->skip (tc2, env);
-                }
-            } // no exception computing content type
-        } // length is > 0
-      else
-        return CORBA::TypeCode::TRAVERSE_CONTINUE;
+              retval = dest->append (tc2, src, env);
+            }
+          // CORBA::release (tc2);
+          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+            return CORBA::TypeCode::TRAVERSE_CONTINUE;
+        } // no exception computing content type
     }
   // error exit
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  dmsg ("marshaling TAO_Marshal_Sequence::skip detected error");
+  dmsg ("marshaling TAO_Marshal_Sequence::append detected error");
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
 // Decode array.
 
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
-                           void *context,
+TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
+                           TAO_InputCDR *src,
+                           TAO_OutputCDR *dest,
                            CORBA::Environment &env)
 {
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
 
   // Return status.
   CORBA::TypeCode::traverse_status retval =
@@ -621,30 +578,31 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
       tc2 = tc->content_type (env);
       if (env.exception () == 0)
         {
-          while (bounds-- && continue_decoding == CORBA::B_TRUE)
+          while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
             {
-              continue_decoding = stream->skip (tc2, env);
+              retval = dest->append (tc2, src, env);
             }
+          // CORBA::release (tc2);
+          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+            return CORBA::TypeCode::TRAVERSE_CONTINUE;
         } // no exception computing content type
     } // no exception computing bounds
   // error exit
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  dmsg ("marshaling TAO_Marshal_Sequence::skip detected error");
+  dmsg ("marshaling TAO_Marshal_Sequence::append detected error");
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
 // Decode alias.
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
-                         void *context,
-                         CORBA::Environment &env)
+TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
+                           TAO_InputCDR *src,
+                           TAO_OutputCDR *dest,
+                           CORBA::Environment &env)
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_ptr tc2;
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-
-  // Context is the CDR stream.
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
 
   // Status of decode operation.
   CORBA::TypeCode::traverse_status retval =
@@ -653,16 +611,17 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
   tc2 = tc->content_type (env);
   if (env.exception () == 0)
     {
-      retval = stream->skip (tc2, env);
+      retval = dest->append (tc2, src, env);
     }
+
   //  tc2->Release ();
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_decoding == CORBA::B_TRUE)
+      && continue_append == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Alias::skip detected error");
+      dmsg ("TAO_Marshal_Alias::append detected error");
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -675,27 +634,28 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
 //
 // NOTE: This is asymmetric with respect to encoding exceptions.
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
-                          void *context,
-                          CORBA::Environment &env)
+TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
+                            TAO_InputCDR *src,
+                            TAO_OutputCDR *dest,
+                            CORBA::Environment &env)
 {
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
   CORBA::TypeCode_ptr param;
 
-  // Number of fields in the exception
+  // Number of fields in the struct.
   int member_count = tc->member_count (env);
   if (env.exception () == 0)
     {
       for (int i = 0; i < member_count
-             && retval == CORBA::TypeCode::TRAVERSE_CONTINUE;
-           i++)
+             && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+             && continue_append == CORBA::B_TRUE; i++)
         {
           param = tc->member_type (i, env);
           if (env.exception () == 0)
             {
-              retval = stream->skip (param, env);
+              retval = dest->append (param, src, env);
             }
           else
             return CORBA::TypeCode::TRAVERSE_STOP;
@@ -704,7 +664,8 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
   else
       return CORBA::TypeCode::TRAVERSE_STOP;
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
+      && continue_append == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -716,13 +677,12 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
 
 // decode wstring
 CORBA::TypeCode::traverse_status
-TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
-                           void *context,
-                           CORBA::Environment &env)
+TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
+                             TAO_InputCDR *src,
+                             TAO_OutputCDR *dest,
+                             CORBA::Environment &env)
 {
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-  TAO_InputCDR *stream = (TAO_InputCDR *) context;
-  CORBA::ULong len;
+  CORBA::Boolean continue_append = CORBA::B_TRUE;
 
   // On decode, omit the check against specified wstring bounds, and
   // cope with illegal "zero length" strings (all lengths on the wire
@@ -732,20 +692,14 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
   // don't generate messages that fail to comply with protocol specs,
   // but we will accept them when it's clear how to do so.
 
-  continue_decoding = stream->read_ulong (len);
+  continue_append = dest->append_wstring (*src);
 
-  if (len != 0)
-    while (continue_decoding != CORBA::B_FALSE && len--)
-      {
-        continue_decoding = stream->skip_wchar ();
-      }
-
-  if (continue_decoding == CORBA::B_TRUE)
+  if (continue_append == CORBA::B_TRUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::skip detected error");
+      dmsg ("TAO_Marshal_TypeCode::append detected error");
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
