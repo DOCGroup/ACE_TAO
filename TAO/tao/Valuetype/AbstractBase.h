@@ -87,7 +87,7 @@ namespace CORBA
 
     /// TAO specific operation
     virtual const char* _tao_obv_repository_id (void) const;
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm);
+    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &strm);
 
     /// Memmory management operations
