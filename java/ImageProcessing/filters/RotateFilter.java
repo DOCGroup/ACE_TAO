@@ -150,8 +150,10 @@ public class RotateFilter extends SpatialFilter
     // it does, compute and store an appropriate color, otherwise skip
     // it.
 
+    System.gc();
+    
     double xf, yf, px, py, apx, apy;
-    int[] pixels = new int[rotwidth_];
+    int[] pixels = new int[rotwidth_*rotheight_];
     int ox, oy, ox1, oy1, index, pixel;
     double cx = (columns_ - 1) / 2;
     double cy = (rows_ - 1) / 2;
@@ -159,14 +161,18 @@ public class RotateFilter extends SpatialFilter
     int p0r = 0, p0g = 0, p0b = 0,
       p1r = 0, p1g = 0,p1b = 0,
       p2r = 0, p2g = 0, p2b = 0,
-      p3r = 0, p3g = 0, p3b = 0;
+      p3r = 0, p3g = 0, p3b = 0, lcv, lcv2;
     int rv,gv,bv, alpha;
     double rd,gd,bd, p0wgt = 0,
       p1wgt = 0, p2wgt = 0, p3wgt = 0, xfrac, yfrac;
-    
-    for (int y = roty_; y < roty_ + rotheight_; y++)
+
+    profile_timer_.start();
+
+    lcv = roty_ + rotheight_;
+    lcv2 = rotx_ + rotwidth_;
+    for (int y = roty_, i = 0; y < lcv; y++)
       {
-	for (int x = rotx_, i = 0; x < rotx_ + rotwidth_; x++, i++)
+	for (int x = rotx_; x < lcv2; x++, i++)
 	  {
 	    // Inverse rotate the point (x,y)
 	    // Inlining the call to rotatePoint
@@ -214,7 +220,8 @@ public class RotateFilter extends SpatialFilter
 		yfrac = yf - oy;
 		px = ((xfrac >= .5) ? (xfrac - .5) : (-.5 + xfrac));
 		py = ((yfrac >= .5) ? (yfrac - .5) : (-.5 + yfrac));
-		apx = Math.abs(px);  apy = Math.abs(py);
+		apx = ((px < 0) ? -px : px);
+		apy = ((py < 0) ? -py : py);
 		
 		/* get neighbor colors:  p0col, p1col, p2col, p3col */
 		ox1 = ox + ((px < 0.0) ? -1 : 1);
@@ -287,15 +294,17 @@ public class RotateFilter extends SpatialFilter
 		pixels[i] = (alpha << 24) | (rv << 16) | (gv << 8) | bv;
 	      }	       
 	  }
-	
-	consumer.setPixels(0, y - roty_, rotwidth_, 1, defaultRGB_,
-			   pixels, 0, rotwidth_);
       }
+
+    profile_timer_.stop();
+    
+    consumer.setPixels(0, 0, rotwidth_, rotheight_, defaultRGB_,
+		       pixels, 0, rotwidth_);
 
     consumer.imageComplete(status);
   }
 
-  private DoublePoint rotatePoint(int x, int y,
+  private final static DoublePoint rotatePoint(int x, int y,
 				  double cx, double cy, double rad)
     {
       /* rotate point x, y 'rad' radians around cx, cy, return rx, ry */
