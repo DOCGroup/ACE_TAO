@@ -301,8 +301,7 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
   policies[policies.length () - 1] =
     rt_orb->create_threadpool_policy (threadpool_id,
                                       ACE_TRY_ENV);
-  ACE_TRY_CHECK;
-
+  ACE_CHECK;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
