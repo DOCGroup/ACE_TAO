@@ -17,8 +17,8 @@ template class TAO_Unbounded_Sequence<Param_Test::Fixed_Struct>;
 template class TAO_Bounded_Sequence<Param_Test::Fixed_Struct,32>;
 template class TAO_Unbounded_Object_Sequence<Coffee,Coffee_var>;
 template class TAO_Bounded_Object_Sequence<Coffee,Coffee_var,32>;
-template class TAO_Unbounded_Array_Sequence<Param_Test::Fixed_Array>;
-template class TAO_Bounded_Array_Sequence<Param_Test::Fixed_Array,32>;
+template class TAO_Unbounded_Array_Sequence<Param_Test::Fixed_Array,Param_Test::Fixed_Array_var>;
+template class TAO_Bounded_Array_Sequence<Param_Test::Fixed_Array,Param_Test::Fixed_Array_var,32>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Any>
 #pragma instantiate TAO_Bounded_Sequence<CORBA::Long,32>
@@ -29,6 +29,6 @@ template class TAO_Bounded_Array_Sequence<Param_Test::Fixed_Array,32>;
 #pragma instantiate TAO_Bounded_Sequence<Param_Test::Fixed_Struct,32>
 #pragma instantiate TAO_Unbounded_Object_Sequence<Coffee,Coffee_var>
 #pragma instantiate TAO_Bounded_Object_Sequence<Coffee,Coffee_var,32>
-#pragma instantiate TAO_Unbounded_Array_Sequence<Param_Test::Fixed_Array>
-#pragma instantiate TAO_Bounded_Array_Sequence<Param_Test::Fixed_Array,32>
+#pragma instantiate TAO_Unbounded_Array_Sequence<Param_Test::Fixed_Array,Param_Test::Fixed_Array_var>
+#pragma instantiate TAO_Bounded_Array_Sequence<Param_Test::Fixed_Array,Param_Test::Fixed_Array_var,32>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
