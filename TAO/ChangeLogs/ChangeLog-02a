@@ -1,38 +1,37 @@
 Fri Sat 17 11:49:29 2001  Pradeep Gore <pradeep@cs.wustl.edu>
     
 	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
-    * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
-    * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
 	* orbsvcs/examples/Notify/Filter/Filter.dsp:
-    * orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
-
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
 	  Modified include settings in these projects.
-    * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
-    * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
-      Modified event loop to use work-pending/perform-work.
+  
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+	  Modified event loop to use work-pending/perform-work.
     	       
 Fri Feb 16 20:12:52 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tests/Smart_Proxies/Makefile:
-
-	Added -I$(TAO_ROOT)/tao to CPPFLAGS to comfort cxx on Tru64 so
-	that it could get the template instantiations.
+  	  Added -I$(TAO_ROOT)/tao to CPPFLAGS to comfort cxx on Tru64 so
+ 	  that it could get the template instantiations.
 
 Fri Feb 16 18:42:29 2001  Pradeep Gore <pradeep@cs.wustl.edu>
 
-    * orbsvcs/examples/Notify/Filter/Filter.dsp
-    * orbsvcs/examples/Notify/Subscribe/Subscribe.dsp
-    * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp
-    * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp
-    * orbsvcs/tests/Notify/Basic/Events_Test.dsp
-    * orbsvcs/tests/Notify/Basic/IdAssignment.dsp
-    * orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp
-    * orbsvcs/tests/Notify/Basic/Simple.dsp
-    * orbsvcs/tests/Notify/Basic/Updates.dsp
-    * orbsvcs/tests/Notify/lib/Notify_Test_Client.h
-    * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp
-    * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp
-      Updated include paths, exported class Notify_Test_Client
+        * orbsvcs/examples/Notify/Filter/Filter.dsp
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.dsp
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp
+	* orbsvcs/tests/Notify/Basic/Events_Test.dsp
+	* orbsvcs/tests/Notify/Basic/IdAssignment.dsp
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp
+	* orbsvcs/tests/Notify/Basic/Simple.dsp
+	* orbsvcs/tests/Notify/Basic/Updates.dsp
+	* orbsvcs/tests/Notify/lib/Notify_Test_Client.h
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp
+	  Updated include paths, exported class Notify_Test_Client
 
 Fri Feb 16 15:26:29 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -1610,7 +1609,6 @@ Thu Feb  1 20:29:54 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
           occurrances of Ace_Thread_Mutex,
           Ace_Recursive_Thread_Mutex, and Ace_RW_Thread_Mutex
           were changed to their TAO_SYNCH_ forms.
-
 
 Thu Feb  1 09:36:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
