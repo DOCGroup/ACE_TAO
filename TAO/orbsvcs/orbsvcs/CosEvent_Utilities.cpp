@@ -312,7 +312,7 @@ CosEC_ServantBase::init_SupplierQOS (RtecScheduler::handle_t supp_handle,
   // Something else: please make the EventSourceID for the
   // supplier also an option...
 
-  char *c = " "; // space
+  const char *c = " "; // space
   char *tok = 0;
 
  // if nothing was specified on the command line use defaults..
@@ -369,7 +369,7 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
   // them (just call insert_source() or insert_type() in the
   // parse_args routine).
 
-  char *c = " "; // space
+  const char *c = " "; // space
   char *tok = 0;
 
   consumer_qos.start_disjunction_group ();
