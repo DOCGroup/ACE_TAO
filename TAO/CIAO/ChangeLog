@@ -1,83 +1,90 @@
+Fri Jan  2 12:59:05 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Benchmark/Benchmark.mpc:
+
+          Prefixed the project name with the '*' operator to avoid project
+          name conflicts.
+
 Thu Jan  1 20:27:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ciao/Makefile:
+        * ciao/Makefile:
 
-	  Updated dependancies since we have now have the Makefiles in the
-	  repo. 
+          Updated dependancies since we have now have the Makefiles in the
+          repo.
 
 Thu Jan  1 19:58:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tools/XML_Helpers/Cascadable_DocHandler.cpp:
+        * tools/XML_Helpers/Cascadable_DocHandler.cpp:
 
-	  Fixed typo.
+          Fixed typo.
 
 Thu Jan  1 20:12:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tools/XML_Helpers/XML_Utils.cpp:
+        * tools/XML_Helpers/XML_Utils.cpp:
 
-	  Fixed a unused variable warning.
+          Fixed a unused variable warning.
 
 Thu Jan  1 20:05:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tools/Assembly_Deployer/Assembly_Impl.cpp:
-	* tools/Assembly_Deployer/Assembly_Manager.cpp:
-	* tools/ComponentServer/ComponentServer.cpp:
-	* tools/Daemon/CIAO_Daemon.cpp:
-	* tools/Daemon/Daemon_Impl.cpp:
-	* tools/Daemon/controller_i.cpp:
-	* tools/RTComponentServer/ComponentServer_Task.cpp:
-	* tools/RTComponentServer/RTConfig_Manager.cpp:
-	* tools/RTComponentServer/RTServer_Impl.cpp:
-	* tools/ServerActivator/ServerActivator.cpp:
-	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
-	* tools/Simple_Component_Server/Simple_Server_i.cpp:
-	* tools/Simple_Component_Server/sample_client.cpp:
-	* tools/XML_Helpers/Assembly_Handlers.cpp:
-	* tools/XML_Helpers/Assembly_Spec.cpp:
-	* tools/XML_Helpers/Assembly_Spec.h:
-	* tools/XML_Helpers/Cascadable_DocHandler.cpp:
-	
-	  More fixes to remove compile errors when exceptions are set
-	  to 0. 
+        * tools/Assembly_Deployer/Assembly_Impl.cpp:
+        * tools/Assembly_Deployer/Assembly_Manager.cpp:
+        * tools/ComponentServer/ComponentServer.cpp:
+        * tools/Daemon/CIAO_Daemon.cpp:
+        * tools/Daemon/Daemon_Impl.cpp:
+        * tools/Daemon/controller_i.cpp:
+        * tools/RTComponentServer/ComponentServer_Task.cpp:
+        * tools/RTComponentServer/RTConfig_Manager.cpp:
+        * tools/RTComponentServer/RTServer_Impl.cpp:
+        * tools/ServerActivator/ServerActivator.cpp:
+        * tools/Simple_Component_Server/Simple_Component_Server.cpp:
+        * tools/Simple_Component_Server/Simple_Server_i.cpp:
+        * tools/Simple_Component_Server/sample_client.cpp:
+        * tools/XML_Helpers/Assembly_Handlers.cpp:
+        * tools/XML_Helpers/Assembly_Spec.cpp:
+        * tools/XML_Helpers/Assembly_Spec.h:
+        * tools/XML_Helpers/Cascadable_DocHandler.cpp:
+
+          More fixes to remove compile errors when exceptions are set
+          to 0.
 
 Thu Jan  1 19:32:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ciao/ComponentServer_Impl.cpp:
+        * ciao/ComponentServer_Impl.cpp:
 
-	  Fixed typo in the last checkin.
+          Fixed typo in the last checkin.
 
 Thu Jan  1 19:28:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* ciao/ComponentInstallation_Impl.cpp:
-	* ciao/ComponentServer_Impl.cpp:
-	* ciao/Container_Base.cpp:
-	* ciao/Container_Base.inl:
-	* ciao/Container_Impl.cpp:
-	* ciao/Container_Impl.inl:
-	* ciao/Cookies.cpp:
-	* ciao/ServerActivator_Impl.cpp:
+        * ciao/ComponentInstallation_Impl.cpp:
+        * ciao/ComponentServer_Impl.cpp:
+        * ciao/Container_Base.cpp:
+        * ciao/Container_Base.inl:
+        * ciao/Container_Impl.cpp:
+        * ciao/Container_Impl.inl:
+        * ciao/Cookies.cpp:
+        * ciao/ServerActivator_Impl.cpp:
 
-	  Bunch of fixes to remove compile errors when exceptions are set
-	  to 0. 
+          Bunch of fixes to remove compile errors when exceptions are set
+          to 0.
 
 Thu Jan  1 18:46:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tools/XML_Helpers/Cascadable_DocHandler.i:
+        * tools/XML_Helpers/Cascadable_DocHandler.i:
 
-	  Fixed compile errors when exceptions are turned off. 
+          Fixed compile errors when exceptions are turned off.
 
 Thu Jan  1 18:41:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile:
+        * Makefile:
 
-	  Do not compile CIAO with static_libs_only=1.
+          Do not compile CIAO with static_libs_only=1.
 
 Thu Jan  1 13:53:53 2004  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp (class Nameable)
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp (class Nameable)
 
-	  Added support for iteration over Names edges.
-	
+          Added support for iteration over Names edges.
+
 
 Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
@@ -125,487 +132,487 @@ Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
 Wed Dec 31 18:13:21 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/CompilerElements/Preprocessor.cpp:
-	* CCF/CCF/IDL2/LexicalAnalyzer.hpp:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Attribute.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Enum.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Exception.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Include.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Interface.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Member.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Module.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Native.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Operation.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Struct.hpp:
-	* CCF/CCF/IDL2/SemanticAction/TypeId.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
-	* CCF/CCF/IDL2/SemanticAction/ValueType.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Elements.tpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Enum.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Enum.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Exception.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Exception.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Include.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Include.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Module.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Module.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Native.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Native.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Operation.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/TypeId.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/TypeId.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/ValueType.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/ValueType.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Exception.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Exception.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Fundamental.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Fundamental.cpp.m4:
-	* CCF/CCF/IDL2/SemanticGraph/Interface.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Interface.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Member.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Module.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Name.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Name.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Native.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Native.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Operation.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Sequence.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Struct.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Translation.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Translation.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/TypeId.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/ValueType.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/ValueType.hpp:
-	* CCF/CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/CCF/IDL2/Traversal/Interface.tpp:
-	* CCF/CCF/IDL2/Traversal/ValueType.cpp:
-	* CCF/CCF/IDL2/Traversal/ValueType.hpp:
-	* CCF/CCF/IDL2/Traversal/ValueType.tpp:
-	* CCF/CCF/IDL3/Parser.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Component.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Consumes.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Emits.hpp:
-	* CCF/CCF/IDL3/SemanticAction/EventType.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Home.hpp:
-	* CCF/CCF/IDL3/SemanticAction/HomeFactory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/HomeFinder.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Provides.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Publishes.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Uses.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Consumes.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Consumes.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Elements.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Emits.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Emits.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/EventType.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/EventType.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Home.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFactory.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFactory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Provides.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Provides.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Publishes.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Publishes.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Uses.hpp:
-	* CCF/CCF/IDL3/SemanticGraph/Component.hpp:
-	* CCF/CCF/IDL3/SemanticGraph/Elements.cpp:
-	* CCF/CCF/IDL3/SemanticGraph/EventType.cpp:
-	* CCF/CCF/IDL3/SemanticGraph/Home.hpp:
-	* CCF/CCF/IDL3/Traversal/EventType.tpp:
-	* CCF/CCF/CIDL/SemanticAction/Composition.hpp:
-	* CCF/CCF/CIDL/SemanticAction/Factory.hpp:
-	* CCF/CCF/CIDL/SemanticAction/HomeExecutor.hpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/Composition.cpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/Composition.hpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/Elements.hpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.cpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp:
-	* CCF/CCF/CIDL/SemanticGraph/Elements.cpp:
-	* CCF/CCF/CIDL/SemanticGraph/Executor.cpp:
-	* CCF/Documentation/TODO:
+        * CCF/CCF/CompilerElements/Preprocessor.cpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Attribute.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Enum.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Exception.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Include.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Interface.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Member.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Module.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Native.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Operation.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Struct.hpp:
+        * CCF/CCF/IDL2/SemanticAction/TypeId.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
+        * CCF/CCF/IDL2/SemanticAction/ValueType.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Attribute.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.tpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Enum.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Enum.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Exception.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Exception.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Include.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Include.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Module.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Module.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Native.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Native.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Operation.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Struct.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/TypeId.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/TypeId.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/ValueType.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/ValueType.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Exception.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Exception.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Fundamental.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Fundamental.cpp.m4:
+        * CCF/CCF/IDL2/SemanticGraph/Interface.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Interface.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Member.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Module.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Native.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Native.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Sequence.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Struct.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Translation.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Translation.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/TypeId.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/ValueType.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/ValueType.hpp:
+        * CCF/CCF/IDL2/Traversal/Elements.hpp:
+        * CCF/CCF/IDL2/Traversal/Interface.tpp:
+        * CCF/CCF/IDL2/Traversal/ValueType.cpp:
+        * CCF/CCF/IDL2/Traversal/ValueType.hpp:
+        * CCF/CCF/IDL2/Traversal/ValueType.tpp:
+        * CCF/CCF/IDL3/Parser.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Component.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Consumes.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Emits.hpp:
+        * CCF/CCF/IDL3/SemanticAction/EventType.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Factory.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Home.hpp:
+        * CCF/CCF/IDL3/SemanticAction/HomeFactory.hpp:
+        * CCF/CCF/IDL3/SemanticAction/HomeFinder.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Provides.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Publishes.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Uses.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Consumes.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Consumes.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Elements.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Emits.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Emits.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/EventType.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/EventType.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Home.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/HomeFactory.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/HomeFactory.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Provides.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Provides.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Publishes.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Publishes.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Uses.hpp:
+        * CCF/CCF/IDL3/SemanticGraph/Component.hpp:
+        * CCF/CCF/IDL3/SemanticGraph/Elements.cpp:
+        * CCF/CCF/IDL3/SemanticGraph/EventType.cpp:
+        * CCF/CCF/IDL3/SemanticGraph/Home.hpp:
+        * CCF/CCF/IDL3/Traversal/EventType.tpp:
+        * CCF/CCF/CIDL/SemanticAction/Composition.hpp:
+        * CCF/CCF/CIDL/SemanticAction/Factory.hpp:
+        * CCF/CCF/CIDL/SemanticAction/HomeExecutor.hpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/Composition.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/Composition.hpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/Elements.hpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp:
+        * CCF/CCF/CIDL/SemanticGraph/Elements.cpp:
+        * CCF/CCF/CIDL/SemanticGraph/Executor.cpp:
+        * CCF/Documentation/TODO:
 
-	  Minor cosmetic changes and cleanups.
+          Minor cosmetic changes and cleanups.
 
 
 Wed Dec 31 12:27:16 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* docs/tutorial/Hello/hello.mpc:
-	  Updated this file to avoid duplicated project names in
-	  MPC generated solution file for VC.
+        * docs/tutorial/Hello/hello.mpc:
+          Updated this file to avoid duplicated project names in
+          MPC generated solution file for VC.
 
 Wed Dec 31 10:16:17 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIAO/ciao/Component_Base.idl:
+        * CIAO/ciao/Component_Base.idl:
 
-	  Replaced inclusion of IFR_Client/Interface.pidl with orb.idl
-	  since it has all that's needed.
+          Replaced inclusion of IFR_Client/Interface.pidl with orb.idl
+          since it has all that's needed.
 
 Tue Dec 30 17:47:49 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* ciao/CCM_Base.idl:
+        * ciao/CCM_Base.idl:
 
-	  Temporarily commented import declaration even though it is
-	  conditionally commented out. Current CIDLC's preprocessor
-	  does not handle conditional compilation.
+          Temporarily commented import declaration even though it is
+          conditionally commented out. Current CIDLC's preprocessor
+          does not handle conditional compilation.
 
 Tue Dec 30 17:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/CompilerElements/Diagnostic.hpp:
-	* CCF/CCF/CompilerElements/TokenStream.hpp:
+        * CCF/CCF/CompilerElements/Diagnostic.hpp:
+        * CCF/CCF/CompilerElements/TokenStream.hpp:
 
-	  Cosmetic changes.
-
-
-	* CCF/CCF/CompilerElements/Makefile.alt:
-	* CCF/CCF/CompilerElements/Preprocessor.cpp:
-	* CCF/CCF/CompilerElements/Preprocessor.hpp:
-	* CCF/CCF/CompilerElements/PreprocessorToken.cpp:
-	* CCF/CCF/CompilerElements/PreprocessorToken.hpp:
-
-	  New (though not very capable) preprocessor for the time being.
+          Cosmetic changes.
 
 
-	* CCF/CCF/IDL2/SemanticAction/Native.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Native.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Native.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Native.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Native.hpp:
-	* CCF/CCF/IDL2/Traversal/Native.cpp:
-	* CCF/CCF/IDL2/Traversal/Native.hpp:
+        * CCF/CCF/CompilerElements/Makefile.alt:
+        * CCF/CCF/CompilerElements/Preprocessor.cpp:
+        * CCF/CCF/CompilerElements/Preprocessor.hpp:
+        * CCF/CCF/CompilerElements/PreprocessorToken.cpp:
+        * CCF/CCF/CompilerElements/PreprocessorToken.hpp:
 
-	  Added support for IDL2 native feature.
-
-	* CCF/CCF/IDL2/SemanticAction/ValueType.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/ValueType.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/ValueType.hpp:
-
-	  Extended support for IDL2 valuetype feature.
+          New (though not very capable) preprocessor for the time being.
 
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/LexicalAnalyzer.hpp:
-	* CCF/CCF/IDL2/Makefile.archive:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction.hpp:
-	* CCF/CCF/IDL2/SemanticGraph.hpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Attribute.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Include.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Interface.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Member.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Elements.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Include.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Include.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Attribute.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
-	* CCF/CCF/IDL2/SemanticGraph/Operation.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
-	* CCF/CCF/IDL2/Traversal/Fundamental.hpp:
-	* CCF/CCF/IDL2/Traversal/Makefile.alt:
+        * CCF/CCF/IDL2/SemanticAction/Native.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Native.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Native.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Native.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Native.hpp:
+        * CCF/CCF/IDL2/Traversal/Native.cpp:
+        * CCF/CCF/IDL2/Traversal/Native.hpp:
 
-	  Cosmetic changes.
+          Added support for IDL2 native feature.
+
+        * CCF/CCF/IDL2/SemanticAction/ValueType.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/ValueType.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/ValueType.hpp:
+
+          Extended support for IDL2 valuetype feature.
 
 
-	* CCF/CCF/IDL3/SemanticAction/EventType.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/EventType.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/EventType.hpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL2/Makefile.archive:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction.hpp:
+        * CCF/CCF/IDL2/SemanticGraph.hpp:
+        * CCF/CCF/IDL2/Traversal.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Attribute.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Include.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Interface.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Member.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Attribute.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Include.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Include.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Attribute.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
+        * CCF/CCF/IDL2/SemanticGraph/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
+        * CCF/CCF/IDL2/Traversal/Fundamental.hpp:
+        * CCF/CCF/IDL2/Traversal/Makefile.alt:
 
-	  Added support for IDL3 eventtype feature.
-
-	* CCF/CCF/IDL3/SemanticAction/HomeFinder.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp:
-
-	  Added support for IDL3 home finder feature.
-
-	* CCF/CCF/IDL3/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL3/LexicalAnalyzer.hpp:
-	* CCF/CCF/IDL3/Parser.cpp:
-	* CCF/CCF/IDL3/Parser.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
-
-	  Cosmetic changes.
-
-
-	* CCF/CCF/CIDL/LexicalAnalyzer.cpp:
-	* CCF/CCF/CIDL/LexicalAnalyzer.hpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/CIDL/SemanticGraph/Composition.cpp:
-	* CCF/CCF/CIDL/SemanticGraph/Composition.hpp:
-
-	  Cosmetic changes.
-
-
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
-	* CCF/Example/IDL2/CxxMapping/Makefile.alt:
-	* CCF/Example/IDL2/CxxMapping/driver.cpp:
-	* CCF/Test/Makefile.alt:
-	* CCF/Test/CIDL/Compiler/GeneratorImpl.hpp:
-	* CCF/Test/CIDL/Compiler/Makefile.alt:
-	* CCF/Test/CIDL/Compiler/driver.cpp:
-	* CCF/Test/CompilerElements/Makefile.alt:
-	* CCF/Test/CompilerElements/CPP/Makefile.alt:
-	* CCF/Test/CompilerElements/CPP/driver.cpp:
-	* CCF/Test/IDL2/Compiler/Makefile.alt:
-	* CCF/Test/IDL2/Compiler/driver.cpp:
-	* CCF/Test/IDL2/Traversal/Recreate/GeneratorImpl.hpp:
-	* CCF/Test/IDL3/Compiler/Makefile.alt:
-	* CCF/Test/IDL3/Compiler/driver.cpp:
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/cidlc.cpp:
-
-	  Updated to reflect changes above.
+          Cosmetic changes.
 
 
-	* CCF/Documentation/TODO:
+        * CCF/CCF/IDL3/SemanticAction/EventType.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/EventType.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/EventType.hpp:
 
-	  Reflected new achievements.
+          Added support for IDL3 eventtype feature.
+
+        * CCF/CCF/IDL3/SemanticAction/HomeFinder.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp:
+
+          Added support for IDL3 home finder feature.
+
+        * CCF/CCF/IDL3/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL3/LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL3/Parser.cpp:
+        * CCF/CCF/IDL3/Parser.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
+
+          Cosmetic changes.
+
+
+        * CCF/CCF/CIDL/LexicalAnalyzer.cpp:
+        * CCF/CCF/CIDL/LexicalAnalyzer.hpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/CIDL/SemanticGraph/Composition.cpp:
+        * CCF/CCF/CIDL/SemanticGraph/Composition.hpp:
+
+          Cosmetic changes.
+
+
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
+        * CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+        * CCF/Example/IDL2/CxxMapping/Makefile.alt:
+        * CCF/Example/IDL2/CxxMapping/driver.cpp:
+        * CCF/Test/Makefile.alt:
+        * CCF/Test/CIDL/Compiler/GeneratorImpl.hpp:
+        * CCF/Test/CIDL/Compiler/Makefile.alt:
+        * CCF/Test/CIDL/Compiler/driver.cpp:
+        * CCF/Test/CompilerElements/Makefile.alt:
+        * CCF/Test/CompilerElements/CPP/Makefile.alt:
+        * CCF/Test/CompilerElements/CPP/driver.cpp:
+        * CCF/Test/IDL2/Compiler/Makefile.alt:
+        * CCF/Test/IDL2/Compiler/driver.cpp:
+        * CCF/Test/IDL2/Traversal/Recreate/GeneratorImpl.hpp:
+        * CCF/Test/IDL3/Compiler/Makefile.alt:
+        * CCF/Test/IDL3/Compiler/driver.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/cidlc.cpp:
+
+          Updated to reflect changes above.
+
+
+        * CCF/Documentation/TODO:
+
+          Reflected new achievements.
 
 
 Tue Dec 30 13:53:20 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/Philosophers/Philosophers.idl:
-	* examples/Philosophers/README:
-	Moved this unfinished example from examples/handcrafted here.
+        * examples/Philosophers/Philosophers.idl:
+        * examples/Philosophers/README:
+        Moved this unfinished example from examples/handcrafted here.
 
 Tue Dec 30 13:39:00 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* ChangeLog:
-	Updated my ChangeLog entries to the correct format.
-	Thanks for the help from Bala and Boris.
+        * ChangeLog:
+        Updated my ChangeLog entries to the correct format.
+        Thanks for the help from Bala and Boris.
 
 Tue Dec 30 11:42:08 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/handcrafted/examples.mwc:
-	Removed this file since MPC works recursively now.
+        * examples/handcrafted/examples.mwc:
+        Removed this file since MPC works recursively now.
 
 Tue Dec 30 11:28:43 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* exmaples/handcrafted/BasicSP:
-	Removed this directory. This example has been moved to
-	examples/OEP/BasicSP and been modified to use the CIDL compiler.
+        * exmaples/handcrafted/BasicSP:
+        Removed this directory. This example has been moved to
+        examples/OEP/BasicSP and been modified to use the CIDL compiler.
 
 Tue Dec 30 11:26:24 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/handcrafted/Philosophers:
-	Removed this directory.
+        * examples/handcrafted/Philosophers:
+        Removed this directory.
 
 Tue Dec 30 11:20:39 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/handcrafted/Hello:
-	Removed this directory. This example has been moved to
-	docs/tutorial/Hello and been modified to use the CIDL compiler.
+        * examples/handcrafted/Hello:
+        Removed this directory. This example has been moved to
+        docs/tutorial/Hello and been modified to use the CIDL compiler.
 
 Tue Dec 30 10:56:03 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/handcrafted/Display:
-	Removed this directory. This example has been moved to
-	examples/OEP/Display and been modified to use the CIDL compiler.
+        * examples/handcrafted/Display:
+        Removed this directory. This example has been moved to
+        examples/OEP/Display and been modified to use the CIDL compiler.
 
 Tue Dec 23 16:26:19 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Operation.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Operation.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Interface.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Operation.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
-	* CCF/CCF/IDL2/Traversal/Operation.cpp:
-	* CCF/CCF/IDL2/Traversal/Operation.hpp:
-	* CCF/CCF/IDL2/Traversal/Operation.tpp:
-	* CCF/Test/IDL2/SemanticGraph/HandBuilt/Builder.cpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Operation.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Operation.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Interface.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
+        * CCF/CCF/IDL2/Traversal/Operation.cpp:
+        * CCF/CCF/IDL2/Traversal/Operation.hpp:
+        * CCF/CCF/IDL2/Traversal/Operation.tpp:
+        * CCF/Test/IDL2/SemanticGraph/HandBuilt/Builder.cpp:
 
-	  Added support for oneway operations.
+          Added support for oneway operations.
 
-	* CCF/CCF/IDL3/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL3/Makefile.archive:
-	* CCF/CCF/IDL3/Parser.cpp:
-	* CCF/CCF/IDL3/Parser.hpp:
-	* CCF/CCF/IDL3/SemanticAction.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Makefile.alt:
-	* CCF/CCF/IDL3/SemanticGraph/Home.cpp:
-	* CCF/CCF/IDL3/SemanticGraph/Home.hpp:
+        * CCF/CCF/IDL3/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL3/Makefile.archive:
+        * CCF/CCF/IDL3/Parser.cpp:
+        * CCF/CCF/IDL3/Parser.hpp:
+        * CCF/CCF/IDL3/SemanticAction.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Factory.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Makefile.alt:
+        * CCF/CCF/IDL3/SemanticGraph/Home.cpp:
+        * CCF/CCF/IDL3/SemanticGraph/Home.hpp:
 
-	  Added support for home finders.
+          Added support for home finders.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 
-	  Added support for feature mentioned above.
+          Added support for feature mentioned above.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
 
-	  Added coverage for features mentioned above.
+          Added coverage for features mentioned above.
 
-	* CCF/Documentation/TODO:
+        * CCF/Documentation/TODO:
 
-	  Reflected new achievements.
+          Reflected new achievements.
 
 Tue Dec 23 12:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/CIDLC.vcproj:
+        * CIDLC/CIDLC.vcproj:
 
-	  Updated VC7.1 projects. Also temporarily excluded from the
-	  build generators that are still to be ported.
+          Updated VC7.1 projects. Also temporarily excluded from the
+          build generators that are still to be ported.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Changed 'interface' to 'interface_' since VC7.1 naively believes
-	  that interface is an alias for struct.
+          Changed 'interface' to 'interface_' since VC7.1 naively believes
+          that interface is an alias for struct.
 
 Tue Dec 23 11:34:56 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/CIDL/CIDL.vcproj:
-	* CCF/CCF/IDL2/IDL2.vcproj:
-	* CCF/CCF/IDL3/IDL3.vcproj:
-	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
-	* CCF/CCF/CompilerElements/CompilerElements.vcproj:
+        * CCF/CCF/CIDL/CIDL.vcproj:
+        * CCF/CCF/IDL2/IDL2.vcproj:
+        * CCF/CCF/IDL3/IDL3.vcproj:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
+        * CCF/CCF/CompilerElements/CompilerElements.vcproj:
 
-	  Updated VC7.1 projects.
+          Updated VC7.1 projects.
 
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Graph.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Graph.tpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Consumes.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Emits.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Home.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFactory.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Provides.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Publishes.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.cpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Graph.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Graph.tpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Consumes.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Emits.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Home.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/HomeFactory.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Provides.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Publishes.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.cpp:
 
-	  Got rid of some warnings.
+          Got rid of some warnings.
 
 Tue Dec 23 10:03:38 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Makefile.archive:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction.hpp:
-	* CCF/CCF/IDL2/SemanticGraph.hpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Enum.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Enum.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Enum.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Enum.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Enum.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
-	* CCF/CCF/IDL2/Traversal/Enum.cpp:
-	* CCF/CCF/IDL2/Traversal/Enum.hpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/Makefile.archive:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction.hpp:
+        * CCF/CCF/IDL2/SemanticGraph.hpp:
+        * CCF/CCF/IDL2/Traversal.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Enum.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Enum.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Enum.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Enum.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Enum.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
+        * CCF/CCF/IDL2/Traversal/Enum.cpp:
+        * CCF/CCF/IDL2/Traversal/Enum.hpp:
 
           Added support for IDL enum type.
 
-	* CCF/CCF/IDL2/SemanticGraph/Member.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Struct.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Exception.hpp:
-	* CCF/CCF/IDL2/Traversal/Attribute.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Member.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Struct.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Exception.hpp:
+        * CCF/CCF/IDL2/Traversal/Attribute.hpp:
 
- 	  Cosmetic changes.
+          Cosmetic changes.
 
 Mon Dec 22 16:50:18 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/ExecutorMappingGenerator.hpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.hpp:
 
-	  New version of local executor mapping generator.
+          New version of local executor mapping generator.
 
-	* CIDLC/cidlc.cpp:
+        * CIDLC/cidlc.cpp:
 
-	  New version of CIDL compiler driver with temporarily disabled
-	  generators that require porting.
+          New version of CIDL compiler driver with temporarily disabled
+          generators that require porting.
 
-	* CIDLC/Makefile.alt:
+        * CIDLC/Makefile.alt:
 
-	  Temporarily disabled generators that require porting.
+          Temporarily disabled generators that require porting.
 
 Mon Dec 22 16:26:21 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF:
+        * CCF:
 
-	  Added new version of CCF.
+          Added new version of CCF.
 
 Mon Dec 22 15:35:19 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF:
+        * CCF:
 
-	  Removed (through cvs, not physically) previous version in
-	  preparation for commitment of the new version.
+          Removed (through cvs, not physically) previous version in
+          preparation for commitment of the new version.
 
 Wed Nov 26 22:16:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -631,45 +638,45 @@ Tue Nov 25 19:46:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Nov 25 15:39:51 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/CompilerElements/FileSystem.hpp:
+        * CCF/CCF/CompilerElements/FileSystem.hpp:
 
-	  Made normalize() function use 'native' path type when
-	  constructing the path.
+          Made normalize() function use 'native' path type when
+          constructing the path.
 
 Tue Nov 25 15:06:02 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/cidlc.cpp:
+        * CIDLC/cidlc.cpp:
 
-	  Some code to support #include handling.
+          Some code to support #include handling.
 
 Tue Nov 25 14:47:18 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/CodeGenerationKit/CommandLine.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLine.hpp:
 
-	  Added capability to iterate over options.
+          Added capability to iterate over options.
 
-	* CCF/CCF/CompilerElements/FileSystem.hpp:
+        * CCF/CCF/CompilerElements/FileSystem.hpp:
 
-	  Added normalize() function to normalize absolute paths.
+          Added normalize() function to normalize absolute paths.
 
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Include.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Include.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Include.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Include.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
 
-	  Added #include handling.
+          Added #include handling.
 
-	* CCF/Test/IDL2/Parser/Include/root.idl:
-	* CCF/Test/IDL2/Parser/Include/bar/bar.idl:
-	* CCF/Test/IDL2/Parser/Include/bar/baz.idl:
-	* CCF/Test/IDL2/Parser/Include/foo/foo.idl:
+        * CCF/Test/IDL2/Parser/Include/root.idl:
+        * CCF/Test/IDL2/Parser/Include/bar/bar.idl:
+        * CCF/Test/IDL2/Parser/Include/bar/baz.idl:
+        * CCF/Test/IDL2/Parser/Include/foo/foo.idl:
 
-	  Simple test for #include.
+          Simple test for #include.
 
 Tue Nov 25 09:34:10 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -678,18 +685,18 @@ Tue Nov 25 09:34:10 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Mon Nov 24 19:24:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
-	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.cpp:
-	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp:
 
-	  Cosmetic fixes.
+          Cosmetic fixes.
 
 Mon Nov 24 16:37:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ciao/ComponentsC.h:
+        * ciao/ComponentsC.h:
 
-	  Removed unneeded inclusion of ComponentsC.i
+          Removed unneeded inclusion of ComponentsC.i
 
 Mon Nov 24 14:48:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -751,86 +758,86 @@ Mon Nov 24 13:39:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 20 20:05:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ciao/ComponentsS.h:
-	* ciao/ComponentsS_T.h:
+        * ciao/ComponentsS.h:
+        * ciao/ComponentsS_T.h:
 
-	  Removed wrong includes.
+          Removed wrong includes.
 
 Thu Nov 20 17:50:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tools/RTComponentServer/RTComponentServer.mpc:
+        * tools/RTComponentServer/RTComponentServer.mpc:
 
-	  Inherit the project form ACEXML since we need that.
+          Inherit the project form ACEXML since we need that.
 
 Thu Nov  6 07:55:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile:
+        * Makefile:
 
-	  Added coreclean target for doing realclean on a core set of
-	  directories in the nightly build.
+          Added coreclean target for doing realclean on a core set of
+          directories in the nightly build.
 
 Wed Nov  5 14:07:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
-	* CCF/CCF/CodeGenerationKit/CommandLineParser.cpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineParser.cpp:
 
-	  Got rid of some warnings.
+          Got rid of some warnings.
 
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/Parsing/Recovery.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/Parsing/Recovery.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
 
-	  Added a work-around to subvert constness of descriptor
+          Added a work-around to subvert constness of descriptor
           member in spirit::parser_error. Joel de Guzman acknowledged
-	  that this is an architectural error but unfortunately it
-	  doesn't seem he is going to fix it any time soon (even though
-	  patch is available).
+          that this is an architectural error but unfortunately it
+          doesn't seem he is going to fix it any time soon (even though
+          patch is available).
 
 Tue Nov  4 21:21:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ciao/ComponentsC.h:
-	* ciao/ComponentsS.h;
+        * ciao/ComponentsC.h:
+        * ciao/ComponentsS.h;
 
-	  Regenerated these files. Not sure why this is maintained in the
-	  repo.
+          Regenerated these files. Not sure why this is maintained in the
+          repo.
 
-	* examples/handcrafted/Hello/hello_executors.h:
+        * examples/handcrafted/Hello/hello_executors.h:
 
-	  #include "tao/LocalObject.h"
+          #include "tao/LocalObject.h"
 
 Tue Nov 04 19:35:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* COPYING: Added ACE/TAO/CIAO Copyright disclaimer.  Thanks to
-	  Roland Schimmack <SC@ProCom.de> for motivating the change.
+        * COPYING: Added ACE/TAO/CIAO Copyright disclaimer.  Thanks to
+          Roland Schimmack <SC@ProCom.de> for motivating the change.
 
 Tue Nov  4 17:11:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tools/Daemon/CIAO_Daemon.cpp: Fixed warnings from g++.
+        * tools/Daemon/CIAO_Daemon.cpp: Fixed warnings from g++.
 
 Tue Nov  4 16:51:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tools/Daemon/controller_i.cpp:
+        * tools/Daemon/controller_i.cpp:
 
-	  #included "ace/OS_NS_strings.h"
+          #included "ace/OS_NS_strings.h"
 
-	* tools/RTComponentServer/RTConfig_Manager.h:
-	* tools/ServerActivator/ServerActivator.cpp:
-	* tools/XML_Helpers/Assembly_Handlers.cpp:
-	* tools/XML_Helpers/RTConfig_Handlers.cpp:
-	* tools/XML_Helpers/Softpkg_Handlers.cpp:
-	* tools/XML_Helpers/XML_Utils.cpp:
+        * tools/RTComponentServer/RTConfig_Manager.h:
+        * tools/ServerActivator/ServerActivator.cpp:
+        * tools/XML_Helpers/Assembly_Handlers.cpp:
+        * tools/XML_Helpers/RTConfig_Handlers.cpp:
+        * tools/XML_Helpers/Softpkg_Handlers.cpp:
+        * tools/XML_Helpers/XML_Utils.cpp:
 
-	  #included "ace/OS_String.h" to get the above files compiling
-	  with g++. We still get a link error that Don is looking at.
+          #included "ace/OS_String.h" to get the above files compiling
+          with g++. We still get a link error that Don is looking at.
 
 Tue Nov  4 16:34:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ciao/Active_Objref_Map.h:
-	* ciao/Client_init.h:
-	* ciao/Object_Set_T.h:
-	* ciao/Server_init.h:
+        * ciao/Active_Objref_Map.h:
+        * ciao/Client_init.h:
+        * ciao/Object_Set_T.h:
+        * ciao/Server_init.h:
 
-	  Added new includes that are needed to get them compiling.
+          Added new includes that are needed to get them compiling.
 
 Wed Oct 29 16:39:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -872,40 +879,40 @@ Wed Oct 29 15:56:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct 29 15:19:07 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Struct.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Component.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Home.hpp: added support for sharing
-	  context by typedef temporary and principal syntax tree node.
+        * CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
+        * CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Struct.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/Component.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/Home.hpp: added support for sharing
+          context by typedef temporary and principal syntax tree node.
 
 Wed Oct 29 13:36:47 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/Traversal/Elements.cpp:
-	* CCF/CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/CCF/IDL2/Traversal/Typedef.hpp: fixed bug in typedef
-	  traversal scheme.
+        * CCF/CCF/IDL2/Traversal/Elements.cpp:
+        * CCF/CCF/IDL2/Traversal/Elements.hpp:
+        * CCF/CCF/IDL2/Traversal/Typedef.hpp: fixed bug in typedef
+          traversal scheme.
 
 Fri Oct 24 19:16:21 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/CCF/IDL2/Traversal/Typedef.hpp: Fixed inheritance ambiguity.
+        * CCF/CCF/IDL2/Traversal/Elements.hpp:
+        * CCF/CCF/IDL2/Traversal/Typedef.hpp: Fixed inheritance ambiguity.
 
-	* CIDLC/Makefile.alt:
-	* CIDLC/ServantSourceGenerator.cpp:
-	* CIDLC/TypeNameEmitter.cpp:
-	* CIDLC/TypeNameEmitter.hpp: Added some functions for
-	  typedef testing.
+        * CIDLC/Makefile.alt:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp: Added some functions for
+          typedef testing.
 
-	* CIDLC/SizeTypeCalculator.cpp:
-	* CIDLC/SizeTypeCalculator.hpp: Added initial implementation
-	  of fixed/variable type size calculation.
+        * CIDLC/SizeTypeCalculator.cpp:
+        * CIDLC/SizeTypeCalculator.hpp: Added initial implementation
+          of fixed/variable type size calculation.
 
 Fri Oct 24 18:17:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -934,8 +941,8 @@ Fri Oct 24 18:17:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Oct 24 17:14:51 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/Traversal/Typedef.hpp: New implementation of
-	  typedef traverser.
+        * CCF/CCF/IDL2/Traversal/Typedef.hpp: New implementation of
+          typedef traverser.
 
 Fri Oct 24 11:31:34 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
@@ -943,270 +950,270 @@ Fri Oct 24 11:31:34 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Thu Oct 16 16:45:35 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Makefile.archive:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction.hpp:
-	* CCF/CCF/IDL2/SyntaxTree.hpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Member.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Struct.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Struct.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Makefile.alt:
-	* CCF/CCF/IDL2/SyntaxTree/Member.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Member.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Operation.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Struct.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Struct.hpp:
-	* CCF/CCF/IDL2/Traversal/Makefile.alt:
-	* CCF/CCF/IDL2/Traversal/Member.cpp:
-	* CCF/CCF/IDL2/Traversal/Member.hpp:
-	* CCF/CCF/IDL2/Traversal/Struct.cpp:
-	* CCF/CCF/IDL2/Traversal/Struct.hpp:
-	* CCF/CCF/IDL2/Traversal/Typedef.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Operation.hpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	  Added support for struct.
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/Makefile.archive:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction.hpp:
+        * CCF/CCF/IDL2/SyntaxTree.hpp:
+        * CCF/CCF/IDL2/Traversal.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Member.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Struct.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Member.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Struct.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Struct.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Makefile.alt:
+        * CCF/CCF/IDL2/SyntaxTree/Member.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Member.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Operation.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Struct.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Struct.hpp:
+        * CCF/CCF/IDL2/Traversal/Makefile.alt:
+        * CCF/CCF/IDL2/Traversal/Member.cpp:
+        * CCF/CCF/IDL2/Traversal/Member.hpp:
+        * CCF/CCF/IDL2/Traversal/Struct.cpp:
+        * CCF/CCF/IDL2/Traversal/Struct.hpp:
+        * CCF/CCF/IDL2/Traversal/Typedef.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/Operation.hpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+          Added support for struct.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
-	  Added a few structs for testing.
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+          Added a few structs for testing.
 
-	* CCF/Documentation/TODO: Marked some items as done or
-	  partially done.
+        * CCF/Documentation/TODO: Marked some items as done or
+          partially done.
 
 Thu Oct 16 12:55:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/SyntaxTree/ElementsCtor.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/InterfaceCtor.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/ValueTypeCtor.cpp: Added fake ctor
-	  definition for some compilers (like MSVC) that insist they
-	  should be defined (even though never used).
+        * CCF/CCF/IDL2/SyntaxTree/ElementsCtor.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/InterfaceCtor.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/ValueTypeCtor.cpp: Added fake ctor
+          definition for some compilers (like MSVC) that insist they
+          should be defined (even though never used).
 
 Thu Oct 16 12:07:01 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.cpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.m4:
-	* CCF/CCF/IDL2/SyntaxTree/Elements.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Interface.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/ValueType.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/ValueType.hpp:
-	* CCF/CCF/IDL2/Traversal/BuiltIn.hpp:
-	* CCF/CCF/IDL2/Traversal/BuiltIn.hpp.m4:
-	* CCF/CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Component.cpp:
-	* CCF/CCF/IDL3/SyntaxTree/Component.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Home.hpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp: Added the
-	  SyntaxTree::ForwardDeclarableTypeDecl base class and moved
-	  there {virtual bool defined () const;}. Added
-	  {virtual bool complete () const;} to TypeDecl to reflect type
-	  completeness. Also changed some type names for consistency.
+        * CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/BuiltIn.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/BuiltIn.cpp.m4:
+        * CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
+        * CCF/CCF/IDL2/SyntaxTree/BuiltIn.m4:
+        * CCF/CCF/IDL2/SyntaxTree/Elements.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Interface.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/ValueType.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/ValueType.hpp:
+        * CCF/CCF/IDL2/Traversal/BuiltIn.hpp:
+        * CCF/CCF/IDL2/Traversal/BuiltIn.hpp.m4:
+        * CCF/CCF/IDL2/Traversal/Elements.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/Component.cpp:
+        * CCF/CCF/IDL3/SyntaxTree/Component.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/Home.hpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp: Added the
+          SyntaxTree::ForwardDeclarableTypeDecl base class and moved
+          there {virtual bool defined () const;}. Added
+          {virtual bool complete () const;} to TypeDecl to reflect type
+          completeness. Also changed some type names for consistency.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Minor changes to
-	  reflect above.
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Minor changes to
+          reflect above.
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/ServantSourceGenerator.cpp:
-	* CIDLC/TypeNameEmitter.cpp:
-	* CIDLC/TypeNameEmitter.hpp:
-	* CIDLC/cidlc.cpp: Minor changes to reflect above.
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+        * CIDLC/cidlc.cpp: Minor changes to reflect above.
 
 Wed Oct 15 15:43:13 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Makefile.archive:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SyntaxTree.hpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Makefile.alt:
-	* CCF/CCF/IDL2/SyntaxTree/Sequence.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
-	* CCF/CCF/IDL2/Traversal/Makefile.alt:
-	* CCF/CCF/IDL2/Traversal/Sequence.cpp:
-	* CCF/CCF/IDL2/Traversal/Sequence.hpp: Added support for
-	  unbounded sequence.
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/Makefile.archive:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SyntaxTree.hpp:
+        * CCF/CCF/IDL2/Traversal.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Makefile.alt:
+        * CCF/CCF/IDL2/SyntaxTree/Sequence.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
+        * CCF/CCF/IDL2/Traversal/Makefile.alt:
+        * CCF/CCF/IDL2/Traversal/Sequence.cpp:
+        * CCF/CCF/IDL2/Traversal/Sequence.hpp: Added support for
+          unbounded sequence.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
-	  Added a few sequences for testing.
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+          Added a few sequences for testing.
 
 Wed Oct 15 13:59:33 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/ValueType.hpp:
-	* CCF/CCF/IDL2/Traversal/Elements.cpp:
-	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Component.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
-	* CCF/CCF/IDL3/SyntaxTree/Home.hpp:
-	* CCF/CCF/IDL3/Traversal/Operation.cpp: Second part of
-	  typedef-related infrastructure.
+        * CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
+        * CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/ValueType.hpp:
+        * CCF/CCF/IDL2/Traversal/Elements.cpp:
+        * CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/Component.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
+        * CCF/CCF/IDL3/SyntaxTree/Home.hpp:
+        * CCF/CCF/IDL3/Traversal/Operation.cpp: Second part of
+          typedef-related infrastructure.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/test-0.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-0_exec.idl.orig:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-1.idl: Added a few
-	  typedef's for testing.
+        * CCF/Example/CIDL/LocalExecutorMapping/test-0.idl:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-0_exec.idl.orig:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-1.idl: Added a few
+          typedef's for testing.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Some minor
-	  clean-up's.
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
+        * CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Some minor
+          clean-up's.
 
-	* CCF/Documentation/TODO: Added a few more items.
+        * CCF/Documentation/TODO: Added a few more items.
 
 Tue Oct 14 22:44:43 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/handcrafted/Hello/simple_client.cpp:
-	* examples/handcrafted/Hello/client.cpp: Added the missing streams
-	  header file.
+        * examples/handcrafted/Hello/simple_client.cpp:
+        * examples/handcrafted/Hello/client.cpp: Added the missing streams
+          header file.
 
 Tue Oct 14 17:18:43 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/Makefile.alt: Added alternative (to mpc) means of
-	  building CIDL compiler.
+        * CIDLC/Makefile.alt: Added alternative (to mpc) means of
+          building CIDL compiler.
 
 Tue Oct 14 16:57:54 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/RepositoryIdGenerator.cpp: Some minor clean-up's.
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/RepositoryIdGenerator.cpp: Some minor clean-up's.
 
 Tue Oct 14 16:41:41 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/IDL2/Makefile.archive:
-	* CCF/IDL2/Parser.cpp:
-	* CCF/IDL2/Parser.hpp:
-	* CCF/IDL2/SemanticAction.hpp:
-	* CCF/IDL2/SyntaxTree.hpp:
-	* CCF/IDL2/Traversal.hpp:
-	* CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/IDL2/SemanticAction/Typedef.hpp:
-	* CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/IDL2/SemanticAction/Impl/Interface.hpp:
-	* CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
-	* CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
-	* CCF/IDL2/SyntaxTree/BuiltIn.hpp:
-	* CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
-	* CCF/IDL2/SyntaxTree/Elements.cpp:
-	* CCF/IDL2/SyntaxTree/Elements.hpp:
-	* CCF/IDL2/SyntaxTree/Elements.tpp:
-	* CCF/IDL2/SyntaxTree/Interface.hpp:
-	* CCF/IDL2/SyntaxTree/Makefile.alt:
-	* CCF/IDL2/SyntaxTree/Module.hpp:
-	* CCF/IDL2/SyntaxTree/Operation.hpp:
-	* CCF/IDL2/SyntaxTree/Translation.cpp:
-	* CCF/IDL2/SyntaxTree/Translation.hpp:
-	* CCF/IDL2/SyntaxTree/TypeId.cpp:
-	* CCF/IDL2/SyntaxTree/Typedef.cpp:
-	* CCF/IDL2/SyntaxTree/Typedef.hpp:
-	* CCF/IDL2/SyntaxTree/ValueType.hpp:
-	* CCF/IDL2/Traversal/BuiltIn.hpp:
-	* CCF/IDL2/Traversal/BuiltIn.hpp.m4:
-	* CCF/IDL2/Traversal/Elements.cpp:
-	* CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/IDL2/Traversal/Interface.hpp:
-	* CCF/IDL2/Traversal/Module.hpp:
-	* CCF/IDL2/Traversal/Operation.hpp:
-	* CCF/IDL2/Traversal/Translation.hpp:
-	* CCF/IDL2/Traversal/TypeId.hpp:
-	* CCF/IDL2/Traversal/Typedef.cpp:
-	* CCF/IDL2/Traversal/Typedef.hpp:
-	* CCF/IDL3/SyntaxTree/Component.hpp:
-	* CCF/IDL3/SyntaxTree/EventType.hpp:
-	* CCF/IDL3/SyntaxTree/Home.hpp:
-	* CCF/IDL3/SyntaxTree/Operation.hpp:
-	* CCF/IDL3/Traversal/Component.hpp:
-	* CCF/IDL3/Traversal/EventType.hpp:
-	* CCF/IDL3/Traversal/Home.hpp:
-	* CCF/IDL3/Traversal/Operation.hpp:
-	* CCF/CIDL/SyntaxTree/Composition.hpp:
-	* CCF/CIDL/SyntaxTree/HomeExecutor.hpp:
-	* CCF/CIDL/Traversal/Composition.hpp:
-	* CCF/CIDL/Traversal/HomeExecutor.hpp: First part of
-	  typedef-related infrastructure.
+        * CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/IDL2/Makefile.archive:
+        * CCF/IDL2/Parser.cpp:
+        * CCF/IDL2/Parser.hpp:
+        * CCF/IDL2/SemanticAction.hpp:
+        * CCF/IDL2/SyntaxTree.hpp:
+        * CCF/IDL2/Traversal.hpp:
+        * CCF/IDL2/SemanticAction/Factory.hpp:
+        * CCF/IDL2/SemanticAction/Typedef.hpp:
+        * CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/IDL2/SemanticAction/Impl/Interface.hpp:
+        * CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+        * CCF/IDL2/SyntaxTree/BuiltIn.hpp:
+        * CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
+        * CCF/IDL2/SyntaxTree/Elements.cpp:
+        * CCF/IDL2/SyntaxTree/Elements.hpp:
+        * CCF/IDL2/SyntaxTree/Elements.tpp:
+        * CCF/IDL2/SyntaxTree/Interface.hpp:
+        * CCF/IDL2/SyntaxTree/Makefile.alt:
+        * CCF/IDL2/SyntaxTree/Module.hpp:
+        * CCF/IDL2/SyntaxTree/Operation.hpp:
+        * CCF/IDL2/SyntaxTree/Translation.cpp:
+        * CCF/IDL2/SyntaxTree/Translation.hpp:
+        * CCF/IDL2/SyntaxTree/TypeId.cpp:
+        * CCF/IDL2/SyntaxTree/Typedef.cpp:
+        * CCF/IDL2/SyntaxTree/Typedef.hpp:
+        * CCF/IDL2/SyntaxTree/ValueType.hpp:
+        * CCF/IDL2/Traversal/BuiltIn.hpp:
+        * CCF/IDL2/Traversal/BuiltIn.hpp.m4:
+        * CCF/IDL2/Traversal/Elements.cpp:
+        * CCF/IDL2/Traversal/Elements.hpp:
+        * CCF/IDL2/Traversal/Interface.hpp:
+        * CCF/IDL2/Traversal/Module.hpp:
+        * CCF/IDL2/Traversal/Operation.hpp:
+        * CCF/IDL2/Traversal/Translation.hpp:
+        * CCF/IDL2/Traversal/TypeId.hpp:
+        * CCF/IDL2/Traversal/Typedef.cpp:
+        * CCF/IDL2/Traversal/Typedef.hpp:
+        * CCF/IDL3/SyntaxTree/Component.hpp:
+        * CCF/IDL3/SyntaxTree/EventType.hpp:
+        * CCF/IDL3/SyntaxTree/Home.hpp:
+        * CCF/IDL3/SyntaxTree/Operation.hpp:
+        * CCF/IDL3/Traversal/Component.hpp:
+        * CCF/IDL3/Traversal/EventType.hpp:
+        * CCF/IDL3/Traversal/Home.hpp:
+        * CCF/IDL3/Traversal/Operation.hpp:
+        * CCF/CIDL/SyntaxTree/Composition.hpp:
+        * CCF/CIDL/SyntaxTree/HomeExecutor.hpp:
+        * CCF/CIDL/Traversal/Composition.hpp:
+        * CCF/CIDL/Traversal/HomeExecutor.hpp: First part of
+          typedef-related infrastructure.
 
-	* CCF/CodeGenerationKit/IndentationIDL.hpp:
-	* CCF/CompilerElements/Preprocessor.hpp:
-	* Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* Example/CIDL/LocalExecutorMapping/cidlc.cpp:
-	* Example/CIDL/LocalExecutorMapping/test-0.idl: Some minor
-	  clean-up's.
+        * CCF/CodeGenerationKit/IndentationIDL.hpp:
+        * CCF/CompilerElements/Preprocessor.hpp:
+        * Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+        * Example/CIDL/LocalExecutorMapping/test-0.idl: Some minor
+          clean-up's.
 
-	* Documentation/TODO: Added a few more items.
+        * Documentation/TODO: Added a few more items.
 
 Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * performance-tests/Benchmark/RoundTrip/svc.conf:
-	  Changed to load Advanced_Resource_Factory dynamically.
+          Changed to load Advanced_Resource_Factory dynamically.
 
         * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
         * performance-tests/Benchmark/RoundTripServer/LatencyTest.h:
         * performance-tests/Benchmark/RoundTripServer/server.cpp:
-	  Changed to implement the Benchmark::Latency_Test interface
-	  instead of the Latency_Test interface.  Otherwise, we won't be
-	  able to connect the interface to a receptacle expecting another
-	  interface type.
+          Changed to implement the Benchmark::Latency_Test interface
+          instead of the Latency_Test interface.  Otherwise, we won't be
+          able to connect the interface to a receptacle expecting another
+          interface type.
 
 Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-	  Fixed a minor compilation problem.
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+          Fixed a minor compilation problem.
 
-	* performance-tests/Benchmark/descriptors/Test-ior.cad:
-	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
-	* performance-tests/Benchmark/RoundTripServer/server.cpp:
+        * performance-tests/Benchmark/descriptors/Test-ior.cad:
+        * performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
+        * performance-tests/Benchmark/RoundTripServer/server.cpp:
 
-	  Changed to output IOR to a fixed file named "rtserver.ior" and
-	  refer to the object as file://rtserver.ior in the cad file
+          Changed to output IOR to a fixed file named "rtserver.ior" and
+          refer to the object as file://rtserver.ior in the cad file
 
 Mon Oct 13 23:41:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/handcrafted/Display/RateGen/controller.cpp:
-	* examples/handcrafted/Display/RateGen/client.cpp: Added inclusion
-	  of "ace/streams.h" to make them compile.
+        * examples/handcrafted/Display/RateGen/controller.cpp:
+        * examples/handcrafted/Display/RateGen/client.cpp: Added inclusion
+          of "ace/streams.h" to make them compile.
 
 Mon Oct 13 22:31:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.cpp:
-	  Fixed a fuzz warning.
+        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.cpp:
+          Fixed a fuzz warning.
 
 Mon Oct 13 16:49:00 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/RTComponentServer/RTConfig_Manager.h:
-	* tools/RTComponentServer/ComponentServer_Task.h:
-	  Added /**/ to fix Fuzz errors.
+        * tools/RTComponentServer/RTConfig_Manager.h:
+        * tools/RTComponentServer/ComponentServer_Task.h:
+          Added /**/ to fix Fuzz errors.
 
 Sun Oct 12 20:44:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1222,22 +1229,22 @@ Sun Oct 12 20:44:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/ServantHeaderGenerator.hpp:
         * CIDLC/ServantSourceGenerator.cpp:
         * CIDLC/ServantSourceGenerator.hpp:
-	  Changed top of files to match the title/author/cvs id  format for
-	  all other CCF and CIDLC files.
+          Changed top of files to match the title/author/cvs id  format for
+          all other CCF and CIDLC files.
 
         * CIDLC/TypeNameEmitter.cpp:
         * CIDLC/TypeNameEmitter.hpp:
 
-	  New files, adding support for all basic IDL types, and factoring
-	  out the typename emitter classes for operation return types and
-	  parameters into a separate translation unit, to eliminate the
-	  duplication in ServantHeaderGenerator.cpp and
-	  ServantSourceGenerator.cpp.
+          New files, adding support for all basic IDL types, and factoring
+          out the typename emitter classes for operation return types and
+          parameters into a separate translation unit, to eliminate the
+          duplication in ServantHeaderGenerator.cpp and
+          ServantSourceGenerator.cpp.
 
         * CIDLC/cidlc.mpc:
         * CIDLC/CIDLC.vcproj:
 
-	  Updated with the new files above.
+          Updated with the new files above.
 
 Sun Oct 12 18:36:16 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -1255,10 +1262,10 @@ Sun Oct 12 18:36:16 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Sat Oct 11 00:18:13 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/generate_component_mpc.pl: My previous change didn't
-	  completely fix the script.  It was using the obsolet dependency
-	  MPC keyword "depends" instead of "after", and the dependencies
-	  was partially broken.
+        * bin/generate_component_mpc.pl: My previous change didn't
+          completely fix the script.  It was using the obsolet dependency
+          MPC keyword "depends" instead of "after", and the dependencies
+          was partially broken.
 
 Fri Oct 10 18:39:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1274,39 +1281,39 @@ Fri Oct 10 18:39:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Oct 10 15:54:00 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.hpp:
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.m4:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.hpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.hpp.m4:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.cpp:
-	* CCF/CCF/IDL2/SyntaxTree/BuildIn.cpp.m4:
-	* CCF/CCF/IDL2/Traversal/BuildIn.hpp:
-	* CCF/CCF/IDL2/Traversal/BuildIn.hpp.m4:
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-1_exec.idl.orig:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
-	* CIDLC/cidlc.cpp: Added support for all built-in types (spec
-	 calls them 'base types') in CCF and in CIDL compiler driver.
+        * CCF/CCF/IDL2/LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/BuildIn.m4:
+        * CCF/CCF/IDL2/SyntaxTree/BuildIn.hpp:
+        * CCF/CCF/IDL2/SyntaxTree/BuildIn.hpp.m4:
+        * CCF/CCF/IDL2/SyntaxTree/BuildIn.cpp:
+        * CCF/CCF/IDL2/SyntaxTree/BuildIn.cpp.m4:
+        * CCF/CCF/IDL2/Traversal/BuildIn.hpp:
+        * CCF/CCF/IDL2/Traversal/BuildIn.hpp.m4:
+        * CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-1_exec.idl.orig:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+        * CIDLC/cidlc.cpp: Added support for all built-in types (spec
+         calls them 'base types') in CCF and in CIDL compiler driver.
 
-	* CCF/Documentation/TODO: marked corresponding item as done.
+        * CCF/Documentation/TODO: marked corresponding item as done.
 
 Thu Oct 09 00:50:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/generate_component_mpc.pl: Minor enhancement to the previous
-	  change.  This script now allows an optional project name prefix
-	  to be define via the [-u] flag.  If this flag is not used, the
-	  dependent component's name will be used as project name prefix.
-	  Since there are possibly many component depending on the same
-	  component, using the depending componant name may not help much.
-	  If neither -u and -p flag are used, no project name prefix will
-	  be added (the redundant leading underscore from the previous
-	  change has been removed.)
+        * bin/generate_component_mpc.pl: Minor enhancement to the previous
+          change.  This script now allows an optional project name prefix
+          to be define via the [-u] flag.  If this flag is not used, the
+          dependent component's name will be used as project name prefix.
+          Since there are possibly many component depending on the same
+          component, using the depending componant name may not help much.
+          If neither -u and -p flag are used, no project name prefix will
+          be added (the redundant leading underscore from the previous
+          change has been removed.)
 
 Fri Oct  6 10:00:12 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/TODO: merged items from my off-line TODO.
+        * CCF/Documentation/TODO: merged items from my off-line TODO.
 
 Fri Oct 03 22:45:43 2003  Chris Cleeland  <cleeland@ociweb.com>
 
@@ -1314,84 +1321,84 @@ Fri Oct 03 22:45:43 2003  Chris Cleeland  <cleeland@ociweb.com>
 
 Fri Oct 03 11:07:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/releasenotes.html: Updated the release notes with more
-	  recent news.
+        * docs/releasenotes.html: Updated the release notes with more
+          recent news.
 
 Fri Oct  3 08:14:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/handcrafted/BasicSP_EC/EC/EC.mpc: Fixed a problem with
-	  the MPC file. Thanks to Johnny Willemsen for poitning this out.
+        * examples/handcrafted/BasicSP_EC/EC/EC.mpc: Fixed a problem with
+          the MPC file. Thanks to Johnny Willemsen for poitning this out.
 
 Thu Oct  2 15:02:10 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/Traversal/TypeId.hpp:
-	* CCF/CCF/IDL2/Traversal/TypeId.cpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SyntaxTree.hpp:
-	* CCF/CCF/IDL2/SemanticAction.hpp: Added missing pieces for
-	  typeid/typeprefix support.
+        * CCF/CCF/IDL2/Traversal/TypeId.hpp:
+        * CCF/CCF/IDL2/Traversal/TypeId.cpp:
+        * CCF/CCF/IDL2/Traversal.hpp:
+        * CCF/CCF/IDL2/SyntaxTree.hpp:
+        * CCF/CCF/IDL2/SemanticAction.hpp: Added missing pieces for
+          typeid/typeprefix support.
 
 Wed Oct  1 14:26:09 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/CompilerElements/Context.hpp: added count () member
-	  function.
+        * CCF/CCF/CompilerElements/Context.hpp: added count () member
+          function.
 
-	* CIDLC/RepositoryIdGenerator.hpp:
-	* CIDLC/RepositoryIdGenerator.cpp: implemented first phase of
-	  repository id generation.
+        * CIDLC/RepositoryIdGenerator.hpp:
+        * CIDLC/RepositoryIdGenerator.cpp: implemented first phase of
+          repository id generation.
 
 Tue Sep 30 09:52:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/mico/mico-thrput-st/client.cc:
-	* performance-tests/mico/mico-thrput-st/server.cc:
+        * performance-tests/mico/mico-thrput-st/client.cc:
+        * performance-tests/mico/mico-thrput-st/server.cc:
 
-	  Fixed fuzz errors.
+          Fixed fuzz errors.
 
 
 Fri Sep 26 12:13:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
-	  Changed to deploy Test-IOR.cad instead of
-	  Test-Name-Service.cad.
+        * performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
+          Changed to deploy Test-IOR.cad instead of
+          Test-Name-Service.cad.
 
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_stub_export.h:
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_svnt_export.h:
-	  Fixed some extra line-breaks that were causing compilation errors.
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_stub_export.h:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_svnt_export.h:
+          Fixed some extra line-breaks that were causing compilation errors.
 
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-	  Fixed a compilation error.
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+          Fixed a compilation error.
 
-	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
-	  Removed a redundant comma.
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
+          Removed a redundant comma.
 
-	* tools/ComponentServer/ComponentServer.cpp:
-	  Fixed execution error in "debug mode."
+        * tools/ComponentServer/ComponentServer.cpp:
+          Fixed execution error in "debug mode."
 
 Wed Sep 24 20:59:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/handcrafted/BasicSP_EC2/EC/EC.mpc: Fixed problems that
-	  missed my last checkiin "Sun Sep 21 17:07:45 2003  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>".
+        * examples/handcrafted/BasicSP_EC2/EC/EC.mpc: Fixed problems that
+          missed my last checkiin "Sun Sep 21 17:07:45 2003  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>".
 
 Sun Sep 21 17:15:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/generate_component_mpc.pl: Appended the value provided to
-	  the -p option to the project names.
+        * bin/generate_component_mpc.pl: Appended the value provided to
+          the -p option to the project names.
 
 Sun Sep 21 17:07:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/handcrafted/BasicSP_EC/BasicSP.mpc:
-	* examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED.mpc:
-	* examples/handcrafted/BasicSP_EC/BMDevice/BMDevice.mpc:
-	* examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay.mpc:
-	* examples/handcrafted/BasicSP_EC/EC/EC.mpc
-	* examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
-	* examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.mpc:
-	* examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice.mpc:
-	* examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay.mpc:
-	  Changed the project file names so that they don't clash with the
-	  project names in examples/handcrafted/BasicSP. This shold get
-	  rid of warning in VC7 builds hosted by remedy.
+        * examples/handcrafted/BasicSP_EC/BasicSP.mpc:
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED.mpc:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice.mpc:
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay.mpc:
+        * examples/handcrafted/BasicSP_EC/EC/EC.mpc
+        * examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
+        * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.mpc:
+        * examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice.mpc:
+        * examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay.mpc:
+          Changed the project file names so that they don't clash with the
+          project names in examples/handcrafted/BasicSP. This shold get
+          rid of warning in VC7 builds hosted by remedy.
 
 Fri Sep 19 14:27:57 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -1416,37 +1423,37 @@ Fri Sep 19 13:31:50 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Tue Sep 16 14:04:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Example/ComponentDeploymentDescriptor: Added small example
-	  that shows how syntax tree traversal mechanism can be used in
-	  different code generation tasks.
+        * CCF/Example/ComponentDeploymentDescriptor: Added small example
+          that shows how syntax tree traversal mechanism can be used in
+          different code generation tasks.
 
 Thu Aug 28 12:30:10 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CFF/IDL2/SyntaxTree/Elements.*: Made SyntaxTree::Node
-	  capable of holding arbitrary context information (see
-	  SyntaxTree::Node::context ()). Plus some minor architectural
-	  changes.
+        * CCF/CFF/IDL2/SyntaxTree/Elements.*: Made SyntaxTree::Node
+          capable of holding arbitrary context information (see
+          SyntaxTree::Node::context ()). Plus some minor architectural
+          changes.
 
-	* CCF/CFF/IDL2/SyntaxTree/TypeId.*
-	* CCF/CFF/IDL2/SemanticAction/TypeId.*
-	* CCF/CFF/IDL2/SemanticAction/Impl/TypeId.*
-	* CCF/CFF/IDL2/LexicalAnalyzer.*
-	* CCF/CFF/IDL2/Parser.*: Added support for typeid and typeprefix.
+        * CCF/CFF/IDL2/SyntaxTree/TypeId.*
+        * CCF/CFF/IDL2/SemanticAction/TypeId.*
+        * CCF/CFF/IDL2/SemanticAction/Impl/TypeId.*
+        * CCF/CFF/IDL2/LexicalAnalyzer.*
+        * CCF/CFF/IDL2/Parser.*: Added support for typeid and typeprefix.
 
 Tue Aug 26 16:59:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tools/RTComponentServer/RTConfig_Manager.cpp:
-	* tools/RTComponentServer/RTConfig_Manager.inl:
-	* tools/RTComponentServer/RTServer_Impl.cpp:
-	* tools/RTComponentServer/RTServer_Impl.h:
-	* tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed compilation
-	  problem on Linux.
+        * tools/RTComponentServer/RTConfig_Manager.cpp:
+        * tools/RTComponentServer/RTConfig_Manager.inl:
+        * tools/RTComponentServer/RTServer_Impl.cpp:
+        * tools/RTComponentServer/RTServer_Impl.h:
+        * tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed compilation
+          problem on Linux.
 
 Tue Aug 26 10:14:03 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CIDLC/ServantSourceGenerator.cpp: Correctly generate get and set
-	  operations for attributes in the servant code.  An error in how
-	  I built the traverse was preventing that.
+        * CIDLC/ServantSourceGenerator.cpp: Correctly generate get and set
+          operations for attributes in the servant code.  An error in how
+          I built the traverse was preventing that.
 
 Tue Aug 26 09:27:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1462,221 +1469,221 @@ Tue Aug 26 09:27:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Aug 25 09:47:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h: Fixed a
-	  compilation error by adding inclusion of "ace/Null_Mutex.h" and
-	  define QT_GENUINE_STR.
+        * examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h: Fixed a
+          compilation error by adding inclusion of "ace/Null_Mutex.h" and
+          define QT_GENUINE_STR.
 
 Mon Aug 25 07:42:14 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tools/RTComponentServer/ComponentServer_Task.cpp:
-	* tools/RTComponentServer/ComponentServer_Task.h:
-	* tools/RTComponentServer/RTConfig_Manager.h: Fixed merge errors
-	  by adding inclusion of "tao/ORB.h", "ace/Null_Mutex.h" and
-	  such.
+        * tools/RTComponentServer/ComponentServer_Task.cpp:
+        * tools/RTComponentServer/ComponentServer_Task.h:
+        * tools/RTComponentServer/RTConfig_Manager.h: Fixed merge errors
+          by adding inclusion of "tao/ORB.h", "ace/Null_Mutex.h" and
+          such.
 
 Sun Aug 24 22:03:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  Merged the RTCIAO-0 branch into main trunk.
+          Merged the RTCIAO-0 branch into main trunk.
 
-	Sun Aug 24 21:45:33 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Sun Aug 24 21:45:33 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/Assembly_Deployer/Assembly_Deployer.mpc:
-		* tools/Daemon/Daemon.mpc: Both CIAO_Daemon and Assembly_Manager
-		  depend on RTCORBA  library now because they both required to
-		  handle RTCORBA related types.
+                * tools/Assembly_Deployer/Assembly_Deployer.mpc:
+                * tools/Daemon/Daemon.mpc: Both CIAO_Daemon and Assembly_Manager
+                  depend on RTCORBA  library now because they both required to
+                  handle RTCORBA related types.
 
-		* tools/Assembly_Deployer/Assembly_Visitors.cpp:
-		* tools/Assembly_Deployer/Assembly_Visitors.h: Decoupled the
-		  container creation functionality from the creation of
-		  ComponentServer into a separate method.  This allows us to
-		  better manage the type of container and the associating policy
-		  sets.
+                * tools/Assembly_Deployer/Assembly_Visitors.cpp:
+                * tools/Assembly_Deployer/Assembly_Visitors.h: Decoupled the
+                  container creation functionality from the creation of
+                  ComponentServer into a separate method.  This allows us to
+                  better manage the type of container and the associating policy
+                  sets.
 
-		* tools/Assembly_Deployer/Deployment_Configuration.cpp:
-		* tools/Assembly_Deployer/Deployment_Configuration.h: Changed the
-		  get_activator[_ior] functions to return default activator where
-		  there's no valid activator id available instead of throwing an
-		  exception.
+                * tools/Assembly_Deployer/Deployment_Configuration.cpp:
+                * tools/Assembly_Deployer/Deployment_Configuration.h: Changed the
+                  get_activator[_ior] functions to return default activator where
+                  there's no valid activator id available instead of throwing an
+                  exception.
 
-		* tools/ComponentServer/ComponentServer.cpp: Invoke the init
-		  method of ComponentServer servant.  This function is now
-		  supported.
+                * tools/ComponentServer/ComponentServer.cpp: Invoke the init
+                  method of ComponentServer servant.  This function is now
+                  supported.
 
-		* tools/RTComponentServer/ComponentServer_Task.cpp:
-		* tools/RTComponentServer/ComponentServer_Task.h:
-		* tools/RTComponentServer/RTComponentServer.cpp:
-		* tools/RTComponentServer/RTComponentServer.mpc:
-		* tools/RTComponentServer/RTConfig_Manager.cpp:
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTServer_Impl.cpp:
-		* tools/RTComponentServer/RTServer_Impl.h:
-		* tools/RTComponentServer/RTServer_Impl.inl: Added/Changed to
-		  properly support the real-time ComponentServer implementation.
+                * tools/RTComponentServer/ComponentServer_Task.cpp:
+                * tools/RTComponentServer/ComponentServer_Task.h:
+                * tools/RTComponentServer/RTComponentServer.cpp:
+                * tools/RTComponentServer/RTComponentServer.mpc:
+                * tools/RTComponentServer/RTConfig_Manager.cpp:
+                * tools/RTComponentServer/RTConfig_Manager.h:
+                * tools/RTComponentServer/RTServer_Impl.cpp:
+                * tools/RTComponentServer/RTServer_Impl.h:
+                * tools/RTComponentServer/RTServer_Impl.inl: Added/Changed to
+                  properly support the real-time ComponentServer implementation.
 
-		* tools/ServerActivator/ServerActivator.cpp: Fixed a fuzz error.
+                * tools/ServerActivator/ServerActivator.cpp: Fixed a fuzz error.
 
-		* tools/XML_Helpers/Assembly_Spec.inl: Changed to return 0 if
-		  rtcad_filename and rtpolicyset_ref is not specified in the
-		  original XML file.
+                * tools/XML_Helpers/Assembly_Spec.inl: Changed to return 0 if
+                  rtcad_filename and rtpolicyset_ref is not specified in the
+                  original XML file.
 
-	Thu Aug 14 16:27:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Thu Aug 14 16:27:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/XML_Helpers/RTCAD-example.rtd:
-		* tools/XML_Helpers/RTCAD-example.cad: Added new file to show some
-		  example cad and rtd files.
+                * tools/XML_Helpers/RTCAD-example.rtd:
+                * tools/XML_Helpers/RTCAD-example.cad: Added new file to show some
+                  example cad and rtd files.
 
-		* tools/XML_Helpers/main.cpp:
-		* tools/XML_Helpers/XML_Utils.cpp: Extended to invoke the RTCAD
-		  handler.
+                * tools/XML_Helpers/main.cpp:
+                * tools/XML_Helpers/XML_Utils.cpp: Extended to invoke the RTCAD
+                  handler.
 
-		* tools/XML_Helpers/RTConfig_Handlers.h:
-		* tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed run-time errors.
+                * tools/XML_Helpers/RTConfig_Handlers.h:
+                * tools/XML_Helpers/RTConfig_Handlers.cpp: Fixed run-time errors.
 
-	Wed Aug 13 01:48:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Wed Aug 13 01:48:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/RTComponentServer/RTComponentServer.mpc: Added dependency
-		  to XML_Helpers library.
+                * tools/RTComponentServer/RTComponentServer.mpc: Added dependency
+                  to XML_Helpers library.
 
-		* tools/XML_Helpers/XML_Utils.h: Added parse_rtcad_extension
-		  static method.  This is yet to be implemented.
+                * tools/XML_Helpers/XML_Utils.h: Added parse_rtcad_extension
+                  static method.  This is yet to be implemented.
 
-		* tools/XML_Helpers/RTConfig_Handlers.h:
-		* tools/XML_Helpers/RTConfig_Handlers.inl:
-		* tools/XML_Helpers/RTConfig_Handlers.cpp: Added new files for
-		  parsing RTConfig extention.
+                * tools/XML_Helpers/RTConfig_Handlers.h:
+                * tools/XML_Helpers/RTConfig_Handlers.inl:
+                * tools/XML_Helpers/RTConfig_Handlers.cpp: Added new files for
+                  parsing RTConfig extention.
 
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTConfig_Manager.cpp:
-		* tools/XML_Helpers/RTConfiguration.idl: Renamed
-		  RTORB_Resources_Info to RTORB_Resource_Info.
+                * tools/RTComponentServer/RTConfig_Manager.h:
+                * tools/RTComponentServer/RTConfig_Manager.cpp:
+                * tools/XML_Helpers/RTConfiguration.idl: Renamed
+                  RTORB_Resources_Info to RTORB_Resource_Info.
 
-		* tools/XML_Helpers/XMLHelper.mpc: Added rtcorba as a base
-		  project.  We now depend on RTCORBA.
+                * tools/XML_Helpers/XMLHelper.mpc: Added rtcorba as a base
+                  project.  We now depend on RTCORBA.
 
-	Sun Aug 10 13:50:15 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Sun Aug 10 13:50:15 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/RTComponentServer/RTConfiguration.idl:
-		* tools/RTComponentServer/RTConfigurationClient.cpp:
-		* tools/RTComponentServer/RTComponentServer.mpc: Removed
-		  RTConfiguration.idl and the stub wrapper
-		  RTConfigurationClient.cpp.  They have been moved to XML_Helpers
-		  library.
+                * tools/RTComponentServer/RTConfiguration.idl:
+                * tools/RTComponentServer/RTConfigurationClient.cpp:
+                * tools/RTComponentServer/RTComponentServer.mpc: Removed
+                  RTConfiguration.idl and the stub wrapper
+                  RTConfigurationClient.cpp.  They have been moved to XML_Helpers
+                  library.
 
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTConfig_Manager.cpp: Changed to include
-		  RTConfigurationC.h from XML_Helpers subdir and make sure
-		  RTCORBA.h is included before RTConfigurationC.h.
+                * tools/RTComponentServer/RTConfig_Manager.h:
+                * tools/RTComponentServer/RTConfig_Manager.cpp: Changed to include
+                  RTConfigurationC.h from XML_Helpers subdir and make sure
+                  RTCORBA.h is included before RTConfigurationC.h.
 
-		* tools/XML_Helpers/XMLHelpers.mpc:
-		* tools/XML_Helpers/RTConfiguration.idl:
-		* tools/XML_Helpers/RTConfiguration_Stubs.cpp: Added
-		  RTConfiguration info and its wrapper cpp file.  This wrapper cpp
-		  file is used to ensure that RTCORBA.h is included before
-		  RTConfigurationC.h.
+                * tools/XML_Helpers/XMLHelpers.mpc:
+                * tools/XML_Helpers/RTConfiguration.idl:
+                * tools/XML_Helpers/RTConfiguration_Stubs.cpp: Added
+                  RTConfiguration info and its wrapper cpp file.  This wrapper cpp
+                  file is used to ensure that RTCORBA.h is included before
+                  RTConfigurationC.h.
 
-		* tools/XML_Helpers/Assembly_Handlers.cpp:
-		* tools/XML_Helpers/Assembly_Handlers.h:
-		* tools/XML_Helpers/Assembly_Handlers.inl:
-		* tools/XML_Helpers/Assembly_Spec.h:
-		* tools/XML_Helpers/Assembly_Spec.inl: Extended to parse and store
-		  <extension> information in <processcollocation> and
-		  <homeplacement>.
+                * tools/XML_Helpers/Assembly_Handlers.cpp:
+                * tools/XML_Helpers/Assembly_Handlers.h:
+                * tools/XML_Helpers/Assembly_Handlers.inl:
+                * tools/XML_Helpers/Assembly_Spec.h:
+                * tools/XML_Helpers/Assembly_Spec.inl: Extended to parse and store
+                  <extension> information in <processcollocation> and
+                  <homeplacement>.
 
-	Wed Aug 06 17:02:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Wed Aug 06 17:02:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTConfig_Manager.cpp: Added support for
-		  keeping PriorityBands information.
+                * tools/RTComponentServer/RTConfig_Manager.h:
+                * tools/RTComponentServer/RTConfig_Manager.cpp: Added support for
+                  keeping PriorityBands information.
 
-	Sun Aug  3 23:12:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Sun Aug  3 23:12:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/RTComponentServer/RTConfig_Manager.cpp: Fixed mismatched
-		  throw specifications.  Added inclusion of "ace/SString.h" as ACE
-		  now only includes "ace/SStringfwd.h".
+                * tools/RTComponentServer/RTConfig_Manager.cpp: Fixed mismatched
+                  throw specifications.  Added inclusion of "ace/SString.h" as ACE
+                  now only includes "ace/SStringfwd.h".
 
-	Sun Aug 03 00:45:59 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Sun Aug 03 00:45:59 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/RTComponentServer/RTConfig_Manager.cpp: Fixed some
-		  accidental pastings of code.
+                * tools/RTComponentServer/RTConfig_Manager.cpp: Fixed some
+                  accidental pastings of code.
 
-	Fri Aug 01 13:50:34 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Fri Aug 01 13:50:34 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/RTComponentServer/RTComponentServer.mpc:
-		* tools/RTComponentServer/RTConfig_Manager.cpp:
-		* tools/RTComponentServer/RTConfig_Manager.h:
-		* tools/RTComponentServer/RTConfig_Manager.inl:
-		* tools/RTComponentServer/RTConfiguration.idl: Added code for
-		  managing named collection of RTCORBA related policies.
+                * tools/RTComponentServer/RTComponentServer.mpc:
+                * tools/RTComponentServer/RTConfig_Manager.cpp:
+                * tools/RTComponentServer/RTConfig_Manager.h:
+                * tools/RTComponentServer/RTConfig_Manager.inl:
+                * tools/RTComponentServer/RTConfiguration.idl: Added code for
+                  managing named collection of RTCORBA related policies.
 
-	Sun Jul 06 21:37:22 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Sun Jul 06 21:37:22 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/RTComponentServer/ComponentServer_Task.cpp (svc): Changed
-		  to take advantage of CIAO::Activator_Callback interface change
-		  for getting back our own ConfigValues.  We will need to use
-		  these configuration values in the future.
+                * tools/RTComponentServer/ComponentServer_Task.cpp (svc): Changed
+                  to take advantage of CIAO::Activator_Callback interface change
+                  for getting back our own ConfigValues.  We will need to use
+                  these configuration values in the future.
 
-	Sun Jul 06 11:50:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Sun Jul 06 11:50:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* tools/RTComponentServer/ComponentServer_Task.cpp:
-		* tools/RTComponentServer/ComponentServer_Task.h:
-		* tools/RTComponentServer/ComponentServer_Task.inl:
-		* tools/RTComponentServer/README:
-		* tools/RTComponentServer/RTComponentServer.cpp:
-		* tools/RTComponentServer/RTComponentServer.mpc: Added the
-		  skeleton of RTComponentServer.
+                * tools/RTComponentServer/ComponentServer_Task.cpp:
+                * tools/RTComponentServer/ComponentServer_Task.h:
+                * tools/RTComponentServer/ComponentServer_Task.inl:
+                * tools/RTComponentServer/README:
+                * tools/RTComponentServer/RTComponentServer.cpp:
+                * tools/RTComponentServer/RTComponentServer.mpc: Added the
+                  skeleton of RTComponentServer.
 
-	Sun Jul 06 11:33:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+        Sun Jul 06 11:33:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-		* Added: this temporary ChangeLog file for changes within the
-		  RTComponentServer.
+                * Added: this temporary ChangeLog file for changes within the
+                  RTComponentServer.
 
 
 Sun Aug 24 21:38:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ciao/Container_Base.cpp:
-	* ciao/Container_Base.h: Added an extra argument of type
-	  CORBA::PolicyList to the init method which we can use to pass
-	  extra RTCORBA policies into the RT Container.
+        * ciao/Container_Base.cpp:
+        * ciao/Container_Base.h: Added an extra argument of type
+          CORBA::PolicyList to the init method which we can use to pass
+          extra RTCORBA policies into the RT Container.
 
-	* ciao/Container_Impl.cpp:
-	* ciao/Container_Impl.h: Fixed memory management of cached
-	  ConfigValue valuetype.
+        * ciao/Container_Impl.cpp:
+        * ciao/Container_Impl.h: Fixed memory management of cached
+          ConfigValue valuetype.
 
-	* ciao/ServerActivator_Impl.h:
-	* ciao/ServerActivator_Impl.cpp: Extended the server activator to
-	  specify RTCAD filename when instantiating a RTComponentServer.
+        * ciao/ServerActivator_Impl.h:
+        * ciao/ServerActivator_Impl.cpp: Extended the server activator to
+          specify RTCAD filename when instantiating a RTComponentServer.
 
-	* examples/OEP/Display/descriptors/HUDisplay-rtcad.cad:
-	* examples/OEP/Display/descriptors/NOTE-win.txt:
-	* examples/OEP/Display/descriptors/RTsvc.conf:
-	* examples/OEP/Display/descriptors/test.rtd:
-	* examples/OEP/Display/descriptors/svcmap.dat: Added an RTCCM
-	  example.
+        * examples/OEP/Display/descriptors/HUDisplay-rtcad.cad:
+        * examples/OEP/Display/descriptors/NOTE-win.txt:
+        * examples/OEP/Display/descriptors/RTsvc.conf:
+        * examples/OEP/Display/descriptors/test.rtd:
+        * examples/OEP/Display/descriptors/svcmap.dat: Added an RTCCM
+          example.
 
 Wed Aug 20 17:44:29 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CIDLC/DescriptorGenerator.cpp: Small fix to make it compile
-	  under linux also.
+        * CIDLC/DescriptorGenerator.cpp: Small fix to make it compile
+          under linux also.
 
 Wed Aug 20 17:36:02 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
-	* performance-tests/mico:
-	  Directory where mico specific tests will be added
+        * performance-tests/mico:
+          Directory where mico specific tests will be added
 
-	* performance-tests/mico/mico-thrput-st:
-	  Single threaded throughput tests for the MICO ORB
+        * performance-tests/mico/mico-thrput-st:
+          Single threaded throughput tests for the MICO ORB
 
-	* performance-tests/mico/mico-thrput-st/server.cc:
-	* performance-tests/mico/mico-thrput-st/client.cc:
-	* performance-tests/mico/mico-thrput-st/RoundTrip_impl.cc:
-	* performance-tests/mico/mico-thrput-st/RoundTrip_impl.h:
-	* performance-tests/mico/mico-thrput-st/Makefile:
-	* performance-tests/mico/mico-thrput-st/mico-env:
-	* performance-tests/mico/mico-thrput-st/RoundTrip.idl:
-	  Single threaded througput test for MICO ORB. This experiment
-	uses the same interface as the one used in TAO for generating
-	daily performance stats. Further, the test also uses ACE for
-	generating results.
+        * performance-tests/mico/mico-thrput-st/server.cc:
+        * performance-tests/mico/mico-thrput-st/client.cc:
+        * performance-tests/mico/mico-thrput-st/RoundTrip_impl.cc:
+        * performance-tests/mico/mico-thrput-st/RoundTrip_impl.h:
+        * performance-tests/mico/mico-thrput-st/Makefile:
+        * performance-tests/mico/mico-thrput-st/mico-env:
+        * performance-tests/mico/mico-thrput-st/RoundTrip.idl:
+          Single threaded througput test for MICO ORB. This experiment
+        uses the same interface as the one used in TAO for generating
+        daily performance stats. Further, the test also uses ACE for
+        generating results.
 
 Wed Aug 20 17:19:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1718,76 +1725,76 @@ Wed Aug 20 17:09:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Aug 20 14:48:15 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CCF/Example/CodeGenerationKit/Indentation/XML/Makefile.alt:
-	* CCF/Example/CodeGenerationKit/Indentation/XML/XML.mpc:
-	* CCF/Example/CodeGenerationKit/Indentation/XML/indent_xml.cpp:
-	  Added example of usage for the XML indenter.
+        * CCF/Example/CodeGenerationKit/Indentation/XML/Makefile.alt:
+        * CCF/Example/CodeGenerationKit/Indentation/XML/XML.mpc:
+        * CCF/Example/CodeGenerationKit/Indentation/XML/indent_xml.cpp:
+          Added example of usage for the XML indenter.
 
-	* CCF/CCF/CodeGenerationKit/IndentationXML.hpp: Added XML
-	  indenter.
+        * CCF/CCF/CodeGenerationKit/IndentationXML.hpp: Added XML
+          indenter.
 
 Tue Aug 19 16:06:01 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CIDLC/cidlc.mpc: Some cleaning of the MPC file: Removed unneeded
-	  Instrocpection and added the CompilerElements library.
+        * CIDLC/cidlc.mpc: Some cleaning of the MPC file: Removed unneeded
+          Instrocpection and added the CompilerElements library.
 
 Mon Aug 18 14:08:05 2003  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
-	* performance-tests/Benchmark/descriptors/test-multi-process.dat:
-	  This file contains host port locations for running components
-	  in multiple hosts/processes. Will be used as an example
-	  scenario for benchmarking experiments
+        * performance-tests/Benchmark/descriptors/test-multi-process.dat:
+          This file contains host port locations for running components
+          in multiple hosts/processes. Will be used as an example
+          scenario for benchmarking experiments
 
 Mon Aug 18 12:11:55 2003  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
-	* performance-tests/Benchmar/Multi_Threaded/NOTE.txt:
-	  Updated information on pre-conditions necessary to run the
-	  experiment
+        * performance-tests/Benchmar/Multi_Threaded/NOTE.txt:
+          Updated information on pre-conditions necessary to run the
+          experiment
 
 Mon Aug 18 12:01:37 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
-	* performance-tests/Benchmar/Multi_Threaded/Multi_Threaded.mpc:
-	* performance-tests/Benchmar/Multi_Threaded/client.cpp:
-	* performance-tests/Benchmar/Multi_Threaded/Client_Task.h:
-	* performance-tests/Benchmar/Multi_Threaded/Client_Task.cpp:
-	* performance-tests/Benchmar/Multi_Threaded/run_test.pl:
-	* performance-tests/Benchmar/Multi_Threaded/svc.conf:
-	* performance-tests/Benchmar/Multi_Threaded/NOTE.txt:
-	* performance-tests/Benchmar/Multi_Threaded/README:
-	  Test that measures round-trip latency behavior using a
-	multi-threaded client.
+        * performance-tests/Benchmar/Multi_Threaded/Multi_Threaded.mpc:
+        * performance-tests/Benchmar/Multi_Threaded/client.cpp:
+        * performance-tests/Benchmar/Multi_Threaded/Client_Task.h:
+        * performance-tests/Benchmar/Multi_Threaded/Client_Task.cpp:
+        * performance-tests/Benchmar/Multi_Threaded/run_test.pl:
+        * performance-tests/Benchmar/Multi_Threaded/svc.conf:
+        * performance-tests/Benchmar/Multi_Threaded/NOTE.txt:
+        * performance-tests/Benchmar/Multi_Threaded/README:
+          Test that measures round-trip latency behavior using a
+        multi-threaded client.
 
-	* performance-tests/Benchmark/descriptors/Multi_Threaded.cad:
-	* performance-tests/Benchmark/descriptors/CIAO_Installation_Data.ini:
-	  Appropriate CAD file to configure the above experiment
+        * performance-tests/Benchmark/descriptors/Multi_Threaded.cad:
+        * performance-tests/Benchmark/descriptors/CIAO_Installation_Data.ini:
+          Appropriate CAD file to configure the above experiment
 
 Sun Aug 17 22:43:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ciao/Container_Base.cpp:
-	* ciao/Container_Base.h:
-	* ciao/Container_Impl.cpp: Changed the signature of
-	  CIAO::Container to pass in a CORBA::PolicyList.  We will need
-	  this to initialize RT_Session_Container and the future
-	  unclassified container.
+        * ciao/Container_Base.cpp:
+        * ciao/Container_Base.h:
+        * ciao/Container_Impl.cpp: Changed the signature of
+          CIAO::Container to pass in a CORBA::PolicyList.  We will need
+          this to initialize RT_Session_Container and the future
+          unclassified container.
 
-	* docs/ConfigValues.html:
-	* docs/XML/ciao_rt_cad_ext.dtd:
-	* docs/XML/componentassembly.dtd: Updated documentation on
-	  extension element usage, RTCAD extension usage and recognizable
-	  ConfigValues names.
+        * docs/ConfigValues.html:
+        * docs/XML/ciao_rt_cad_ext.dtd:
+        * docs/XML/componentassembly.dtd: Updated documentation on
+          extension element usage, RTCAD extension usage and recognizable
+          ConfigValues names.
 
-	* examples/OEP/Display/RateGen/client.cpp:
-	* examples/OEP/Display/RateGen/controller.cpp:
-	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h:
-	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h:
-	* examples/OEP/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp:
-	  Reordered order of inclusion to make sure ACE headers are seen
-	  by the compiler first.
+        * examples/OEP/Display/RateGen/client.cpp:
+        * examples/OEP/Display/RateGen/controller.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp:
+          Reordered order of inclusion to make sure ACE headers are seen
+          by the compiler first.
 
 Sun Aug 17 09:53:57 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CCF/CCF/CCF.mwc: Fixed a bug in the name of a file that was
-	  preventing the build in VC71.
+        * CCF/CCF/CCF.mwc: Fixed a bug in the name of a file that was
+          preventing the build in VC71.
 
 Fri Aug 15 16:26:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1805,10 +1812,10 @@ Fri Aug 15 16:26:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Aug 15 15:18:37 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-		* CCF:
-		* CIDLC:
+                * CCF:
+                * CIDLC:
 
-		Added VC7.1 Solutions and Projects.
+                Added VC7.1 Solutions and Projects.
 
 Wed Aug 13 17:37:30 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -1846,8 +1853,8 @@ Wed Aug 13 16:23:02 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Wed Aug 13 13:25:14 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CIDLC/cidlc.mpc: Reordered static library list to suit
-	  dependencies.
+        * CIDLC/cidlc.mpc: Reordered static library list to suit
+          dependencies.
 
 Wed Aug 13 12:20:12 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -1887,37 +1894,37 @@ Tue Aug 12 21:56:42 2003 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
 
 2003-08-12  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CIAO.mwc: Removed CCF MPC files as they still don't work the way
-	  I expected it to.
+        * CIAO.mwc: Removed CCF MPC files as they still don't work the way
+          I expected it to.
 
 2003-08-11  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CIDLC/ServantGenerator.cpp: Removed commented code.
+        * CIDLC/ServantGenerator.cpp: Removed commented code.
 
 2003-08-07  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* CCF/Example/CodeGenerationKit/Indentation/IDL/IDL.mpc:
-	* CCF/Example/CodeGenerationKit/Indentation/Indentation.mwc:
-	* CCF/Example/CodeGenerationKit/CodeGenerationKit.mwc:
-	* CCF/Example/CIDL/LocalExecutorMapping/LocalExecutorMapping.mpc:
-	* CCF/Example/CIDL/CIDL.mwc:
-	* CCF/Example/Example.mwc:
-	* CCF/CCF/CompilerElements/CompilerElements.mpc:
-	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
-	* CCF/CCF/IDL3/IDL3.mpc:
-	* CCF/CCF/IDL2/IDL2.mpc:
-	* CCF/CCF/CIDL/CIDL.mpc:
-	* CCF/CCF/CCF.mwc:
-	* CCF/CCF.mwc:
-	CCF Makefiles to MPC.
+        * CCF/Example/CodeGenerationKit/Indentation/IDL/IDL.mpc:
+        * CCF/Example/CodeGenerationKit/Indentation/Indentation.mwc:
+        * CCF/Example/CodeGenerationKit/CodeGenerationKit.mwc:
+        * CCF/Example/CIDL/LocalExecutorMapping/LocalExecutorMapping.mpc:
+        * CCF/Example/CIDL/CIDL.mwc:
+        * CCF/Example/Example.mwc:
+        * CCF/CCF/CompilerElements/CompilerElements.mpc:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+        * CCF/CCF/IDL3/IDL3.mpc:
+        * CCF/CCF/IDL2/IDL2.mpc:
+        * CCF/CCF/CIDL/CIDL.mpc:
+        * CCF/CCF/CCF.mwc:
+        * CCF/CCF.mwc:
+        CCF Makefiles to MPC.
 
-	* CIDLC/cidlc.mpc: Adapted to the new structure of the CIDL
-	compiler.
+        * CIDLC/cidlc.mpc: Adapted to the new structure of the CIDL
+        compiler.
 
-	* CIDLC/README: Updated the information regarding the new
-	libraries and how to build the CIDL compiler now.
+        * CIDLC/README: Updated the information regarding the new
+        libraries and how to build the CIDL compiler now.
 
-	* CIDLC/parser_examples/*.*: Removed old parser examples code.
+        * CIDLC/parser_examples/*.*: Removed old parser examples code.
 
 Tue Aug 12 20:18:23 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -1943,32 +1950,32 @@ Tue Aug 12 20:18:23 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 2003-08-11  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
-	* performance-tests/Benchmark/RoundTrip/client.cpp:
-	* performance-tests/Benchmark/RoundTrip/svc.conf:
-	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
-	* performance-tests/Benchmark/RoundTrip/run_test.pl:
-	  The client was not using the proper svc conf file to run in
-	  "single-threaded" mode. Added proper svc.conf file and support
-	  code in the client. The .mpc file was modified to add client's
-	  dependency with TAO_Strategies library.
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+        * performance-tests/Benchmark/RoundTrip/svc.conf:
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc:
+        * performance-tests/Benchmark/RoundTrip/run_test.pl:
+          The client was not using the proper svc conf file to run in
+          "single-threaded" mode. Added proper svc.conf file and support
+          code in the client. The .mpc file was modified to add client's
+          dependency with TAO_Strategies library.
 
 Thu Aug 07 16:46:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
-	  Changed to use base project qt-min_moc as we don't need to use
-	  ACE_QtReactor.
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+          Changed to use base project qt-min_moc as we don't need to use
+          ACE_QtReactor.
 
 Wed Aug 06 17:00:05 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/XML/ciao_rt_cad_ext.dtd: Added DTD for RT extension to cad
-	  file.
+        * docs/XML/ciao_rt_cad_ext.dtd: Added DTD for RT extension to cad
+          file.
 
 2003-08-06  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
-	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
-	* performance-tests/Benchmark/RoundTrip/run_test.pl:
-	  Fixed problems relating to parsing arguments when the number of
-	  iterations is specified from the command line.
+        * performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
+        * performance-tests/Benchmark/RoundTrip/run_test.pl:
+          Fixed problems relating to parsing arguments when the number of
+          iterations is specified from the command line.
 
 Tue Aug 05 17:25:45 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -1980,7 +1987,7 @@ Tue Aug 05 17:25:45 2003  George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
 
           Added library include paths and additional library to MPC
-	  files.
+          files.
 
           Removed file:
         * examples/handcrafted/BasicSP_EC2/EC/config:
@@ -2004,50 +2011,50 @@ Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC2/RTEventService/*.*:
 
           Added new event channel example. The event service is
-	  integrated as a separate component.
+          integrated as a separate component.
 
 2003-08-04  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
-	* performance-tests/Benchmark/RountTripClient/run_test.pl:
-	* performance-tests/Benchmark/RountTripClient/RoundTripClient_exec.cpp:
-	* performance-tests/Benchmark/RountTrip/RoundTrip_exec.cpp:
-	  Fixed errors in the perl file for running the example. Corrected
-	  the way in which throughput is measured within the client
-	  component. Also added code to enable tests to be run in the
-	  super user mode.
+        * performance-tests/Benchmark/RountTripClient/run_test.pl:
+        * performance-tests/Benchmark/RountTripClient/RoundTripClient_exec.cpp:
+        * performance-tests/Benchmark/RountTrip/RoundTrip_exec.cpp:
+          Fixed errors in the perl file for running the example. Corrected
+          the way in which throughput is measured within the client
+          component. Also added code to enable tests to be run in the
+          super user mode.
 
 2003-08-04  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-	* performance-tests/Benchmark/RoundTripClient/client.cpp:
-	* performance-tests/Benchmark/RoundTripClient/run_test.pl:
-	* performance-tests/Benchmark/descriptors/RoundTripClient.cad:
-	* performance-tests/Benchmark/descriptors/RoundTripClient.csd:
-	* performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
-	  Made the test to run.  Fixed some problems with UUID.  Made the
-	  client to correctly expect a component instance instead of a
-	  home.
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+        * performance-tests/Benchmark/RoundTripClient/client.cpp:
+        * performance-tests/Benchmark/RoundTripClient/run_test.pl:
+        * performance-tests/Benchmark/descriptors/RoundTripClient.cad:
+        * performance-tests/Benchmark/descriptors/RoundTripClient.csd:
+        * performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
+          Made the test to run.  Fixed some problems with UUID.  Made the
+          client to correctly expect a component instance instead of a
+          home.
 
 Mon Jul  7 23:35:14 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tools/RTComponentServer/ComponentServer_Task.inl:
-	* tools/Simple_Component_Server/Simple_Component_Server.cpp: Fixed
-	  compilation errors/warnings on Linux.
+        * tools/RTComponentServer/ComponentServer_Task.inl:
+        * tools/Simple_Component_Server/Simple_Component_Server.cpp: Fixed
+          compilation errors/warnings on Linux.
 
 Fri Aug 01 23:34:38 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tools/Simple_Component_Server/sample_client.cpp:
-	* tools/Assembly_Deployer/Assembly_Deployer.cpp: Fixed compilation
-	  errors.  We need to include "ace/streams.h" explicitly if we
-	  want to use iostream stuff.
+        * tools/Simple_Component_Server/sample_client.cpp:
+        * tools/Assembly_Deployer/Assembly_Deployer.cpp: Fixed compilation
+          errors.  We need to include "ace/streams.h" explicitly if we
+          want to use iostream stuff.
 
 2003-08-01  Diego Sevilla  <dsevilla@ditec.um.es>
 
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
-	Small bug fix.
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+        Small bug fix.
 
-	* performance-tests/Benchmark/Benchmark.idl: Added missing
-	Controller interface.
+        * performance-tests/Benchmark/Benchmark.idl: Added missing
+        Controller interface.
 
 2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
 
@@ -2089,16 +2096,16 @@ Fri Aug 01 23:34:38 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
         * performance-tests/Benchmark/descriptors/RoundTripClient.csd:
         * performance-tests/Benchmark/descriptors/RoundTripClient.ssd:
         * performance-tests/Benchmark/descriptors/test.dat:
-	  Added files for the performance tests Arvind and I are
-	  developing.
+          Added files for the performance tests Arvind and I are
+          developing.
 
         * CIDLC/ServantHeaderGenerator.cpp: Removed usage of Traversal
-	  namespace to avoid name clashing.
+          namespace to avoid name clashing.
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	  Generate SessionContext by now instead of CCMContext for local
-	  interfaces.
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+          Generate SessionContext by now instead of CCMContext for local
+          interfaces.
 
 Thu Jul 31 16:50:29 2003 George Edwards <g.edwards@vanderbilt.edu>
 
@@ -2110,30 +2117,30 @@ Thu Jul 31 16:50:29 2003 George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp:
 
           Made modifications requested. Added @@ Bala comments  to
-	  indicate changes.
+          indicate changes.
 
 2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
 
         * examples/OEP/BasicSP/EC/EC_exec.{cpp,h}: Changed the exception
-	  specification for the new_EC method (explicit home operations
-	  don't throw CCMException.)
+          specification for the new_EC method (explicit home operations
+          don't throw CCMException.)
 
-	* examples/OEP/Display/RateGen/RateGen_exec.{cpp,h}: Ditto.
+        * examples/OEP/Display/RateGen/RateGen_exec.{cpp,h}: Ditto.
 
         * CIDLC/*: Adapted the CIDL compiler to work with the new CCF
           library.  Basically the same code is generated with small bugs
-	  fixed.
+          fixed.
 
 Wed Jul 30 07:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
-	* examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp: Added @@ George
-	  comments for George. This is a code review. Same comments apply
-	  to other components.
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp: Added @@ George
+          comments for George. This is a code review. Same comments apply
+          to other components.
 
 Tue Jul 29 15:36:20 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/*.*: Replaced old version with a new one.
+        * CCF/*.*: Replaced old version with a new one.
 
 Thu Jul 24 16:22:27 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -2146,122 +2153,122 @@ Thu Jul 24 16:22:27 2003  George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC/EC/*.*:
 
           Modified BasicSP example to use TAO's RT event channel for
-	  event propagation. This involved modifications to each
-	  component's servant header and source files, which are normally
-	  generated by the CIDL compiler.
+          event propagation. This involved modifications to each
+          component's servant header and source files, which are normally
+          generated by the CIDL compiler.
 
 Sun Jul 13 20:14:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* README: Updated information on MPC tools.  ACE/TAO are in
-	  transition to use MPC based solution exclusively (like what CIAO
-	  is doing already.)  There are currently some mismatch between
-	  MPC genearted Makefile/project files and the stock ones.  Be
-	  caution.
+        * README: Updated information on MPC tools.  ACE/TAO are in
+          transition to use MPC based solution exclusively (like what CIAO
+          is doing already.)  There are currently some mismatch between
+          MPC genearted Makefile/project files and the stock ones.  Be
+          caution.
 
-	  Once we switch to all MPC based approach, this will no longer be
-	  a problem.
+          Once we switch to all MPC based approach, this will no longer be
+          a problem.
 
 Wed Jul 09 21:06:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tools/ServerActivator/ServerActivator.cpp: Fixed compilation due
-	  to earlier change in the signature of ServerActivator_Impl::init
-	  method.
+        * tools/ServerActivator/ServerActivator.cpp: Fixed compilation due
+          to earlier change in the signature of ServerActivator_Impl::init
+          method.
 
 Tue Jul 08 10:52:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tools/Daemon/CIAO_Daemon.cpp:
-	* tools/Daemon/README: Reverted the previous documentation change,
-	  instead, register the daemon interface as "CIAODaemon" in the
-	  internal IOR table.  This provides a more consistent naming
-	  scheme throughout.  Thanks to Roland Schimmack <SC@ProCom.de>
-	  for motivating this change.
+        * tools/Daemon/CIAO_Daemon.cpp:
+        * tools/Daemon/README: Reverted the previous documentation change,
+          instead, register the daemon interface as "CIAODaemon" in the
+          internal IOR table.  This provides a more consistent naming
+          scheme throughout.  Thanks to Roland Schimmack <SC@ProCom.de>
+          for motivating this change.
 
 Tue Jul 08 07:11:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tools/Daemon/README: Fixed discrepancy in document.  The
-	  IOR-Table entry for daemon interface should be "CIAO-Daemon"
-	  instead of "CIAODaemon".  Thanks to Roland Schimmack
-	  <SC@ProCom.de> for reporting this.
+        * tools/Daemon/README: Fixed discrepancy in document.  The
+          IOR-Table entry for daemon interface should be "CIAO-Daemon"
+          instead of "CIAODaemon".  Thanks to Roland Schimmack
+          <SC@ProCom.de> for reporting this.
 
 Sun Jul 06 21:40:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  There are two major changes in this entry.
+          There are two major changes in this entry.
 
-	1. A scheme for associating component server with a logical
-	  configuration and to map the logical name to a real svc.conf
-	  file.  Each local CIAO_Daemon can determine what default
-	  svc.conf file to use, if none specified, and how logical
-	  names map to actual svc.conf files.
+        1. A scheme for associating component server with a logical
+          configuration and to map the logical name to a real svc.conf
+          file.  Each local CIAO_Daemon can determine what default
+          svc.conf file to use, if none specified, and how logical
+          names map to actual svc.conf files.
 
-	2. Added mechanism to pass the ConfigValues from
-	  Components::Deployment::ServerActivator::create_component_server
-	  to a Components::Deployment::ComponentServer instance which it
-	  can later use for futher configure the ComponentServer.
+        2. Added mechanism to pass the ConfigValues from
+          Components::Deployment::ServerActivator::create_component_server
+          to a Components::Deployment::ComponentServer instance which it
+          can later use for futher configure the ComponentServer.
 
-	* ciao/Server_init.cpp:
-	* ciao/Server_init.h: Added a new Utility namespace for commonly
-	  used server side functions.  Currently only a write_IOR
-	  method is available.
+        * ciao/Server_init.cpp:
+        * ciao/Server_init.h: Added a new Utility namespace for commonly
+          used server side functions.  Currently only a write_IOR
+          method is available.
 
-	* ciao/CIAO_Servers.idl: Updated
-	  CIAO::Activator_Callback::register_component_server method to
-	  pass back ComponentServer's ConfigValues.
+        * ciao/CIAO_Servers.idl: Updated
+          CIAO::Activator_Callback::register_component_server method to
+          pass back ComponentServer's ConfigValues.
 
-	* docs/ConfigValues.html: Docuement the new ConfigValue name
-	  ("CIAO-svcconf-id") that CIAO recognize.
+        * docs/ConfigValues.html: Docuement the new ConfigValue name
+          ("CIAO-svcconf-id") that CIAO recognize.
 
-	* ciao/ServerActivator_Impl.cpp:
-	* ciao/ServerActivator_Impl.h:
-	* ciao/ServerActivator_Impl.inl: Changed to support:
+        * ciao/ServerActivator_Impl.cpp:
+        * ciao/ServerActivator_Impl.h:
+        * ciao/ServerActivator_Impl.inl: Changed to support:
 
-	  Activator_Callback change.
+          Activator_Callback change.
 
-	  Mechanisms to maintain an (id, svc.conf) mapping, and keeping a
-	  default svc.conf file.
+          Mechanisms to maintain an (id, svc.conf) mapping, and keeping a
+          default svc.conf file.
 
-	* ciao/ComponentServer_Impl.h:
-	* ciao/ComponentServer_Impl.inl: Changed to update the
-	  ConfigValues when calling back to the ServerActivator.
+        * ciao/ComponentServer_Impl.h:
+        * ciao/ComponentServer_Impl.inl: Changed to update the
+          ConfigValues when calling back to the ServerActivator.
 
-	* examples/OEP/Display/descriptors/svcmap.dat: Added an example
-	  svcconf-id to svc.conf filename mapping file.
+        * examples/OEP/Display/descriptors/svcmap.dat: Added an example
+          svcconf-id to svc.conf filename mapping file.
 
-	* tools/Assembly_Deployer/Assembly_Visitors.cpp: Extend the the
-	  syntax of <destination> tag.  It can now contain an optional '|'
-	  delimited svc.conf id to provide the CIAO Daemon the logical
-	  svc.conf file should use.
+        * tools/Assembly_Deployer/Assembly_Visitors.cpp: Extend the the
+          syntax of <destination> tag.  It can now contain an optional '|'
+          delimited svc.conf id to provide the CIAO Daemon the logical
+          svc.conf file should use.
 
-	* tools/Assembly_Deployer/Deployment_Configuration.cpp: Enhanced
-	  to provide a more comprehensive error message.
+        * tools/Assembly_Deployer/Deployment_Configuration.cpp: Enhanced
+          to provide a more comprehensive error message.
 
-	* tools/Daemon/CIAO_Daemon.cpp:
-	* tools/Daemon/README: Extended CIAODaemon's command line options
-	  to pass in the default svc.conf filename and the (id, svc.conf)
-	  mapping data file.
+        * tools/Daemon/CIAO_Daemon.cpp:
+        * tools/Daemon/README: Extended CIAODaemon's command line options
+          to pass in the default svc.conf filename and the (id, svc.conf)
+          mapping data file.
 
-	* tools/ComponentServer/ComponentServer.cpp: Changed to update
-	  this component server's ConfigValues after calling back to the
-	  ServerActivator.  Removed the old write_IOR function and changed
-	  to use the global function in CIAO::Utility namespace.
+        * tools/ComponentServer/ComponentServer.cpp: Changed to update
+          this component server's ConfigValues after calling back to the
+          ServerActivator.  Removed the old write_IOR function and changed
+          to use the global function in CIAO::Utility namespace.
 
-	* tools/Simple_Component_Server/Simple_Component_Server.cpp: Some
-	  minor memory leaks were identified in this file, but I didn't
-	  have time to fix them yet.  So added comments to identify them.
+        * tools/Simple_Component_Server/Simple_Component_Server.cpp: Some
+          minor memory leaks were identified in this file, but I didn't
+          have time to fix them yet.  So added comments to identify them.
 
 Sun Jul 06 19:41:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/OEP/Display/NavDisplayGUI_exec/README: Documented how
-	  one can generate a project that work for this component.
+        * examples/OEP/Display/NavDisplayGUI_exec/README: Documented how
+          one can generate a project that work for this component.
 
 Thu Jul 03 16:04:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ciao/CCM_Core.mpc: Fixed compilation errors by
+        * ciao/CCM_Core.mpc: Fixed compilation errors by
 
-	  . Including $(TAO_ROOT)/orbsvcs/orbsvcs to IDL and C++ include
-	  paths.  It's necessary to do this because security idl files
-	  includes other stuff in that subdir.
+          . Including $(TAO_ROOT)/orbsvcs/orbsvcs to IDL and C++ include
+          paths.  It's necessary to do this because security idl files
+          includes other stuff in that subdir.
 
-	  . Adding dependency to ifr_client to CIAO_Container library.
+          . Adding dependency to ifr_client to CIAO_Container library.
 
 Wed Jul 02 14:57:00 2003  Justin Michel  <michel_j@ociweb.com>
 
@@ -2315,109 +2322,109 @@ Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Tue Jun 24 15:42:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/generate_component_mpc.pl: Updated mpc file generator to
-	  take advantage of the new CIDL rules.
+        * bin/generate_component_mpc.pl: Updated mpc file generator to
+          take advantage of the new CIDL rules.
 
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
-	* examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
-	* examples/OEP/BasicSP/EC/EC.mpc:
-	* examples/OEP/Display/GPS/GPS.mpc:
-	* examples/OEP/Display/NavDisplay/NavDisplay.mpc:
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
-	* examples/OEP/Display/RateGen/RateGen.mpc:
-	* examples/handcrafted/BasicSP/BasicSP.mpc:
-	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED.mpc:
-	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
-	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.mpc:
-	* examples/handcrafted/Display/HUDisplay.mpc:
-	* examples/handcrafted/Display/GPS/GPS.mpc:
-	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
-	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
-	* examples/handcrafted/Display/RateGen/RateGen.mpc:
-	* examples/handcrafted/Hello/hello.mpc: Updated mpc files to take
-	  advantage of the new CIDL build rules, and to use the new
-	  ciao_servant mpc template for building servant DLLs and
-	  ciao_component mpc template for building component executor
-	  DLLs..
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/OEP/BasicSP/EC/EC.mpc:
+        * examples/OEP/Display/GPS/GPS.mpc:
+        * examples/OEP/Display/NavDisplay/NavDisplay.mpc:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * examples/OEP/Display/RateGen/RateGen.mpc:
+        * examples/handcrafted/BasicSP/BasicSP.mpc:
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/handcrafted/Display/HUDisplay.mpc:
+        * examples/handcrafted/Display/GPS/GPS.mpc:
+        * examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+        * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * examples/handcrafted/Display/RateGen/RateGen.mpc:
+        * examples/handcrafted/Hello/hello.mpc: Updated mpc files to take
+          advantage of the new CIDL build rules, and to use the new
+          ciao_servant mpc template for building servant DLLs and
+          ciao_component mpc template for building component executor
+          DLLs..
 
 Sun Jun 22 15:23:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/OEP/BasicSP/EC/EC.mpc:
-	* examples/OEP/Display/RateGen/RateGen.mpc: Renamed projects named
-	  "controller" to resolve project name conflicts.
+        * examples/OEP/BasicSP/EC/EC.mpc:
+        * examples/OEP/Display/RateGen/RateGen.mpc: Renamed projects named
+          "controller" to resolve project name conflicts.
 
 Sun Jun 22 09:03:57 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ciao/diffs/*: Removed obsolete diff files.
+        * ciao/diffs/*: Removed obsolete diff files.
 
 Sat Jun 21 10:30:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/OEP/BasicSP/BasicSP.mpc:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
-	* examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
-	* examples/OEP/BasicSP/EC/EC.mpc: Added new MPC files.
+        * examples/OEP/BasicSP/BasicSP.mpc:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/OEP/BasicSP/EC/EC.mpc: Added new MPC files.
 
-	* examples/OEP/BasicSP/BasicSP.dsw:
-	* examples/OEP/BasicSP/BasicSP_stub.dsp:
-	* examples/OEP/BasicSP/BasicSP_svnt.dsp:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.dsp:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.dsp:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_stub.dsp:
-	* examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.dsp:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
-	* examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
-	* examples/OEP/BasicSP/EC/EC_client.dsp:
-	* examples/OEP/BasicSP/EC/EC_exec.dsp:
-	* examples/OEP/BasicSP/EC/EC_stub.dsp:
-	* examples/OEP/BasicSP/EC/EC_svnt.dsp:
-	* examples/OEP/BasicSP/EC/controller.dsp: Removed these
-	  handcrafted projects/workspaces now that we genertae them via MPC.
+        * examples/OEP/BasicSP/BasicSP.dsw:
+        * examples/OEP/BasicSP/BasicSP_stub.dsp:
+        * examples/OEP/BasicSP/BasicSP_svnt.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
+        * examples/OEP/BasicSP/EC/EC_client.dsp:
+        * examples/OEP/BasicSP/EC/EC_exec.dsp:
+        * examples/OEP/BasicSP/EC/EC_stub.dsp:
+        * examples/OEP/BasicSP/EC/EC_svnt.dsp:
+        * examples/OEP/BasicSP/EC/controller.dsp: Removed these
+          handcrafted projects/workspaces now that we genertae them via MPC.
 
 Sat Jun 21 09:50:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/OEP/Display/HUDisplay.mpc:
-	* examples/OEP/Display/GPS/GPS.mpc:
-	* examples/OEP/Display/NavDisplay/NavDisplay.mpc:
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
-	* examples/OEP/Display/RateGen/RateGen.mpc: Added new MPC files
-	  that can handle CIDL and Qt files.
+        * examples/OEP/Display/HUDisplay.mpc:
+        * examples/OEP/Display/GPS/GPS.mpc:
+        * examples/OEP/Display/NavDisplay/NavDisplay.mpc:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * examples/OEP/Display/RateGen/RateGen.mpc: Added new MPC files
+          that can handle CIDL and Qt files.
 
-	* examples/OEP/Display/Display.dsw:
-	* examples/OEP/Display/HUDisplay_stub.dsp:
-	* examples/OEP/Display/HUDisplay_svnt.dsp:
-	* examples/OEP/Display/GPS/GPS_exec.dsp:
-	* examples/OEP/Display/GPS/GPS_stub.dsp:
-	* examples/OEP/Display/GPS/GPS_svnt.dsp:
-	* examples/OEP/Display/GPS/GPS_tracing_exec.dsp:
-	* examples/OEP/Display/NavDisplay/NavDisplay_exec.dsp:
-	* examples/OEP/Display/NavDisplay/NavDisplay_stub.dsp:
-	* examples/OEP/Display/NavDisplay/NavDisplay_svnt.dsp:
-	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:
-	* examples/OEP/Display/RateGen/RateGen_client.dsp:
-	* examples/OEP/Display/RateGen/RateGen_exec.dsp:
-	* examples/OEP/Display/RateGen/RateGen_stub.dsp:
-	* examples/OEP/Display/RateGen/RateGen_svnt.dsp:
-	* examples/OEP/Display/RateGen/controller.dsp: Removed handcrafted
-	  projects/workspaces now that we can generate them with MPC
-	  files.
+        * examples/OEP/Display/Display.dsw:
+        * examples/OEP/Display/HUDisplay_stub.dsp:
+        * examples/OEP/Display/HUDisplay_svnt.dsp:
+        * examples/OEP/Display/GPS/GPS_exec.dsp:
+        * examples/OEP/Display/GPS/GPS_stub.dsp:
+        * examples/OEP/Display/GPS/GPS_svnt.dsp:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_stub.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.dsp:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:
+        * examples/OEP/Display/RateGen/RateGen_client.dsp:
+        * examples/OEP/Display/RateGen/RateGen_exec.dsp:
+        * examples/OEP/Display/RateGen/RateGen_stub.dsp:
+        * examples/OEP/Display/RateGen/RateGen_svnt.dsp:
+        * examples/OEP/Display/RateGen/controller.dsp: Removed handcrafted
+          projects/workspaces now that we can generate them with MPC
+          files.
 
 Fri Jun 20 21:06:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * examples/OEP/Display/HUDisplay_stub.dsp:
         * examples/OEP/Display/HUDisplay_svnt.dsp: Fixed incorrect usages
-	  of environment variables in project files.
+          of environment variables in project files.
 
 Fri Jun 20 11:41:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ciao/ServerActivator_Impl.cpp (create_component_server):
-	  Added more code to generate debug info when things go wrong.
-	  Thanks to Emre Turkay <emre.turkay@vanderbilt.edu> for
-	  motivating this.
+        * ciao/ServerActivator_Impl.cpp (create_component_server):
+          Added more code to generate debug info when things go wrong.
+          Thanks to Emre Turkay <emre.turkay@vanderbilt.edu> for
+          motivating this.
 
 Fri Jun 20 10:21:10 2003  Chad Elliott  <elliott_c@ociweb.com>
 
