@@ -447,7 +447,7 @@ ACE_INLINE void
 ACE_ES_Consumer_Rep_Timeout::init (ACE_ES_Consumer_Correlation *correlation,
 				   RtecEventChannelAdmin::Dependency &dep)
 {
-  ACE_ES_Event_Container *temp = new ACE_ES_Event_Container (dep.event_);
+  ACE_ES_Event_Container *temp = new ACE_ES_Event_Container (dep.event);
   if (temp == 0)
     {
       ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Consumer_Rep_Timeout::init"));
@@ -544,7 +544,7 @@ ACE_ES_Dependency_Iterator::parse (void)
       if (rt_info_ == 0)
 	rt_info_ = rep_[x].rt_info;
 
-      switch (rep_[x].event_.type_)
+      switch (rep_[x].event.type_)
 	{
 	case ACE_ES_CONJUNCTION_DESIGNATOR:
 	  n_conjunctions_++;

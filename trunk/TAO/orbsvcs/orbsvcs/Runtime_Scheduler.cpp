@@ -76,7 +76,7 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
   info->priority = rt_info_[handle].priority;
   info->preemption_subpriority = rt_info_[handle].static_subpriority;
   info->preemption_priority = rt_info_[handle].preemption_priority;
-  info->info_type = rt_info_[handle].info_type;
+  info->info_type = RtecScheduler::Info_Type(rt_info_[handle].info_type);
 
   return info;
 }

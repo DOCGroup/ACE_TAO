@@ -160,8 +160,11 @@ class ACE_ES_Supplier_Module;
 class ACE_ES_Dispatching_Base;
 typedef ACE_ES_Dispatching_Base ACE_ES_Dispatching_Module;
 
+class TAO_EC_Gateway;
+// Forward declare the class used to connect several EC together.
+
 // ec..
-class TAO_ORBSVCS_Export ACE_EventChannel : public RtecEventChannelAdmin_EventChannelBOAImpl
+class TAO_ORBSVCS_Export ACE_EventChannel : public POA_RtecEventChannelAdmin::EventChannel
 // = TITLE
 //   ACE Event Channel.
 //
@@ -228,6 +231,15 @@ public:
   void report_disconnect_i (u_long);
   // Consumer or supplier disconnected.
 
+  void add_gateway (TAO_EC_Gateway* gw);
+  void del_gateway (TAO_EC_Gateway* gw);
+  // Add and remove gateways from the EC.
+
+  void update_consumer_gwys (CORBA::Environment& _env);
+  void update_supplier_gwys (CORBA::Environment& _env);
+  // The consumer (or supplier) list has changed, thus the EC has to
+  // inform any gateways it has.
+  // TODO: currently we only support consumer gateways.
 
 private:
   ACE_RTU_Manager *rtu_manager_;
@@ -244,6 +256,12 @@ private:
 
   int destroyed_;
   // Ensures this->destory is executed only once.
+
+  typedef ACE_Unbounded_Set<TAO_EC_Gateway*> Gateway_Set;
+  typedef ACE_Unbounded_Set_Iterator<TAO_EC_Gateway*> Gateway_Set_Iterator;
+
+  Gateway_Set gwys_;
+  // Keep the set of Gateways, i.e. connections to peer EC.
 };
 
 // ************************************************************
@@ -690,7 +708,7 @@ public:
 class ACE_ES_Dispatch_Request;
 class ACE_Push_Consumer_Proxy;
 
-class TAO_ORBSVCS_Export ACE_ES_Consumer_Correlation : public RtecEventComm_PushSupplierBOAImpl
+class TAO_ORBSVCS_Export ACE_ES_Consumer_Correlation : public POA_RtecEventComm::PushSupplier
 // = TITLE
 //    Event Service Consumer_Correlation
 //
@@ -821,7 +839,7 @@ public:
 // Forward declarations.
 class ACE_ES_Dispatch_Request;
 
-class TAO_ORBSVCS_Export ACE_ES_Consumer_Module : public RtecEventChannelAdmin_ConsumerAdminBOAImpl
+class TAO_ORBSVCS_Export ACE_ES_Consumer_Module : public POA_RtecEventChannelAdmin::ConsumerAdmin
 // = TITLE
 //    Event Service Consumer Module
 //
@@ -859,6 +877,12 @@ public:
 
   void shutdown (void);
   // Actively disconnect from all consumers.
+
+  void fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos,
+		 RtecEventChannelAdmin::SupplierQOS& s_qos);
+  // Fill the QoS factories with the disjuction off all the
+  // subscriptions in this EC.
+  // It leaves the gateways out of the list.
 
 private:
   typedef ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *> Consumer_Iterator;
@@ -1086,7 +1110,7 @@ private:
 
 // ************************************************************
 
-class TAO_ORBSVCS_Export ACE_ES_Supplier_Module : public RtecEventChannelAdmin_SupplierAdminBOAImpl
+class TAO_ORBSVCS_Export ACE_ES_Supplier_Module : public POA_RtecEventChannelAdmin::SupplierAdmin
 // = TITLE
 //    Event Service Supplier Proxy Module
 //
@@ -1147,7 +1171,7 @@ class ACE_EventChannel;
 
 // = Event Channel interfaces.
 
-class TAO_ORBSVCS_Export ACE_Push_Supplier_Proxy : public RtecEventChannelAdmin_ProxyPushConsumerBOAImpl
+class TAO_ORBSVCS_Export ACE_Push_Supplier_Proxy : public POA_RtecEventChannelAdmin::ProxyPushConsumer
 // = TITLE
 //    Push Supplier Proxy.
 //
@@ -1220,7 +1244,7 @@ private:
 
 // ************************************************************
 
-class TAO_ORBSVCS_Export ACE_Push_Consumer_Proxy : public RtecEventChannelAdmin_ProxyPushSupplierBOAImpl
+class TAO_ORBSVCS_Export ACE_Push_Consumer_Proxy : public POA_RtecEventChannelAdmin::ProxyPushSupplier
 // = TITLE
 //     Push Consumer Proxy.
 //

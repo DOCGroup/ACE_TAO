@@ -433,6 +433,8 @@ Test_ECG::run (int argc, char* argv[])
           tv.set (5, 0);
           if (orb->run (&tv) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+
+	  ec_impl.add_gateway (&this->ecg_);
         }
 
       this->connect_consumers (local_ec.in (), TAO_TRY_ENV);
@@ -726,46 +728,12 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       ACE_OS::strcpy (ecg_name, "ecg_");
       ACE_OS::strcat (ecg_name, this->lcl_name_);
 
-      // Generate its ConsumerQOS
-
       // We could use the same name on the local and remote scheduler,
       // but that fails when using a global scheduler.
       char rmt[BUFSIZ];
       ACE_OS::strcpy (rmt, ecg_name);
       ACE_OS::strcat (rmt, "@");
       ACE_OS::strcat (rmt, this->rmt_name_);
-
-      RtecScheduler::handle_t rmt_info =
-        remote_sch->create (rmt, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // The worst case execution time is far less than 500 usecs, but
-      // that is a safe estimate....
-      ACE_Time_Value tv (0, 500);
-      TimeBase::TimeT time;
-      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-      remote_sch->set (rmt_info,
-                       RtecScheduler::VERY_HIGH_CRITICALITY,
-                       time, time, time,
-                       25000 * 10,
-                       RtecScheduler::VERY_LOW_IMPORTANCE,
-                       time,
-                       0,
-                       RtecScheduler::OPERATION,
-                       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_ConsumerQOS_Factory consumer_qos;
-      consumer_qos.start_disjunction_group ();
-      consumer_qos.insert_type (this->hpc_event_a_, rmt_info);
-      consumer_qos.insert_type (this->hpc_event_b_, rmt_info);
-      if (this->lp_consumers_ > 0)
-        {
-          consumer_qos.insert_type (this->lpc_event_a_, rmt_info);
-          consumer_qos.insert_type (this->lpc_event_b_, rmt_info);
-        }
-
-      // Generate its SupplierQOS
 
       // We could use the same name on the local and remote scheduler,
       // but that fails when using a global scheduler.
@@ -774,45 +742,8 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       ACE_OS::strcat (lcl, "@");
       ACE_OS::strcat (lcl, this->lcl_name_);
 
-      RtecScheduler::handle_t lcl_info =
-        local_sch->create (lcl, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      local_sch->set (lcl_info,
-                      RtecScheduler::VERY_HIGH_CRITICALITY,
-                      time, time, time,
-                      25000 * 10,
-                      RtecScheduler::VERY_LOW_IMPORTANCE,
-                      time,
-                      1,
-                      RtecScheduler::OPERATION,
-                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      CORBA::ULong supplier_id = ACE::crc32 (lcl);
-      ACE_DEBUG ((LM_DEBUG, "ID for <%s> is %04.4x\n", lcl, supplier_id));
-
-      ACE_SupplierQOS_Factory supplier_qos;
-      supplier_qos.insert (supplier_id,
-                           this->hpc_event_a_,
-                           lcl_info, 1);
-      supplier_qos.insert (supplier_id,
-                           this->hpc_event_b_,
-                           lcl_info, 1);
-      if (this->lp_consumers_ > 0)
-        {
-          supplier_qos.insert (supplier_id,
-                               this->lpc_event_a_,
-                               lcl_info, 1);
-          supplier_qos.insert (supplier_id,
-                               this->lpc_event_b_,
-                               lcl_info, 1);
-        }
-
-      this->ecg_.open (remote_ec, local_ec,
-                       consumer_qos.get_ConsumerQOS (),
-                       supplier_qos.get_SupplierQOS (),
-                       TAO_TRY_ENV);
+      this->ecg_.init (remote_ec, local_ec, remote_sch, local_sch,
+		       rmt, lcl, TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
