@@ -81,7 +81,7 @@ TAO::be_visitor_enum_typecode::visit_members (be_enum * node)
       AST_EnumVal * const item = AST_EnumVal::narrow_from_decl (d);
 
       // os << item->name ();
-      os << "\"" << item->original_local_name () << "\"";
+      os << "{ \"" << item->original_local_name () << "\" }";
 
       if (n < count - 1)
         os << ",";

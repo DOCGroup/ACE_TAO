@@ -183,7 +183,7 @@ TAO::TypeCode::Enum<StringType,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-      safe_enumerators.reset (enumerators);
+      safe_enumerators.reset (tc_enumerators);
 
       static char const * empty_name = "";
 
