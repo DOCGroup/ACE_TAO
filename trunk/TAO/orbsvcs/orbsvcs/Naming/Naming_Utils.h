@@ -23,8 +23,8 @@
 
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/IOR_Multicast.h"
 #include "CosNaming_i.h"
-#include "Ior_Multicast.h"
 
 class TAO_ORBSVCS_Export TAO_Naming_Server
 {
@@ -67,7 +67,7 @@ private:
   CosNaming::NamingContext_ptr naming_context_ptr_;
   // NamingContext ptr.
 
-  IOR_Multicast *ior_multicast_;
+  TAO_IOR_Multicast *ior_multicast_;
   // The ior_multicast event handler.
 };
 
