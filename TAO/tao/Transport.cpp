@@ -497,7 +497,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
         {
           ACE_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - Transport[%d]::send_synchronous_message_i, "
-                      "error while flushing message %m\n",
+                      "error while flushing message - %m\n",
                       this->id ()));
         }
 
@@ -1046,7 +1046,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
                               "fatal error in "
-                              "send_message_block_chain_i %m\n",
+                              "send_message_block_chain_i - %m\n",
                               this->id ()));
                 }
               return -1;
@@ -1789,7 +1789,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Transport[%d]::process_parsed_messages, "
-                    "received CloseConnection message %m\n",
+                    "received CloseConnection message - %m\n",
                     this->id()));
 
       // Return a "-1" so that the next stage can take care of
@@ -1825,7 +1825,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         "TAO (%P|%t) - Transport[%d]::process_parsed_messages, "
-                        "error in process_reply_message %m\n",
+                        "error in process_reply_message - %m\n",
                         this->id ()));
 
           return -1;
