@@ -270,6 +270,24 @@ be_interface_strategy::strategy_type ()
   return strategy_type_;
 }
 
+TAO_CodeGen::CG_STATE
+be_interface_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
+                                   int is_extra_state)
+{
+  ACE_UNUSED_ARG (is_extra_state);
+  return current_state;
+}
+
+
+
+int 
+be_interface_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
+{
+  ACE_UNUSED_ARG (current_state);
+  return 0;
+}
+
+
 // @@ Michael: Deprecated due to new AMI design
 #if 0
 // ****************************************************************
@@ -396,15 +414,11 @@ be_interface_ami_handler_strategy::~be_interface_ami_handler_strategy ()
 
 
 TAO_CodeGen::CG_STATE
-be_interface_ami_handler_strategy::next_state (TAO_CodeGen::CG_STATE current_state)
+be_interface_ami_handler_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
+                                               int is_extra_state)
 {
-  switch (current_state)
-    {
-  case TAO_CodeGen::TAO_INTERFACE_CS:
-    return TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CS;
-  default:
-    return current_state;
-    }
+  ACE_UNUSED_ARG (is_extra_state);
+  return current_state;
 }
 
 
@@ -424,12 +438,35 @@ be_interface_ami_exception_holder_strategy::~be_interface_ami_exception_holder_s
 
 
 TAO_CodeGen::CG_STATE
-be_interface_ami_exception_holder_strategy::next_state (TAO_CodeGen::CG_STATE current_state)
+be_interface_ami_exception_holder_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
+                                                        int is_extra_state)
 {
-  return current_state;
+  if (is_extra_state)
+    { 
+      switch (current_state)
+        {
+      case TAO_CodeGen::TAO_VALUETYPE_CH:
+        return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH;
+      case TAO_CodeGen::TAO_VALUETYPE_CS:
+        return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS;
+      default:
+        return current_state;
+        }
+    }
+  else
+    return current_state;
 }
 
 
+int 
+be_interface_ami_exception_holder_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
+{
+  if (current_state == TAO_CodeGen::TAO_VALUETYPE_CH
+   || current_state == TAO_CodeGen::TAO_VALUETYPE_CS)
+    return 1;
+  else
+    return 0;
+}
 
 // ****************************************************************
 // Default Strategy
@@ -549,12 +586,6 @@ be_interface_default_strategy::local_coll_name (int type)
                             0); // suffix
 
   return this->local_coll_name_;
-}
-
-TAO_CodeGen::CG_STATE
-be_interface_default_strategy::next_state (TAO_CodeGen::CG_STATE current_state)
-{
-  return current_state;
 }
 
 

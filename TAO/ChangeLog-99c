@@ -1,3 +1,77 @@
+Wed Sep 29 04:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/tao_idl.dsp: 
+	  Added the file TAO_IDL/be_include/be_interface_strategy.h
+
+	* TAO_IDL/be/be_interface.cpp
+	  TAO_IDL/be/be_interface_strategy.cpp
+	  TAO_IDL/be_include/be_interface.h
+	  TAO_IDL/be_include/be_interface_strategy.h:
+	  Introduced new capabilites to the interface strategy to
+	  allow additional code generation depending on the assigned
+	  strategy.
+
+	* TAO_IDL/be/be_visitor_operation/ami_ch.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	  Changed the code generation of the sendc_ method to
+	  use the marshaling () and arguments () methods
+	  on the strategy to retrieve the operation specialized
+	  to generate code for "marshalling" and for the "arguments".
+
+	* TAO_IDL/be/be_visitor_module/module.cpp,
+	  TAO_IDL/be/be_visitor_root/root.cpp:
+	  Provided hooks for addtional code generation in the
+	  method visit_valuetype ().
+
+	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp
+	  Refined the code generation for exception holders.
+	
+	* TAO_IDL/be/be_visitor_interface.cpp,
+	  TAO_IDL/be/be_visitor_argument.cpp,
+	  TAO_IDL/be/be_visitor_factory.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface.cpp,
+	  TAO_IDL/be/be_visitor_interface/tie_sh.cpp,
+	  TAO_IDL/be/be_visitor_operation/argument.cpp,
+	  TAO_IDL/be/be_visitor_operation/operation_ih.cpp,
+	  TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp,
+	  TAO_IDL/be_include/be_codegen.h,
+	  TAO_IDL/be_include/be_operation.h,
+	  TAO_IDL/be_include/be_operation_strategy.h,
+	  TAO_IDL/be_include/be_visitor_interface/tie_sh.h:
+	  Removed dependencies to AMI specificas.
+
+	* TAO_IDL/be/be_visitor_valuetype.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/arglist.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp,
+	  TAO_IDL/be_include/be_visitor_valuetype.h:
+	  Did some minor corrections and enhancements to produce
+	  correct code. 
+
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+	  TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+	  Made further refinements to the implied IDL node insertion.
+
+	* TAO_IDL/be/be_operation.cpp,
+	  TAO_IDL/be/be_operation_strategy.cpp: Enhanced the operation
+	  strategies.
+
+	* tao/Asynch_Invocation.cpp,
+	  tao/Asynch_Invocation.h: Removed the "exception list"
+	  arguments to the two invoke () methods, this resulted
+	  in removing one of them because the difference was just
+	  in the representation of the exception list. We do not
+	  need to hand over exceptions because they get caught 
+	  by the reply handler reply stub and not by invoke
+	  as in the SMI case.
+
+	* tests/AMI/simple_client.cpp:
+	  Corrected the name of the return value to be conform 
+	  with the Messaging spec, which says it is named "ami_return_val".
+
 Tue Sep 28 19:45:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynStruct_i.cpp:

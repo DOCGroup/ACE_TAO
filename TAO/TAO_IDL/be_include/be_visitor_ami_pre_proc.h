@@ -83,8 +83,12 @@ private:
   be_valuetype *create_exception_holder (be_interface *node);
   // create the exception holder valuetype
   
-  be_operation *create_sendc_operation (be_operation *node);
-  // create a method with "sendc_" prepended
+  be_operation *create_sendc_operation (be_operation *node,
+                                        int for_arguments);
+  // create a method with "sendc_" prepended, if for_arguments
+  // equals one the sendc operation contains also the 
+  // object reference to the reply handler as the first argument,
+  // but this should not be marhaled, therefor we need the switch
 
   be_operation *create_excep_operation (be_operation *node,
                                         be_interface *reply_handler,

@@ -41,6 +41,8 @@
 #include "be_visitor_valuetype/field_cs.h"
 #include "be_visitor_valuetype/field_cdr_ci.h"
 #include "be_visitor_valuetype/obv_module.h"
+#include "be_visitor_valuetype/ami_exception_holder_ch.h"
+#include "be_visitor_valuetype/ami_exception_holder_cs.h"
 
 #endif /* IDL_HAS_VALUETYPE */
 

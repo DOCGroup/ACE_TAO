@@ -191,9 +191,6 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INVOKE_CS);
       break;
-    case TAO_CodeGen::TAO_AMI_OPERATION_ARG_INVOKE_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_ARGUMENT_INVOKE_CS);
-      break;
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_INVOKE_CS);
       break;

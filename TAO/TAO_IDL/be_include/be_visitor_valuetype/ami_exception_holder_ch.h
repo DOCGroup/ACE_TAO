@@ -20,31 +20,31 @@
 //
 // ============================================================================
 
-#ifndef _BE_INTERFACE_AMI_EXCEPTION_HOLDER_CH_H_
-#define _BE_INTERFACE_AMI_EXCEPTION_HOLDER_CH_H_
+#ifndef _BE_VISITOR_VALUETYPE_AMI_EXCEPTION_HOLDER_CH_H_
+#define _BE_VISITOR_VALUETYPE_AMI_EXCEPTION_HOLDER_CH_H_
 
-// we need derived interface visitors for the client and server header files. For
-// the others, they use the default interface visitor
 
-class be_visitor_interface_ami_exception_holder_ch : public be_visitor_interface
+class be_visitor_valuetype_ami_exception_holder_ch : public be_visitor_valuetype
 {
   //
   // = TITLE
-  //   be_visitor_ami_exception_holder_ch
+  //   be_visitor_valuetype_ami_exception_holder_ch
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the client header for
   //   interface.
   //
 public:
-  be_visitor_interface_ami_exception_holder_ch (be_visitor_context *ctx);
+  be_visitor_valuetype_ami_exception_holder_ch (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_interface_ami_exception_holder_ch (void);
+  ~be_visitor_valuetype_ami_exception_holder_ch (void);
   // destructor
 
-  virtual int visit_interface (be_interface *node);
-  // set the right context and make a visitor
+  virtual int visit_valuetype (be_valuetype *node);
+
+  virtual int visit_operation (be_operation *node);
+
 };
 
-#endif /* _BE_INTERFACE_AMI_EXCEPTIUON_HOLER_CH_H_ */
+#endif /* _BE_VISITOR_VALUETYPE_AMI_EXCEPTIUON_HOLER_CH_H_ */

@@ -56,22 +56,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Calls TAO_GIOP_Asynch_Invocation::start.
 
-  int invoke (CORBA::ExceptionList &exceptions,
-              CORBA_Environment &TAO_IN_ENV =
+  int invoke (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Send request, block until any reply comes back, and unmarshal
   // reply parameters as appropriate.
 
-  int invoke (TAO_Exception_Data *excepts,
-              CORBA::ULong except_count,
-              CORBA_Environment &TAO_IN_ENV =
-                    TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::Exception));
-  // Special purpose invoke method used by the interpretive stubs. This
-  // accomplishes the same task as the normal invoke except that
-  // Exceptions are allocated and decoded here. This reduces the
-  // footprint of the generated stubs.
 
   //   TAO_InputCDR &inp_stream (void);
   //   // Return the underlying input stream.

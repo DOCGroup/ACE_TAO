@@ -52,8 +52,15 @@ public:
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
   // returns true if we have to genrate extra code.
 
-  virtual be_operation *hidden_operation ();
-  // returns the operation node which contains extra data,
+  virtual be_operation *marshaling ();
+  // returns the operation containing special marshaling information,
+  // this makes sense if not all arguments get marshaled, e.g. AMI
+  // sendc_ operations
+
+  virtual be_operation *arguments ();
+  // returns a customized arguments list, e.g. AMI sendc_ operations
+  // only use the in and inout arguments but not the out arguments,
+  // also the first argument is the reply handler.
 
 protected:
 
@@ -112,7 +119,8 @@ class be_operation_ami_sendc_strategy
 {
 public:
   be_operation_ami_sendc_strategy (be_operation *node,
-                                   be_operation *hidden_operation);
+                                   be_operation *marshaling,
+                                   be_operation *arguments);
 
   virtual ~be_operation_ami_sendc_strategy ();
 
@@ -123,11 +131,18 @@ public:
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
   // returns true if we have to genrate extra code.
 
-  virtual be_operation *hidden_operation ();
-  // returns the operation node which contains extra data,
+  virtual be_operation *marshaling ();
+  // returns the operation containing special marshaling information,
+  // this makes sense if not all arguments get marshaled, e.g. AMI
+  // sendc_ operations
 
+  virtual be_operation *arguments ();
+  // returns a customized arguments list, e.g. AMI sendc_ operations
+  // only use the in and inout arguments but not the out arguments,
+  // also the first argument is the reply handler.
 private:
-  be_operation *hidden_operation_;
+  be_operation *marshaling_;
+  be_operation *arguments_;
 };
 
 

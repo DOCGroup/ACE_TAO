@@ -65,8 +65,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "::_tao_marshal__" << node->flat_name ()
           <<    " (TAO_OutputCDR &strm)"
           << "{" << be_idt_nl
-          <<   "return " << node->full_obv_skel_name ()
-          <<   "::_tao_marshal_state (strm);" << be_nl
+          <<   "return _tao_marshal_state (strm);" << be_nl
           << be_uidt_nl << "}\n";
 
       *os << "CORBA::Boolean "
@@ -74,8 +73,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "::_tao_unmarshal__" << node->flat_name ()
           <<    " (TAO_InputCDR &strm)"
           << "{" << be_idt_nl
-          <<   "return " << node->full_obv_skel_name ()
-          <<   "::_tao_unmarshal_state (strm);" << be_nl
+          <<   "return _tao_unmarshal_state (strm);" << be_nl
           << be_uidt_nl << "}\n";
 
       if (this->visit_scope (node) == -1)

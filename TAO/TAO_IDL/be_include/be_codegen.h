@@ -284,7 +284,10 @@ public:
     TAO_OBV_OPERATION_ARGLIST_IS,            // ... for implementation header
     TAO_OBV_OPERATION_ARGLIST_COLLOCATED_SH,   // ... for collocated server
     TAO_OBV_OPERATION_ARGLIST_OTHERS,          // ... for all other cases
+    TAO_OBV_OPERATION_ARGLIST_IMPL_CH,       // for implementations, e.g. exception holders
+    TAO_OBV_OPERATION_ARGLIST_IMPL_CS,       // for implementations, e.g. exception holders
 
+#if 0
     // Emitting code for AMI.
     TAO_AMI_OPERATION_CH,                  // AMI stub generation.
     TAO_AMI_OPERATION_CS,                  // AMI stub generation.
@@ -364,13 +367,16 @@ public:
     TAO_AMI_EXCEPTION_HOLDER_ATTRIBUTE_CS,
     TAO_AMI_EXCEPTION_HOLDER_OPERATION_CH,
     TAO_AMI_EXCEPTION_HOLDER_OPERATION_CS,
+#endif /* 0 */
 
     // AMI next generation states
     TAO_AMI_SENDC_OPERATION_CH,
     TAO_AMI_SENDC_OPERATION_CS,
-    TAO_AMI_EXCEP_HOLDER_RAISE_OPERATION_CS,
     TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CH,
     TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CS,
+    TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH,
+    TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS,
+    TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS,
 
     // Emitting code for root.
     TAO_ROOT_CH,

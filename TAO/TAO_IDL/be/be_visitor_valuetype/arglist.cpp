@@ -71,31 +71,36 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
         *os << ",\n";
 
       os->indent ();
+
+      // @@ Michael: This switch statement needs urgently attention!
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
+        case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
           // last argument - is always CORBA::Environment
           *os << "CORBA::Environment &ACE_TRY_ENV";
           *os << " = " << be_idt_nl
-              << "TAO_default_environment ()"
+              << "TAO_default_environment ())"
               << be_uidt;
           break;
-//  case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
+//    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
 //    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
 //    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OTHERS:
-//          // last argument - is always CORBA::Environment
-//          *os << "CORBA::Environment &ACE_TRY_ENV";
-//          break;
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
+          // last argument - is always CORBA::Environment
+          *os << "CORBA::Environment &ACE_TRY_ENV)";
+          break;
         default:
-          *os << "CORBA::Environment &ACE_TRY_ENV";
+          *os << "CORBA::Environment &ACE_TRY_ENV)";
           break;
         }
     }
-
-  // *os << be_uidt;
-  // os->indent ();
-  *os << ")";// << be_uidt;
+  else
+    {
+      os->indent ();
+      *os << ")";// << be_uidt;
+    }
 
   switch (this->ctx_->state ())
     {
@@ -107,9 +112,14 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
       break;
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
+      *os << ";\n";    
+    case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
     default:
        *os << "\n";
     }
+
+  // @@ Michael: Can we get rid of this one, please!
   if (!this->ctx_->attribute ())    // hack to get a nice newline
     *os << "\n";
   return 0;

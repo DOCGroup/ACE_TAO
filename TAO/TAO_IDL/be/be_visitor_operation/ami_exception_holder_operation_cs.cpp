@@ -81,10 +81,10 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
   // so the interface type strategy does not work here.
   // We have to go by foot.
   // Genereate scope name.
-  *os << parent->compute_name ("AMI_", "ExceptionHolder");
+  *os << parent->compute_name ("_tao_", "");
 
   // Generate the operation name.
-  *os << "::raise_";
+  *os << "::";
 
   // check if we are an attribute node in disguise
   if (this->ctx_->attribute ())

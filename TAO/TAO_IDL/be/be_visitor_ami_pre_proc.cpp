@@ -67,6 +67,15 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
       excep_holder->set_defined_in (node->defined_in ());
       (be_module::narrow_from_scope (node->defined_in ()))
         ->be_add_interface (excep_holder, node);
+      (AST_Module::narrow_from_scope (node->defined_in ()))
+        ->set_has_nested_valuetype ();
+      // Remember from whom we were cloned
+      excep_holder->original_interface (node);
+      // Set the strategy
+      be_interface_strategy *old_strategy = 
+        excep_holder->set_strategy (new be_interface_ami_exception_holder_strategy (excep_holder));
+      if (old_strategy)
+        delete old_strategy;
     }
   else
     {
@@ -85,6 +94,8 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
       reply_handler->set_defined_in (node->defined_in ());
       (be_module::narrow_from_scope (node->defined_in ()))
         ->be_add_interface (reply_handler, node);
+      // Remember from whom we were cloned
+      reply_handler->original_interface (node);
     }
   else
     {
@@ -130,24 +141,29 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
                         -1);
     }
 
-  be_operation *sendc_operation = this->create_sendc_operation (node);
+  be_operation *sendc_marshaling = 
+    this->create_sendc_operation (node, 
+                                   0); // for arguments = FALSE
 
-  if (sendc_operation)
+  be_operation *sendc_arguments = 
+    this->create_sendc_operation (node,
+                                  1); // for arguments = TRUE
+
+  if (sendc_marshaling && sendc_arguments)
     {
-      sendc_operation->set_defined_in (node->defined_in ());
+      sendc_marshaling->set_defined_in (node->defined_in ());
+
+      sendc_arguments->set_defined_in (node->defined_in ());
 
       // We do not copy the exceptions because the exceptions
       // are delivered by the excep methods.
 
-      // After having generated the operation we insert it into the
-      // exceptionholder valuetype.
-      // @@ Michael: We use the hidden_operation () method
-      // (be_interface::narrow_from_scope (node->defined_in ()))->be_add_operation (sendc_operation);
-
-        // Set the proper strategy
+      // Set the proper strategy, and store the specialized
+      // marshaling and arguments operations in it.
       be_operation_strategy *old_strategy = 
         node->set_strategy (new be_operation_ami_sendc_strategy (node, 
-                                                                 sendc_operation));
+                                                                 sendc_marshaling,
+                                                                 sendc_arguments));
       if (old_strategy)
         delete old_strategy;
     }
@@ -294,22 +310,24 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                                                0);
 
               // Name the operation properly
-              UTL_ScopedName *new_name = (UTL_ScopedName *) node->name ()->copy ();
+              UTL_ScopedName *op_name = (UTL_ScopedName *)excep_holder->name ()-> copy ();
 
               ACE_CString new_local_name ("raise_");
               new_local_name += op->name ()->last_component ()->get_string ();
-  
-              new_name->nconc (new UTL_ScopedName (new Identifier (new_local_name.rep (), 
-                                                                   0,
-                                                                   0,
-                                                                   0),
-                                                   0));
+
+              op_name->nconc (new UTL_ScopedName (
+                                new Identifier (
+                                  new_local_name.rep (), 1, 0, I_FALSE),
+                                0));
 
               be_operation *operation = new be_operation (rt,
                                                           AST_Operation::OP_noflags,
-                                                          new_name,
+                                                          op_name,
                                                           0);
+              operation->set_name (op_name);
+              operation->set_defined_in (excep_holder);
 
+              // @@ Michael: this needs a fix!
               AST_Operation *op_base = ACE_reinterpret_cast (AST_Operation *,
                                                              op);
 
@@ -469,7 +487,8 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
 
 
 be_operation *
-be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
+be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
+                                                  int for_arguments)
 {
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_sendc_operation\n"));
   // Create the return type, which is "void"
@@ -498,37 +517,41 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   // Create the first argument, which is a Reply Handler
 
-  // Create the field type
-  be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+  if (for_arguments)
+    {
+      // Create the field type
+      be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-  // Add the pre- and suffix
-  ACE_CString excep_holder_name;
-  this->generate_name (excep_holder_name,
-                       "AMI_",
-                       parent
-                         ->name ()
-                           ->last_component ()
-                             ->get_string (),
-                       "Handler");
-  UTL_ScopedName *field_name = (UTL_ScopedName *)parent->name ()->copy ();
-  field_name->last_component ()->replace_string (excep_holder_name.rep ());
-  be_interface *field_type= new be_interface (field_name,
-                                              0,
-                                              0,
-                                              0);
-  field_type->set_defined_in (node->defined_in ());
+      // Add the pre- and suffix
+      ACE_CString excep_holder_name;
+      this->generate_name (excep_holder_name,
+                           "AMI_",
+                           parent
+                             ->name ()
+                               ->last_component ()
+                                 ->get_string (),
+                           "Handler");
+      UTL_ScopedName *field_name = (UTL_ScopedName *)parent->name ()->copy ();
+      field_name->last_component ()->replace_string (excep_holder_name.rep ());
+      be_interface *field_type= new be_interface (field_name,
+                                                  0,
+                                                  0,
+                                                  0);
+      field_type->set_defined_in (node->defined_in ());
 
-  // Create the argument
-  be_argument *arg = new be_argument (AST_Argument::dir_IN,
-                                      field_type, // is also a valuetype
-                                      new UTL_ScopedName 
-                                      (new Identifier
-                                          ("ami_handler", 1, 0, I_FALSE),
-                                        0),
-                                      0);
+      // Create the argument
+      be_argument *arg = new be_argument (AST_Argument::dir_IN,
+                                          field_type, // is also a valuetype
+                                          new UTL_ScopedName 
+                                          (new Identifier
+                                              ("ami_handler", 1, 0, I_FALSE),
+                                            0),
+                                          0);
 
-  // Add the reply handler to the argument list
-  op->add_argument_to_scope (arg);
+      // Add the reply handler to the argument list
+      op->add_argument_to_scope (arg);
+
+    }
 
   // Iterate over the arguments and put all the in and inout 
   // into the new method.
@@ -577,6 +600,9 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 }
 
 
+
+
+
 be_operation * 
 be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
                                                          be_interface *reply_handler)
@@ -617,7 +643,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
                                           node->return_type (), 
                                           new UTL_ScopedName 
                                           (new Identifier
-                                              ("_tao_retval", 1, 0, I_FALSE),
+                                              ("ami_return_val", 1, 0, I_FALSE),
                                             0),
                                           0);
 
