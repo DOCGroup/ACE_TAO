@@ -81,8 +81,13 @@ int TPC_Logging_Acceptor::accept_svc_handler
     (TPC_Logging_Handler *sh) {
   if (PARENT::accept_svc_handler (sh) == -1) return -1;
   SSL_clear (ssl_);  // Reset for new SSL connection.
-  SSL_set_fd
-    (ssl_, reinterpret_cast<int> (sh->get_handle ()));
+#if defined (ACE_WIN32)
+  // ACE_WIN32 is the only platform where ACE_HANDLE is not an int.
+  // See ace/config-lite.h for the typedefs.
+  SSL_set_fd (ssl_, reinterpret_cast<int> (sh->get_handle ()));
+#else
+  SSL_set_fd (ssl_, sh->get_handle ());
+#endif /* ACE_WIN32 */
 
   SSL_set_verify
     (ssl_,
