@@ -17,8 +17,6 @@
 #define PACE_UNISTD_H_WIN32
 
 #include "pace/sys/types.h"
-/*#include <stropts.h>*/
-#include <unistd.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
