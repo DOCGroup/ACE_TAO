@@ -1337,6 +1337,22 @@ public:
   ACE_Time_Value (long sec, long usec = 0);
   // Constructor.
 
+  ACE_Time_Value (unsigned long sec, unsigned long usec = 0);
+  // Constructor.  (sys/types.h is #included below, so we can't
+  // use u_long).
+
+  ACE_Time_Value (int sec, int usec = 0);
+  // Constructor.
+
+  ACE_Time_Value (unsigned int sec, unsigned int usec = 0);
+  // Constructor.  (sys/types.h is #included below, so we can't
+  // use u_int).
+
+#if !defined (ACE_LACKS_FLOATING_POINT)
+  ACE_Time_Value (double time);
+  // Constructor.
+#endif /* ! ACE_LACKS_FLOATING_POINT */
+
   // = Methods for converting to/from various time formats.
   ACE_Time_Value (const struct timeval &t);
   // Construct the <ACE_Time_Value> from a <timeval>.
@@ -1355,9 +1371,11 @@ public:
   void set (long sec, long usec);
   // Construct a <Time_Value> from two <long>s.
 
+#if !defined (ACE_LACKS_FLOATING_POINT)
   void set (double d);
   // Construct a <Time_Value> from a <double>, which is assumed to be
   // in second format, with any remainder treated as microseconds.
+#endif /* ! ACE_LACKS_FLOATING_POINT */
 
   void set (const timeval &t);
   // Construct a <Time_Value> from a <timeval>.
