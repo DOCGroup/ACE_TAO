@@ -1,3 +1,9 @@
+Thu Feb  6 17:51:06 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Tagged_Components.cpp: Removed some vague print statements. 
+	* tao/Strategies/SHMIOP_Connector.cpp: Fixed some debug
+	  statements. 
+
 Thu Feb  6 16:37:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Stub.cpp (ior_info_): 
