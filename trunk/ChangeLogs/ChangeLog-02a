@@ -1,3 +1,9 @@
+Sun Jan 30 12:35:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Token.cpp (remove_entry): <tail_> should point to <prev>
+	  entry if we are removing the last entry in the queue.  Thanks to
+	  Irfan for pointing this out.
+
 Sat Jan 29 12:56:16 2000  bala  <bala@cs.wustl.edu>
 
         * ACE version 5.0.13 released.
