@@ -6,17 +6,22 @@ Wed Jan 20 13:38:03 1999  David L. Levine  <levine@cs.wustl.edu>
         * docs/ACE-guidelines.html: added guideline for calling
           ACE_OS::unlink () immediately after opening a temporary file.
 
+        * *.h: replaced () around #pragma implementation argument.  Thanks
+          to Susan Liebeskind <susan.liebeskind@gtri.gatech.edu> and
+          Steve Huston for reporting and confirming that it's necessary
+          AIX.
+
 Wed Jan 20 01:48:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Parse_Node.cpp (symbol): Remembered to pass down the
-	  "gobbler" in a Static_Function_Node.  Thanks to Eric C. Newton
-	  <ecn@smart.net> for reporting and providing the fix.
+        * ace/Parse_Node.cpp (symbol): Remembered to pass down the
+          "gobbler" in a Static_Function_Node.  Thanks to Eric C. Newton
+          <ecn@smart.net> for reporting and providing the fix.
 
 Tue Jan 19 17:52:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SString.h: Clarified the role of the <release> argument for
- 	  the <set> method.  Thanks to Sudhanshu Garg
- 	  <sg2@ladybug.cec.wustl.edu> for suggesting this.
+        * ace/SString.h: Clarified the role of the <release> argument for
+          the <set> method.  Thanks to Sudhanshu Garg
+          <sg2@ladybug.cec.wustl.edu> for suggesting this.
 
 Tue Jan 19 16:15:26 1999  David L. Levine  <levine@cs.wustl.edu>
 

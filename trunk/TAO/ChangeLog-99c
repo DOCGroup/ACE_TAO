@@ -4,6 +4,12 @@ Wed Jan 20 13:54:37 1999  David L. Levine  <levine@cs.wustl.edu>
           LynxOS' g++ was raising an internal compiler error on it, and
           it appears to no longer be used.
 
+        * *.h,TAO_IDL/be/be_codegen.cpp (end_server_template_header):
+          replaced () around #pragma implementation argument.  Thanks to
+          Susan Liebeskind <susan.liebeskind@gtri.gatech.edu> and
+          Steve Huston for reporting and confirming that it's necessary
+          on AIX.
+
 Tue Jan 19 18:38:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * examples/Simple/time/Time_Client_i.h
