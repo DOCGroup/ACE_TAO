@@ -165,7 +165,7 @@ CORBA::Any::operator= (const CORBA::Any &rhs)
     {
       if (this->impl_ != 0)
         {
-          this->impl_->free_value ();
+          this->impl_->_remove_ref ();
         }
 
       this->impl_ = rhs.impl_;
