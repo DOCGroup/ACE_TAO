@@ -29,6 +29,9 @@ libACEXML_XML_Svc_Conf_Parser_la_SOURCES = \
   Svcconf.cpp \
   Svcconf_Handler.cpp
 
+libACEXML_XML_Svc_Conf_Parser_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libACEXML_XML_Svc_Conf_Parser_la_LIBADD = \
  $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
 

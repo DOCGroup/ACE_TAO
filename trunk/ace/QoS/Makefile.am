@@ -32,6 +32,9 @@ libACE_QoS_la_SOURCES = \
   QoS_Session_Impl.cpp \
   SOCK_Dgram_Mcast_QoS.cpp
 
+libACE_QoS_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libACE_QoS_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 

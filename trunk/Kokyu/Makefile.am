@@ -32,6 +32,9 @@ libKokyu_la_SOURCES = \
   Kokyu.cpp \
   Kokyu_defs.cpp
 
+libKokyu_la_LDFLAGS = \
+ -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+
 libKokyu_la_LIBADD = \
  $(ACE_BUILDDIR)/ace/libACE.la
 
