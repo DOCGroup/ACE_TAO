@@ -133,6 +133,10 @@ private:
   // These methods must go after the others to work around a bug with
   // Borland's C++ Builder...
 
+  /// Allocate a new ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> instance,
+  /// returning NULL if it cannot be created.
+  static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *internal_create (X *p);
+
   /// Create a ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> and initialize
   /// the reference count.
   static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *create (X *p);
