@@ -236,7 +236,6 @@ typedef long off_t;
 //#endif  // UNDER_CE
 
 #define ACE_HAS_STRDUP_EMULATION
-#define ACE_HAS_WINSOCK2 0
 
 // CE doesn't have <sys/types.h> instead <types.h>
 #define ACE_HAS_FLAT_TYPES_H

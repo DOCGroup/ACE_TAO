@@ -1,3 +1,21 @@
+Wed Mar 26 16:48:31 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-WinCE.h: Let ACE_HAS_WINSOCK2 be conditional on the CE
+	  version; there was a #define ACE_HAS_WINSOCK2 at the end of the
+	  file that shouldn't have been there.
+
+	* ace/config-win32-common.h: For WinCE and ACE_HAS_WINSOCK2, need
+	  to define the errno codes without WSA prefixes. Also, WinCE (at
+	  least at CE 4.0) doesn't have Winsock 2 extensions, so don't pull
+	  in mswsock.h, and set up to link ws2.lib, not ws2_32.lib.
+
+	* ace/Reactor.cpp: Don't use ACE_HAS_WINCE to block out
+	  ACE_WFMO_Reactor; use the more direct tests (Winsock versions) if
+	  needed.
+
+	* ace/SPIPE_Stream.i (send_handle): Don't attempt this on WinCE even
+	  though CE4 has ACE_HAS_WINSOCK2. It doesn't have WSADuplicateSocket.
+
 Wed Mar 26 16:15:39 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* ace/Unbounded_Set.h: 
