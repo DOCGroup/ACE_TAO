@@ -190,7 +190,6 @@ private:
 #define ACE_MAX(x,y) (((x)>(y))?(x):(y))
 #define ACE_MIN(x,y) (((x)<(y))?(x):(y))
 
-
 // keep the compiler from complaining of
 // parameters which are not used.
 #if defined (ghs)
@@ -2572,6 +2571,13 @@ struct ACE_Export ACE_Str_Buf : public strbuf
   ACE_Str_Buf (strbuf &);
   // Constructor.
 };
+
+#if defined (ACE_HAS_BROKEN_BITSHIFT)
+#define ACE_MSB_MASK (~(ACE_UINT32 (1) << ACE_UINT32 (NFDBITS - 1)))
+#else
+// This needs to go here to avoid overflow problems on some compilers.
+#define ACE_MSB_MASK (~(1 << (NFDBITS - 1)))
+#endif /* ACE_HAS_BROKEN_BITSHIFT */
 
 class ACE_Export ACE_OS
   // = TITLE

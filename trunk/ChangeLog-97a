@@ -1,5 +1,22 @@
 Sun May 25 11:36:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* examples/Reactor/Misc: Removed test_handle_set.cpp since it 
+	  is now completed subsumed by tests/Handle_Set_Test.cpp.
+
+	* tests/Handle_Set_Test.cpp: Updated the test of
+ 	  the ACE_Handle_Set so that it shows how fast the iterator works.
+
+	* ace/Reactor.cpp: Updated the Reactor to use the new
+ 	  ACE_Handle_Set_Iterator (whic no longer requires calling
+ 	  operator++ to advance the iterator).
+
+	* ace/Handle_Set: Rewrote the ACE_Handle_Set_Iterator to speed it up. 
+	  The result seems to be about 15% faster than the original.
+
+	* ace/OS.h: Changed the MSB_MASK static constant into a macro and
+ 	  moved it from Handle_Set.cpp into OS.h, changing its name to
+ 	  ACE_MSB_MASK.
+
 	* ace/Sched_Params.cpp (priority_max): Added another #ifdef for
  	  Chorus.  Thanks to Wei Chiang for reporting this.
 
