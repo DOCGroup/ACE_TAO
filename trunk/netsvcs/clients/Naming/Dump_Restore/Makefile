@@ -15,9 +15,9 @@ OBJ     = $(SRC:%.cpp=$(VDIR)%.o)
 
 LSRC    = $(addsuffix .cpp,$(FILES))
 LOBJ    = $(LSRC:%.cpp=$(VDIR)%.o)
-SHOBJ   = $(addsuffix .so,$(FILES))
+SHOBJ   = $(addsuffix .$(SOEXT),$(FILES))
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
+LIBS   += $(ACELIB)
 
 BIN2    = main
 LIB2    = libDump_Restore.a

@@ -4,8 +4,23 @@
 #       Makefile for building tests using Visual Age C++ Incremental compiler
 #----------------------------------------------------------------------------
 
-all:
-	vacbld_r -p tests.icp:all -severity=warning -showprogress=60
+tests := $(wildcard *.icc)
+exes := $(basename $tests)
+codestores := $(addsuffix .ics, $(exes))
 
-realclean:
-	vacbld_r -p tests.icp:all -clean
+all:
+	@for t in $(tests); \
+	do \
+		echo vacbld_r $$t -severity=warning; \
+		vacbld_r $$t -severity=warning; \
+	done
+
+#	vacbld_r -p tests.icp:all -severity=warning -showprogress=60
+
+clean:
+	/bin/rm -rf $(codestores)
+
+realclean: clean
+        /bin/rm -rf $(exes) libDLL_Test.$(SOEXT)
+
+#	vacbld_r -p tests.icp:all -clean
