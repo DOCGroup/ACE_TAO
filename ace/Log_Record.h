@@ -188,7 +188,7 @@ private:
   ACE_UINT32 pid_;
 
   /// Logging record data
-  ACE_TCHAR msg_data_[MAXLOGMSGLEN];
+  ACE_TCHAR msg_data_[MAXLOGMSGLEN + 1]; // Add one for NUL-terminator.
 
   /// Symbolic names for the <ACE_Log_Priority> enums.
   static const ACE_TCHAR *priority_names_[];
