@@ -210,7 +210,7 @@ CORBA_TypeCode::child_free (void)
       {
 	// free up members
 
-	for (int i = 0; 
+	for (CORBA_ULong i = 0; 
 	     i < _private_state->tc_member_count_;
 	     i++)
 	  // @@ This might be a memory leak if tc_member_type_list_[i]
@@ -513,7 +513,7 @@ CORBA_TypeCode::private_member_type (CORBA_ULong index,
 		{
 		  // compute the typecodes for all the members and
 		  // return the required one.
-		  for (int i = 0; i < mcount; i++) 
+		  for (CORBA_ULong i = 0; i < mcount; i++) 
 		    {
 		      // the ith entry will have the typecode of the ith guy
 		      if (!stream.skip_string ()  // skip the name
@@ -582,7 +582,7 @@ CORBA_TypeCode::private_member_type (CORBA_ULong index,
 		  // compute the typecodes for all the members and return the
 		  // required one
 
-		  for (int i = 0; i < temp; i++) 
+		  for (CORBA_ULong i = 0; i < temp; i++) 
 		    {
 		      // the ith entry will have the typecode of the ith guy
 		      if (stream.decode (tc, &scratch, this,  env) // member label
@@ -1127,7 +1127,7 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
 	  temp = (n - 3) / 2;
 
 	  // skip member pairs to the one we want
-	  for (int i = 0; i < temp; i++) 
+	  for (CORBA_ULong i = 0; i < temp; i++) 
 	    {
 	      // skip to the member being asked
 	      if (!stream.skip_string ()	// member name
@@ -1181,7 +1181,7 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
 
       CORBA_Long scratch;		// always big enough
 
-      for (int i = 0; i < temp; i++) 
+      for (CORBA_ULong i = 0; i < temp; i++) 
 	{
 	  if (stream.decode (tc, &scratch, this,  env) // member label
 	      != CORBA_TypeCode::TRAVERSE_CONTINUE
