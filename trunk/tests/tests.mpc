@@ -1,3 +1,40 @@
+project(Framework Component DLL) : acelib {
+  sharedname = Framework_Component_DLL
+  dllflags   = FRAMEWORK_COMPONENT_DLL_BUILD_DLL
+
+  Source_Files {
+    Framework_Component_DLL.cpp
+  }
+  Header_Files {
+    Framework_Component_DLL.h
+    Framework_Component_DLL_Export.h
+  }
+}
+
+project(DLL Test Lib) : acelib {
+  sharedname = DLL_Test
+
+  Source_Files {
+    DLL_Test.cpp
+  }
+  Header_Files {
+    test_config.h
+  }
+}
+
+project(Service Config DLL) : acelib {
+  sharedname = Service_Config_DLL
+  dllflags   = SERVICE_CONFIG_DLL_BUILD_DLL
+
+  Source_Files {
+    Service_Config_DLL.cpp
+  }
+  Header_Files {
+    Service_Config_DLL.h
+    Service_Config_DLL_Export.h
+  }
+}
+
 project(Aio Platform Test) : aceexe {
   exename = Aio_Platform_Test
   Source_Files {
@@ -926,7 +963,10 @@ project(Upgradable RW Test) : aceexe {
 }
 
 project(Naming Test) : aceexe {
-  exename = Naming_Test
+  exename  = Naming_Test
+  compname = --ace
+  comps   += Other
+
   Source_Files {
     Naming_Test.cpp
   }
@@ -935,7 +975,10 @@ project(Naming Test) : aceexe {
 }
 
 project(Thread Pool Reactor Test) : aceexe {
-  exename = Thread_Pool_Reactor_Test
+  exename  = Thread_Pool_Reactor_Test
+  compname = --ace
+  comps   += Other
+
   Source_Files {
     Thread_Pool_Reactor_Test.cpp
   }
@@ -944,7 +987,10 @@ project(Thread Pool Reactor Test) : aceexe {
 }
 
 project(Thread Pool Reactor Resume Test) : aceexe {
-  exename = Thread_Pool_Reactor_Resume_Test
+  exename  = Thread_Pool_Reactor_Resume_Test
+  compname = --ace
+  comps   += Other
+
   Source_Files {
     Thread_Pool_Reactor_Resume_Test.cpp
   }
@@ -953,7 +999,10 @@ project(Thread Pool Reactor Resume Test) : aceexe {
 }
 
 project(XtReactor Test) : aceexe {
-  exename = XtReactor_Test
+  exename  = XtReactor_Test
+  compname = --ace
+  comps   += Other
+
   Source_Files {
     XtReactor_Test.cpp
   }
@@ -962,7 +1011,10 @@ project(XtReactor Test) : aceexe {
 }
 
 project(FlReactor Test) : aceexe {
-  exename = FlReactor_Test
+  exename  = FlReactor_Test
+  compname = --ace
+  comps   += Other
+
   Source_Files {
     FlReactor_Test.cpp
   }
@@ -971,7 +1023,10 @@ project(FlReactor Test) : aceexe {
 }
 
 project(TkReactor Test) : aceexe {
-  exename = TkReactor_Test
+  exename  = TkReactor_Test
+  compname = --ace
+  comps   += Other
+
   Source_Files {
     TkReactor_Test.cpp
   }
@@ -980,7 +1035,10 @@ project(TkReactor Test) : aceexe {
 }
 
 project(Codecs Test) : aceexe {
-  exename = Codecs_Test
+  exename  = Codecs_Test
+  compname = --ace
+  comps   += Codecs
+
   Source_Files {
     Codecs_Test.cpp
   }
@@ -989,7 +1047,10 @@ project(Codecs Test) : aceexe {
 }
 
 project(Tokens Test) : aceexe {
-  exename = Tokens_Test
+  exename  = Tokens_Test
+  compname = --ace
+  comps   += Token
+
   Source_Files {
     Tokens_Test.cpp
   }
