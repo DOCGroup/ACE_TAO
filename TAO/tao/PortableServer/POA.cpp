@@ -2432,26 +2432,6 @@ TAO_POA::locate_servant_i (const char *operation,
               // Increment the reference count.
               ++servant_upcall.active_object_map_entry ()->reference_count_;
 
-              // A recursive thread lock without using a recursive
-              // thread lock.  Non_Servant_Upcall has a magic
-              // constructor and destructor.  We unlock the
-              // Object_Adapter lock for the duration of the servant
-              // activator upcalls; reacquiring once the upcalls
-              // complete.  Even though we are releasing the lock,
-              // other threads will not be able to make progress since
-              // <Object_Adapter::non_servant_upcall_in_progress_> has
-              // been set.
-              TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
-              ACE_UNUSED_ARG (non_servant_upcall);
-
-              // If this operation causes the object to be activated,
-              // _add_ref is invoked at least once on the Servant
-              // argument before returning. Otherwise, the POA does
-              // not increment or decrement the reference count of the
-              // Servant passed to this function.
-              servant->_add_ref (ACE_TRY_ENV);
-              ACE_CHECK_RETURN (0);
-
               // If we are a single threaded POA, set up the
               // appropriate locking in the servant.
               this->establish_servant_lock (servant);
