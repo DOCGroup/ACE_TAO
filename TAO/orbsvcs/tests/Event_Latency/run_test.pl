@@ -29,12 +29,12 @@ $ES = Process::Create ("..".$DIR_SEPARATOR
 		       ."..".$DIR_SEPARATOR
 		       ."Event_Service".$DIR_SEPARATOR
 		       ."Event_Service".$EXE_EXT,
-		       "-ORBNameServiceIOR file://$NS_ior -t new");
+		       "-ORBInitRef NameService=file://$NS_ior -t new");
 
 sleep $sleeptime;
 
 $TEST = Process::Create (".".$DIR_SEPARATOR."Event_Latency".$EXE_EXT,
-			 "-ORBNameServiceIOR file://$NS_ior"
+			 "-ORBInitRef NameService=file://$NS_ior"
 			 ." -j -m 100");
 
 if ($TEST->TimedWait (60) == -1) {

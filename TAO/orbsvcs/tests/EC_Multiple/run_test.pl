@@ -25,7 +25,7 @@ if (ACE::waitforfile_timed ($NS_ior, 5) == -1) {
 
 # This is a very simple test, no multiple consumers and no gateways.
 $TEST = Process::Create ($EXEPREFIX."EC_Multiple".$EXE_EXT,
-			 "-ORBNameServiceIOR file://$NS_ior"
+			 "-ORBInitRef NameService=file://$NS_ior"
 			 ." -s local");
 if ($TEST->TimedWait (60) == -1) {
   print STDERR "ERROR: test timedout\n";
