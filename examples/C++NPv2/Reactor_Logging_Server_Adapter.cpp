@@ -9,7 +9,6 @@
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
                                                 ACE_TCHAR *argv[]) {
-  ACE_DEBUG ((LM_DEBUG, "adapter init, argv[0] = %s\n", argv[0]));
   ACE_NEW_RETURN (server_,
                   Reactor_Logging_Server<ACCEPTOR>
                     (argc, argv, ACE_Reactor::instance ()), -1);
