@@ -485,6 +485,7 @@ ACE_HAS_SPARCWORKS_401_SIGNALS          Compiler has brain-damaged
                                         prototype...
 ACE_HAS_SSIZE_T                         Compiler supports the ssize_t
                                         typedef
+ACE_HAS_STRPTIME                        Enables ACE_OS::strptime ().
 ACE_HAS_STHREADS                        Platform supports Solaris
                                         threads
 ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports
@@ -797,7 +798,7 @@ ACE_LACKS_SOME_POSIX_PROTOTYPES         Platform lacks POSIX
                                         prototypes for certain System
                                         V functions like shared memory
                                         and message queues.
-ACE_LACKS_STRPTIME                      Platform/compiler lacks the strptime() 
+ACE_LACKS_NATIVE_STRPTIME               Platform/compiler lacks the strptime() 
                                         function.
 ACE_LACKS_STRRCHR                       Platform/compiler lacks
                                         strrchr () function.
