@@ -167,8 +167,4 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
-#if !defined (__EXCEPTIONS) && defined (ACE_HAS_EXCEPTIONS)
-# error ACE_HAS_EXCEPTIONS requested but old g++ does not support it well
-#endif /* ! __EXCEPTIONS && ACE_HAS_EXCEPTIONS */
-
 #endif /* ACE_LINUX_COMMON_H */
