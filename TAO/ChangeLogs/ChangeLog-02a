@@ -1,3 +1,11 @@
+Fri Mar 22 19:19:18 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CDR_Encaps_Codec.cpp (encode_value):
+
+	  Pass the GIOP version and ORB Core with which the CDR
+	  encapsulation Codec is associated to the TAO_InputCDR stream
+	  object used when encoding the value into a CDR encapsulation.
+
 Fri Mar 22 14:23:46 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/tests/Event/Makefile:
