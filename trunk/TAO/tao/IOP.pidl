@@ -8,6 +8,7 @@
 //   is:
 //
 //     tao_idl
+//          -Ge 1
 //          -Wb,export_macro=TAO_Export
 //          -Wb,export_include="tao/TAO_Export.h"
 //          -Wb,pre_include="ace/pre.h"
@@ -17,6 +18,8 @@
 
 #ifndef TAO_IOP_PIDL
 #define TAO_IOP_PIDL
+
+#include "orb.idl"
 
 #pragma prefix "omg.org"
 
@@ -43,9 +46,10 @@ module IOP
   };
   typedef sequence<TaggedComponent> MultipleComponentProfile;
   typedef sequence<TaggedComponent> TaggedComponentList;
+  typedef sequence<TaggedComponent> TaggedComponentSeq;
 
   // @@ All security related tags are located in the Security Service
-  // @@ related IDL files, in accordance with the Security Service 1.7
+  // @@ related IDL files, in accordance with the Security Service 1.8
   // @@ specification.
 
   const ComponentId TAG_ORB_TYPE = 0;
@@ -92,6 +96,32 @@ module IOP
   const ServiceId FT_GROUP_VERSION = 12;
   const ServiceId FT_REQUEST = 13;
 
+  local interface Codec {
+    exception InvalidTypeForEncoding {};
+    exception FormatMismatch {};
+    exception TypeMismatch {};
+
+    CORBA::OctetSeq encode (in any data) raises (InvalidTypeForEncoding);
+    any decode (in CORBA::OctetSeq data) raises (FormatMismatch);
+    CORBA::OctetSeq encode_value (in any data) raises (InvalidTypeForEncoding);
+    any decode_value (in CORBA::OctetSeq data, in CORBA::TypeCode tc)
+      raises (FormatMismatch, TypeMismatch);
+  };
+
+  typedef short EncodingFormat;
+  const EncodingFormat ENCODING_CDR_ENCAPS = 0;
+
+  struct Encoding {
+    EncodingFormat format;
+    octet major_version;
+    octet minor_version;
+  };
+
+  local interface CodecFactory {
+    exception UnknownEncoding {};
+
+    Codec create_codec (in Encoding enc) raises (UnknownEncoding);
+  };
 };
 
 #pragma prefix ""

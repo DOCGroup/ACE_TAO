@@ -240,7 +240,10 @@ ORB_CORE_FILES = \
   BiDirPolicyC \
   BiDir_ORBInitializer \
   BiDir_PolicyFactory \
-  BiDir_Policy_i
+  BiDir_Policy_i \
+  CodecFactory \
+  CodecFactory_ORBInitializer \
+  CDR_Encaps_Codec
 
 DYNAMIC_ANY_FILES =
 

@@ -167,6 +167,10 @@ SOURCE=.\cdr.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CDR_Encaps_Codec.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Cleanup_Func_Registry.h
 # End Source File
 # Begin Source File
@@ -180,6 +184,14 @@ SOURCE=.\Client_Strategy_Factory.h
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CodecFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CodecFactory_ORBInitializer.h
 # End Source File
 # Begin Source File
 
@@ -1551,6 +1563,10 @@ SOURCE=.\CDR.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CDR_Encaps_Codec.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Cleanup_Func_Registry.cpp
 # End Source File
 # Begin Source File
@@ -1564,6 +1580,14 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CodecFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CodecFactory_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 

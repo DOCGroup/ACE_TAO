@@ -906,6 +906,10 @@ protected:
   /// callbacks  which can be dynamically loaded.
   void services_callbacks_init (void);
 
+  /// Helper method that invokes Interceptor::destroy() on all
+  /// registered interceptors when ORB::destroy() is called.
+  void destroy_interceptors (CORBA::Environment &ACE_TRY_ENV);
+
 private:
 
   /// The ORB Core should not be copied.
