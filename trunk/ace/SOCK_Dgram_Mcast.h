@@ -126,9 +126,10 @@ public:
   int set_option (int option, 
 		  char optval);
   // Set an ip option that takes a char as input, such as
-  // <IP_MULTICAST_LOOP>.  This is just a more concise nice interface
-  // to a subset of possible <ACE_SOCK::set_option> calls.  Returns 0
-  // on success, -1 on failure.
+  // <IP_MULTICAST_LOOP> or <IP_MULTICAST_TTL>.  This is just a more
+  // concise nice interface to a subset of possible
+  // <ACE_SOCK::set_option> calls.  Returns 0 on success, -1 on
+  // failure.
 
   void dump (void) const;
   // Dump the state of an object.
