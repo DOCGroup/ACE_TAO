@@ -9,17 +9,17 @@ TAO_String_Hash_Key::TAO_String_Hash_Key (void)
 }
 
 TAO_String_Hash_Key::TAO_String_Hash_Key (char * name)
-  : CORBA_String_var (name)
+  : CORBA::String_var (name)
 {
 }
 
 TAO_String_Hash_Key::TAO_String_Hash_Key (const char * name)
-  : CORBA_String_var (name)
+  : CORBA::String_var (name)
 {
 }
 
 TAO_String_Hash_Key::TAO_String_Hash_Key (const CORBA::String_var &src)
-  : CORBA_String_var (src)
+  : CORBA::String_var (src)
 {
 }
 
@@ -42,10 +42,6 @@ TAO_String_Hash_Key::hash (void) const
 {
   u_long ret = ACE::hash_pjw (this->in ());
   return ret;
-}
-
-TAO_String_Hash_Key::~TAO_String_Hash_Key (void)
-{
 }
 
 // TAO_Sequence_Extracter_Base

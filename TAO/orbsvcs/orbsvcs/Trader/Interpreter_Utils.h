@@ -1,7 +1,18 @@
-// $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ * @file   Interpreter_Utils.h
+ *
+ * $Id$
+ *
+ * @author 
+ */
+//=============================================================================
 
 #ifndef TAO_INTERPRETER_UTILS_H
 #define TAO_INTERPRETER_UTILS_H
+
 #include "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
@@ -28,9 +39,6 @@ public:
 
   TAO_String_Hash_Key (const CORBA::String_var &hash_key);
   // Copy constructor.
-
-  ~TAO_String_Hash_Key (void);
-  // Destructor.
 
   int operator == (const TAO_String_Hash_Key &hash_key) const;
   // The operator for hash binding and "find"ing.
@@ -65,4 +73,5 @@ public:
 };
 
 #include "ace/post.h"
+
 #endif /* TAO_INTERPRETER_UTILS_H */

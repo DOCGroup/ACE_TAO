@@ -1,9 +1,11 @@
-// $Id$
-
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"
 
-ACE_RCSID (Trader, Constraint_Nodes, "$Id$")
+
+ACE_RCSID (Trader,
+           Constraint_Nodes,
+           "$Id$")
+
 
 int
 TAO_Noop_Constraint::accept (TAO_Constraint_Visitor* visitor)
@@ -342,7 +344,7 @@ TAO_Literal_Constraint (CORBA::Any* any)
       break;
     case TAO_BOOLEAN:
       {
-        CORBA_Any::to_boolean tmp (this->op_.bool_);
+        CORBA::Any::to_boolean tmp (this->op_.bool_);
         (*any) >>= tmp;
       }
     break;
