@@ -9,7 +9,7 @@ pch_defines           = ACE_USING_PCH
 
 Static Release {
   use_debug_libraries   = 0
-  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi
+  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Static_Release
@@ -20,7 +20,7 @@ Static Release {
 
 Static Debug {
   use_debug_libraries   = 1
-  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /Gy /MDd
+  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = Static_Debug

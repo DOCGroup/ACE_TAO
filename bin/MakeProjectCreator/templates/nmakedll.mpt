@@ -5,7 +5,7 @@ pch_defines    = ACE_USING_PCH
 Release {
   type_code             = 0x0102
   use_debug_libraries   = 0
-  compile_flags         = /W3 /GX /O2 /MD /Zi /Ob2
+  compile_flags         = /W3 /GX /O2 /MD /Zi /Ob2 /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Release
@@ -19,7 +19,7 @@ Release {
 Debug {
   type_code             = 0x0102
   use_debug_libraries   = 1
-  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /Gy
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   intermediate_dir      = Debug
@@ -34,7 +34,7 @@ Static Release {
   type_description      = "Static Library"
   type_code             = 0x0104
   use_debug_libraries   = 0
-  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi
+  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Static_Release
@@ -49,7 +49,7 @@ Static Debug {
   type_description      = "Static Library"
   type_code             = 0x0104
   use_debug_libraries   = 1
-  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /Gy /MDd
+  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = Static_Debug
