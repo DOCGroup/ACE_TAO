@@ -177,6 +177,20 @@ public:
                      ACE_Allocator *message_block_allocator = 0);
 
   /**
+   * A copy constructor. This constructor is a bit different. If the
+   * incoming Message Block has a data block from the stack this
+   * constructor does a deep copy ie. allocates a new data block on
+   * the heap and does a copy of the data from the incoming message
+   * block. As a final note, the alignment information is used to
+   * align the data block if it is created afresh. If the incoming
+   * <mb> has a data block has a data block allocated from the heap,
+   * then this constructor just duplicates (ie. a shallow copy) the
+   * data block of the incoming <mb>.
+   */
+  ACE_Message_Block (const ACE_Message_Block &mb,
+                     size_t align);
+
+  /**
    * Create a Message Block that assumes ownership of <data> (i.e.,
    * doesn't delete it since it didn't malloc it!).  Note that the
    * <size> of the <Message_Block> will be <size>, but the <length>
@@ -291,6 +305,7 @@ public:
   /// Return a "shallow" copy that increments our reference count by 1.
   ACE_Message_Block *duplicate (void) const;
 
+
   /**
    * Return a "shallow" copy that increments our reference count by 1.
    * This is similar to CORBA's <_duplicate> method, which is useful
@@ -298,6 +313,7 @@ public:
    * before calling <_duplicate> on them.
    */
   static ACE_Message_Block *duplicate (const ACE_Message_Block *mb);
+
 
   /**
    * Decrease the shared ACE_Data_Block's reference count by 1.  If the

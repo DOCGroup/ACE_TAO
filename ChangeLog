@@ -1,3 +1,67 @@
+Thu Jul  5 23:22:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	  Fixes that were required for fixing bug 575. Merged in from
+	  branch bug_575_stage_2.  
+
+
+	
+Thu Jul  5 23:09:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp (ACE_InputCDR): Fixed a long standing bug in
+	  the branch. This caused the DSI_Gateway test to fail. The
+	  problem was from setting the write pointer to a wrong position
+	  during the construction.
+
+Thu Jul  5 14:39:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Merged with the main trunk and moved it to a new branch by name
+	  bug_575_stage_2. 
+
+
+Thu Jun 28 15:25:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Reactor.h (ACE_Reactor):
+	* ace/Reactor.cpp: Added a new method resumable_handler () to the
+	  reactor interface. This would indicate whether the application
+	  can take advantage by resuming the handlers themselves or
+	  not. Not all reactors can allow this feature.
+
+	* ace/Reactor_Impl.h:
+	* ace/Reactor_Impl.cpp: Added a pure virtual function so that all
+	  the implementations can decide whether the handlers are
+	  resumable or not.
+
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor_Base.cpp:
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp:
+	* ace/WFMO_Reactor.h:
+	* ace/WFMO_Reactor.cpp:Implemented resumable_handlers ().
+
+
+Sun Jun 24 11:25:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Created this file. Got the whole stuff in ace to a new branch by
+	  name bug_575_stage_1. This ChangeLog file will be in branch
+	  bug_575.
+
+Fri Jun 22 16:52:13 2001  Balachandran Natarajan <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp: Changed the copy constructor for the
+	  ACE_InputCDR's. Instead of duplicating the ACE_Data_Block we
+	  now use the new copy constructor in the ACE_Message_Block.
+
+	* ace/Message_Block.h:
+	* ace/Message_Block.cpp: Added a new copy constructor to the
+	  ACE_Message_Block. This copy constructor does a deep copy from
+	  the data block if the data block of the incoming message block
+	  is on the stack or does a shallow copy of the data block (by
+	  incrementing the ref count) if it is on the heap.
+
+	END of entries from bug_575_stage_2.
+	
+
+
 Thu Jul  5 22:07:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the new perl script in LongUpcalls
