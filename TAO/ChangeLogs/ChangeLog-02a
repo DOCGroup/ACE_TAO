@@ -1,3 +1,10 @@
+2000-07-22  Yamuna Krishnamurthy  <yamuna@danzon.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	Fixed compile warnings	
+
 Fri Jul 21 17:54:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Invocation.cpp (reset_reply_received): 
