@@ -55,7 +55,6 @@ my  $perl_path = '/usr/bin/perl';
   die "$0: perl path is incorrect, please fix the script\n";
 
 my $dot_path = '/usr/bin';
-
 &can_run($dot_path.'/dot -V') ||
   die "$0: dot path is incorrect, please fix the script\n";
 
@@ -763,6 +762,7 @@ sub create_kit () {
   #&ex("cd ACE_wrappers && bin/bootstrap");
 
   if ($kit eq 'ace'  ||  $kit eq 'ace+tao') {
+
     if ($create_zips) {
       $build_command =
         "$rm ACE.zip ACE-lib.zip; " .
@@ -782,31 +782,20 @@ sub create_kit () {
           "$gzip -9 > ACE-lib.tar.gz && " .
         "$find $release_lib_files $release_filter | $cpio -o -H ustar | " .
           "$bzip2 > ACE-lib.tar.bz2 && " .
-	"$find ACE_wrappers/html $release_filter | $cpio -o -H ustar | " .
-	  "$gzip -9 > ACE-html.tar.gz && ".
-	"$find ACE_wrappers/html $release_filter | $cpio -o -H ustar | " .
-	  "$bzip2 -9 > ACE-html.tar.bz2 && ".
-	"$find ACE_wrappers/html $release_filter | $egrep $bin_files | " .
-	  "zip ACE-html.zip -q9@ &&" .
-	"$find ACE_wrappers/html $release_filter | $egrep -v $bin_files | " .
-	  "zip ACE-html.zip -qlg9@ &&" .
         "$chmod 664 ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ".
-	  "ACE.zip ACE-lib.zip ACE-html.zip && " .
+	  "ACE.zip ACE-lib.zip && " .
         "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ".
-	  "ACE.zip ACE-lib.zip ACE-html.zip && " .
-        "$dispose ACE.zip ACE-lib.zip ACE-html.zip $dest && " .
-        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ACE-html.tar.bz2 $dest && " .
+	  "ACE.zip ACE-lib.zip && " .
+        "$dispose ACE.zip ACE-lib.zip $dest && " .
+        "$dispose ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 $dest && " .
         "$cp $dest/ACE.zip $old_versions_dir/$local_ace_tag.zip &&".
         "$cp $dest/ACE-lib.zip $old_versions_dir/$local_ace_tag-lib.zip &&".
-        "$cp $dest/ACE-html.zip $old_versions_dir/$local_ace_tag-html.zip &&".
         "$cp $dest/ACE.tar.gz $old_versions_dir/$local_ace_tag.tar.gz &&".
         "$cp $dest/ACE-lib.tar.gz $old_versions_dir/$local_ace_tag-lib.tar.gz &&".
-        "$cp $dest/ACE-html.tar.gz $old_versions_dir/$local_ace_tag-html.tar.gz &&".
         "$cp $dest/ACE.tar.bz2 $old_versions_dir/$local_ace_tag.tar.bz2 &&".             
-        "$cp $dest/ACE-lib.tar.bz2 $old_versions_dir/$local_ace_tag-lib.tar.bz2 &&".                   
-        "$cp $dest/ACE-html.tar.bz2 $old_versions_dir/$local_ace_tag-html.tar.bz2; ";             
-      $archives = " ACE.tar.gz ACE-lib.tar.gz ACE-html.tar.gz ".
-	          "ACE.zip ACE-lib.zip ACE-html.zip ACE.tar.bz2 ACE-lib.tar.bz2 ACE-html.tar.bz2 ";
+        "$cp $dest/ACE-lib.tar.bz2 $old_versions_dir/$local_ace_tag-lib.tar.bz2;";
+      $archives = " ACE.tar.gz ACE-lib.tar.gz ".
+	          "ACE.zip ACE-lib.zip ACE.tar.bz2 ACE-lib.tar.bz2 ";
     } else {
       $build_command =
         "$find $release_files $release_filter | $cpio -o -H ustar | " .
