@@ -1,32 +1,27 @@
-#----------------------------------------------------------------------------
-#
 # $Id$
-#
-#----------------------------------------------------------------------------
 
-#----------------------------------------------------------------------------
-#       Local macros
-#----------------------------------------------------------------------------
+SRC = $(BIN:%=%$(VAR).cpp) \
+      Consumer.cpp \
+      Supplier.cpp
+
+LDLIBS = -lTAO_RTEC_COSEC -lTAO_CosEvent -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
-endif # ! TAO_ROOT
+endif
 
-BIN2 =   Service \
-	Consumer \
-	Supplier
+CPPFLAGS += -I../../lib \
+	-I$(TAO_ROOT)/orbsvcs \
+        -I$(TAO_ROOT)
 
-#### If the orbsvcs library wasn't built with all components, don't
-#### try to build certain tests.
+BIN2 = Basic
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (NativeCosEvent,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
+ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
-endif # NativeCosEvent
-
-PSRC=$(addsuffix .cpp,$(BIN2))
-LDLIBS = -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
-        $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
+endif # RTEvent
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -37,15 +32,8 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-# To build multiple executables in the same directory on AIX, it works
-# best to wipe out any previously-created tempinc directory.
-# The compiler/linker isn't too smart about instantiating templates...
-ifdef TEMPINCDIR
-COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
-endif
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
 #----------------------------------------------------------------------------
 #       Local targets
@@ -54,20 +42,26 @@ endif
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Service.o .obj/Service.so .shobj/Service.o .shobj/Service.so: Service.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h \
+.obj/Basic.o .obj/Basic.so .shobj/Basic.o .shobj/Basic.so: Basic.cpp Basic.h Consumer.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -79,15 +73,8 @@ endif
  $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -342,11 +329,11 @@ endif
  $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Factory.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -359,23 +346,64 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i
+ Supplier.h ../../lib/CosEvent_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.h \
+ $(TAO_ROOT)/tao/TimeBaseS_T.i \
+ $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
+ ../../lib/rtec_cosec_export.h
 
 .obj/Consumer.o .obj/Consumer.so .shobj/Consumer.o .shobj/Consumer.so: Consumer.cpp Consumer.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
- $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -657,6 +685,9 @@ endif
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -670,17 +701,14 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i
 
 .obj/Supplier.o .obj/Supplier.so .shobj/Supplier.o .shobj/Supplier.so: Supplier.cpp Supplier.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
- $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -962,6 +990,9 @@ endif
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -975,8 +1006,6 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \

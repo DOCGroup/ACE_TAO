@@ -16,8 +16,6 @@ DIRS  = Simple_Naming \
         EC_Custom_Marshal \
         EC_Basic \
         Property \
-        CosEC_Basic \
-        CosEC_Multiple \
         Sched \
         Sched_Conf \
         Time \

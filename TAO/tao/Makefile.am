@@ -82,6 +82,7 @@ IDL_COMPILER_FILES = \
 
 ORB_CORE_FILES = \
   Any.cpp \
+  Bind_Dispatcher_Guard.cpp \
   CORBA_String.cpp \
   CurrentC.cpp \
   Exception.cpp \
@@ -513,13 +514,6 @@ pkginclude_HEADERS = \
   $(TEMPLATE_FILES) \
   $(IDL_HEADERS)
 
-
-## noinst_PROGRAMS = t-sizes
-
-## t_sizes_SOURCES = t-sizes.cpp
-
-EXTRA_DIST = \
-  t-sizes.cpp
 
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.

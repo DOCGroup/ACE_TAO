@@ -8,9 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	Factory \
-	Simple \
-	RtEC_Based
+DIRS  =	Basic \
+	Multiple
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
