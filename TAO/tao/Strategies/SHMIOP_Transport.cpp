@@ -17,6 +17,7 @@
 #include "tao/debug.h"
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
+#include "tao/GIOP_Message_Lite.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -27,13 +28,12 @@ ACE_RCSID (Strategies, SHMIOP_Transport, "$Id$")
 
 TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                                             TAO_ORB_Core *orb_core,
-                                            CORBA::Boolean /*flag*/)
+                                            CORBA::Boolean flag)
   : TAO_Transport (TAO_TAG_SHMEM_PROFILE,
                    orb_core),
     connection_handler_ (handler),
     messaging_object_ (0)
 {
-#if 0
   if (flag)
     {
       // Use the lite version of the protocol
@@ -41,7 +41,6 @@ TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handl
                TAO_GIOP_Message_Lite (orb_core));
     }
   else
-#endif /*#if 0 */
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,

@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "GIOP_Message_Base.h"
 #include "operation_details.h"
 #include "GIOP_Utils.h"
@@ -16,6 +17,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao, GIOP_Message_Base, "$Id$")
+
 
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
@@ -46,7 +48,7 @@ TAO_GIOP_Message_Base::init (CORBA::Octet major,
 
 
 void
-TAO_GIOP_Message_Base::reset (int /* reset_flag */)
+TAO_GIOP_Message_Base::reset (void)
 {
   // no-op
 }
@@ -254,10 +256,14 @@ TAO_GIOP_Message_Base::message_type (
     case TAO_GIOP_CLOSECONNECTION:
       return TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION;
 
+    case TAO_GIOP_FRAGMENT:
+      return TAO_PLUGGABLE_MESSAGE_FRAGMENT;
+
     case TAO_GIOP_CANCELREQUEST:
     case TAO_GIOP_MESSAGERROR:
-    case TAO_GIOP_FRAGMENT:
       // Never happens: why??
+
+
     default:
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) %N:%l        message_type : ")
@@ -386,8 +392,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       // Copy the pay load..
 
       // Calculate the bytes that needs to be copied in the queue...
-      size_t copy_len =
-        state.message_size () - TAO_GIOP_MESSAGE_HEADER_LEN;
+      size_t copy_len =  state.payload_size ();
 
       // If teh data that needs to be copied is more than that is
       // available to us ..
@@ -449,6 +454,42 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
 }
 
 
+int
+TAO_GIOP_Message_Base::consolidate_fragments (TAO_Queued_Data *dqd,
+                                              const TAO_Queued_Data *sqd)
+{
+  if (dqd->byte_order_ != sqd->byte_order_
+      || dqd->major_version_ != sqd->major_version_
+      || dqd->minor_version_ != sqd->minor_version_)
+    {
+      // Yes, print it out in all debug levels!. This is an error by
+      // CORBA 2.4 spec
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) incompatible fragments:")
+                  ACE_TEXT ("different GIOP versions or byte order\n")));
+      return -1;
+    }
+
+  // Skip the header in the incoming message
+  sqd->msg_block_->rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
+
+  // If we have a fragment header skip the header length too..
+  if (sqd->minor_version_ == 2)
+    sqd->msg_block_->rd_ptr (TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
+
+  // Get the length of the incoming message block..
+  int incoming_size = sqd->msg_block_->length ();
+
+  // Increase the size of the destination message block
+  dqd->msg_block_->size (incoming_size);
+
+  // Copy the data
+  dqd->msg_block_->copy (sqd->msg_block_->rd_ptr (),
+                         incoming_size);
+
+  return 0;
+}
+
 void
 TAO_GIOP_Message_Base::get_message_data (TAO_Queued_Data *qd)
 {
@@ -459,6 +500,9 @@ TAO_GIOP_Message_Base::get_message_data (TAO_Queued_Data *qd)
     this->message_state_.giop_version_.major;
   qd->minor_version_ =
     this->message_state_.giop_version_.minor;
+
+  qd->more_fragments_ =
+    this->message_state_.more_fragments_;
 
   qd->msg_type_=
     this->message_type (this->message_state_);

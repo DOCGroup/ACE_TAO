@@ -279,6 +279,11 @@
 
 // Define if your processor does not store words with the most significant
 // byte first.
+
+// @todo: It seems to be that this definition of TAO_ENCAP_BYTE_ORDER
+// should be  removed. We have an equivalent ACE definition in
+// ACE_CDR_BYTE_ORDER. Today both of them are consistent. It would be
+// a havoc if oneday this consistency is gone..
 #if defined (ACE_LITTLE_ENDIAN)
 #  define TAO_ENCAP_BYTE_ORDER 1  /* little endian encapsulation byte order has
                                      the value = 1 */
@@ -927,6 +932,14 @@ enum TAO_Policy_Scope
 #if !defined (TAO_DEF_GIOP_MINOR)
 #define TAO_DEF_GIOP_MINOR 2
 #endif /* TAO_DEF_GIOP_MINOR */
+
+#if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
+#   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024
+#endif /*TAO_CONNECTION_HANDLER_STACK_BUF_SIZE */
+
+#if !defined (TAO_RESUMES_CONNECTION_HANDLER)
+#   define TAO_RESUMES_CONNECTION_HANDLER 1
+#endif /*TAO_RESUMES_CONNECTION_HANDLER*/
 
 // By default TAO generate the OMG standard profile components
 // (ORB_TYPE and CODE_SETS)
