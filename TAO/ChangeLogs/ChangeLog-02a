@@ -1,3 +1,17 @@
+Thu Jul  6 21:15:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+
+	  Signature for create_alias_tc was not consistent with
+	  the header file. Also commented out an unused parameter
+	  name.
+
+	* orbsvcs/IFR_Service/TCF_Loader.h:
+	* orbsvcs/IFR_Service/TCF_Loader.cpp:
+
+	  Throw spec was inconsistent with base class 
+	  TAO_Object_Loader.
+
 Thu Jul  6 20:46:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceC.i:
