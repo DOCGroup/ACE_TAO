@@ -74,7 +74,7 @@ Dispatcher_Task::svc (void)
       }
 
     ACE_DEBUG ((LM_DEBUG, "(%t) Dispatcher Thread started prio=%d\n", prio));
-  
+
   while (!done)
     {
       ACE_Message_Block *mb;
@@ -169,9 +169,8 @@ void Dispatch_Queue_Item::init_i (const QoSDescriptor& qos_info)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
-
+template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
-
+#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
