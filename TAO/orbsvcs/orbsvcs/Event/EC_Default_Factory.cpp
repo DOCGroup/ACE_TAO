@@ -54,9 +54,9 @@ TAO_EC_Default_Factory::unsupported_option_value (const char * option_name,
                                                   const char * option_value)
 {
   ACE_ERROR ((LM_ERROR,
-              "EC_Default_Factory -"
+              "EC_Default_Factory - "
               "Unsupported <%s> option value: <%s>. "
-              "Ignoring this option - using defaults instead.",
+              "Ignoring this option - using defaults instead.\n",
               option_name,
               option_value));
 }
