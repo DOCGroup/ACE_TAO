@@ -1,3 +1,10 @@
+Wed Mar 28 20:33:28 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/ACE.cpp: Further improved the implementation of
+	  handle_ready() by simply calling poll() with the timeout
+ 	  pointer.  Thanks to Przemyslaw Marciniak <pmarciniak@lucent.com>
+ 	  for reporting this.
+
 Wed Mar 28 17:45:22 2001  Steve Huston  <shuston@riverace.com>
 
         * bin/make_pretty.pl: Adjust the error detector for IBM C/C++ 3.6.6.
