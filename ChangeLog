@@ -1,3 +1,13 @@
+Fri Oct 18 20:13:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_gcc.GNU: Added an optional
+          build parameter, with_ld, whose default value is hpux. This
+          says which ld is used with g++.
+
+        * include/makeinclude/platform_g++_common.GNU: When setting the
+          SOFLAGS for setting SONAME, if with_ld is hpux, use +h, not -h.
+          -h means "hide symbol" in HP-UX ld.
+
 Fri Oct 18 17:12:03 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/C++NPv2/display_logfile.cpp: 
