@@ -45,6 +45,7 @@ test (void *args)
       ACE_ASSERT (pm->release () == 0);
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) = released\n"));
     }
+  return 0;
 }
 
 static void

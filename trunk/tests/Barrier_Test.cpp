@@ -71,8 +71,6 @@ main (int, char *argv[])
   ACE_START_TEST ("Barrier_Test.cpp");
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Service_Config daemon (argv[0]);
-
   int n_threads = ACE_MAX_THREADS;
   int n_iterations = ACE_MAX_ITERATIONS;
 
