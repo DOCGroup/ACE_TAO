@@ -24,18 +24,19 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub new {
-  my($class)    = shift;
-  my($global)   = shift;
-  my($inc)      = shift;
-  my($template) = shift;
-  my($ti)       = shift;
-  my($relative) = shift;
-  my($addtemp)  = shift;
-  my($addproj)  = shift;
-  my($progress) = shift;
-  my($toplevel) = shift;
-  my($type)     = shift;
-  my($self)     = Parser::new($class);
+  my($class)     = shift;
+  my($global)    = shift;
+  my($inc)       = shift;
+  my($template)  = shift;
+  my($ti)        = shift;
+  my($relative)  = shift;
+  my($addtemp)   = shift;
+  my($addproj)   = shift;
+  my($progress)  = shift;
+  my($toplevel)  = shift;
+  my($baseprojs) = shift;
+  my($type)      = shift;
+  my($self)      = Parser::new($class);
 
   $self->{'relative'}       = $relative;
   $self->{'template'}       = $template;
@@ -54,6 +55,7 @@ sub new {
   $self->{'reading_global'} = 0;
   $self->{'global_assign'}  = {};
   $self->{'assign'}         = {};
+  $self->{'baseprojs'}      = $baseprojs;
 
   return $self;
 }
@@ -512,6 +514,12 @@ sub get_assignment {
   my($name) = shift;
   my($tag)  = ($self->{'reading_global'} ? 'global_assign' : 'assign');
   return $self->{$tag}->{$name};
+}
+
+
+sub get_baseprojs {
+  my($self) = shift;
+  return $self->{'baseprojs'};
 }
 
 # ************************************************************

@@ -40,7 +40,7 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = 1.5;
+  $self->{'version'}  = 1.6;
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
@@ -61,7 +61,7 @@ sub optionError {
   print STDERR "$base v$self->{'version'}\n" .
                "Usage: $base [-global <file>] [-include <directory>] [-recurse]\n" .
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
-               $spaces . "[-template <file>] [-relative NAME=VAR]\n" .
+               $spaces . "[-template <file>] [-relative NAME=VAR] [-base <project>]\n" .
                $spaces . "[-noreldefs] [-notoplevel] [-static] [-static_only]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
@@ -82,6 +82,8 @@ sub optionError {
 
   my($default) = $self->extractType($self->{'default'});
   print STDERR
+"       -base           Add <project> as a base project to each generated\n" .
+"                       project file.\n" .
 "       -global         Specifies the global input file.  Values stored\n" .
 "                       within this file are applied to all projects.\n" .
 "       -include        Specifies a directory to search when looking for base\n" .
@@ -252,7 +254,8 @@ sub run {
                                   $options->{'addtemp'},
                                   $options->{'addproj'},
                                   (-t 1 ? \&progress : undef),
-                                  $options->{'toplevel'});
+                                  $options->{'toplevel'},
+                                  $options->{'baseprojs'});
       if ($base ne $file) {
         my($dir) = dirname($file);
         if (!$generator->cd($dir)) {

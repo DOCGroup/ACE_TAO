@@ -11,7 +11,7 @@ projects for each one found.
 
 Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
-              [-template <file>] [-relative NAME=VAR]
+              [-template <file>] [-relative NAME=VAR] [-base <project>]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
@@ -19,6 +19,8 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
                       va4 | vc6 | vc7>]
               [files]
 
+       -base           Add <project> as a base project to each generated
+                       project file.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
        -include        Specifies a directory to search when looking for base
@@ -105,7 +107,7 @@ project in the directory from which the script was started.
 
 Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
-              [-template <file>] [-relative NAME=VAR]
+              [-template <file>] [-relative NAME=VAR] [-base <project>]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
@@ -113,6 +115,8 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
                       va4 | vc6 | vc7>]
               [files]
 
+       -base           Add <project> as a base project to each generated
+                       project file.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
        -include        Specifies a directory to search when looking for base
