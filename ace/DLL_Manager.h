@@ -169,7 +169,7 @@ class ACE_Export ACE_DLL_Manager
 public:
   // This if to silence the compiler warnings, even though ACE_Framework_Repository 
   // always uses the instance method.
-  friend ACE_Framework_Repository;
+  friend class ACE_Framework_Repository;
 
   enum
   {
