@@ -1,3 +1,8 @@
+Wed Jun 27 22:02:03 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/Naming_Service/README: Updated this to reflect the fact
+ 	that multicast response is no longer the default.
+
 Wed Jun 27 14:25:48 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/PortableServer/Operation_Table.cpp (find): Enhanced the
