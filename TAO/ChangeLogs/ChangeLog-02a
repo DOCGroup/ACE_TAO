@@ -1,3 +1,52 @@
+Thu Apr 27 14:31:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/varout.h:
+        * tao/varout.i:
+        * tao/varout.cpp:
+          Removed the TAO_Object_Field_T<> template, is was only required
+          for interpretive marshaling, but that is long gone.  This is
+          another step in solving [BUGID:135]
+
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+          Don't generate code that uses TAO_Object_Field_T<>
+
+        * tao/Any.cpp:
+        * tao/CDR.cpp:
+        * tao/DomainC.cpp:
+        * tao/DynAnyC.cpp:
+        * tao/IORC.cpp:
+        * tao/ImplRepoC.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/InterfaceC.h:
+        * tao/LocalObject.cpp:
+        * tao/Marshal.cpp:
+        * tao/MessagingC.cpp:
+        * tao/MessagingC.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/Typecode.cpp:
+        * tao/corba.h:
+        * tao/singletons.h:
+          Removed all references to TAO_Object_Field, TAO_Object_Field_T<>
+          or varout.h
+          Also removed singletons.h because it was empty.
+
+        * */Makefile:
+          Updated all dependencies (again)
+
 Thu Apr 27 13:08:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/tao_idl_static.dsp:
@@ -8,15 +57,15 @@ Thu Apr 27 13:08:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Apr 27 15:08:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/DynAny_i.h: Also need to include Typecode.h here.
+        * tao/DynAny_i.h: Also need to include Typecode.h here.
 
 Thu Apr 27 15:07:21 2000  Shawn Hannan <hannan@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Simple/Consumer.cpp:
-	* orbsvcs/examples/RtEC/Simple/Supplier.cpp:
+        * orbsvcs/examples/RtEC/Simple/Consumer.cpp:
+        * orbsvcs/examples/RtEC/Simple/Supplier.cpp:
 
-	  Replaced #include "orbsvcs/RtecEventChannelAdminS.h"
-	  with #include "orbsvcs/RtecEventChannelAdminC.h"
+          Replaced #include "orbsvcs/RtecEventChannelAdminS.h"
+          with #include "orbsvcs/RtecEventChannelAdminC.h"
 
 Thu Apr 27 11:10:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 

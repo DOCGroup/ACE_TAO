@@ -17,7 +17,6 @@
 #include "tao/DomainC.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
-#include "tao/varout.h"
 #include "tao/POA_CORBA.h"
 #include "tao/ORB.h"
 
@@ -404,11 +403,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DomainManager_ptr
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_DomainManager,CORBA_DomainManager_var>;
   template class TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>;
   template class TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Field_T<CORBA_DomainManager,CORBA_DomainManager_var>
 # pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_DomainManager,CORBA_DomainManager_var>
 # pragma instantiate TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -477,7 +474,6 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstructionPolic
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>;
   template class TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO_Object_Manager<CORBA_ConstructionPolicy,CORBA_ConstructionPolicy_var>

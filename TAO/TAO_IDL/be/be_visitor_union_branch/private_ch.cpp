@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_union_branch.h"
 
@@ -170,14 +170,8 @@ be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
   os = this->ctx_->stream ();
 
   os->indent (); // start from current indentation
-  // C++ does not allow an object declaration inside a union. Hence we
-  // must have a pointer. This changes some of the methods.
-  // We use TAO_Object_Field_T<> so that _upcast() and _downcast() will work.
-  *os << "TAO_Object_Field_T<"
-      << bt->nested_type_name (bu, "") << ",";
-  // Must use another statement, nested_type_name has side effects...
   *os << bt->nested_type_name (bu, "_var")
-      << "> *" << ub->local_name () << "_;\n";
+      << " *" << ub->local_name () << "_;\n";
   return 0;
 }
 
@@ -207,14 +201,8 @@ be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
   os = this->ctx_->stream ();
 
   os->indent (); // start from current indentation
-  // C++ does not allow an object declaration inside a union. Hence we
-  // must have a pointer. This changes some of the methods.
-  // We use TAO_Object_Field_T<> so that _upcast() and _downcast() will work.
-  *os << "TAO_Object_Field_T<"
-      << bt->nested_type_name (bu, "") << ",";
-  // Must use another statement, nested_type_name has side effects...
   *os << bt->nested_type_name (bu, "_var")
-      << "> *" << ub->local_name () << "_;\n";
+      << " *" << ub->local_name () << "_;\n";
   return 0;
 }
 
@@ -250,10 +238,8 @@ be_visitor_union_branch_private_ch::visit_predefined_type (be_predefined_type *n
       // check if we are dealing with a CORBA::Object
       if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
         {
-          *os << "TAO_Object_Field_T<"
-              << bt->name () << ","
-              << bt->name () << "_var"
-              << "> *" << ub->local_name () << "_;\n";
+          *os << bt->name () << "_var"
+              << " *" << ub->local_name () << "_;\n";
         }
       else
         *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()

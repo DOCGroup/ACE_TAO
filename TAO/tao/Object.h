@@ -316,36 +316,6 @@ private:
   CORBA::Object_ptr &ptr_;
 };
 
-class TAO_Export TAO_Object_Field
-{
-  // = TITLE
-  //   Base class to represent fields (in structures) corresponding to
-  //   object references.
-  //
-  // = DESCRIPTION
-  //   When an object reference appears in a structure the marshaling
-  //   and demarhsaling of the structure gets complicated:
-  //   the interpreter can only marshal CORBA_Object_ptr when it
-  //   dermarshal it creates on of those objects.
-  //   The downcasting to the right type must be executed by classes
-  //   with compile-time knowledge of the object type.
-  //   The solution addopted in TAO is to create a special manager
-  //   class for that field called TAO_Object_Field_T<T> (see
-  //   varout.h), this class serves as an abstract interface to
-  //   manipulate instances of those classes (by the interpreter, of
-  //   course).
-  //
-public:
-  virtual ~TAO_Object_Field (void);
-  // destructor
-
-  virtual void _downcast (CORBA_Object* base_ptr,
-                          CORBA_Environment &ACE_TRY_ENV =
-                            TAO_default_environment ()) = 0;
-  virtual CORBA_Object* _upcast (void) = 0;
-  virtual void _release (void) = 0;
-};
-
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA_Object*);
 

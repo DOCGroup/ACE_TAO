@@ -17,7 +17,6 @@
 #include "tao/Any.h"
 #include "tao/Exception.h"
 #include "tao/Principal.h"
-#include "tao/singletons.h"
 #include "tao/Marshal.h"
 #include "tao/debug.h"
 

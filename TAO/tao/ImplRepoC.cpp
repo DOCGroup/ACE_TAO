@@ -3177,10 +3177,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>;
   template class TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>
 #  pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerObject,ImplementationRepository::ServerObject_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -3704,10 +3702,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<ImplementationRepository::Administration,ImplementationRepository::Administration_var>;
   template class TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<ImplementationRepository::Administration,ImplementationRepository::Administration_var>
 #  pragma instantiate TAO_Object_Manager<ImplementationRepository::Administration,ImplementationRepository::Administration_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -4015,10 +4011,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, ImplementationRepository
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>;
   template class TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>
 #  pragma instantiate TAO_Object_Manager<ImplementationRepository::ServerInformationIterator,ImplementationRepository::ServerInformationIterator_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

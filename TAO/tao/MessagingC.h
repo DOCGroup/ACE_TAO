@@ -43,7 +43,6 @@
 #include "tao/PolicyC.h"
 #include "tao/IOPC.h"
 #include "tao/PollableC.h"
-#include "tao/varout.h"
 
 #if (TAO_HAS_SMART_PROXIES == 1)
 #include "tao/Smart_Proxies.h"
