@@ -171,17 +171,17 @@ namespace CIAO
         }
         
       total = src.source.length ();
-      for (size_t i = 0; i < total; ++i)
+      for (size_t j = 0; j < total; ++j)
         {
-          XMLSchema::string< char > curr ((src.source[i]));
+          XMLSchema::string< char > curr ((src.source[j]));
           add.add_source (curr);
         }  
       
       total = src.execParameter.length ();
-      for (size_t i = 0; i < total; ++i)
+      for (size_t k = 0; k < total; ++k)
         {
           add.add_execParameter (
-            Property_Handler::get_property (src.execParameter[i])
+            Property_Handler::get_property (src.execParameter[k])
           );
         }
         

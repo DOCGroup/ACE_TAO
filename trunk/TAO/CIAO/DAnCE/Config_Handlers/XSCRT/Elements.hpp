@@ -14,9 +14,10 @@
 
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
 
-#pragma warning(disable:4786)
+
 // Stuff for broken VC6. Don't like what you see - use better compiler!
 //
+#pragma warning(disable:4786)
 
 inline
 std::wistream&
@@ -49,6 +50,42 @@ operator<< (std::wostream& os, __int64 const& v)
 inline
 std::wostream&
 operator<< (std::wostream& os, unsigned __int64 const& v)
+{
+  os << unsigned long (v);
+  return os;
+}
+
+inline
+std::istream&
+operator>> (std::istream& is, __int64& v)
+{
+  long t;
+  is >> t;
+  v = t;
+  return is;
+}
+
+inline
+std::istream&
+operator>> (std::istream& is, unsigned __int64& v)
+{
+  unsigned long t;
+  is >> t;
+  v = t;
+  return is;
+}
+
+inline
+std::ostream&
+operator<< (std::ostream& os, __int64 const& v)
+{
+  os << long (v);
+  return os;
+}
+
+inline
+std::ostream&
+operator<< (std::ostream& os, unsigned __int64 const& v)
 {
   os << unsigned long (v);
   return os;
