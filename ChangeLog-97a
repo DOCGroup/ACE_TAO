@@ -4,6 +4,9 @@ Tue Feb 11 11:26:03 1997  David L. Levine  <levine@cs.wustl.edu>
 	  and only support ACE_OS::clock_gettime if that's defined.
 	  It can be supported on Solaris 2.5, but -lposix4 is then required.
 
+	* ace/Thread_Priority.*: added increment () and decrement ()
+	  operations.
+
 	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU:
 	  added -pta back to avoid link problems with template classes
 	  that have virtual functions that are all inline, if inlining
@@ -15,6 +18,10 @@ Tue Feb 11 11:26:03 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/Logger/simple-server/server_loggerd.cpp (main):
 	  added ACE_UNUSED_ARG (sa);.
+
+	* examples/Reactor/Misc/notification.cpp (Thread_Handler ctor):
+	  changed type of n_threads argument from int to size_t to avoid
+	  signed/unsigned comparison.
 
 Mon Feb 10 15:27:02 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
