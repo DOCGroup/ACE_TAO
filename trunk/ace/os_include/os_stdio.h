@@ -35,6 +35,8 @@
 #if defined (VXWORKS)
 // for remove(), rename()
 #  include /**/ <ioLib.h>
+// for remCurIdGet()
+#  include /**/ <remLib.h>
 #endif /* VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
