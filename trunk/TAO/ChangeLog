@@ -1,3 +1,8 @@
+Mon Jul 29 13:44:51 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* docs/releasenotes/PSS.html:
+	  Added the present status and future work related information.
+
 Mon Jul 29 11:15:47 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.IFRService:
