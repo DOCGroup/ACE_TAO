@@ -35,29 +35,31 @@ public:
   ACE_URL_Property (const ACE_USHORT16 *name,
 		    const ACE_USHORT16 *value);
 
-  ACE_URL_Property (ACE_URL_Property &p);
+  ACE_URL_Property (const ACE_URL_Property &p);
   // Copy constructor.
   
   ~ACE_URL_Property (void);
   // Destructor.
 
-  ACE_URL_Property &operator= (ACE_URL_Property &rhs);
+  ACE_URL_Property &operator= (const ACE_URL_Property &rhs);
   // Assignment operator.
 
-  int operator== (ACE_URL_Property &rhs) const;
+  int operator== (const ACE_URL_Property &rhs) const;
   // Equals operator.
 
-  int operator!= (ACE_URL_Property &rhs) const;
+  int operator!= (const ACE_URL_Property &rhs) const;
   // Not equals operator.
 
-  ACE_WString *name (void);
+  ACE_WString *name_rep (void);
+  const ACE_WString *name (void) const;
   // Query property name.
 
   void name (const ACE_USHORT16 *n);
   void name (const char *n);
   // Set property name.
 
-  ACE_WString *value (void);
+  ACE_WString *value_rep (void);
+  const ACE_WString *value (void) const;
   // Query property value.
 
   void value (const ACE_USHORT16 *v);
@@ -69,10 +71,11 @@ public:
   // Returns memory size required to encode this object.
 
   void encode (void *buf) const;
-  // Encode this object into buf for network transmission.
+  // Encodes this object into buf for network transmission.
 
-  static ACE_URL_Property *decode (void *buf);
-  // Decode buf and create an object of this class.
+  ACE_URL_Property *decode (void *buf);
+  // Decodes buf and modifies this object, you should
+  // probably create this with default ctor.
 
 protected:
   ACE_WString *name_;
@@ -93,22 +96,22 @@ class ACE_Export ACE_URL_Offer
   //     <ACE_URL_Property_Seq>.
 {
 public:
-  ACE_URL_Offer (const char *url, size_t size);
+  ACE_URL_Offer (const size_t size = 1, const char *url = 0);
   // Create an offer.
 
-  ACE_URL_Offer (ACE_URL_Offer &o);
+  ACE_URL_Offer (const ACE_URL_Offer &o);
   // Copy ctor.
 
   ~ACE_URL_Offer (void);
   // Default destructor.
 
-  ACE_URL_Offer &operator= (ACE_URL_Offer &rhs);
+  ACE_URL_Offer &operator= (const ACE_URL_Offer &rhs);
   // Assignment operator.
 
-  int operator== (ACE_URL_Offer &rhs) const;
+  int operator== (const ACE_URL_Offer &rhs) const;
   // Equality operator.
 
-  int operator!= (ACE_URL_Offer &rhs) const;
+  int operator!= (const ACE_URL_Offer &rhs) const;
   // Inequality operator.
 
   const char *url (void) const;
@@ -120,7 +123,7 @@ public:
   ACE_URL_Property_Seq &url_properties (void);
   // Get properties of this offer.
   
-  void url_properties (ACE_URL_Property_Seq &prop);
+  void url_properties (const ACE_URL_Property_Seq &prop);
   // Set properties of this offer.
 
   // Some helper functions for encoding and decoding.
@@ -128,10 +131,11 @@ public:
   // Returns memory size required to encode this object.
 
   void encode (void *buf) const;
-  // Encode this object into buf for network transmission.
+  // Encodes this object into buf for network transmission.
 
-  static ACE_URL_Offer *decode (void *buf);
-  // Decode buf and create an object of this class.
+  ACE_URL_Offer *decode (void *buf);
+  // Decodes buf into current object, you better use
+  // the default ctor.
 
 protected:
   char *url_;
