@@ -124,13 +124,14 @@ class GIOP {				// namespace
     // All GIOP messages include a header and message type.
     //
     enum MsgType {
-	Request = 0,				// sent by client
-	Reply = 1,                              // by server
-	CancelRequest = 2,                      // by client
-	LocateRequest = 3,                      // by client
-	LocateReply = 4,                        // by server
-	CloseConnection = 5,                    // by server
-	MessageError = 6                        // by both
+	Request = 0,		// sent by client
+	Reply = 1,		// by server
+	CancelRequest = 2,	// by client
+	LocateRequest = 3,	// by client
+	LocateReply = 4,	// by server
+	CloseConnection = 5,	// by server
+	MessageError = 6,	// by both
+	EndOfFile = 7		// "discovered" by either
     };
 
     struct MessageHeader {
@@ -274,34 +275,35 @@ class GIOP {				// namespace
     static void		close_connection (ACE_HANDLE &fd, void *ctx);
 
     //
-    // Generic server side data dispatch -- called for all file descriptors
-    // on which incoming messages are expected.
-    //
-    // The handle_request() routine is used to handle request messages; its
-    // 'reply' parameter is null if the request is "oneway" (or the client
-    // isn't waiting for the response that this request normally creates).  
-    //
-    // The optional check_forward() routine is used to verify that the
-    // request is to be delivered within this process by handle_request().
-    // Each call to handle_request() is preceded by a call to this routine
-    // if it's provided.  It's used when handling GIOP "Request" messages
-    // as well as GIOP "LocateRequest" messages, and returns an enum to
-    // indicate overal status (LocateStatusType) as well as an objref
-    // in the case of OBJECT_FORWARD.  That objref is released.
-    //
+  // Generic server side data dispatch -- called for all file descriptors
+  // on which incoming messages are expected.
+  //
+  // The handle_request() routine is used to handle request messages; its
+  // 'reply' parameter is null if the request is "oneway" (or the client
+  // isn't waiting for the response that this request normally creates).  
+  //
+  // The optional check_forward() routine is used to verify that the
+  // request is to be delivered within this process by handle_request().
+  // Each call to handle_request() is preceded by a call to this routine
+  // if it's provided.  It's used when handling GIOP "Request" messages
+  // as well as GIOP "LocateRequest" messages, and returns an enum to
+  // indicate overal status (LocateStatusType) as well as an objref
+  // in the case of OBJECT_FORWARD.  That objref is released.
+  // 
+  // Return: 1==success,0==EOF,-1==error
   typedef LocateStatusType (*ForwardFunc)(opaque&,CORBA_Object_ptr&,void*);
   typedef void (*RequestHandler)(RequestHeader&,CDR&,CDR*,void*,CORBA_Environment&);
 
-  static void incoming_message(ACE_SOCK_Stream& peer,
-			       ForwardFunc check_forward,
-			       RequestHandler handle_request,
-			       void* context,
-			       CORBA_Environment& env);
-  static void incoming_message(ACE_HANDLE& fd,
-			       ForwardFunc check_forward,
-			       RequestHandler handle_request,
-			       void* context,
-			       CORBA_Environment& env);
+  static int incoming_message(ACE_SOCK_Stream& peer,
+			      ForwardFunc check_forward,
+			      RequestHandler handle_request,
+			      void* context,
+			      CORBA_Environment& env);
+  static int incoming_message(ACE_HANDLE& fd,
+			      ForwardFunc check_forward,
+			      RequestHandler handle_request,
+			      void* context,
+			      CORBA_Environment& env);
 
   static CORBA_Boolean send_message (CDR& stream, ACE_SOCK_Stream& peer);
   static CORBA_Boolean send_message (CDR& stream, ACE_HANDLE& connection);

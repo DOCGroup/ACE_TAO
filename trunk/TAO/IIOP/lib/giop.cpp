@@ -412,8 +412,7 @@ GIOP::read_message (ACE_SOCK_Stream& connection, CDR& msg, CORBA_Environment& en
     if (len == 0) {			// EOF
       dmsg1 ("Header EOF ... peer probably aborted connection %d", 
 	     connection);
-
-      //
+      return EndOfFile;
       // XXX should probably find some way to report this without
       // an exception, since for most servers it's not an error.
       // Is it _never_ an error?  Not sure ...
@@ -1118,7 +1117,7 @@ GIOP::Invocation::invoke (
 // In the typical case, the request and response buffers live on the
 // stack so that the heap never gets used.  These grow if needed.
 //
-void
+int
 GIOP::incoming_message (
     ACE_SOCK_Stream&	peer,
     LocateStatusType	check_forward (
@@ -1137,46 +1136,79 @@ GIOP::incoming_message (
     CORBA_Environment	&env
 )
 {
-    unsigned char	buffer [CDR::DEFAULT_BUFSIZE];
-    CDR			msg (&buffer [0], sizeof buffer);
+  int retval = 1;		// 1==success, 0==eof, -1==error
 
-    switch (read_message (peer, msg, env)) {
-      case Request:
-	{
-	    RequestHeader	req;
-	    CORBA_Boolean	hdr_status;
+  unsigned char	buffer [CDR::DEFAULT_BUFSIZE];
+  CDR			msg (&buffer [0], sizeof buffer);
 
-	    //
-	    // Tear out the service context ... we currently ignore it,
-	    // but it should probably be passed to each ORB service as
-	    // appropriate (e.g. transactions, security).
-	    //
-	    // NOTE:  As security support kicks in, this is a good place
-	    // to verify a digital signature, if that is required in this
-	    // security environment.  It may be required even when using
-	    // IPSEC security infrastructure.
-	    //
-	    hdr_status = CDR::decoder (&TC_ServiceContextList,
-		    &req.service_info, 0, &msg, env);
+  switch (read_message (peer, msg, env))
+    {
+      //
+      // These messages should never be sent to the server; it's an error
+      // if the peer tries.  Set the environment accordingly, as it's not
+      // yet been reported as an error.
+      //
+    case Reply:
+    case LocateReply:
+    case CloseConnection:
+    default:					// Unknown message
+      dmsg ("Illegal message received by server");
+      env.exception (new CORBA_COMM_FAILURE (COMPLETED_NO));
+      // FALLTHROUGH
 
-	    //
-	    // Get the rest of the request header ...
-	    //
-	    hdr_status = hdr_status && msg.get_ulong (req.request_id);
-	    hdr_status = hdr_status && msg.get_boolean (req.response_expected);
-	    hdr_status = hdr_status && CDR::decoder (&TC_opaque, &req.object_key,
-		    0, &msg, env);
-	    hdr_status = hdr_status && CDR::decoder (_tc_CORBA_String, &req.operation,
-		    0, &msg, env);
-	    hdr_status = hdr_status && CDR::decoder (_tc_CORBA_Principal,
-		    &req.requesting_principal, 0, &msg, env);
+      //
+      // read_message() has already set some error in the environment for
+      // all "MessageError" cases, so don't clobber it.
+      //
+      // General error recovery is to send MessageError to the peer just
+      // in case (it'll fail on EOF) and then close the connection.
+      //
+    case MessageError:
+      retval = -1;
+      send_error (peer);
+      break;
+
+    case EndOfFile:
+      retval = 0;
+      break;
+
+      // This is the common case!
+    case Request:
+      {
+	RequestHeader	req;
+	CORBA_Boolean	hdr_status;
+
+	//
+	// Tear out the service context ... we currently ignore it,
+	// but it should probably be passed to each ORB service as
+	// appropriate (e.g. transactions, security).
+	//
+	// NOTE:  As security support kicks in, this is a good place
+	// to verify a digital signature, if that is required in this
+	// security environment.  It may be required even when using
+	// IPSEC security infrastructure.
+	//
+	hdr_status = CDR::decoder (&TC_ServiceContextList,
+				   &req.service_info, 0, &msg, env);
+
+	//
+	// Get the rest of the request header ...
+	//
+	hdr_status = hdr_status && msg.get_ulong (req.request_id);
+	hdr_status = hdr_status && msg.get_boolean (req.response_expected);
+	hdr_status = hdr_status && CDR::decoder (&TC_opaque, &req.object_key,
+						 0, &msg, env);
+	hdr_status = hdr_status && CDR::decoder (_tc_CORBA_String, &req.operation,
+						 0, &msg, env);
+	hdr_status = hdr_status && CDR::decoder (_tc_CORBA_Principal,
+						 &req.requesting_principal, 0, &msg, env);
 
 
-	    // XXX check whether hdr_status identifies a header
-	    // unmarshaling error, and handle appropriately
+	// XXX check whether hdr_status identifies a header
+	// unmarshaling error, and handle appropriately
 
 #ifdef	DEBUG
-	    if (debug_level >= 3) {
+	if (debug_level >= 3) {
 		dmsg_v ("%sRequest ID %#lx from FD %d",
 		    req.response_expected ? "" : "Oneway ",
 		    req.request_id, fd);
@@ -1194,14 +1226,14 @@ GIOP::incoming_message (
 
 		// NOTE:  describe any service context, and how
 		// many bytes of non-header data were sent.
-	    }
+	}
 #endif	// DEBUG
 
-	    //
-	    // Verify that we're to dispatch the request within this
-	    // particular process.
-	    //
-	    if (check_forward != 0) {
+	//
+	// Verify that we're to dispatch the request within this
+	// particular process.
+	//
+	if (check_forward != 0) {
 		LocateStatusType		status;
 		CORBA_Object_ptr		fwd_ref = 0;
 
@@ -1253,45 +1285,45 @@ GIOP::incoming_message (
 		    CORBA_string_free (req.operation);
 		    return;
 		}
-	    }
-
-
-	    //
-	    // So, we read a request, now dispatch it using something more
-	    // primitive than a CORBA2 ServerRequest pseudo-object.
-	    //
-	    if (req.response_expected) {
-		ServiceContextList	resp_ctx;
-		unsigned char		buf2 [CDR::DEFAULT_BUFSIZE];
-		CDR 			response (&buf2 [0], sizeof buf2);
-
-		start_message (Reply, response);
-		resp_ctx.length = 0;
-		CDR::encoder (&TC_ServiceContextList, &resp_ctx,
-			0, &response, env);
-		response.put_ulong (req.request_id);
-
-		handle_request (req, msg, &response, context, env);
-
-		//
-		// "handle_request" routine puts ReplyStatusType then
-		// parameters.
-		//
-		(void) send_message (response, peer);
-	    } else
-		handle_request (req, msg, 0, context, env);
-
-	    delete req.object_key.buffer;
-	    CORBA_string_free (req.operation);
 	}
-	break;
 
-      //
-      // Forward requests as needed; if caller hasn't provided code to
-      // support forwarding, we default to doing no forwarding.
-      //
-      case LocateRequest:
-	{
+
+	//
+	// So, we read a request, now dispatch it using something more
+	// primitive than a CORBA2 ServerRequest pseudo-object.
+	//
+	if (req.response_expected) {
+	  ServiceContextList	resp_ctx;
+	  unsigned char		buf2 [CDR::DEFAULT_BUFSIZE];
+	  CDR 			response (&buf2 [0], sizeof buf2);
+
+	  start_message (Reply, response);
+	  resp_ctx.length = 0;
+	  CDR::encoder (&TC_ServiceContextList, &resp_ctx,
+			0, &response, env);
+	  response.put_ulong (req.request_id);
+
+	  handle_request (req, msg, &response, context, env);
+
+	  //
+	  // "handle_request" routine puts ReplyStatusType then
+	  // parameters.
+	  //
+	  (void) send_message (response, peer);
+	} else
+	  handle_request (req, msg, 0, context, env);
+
+	delete req.object_key.buffer;
+	CORBA_string_free (req.operation);
+      }
+    break;
+
+    //
+    // Forward requests as needed; if caller hasn't provided code to
+    // support forwarding, we default to doing no forwarding.
+    //
+    case LocateRequest:
+      {
 	    CORBA_ULong		request_id;
 	    opaque			key;
 
@@ -1326,55 +1358,33 @@ GIOP::incoming_message (
 		}
 	    }
 	    (void) send_message (response, peer);
-	}
-	break;
+      }
+    break;
 
-      //
-      // Cancel request -- ignored this implementation.
-      //
-      // THREADING NOTE:  Handling it would require (a) some thread to read
-      // the CancelRequest while one was working on handling the Request,
-      // (b) a way to find the thread working on that request, (c) using
-      // thread cancellation to alert that thread that the work it's
-      // been doing can safely be discarded.  Also of course (d) making
-      // the various worker threads cleanly handle cancellation, and
-      // (e) modifying client code to send a CancelRequest when it's
-      // been canceled.
-      //
-      case CancelRequest:
-	{
+    //
+    // Cancel request -- ignored this implementation.
+    //
+    // THREADING NOTE:  Handling it would require (a) some thread to read
+    // the CancelRequest while one was working on handling the Request,
+    // (b) a way to find the thread working on that request, (c) using
+    // thread cancellation to alert that thread that the work it's
+    // been doing can safely be discarded.  Also of course (d) making
+    // the various worker threads cleanly handle cancellation, and
+    // (e) modifying client code to send a CancelRequest when it's
+    // been canceled.
+    //
+    case CancelRequest:
+      {
 	    CORBA_ULong	request_id;
 
 	    msg.get_ulong (request_id);
-	}
-	break;
+      }
+    break;
 
-      //
-      // These messages should never be sent to the server; it's an error
-      // if the peer tries.  Set the environment accordingly, as it's not
-      // yet been reported as an error.
-      //
-      case Reply:
-      case LocateReply:
-      case CloseConnection:
-      default:					// Unknown message
-	dmsg ("Illegal message received by server");
-	env.exception (new CORBA_COMM_FAILURE (COMPLETED_NO));
-	// FALLTHROUGH
-
-      //
-      // read_message() has already set some error in the environment for
-      // all "MessageError" cases, so don't clobber it.
-      //
-      // General error recovery is to send MessageError to the peer just
-      // in case (it'll fail on EOF) and then close the connection.
-      //
-      case MessageError:
-	send_error (peer);
-	break;
     }
 
-    // ... error if unconsumed data remains; is this the spot to test that?
+  // ... error if unconsumed data remains; is this the spot to test that?
+  return retval;
 }
 
 #if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)

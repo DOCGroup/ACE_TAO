@@ -190,11 +190,9 @@ private:
   TOA::dsi_handler skeleton;
   void* context; // what the hell is this for?  --cjc
 
-  //
-  // Used internally by threaded (and unthreaded) code to
-  // dispatch incoming GIOP messages
-  //
-  void handle_message (Dispatch_Context& context, CORBA_Environment& env);
+  // Used internally by threaded (and unthreaded) code to dispatch
+  // incoming GIOP messages.  Returns 1 for success, 0==EOF, -1==error
+  int handle_message (Dispatch_Context& context, CORBA_Environment& env);
 
 #ifdef	_POSIX_THREADS
   //
