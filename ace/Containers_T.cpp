@@ -907,19 +907,12 @@ ACE_Double_Linked_List<T>::remove_element (T *item)
 }
 
 //--------------------------------------------------
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set)
 
-  template <class T, size_t ACE_SIZE> size_t
+template <class T, size_t ACE_SIZE> size_t
 ACE_Fixed_Set<T, ACE_SIZE>::size (void) const
 {
-  return this->cur_size_;
-}
-
-template <class T> size_t
-ACE_Bounded_Set<T>::size (void) const
-{
-  ACE_TRACE ("ACE_Bounded_Set<T>::size");
+  ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::size");
   return this->cur_size_;
 }
 
@@ -943,9 +936,10 @@ ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
   : cur_size_ (fs.cur_size_)
 {
   ACE_TRACE ("ACE_Fixed_Set<T>::ACE_Fixed_Set");
-
-  for (size_t i = 0; i < this->cur_size_; i++)
-    this->search_structure_[i] = fs.search_structure_[i];
+ 
+  for (size_t i = 0, j = 0; i < fs.max_size_ && j < this->cur_size_; ++i)
+    if (fs.search_structure_[i].is_free_ == 0)
+      this->search_structure_[j++] = fs.search_structure_[i];
 }
 
 template <class T, size_t ACE_SIZE> void
@@ -957,8 +951,9 @@ ACE_Fixed_Set<T, ACE_SIZE>::operator= (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
     {
       this->cur_size_ = fs.cur_size_;
 
-      for (size_t i = 0; i < this->cur_size_; i++)
-        this->search_structure_[i] = fs.search_structure_[i];
+      for (size_t i = 0, j = 0; i < fs.max_size_ && j < this->cur_size_; ++i)
+        if (fs.search_structure_[i].is_free_ == 0)
+          this->search_structure_[j++] = fs.search_structure_[i];
     }
 }
 
@@ -977,10 +972,13 @@ ACE_Fixed_Set<T, ACE_SIZE>::find (const T &item) const
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::find");
 
-  for (size_t i = 0; i < this->cur_size_; i++)
-    if (this->search_structure_[i].item_ == item
-        && this->search_structure_[i].is_free_ == 0)
-      return 0;
+  for (size_t i = 0, j = 0; i < this->max_size_ && j < this->cur_size_; ++i)
+    if (this->search_structure_[i].is_free_ == 0)
+      {
+        if (this->search_structure_[i].item_ == item)
+          return 0;
+        ++j;
+      }
 
   return -1;
 }
@@ -991,29 +989,27 @@ ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::insert");
   ssize_t first_free = -1;   // Keep track of first free slot.
   size_t i;
-
-  for (i = 0; i < this->cur_size_; i++)
+  
+  for (i = 0; 
+       i < this->max_size_  && first_free == -1;
+       ++i)
+       
     // First, make sure we don't allow duplicates.
 
-    if (this->search_structure_[i].item_ == item
-        && this->search_structure_[i].is_free_ == 0)
-      return 1;
-    else if (this->search_structure_[i].is_free_
-             && first_free == -1)
+    if (this->search_structure_[i].is_free_ == 0)
+      {
+        if (this->search_structure_[i].item_ == item)
+          return 1;
+      }
+    else
       first_free = i;
-
+     
   // If we found a free spot let's reuse it.
+
   if (first_free > -1)
     {
       this->search_structure_[first_free].item_ = item;
       this->search_structure_[first_free].is_free_ = 0;
-      return 0;
-    }
-  // Insert at the end of the active portion.
-  else if (i < this->max_size_)
-    {
-      this->search_structure_[i].item_ = item;
-      this->search_structure_[i].is_free_ = 0;
       this->cur_size_++;
       return 0;
     }
@@ -1029,163 +1025,204 @@ ACE_Fixed_Set<T, ACE_SIZE>::remove (const T &item)
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::remove");
 
-  for (size_t i = 0; i < this->cur_size_; i++)
-    if (this->search_structure_[i].item_ == item)
+  for (size_t i = 0, j = 0; 
+       i < this->max_size_ && j < this->cur_size_; 
+       ++i)
+    if (this->search_structure_[i].is_free_ == 0)
       {
-        // Mark this entry as being free.
-        this->search_structure_[i].is_free_ = 1;
-
-        // If we just unbound the highest entry, then we need to
-        // figure out where the next highest active entry is.
-        if (i + 1 == this->cur_size_)
+        if (this->search_structure_[i].item_ == item)
           {
-            while (i > 0
-                   && this->search_structure_[--i].is_free_)
-              continue;
+            // Mark this entry as being free.
+            this->search_structure_[i].is_free_ = 1;
 
-            if (i == 0
-                && this->search_structure_[i].is_free_)
-              this->cur_size_ = 0;
-            else
-              this->cur_size_ = i + 1;
+            --this->cur_size_;
+            return 0;
           }
-        return 0;
+        else
+          ++j;
       }
-
+    
   return -1;
 }
+  
+//--------------------------------------------------
+ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set_Iterator_Base)
 
+template <class T, size_t ACE_SIZE> void
+ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::dump_i (void) const
+{
+#if defined (ACE_HAS_DUMP)
+  ACE_TRACE ("ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::dump_i");
+#endif /* ACE_HAS_DUMP */
+}
+
+template <class T, size_t ACE_SIZE>
+ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::ACE_Fixed_Set_Iterator_Base (ACE_Fixed_Set<T, ACE_SIZE> &s)
+  : s_ (s),
+    next_ (-1),
+    iterated_items_ (0)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::ACE_Fixed_Set_Iterator_Base");
+  this->advance ();
+}
+
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::advance (void)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::advance");
+  
+  if (this->iterated_items_ < this->s_.cur_size_)
+    {
+      for (++this->next_;
+           ACE_static_cast(size_t, this->next_) < this->s_.max_size_;
+           ++this->next_)
+      if (this->s_.search_structure_[this->next_].is_free_ == 0)
+        {
+          ++this->iterated_items_;
+          return 1;
+        }
+    }
+  else
+    ++this->next_;
+  
+  return 0;
+}
+
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::first (void)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::first");
+
+  next_ = -1;
+  iterated_items_ = 0;
+  return this->advance ();
+}
+
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::done (void) const
+{
+  ACE_TRACE ("ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::done");
+
+  return ! (this->iterated_items_ < this->s_.cur_size_);
+}
+
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::next_i (T *&item)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::next_i");
+  
+  if (ACE_static_cast(size_t, this->next_) < this->s_.max_size_)
+    do
+      {
+        if (this->s_.search_structure_[this->next_].is_free_ == 0)
+          {
+            item = &this->s_.search_structure_[this->next_].item_;
+            this->advance ();
+            return 1;
+          }
+      }
+    while (this->advance () == 1);
+
+  return 0;
+}
+
+//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set_Iterator)
 
-  template <class T, size_t ACE_SIZE> void
+template <class T, size_t ACE_SIZE> void
 ACE_Fixed_Set_Iterator<T, ACE_SIZE>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::dump");
+  this->dump_i ();
 #endif /* ACE_HAS_DUMP */
 }
 
 template <class T, size_t ACE_SIZE>
 ACE_Fixed_Set_Iterator<T, ACE_SIZE>::ACE_Fixed_Set_Iterator (ACE_Fixed_Set<T, ACE_SIZE> &s)
-  : s_ (s),
-    next_ (-1)
+  : ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE> (s)
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::ACE_Fixed_Set_Iterator");
-  this->advance ();
-}
-
-template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set_Iterator<T, ACE_SIZE>::advance (void)
-{
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::advance");
-
-  for (++this->next_;
-       static_cast<size_t> (this->next_) < this->s_.cur_size_
-         && this->s_.search_structure_[this->next_].is_free_;
-       ++this->next_)
-    continue;
-
-  return static_cast<size_t> (this->next_) < this->s_.cur_size_;
-}
-
-template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set_Iterator<T, ACE_SIZE>::first (void)
-{
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::first");
-
-  next_ = -1;
-  return this->advance ();
-}
-
-template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set_Iterator<T, ACE_SIZE>::done (void) const
-{
-  ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::done");
-
-  return static_cast<ACE_CAST_CONST size_t> (this->next_) >=
-    this->s_.cur_size_;
 }
 
 template <class T, size_t ACE_SIZE> int
 ACE_Fixed_Set_Iterator<T, ACE_SIZE>::next (T *&item)
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::next");
-  if (static_cast<size_t> (this->next_) < this->s_.cur_size_)
-    {
-      item = &this->s_.search_structure_[this->next_].item_;
-      return 1;
-    }
-  else
-    return 0;
+  return this->next_i (item);
 }
 
+template <class T, size_t ACE_SIZE> int
+ACE_Fixed_Set_Iterator<T, ACE_SIZE>::remove (T *&item)
+{
+  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::remove");
+  
+  if (this->s_.search_structure_[this->next_].is_free_ == 0)
+    {
+      item = &this->s_.search_structure_[this->next_].item_;
+      this->s_.remove (*item);
+      --iterated_items_;
+      return 1;
+    }
+    
+  return 0;
+}
+
+template <class T, size_t ACE_SIZE> T&
+ACE_Fixed_Set_Iterator<T, ACE_SIZE>::operator* (void)
+{
+  T *retv = 0;
+
+  if (this->s_.search_structure_[this->next_].is_free_ == 0)
+    retv = &this->s_.search_structure_[this->next_].item_;
+
+  ACE_ASSERT (retv != 0);
+
+  return *retv;
+}
+
+//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set_Const_Iterator)
 
-  template <class T, size_t ACE_SIZE> void
+template <class T, size_t ACE_SIZE> void
 ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::dump");
+  this->dump_i ();
 #endif /* ACE_HAS_DUMP */
 }
 
 template <class T, size_t ACE_SIZE>
 ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::ACE_Fixed_Set_Const_Iterator (const ACE_Fixed_Set<T, ACE_SIZE> &s)
-  : s_ (s),
-    next_ (-1)
+  : ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE> (s)
 {
   ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::ACE_Fixed_Set_Const_Iterator");
-  this->advance ();
 }
 
 template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::advance (void)
-{
-  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::advance");
-
-  for (++this->next_;
-       static_cast<size_t> (this->next_) < this->s_.cur_size_
-         && this->s_.search_structure_[this->next_].is_free_;
-       ++this->next_)
-    continue;
-
-  return static_cast<size_t> (this->next_) < this->s_.cur_size_;
-}
-
-template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::first (void)
-{
-  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::first");
-
-  next_ = -1;
-  return this->advance ();
-}
-
-template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::done (void) const
-{
-  ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::done");
-
-  return static_cast<ACE_CAST_CONST size_t> (this->next_) >=
-    this->s_.cur_size_;
-}
-
-template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next (T *&item)
+ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next (const T *&item)
 {
   ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next");
-  if (static_cast<size_t> (this->next_) < this->s_.cur_size_)
-    {
-      item = &this->s_.search_structure_[this->next_].item_;
-      return 1;
-    }
-  else
-    return 0;
+  
+  return this->next_i (item);
+}
+  
+template <class T, size_t ACE_SIZE> const T&
+ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::operator* (void) const
+{
+  const T *retv = 0;
+
+  if (this->s_.search_structure_[this->next_].is_free_ == 0)
+    retv = &this->s_.search_structure_[this->next_].item_;
+
+  ACE_ASSERT (retv != 0);
+
+  return *retv;
 }
 
+//--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Set)
 
-  template <class T> void
+template <class T> void
 ACE_Bounded_Set<T>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -1212,6 +1249,13 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (void)
 
   for (size_t i = 0; i < this->max_size_; ++i)
     this->search_structure_[i].is_free_ = 1;
+}
+
+template <class T> size_t
+ACE_Bounded_Set<T>::size (void) const
+{
+  ACE_TRACE ("ACE_Bounded_Set<T>::size");
+  return this->cur_size_;
 }
 
 template <class T>
