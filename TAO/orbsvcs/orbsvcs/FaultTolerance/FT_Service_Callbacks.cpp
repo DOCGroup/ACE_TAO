@@ -12,10 +12,6 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/CDR.h"
 
-#if !defined (__ACE_INLINE__)
-# include "FT_Service_Callbacks.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (FaultTolerance,
            FT_Service_Callbacks,
            "$Id$")
