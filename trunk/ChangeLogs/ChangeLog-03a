@@ -1,3 +1,13 @@
+Tue Dec 24 07:31:54 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Argv_Type_Converter.h:
+	* ace/Argv_Type_Converter.cpp: Reverted the following changes "Mon
+	  Dec 23 17:26:42 2002  Steve Huston  <shuston@riverace.com>" and
+	  "Mon Dec 23 22:57:18 2002  Balachandran Natarajan
+	  <bala@isis-server.isis.vanderbilt.edu>". The argument parsing in
+	  TAO gets busted due to these changes and most of tests in our
+	  daily builds fail. 
+
 Mon Dec 23 22:57:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Argv_Type_Converter.h: Changed saved_argc_ to be of type int

@@ -39,10 +39,10 @@ class ACE_Export ACE_Argv_Type_Converter
 {
 public:
 
-  ACE_Argv_Type_Converter (int argc, char** argv);
+  ACE_Argv_Type_Converter (int &argc, char** argv);
 
 #if defined (ACE_USES_WCHAR)
-  ACE_Argv_Type_Converter (int argc, wchar_t** argv);
+  ACE_Argv_Type_Converter (int &argc, wchar_t** argv);
 #endif  // ACE_USES_WCHAR
 
   ~ACE_Argv_Type_Converter (void);
@@ -83,7 +83,7 @@ private:
 
 private:
   /// Original number of input paramter, same as 'argc'.
-  int saved_argc_;
+  int &saved_argc_;
 
   /// Data member pointer that contains converted argv in ACE_ANTI_TCHAR.
   char** char_argv_;
