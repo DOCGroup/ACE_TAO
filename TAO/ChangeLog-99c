@@ -8,6 +8,15 @@ Mon Sep 21 09:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  Implemented the code necessary to do exception handling in 
 	  the reply stub.
 
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+	  Fixed some code generation problem with the ACE_NESTED_CLASS
+	  macro.
+
+	* examples/OBV/Typed_Events/Event_Types_impl.cpp,
+	  examples/OBV/Typed_Events/Event_Types_impl.h:
+	  Added the missing CORBA::Environment to the methods
+	  inheriting from the Skeleton.
+
 Mon Sep 20 19:11:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/decode.cpp:

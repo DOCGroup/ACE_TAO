@@ -53,7 +53,7 @@ Temperature_impl::~Temperature_impl ()
 }
 
 void
-Temperature_impl::do_print (void)
+Temperature_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
 {
   Event_impl::do_print ();
   // The timestamp
@@ -89,21 +89,21 @@ Position_impl::~Position_impl ()
 }
 
 void
-Position_impl::do_print (void)
+Position_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
 {
   Event_impl::do_print ();
   // The timestamp
 
   ACE_DEBUG((LM_DEBUG, "Position is (%f, %f, %f)\n",
-             this->x(), this->y(), this->z() ));
+             this->x(ACE_TRY_ENV), this->y(ACE_TRY_ENV), this->z(ACE_TRY_ENV) ));
 }
 
-CORBA::Float Position_impl::x ()  { return this->xyz()[0]; }
-void Position_impl::x (CORBA::Float x)   { this->xyz()[0] = x; }
-CORBA::Float Position_impl::y ()  { return this->xyz()[1]; }
-void Position_impl::y (CORBA::Float y)   { this->xyz()[1] = y; }
-CORBA::Float Position_impl::z ()  { return this->xyz()[2]; }
-void Position_impl::z (CORBA::Float z)   { this->xyz()[2] = z; }
+CORBA::Float Position_impl::x (CORBA::Environment &ACE_TRY_ENV)  { return this->xyz()[0]; }
+void Position_impl::x (CORBA::Float x, CORBA::Environment &ACE_TRY_ENV)   { this->xyz()[0] = x; }
+CORBA::Float Position_impl::y (CORBA::Environment &ACE_TRY_ENV)  { return this->xyz()[1]; }
+void Position_impl::y (CORBA::Float y, CORBA::Environment &ACE_TRY_ENV)   { this->xyz()[1] = y; }
+CORBA::Float Position_impl::z (CORBA::Environment &ACE_TRY_ENV)  { return this->xyz()[2]; }
+void Position_impl::z (CORBA::Float z, CORBA::Environment &ACE_TRY_ENV)   { this->xyz()[2] = z; }
 
 
 Position_factory::~Position_factory ()
@@ -134,7 +134,7 @@ Log_Msg_impl::~Log_Msg_impl ()
 }
 
 void
-Log_Msg_impl::do_print (void)
+Log_Msg_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
 {
   Event_impl::do_print ();
   // The timestamp
@@ -185,19 +185,19 @@ Event_List_Link_impl::~Event_List_Link_impl ()
 }
 
 Event*
-Event_List_Link_impl::get_event (void)
+Event_List_Link_impl::get_event (CORBA::Environment &ACE_TRY_ENV)
 {
   return this->my_event ();
 }
 
 Event_List_Link*
-Event_List_Link_impl::get_next_link (void)
+Event_List_Link_impl::get_next_link (CORBA::Environment &ACE_TRY_ENV)
 {
   return this->next ();
 }
 
 void
-Event_List_Link_impl::attach_next_link (Event_List_Link *n)
+Event_List_Link_impl::attach_next_link (Event_List_Link *n, CORBA::Environment &ACE_TRY_ENV)
 {
   this->next (n);
 }
@@ -227,7 +227,7 @@ Event_List_impl::~Event_List_impl ()
 }
 
 void
-Event_List_impl::store_event (Event* e)
+Event_List_impl::store_event (Event* e, CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation should perform atomically and should
   // guard against the access to the list from another thread.
@@ -366,7 +366,7 @@ Temperature_Criterion_impl::~Temperature_Criterion_impl ()
 
 
 CORBA::Boolean
-Temperature_Criterion_impl::is_critical (Event* e)
+Temperature_Criterion_impl::is_critical (Event* e, CORBA::Environment &ACE_TRY_ENV)
 {
   // Downcast to a temperature.
   Temperature* t = Temperature::_downcast (e);
@@ -383,7 +383,7 @@ Temperature_Criterion_impl::is_critical (Event* e)
 
 
 void
-Temperature_Criterion_impl::do_print (void)
+Temperature_Criterion_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG((LM_DEBUG, "Alarm boundary for events with origin id %d is\n",
              this->origin_id_ () ));
@@ -422,7 +422,7 @@ Position_Criterion_impl::~Position_Criterion_impl ()
 
 
 CORBA::Boolean
-Position_Criterion_impl::is_critical (Event* e)
+Position_Criterion_impl::is_critical (Event* e, CORBA::Environment &ACE_TRY_ENV)
 {
   Position* p = Position::_downcast (e);
   // Is Event really a Position ?
@@ -443,7 +443,7 @@ Position_Criterion_impl::is_critical (Event* e)
 
 
 void
-Position_Criterion_impl::do_print (void)
+Position_Criterion_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG((LM_DEBUG,
              "Alarm boundary for events with origin id %d is the box\n",
@@ -475,7 +475,7 @@ Log_Msg_Criterion_impl::~Log_Msg_Criterion_impl ()
 
 
 CORBA::Boolean
-Log_Msg_Criterion_impl::is_critical (Event* e)
+Log_Msg_Criterion_impl::is_critical (Event* e, CORBA::Environment &ACE_TRY_ENV)
 {
   Log_Msg* lm = Log_Msg::_downcast (e);
 
@@ -489,7 +489,7 @@ Log_Msg_Criterion_impl::is_critical (Event* e)
 
 
 void
-Log_Msg_Criterion_impl::do_print (void)
+Log_Msg_Criterion_impl::do_print (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG((LM_DEBUG,
              "All log messages with urgency greater zero are registered.\n" ));
@@ -523,7 +523,7 @@ Criterion_List_impl::~Criterion_List_impl ()
 }
 
 void
-Criterion_List_impl::store_criterion (Criterion *c)
+Criterion_List_impl::store_criterion (Criterion *c, CORBA::Environment &ACE_TRY_ENV)
 {
   if (!my_list ())
     {
@@ -536,7 +536,7 @@ Criterion_List_impl::store_criterion (Criterion *c)
 }
 
 CORBA::Boolean
-Criterion_List_impl::is_critical (Event *e)
+Criterion_List_impl::is_critical (Event *e, CORBA::Environment &ACE_TRY_ENV)
 {
   // Try all criterions. Walking the list is efficient enough for
   // demonstration.
