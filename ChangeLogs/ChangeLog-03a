@@ -1,7 +1,8 @@
 Thu Aug 22 03:50:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
+	* bin/performance_stats.sh:
 	* bin/footprint_stats.sh: Calculate value of DATE
-	  inside this script instead of passing it in as the
+	  inside these scripts instead of passing it in as the
 	  third parameter.  This will make it easier to make
 	  an autobuild script around this.
 
