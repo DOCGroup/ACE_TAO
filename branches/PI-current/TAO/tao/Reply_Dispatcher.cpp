@@ -10,7 +10,6 @@
 
 // Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
-  : reply_service_info_ ()
   //  : reply_received_ (0)
 {
 }
@@ -36,8 +35,10 @@ TAO_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *)
 // *********************************************************************
 
 // Constructor.
-TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core)
-  : message_state_ (orb_core),
+TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
+                                                        IOP::ServiceContextList &sc)
+  : reply_service_info_ (sc),
+    message_state_ (orb_core),
     reply_received_ (0),
     leader_follower_condition_variable_ (0),
     orb_core_ (orb_core)
@@ -133,7 +134,7 @@ TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *t
 }
 
 // *********************************************************************
-#if defined (TAO_HAS_CORBA_MESSAGING) 
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 #if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
 
