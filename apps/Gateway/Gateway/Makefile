@@ -153,7 +153,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  Event_Forwarding_Discriminator.h Concurrency_Strategies.h Event.h \
- Dispatch_Set.h Gateway.h
+ Consumer_Dispatch_Set.h Gateway.h
 .obj/Event_Channel.o .shobj/Event_Channel.so: Event_Channel.cpp \
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -222,7 +222,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  Event_Forwarding_Discriminator.h Concurrency_Strategies.h Event.h \
- Dispatch_Set.h Event_Channel.h
+ Consumer_Dispatch_Set.h Event_Channel.h
 .obj/Event_Forwarding_Discriminator.o .shobj/Event_Forwarding_Discriminator.so: Event_Forwarding_Discriminator.cpp \
  Event_Forwarding_Discriminator.h \
  $(WRAPPER_ROOT)/ace/Map_Manager.h \
@@ -245,9 +245,9 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
- Event.h Dispatch_Set.h \
+ Event.h Consumer_Dispatch_Set.h \
  $(WRAPPER_ROOT)/ace/Set.h
-.obj/Proxy_Handler.o .shobj/Proxy_Handler.so: Proxy_Handler.cpp Dispatch_Set.h \
+.obj/Proxy_Handler.o .shobj/Proxy_Handler.so: Proxy_Handler.cpp Consumer_Dispatch_Set.h \
  $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
@@ -381,7 +381,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SOCK_Connector.h \
  $(WRAPPER_ROOT)/ace/SOCK_Connector.i \
  Event_Forwarding_Discriminator.h Concurrency_Strategies.h Event.h \
- Dispatch_Set.h
+ Consumer_Dispatch_Set.h
 .obj/Thr_Proxy_Handler.o .shobj/Thr_Proxy_Handler.so: Thr_Proxy_Handler.cpp Thr_Proxy_Handler.h \
  Proxy_Handler.h \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
@@ -446,7 +446,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Task_T.h \
  Event_Forwarding_Discriminator.h \
  $(WRAPPER_ROOT)/ace/Map_Manager.h \
- Concurrency_Strategies.h Event.h Dispatch_Set.h \
+ Concurrency_Strategies.h Event.h Consumer_Dispatch_Set.h \
  Proxy_Handler_Connector.h \
  $(WRAPPER_ROOT)/ace/Connector.h \
  $(WRAPPER_ROOT)/ace/Connector.i

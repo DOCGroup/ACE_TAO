@@ -222,7 +222,7 @@ protected:
 
   // = Demultiplexing hooks.
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::RWE_MASK);
+			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Terminate the Client ACE_Connector by iterating over any
   // unconnected ACE_Svc_Handler's and removing them from the
   // ACE_Reactor.

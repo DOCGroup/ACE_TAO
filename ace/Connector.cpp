@@ -268,7 +268,7 @@ ACE_Connector<SH, PR_CO_2>::cleanup_AST (ACE_HANDLE handle,
   this->reactor_->cancel_timer (ast->cancellation_id ());
 
   // Remove ACE_HANDLE from ACE_Reactor.
-  this->reactor_->remove_handler (handle, ACE_Event_Handler::RWE_MASK 
+  this->reactor_->remove_handler (handle, ACE_Event_Handler::ALL_EVENTS_MASK 
 				  | ACE_Event_Handler::DONT_CALL);
 
   // Remove ACE_HANDLE from the map.

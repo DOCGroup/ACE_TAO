@@ -17,18 +17,17 @@ main (int argc, char *argv[])
 	ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
       else // Use static binding.
 	{
-	  static char *l_argv[3] = { "-d" };
 	  ACE_Service_Object *so = ACE_SVC_INVOKE (Gateway);
 
-	  if (so->init (1, l_argv) == -1)
+	  if (so->init (argc - 1, argv + 1) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "init", 1));
 	}
     }
 
   // Run forever, performing the configured services until we are shut
-  // down by a signal.
+  // down by a SIGINT/SIGQUIT signal.
 
-  ACE_Service_Config::run_reactor_event_loop ();
+  daemon.run_reactor_event_loop ();
 
   return 0;
 }

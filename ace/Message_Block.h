@@ -23,17 +23,21 @@
 
 class ACE_Export ACE_Message_Block
   // = TITLE
-  //     Object used to store messages in the ASX framework.
+  //     Stores messages for use throughout ACE (particularly
+  //     <ACE_Message_Queue>).
   //
   // = DESCRIPTION
-  //     An ACE_Message_Block is modeled after the message data
-  //     structures used in System V STREAMS.  A Message_Block is
-  //     composed of one or more Message_Blocks that are linked
-  //     together by PREV and NEXT pointers.  In addition, a
-  //     ACE_Message_Block may also be linked to a chain of other
-  //     Message_Blocks.  This structure enables efficient
+  //     An <ACE_Message_Block> is modeled after the message data
+  //     structures used in System V STREAMS.  An <ACE_Message_Block>
+  //     is composed of one or more <ACE_Message_Blocks> that can be
+  //     linked to form a ``fragment chain.''  In addition,
+  //     <ACE_Message_Blocks> can be linked together by <prev_> and
+  //     <next_> pointers to form a queue of messages (this is how
+  //     <ACE_Message_Queue> works).  This structure enables efficient
   //     manipulation of arbitrarily-large messages *without*
-  //     incurring memory copying overhead.
+  //     incurring memory copying overhead since (1)
+  //     <ACE_Message_Blocks> can be chained together via pointers and
+  //     (2) <ACE_Message_Blocks> keep a reference count.
 {
 public:  
   enum ACE_Message_Type
@@ -90,13 +94,16 @@ public:
 		     ACE_Message_Type type = MB_DATA, 
 		     ACE_Message_Block *cont = 0, 
 		     const char *data = 0,
-		     ACE_Allocator *allocator = 0);
+		     ACE_Allocator *allocator_strategy_ = 0,
+		     ACE_Lock *locking_strategy = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
   // <data>, using <allocator> to get the data if it's non-0.  If
   // <data> != 0 we assume ownership of the <data> (and don't delete
-  // it).
+  // it).  If <locking_strategy> is non-0 then this is used to protect
+  // regions of code that access shared state (e.g., reference
+  // counting) from race conditions.
 
   int init (const char *data,
 	    size_t size = 0);
@@ -107,13 +114,16 @@ public:
 	    ACE_Message_Type type = MB_DATA, 
 	    ACE_Message_Block *cont = 0, 
 	    const char *data = 0,
-	    ACE_Allocator *allocator = 0);
+	    ACE_Allocator *allocator = 0,
+	    ACE_Lock *locking_strategy = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
   // <data>, using <allocator> to get the data if it's non-0.  If
   // <data> != 0 we assume ownership of the <data> (and don't delete
-  // it).
+  // it).  If <locking_strategy> is non-0 then this is used to protect
+  // regions of code that access shared state (e.g., reference
+  // counting) from race conditions.
 
   ~ACE_Message_Block (void);
   // Delete all the resources held in the message.
@@ -145,6 +155,16 @@ public:
   ACE_Message_Block *clone (Message_Flags mask = ACE_Message_Block::DONT_DELETE) const;
   // Return an exact "deep copy" of the message.
 
+  // = Reference counting methods.
+  ACE_Message_Block *duplicate (void);
+  // Increment our reference count by one.
+
+  ACE_Message_Block *release (void);
+  // Decrement our reference count by one.  If the reference count is
+  // > 0 then return this; else if reference count == 0 then delete
+  // <this> and return 0.  Behavior is undefined if reference count <
+  // 0.
+
   // = Operations on Message data 
 
   int copy (const char *buf, size_t n);
@@ -160,7 +180,9 @@ public:
   char *base (void) const;
   // Get message data.
 
-  void base (char *data, size_t size, Message_Flags = DONT_DELETE);
+  void base (char *data,
+	     size_t size, 
+	     Message_Flags = DONT_DELETE);
   // Set message data.
 
   char *end (void) const;
@@ -180,41 +202,42 @@ public:
   void wr_ptr (size_t n);
   // Set the write pointer ahead <n> bytes.
 
-  // = The length of a message is computed as the length between the
-  // wr_ptr() - rd_ptr ()).
+  // = Message length is wr_ptr() - rd_ptr ().
   size_t length (void) const;
   // Get the length of the message 
   void length (size_t n);
   // Set the length of the message 
 
-  // = The size of the allocated buffer is the total amount of space
-  // alloted.
+  // = Message size is the total amount of space alloted.
   size_t size (void) const;
   // Get the total amount of space in the message.
   int size (size_t length);
   // Set the total amount of space in the message.  Returns 0 if
   // successful, else -1.
 
-  // = The coninuation field is used to chain together composite
-  // messages.
+  // = The continuation field chains together composite messages.
   ACE_Message_Block *cont (void) const;
   // Get the continuation field.
   void cont (ACE_Message_Block *);
   // Set the continuation field.
 
-  // = The <next_> pointer points to the <Message_Block> directly ahead
-  // in the Message_Queue.
+  // = The <next_> pointer is a link to the <Message_Block> directly ahead in the Message_Queue.
   ACE_Message_Block *next (void) const;
   // Get link to next message.
   void next (ACE_Message_Block *);
   // Set link to next message.
 
-  // = The <prev_> pointer points to the <Message_Block> directly
-  // ahead in the Message_Queue.
+  // = The <prev_> pointer is a link to the <Message_Block> directly ahead in the Message_Queue.
   ACE_Message_Block *prev (void) const;
   // Get link to prev message.
   void prev (ACE_Message_Block *);
   // Set link to prev message.
+
+  // = The locking strategy prevents race condition.
+  ACE_Lock *locking_strategy (void);
+  // Get the locking strategy.
+  ACE_Lock *locking_strategy (ACE_Lock *);
+  // Set a new locking strategy and return the hold one.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -224,7 +247,7 @@ public:
 
 private:
   Message_Flags flags_; 	
-  // Misc flags.
+  // Misc flags (e.g., DONT_DELETE and USER_FLAGS).
 
   char *base_;	
   // Pointer to beginning of message block.
@@ -257,8 +280,16 @@ private:
   ACE_Message_Block *prev_;	
   // Pointer to previous message in the list.
 
-  ACE_Allocator *allocator_;
+  ACE_Allocator *allocator_strategy_;
   // Pointer to the allocator defined for this message block.
+
+  ACE_Lock *locking_strategy_;
+  // Pointer to the locking defined for this message block.  This is
+  // used to protect regions of code containing 
+
+  size_t reference_count_;
+  // Reference count for this <Message_Block> which is used to avoid
+  // deep copies (i.e., <clone>).
 
   // = Disallow these operations for now (use <clone> instead).
   ACE_Message_Block &operator= (const ACE_Message_Block &);

@@ -66,7 +66,7 @@ Peer_Handler<ROUTER, KEY>::svc (void)
 {
 #if 0
   ACE_Thread_Control thread_control (tm);
-  // Just a try !!  we're just reading from our Message_Queue
+
   ACE_Message_Block *db, *hb;
   int n;
 

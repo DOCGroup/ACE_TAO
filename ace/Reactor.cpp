@@ -92,7 +92,7 @@ ACE_Handler_Repository::close (ACE_Reactor *reactor)
            i < this->cur_size_; 
            i++)
         reactor->detach (this->event_handlers_[i].handle_,
-			 ACE_Event_Handler::RWE_MASK);
+			 ACE_Event_Handler::ALL_EVENTS_MASK);
 
       delete [] this->event_handlers_;
       this->event_handlers_ = 0;
@@ -100,7 +100,7 @@ ACE_Handler_Repository::close (ACE_Reactor *reactor)
       for (ACE_HANDLE h = 0; 
            h < this->max_handlep1_; 
            h++)
-        reactor->detach (h, ACE_Event_Handler::RWE_MASK);
+        reactor->detach (h, ACE_Event_Handler::ALL_EVENTS_MASK);
 
       delete [] this->event_handlers_;
       this->event_handlers_ = 0;
@@ -1591,7 +1591,7 @@ ACE_Reactor::check_handles (void)
       if (ACE_OS::poll (&p_handle, 1, 0) == -1)
 	{
 	  result = 1;
-	  this->detach (handle, ACE_Event_Handler::RWE_MASK);
+	  this->detach (handle, ACE_Event_Handler::ALL_EVENTS_MASK);
 	}
 #else
       rmask.set_bit (handle);
@@ -1600,7 +1600,7 @@ ACE_Reactor::check_handles (void)
 			  &time_poll) < 0)
 	{
 	  result = 1;
-	  this->detach (handle, ACE_Event_Handler::RWE_MASK);
+	  this->detach (handle, ACE_Event_Handler::ALL_EVENTS_MASK);
 	}
       rmask.clr_bit (handle);
 #endif /* ACE_USE_POLL */

@@ -73,7 +73,7 @@ public:
   // = Demultiplexing hooks.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::RWE_MASK);
+			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform termination activities on the SVC_HANDLER.  The default
   // behavior is to close down the <peer_> (to avoid descriptor leaks)
   // and to delete this (to avoid memory leaks)!  If you don't want
