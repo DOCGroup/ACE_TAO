@@ -1,3 +1,9 @@
+Sun Aug 23 11:12:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile: 
+	* tests/Message_Queue_Notifications_Test.cpp: 
+	  Fixed typos.
+
 Sat Aug 22 21:52:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/UPIPE_SAP/ex[23].cpp: Changed the
