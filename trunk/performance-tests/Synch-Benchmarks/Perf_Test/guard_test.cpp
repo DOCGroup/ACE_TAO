@@ -56,6 +56,7 @@ Guard_Test::init (int argc, char *argv[])
                              "Invalid option\n"), -1);
         }
     }
+  return 0;
 }
 
 int
