@@ -1,3 +1,8 @@
+Tue May  4 20:17:41 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/CORBA.pidl: 
+	New file for adding entries that would generate new typecodes
+
 1999-05-04  Seth Widoff  <swidoff@cs.cmu.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
