@@ -136,13 +136,13 @@ typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
 
 #if defined (__BORLANDC__)
 # if !defined (TAO_AV_BUILD_DLL)
-#   pragma option -Jgx
+#   pragma option push -Jgx
 # endif
 #endif
 TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
 #if defined (__BORLANDC__)
 # if !defined(TAO_AV_BUILD_DLL)
-#   pragma option -Jgx- -Jgd
+#   pragma option pop
 # endif
 #endif
 

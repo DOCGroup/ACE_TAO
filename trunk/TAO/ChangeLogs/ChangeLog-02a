@@ -1,3 +1,12 @@
+Fri Jul 06 21:53:26 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/Makefile.bor:
+        * tao/Strategies/Makefile.bor:
+          Removed GIOP Lite support and added new source files.
+
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+          Fixed borland #pragmas to correctly reset previous options.
+
 Fri Jul  6 16:58:52 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.cpp (shutdown):
