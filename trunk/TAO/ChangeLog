@@ -12,7 +12,7 @@ Sun Mar  2 10:04:54 2003  Ossama Othman  <ossama@uci.edu>
 	  Fixed emulated exception macro usage.  "ACE_TRY_{CHECK_}EX", not
 	  "ACE_TRY{_CHECK}".
 
-	  Added missing "ACE_TRY_CHECK" after inner ACE_TRY block's
+	  Added missing "ACE_TRY_CHECK" after inner ACE_TRY_EX block's
 	  ACE_ENDTRY.
 
 Sun Mar  2 09:23:18 2003  Ossama Othman  <ossama@uci.edu>
