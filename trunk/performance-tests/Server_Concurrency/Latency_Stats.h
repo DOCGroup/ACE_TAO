@@ -120,6 +120,9 @@ private:
 inline void
 Throughput_Stats::accumulate (const Throughput_Stats& rhs)
 {
+  if (rhs.n_ == 0)
+    return;
+
   if (this->n_ == 0)
     {
       this->start_ = rhs.start_;
