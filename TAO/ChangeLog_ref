@@ -1,3 +1,17 @@
+Tue Jul  8 12:50:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Created a separate function call for the generation of file includes 
+          for the stub source file, and moved the generation of arg class file
+          includes there, along with the existing file include generations.
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Fixed initialization of the bitmasks used to modify the bit vector
+          used to select ORB file includes for code generation.
+
 Mon Jul  7 21:58:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bench/wire/testC.cpp:

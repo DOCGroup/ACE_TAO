@@ -87,7 +87,16 @@ static long seen_once[INCREMENT] = {0};
 IDL_GlobalData::dsf::dsf (void)
   : valuetype_seen_ (0),
     abstract_iface_seen_ (0),
-    iface_seq_seen_ (0)
+    iface_seq_seen_ (0),
+    basic_arg_seen_ (0),
+    bd_string_arg_seen_ (0),
+    fixed_array_arg_seen_ (0),
+    fixed_size_arg_seen_ (0),
+    object_arg_seen_ (0),
+    special_basic_arg_seen_ (0),
+    ub_string_arg_seen_ (0),
+    var_array_arg_seen_ (0),
+    var_size_arg_seen_ (0)
 {}
 
 IDL_GlobalData::IDL_GlobalData (void)

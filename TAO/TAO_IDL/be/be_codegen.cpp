@@ -186,7 +186,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                                 << "\"";
         }
 
-      this->gen_orb_file_includes (this->client_header_);
+      this->gen_stub_hdr_includes ();
 
       size_t nfiles = idl_global->n_included_idl_files ();
 
@@ -304,54 +304,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   // Generate the ident string, if any.
   this->gen_ident_string (this->client_stubs_);
 
-  // Generate the include statement for the precompiled header file.
-  if (be_global->pch_include ())
-    {
-      *this->client_stubs_ << "#include \""
-                           << be_global->pch_include ()
-                           << "\"";
-    }
-
-  // Generate the include statement for the client header. We just
-  // need to put only the base names. Path info is not required.
-  *this->client_stubs_ << "\n#include \""
-                       << be_global->be_get_client_hdr_fname (1)
-                       << "\"";
-
-  this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
-  this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
-
-  // The following header must always be included.
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/PortableInterceptor.h");
-
-  // Include the Portable Interceptor related headers.
-  *this->client_stubs_ << "\n\n#if TAO_HAS_INTERCEPTORS == 1";
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/RequestInfo_Util.h");
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/ClientRequestInfo_i.h");
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/ClientInterceptorAdapter.h");
-  *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
-
-  if (be_global->ami_call_back () == I_TRUE)
-    {
-      // Including Asynch Invocation file.
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Messaging/Twoway_Asynch_Invocation.h");
-      *this->client_stubs_ << "\n#if TAO_HAS_INTERCEPTORS == 1\n";
-      this->gen_standard_include (this->client_stubs_,
-                                  "tao/Messaging/AMI_ClientRequestInfo_i.h");
-      *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
-    }
-
-  if (be_global->gen_amh_classes () == I_TRUE)
-    {
-      // Necessary for the AIX compiler.
-      this->gen_standard_include (this->client_stubs_,
-                                  "ace/Auto_Ptr.h");
-    }
+  this->gen_stub_src_includes ();
 
   *this->client_stubs_ << "\n\n#if defined (__BORLANDC__)\n"
                        << "#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig\n"
@@ -1356,7 +1309,7 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
 }
 
 void
-TAO_CodeGen::gen_orb_file_includes (TAO_OutStream *stream)
+TAO_CodeGen::gen_stub_hdr_includes (void)
 {
   // Include the Messaging files if AMI is enabled.
   if (be_global->ami_call_back () == I_TRUE)
@@ -1407,6 +1360,59 @@ TAO_CodeGen::gen_orb_file_includes (TAO_OutStream *stream)
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/Sequence_T.h");
     }
+}
+
+void
+TAO_CodeGen::gen_stub_src_includes (void)
+{
+  // Generate the include statement for the precompiled header file.
+  if (be_global->pch_include ())
+    {
+      *this->client_stubs_ << "#include \""
+                           << be_global->pch_include ()
+                           << "\"";
+    }
+
+  // Generate the include statement for the client header. We just
+  // need to put only the base names. Path info is not required.
+  *this->client_stubs_ << "\n#include \""
+                       << be_global->be_get_client_hdr_fname (1)
+                       << "\"";
+
+  this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
+  this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
+
+  // The following header must always be included.
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/PortableInterceptor.h");
+
+  // Include the Portable Interceptor related headers.
+  *this->client_stubs_ << "\n\n#if TAO_HAS_INTERCEPTORS == 1";
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/RequestInfo_Util.h");
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/ClientRequestInfo_i.h");
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/ClientInterceptorAdapter.h");
+  *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
+
+  if (be_global->ami_call_back () == I_TRUE)
+    {
+      // Including Asynch Invocation file.
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Messaging/Twoway_Asynch_Invocation.h");
+      *this->client_stubs_ << "\n#if TAO_HAS_INTERCEPTORS == 1\n";
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Messaging/AMI_ClientRequestInfo_i.h");
+      *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
+    }
+
+  if (be_global->gen_amh_classes () == I_TRUE)
+    {
+      // Necessary for the AIX compiler.
+      this->gen_standard_include (this->client_stubs_,
+                                  "ace/Auto_Ptr.h");
+    }
 
   this->gen_arg_file_include (idl_global->decls_seen_masks.basic_arg_seen_,
                               "tao/Basic_Arguments.h");
@@ -1434,7 +1440,7 @@ TAO_CodeGen::gen_arg_file_include (ACE_UINT64 mask, const char *filepath)
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        mask))
     {
-      this->gen_standard_include (this->client_header_,
+      this->gen_standard_include (this->client_stubs_,
                                   filepath);
     }
 }
