@@ -109,6 +109,9 @@ Test_Aio::Test_Aio (void)
 
 Test_Aio::~Test_Aio (void)
 {
+  if (close (this->out_fd_) != 0)
+    perror ("close");
+
   delete aiocb_write_;
   delete aiocb_read_;
   delete [] buffer_write_;
@@ -120,8 +123,8 @@ int
 Test_Aio::init (void)
 {
   // Open the output file.
-  this->out_fd_ = open ("test_aio.log", O_RDWR | O_CREAT | O_TRUNC, 0666);
-  if (this->out_fd_ == 0)
+  this->out_fd_ = open ("test_aio.log", O_RDWR | O_CREAT | O_TRUNC, 0600);
+  if (this->out_fd_ == -1)
     {
       perror ("open");
       return -1;
