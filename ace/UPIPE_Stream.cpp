@@ -171,7 +171,7 @@ ACE_UPIPE_Stream::send_n (const char *buf,
   ACE_TRACE ("ACE_UPIPE_Stream::send_n");
 
   size_t bytes_written;
-  ssize_t len;
+  ssize_t len = 0;
 
   for (bytes_written = 0; 
        bytes_written < n;
@@ -195,7 +195,7 @@ ACE_UPIPE_Stream::recv_n (char *buf,
 {
   ACE_TRACE ("ACE_UPIPE_Stream::recv_n");
   size_t bytes_read;
-  ssize_t len;
+  ssize_t len = 0;
 
   for (bytes_read = 0; 
        bytes_read < n;

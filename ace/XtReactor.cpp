@@ -107,7 +107,7 @@ ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId *id)
 
 void ACE_XtReactor::InputCallbackProc (XtPointer closure, 
 				       int * source, 
-				       XtInputId *id)
+				       XtInputId *)
 {
   ACE_XtReactor *self = (ACE_XtReactor *) closure;
 
@@ -150,7 +150,7 @@ void ACE_XtReactor::InputCallbackProc (XtPointer closure,
 
 int ACE_XtReactor::XtWaitForMultipleEvents (int width, 
 					    ACE_Reactor_Handle_Set &wait_set,
-					    ACE_Time_Value *max_wait_time)
+					    ACE_Time_Value *)
 {
   // Check to make sure our handle's are all usable.
 
