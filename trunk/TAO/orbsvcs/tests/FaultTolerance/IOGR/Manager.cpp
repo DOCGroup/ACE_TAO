@@ -1,10 +1,15 @@
 //$Id$
-#include "ace/Get_Opt.h"
 #include "Manager.h"
-#include "tao/IORManipulation/IORC.h"
+#include "Client_i.h"
+#include "testC.h"
+#include "ace/Get_Opt.h"
+#include "ace/Read_Buffer.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/FT_CORBAC.h"
-#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
+
+
+
 
 // Files which have the IOR
 const char *first_ior = 0;
@@ -76,16 +81,21 @@ main (int argc,
       manager.make_merged_iors (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      cout << "Merged IORS" <<endl;
       // Set properties. This is the most important portion of the
       // test
       manager.set_properties (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      cout << "Set prop" <<endl;
 
       // Write IOR to file
       manager.write_to_file ();
 
-      //manager.run (ACE_TRY_ENV);
-      //ACE_TRY_CHECK;
+      // Client, who is going to use the merged IOR
+      // Construct that with the managers ORB
+      Client_i client_imp (manager.orb ());
+      client_imp.init (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -99,10 +109,12 @@ main (int argc,
 }
 
 Manager::Manager (void)
-  :orb_ (0)
+  :orb_ (0),
+   merged_set_ (0)
 {
   //no-op
 }
+
 
 int
 Manager::init (int argc,
@@ -255,4 +267,129 @@ Manager::write_to_file (void)
     }
 
   return 0;
+}
+
+CORBA::ORB_ptr
+Manager::orb (void)
+{
+  this->orb_.in ();
+}
+
+Client_i::Client_i (CORBA::ORB_ptr orb)
+  :orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
+void
+run_test (Simple_Server_ptr server,
+          CORBA::Environment &ACE_TRY_ENV);
+
+void
+Client_i::init (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Open the file for reading.
+  ACE_HANDLE f_handle = ACE_OS::open (ior_output_file,
+                                      0);
+
+  if (f_handle == ACE_INVALID_HANDLE)
+    ACE_ERROR ((LM_ERROR,
+                "Unable to open %s for writing: %p\n",
+                ior_output_file));
+
+  ACE_Read_Buffer ior_buffer (f_handle);
+
+  char *data = ior_buffer.read ();
+
+  if (data == 0)
+    ACE_ERROR ((LM_ERROR,
+                "Unable to read ior: %p\n"));
+
+
+  int argc = 0;
+  char **argv = 0;
+  this->orb_ = CORBA::ORB_init (argc,
+                                argv,
+                                0,
+                                ACE_TRY_ENV);
+  ACE_CHECK;
+  cout << "String to OBJ" <<endl;
+  CORBA::Object_var object =
+    this->orb_->string_to_object (data,
+                                  ACE_TRY_ENV);
+  ACE_CHECK;
+
+  cout << "String to OBJ 1" <<endl;
+  // Combined IOR stuff
+  Simple_Server_var server =
+    Simple_Server::_narrow (object.in (),
+                            ACE_TRY_ENV);
+  ACE_CHECK;
+
+  cout << " Narrow done " <<endl;
+  if (CORBA::is_nil (server.in ()))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Object reference <%s> is nil\n",
+                  data));
+    }
+
+  cout << "Start test " <<endl;
+  run_test (server.in (),
+            ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ior_buffer.alloc ()->free (data);
+  ACE_OS::close (f_handle);
+}
+
+
+void run_test (Simple_Server_ptr server,
+               CORBA::Environment &ACE_TRY_ENV)
+{
+  for (CORBA::ULong i = 0;
+       i < 10;
+       i++)
+    {
+      ACE_TRY
+        {
+          // Make a remote call
+          server->remote_call (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "I am going to shutdown \n"));
+          server->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          ACE_OS::sleep (10);
+        }
+      ACE_CATCH (CORBA::TRANSIENT, t)
+        {
+          if (t.completed () != CORBA::COMPLETED_NO)
+            {
+              ACE_PRINT_EXCEPTION (t, "Unexpected kind of TRANSIENT");
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "The completed status %d\n", t.completed ()));
+              ACE_DEBUG ((LM_DEBUG,
+                          "Automagically re-issuing request on TRANSIENT\n"));
+              ACE_OS::sleep (1);
+            }
+        }
+      ACE_CATCH (CORBA::COMM_FAILURE, f)
+        {
+          ACE_PRINT_EXCEPTION (f, "A (sort of) expected COMM_FAILURE");
+          ACE_DEBUG ((LM_DEBUG,
+                      "Automagically re-issuing request on COMM_FAILURE\n"));
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Unexpected exception");
+          ACE_RE_THROW;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
 }

@@ -1,9 +1,10 @@
 // $Id$
 
-#include "tao/IORManipulation/IORC.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "testC.h"
+#include "orbsvcs/FT_CORBAC.h"
+
 
 ACE_RCSID(IOGR,client, "$Id$")
 
@@ -64,6 +65,8 @@ main (int argc, char *argv[])
         Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      FT::ObjectGroupId jk;
+ 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,

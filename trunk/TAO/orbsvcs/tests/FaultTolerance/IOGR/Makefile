@@ -15,13 +15,12 @@ endif # ! TAO_ROOT
 #LDLIBS = -lTAO_FaultTolerance -lTAO -lACE
 
 IDLFILES = testC testS
-BIN = server Manager client
+BIN = server Manager 
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
 
-CLIENT_OBJS = client.o $(addsuffix .o, $(IDLFILES))
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
-MANAGER_OBJS = Manager.o
+MANAGER_OBJS = Manager.o testC.o
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 TAO_IDLFLAGS += -Ge 1
@@ -47,13 +46,10 @@ TAO_IOR_MANIP_LIBS = -lTAO_IORManip
 TAO_FT_LIBS = -lTAO_FaultTolerance -lTAO_CosNaming -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_PortableServer
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 Manager:$(addprefix $(VDIR),$(MANAGER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_IOR_MANIP_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
-
-client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_IOR_MANIP_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
