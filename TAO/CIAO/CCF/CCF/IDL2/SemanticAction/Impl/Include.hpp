@@ -40,7 +40,7 @@ namespace CCF
           virtual void
           begin (StringLiteralPtr const& sl)
           {
-            if (trace_) cerr << "include \"" << sl << "\"" << endl;
+            if (trace_) cerr << "include " << sl << endl;
 
             /*
               @@ this code is experimentla and temporarlily disabled

@@ -32,8 +32,8 @@ namespace CCF
           Component (bool trace, SyntaxTree::ScopePtr& scope)
               : ScopeBase<SyntaxTree::ComponentDeclPtr> (scope),
                 trace_ (trace),
-                name_ (""),
-                inherits_ ("")
+                name_ ("::"), //@@ this is dirty
+                inherits_ ("::")
           {
           }
 
@@ -64,7 +64,7 @@ namespace CCF
               };
 
               virtual bool
-              test (DeclarationPtr const& d)
+              test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
                 std::string type = d->declaration_class ();
@@ -132,7 +132,7 @@ namespace CCF
               };
 
               virtual bool
-              test (DeclarationPtr const& d)
+              test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
                 std::string type = d->declaration_class ();
@@ -194,7 +194,7 @@ namespace CCF
 
             ComponentDefPtr def;
 
-            if (inherits_ == ScopedName (""))
+            if (inherits_ == ScopedName ("::"))
             {
               def = ComponentDefPtr (new ComponentDef (
                                        name_,
@@ -214,8 +214,8 @@ namespace CCF
             push (def);
             scope_ = def;
 
-            name_ = SimpleName (""); //indicate that we are done
-            inherits_  = ScopedName ("");
+            name_ = SimpleName ("::"); //indicate that we are done
+            inherits_  = ScopedName ("::");
             supports_.clear ();
           }
 
@@ -232,7 +232,7 @@ namespace CCF
 
             using namespace SyntaxTree;
 
-            if (name_ != SimpleName (""))
+            if (name_ != SimpleName ("::"))
             {
               ComponentDeclPtr decl (new ComponentForwardDecl (name_, scope_));
               scope_->insert (decl);

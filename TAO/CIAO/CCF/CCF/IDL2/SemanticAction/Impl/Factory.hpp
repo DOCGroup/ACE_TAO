@@ -8,6 +8,7 @@
 #include "CCF/IDL2/SemanticAction/Factory.hpp"
 
 #include "CCF/IDL2/SemanticAction/Impl/Include.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Module.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Interface.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Attribute.hpp"
@@ -39,6 +40,8 @@ namespace CCF
                 scope_ (r->scope ()),
 
                 include_ (trace_, *this, r, scope_),
+                type_id_ (trace_, scope_),
+                type_prefix_ (trace_, scope_),
                 module_ (trace_, scope_),
                 interface_ (trace_, scope_),
                 attribute_ (trace_, scope_),
@@ -50,6 +53,18 @@ namespace CCF
           include ()
           {
             return include_;
+          }
+
+          virtual SemanticAction::TypeId&
+          type_id ()
+          {
+            return type_id_;
+          }
+
+          virtual SemanticAction::TypePrefix&
+          type_prefix ()
+          {
+            return type_prefix_;
           }
 
           virtual SemanticAction::Module&
@@ -83,6 +98,8 @@ namespace CCF
           SyntaxTree::TranslationRegionPtr region_;
 
           Include include_;
+          TypeId type_id_;
+          TypePrefix type_prefix_;
           Module module_;
           Interface interface_;
           Attribute attribute_;

@@ -13,8 +13,8 @@ namespace CCF
   {
     namespace SyntaxTree
     {
-      
-      //      
+
+      //
       //
       //
       class ValueTypeDecl : public virtual TypeDecl

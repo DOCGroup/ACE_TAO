@@ -85,6 +85,19 @@ namespace CCF
       }
 
       Declaration::
+      Declaration (SimpleName const& name,
+                   Order const& order,
+                   ScopePtr const& scope)
+          : order_ (order),
+            name_ (scope->name (), name),
+            scope_ (scope->table (),
+                    scope->name (),
+                    scope->order ()) // Hint: scope->scope () may throw
+      {
+        type_info (static_type_info ());
+      }
+
+      Declaration::
       Declaration (ScopedName const& name,
                    Order const& order,
                    DeclarationTable const& table)
@@ -186,9 +199,9 @@ namespace CCF
       resolve (Name const& name,
                ScopedName const& from,
                Order const& before,
-               ResolvePredicate& p) const throw (ResolutionFailure)
+               ResolvePredicate const& p) const throw (ResolutionFailure)
       {
-        ScopedName result ("");
+        ScopedName result ("::"); //@@ bad. need to recode this function
 
         // Check if name is already scoped
         try
@@ -204,7 +217,7 @@ namespace CCF
             {
               result = ScopedName (base, name);
 
-              //cerr << "*** resolve: considering: " << result << endl;
+              // cerr << "*** resolve: considering: " << result << endl;
 
               IteratorPair pair = lookup (result);
 
@@ -227,7 +240,7 @@ namespace CCF
               }
             }
           }
-          catch (ScopedName::AtRoot const&)
+          catch (ScopedName::FileScope const&)
           {
             // didn't find anything
             throw NameNotFound ();

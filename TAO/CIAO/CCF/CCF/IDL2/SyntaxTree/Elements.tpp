@@ -50,7 +50,7 @@ namespace CCF
       DeclarationRef<T, Ptr>::
       DeclarationRef (DeclarationTable const& table)
           : table_ (table),
-            name_ (""),
+            name_ ("::"), //@@ this is bad
             order_ (0),
             initialized_ (false),
             with_order_ (false)
@@ -80,7 +80,7 @@ namespace CCF
         }
       }
 
-      
+
       //
       // DeclarationTable
       //

@@ -34,8 +34,8 @@ namespace CCF
 
       FileScope::
       FileScope (DeclarationTable& table, Order const& order)
-          : Declaration (ScopedName (""), order, table),
-            Scope (table, ScopedName (""), order)
+          : Declaration (ScopedName ("::"), order, table),
+            Scope (table, ScopedName ("::"), order)
       {
         type_info (static_type_info ());
       }

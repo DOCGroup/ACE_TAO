@@ -16,6 +16,8 @@ namespace CCF
       class Interface;
       class Attribute;
       class Operation;
+      class TypeId;
+      class TypePrefix;
 
       //
       //
@@ -28,6 +30,12 @@ namespace CCF
 
         virtual Include&
         include () = 0;
+
+        virtual TypeId&
+        type_id () = 0;
+
+        virtual TypePrefix&
+        type_prefix () = 0;
 
         virtual Module&
         module () = 0;

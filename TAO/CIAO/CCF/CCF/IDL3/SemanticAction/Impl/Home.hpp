@@ -30,9 +30,9 @@ namespace CCF
           Home (bool trace, SyntaxTree::ScopePtr& scope)
               : ScopeBase<SyntaxTree::HomeDefPtr> (scope),
                 trace_ (trace),
-                name_ (""),
-                inherits_ (""),
-                manages_ ("")
+                name_ ("::"), //@@ this is dirty
+                inherits_ ("::"),
+                manages_ ("::")
 
           {
           }
@@ -64,7 +64,7 @@ namespace CCF
               };
 
               virtual bool
-              test (DeclarationPtr const& d)
+              test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
                 std::string type = d->declaration_class ();
@@ -134,7 +134,7 @@ namespace CCF
               };
 
               virtual bool
-              test (DeclarationPtr const& d)
+              test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
                 std::string type = d->declaration_class ();
@@ -210,7 +210,7 @@ namespace CCF
               };
 
               virtual bool
-              test (DeclarationPtr const& d)
+              test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
                 std::string type = d->declaration_class ();
@@ -268,7 +268,7 @@ namespace CCF
                               supports_,
                               manages_));
 
-            if (inherits_ == ScopedName (""))
+            if (inherits_ == ScopedName ("::"))
             {
               def = HomeDefPtr (new HomeDef (
                                   name_,
@@ -291,10 +291,10 @@ namespace CCF
             push (def);
             scope_ = def;
 
-            name_ = SimpleName (""); //indicate that we are done
-            inherits_  = ScopedName ("");
+            name_ = SimpleName ("::"); //indicate that we are done
+            inherits_  = ScopedName ("::");
             supports_.clear ();
-            manages_  = ScopedName ("");
+            manages_  = ScopedName ("::");
           }
 
           virtual void
@@ -310,7 +310,7 @@ namespace CCF
 
             using namespace SyntaxTree;
 
-            if (name_ != SimpleName (""))
+            if (name_ != SimpleName ("::"))
             {
               // this is not supported by spec yet
             }

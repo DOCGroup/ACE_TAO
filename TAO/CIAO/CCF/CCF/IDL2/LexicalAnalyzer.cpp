@@ -19,18 +19,20 @@ namespace CCF
     {
       // Keywords (alphabetic order).
 
-      keyword_table_.insert ("abstract" );
-      keyword_table_.insert ("attribute");
-      keyword_table_.insert ("factory"  );
-      keyword_table_.insert ("in"       );
-      keyword_table_.insert ("include"  );
-      keyword_table_.insert ("inout"    );
-      keyword_table_.insert ("interface");
-      keyword_table_.insert ("local"    );
-      keyword_table_.insert ("module"   );
-      keyword_table_.insert ("out"      );
-      keyword_table_.insert ("sinclude" );
-      keyword_table_.insert ("supports" );
+      keyword_table_.insert ("abstract"  );
+      keyword_table_.insert ("attribute" );
+      keyword_table_.insert ("factory"   );
+      keyword_table_.insert ("in"        );
+      keyword_table_.insert ("include"   );
+      keyword_table_.insert ("inout"     );
+      keyword_table_.insert ("interface" );
+      keyword_table_.insert ("local"     );
+      keyword_table_.insert ("module"    );
+      keyword_table_.insert ("out"       );
+      keyword_table_.insert ("sinclude"  );
+      keyword_table_.insert ("supports"  );
+      keyword_table_.insert ("typeid"    );
+      keyword_table_.insert ("typeprefix");
 
       punctuation_table_.insert (":");
       punctuation_table_.insert (",");

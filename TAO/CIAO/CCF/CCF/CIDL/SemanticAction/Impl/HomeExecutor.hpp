@@ -31,9 +31,9 @@ namespace CCF
           HomeExecutor (bool trace, SyntaxTree::ScopePtr& scope)
               : ScopeBase<SyntaxTree::HomeExecutorPtr> (scope),
                 trace_ (trace),
-                name_ (""),
-                implements_ (""),
-                manages_ ("")
+                name_ ("::"), //@@ this is dirty
+                implements_ ("::"),
+                manages_ ("::")
 
           {
           }
@@ -71,7 +71,7 @@ namespace CCF
               };
 
               virtual bool
-              test (DeclarationPtr const& d)
+              test (DeclarationPtr const& d) const
                 throw (IncompatibleType)
               {
                 std::string type = d->declaration_class ();

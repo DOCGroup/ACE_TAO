@@ -27,7 +27,7 @@ namespace CCF
           Attribute (bool trace, SyntaxTree::ScopePtr& current)
               : trace_ (trace),
                 scope_ (current),
-                type_ ("")
+                type_ ("::") //@@ this is dirty
           {
           }
 
@@ -44,7 +44,7 @@ namespace CCF
             struct Predicate : public DeclarationTable::ResolvePredicate
             {
               virtual bool
-              test (DeclarationPtr const& d) throw ()
+              test (DeclarationPtr const& d) const throw ()
               {
                 return d->is_a<TypeDecl> ();
               }
@@ -92,7 +92,7 @@ namespace CCF
 
             scope_->insert (a);
 
-            type_ = ScopedName ("");
+            type_ = ScopedName ("::");
           }
 
         private:

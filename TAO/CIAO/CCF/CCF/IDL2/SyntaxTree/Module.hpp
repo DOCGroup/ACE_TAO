@@ -13,8 +13,8 @@ namespace CCF
   {
     namespace SyntaxTree
     {
-      //
       // Module
+      //
       //
       class Module : public virtual Scope
       {
