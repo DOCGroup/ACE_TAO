@@ -2,7 +2,7 @@
 # Makefile for building	the TAO	SSLIOP library
 #
 
-!ifdef SSLIOP
+!ifdef SSL_ROOT
 NAME = TAO_SSLIOP
 !endif
 
