@@ -1,3 +1,7 @@
+Tue Oct 15 10:48:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/CDR_Encaps_Codec.cpp: Cosmetic fix.
+
 Tue Oct 15 10:05:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * tao/Messaging/MessagingC.cpp:
