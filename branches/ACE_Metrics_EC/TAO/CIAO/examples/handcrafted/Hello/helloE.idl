@@ -1,0 +1,50 @@
+// $Id$
+
+// Executor interface definitions of hello.cidl.
+//   tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Sc helloE.idl
+
+#include "ciao/CCM_Container.idl"
+#include "hello.idl"
+
+local interface CCM_Hello : Hello
+{
+};
+
+// Component main executor
+local interface CCM_HelloWorld_Executor
+  : Components::EnterpriseComponent,
+    Hello
+{
+  //  attribute string message;
+};
+
+local interface CCM_HelloWorld
+  : CCM_HelloWorld_Executor
+/*
+: Components::EnterpriseComponent,
+  Hello
+*/
+{
+};
+
+local interface CCM_HelloWorld_Context
+  : ::Components::SessionContext
+{
+};
+
+local interface CCM_HelloHomeImplicit
+{
+  Components::EnterpriseComponent create ()
+    raises (Components::CreateFailure);
+};
+
+local interface CCM_HelloHomeExplicit
+  : Components::HomeExecutorBase
+{
+};
+
+local interface CCM_HelloHome
+  : CCM_HelloHomeExplicit,
+    CCM_HelloHomeImplicit
+{
+};

@@ -1,0 +1,7 @@
+project(ORB Shutdown Server): server {
+  Source_Files {
+    Foo_Bar.cpp
+    server.cpp
+  }
+}
+

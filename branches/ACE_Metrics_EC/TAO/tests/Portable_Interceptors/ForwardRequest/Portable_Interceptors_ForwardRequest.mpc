@@ -1,0 +1,24 @@
+project(Portable Interceptors ForwardRequest Server): server {
+  requires += interceptors
+  idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)
+
+  Source_Files {
+    test_i.cpp
+    Server_ORBInitializer.cpp
+    Server_Request_Interceptor.cpp
+    server.cpp
+  }
+}
+
+project(Portable Interceptors ForwardRequest Client): client {
+  requires += interceptors
+  idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)
+
+  Source_Files {
+    testC.cpp
+    Client_ORBInitializer.cpp
+    Client_Request_Interceptor.cpp
+    client.cpp
+  }
+}
+

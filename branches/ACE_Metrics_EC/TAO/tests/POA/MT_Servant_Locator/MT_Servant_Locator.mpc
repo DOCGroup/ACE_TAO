@@ -1,0 +1,3 @@
+project(POA MT Servant Locator): server {
+  exename = MT_Servant_Locator
+}

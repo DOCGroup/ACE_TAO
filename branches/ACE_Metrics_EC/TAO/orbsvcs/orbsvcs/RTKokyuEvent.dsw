@@ -1,0 +1,290 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "ACE DLL"=..\..\..\ace\ace_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CosNaming"=.\CosNaming.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORTable"=..\..\tao\IORTable\TAO_IORTable.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Kokyu_DLL"=..\..\..\Kokyu\Kokyu_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Messaging"=..\..\tao\Messaging\TAO_Messaging.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "PortableServer"=..\..\tao\PortableServer\TAO_PortableServer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTEvent"=.\RTEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTKokyuEvent"=.\RTKokyuEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Kokyu_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTSched"=.\RTSched.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Svc Utils"=.\Svc_Utils.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO DLL"=..\..\tao\TAO.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL Compiler"=..\..\TAO_IDL\tao_idl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_BE_DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_BE_DLL"=..\..\TAO_IDL\TAO_IDL_BE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_FE_DLL"=..\..\TAO_IDL\TAO_IDL_FE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "gperf"=..\..\..\apps\gperf\src\gperf.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

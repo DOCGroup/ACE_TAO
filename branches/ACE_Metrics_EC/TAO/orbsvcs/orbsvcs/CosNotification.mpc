@@ -1,0 +1,46 @@
+project(CosNotification) : orbsvcslib, core {
+  depends    += Svc_Utils ETCL DynamicAny PortableServer
+  sharedname  = TAO_CosNotification
+  libs       += TAO_Svc_Utils TAO_ETCL TAO_DynamicAny TAO_PortableServer TAO
+  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Notify_Export -Wb,export_include=Notify/notify_export.h
+  // Set both DLL flags because of the shared idl files
+  dllflags    = TAO_NOTIFY_BUILD_DLL TAO_EVENT_BUILD_DLL
+  tagchecks   = Notify
+  include_dir = orbsvcs
+
+  IDL_Files {
+    CosEventComm.idl
+    CosEventChannelAdmin.idl
+    CosNotification.idl
+    CosNotifyComm.idl
+    CosNotifyFilter.idl
+    CosNotifyChannelAdmin.idl
+    NotifyExt.idl
+    Event_Forwarder.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    Notify {
+      CosEventCommC.cpp
+      CosEventCommS.cpp
+      CosEventChannelAdminC.cpp
+      CosEventChannelAdminS.cpp
+      CosNotificationC.cpp
+      CosNotificationS.cpp
+      CosNotifyCommC.cpp
+      CosNotifyCommS.cpp
+      CosNotifyFilterC.cpp
+      CosNotifyFilterS.cpp
+      CosNotifyChannelAdminC.cpp
+      CosNotifyChannelAdminS.cpp
+      NotifyExtC.cpp
+      NotifyExtS.cpp
+      Event_ForwarderC.cpp
+      Event_ForwarderS.cpp
+      Notify
+      Notify/Any
+      Notify/Sequence
+      Notify/Structured
+    }
+  }
+}

@@ -1,0 +1,3 @@
+project(POA Policies): server {
+  exename = Policies
+}

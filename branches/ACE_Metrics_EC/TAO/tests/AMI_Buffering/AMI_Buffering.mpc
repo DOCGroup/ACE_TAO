@@ -1,0 +1,32 @@
+project(AMI Buffering Server): messaging {
+  idlflags -= -Sc
+  idlflags += -GC
+
+  Source_Files {
+    AMI_Buffering.cpp
+    server.cpp
+  }  
+}
+ 
+project(AMI Buffering Client): messaging {
+  idlflags -= -Sc
+  idlflags += -GC
+  exename   = client
+
+  Source_Files {
+    Client_Task.cpp
+    Reply_Handler.cpp
+    client.cpp
+  }  
+}
+
+project(AMI Buffering Admin): messaging {
+  idlflags -= -Sc
+  idlflags += -GC
+  exename   = admin
+
+  Source_Files {
+    AMI_Buffering_Admin.cpp
+    admin.cpp
+  }  
+}

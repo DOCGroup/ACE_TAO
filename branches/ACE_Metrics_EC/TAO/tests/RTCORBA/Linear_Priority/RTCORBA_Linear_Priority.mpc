@@ -1,0 +1,13 @@
+project(RTCORBA Linear Priority Server): rt_server {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(RTCORBA Linear Priority Client): rt_client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

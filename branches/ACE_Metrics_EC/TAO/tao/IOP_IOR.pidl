@@ -1,0 +1,117 @@
+// -*- IDL -*-
+/**
+ * @file IOP_IOR.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the IOP module.
+ *
+ * This file is used to generate IOPC.{h,i,cpp}, using the following
+ * command:
+ *
+ *   tao_idl.exe
+ *        -o orig -Gp -Gd -Ge 1 -Gv
+ *        -Wb,export_macro=TAO_Export
+ *        -Wb,export_include=TAO_Export.h
+ *        -Wb,pre_include="ace/pre.h"
+ *        -Wb,post_include="ace/post.h"
+ *        IOP.pidl
+ *
+ * and then:
+ *
+ * cp orig/IOP_IORC.{h,i,cpp} .
+ * patch < diffs/IOPC.diff
+ *
+ * The code left in IOP_IORC.{h,i,cpp} is ready for use.
+ *
+ */
+
+#ifndef TAO_IOP_IOR_PIDL
+#define TAO_IOP_IOR_PIDL
+
+#include <orb.idl>
+#include <OctetSeq.pidl>
+
+#pragma prefix "omg.org"
+
+module IOP
+{
+  typedef unsigned long ProfileId;
+  const ProfileId TAG_INTERNET_IOP = 0;
+  const ProfileId TAG_MULTIPLE_COMPONENTS = 1;
+
+  struct TaggedProfile {
+    ProfileId       tag;
+    CORBA::OctetSeq profile_data;
+  };
+
+  struct IOR {
+    string                    type_id;
+    sequence<TaggedProfile>   profiles;
+  };
+
+  typedef unsigned long ComponentId;
+  struct TaggedComponent {
+    ComponentId     tag;
+    CORBA::OctetSeq component_data;
+  };
+  typedef sequence<TaggedComponent> MultipleComponentProfile;
+  typedef sequence<TaggedComponent> TaggedComponentList;
+  typedef sequence<TaggedComponent> TaggedComponentSeq;
+
+  // @@ All security related tags are located in the Security Service
+  // @@ related IDL files, in accordance with the Security Service 1.8
+  // @@ specification.
+
+  const ComponentId TAG_ORB_TYPE = 0;
+  const ComponentId TAG_CODE_SETS = 1;
+  const ComponentId TAG_POLICIES = 2;
+  const ComponentId TAG_ALTERNATE_IIOP_ADDRESS = 3;
+
+  const ComponentId TAG_COMPLETE_OBJECT_KEY = 5;
+  const ComponentId TAG_ENDPOINT_ID_POSITION = 6;
+  const ComponentId TAG_LOCATION_POLICY = 12;
+  const ComponentId TAG_DCE_STRING_BINDING = 100;
+  const ComponentId TAG_DCE_BINDING_NAME = 101;
+  const ComponentId TAG_DCE_NO_PIPES = 102;
+
+  typedef unsigned long ServiceId;
+  struct ServiceContext {
+    ServiceId          context_id;
+    sequence <octet>   context_data;
+  };
+  typedef sequence <ServiceContext> ServiceContextList;
+
+  const ServiceId TransactionService = 0;
+  const ServiceId CodeSets = 1;
+  const ServiceId ChainBypassCheck = 2;
+  const ServiceId ChainBypassInfo = 3;
+  const ServiceId LogicalThreadId = 4;
+  const ServiceId BI_DIR_IIOP = 5;
+  const ServiceId SendingContextRunTime = 6;
+  const ServiceId INVOCATION_POLICIES = 7;
+  // const ServiceId FORWARDED_IDENTITY = 8;
+  const ServiceId UnknownExceptionInfo = 9;
+
+  // The following are defined in CORBA v2.4.2 Chapter 24 (February, 2001):
+  const ServiceId RTCorbaPriority = 10;
+  const ServiceId RTCorbaPriorityRange = 11;
+
+  // The following are defined in the ptc/2000-04-04:
+  // Fault Tolerant CORBA Specification, V1.0
+  const ComponentId TAG_FT_GROUP = 27;
+  const ComponentId TAG_FT_PRIMARY = 28;
+  const ComponentId TAG_FT_HEARTBEAT_ENABLED = 29;
+  const ServiceId FT_GROUP_VERSION = 12;
+  const ServiceId FT_REQUEST = 13;
+
+  // The following are not defined yet in the Unreliable Multicast
+  // InterORB Protocol (orbos/2001-11-08)
+  const ProfileId TAG_UIPMC = 0x54414f0c;  // @@ Get real number
+  const ComponentId TAG_GROUP = 0x54414f03;  // @@ Get real number
+  const ComponentId TAG_GROUP_IIOP = 0x54414f04; // @@ Get real number
+};
+
+#pragma prefix ""
+
+#endif  /* TAO_IOP_PIDL */

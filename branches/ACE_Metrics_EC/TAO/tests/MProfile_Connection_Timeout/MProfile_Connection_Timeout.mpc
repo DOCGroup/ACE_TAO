@@ -1,0 +1,19 @@
+project(MProfile Connection Timeout Server): server {
+  depends += IORManipulation Messaging
+  libs    += TAO_IORManip Messaging
+
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(MProfile Connection Timeout Client): client {
+  depends += IORManipulation Messaging
+  libs    += TAO_IORManip TAO_Messaging
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}

@@ -1,0 +1,20 @@
+project(OBV Factory Server): server {
+  idlflags += -Gv
+
+  Source_Files {
+    FactoryC_impl.cpp
+    FactoryS_impl.cpp
+    server.cpp
+  }
+}
+
+project(OBV Factory Client): client {
+  idlflags += -Gv
+
+  Source_Files {
+    FactoryC.cpp
+    FactoryC_impl.cpp
+    client.cpp
+  }
+}
+

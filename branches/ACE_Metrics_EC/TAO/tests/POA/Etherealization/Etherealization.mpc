@@ -1,0 +1,3 @@
+project(POA Etherealization): server, minimum_corba {
+  exename = Etherealization
+}

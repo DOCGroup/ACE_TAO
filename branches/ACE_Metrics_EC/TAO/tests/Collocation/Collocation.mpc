@@ -1,0 +1,37 @@
+project(Collocation Test Stub): taolib_with_idl {
+  sharedname = Collocation_Test_Stub
+  libs      += TAO
+  idlflags  += -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h -Gd
+  dllflags   = MY_STUB_BUILD_DLL
+
+  Source_Files {
+    DiamondC.cpp
+  }  
+}
+
+project(Collocation Diamond) : taolib_with_idl {
+  depends   += PortableServer Collocation_Test_Stub
+  sharedname = Collocation_Diamond
+  libs      += Collocation_Test_Stub TAO_PortableServer TAO
+  idlflags  += -Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export -Wb,skel_export_include=diamond_export.h -Wb,stub_export_include=stub_export.h -Gd
+  dllflags   = DIAMOND_BUILD_DLL
+
+  Source_Files {
+    Diamond_i.cpp
+    DiamondS.cpp
+  }
+}
+
+project(Collocation Server) : strategies, server {
+  depends += Collocation_Test_Stub Collocation_Diamond
+  exename  = Collocation
+  libs    += Collocation_Test_Stub Collocation_Diamond
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Collocation_Tester.cpp
+    Collocation.cpp
+  }
+}

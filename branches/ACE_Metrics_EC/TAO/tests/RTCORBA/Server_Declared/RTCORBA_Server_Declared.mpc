@@ -1,0 +1,13 @@
+project(RTCORBA Server Declared Server): rt_server {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(RTCORBA Server Declared Client): rt_client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

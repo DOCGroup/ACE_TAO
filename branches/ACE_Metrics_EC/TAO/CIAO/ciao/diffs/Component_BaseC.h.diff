@@ -1,0 +1,65 @@
+*** Component_BaseC.h	Sun Jun 30 16:16:30 2002
+--- Component_BaseC.h.mod	Sun Jun 30 16:15:02 2002
+***************
+*** 30,36 ****
+  
+  #include "SecurityLevel2C.h"
+  #include "CosPersistentStateC.h"
+! #include "tao/IFR_Client/InterfaceC.h"
+  #include "CosNotificationC.h"
+  #include "CosNotifyChannelAdminC.h"
+  
+--- 30,36 ----
+  
+  #include "SecurityLevel2C.h"
+  #include "CosPersistentStateC.h"
+! #include "tao/IFR_Client/IFR_BaseC.h"
+  #include "CosNotificationC.h"
+  #include "CosNotifyChannelAdminC.h"
+  
+***************
+*** 6905,6914 ****
+      virtual void name (const CORBA::String_var&) = 0;     // set
+      virtual const char *name (void) const = 0;     // get method
+      
+!     virtual void value (CORBA::Any) = 0;    // set
+!     virtual const CORBA::Any value (void) const = 0;     // get method
+      
+!     virtual CORBA::Any value (void) = 0;     // get method
+      
+      
+    protected:
+--- 6905,6914 ----
+      virtual void name (const CORBA::String_var&) = 0;     // set
+      virtual const char *name (void) const = 0;     // get method
+  
+!     virtual void value (CORBA::Any&) = 0;    // set
+!     virtual const CORBA::Any &value (void) const = 0;     // get method
+  
+!     virtual CORBA::Any &value (void) = 0;     // get method
+  
+  
+    protected:
+***************
+*** 16348,16357 ****
+      virtual void name (const CORBA::String_var&);     // set
+      virtual const char *name (void) const;     // get method
+      
+!     virtual void value (CORBA::Any);    // set
+!     virtual const CORBA::Any value (void) const;     // get method
+      
+!     virtual CORBA::Any value (void);     // get method
+      
+      
+    protected:
+--- 16348,16357 ----
+      virtual void name (const CORBA::String_var&);     // set
+      virtual const char *name (void) const;     // get method
+  
+!     virtual void value (CORBA::Any&);    // set
+!     virtual const CORBA::Any &value (void) const;     // get method
+  
+!     virtual CORBA::Any &value (void);     // get method
+  
+  
+    protected:

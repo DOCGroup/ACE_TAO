@@ -1,0 +1,14 @@
+project(Connection Purging Server): strategies, server {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(Connection Purging Client): strategies, client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,3 @@
+project(POA Default Servant): server {
+  exename = Default_Servant
+}

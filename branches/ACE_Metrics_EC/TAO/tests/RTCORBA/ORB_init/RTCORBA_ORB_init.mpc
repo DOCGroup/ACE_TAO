@@ -1,0 +1,4 @@
+project(RTCORBA ORB Init): rt_client {
+  exename = ORB_init
+}
+

@@ -1,0 +1,5 @@
+project: server, orbsvcsexe {
+  depends += RTEvent Svc_Utils
+  libs    += TAO_RTEvent TAO_Svc_Utils
+  comps   += RTEvent
+}

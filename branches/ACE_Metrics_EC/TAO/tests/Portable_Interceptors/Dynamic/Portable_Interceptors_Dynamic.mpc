@@ -1,0 +1,20 @@
+project(Portable Interceptors Dynamic Server): server {
+  requires += interceptors
+  Source_Files {
+    test_i.cpp
+    interceptors.cpp
+    Echo_Server_ORBInitializer.cpp
+    server.cpp
+  }
+}
+
+project(Portable Interceptors Dynamic Client): client {
+  requires += interceptors
+  Source_Files {
+    testC.cpp
+    interceptors.cpp
+    Echo_Client_ORBInitializer.cpp
+    client.cpp
+  }
+}
+

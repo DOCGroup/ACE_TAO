@@ -1,0 +1,25 @@
+project(MProfile Forwarding Server): server, minimum_corba {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(MProfile Forwarding Client): client, minimum_corba {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+
+project(MProfile Forwarding Manager): server, minimum_corba {
+  depends += IORManipulation
+  libs    += TAO_IORManip
+  exename  = Manager
+
+  Source_Files {
+    testC.cpp
+    Servant_Locator.cpp
+    Manager.cpp
+  }
+}

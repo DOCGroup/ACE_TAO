@@ -1,0 +1,4 @@
+project(ORB Destroy): server {
+  exename = ORB_destroy
+}
+

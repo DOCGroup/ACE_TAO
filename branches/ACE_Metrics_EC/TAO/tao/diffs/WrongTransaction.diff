@@ -1,0 +1,41 @@
+--- orig/WrongTransactionC.h	Mon Feb  4 15:45:55 2002
++++ WrongTransactionC.h	Mon Feb  4 15:56:28 2002
+@@ -23,7 +23,12 @@
+ #define _TAO_IDL_ORIG_WRONGTRANSACTIONC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
++
++#if (TAO_HAS_MINIMUM_CORBA == 0)
++
++#include "tao/Exception.h"
++#include "tao/CDR.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+@@ -127,6 +132,8 @@
+ #if defined (__BORLANDC__)
+ #pragma option pop
+ #endif /* __BORLANDC__ */
++
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+ 
+ #include "ace/post.h"
+ #endif /* ifndef */
+--- orig/WrongTransactionC.cpp	Mon Feb  4 15:45:55 2002
++++ WrongTransactionC.cpp	Mon Feb  4 15:56:45 2002
+@@ -21,6 +21,8 @@
+ 
+ #include "WrongTransactionC.h"
+ 
++#if (TAO_HAS_MINIMUM_CORBA == 0)
++
+ #include "tao/Stub.h"
+ #include "tao/Invocation.h"
+ #include "tao/PortableInterceptor.h"
+@@ -266,3 +268,4 @@
+   return 0;
+ }
+ 
++#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -1,0 +1,22 @@
+project(RT_Notification) : orbsvcslib, core {
+  depends    += Svc_Utils ETCL DynamicAny PortableServer TAO_RTCORBA CosNotification
+  sharedname  = TAO_RT_Notification
+  libs       += TAO_CosNotification TAO_Svc_Utils TAO_ETCL TAO_DynamicAny TAO_PortableServer TAO TAO_RTCORBA
+  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RT_Notify_Export -Wb,export_include=Notify/rt_notify_export.h
+  dllflags    = TAO_RT_NOTIFY_BUILD_DLL
+  tagchecks   = RT_Notify
+  include_dir = orbsvcs
+
+  IDL_Files {
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    RT_Notify {
+      Notify/RT_Builder.cpp
+      Notify/RT_Factory.cpp
+      Notify/RT_Notify_Service.cpp
+      Notify/RT_POA_Helper.cpp
+      Notify/RT_Properties.cpp
+    }
+  }
+}

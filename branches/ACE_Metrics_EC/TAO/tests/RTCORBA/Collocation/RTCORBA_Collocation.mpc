@@ -1,0 +1,5 @@
+project(RTCORBA Collocation Server): rt_server {
+  exename = Collocation
+}
+
+

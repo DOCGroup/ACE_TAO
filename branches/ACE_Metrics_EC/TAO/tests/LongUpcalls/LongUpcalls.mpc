@@ -1,0 +1,45 @@
+project(Long Upcalls Server): messaging {
+  idlflags -= -Sc
+  idlflags += -GC
+  exename   = blocking_server
+
+  Source_Files {
+    Manager.cpp
+    blocking_server.cpp
+  }  
+}
+
+project(Long Upcalls Client): messaging {
+  idlflags -= -Sc
+  idlflags += -GC
+  exename   = blocking_client
+
+  Source_Files {
+    Controller.cpp
+    blocking_client.cpp
+  }  
+}
+
+project(Long Upcalls AMI Server): messaging {
+  idlflags -= -Sc
+  idlflags += -GC
+  exename   = ami_server
+
+  Source_Files {
+    AMI_Manager.cpp
+    ami_server.cpp
+  }  
+}
+
+project(Long Upcalls AMI Client): messaging {
+  idlflags -= -Sc
+  idlflags += -GC
+  exename   = ami_client
+
+  Source_Files {
+    Controller.cpp
+    Manager_Handler.cpp
+    ami_client.cpp
+  }  
+}
+

@@ -1,0 +1,3 @@
+project(POA Object Reactivation): server {
+  exename = Object_Reactivation
+}

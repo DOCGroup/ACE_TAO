@@ -1,0 +1,17 @@
+project(Two Objects Server): server {
+  Source_Files {
+    worker.cpp
+    First_i.cpp
+    Second_i.cpp
+    Object_Factory_i.cpp
+    server.cpp
+  }
+}
+
+project(Two Objects Client): client {
+  Source_Files {
+    Two_ObjectsC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,20 @@
+project(ORT Server): server {
+  requires += interceptors
+
+  Source_Files {
+    ORT_test_i.cpp
+    ORT_test_IORInterceptor_ORBInitializer.cpp
+    ORT_test_IORInterceptor.cpp
+    server.cpp
+  }
+}
+
+project(ORT Client): client {
+  requires += interceptors
+
+  Source_Files {
+    ORT_testC.cpp
+    client.cpp
+  }
+}
+
