@@ -128,6 +128,7 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
     event[0].header.ttl    = 1;
 
     ACE_Time_Value time_val = ACE_OS::gettimeofday ();
+   TAO_FTRTEC::Log(1, "sending data %d\n", seq_no_);
 
     event[0].header.ec_send_time = time_val.sec () * 10000000 + time_val.usec ()* 10;
     event[0].data.any_value <<= seq_no_;
@@ -154,10 +155,6 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
       orb_->shutdown();
     }
 
-    TAO_FTRTEC::Log(1, "sending data %d\n", seq_no_);
-
-    if (num_iterations_ ==(int) ++seq_no_) {
-    }
   }
   ACE_CATCHANY
   {

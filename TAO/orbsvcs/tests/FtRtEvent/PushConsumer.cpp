@@ -6,6 +6,7 @@
 #include "FtRtEvent_Test.h"
 #include <vector>
 #include <fstream>
+#include "orbsvcs/FtRtEvent/Utils/Log.h"
 
 
 ACE_RCSID (FtRtEvent,
@@ -77,6 +78,9 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
       time_val.sec () * 10000000 + time_val.usec ()* 10 - event[0].header.ec_send_time;
     event[0].data.any_value >>= x;
     run_times[x] = static_cast<int>(elaps/10);
+    
+    TAO_FTRTEC::Log(3, "received event %d\n", x);
+
 
     if ( num_iterations_ == static_cast<int>(x) ) {
       supplier_->disconnect_push_supplier();

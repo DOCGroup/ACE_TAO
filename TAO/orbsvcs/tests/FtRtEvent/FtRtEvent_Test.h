@@ -13,6 +13,7 @@
 #define FTRTEVENT_TEST_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "ace/SString.h"
 
 namespace TAO_FTRTEC {
   class FTEC_Gateway;
