@@ -40,8 +40,8 @@ ENABLED_SECTIONS      =
 #---------------------------------------------------------------------------
 
 QUIET                 = YES
-WARNINGS              = NO
-WARN_IF_UNDOCUMENTED  = NO
+WARNINGS              = YES
+WARN_IF_UNDOCUMENTED  = YES
 WARN_FORMAT           = "$file:$line: $text"
 
 #---------------------------------------------------------------------------
