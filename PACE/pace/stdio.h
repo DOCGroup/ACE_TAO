@@ -204,11 +204,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-# if defined (PACE_HAS_CPLUSPLUS)
-#  define pace_fscanf ::fscanf
-# else
 #  define pace_fscanf fscanf
-# endif /* PACE_HAS_CPLUSPLUS */
 #endif /* PACE_HAS_POSIX_DI_UOF */
   /* int pace_scanf (const char *format, ... ); */
 
