@@ -6,7 +6,7 @@ Wed Apr 18 10:28:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  EAGAIN and EWOULDBLOCK are same. This made the reactor call the
 	  handle_input () again and again. Every call would return a 0
 	  with errno set to EAGAIN. Thanks to Jody Hagins
-	  <jody@atdesk.com>for coming up with a test case that
+	  <jody@atdesk.com> for coming up with a test case that
 	  demonstrated the problem. Need to check the test case in with
 	  some modifications. 
 	
