@@ -1,3 +1,8 @@
+Wed Jun  9 17:16:44 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/run_test.pl:
+	Made the output from print statements go to STDERR.
+
 Wed Jun  9 17:07:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/Reactor/run_test.pl:
@@ -46,7 +51,8 @@ Wed Jun 09 16:03:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 Wed Jun  9 13:43:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * TAO_IDL/fe: Regenerated the y.tab.cpp file with the new BYACC so
- 	  that we won't have any more annoying warnings about const
+ 	  that we won't have any more annoying warnings about cons
+	t
  	  correctness.
 
         * utils/nslist: Added a new utility program that prints out a
