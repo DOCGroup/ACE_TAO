@@ -488,6 +488,12 @@ CPPFLAGS     += -DACE_BUILD_DLL -DACE_OS_BUILD_DLL
 endif
 endif
 
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DACE_AS_STATIC_LIBS
+endif
+endif
+
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
