@@ -1005,11 +1005,19 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
     {
     case USYNC_PROCESS: 
       // Timeout can't occur, so don't bother checking...
-      if (::WaitForSingleObject(m->proc_mutex_, INFINITE) == WAIT_OBJECT_0)
-	return 0;
-      else
-	// This is a hack, we need to find an appropriate mapping...
-	ACE_FAIL_RETURN (-1); 
+      
+      switch (::WaitForSingleObject (m->proc_mutex_, INFINITE))
+	{
+	case WAIT_OBJECT_0:
+	  return 0;
+	case WAIT_ABANDONED:
+	  errno = WAIT_ABANDONED;
+	  return -1;
+	default:
+	  // This is a hack, we need to find an appropriate mapping...
+	  errno = ::GetLastError ();
+	  return -1;
+	}
     case USYNC_THREAD:
       return ACE_OS::thread_mutex_lock (&m->thr_mutex_);
     default:
@@ -1040,14 +1048,18 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
     case USYNC_PROCESS: 
       {
 	// Try for 0 milliseconds - i.e. nonblocking.
-	DWORD result = ::WaitForSingleObject(m->proc_mutex_, 0);
-
-	if (result == WAIT_OBJECT_0)
-	  return 0;
-	else
+	switch (::WaitForSingleObject (m->proc_mutex_, 0))
 	  {
-	    errno = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
-	    // This is a hack, we need to find an appropriate mapping...
+	  case WAIT_OBJECT_0:
+	    return 0;
+	  case WAIT_ABANDONED:
+	    errno = WAIT_ABANDONED;
+	    return -1;  
+	  case WAIT_TIMEOUT:
+	    errno = ETIME;
+	    return -1;
+	  default:
+	    errno = ::GetLastError ();
 	    return -1;
 	  }
       }
@@ -1499,9 +1511,18 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   if (result != WAIT_OBJECT_0)
     {
-      // This is a hack, we need to find an appropriate mapping...
-      error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
-      result = -1;
+      switch (result)
+	{
+	case WAIT_ABANDONED:
+	  error = WAIT_ABANDONED;
+	  break;
+	case WAIT_TIMEOUT:
+	  error = ETIME;
+	  break;
+	default:
+	  error = ::GetLastError ();
+	  break;
+	}
     }
   else if (cv->was_broadcast_ && cv->waiters_ == 0)
     // Release the signaler/broadcaster if we're the last waiter.
@@ -1599,9 +1620,18 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   if (result != WAIT_OBJECT_0)
     {
-      // This is a hack, we need to find an appropriate mapping...
-      error = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
-      result = -1;
+      switch (result)
+	{
+	case WAIT_ABANDONED:
+	  error = WAIT_ABANDONED;
+	  break;
+	case WAIT_TIMEOUT:
+	  error = ETIME;
+	  break;
+	default:
+	  error = ::GetLastError ();
+	  break;
+	}
     }
   else if (cv->was_broadcast_ && cv->waiters_ == 0)
     // Release the signaler/broadcaster if we're the last waiter.
@@ -1651,9 +1681,18 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   if (result != WAIT_OBJECT_0)
     {
-      // This is a hack, we need to find an appropriate mapping...
-      error = ::GetLastError ();
-      result = -1;
+      switch (result)
+	{
+	case WAIT_ABANDONED:
+	  error = WAIT_ABANDONED;
+	  break;
+	case WAIT_TIMEOUT:
+	  error = ETIME;
+	  break;
+	default:
+	  error = ::GetLastError ();
+	  break;
+	}
     }
   else if (cv->was_broadcast_ && cv->waiters_ == 0)
     // Release the signaler/broadcaster if we're the last waiter.
@@ -1991,10 +2030,15 @@ ACE_INLINE int
 ACE_OS::event_wait (ACE_event_t *event)
 {
 #if defined (ACE_WIN32)
-  if (::WaitForSingleObject (*event, INFINITE) == WAIT_OBJECT_0)
-    return 0;
-  else
-    ACE_FAIL_RETURN (-1);
+  switch (::WaitForSingleObject (*event, INFINITE))
+    {
+    case WAIT_ABANDONED:
+      errno = WAIT_ABANDONED;
+      return -1;
+    default:
+      errno = ::GetLastError ();
+      return -1;
+    }
 #elif defined (ACE_HAS_THREADS)
   int result = 0;
   int error = 0;
@@ -2060,12 +2104,17 @@ ACE_OS::event_timedwait (ACE_event_t *event,
       ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
       result = ::WaitForSingleObject (*event, relative_time.msec ());
     }
-  if (result == WAIT_OBJECT_0)
-    return 0;
-  else
+
+  switch (result)
     {
-      errno = result == WAIT_TIMEOUT ? ETIME : ::GetLastError ();
+    case WAIT_OBJECT_0:
+      return 0;
+    case WAIT_ABANDONED:
+      errno = WAIT_ABANDONED;
+      return -1;
+    default:
       // This is a hack, we need to find an appropriate mapping...
+      errno = ::GetLastError ();
       return -1;
     }
 #elif defined (ACE_HAS_THREADS)
@@ -3253,10 +3302,18 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   return result;
 
 #elif defined (ACE_HAS_WTHREADS)
-  if (::WaitForSingleObject (*s, INFINITE) == WAIT_OBJECT_0)
-    return 0;
-  else
-    ACE_FAIL_RETURN (-1);
+  switch (::WaitForSingleObject (*s_, INFINITE))
+    {
+    case WAIT_OBJECT_0:
+      return 0;
+    case WAIT_ABANDONED:
+      errno = WAIT_ABANDONED;
+      return -1;
+    default:
+      // This is a hack, we need to find an appropriate mapping...
+      errno = ::GetLastError ();
+      return -1;
+    }
   /* NOTREACHED */
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -3853,11 +3910,17 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
   struct sched_param param;
   int policy = 0;
+  int result;
 
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param), 
+                                ace_result_),
+              int, -1, retval);
+  if (result == -1) 
+    return result; // error in pthread_getschedparam
   param.sched_priority = prio;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, &policy, &param), 
-				       ace_result_), 
-		     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, policy, &param), 
+                                       result),
+                     int, -1, result);
 #elif defined (ACE_HAS_WTHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio), 
 				       ace_result_), 

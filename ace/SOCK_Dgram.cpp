@@ -122,7 +122,11 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   send_msg.msg_iov = (iovec *) iov;
   send_msg.msg_iovlen = n;
-  send_msg.msg_name = (caddr_t) addr.get_addr (); // caddr_t is POSIX for char *
+#if defined (ACE_HAS_SOCKADDR_MSG_NAME)
+  send_msg.msg_name = (struct sockaddr *) addr.get_addr ();
+#else
+  send_msg.msg_name = (char *) addr.get_addr ();
+#endif /* ACE_HAS_SOCKADDR_MSG_NAME */
   send_msg.msg_namelen = addr.get_size ();
   send_msg.msg_accrights = 0;
   send_msg.msg_accrightslen = 0;
@@ -143,7 +147,11 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 
   recv_msg.msg_iov = (iovec *) iov;
   recv_msg.msg_iovlen = n;
-  recv_msg.msg_name = (caddr_t) addr.get_addr (); // caddr_t is POSIX for char *
+#if defined (ACE_HAS_SOCKADDR_MSG_NAME)
+  recv_msg.msg_name = (struct sockaddr *) addr.get_addr ();
+#else
+  recv_msg.msg_name = (char *) addr.get_addr ();
+#endif /* ACE_HAS_SOCKADDR_MSG_NAME */
   recv_msg.msg_namelen = addr.get_size ();
   recv_msg.msg_accrights = 0;
   recv_msg.msg_accrightslen = 0;

@@ -80,7 +80,7 @@
   // a myiostream&, the second >> will be invoked as desired.  */
 
 template <class STREAM> int
-ACE_Streambuf<STREAM>::underflow( void )
+ACE_Streambuf<STREAM>::underflow (void)
 {
   // If input mode is not set, any attempt to read from the stream is
   // a failure.
@@ -344,8 +344,8 @@ ACE_Streambuf<STREAM>::flushbuf (void)
   return 0;
 }
 
-template <class STREAM>
-int ACE_Streambuf<STREAM>::get_one_byte (void)
+template <class STREAM> int 
+ACE_Streambuf<STREAM>::get_one_byte (void)
 {
   char * p = base ();
   ssize_t i = peer_->recv_n (p, 1);
@@ -405,7 +405,9 @@ ACE_Streambuf<STREAM>::fillbuf (void)
 template <class STREAM>
 ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, int io_mode)
   : peer_ (peer),
-    mode_ (io_mode)
+    mode_ (io_mode),
+    get_mode_ (1),
+    put_mode_ (2)
 {
   // A streambuf allows for unbuffered IO where every character is
   // read as requested and written as provided.  To me, this seems
