@@ -27,14 +27,14 @@
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_union/union_ci.cpp:51
+// be\be_visitor_union/union_ci.cpp:51
 
 // *************************************************************
 // Inline operations for union GIOP::TargetAddress
 // *************************************************************
 
 // TAO_IDL - Generated from
-// be/be_visitor_union/discriminant_ci.cpp:164
+// be\be_visitor_union/discriminant_ci.cpp:164
 
 ACE_INLINE
 void 
@@ -60,7 +60,7 @@ GIOP::TargetAddress::_d (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_union_branch/public_ci.cpp:890
+// be\be_visitor_union_branch/public_ci.cpp:875
 
 // Accessor to set the member.
 ACE_INLINE
@@ -93,7 +93,7 @@ GIOP::TargetAddress::object_key (void)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_union_branch/public_ci.cpp:1199
+// be\be_visitor_union_branch/public_ci.cpp:1184
 
 // Accessor to set the member.
 ACE_INLINE
@@ -126,7 +126,7 @@ GIOP::TargetAddress::profile (void)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_union_branch/public_ci.cpp:1199
+// be\be_visitor_union_branch/public_ci.cpp:1184
 
 // Accessor to set the member.
 ACE_INLINE
@@ -156,155 +156,5 @@ GIOP::IORAddressingInfo &
 GIOP::TargetAddress::ior (void)
 {
   return *this->u_.ior_;
-}
-
-// TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ci.cpp:70
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const GIOP::Version &_tao_aggregate
-  )
-{
-  return
-    (strm << CORBA::Any::from_octet (_tao_aggregate.major)) &&
-    (strm << CORBA::Any::from_octet (_tao_aggregate.minor));
-}
-
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    GIOP::Version &_tao_aggregate
-  )
-{
-  return
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.major)) &&
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor));
-}
-
-// TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ci.cpp:70
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const GIOP::IORAddressingInfo &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.selected_profile_index) &&
-    (strm << _tao_aggregate.ior);
-}
-
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    GIOP::IORAddressingInfo &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.selected_profile_index) &&
-    (strm >> _tao_aggregate.ior);
-}
-
-// TAO_IDL - Generated from
-// be/be_visitor_union/cdr_op_ci.cpp:69
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const GIOP::TargetAddress &_tao_union
-  )
-{
-  if ( !(strm << _tao_union._d ()) )
-    {
-      return 0;
-    }
-  
-  CORBA::Boolean result = 1;
-  
-  switch (_tao_union._d ())
-  {
-    case 0:
-      {
-        result = strm << _tao_union.object_key ();
-      }
-      break;
-    case 1:
-      {
-        result = strm << _tao_union.profile ();
-      }
-      break;
-    case 2:
-      {
-        result = strm << _tao_union.ior ();
-      }
-      break;
-    default:
-      break;
-  }
-  
-  return result;
-}
-
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    GIOP::TargetAddress &_tao_union
-  )
-{
-  CORBA::Short _tao_discriminant;
-  if ( !(strm >> _tao_discriminant) )
-    {
-      return 0;
-    }
-  
-  CORBA::Boolean result = 1;
-  
-  switch (_tao_discriminant)
-  {
-    case 0:
-      {
-        CORBA::OctetSeq _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.object_key (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 1:
-      {
-        IOP::TaggedProfile _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.profile (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    case 2:
-      {
-        GIOP::IORAddressingInfo _tao_union_tmp;
-        result = strm >> _tao_union_tmp;
-        
-        if (result)
-          {
-            _tao_union.ior (_tao_union_tmp);
-            _tao_union._d (_tao_discriminant);
-          }
-      }
-      break;
-    default:
-      _tao_union._d (_tao_discriminant);
-      break;
-  }
-  
-  return result;
 }
 
