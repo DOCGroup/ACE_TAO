@@ -1,3 +1,10 @@
+Tue Sep 20 09:05:38 2000  Balachandran Natarajan <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp (CFG):
+	* orbsvcs/orbsvcs/orbsvcs.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsw: Added FT files in to these
+	  for MSVC builds.
+
 Tue Sep 19 17:38:38 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.h (~TAO_ORB_Core):
@@ -18,7 +25,7 @@ Tue Sep 19 16:49:23 2000  Ossama Othman  <ossama@uci.edu>
 	* tao/CORBA_String.cpp:
 
 	  New files that now contain the CORBA::String related classes.
-	
+
 	* tao/ORB.h:
 	* tao/ORB.i:
 	* tao/ORB.cpp:
@@ -45,7 +52,7 @@ Tue Sep 19 16:49:23 2000  Ossama Othman  <ossama@uci.edu>
 	  Include `ace/SString.h' to pull in ACE_CString class.
 
 	  (info):
-	
+
 	  Return "const char *" instead "ACE_CString" since we only cared
 	  about the underlying C string, not the entire ACE_CString
 	  instance.
@@ -128,7 +135,7 @@ Tue Sep 19 16:49:23 2000  Ossama Othman  <ossama@uci.edu>
 	  Use virtual inheritance from when deriving from the
 	  TAO_Abstract_ServantBase class to disambiguate the _add_ref()
 	  and _remove_ref() methods when mixing in the RefCountServantBase
-	  class. 
+	  class.
 
 	* tao/PortableServer/Servant_Base.cpp (_add_ref, _remove_ref):
 
@@ -177,7 +184,7 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	  to set the proxy broker to remote proxy broker.
 
 	  Moved servant pointer from TAO_Collocated_Object back to
-	  CORBA::Object. 
+	  CORBA::Object.
 
 	  Added member variable keep a reference to the Proxy Broker.
 
@@ -208,7 +215,7 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	  Abstract base class for the Object Proxies, each concrete
 	  proxy implements a strategy to perform a call.
-	
+
 	* tao/Remote_Object_Proxy_Impl.h:
 	* tao/Remote_Object_Proxy_Impl.cpp:
 
@@ -242,7 +249,7 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	  Modified the implementation of the method <create_collocated_object>
 	  not to create a TAO_Collocated_Object, but to set the
-	  right type of proxy broker. 
+	  right type of proxy broker.
 
 	* tao/TAO.dsp:
 
@@ -258,7 +265,7 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	  Updated Makefile to compile the new files.
 
 	* tao/PortableServer/Makefile
-	  
+
 	  Updated Makefile to compile the new files.
 
 Tue Sep 19 13:32:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
