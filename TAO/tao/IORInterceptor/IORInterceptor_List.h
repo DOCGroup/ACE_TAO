@@ -24,6 +24,7 @@
 #include "IORInterceptorC.h"
 
 #include "tao/Interceptor_List.h"
+#include "tao/PortableServer/ORT_Adapter.h"
 
 /**
  * @class TAO_IORInterceptor_List
@@ -53,6 +54,12 @@ public:
   /// Return reference to the underlying Portable Interceptor array.
   TYPE & interceptors (void);
 
+  void adapter_state_changed (
+      const TAO::ORT_Array &array_obj_ref_template,
+      PortableInterceptor::AdapterState state
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 protected:
 
   /// Return the length of the underlying interceptor array.
@@ -61,14 +68,13 @@ protected:
   /// Set the length of the underlying interceptor array.
   virtual void length (size_t);
 
-  /// Return the interceptor in array element <index>.
-  virtual PortableInterceptor::Interceptor_ptr interceptor (size_t);
+  /// Return the interceptor in array element @a index.
+  virtual PortableInterceptor::Interceptor_ptr interceptor (size_t index);
 
 private:
 
   /// Dynamic array of registered IOR interceptors.
   TYPE interceptors_;
-
 };
 
 

@@ -49,6 +49,12 @@ module PortableInterceptor {
 
   typeprefix PortableInterceptor "omg.org";
 
+  const AdapterState    HOLDING         = 0;
+  const AdapterState    ACTIVE          = 1;
+  const AdapterState    DISCARDING      = 2;
+  const AdapterState    INACTIVE        = 3;
+  const AdapterState    NON_EXISTENT    = 4;
+
   local interface Interceptor
   {
     readonly attribute string name;

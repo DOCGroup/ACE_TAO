@@ -14,10 +14,10 @@ ACE_RCSID (PortableServer,
 
 #include "tao/StringSeqC.h"
 
-#include "tao/PortableServer/IORInfo.h"
-#include "tao/PortableServer/ObjectReferenceTemplate.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
-
+#include "tao/PortableServer/ORT_Adapter.h"
+#include "tao/PortableServer/ORT_Adapter_Factory.h"
+#include "tao/PortableInterceptorC.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -28,8 +28,8 @@ ACE_RCSID (PortableServer,
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/TSS_Resources.h"
+#include "tao/IORInterceptor_Adapter.h"
 #include "tao/debug.h"
-#include "tao/IORInterceptor/IORInterceptor_List.h"
 #include "Default_Acceptor_Filter.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_sys_time.h"
@@ -41,6 +41,7 @@ ACE_RCSID (PortableServer,
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "POA.i"
@@ -171,10 +172,14 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 void
 TAO_POA::set_obj_ref_factory (
   PortableInterceptor::ObjectReferenceFactory *current_factory
-  ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_ENV_ARG_DECL)
 {
-  CORBA::add_ref (current_factory);
-  this->obj_ref_factory_ = current_factory;
+  if (this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER))
+    {
+      // Activate a different factory
+      this->ort_adapter_->set_obj_ref_factory (current_factory
+                                               ACE_ENV_ARG_PARAMETER);
+    }
 }
 
 TAO_POA::TAO_POA (const TAO_POA::String &name,
@@ -194,6 +199,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     policies_ (policies),
     parent_ (parent),
     active_object_map_ (0),
+    ort_adapter_ (0),
     adapter_state_ (PortableInterceptor::HOLDING),
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -345,22 +351,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-  // Create an ObjectReferenceTemplate for this POA.
-  ACE_NEW_THROW_EX (this->def_ort_template_,
-                    TAO_ObjectReferenceTemplate (
-                      this->orb_core_.server_id (),
-                      this->orb_core_.orbid (),
-                      this),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
-
-  this->ort_template_ = this->def_ort_template_;
-
-  // Must increase ref count since this->obj_ref_factory_ will
-  // descrease it upon destruction.
-  CORBA::add_ref (this->ort_template_.in ());
-  this->obj_ref_factory_ = this->ort_template_;
 }
 
 TAO_POA::~TAO_POA (void)
@@ -376,6 +366,7 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Delete the active object map.
   delete this->active_object_map_;
+  active_object_map_ = 0;
 
   // Remove POA from the POAManager.
   int result = this->poa_manager_.remove_poa (this);
@@ -424,6 +415,17 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+  }
+
+  if (this->ort_adapter_ != 0)
+  {
+    TAO::ORT_Adapter_Factory *ort_factory =
+      this->ORT_adapter_factory ();
+
+    ort_factory->destroy (this->ort_adapter_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    this->ort_adapter_ = 0;
   }
 
   CORBA::release (this);
@@ -731,11 +733,12 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
         }
     }
 
-  PortableInterceptor::ObjectReferenceTemplateSeq seq_obj_ref_template;
+  TAO::ORT_Array array_obj_ref_template;
 
   CORBA::ULong i = 0;
 
-  //  Remove all children POAs
+  // Gather all ObjectReferenceTemplates and change all adapter states
+  // to inactivate
   for (CHILDREN::iterator iterator = this->children_.begin ();
        iterator != this->children_.end ();
        ++iterator)
@@ -744,35 +747,47 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       // Get the adapter template related to the ChildPOA
       PortableInterceptor::ObjectReferenceTemplate *child_at =
-        child_poa->get_adapter_template ();
+        child_poa->get_adapter_template_i ();
 
-      CORBA::add_ref (child_at);
+      // In case no ORT library is linked we get zero
+      if (child_at != 0)
+        {
+          // Add it to the sequence of object reference templates that
+          // will be destroyed.
+          array_obj_ref_template.size (i + 1);
 
-      // Add it to the sequence of object reference templates that
-      // will be destroyed.
-      seq_obj_ref_template.length (i + 1);
+          array_obj_ref_template[i] = child_at;
+        }
 
-      seq_obj_ref_template[i] = child_at;
-
-      child_poa->adapter_state_ = PortableInterceptor::INACTIVE;
-
-      child_poa->adapter_state_changed (seq_obj_ref_template,
-                                        child_poa->adapter_state_
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      child_poa->adapter_state_ =
+        PortableInterceptor::INACTIVE;
 
       ++i;
+    }
 
-      child_poa->destroy_i (etherealize_objects,
-                            wait_for_completion
-                            ACE_ENV_ARG_PARAMETER);
+  // Notify the state changes to the IORInterceptors
+  this->adapter_state_changed (array_obj_ref_template,
+                               PortableInterceptor::INACTIVE
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Destroy all child POA's now.
+  for (CHILDREN::iterator destroy_iterator = this->children_.begin ();
+       destroy_iterator != this->children_.end ();
+       ++destroy_iterator)
+    {
+      TAO_POA *destroy_child_poa = (*destroy_iterator).int_id_;
+
+      destroy_child_poa->destroy_i (etherealize_objects,
+                                    wait_for_completion
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   //
   // ImplRepo related.
   //
-#if (TAO_HAS_MINIMUM_CORBA == 0)
   if (this->cached_policies_.lifespan () == PortableServer::PERSISTENT)
     {
       this->imr_notify_shutdown ();
@@ -825,6 +840,21 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       (non_servant_upcall_in_progress == 0 ||
        &non_servant_upcall_in_progress->poa () != this))
     {
+      TAO::ORT_Array my_array_obj_ref_template;
+
+      // Get the adapter template
+      PortableInterceptor::ObjectReferenceTemplate *adapter =
+        this->get_adapter_template_i ();
+
+      if (adapter != 0)
+        {
+          // Add it to the sequence of object reference templates, we just notify
+          // for ourselves that we are now non_existent, our childs will do it
+          // for themselves.
+          array_obj_ref_template.size (1);
+          array_obj_ref_template[0] = adapter;
+        }
+
       // According to the ORT spec, after a POA is destroyed, its state
       // has to be changed to NON_EXISTENT and all the registered
       // interceptors are to be informed. Since, the POA is destroyed
@@ -838,14 +868,10 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
 
-      this->adapter_state_changed (seq_obj_ref_template,
+      this->adapter_state_changed (array_obj_ref_template,
                                    this->adapter_state_
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-
-      // Break all ties between the ObjectReferenceTemplate and this
-      // POA.
-      this->def_ort_template_->poa (0);
     }
   else
     {
@@ -1017,31 +1043,19 @@ TAO_POA::add_ior_component_to_profile (
 
 void
 TAO_POA::adapter_state_changed (
-   const PortableInterceptor::ObjectReferenceTemplateSeq &seq_obj_ref_template,
+   const TAO::ORT_Array &array_obj_ref_template,
    PortableInterceptor::AdapterState state
    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /// First get a list of all the interceptors.
-  TAO_IORInterceptor_List * interceptor_list =
-    this->orb_core_.ior_interceptor_list ();
+  TAO_IORInterceptor_Adapter *ior_adapter =
+    this->orb_core_.ior_interceptor_adapter ();
 
-  if (interceptor_list == 0)
-    return;
-
-  TAO_IORInterceptor_List::TYPE & interceptors =
-    interceptor_list->interceptors ();
-
-  const size_t interceptor_count = interceptors.size ();
-
-  if (interceptor_count == 0)
-    return;
-
-  for (size_t i = 0; i < interceptor_count; ++i)
+  if (ior_adapter)
     {
-      interceptors[i]->adapter_state_changed (seq_obj_ref_template,
-                                              state
-                                              ACE_ENV_ARG_PARAMETER);
+      ior_adapter->adapter_state_changed (array_obj_ref_template,
+                                          state
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -1055,7 +1069,8 @@ TAO_POA::get_servant_manager_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   // This operation requires the USE_SERVANT_MANAGER policy; if not
   // present, the WrongPolicy exception is raised.
-  if (this->cached_policies_.request_processing () != PortableServer::USE_SERVANT_MANAGER)
+  if (this->cached_policies_.request_processing () !=
+      PortableServer::USE_SERVANT_MANAGER)
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         PortableServer::ServantManager::_nil ());
@@ -1064,7 +1079,8 @@ TAO_POA::get_servant_manager_i (ACE_ENV_SINGLE_ARG_DECL)
   // This operation returns the servant manager associated with the
   // POA.  If no servant manager has been associated with the POA, it
   // returns a null reference.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
+  if (this->cached_policies_.servant_retention () ==
+      PortableServer::RETAIN)
     return PortableServer::ServantManager::_duplicate (this->servant_activator_.in ());
   else
     return PortableServer::ServantManager::_duplicate (this->servant_locator_.in ());
@@ -1921,14 +1937,32 @@ TAO_POA::create_reference_i (const char *intf,
                                    1,
                                    priority);
 
+  return this->invoke_key_to_object_helper_i (intf,
+                                              user_id
+                                              ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object_ptr
+TAO_POA::invoke_key_to_object_helper_i (const char * repository_id,
+                                        const PortableServer::ObjectId & id
+                                        ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
   const PortableInterceptor::ObjectId &user_oid =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
-                          user_id);
+    reinterpret_cast <const PortableInterceptor::ObjectId &>(id);
 
   // Ask the ORT to create the object.
-  return this->obj_ref_factory_->make_object (intf,
+  if (this->ORT_adapter_i ())
+    {
+      // Ask the ORT to create the object.
+      return this->ort_adapter_->make_object (repository_id,
                                               user_oid
                                               ACE_ENV_ARG_PARAMETER);
+    }
+  else
+    {
+      return this->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
 }
 
 CORBA::Object_ptr
@@ -2005,13 +2039,8 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                                    1,
                                    priority);
 
-  const PortableInterceptor::ObjectId &user_oid =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
-                          user_id);
-
-  // Ask the ORT to create the object.
-  return this->obj_ref_factory_->make_object (intf,
-                                              user_oid
+  return this->invoke_key_to_object_helper_i (intf,
+                                              user_id
                                               ACE_ENV_ARG_PARAMETER);
 }
 
@@ -2253,19 +2282,14 @@ TAO_POA::servant_to_reference_i (PortableServer::Servant servant
                                    1,
                                    priority);
 
-  const PortableInterceptor::ObjectId &user_oid =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
-                          user_id);
-
   // Ask the ORT to create the object.
   // @@NOTE:There is a possible deadlock lurking here. We held the
   // lock, and we are possibly trying to make a call into the
   // application code. Think what would happen if the app calls us
   // back. We need to get to this at some point.
-  return this->obj_ref_factory_->make_object (
-    servant->_interface_repository_id (),
-    user_oid
-    ACE_ENV_ARG_PARAMETER);
+  return this->invoke_key_to_object_helper_i (servant->_interface_repository_id (),
+                                              user_id
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
@@ -2605,13 +2629,8 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
                                        1,
                                        priority);
 
-      const PortableInterceptor::ObjectId &user_oid =
-        ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
-                              id);
-
-      // Ask the ORT to create the object.
-      return this->obj_ref_factory_->make_object (servant->_interface_repository_id (),
-                                                  user_oid
+      return this->invoke_key_to_object_helper_i (servant->_interface_repository_id (),
+                                                  id
                                                   ACE_ENV_ARG_PARAMETER);
     }
   else
@@ -3740,127 +3759,26 @@ TAO_POA::key_to_stub_i (const TAO::ObjectKey &key,
 void
 TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
 {
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  /// First get a list of all the interceptors.
-  TAO_IORInterceptor_List * interceptor_list =
-    this->orb_core_.ior_interceptor_list ();
+  TAO_IORInterceptor_Adapter *ior_adapter =
+    this->orb_core_.ior_interceptor_adapter ();
 
-  if (interceptor_list == 0)
-    return;
-
-  TAO_IORInterceptor_List::TYPE & interceptors =
-    interceptor_list->interceptors ();
-
-  const size_t interceptor_count = interceptors.size ();
-
-  if (interceptor_count == 0)
-    return;
-
-  TAO_IORInfo *tao_info = 0;
-  ACE_NEW_THROW_EX (tao_info,
-                    TAO_IORInfo (this),
-                    CORBA::NO_MEMORY (
-                       CORBA::SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          ENOMEM),
-                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
-
-  PortableInterceptor::IORInfo_var info = tao_info;
-
-  // Release the POA during IORInterceptor calls to avoid potential
-  // deadlocks.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-  ACE_UNUSED_ARG (non_servant_upcall);
-
-  for (size_t i = 0; i < interceptor_count; ++i)
+  if (ior_adapter)
     {
-      ACE_TRY
-        {
-          interceptors[i]->establish_components (info.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          // According to the Portable Interceptors specification,
-          // IORInterceptor::establish_components() must not throw an
-          // exception.  If it does, then the ORB is supposed to
-          // ignore it and continue processing the remaining
-          // IORInterceptors.
-          if (TAO_debug_level > 1)
-            {
-              CORBA::String_var name = interceptors[i]->name (
-                ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              // @@ What do we do if we get an exception here?
-
-              if (name.in () != 0)
-                {
-                  ACE_DEBUG ((LM_WARNING,
-                              "(%P|%t) Exception thrown while processing "
-                              "IORInterceptor \"%s\">\n",
-                              ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
-                }
-
-              ACE_PRINT_TAO_EXCEPTION (ACE_ANY_EXCEPTION,
-                                       "Ignoring exception in "
-                                       "IORInterceptor::establish_components");
-            }
-        }
-      ACE_ENDTRY;
+      ior_adapter->establish_components (this ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
-
-  tao_info->components_established ();
-
-  this->components_established (info.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // The IORInfo instance is no longer valid.  Invalidate it to
-  // prevent the user from peforming "illegal" operations.
-  tao_info->invalidate ();
 }
 
 void
 TAO_POA::components_established (PortableInterceptor::IORInfo_ptr info
                                  ACE_ENV_ARG_DECL)
 {
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  TAO_IORInterceptor_List * interceptor_list =
-    this->orb_core_.ior_interceptor_list ();
+  TAO_IORInterceptor_Adapter *ior_adapter =
+    this->orb_core_.ior_interceptor_adapter ();
 
-    if (interceptor_list == 0)
-    return;
-
-  TAO_IORInterceptor_List::TYPE & interceptors =
-    interceptor_list->interceptors ();
-
-  const size_t interceptor_count = interceptors.size ();
-
-  // All the establish_components() interception points have been
-  // invoked. Now call the components_established() interception point
-  // on all the IORInterceptors.
-  for (size_t j = 0; j < interceptor_count; ++j)
+  if (ior_adapter)
     {
-      ACE_TRY
-        {
-          interceptors[j]->components_established (
-            info
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 6,
-                                         CORBA::COMPLETED_NO));
-        }
-      ACE_ENDTRY;
+      ior_adapter->components_established (info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -4170,6 +4088,82 @@ TAO_POA::imr_notify_shutdown (void)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+TAO::ORT_Adapter_Factory *
+TAO_POA::ORT_adapter_factory (void)
+{
+  return ACE_Dynamic_Service<TAO::ORT_Adapter_Factory>::instance (
+           TAO_POA::ort_adapter_factory_name ());
+}
+
+TAO::ORT_Adapter *
+TAO_POA::ORT_adapter_i (void)
+{
+  if (this->ort_adapter_ != 0)
+    return this->ort_adapter_;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      TAO::ORT_Adapter_Factory * ort_ap_factory =
+        this->ORT_adapter_factory ();
+
+      if (!ort_ap_factory)
+        return 0;
+
+      // Get the full adapter name of this POA, do this before we
+      // create the adapter so that in case this fails, we just
+      // return 0 and not a not activated adapter
+      PortableInterceptor::AdapterName *adapter_name =
+        this->adapter_name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      this->ort_adapter_ =
+          ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (!ort_adapter_)
+        return 0;
+
+      // @todo We have to look at this, we activate it but hold the POA lock,
+      // in case we are called by ORT_adapter, we shouldn't keep the lock
+      // here, but then the ort_adapter should be guarded against multiple
+      // activations.
+      this->ort_adapter_->activate (this->orb_core_.server_id (),
+                                    this->orb_core_.orbid (),
+                                    adapter_name,
+                                    this
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "(%P|%t) Cannot initialize the "
+                           "object_reference_template_adapter\n");
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+
+  return this->ort_adapter_;
+}
+
+TAO::ORT_Adapter *
+TAO_POA::ORT_adapter (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (this->ort_adapter_ != 0)
+    return this->ort_adapter_;
+
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (0);
+
+  // DCL ..
+  if (this->ort_adapter_ != 0)
+    return this->ort_adapter_;
+
+  return this->ORT_adapter_i ();
+}
+
 TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
                               ACE_ENV_ARG_DECL,
                               int check_for_destruction)
@@ -4304,6 +4298,53 @@ TAO_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id,
   this->priority_ = priority;
 }
 
+void
+TAO_POA::ort_adapter_factory_name (const char *name)
+{
+  TAO_POA_Static_Resources::instance ()->ort_adapter_factory_name_ =
+    name;
+}
+
+const char *
+TAO_POA::ort_adapter_factory_name (void)
+{
+  return TAO_POA_Static_Resources::instance ()->ort_adapter_factory_name_.c_str();
+}
+
+// Initialize instance_ to 0, since this is what we test for in the call
+// to instance ().  Note that this does not require a constructor call, so
+// it is always initialized by the time that instance () can be called.
+TAO_POA_Static_Resources* TAO_POA_Static_Resources::instance_ = 0;
+
+// Force an instance to be created at module initialization time,
+// since we do not want to worry about double checked locking and
+// the race condition to initialize the lock.
+TAO_POA_Static_Resources* TAO_POA_Static_Resources::initialization_reference_ =
+  TAO_POA_Static_Resources::instance ();
+
+TAO_POA_Static_Resources*
+TAO_POA_Static_Resources::instance (void)
+{
+  if (TAO_POA_Static_Resources::instance_ == 0)
+    {
+      // This new is never freed on purpose.  The data specified by
+      // it needs to be around for the last shared library that references
+      // this class.  This could occur in a destructor in a shared library
+      // that is unloaded after this one.  One solution to avoid this
+      // harmless memory leak would be to use reference counting.
+      ACE_NEW_RETURN (TAO_POA_Static_Resources::instance_,
+                      TAO_POA_Static_Resources (),
+                      0);
+    }
+
+  return TAO_POA_Static_Resources::instance_;
+}
+
+TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
+  : ort_adapter_factory_name_ ("ORT_Adapter_Factory")
+{
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>;
@@ -4321,13 +4362,11 @@ template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
 template class ACE_Array_Base <IOP::ProfileId>;
 
-//template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class auto_ptr<TAO_Active_Object_Map>;
 
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
            && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-//template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
 #  endif  /* ACE_LACKS_AUTO_PTR */
 
@@ -4349,13 +4388,11 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
 
-//#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate auto_ptr<TAO_Active_Object_Map>
 
 #  if defined (ACE_LACKS_AUTO_PTR) \
       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
            && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-//#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
 #    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>
 #  endif  /* ACE_LACKS_AUTO_PTR */
 

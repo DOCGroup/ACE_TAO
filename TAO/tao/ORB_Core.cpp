@@ -2770,17 +2770,6 @@ TAO_ORB_Core::add_interceptor (
     }
 }
 
-TAO_IORInterceptor_List *
-TAO_ORB_Core::ior_interceptor_list (void)
-{
-  if (this->ior_interceptor_adapter ())
-    {
-      return this->ior_interceptor_adapter_->interceptor_list ();
-    }
-
-  return 0;
-}
-
 TAO_IORInterceptor_Adapter *
 TAO_ORB_Core::ior_interceptor_adapter (void)
 {
@@ -2815,6 +2804,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                                    "ior_interceptor_adapter \n");
             }
           ACE_ENDTRY;
+          ACE_CHECK_RETURN(0);
         }
     }
 
