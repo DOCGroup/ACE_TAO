@@ -186,7 +186,7 @@ InputDir=<%dirname(idl_file)%>
 <%if(dirname_found)%>
 BuildCmds= \
 	cd $(InputDir) \
-	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> <%basename(idl_file)%>
+	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> <%basename(idl_file)%>
 
 "$(InputDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -207,7 +207,7 @@ BuildCmds= \
    $(BuildCmds)
 <%else%>
 BuildCmds= \
-	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> $(InputPath)
+	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> $(InputPath)
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

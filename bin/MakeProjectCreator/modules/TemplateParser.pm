@@ -26,7 +26,7 @@ my(@keywords) = ('if', 'else', 'endif',
                  'noextension', 'dirname', 'basename', 'basenoextension',
                  'foreach', 'forfirst', 'fornotfirst',
                  'fornotlast', 'forlast', 'endfor',
-                 'comment'
+                 'comment', 'flag_overrides',
                 );
 
 # ************************************************************
@@ -472,6 +472,38 @@ sub handle_end {
 }
 
 
+sub get_flag_overrides {
+  my($self)  = shift;
+  my($name)  = shift;
+  my($value) = undef;
+  my($file)  = $self->get_value($name);
+  my($prjc)  = $self->{'prjc'};
+  my($fo)    = $prjc->{'flag_overrides'};
+
+  foreach my $key (keys %$fo) {
+    if ($key =~ /^$name/) {
+      foreach my $of (keys %{$$fo{$key}}) {
+        if ($of eq $file) {
+          foreach my $ma (keys %{$prjc->{'matching_assignments'}}) {
+            if ($ma eq $key) {
+              foreach my $aname (@{$prjc->{'matching_assignments'}->{$ma}}) {
+                if (defined $$fo{$key}->{$of}->{$aname}) {
+                  $value = $$fo{$key}->{$of}->{$aname};
+                }
+              }
+              last;
+            }
+          }
+          last;
+        }
+      }
+      last;
+    }
+  }
+  return $value;
+}
+
+
 sub handle_if {
   my($self)   = shift;
   my($val)    = shift;
@@ -488,7 +520,15 @@ sub handle_if {
       $val =~ s/^\s+//;
       $true = 0;
     }
-    if (!defined $self->get_value($val)) {
+
+    if ($val =~ /flag_overrides\(([^\)]+)\)/) {
+      $val = $self->get_flag_overrides($1);
+    }
+    else {
+      $val = $self->get_value($val)
+    }
+
+    if (!defined $val) {
       $self->{'if_skip'} = $true;
     }
     else {
@@ -599,6 +639,22 @@ sub handle_basenoextension {
 }
 
 
+sub handle_flag_overrides {
+  my($self) = shift;
+  my($name) = shift;
+  my($file) = $self->get_value($name);
+  my($prjc) = $self->{'prjc'};
+  my($fo)   = $prjc->{'flag_overrides'};
+
+  if (!$self->{'if_skip'}) {
+    my($value) = $self->get_flag_overrides($name);
+    if (defined $value) {
+      $self->append_current($value);
+    }
+  }
+}
+
+
 ## Given a line that starts with an identifier, we split
 ## then name from the possible value stored inside ()'s and
 ## we stop looking at the line when we find the %> ending 
@@ -646,7 +702,7 @@ sub process_name {
 
   if ($line eq "") {
   }
-  elsif ($line =~ /^(\w+)(\(([^\)]+|\".*\")\))?%>/) {
+  elsif ($line =~ /^(\w+)(\(([^\)]+|\".*\"|flag_overrides\([^\)]+\))\))?%>/) {
     my($name, $val) = $self->split_name_value($line);
 
     $length += length($name);
@@ -673,6 +729,9 @@ sub process_name {
       }
       elsif ($name eq 'comment') {
         ## Ignore the contents of the comment
+      }
+      elsif ($name eq 'flag_overrides') {
+        $self->handle_flag_overrides($val);
       }
       elsif ($name eq 'noextension') {
         $self->handle_noextension($val);
@@ -737,7 +796,7 @@ sub collect_data {
   $prjc->update_project_info($self, 1, ['depends']);
 
   ## VC7 Projects need to know the GUID.
-  ## We need to save this value in our know values
+  ## We need to save this value in our known values
   ## since each guid generated will be different.  We need
   ## this to correspond to the same guid used in the workspace.
   my($guid) = $prjc->update_project_info($self, 1, ['guid']);

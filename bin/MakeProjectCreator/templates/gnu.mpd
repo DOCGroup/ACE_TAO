@@ -181,13 +181,16 @@ TAO_IDLFLAGS += <%idlflags%>
 
 ADDITIONAL_IDL_TARGETS =
 <%foreach(idl_files)%>
-IDL_FILE_DIR = <%dirname(idl_file)%>
+# IDL File Directory: <%dirname(idl_file)%>
 <%if(dirname_found)%>
-ifneq ($(tao_dont_use_idl_make_rule),1)
 ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
 <%noextension(idl_file)%>C.h: <%idl_file%>
-	(cd $(IDL_FILE_DIR) && $(TAO_IDL) $(TAO_IDLFLAGS) <%basename(idl_file)%>)
-endif
+	(cd <%dirname(idl_file)%> && $(TAO_IDL) <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%basename(idl_file)%>)
+<%else%>
+<%if(flag_overrides(idl_file))%>
+<%noextension(idl_file)%>C.h: <%idl_file%>
+	$(TAO_IDL) <%flag_overrides(idl_file)%> <%basename(idl_file)%>
+<%endif%>
 <%endif%>
 <%endfor%>
 

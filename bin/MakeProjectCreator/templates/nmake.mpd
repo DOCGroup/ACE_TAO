@@ -204,13 +204,13 @@ InputDir=<%dirname(idl_file)%>
 	<<tempfile.bat
 	@echo off
 	cd $(InputDir)
-	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> <%basename(idl_file)%>
+	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> <%basename(idl_file)%>
 <<
 <%else%>
 ".\$(InputName)C.h"	".\$(InputName)C.i"	".\$(InputName)C.cpp"	".\$(InputName)S.h"	".\$(InputName)S.i"	".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	<<tempfile.bat 
 	@echo off 
-	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> $(InputPath)
+	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%if(flag_overrides(idl_file))%><%flag_overrides(idl_file)%><%else%><%idlflags("-Sc")%><%endif%> $(InputPath)
 <<
 <%endif%>
 
