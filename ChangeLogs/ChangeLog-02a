@@ -1,3 +1,7 @@
+Mon Sep 10 17:31:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Added a new platform to the list.
+
 Mon Sep 10 12:54:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
