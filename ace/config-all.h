@@ -374,7 +374,9 @@ extern int t_errno;
     // introduces other stuff that breaks things, like <memory>, which
     // screws up auto_ptr.
 #   include /**/ <new>
-#   if (defined (__HP_aCC) && !defined (RWSTD_NO_NAMESPACE)) \
+#   if ((defined (__HP_aCC) && \
+        (__HP_aCC <  32500 && !defined (RWSTD_NO_NAMESPACE)) || \
+        (__HP_aCC >= 32500 && defined (_NAMESPACE_STD)))) \
        || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #     define ACE_bad_alloc std::bad_alloc
 #   else
