@@ -18,6 +18,10 @@ MKLIST = Makefile.Iterative_Logging_Server \
 	Makefile.RT_Thread_Per_Connection_Logging_Server \
 	Makefile.Thread_Per_Connection_Logging_Server
 
+## Ensure that Makefiles in MKLIST are executed in sequence during a
+## parallel build because we share some files between multiple libraries.
+.NOTPARALLEL:
+
 ## Makefile.Reactive_Logging_Server_Ex.mkfile is a dummy target which will cause
 ## $(MAKE) -f Makefile.Reactive_Logging_Server_Ex to be invoked
 %.mkfile: %

@@ -10,6 +10,13 @@ option
 	target type (exe) "Time_Service_Test"
 	{
 	   source type (cpp) "Time_Service_Test.cpp"
-	   source platformLinkLibs
+	   if ($__IBMCPP__ >= 500) {
+	     option macros(global) {
+	       source type (hpp) "test_config.h"
+	     }
+	     source type (cpp) "test_config.h"
+	     source type (cpp) "../ace/Singleton.cpp"
+	   }
+	   source type (lib) platformLinkLibs
 	}
     }
