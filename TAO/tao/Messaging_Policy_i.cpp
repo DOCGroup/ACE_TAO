@@ -10,7 +10,7 @@
 
 ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
 
-#if (TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1)
+#if (TAO_HAS_REALTIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry)
   :  relative_expiry_ (relative_expiry)
@@ -52,7 +52,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
     policy = orb_core->stubless_relative_roundtrip_timeout ();
   else
     policy = stub->relative_roundtrip_timeout ();
-   
+
   if (CORBA::is_nil (policy.in ()))
     {
       has_timeout = 0;
@@ -164,7 +164,7 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
     }
 }
 
-#endif /* TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 // ****************************************************************
 

@@ -1,3 +1,13 @@
+Wed Nov  1 09:47:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Stub.cpp: 
+	* tao/Messaging_Policy_i.h: 
+	* tao/Messaging_Policy_i.cpp: 
+	* tao/Messaging_PolicyFactory.cpp (create_policy): 
+	* tao/Messaging_ORBInitializer.cpp (pre_init): 
+	  Changed TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY to
+	  TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
+	
 Wed Nov  1 08:19:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Messaging_ORBInitializer.cpp:

@@ -731,7 +731,7 @@ TAO_Stub::sync_strategy (void)
   return this->orb_core_->transport_sync_strategy ();
 }
 
-#if (TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1)
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 CORBA::Policy *
 TAO_Stub::relative_roundtrip_timeout (void)
@@ -770,7 +770,7 @@ TAO_Stub::relative_roundtrip_timeout (void)
   return result;
 }
 
-#endif /* TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+#endif /* TAO_HAS_REALTIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -822,9 +822,9 @@ TAO_Stub::sync_scope (void)
   // construction time...
   if (this->policies_ != 0)
     result = this->policies_->sync_scope ();
-  
+
   this->orb_core_->stubless_sync_scope (result);
-  
+
   return result;
 }
 
