@@ -1,3 +1,11 @@
+Wed Mar  6 21:48:15 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux_kcc.GNU (CCFLAGS):
+
+          Moved --one_instantiation_per_object flag as a common flag.
+          Otherwise building with debugging enabled doesn't work with
+          libraries built without debug information.
+
 Wed Mar  6 21:42:37 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * bin/ace-install:

@@ -22,12 +22,12 @@ endif
 
 CC      = KCC
 CXX     = $(CC)
-CFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
+CPPFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
            -D_GNU_SOURCE
 
-CCFLAGS += $(CFLAGS) -DNULL=0
+CCFLAGS += $(CFLAGS) -DNULL=0 --one_instantiation_per_object
 DCFLAGS += +K0 -g
-OCFLAGS += +K3 -O --one_instantiation_per_object
+OCFLAGS += +K3 -O
 DLD     = $(CC)
 LD      = $(CC)
 # Using just -ldl results in a very annoying warning (nm: no symbols),
