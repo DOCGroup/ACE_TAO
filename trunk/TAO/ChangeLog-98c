@@ -1,3 +1,12 @@
+Fri Jul  3 00:39:03 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}: 
+	Added code to sort by preference the merged result sequence of a
+	federated query. 
+
 Thu Jul  2 19:41:46 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * tests/Param_Test/Makefile:
