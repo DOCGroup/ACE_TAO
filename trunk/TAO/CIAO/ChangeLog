@@ -4,7 +4,8 @@ Fri Jun 25 10:51:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* CIDLC/ServantSourceGenerator.cpp:
 
 	  Fixed compilation problems with VC6. To put it short VC6 just
-	  cannot handle templates properly.
+	  cannot handle templates properly. Thanks to gan Deng for reporting
+	  the problem.
 
 Thu Jun 24 17:25:36 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
