@@ -158,7 +158,7 @@ public:
   virtual ~ACE_Streambuf (void);
 
   /// Get the current Time_Value pointer and provide a new one.
-  ACE_Time_Value *recv_timeout (ACE_Time_Value *tv = NULL);
+  ACE_Time_Value *recv_timeout (ACE_Time_Value *tv = 0);
 
   /**
    * Use this to allocate a new/different buffer for put operations.
@@ -169,7 +169,7 @@ public:
    * It is your responsibility to delete this memory when you are done
    * with it.
    */
-  char *reset_put_buffer (char *newBuffer = NULL,
+  char *reset_put_buffer (char *newBuffer = 0,
                           u_int _streambuf_size = 0,
                           u_int _pptr = 0 );
 
@@ -186,7 +186,7 @@ public:
    * It is your responsibility to delete this memory when you are done
    * with it.
    */
-  char *reset_get_buffer (char *newBuffer = NULL,
+  char *reset_get_buffer (char *newBuffer = 0,
                           u_int _streambuf_size = 0,
                           u_int _gptr = 0,
                           u_int _egptr = 0);
@@ -219,7 +219,7 @@ protected:
 
   /// The overflow function receives the character which caused the
   /// overflow.
-  virtual int overflow (int = EOF);
+  virtual int overflow (int c = EOF);
 
   /// Resets the <base> pointer and streambuf mode.  This is used
   /// internally when get/put buffers are allocatd.
@@ -301,15 +301,15 @@ protected:
                         ssize_t len) = 0;
   virtual ssize_t recv (char *buf,
                         ssize_t len,
-                        ACE_Time_Value *tv = NULL) = 0;
+                        ACE_Time_Value *tv = 0) = 0;
   virtual ssize_t recv (char *buf,
                         ssize_t len,
                         int flags,
-                        ACE_Time_Value *tv = NULL) = 0;
+                        ACE_Time_Value *tv = 0) = 0;
   virtual ssize_t recv_n (char *buf,
                           ssize_t len,
                           int flags = 0,
-                          ACE_Time_Value *tv = NULL) = 0;
+                          ACE_Time_Value *tv = 0) = 0;
 
   virtual ACE_HANDLE get_handle (void);
 
