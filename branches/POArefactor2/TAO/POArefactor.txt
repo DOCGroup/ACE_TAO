@@ -1,3 +1,35 @@
+Mon Nov 15 10:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Typecode_types.pidl:
+        * tao/Typecode_types.{h,cpp,inl}:
+        * tao/Typecode.{h,cpp}:
+        * tao/ORB.idl:
+        * tao/diffs/Typecode.diff
+          Moved the typecode interface forward declaration with the TCKind
+          enum to a new file that can be compiled with the IDL compiler.
+          Removed some stuff from the Typecode.{h,cpp} that is now generated
+          by the IDL compiler. Some patches have to be done, these are in the
+          diff file.
+
+        * tao/Typecode_types.pidl:
+          Added missing tk_event to the TCKind enum
+
+        * tao/*.pidl:
+        * tao/PortableServer/*.pidl:
+          Regenerated dozens of pidl files with the idl compiler change below.
+
+        * tao/diffs/IOP_Codec.diff:
+        * tao/diffs/Pollable.diff:
+        * tao/diffs/StringSeq.diff:
+        * tao/diffs/TAO.diff:
+          Zapped these not needed diffs
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          Moved the branch POArefactor2 to the latest version of this file,
+          this takes care that the typecodes for exceptions are generated in
+          the C.cpp file instead of A.cpp, making it much easier to regenerate
+          the pidl files in the repo.
+
 Sun Nov 14 21:06:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/PortableServer/IdUniquenessStrategy.h:
@@ -11,12 +43,12 @@ Sun Nov 14 19:08:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
  	* tao/PortableServer/Local_Servant_Base.h:
 
 	  Changed .i to .inl
-	
+
 	* tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
 	* tao/PortableServer/ThreadPolicyValueORBControl.cpp:
 
 	  Added a comment for Johnny.
-	
+
 Fri Nov 12 13:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServerInterceptorAdapter.h:
