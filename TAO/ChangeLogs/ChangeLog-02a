@@ -1,3 +1,30 @@
+Mon Oct  2 10:58:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Wait_On_Leader_Follower.cpp (connection_closed): Fixed a
+	  typo that was a source of a bug. The reply_received value was
+	  being set to -11 when that should have been set to -1. This was
+	  not generating the right exceptions when the client's transport
+	  detected that the server was shutdown.
+
+	* tao/Invocation.cpp:
+	* tao/Invocation.h:
+	* tao/Invocation.i: Added hooks for transparent reinvocation for
+	  FT CORBA. Transparent reinvocation happens only if certain
+	  policies are set and if the FT library is loaded. Also added a
+	  flag restart_flag_ to the Invocation classes. This flag is set
+	  to true in the generated code whenever the Invocation classes
+	  return TAO_INVOKE_RESTART.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i: Implementation of the hooks for the transparent
+	  reinvocation.
+
+	* tao/Service_Callbacks.h:
+	* tao/Service_Callbacks.cpp: Added calls to call in to the
+	  services to return the right exception to the Invocation
+	  classes.
+
 Mon Oct  2 07:38:59 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable: Added new Borland C++

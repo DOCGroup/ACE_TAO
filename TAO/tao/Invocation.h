@@ -107,12 +107,20 @@ public:
   TAO_OutputCDR &out_stream (void);
   // Return the underlying output stream.
 
-  void select_endpoint_based_on_policy (CORBA_Environment &ACE_TRY_ENV 
+  void select_endpoint_based_on_policy (CORBA_Environment &ACE_TRY_ENV
                                        = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Select the endpoint (and profile) we will use to in this
-  // invocation, based on TAO::Client_Priority_Policy.)  I think this  
+  // invocation, based on TAO::Client_Priority_Policy.)  I think this
   // function may be more appropriate in TAO_Stub class.
+
+  //  CORBA::Boolean restart_flag (void);
+  void restart_flag (CORBA::Boolean flag);
+  // Set the value for the  restart flag.
+
+  int close_connection (void);
+  // resets the forwarding profile and behaves like we are fowarded
+  // (to the same server)
 
 protected:
   void start (CORBA_Environment &ACE_TRY_ENV =
@@ -131,10 +139,6 @@ protected:
   // Notice that the same profile is tried again because it may be
   // that the server closed the connection simply to release
   // resources.
-
-  int close_connection (void);
-  // resets the forwarding profile and behaves like we are fowarded
-  // (to the same server)
 
   int location_forward (TAO_InputCDR &inp_stream,
                         CORBA_Environment &ACE_TRY_ENV =
@@ -190,6 +194,11 @@ protected:
   // LOC_NEEDS_ADDRESSING_MODE. If we receive an exception we will
   // fill up this data atmost *once* and send it to the server.
 
+  CORBA::Boolean restart_flag_;
+  // This flag is turned on when the previous invocation on an
+  // endpoint or a profile returned a TAO_INVOKE_RESTART. FT CORBA
+  // relies on this flag for guarenteeing unique id's during
+  // reinvocations.
 };
 
 // ****************************************************************

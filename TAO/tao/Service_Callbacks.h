@@ -29,6 +29,7 @@
 
 class TAO_Profile;
 class TAO_MProfile;
+class TAO_GIOP_Invocation;
 
 class TAO_Export TAO_Service_Callbacks
 {
@@ -70,9 +71,22 @@ public:
 
   virtual void service_context_list (TAO_Stub *&stub,
                                      IOP::ServiceContextList &service_list,
+                                     CORBA::Boolean restart,
                                      CORBA::Environment &ACE_TRY_ENV);
   // Allow the services to add service specific service contexr
   // information.
+
+  virtual int raise_comm_failure (TAO_GIOP_Invocation *invoke,
+                                  TAO_Profile *profile,
+                                  CORBA::Environment &ACE_TRY_ENV);
+  // Allow the service layer to decide whether the COMM_FAILURE
+  // exception should be thrown or a reinvocation is needed
+
+  virtual int raise_transient_failure (TAO_GIOP_Invocation *invoke,
+                                       TAO_Profile *profile,
+                                       CORBA::Environment &ACE_TRY_ENV);
+  // Allow the service layer to decide whether the TRANSIENT
+  // exception should be thrown or a reinvocation is needed
 };
 
 
