@@ -29,6 +29,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 class TAO_RTCORBA_Export TAO_Linear_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
 {
   //
@@ -68,6 +70,8 @@ public:
 #if defined (__ACE_INLINE__)
 # include "Linear_Network_Priority_Mapping.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_LINEAR_NETWORK_PRIORITY_MAPPING_H */

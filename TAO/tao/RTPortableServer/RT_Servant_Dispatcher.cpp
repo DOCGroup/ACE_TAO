@@ -1,4 +1,7 @@
 #include "RT_Servant_Dispatcher.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "RT_POA.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/ORB_Core.h"
@@ -393,3 +396,5 @@ TAO_RT_Servant_Dispatcher::create_POA (const ACE_CString &name,
 
   return poa;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -10,6 +10,10 @@
 
 ACE_RCSID(tao, Network_Priority_Mapping, "$Id$")
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 TAO_Network_Priority_Mapping::~TAO_Network_Priority_Mapping (void)
 {
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

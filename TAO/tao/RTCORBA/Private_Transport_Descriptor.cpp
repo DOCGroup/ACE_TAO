@@ -1,5 +1,7 @@
 #include "Private_Transport_Descriptor.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #if !defined (__ACE_INLINE__)
 # include "Private_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
@@ -61,4 +63,6 @@ TAO_Private_Transport_Descriptor::hash (void) const
 {
   return (this->endpoint_->hash () + this->object_id_);
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

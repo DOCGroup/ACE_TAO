@@ -33,6 +33,7 @@
 #include "ace/pre.h"
 #include "rtcorba_export.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -2814,6 +2815,8 @@ TAO_RTCORBA_Export CORBA::Boolean operator>> (
 #if defined (__BORLANDC__)
 #pragma option pop
 #endif /* __BORLANDC__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* ifndef */

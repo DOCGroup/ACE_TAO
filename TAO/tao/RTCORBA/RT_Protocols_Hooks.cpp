@@ -1,5 +1,8 @@
 
 #include "RT_Protocols_Hooks.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "RT_Policy_i.h"
 
 #include "tao/Invocation.h"
@@ -739,3 +742,5 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
 #pragma instantiate ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

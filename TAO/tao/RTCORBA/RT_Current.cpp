@@ -3,6 +3,9 @@
 //
 
 #include "RT_Current.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "Priority_Mapping.h"
 
 #include "tao/Stub.h"
@@ -63,3 +66,5 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority
   if (result == -1)
     ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

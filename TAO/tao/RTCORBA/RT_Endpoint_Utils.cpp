@@ -1,4 +1,7 @@
 #include "RT_Endpoint_Utils.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "RT_Endpoint_Selector_Factory.h"
 #include "RT_Invocation_Endpoint_Selectors.h"
 #include "tao/Invocation.h"
@@ -68,3 +71,4 @@ TAO_RT_Endpoint_Utils::client_protocol_policy (TAO_GIOP_Invocation *invocation
   return retval;
 }
 
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

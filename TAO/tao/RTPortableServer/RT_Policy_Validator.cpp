@@ -1,4 +1,7 @@
 #include "RT_Policy_Validator.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
@@ -498,3 +501,5 @@ TAO_POA_RT_Policy_Validator::extract_acceptor_registry (TAO_ORB_Core &orb_core,
 
   return acceptor_registry;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -19,6 +19,8 @@
 
 #include "rtcorba_export.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 
@@ -44,6 +46,8 @@ public:
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_ORB_Loader)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_ORB_Loader)
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_RT_ORB_LOADER_H */

@@ -25,6 +25,8 @@
 
 #include "RTPortableServerC.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
 #endif /* __BORLANDC__ */
@@ -320,3 +322,5 @@ operator>>= (
 // # pragma instantiate TAO_Object_Manager<RTPortableServer::POA, RTPortableServer::POA_var>
 # pragma instantiate TAO::Any_Impl_T<RTPortableServer::POA>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0 */

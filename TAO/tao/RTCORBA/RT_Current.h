@@ -17,6 +17,8 @@
 
 #include "tao/orbconf.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #define TAO_RTCORBA_SAFE_INCLUDE
 #include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
@@ -78,6 +80,8 @@ private:
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_RT_CURRENT_H */

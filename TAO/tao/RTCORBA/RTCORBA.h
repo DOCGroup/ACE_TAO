@@ -19,6 +19,9 @@
 #include "ace/pre.h"
 
 #include "rtcorba_export.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -37,6 +40,8 @@ static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
 #define TAO_RTCORBA_SAFE_INCLUDE
 #include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_RTCORBA_H_ */

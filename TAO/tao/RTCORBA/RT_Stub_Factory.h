@@ -19,6 +19,9 @@
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -51,6 +54,8 @@ public:
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Stub_Factory)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Stub_Factory)
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_RT_STUB_FACTORY_H_ */

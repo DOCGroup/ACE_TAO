@@ -22,6 +22,9 @@
 #include "ace/pre.h"
 
 #include "rtportableserver_export.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "tao/PortableServer/POA.h"
 
 #define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
@@ -323,6 +326,8 @@ protected:
 #if defined (__ACE_INLINE__)
 # include "RT_POA.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_POA_H */

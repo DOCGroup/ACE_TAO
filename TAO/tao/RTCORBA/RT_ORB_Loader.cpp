@@ -1,4 +1,7 @@
 #include "RT_ORB_Loader.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "RT_ORBInitializer.h"
 
 #include "tao/debug.h"
@@ -197,3 +200,5 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_ORB_Loader,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

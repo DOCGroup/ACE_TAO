@@ -1,5 +1,8 @@
 // $Id$
 #include "RT_Mutex.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "RT_ORB.h"
 
 ACE_RCSID(TAO, RT_Mutex, "$Id$")
@@ -93,3 +96,5 @@ TAO_Named_RT_Mutex::name (void) const
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

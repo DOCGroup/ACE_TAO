@@ -1,5 +1,7 @@
 #include "Thread_Pool.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 ACE_RCSID (RTCORBA,
            Thread_Pool,
            "$Id$")
@@ -929,3 +931,5 @@ template class ACE_Auto_Basic_Array_Ptr<size_t>;
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<size_t>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
