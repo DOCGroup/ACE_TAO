@@ -57,7 +57,7 @@ installPackage (const char* installation_name,
           throw DOMException ();
         }
 
-      CIAO::Config_Handler::TPD_Handler top_pc_handler 
+      CIAO::Config_Handler::TPD_Handler top_pc_handler
         (tpd_doc,
          DOMNodeFilter::SHOW_ELEMENT |
          DOMNodeFilter::SHOW_TEXT);
@@ -121,13 +121,12 @@ createPackage (const char*,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 Deployment::PackageConfiguration*
-CIAO::RepositoryManager_Impl::
-findPackageByName (const char* name
-                   ACE_ENV_ARG_DECL)
+CIAO::RepositoryManager_Impl::findPackageByName (const char* name
+                                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
 {
@@ -139,7 +138,7 @@ findPackageByName (const char* name
     }
   else
     {
-      ACE_THROW (Deployment::NoSuchName ());
+      ACE_THROW_RETURN (Deployment::NoSuchName (), 0);
     }
 }
 
@@ -185,7 +184,7 @@ deletePackage (const char*
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::NoSuchName))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void
