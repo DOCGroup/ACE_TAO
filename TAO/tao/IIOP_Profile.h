@@ -103,6 +103,7 @@ public:
   // Encodes this profile's endpoints into a tagged component.
   // This is done only if RTCORBA is enabled, since currently this is
   // the only case when we have more than one endpoint per profile.
+  // Returns 0 on success and -1 on failure.
   //
   // Endpoints are transmitted using TAO-proprietory tagged component.
   // Component tag is TAO_TAG_ENDPOINTS and component data is an
