@@ -29,6 +29,9 @@
 #  quantify         Quantify all executables.
 #  repo             Use GNU template repository (g++ with repo patches and
 #                     egcs only).
+#  rtti             Enable run-time type identification.  On some platforms,
+#                     it is enabled by default, so this is ignored.  It is
+#                     only currently supported with Sun C++.
 #  shared_libs      Build shared libraries. Ignored if static_libs_only is set.
 #  static_libs      Build shared libraries. Ignored if shared_libs_only is set.
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
@@ -113,6 +116,14 @@ static_libs = 0
 ifeq ($(exceptions),0)
   override exceptions =
 endif # exceptions
+
+ifeq ($(fast),0)
+  override fast =
+endif # fast
+
+ifeq ($(rtti),0)
+  override rtti =
+endif # rtti
 
 #### Defined versioned_so = 1 if your platform requires version number
 #### be appended after so library.

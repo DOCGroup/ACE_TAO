@@ -1289,7 +1289,10 @@ profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 purify           Purify all executables.
 quantify         Quantify all executables.
 repo             Use GNU template repository (g++ with repo patches and
-egcs only).
+                   egcs only).
+rtti             Enable run-time type identification.  On some platforms,
+                   it is enabled by default, so this is ignored.  It is
+                   only currently supported with Sun C++.
 shared_libs      Build shared libraries. Ignored if static_libs_only is set.
 static_libs      Build shared libraries. Ignored if shared_libs_only is set.
 shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
