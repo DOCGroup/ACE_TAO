@@ -33,9 +33,9 @@
 #include "ace/Priority_Reactor.h"
 #include "Priority_Reactor_Test.h"
 
-int opt_nchildren = 20;
-int opt_nloops = 200;
-int opt_priority_reactor = 1;
+static int opt_nchildren = 20;
+static int opt_nloops = 200;
+static int opt_priority_reactor = 1;
 
 
 
@@ -60,21 +60,21 @@ public:
   // The Svc_Handler callbacks.
 
 private:
-  static int waiting;
+  static int waiting_;
   // How many writers are we waiting for.
 
-  static int started;
+  static int started_;
   // How many readers have started.
 };
 
 typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
-int Read_Handler::waiting = 0;
-int Read_Handler::started = 0;
+int Read_Handler::waiting_ = 0;
+int Read_Handler::started_ = 0;
 
 void Read_Handler::set_countdown (int nchildren)
 {
-  Read_Handler::waiting = nchildren;
+  Read_Handler::waiting_ = nchildren;
 }
 
 int Read_Handler::open (void *)
@@ -95,8 +95,8 @@ int Read_Handler::open (void *)
   // clients are misbehaved, hence pusnished.
   const int max_priority = 15;
 
-  priority (ACE_Event_Handler::LO_PRIORITY + started % max_priority);
-  started++;
+  priority (ACE_Event_Handler::LO_PRIORITY + started_ % max_priority);
+  started_++;
   ACE_DEBUG((LM_DEBUG, "(%P|%t) created svc_handler for handle %d "
 	     "with priority %d\n", get_handle (), priority ()));
 
@@ -121,8 +121,8 @@ int Read_Handler::handle_input (ACE_HANDLE h)
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %p\n",
 		      "Read_Handler::handle_input"));
 	}
-      waiting--;
-      if (waiting == 0)
+      waiting_--;
+      if (waiting_ == 0)
 	{
 	  ACE_Reactor::instance()->end_event_loop();
 	}
@@ -162,6 +162,8 @@ int Write_Handler::open (void *)
 
 int Write_Handler::svc (void)
 {
+  // Send several short messages, doing pauses between each message.
+  // The number of messages can be controlled from the command line.
   ACE_Time_Value pause (0, 1000);
   for (int i = 0; i < opt_nloops; ++i)
     {
