@@ -54,3 +54,9 @@ TAO_Profile::addressing_mode (void) const
 {
   return this->addressing_mode_;
 }
+
+ACE_INLINE const TAO::ObjectKey &
+TAO_Profile::object_key (void) const
+{
+  return this->object_key_;
+}

@@ -79,8 +79,6 @@ public:
   /// Template methods, please see Profile.h for documentation.
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
   virtual int encode_endpoints (void);
-  virtual const TAO::ObjectKey &object_key (void) const;
-  virtual TAO::ObjectKey *_key (void) const;
   virtual TAO_Endpoint *endpoint (void);
   virtual size_t endpoint_count (void);
   virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
