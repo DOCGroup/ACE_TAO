@@ -1,23 +1,28 @@
+Fri May 29 15:33:41 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Misc/context_switch_time.cpp:
+          added Synchronized Suspend-Resume Test.
+
 Fri May 29 14:46:49 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/OS.cpp: Added some minor fixes to the difftime implementation.
+        * ace/OS.cpp: Added some minor fixes to the difftime implementation.
 
-	* ace/OS.cpp:
-	* ace/OS.i:
-	* ace/README:
-	* ace/config-sunos4*:
-	  Added ACE_LACKS_DIFFTIME macro because SunOS4 does not support
-	  the Standard C difftime function.  Added a difftime
-	  implementation for when such is the case.
+        * ace/OS.cpp:
+        * ace/OS.i:
+        * ace/README:
+        * ace/config-sunos4*:
+          Added ACE_LACKS_DIFFTIME macro because SunOS4 does not support
+          the Standard C difftime function.  Added a difftime
+          implementation for when such is the case.
 
 Fri May 29 08:22:36 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Log_Msg.cpp, Trace.cpp: Changed decision for
-	  order-of-include/inline from ACE_WIN32 to
-	  ACE_HAS_ONE_DEFINITION_RULE.  This completes the changes needed
-	  to be able to use the newer versions of HP aC++.
+        * ace/Log_Msg.cpp, Trace.cpp: Changed decision for
+          order-of-include/inline from ACE_WIN32 to
+          ACE_HAS_ONE_DEFINITION_RULE.  This completes the changes needed
+          to be able to use the newer versions of HP aC++.
 
-	* ace/config-win32.h: Set ACE_HAS_ONE_DEFINITION_RULE.
+        * ace/config-win32.h: Set ACE_HAS_ONE_DEFINITION_RULE.
 
 Thu May 28 16:17:41 1998  Steve Huston  <shuston@riverace.com>
 
