@@ -1,3 +1,15 @@
+Wed Sep 27 08:46:12 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/RMCast.dsw:
+          Add new files to the project
+
+        * tests/RMCast/RMCast_Tests.dsw:
+        * tests/RMCast/RMCast_Membership_Test.dsp:
+          Add project file for the new test
+
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+          Fixed warning under MSVC
+
 Wed Sep 27 08:23:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/Makefile:
