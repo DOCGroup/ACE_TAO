@@ -3383,18 +3383,6 @@ extern "C"
 #     undef queue
 #   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 
-  // Define INET string length constants if they haven't been defined
-#   if !defined (INET_ADDRSTRLEN)
-  // for IPv4 dotted-decimal
-#     define INET_ADDRSTRLEN 16
-#   endif /* INET_ADDRSTRLEN */
-
-#   if !defined (INET6_ADDRSTRLEN)
-  // for IPv6 hex string
-#     define INET6_ADDRSTRLEN 46
-#   endif /* INET6_ADDRSTRLEN */
-
-
 #   if defined(VXWORKS) && defined(ghs)
 // Works around a lack of proper prototypes for these functions on VxWorks
 unsigned long inet_addr(const char *);
@@ -3792,6 +3780,17 @@ typedef fd_set ACE_FD_SET_TYPE;
 # if !defined(MAXHOSTNAMELEN)
 #   define MAXHOSTNAMELEN  256
 # endif /* MAXHOSTNAMELEN */
+
+  // Define INET string length constants if they haven't been defined
+#   if !defined (INET_ADDRSTRLEN)
+  // for IPv4 dotted-decimal
+#     define INET_ADDRSTRLEN 16
+#   endif /* INET_ADDRSTRLEN */
+
+#   if !defined (INET6_ADDRSTRLEN)
+  // for IPv6 hex string
+#     define INET6_ADDRSTRLEN 46
+#   endif /* INET6_ADDRSTRLEN */
 
 # if defined (ACE_LACKS_SIGSET)
 typedef u_int sigset_t;
