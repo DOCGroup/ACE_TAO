@@ -24,6 +24,7 @@ JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
   JAWS_Data_Block *db = ACE_dynamic_cast (JAWS_Data_Block *, mb);
 
+  // guarantee the handler remains for the duration of this call
   db->io_handler ()->acquire ();
 
   int status = this->handle_put (db, tv);
@@ -70,10 +71,16 @@ JAWS_Pipeline_Accept_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
       return -1;
     }
 
+  ioh->acquire ();
+
   ioh->task (next);
   db->io_handler (ioh);
 
-  return this->handle_put (ioh->message_block (), tv);
+  int result = this->handle_put (ioh->message_block (), tv);
+
+  ioh->release ();
+
+  return result;
 }
 
 int
@@ -164,6 +171,34 @@ JAWS_Pipeline_Accept_Task::new_handler (JAWS_Data_Block *data)
   return nioh;
 }
 
+int
+JAWS_Pipeline_Done_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
+{
+  JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put");
+
+  JAWS_Data_Block *data = ACE_dynamic_cast (JAWS_Data_Block *, mb);
+
+  JAWS_IO_Handler *handler = data->io_handler ();
+  JAWS_Dispatch_Policy *policy = this->policy ();
+  if (policy == 0) policy = data->policy ();
+
+  JAWS_IO *io = policy->io ();
+
+  data->task (0);
+  data->io_handler (0);
+
+  if (handler)
+    handler->done ();
+
+  // hack, let Concurrency know we are done.
+  return -2;
+}
+
+int
+JAWS_Pipeline_Done_Task::handle_put (JAWS_Data_Block *, ACE_Time_Value *)
+{
+  return 0;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>;
