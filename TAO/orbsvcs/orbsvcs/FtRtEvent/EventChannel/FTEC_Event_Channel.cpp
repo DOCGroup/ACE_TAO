@@ -39,7 +39,7 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
                        FtRtecEventChannelAdmin::EventChannel_ptr ec
                        ACE_ENV_ARG_DECL)
 {
-    if (membership != TAO_FTEC_Event_Channel::NONE) {// register to naming service
+    if (membership != TAO_FTEC_Event_Channel::UNSPECIFIED) {// register to naming service
       FTRT::ManagerInfoList member_list;
       member_list.length(1);
       member_list[0].the_location = Fault_Detector::instance()->my_location();

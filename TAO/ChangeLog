@@ -1,3 +1,14 @@
+Sat Dec  6 12:37:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+	  
+	  Changed the names of enum declarations "NONE" in these
+	  files. This was causing a clash with VxWORKS systems
+	  headers. Thanks to Thomas Lockhart for providing the patches. 
+	  
 Sat Dec  6 18:25:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Latency/DII/client.dsp:

@@ -13,7 +13,7 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 
 TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
-  : implicit_id_ (NONE)
+  : implicit_id_ (TAO_Notify_Constraint_Visitor::EMPTY)
 {
   (void) this->implicit_ids_.bind (ACE_CString ("filterable_data",
                                                 0,
@@ -699,7 +699,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
 
   if (this->implicit_ids_.find (component_name, this->implicit_id_) != 0)
     {
-      this->implicit_id_ = NONE;
+      this->implicit_id_ = TAO_Notify_Constraint_Visitor::EMPTY;
     }
 
   // If this component has no sub-component, only an identifier,
@@ -711,7 +711,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
   // matches one of the nested field names in
   // CosNotification::StructuredEvent, we just visit the nested
   // component, if any.
-  if (this->implicit_id_ == NONE)
+  if (this->implicit_id_ == TAO_Notify_Constraint_Visitor::EMPTY)
     {
       if (nested == 0)
         {

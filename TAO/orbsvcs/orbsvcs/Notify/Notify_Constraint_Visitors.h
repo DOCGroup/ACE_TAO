@@ -106,7 +106,7 @@ protected:
       EVENT_NAME,
       VARIABLE_HEADER,
       REMAINDER_OF_BODY,
-      NONE
+      EMPTY
     };
 
   /// Storage for the type of implicit id the component has (if any).
