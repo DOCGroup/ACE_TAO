@@ -1,3 +1,64 @@
+Wed Jun 19 11:47:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_si.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd/valuetype_fwd_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/interface.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation.h:
+        * TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_sh.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_ss.h:
+
+          Re-did the implementation of abstract interfaces. Now either
+          an interface or a valuetype can be passed as an abstract
+          interface argument. The abstract interface can make calls
+          on the concrete interface's methods, and can narrow to
+          the concrete interface and make calls on methods not declared
+          in the abstract interface. We can also recover the state of
+          a valuetype. The AbstractBase methods _to_object and _to_value
+          are working, and none of this is leaking memory according to
+          Purify.
+
 Wed Jun  5 09:04:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
@@ -105,7 +166,7 @@ Tue Jun  4 11:08:40 2002  Jeff Parsons <parsons@cs.wustl.edu>
 	  - Fixed value factory code generation.
 
 	  - Finished code generation for abstract interfaces, add code
-	    generatino for abstract valuetypes, and added code generation
+	    generation for abstract valuetypes, and added code generation
 	    for valuetype interface support. The last item isn't finished
 	    yet.	
 
