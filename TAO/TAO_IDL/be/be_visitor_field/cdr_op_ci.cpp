@@ -255,7 +255,6 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
   return 0;
 }
 
-// Visit interface type.
 int
 be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
 {
@@ -321,7 +320,12 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
   return 0;
 }
 
-// Visit interface forward type.
+int
+be_visitor_field_cdr_op_ci::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
 int
 be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
 {
@@ -396,7 +400,12 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-// Visit value type.
+int
+be_visitor_field_cdr_op_ci::visit_component_fwd (be_component_fwd *node)
+{
+  return this->visit_interface_fwd (node);
+}
+
 int
 be_visitor_field_cdr_op_ci::visit_valuetype (be_valuetype *)
 {
@@ -440,7 +449,12 @@ be_visitor_field_cdr_op_ci::visit_valuetype (be_valuetype *)
   return 0;
 }
 
-// Visit value forward type.
+int
+be_visitor_field_cdr_op_ci::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
 int
 be_visitor_field_cdr_op_ci::visit_valuetype_fwd (be_valuetype_fwd *)
 {
@@ -484,6 +498,12 @@ be_visitor_field_cdr_op_ci::visit_valuetype_fwd (be_valuetype_fwd *)
     }
 
   return 0;
+}
+
+int
+be_visitor_field_cdr_op_ci::visit_eventtype_fwd (be_eventtype_fwd *node)
+{
+  return this->visit_valuetype_fwd (node);
 }
 
 // Visit predefined type.
