@@ -1,3 +1,9 @@
+Tue May 10 12:03:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Corrected incorrect method names in ACE_DEBUG lines, found this
+          will searching why some tests fail on Windows.
+
 Tue May 10 08:50:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Asynch_Reply_Dispatcher.{h,cpp}:
