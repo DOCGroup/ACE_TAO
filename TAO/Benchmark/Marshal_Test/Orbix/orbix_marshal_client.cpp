@@ -20,6 +20,8 @@
 #include "orbix_marshal_client.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Orbix, orbix_marshal_client, "$Id$")
+
 int
 Orbix_Marshal_Client_Proxy::run (CORBA_Marshal_Proxy::OPTIONS &options,
 				CORBA_Marshal_Proxy::RESULTS &results)

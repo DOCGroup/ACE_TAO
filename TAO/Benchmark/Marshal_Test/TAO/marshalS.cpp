@@ -3,6 +3,8 @@
 #include <iostream.h>
 #include "marshalS.h"
 
+ACE_RCSID(TAO, marshalS, "$Id$")
+
 static const TAO_operation_db_entry Marshal_operations[] = {
   {"_is_a", &_skel_Marshal::_Marshal_is_a_skel},
   { "test_short", &_skel_Marshal::_Marshal_test_short_skel},

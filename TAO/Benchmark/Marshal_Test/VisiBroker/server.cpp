@@ -3,6 +3,8 @@
 #include "benchmark/driver.h"
 #include "visi_marshal_server.h"
 
+ACE_RCSID(VisiBroker, server, "$Id$")
+
 int main (int argc, char *argv [])
 {
   // instantiate a DRIVER with the Visi_Client_Proxy as the template
