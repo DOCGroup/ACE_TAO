@@ -51,86 +51,86 @@ ACE_Command_Base::~ACE_Command_Base (void)
 // STL-style Functor Classes and Template Specializations //
 ////////////////////////////////////////////////////////////
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<char>::operator () (char t) const
 {
   return t;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<signed char>::operator () (signed char t) const
 {
   return t;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<unsigned char>::operator () (unsigned char t) const
 {
   return t;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<short>::operator () (short t) const
 {
   return t;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<unsigned short>::operator () (unsigned short t) const
 {
   return t;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<int>::operator () (int t) const
 {
   return t;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<unsigned int>::operator () (unsigned int t) const
 {
   return t;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<long>::operator () (long t) const
 {
   return t;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<unsigned long>::operator () (unsigned long t) const
 {
   return t;
 }
 
-ACE_INLINE u_long 
-ACE_Hash<unsigned long long>::operator () (unsigned long long t) const
+ACE_INLINE u_long
+ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 t) const
 {
-  return ACE_static_cast (u_long, t);
+  return ACE_U64_TO_U32 (t);
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<const char *>::operator () (const char *t) const
 {
   return ACE::hash_pjw (t);
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<char *>::operator () (const char *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<const wchar_t *>::operator () (const wchar_t *t) const
 {
   return ACE::hash_pjw (t);
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<wchar_t *>::operator () (const wchar_t *t) const
 {
   return ACE::hash_pjw (t);
@@ -138,39 +138,39 @@ ACE_Hash<wchar_t *>::operator () (const wchar_t *t) const
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<const ACE_USHORT16 *>::operator () (const ACE_USHORT16 *t) const
 {
   return ACE::hash_pjw (t);
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Hash<ACE_USHORT16 *>::operator () (const ACE_USHORT16 *t) const
 {
   return ACE::hash_pjw (t);
 }
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Equal_To<const char *>::operator () (const char *lhs, const char *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Equal_To<char *>::operator () (const char *lhs, const char *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Equal_To<const wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Equal_To<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
@@ -178,39 +178,39 @@ ACE_Equal_To<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) co
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Equal_To<const ACE_USHORT16 *>::operator () (const ACE_USHORT16 *lhs, const ACE_USHORT16 *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Equal_To<ACE_USHORT16 *>::operator () (const ACE_USHORT16 *lhs, const ACE_USHORT16 *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Less_Than<const char *>::operator () (const char *lhs, const char *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Less_Than<char *>::operator () (const char *lhs, const char *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Less_Than<const wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Less_Than<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
@@ -218,13 +218,13 @@ ACE_Less_Than<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) c
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 #if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Less_Than<const ACE_USHORT16 *>::operator () (const ACE_USHORT16 *lhs, const ACE_USHORT16 *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Less_Than<ACE_USHORT16 *>::operator () (const ACE_USHORT16 *lhs, const ACE_USHORT16 *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
