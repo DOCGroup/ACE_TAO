@@ -52,6 +52,9 @@ static ACE_thread_key_t key_;
 #endif /* VXWORKS */
 
 /* static */
+#if defined (ACE_HAS_THR_C_FUNC)
+extern "C" 
+#endif /* ACE_HAS_THR_C_FUNC */
 void
 ACE_TSS_cleanup (void *ptr)
 {

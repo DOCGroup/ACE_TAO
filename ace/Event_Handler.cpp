@@ -152,14 +152,14 @@ ACE_Event_Handler::reactor (void) const
 }
 
 void 
-ACE_Event_Handler::reactorex (ACE_ReactorEx *reactorex)
+ACE_Event_Handler::reactorEx (ACE_ReactorEx *reactorex)
 {
   ACE_TRACE ("ACE_Event_Handler::reactorex");
   this->reactorex_ = reactorex;
 }
 
 ACE_ReactorEx *
-ACE_Event_Handler::reactorex (void) const
+ACE_Event_Handler::reactorEx (void) const
 {
   ACE_TRACE ("ACE_Event_Handler::ReactorEx");
 
