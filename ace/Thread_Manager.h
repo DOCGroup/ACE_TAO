@@ -102,7 +102,7 @@ private:
 // Win32) the returning handle won't have the same value as the
 // original handle.  Therefore, I don't see a way to distinguish
 // whether two handles point to the same theread or not.
-// Motto: Always use thread ids to manipulate Thread_Manager. (???)
+// Motto: Always use thread ids to manipulate Thread_Manager. ???
 
 #if defined (NANBOR_EXP_CODES)
 CLASS ACE_Export ACE_Thread_Descriptor_Adapter
