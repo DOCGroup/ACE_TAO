@@ -591,6 +591,177 @@ SOURCE=.\CosNamingS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CosNotificationC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotificationS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotificationS_T.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyChannelAdminC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyChannelAdminS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyCommC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyCommS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilterC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilterS.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Property\CosPropertyService_i.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
@@ -2016,6 +2187,405 @@ SOURCE=.\Naming\Naming_Utils.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notify\Notify_Constraint_Interpreter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Constraint_Visitors.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ConsumerAdmin_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Dispatcher.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_EventChannel_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_EventChannelFactory_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Filter_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_FilterAdmin_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_FilterFactory_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxyConsumer_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxyPushConsumer_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxyPushSupplier_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxySupplier_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_QoSAdmin_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_StructuredProxyPushConsumer_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_StructuredProxyPushSupplier_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_StructuredPushConsumer.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_StructuredPushSupplier.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_SupplierAdmin_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\NotifyPublish_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\NotifySubscribe_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Trader\Offer_Iterators.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
@@ -2912,6 +3482,54 @@ SOURCE=.\CosNamingS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CosNotificationC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotificationS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotificationS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyChannelAdminC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyChannelAdminS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyChannelAdminS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyCommC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyCommS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyCommS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilterC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilterS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilterS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Property\CosPropertyService_i.h
 # End Source File
 # Begin Source File
@@ -3156,6 +3774,10 @@ SOURCE=.\Naming\Hash_Naming_Context.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notify\ID_Pool_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImplRepoS_T.h
 # End Source File
 # Begin Source File
@@ -3217,6 +3839,90 @@ SOURCE=.\Naming\Naming_Context_Interface.h
 # Begin Source File
 
 SOURCE=.\Naming\Naming_Utils.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Constraint_Interpreter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Constraint_Visitors.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ConsumerAdmin_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Dispatcher.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_EventChannel_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_EventChannelFactory_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_Filter_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_FilterAdmin_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_FilterFactory_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxyConsumer_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxyPushConsumer_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxyPushSupplier_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_ProxySupplier_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_QoSAdmin_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_StructuredProxyPushConsumer_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_StructuredProxyPushSupplier_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_StructuredPushConsumer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_StructuredPushSupplier.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\Notify_SupplierAdmin_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\NotifyPublish_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\NotifySubscribe_i.h
 # End Source File
 # Begin Source File
 
@@ -3421,6 +4127,54 @@ SOURCE=.\CosNamingC.i
 # Begin Source File
 
 SOURCE=.\CosNamingS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotificationC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotificationS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotificationS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyChannelAdminC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyChannelAdminS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyChannelAdminS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyCommC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyCommS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyCommS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilterC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilterS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilterS_T.i
 # End Source File
 # Begin Source File
 
@@ -3632,6 +4386,10 @@ SOURCE=.\Event_Utilities.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notify\ID_Pool_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\LifeCycleServiceC.i
 # End Source File
 # Begin Source File
@@ -3699,7 +4457,7 @@ InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -3738,7 +4496,7 @@ InputPath=.\CosEventChannelAdmin.idl
 InputName=CosEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -3940,7 +4698,7 @@ InputPath=.\CosEventComm.idl
 InputName=CosEventComm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -3979,7 +4737,7 @@ InputPath=.\CosEventComm.idl
 InputName=CosEventComm
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -4181,7 +4939,7 @@ InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -4220,7 +4978,7 @@ InputPath=.\CosLifeCycle.idl
 InputName=CosLifeCycle
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -4422,7 +5180,7 @@ InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -4461,7 +5219,7 @@ InputPath=.\CosNaming.idl
 InputName=CosNaming
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -4652,6 +5410,378 @@ BuildCmds= \
 # End Source File
 # Begin Source File
 
+SOURCE=.\CosNotification.idl
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__COSNO="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\CosNotification.idl
+InputName=CosNotification
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__COSNO="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\CosNotification.idl
+InputName=CosNotification
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyChannelAdmin.idl
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__COSNOT="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\CosNotifyChannelAdmin.idl
+InputName=CosNotifyChannelAdmin
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__COSNOT="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\CosNotifyChannelAdmin.idl
+InputName=CosNotifyChannelAdmin
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyComm.idl
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__COSNOTI="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\CosNotifyComm.idl
+InputName=CosNotifyComm
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__COSNOTI="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\CosNotifyComm.idl
+InputName=CosNotifyComm
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilter.idl
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__COSNOTIF="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\CosNotifyFilter.idl
+InputName=CosNotifyFilter
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__COSNOTIF="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\CosNotifyFilter.idl
+InputName=CosNotifyFilter
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosPropertyService.idl
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
@@ -4663,7 +5793,7 @@ InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -4702,7 +5832,7 @@ InputPath=.\CosPropertyService.idl
 InputName=CosPropertyService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -4904,7 +6034,7 @@ InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -4943,7 +6073,7 @@ InputPath=.\CosTrading.idl
 InputName=CosTrading
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -5145,7 +6275,7 @@ InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -5184,7 +6314,7 @@ InputPath=.\CosTradingDynamic.idl
 InputName=CosTradingDynamic
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -5386,7 +6516,7 @@ InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -5425,7 +6555,7 @@ InputPath=.\CosTradingRepos.idl
 InputName=CosTradingRepos
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -5621,12 +6751,13 @@ SOURCE=.\DsLogAdmin.idl
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__DSLOG="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\DsLogAdmin.idl
 InputName=DsLogAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -5665,7 +6796,7 @@ InputPath=.\DsLogAdmin.idl
 InputName=DsLogAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -5791,7 +6922,7 @@ InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -5830,7 +6961,7 @@ InputPath=.\LifeCycleService.idl
 InputName=LifeCycleService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -6032,7 +7163,7 @@ InputPath=.\RtecDefaultEventData.idl
 InputName=RtecDefaultEventData
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -6071,7 +7202,7 @@ InputPath=.\RtecDefaultEventData.idl
 InputName=RtecDefaultEventData
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -6269,7 +7400,7 @@ InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -6308,7 +7439,7 @@ InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -6506,7 +7637,7 @@ InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -6545,7 +7676,7 @@ InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -6747,7 +7878,7 @@ InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -6786,7 +7917,7 @@ InputPath=.\RtecScheduler.idl
 InputName=RtecScheduler
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -6988,7 +8119,7 @@ InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -7027,7 +8158,7 @@ InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -7229,7 +8360,7 @@ InputPath=.\TimeBase.idl
 InputName=TimeBase
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -7268,7 +8399,7 @@ InputPath=.\TimeBase.idl
 InputName=TimeBase
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -7470,7 +8601,7 @@ InputPath=.\TimeService.idl
 InputName=TimeService
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao      -Wb,export_macro=TAO_ORBSVCS_Export               -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -7509,7 +8640,7 @@ InputPath=.\TimeService.idl
 InputName=TimeService
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao    -Wb,export_macro=TAO_ORBSVCS_Export                                                      -Wb,export_include=orbsvcs_export.h $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -7704,6 +8835,75 @@ BuildCmds= \
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=.\CosNotifyChannelAdminS_T.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyCommS_T.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosNotifyFilterS_T.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosPropertyServiceS_T.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
@@ -7839,6 +9039,31 @@ SOURCE=.\CosTradingS_T.cpp
 SOURCE=.\DsLogAdminS_T.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify\ID_Pool_T.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
 

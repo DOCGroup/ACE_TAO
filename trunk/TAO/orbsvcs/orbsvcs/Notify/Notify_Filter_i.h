@@ -184,18 +184,18 @@ private:
   // Id generator for ConstraintInfo's.
 
   ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
-                                         TAO_Notify_Filter_i::Notify_Constraint_Expr*,
-                                         ACE_SYNCH_MUTEX>
+                        ACE_NESTED_CLASS (TAO_Notify_Filter_i, Notify_Constraint_Expr*),
+                        ACE_SYNCH_MUTEX>
   constraint_expr_list_;
   // A list of the constraints stored in this filter.
 
   typedef ACE_Hash_Map_Iterator <CosNotifyFilter::ConstraintID,
-                                                  TAO_Notify_Filter_i::Notify_Constraint_Expr*,
+                                 ACE_NESTED_CLASS (TAO_Notify_Filter_i, Notify_Constraint_Expr*),
                                                   ACE_SYNCH_MUTEX>
   CONSTRAINT_EXPR_LIST_ITER;
 
   typedef ACE_Hash_Map_Entry<CosNotifyFilter::ConstraintID,
-                                              TAO_Notify_Filter_i::Notify_Constraint_Expr*>
+                             ACE_NESTED_CLASS (TAO_Notify_Filter_i, Notify_Constraint_Expr*)>
   CONSTRAINT_EXPR_ENTRY;
 };
 

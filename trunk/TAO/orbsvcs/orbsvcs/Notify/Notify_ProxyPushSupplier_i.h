@@ -24,6 +24,13 @@
 
 class TAO_Notify_ConsumerAdmin_i;
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_Notify_ProxyPushSupplier_i :
 public virtual POA_CosNotifyChannelAdmin::ProxyPushSupplier,
   public virtual TAO_Notify_ProxySupplier_i,
@@ -89,5 +96,9 @@ virtual void resume_connection (
  protected:
   CosEventComm::PushConsumer_var push_consumer_;
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* NOTIFY_PROXYPUSHSUPPLIER_I_H */

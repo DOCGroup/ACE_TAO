@@ -19,6 +19,9 @@
 #ifndef ID_POOL_T_H
 #define ID_POOL_T_H
 
+// Need this to get ACE macros
+#include "ace/config.h"
+
 template <class ID_TYPE>
 class ID_Pool
 {
@@ -51,6 +54,5 @@ class ID_Pool
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("ID_Pool.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 
 #endif /* ID_POOL_T_H */
