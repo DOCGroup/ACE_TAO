@@ -104,11 +104,6 @@ TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_GCC_3.0/
 WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?rumba_GCC_3.0
 
-[RedHat_NoInline]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_NoInline/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?maglor_NoInline
-
 [RedHat_Single_Threaded]
 TYPE = TIMEONLY
 LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/curufin_SingleThreaded/
