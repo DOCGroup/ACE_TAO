@@ -90,10 +90,10 @@ TAO_Notify_AdminProperties::set_admin (const CosNotification::AdminProperties & 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Atomic_Op<ACE_Thread_Mutex,int>;
+template class ACE_Atomic_Op<ACE_SYNCH_MUTEX,int>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex,int>
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX,int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

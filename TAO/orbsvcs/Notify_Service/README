@@ -65,3 +65,24 @@ manner:
 Note that the client uses:
  resolve_initial_references ("NotifyEventChannelFactory");
 to obtain the object reference.
+
+The svc.conf options:
+----------------------
+
+The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the following options:
+
+"-MTDispatching"                     : Enable MT dispatching 
+"-DispatchingThreads [thread_count]" : How many threads for MT dispatching.
+"-MTSourceEval"                      : Enable MT proxy consumer(source) filter evaluation. 
+"-SourceThreads [thread_count]"      : How many threads for source filter evaluation.
+"-MTLookup"                          : Enable MT subscription table lookup.
+"-LookupThreads [thread_count]"      : How many lookup threads.
+"-MTListenerEval"                    : Enable MT proxy supplier (listener) filter evaluation.  
+"-ListenerThreads"                   : How many threads for listener filter evaluation.
+
+e.g. svc.conf
+static Notify_Default_Event_Manager_Objects_Factory "-MTSourceEval -MTDispatching -DispatchingThreads 2"
+
+This means that we want to enable MT proxy supplier filter evaluation
+(default 1 thread) and MT event dispatching with 2 threads.
+

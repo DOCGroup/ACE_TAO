@@ -190,16 +190,14 @@ TAO_Notify_Default_EMO_Factory::create_dispatching_task (CORBA::Environment &ACE
   int dispatching_threads_flags =
     THR_SCHED_DEFAULT|THR_BOUND|THR_NEW_LWP;
 
-  int dispatching_threads_priority =
-    ACE_THR_PRI_OTHER_MIN;
-    //    ACE_THR_PRI_OTHER_DEF;
-  // ACE_THR_PRI_OTHER_DEF;
+  //  int dispatching_threads_priority
+
+  // Later: give the user options to specify threads flags and thread priority for each task.
 
   if (this->mt_dispatching_ == 1)
     ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (this->dispatching_threads_,
                                                        dispatching_threads_flags,
-                                                       0,
-                                                       dispatching_threads_priority),
+                                                       0),
                       CORBA::NO_MEMORY ());
   else
     ACE_NEW_THROW_EX (task,
