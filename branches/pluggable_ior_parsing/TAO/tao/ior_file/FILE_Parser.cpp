@@ -1,8 +1,9 @@
 // $Id$
 
 #include "FILE_Parser.h"
-#include "Object_Loader.h"
+#include "tao/ior_dll/Object_Loader.h"
 #include "tao/Object.h"
+#include "tao/ORB.h"
 #include "tao/Exception.h"
 #include "tao/Environment.h"
 #include "ace/Read_Buffer.h"
@@ -22,9 +23,9 @@ static const char file_prefix[] = "file:";
 int
 TAO_FILE_Parser::match_prefix (const char *ior_string) const
 {
-  return (ACE_OS::strncmp (str,
-                           file_prefix,
-                           sizeof file_prefix - 1) == 0);
+  return (ACE_OS::strncmp (ior_string,
+                           ::file_prefix,
+                           sizeof (::file_prefix) - 1) == 0);
 }
 
 CORBA::Object_ptr
@@ -36,7 +37,7 @@ TAO_FILE_Parser::parse_string (const char *ior,
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
   const char *filename =
-    ior + sizeof file_prefix - 1;
+    ior + sizeof (::file_prefix)+1;
 
   FILE* file = ACE_OS::fopen (filename, "r");
 
@@ -53,7 +54,7 @@ TAO_FILE_Parser::parse_string (const char *ior,
   CORBA::Object_ptr object = CORBA::Object::_nil ();
   ACE_TRY
     {
-      object = this->string_to_object (string, ACE_TRY_ENV);
+      object = orb->string_to_object (string, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       reader.alloc ()->free (string);
