@@ -15,33 +15,37 @@ endif # ! TAO_ROOT
 LDLIBS = -lorbsvcs -lTAO
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
-PROG_SRCS = server_i.cpp \
+PROG_SRCS = Cubit_Server.cpp \
 	    server.cpp \
             client_i.cpp \
             collocation_test.cpp \
 	    client.cpp \
-	    cubit_i.cpp \
-	    tmplinst.cpp
+	    Cubit_Client.cpp \
+	    RTI_IO.cpp
+	    tmplinst.cpp 
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
 CUBIT_SVR_OBJS = cubitC.o \
 		 cubitS.o \
-		 server_i.o \
-		 cubit_i.o \
+		 Cubit_Server.o \
+		 Cubit_Client.o \
 		 server.o \
+		 RTI_IO.o \
 		 tmplinst.o
 CUBIT_CLT_OBJS = cubitC.o \
 		 cubitS.o \
 		 client_i.o \
 		 client.o \
+		 RTI_IO.o \
 		 tmplinst.o
 COLLOCATION_OBJS = cubitC.o \
 		   cubitS.o \
-		   server_i.o \
-		   cubit_i.o \
+		   Cubit_Server.o \
+		   Cubit_Client.o \
 		   client_i.o \
 		   collocation_test.o \
+		   RTI_IO.o \
 		   tmplinst.o
 
 BIN = server \
@@ -545,7 +549,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
-.obj/server_i.o .obj/server_i.so .shobj/server_i.o .shobj/server_i.so: server_i.cpp server_i.h \
+.obj/Cubit_Server.o .obj/Cubit_Server.so .shobj/Cubit_Server.o .shobj/Cubit_Server.so: Cubit_Server.cpp Cubit_Server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -776,7 +780,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- cubit_i.h cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i \
+ Cubit_Client.h cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i \
  cubitS_T.cpp cubitS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
@@ -791,7 +795,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server_i.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Cubit_Server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1022,7 +1026,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- cubit_i.h cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i \
+ Cubit_Client.h cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i \
  cubitS_T.cpp cubitS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
@@ -1039,7 +1043,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
-.obj/client_i.o .obj/client_i.so .shobj/client_i.o .shobj/client_i.so: client_i.cpp \
+.obj/client_i.o .obj/client_i.so .shobj/client_i.o .shobj/client_i.so: client_i.cpp RTI_IO.h \
  $(ACE_ROOT)/ace/Env_Value_T.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1542,8 +1546,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
- server_i.h $(TAO_ROOT)/tao/TAO.h \
- cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
+ Cubit_Server.h $(TAO_ROOT)/tao/TAO.h \
+ Cubit_Client.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client_i.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1794,7 +1798,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
-.obj/cubit_i.o .obj/cubit_i.so .shobj/cubit_i.o .shobj/cubit_i.so: cubit_i.cpp \
+.obj/Cubit_Client.o .obj/Cubit_Client.so .shobj/Cubit_Client.o .shobj/Cubit_Client.so: Cubit_Client.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2023,7 +2027,7 @@ realclean: clean
  $(TAO_ROOT)/tao/singletons.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp cubit_i.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp Cubit_Client.h \
  cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp \
  cubitS.i \
  $(TAO_ROOT)/tao/Timeprobe.h \

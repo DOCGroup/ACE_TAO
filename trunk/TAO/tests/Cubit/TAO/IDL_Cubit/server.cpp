@@ -1,9 +1,11 @@
 // $Id$
 
-#include "server_i.h"
+#include "Cubit_Server.h"
 #include "tao/Timeprobe.h"
 
 ACE_RCSID(IDL_Cubit, server, "$Id$")
+
+// This runs the server test.
 
 int
 main (int argc, char *argv[])
@@ -11,7 +13,7 @@ main (int argc, char *argv[])
   Cubit_Server cubit_server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tIDL_Cubit:SERVER\n\n"));
+              "\n\tIDL_Cubit: server\n\n"));
   TAO_TRY
     {
       if (cubit_server.init (argc, argv, TAO_TRY_ENV) == -1)

@@ -99,7 +99,7 @@ SOURCE=.\collocation_test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\cubit_i.cpp
+SOURCE=.\Cubit_Client.cpp
 # End Source File
 # Begin Source File
 
@@ -111,7 +111,7 @@ SOURCE=.\cubitS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\server_i.cpp
+SOURCE=.\Cubit_Server.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -123,7 +123,7 @@ SOURCE=.\client_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\cubit_i.h
+SOURCE=.\Cubit_Client.h
 # End Source File
 # Begin Source File
 
@@ -135,7 +135,7 @@ SOURCE=.\cubitS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\server_i.h
+SOURCE=.\Cubit_Server.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

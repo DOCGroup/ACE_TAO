@@ -2,7 +2,7 @@
 default:
 	program
 	:debuglevel=multi
-cubit_i.cpp
+Cubit_Client.cpp
 	C++
 cubitS.cpp
 	C++

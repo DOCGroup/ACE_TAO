@@ -6,6 +6,7 @@
 #include "orbsvcs/CosNamingC.h"
 
 #include "tao/Timeprobe.h"
+#include "RTI_IO.h"
 
 ACE_RCSID(IDL_Cubit, client_i, "$Id$")
 
@@ -39,6 +40,10 @@ ACE_RCSID(IDL_Cubit, client_i, "$Id$")
 
   "Cubit_Client::cube_octet_sequence - start",
   "Cubit_Client::cube_octet_sequence - end"
+
+  "Cubit_Client::cube_rti_data - start",
+  "Cubit_Client::cube_rti_data - end"
+
 };
 
 enum
@@ -69,7 +74,11 @@ enum
   CUBIT_CLIENT_CUBE_LONG_SEQUENCE_END,
 
   CUBIT_CLIENT_CUBE_OCTET_SEQUENCE_START,
-  CUBIT_CLIENT_CUBE_OCTET_SEQUENCE_END
+  CUBIT_CLIENT_CUBE_OCTET_SEQUENCE_END,
+
+  CUBIT_CLIENT_CUBE_RTI_DATA_START,
+  CUBIT_CLIENT_CUBE_RTI_DATA_END,
+
 };
 
 // Setup Timeprobes
@@ -608,6 +617,59 @@ Cubit_Client::cube_octet_sequence (int i, int l)
 }
 
 void
+Cubit_Client::cube_rti_data (int i, int numUpdates, int numAttrs)
+{
+  this->call_count_++;
+
+  Cubit::RtiPacket input;
+  input.packetHeader.packetLength=1; // this is probably redundant
+  input.packetHeader.federationHandle=2;
+  input.packetHeader.channelHandle=3;
+  input.packetHeader.packetColor=4;
+  input.msgs.length(numUpdates);
+  for (int j=0; j<numUpdates; ++j) {
+    input.msgs[j].oumh(Cubit::RtiObjectUpdateMessageHeader());
+    Cubit::RtiObjectUpdateMessageHeader & oumh=input.msgs[j].oumh();
+    oumh.updateLength=2001; // redundant
+    oumh.updateTag=2002;
+    oumh.objectHandle=2003;
+    oumh.timestamp=3.14159;
+    oumh.eventRetractionHandle=2004;
+    oumh.classHandle=2005;
+    oumh.sendingFederateHandle=2006;
+    oumh.userTag=CORBA::string_dup("beefcake!");
+    oumh.regionData.length(0);
+    oumh.transportationHandle=1;
+    oumh.orderingHandle=1;
+    oumh.messagePayload.length(numAttrs);
+    for (int k=0; k<numAttrs; ++k) {
+      oumh.messagePayload[k]=Cubit::HandleValuePair();
+      Cubit::HandleValuePair & hvp=oumh.messagePayload[k];
+      hvp.handle=k*k;
+      char * d1="somedata";
+      hvp.data.length(strlen(d1));
+      strcpy((char*)hvp.data.get_buffer(),d1);
+    }
+  }
+
+  Cubit::RtiPacket_var output;
+  Cubit::RtiPacket_out vout (output);
+
+  // Cube the sequence
+  cout << "input\n" << input << endl;
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_RTI_DATA_START);
+
+    this->cubit_->cube_rti_data (input, vout, this->env_);
+  }
+  cout << "output\n" <<  *vout << endl;
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "need to check whether cubing happened\n")
+	     );
+}
+
+void
 Cubit_Client::print_stats (const char *call_name,
                            ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
 {
@@ -687,6 +749,7 @@ Cubit_Client::run (int testing_collocation)
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_oneway", elapsed_time);
 
+#if 0 && RUN_RTI_TEST_ONLY
   // VOID
   this->call_count_ = 0;
   this->error_count_ = 0;
@@ -800,6 +863,17 @@ Cubit_Client::run (int testing_collocation)
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube mixin (short/octet/long)", elapsed_time);
+#endif
+
+  // RTI
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_rti_data (this->loop_count_, 2, 5);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_rti_data", elapsed_time);
 
   if (testing_collocation)
     {

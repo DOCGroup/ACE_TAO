@@ -55,7 +55,7 @@ INTDIR=.\Release
 ALL : "$(OUTDIR)\server.exe"
 
 CLEAN : 
-	-@erase "$(INTDIR)\cubit_i.obj"
+	-@erase "$(INTDIR)\Cubit_Client.obj"
 	-@erase "$(INTDIR)\cubitC.obj"
 	-@erase "$(INTDIR)\cubitS.obj"
 	-@erase "$(INTDIR)\svr.obj"
@@ -92,7 +92,7 @@ LINK32_FLAGS=ace.lib TAO.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no\
  /pdb:"$(OUTDIR)/server.pdb" /machine:I386 /out:"$(OUTDIR)/server.exe" 
 LINK32_OBJS= \
-	"$(INTDIR)\cubit_i.obj" \
+	"$(INTDIR)\Cubit_Client.obj" \
 	"$(INTDIR)\cubitC.obj" \
 	"$(INTDIR)\cubitS.obj" \
 	"$(INTDIR)\svr.obj"
@@ -120,7 +120,7 @@ INTDIR=.\Debug
 ALL : "$(OUTDIR)\server.exe"
 
 CLEAN : 
-	-@erase "$(INTDIR)\cubit_i.obj"
+	-@erase "$(INTDIR)\Cubit_Client.obj"
 	-@erase "$(INTDIR)\cubitC.obj"
 	-@erase "$(INTDIR)\cubitS.obj"
 	-@erase "$(INTDIR)\svr.obj"
@@ -161,7 +161,7 @@ LINK32_FLAGS=aced.lib TAO.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/server.pdb" /debug /machine:I386 /out:"$(OUTDIR)/server.exe" 
 LINK32_OBJS= \
-	"$(INTDIR)\cubit_i.obj" \
+	"$(INTDIR)\Cubit_Client.obj" \
 	"$(INTDIR)\cubitC.obj" \
 	"$(INTDIR)\cubitS.obj" \
 	"$(INTDIR)\svr.obj"
@@ -322,7 +322,7 @@ LINK32_OBJS= \
 
 SOURCE=.\svr.cpp
 DEP_CPP_SVR_C=\
-	".\cubit_i.h"\
+	".\Cubit_Client.h"\
 	".\cubitC.h"\
 	".\cubitC.i"\
 	".\cubitS.h"\
@@ -751,9 +751,9 @@ NODEP_CPP_CUBIT=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\cubit_i.cpp
+SOURCE=.\Cubit_Client.cpp
 DEP_CPP_CUBIT_=\
-	".\cubit_i.h"\
+	".\Cubit_Client.h"\
 	".\cubitC.h"\
 	".\cubitC.i"\
 	".\cubitS.h"\
@@ -959,7 +959,7 @@ NODEP_CPP_CUBIT_=\
 	"..\..\..\..\tao\tao\factories.h"\
 	
 
-"$(INTDIR)\cubit_i.obj" : $(SOURCE) $(DEP_CPP_CUBIT_) "$(INTDIR)" ".\cubitC.h"\
+"$(INTDIR)\Cubit_Client.obj" : $(SOURCE) $(DEP_CPP_CUBIT_) "$(INTDIR)" ".\cubitC.h"\
  ".\cubitC.i" ".\cubitS.h" ".\cubitS.i"
 
 

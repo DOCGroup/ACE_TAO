@@ -1,8 +1,8 @@
 // $Id$
 
-#include "server_i.h"
+#include "Cubit_Server.h"
 
-ACE_RCSID(IDL_Cubit, server_i, "$Id$")
+ACE_RCSID(IDL_Cubit, Cubit_Server, "$Id$")
 
 Cubit_Server::Cubit_Server (void)
   : use_naming_service_ (1),

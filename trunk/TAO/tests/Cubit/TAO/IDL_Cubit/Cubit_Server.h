@@ -7,7 +7,7 @@
 //    TAO/tests/IDL_Cubit
 //
 // = FILENAME
-//    server.h
+//    Cubit_Server.h
 //
 // = DESCRIPTION
 //      This class implements a simple "cube" CORBA server for the Cubit
@@ -18,14 +18,14 @@
 //
 // ============================================================================
 
-#if !defined (_C_SERVER_H)
-#define _C_SERVER_H
+#if !defined (_CUBIT_SERVER_H)
+#define _CUBIT_SERVER_H
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "tao/TAO.h"
 #include "orbsvcs/CosNamingC.h"
-#include "cubit_i.h"
+#include "Cubit_Client.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
 class Cubit_Server
@@ -92,4 +92,4 @@ private:
   // commandline arguments.
 };
 
-#endif /* _C_SERVER_H */
+#endif /* _CUBIT_SERVER_H */
