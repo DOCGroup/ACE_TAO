@@ -1,3 +1,10 @@
+Fri Mar 17 00:18:40 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/QOS/Sender_QOS_Event_Handler.cpp (handle_qos): 
+	  Make sure to cast the const char* to void* to avoid compiler
+ 	  warnings.  Thanks to Craig Rodrigues <rodrigc@mediaone.net> for
+ 	  reporting this.
+
 Thu Mar 16 11:51:49 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/MEM_SAP.i:
