@@ -1,7 +1,8 @@
 Tue Jan 05 14:32:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object.i (_narrow): _narrow must increase the reference
- 	  count on the object.
+ 	  count on the object.  Thanks to Ron Barack <rab@terminal.cz> for
+ 	  reporting this bug.
 
 Tue Jan 05 14:21:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
