@@ -39,7 +39,7 @@ class Element
 public:
   Element (ACE_CString* item = 0, Element* p = 0, Element* n = 0)
     : prev_ (p), next_(n), item_(item)
-    { 
+    {
     }
 
   ACE_CString* value (void)
@@ -56,7 +56,7 @@ private:
 typedef ACE_Double_Linked_List<Element>  Linked_List;
 
 
-class Time_Calculation 
+class Time_Calculation
 //  = TITLE
 //     class to do time calculations thread safe
 //
@@ -69,16 +69,16 @@ public:
       times_.user_time = 0;
       times_.system_time = 0;
     }
-    
+
   void report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
-  // take the time of the thread and add it to 
+  // take the time of the thread and add it to
   void print_stats ();
 
 private:
   ACE_Profile_Timer::ACE_Elapsed_Time times_;
   // add the times incrementally
 
-  ACE_Thread_Mutex mutex_;
+  ACE_SYNCH_MUTEX mutex_;
   // protect the time
 
   unsigned int reported_times_;
@@ -93,7 +93,7 @@ class Reader_Task : public ACE_Task_Base
 {
 public:
   Reader_Task (Time_Calculation &time_Calculation,
-               ACE_Barrier &barrier) 
+               ACE_Barrier &barrier)
     : time_Calculation_ (time_Calculation),
     barrier_(barrier)
     {
@@ -106,7 +106,7 @@ private:
   // keep a reference to the time calculation class
 
   ACE_Barrier &barrier_;
-  // keep this reference for the barrier, in order 
+  // keep this reference for the barrier, in order
   // to allow a "nice" start
 };
 
@@ -117,7 +117,7 @@ class Writer_Task : public ACE_Task_Base
 {
 public:
   Writer_Task (Time_Calculation &time_Calculation,
-               ACE_Barrier &barrier) 
+               ACE_Barrier &barrier)
     : time_Calculation_ (time_Calculation),
     barrier_(barrier)
     {
@@ -130,7 +130,7 @@ private:
   // keep a reference to the time calculation class
 
   ACE_Barrier &barrier_;
-  // keep this reference for the barrier, in order 
+  // keep this reference for the barrier, in order
   // to allow a "nice" start
 };
 
