@@ -1,3 +1,9 @@
+Wed Mar 30 13:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* DAnCE/Config_Handlers/DataType_Handler.cpp:
+	* DAnCE/Old_Config_Handlers/DT_Handler.cpp:
+          Fixed include of Typecode.h to TypeCode.h
+
 Thu Mar 24 17:02:34  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
