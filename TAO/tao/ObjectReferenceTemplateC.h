@@ -33,6 +33,7 @@
 #include "OctetSeqC.h"
 #include "StringSeqC.h"
 #include "ValueBase.h"
+#include "Exception.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

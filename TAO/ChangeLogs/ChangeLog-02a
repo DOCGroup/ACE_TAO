@@ -1,3 +1,33 @@
+Fri Feb  8 12:25:55 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ObjectReferenceTemplateC.h:
+	* diffs/ObjectReferenceTemplate.diff:
+	  Add missing #include for "tao/Exception.h".
+
+	* Domain/DomainS.cpp:
+	* diffs/Domain.diff:
+	  Since we link TAO_IFR_Client we can use the CORBA::InterfaceDef
+	  operators directly instead of using the IFR_Client_Adapter, that
+	  makes the patches shorter and, therefore, makes for easier long
+	  term maintainance.
+	
+	* Domain/DomainS.h:
+	* diffs/Domain.diff:
+	  Fixed the export macros.
+
+	* PortableServer/Default_ORTC.cpp:
+	* PortableServer/diffs/Default_ORT.diff:
+	  Add missing #include for "tao/ValueFactory.h", only required in
+	  minimum CORBA builds.
+
+	* PortableServer/ObjectReferenceFactory.h:
+	* PortableServer/ObjectReferenceTemplate.h:
+	  Fixed throw specs for make_object()
+
+	* diffs/Policy.diff:
+	  Generate a new patch file that includes the export macro changes
+	  on the PolicyS.h file.
+
 Fri Feb  8 13:55:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Xt_Stopwatch/server.cpp (main): Added a patch for single
