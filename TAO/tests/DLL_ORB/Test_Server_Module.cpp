@@ -66,10 +66,9 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // Add two to the new argc since
-      // "dummy -ORBSkipServiceConfigOpen" is being added to the argv
-      // vector.
-      int new_argc = argc + 2;
+      // Add one to the new argc since "dummy" is being added to the
+      // argv vector.
+      int new_argc = argc + 1;
 
       CORBA::StringSeq new_argv (new_argc);
       new_argv.length (new_argc);
@@ -78,7 +77,6 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       // again since the Service Configurator file is already in the
       // process of being opened.
       new_argv[0] = CORBA::string_dup ("dummy");
-      new_argv[1] = CORBA::string_dup ("-ORBSkipServiceConfigOpen");
 
       // Copy the remaining arguments into the new argument vector.
       for (int i = new_argc - argc, j = 0;
