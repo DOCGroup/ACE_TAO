@@ -500,6 +500,25 @@ SOURCE=.\Based_Pointer_Repository.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Stats.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Basic_Types.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -2609,6 +2628,25 @@ SOURCE=.\RW_Process_Mutex.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sample_History.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sched_Params.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -4267,6 +4305,10 @@ SOURCE=.\Based_Pointer_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Stats.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
@@ -4867,6 +4909,10 @@ SOURCE=.\RW_Process_Mutex.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sample_History.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sched_Params.h
 # End Source File
 # Begin Source File
@@ -5355,6 +5401,10 @@ SOURCE=.\Based_Pointer_T.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Stats.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Basic_Types.i
 # End Source File
 # Begin Source File
@@ -5784,6 +5834,10 @@ SOURCE=.\Remote_Tokens.i
 # Begin Source File
 
 SOURCE=.\RW_Process_Mutex.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sample_History.inl
 # End Source File
 # Begin Source File
 
