@@ -633,7 +633,6 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   int missingParameter = 0;
   const char * missingParameterName = 0;
 
-#if 0 // PG_FIND
   CORBA::Long initialValue = 0;
   if (! ::TAO_PG::find (decoder, criterion_initial_value, initialValue) )
   {
@@ -652,52 +651,6 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     // missingParameter = 1;
     // missingParameterName = PortableGroup::role_criterion;
   }
-#else // PG_FIND
-  CORBA::Long initialValue = 0;
-  PortableGroup::Value * any;
-  if (decoder.find (criterion_initial_value, any))
-  {
-    if (! ((*any) >>= initialValue))
-    {
-      // not required.  Otherwise:
-      // missingParameter = 1;
-      // missingParameterName = criterion_initial_value;
-    }
-  }
-  else
-  {
-    // not required.  Otherwise:
-    // missingParameter = 1;
-    // missingParameterName = criterion_initial_value;
-  }
-
-  const char * role = "replica";
-  if (decoder.find (PortableGroup::role_criterion, any) )
-  {
-    if ( ! ((*any) >>= role))
-    {
-
-      ACE_ERROR((LM_INFO,
-        "Property \"%s\" not found?\n", PortableGroup::role_criterion
-        ));
-      // not required.  Otherwise:
-      // missingParameter = 1;
-      // missingParameterName = PortableGroup::role_criterion;
-    }
-  }
-  else
-  {
-
-    ACE_ERROR((LM_INFO,
-      "Property \"%s\" not found?\n", PortableGroup::role_criterion
-      ));
-    // not required.  Otherwise:
-    // missingParameter = 1;
-    // missingParameterName = PortableGroup::role_criterion;
-  }
-
-#endif
-
   if (missingParameter)
   {
     ACE_ERROR ((LM_ERROR,
