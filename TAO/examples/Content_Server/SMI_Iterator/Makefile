@@ -45,7 +45,12 @@ CLIENT_OBJS = \
 	$(addsuffix .o, $(CLIENT_FILES)) \
 	Web_ServerC.o
 
-BIN = client server
+BIN2 = client server
+
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Notify
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
