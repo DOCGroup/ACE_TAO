@@ -64,16 +64,20 @@ Fri Apr 04 12:28:40 1997  David L. Levine  <levine@cs.wustl.edu>
 	  on VxWorks) to register cleanup handler.  Each new instance
 	  of an ACE_Log_Msg is inserted into an ACE_Unbounded_Set; the
 	  cleanup handler iterates over the Set and deletes the
-	  ACE_Log_Msgs at program exit.  (It works differently on VxWorks:
-	  the Set isn't used.  Instead, the cleanup hook is called for
-	  each task when it exits, passing the task control block (TCB) of
-	  the exiting task.  A pointer to the ACE_Log_Msg instance is
-	  contained in one of the spare fields of the TCB, so the cleanup
-	  handler simply deletes it.)  Also, the two strings that are
-	  allocated get cleaned up after the last ACE_Log_Msg instance
-	  is deleted.  Many thanks to Matthias Kerkhoff
-	  <make@cs.tu-berlin.de> for figuring this out and cranking out
-	  the code.
+	  ACE_Log_Msgs at program exit.  
+
+	  Also, the two strings that are allocated get cleaned up after
+	  the last ACE_Log_Msg instance is deleted.  Many thanks to
+	  Matthias Kerkhoff <make@cs.tu-berlin.de> for figuring this out
+	  and cranking out the code.
+
+	  It works differently on VxWorks, because it doesn't have
+	  ::atexit ().  VxWorks has ::taskDeleteHookAdd (), which is
+	  called when each task exits.  So, the Set isn't used.  Instead,
+	  the cleanup hook is called for each task when it exits, passing
+	  the task control block (TCB) of the exiting task.  A pointer to
+	  the ACE_Log_Msg instance is contained in one of the spare fields
+	  of the TCB, so the cleanup handler simply deletes it.
 
 	* ace/IOStream.h: specify template parameter (ACE_IOStream<STREAM>)
 	  to ACE_OPERATOR{G,P}_SET macros.  Thanks to Chuck Gehr
