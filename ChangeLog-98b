@@ -2,7 +2,7 @@ Wed Oct 14 22:17:31 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added guideline for protection of
           header files against multiple inclusion.  Thanks to
-          Eric C. Newton <ecn@smart.net> for pointing out the method
+          Eric C. Newton <ecn@smart.net> for pointing out the construct
           used by gcc/g++ to minimize unnecessary file inclusion.
           Fortunately, other compilers use the same method.
 
