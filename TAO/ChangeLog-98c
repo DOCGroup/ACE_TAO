@@ -1,3 +1,22 @@
+Tue Sep 15 14:34:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	  Removed the << and >> operators involving the Boolean, Octet,
+	  Char or WChar. The helper classes from_boolean/char/wchar/octet
+	  or to_boolean/char/wchar/octet have to be used.
+
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp: 
+	  The generated code now uses the from_boolean/char/wchar/octet
+	  helpers for the << operators and the corresponding to_* form
+	  for the >> operators
+
+	* tao/Invocation.cpp: 
+	  Use the from_boolean and to_boolean helpers.
+
+	* TAO_IDL/be/be_visitor_root/cdr_op.cpp: 
+	  Cosmetic changes.
+
 Tue Sep 15 13:51:36 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
 	* TAO/orbsvcs/tests/Simple_Naming/client.cpp : 
