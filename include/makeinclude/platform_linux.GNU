@@ -19,28 +19,24 @@ ifeq ($(threads),0)
   CFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
-ifeq ($(threads),1)
-   xt_reactor =0
-   fl_reactor =0
-   PLATFORM_XT_CPPFLAGS=
-   PLATFORM_XT_LIBS=-lXt  
-   PLATFORM_XT_LDFLAGS=
+PLATFORM_XT_CPPFLAGS=
+PLATFORM_XT_LIBS=-lXt  
+LATFORM_XT_LDFLAGS=
 
-   PLATFORM_FL_CPPFLAGS=
-   PLATFORM_FL_LIBS=-lfltk
-   PLATFORM_FL_LDFLAGS=
+PLATFORM_FL_CPPFLAGS=
+PLATFORM_FL_LIBS=-lfltk
+PLATFORM_FL_LDFLAGS=
 
-   PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
-   PLATFORM_X11_LIBS=-lX11
-   PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
+PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
+PLATFORM_X11_LIBS=-lX11
+PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
 
-   PLATFORM_GL_CPPFLAGS=
-   PLATFORM_GL_LIBS=-lGL
-   PLATFORM_GL_LDFLAGS= 
+PLATFORM_GL_CPPFLAGS=-I/usr/X11R6/include
+PLATFORM_GL_LIBS=-lGL
+PLATFORM_GL_LDFLAGS=-L/usr/X11R6/lib
 
-   PLATFORM_AIO_SUPPORT := \
-   $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
-endif
+PLATFORM_AIO_SUPPORT := \
+       $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
 
 CC      = gcc
 CXX     = g++

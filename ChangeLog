@@ -1,3 +1,12 @@
+Thu Aug 03 17:40:01 2000 Eric Ding <qnd1@cs.wustl.edu>
+	* include/makeinclude/platform_linux.GNU
+	  Remove ifeq($(threads),1), xt_reactor=0, fl_reactor=0,
+          and add -I/usr/X11R6/include, -L/usr/X11R6/include to
+          platform_GL flags.
+          Patch supplied by Craig Rodrigues        
+                            http://www.gis.net/~craigr    
+                            rodrigc@mediaone.net
+
 Wed Aug  2 17:44:58 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/config-win32-borland.h: Suppress all warnings from the
