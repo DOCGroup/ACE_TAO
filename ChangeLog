@@ -1,3 +1,9 @@
+Fri Aug  6 09:41:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+          Just always use Makefile.bor as workspace name, this is the way
+          our Borland users expect things to work.
+
 Fri Aug  6 09:15:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
         * apps/JAWS3/jaws3/Reactive_IO_Helpers.h
