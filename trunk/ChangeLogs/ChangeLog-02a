@@ -1,3 +1,21 @@
+Tue Jul 24 07:45:03 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Containers_T: Fixed some problems with the lack of 
+	  const for the ACE_DLList and ACE_Double_Linked_List classes.
+  	  Thanks to Michael Kircher for reporting this.
+
+	* ace/config-cygwin32-common.h: Removed the ACE_LACKS_FORK
+	  macro since this is apparently working on Cygwin.  Thanks tj
+ 	  Stefan Kluehspies <Stefan.Kluehspies@gmx.net> for reporting
+ 	  this.
+
+	* ace/config-cygwin32.h: Removed the #define _CLOCKID_T
+	  macro, which should now be handled by the following change.
+
+	* ace/OS.h: Added a #defined for _CLOCKID_T_.  Thanks to
+	  Stefan Kluehspies <Stefan.Kluehspies@gmx.net> for
+	  reporting this.
+
 Tue Jul 24 11:10:59 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/OS.h:
@@ -16,9 +34,9 @@ Tue Jul 24 10:04:52 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/INET_Addr.cpp:
 
-          Corrected a run-time error on Tru64 with gcc.  Any executable that
-          called ACE_INET_Addr::get_host_name() would core dump.  This was
-          caused by the call to ACE_OS::gethostbyaddr_r().
+          Corrected a run-time error on Tru64 with gcc.  Any executable
+ 	  that called ACE_INET_Addr::get_host_name() would core dump.
+  	  This was caused by the call to ACE_OS::gethostbyaddr_r().
 
 Tue Jul 24 08:20:02 2001  Chad Elliott  <elliott_c@ociweb.com>
 
