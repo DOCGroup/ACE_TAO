@@ -130,9 +130,17 @@ DEFINE_GUID (IID_IIOP_Object,
 // IID_STUB_Object and IID_CORBA_Object were not being defined.
 // Need a central place for all of these macros.
 
-// {A201E4C7-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_STUB_Object,
+
+/*DEFINE_GUID (IID_STUB_Object,
 0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
+*/
+// {A201E4C7-F258-11ce-9598-0000C07CA898}
+/*#ifndef INITGUID
+EXTERN_C ACE_Svc_Export GUID FAR IID_STUB_Object;
+#else*/
+EXTERN_C ACE_Svc_Export GUID IID_STUB_Object = 
+{0xa201e4c7, 0xf258, 0x11ce, {0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98} };
+//#endif // INITGUID
 
 // {A201E4C2-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_CORBA_Object,
