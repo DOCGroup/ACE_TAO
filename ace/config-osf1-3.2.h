@@ -15,9 +15,9 @@
 // DF: DEC's CXX supports explicit template specialization.
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
-// DF: 3.2 has getpgid but no prototype defined anywhere so we do not
-// use it. I suppose we could add a prototype somewhere but that would
-// be cheating.
+// DF: 3.2 has getpgid but no prototype defined anywhere.  So we cheat
+// and declare it here.
+extern "C" pid_t getpgid (pid_t);
 
 // DF: ACE_HAS_STRING_CLASS seems the right thing to do...
 #define ACE_HAS_STRING_CLASS
