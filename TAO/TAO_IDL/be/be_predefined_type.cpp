@@ -84,8 +84,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
       case AST_PredefinedType::PT_wchar:
       case AST_PredefinedType::PT_boolean:
       case AST_PredefinedType::PT_octet:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.ambiguous_type_seen_);
+        idl_global->ambiguous_type_seen_ = true;
         break;
       case AST_PredefinedType::PT_any:
       case AST_PredefinedType::PT_object:
@@ -94,8 +93,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
       case AST_PredefinedType::PT_pseudo:
         break;
       default:
-        ACE_SET_BITS (idl_global->decls_seen_info_,
-                      idl_global->decls_seen_masks.basic_type_seen_);
+        idl_global->basic_type_seen_ = true;
         break;
     }
 }

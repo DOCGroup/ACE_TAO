@@ -83,11 +83,9 @@ be_union::be_union (AST_ConcreteType *dt,
 
   if (!this->imported ())
     {
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.aggregate_seen_);
+      idl_global->aggregate_seen_ = true;
 
-      ACE_SET_BITS (idl_global->decls_seen_info_,
-                    idl_global->decls_seen_masks.union_seen_);
+      idl_global->union_seen_ = true;
     }
 }
 

@@ -578,11 +578,9 @@ be_valuetype *
 be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 {
   // AMH exception holders require both of these.
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.valuetype_seen_);
+  idl_global->valuetype_seen_ = true;
 
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.valuefactory_seen_);
+  idl_global->valuefactory_seen_ = true;
 
   const int inherit_count = 0;
   AST_Interface **p_intf = 0;
