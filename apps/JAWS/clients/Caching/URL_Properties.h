@@ -177,7 +177,6 @@ protected:
 };
 
 typedef ACE_Array<ACE_URL_Offer> ACE_URL_Offer_Seq;
-typedef char *ACE_URL_OfferID;
 
 #if defined (__ACE_INLINE__)
 #include "URL_Properties.i"
