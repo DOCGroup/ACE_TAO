@@ -128,8 +128,9 @@ namespace CIAO
               CORBA::ULong i (cid.capability.length ());
               cid.capability.length (i + 1);
               // delegate the populating process
-              CAP_Handler::process_Capability (this->iter_,
-                                               cid.capability[i]);
+              CAP_Handler cap_handler (this->iter_, false);
+              cap_handler.process_Capability (this->iter_,
+                                              cid.capability[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("implements")))
             {
