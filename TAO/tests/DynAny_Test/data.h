@@ -1,20 +1,16 @@
-// -*- c++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/DynAny_Test
-//
-// = FILENAME
-//    data.h
-//
-// = DESCRIPTION
-//    Header file for the class containing test constants.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    data.h
+ *
+ *  $Id$
+ *
+ *  Header file for the class containing test constants.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "tao/corba.h"
 

@@ -1,30 +1,26 @@
-// -*- c++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/DynAny_Test
-//
-// = FILENAME
-//    test_dynunion.cpp
-//
-// = DESCRIPTION
-//    Implementation of the simple DynUnion test
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_dynunion.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the simple DynUnion test
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
 
 #include "test_dynunion.h"
 #include "da_testsC.h"
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
+#include "analyzer.h"
 
-Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb)
+Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb, int debug)
   : orb_ (orb),
     test_name_ (CORBA::string_dup ("test_dynunion")),
-    error_count_ (0)
+    error_count_ (0),
+    debug_ (debug)
 {
 }
 
@@ -73,6 +69,8 @@ Test_DynUnion::run_test (void)
                             -1);
         }
 
+      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
+
       tu._d (DynAnyTests::TE_SECOND);
       tu.tc (data.m_typecode2);
       CORBA::Any in_any1;
@@ -91,6 +89,7 @@ Test_DynUnion::run_test (void)
       fa1->insert_typecode (data.m_typecode1
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
       CORBA::TypeCode_var s_out1 = fa1->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -106,6 +105,9 @@ Test_DynUnion::run_test (void)
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
+
+      analyzer.analyze(fa1.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       CORBA::Any_var out_any1 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -147,6 +149,9 @@ Test_DynUnion::run_test (void)
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode alias)/from_any/to_any\n"));
+
+      analyzer.analyze(fa1.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       CORBA::Any_var out_any2 = fa1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
