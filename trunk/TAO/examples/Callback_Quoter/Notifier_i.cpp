@@ -18,9 +18,6 @@
 // ===========================================================
 
 #include "Notifier_i.h"
-#include "ace/OS.h"
-#include "tao/Exception.h"
-#include "tao/try_macros.h"
 
 
 Notifier_i::Notifier_i (void)
@@ -77,8 +74,6 @@ Notifier_i::register_callback (const char *stock_name,
   else
     {
       // the unbounded set entry is created.
-      // NOTE:: its pathetic, but to make this macro call its necessary to name
-      // your TAO_ENV_SINGLE_ARG_PARAMETERironment variable TAO_ENV_SINGLE_ARG_PARAMETER
       ACE_NEW_THROW_EX (consumers, CONSUMERS, CORBA::NO_MEMORY ());
       ACE_CHECK;
 

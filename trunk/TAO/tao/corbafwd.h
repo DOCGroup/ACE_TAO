@@ -32,7 +32,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/try_macros.h"
+#include "ace/CORBA_macros.h"
+#include "tao/orbconf.h"
 #include "tao/varbase.h"
 #include "tao/TAO_Export.h"
 
