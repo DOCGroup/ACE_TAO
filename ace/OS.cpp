@@ -2010,7 +2010,7 @@ ACE_TSS_Emulation_cleanup (void *ptr)
 }
 
 void **
-ACE_TSS_Emulation::tss_base (void* ts_storage[])
+ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
 {
   // TSS Singleton implementation.
 
@@ -2025,9 +2025,9 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[])
           ACE_NO_HEAP_CHECK;
           if (ACE_OS::thr_keycreate (&native_tss_key_,
                                      &ACE_TSS_Emulation_cleanup) != 0)
-           {
+            {
               return 0; // Major problems, this should *never* happen!
-           }
+            }
           key_created_ = 1;
         }
     }
@@ -2044,39 +2044,45 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[])
   // at least on Pthreads Draft 4 platforms.
   if (old_ts_storage == 0)
     {
+      if (ts_created)
+        *ts_created = 1u;
+
       // Use the ts_storage passed as argument, if non-zero.  It is
       // possible that this has been implemented in the stack. At the
       // moment, this is unknown.  The cleanup must not do nothing.
       // If ts_storage is zero, allocate (and eventually leak) the
       // storage array.
       if (ts_storage == 0)
-      {
-        ACE_NO_HEAP_CHECK;
+        {
+          ACE_NO_HEAP_CHECK;
 
-        ACE_NEW_RETURN (ts_storage,
-                        void*[ACE_TSS_THREAD_KEYS_MAX],
-                        0);
+          ACE_NEW_RETURN (ts_storage,
+                          void*[ACE_TSS_THREAD_KEYS_MAX],
+                          0);
 
-        // Zero the entire TSS array.  Do it manually instead of using
-        // memset, for optimum speed.  Though, memset may be faster
-        // :-)
-        void **tss_base_p = ts_storage;
+          // Zero the entire TSS array.  Do it manually instead of
+          // using memset, for optimum speed.  Though, memset may be
+          // faster :-)
+          void **tss_base_p = ts_storage;
 
-        for (u_int i = 0;
-             i < ACE_TSS_THREAD_KEYS_MAX;
-             ++i)
-          *tss_base_p++ = 0;
-      }
+          for (u_int i = 0;
+               i < ACE_TSS_THREAD_KEYS_MAX;
+               ++i)
+            *tss_base_p++ = 0;
+        }
 
-     // Store the pointer in thread-specific storage.  It gets deleted
-     // via the ACE_TSS_Emulation_cleanup function when the thread
-     // terminates.
-     if (ACE_OS::thr_setspecific (native_tss_key_,
-                                 (void *) ts_storage) != 0)
+       // Store the pointer in thread-specific storage.  It gets
+       // deleted via the ACE_TSS_Emulation_cleanup function when the
+       // thread terminates.
+       if (ACE_OS::thr_setspecific (native_tss_key_,
+                                    (void *) ts_storage) != 0)
           return 0; // Major problems, this should *never* happen!
     }
+  else
+    if (ts_created)
+      ts_created = 0;
 
-  return old_ts_storage;
+  return ts_storage  ?  ts_storage  :  old_ts_storage;
 }
 #endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
@@ -2131,9 +2137,9 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
   // Zero the entire TSS array.
   void **tss_base_p = ts_storage;
   for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
-  {
-    *tss_base_p = 0;
-  }
+    {
+      *tss_base_p = 0;
+    }
 
   return (void *) tss_base;
 #   else  /* ! ACE_PSOS */
@@ -2143,7 +2149,9 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
         // directly by the shell (without spawning a new task) after
         // another program has been run.
 
-  if (tss_base (ts_storage) == 0)
+  u_int ts_created = 0;
+  tss_base (ts_storage, &ts_created);
+  if (ts_created)
     {
 #     else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
       tss_base () = ts_storage;

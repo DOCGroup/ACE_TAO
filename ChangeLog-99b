@@ -1,3 +1,15 @@
+Wed Jul 21 10:25:07 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp} (tss_base,tss_open): with TSS emulation,
+          no longer return indication of whether tss_base allocated
+          the ts_storage array.  Instead, added an (optional)
+          argument that tss_open can use for that purpose.  This
+          allows threads that haven't been spawned by ACE to use
+          ACE's TSS emulation.  Thanks to David Hauck
+          <davidh@realtimeint.com> for reporting this and testing
+          the fix on NT.  And, thanks to Terry Rosenbaum
+          <Terry.Rosenbaum@Radiology.MSU.edu> for originally reporting it.
+
 Wed Jul 21 09:34:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Shared_Malloc/test_position_independent_malloc.cpp (main):
