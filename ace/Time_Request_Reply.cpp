@@ -1,4 +1,3 @@
-// Time_Request_Reply.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -13,11 +12,11 @@ ACE_Time_Request::ACE_Time_Request (void)
   ACE_TRACE ("ACE_Time_Request::ACE_Time_Request");
 }
 
-// Create a ACE_Time_Request message.  
+// Create a ACE_Time_Request message.
 
 ACE_Time_Request::ACE_Time_Request (ACE_INT32 t, // Type of request.
-				    const ACE_UINT32 time,
-				    ACE_Time_Value *timeout) // Max time waiting for request.
+                                    const ACE_UINT32 time,
+                                    ACE_Time_Value *timeout) // Max time waiting for request.
 {
   ACE_TRACE ("ACE_Time_Request::ACE_Time_Request");
   this->msg_type (t);
@@ -58,14 +57,14 @@ ACE_Time_Request::size (void) const
 }
 
 // = Set/get the type of the message.
-ACE_INT32 
+ACE_INT32
 ACE_Time_Request::msg_type (void) const
 {
   ACE_TRACE ("ACE_Time_Request::msg_type");
   return this->transfer_.msg_type_;
 }
 
-void 
+void
 ACE_Time_Request::msg_type (ACE_INT32 t)
 {
   ACE_TRACE ("ACE_Time_Request::msg_type");
@@ -80,7 +79,7 @@ ACE_Time_Request::block_forever (void) const
   return this->transfer_.block_forever_;
 }
 
-void 
+void
 ACE_Time_Request::block_forever (ACE_UINT32 bs)
 {
   ACE_TRACE ("ACE_Time_Request::block_forever");
@@ -95,7 +94,7 @@ ACE_Time_Request::timeout (void) const
   return ACE_Time_Value (this->transfer_.sec_timeout_, this->transfer_.usec_timeout_);
 }
 
-void 
+void
 ACE_Time_Request::timeout (const ACE_Time_Value timeout)
 {
   ACE_TRACE ("ACE_Time_Request::timeout");
@@ -111,14 +110,14 @@ ACE_Time_Request::time (void) const
   return this->time_;
 }
 
-void 
+void
 ACE_Time_Request::time (ACE_UINT32 t)
 {
   ACE_TRACE ("ACE_Time_Request::time");
   this->time_ = t;
 }
 
-// Encode the transfer buffer into network byte order 
+// Encode the transfer buffer into network byte order
 // so that it can be sent to the server.
 int
 ACE_Time_Request::encode (void *&buf)
@@ -128,15 +127,15 @@ ACE_Time_Request::encode (void *&buf)
 
   buf = (void *) &this->transfer_;
   this->transfer_.block_forever_ = htonl (this->transfer_.block_forever_);
-  this->transfer_.usec_timeout_	 = htonl (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_	 = htonl (this->transfer_.sec_timeout_);
-  this->transfer_.msg_type_	 = htonl (this->transfer_.msg_type_);
-  this->transfer_.time_	         = htonl (this->transfer_.time_);
+  this->transfer_.usec_timeout_  = htonl (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_   = htonl (this->transfer_.sec_timeout_);
+  this->transfer_.msg_type_      = htonl (this->transfer_.msg_type_);
+  this->transfer_.time_          = htonl (this->transfer_.time_);
 
   return this->size ();  // Always fixed
 }
 
-// Decode the transfer buffer into host byte byte order 
+// Decode the transfer buffer into host byte byte order
 // so that it can be used by the server.
 int
 ACE_Time_Request::decode (void)
@@ -144,10 +143,10 @@ ACE_Time_Request::decode (void)
   ACE_TRACE ("ACE_Time_Request::decode");
   // Decode
   this->transfer_.block_forever_ = ntohl (this->transfer_.block_forever_);
-  this->transfer_.usec_timeout_	 = ntohl (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_	 = ntohl (this->transfer_.sec_timeout_);
-  this->transfer_.msg_type_	 = ntohl (this->transfer_.msg_type_);
-  this->transfer_.time_	         = ntohl (this->transfer_.time_);
+  this->transfer_.usec_timeout_  = ntohl (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_   = ntohl (this->transfer_.sec_timeout_);
+  this->transfer_.msg_type_      = ntohl (this->transfer_.msg_type_);
+  this->transfer_.time_          = ntohl (this->transfer_.time_);
 
   this->time_ = this->transfer_.time_;
   return 0;
@@ -159,8 +158,8 @@ void
 ACE_Time_Request::dump (void) const
 {
   ACE_TRACE ("ACE_Time_Request::dump");
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\n"), 
-	      this->size ()));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\n"),
+              this->size ()));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("message-type = ")));
 
   switch (this->msg_type ())
@@ -177,12 +176,13 @@ ACE_Time_Request::dump (void) const
     ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("blocking forever\n")));
   else
     {
+#if !defined (ACE_NDEBUG)
       ACE_Time_Value tv = this->timeout ();
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("waiting for %ld secs and %ld usecs\n"), 
-		  tv.sec (), tv.usec ()));
+#endif /* ! ACE_NDEBUG */
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("waiting for %ld secs and %ld usecs\n"),
+                  tv.sec (), tv.usec ()));
     }
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\ntime = %d\n"), 
-	      this->time ()));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\ntime = %d\n"),
+              this->time ()));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("+++++++\n")));
 }
-

@@ -654,7 +654,9 @@ ACE_Service_Config::reconfigure (void)
 
   if (ACE::debug ())
     {
+#if !defined (ACE_NDEBUG)
       time_t t = ACE_OS::time (0);
+#endif /* ! ACE_NDEBUG */
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("beginning reconfiguration at %s"),
