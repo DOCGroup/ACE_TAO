@@ -1,3 +1,34 @@
+Mon Nov 29 11:45:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/fe.fe_interface_header.cpp:
+	* TAO_IDL/include/fe_interface_header.h:
+	* TAO_IDL/include/ast_generator.h:
+	* TAO_IDL/ast/ast_generator.cpp:
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/be_include/be_generator.h:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	  Operations cannot be overloaded in IDL. If an illegal
+	  overload occurred in the next generations, the error
+	  was caught, but not if it skipped a generation. This
+	  was mystifying, since the comments in the front end
+	  said that a flat list was compiled of all the interface's
+	  ancestors. As it turned out, when the back end was
+	  written, this list was changed to include only the
+	  immediate ancestors, for the purpose of generating
+	  the inhertance list in the class declaration. So such a
+	  flat list had to be added, maintained, and the 
+	  signatures of all related functions changed. Thanks to
+	  Jochen Linkohr <Jochen.Linkohr@stz-rechnereinsatz.de>
+	  for uncovering this bug.
+
 Sun Nov 28 23:27:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/index.html:
