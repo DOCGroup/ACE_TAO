@@ -30,11 +30,11 @@ extern "C" {
 #endif /* PACE_TCHAR */
 
 #ifndef PACE_HANDLE
-  typedef void * PACE_HANDLE;
+  typedef HANDLE PACE_HANDLE;
 #endif /* PACE_HANDLE */
 
 #ifndef PACE_INVALID_HANDLE
-#define PACE_INVALID_HANDLE (void*)0
+#define PACE_INVALID_HANDLE (HANDLE)0
 #endif /* PACE_INVALID_HANDLE */
 
 #ifndef PACE_DEV_T
