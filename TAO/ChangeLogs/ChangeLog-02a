@@ -3,7 +3,7 @@ Fri Sep 29 17:17:08 2000  Ossama Othman  <ossama@uci.edu>
 	* tao/corbafwd.cpp (string_dup, wstring_dup):
 
 	  Verify that the allocated buffer is non-zero prior to copying
-	  the string to it since the copy functions used assume that the
+	  the string to it since the copy functions used assumes that the
 	  buffer is a valid one.
 
 Fri Sep 29 16:37:03 2000  Carlos O'Ryan  <coryan@uci.edu>
@@ -529,7 +529,7 @@ Mon Sep 25 11:09:20 2000  Ossama Othman  <ossama@uci.edu>
 
         * tao/corbafwd.cpp (string_dup, wstring_dup):
 
-          Set e rrno to EINVAL if a null pointer was passed as an
+          Set errno to EINVAL if a null pointer was passed as an
           argument.
 
         * tao/corbafwd.h:
