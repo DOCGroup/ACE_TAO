@@ -92,7 +92,7 @@ check:	$(TESTS)
 	@echo ''
 
 #clean:
-#	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+#	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf FooC.* FooS.*

@@ -63,7 +63,7 @@ client:	$(addprefix $(VDIR),$(TTCP_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf ttcp.cpp ttcp.h ttcp_s.cpp ttcp_s.h

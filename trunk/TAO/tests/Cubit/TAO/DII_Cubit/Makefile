@@ -113,7 +113,7 @@ echo_svr:	test1.o echo_svr.o
 	$(LINK.cc) -o echo_svr echo_svr.o test1.o $(LDLIBS) $(POSTLINK)
 endif
 
-	-rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+	-rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 	-@echo "Nothing to install, these are tests!"
 

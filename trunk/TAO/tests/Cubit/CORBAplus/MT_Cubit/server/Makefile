@@ -54,7 +54,7 @@ svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/iiop_s.o $(VLDLIBS) $(POSTLINK)
 
 clean:	
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf cubit.cpp cubit.h cubit_s.*
