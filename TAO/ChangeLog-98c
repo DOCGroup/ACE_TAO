@@ -1,3 +1,17 @@
+Wed Nov  5 00:48:58 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* tests/Thruput_test/utils.cpp: Delete static definitions of 
+	functions.
+
+	* tests/Thruput_test/ttcpS.cpp: 
+	* tests/Thruput_test/ttcpC.cpp (_duplicate): 
+	* tests/Thruput_test/client.cpp (main): 	
+	* tests/Thruput_test/ttcp_i.cpp (sendStructSeq): 
+	* tests/Cubit/TAO/DII_Cubit/clnt.cpp: 
+	* tests/Cubit/TAO/DII_Cubit/svr.cpp: Removed a couple of warnings
+	of unused and uninitialized variables.  Included "ace/ACE.h" to
+	be able to have the _REENTRANT flag.
+
 Wed Nov  5 00:18:17 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_sequence.cpp: Added code to generate the missing
