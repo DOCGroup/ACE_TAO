@@ -1,5 +1,13 @@
 Tue Jan  6 14:00:12 2004  Steve Huston  <shuston@riverace.com>
 
+	* examples/APG/Logging/Trace.h:
+	* examples/APG/Logging/Wrap_Macros.cpp:
+	* examples/APG/Logging/Trace_Return.cpp: The funky __VA_ARGS__ trick
+	  works only on g++ 2.96 and later.
+
+	* examples/APG/Makefile: Re-enabled the Logging directory - with the
+	  fixes above, this should work everywhere now.
+
 	* examples/Misc/test_read_buffer.cpp: Added #include
 	  "ace/OS_NS_unistd.h" to get ACE_OS::write().
 
