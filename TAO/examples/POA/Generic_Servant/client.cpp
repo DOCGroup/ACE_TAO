@@ -39,11 +39,11 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.optarg;
+        IOR = ACE_OS::strdup (get_opts.optarg);
         break;
 
       case 'f':
-        IOR_file = ACE_OS::strdup (get_opts.optarg);
+        IOR_file = get_opts.optarg;
         break;
 
       case 'o':
@@ -235,7 +235,7 @@ main (int argc, char **argv)
 
   ACE_TIMEPROBE_PRINT;
 
-  ACE_OS::free (IOR_file);
-
+  ACE_OS::free (IOR);
+  
   return 0;
 }

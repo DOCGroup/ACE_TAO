@@ -1,3 +1,13 @@
+Mon Sep 28 02:26:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA: Added ability to support perl scripts for running
+ 	  the tests and writing IORs to files:
+
+	  - ACE_wrappers/TAO/examples/POA/DSI/client.cpp 
+	  - ACE_wrappers/TAO/examples/POA/DSI/server.cpp 
+	  - ACE_wrappers/TAO/examples/POA/Generic_Servant/client.cpp 
+	  - ACE_wrappers/TAO/examples/POA/On_Demand_Activation/server.cpp
+
 Sun Sep 27 23:00:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA: Changed the creation time to have a binary encoding
