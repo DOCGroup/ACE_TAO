@@ -586,7 +586,9 @@ protected:
   // else 0.
 
   int set_default_policies (void);
-  // Set ORB-level policy defaults for this ORB.
+  // Set ORB-level policy defaults for this ORB.  Currently sets
+  // default RTCORBA policies: ServerProtocolPolicy &
+  // ClientProtocolPolicy. 
 
   void resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV);
   // Obtain and cache the dynamic any factory object reference

@@ -72,10 +72,21 @@ class TAO_Export TAO_UIOP_Client_Connection_Handler : public TAO_UIOP_Handler_Ba
   //      <Svc_Handler> used on the client side and returned by the
   //      <TAO_CONNECTOR>.
 public:
-  // = Intialization method.
-  TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0,
-                                      TAO_ORB_Core* orb_core = 0,
-                                      CORBA::Boolean flag = 0);
+  // = Intialization methods.
+
+  TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager* t = 0);
+  // This constructor should *never* get called, it is just here to
+  // make the compiler happy: the default implementation of the
+  // Creation_Strategy requires a constructor with that signature, we
+  // don't use that implementation, but some (most?) compilers
+  // instantiate it anyway.
+
+  TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
+                                      TAO_ORB_Core* orb_core,
+                                      CORBA::Boolean flag,
+                                      void *arg);
+  // Constructor. <arg> parameter is used by the Connector to pass the
+  // protocol configuration properties for this connection.
 
   virtual ~TAO_UIOP_Client_Connection_Handler (void);
 
@@ -117,6 +128,9 @@ protected:
 
   CORBA::Boolean lite_flag_;
   // Are we usinglite?
+
+  UIOP_Properties *uiop_properties_;
+  // UIOP configuration properties for this connection.
 };
 
 // ****************************************************************
