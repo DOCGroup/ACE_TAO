@@ -1,3 +1,9 @@
+Wed May 31 08:59:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+ 
+        * ace/config-g++-common.h:
+ 
+          Only define ACE_LACKS_AUTO_PTR for gcc versions <= 2.91
+
 Wed May 30 23:54:27 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp: 
