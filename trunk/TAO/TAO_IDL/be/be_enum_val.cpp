@@ -45,6 +45,13 @@ be_enum_val::accept (be_visitor *visitor)
   return visitor->visit_enum_val (this);
 }
 
+int
+be_enum_val::compute_size_type (void)
+{
+  this->size_type_ = be_decl::FIXED;
+  return 0;
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_enum_val, AST_EnumVal, be_decl)
 IMPL_NARROW_FROM_DECL (be_enum_val)
