@@ -309,12 +309,6 @@ TAO_Transport::register_handler (void)
 }
 
 int
-TAO_Transport::handle_close (void)
-{
-  ACE_NOTSUP_RETURN (-1);
-}
-
-int
 TAO_Transport::wait_for_reply (void)
 {
   return this->ws_->wait ();

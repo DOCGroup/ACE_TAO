@@ -60,7 +60,7 @@ public:
   // The tag, each concrete class will have a specific tag value.
 
   virtual void close_connection() = 0;
-  // Call the corresponding connection handler's <handle_close>
+  // Call the corresponding connection handler's <close>
   // method.
 
   virtual int idle (void) = 0;
@@ -170,9 +170,6 @@ public:
   // Register the handler with the reactor. Will be called by the Wait
   // Strategy if Reactor is used  for that strategy. Default
   // implementation out here returns -1 setting <errno> to ENOTSUP.
-
-  virtual int handle_close (void);
-  // The connection was closed, let everybody know about it....
 
 protected:
   CORBA::ULong tag_;

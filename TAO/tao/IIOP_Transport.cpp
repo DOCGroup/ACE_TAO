@@ -73,7 +73,6 @@ TAO_IIOP_Client_Transport::
                          orb_core),
      client_handler_ (handler)
 {
-  message_header_.message_size = 0;
 }
 
 TAO_IIOP_Server_Transport::~TAO_IIOP_Server_Transport (void)
@@ -244,14 +243,6 @@ TAO_IIOP_Client_Transport::register_handler (void)
 
   return r->register_handler (this->client_handler (),
                               ACE_Event_Handler::READ_MASK);
-}
-
-int
-TAO_IIOP_Client_Transport::handle_close (void)
-{
-  this->wait_strategy ()->handle_close ();
-  // @@ Should we? : this->rms_->handle_close ();
-  return 0;
 }
 
 int

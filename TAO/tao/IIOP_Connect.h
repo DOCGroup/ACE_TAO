@@ -86,7 +86,7 @@ public:
   // Return the transport objects
 
 protected:
-  TAO_IIOP_Client_Transport *iiop_transport_;
+  TAO_IIOP_Client_Transport *transport_;
   // Reference to the transport object, it is owned by this class.
 };
 
@@ -167,7 +167,7 @@ protected:
   // Perform appropriate closing.
 
 protected:
-  TAO_IIOP_Server_Transport *iiop_transport_;
+  TAO_IIOP_Server_Transport *transport_;
   // @@ New transport object reference.
 
   TAO_ORB_Core *orb_core_;

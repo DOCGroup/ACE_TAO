@@ -17,8 +17,8 @@
 
 ACE_RCSID(tao, UIOP_Connect, "$Id$")
 
-TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core)
-  : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
+  TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core)
+    : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
 {
 }
 
@@ -51,22 +51,21 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
     orb_core_ (orb_core),
     tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
-  message_header_.message_size = 0;
-  uiop_transport_ = new TAO_UIOP_Server_Transport (this,
-                                                   this->orb_core_);
+  transport_ = new TAO_UIOP_Server_Transport (this,
+                                              this->orb_core_);
 }
 
 TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
 {
-  delete uiop_transport_;
-  uiop_transport_ = 0;
+  delete this->transport_;
+  this->transport_ = 0;
 }
 
 TAO_Transport *
 TAO_UIOP_Server_Connection_Handler::transport (void)
 {
   // @@ For now return nothing since all is not in place!
-  return uiop_transport_;
+  return transport_;
 }
 
 int
@@ -86,7 +85,7 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
     return -1;
   else if (this->peer ().set_option (SOL_SOCKET,
                                      SO_RCVBUF,
-                                    ACE_reinterpret_cast (void *, &rcvbufsize),
+                                     ACE_reinterpret_cast (void *, &rcvbufsize),
                                      sizeof (rcvbufsize)) == -1
            && errno != ENOTSUP)
     return -1;
@@ -148,7 +147,7 @@ TAO_UIOP_Server_Connection_Handler::activate (long flags,
 
 int
 TAO_UIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
-                                             ACE_Reactor_Mask rm)
+                                                  ACE_Reactor_Mask rm)
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
@@ -204,13 +203,14 @@ TAO_UIOP_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
                                                     CORBA::ULong &request_id,
                                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  return TAO_GIOP::process_server_request (this->transport (),
-                                           this->orb_core_,
-                                           input,
-                                           output,
-                                           response_required,
-                                           request_id,
-                                           ACE_TRY_ENV);
+  TAO_GIOP::process_server_request (this->transport (),
+                                    this->orb_core_,
+                                    input,
+                                    output,
+                                    response_required,
+                                    request_id,
+                                    ACE_TRY_ENV);
+  return 0;
 }
 
 int
@@ -220,19 +220,20 @@ TAO_UIOP_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                                    CORBA::ULong &request_id,
                                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  return TAO_GIOP::process_server_locate (this->transport (),
-                                          this->orb_core_,
-                                          input,
-                                          output,
-                                          response_required,
-                                          request_id,
-                                          ACE_TRY_ENV);
+  TAO_GIOP::process_server_locate (this->transport (),
+                                   this->orb_core_,
+                                   input,
+                                   output,
+                                   response_required,
+                                   request_id,
+                                   ACE_TRY_ENV);
+  return 0;
 }
 
 void
 TAO_UIOP_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
 {
-  TAO_GIOP::send_message (this->uiop_transport_,
+  TAO_GIOP::send_message (this->transport_,
                           output,
                           this->orb_core_);
 }
@@ -259,16 +260,11 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
       TAO_InputCDR input (&this->payload_,
                           header_copy.byte_order,
                           this->orb_core_);
-      result = TAO_GIOP::process_server_message (this->transport (),
-                                                 this->orb_core_,
-                                                 input,
-                                                 header_copy);
-      if (result == -1 && TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - %p\n",
-                      "UIOP_Server_CH::handle_input, upcall"));
-        }
+      TAO_GIOP::process_server_message (this->transport (),
+                                        this->orb_core_,
+                                        input,
+                                        header_copy);
+      result = 0;
     }
   return result;
 }
@@ -276,25 +272,25 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
 // ****************************************************************
 
 TAO_UIOP_Client_Connection_Handler::
-    TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
-                                        TAO_ORB_Core* orb_core)
+TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
+                                    TAO_ORB_Core* orb_core)
   : TAO_UIOP_Handler_Base (t)
 {
-  uiop_transport_ = new TAO_UIOP_Client_Transport(this,
-                                                  orb_core);
+  transport_ = new TAO_UIOP_Client_Transport(this,
+                                             orb_core);
 }
 
 // @@ Need to get rid of the Transport Objects!
 TAO_UIOP_Client_Connection_Handler::~TAO_UIOP_Client_Connection_Handler (void)
 {
-  delete this->uiop_transport_;
-  this->uiop_transport_ = 0;
+  delete this->transport_;
+  this->transport_ = 0;
 }
 
 TAO_Transport *
 TAO_UIOP_Client_Connection_Handler::transport (void)
 {
-  return this->uiop_transport_;
+  return this->transport_;
 }
 
 // @@ Should I do something here to enable non-blocking?? (Alex).
@@ -401,13 +397,11 @@ TAO_UIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   this->peer ().close ();
 
-  this->transport ()->handle_close ();
-
   return 0;
 }
 
 int
-TAO_UIOP_Client_Connection_Handler::close (u_long)
+TAO_UIOP_Client_Connection_Handler::close (u_long flags)
 {
   this->destroy ();
 

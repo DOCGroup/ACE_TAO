@@ -288,6 +288,8 @@ TAO_Acceptor_Registry::close_all (void)
       if (*i == 0)
         continue;
       (*i)->close ();
+
+      delete *i;
     }
   this->acceptors_.reset ();
   return 0;

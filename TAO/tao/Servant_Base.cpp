@@ -78,7 +78,7 @@ TAO_ServantBase::_remove_ref (CORBA::Environment &)
 
 CORBA::Boolean
 TAO_ServantBase::_is_a (const char* logical_type_id,
-			CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
   const char *id = CORBA::_tc_Object->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -313,24 +313,16 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
                          invalid_oid->get_buffer (),
                          0);
 
-  // Note the use of a fake key and no registration with POAs
-  PortableServer::POA_var poa_stub = this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  PortableServer::Servant servant = poa_stub->_servant ();
-  if (servant == 0)
-    {
-      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                        0);
-    }
-
-  void *ptr = servant->_downcast (servant->_interface_repository_id ());
-  POA_PortableServer::POA *poa = (POA_PortableServer::POA *) ptr;
-  TAO_POA *poa_impl = ACE_dynamic_cast (TAO_POA *, poa);
-
-  return poa_impl->orb_core ().orb ()->create_stub_object (tmp_key,
-                                                           this->_interface_repository_id (),
-                                                           ACE_TRY_ENV);
+  // It is ok to use TAO_ORB_Core_instance here since the locality
+  // constrained servant does not really register with a POA or get
+  // exported remotely.
+  //
+  // The correct thing to do is to probably use ORB of the default
+  // POA. The unfortunate part is that calling default_POA() requires
+  // the creation of a local stub, hence causing a infinite loop.
+  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (tmp_key,
+                                                               this->_interface_repository_id (),
+                                                               ACE_TRY_ENV);
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

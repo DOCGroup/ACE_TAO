@@ -73,7 +73,6 @@ TAO_UIOP_Client_Transport::
                          orb_core),
      client_handler_ (handler)
 {
-  message_header_.message_size = 0;
 }
 
 TAO_UIOP_Server_Transport::~TAO_UIOP_Server_Transport (void)
@@ -196,7 +195,7 @@ TAO_UIOP_Client_Transport::handle_client_input (int block)
   TAO_GIOP_ServiceContextList reply_ctx;
   CORBA::ULong request_id;
   CORBA::ULong reply_status;
-  
+
   result = TAO_GIOP::parse_reply (this,
                                   this->orb_core_,
                                   *cdr,
@@ -244,14 +243,6 @@ TAO_UIOP_Client_Transport::register_handler (void)
 
   return r->register_handler (this->client_handler (),
                               ACE_Event_Handler::READ_MASK);
-}
-
-int
-TAO_UIOP_Client_Transport::handle_close (void)
-{
-  this->wait_strategy ()->handle_close ();
-  // @@ Should we? : this->rms_->handle_close ();
-  return 0;
 }
 
 int

@@ -50,6 +50,11 @@ TAO_IIOP_Connect_Creation_Strategy::make_svc_handler (
 
 // ****************************************************************
 
+typedef ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
+                                    TAO_SOCK_CONNECTOR,
+                                    TAO_Cached_Connector_Lock>
+        TAO_CACHED_CONNECT_STRATEGY;
+
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : TAO_Connector (TAO_IOP_TAG_INTERNET_IOP),
     base_connector_ ()
@@ -59,15 +64,19 @@ TAO_IIOP_Connector::TAO_IIOP_Connector (void)
 int
 TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
-  typedef ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
-                                      TAO_SOCK_CONNECTOR,
-                                      TAO_Cached_Connector_Lock>
-        TAO_CACHED_CONNECT_STRATEGY;
+  TAO_Cached_Connector_Lock *connector_lock = 0;
+  ACE_NEW_RETURN (connector_lock,
+                  TAO_Cached_Connector_Lock (orb_core),
+                  -1);
 
-  TAO_CACHED_CONNECT_STRATEGY* cached_connect_strategy =
+  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy =
     new TAO_CACHED_CONNECT_STRATEGY (
         new TAO_IIOP_Connect_Creation_Strategy (orb_core->thr_mgr (),
-                                                orb_core));
+                                                orb_core),
+        0,
+        0,
+        connector_lock,
+        1);
 
   return this->base_connector_.open (orb_core->reactor (),
                                      &this->null_creation_strategy_,
@@ -78,15 +87,13 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_IIOP_Connector::close (void)
 {
-#if 0
-  // @@ We should destroy the strategies that we created above...
-  if (this->cached_connect_strategy_ != 0)
-    {
-      // Zap the creation strategy that we created earlier
-      delete this->cached_connect_strategy_->creation_strategy ();
-      delete this->cached_connect_strategy_;
-    }
-#endif /* 0 */
+  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy =
+    ACE_dynamic_cast (TAO_CACHED_CONNECT_STRATEGY *,
+                      this->base_connector_.connect_strategy ());
+
+  // Zap the creation strategy that we created earlier
+  delete cached_connect_strategy->creation_strategy ();
+  delete cached_connect_strategy;
 
   this->base_connector_.close ();
   return 0;
