@@ -11,7 +11,6 @@
 static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> allocator;
 
 const int SEM_KEY = ACE_DEFAULT_SEM_KEY + 1;
-const int SHMSZ = 27;
 
 static int
 parent (char *shm)

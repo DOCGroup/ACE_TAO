@@ -77,8 +77,8 @@ ACE_Thread::spawn (ACE_THR_FUNC func,
 		   ACE_thread_t *t_id, 
 		   ACE_hthread_t *t_handle,
 		   long priority,
-		   void *stack, 
-		   size_t stack_size,
+		   void *thr_stack, 
+		   size_t thr_stack_size,
 		   ACE_Thread_Adapter *thread_adapter)
 {
   ACE_TRACE ("ACE_Thread::spawn");
@@ -88,8 +88,8 @@ ACE_Thread::spawn (ACE_THR_FUNC func,
 			     t_id,
 			     t_handle, 
 			     priority,
-			     stack,
-			     stack_size,
+			     thr_stack,
+			     thr_stack_size,
 			     thread_adapter);
 }
 

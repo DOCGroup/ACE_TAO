@@ -1535,7 +1535,7 @@ ACE_Thread_Adapter::invoke (void)
 
       // This prevents a second invocation of the cleanup code (called
       // later by ACE_Thread_Manager::exit()).
-      thr_mgr_ptr->at_exit (task_ptr, NULL, 0);
+      thr_mgr_ptr->at_exit (task_ptr, 0, 0);
     }
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
@@ -1611,7 +1611,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
     thr_desc_ (td)
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
     ,
-    ostream_ (NULL),
+    ostream_ (0),
     priority_mask_ (0),
     tracing_enabled_ (0),
     restart_ (1),
@@ -2183,7 +2183,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         ACE_SET_BITS (flags, THR_SUSPENDED);
 
       *thr_handle = (void *) ::_beginthreadex
-        (NULL,
+        (0,
          stacksize,
          (unsigned (__stdcall *) (void *)) ACE_THREAD_FUNCTION,
          ACE_THREAD_ARGUMENT,
@@ -2203,9 +2203,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     }
 #    if 0
   *thr_handle = ::CreateThread
-    (NULL, stacksize,
+    (0, 
+     stacksize,
      LPTHREAD_START_ROUTINE (ACE_THREAD_FUNCTION),
-     ACE_THREAD_ARGUMENT, flags, thr_id);
+     ACE_THREAD_ARGUMENT,
+     flags,
+     thr_id);
 #    endif /* 0 */
 
   // Close down the handle if no one wants to use it.
@@ -2484,14 +2487,14 @@ ACE_OS::fork_exec (char *argv[])
       ACE_OS::memset ((void *) &startup_info, 0, sizeof startup_info);
       startup_info.cb = sizeof startup_info;
 
-      if (::CreateProcess (NULL,
+      if (::CreateProcess (0,
                            (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ()),
-                           NULL, // No process attributes.
-                           NULL,  // No thread attributes.
+                           0, // No process attributes.
+                           0,  // No thread attributes.
                            TRUE, // Allow handle inheritance.
                            0, /* CREATE_NEW_CONSOLE */ // Don't create a new console window.
-                           NULL, // No environment.
-                           NULL, // No current directory.
+                           0, // No environment.
+                           0, // No current directory.
                            &startup_info,
                            &process_info))
         {

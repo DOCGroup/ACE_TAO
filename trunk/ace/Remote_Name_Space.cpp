@@ -74,7 +74,7 @@ ACE_Remote_Name_Space::resolve (const ACE_WString &name,
   ACE_TRACE ("ACE_Remote_Name_Space::resolve");
   ACE_Name_Request request (ACE_Name_Request::RESOLVE, name.rep (),
 			    name.length () * sizeof (ACE_USHORT16),
-			    NULL, 0, NULL, 0);
+			    0, 0, 0, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
@@ -98,7 +98,7 @@ ACE_Remote_Name_Space::unbind (const ACE_WString &name)
   ACE_TRACE ("ACE_Remote_Name_Space::unbind");
   ACE_Name_Request request (ACE_Name_Request::UNBIND, name.rep (),
 			    name.length () * sizeof (ACE_USHORT16),
-			    NULL, 0, NULL, 0);
+			    0, 0, 0, 0);
 
   int result = this->ns_proxy_.request_reply (request);
   return result == ACE_Name_Reply::SUCCESS ? 0 : result;
@@ -111,12 +111,12 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
   ACE_Name_Request request (ACE_Name_Request::LIST_NAMES, pattern.rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
-			    NULL, 0, NULL, 0);
+			    0, 0, 0, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
   
-  ACE_Name_Request reply (0, NULL, 0, NULL, 0, NULL, 0, 0);
+  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -141,12 +141,12 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUES, pattern.rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
-			    NULL, 0, NULL, 0);
+			    0, 0, 0, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
   
-  ACE_Name_Request reply (0, NULL, 0, NULL, 0, NULL, 0, 0);
+  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -171,12 +171,12 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPES, pattern.rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
-			    NULL, 0, NULL, 0);
+			    0, 0, 0, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
   
-  ACE_Name_Request reply (0, NULL, 0, NULL, 0, NULL, 0, 0);
+  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -201,12 +201,12 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
   ACE_Name_Request request (ACE_Name_Request::LIST_NAME_ENTRIES, pattern.rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
-			    NULL, 0, NULL, 0);
+			    0, 0, 0, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
   
-  ACE_Name_Request reply (0, NULL, 0, NULL, 0, NULL, 0, 0);
+  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -235,12 +235,12 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUE_ENTRIES, pattern.rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
-			    NULL, 0, NULL, 0);
+			    0, 0, 0, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
   
-  ACE_Name_Request reply (0, NULL, 0, NULL, 0, NULL, 0, 0);
+  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {
@@ -269,12 +269,12 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPE_ENTRIES, pattern.rep (),
 			    pattern.length () * sizeof (ACE_USHORT16),
-			    NULL, 0, NULL, 0);
+			    0, 0, 0, 0);
 
   if (this->ns_proxy_.send_request (request) == -1)
     return -1;
   
-  ACE_Name_Request reply (0, NULL, 0, NULL, 0, NULL, 0, 0);
+  ACE_Name_Request reply (0, 0, 0, 0, 0, 0, 0, 0);
 
   while (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
     {

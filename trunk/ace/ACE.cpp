@@ -2103,7 +2103,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
   const int MAX_IF = 50; // probably hard to put this many ifs in a unix box..
   int num_ifs = MAX_IF; // HACK - set to an unreasonable number
   struct ifconf ifcfg;
-  struct ifreq *p_ifs = NULL;
+  struct ifreq *p_ifs = 0;
   size_t ifreq_size = 0;
 
   ifreq_size = num_ifs * sizeof (struct ifreq);

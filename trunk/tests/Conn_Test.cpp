@@ -417,9 +417,7 @@ server (void *arg)
       svc_handler->recv_data ();
     }
 
-  if (svc_handler->close () == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
-
+  /* NOTREACHED */
   return 0;
 }
 
