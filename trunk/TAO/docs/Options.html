@@ -401,6 +401,15 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         was compiled with support for the FL toolkit
     </TD>
   </TR>
+  <TR>
+    <TD><CODE>-ORBReactorMaskSignals</CODE> <EM>0/1</EM></TD>
+    <TD>ACE select reactors mask signals during upcalls to the event
+	handlers.  This is only useful if the application is going to
+        trap those signals and handle them in any way.
+        Disabling the mask can improve performance by reducing the
+	number of kernel level locks.
+    </TD>
+  </TR>
 </TR>
 <TR><TD><CODE>wfmo<CODE></TD>
 <TD>Use the

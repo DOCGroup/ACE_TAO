@@ -1742,14 +1742,14 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
                              "no more TSS keys"),
                           0);
 
-      dblock_allocator = 
+      dblock_allocator =
         this->input_cdr_dblock_allocator_i (tss);
       buffer_allocator =
         this->input_cdr_buffer_allocator_i (tss);
     }
   else
     {
-      dblock_allocator = 
+      dblock_allocator =
         this->input_cdr_dblock_allocator ();
       buffer_allocator =
         this->input_cdr_buffer_allocator ();
@@ -2019,8 +2019,6 @@ TAO_ORB_Core_instance (void)
 template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
 template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >;
 
-template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
-
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 
@@ -2043,8 +2041,6 @@ template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex
 
 #pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >
-
-#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>

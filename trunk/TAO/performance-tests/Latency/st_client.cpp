@@ -175,7 +175,7 @@ Client::svc (void)
       // @@ We should use "validate_connection" for this
       for (int j = 0; j < 100; ++j)
         {
-          server_->_is_a ("IDL:Test:1.0", ACE_TRY_ENV);
+          server_->_non_existent (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
