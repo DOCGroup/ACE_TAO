@@ -20,7 +20,8 @@ Baseline_Test_Options baseline_options;
 Baseline_Test_Base::Baseline_Test_Base (void)
   : Benchmark_Base (Benchmark_Base::BASELINE),
     yield_method_ (Baseline_Test_Options::USE_SLEEP_ZERO),
-    iteration_ (DEFAULT_ITERATIONS)
+    iteration_ (DEFAULT_ITERATIONS),
+    what_(TEST_LOCK)
 {
 }
 
@@ -33,13 +34,13 @@ Baseline_Test_Base::init (int argc, char *argv[])
 int
 Baseline_Test_Base::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, "i:y", 0);
+  ACE_Get_Opt getopt (argc, argv, "i:ylrw", 0);
   int c;
 
   while ((c = getopt ()) != -1)
     switch (c)
       {
-      case 'i':
+      case 'i':                 // Total iterations
         {
           int tmp = ACE_OS::atoi (getopt.optarg);
           if (tmp <= 0)
@@ -53,6 +54,18 @@ Baseline_Test_Base::parse_args (int argc, char *argv[])
 
       case 'y':                 // Use thr_yield.
         this->yield_method_ = Baseline_Test_Options::USE_THR_YIELD;
+        break;
+
+      case 'l':
+        this->what_ = TEST_LOCK;
+        break;
+
+      case 'r':
+        this->what_ = TEST_READLOCK;
+        break;
+
+      case 'w':
+        this->what_ = TEST_WRITELOCK;
         break;
 
       default:
