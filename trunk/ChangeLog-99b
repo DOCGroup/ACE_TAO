@@ -39,6 +39,22 @@ Tue Feb 23 19:54:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	  Fixed the potential dominance warnings in POSIX
  	  implementation. Updated the documentation.
 
+Tue Feb 23 18:11:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+        
+	* examples/DLL/DLL.dsw:
+	  examples/DLL/Main.dsp:
+	  examples/DLL/Newsweek.dsp:
+	  examples/DLL/Today.dsp:
+	  Added extra include and linker options to the projects.
+
+	* tests/DLL_Test:
+	  Added OBJ_PREFIX to cater to the problem which arose due to the fact
+	  that the .o is produced under the .obj directory on SunOS.
+
+	* tests/run_tests.sh:
+          tests/run_tests.bat:
+          Made an entry for DLL_Test.
+	
 Tue Feb 23 16:54:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/OS.i (recursive_mutex_trylock and recursive_mutex_lock):
@@ -67,22 +83,6 @@ Tue Feb 23 15:50:40 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         be got through <implementation> method in the <ACE_Proactor>.
         The need for RTTI has been avioded in this design.
 
-Tue Feb 23 18:11:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-        
-	* examples/DLL/DLL.dsw:
-	  examples/DLL/Main.dsp:
-	  examples/DLL/Newsweek.dsp:
-	  examples/DLL/Today.dsp:
-	  Added extra include and linker options to the projects.
-
-	* tests/DLL_Test:
-	  Added OBJ_PREFIX to cater to the problem which arose due to the fact
-	  that the .o is produced under the .obj directory on SunOS.
-
-	* tests/run_tests.sh:
-          tests/run_tests.bat:
-          Made an entry for DLL_Test.
-	
 Tue Feb 23 15:19:33 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/NT_Service.(h cpp): Added two new methods:
