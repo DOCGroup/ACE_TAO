@@ -403,6 +403,10 @@ public:
   int deletion (TIMER_QUEUE &timer_queue,
                 ACE_Event_Handler *handler,
                 const void *arg);
+private:
+  // = Don't allow these operations for now.
+  ACE_UNIMPLEMENTED_FUNC (ACE_Event_Handler_Handle_Timeout_Upcall (const ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK> &))
 };
 
 #if defined (__ACE_INLINE__)
