@@ -121,7 +121,7 @@ private:
   // or thread, as indicated by the scope_ parameter.
 
   int scope_;
-  // <scope_> must one of the following:
+  // <scope_> must be one of the following:
   //   ACE_SCOPE_PROCESS:  sets the scheduling policy for the
   //     process, and the process priority.  On some platforms,
   //     such as Win32, the scheduling policy can _only_ be
