@@ -678,8 +678,13 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                         -1);
     }
 
-  *os << be_nl << be_nl
-      << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
+  // Skip marshalling on location forward
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
+      << "if (!_tao_vfr.location_forwarded ())" << be_idt_nl
+      << "{" << be_idt;
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */"<< be_nl;
+
+  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl;
 
   *os << "if (!(" << be_idt << be_idt;
@@ -734,6 +739,11 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
       << be_nl
       << "ACE_CHECK;" << be_uidt_nl
       << "}" << be_uidt;
+
+  // End of scope: Skip marshalling on location forward
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)"
+      << be_uidt_nl << "}" << be_uidt;
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
   return 0;
 }
