@@ -1937,6 +1937,11 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
 
   if (be_global->gen_thru_poa_collocation ())
     {
+      // Thru-POA/skeleton argument selection function templates.
+      this->gen_cond_file_include (idl_global->non_local_iface_seen_,
+                                   "tao/PortableServer/get_arg.h",
+                                   stream);
+
       // We need the stub side argument templates when thru-POA
       // collocation is enabled for type resolution.
       // this->gen_stub_arg_file_includes (stream);

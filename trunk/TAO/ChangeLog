@@ -1,3 +1,29 @@
+Tue Mar 08 12:26:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/get_arg.h:
+
+	  Moved thru-POA/skeleton argument selection function templates
+	  out of generated skeletons and into this new file.
+
+	* TAO_IDL/be/be_codegen.cpp:
+
+	  Generate include directive for new get_arg.h header file when
+	  thru-POA collocation support is enabled and an unconstrained
+	  interface is seen.
+
+	* TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+
+	  Since MSVC++ 6 cannot typedefs that depend on template
+	  parameters, explicitly specify the return argument type in a
+	  second template parameter for the get_*_arg<>() function
+	  templates.
+
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+
+	  Remove thru-POA/skeleton argument selection function template
+	  generation.  Those templates are now in the PortableServer
+	  library.
+
 Tue Mar 08 10:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Collocated/Forward/OBV_Forward.mpc:
