@@ -1,6 +1,6 @@
 Thu Jan 29 12:32:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/platform_irix6.x-sgic++.GNU: 
+	* include/makeinclude/platform_irix6.x-sgic++.GNU:
 	  Added support for debugging, somehow the DCCFLAGS were missing.
 
 Thu Jan 29 10:52:34 1998  David L. Levine  <levine@cs.wustl.edu>
@@ -32,6 +32,10 @@ Thu Jan 29 10:52:34 1998  David L. Levine  <levine@cs.wustl.edu>
           These (and any other) options can be overridden in
           platform_sunos5_egcs.GNU if necessary.  See the commented
           example there.
+
+        * ace/config-sunos5.5-egcs.h: added
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION to match
+          -fno-implicit-templates in the platform_sunos5_egcs.GNU.
 
         * tests/Env_Value_Test.cpp: updated comment to explain why we
           can't use spawn with ACE_HAS_NONSTATIC_OBJECT_MANAGER.  We
