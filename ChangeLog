@@ -1,3 +1,13 @@
+Sat Nov 24 10:23:00 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Unbounded_Set.h (class ACE_Unbounded_Set): Moved the
+	  insert_tail() method from the private part of the class to the
+ 	  public part since it's needed by the examples/Misc/test_set.cpp
+ 	  file.
+
+	* examples/Misc/test_set.cpp (main): Somehow the contents of this file
+	  got lost.  Thanks to Johnny Willemsen for reporting this!
+
 Fri Nov 23 08:40:33 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Refcounted_Auto_Ptr_Test.cpp: Added some ACE_DEBUGs to

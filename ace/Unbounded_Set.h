@@ -193,6 +193,10 @@ public:
    */
   int insert (const T &new_item);
 
+  /// Insert <item> at the tail of the set (doesn't check for
+  /// duplicates).
+  int insert_tail (const T &item);
+
   /**
    * Remove first occurrence of <item> from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
@@ -221,10 +225,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Insert <item> at the tail of the set (doesn't check for
-  /// duplicates).
-  int insert_tail (const T &item);
-
   /// Delete all the nodes in the Set.
   void delete_nodes (void);
 
