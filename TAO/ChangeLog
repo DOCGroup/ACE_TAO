@@ -1,3 +1,15 @@
+Mon Feb 21 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/FindPOA/POA_FindPOA.mpc:
+        * examples/POA/NewPOA/POA_NewPOA.mpc:
+        * examples/POA/POA_BiDir/POA_BiDir.mpc:
+        * examples/POA/RootPOA/RootPOA.mpc:
+          Added exename to explicitly state the exe to be generated
+
+        * examples/POA/TIE/POA_TIE.mpc:
+          Derive client/server from taoclient/taoserver, the client doesn't
+          need portableserver
+
 Sun Feb 20 19:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.cpp:
