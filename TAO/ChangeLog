@@ -1,3 +1,9 @@
+Sun Feb 20 19:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.cpp:
+          The default servant request processing factory is not available in
+          the minimum poa configuration
+
 Sun Feb 20 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Default_Servant/Default_Servant.cpp:
