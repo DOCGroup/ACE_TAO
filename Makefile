@@ -93,7 +93,8 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 include \
                 netsvcs \
                 performance-tests \
-                tests
+                tests \
+		WindozeCE
 
 RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
                 ACE_wrappers/ACE-INSTALL \
