@@ -31,9 +31,11 @@ private:
   static Test_Singleton *instance_;
 
   Test_Singleton (void) { ACE_DEBUG ((LM_DEBUG, "Test_Singleton %d ctor\n", NUMBER)); }
-  ~Test_Singleton (void) { ACE_DEBUG ((LM_DEBUG, "Test_Singleton %d dtor\n", NUMBER)); }
+  // We can't reliably use ACE_Log_Msg in a destructor that is called by
+  // ACE_Object_Manager.  Yet.
+  ~Test_Singleton (void) { /* ACE_DEBUG ((LM_DEBUG, "Test_Singleton %d dtor\n", NUMBER)); */ }
 
-  friend class verbase_friend_declaration_to_avoid_compiler_warning_with_private_ctor;
+  friend class misspelled_verbase_friend_declaration_to_avoid_compiler_warning_with_private_ctor;
 };
 
 Test_Singleton<1> *Test_Singleton<1>::instance_ = 0;
