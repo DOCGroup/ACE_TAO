@@ -1373,8 +1373,6 @@ AST_Expression::eval_bin_op(AST_Expression::EvalKind ek)
 {
   AST_ExprValue	*retval = NULL;
 
-  if (ek != EK_const && ek != EK_positive_int)
-    return NULL;
   if (pd_v1 == NULL || pd_v2 == NULL)
     return NULL;
   pd_v1->set_ev(pd_v1->eval_internal(ek));
@@ -1431,45 +1429,80 @@ AST_Expression::eval_bit_op(AST_Expression::EvalKind ek)
 {
   AST_Expression::AST_ExprValue	*retval=NULL;
 
-  if (ek != EK_const && ek != EK_positive_int)
-    return NULL;
   if (pd_v1 == NULL || pd_v2 == NULL)
     return NULL;
-  pd_v1->set_ev(pd_v1->eval_internal(ek));
-  if (pd_v1->ev() == NULL)
-    return NULL;
-  pd_v1->set_ev(pd_v1->coerce(EV_long));
-  if (pd_v1->ev() == NULL)
-    return NULL;
-  pd_v2->set_ev(pd_v2->eval_internal(ek));
-  if (pd_v2->ev() == NULL)
-    return NULL;
-  pd_v2->set_ev(pd_v2->coerce(EV_long));
-  if (pd_v2->ev() == NULL)
+
+  pd_v1->set_ev (pd_v1->eval_internal (ek));
+  pd_v2->set_ev (pd_v2->eval_internal (ek));
+  if (pd_v1->ev () == NULL || pd_v2->ev () == NULL )
     return NULL;
 
   retval = new AST_ExprValue;
-  retval->et = EV_long;
 
-  switch (pd_ec) {
-  case EC_or:
-    retval->u.lval = pd_v1->ev()->u.lval | pd_v2->ev()->u.lval;
-    break;
-  case EC_xor:
-    retval->u.lval = pd_v1->ev()->u.lval ^ pd_v2->ev()->u.lval;
-    break;
-  case EC_and:
-    retval->u.lval = pd_v1->ev()->u.lval & pd_v2->ev()->u.lval;
-    break;
-  case EC_left:
-    retval->u.lval = pd_v1->ev()->u.lval << pd_v2->ev()->u.lval;
-    break;
-  case EC_right:
-    retval->u.lval = pd_v1->ev()->u.lval >> pd_v2->ev()->u.lval;
-    break;
-  default:
+  // @@(JP) The rest will have to be expanded to handle 64-bit ints.
+  if (ek == EK_ulong)
+    {
+      pd_v1->set_ev (pd_v1->coerce (EV_ulong));
+      pd_v2->set_ev (pd_v2->coerce (EV_ulong));
+      retval->et = EV_ulong;
+    }
+  else
+    {
+      pd_v1->set_ev (pd_v1->coerce (EV_long));
+      pd_v2->set_ev (pd_v2->coerce (EV_long));
+      retval->et = EV_long;
+    }
+
+  if (pd_v1->ev () == NULL || pd_v2->ev () == NULL)
     return NULL;
-  }
+
+  if (ek == EK_ulong)
+    {
+      switch (pd_ec) 
+      {
+        case EC_or:
+          retval->u.ulval = pd_v1->ev ()->u.ulval | pd_v2->ev ()->u.ulval;
+          break;
+        case EC_xor:
+          retval->u.ulval = pd_v1->ev ()->u.ulval ^ pd_v2->ev ()->u.ulval;
+          break;
+        case EC_and:
+          retval->u.ulval = pd_v1->ev ()->u.ulval & pd_v2->ev ()->u.ulval;
+          break;
+        case EC_left:
+          retval->u.ulval = pd_v1->ev ()->u.ulval << pd_v2->ev ()->u.ulval;
+          break;
+        case EC_right:
+          retval->u.ulval = pd_v1->ev ()->u.ulval >> pd_v2->ev ()->u.ulval;
+          break;
+        default:
+          return NULL;
+      }
+    }
+  else
+    {
+      switch (pd_ec) 
+      {
+        case EC_or:
+          retval->u.lval = pd_v1->ev ()->u.lval | pd_v2->ev ()->u.lval;
+          break;
+        case EC_xor:
+          retval->u.lval = pd_v1->ev ()->u.lval ^ pd_v2->ev ()->u.lval;
+          break;
+        case EC_and:
+          retval->u.lval = pd_v1->ev ()->u.lval & pd_v2->ev ()->u.lval;
+          break;
+        case EC_left:
+          retval->u.lval = pd_v1->ev ()->u.lval << pd_v2->ev ()->u.lval;
+          break;
+        case EC_right:
+          retval->u.lval = pd_v1->ev ()->u.lval >> pd_v2->ev ()->u.lval;
+          break;
+        default:
+          return NULL;
+      }
+    }
+
   return retval;
 }
 
@@ -1488,10 +1521,9 @@ AST_Expression::eval_un_op(AST_Expression::EvalKind ek)
   if (pd_ev != NULL)
     return pd_ev;
 
-//  if (ek != EK_const && ek != EK_positive_int)
-//    return NULL;
   if (pd_v1 == NULL)
     return NULL;
+
   pd_v1->set_ev(pd_v1->eval_internal(ek));
   if (pd_v1->ev() == NULL)
     return NULL;
@@ -1514,9 +1546,9 @@ AST_Expression::eval_un_op(AST_Expression::EvalKind ek)
       retval->u.dval = -(pd_v1->ev()->u.dval);
       break;
     case EC_bit_neg:
-  //    pd_v1->set_ev(pd_v1->coerce(EV_long));
-  //    if (pd_v1->ev() == NULL)
-  //      return NULL;
+      if (pd_v1->ev() == NULL)
+        return NULL;
+
       switch (pd_v1->ev ()->et)
       {
         case EV_short:
@@ -1549,7 +1581,10 @@ AST_Expression::eval_un_op(AST_Expression::EvalKind ek)
           retval->et = EV_octet;
           retval->u.oval = ~pd_v1->ev ()->u.oval;
           break;
+        default:
+          return NULL;
       }
+
       break;
     default:
       return NULL;
