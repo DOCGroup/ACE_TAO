@@ -8,7 +8,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-ACE_RCSID(EC_Tests, Negation, "$Id$")
+ACE_RCSID(EC_Tests, Bitmask, "$Id$")
 
 int
 main (int argc, char* argv[])
@@ -65,8 +65,6 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      const int event_type = 20;
-      const int event_source = 10;
       const int milliseconds = 50;
 
       EC_Counting_Supplier first_supplier;
@@ -76,10 +74,10 @@ main (int argc, char* argv[])
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
       first_supplier.connect (supplier_admin.in (),
-                              event_source,
-                              event_type,
-                              event_source,
-                              event_type,
+                              0x00001111UL,
+                              0x11110000UL,
+                              0x00001111UL,
+                              0x11110000UL,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -90,60 +88,98 @@ main (int argc, char* argv[])
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
       second_supplier.connect (supplier_admin.in (),
-                               event_source,
-                               event_type + 1,
-                               event_source,
-                               event_type + 1,
+                               0x01100000UL,
+                               0x00000110UL,
+                               0x01100000UL,
+                               0x00000110UL,
                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      EC_Counting_Supplier third_supplier;
-
-      third_supplier.activate (consumer_admin.in (),
-                               milliseconds,
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      third_supplier.connect (supplier_admin.in (),
-                              event_source,
-                              event_type + 1,
-                              event_source,
-                              event_type + 1,
-                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      EC_Counting_Consumer regular_consumer ("Consumer/regular");
+      EC_Counting_Consumer consumer_bitmask_reject ("Consumer/bitmask/reject");
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
 
-
       {
         ACE_ConsumerQOS_Factory consumer_qos;
+        consumer_qos.start_bitmask (0x00001111, 0x11110000);
         consumer_qos.start_disjunction_group ();
-        consumer_qos.insert (event_source, event_type, 0);
+        consumer_qos.insert (0x01100000, 0x00000110, 0);
 
-        regular_consumer.connect (consumer_admin.in (),
-                                  consumer_qos.get_ConsumerQOS (),
-                                  ACE_TRY_ENV);
+        consumer_bitmask_reject.connect (consumer_admin.in (),
+                                         consumer_qos.get_ConsumerQOS (),
+                                         ACE_TRY_ENV);
         ACE_TRY_CHECK;
       }
 
       // ****************************************************************
 
-      EC_Counting_Consumer negation_consumer ("Consumer/negation");
+      EC_Counting_Consumer consumer_bitmask_accept ("Consumer/bitmask/accept");
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
 
       {
         ACE_ConsumerQOS_Factory consumer_qos;
-        consumer_qos.start_negation ();
-        consumer_qos.start_disjunction_group ();
-        consumer_qos.insert (event_source, event_type, 0);
+        consumer_qos.start_bitmask (0x01100110, 0x01100110);
+        consumer_qos.insert_null_terminator ();
 
-        negation_consumer.connect (consumer_admin.in (),
-                                   consumer_qos.get_ConsumerQOS (),
-                                   ACE_TRY_ENV);
+        consumer_bitmask_accept.connect (consumer_admin.in (),
+                                         consumer_qos.get_ConsumerQOS (),
+                                         ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+
+      // ****************************************************************
+
+      EC_Counting_Consumer consumer_bitmask_filter ("Consumer/bitmask/filter");
+      // Create a consumer, intialize its RT_Info structures, and
+      // connnect to the event channel....
+
+      {
+        ACE_ConsumerQOS_Factory consumer_qos;
+        consumer_qos.start_bitmask (0x00000110, 0x01100000);
+        consumer_qos.insert_null_terminator ();
+
+        consumer_bitmask_filter.connect (consumer_admin.in (),
+                                         consumer_qos.get_ConsumerQOS (),
+                                         ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+
+      // ****************************************************************
+
+      EC_Counting_Consumer consumer_bitmask_value ("Consumer/bitmask/value");
+      // Create a consumer, intialize its RT_Info structures, and
+      // connnect to the event channel....
+
+      {
+        ACE_ConsumerQOS_Factory consumer_qos;
+        consumer_qos.start_disjunction_group ();
+        consumer_qos.insert_bitmasked_value (0x11110000, 0x00001111,
+                                             0x01100000, 0x00000110);
+
+        consumer_bitmask_value.connect (consumer_admin.in (),
+                                        consumer_qos.get_ConsumerQOS (),
+                                        ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+
+      // ****************************************************************
+
+      EC_Counting_Consumer consumer_bitmask_loose ("Consumer/bitmask/loose");
+      // Create a consumer, intialize its RT_Info structures, and
+      // connnect to the event channel....
+
+      {
+        ACE_ConsumerQOS_Factory consumer_qos;
+        consumer_qos.start_disjunction_group ();
+        consumer_qos.insert_bitmasked_value (0x11111111, 0x11111111,
+                                             0x01100000, 0x00000110);
+
+        consumer_bitmask_loose.connect (consumer_admin.in (),
+                                        consumer_qos.get_ConsumerQOS (),
+                                        ACE_TRY_ENV);
         ACE_TRY_CHECK;
       }
 
@@ -156,20 +192,19 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      negation_consumer.disconnect (ACE_TRY_ENV);
+      consumer_bitmask_loose.disconnect (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      consumer_bitmask_value.disconnect (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      consumer_bitmask_filter.disconnect (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      consumer_bitmask_accept.disconnect (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      consumer_bitmask_reject.disconnect (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      regular_consumer.disconnect (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // ****************************************************************
-
-      third_supplier.deactivate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      third_supplier.disconnect (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
       second_supplier.deactivate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       second_supplier.disconnect (ACE_TRY_ENV);
@@ -191,8 +226,11 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      negation_consumer.dump_results (200, 5);
-      regular_consumer.dump_results (100, 5);
+      consumer_bitmask_reject.dump_results (0, 5);
+      consumer_bitmask_accept.dump_results (200, 5);
+      consumer_bitmask_filter.dump_results (100, 5);
+      consumer_bitmask_value.dump_results (100, 5);
+      consumer_bitmask_loose.dump_results (100, 5);
 
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;

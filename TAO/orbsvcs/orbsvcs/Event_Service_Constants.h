@@ -46,6 +46,9 @@ const long ACE_ES_CONJUNCTION_DESIGNATOR = 8;
 const long ACE_ES_DISJUNCTION_DESIGNATOR = 9;
 const long ACE_ES_NEGATION_DESIGNATOR = 10;
 const long ACE_ES_LOGICAL_AND_DESIGNATOR = 11;
+const long ACE_ES_BITMASK_DESIGNATOR = 12;
+const long ACE_ES_MASKED_TYPE_DESIGNATOR = 13;
+const long ACE_ES_NULL_DESIGNATOR = 14;
 const long ACE_ES_EVENT_UNDEFINED = 16;
 
 // = Predefined event sources.
