@@ -10,6 +10,10 @@
 # include "POA_Policy_Set.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID (PortableServer,
+           POA_Policy_Set,
+           "$Id$")
+
 ACE_RCSID(tao, POA, "$Id$")
 
 TAO_POA_Policy_Set::TAO_POA_Policy_Set ()

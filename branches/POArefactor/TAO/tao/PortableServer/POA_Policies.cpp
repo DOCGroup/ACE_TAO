@@ -8,7 +8,9 @@
 # include "POA_Policies.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(PortableServer, POA_Policies, "$Id$")
+ACE_RCSID(PortableServer,
+          POA_Policies,
+          "$Id$")
 
 
 #if (TAO_HAS_MINIMUM_POA == 0)

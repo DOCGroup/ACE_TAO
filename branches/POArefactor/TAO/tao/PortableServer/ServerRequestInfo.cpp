@@ -2,7 +2,7 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-ACE_RCSID (TAO_PortableServer,
+ACE_RCSID (PortableServer,
            ServerRequestInfo,
            "$Id$")
 

@@ -11,6 +11,9 @@
 # include "POAManager.i"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID (PortableServer,
+           POAManager,
+           "$Id$")
 
 TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
   : state_ (PortableServer::POAManager::HOLDING),

@@ -4,7 +4,9 @@
 #include "POA.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID(PortableServer, POA_GUARD, "$Id$")
+ACE_RCSID(PortableServer,
+          POA_Guard,
+          "$Id$")
 
 TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
                               ACE_ENV_ARG_DECL,

@@ -10,8 +10,8 @@
 #include "tao/Profile.h"
 #include "tao/DomainC.h"
 
-ACE_RCSID (tao,
-           TAO_Object_Remote_Proxy_Broker,
+ACE_RCSID (PortableServer,
+           Collocated_Object_Proxy_Broker,
            "$Id$")
 
 

@@ -9,6 +9,10 @@
 # include "Key_Adapters.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (PortableServer,
+           Key_Adapters,
+           "$Id$")
+
 ////////////////////////////////////////////////////////////////////////////////
 
 TAO_Incremental_Key_Generator::TAO_Incremental_Key_Generator (void)
