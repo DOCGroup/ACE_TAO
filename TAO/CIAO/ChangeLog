@@ -1,3 +1,16 @@
+Mon Jul  5 08:36:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/temp/README:
+	* tests/temp/assembly/README:
+	* tests/temp/assembly/client.cpp:
+	* tests/temp/assembly/control.idl:
+	* tests/temp/assembly/control.mpc:
+	* tests/temp/assembly/run_test.pl:
+	* tests/temp/assembly/server.cpp:
+
+	  Completely removed them. They were not supposed to be shipped or
+	  built. We have better test programs for those features now. 
+
 Mon Jul  5 08:27:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
