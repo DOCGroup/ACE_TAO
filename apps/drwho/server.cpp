@@ -84,9 +84,9 @@ do_drwho (SMR_Server &smr_server)
 int
 main (int argc, char *argv[])
 {
-  ACE_OS::signal (SIGTERM, exit_server);
-  ACE_OS::signal (SIGINT, exit_server);
-  ACE_OS::signal (SIGQUIT, exit_server);
+  ACE_OS::signal (SIGTERM, (ACE_SignalHandler)exit_server);
+  ACE_OS::signal (SIGINT, (ACE_SignalHandler)exit_server);
+  ACE_OS::signal (SIGQUIT, (ACE_SignalHandler)exit_server);
 
   Options::set_options (argc, argv);
   Options::set_opt (Options::STAND_ALONE_SERVER);
@@ -104,7 +104,7 @@ main (int argc, char *argv[])
     {
 
       for (;;)
-	do_drwho (smr_server);
+        do_drwho (smr_server);
 
       /* NOTREACHED */
     }
