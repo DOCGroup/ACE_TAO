@@ -153,7 +153,8 @@ interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key
       wsListI[i].st_string = this->wstring_from_server(key ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       ref_.assign_warray (key, wsListI[i].st_array);
-      wsListI[i].st_any <<= CORBA::wstring_dup(L"");
+      // the cast is to keep the TRUE64 Cxx compiler happy.
+      wsListI[i].st_any <<= CORBA::wstring_dup(static_cast<const CORBA::WChar *>(L""));
     }
   return wsListI._retn();
 }
