@@ -1,3 +1,11 @@
+Fri Mar 26 18:12:56 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+          I think the passing of a _var into a method that 
+          accepts _ptr was causing errors on some platforms so 
+          I added .ionout () to it hoping to fix it.
+
 Fri Mar 26 17:59:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
