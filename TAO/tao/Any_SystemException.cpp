@@ -54,31 +54,31 @@ TAO::Any_SystemException::insert (CORBA::Any & any,
   Any_SystemException *new_impl = 0;
   ACE_NEW (new_impl,
            Any_SystemException (destructor,
-                          tc,
-                          value));
+                                tc,
+                                value));
   any.replace (new_impl);
 }
 
 void
 TAO::Any_SystemException::insert_copy (CORBA::Any & any,
-                                 _tao_destructor destructor,
-                                 CORBA::TypeCode_ptr tc,
-                                 const CORBA::SystemException & value)
+                                       _tao_destructor destructor,
+                                       CORBA::TypeCode_ptr tc,
+                                       const CORBA::SystemException & value)
 {
   Any_SystemException *new_impl = 0;
   ACE_NEW (new_impl,
            Any_SystemException (destructor,
-                          tc,
-                          value));
+                                tc,
+                                value));
   any.replace (new_impl);
 }
 
 CORBA::Boolean
 TAO::Any_SystemException::extract (const CORBA::Any & any,
-                             _tao_destructor destructor,
-                             CORBA::TypeCode_ptr tc,
-                             const CORBA::SystemException *& _tao_elem,
-                             TAO::excp_factory f)
+                                   _tao_destructor destructor,
+                                   CORBA::TypeCode_ptr tc,
+                                   const CORBA::SystemException *& _tao_elem,
+                                   TAO::excp_factory f)
 {
   _tao_elem = 0;
 
@@ -173,7 +173,7 @@ TAO::Any_SystemException::value (void) const
 }
 
 CORBA::Boolean
-TAO::Any_SystemException::marshal_value (TAO_OutputCDR &cdr) \
+TAO::Any_SystemException::marshal_value (TAO_OutputCDR &cdr)
 {
   ACE_TRY_NEW_ENV
     {
