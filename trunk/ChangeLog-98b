@@ -5,7 +5,7 @@ Wed Aug 12 21:32:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* ace/Message_Block.cpp: 
 	  Enabled the base() method, it replaces the internal buffer and
 	  resets the Message_Block. There were other ways to do this (like
-	  calling data_block->base()), but some users find it convinient.
+	  calling data_block->base()), but some users find it convenient.
 	  I also modified the Data_Block::base() method to release any
 	  memory held by the class before the method is called.
 
