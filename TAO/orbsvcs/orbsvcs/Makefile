@@ -158,7 +158,7 @@ clean:
 	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
-	-/bin/rm -rf $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
+	-/bin/rm -rf $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
