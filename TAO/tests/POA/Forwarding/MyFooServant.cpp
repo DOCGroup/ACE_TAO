@@ -27,7 +27,7 @@ MyFirstFooServant::MyFirstFooServant (PortableServer::POA_ptr poa,
 {
   if (CORBA::is_nil (forward_to))
     {
-     ACE_DEBUG ((LM_DEBUG,"MyFirstFooServant::MyFirstFooServant: forward_to is nil!\n"));
+     ACE_DEBUG ((LM_DEBUG,"POA approach: Forward_to is nil!\n"));
     }
 }
 
@@ -79,7 +79,7 @@ MyFirstFooServant::forward (CORBA::Environment &env)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,"MyFirstFooServant::forward: forward_to refenence is nil.\n"));
+      ACE_DEBUG ((LM_DEBUG,"POA approach: Forward_to refenence is nil.\n"));
       CORBA::Exception *exception = new Foo::Cannot_Forward;
       env.exception (exception);
       return;
