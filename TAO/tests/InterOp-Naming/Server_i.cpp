@@ -148,7 +148,7 @@ Server_i::init (int argc,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("\tException in activation of POA");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "\tException in activation of POA");
       return -1;
     }
   ACE_ENDTRY;

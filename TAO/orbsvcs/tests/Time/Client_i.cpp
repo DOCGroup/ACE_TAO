@@ -27,21 +27,22 @@ Client_i::test_for_secure_universal_time (void)
 {
   ACE_DEBUG ((LM_DEBUG,
  	      "[CLIENT] Process/Thread Id : (%P/%t) Testing secure_time()\n"));
-  TAO_TRY
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CosTime::UTO_var UTO_server =
- 	   this->clerk_->secure_universal_time (TAO_TRY_ENV);
+ 	   this->clerk_->secure_universal_time (ACE_TRY_ENV);
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
+      ACE_PRINT_EXCEPTION (sysex, "System Exception");
       ACE_DEBUG ((LM_DEBUG,
  		  "[CLIENT] Process/Thread Id : (%P/%t) test_for_secure_universal_time() successful !!\n"));
 	}
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 // The following test retrieves the current universal time as a UTO
@@ -52,68 +53,70 @@ Client_i::test_for_universal_time (void)
 {
   ACE_DEBUG ((LM_DEBUG,
  	      "[CLIENT] Process/Thread Id : (%P/%t) Testing universal_time()\n"));
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CosTime::UTO_var UTO_server =
- 	this->clerk_->universal_time (TAO_TRY_ENV);
+ 	this->clerk_->universal_time (ACE_TRY_ENV);
 
-	  TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
  		  "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q"
  		  "\nstruct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
- 		  UTO_server->time (TAO_TRY_ENV),
- 		  UTO_server->inaccuracy (TAO_TRY_ENV),
- 		  UTO_server->tdf (TAO_TRY_ENV),
+ 		  UTO_server->time (ACE_TRY_ENV),
+ 		  UTO_server->inaccuracy (ACE_TRY_ENV),
+ 		  UTO_server->tdf (ACE_TRY_ENV),
  		  (UTO_server->utc_time ()).time,
  		  (UTO_server->utc_time ()).inacclo,
  		  (UTO_server->utc_time ()).inacchi,
  		  (UTO_server->utc_time ()).tdf));
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Error:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error:");
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) test_for_universal_time()\n"));
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 void
 Client_i::test_for_new_universal_time (void)
 {
-  // @@ Vishal, please consider replacing these numbers with consts or enums.
   TimeBase::TimeT time = 999999999;
   TimeBase::InaccuracyT inaccuracy = 9999;
   TimeBase::TdfT tdf = 99;
-
+  
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing new_universal_time()\n"));
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CosTime::UTO_var UTO_server = this->clerk_->new_universal_time (time,
  								      inaccuracy,
                                                                       tdf,
-                                                                      TAO_TRY_ENV);
+                                                                      ACE_TRY_ENV);
 
-      ACE_ASSERT (UTO_server->time (TAO_TRY_ENV) == 999999999);
-      ACE_ASSERT (UTO_server->inaccuracy (TAO_TRY_ENV) == 9999);
-      ACE_ASSERT (UTO_server->tdf (TAO_TRY_ENV) == 99);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).time == 999999999);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacchi == 0);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacclo == 9999);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).tdf == 99);
+      ACE_ASSERT (UTO_server->time (ACE_TRY_ENV) == 999999999);
+      ACE_ASSERT (UTO_server->inaccuracy (ACE_TRY_ENV) == 9999);
+      ACE_ASSERT (UTO_server->tdf (ACE_TRY_ENV) == 99);
+      ACE_ASSERT ((UTO_server->utc_time (ACE_TRY_ENV)).time == 999999999);
+      ACE_ASSERT ((UTO_server->utc_time (ACE_TRY_ENV)).inacchi == 0);
+      ACE_ASSERT ((UTO_server->utc_time (ACE_TRY_ENV)).inacclo == 9999);
+      ACE_ASSERT ((UTO_server->utc_time (ACE_TRY_ENV)).tdf == 99);
 		  
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) Test new_universal_time () fails.\n"));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception :\n");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 void
@@ -129,31 +132,33 @@ Client_i::test_for_uto_from_utc (void)
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing uto_from_utc ()\n"));
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CosTime::UTO_var UTO_server = this->clerk_->uto_from_utc (utc_struct,
-                                                                TAO_TRY_ENV);
+                                                                ACE_TRY_ENV);
       
       TimeBase::InaccuracyT inaccuracy = utc_struct.inacchi;
       inaccuracy <<= 32;
       inaccuracy |= utc_struct.inacclo;
       
-      ACE_ASSERT (UTO_server->time (TAO_TRY_ENV) == 999999999);
-      ACE_ASSERT (UTO_server->inaccuracy (TAO_TRY_ENV) == inaccuracy);
-      ACE_ASSERT (UTO_server->tdf (TAO_TRY_ENV) == 99);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).time == 999999999);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacclo == 50);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).inacchi == 50);
-      ACE_ASSERT ((UTO_server->utc_time (TAO_TRY_ENV)).tdf == 99);
+      ACE_ASSERT (UTO_server->time (ACE_TRY_ENV) == 999999999);
+      ACE_ASSERT (UTO_server->inaccuracy (ACE_TRY_ENV) == inaccuracy);
+      ACE_ASSERT (UTO_server->tdf (ACE_TRY_ENV) == 99);
+      ACE_ASSERT ((UTO_server->utc_time (ACE_TRY_ENV)).time == 999999999);
+      ACE_ASSERT ((UTO_server->utc_time (ACE_TRY_ENV)).inacclo == 50);
+      ACE_ASSERT ((UTO_server->utc_time (ACE_TRY_ENV)).inacchi == 50);
+      ACE_ASSERT ((UTO_server->utc_time (ACE_TRY_ENV)).tdf == 99);
       
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) Test uto_from_utc () fails.\n"));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception :\n");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 void
@@ -165,23 +170,25 @@ Client_i::test_for_new_interval (void)
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing new_interval ()\n"));
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CosTime::TIO_var TIO_server = this->clerk_->new_interval (lower,
  								upper,
-                                                                TAO_TRY_ENV);
+                                                                ACE_TRY_ENV);
 
-      ACE_ASSERT ((TIO_server->time_interval (TAO_TRY_ENV)).lower_bound == 666666666);
-      ACE_ASSERT ((TIO_server->time_interval (TAO_TRY_ENV)).upper_bound == 999999999);
+      ACE_ASSERT ((TIO_server->time_interval (ACE_TRY_ENV)).lower_bound == 666666666);
+      ACE_ASSERT ((TIO_server->time_interval (ACE_TRY_ENV)).upper_bound == 999999999);
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) Test new_interval () fails.\n"));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception :\n");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   
   return;
 }
@@ -301,7 +308,9 @@ Client_i::~Client_i (void)
 int
 Client_i::obtain_initial_references (void)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // Initialize the naming services.
       if (my_name_client_.init (orb_.in ()) != 0)
@@ -331,12 +340,12 @@ Client_i::obtain_initial_references (void)
 
       CORBA::Object_var temp_object =
         my_name_client_->resolve (clerk_name,
-				  TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+				  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       clerk_ = CosTime::TimeService::_narrow (temp_object.in (),
-					      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+					      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (clerk_.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -344,12 +353,12 @@ Client_i::obtain_initial_references (void)
 			   "Clerk Reference\n"),
 			   -1);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Client :: obtain_initial_references");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client :: obtain_initial_references\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -362,15 +371,17 @@ Client_i::init (int argc, char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
+  
+  ACE_DECLARE_NEW_CORBA_ENV;
 
-  TAO_TRY
+  ACE_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     0,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -383,9 +394,9 @@ Client_i::init (int argc, char **argv)
 
 	  CORBA::Object_var server_object =
 	  this->orb_->string_to_object (this->ior_,
-					TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-
+					ACE_TRY_ENV);
+	  ACE_TRY_CHECK;
+          
 	  if (CORBA::is_nil (server_object.in ()))
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "invalid ior <%s>\n",
@@ -393,11 +404,11 @@ Client_i::init (int argc, char **argv)
 			      -1);
 	  this->clerk_ =
 	    CosTime::TimeService::_narrow (server_object.in (),
-					    TAO_TRY_ENV);
+                                           ACE_TRY_ENV);
 
 	  ACE_DEBUG ((LM_DEBUG,
 		      "[CLIENT] Process/Thread Id : (%P/%t) Using the IOR provided\n"));
-	  TAO_CHECK_ENV;
+	  ACE_TRY_CHECK;
 	}
       else
 	{ // No IOR specified. Use the Naming Service
@@ -407,15 +418,15 @@ Client_i::init (int argc, char **argv)
 	  if (this->obtain_initial_references () == -1)
 	    return -1;
 
-	  TAO_CHECK_ENV;
+	  ACE_TRY_CHECK;
 	}
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Client_i::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
