@@ -28,6 +28,7 @@ ACE_Message_Queue_Vx::dump (void) const
               ASYS_TEXT ("low_water_mark = %d\n")
               ASYS_TEXT ("high_water_mark = %d\n")
               ASYS_TEXT ("cur_bytes = %d\n")
+              ASYS_TEXT ("cur_length = %d\n")
               ASYS_TEXT ("cur_count = %d\n")
               ASYS_TEXT ("head_ = %u\n")
               ASYS_TEXT ("MSG_Q_ID = %u\n"),
@@ -35,6 +36,7 @@ ACE_Message_Queue_Vx::dump (void) const
               this->low_water_mark_,
               this->high_water_mark_,
               this->cur_bytes_,
+              this->cur_length_,
               this->cur_count_,
               this->head_,
               this->tail_));
@@ -76,6 +78,7 @@ ACE_Message_Queue_Vx::open (size_t max_messages,
   this->low_water_mark_  = 0;
   this->deactivated_ = 0;
   this->cur_bytes_ = 0;
+  this->cur_length_ = 0;
   this->cur_count_ = 0;
   this->head_ = 0;
   this->notification_strategy_ = ns;
@@ -268,6 +271,7 @@ ACE_Message_Queue_NT::ACE_Message_Queue_NT (size_t max_threads)
   : max_cthrs_ (max_threads),
     cur_thrs_ (0),
     cur_bytes_ (0),
+    cur_length_ (0),
     cur_count_ (0),
     deactivated_ (0),
     completion_port_ (ACE_INVALID_HANDLE)
@@ -323,6 +327,7 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
         {
           // Update the states once I succeed.
           this->cur_bytes_ += msize;
+          this->cur_length_ += temp->length ();
           return ++this->cur_count_;
         }
     }
@@ -367,6 +372,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
           {                     // Really get a valid MB from the queue.
             --this->cur_count_;
             this->cur_bytes_ -= msize;
+            this->cur_length_ -= first_item->length ();
             return this->cur_count_;
           }
         else                    // I am woken up by deactivate ().
@@ -422,12 +428,14 @@ ACE_Message_Queue_NT::dump (void) const
               ASYS_TEXT ("max_cthrs_ = %d\n")
               ASYS_TEXT ("cur_thrs_ = %d\n")
               ASYS_TEXT ("cur_bytes = %d\n")
+              ASYS_TEXT ("cur_length = %d\n")
               ASYS_TEXT ("cur_count = %d\n")
               ASYS_TEXT ("completion_port_ = %x\n"),
               this->deactivated_,
               this->max_cthrs_,
               this->cur_thrs_,
               this->cur_bytes_,
+              this->cur_length_,
               this->cur_count_,
               this->completion_port_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

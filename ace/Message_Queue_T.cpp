@@ -124,6 +124,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
               ASYS_TEXT ("low_water_mark = %d\n")
               ASYS_TEXT ("high_water_mark = %d\n")
               ASYS_TEXT ("cur_bytes = %d\n")
+              ASYS_TEXT ("cur_length = %d\n")
               ASYS_TEXT ("cur_count = %d\n")
               ASYS_TEXT ("head_ = %u\n")
               ASYS_TEXT ("tail_ = %u\n"),
@@ -131,6 +132,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
               this->low_water_mark_,
               this->high_water_mark_,
               this->cur_bytes_,
+              this->cur_length_,
               this->cur_count_,
               this->head_,
               this->tail_));
@@ -183,6 +185,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::open (size_t hwm,
   this->low_water_mark_  = lwm;
   this->deactivated_ = 0;
   this->cur_bytes_ = 0;
+  this->cur_length_ = 0;
   this->cur_count_ = 0;
   this->tail_ = 0;
   this->head_ = 0;
@@ -237,6 +240,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
       this->cur_count_--;
 
       this->cur_bytes_ -= this->head_->total_size ();
+      this->cur_length_ -= this->head_->total_length ();
 
       ACE_Message_Block *temp = this->head_;
       this->head_ = this->head_->next ();
@@ -312,6 +316,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail_i (ACE_Message_Block *new_item)
 
   // Make sure to count all the bytes in a composite message!!!
   this->cur_bytes_ += new_item->total_size ();
+  this->cur_length_ += new_item->total_length ();
 
   this->cur_count_++;
 
@@ -343,6 +348,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i (ACE_Message_Block *new_item)
 
   // Make sure to count all the bytes in a composite message!!!
   this->cur_bytes_ += new_item->total_size ();
+  this->cur_length_ += new_item->total_length ();
 
   this->cur_count_++;
 
@@ -408,6 +414,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
 
   // Make sure to count all the bytes in a composite message!!!
   this->cur_bytes_ += new_item->total_size ();
+  this->cur_length_ += new_item->total_length ();
 
   this->cur_count_++;
 
@@ -441,6 +448,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
 
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= first_item->total_size ();
+  this->cur_length_ -= first_item->total_length ();
 
   this->cur_count_--;
 
@@ -854,6 +862,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
       this->cur_count_--;
 
       this->cur_bytes_ -= temp1->total_size ();
+      this->cur_length_ -= temp->total_length ();
     }
 
   return result;
@@ -1058,6 +1067,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
     return result;
 
   this->cur_bytes_ += new_item->total_size ();
+  this->cur_length_ += new_item->total_length ();
 
   this->cur_count_++;
 
@@ -1244,6 +1254,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
   // Make sure to subtract off all of the bytes associated with this
   // message.
   this->cur_bytes_ -= first_item->total_size ();
+  this->cur_length_ -= first_item->total_length ();
 
   this->cur_count_--;
 

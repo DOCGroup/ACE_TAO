@@ -101,8 +101,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::low_water_mark (size_t lwm)
   this->low_water_mark_ = lwm;
 }
 
-// Return the current number of bytes in the queue.
-
 template <ACE_SYNCH_DECL> ACE_INLINE size_t
 ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes (void)
 {
@@ -112,7 +110,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes (void)
   return this->cur_bytes_;
 }
 
-// Return the current number of messages in the queue.
+template <ACE_SYNCH_DECL> ACE_INLINE size_t
+ACE_Message_Queue<ACE_SYNCH_USE>::message_length (void)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, 0);
+
+  return this->cur_length_;
+}
 
 template <ACE_SYNCH_DECL> ACE_INLINE size_t
 ACE_Message_Queue<ACE_SYNCH_USE>::message_count (void)
@@ -121,6 +126,24 @@ ACE_Message_Queue<ACE_SYNCH_USE>::message_count (void)
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, 0);
 
   return this->cur_count_;
+}
+
+template <ACE_SYNCH_DECL> ACE_INLINE void
+ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes (size_t new_value)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_bytes");
+  ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_);
+
+  this->cur_bytes_ = new_value;
+}
+
+template <ACE_SYNCH_DECL> ACE_INLINE void
+ACE_Message_Queue<ACE_SYNCH_USE>::message_length (size_t new_value)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_length");
+  ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_);
+
+  this->cur_length_ = new_value;
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE int
@@ -150,7 +173,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivated (void)
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE ACE_SYNCH_MUTEX_T &
-ACE_Message_Queue<ACE_SYNCH_USE>::lock (void) 
+ACE_Message_Queue<ACE_SYNCH_USE>::lock (void)
 {
   return this->lock_;
 }
