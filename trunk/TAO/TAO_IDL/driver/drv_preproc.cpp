@@ -116,7 +116,8 @@ DRV_cpp_putarg(char *str)
 void
 DRV_cpp_init()
 {
-
+  // @@ There are two "one time" memory leaks in this function.
+  //    They will not blow off the program but should be fixed at some point.
   char *cpp_loc;
 
   // DRV_cpp_putarg("\\cygnus\\H-i386-cygwin32\\bin\\echo");
@@ -124,6 +125,15 @@ DRV_cpp_init()
 
   if (cpp_path != 0)
       cpp_loc = cpp_path;
+#if defined (_MSC_VER)
+  cpp_path.open ("MSVCDir", (char*) 0);
+  if (cpp_path != 0)
+    {
+      cpp_loc = new char[BUFSIZ];
+      ACE_OS::strcpy (cpp_loc, cpp_path);
+      ACE_OS::strcat (cpp_loc, "\\bin\\CL.exe");
+    }
+#endif /* _MSC_VER */
   else
       cpp_loc = idl_global->cpp_location();
   DRV_cpp_putarg (cpp_loc);
