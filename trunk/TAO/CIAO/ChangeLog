@@ -1,9 +1,37 @@
+Fri Jan  2 14:41:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+
+	  Fixed small recognition bug.
+
+	* CCF/CCF/IDL2/Traversal/Attribute.cpp:
+	* CCF/CCF/IDL2/Traversal/Attribute.hpp:
+
+	  Added traversal or readonly attribute.
+
+	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+
+	  Added support for readonly attribute.
+	
+	* CCF/Example/CIDL/LocalExecutorMapping/test-0_exec.idl.orig:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-1.idl:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-1_exec.idl.orig:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+
+	  Updated tests and results.
+	
+	* CIDLC/ExecutorMappingGenerator.cpp:
+
+	  Added support for readonly attribute.
+
 Fri Jan  2 13:44:06 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/CompilerElements/Preprocessor.cpp:
 
 	  Removed debug print.
-	
+
 	* CCF/Documentation/TODO:
 
 	  Updated.
