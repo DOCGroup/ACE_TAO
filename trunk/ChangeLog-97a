@@ -7,6 +7,11 @@ Sat Apr 26 17:19:56 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/ace.{mdp,mak}: Updated for changes to Timer files.
 
+	* ace: Updated the following files to include /**/ before an
+	  include file directive: OS.h, config-win32-common.h. Thanks
+	  to Matthias Kerkhoff <make@cs.tu-berlin.de> for reporting
+	  this.
+
 Sat Apr 26 13:41:15 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Came up with a scheme that allowed us to remove the

@@ -1340,7 +1340,7 @@ typedef int ACE_thread_key_t;
 // This must come after signal.h is #included.
 #if defined (SCO)
 #define SIGIO SIGPOLL
-#include <sys/regset.h>
+#include /**/ <sys/regset.h>
 #endif /* SCO */
 
 #if defined (ACE_HAS_SIG_MACROS)
