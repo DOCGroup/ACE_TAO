@@ -135,13 +135,13 @@ Peer_Handler::open (void *a)
 
   // Schedule the time between disconnects.  This should really be a
   // "tunable" parameter.
-  if (ACE_Service_Config::reactor ()->schedule_timer (this, 0, timeout) == -1)
+  if (ACE_Reactor::instance()->schedule_timer (this, 0, timeout) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "schedule_timer"));
 
   // If there are events left in the queue, make sure we enable the
   // ACE_Reactor appropriately to get them sent out.
   if (this->msg_queue ()->is_empty () == 0
-      && ACE_Service_Config::reactor ()->schedule_wakeup 
+      && ACE_Reactor::instance()->schedule_wakeup 
           (this, ACE_Event_Handler::WRITE_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_wakeup"), -1);
 
@@ -174,7 +174,7 @@ Peer_Handler::xmit_stdin (void)
 
 	  // Take stdin out of the ACE_Reactor so we stop trying to
 	  // send events.
-	  ACE_Service_Config::reactor ()->remove_handler 
+	  ACE_Reactor::instance()->remove_handler 
 	    (ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
 	  mb->release ();
 	  break;
@@ -240,7 +240,7 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enqueue_head"), -1);
       
       // Tell ACE_Reactor to call us back when we can send again.
-      if (ACE_Service_Config::reactor ()->schedule_wakeup
+      if (ACE_Reactor::instance()->schedule_wakeup
 	  (this, ACE_Event_Handler::WRITE_MASK) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_wakeup"), -1);
       return 0;
@@ -293,7 +293,7 @@ Peer_Handler::handle_output (ACE_HANDLE)
 			  this->get_handle (), 
 			  this->proxy_id_));
 
-	      if (ACE_Service_Config::reactor ()->cancel_wakeup
+	      if (ACE_Reactor::instance()->cancel_wakeup
 		  (this, ACE_Event_Handler::WRITE_MASK) == -1)
 		ACE_ERROR ((LM_ERROR, "%p\n", "cancel_wakeup"));
 	    }
@@ -520,8 +520,8 @@ Peer_Handler::await_supplier_id (void)
   // Register this handler to receive test events on stdin.
 
   if (ACE::register_stdin_handler (this,
-				   ACE_Service_Config::reactor (),
-				   ACE_Service_Config::thr_mgr ()) == -1)
+				   ACE_Reactor::instance(),
+				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
   return 0;
 }
@@ -599,11 +599,11 @@ Peer_Handler::handle_close (ACE_HANDLE,
       // ACE_Event_Handler::DONT_CALL instructs the ACE_Reactor *not*
       // to call this->handle_close(), which would otherwise lead to
       // recursion!).
-      ACE_Service_Config::reactor ()->remove_handler 
+      ACE_Reactor::instance()->remove_handler 
 	(ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
 
       // Deregister this handler with the ACE_Reactor.
-      if (ACE_Service_Config::reactor ()->remove_handler 
+      if (ACE_Reactor::instance()->remove_handler 
 	  (this, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::ALL_EVENTS_MASK) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "handle = %d: %p\n", 
 			  this->get_handle (), "remove_handler"), -1);
@@ -675,7 +675,7 @@ Peer_Acceptor::handle_signal (int signum, siginfo_t *, ucontext_t *)
 
   if (signum != SIGPIPE)
     // Shut down the main event loop.
-    ACE_Service_Config::end_reactor_event_loop ();
+    ACE_Reactor::end_event_loop();
 
   return 0;
 }
@@ -756,10 +756,10 @@ Peer_Acceptor::init (int argc, char *argv[])
   // down gracefully via signals.
 
 #if defined (ACE_WIN32)
-  if (ACE_Service_Config::reactor ()->register_handler (SIGINT, this) == -1)
+  if (ACE_Reactor::instance()->register_handler (SIGINT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 #else
-  if (ACE_Service_Config::reactor ()->register_handler (sig_set, this) == -1)
+  if (ACE_Reactor::instance()->register_handler (sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 #endif
 

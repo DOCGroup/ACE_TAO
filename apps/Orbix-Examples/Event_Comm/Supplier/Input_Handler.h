@@ -23,7 +23,7 @@
 
 #include "ace/Service_Config.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 // Forward declaration.
 class Notifier_Handler;

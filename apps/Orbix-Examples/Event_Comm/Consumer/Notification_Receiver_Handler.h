@@ -25,7 +25,7 @@
 #include "ace/CORBA_Handler.h"
 #include "Event_Comm_i.h"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 class Notification_Receiver_Handler 
   // = TITLE

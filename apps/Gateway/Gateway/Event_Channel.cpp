@@ -49,7 +49,7 @@ ACE_Event_Channel::compute_performance_statistics (void)
 
   if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
     {
-      if (ACE_Service_Config::thr_mgr ()->suspend_all () == -1)
+      if (ACE_Thread_Manager::instance ()->suspend_all () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "suspend_all"), -1);
       ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads..."));
     }
@@ -99,7 +99,7 @@ ACE_Event_Channel::compute_performance_statistics (void)
 
   if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
     {
-      if (ACE_Service_Config::thr_mgr ()->resume_all () == -1)
+      if (ACE_Thread_Manager::instance ()->resume_all () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "resume_all"), -1);
       ACE_DEBUG ((LM_DEBUG, "(%t) resuming all threads..."));
     }
@@ -227,7 +227,7 @@ ACE_Event_Channel::complete_proxy_connection (Proxy_Handler *proxy_handler)
 					   sizeof (int)) == -1)
       ACE_ERROR ((LM_ERROR, "(%t) %p\n", "set_option"));
   
-  proxy_handler->thr_mgr (ACE_Service_Config::thr_mgr ());
+  proxy_handler->thr_mgr (ACE_Thread_Manager::instance ());
 
   // Our state is now "established."
   proxy_handler->state (Proxy_Handler::ESTABLISHED);
@@ -268,7 +268,7 @@ ACE_Event_Channel::reinitiate_proxy_connection (Proxy_Handler *proxy_handler)
 		  proxy_handler->id ()));
       
       // Reschedule ourselves to try and connect again.
-      if (ACE_Service_Config::reactor ()->schedule_timer 
+      if (ACE_Reactor::instance()->schedule_timer 
 	  (proxy_handler, 0, proxy_handler->timeout ()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", 
 			   "schedule_timer"), -1);
@@ -303,7 +303,7 @@ ACE_Event_Channel::initiate_connector (void)
 void
 ACE_Event_Channel::initiate_acceptor (void)
 {
-  if (ACE_Service_Config::reactor ()->register_handler 
+  if (ACE_Reactor::instance()->register_handler 
       (&this->acceptor_, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", 
 		"cannot register acceptor"));
@@ -317,7 +317,7 @@ ACE_Event_Channel::close (u_long)
 {
   if (this->options ().threading_strategy_ != ACE_Event_Channel_Options::REACTIVE)
     {
-      if (ACE_Service_Config::thr_mgr ()->suspend_all () == -1)
+      if (ACE_Thread_Manager::instance ()->suspend_all () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "suspend_all"), -1);
       ACE_DEBUG ((LM_DEBUG, "(%t) suspending all threads\n"));
     }

@@ -26,7 +26,7 @@
 #include "ace/SString.h"
 #include "Event_Comm.hh"
 
-#if defined (ACE_HAS_ORBIX)
+#if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 // Forward reference.
 class Notification_Receiver_Entry;

@@ -76,7 +76,7 @@ Consumer_Proxy::nonblk_put (ACE_Message_Block *event)
         ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enqueue_head"), -1);
       
       // Tell ACE_Reactor to call us back when we can send again.
-      else if (ACE_Service_Config::reactor ()->schedule_wakeup 
+      else if (ACE_Reactor::instance()->schedule_wakeup 
 	       (this, ACE_Event_Handler::WRITE_MASK) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "schedule_wakeup"), -1);
       return 0;
@@ -155,7 +155,7 @@ Consumer_Proxy::handle_output (ACE_HANDLE)
                          this->get_handle (), this->id ()));
 
 
-              if (ACE_Service_Config::reactor ()->cancel_wakeup 
+              if (ACE_Reactor::instance()->cancel_wakeup 
 		  (this, ACE_Event_Handler::WRITE_MASK) == -1)
                 ACE_ERROR ((LM_ERROR, "(%t) %p\n", "cancel_wakeup"));
             }
@@ -415,7 +415,7 @@ Thr_Consumer_Proxy::handle_input (ACE_HANDLE h)
   // Call down to the <Consumer_Proxy> to handle this first.
   this->Consumer_Proxy::handle_input (h);
 
-  ACE_Service_Config::reactor ()->remove_handler 
+  ACE_Reactor::instance()->remove_handler 
     (h, ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL);
 
   // Deactivate the queue while we try to get reconnected.
@@ -439,7 +439,7 @@ Thr_Consumer_Proxy::open (void *)
 
   // Register ourselves to receive input events (which indicate that
   // the Consumer has shut down unexpectedly).
-  else if (ACE_Service_Config::reactor ()->register_handler 
+  else if (ACE_Reactor::instance()->register_handler 
       (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
 
