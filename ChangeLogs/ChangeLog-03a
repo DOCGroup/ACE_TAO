@@ -3,14 +3,26 @@ Sun Jul 29 22:10:40 2001  Ossama Othman  <ossama@uci.edu>
 	* tests/Service_Config_DLL.cpp:
 	* tests/Service_Config_DLL.h:
 	* tests/Service_Config_DLL.dsp:
+	* tests/Service_Config_DLL_Export.h:
 	* tests/Service_Config_Test.conf:
-	* tests/Service_Config_Test_Export.h:
 
 	  New files associated with the existing Service_Config_Test.
 	  They are used when testing the reentrance/thread-safety of the
 	  Service Configurator, in addition to testing the Service
 	  Configurator's ability to handle nested processing of Service
 	  Configurator directives.
+
+	* tests/Service_Config_Test.cpp (run_test):
+
+	  Add arguments to the Service Configurator argument vector to
+	  make it process the newly added `Service_Config_Test.conf'
+	  file.
+
+	  (main):
+
+	  Make the ACE_Thread_Manager wait for all running threads before
+	  exiting the test.  Processing the `Service_Config_Test.conf'
+	  file causes some threads to be spawned.
 
 Sun Jul 29 19:19:20 2001  Ossama Othman  <ossama@uci.edu>
 
