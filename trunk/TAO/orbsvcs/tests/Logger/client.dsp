@@ -92,5 +92,13 @@ SOURCE=.\client.cpp
 
 SOURCE=.\client.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\client_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\client_i.h
+# End Source File
 # End Target
 # End Project

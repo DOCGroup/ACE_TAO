@@ -88,5 +88,13 @@ LINK32=link.exe
 
 SOURCE=.\server.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\server_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\server_i.h
+# End Source File
 # End Target
 # End Project

@@ -69,7 +69,8 @@ Trading_Service::init (int argc, char* argv[])
       CORBA::ORB_ptr orb = this->orb_manager_.orb ();
       
       // Create a Trader Object and set its Service Type Repository.
-      this->trader_ = TAO_Trader_Factory::create_trader (argc, argv);
+      this->trader_ = 
+	auto_ptr<TAO_Trader_Factory::TAO_TRADER> (TAO_Trader_Factory::create_trader (argc, argv));
       TAO_Support_Attributes_Impl& sup_attr = this->trader_->support_attributes ();
       TAO_Trading_Components_Impl& trd_comp = this->trader_->trading_components ();
       sup_attr.type_repos (this->type_repos_._this (TAO_TRY_ENV));
