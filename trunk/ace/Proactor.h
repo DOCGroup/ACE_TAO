@@ -435,10 +435,6 @@ private:
   // Deny access since member-wise won't work...
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Proactor.i"
-#endif /* __ACE_INLINE__ */
-
 #else /* NOT WIN32 or POSIX with AIO features. */
 class ACE_Export ACE_Proactor
 {

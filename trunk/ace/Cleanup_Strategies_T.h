@@ -129,10 +129,6 @@ public:
   // The dummy cleanup method.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Cleanup_Strategies_T.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Cleanup_Strategies_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

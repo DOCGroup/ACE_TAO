@@ -518,8 +518,6 @@ private:
   // delete it, else 0.
 };
 
-#include "ace/Acceptor.i"
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Acceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

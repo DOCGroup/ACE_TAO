@@ -169,10 +169,6 @@ private:
   // Bytes to be read with the <accept> call.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Asynch_Acceptor.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Asynch_Acceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

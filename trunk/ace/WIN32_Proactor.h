@@ -259,10 +259,6 @@ protected:
   // Time value requested by caller
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/WIN32_Proactor.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ACE_WIN32 */
 #include "ace/post.h"
 #endif /* ACE_PROACTOR_H */

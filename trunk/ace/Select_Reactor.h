@@ -65,9 +65,5 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> > &))
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Select_Reactor.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/post.h"
 #endif /* ACE_SELECT_REACTOR_H */
