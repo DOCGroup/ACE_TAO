@@ -12,6 +12,7 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(lib, Logging_Strategy, "$Id$")
 
@@ -231,7 +232,7 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
            ACE_TCHAR[MAXPATHLEN + 1]);
 
   // Get the temporary directory
-  if (ACE_Lib_Find::get_temp_dir 
+  if (ACE_Lib_Find::get_temp_dir
       (this->filename_,
        MAXPATHLEN - 7) == -1) // 7 for "logfile"
     {
@@ -256,7 +257,7 @@ ACE_Logging_Strategy::fini (void)
   delete [] this->logger_key_;
   delete [] this->program_name_;
 
-  if (this->reactor () && 
+  if (this->reactor () &&
       this->interval_ > 0 && this->max_size_ > 0)
     this->reactor ()->cancel_timer (this);
 
@@ -315,12 +316,12 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
           ofstream *output_file = 0;
           // Create a new ofstream to direct output to the file.
           if (wipeout_logfile_)
-            ACE_NEW_RETURN 
+            ACE_NEW_RETURN
               (output_file,
                ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_)),
                -1);
           else
-            ACE_NEW_RETURN 
+            ACE_NEW_RETURN
               (output_file,
                ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_),
                          ios::app | ios::out),
@@ -341,9 +342,9 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
             {
               if (this->reactor () == 0)
                 // Use singleton.
-                this->reactor (ACE_Reactor::instance ());  
+                this->reactor (ACE_Reactor::instance ());
 
-              this->reactor ()->schedule_timer 
+              this->reactor ()->schedule_timer
                 (this, 0,
                  ACE_Time_Value (this->interval_),
                  ACE_Time_Value (this->interval_));
@@ -382,7 +383,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
       ACE_OS::fclose (output_file);
       // We'll call msg_ostream() modifier later.
 #else
-      ofstream *output_file = 
+      ofstream *output_file =
         (ofstream *) this->log_msg_->msg_ostream ();
       output_file->close ();
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
@@ -467,7 +468,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
             }
           else
             {
-              if (fixed_number_ && count_>max_file_number_) 
+              if (fixed_number_ && count_>max_file_number_)
                 count_ = 1; // start over from 1
 
               ACE_OS::sprintf (backup,
@@ -509,7 +510,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
   return 0;
 }
 
-void 
+void
 ACE_Logging_Strategy::log_msg (ACE_Log_Msg *log_msg)
 {
   this->log_msg_  = log_msg;

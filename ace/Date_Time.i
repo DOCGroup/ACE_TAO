@@ -8,7 +8,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::update (const ACE_Time_Value& timevalue)
 {
 #if defined (ACE_HAS_WINCE)
@@ -41,7 +41,7 @@ ACE_Date_Time::update (const ACE_Time_Value& timevalue)
 #endif /* ACE_HAS_WINCE */
 }
 
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::update (void)
 {
   ACE_TRACE ("ACE_Date_Time::update");
@@ -49,14 +49,14 @@ ACE_Date_Time::update (void)
   update(ACE_OS::gettimeofday ());
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_Date_Time::ACE_Date_Time (void)
 {
   ACE_TRACE ("ACE_Date_Time::ACE_Date_Time");
   this->update ();
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_Date_Time::ACE_Date_Time (const ACE_Time_Value& timevalue)
 {
   ACE_TRACE ("ACE_Date_Time::ACE_Date_Time: timevalue");
@@ -64,7 +64,7 @@ ACE_Date_Time::ACE_Date_Time (const ACE_Time_Value& timevalue)
 }
 
 // Constructor with init values, no check for validy
-ASYS_INLINE
+ACE_INLINE
 ACE_Date_Time::ACE_Date_Time (long day,
                               long month,
                               long year,
@@ -88,7 +88,7 @@ ACE_Date_Time::ACE_Date_Time (long day,
 // set/get portions of ACE_Date_Time, no check for validy
 
 // get day
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Date_Time::day (void) const
 {
   ACE_TRACE ("ACE_Date_Time::day");
@@ -96,7 +96,7 @@ ACE_Date_Time::day (void) const
 }
 
 // set day
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::day (long day)
 {
   ACE_TRACE ("ACE_Date_Time::day");
@@ -104,7 +104,7 @@ ACE_Date_Time::day (long day)
 }
 
 // get month
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Date_Time::month (void) const
 {
   ACE_TRACE ("ACE_Date_Time::month");
@@ -112,7 +112,7 @@ ACE_Date_Time::month (void) const
 }
 
 // set month
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::month (long month)
 {
   ACE_TRACE ("ACE_Date_Time::month");
@@ -120,7 +120,7 @@ ACE_Date_Time::month (long month)
 }
 
 // get year
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Date_Time::year (void) const
 {
   ACE_TRACE ("ACE_Date_Time::year");
@@ -128,7 +128,7 @@ ACE_Date_Time::year (void) const
 }
 
 // set year
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::year (long year)
 {
   ACE_TRACE ("ACE_Date_Time::year");
@@ -136,7 +136,7 @@ ACE_Date_Time::year (long year)
 }
 
 // get hour
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Date_Time::hour (void) const
 {
   ACE_TRACE ("ACE_Date_Time::hour");
@@ -144,7 +144,7 @@ ACE_Date_Time::hour (void) const
 }
 
 // set hour
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::hour (long hour)
 {
   ACE_TRACE ("ACE_Date_Time::hour");
@@ -152,7 +152,7 @@ ACE_Date_Time::hour (long hour)
 }
 
 // get minute
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Date_Time::minute (void) const
 {
   ACE_TRACE ("ACE_Date_Time::minute");
@@ -160,7 +160,7 @@ ACE_Date_Time::minute (void) const
 }
 
 // set minute
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::minute (long minute)
 {
   ACE_TRACE ("ACE_Date_Time::minute");
@@ -168,7 +168,7 @@ ACE_Date_Time::minute (long minute)
 }
 
 // get second
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Date_Time::second (void) const
 {
   ACE_TRACE ("ACE_Date_Time::second");
@@ -176,7 +176,7 @@ ACE_Date_Time::second (void) const
 }
 
 // set second
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::second (long second)
 {
   ACE_TRACE ("ACE_Date_Time::second");
@@ -184,7 +184,7 @@ ACE_Date_Time::second (long second)
 }
 
 // get microsec
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Date_Time::microsec (void) const
 {
   ACE_TRACE ("ACE_Date_Time::microsec");
@@ -192,7 +192,7 @@ ACE_Date_Time::microsec (void) const
 }
 
 // set microsec
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::microsec (long microsec)
 {
   ACE_TRACE ("ACE_Date_Time::microsec");
@@ -200,7 +200,7 @@ ACE_Date_Time::microsec (long microsec)
 }
 
 // get wday
-ASYS_INLINE long
+ACE_INLINE long
 ACE_Date_Time::weekday (void) const
 {
   ACE_TRACE ("ACE_Date_Time::weekday");
@@ -208,7 +208,7 @@ ACE_Date_Time::weekday (void) const
 }
 
 // set wday
-ASYS_INLINE void
+ACE_INLINE void
 ACE_Date_Time::weekday (long wday)
 {
   ACE_TRACE ("ACE_Date_Time::weekday");

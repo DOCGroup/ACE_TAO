@@ -30,10 +30,6 @@
 #include "ace/Condition_T.h"
 #include "ace/Synch_Traits.h"
 
-#if defined (__ACE_INLINE__)
-#include "ace/Synch_T.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Synch_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

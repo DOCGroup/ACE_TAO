@@ -5,7 +5,7 @@
 
 #include "ace/OS_NS_fcntl.h"
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_Flag_Manip::get_flags (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Flag_Manip::get_flags");

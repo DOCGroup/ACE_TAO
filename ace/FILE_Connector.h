@@ -16,6 +16,7 @@
 
 #include "ace/FILE_IO.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/os_fcntl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +32,7 @@
  * the end of the file initially during open, but it is not
  * re-positioned at the end prior to each write, as specified by
  * POSIX.  This is generally good enough for typical situations, but
- * it is ``not quite right'' in its semantics.  
+ * it is ``not quite right'' in its semantics.
  */
 class ACE_Export ACE_FILE_Connector
 {
@@ -102,9 +103,9 @@ public:
   typedef ACE_FILE_IO PEER_STREAM;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/FILE_Connector.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_FILE_CONNECTOR_H */

@@ -1,4 +1,3 @@
-// LSOCK_Connector.cpp
 // $Id$
 
 #include "ace/LSOCK_Connector.h"
@@ -8,9 +7,9 @@
 
 ACE_RCSID(ace, LSOCK_Connector, "$Id$")
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/LSOCK_Connector.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Connector)
 
@@ -32,8 +31,8 @@ ACE_LSOCK_Connector::ACE_LSOCK_Connector (void)
 }
 
 // Establish a connection.
-ACE_LSOCK_Connector::ACE_LSOCK_Connector (ACE_LSOCK_Stream &new_stream, 
-					  const ACE_UNIX_Addr &remote_sap, 
+ACE_LSOCK_Connector::ACE_LSOCK_Connector (ACE_LSOCK_Stream &new_stream,
+					  const ACE_UNIX_Addr &remote_sap,
 					  ACE_Time_Value *timeout,
 					  const ACE_Addr &local_sap,
 					  int reuse_addr,

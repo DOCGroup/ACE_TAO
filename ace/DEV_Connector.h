@@ -16,6 +16,7 @@
 
 #include "ace/DEV_IO.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/os_fcntl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -96,9 +97,9 @@ public:
   typedef ACE_DEV_IO   PEER_STREAM;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/DEV_Connector.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_DEV_CONNECTOR_H */

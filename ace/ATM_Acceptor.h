@@ -23,7 +23,6 @@
 
 #if defined (ACE_HAS_ATM)
 
-#include "ace/Time_Value.h"
 #include "ace/ATM_Stream.h"
 #include "ace/ATM_Params.h"
 #include "ace/ATM_QoS.h"
@@ -39,6 +38,9 @@ typedef ACE_SOCK_Acceptor ATM_Acceptor;
 #include "ace/TLI_Acceptor.h"
 typedef ACE_TLI_Acceptor ATM_Acceptor;
 #endif // ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM
+
+// Forward declarations.
+class ACE_Time_Value
 
 /**
  * @class ACE_ATM_Acceptor

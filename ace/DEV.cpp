@@ -4,11 +4,11 @@
 
 #include "ace/DEV.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/DEV.i"
-#endif
-
 #include "ace/OS_NS_unistd.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/DEV.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, DEV, "$Id$")
 
@@ -22,7 +22,7 @@ ACE_DEV::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-// This is the do-nothing constructor. 
+// This is the do-nothing constructor.
 
 ACE_DEV::ACE_DEV (void)
 {

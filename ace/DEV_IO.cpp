@@ -4,9 +4,9 @@
 #include "ace/DEV_IO.h"
 #include "ace/Log_Msg.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/DEV_IO.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, DEV_IO, "$Id$")
 

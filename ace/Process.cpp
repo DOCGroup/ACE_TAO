@@ -14,9 +14,10 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Time_Value.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (ace, Process, "$Id$")
-
 
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.

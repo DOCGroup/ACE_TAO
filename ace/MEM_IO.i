@@ -5,20 +5,20 @@
 
 #include "ace/OS_NS_string.h"
 
-ASYS_INLINE
+ACE_INLINE
 ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
 {
 }
 
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
-ASYS_INLINE
+ACE_INLINE
 ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (void)
   : mq_ (0),
     malloc_ (0)
 {
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_MT_MEM_IO::ACE_MT_MEM_IO ()
 {
   this->recv_channel_.sema_ = 0;
@@ -27,14 +27,14 @@ ACE_MT_MEM_IO::ACE_MT_MEM_IO ()
   this->send_channel_.lock_ = 0;
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (MQ_Struct *mq)
   : mq_ (mq),
     malloc_ (0)
 {
 }
 
-ASYS_INLINE int
+ACE_INLINE int
 ACE_MT_MEM_IO::Simple_Queue::init (MQ_Struct *mq,
                                    ACE_MEM_SAP::MALLOC_TYPE *malloc)
 {
@@ -47,7 +47,7 @@ ACE_MT_MEM_IO::Simple_Queue::init (MQ_Struct *mq,
 }
 #endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_Reactive_MEM_IO::get_buf_len (const off_t off, ACE_MEM_SAP_Node *&buf)
 {
 #if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
@@ -74,7 +74,7 @@ ACE_Reactive_MEM_IO::get_buf_len (const off_t off, ACE_MEM_SAP_Node *&buf)
 }
 
 // Send an n byte message to the connected socket.
-ASYS_INLINE
+ACE_INLINE
 ACE_MEM_IO::ACE_MEM_IO (void)
   : deliver_strategy_ (0),
     recv_buffer_ (0),
@@ -84,7 +84,7 @@ ACE_MEM_IO::ACE_MEM_IO (void)
   // ACE_TRACE ("ACE_MEM_IO::ACE_MEM_IO");
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::fetch_recv_buf");
@@ -112,13 +112,13 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
   return retv;
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_MEM_IO::~ACE_MEM_IO (void)
 {
   delete this->deliver_strategy_;
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf,
                   size_t len,
                   int flags,
@@ -142,7 +142,7 @@ ACE_MEM_IO::send (const void *buf,
                                             timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf,
                   size_t len,
                   int flags,
@@ -177,7 +177,7 @@ ACE_MEM_IO::recv (void *buf,
   return count;
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf, size_t n, int flags)
 {
   ACE_TRACE ("ACE_MEM_IO::send");
@@ -186,7 +186,7 @@ ACE_MEM_IO::send (const void *buf, size_t n, int flags)
 
 // Recv an n byte message from the connected socket.
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf, size_t n, int flags)
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
@@ -195,7 +195,7 @@ ACE_MEM_IO::recv (void *buf, size_t n, int flags)
 
 // Send an n byte message to the connected socket.
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf, size_t n)
 {
   ACE_TRACE ("ACE_MEM_IO::send");
@@ -204,7 +204,7 @@ ACE_MEM_IO::send (const void *buf, size_t n)
 
 // Recv an n byte message from the connected socket.
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf, size_t n)
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
@@ -212,7 +212,7 @@ ACE_MEM_IO::recv (void *buf, size_t n)
   return this->recv (buf, n, 0);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout)
@@ -221,7 +221,7 @@ ACE_MEM_IO::recv (void *buf,
   return this->recv (buf, len, 0, timeout);
 }
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout)

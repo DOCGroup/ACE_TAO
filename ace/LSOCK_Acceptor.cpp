@@ -1,10 +1,12 @@
-// LSOCK_Acceptor.cpp
 // $Id$
 
 #include "ace/LSOCK_Acceptor.h"
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_socket.h"
 
 ACE_RCSID(ace, LSOCK_Acceptor, "$Id$")
 
@@ -12,7 +14,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Acceptor)
 
 // Return the local endpoint address.
 
-int 
+int
 ACE_LSOCK_Acceptor::get_local_addr (ACE_Addr &a) const
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::get_local_addr");
@@ -44,24 +46,24 @@ ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (void)
 }
 
 int
-ACE_LSOCK_Acceptor::open (const ACE_Addr &remote_sap, 
-			  int reuse_addr, 
-			  int protocol_family, 
-			  int backlog, 
+ACE_LSOCK_Acceptor::open (const ACE_Addr &remote_sap,
+			  int reuse_addr,
+			  int protocol_family,
+			  int backlog,
 			  int protocol)
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::open");
   this->local_addr_ = *((ACE_UNIX_Addr *) &remote_sap); // This is a gross hack...
-  return ACE_SOCK_Acceptor::open (remote_sap, reuse_addr, 
+  return ACE_SOCK_Acceptor::open (remote_sap, reuse_addr,
 				  protocol_family, backlog, protocol);
 }
 
 // General purpose routine for performing server ACE_SOCK creation.
 
-ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (const ACE_Addr &remote_sap, 
-					int reuse_addr, 
-					int protocol_family, 
-					int backlog, 
+ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (const ACE_Addr &remote_sap,
+					int reuse_addr,
+					int protocol_family,
+					int backlog,
 					int protocol)
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor");
@@ -78,7 +80,7 @@ ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (const ACE_Addr &remote_sap,
 
 int
 ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
-			    ACE_Addr *remote_addr, 
+			    ACE_Addr *remote_addr,
 			    ACE_Time_Value *timeout,
 			    int restart,
                             int reset_new_handle) const
@@ -105,14 +107,14 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
 	new_stream.set_handle (ACE_OS::accept (this->get_handle (),
 					       addr,
 					       &len));
-      while (new_stream.get_handle () == ACE_INVALID_HANDLE 
+      while (new_stream.get_handle () == ACE_INVALID_HANDLE
 	     && restart != 0
 	     && errno == EINTR
 	     && timeout == 0);
 
       // Reset the size of the addr, which is only necessary for UNIX
       // domain sockets.
-      if (new_stream.get_handle () != ACE_INVALID_HANDLE 
+      if (new_stream.get_handle () != ACE_INVALID_HANDLE
 	  && remote_addr != 0)
 	remote_addr->set_size (len);
     }
@@ -130,7 +132,7 @@ ACE_LSOCK_Acceptor::remove (void)
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::remove");
   int result = this->close ();
-  return ACE_OS::unlink (this->local_addr_.get_path_name ()) == -1 
+  return ACE_OS::unlink (this->local_addr_.get_path_name ()) == -1
     || result == -1 ? -1 : 0;
 }
 

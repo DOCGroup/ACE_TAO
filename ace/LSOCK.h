@@ -56,7 +56,7 @@ protected:
   /// Default constructor.
   ACE_LSOCK (void);
 
-  /// Initialize based on <handle>
+  /// Initialize based on @a handle.
   ACE_LSOCK (ACE_HANDLE handle);
 
   /// Get handle.
@@ -70,9 +70,9 @@ private:
   ACE_HANDLE aux_handle_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/LSOCK.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #include /**/ "ace/post.h"

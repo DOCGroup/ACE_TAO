@@ -60,10 +60,6 @@ private:
   ACE_LOCK lock_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Test_and_Set.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Test_and_Set.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

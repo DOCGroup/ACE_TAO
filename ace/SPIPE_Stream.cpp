@@ -2,10 +2,11 @@
 // $Id$
 
 #include "ace/SPIPE_Stream.h"
+#include "ace/OS_Memory.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/SPIPE_Stream.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SPIPE_Stream, "$Id$")
 

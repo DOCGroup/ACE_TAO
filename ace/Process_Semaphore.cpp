@@ -2,6 +2,7 @@
 
 #include "ace/Process_Semaphore.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process_Semaphore.inl"

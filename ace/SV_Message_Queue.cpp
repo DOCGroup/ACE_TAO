@@ -1,12 +1,11 @@
-// SV_Message_Queue.cpp
 // $Id$
 
 #include "ace/SV_Message_Queue.h"
 #include "ace/Log_Msg.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/SV_Message_Queue.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SV_Message_Queue, "$Id$")
 

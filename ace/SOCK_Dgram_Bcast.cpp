@@ -7,10 +7,11 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/OS_NS_netdb.h"
+#include "ace/OS_Memory.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/SOCK_Dgram_Bcast.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_Dgram_Bcast, "$Id$")
 

@@ -1091,7 +1091,6 @@ INLINE_FILES = \
   DEV_IO.i \
   Dirent.i \
   Dynamic.i \
-  Dynamic_Service_Base.i \
   Dynamic_Service.i \
   Env_Value_T.i \
   Event_Handler.i \
@@ -1106,25 +1105,21 @@ INLINE_FILES = \
   FILE.i \
   FILE_IO.i \
   Flag_Manip.i \
-  FlReactor.i \
   Free_List.i \
   Functor.i \
   Functor_String.inl \
   Functor_T.i \
   Get_Opt.i \
   Handle_Gobbler.i \
-  Handle_Ops.i \
   Handle_Set.i \
   Hash_Cache_Map_Manager_T.i \
   Hash_Map_Manager_T.i \
   Hash_Map_With_Allocator_T.i \
   High_Res_Timer.i \
   INET_Addr.i \
-  Init_ACE.i \
   IO_SAP.i \
   IOStream_T.i \
   IPC_SAP.i \
-  Lib_Find.i \
   Local_Tokens.i \
   Log_Record.i \
   LSOCK_CODgram.i \
@@ -1150,7 +1145,6 @@ INLINE_FILES = \
   Message_Block_T.i \
   Message_Queue.i \
   Message_Queue_T.i \
-  Metrics_Cache.i \
   Metrics_Cache_T.i \
   Module.i \
   Msg_WFMO_Reactor.i \
@@ -1165,7 +1159,6 @@ INLINE_FILES = \
   Parse_Node.i \
   PI_Malloc.i \
   Pipe.i \
-  POSIX_Asynch_IO.i \
   POSIX_CB_Proactor.i \
   POSIX_Proactor.i \
   Proactor.i \
@@ -1217,13 +1210,10 @@ INLINE_FILES = \
   SV_Semaphore_Complex.i \
   SV_Semaphore_Simple.i \
   SV_Shared_Memory.i \
-  Synch.i \
   Synch_Options.i \
-  Synch_T.i \
   Task_Ex_T.i \
   Task.i \
   Task_T.i \
-  Test_and_Set.i \
   Thread.i \
   Thread_Manager.i \
   Timeprobe.i \
@@ -1256,7 +1246,6 @@ INLINE_FILES = \
   CDR_Base.inl \
   Cleanup.inl \
   Codeset_Registry.inl \
-  Condition_Recursive_Thread_Mutex.inl \
   Condition_Thread_Mutex.inl \
   Condition_T.inl \
   Dev_Poll_Reactor.inl \
@@ -1264,7 +1253,6 @@ INLINE_FILES = \
   Event.inl \
   File_Lock.inl \
   Framework_Component.inl \
-  Framework_Component_T.inl \
   Guard_T.inl \
   Hashable.inl \
   Intrusive_List.inl \
@@ -1274,8 +1262,6 @@ INLINE_FILES = \
   Manual_Event.inl \
   Mutex.inl \
   Notification_Strategy.inl \
-  Object_Manager_Base.inl \
-  OS_Dirent.inl \
   OS_Errno.inl \
   OS_Log_Msg_Attributes.inl \
   OS_Memory.inl \
@@ -1312,7 +1298,6 @@ INLINE_FILES = \
   OS_NS_unistd.inl \
   OS_NS_wchar.inl \
   OS_String.inl \
-  OS_Thread_Adapter.inl \
   OS_TLI.inl \
   Process_Mutex.inl \
   Process_Semaphore.inl \

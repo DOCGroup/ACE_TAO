@@ -1,13 +1,14 @@
-// SPIPE_Connector.cpp
 // $Id$
 
 #include "ace/SPIPE_Connector.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/SPIPE_Connector.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SPIPE_Connector, "$Id$")
 

@@ -3,12 +3,12 @@
 
 #include "ace/OS_NS_sys_socket.h"
 
-ASYS_INLINE
+ACE_INLINE
 ACE_Bcast_Node::~ACE_Bcast_Node (void)
 {
 }
 
-ASYS_INLINE
+ACE_INLINE
 ACE_SOCK_Dgram_Bcast::~ACE_SOCK_Dgram_Bcast (void)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::~ACE_SOCK_Dgram_Bcast");
@@ -17,7 +17,7 @@ ACE_SOCK_Dgram_Bcast::~ACE_SOCK_Dgram_Bcast (void)
 // Broadcast an N byte datagram to ADDR (note that addr must be
 // preassigned to the broadcast address of the subnet...)
 
-ASYS_INLINE ssize_t
+ACE_INLINE ssize_t
 ACE_SOCK_Dgram_Bcast::send (const void *buf,
 			    size_t n,
 			    const ACE_Addr &addr,

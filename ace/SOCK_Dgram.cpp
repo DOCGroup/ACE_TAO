@@ -5,6 +5,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_Memory.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/os_include/net/os_if.h"
 

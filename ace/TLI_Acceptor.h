@@ -21,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
 #include "ace/TLI_Stream.h"
 #include "ace/Default_Constants.h"
 
@@ -29,6 +28,7 @@
 
 // Forward reference...
 class ACE_TLI_Request_Queue;
+class ACE_Time_Value
 
 /**
  * @class ACE_TLI_Acceptor

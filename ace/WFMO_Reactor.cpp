@@ -1271,12 +1271,6 @@ ACE_WFMO_Reactor::timer_queue (ACE_Timer_Queue *tq)
 }
 
 int
-ACE_WFMO_Reactor::set_timer_queue (ACE_Timer_Queue *tq)
-{
-  return this->timer_queue (tq);
-}
-
-int
 ACE_WFMO_Reactor::close (void)
 {
   // This GUARD is necessary since we are updating shared state.

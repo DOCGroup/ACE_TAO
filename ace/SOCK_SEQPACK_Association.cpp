@@ -2,13 +2,13 @@
 
 #include "ace/SOCK_SEQPACK_Association.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_SEQPACK_Association.i"
-#endif
-
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/SOCK_SEQPACK_Association.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_SEQPACK_Association, "$Id$")
 
@@ -44,33 +44,33 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::get_local_addrs");
 
 #if defined (ACE_HAS_LKSCTP)
-  /* 
+  /*
     The size of ACE_INET_Addr must be large enough to hold the number of
     local addresses on the machine.  If the array is too small, the function
-    will only return the number of addresses that will fit.  If the array is 
+    will only return the number of addresses that will fit.  If the array is
     too large, the 'size' parameter will be modified to indicate the number
-    of addrs.  
+    of addrs.
 
     We will call sctp_getladdrs() which accepts 3 parameters
     1. a socket fd
-    2. a sctp association_id which will be ignored since we are using 
-       tcp sockets    
+    2. a sctp association_id which will be ignored since we are using
+       tcp sockets
     3. a pointer to sockaddr
 
     lksctp/draft will allocate memory and we are responsible for freeing
-    it by calling sctp_freeladdrs().  
+    it by calling sctp_freeladdrs().
   */
 
   sockaddr_in *si = 0;
   sockaddr *laddrs = 0;
   int err = 0;
   size_t len = 0;
- 
+
   err = sctp_getladdrs(this->get_handle(), 0, &laddrs);
   if (err > 0)
   {
     len = err;
-    // check to see if we have more addresses than we have 
+    // check to see if we have more addresses than we have
     // space in our ACE_INET_Addr array
     if (len > size)
     {
@@ -78,7 +78,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
       // few that fit
       len = size;
     }
-      
+
     for (size_t i = 0; i < len; i++)
     {
       // first we cast the sockaddr to sockaddr_in
@@ -176,15 +176,15 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
 }
 
 
-int 
+int
 ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &size) const
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::get_remote_addrs");
 #if defined (ACE_HAS_LKSCTP)
   /*
     The size of ACE_INET_Addr must be large enough to hold the number of
-    remotes addresses in the association.  If the array is too small, the 
-    function will only return the number of addresses that will fit.  If the 
+    remotes addresses in the association.  If the array is too small, the
+    function will only return the number of addresses that will fit.  If the
     array is too large, the 'size' parameter will be modified to indicate
     the number of addrs.
 

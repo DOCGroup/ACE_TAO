@@ -8,6 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, Log_Msg_NT_Event_Log, "$Id$")
 

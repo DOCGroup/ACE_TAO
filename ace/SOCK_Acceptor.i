@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// SOCK_Acceptor.i
-
 ACE_INLINE
 ACE_SOCK_Acceptor::~ACE_SOCK_Acceptor (void)
 {

@@ -81,9 +81,9 @@ private:
   ACE_HANDLE handles_[2];
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/Pipe.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

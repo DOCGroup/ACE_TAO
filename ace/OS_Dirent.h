@@ -28,13 +28,5 @@
 
 #include "ace/OS_NS_dirent.h"
 
-# if defined (ACE_HAS_INLINED_OSCALLS)
-#   if defined (ACE_INLINE)
-#     undef ACE_INLINE
-#   endif /* ACE_INLINE */
-#   define ACE_INLINE inline
-#   include "ace/OS_Dirent.inl"
-# endif /* ACE_HAS_INLINED_OSCALLS */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_OS_DIRENT_H */

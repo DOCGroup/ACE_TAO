@@ -36,6 +36,9 @@
 #  include "ace/Mutex.h"
 #endif /* ACE_HAS_SYSV_IPC && !ACE_USES_MUTEX_FOR_PROCESS_MUTEX */
 
+// Forward declarations
+class ACE_Time_Value;
+
 /**
  * @class ACE_Process_Mutex
  *
@@ -57,12 +60,12 @@
  * Also, if you require the ability to do a timed @c acquire(), you must
  * set @c ACE_USES_MUTEX_FOR_PROCESS_MUTEX, as timed acquire does not
  * work with System V semaphores.
- * @attention Currently there is also the operational difference between 
- * pthreads and semaphores based @c. For semaphore base @c the semaphore 
+ * @attention Currently there is also the operational difference between
+ * pthreads and semaphores based @c. For semaphore base @c the semaphore
  * is destroyed after the last instance of @c in OS. In contrary, pthread based
- * @c is destroyed when the owner, namely the process which created the 
- * first instance of @c destroys the mutex. For protable applications it is better 
- * to always ensure that the owner of the mutex destroys it after the 
+ * @c is destroyed when the owner, namely the process which created the
+ * first instance of @c destroys the mutex. For protable applications it is better
+ * to always ensure that the owner of the mutex destroys it after the
  * other processes.
  */
 class ACE_Export ACE_Process_Mutex

@@ -18,6 +18,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
 # include "ace/Object_Manager_Base.h"

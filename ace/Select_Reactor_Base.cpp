@@ -8,6 +8,7 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+#include "ace/OS_NS_fcntl.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Select_Reactor_Base.i"

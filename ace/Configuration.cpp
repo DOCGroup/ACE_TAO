@@ -7,6 +7,10 @@
 // ACE_Configuration. They're deprecated at ACE 5.2.
 #include "ace/Configuration_Import_Export.h"
 
+#if !defined (ACE_LACKS_ACCESS)
+#  include "ace/OS_NS_unistd.h"
+#endif /* ACE_LACKS_ACCESS */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #if defined (ACE_HAS_THREADS)

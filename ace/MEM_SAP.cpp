@@ -4,9 +4,9 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/MEM_SAP.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, MEM_SAP, "$Id$")
 

@@ -2,14 +2,14 @@
 
 #include "ace/Flag_Manip.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Flag_Manip.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_LACKS_FCNTL)
 #  include "ace/OS_NS_stropts.h"
 #  include "ace/OS_NS_errno.h"
 #endif /* ACE_WIN32 || VXWORKS || ACE_LACKS_FCNTL */
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Flag_Manip.i"
+#endif /* __ACE_INLINE__ */
 
 #if defined (CYGWIN32)
 #  include "ace/os_include/os_termios.h"

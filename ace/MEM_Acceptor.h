@@ -176,9 +176,9 @@ private:
   ACE_MEM_IO::Signal_Strategy preferred_strategy_;
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if defined (__ACE_INLINE__)
 #include "ace/MEM_Acceptor.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 

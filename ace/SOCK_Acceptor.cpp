@@ -5,6 +5,8 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/os_include/os_fcntl.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SOCK_Acceptor.i"

@@ -1,15 +1,16 @@
-// SOCK_SEQPACK_Acceptor.cpp
 // $Id$
 
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_SEQPACK_Acceptor.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/os_include/os_fcntl.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/SOCK_SEQPACK_Acceptor.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_SEQPACK_Acceptor, "SOCK_SEQPACK_Acceptor.cpp,v 4.30 2002/03/08 23:18:09 spark Exp")
 

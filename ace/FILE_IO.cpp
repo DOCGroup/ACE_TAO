@@ -3,12 +3,13 @@
 
 #include "ace/FILE_IO.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FILE_IO.i"
-#endif
-
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_Memory.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/FILE_IO.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, FILE_IO, "$Id$")
 

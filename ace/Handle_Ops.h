@@ -45,10 +45,6 @@ public:
                                        LPSECURITY_ATTRIBUTES sa = 0);
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Handle_Ops.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #include /**/ "ace/post.h"
 
 #endif /* ACE_HANDLE_OPS_H */
