@@ -120,15 +120,11 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (size_t size)
 
   // Copy over the currently active elements.
   for (i = 0; i < this->cur_size_; i++)
-    {
-      temp[i] = this->search_structure_[i]; // Structure assignment.
-    }
-
-  this->total_size_ = size;
+      new (&(temp[i])) ACE_Map_Entry<EXT_ID, INT_ID> (this->search_structure_[i]); // Structure assignment.
 
   // Mark the newly allocated elements as being "free".
 
-  for (i = this->cur_size_; i < this->total_size_; i++)
+  for (i = this->cur_size_; i < size; i++)
     {
       // Call the constructor for each element in the array.  Note
       // that this requires a default constructor for <EXT_ID> and
@@ -137,8 +133,11 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (size_t size)
       temp[i].is_free_ = 1;
     }
 
+  // Remove/free old elements, update the new totoal size.
   this->free_search_structure ();
+  this->total_size_ = size;
 
+  // Start using new elements.
   this->search_structure_ = temp;
   return 0;
 }
@@ -766,7 +765,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
@@ -813,7 +812,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
