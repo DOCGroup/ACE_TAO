@@ -153,7 +153,8 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       // Create the repository entry.
 
-      CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
+      CORBA::Container_ptr current_scope =
+        CORBA::Container::_nil ();
 
       if (be_global->ifr_scopes ().top (current_scope) == 0)
         {

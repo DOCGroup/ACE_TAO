@@ -186,7 +186,8 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
             }
           else
             {
-              CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
+              CORBA::Container_ptr current_scope =
+                CORBA::Container::_nil ();
 
               if (be_global->ifr_scopes ().top (current_scope) != 0)
                 {

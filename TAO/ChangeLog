@@ -4,6 +4,165 @@ Tue Jun 17 09:59:56 2003  Chad Elliott  <elliott_c@ociweb.com>
 
           Allow help requests to get down to the directives.
 
+Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_component_fwd.cpp:
+        * TAO_IDL/ast/ast_concrete_type.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_enum_val.cpp:
+        * TAO_IDL/ast/ast_eventtype.cpp:
+        * TAO_IDL/ast/ast_eventtype_fwd.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_structure_fwd.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_union_fwd.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/ast/ast_valuetype_fwd.cpp:
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_component_fwd.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_enum_val.cpp:
+        * TAO_IDL/be/be_eventtype.cpp:
+        * TAO_IDL/be/be_eventtype_fwd.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_factory.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_module.cpp:
+        * TAO_IDL/be/be_native.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_root.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_structure_fwd.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_union_fwd.cpp:
+        * TAO_IDL/be/be_union_label.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_valuetype_fwd.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_constant.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+        * TAO_IDL/be_include/be_eventtype.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_init_arglist_ch.h:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_eventtype.h:
+        * TAO_IDL/include/ast_factory.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_valuetype.h:
+        * tao/IFR_Client/IFR_Components.pidl:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+
+	  Various changes:
+
+	  - Added support for exceptions in valuetype factories.
+
+	  - Changed the order of constructor calls in IDL compiler
+	    source files, to eliminate warnings from gcc 3.3.
+
+	  - Fixed bug in code generation for impl classes.
+
+	  - Fixed bug in code generation for typedef'd string
+	    constant when it appears inside an interface or
+	    valuetype.
+
+	  - Fixed bug in typecode generation for recursive types
+	    using a typdef'd sequence and forward struct/union
+	    declaration.
+
+	  - Added infrastructure to store and pass a default
+	    value of 0 for the 'custom' flag applied to
+	    valuetypes, even though we don't support it yet.
+
+        * tests/OBV/Factory/FactoryC_impl.cpp:
+        * tests/OBV/Factory/FactoryC_impl.h:
+
+	   Added throw spec to test code, now that factoy
+	   operations for valuetypes support exceptions.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.i
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.i
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+
+	  Added more support for IDL3 extensions in the IFR and
+	  IFR loader. None of this is tested yet.
+
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.cpp:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.inl:
+        * tao/Seq_Out_T.inl:
+        * tao/TAO.dsp:
+        * tao/VarOut_T.inl:
+
+	  Changed the position of 'const' qualifiers, which causes
+	  no change in semantics, but makes it easier for MSVC to
+	  deal with.
+
 Tue Jun 17 09:20:18 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:

@@ -262,7 +262,8 @@ be_generator::create_valuetype (UTL_ScopedName *n,
                                 long n_supports,
                                 AST_Interface *supports_concrete,
                                 idl_bool abstract,
-                                idl_bool truncatable)
+                                idl_bool truncatable,
+                                idl_bool custom)
 {
   be_valuetype *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -276,7 +277,8 @@ be_generator::create_valuetype (UTL_ScopedName *n,
                                 n_supports,
                                 supports_concrete,
                                 abstract,
-                                truncatable),
+                                truncatable,
+                                custom),
                   0);
 
   return retval;
@@ -296,6 +298,7 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n,
                                                  0,
                                                  0,
                                                  abstract,
+                                                 0,
                                                  0);
 
   be_valuetype_fwd *retval = 0;
@@ -318,7 +321,8 @@ be_generator::create_eventtype (UTL_ScopedName *n,
                                 long n_supports,
                                 AST_Interface *supports_concrete,
                                 idl_bool abstract,
-                                idl_bool truncatable)
+                                idl_bool truncatable,
+                                idl_bool custom)
 {
   be_eventtype *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -332,7 +336,8 @@ be_generator::create_eventtype (UTL_ScopedName *n,
                                 n_supports,
                                 supports_concrete,
                                 abstract,
-                                truncatable),
+                                truncatable,
+                                custom),
                   0);
 
   return retval;
@@ -352,6 +357,7 @@ be_generator::create_eventtype_fwd (UTL_ScopedName *n,
                                                  0,
                                                  0,
                                                  abstract,
+                                                 0,
                                                  0);
 
   be_eventtype_fwd *retval = 0;

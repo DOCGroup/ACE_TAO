@@ -14,7 +14,12 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Home::AST_Home (void)
-  : pd_base_home (0),
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    pd_base_home (0),
     pd_managed_component (0),
     pd_primary_key (0)
 {
@@ -28,20 +33,20 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                     long n_supports,
                     AST_Interface **supports_flat,
                     long n_supports_flat)
-  : AST_Interface (n,
+  : COMMON_Base (I_FALSE,
+                 I_FALSE),
+    AST_Decl (AST_Decl::NT_home,
+              n),
+    AST_Type (AST_Decl::NT_home,
+              n),
+    UTL_Scope (AST_Decl::NT_home),
+    AST_Interface (n,
                    supports,
                    n_supports,
                    supports_flat,
                    n_supports_flat,
                    I_FALSE,
                    I_FALSE),
-    AST_Type (AST_Decl::NT_home,
-              n),
-    AST_Decl (AST_Decl::NT_home,
-              n),
-    UTL_Scope (AST_Decl::NT_home),
-    COMMON_Base (I_FALSE,
-                 I_FALSE),
     pd_base_home (base_home),
     pd_managed_component (managed_component),
     pd_primary_key (primary_key)
@@ -85,35 +90,6 @@ AST_Home::finders (void)
 void
 AST_Home::destroy (void)
 {
-  // Can't call AST_Interface->destroy() because all the 
-  // home's decls are also added to the explicit interface.
-
-  // Also, the factory and finder queues contain operation
-  // nodes which are simply reused by adding a return type
-  // and/or an argument.
-/*
-  AST_Operation **tmp = 0;
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> i (this->pd_factories);
-       ! i.done ();
-       i.advance ())
-    {
-      i.next (tmp);
-      (*tmp)->destroy ();
-      delete (*tmp);
-      (*tmp) = 0;
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<AST_Operation *> j (this->pd_finders);
-       ! j.done ();
-       j.advance ())
-    {
-      j.next (tmp);
-      (*tmp)->destroy ();
-      delete (*tmp);
-      (*tmp) = 0;
-    }
-*/
 }
 
 void

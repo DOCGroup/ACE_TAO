@@ -78,8 +78,12 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_String::AST_String (void)
- : pd_max_size (0),
-   pd_width (sizeof (char))
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    pd_max_size (0),
+    pd_width (sizeof (char))
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
@@ -89,11 +93,16 @@ AST_String::AST_String (AST_Decl::NodeType nt,
                         UTL_ScopedName *n,
                         AST_Expression *ms,
                         long wide)
- : AST_Decl (nt,
-		         n,
-             I_TRUE),
-   pd_max_size (ms),
-   pd_width (wide)
+  : COMMON_Base (),
+    AST_Decl (nt,
+		          n,
+              I_TRUE),
+    AST_Type (nt,
+		          n),
+    AST_ConcreteType (nt,
+		                  n),
+    pd_max_size (ms),
+    pd_width (wide)
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);

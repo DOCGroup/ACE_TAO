@@ -708,7 +708,8 @@ value_concrete_decl :
                     $1->n_supports (),
                     $1->supports_concrete (),
                     I_FALSE,
-                    $1->truncatable ()
+                    $1->truncatable (),
+                    I_FALSE
                   );
               i = AST_Interface::narrow_from_decl (v);
               AST_Interface::fwd_redefinition_helper (i, 
@@ -770,6 +771,7 @@ value_abs_decl :
                     $2->n_supports (),
                     $2->supports_concrete (),
                     I_TRUE,
+                    I_FALSE,
                     I_FALSE
                   );
               i = AST_Interface::narrow_from_decl (v);
@@ -3675,9 +3677,20 @@ init_decl
         init_parameter_list
         {
 //      init_parameter_list
-        /* TODO: replace parameter_list with rule that accepts only IN args */
-
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
+        }
+        opt_raises
+        {
+//      opt_raises
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
+
+          if ($7 != 0)
+            {
+              UTL_Scope *s = idl_global->scopes ().top_non_null ();
+              AST_Factory *f = AST_Factory::narrow_from_scope (s);
+              (void) f->fe_add_exceptions ($7);
+            }
+
           idl_global->scopes ().pop ();
         }
         ;
@@ -4965,6 +4978,7 @@ event_abs_decl :
                     $2->n_supports (),
                     $2->supports_concrete (),
                     I_TRUE,
+                    I_FALSE,
                     I_FALSE
                   );
               i = AST_Interface::narrow_from_decl (e);
@@ -5090,7 +5104,8 @@ event_decl :
                     $2->n_supports (),
                     $2->supports_concrete (),
                     I_FALSE,
-                    $2->truncatable ()
+                    $2->truncatable (),
+                    I_FALSE
                   );
               i = AST_Interface::narrow_from_decl (e);
               AST_Interface::fwd_redefinition_helper (i, 

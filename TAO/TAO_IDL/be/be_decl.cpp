@@ -47,7 +47,9 @@ ACE_RCSID (be,
 
 // Default Constructor
 be_decl::be_decl (void)
-  : cli_hdr_gen_ (I_FALSE),
+  : COMMON_Base (),
+    AST_Decl (),
+    cli_hdr_gen_ (I_FALSE),
     cli_stub_gen_ (I_FALSE),
     cli_inline_gen_ (I_FALSE),
     srv_hdr_gen_ (I_FALSE),
@@ -67,7 +69,8 @@ be_decl::be_decl (void)
 // Constructor
 be_decl::be_decl (AST_Decl::NodeType type,
                   UTL_ScopedName *n)
-  : AST_Decl (type,
+  : COMMON_Base (),
+    AST_Decl (type,
               n),
     cli_hdr_gen_ (I_FALSE),
     cli_stub_gen_ (I_FALSE),

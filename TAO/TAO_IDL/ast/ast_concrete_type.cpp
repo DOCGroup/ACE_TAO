@@ -75,12 +75,18 @@ ACE_RCSID (ast,
 
 // Constructor(s) and destructor.
 AST_ConcreteType::AST_ConcreteType (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type ()
 {
 }
 
 AST_ConcreteType::AST_ConcreteType (AST_Decl::NodeType nt,
                                     UTL_ScopedName *n)
-  : AST_Decl (nt,
+  : COMMON_Base (),
+    AST_Decl (nt,
+              n),
+    AST_Type (nt,
               n)
 {
 }

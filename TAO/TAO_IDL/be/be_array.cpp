@@ -33,6 +33,13 @@ ACE_RCSID (be,
            "$Id$")
 
 be_array::be_array (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    AST_Array (),
+    be_decl (),
+    be_type ()
 {
 }
 
@@ -41,20 +48,24 @@ be_array::be_array (UTL_ScopedName *n,
                     UTL_ExprList *dims,
                     idl_bool local,
                     idl_bool abstract)
-  : be_type (AST_Decl::NT_array,
-             n),
-    be_decl (AST_Decl::NT_array,
-             n),
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_array,
+              n,
+              I_TRUE),
+    AST_Type (AST_Decl::NT_array,
+              n),
+    AST_ConcreteType (AST_Decl::NT_array,
+                      n),
     AST_Array (n,
                ndims,
                dims,
                local,
                abstract),
-    AST_Decl (AST_Decl::NT_array,
-              n,
-              I_TRUE),
-    COMMON_Base (local,
-                 abstract)
+    be_decl (AST_Decl::NT_array,
+             n),
+    be_type (AST_Decl::NT_array,
+             n)
 {
 }
 

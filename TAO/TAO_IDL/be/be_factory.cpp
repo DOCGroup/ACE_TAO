@@ -27,21 +27,27 @@ ACE_RCSID (be,
            "$Id$")
 
 be_factory::be_factory (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    UTL_Scope (),
+    AST_Factory (),
+    be_scope (),
+    be_decl ()
 {
 }
 
 be_factory::be_factory (UTL_ScopedName *n)
-    :
-    AST_Factory (n),
-
+  : COMMON_Base (1,
+                 0), //@@ Always local, never abstract
     AST_Decl (AST_Decl::NT_factory,
               n),
     UTL_Scope (AST_Decl::NT_factory),
-    COMMON_Base (1,
-                 0) //@@ Always local, never abstract
+    AST_Factory (n),
+    be_scope (AST_Decl::NT_factory),
+    be_decl (AST_Decl::NT_factory,
+             n)
 {
 }
-
 
 be_factory::~be_factory (void)
 {

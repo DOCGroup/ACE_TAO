@@ -9,19 +9,23 @@ ACE_RCSID( ast,
            "$Id$")
 
 AST_ComponentFwd::AST_ComponentFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_InterfaceFwd ()
 {
 }
 
 AST_ComponentFwd::AST_ComponentFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : AST_InterfaceFwd (dummy,
-                      n),
-    AST_Type (AST_Decl::NT_component_fwd,
-              n),
+  : COMMON_Base (I_TRUE,
+                 I_FALSE),
     AST_Decl (AST_Decl::NT_component_fwd,
               n),
-    COMMON_Base (I_TRUE,
-                 I_FALSE)
+    AST_Type (AST_Decl::NT_component_fwd,
+              n),
+    AST_InterfaceFwd (dummy,
+                      n)
 {
 }
 

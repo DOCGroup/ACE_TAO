@@ -128,7 +128,8 @@ public:
       long n_supports,
       AST_Interface *supports_concrete,
       idl_bool abstract,
-      idl_bool truncatable
+      idl_bool truncatable,
+      idl_bool custom
     );
 
   // Create a node representing a forward declaration of a valuetype.
@@ -149,7 +150,8 @@ public:
       long n_supports,
       AST_Interface *supports_concrete,
       idl_bool abstract,
-      idl_bool truncatable
+      idl_bool truncatable,
+      idl_bool custom
     );
 
   // Create a node representing a forward declaration of an eventtype.

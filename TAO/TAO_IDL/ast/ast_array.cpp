@@ -85,7 +85,11 @@ ACE_RCSID (ast,
 // Constructor(s) and destructor.
 
 AST_Array::AST_Array (void)
-  : pd_n_dims (0),
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    pd_n_dims (0),
     pd_dims (0),
     pd_base_type (0)
 {
@@ -96,11 +100,15 @@ AST_Array::AST_Array (UTL_ScopedName *n,
                       UTL_ExprList *ds,
                       idl_bool local,
                       idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_array,
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_array,
               n,
               I_TRUE),
-    COMMON_Base (local,
-                 abstract),
+    AST_Type (AST_Decl::NT_array,
+              n),
+    AST_ConcreteType (AST_Decl::NT_array,
+                      n),
     pd_n_dims (nd),
     pd_base_type (0)
 {

@@ -69,7 +69,7 @@ module CORBA
     {
     };
 
-    interface Container
+    interface Container : CORBA::Container
     {
       ComponentDef create_component (
 	  in RepositoryId id,
@@ -99,7 +99,7 @@ module CORBA
 	  in boolean is_truncatable,
 	  in ValueDefSeq abstract_base_values,
 	  in InterfaceDefSeq supported_interfaces,
-	in ExtInitializerSeq initializers
+	  in ExtInitializerSeq initializers
 	);
     };
 

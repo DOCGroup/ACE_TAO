@@ -31,16 +31,26 @@ ACE_RCSID (be,
 
 // Default Constructor.
 be_root::be_root (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    UTL_Scope (),
+    AST_Root (),
+    be_scope (),
+    be_decl ()
 {
 }
 
 // Constructor used to build the root of the abstract syntax tree (AST).
 be_root::be_root (UTL_ScopedName *n)
-  : AST_Root (n),
+  : COMMON_Base (),
     AST_Decl (AST_Decl::NT_root,
               n),
-    UTL_Scope (AST_Decl::NT_root)
-
+    UTL_Scope (AST_Decl::NT_root),
+    AST_Module (n),
+    AST_Root (n),
+    be_scope (AST_Decl::NT_root),
+    be_decl (AST_Decl::NT_root,
+             n)
 {
 }
 

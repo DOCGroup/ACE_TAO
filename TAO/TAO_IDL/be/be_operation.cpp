@@ -30,6 +30,12 @@ ACE_RCSID (be,
            "$Id$")
 
 be_operation::be_operation (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    UTL_Scope (),
+    AST_Operation (),
+    be_scope (),
+    be_decl ()
 {
   ACE_NEW (this->strategy_,
            be_operation_default_strategy (this));
@@ -40,16 +46,19 @@ be_operation::be_operation (AST_Type *rt,
                             UTL_ScopedName *n,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Operation (rt,
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_op,
+              n),
+    UTL_Scope (AST_Decl::NT_op),
+    AST_Operation (rt,
                    fl,
                    n,
                    local,
                    abstract),
-    AST_Decl (AST_Decl::NT_op,
-              n),
-    UTL_Scope (AST_Decl::NT_op),
-    COMMON_Base (local,
-                 abstract)
+    be_scope (AST_Decl::NT_op),
+    be_decl (AST_Decl::NT_op,
+             n)
 {
   ACE_NEW (this->strategy_,
            be_operation_default_strategy (this));

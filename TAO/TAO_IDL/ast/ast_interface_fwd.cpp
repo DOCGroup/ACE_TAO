@@ -79,18 +79,21 @@ ACE_RCSID( ast,
            "$Id$")
 
 AST_InterfaceFwd::AST_InterfaceFwd (void)
-  : pd_full_definition (0)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    pd_full_definition (0)
 {
 }
 
 AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : AST_Type (AST_Decl::NT_interface_fwd,
-              n),
+  : COMMON_Base (dummy->is_local (),
+                 dummy->is_abstract ()),
     AST_Decl (AST_Decl::NT_interface_fwd,
               n),
-    COMMON_Base (dummy->is_local (),
-                 dummy->is_abstract ())
+    AST_Type (AST_Decl::NT_interface_fwd,
+              n)
 {
   // Create a dummy placeholder for the forward declared interface. This
   // interface node is not yet defined (n_inherits < 0), so some operations

@@ -33,7 +33,11 @@ ACE_RCSID (be,
            "$Id$")
 
 be_type::be_type (void)
-  : tc_name_ (0),
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    be_decl (),
+    tc_name_ (0),
     common_varout_gen_ (I_FALSE),
     seen_in_sequence_ (I_FALSE)
 {
@@ -41,12 +45,13 @@ be_type::be_type (void)
 
 be_type::be_type (AST_Decl::NodeType nt,
                   UTL_ScopedName *n)
-  : be_decl (nt,
-             n),
-    AST_Type (nt,
-              n),
+  : COMMON_Base (),
     AST_Decl (nt,
               n),
+    AST_Type (nt,
+              n),
+    be_decl (nt,
+             n),
     tc_name_ (0),
     common_varout_gen_ (I_FALSE),
     seen_in_sequence_ (I_FALSE)

@@ -16,11 +16,17 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_ValueType::AST_ValueType (void)
-  : pd_supports (0),
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    pd_supports (0),
     pd_n_supports (0),
     pd_inherits_concrete (0),
     pd_supports_concrete (0),
-    pd_truncatable (I_FALSE)
+    pd_truncatable (I_FALSE),
+    pd_custom (I_FALSE)
 {
 }
 
@@ -34,26 +40,28 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                               long n_supports,
                               AST_Interface *supports_concrete,
                               idl_bool abstract,
-                              idl_bool truncatable)
-  : AST_Interface (n,
+                              idl_bool truncatable,
+                              idl_bool custom)
+  : COMMON_Base (I_FALSE,
+                 abstract),
+    AST_Decl (AST_Decl::NT_valuetype,
+              n),
+    AST_Type (AST_Decl::NT_valuetype,
+              n),
+    UTL_Scope (AST_Decl::NT_valuetype),
+    AST_Interface (n,
                    inherits,
                    n_inherits,
                    inherits_flat,
                    n_inherits_flat,
                    I_FALSE,
                    abstract),
-    AST_Type (AST_Decl::NT_valuetype,
-              n),
-    AST_Decl (AST_Decl::NT_valuetype,
-              n),
-    UTL_Scope (AST_Decl::NT_valuetype),
-    COMMON_Base (I_FALSE,
-                 abstract),
     pd_supports (supports),
     pd_n_supports (n_supports),
     pd_inherits_concrete (inherits_concrete),
     pd_supports_concrete (supports_concrete),
-    pd_truncatable (truncatable)           
+    pd_truncatable (truncatable),
+    pd_custom (custom)
 {
 }
 
@@ -109,6 +117,12 @@ idl_bool
 AST_ValueType::truncatable (void) const
 {
   return this->pd_truncatable;
+}
+
+idl_bool
+AST_ValueType::custom (void) const
+{
+  return this->pd_custom;
 }
 
 void

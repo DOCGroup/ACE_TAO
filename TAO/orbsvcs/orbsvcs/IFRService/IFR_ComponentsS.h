@@ -1,3 +1,4 @@
+// -*- C++ -*-
 //
 // $Id$
 
@@ -14,12 +15,18 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:443
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:487
 
 #ifndef _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_COMPONENTSS_H_
 #define _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_COMPONENTSS_H_
@@ -142,7 +149,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_ext_value_skel (
           TAO_ServerRequest &req, 
@@ -152,7 +159,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_ext_attribute_skel (
           TAO_ServerRequest &req, 
@@ -246,7 +253,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void is_a_skel (
           TAO_ServerRequest &req, 
@@ -256,7 +263,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_value_skel (
           TAO_ServerRequest &req, 
@@ -266,7 +273,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_member_skel (
           TAO_ServerRequest &req, 
@@ -276,7 +283,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_attribute_skel (
           TAO_ServerRequest &req, 
@@ -286,7 +293,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_operation_skel (
           TAO_ServerRequest &req, 
@@ -296,7 +303,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_skel (
           TAO_ServerRequest &req, 
@@ -306,7 +313,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void contents_skel (
           TAO_ServerRequest &req, 
@@ -316,7 +323,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_name_skel (
           TAO_ServerRequest &req, 
@@ -326,7 +333,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_contents_skel (
           TAO_ServerRequest &req, 
@@ -336,7 +343,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_module_skel (
           TAO_ServerRequest &req, 
@@ -346,7 +353,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_constant_skel (
           TAO_ServerRequest &req, 
@@ -356,7 +363,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_struct_skel (
           TAO_ServerRequest &req, 
@@ -366,7 +373,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_union_skel (
           TAO_ServerRequest &req, 
@@ -376,7 +383,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_enum_skel (
           TAO_ServerRequest &req, 
@@ -386,7 +393,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_alias_skel (
           TAO_ServerRequest &req, 
@@ -396,7 +403,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_interface_skel (
           TAO_ServerRequest &req, 
@@ -406,7 +413,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_skel (
           TAO_ServerRequest &req, 
@@ -416,7 +423,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_box_skel (
           TAO_ServerRequest &req, 
@@ -426,7 +433,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_exception_skel (
           TAO_ServerRequest &req, 
@@ -436,7 +443,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_native_skel (
           TAO_ServerRequest &req, 
@@ -446,7 +453,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_abstract_interface_skel (
           TAO_ServerRequest &req, 
@@ -456,7 +463,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_local_interface_skel (
           TAO_ServerRequest &req, 
@@ -466,7 +473,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_ext_value_skel (
           TAO_ServerRequest &req, 
@@ -527,7 +534,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -537,7 +544,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -557,7 +564,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -644,7 +651,7 @@ TAO_NAMESPACE  POA_CORBA
     class _TAO_Container_Strategized_Proxy_Broker;
     
     class  Container
-      : public virtual PortableServer::ServantBase
+      : public virtual POA_CORBA::Container
     {
     protected:
       Container (void);
@@ -774,6 +781,201 @@ TAO_NAMESPACE  POA_CORBA
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void lookup_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void contents_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void lookup_name_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void describe_contents_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_module_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_constant_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_struct_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_union_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_enum_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_alias_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_interface_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_value_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_value_box_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_exception_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_native_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_abstract_interface_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_local_interface_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void create_ext_value_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );      static void _get_def_kind_skel (
+          TAO_ServerRequest &req,
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
+      
+      static void destroy_skel (
+          TAO_ServerRequest &req, 
+          void *obj,
+          void *context
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        );
     };    
     
     ///////////////////////////////////////////////////////////////////////
@@ -832,7 +1034,8 @@ TAO_NAMESPACE  POA_CORBA
     
     class  _TAO_Container_ThruPOA_Proxy_Impl : 
       public virtual ::CORBA::ComponentIR::_TAO_Container_Proxy_Impl,
-      public virtual TAO_ThruPOA_Object_Proxy_Impl
+      public virtual TAO_ThruPOA_Object_Proxy_Impl,
+      public virtual ::POA_CORBA::_TAO_Container_ThruPOA_Proxy_Impl
     {
     public:
       _TAO_Container_ThruPOA_Proxy_Impl (void);
@@ -967,7 +1170,7 @@ TAO_NAMESPACE  POA_CORBA
       virtual const char* _interface_repository_id (void) const;
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_component_skel (
           TAO_ServerRequest &req, 
@@ -977,7 +1180,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_home_skel (
           TAO_ServerRequest &req, 
@@ -987,7 +1190,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_event_skel (
           TAO_ServerRequest &req, 
@@ -997,7 +1200,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_skel (
           TAO_ServerRequest &req, 
@@ -1007,7 +1210,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void contents_skel (
           TAO_ServerRequest &req, 
@@ -1017,7 +1220,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_name_skel (
           TAO_ServerRequest &req, 
@@ -1027,7 +1230,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_contents_skel (
           TAO_ServerRequest &req, 
@@ -1037,7 +1240,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_module_skel (
           TAO_ServerRequest &req, 
@@ -1047,7 +1250,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_constant_skel (
           TAO_ServerRequest &req, 
@@ -1057,7 +1260,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_struct_skel (
           TAO_ServerRequest &req, 
@@ -1067,7 +1270,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_union_skel (
           TAO_ServerRequest &req, 
@@ -1077,7 +1280,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_enum_skel (
           TAO_ServerRequest &req, 
@@ -1087,7 +1290,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_alias_skel (
           TAO_ServerRequest &req, 
@@ -1097,7 +1300,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_interface_skel (
           TAO_ServerRequest &req, 
@@ -1107,7 +1310,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_skel (
           TAO_ServerRequest &req, 
@@ -1117,7 +1320,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_box_skel (
           TAO_ServerRequest &req, 
@@ -1127,7 +1330,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_exception_skel (
           TAO_ServerRequest &req, 
@@ -1137,7 +1340,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_native_skel (
           TAO_ServerRequest &req, 
@@ -1147,7 +1350,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_abstract_interface_skel (
           TAO_ServerRequest &req, 
@@ -1157,7 +1360,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_local_interface_skel (
           TAO_ServerRequest &req, 
@@ -1167,7 +1370,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_ext_value_skel (
           TAO_ServerRequest &req, 
@@ -1228,7 +1431,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -1238,7 +1441,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -1253,7 +1456,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -1401,7 +1604,7 @@ TAO_NAMESPACE  POA_CORBA
       virtual const char* _interface_repository_id (void) const;
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_id_skel (
           TAO_ServerRequest &req, 
@@ -1411,7 +1614,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void get_canonical_typecode_skel (
           TAO_ServerRequest &req, 
@@ -1421,7 +1624,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void get_primitive_skel (
           TAO_ServerRequest &req, 
@@ -1431,7 +1634,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_string_skel (
           TAO_ServerRequest &req, 
@@ -1441,7 +1644,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_wstring_skel (
           TAO_ServerRequest &req, 
@@ -1451,7 +1654,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_sequence_skel (
           TAO_ServerRequest &req, 
@@ -1461,7 +1664,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_array_skel (
           TAO_ServerRequest &req, 
@@ -1471,7 +1674,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_fixed_skel (
           TAO_ServerRequest &req, 
@@ -1481,7 +1684,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_component_skel (
           TAO_ServerRequest &req, 
@@ -1491,7 +1694,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_home_skel (
           TAO_ServerRequest &req, 
@@ -1501,7 +1704,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_event_skel (
           TAO_ServerRequest &req, 
@@ -1511,7 +1714,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_skel (
           TAO_ServerRequest &req, 
@@ -1521,7 +1724,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void contents_skel (
           TAO_ServerRequest &req, 
@@ -1531,7 +1734,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_name_skel (
           TAO_ServerRequest &req, 
@@ -1541,7 +1744,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_contents_skel (
           TAO_ServerRequest &req, 
@@ -1551,7 +1754,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_module_skel (
           TAO_ServerRequest &req, 
@@ -1561,7 +1764,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_constant_skel (
           TAO_ServerRequest &req, 
@@ -1571,7 +1774,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_struct_skel (
           TAO_ServerRequest &req, 
@@ -1581,7 +1784,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_union_skel (
           TAO_ServerRequest &req, 
@@ -1591,7 +1794,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_enum_skel (
           TAO_ServerRequest &req, 
@@ -1601,7 +1804,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_alias_skel (
           TAO_ServerRequest &req, 
@@ -1611,7 +1814,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_interface_skel (
           TAO_ServerRequest &req, 
@@ -1621,7 +1824,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_skel (
           TAO_ServerRequest &req, 
@@ -1631,7 +1834,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_box_skel (
           TAO_ServerRequest &req, 
@@ -1641,7 +1844,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_exception_skel (
           TAO_ServerRequest &req, 
@@ -1651,7 +1854,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_native_skel (
           TAO_ServerRequest &req, 
@@ -1661,7 +1864,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_abstract_interface_skel (
           TAO_ServerRequest &req, 
@@ -1671,7 +1874,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_local_interface_skel (
           TAO_ServerRequest &req, 
@@ -1681,7 +1884,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_ext_value_skel (
           TAO_ServerRequest &req, 
@@ -1696,7 +1899,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -1929,7 +2132,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -1939,7 +2142,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -1954,7 +2157,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -2244,7 +2447,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -2254,7 +2457,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -2269,7 +2472,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -2565,7 +2768,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -2575,7 +2778,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -2590,7 +2793,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -2783,7 +2986,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void is_a_skel (
           TAO_ServerRequest &req, 
@@ -2844,7 +3047,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -2854,7 +3057,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -2869,7 +3072,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -3027,7 +3230,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void is_a_skel (
           TAO_ServerRequest &req, 
@@ -3088,7 +3291,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -3098,7 +3301,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -3113,7 +3316,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -3271,7 +3474,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void is_a_skel (
           TAO_ServerRequest &req, 
@@ -3332,7 +3535,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -3342,7 +3545,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -3357,7 +3560,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -3691,7 +3894,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void is_a_skel (
           TAO_ServerRequest &req, 
@@ -3701,7 +3904,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_interface_skel (
           TAO_ServerRequest &req, 
@@ -3711,7 +3914,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_attribute_skel (
           TAO_ServerRequest &req, 
@@ -3721,7 +3924,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_operation_skel (
           TAO_ServerRequest &req, 
@@ -3731,7 +3934,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_ext_interface_skel (
           TAO_ServerRequest &req, 
@@ -3741,7 +3944,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_ext_attribute_skel (
           TAO_ServerRequest &req, 
@@ -3751,7 +3954,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_skel (
           TAO_ServerRequest &req, 
@@ -3761,7 +3964,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void contents_skel (
           TAO_ServerRequest &req, 
@@ -3771,7 +3974,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_name_skel (
           TAO_ServerRequest &req, 
@@ -3781,7 +3984,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_contents_skel (
           TAO_ServerRequest &req, 
@@ -3791,7 +3994,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_module_skel (
           TAO_ServerRequest &req, 
@@ -3801,7 +4004,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_constant_skel (
           TAO_ServerRequest &req, 
@@ -3811,7 +4014,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_struct_skel (
           TAO_ServerRequest &req, 
@@ -3821,7 +4024,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_union_skel (
           TAO_ServerRequest &req, 
@@ -3831,7 +4034,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_enum_skel (
           TAO_ServerRequest &req, 
@@ -3841,7 +4044,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_alias_skel (
           TAO_ServerRequest &req, 
@@ -3851,7 +4054,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_interface_skel (
           TAO_ServerRequest &req, 
@@ -3861,7 +4064,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_skel (
           TAO_ServerRequest &req, 
@@ -3871,7 +4074,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_box_skel (
           TAO_ServerRequest &req, 
@@ -3881,7 +4084,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_exception_skel (
           TAO_ServerRequest &req, 
@@ -3891,7 +4094,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_native_skel (
           TAO_ServerRequest &req, 
@@ -3901,7 +4104,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_abstract_interface_skel (
           TAO_ServerRequest &req, 
@@ -3911,7 +4114,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_local_interface_skel (
           TAO_ServerRequest &req, 
@@ -3921,7 +4124,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_ext_value_skel (
           TAO_ServerRequest &req, 
@@ -3982,7 +4185,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -3992,7 +4195,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -4012,7 +4215,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -4396,7 +4599,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -4406,7 +4609,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -4421,7 +4624,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -4683,7 +4886,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -4693,7 +4896,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -4708,7 +4911,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -5050,7 +5253,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void is_a_skel (
           TAO_ServerRequest &req, 
@@ -5060,7 +5263,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_interface_skel (
           TAO_ServerRequest &req, 
@@ -5070,7 +5273,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_attribute_skel (
           TAO_ServerRequest &req, 
@@ -5080,7 +5283,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_operation_skel (
           TAO_ServerRequest &req, 
@@ -5090,7 +5293,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_ext_interface_skel (
           TAO_ServerRequest &req, 
@@ -5100,7 +5303,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_ext_attribute_skel (
           TAO_ServerRequest &req, 
@@ -5110,7 +5313,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_skel (
           TAO_ServerRequest &req, 
@@ -5120,7 +5323,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void contents_skel (
           TAO_ServerRequest &req, 
@@ -5130,7 +5333,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void lookup_name_skel (
           TAO_ServerRequest &req, 
@@ -5140,7 +5343,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_contents_skel (
           TAO_ServerRequest &req, 
@@ -5150,7 +5353,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_module_skel (
           TAO_ServerRequest &req, 
@@ -5160,7 +5363,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_constant_skel (
           TAO_ServerRequest &req, 
@@ -5170,7 +5373,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_struct_skel (
           TAO_ServerRequest &req, 
@@ -5180,7 +5383,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_union_skel (
           TAO_ServerRequest &req, 
@@ -5190,7 +5393,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_enum_skel (
           TAO_ServerRequest &req, 
@@ -5200,7 +5403,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_alias_skel (
           TAO_ServerRequest &req, 
@@ -5210,7 +5413,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_interface_skel (
           TAO_ServerRequest &req, 
@@ -5220,7 +5423,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_skel (
           TAO_ServerRequest &req, 
@@ -5230,7 +5433,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_value_box_skel (
           TAO_ServerRequest &req, 
@@ -5240,7 +5443,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_exception_skel (
           TAO_ServerRequest &req, 
@@ -5250,7 +5453,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_native_skel (
           TAO_ServerRequest &req, 
@@ -5260,7 +5463,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_abstract_interface_skel (
           TAO_ServerRequest &req, 
@@ -5270,7 +5473,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_local_interface_skel (
           TAO_ServerRequest &req, 
@@ -5280,7 +5483,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void create_ext_value_skel (
           TAO_ServerRequest &req, 
@@ -5341,7 +5544,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void describe_skel (
           TAO_ServerRequest &req, 
@@ -5351,7 +5554,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void move_skel (
           TAO_ServerRequest &req, 
@@ -5371,7 +5574,7 @@ TAO_NAMESPACE  POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1745
       
       static void destroy_skel (
           TAO_ServerRequest &req, 
@@ -5587,7 +5790,7 @@ TAO_NAMESPACE  POA_CORBA
 TAO_NAMESPACE_CLOSE // module CORBA
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1044
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1090
 
 #include "IFR_ComponentsS_T.h"
 
@@ -5605,4 +5808,3 @@ TAO_NAMESPACE_CLOSE // module CORBA
 
 #include "ace/post.h"
 #endif /* ifndef */
-

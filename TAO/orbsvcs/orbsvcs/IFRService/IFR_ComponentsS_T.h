@@ -15,12 +15,18 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:604
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:648
 
 #ifndef _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_COMPONENTSS_T_H_
 #define _TAO_IDL_______ORBSVCS_ORBSVCS_IFRSERVICE_ORIG_IFR_COMPONENTSS_T_H_
@@ -853,6 +859,284 @@ TAO_NAMESPACE  POA_CORBA
           const CORBA::InterfaceDefSeq & supported_interfaces,
           const CORBA::ExtInitializerSeq & initializers
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::Contained_ptr lookup (
+          const char * search_name
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::ContainedSeq * contents (
+          CORBA::DefinitionKind limit_type,
+          CORBA::Boolean exclude_inherited
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::ContainedSeq * lookup_name (
+          const char * search_name,
+          CORBA::Long levels_to_search,
+          CORBA::DefinitionKind limit_type,
+          CORBA::Boolean exclude_inherited
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::Container::DescriptionSeq * describe_contents (
+          CORBA::DefinitionKind limit_type,
+          CORBA::Boolean exclude_inherited,
+          CORBA::Long max_returned_objs
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::ModuleDef_ptr create_module (
+          const char * id,
+          const char * name,
+          const char * version
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::ConstantDef_ptr create_constant (
+          const char * id,
+          const char * name,
+          const char * version,
+          CORBA::IDLType_ptr type,
+          const CORBA::Any & value
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::StructDef_ptr create_struct (
+          const char * id,
+          const char * name,
+          const char * version,
+          const CORBA::StructMemberSeq & members
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::UnionDef_ptr create_union (
+          const char * id,
+          const char * name,
+          const char * version,
+          CORBA::IDLType_ptr discriminator_type,
+          const CORBA::UnionMemberSeq & members
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::EnumDef_ptr create_enum (
+          const char * id,
+          const char * name,
+          const char * version,
+          const CORBA::EnumMemberSeq & members
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::AliasDef_ptr create_alias (
+          const char * id,
+          const char * name,
+          const char * version,
+          CORBA::IDLType_ptr original_type
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::InterfaceDef_ptr create_interface (
+          const char * id,
+          const char * name,
+          const char * version,
+          const CORBA::InterfaceDefSeq & base_interfaces
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::ValueDef_ptr create_value (
+          const char * id,
+          const char * name,
+          const char * version,
+          CORBA::Boolean is_custom,
+          CORBA::Boolean is_abstract,
+          CORBA::ValueDef_ptr base_value,
+          CORBA::Boolean is_truncatable,
+          const CORBA::ValueDefSeq & abstract_base_values,
+          const CORBA::InterfaceDefSeq & supported_interfaces,
+          const CORBA::InitializerSeq & initializers
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::ValueBoxDef_ptr create_value_box (
+          const char * id,
+          const char * name,
+          const char * version,
+          CORBA::IDLType_ptr original_type_def
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::ExceptionDef_ptr create_exception (
+          const char * id,
+          const char * name,
+          const char * version,
+          const CORBA::StructMemberSeq & members
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::NativeDef_ptr create_native (
+          const char * id,
+          const char * name,
+          const char * version
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::AbstractInterfaceDef_ptr create_abstract_interface (
+          const char * id,
+          const char * name,
+          const char * version,
+          const CORBA::AbstractInterfaceDefSeq & base_interfaces
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::LocalInterfaceDef_ptr create_local_interface (
+          const char * id,
+          const char * name,
+          const char * version,
+          const CORBA::InterfaceDefSeq & base_interfaces
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::ExtValueDef_ptr create_ext_value (
+          const char * id,
+          const char * name,
+          const char * version,
+          CORBA::Boolean is_custom,
+          CORBA::Boolean is_abstract,
+          CORBA::ValueDef_ptr base_value,
+          CORBA::Boolean is_truncatable,
+          const CORBA::ValueDefSeq & abstract_base_values,
+          const CORBA::InterfaceDefSeq & supported_interfaces,
+          const CORBA::ExtInitializerSeq & initializers
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      ::CORBA::DefinitionKind def_kind (
+          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+        ));
+      
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+      
+      void destroy (
+          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
@@ -5089,7 +5373,7 @@ TAO_NAMESPACE_CLOSE // module CORBA
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1187
 
 #if defined (__ACE_INLINE__)
 #include "IFR_ComponentsS_T.i"
@@ -5109,4 +5393,3 @@ TAO_NAMESPACE_CLOSE // module CORBA
 
 #include "ace/post.h"
 #endif /* ifndef */
-

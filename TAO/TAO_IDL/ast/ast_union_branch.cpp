@@ -77,18 +77,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ACE_RCSID(ast, ast_union_branch, "$Id$")
 
 AST_UnionBranch::AST_UnionBranch (void)
- : pd_ll (0)
+  : COMMON_Base (),
+    AST_Decl (),
+	  AST_Field (),
+	  pd_ll (0)
 {
 }
 
 AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
                                   AST_Type *ft,
 				                          UTL_ScopedName *n)
-  : AST_Field (AST_Decl::NT_union_branch,
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_union_branch,
+              n),
+	  AST_Field (AST_Decl::NT_union_branch,
                ft,
                n),
-	  AST_Decl (AST_Decl::NT_union_branch,
-              n),
 	  pd_ll (ll)
 {
 }

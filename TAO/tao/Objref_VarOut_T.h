@@ -47,7 +47,7 @@ public:
   T * operator-> (void) const;
 
   // Cast operators.
-  operator const T *& () const;
+  operator T const *& () const;
   operator T *& ();
 
   T * in (void) const;

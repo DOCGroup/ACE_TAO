@@ -80,7 +80,7 @@ TAO_NAMESPACE  CORBA
   {
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF__ODDS_N_ENDS_CH_
@@ -126,7 +126,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_HOMEDEF__ODDS_N_ENDS_CH_
@@ -172,7 +172,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_EVENTDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_EVENTDEF__ODDS_N_ENDS_CH_
@@ -218,7 +218,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_EVENTDEF_CH_)
 #define _CORBA_COMPONENTIR_EVENTDEF_CH_
@@ -257,7 +257,7 @@ TAO_NAMESPACE  CORBA
       static void _tao_any_destructor (void *);
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -420,7 +420,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EventDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_CONTAINER__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_CONTAINER__ODDS_N_ENDS_CH_
@@ -466,7 +466,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_CONTAINER_CH_)
 #define _CORBA_COMPONENTIR_CONTAINER_CH_
@@ -477,7 +477,7 @@ TAO_NAMESPACE  CORBA
     class _TAO_Container_Remote_Proxy_Broker;
     
     class TAO_IFR_Client_Export Container
-      : public virtual CORBA::Object
+      : public virtual CORBA::Container
     {
     public:
       typedef Container_ptr _ptr_type;
@@ -557,7 +557,7 @@ TAO_NAMESPACE  CORBA
         ));
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -611,7 +611,7 @@ TAO_NAMESPACE  CORBA
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/base_proxy_impl_ch.cpp:35
     
     class TAO_IFR_Client_Export _TAO_Container_Proxy_Impl
-      : public virtual TAO_Object_Proxy_Impl
+      : public virtual CORBA::_TAO_Container_Proxy_Impl
     {
     public:
       virtual ~_TAO_Container_Proxy_Impl (void) {}
@@ -689,7 +689,8 @@ TAO_NAMESPACE  CORBA
     
     class TAO_IFR_Client_Export _TAO_Container_Remote_Proxy_Impl
       : public virtual _TAO_Container_Proxy_Impl,
-        public virtual TAO_Remote_Object_Proxy_Impl
+        public virtual TAO_Remote_Object_Proxy_Impl,
+        public virtual CORBA::_TAO_Container_Remote_Proxy_Impl
     {
     public:
       _TAO_Container_Remote_Proxy_Impl (void);
@@ -829,7 +830,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Container;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_MODULEDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_MODULEDEF__ODDS_N_ENDS_CH_
@@ -875,7 +876,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_MODULEDEF_CH_)
 #define _CORBA_COMPONENTIR_MODULEDEF_CH_
@@ -915,7 +916,7 @@ TAO_NAMESPACE  CORBA
       static void _tao_any_destructor (void *);
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -1080,7 +1081,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ModuleDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_REPOSITORY__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_REPOSITORY__ODDS_N_ENDS_CH_
@@ -1126,7 +1127,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_REPOSITORY_CH_)
 #define _CORBA_COMPONENTIR_REPOSITORY_CH_
@@ -1166,7 +1167,7 @@ TAO_NAMESPACE  CORBA
       static void _tao_any_destructor (void *);
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -1331,7 +1332,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Repository;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF__ODDS_N_ENDS_CH_
@@ -1377,7 +1378,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF_CH_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF_CH_
@@ -1437,7 +1438,7 @@ TAO_NAMESPACE  CORBA
         ));
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -1646,7 +1647,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProvidesDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:249
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:254
     
     struct ProvidesDescription;
     
@@ -1684,7 +1685,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProvidesDescription;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_USESDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_USESDEF__ODDS_N_ENDS_CH_
@@ -1730,7 +1731,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_USESDEF_CH_)
 #define _CORBA_COMPONENTIR_USESDEF_CH_
@@ -1811,7 +1812,7 @@ TAO_NAMESPACE  CORBA
         ));
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -2066,7 +2067,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UsesDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:249
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:254
     
     struct UsesDescription;
     
@@ -2105,7 +2106,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UsesDescription;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_EVENTPORTDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_EVENTPORTDEF__ODDS_N_ENDS_CH_
@@ -2151,7 +2152,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_EVENTPORTDEF_CH_)
 #define _CORBA_COMPONENTIR_EVENTPORTDEF_CH_
@@ -2222,7 +2223,7 @@ TAO_NAMESPACE  CORBA
         ));
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -2455,7 +2456,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EventPortDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:249
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:254
     
     struct EventPortDescription;
     
@@ -2493,7 +2494,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EventPortDescription;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_EMITSDEF__ODDS_N_ENDS_CH_
@@ -2539,7 +2540,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF_CH_)
 #define _CORBA_COMPONENTIR_EMITSDEF_CH_
@@ -2578,7 +2579,7 @@ TAO_NAMESPACE  CORBA
       static void _tao_any_destructor (void *);
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -2741,7 +2742,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EmitsDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF__ODDS_N_ENDS_CH_
@@ -2787,7 +2788,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF_CH_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF_CH_
@@ -2826,7 +2827,7 @@ TAO_NAMESPACE  CORBA
       static void _tao_any_destructor (void *);
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -2989,7 +2990,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PublishesDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF__ODDS_N_ENDS_CH_
@@ -3035,7 +3036,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF_CH_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF_CH_
@@ -3074,7 +3075,7 @@ TAO_NAMESPACE  CORBA
       static void _tao_any_destructor (void *);
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -3237,7 +3238,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ConsumesDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF_CH_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF_CH_
@@ -3389,7 +3390,7 @@ TAO_NAMESPACE  CORBA
         ));
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -3796,7 +3797,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ComponentDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:91
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:100
 
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CH_)
 #define _CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CH_
@@ -3849,7 +3850,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProvidesDescriptionSeq;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:91
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:100
 
 #if !defined (_CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CH_)
 #define _CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CH_
@@ -3902,7 +3903,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UsesDescriptionSeq;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:91
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:100
 
 #if !defined (_CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CH_)
 #define _CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CH_
@@ -3955,7 +3956,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EventPortDescriptionSeq;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:249
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:254
     
     struct ComponentDescription;
     
@@ -4001,7 +4002,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ComponentDescription;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_FACTORYDEF__ODDS_N_ENDS_CH_
@@ -4047,7 +4048,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF_CH_)
 #define _CORBA_COMPONENTIR_FACTORYDEF_CH_
@@ -4086,7 +4087,7 @@ TAO_NAMESPACE  CORBA
       static void _tao_any_destructor (void *);
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -4249,7 +4250,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_FactoryDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:570
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:584
 
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF__ODDS_N_ENDS_CH_)
 #define _CORBA_COMPONENTIR_FINDERDEF__ODDS_N_ENDS_CH_
@@ -4295,7 +4296,7 @@ TAO_NAMESPACE  CORBA
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF_CH_)
 #define _CORBA_COMPONENTIR_FINDERDEF_CH_
@@ -4334,7 +4335,7 @@ TAO_NAMESPACE  CORBA
       static void _tao_any_destructor (void *);
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -4497,7 +4498,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_FinderDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:50
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF_CH_)
 #define _CORBA_COMPONENTIR_HOMEDEF_CH_
@@ -4650,7 +4651,7 @@ TAO_NAMESPACE  CORBA
         ));
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:207
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
       
       virtual CORBA::Boolean _is_a (
           const char *type_id
@@ -5061,7 +5062,7 @@ TAO_NAMESPACE  CORBA
     TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_HomeDef;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:249
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:254
     
     struct HomeDescription;
     
@@ -5544,7 +5545,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Componen
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1055
 
 #if defined (__ACE_INLINE__)
 #include "IFR_ComponentsC.i"

@@ -73,6 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "utl_scoped_name.h"
 
+class UTL_ExceptList;
+
 class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {
@@ -89,6 +91,12 @@ public:
   // Data Accessors.
 
   // Public operations.
+
+  UTL_ExceptList *exceptions (void);
+  // Return exception list.
+
+  int n_exceptions (void);
+  // Return exception count.
 
   virtual int argument_count (void);
   // Return the count of members.
@@ -115,12 +123,19 @@ public:
 private:
   // Data.
 
+  UTL_ExceptList *pd_exceptions;
+  // Exceptions raised
+
+  int pd_n_exceptions;
+  // Exception count.
+
   int argument_count_;
   // Number of arguments.
 
   int has_native_;
   // Is any argument of type native.
 
+private:
   // Operations.
 
   int compute_argument_attr (void);
@@ -130,6 +145,7 @@ private:
 
   friend int tao_yyparse (void);
   virtual AST_Argument *fe_add_argument (AST_Argument *a);
+  virtual UTL_NameList *fe_add_exceptions (UTL_NameList *e);
 };
 
 #endif           // _AST_FACTORY_AST_FACTORY_HH

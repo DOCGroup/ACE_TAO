@@ -8,11 +8,17 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Native::AST_Native (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type ()
 {
 }
 
 AST_Native::AST_Native (UTL_ScopedName *n)
-  : AST_Decl (AST_Decl::NT_native,
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_native,
+              n),
+    AST_Type (AST_Decl::NT_native,
               n)
 {
 }

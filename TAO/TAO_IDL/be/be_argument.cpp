@@ -27,20 +27,28 @@ ACE_RCSID (be,
            "$Id$")
 
 be_argument::be_argument (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    AST_Argument (),
+    be_decl ()
 {
 }
 
 be_argument::be_argument (AST_Argument::Direction d,
                           AST_Type *ft,
                           UTL_ScopedName *n)
-  : AST_Argument (d,
-                  ft,
-                  n),
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_argument,
+              n),
     AST_Field (AST_Decl::NT_argument,
                ft,
                n),
-    AST_Decl (AST_Decl::NT_argument,
-              n)
+    AST_Argument (d,
+                  ft,
+                  n),
+    be_decl (AST_Decl::NT_argument,
+             n)
 {
 }
 

@@ -28,6 +28,12 @@ ACE_RCSID (be,
            "$Id$")
 
 be_typedef::be_typedef (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_Typedef (),
+    be_decl (),
+    be_type ()
 {
 }
 
@@ -35,20 +41,20 @@ be_typedef::be_typedef (AST_Type *bt,
                         UTL_ScopedName *n,
                         idl_bool local,
                         idl_bool abstract)
-  : be_type (AST_Decl::NT_typedef,
-             n),
-    be_decl (AST_Decl::NT_typedef,
-             n),
+  : COMMON_Base (bt->is_local () || local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_typedef,
+              n),
+    AST_Type (AST_Decl::NT_typedef,
+              n),
     AST_Typedef (bt,
                  n,
                  bt->is_local () || local,
                  abstract),
-    AST_Type (AST_Decl::NT_typedef,
-              n),
-    AST_Decl (AST_Decl::NT_typedef,
-              n),
-    COMMON_Base (bt->is_local () || local,
-                 abstract)
+    be_decl (AST_Decl::NT_typedef,
+             n),
+    be_type (AST_Decl::NT_typedef,
+             n)
 {
 }
 

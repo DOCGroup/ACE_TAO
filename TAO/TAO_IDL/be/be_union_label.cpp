@@ -10,6 +10,7 @@ ACE_RCSID (be,
            "$Id$")
 
 be_union_label::be_union_label (void)
+  : AST_UnionLabel ()
 {
 }
 

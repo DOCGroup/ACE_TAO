@@ -27,17 +27,27 @@ ACE_RCSID (be,
            "$Id$")
 
 be_enum_val::be_enum_val (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Constant (),
+    AST_EnumVal (),
+    be_decl ()
 {
 }
 
 be_enum_val::be_enum_val (unsigned long v,
                           UTL_ScopedName *n)
-  : AST_Constant (AST_Expression::EV_ulong,
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_enum_val,
+              n),
+    AST_Constant (AST_Expression::EV_ulong,
                   AST_Decl::NT_enum_val,
                   new AST_Expression (v),
                   n),
-    AST_Decl (AST_Decl::NT_enum_val,
-              n)
+    AST_EnumVal (v,
+                 n),
+    be_decl (AST_Decl::NT_enum_val,
+             n)
 {
 }
 

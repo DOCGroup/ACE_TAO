@@ -22,7 +22,7 @@ ACE_INLINE
 TAO_Seq_Out_T<T,T_var,T_elem>::TAO_Seq_Out_T (
     const TAO_Seq_Out_T<T,T_var,T_elem> & p
   )
-  : ptr_ (ACE_const_cast (THIS_OUT_TYPE &, p).ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 template<typename T, typename T_var, typename T_elem>
@@ -32,7 +32,7 @@ TAO_Seq_Out_T<T,T_var,T_elem>::operator= (
     const TAO_Seq_Out_T<T,T_var,T_elem> & p
   )
 {
-  this->ptr_ = ACE_const_cast (THIS_OUT_TYPE &, p).ptr_;
+  this->ptr_ = p.ptr_;
   return *this;
 }
 
@@ -99,7 +99,7 @@ ACE_INLINE
 TAO_MngSeq_Out_T<T,T_var,T_elem>::TAO_MngSeq_Out_T (
     const TAO_MngSeq_Out_T<T,T_var,T_elem> & p
   )
-  : ptr_ (ACE_const_cast (THIS_OUT_TYPE &, p).ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 template<typename T, typename T_var, typename T_elem>
@@ -109,7 +109,7 @@ TAO_MngSeq_Out_T<T,T_var,T_elem>::operator= (
     const TAO_MngSeq_Out_T<T,T_var,T_elem> & p
   )
 {
-  this->ptr_ = ACE_const_cast (THIS_OUT_TYPE &, p).ptr_;
+  this->ptr_ = p.ptr_;
   return *this;
 }
 
