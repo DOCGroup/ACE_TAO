@@ -45,6 +45,9 @@ namespace TAO
 
   private:
 
+    /// Generate union field TypeCode declarations, if necessary.
+    int gen_case_typecodes (be_union * node);
+
     /// Generate union branch related TypeCode code.
     int visit_cases (be_union * node);
 
