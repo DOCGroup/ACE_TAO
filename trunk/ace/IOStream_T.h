@@ -136,12 +136,47 @@ public:
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 
 #if defined (ACE_LACKS_IOSTREAM_FX)
-  virtual int ipfx (int /* need */ = 0) {  return good(); }
-  virtual int ipfx0(void)         {  return good (); }  // Optimized ipfx(0)
-  virtual int ipfx1(void)         {  return good (); }  // Optimized ipfx(1)
+  virtual int ipfx (int noskip = 0)
+    {
+      if (good())
+        {
+          if (tie() != 0)
+             tie()->flush();
+          if (!noskip && flags() & skipws)
+            {
+              int ch;
+              while (isspace(ch = rdbuf()->sbumpc()))
+                  ;
+              if (ch != EOF)
+                  rdbuf()->sputbackc(ch);
+            }
+          if (good())
+              return (1);
+        }
+      setstate(failbit);
+      return (0);
+    }
+  virtual int ipfx0(void)         {  return ipfx (0); }  // Optimized ipfx(0)
+  virtual int ipfx1(void)                                // Optimized ipfx(1)
+    {
+      if (good())
+        {
+          if (tie() != 0)
+             tie()->flush();
+          if (good())
+              return (1);
+        }
+      setstate(failbit);
+      return (0);
+    }
   virtual void isfx (void)        {  return; }
-  virtual int opfx (void)         {  return good (); }
-  virtual void osfx (void)        {  put (' '); return; }
+  virtual int opfx (void)
+    {
+      if (good() && tie() != 0)
+        tie()->flush();
+      return (good());
+    }
+  virtual void osfx (void)        {  if (flags() & unitbuf) flush(); }
 #else
 #if defined (__GNUC__)
   virtual int ipfx0(void)         { return iostream::ipfx0 (); }  // Optimized ipfx(0)
