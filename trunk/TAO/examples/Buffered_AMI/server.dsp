@@ -7,19 +7,19 @@
 CFG=Buffered_AMI Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "server.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "server.mak" CFG="Buffered_AMI Server - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "Buffered_AMI Server - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "Buffered_AMI Server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -65,8 +65,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -76,7 +76,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib taod.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\lib" /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -123,13 +123,13 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "Buffered_AMI Server - Win32 Release"
 
-USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"
+USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -GC $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -161,13 +161,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Buffered_AMI Server - Win32 Debug"
 
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"
+USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
 InputPath=.\test.idl
 InputName=test
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -GC $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -197,7 +197,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
