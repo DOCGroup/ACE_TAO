@@ -1,3 +1,18 @@
+Sun Jan 16 21:32:18 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Moved the #defines for ACE_MIN and ACE_MAX into the
+	  new $ACE_ROOT/Min_Max.h file, along with their template function
+ 	  definitions.
+
+	* ace: Added a new file called Min_Max.h that uses templates, rather
+	  than macros, to implement the ACE_MIN and ACE_MAX macros.  This
+ 	  is a "Good Thing" because the use of macros has undesirable
+ 	  side-effects due to the "call-by-name" semantics of macro
+ 	  paramter expansion...  If for some reason your compiler can't
+ 	  handle this, please #define ACE_LACKS_MIN_MAX_TEMPLATES in your
+ 	  config.h file.  Thanks to Derek Dominish
+ 	  <Derek.Dominish@Australia.Boeing.com> for contributing this.
+
 Sun Jan 16 16:43:10 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config.h.in:
