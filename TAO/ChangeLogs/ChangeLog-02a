@@ -1,3 +1,12 @@
+Wed Mar  1 21:36:38 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/POAC.h:
+        * tao/POAC.i:
+
+          Carlos accidentally spilled a little bit of his life-supplying
+          coffee this morning and it finally caught up with him.  He 
+          missed the &'s in the operator>> for AdapterInactive.
+
 Wed Mar  1 18:01:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Exception.h:
