@@ -64,7 +64,25 @@ ACE_OutputCDR::from_string::from_string (ACE_CDR::Char *s,
 }
 
 ACE_INLINE
+ACE_OutputCDR::from_string::from_string (const ACE_CDR::Char *s,
+                                         ACE_CDR::ULong b,
+                                         ACE_CDR::Boolean nocopy)
+  : val_ (ACE_const_cast (ACE_CDR::Char *, s)),
+    bound_ (b),
+    nocopy_ (nocopy)
+{
+}
+
+ACE_INLINE
 ACE_InputCDR::to_string::to_string (ACE_CDR::Char *&s,
+                                    ACE_CDR::ULong b)
+  : val_ (ACE_const_cast (const ACE_CDR::Char *&, s)),
+    bound_ (b)
+{
+}
+
+ACE_INLINE
+ACE_InputCDR::to_string::to_string (const ACE_CDR::Char *&s,
                                     ACE_CDR::ULong b)
   : val_ (s),
     bound_ (b)
@@ -82,7 +100,25 @@ ACE_OutputCDR::from_wstring::from_wstring (ACE_CDR::WChar *ws,
 }
 
 ACE_INLINE
+ACE_OutputCDR::from_wstring::from_wstring (const ACE_CDR::WChar *ws,
+                                           ACE_CDR::ULong b,
+                                           ACE_CDR::Boolean nocopy)
+  : val_ (ACE_const_cast (ACE_CDR::WChar *, ws)),
+    bound_ (b),
+    nocopy_ (nocopy)
+{
+}
+
+ACE_INLINE
 ACE_InputCDR::to_wstring::to_wstring (ACE_CDR::WChar *&ws,
+                                      ACE_CDR::ULong b)
+  : val_ (ACE_const_cast (const ACE_CDR::WChar *&, ws)),
+    bound_ (b)
+{
+}
+
+ACE_INLINE
+ACE_InputCDR::to_wstring::to_wstring (const ACE_CDR::WChar *&ws,
                                       ACE_CDR::ULong b)
   : val_ (ws),
     bound_ (b)
@@ -1135,7 +1171,7 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_octet x)
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_InputCDR::to_string x)
 {
-  is.read_string (x.val_);
+  is.read_string (ACE_const_cast (char *&, x.val_));
   // check if the bounds are satisfied
   return (is.good_bit () &&
           (ACE_OS::strlen (x.val_) <= x.bound_));
@@ -1144,7 +1180,7 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_string x)
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_InputCDR::to_wstring x)
 {
-  is.read_wstring (x.val_);
+  is.read_wstring (ACE_const_cast (ACE_CDR::WChar *&, x.val_));
   // check if the bounds are satisfied
   return (is.good_bit () &&
           (ACE_OS::wslen (x.val_) <= x.bound_));
