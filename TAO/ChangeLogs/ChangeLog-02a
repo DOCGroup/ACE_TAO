@@ -1,3 +1,18 @@
+Tue Jan  9 11:32:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
+
+          Added files Unknown_User_Exception.* to project, as they
+          had been added to TAO_DynamicInterface.dsp.
+
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Server_Request.h:
+
+          Added #include of Dynamic_Adapter_Impl.h. This will force
+          the execution of the static constructor that registers
+          the derived Dynamic_Adapter service object, whether the
+          application is using DII or DSI.
+
 Tue Jan  9 09:13:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp: 
