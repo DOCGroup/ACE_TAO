@@ -1,9 +1,22 @@
+Wed Sep 22 14:40:15 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/ACE.cpp:
+
+	  Changed ACE::crc32() family of functions to NOT fold in the
+	  length of the string/buffer/iovec into the CRC.
+
+	* ace/ACE.cpp:
+	* ace/ACE.h:
+
+	  Changed return type of ACE::crc32() family of functions from
+	  u_long to ACE_UINT32.
+
 Wed Sep 22 13:46:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/msvc_cidlc.pl:
 
 	  CIDLC cannot be compiled in release mode. Enable only debug
-	  mode. 
+	  mode.
 
 Wed Sep 22 10:35:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 

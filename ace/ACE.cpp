@@ -422,7 +422,7 @@ ACE::hash_pjw (const wchar_t *str)
 
 namespace ACE
 {
-  const u_long crc_table_[] =
+  const ACE_UINT32 crc_table_[] =
     {
       0x0,
       0x04c11db7, 0x09823b6e, 0x0d4326d9, 0x130476dc, 0x17c56b6b,
@@ -483,36 +483,28 @@ namespace ACE
 // computes the CRC for it (it stops on the first '\0' character).
 
 // UNICOS UINT32's are 64-bit on the Cray PVP architecture
-#if defined(_UNICOS) || (ACE_SIZEOF_LONG == 8)
+#if defined(_UNICOS) 
 #  define COMPUTE(var, ch) (var) = ( 0x00000000ffffffff & ((var) << 8)) ^ ACE::crc_table_[(((var) >> 24) ^ (ch))&0xff]
 #else /* _UNICOS */
 #  define COMPUTE(var, ch) (var) = ((var) << 8) ^ ACE::crc_table_[(((var) >> 24) ^ (ch))&0xff]
 #endif /* _UNICOS */
 
-u_long
+ACE_UINT32
 ACE::crc32 (const char *string)
 {
   register ACE_UINT32 crc = 0;
-
-  u_long len = 0;
 
   for (const char *p = string;
        *p != 0;
        ++p)
     {
       COMPUTE (crc, *p);
-      ++len;
     }
-
-  // Include the length of the string.
-
-  for (; len != 0; len >>= 8)
-    COMPUTE (crc, len & 0xff);
 
   return ~crc;
 }
 
-u_long
+ACE_UINT32
 ACE::crc32 (const char *buffer, ACE_UINT32 len)
 {
   register ACE_UINT32 crc = 0;
@@ -520,22 +512,17 @@ ACE::crc32 (const char *buffer, ACE_UINT32 len)
   for (const char *p = buffer;
        p != buffer + len;
        ++p)
-    COMPUTE (crc, *p);
-
-  // Include the length of the string.
-
-  for (; len != 0; len >>= 8)
-    COMPUTE (crc, len & 0xff);
-
+    {
+      COMPUTE (crc, *p);
+    }
+  
   return ~crc;
 }
 
-u_long
+ACE_UINT32
 ACE::crc32 (iovec *iov, int len)
 {
   register ACE_UINT32 crc = 0;
-
-  int total_len = 0;
 
   for (int i = 0; i < len; ++i)
     {
@@ -543,14 +530,7 @@ ACE::crc32 (iovec *iov, int len)
            p != (char *) iov[i].iov_base + iov[i].iov_len;
            ++p)
         COMPUTE (crc, *p);
-
-      total_len += iov[i].iov_len;
     }
-
-  // Include the length of the string.
-
-  for (; total_len != 0; total_len >>= 8)
-    COMPUTE (crc, total_len & 0xff);
 
   return ~crc;
 }
