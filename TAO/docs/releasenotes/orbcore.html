@@ -451,13 +451,8 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
       with the compiler option interface_repo=1 or with
       #define TAO_HAS_INTERFACE_REPOSITORY 1 uncommented in
       TAO/tao/orbconf.h. Then build the TypeCodeFactory files in
-      the directory mentioned above. In the application, a service
-      config file containing the line
-      'dynamic TypeCodeFactory Service_Object * TypeCodeFactory_DLL:_make_TCF_Loader()'
-      should be in the directory. If it is named svc.conf, it will be loaded 
-      at startup, and if it has another name it can be loaded at the point
-      of your choosing in the application code. A command line option will also be
-      implemented shortly. A call to resolve_initial_references ("TypeCodeFactory")
+      the directory mentioned above. In the application, a 
+      call to resolve_initial_references ("TypeCodeFactory")
       will fetch the object reference, which should then be narrowed from
       CORBA::Object_ptr.
 
