@@ -1342,7 +1342,7 @@ static const CORBA::Long _oc_Messaging_PolicyValueSeq[] =
           CORBA::tk_octet,
 
         0,
-      0,
+      0
 };
 static CORBA::TypeCode _tc_TAO_tc_Messaging_PolicyValueSeq (CORBA::tk_alias, sizeof (_oc_Messaging_PolicyValueSeq), (char *) &_oc_Messaging_PolicyValueSeq, 0, sizeof (Messaging::PolicyValueSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
@@ -1360,33 +1360,7 @@ TAO_NAMESPACE_END
 
 // ****************************************************************
 
-#if defined (TAO_HAS_AMI_POLLER)
-
-static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x4d657373), ACE_NTOHL (0x6167696e), ACE_NTOHL (0x672f4578), ACE_NTOHL (0x63657074), ACE_NTOHL (0x696f6e48), ACE_NTOHL (0x6f6c6465), ACE_NTOHL (0x723a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:Messaging/ExceptionHolder:1.0
-  16, ACE_NTOHL (0x45786365), ACE_NTOHL (0x7074696f), ACE_NTOHL (0x6e486f6c), ACE_NTOHL (0x64657200),  // name = ExceptionHolder
-  3, // member count
-    20, ACE_NTOHL (0x69735f73), ACE_NTOHL (0x79737465), ACE_NTOHL (0x6d5f6578), ACE_NTOHL (0x63657074), ACE_NTOHL (0x696f6e00),  // name = is_system_exception
-    CORBA::tk_boolean,
-
-    11, ACE_NTOHL (0x62797465), ACE_NTOHL (0x5f6f7264), ACE_NTOHL (0x65720000),  // name = byte_order
-    CORBA::tk_boolean,
-
-    20, ACE_NTOHL (0x6d617273), ACE_NTOHL (0x68616c65), ACE_NTOHL (0x645f6578), ACE_NTOHL (0x63657074), ACE_NTOHL (0x696f6e00),  // name = marshaled_exception
-    CORBA::tk_sequence, // typecode kind
-    12, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_octet,
-
-    0,
-};
-static CORBA::TypeCode _tc_TAO_tc_Messaging_ExceptionHolder (CORBA::tk_struct, sizeof (_oc_Messaging_ExceptionHolder), (char *) &_oc_Messaging_ExceptionHolder, 0, sizeof (Messaging::ExceptionHolder));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ExceptionHolder, &_tc_TAO_tc_Messaging_ExceptionHolder)
-TAO_NAMESPACE_END
+//#if defined(TAO_HAS_AMI_CALLBACK)
 
 // *************************************************************
 // Messaging::ExceptionHolder::_tao_seq_Octet
@@ -1410,18 +1384,86 @@ static const CORBA::Long _oc_Messaging_ExceptionHolder__tao_seq_Octet[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_octet,
-
-  0,
+    0,
 };
-static CORBA::TypeCode _tc_TAO_tc_Messaging_ExceptionHolder__tao_seq_Octet (CORBA::tk_sequence, sizeof (_oc_Messaging_ExceptionHolder__tao_seq_Octet), (char *) &_oc_Messaging_ExceptionHolder__tao_seq_Octet, 0, sizeof (Messaging::ExceptionHolder::_tao_seq_Octet));
 
-CORBA::TypeCode_ptr Messaging::ExceptionHolder::_tc__tao_seq_Octet = &_tc_TAO_tc_Messaging_ExceptionHolder__tao_seq_Octet;
 
-#endif /* TAO_HAS_AMI_POLLER */
+Messaging::ExceptionHolder* Messaging::ExceptionHolder::_downcast (CORBA::ValueBase* v)
+{
+  if (v == 0) return 0;
+  return (ExceptionHolder* ) v->_tao_obv_narrow ((ptr_arith_t) &_downcast);
+}
+
+const char* Messaging::ExceptionHolder::_tao_obv_repository_id () const
+{
+  return this->_tao_obv_static_repository_id ();
+}
+
+void* Messaging::ExceptionHolder::_tao_obv_narrow (ptr_arith_t type_id)
+{
+  if (type_id == (ptr_arith_t) &_downcast)
+    return this;
+  void *rval = 0;
+  return rval;
+}
+
+CORBA::Boolean Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm)
+{
+  return this->_tao_marshal__Messaging_ExceptionHolder (strm);
+}
+
+CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal_v (TAO_InputCDR & strm)
+{
+  return this->_tao_unmarshal__Messaging_ExceptionHolder (strm);
+}
+
+CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (TAO_InputCDR &strm, Messaging::ExceptionHolder *&new_object)
+{
+  CORBA::Boolean retval = 1;
+  CORBA::ValueBase *base;   // %! should be a _var
+  CORBA::ValueFactory_ptr factory;   // %! should be a _var
+  if (!CORBA::ValueBase::_tao_unmarshal_pre (strm, factory, base,
+          Messaging::ExceptionHolder::_tao_obv_static_repository_id ()) )
+    {
+      return 0;
+    }
+  if (factory != 0)
+    {
+      base = factory->create_for_unmarshal ();
+      factory->_remove_ref ();
+      if (base == 0)  return 0;  // %! except.?
+      //%! ACE_DEBUG ((LM_DEBUG, "Messaging::ExceptionHolder::_tao_unmarshal %s\n", base->_tao_obv_repository_id () ));
+      retval = base->_tao_unmarshal_v (strm);
+      //%! ACE_DEBUG ((LM_DEBUG, "Messaging::ExceptionHolder::_tao_unmarshal retval unmarshal_v is %d\n", retval));
+      if (!retval) return 0;
+    }
+  // Now base must be null or point to the unmarshaled object.
+  // Align the pointer to the right subobject.
+  new_object = Messaging::ExceptionHolder::_downcast (base);
+  // %! unmarshal_post
+  return 1;
+}
+
+
+#if !defined (_MESSAGING_EXCEPTIONHOLDER___INIT_CS_)
+#define _MESSAGING_EXCEPTIONHOLDER___INIT_CS_
+
+Messaging::ExceptionHolder_init::~ExceptionHolder_init ()
+{
+}
+
+const char* 
+Messaging::ExceptionHolder_init::tao_repository_id ()
+{
+  return Messaging::ExceptionHolder::_tao_obv_static_repository_id ();
+}
+
+
+#endif /* end #if !defined */
+
 
 // ****************************************************************
 
-#if defined(TAO_HAS_AMI_CALLBACK)
 
 Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_narrow (
     CORBA::Object_ptr obj,
@@ -1505,7 +1547,257 @@ TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyHandler, &_tc_TAO_tc_Messaging_ReplyHandler)
 TAO_NAMESPACE_END
 
-#endif /* TAO_HAS_AMI_CALLBACK */
+CORBA::Boolean 
+OBV_Messaging::ExceptionHolder::_tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &strm){
+  //  @@: Michael
+  return /*OBV_Messaging::ExceptionHolder::*/_tao_marshal_state (strm);
+  
+}
+CORBA::Boolean OBV_Messaging::ExceptionHolder::_tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &strm){
+  // @@: Michael
+  return /*OBV_Messaging::ExceptionHolder::*/_tao_unmarshal_state (strm);
+  
+}
+// accessor to set the member
+void
+OBV_Messaging::ExceptionHolder::is_system_exception (CORBA::Boolean val) // set
+{
+  // set the value
+  this->_pd_is_system_exception = val;
+}
+// retrieve the member
+CORBA::Boolean
+OBV_Messaging::ExceptionHolder::is_system_exception (void) const
+{
+  return this->_pd_is_system_exception;
+}
+
+// accessor to set the member
+void
+OBV_Messaging::ExceptionHolder::byte_order (CORBA::Boolean val) // set
+{
+  // set the value
+  this->_pd_byte_order = val;
+}
+// retrieve the member
+CORBA::Boolean
+OBV_Messaging::ExceptionHolder::byte_order (void) const
+{
+  return this->_pd_byte_order;
+}
+
+
+#if !defined (_MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CS_)
+#define _MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CS_
+
+// *************************************************************
+// Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_var
+// *************************************************************
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (Messaging::ExceptionHolder::_tao_seq_Octet *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_tao_seq_Octet_var (const Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_var::~_tao_seq_Octet_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (Messaging::ExceptionHolder::_tao_seq_Octet *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_var &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator= (const Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, Messaging::ExceptionHolder::_tao_seq_Octet (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator const Messaging::ExceptionHolder::_tao_seq_Octet &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator Messaging::ExceptionHolder::_tao_seq_Octet &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator Messaging::ExceptionHolder::_tao_seq_Octet &() const// cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const Messaging::ExceptionHolder::_tao_seq_Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *&
+Messaging::ExceptionHolder::_tao_seq_Octet_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::_retn (void)
+{
+  Messaging::ExceptionHolder::_tao_seq_Octet *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class Messaging::ExceptionHolder::_tao_seq_Octet_out
+// *************************************************************
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (Messaging::ExceptionHolder::_tao_seq_Octet *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (Messaging::ExceptionHolder::_tao_seq_Octet_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+Messaging::ExceptionHolder::_tao_seq_Octet_out::_tao_seq_Octet_out (const Messaging::ExceptionHolder::_tao_seq_Octet_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Messaging::ExceptionHolder::_tao_seq_Octet_out&,p).ptr_)
+{}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_out &
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (const Messaging::ExceptionHolder::_tao_seq_Octet_out &p)
+{
+  this->ptr_ = ACE_const_cast (Messaging::ExceptionHolder::_tao_seq_Octet_out&,p).ptr_;
+  return *this;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet_out &
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator= (Messaging::ExceptionHolder::_tao_seq_Octet *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator Messaging::ExceptionHolder::_tao_seq_Octet *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *&
+Messaging::ExceptionHolder::_tao_seq_Octet_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE Messaging::ExceptionHolder::_tao_seq_Octet *
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA::Octet &
+Messaging::ExceptionHolder::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+// accessor to set the member
+void
+OBV_Messaging::ExceptionHolder::marshaled_exception (const Messaging::ExceptionHolder::_tao_seq_Octet &val)
+{
+  ACE_NEW (
+      this->_pd_marshaled_exception,
+      /*Messaging::ExceptionHolder::*/_tao_seq_Octet (val)
+    );
+}
+// readonly get method 
+const Messaging::ExceptionHolder::_tao_seq_Octet &
+OBV_Messaging::ExceptionHolder::marshaled_exception (void) const
+{
+  return *this->_pd_marshaled_exception;
+}
+// read/write get method 
+Messaging::ExceptionHolder::_tao_seq_Octet &
+OBV_Messaging::ExceptionHolder::marshaled_exception (void)
+{
+  return *this->_pd_marshaled_exception;
+}
+
+
+//#endif /* TAO_HAS_AMI_CALLBACK */
 
 #if defined(TAO_HAS_AMI_POLLER)
 
@@ -1948,7 +2240,8 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Poller, &_tc_TAO_tc_Messaging_Poller)
 TAO_NAMESPACE_END
-#endif
+
+#endif /* TAO_HAS_AMI_POLLER */
 
 // ****************************************************************
 
@@ -2227,74 +2520,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSe
 
 // ****************************************************************
 
-#if defined(TAO_HAS_AMI_POLLER)
-void operator<<= (CORBA::Any &_tao_any, const Messaging::ExceptionHolder &_tao_elem) // copying
-{
-  Messaging::ExceptionHolder *_any_val;
-  ACE_NEW (_any_val, Messaging::ExceptionHolder (_tao_elem));
-  if (!_any_val) return;
-  ACE_TRY_NEW_ENV
-  {
-    _tao_any.replace (Messaging::_tc_ExceptionHolder, _any_val, 1, ACE_TRY_ENV); // copy the value
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-    delete _any_val;
-  }
-  ACE_ENDTRY;
-}
-
-void operator<<= (CORBA::Any &_tao_any, Messaging::ExceptionHolder *_tao_elem) // non copying
-{
-  ACE_TRY_NEW_ENV
-  {
-    _tao_any.replace (Messaging::_tc_ExceptionHolder, _tao_elem, 1, ACE_TRY_ENV); // consume it
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY {}
-  ACE_ENDTRY;
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ExceptionHolder *&_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (Messaging::_tc_ExceptionHolder, ACE_TRY_ENV)) return 0; // not equal
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = (Messaging::ExceptionHolder *)_tao_any.value ();
-      return 1;
-      }
-    else
-    {
-      ACE_NEW_RETURN (_tao_elem, Messaging::ExceptionHolder, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-      if (stream.decode (Messaging::_tc_ExceptionHolder, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
-      {
-        ((CORBA::Any *)&_tao_any)->replace (Messaging::_tc_ExceptionHolder, _tao_elem, 1, ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-        return 1;
-      }
-      else
-      {
-        delete _tao_elem;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-    delete _tao_elem;
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-// ****************************************************************
+#if defined(TAO_HAS_AMI_CALLBACK) || defined(TAO_HAS_AMI_POLLER)
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr _tao_elem)
 {
@@ -2346,7 +2572,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyHandler_
   return 0;
 }
 
+#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+
 // ****************************************************************
+
+#if defined(TAO_HAS_AMI_POLLER)
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::Poller_ptr _tao_elem)
 {

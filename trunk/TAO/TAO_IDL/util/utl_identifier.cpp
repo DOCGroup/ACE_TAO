@@ -102,6 +102,15 @@ Identifier::get_string ()
   return pv_string;
 }
 
+void
+Identifier::replace_string (const char * s)
+{
+  if (this->pv_string)
+    ACE_OS::free (this->pv_string);
+
+  pv_string = ACE_OS::strdup (s);
+}
+
 // Compare two Identifier *
 long
 Identifier::compare (Identifier *o)

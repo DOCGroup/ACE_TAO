@@ -60,6 +60,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       // forward declaration
       *os << "class " << node->local_name () << ";" << be_nl;
 
+      *os << "typedef " << node->local_name ()
+          << " *" << node->local_name () << "_ptr;" << be_nl;
+
       // generate the ifdefined macro for the _var type
       os->gen_ifdef_macro (node->flat_name (), "_var");
 

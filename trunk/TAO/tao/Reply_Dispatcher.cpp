@@ -178,12 +178,49 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                   "(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
     }
 
+  // @@ Michael: Addition
+  // Check the reply error.
+
+  // @@Michael: Do this. I think we have to marshal
+  // it in order to be able to handle it as the other exceptions.
+  // if (this->reply_status_ == -1)
+  //      ACE_THROW_RETURN (CORBA::COMM_FAILURE (
+  //        CORBA_SystemException::_tao_minor_code (
+  //          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+  //          errno),
+  //        CORBA::COMPLETED_MAYBE),
+  //      TAO_INVOKE_EXCEPTION);
+
+  // @@ Michael: We need to refine the following.
+  CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
+  switch (reply_status)
+    {
+    case TAO_GIOP_NO_EXCEPTION:
+      reply_error = TAO_AMI_REPLY_OK;
+      break;
+    case TAO_GIOP_USER_EXCEPTION:
+      reply_error = TAO_AMI_REPLY_USER_EXCEPTION;
+      break;
+    case TAO_GIOP_SYSTEM_EXCEPTION:
+      reply_error = TAO_AMI_REPLY_SYSTEM_EXCEPTION;
+      break;
+    default: 
+    case TAO_GIOP_LOCATION_FORWARD:
+      // @@ Michael: Not even the spec mentions this case.
+      //             We have to think about this case.
+      // Handle the forwarding and return so the stub restarts the
+      // request!
+      reply_error = TAO_AMI_REPLY_NOT_OK;
+      break;
+    }
+
   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
   ACE_TRY
     {
       // Call the Reply Handler's skeleton.
       reply_handler_skel_ (message_state_->cdr,
                            reply_handler_,
+                           reply_error,
                            ACE_TRY_ENV);
     }
   ACE_CATCHANY

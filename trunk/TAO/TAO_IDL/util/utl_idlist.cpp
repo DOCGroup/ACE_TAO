@@ -108,8 +108,8 @@ UTL_List *
 UTL_IdList::copy ()
 {
   if (tail () == NULL)
-    return (UTL_List *) new UTL_IdList (head (), NULL);
-  return (UTL_List *) new UTL_IdList (head (), (UTL_IdList *) tail ()->copy ());
+    return (UTL_List *) new UTL_IdList (new Identifier (head ()->get_string ()), NULL);
+  return (UTL_List *) new UTL_IdList (new Identifier (head ()->get_string ()), (UTL_IdList *) tail ()->copy ());
 }
 
 // Get list item
