@@ -76,7 +76,13 @@ main (int argc, char *[])
       TEST_THIS (int, "TEST_VALUE_NEGATIVE", 4, -10);
       TEST_THIS (double, "TEST_VALUE_NEGATIVE", -1.0, -10.2);
       TEST_THIS (long, "TEST_VALUE_NEGATIVE", 0, -10L);
+#if defined (linux) && defined (__alpha)
+      // ::strtoul () appears to be broken on Linux 2.0.30/Alpha:
+      // it returns 0 for a negative number.
       TEST_THIS (unsigned long, "TEST_VALUE_NEGATIVE", 0, 0);
+#else  /* ! linux || ! __alpha */
+      TEST_THIS (unsigned long, "TEST_VALUE_NEGATIVE", 0, (unsigned long) -10);
+#endif /* ! linux || ! __alpha */
       TEST_THIS (short, "TEST_VALUE_NEGATIVE", 0, -10);
 
       char* defstr = "Sarah Cleeland is Two!";
