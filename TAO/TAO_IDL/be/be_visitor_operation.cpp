@@ -61,5 +61,10 @@
 #include "be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp"
 #include "be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp"
 #include "be_visitor_operation/ami_exception_holder_operation_cs.cpp"
+#include "be_visitor_operation/smart_proxy_ch.cpp"
+#include "be_visitor_operation/smart_proxy_cs.cpp"
+
+
+
 
 ACE_RCSID(be, be_visitor_operation, "$Id$")

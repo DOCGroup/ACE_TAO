@@ -198,6 +198,10 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
       return new be_visitor_interface_cdr_op_cs (new_ctx);
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
+      return new be_visitor_interface_smart_proxy_ch (new_ctx);
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
+      return new be_visitor_interface_smart_proxy_cs (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_FWD_CH:
       return new be_visitor_interface_fwd_ch (new_ctx);
@@ -422,6 +426,9 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH:
+    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
+      
       return new be_visitor_attribute (new_ctx);
 
     case TAO_CodeGen::TAO_EXCEPTION_CH:
@@ -516,6 +523,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_direct_collocated_sh (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS:
       return new be_visitor_operation_direct_collocated_ss (new_ctx);
+    case TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH:
+      return new be_visitor_operation_smart_proxy_ch (new_ctx);
+    case TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS:
+      return new be_visitor_operation_smart_proxy_cs (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_RETTYPE_CH:
     case TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS:
       return new be_visitor_operation_rettype (new_ctx);
@@ -657,6 +668,10 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_direct_collocated_sh (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS:
       return new be_visitor_operation_direct_collocated_ss (new_ctx);
+    case TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH:
+      return new be_visitor_operation_smart_proxy_ch (new_ctx);
+    case TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS:
+      return new be_visitor_operation_smart_proxy_cs (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_RETTYPE_CH:
     case TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS:
