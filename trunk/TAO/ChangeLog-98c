@@ -1,13 +1,18 @@
 Thu Sep  3 20:49:13 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: Removed some warnings about
- 	signed with unsigned comparisons.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp: Removed some warnings about
+        signed with unsigned comparisons.
 
 Thu Sep 03 18:57:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/start_services: removed -ORBobjrefstyle url
           from Naming_Service startup.  It caused interoperability problems
           with VisiBroker java when running Simulator/DOVEBrowser.
+
+        * tests/POA/TIE/Makefile: fixed g++ exclusion to work in
+          with nested makes, by specifying all, clean, and realclean
+          targets.  Also, enhanced the g++ check so that it allows
+          egcs (and g++ 2.8.x) to build this module.
 
 Thu Sep  3 16:22:54 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
@@ -20,13 +25,13 @@ Thu Sep  3 15:52:33 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp: Fixed g++ warnings.
 
 Thu Sep 03 14:00:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-	  
-	* tests/Cubit/TAO/MT_Cubit/MT_Cubit.dsw:
-	* tests/Cubit/TAO/MT_Cubit/{client,server}.dsp: Updated project
-	  settings.
-	
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: Removed an unused local
-	  variable.  
+
+        * tests/Cubit/TAO/MT_Cubit/MT_Cubit.dsw:
+        * tests/Cubit/TAO/MT_Cubit/{client,server}.dsp: Updated project
+          settings.
+
+        * tests/Cubit/TAO/MT_Cubit/server.cpp: Removed an unused local
+          variable.
 
 Thu Sep  3 13:36:36 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
