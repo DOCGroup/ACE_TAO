@@ -1,3 +1,13 @@
+
+Thu Jun 19 09:55:55 2003  Gan Deng <gan.deng@vanderbilt.edu>
+
+	* performance-tests/Sequence_Latency/AMI/*: 
+
+          New test for the sequence of different data types. This
+          is based on performance-tests/Latency/AMI/*, but uses 
+          different data types.
+
+
 Thu Jun 19 14:56:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
@@ -5,6 +15,7 @@ Thu Jun 19 14:56:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
           Documentation update
+
 
 Thu Jun 19 06:12:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
