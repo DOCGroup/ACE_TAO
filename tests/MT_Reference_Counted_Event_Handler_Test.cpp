@@ -1376,7 +1376,7 @@ template class test<ACE_WFMO_Reactor>;
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Timer_Cancellation_Test"));
+  ACE_START_TEST (ACE_TEXT ("MT_Reference_Counted_Event_Handler_Test"));
 
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("threads not supported on this platform\n")));
