@@ -44,7 +44,7 @@ bugs.
 * Menu:
 
 * Copying::			GNU `gperf' General Public License says
-                    how you can copy and share `gperf'.
+                                how you can copy and share `gperf'.
 * Contributors::		People who have contributed to `gperf'.
 * Motivation::			Static search structures and GNU GPERF.
 * Search Structures::		Static search structures and GNU `gperf'
@@ -1111,20 +1111,20 @@ Foundation, 1989.
 
 Tag Table:
 Node: Top1224
-Node: Copying2499
-Node: Contributors15802
-Node: Motivation16902
-Node: Search Structures18169
-Node: Description21722
-Node: Input Format23542
-Node: Declarations24337
-Node: Keywords26644
-Node: Functions28235
-Node: Output Format28729
-Node: Options31199
-Node: Bugs44569
-Node: Projects47256
-Node: Implementation48833
-Node: Bibliography49552
+Node: Copying2511
+Node: Contributors15814
+Node: Motivation16914
+Node: Search Structures18181
+Node: Description21734
+Node: Input Format23554
+Node: Declarations24349
+Node: Keywords26656
+Node: Functions28247
+Node: Output Format28741
+Node: Options31211
+Node: Bugs44581
+Node: Projects47268
+Node: Implementation48845
+Node: Bibliography49564
 
 End Tag Table
