@@ -979,7 +979,7 @@ public:
   // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
 
   void exit (void *status);
-  // Cleanup the thread-specific objects and exit with <status>.
+  // Cleanup the thread-specific objects.  Does _NOT_ exit the thread.
 
   int insert (ACE_thread_key_t key, void (*destructor)(void *), void *inst);
   // Insert a <key, destructor> tuple into the table.
@@ -1089,8 +1089,8 @@ ACE_TSS_Cleanup::exit (void * /* status */)
 
 	  key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
 
-	  if ((ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0)
-	      && (key_info->destructor_) 
+	  if (key_info->destructor_
+	      && ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0
 	      && tss_info)
 	    {
  	      info_arr[info_ix].key_ = key_info->key_;
@@ -1113,7 +1113,12 @@ ACE_TSS_Cleanup::exit (void * /* status */)
 
 	ACE_OS::thr_getspecific (info_arr[i].key_, &tss_info);
 
-	(*info_arr[i].destructor_)(tss_info);
+        if (tss_info != 0)
+          {
+            // Only call the destructor if the value is non-zero for this
+            // thread.
+            (*info_arr[i].destructor_)(tss_info);
+          }
       }
 
     // Acquiring ACE_TSS_Cleanup::lock_ to free TLS keys and remove
@@ -1312,14 +1317,26 @@ template class ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref>;
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
 
 void
+ACE_OS::cleanup_tss ()
+{
+#if defined (ACE_HAS_TSS_EMULATION)
+  // Call destructors for thread-specific storage.
+  ACE_TSS_Cleanup::instance ()->exit (0);
+#else
+  // Just close the ACE_Log_Msg for the current (which should be main) thread.
+  ACE_Log_Msg::close ();
+#endif /* ACE_HAS_TSS_EMULATION */
+}
+
+void
 ACE_Thread_Adapter::inherit_log_msg (void)
 {
+#if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
   // Inherit the logging features if the parent thread has an
   // <ACE_Log_Msg>.  Note that all of the following operations occur
   // within thread-specific storage.
   ACE_Log_Msg *new_log = ACE_LOG_MSG;
 
-#if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
   if (this->ostream_)
     {
       new_log->msg_ostream (this->ostream_);
@@ -1338,7 +1355,11 @@ void *
 ACE_Thread_Adapter::invoke (void)
 {
 #if defined (ACE_HAS_TSS_EMULATION)
-  ACE_TSS_Emulation::tss_allocate ();
+  // As early as we can in the execution of the new thread, allocate
+  // its local TS storage.  Allocate it on the stack, to save dynamic
+  // allocation/dealloction.
+  void *ts_storage[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
+  ACE_TSS_Emulation::tss_open (ts_storage);
 #endif /* ACE_HAS_TSS_EMULATION */
 
   // Inherit the logging features if the parent thread has an
@@ -1369,6 +1390,11 @@ ACE_Thread_Adapter::invoke (void)
   // If dropped off end, call destructors for thread-specific storage.
   ACE_TSS_Cleanup::instance ()->exit (status);
 
+#if defined (ACE_HAS_TSS_EMULATION)
+  // Close the thread's local TS storage.
+  ACE_TSS_Emulation::tss_close (ts_storage);
+#endif /* ACE_HAS_TSS_EMULATION */
+
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   // Exit the thread.
   // Allow CWinThread-destructor to be invoked from AfxEndThread.
@@ -1376,17 +1402,10 @@ ACE_Thread_Adapter::invoke (void)
   // thread now if we are running an MFC thread.
   CWinThread *pThread = ::AfxGetThread ();
   if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-# endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
     {
-# if defined (ACE_WIN32)
       ::_endthreadex ((DWORD) status);
-# else /* ! ACE_WIN32 */
-#   if defined (ACE_HAS_TSS_EMULATION)
-      // Delete the thread's TSS.
-      ACE_TSS_Emulation::tss_deallocate ();
-#   endif /* ACE_HAS_TSS_EMULATION */
-# endif /* ! ACE_WIN32 */
     }
+# endif /* ACE_WIN32 && ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
   return status;
 #else
