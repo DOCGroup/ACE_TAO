@@ -42,6 +42,7 @@ DLList_Test
 Dynamic_Priority_Test
 Enum_Interfaces_Test
 Env_Value_Test: !chorus
+FIFO_Test: !MSVC
 Framework_Component_Test: !STATIC
 Future_Test
 Future_Set_Test
