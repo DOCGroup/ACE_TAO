@@ -528,6 +528,10 @@ SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Base.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
@@ -795,6 +799,10 @@ SOURCE=.\Profile.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Profile_Transport_Resolver.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.cpp
 # End Source File
 # Begin Source File
@@ -816,6 +824,10 @@ SOURCE=.\Reactive_Flushing_Strategy.cpp
 # Begin Source File
 
 SOURCE=.\Refcounted_ObjectKey.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Remote_Invocation.cpp
 # End Source File
 # Begin Source File
 
@@ -894,6 +906,10 @@ SOURCE=.\Stub_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Invocation.cpp
 # End Source File
 # Begin Source File
 
@@ -1452,6 +1468,10 @@ SOURCE=.\Invocation.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Base.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
@@ -1736,6 +1756,10 @@ SOURCE=.\Profile.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Profile_Transport_Resolver.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.h
 # End Source File
 # Begin Source File
@@ -1761,6 +1785,10 @@ SOURCE=.\Reactive_Flushing_Strategy.h
 # Begin Source File
 
 SOURCE=.\Refcounted_ObjectKey.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Remote_Invocation.h
 # End Source File
 # Begin Source File
 
@@ -1857,6 +1885,10 @@ SOURCE=.\Stub_Factory.h
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Invocation.h
 # End Source File
 # Begin Source File
 

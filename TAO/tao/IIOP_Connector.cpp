@@ -277,7 +277,7 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 }
 
 TAO_Transport *
-TAO_IIOP_Connector::make_connection (TAO::Profile_Connection_Resolver *r,
+TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface &desc,
                                      ACE_Time_Value *max_wait_time)
 {
@@ -285,7 +285,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Connection_Resolver *r,
     this->remote_endpoint (desc.endpoint ());
 
    if (iiop_endpoint == 0)
-     return -1;
+     return 0;
 
    const ACE_INET_Addr &remote_address =
      iiop_endpoint->object_addr ();
@@ -363,7 +363,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Connection_Resolver *r,
        (void) this->active_connect_strategy_->post_failed_connect (svc_handler,
                                                                    status);
 
-       return -1;
+       return 0;
      }
 
    if (TAO_debug_level > 2)
@@ -378,7 +378,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Connection_Resolver *r,
 
    // Add the handler to Cache
    int retval =
-     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
                                                                               base_transport);
 
    if (retval != 0 && TAO_debug_level > 0)

@@ -9,7 +9,7 @@
 #include "debug.h"
 #include "Connect_Strategy.h"
 #include "Client_Strategy_Factory.h"
-
+#include "Base_Transport_Property.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Transport_Connector.inl"
@@ -266,13 +266,13 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
 
 
 TAO_Transport*
-TAO_Connector::connect (TAO::Profile_Connection_Resolver *r,
+TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         TAO_Endpoint *ep,
                         ACE_Time_Value *timeout
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (this->set_validate_endpoint (ep) == -1)
-    return -1;
+    return 0;
 
   TAO_Base_Transport_Property desc (ep);
 
@@ -283,7 +283,7 @@ TAO_Connector::connect (TAO::Profile_Connection_Resolver *r,
   // @@todo: We need to send the timeout value to the cache registry
   // too. That should be the next step!
   if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
-        desc,
+        &desc,
         base_transport) == 0)
     {
       if (TAO_debug_level > 2)

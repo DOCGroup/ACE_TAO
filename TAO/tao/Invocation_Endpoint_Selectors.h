@@ -32,7 +32,7 @@ class TAO_GIOP_Invocation;
 
 namespace TAO
 {
-  class Profile_Connection_Resolver;
+  class Profile_Transport_Resolver;
 }
 
 /**
@@ -63,7 +63,7 @@ public:
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
                                 ACE_ENV_ARG_DECL) = 0;
 
-  virtual void select_endpoint (TAO::Profile_Connection_Resolver *r
+  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r
                                 ACE_ENV_ARG_DECL) = 0;
 
   /**
@@ -111,7 +111,7 @@ public:
 
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
                                 ACE_ENV_ARG_DECL);
-  virtual void select_endpoint (TAO::Profile_Connection_Resolver *r
+  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r
                                 ACE_ENV_ARG_DECL);
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile

@@ -50,6 +50,12 @@ TAO_GIOP_Message_Lite::init (CORBA::Octet,
   return;
 }
 
+TAO_OutputCDR &
+TAO_GIOP_Message_Lite::out_stream (void)
+{
+  return this->cdr_;
+}
+
 void
 TAO_GIOP_Message_Lite::reset (void)
 {

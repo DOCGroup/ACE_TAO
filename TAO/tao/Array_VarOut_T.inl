@@ -37,7 +37,7 @@ TAO_Array_Var_Base_T<T,T_slice,T_life>::operator T_slice * const & () const
 template<typename T, typename T_slice, typename T_life>
 ACE_INLINE
 T_slice const &
-TAO_Array_Var_Base_T<T_slice,T_life>::operator[] (CORBA::ULong index) const
+TAO_Array_Var_Base_T<T,T_slice,T_life>::operator[] (CORBA::ULong index) const
 {
   return this->ptr_[index];
 }
@@ -62,7 +62,7 @@ TAO_Array_Var_Base_T<T,T_slice,T_life>::operator[] (CORBA::ULong index)
 
 template<typename T, typename T_slice, typename T_life>
 ACE_INLINE
-T_slice * const
+const T_slice *
 TAO_Array_Var_Base_T<T,T_slice,T_life>::in (void) const
 {
   return this->ptr_;

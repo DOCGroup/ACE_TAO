@@ -20,30 +20,31 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Remote_Invocation.h"
 
-namespace  CORBA
-{
-  class Object;
-}
+class TAO_Operation_Deatils;
+class TAO_Synch_Reply_Dispatcher;
 
 namespace TAO
 {
-  /**
-   * @class Synch_Invocation
-   *
-   * @brief Base class for Twoway_Invocation and Oneway_Invocation.
-   *
-   */
-  class TAO_Export Synch_Invocation
+  class Profile_Transport_Resolver;
+
+  class TAO_Export Synch_Twoway_Invocation: public Remote_Invocation
   {
   public:
-    Synch_Invocation ();
-  };
+    Synch_Twoway_Invocation (Profile_Transport_Resolver &resolver,
+                             TAO_Operation_Details &detail);
 
-  class TAO_Export Synch_Twoway_Invocation: public Synch_Invocation
-  {
-  public:
+    int communicate (Argument **args,
+                     int args_number
+                     ACE_ENV_ARG_DECL);
 
+  private:
+
+    void check_reply_status (TAO_Synch_Reply_Dispatcher &rd,
+                             Argument **args,
+                             int args_number
+                             ACE_ENV_ARG_DECL);
   };
 }
 

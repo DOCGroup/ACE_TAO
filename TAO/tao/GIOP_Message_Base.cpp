@@ -27,7 +27,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                     this)
     , out_stream_ (this->buffer_,
                    sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
-                   byte_order,
+                   TAO_ENCAP_BYTE_ORDER,
                    orb_core->output_cdr_buffer_allocator (),
                    orb_core->output_cdr_dblock_allocator (),
                    orb_core->output_cdr_msgblock_allocator (),
@@ -56,6 +56,11 @@ TAO_GIOP_Message_Base::init (CORBA::Octet major,
                                  minor);
 }
 
+TAO_OutputCDR &
+TAO_GIOP_Message_Base::out_stream (void)
+{
+  return this->out_stream_;
+}
 
 void
 TAO_GIOP_Message_Base::reset (void)
