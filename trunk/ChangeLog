@@ -1,3 +1,8 @@
+Thu Aug 02 13:04:19 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace.icc: Added Intrusive_List.cpp to the TEMPLATE_FILES
+          section.
+
 Thu Aug 02 06:59:39 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Basic_Types.h (ACE_SIZEOF_WCHAR): If ACE_HAS_XPG4_MULTIBYTE_CHAR
