@@ -1,3 +1,18 @@
+Mon Jan  4 16:52:08 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Added the following project files for Time Service on NT.
+	* orbsvcs/Time_Service/Time_Service.dsw
+	* orbsvcs/Time_Service/Time_Service_Clerk.dsp
+	* orbsvcs/Time_Service/Time_Service_Server.dsp
+
+	* orbsvcs/tests/Time/Time_Service_Test.dsw
+	* orbsvcs/tests/Time/Time_Service_Test.dsp
+
+	* orbsvcs/tests/Time/Client_i.cpp: Changed the TAO_CATCHANY to
+	  TAO_CATCH (SystemException, sysex). The former somehow wasn't
+	  catching CORBA::NO_IMPLEMENT on NT.
+
+
 Mon Jan  4 16:30:27 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao_idl/be/be_visitor_union_branch/private_ch.cpp:
