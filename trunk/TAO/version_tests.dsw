@@ -219,6 +219,60 @@ Package=<4>
 
 ###############################################################################
 
+Project: "AMI_Test_Client"=.\tests\AMI\AMI_Test_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "AMI_Test_Server"=.\tests\AMI\AMI_Test_Server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "AMI_Test_Simple_Client"=.\tests\AMI\AMI_Test_Simple_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Buffered_AMI Client"=.\examples\Buffered_AMI\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1846,6 +1900,21 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ORB_init"=.\tests\ORB_init\ORB_init.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
     End Project Dependency
 }}}
 
