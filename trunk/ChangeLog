@@ -1,5 +1,9 @@
 Thu Aug  5 13:17:26 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
+	* examples/NT_Service/ntsvc.{h,cpp}: Added a destructor to 
+	  Service that cancels the timer.  Thanks to Scott Harris
+ 	  <harris_s@ociweb.com> for this fix.
+
 	* ace/ACE.cpp (sock_error): Added support for WSAEISCONN.
 	  Thanks to Boris Kaminer <boris_kaminer@mail.ru> for reporting
  	  this.
