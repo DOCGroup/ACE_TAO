@@ -168,6 +168,13 @@ public:
   bool disable_rt_collocation_resolver (void) const;
   void disable_rt_collocation_resolver (bool);
 
+  /// Accepts the list of preferred interfaces and does a simple
+  /// semantic check on the string
+  bool preferred_interfaces (const char *s);
+  const char *preferred_interfaces (void) const;
+
+  void enforce_pref_interfaces (bool p);
+  bool enforce_pref_interfaces (void) const;
 private:
   // Each "endpoint" is of the form:
   //
@@ -269,6 +276,11 @@ private:
    * loaded if the RTORB is used.
    */
   bool disable_rt_collocation_resolver_;
+
+  /// Preferred network interfaces as a string
+  ACE_CString pref_network_;
+
+  bool enforce_preferred_interfaces_;
 };
 
 #if defined (__ACE_INLINE__)

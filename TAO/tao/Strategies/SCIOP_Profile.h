@@ -103,10 +103,25 @@ protected:
    * one endpoint.
    *
    * Currently, a profile contains more than one endpoint, i.e.,
-   * list contains more than just the head, only when RTCORBA is enabled.
-   * However, in the near future, this will be used in nonRT
-   * mode as well, e.g., to support TAG_ALTERNATE_SCIOP_ADDRESS
-   * feature.
+   * list contains more than just the head, only for two cases
+   * (1) when RTCORBA is enabled and
+   * (2) the ORB is initialized with -ORBPreferredInterfaces option.
+   * However, in the near future, this will be used in for mode as
+   * well, e.g., to support TAG_ALTERNATE_IIOP_ADDRESS  feature.
+   *
+   * This is probably as good a place to discuss how the list of
+   * endpoints is used for #2. If the ORB is configured to use
+   * preferred interfaces for invocation, TAO creates an endpoint per
+   * preferred interface. To be clear, every tuple
+   * <destination:target> will have an endpoint. What TAO essentially
+   * does is that creates it multiple endpoints so that the invocation
+   * code path can use existing iterating techniques to try one
+   * preferred interface after another (if the first did not work). If
+   * the ORB is configured with -ORBEnforcePreferredInterface set to
+   * false in addition to the ORBPreferredInterfaces option , TAO
+   * creates another endpoint with the preferred bit set to null, so
+   * that the invocation code can fall back to a SCTP stack returned
+   * local address.
    * Addressing info of the default endpoint, i.e., head of the list,
    * is transmitted using standard SCIOP ProfileBody components.  See
    * <encode_endpoints> method documentation above for how the rest of

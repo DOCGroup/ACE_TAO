@@ -89,7 +89,6 @@ int
 TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 {
   // Decode multiple endpoints, starting with the primary (endpoint_)
-
   CORBA::StringSeq endpointSeq;
   cdr >> endpointSeq;
 
@@ -106,15 +105,20 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 
   // Add multiple endpoints > 1
 
-  for (int i=endpointSeq.length() - 1; i > 0 ; i--) {
-    TAO_SCIOP_Endpoint *endpoint = 0;
-    ACE_NEW_RETURN (endpoint,
-                    TAO_SCIOP_Endpoint (endpointSeq[i].in(),
-                                        this->endpoint_.port_,
-                                        this->endpoint_.priority()),
-                    -1);
-    this->add_endpoint (endpoint);
-  }
+  for (int i=endpointSeq.length() - 1; i > 0 ; i--)
+    {
+      TAO_SCIOP_Endpoint *endpoint = 0;
+      ACE_NEW_RETURN (endpoint,
+                      TAO_SCIOP_Endpoint (endpointSeq[i].in(),
+                                          this->endpoint_.port_,
+                                          this->endpoint_.priority()),
+                      -1);
+
+      this->count_ +=
+        endpoint->preferred_interfaces (this->orb_core ());
+
+      this->add_endpoint (endpoint);
+    }
 
   // SCIOR has a max_streams variable
   // We are ignoring it for now since ACE SCTP code fixes at 1 anyway.

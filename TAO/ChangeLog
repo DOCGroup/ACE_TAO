@@ -1,3 +1,73 @@
+Sun Nov 28 05:14:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Connector_Registry.cpp:
+
+	  Used an auto_ptr <> instead of using delete's in the error
+	  paths. 
+
+	The following checkin adds a simple command line option which
+        allows configuring the client ORB during initializing with a
+        capability to choose preferred interface(s). This is very useful
+        for clients on a multihomed hosts, allowing clients to choose
+        specific interfaces/networks to communicate with a remote
+        target. This capability comes through two options
+        -ORBPreferredInterfaces, and
+	-ORBEnforcePreferredInterfaces. Please see docs/Options.html for
+        more details.
+	
+	* tao/Endpoint.h:
+
+	  Cosmetic fixes.
+	
+	* tao/IIOP_Connection_Handler.cpp:
+
+	  Added a debug statement 
+
+	* tao/IIOP_Connector.cpp:
+	  
+	  Used the local addr for connect () instead of using the default
+	  ACE_Addr::sap_any.  
+	
+	* tao/IIOP_Endpoint.cpp:
+	* tao/IIOP_Endpoint.h:
+
+	  Added preferred_interfaces (), and a copy constructor. The
+	  former is used to parse the option and store the preferred path
+	  for every target end point. A list of preferred paths are
+	  organized as multiple endpoints (with same target) with different
+	  preferred networks stringed through the next_ pointer. This
+	  allows the Invocation code path to pick things through its
+	  iteration process. 
+	
+	* tao/IIOP_Profile.cpp:
+
+	  Called TAO_IIOP_Endpoint::preferred_interfaces () from within
+	  decode_profile ().
+	
+	* tao/IIOP_Profile.h:
+
+	  Added documentation. 
+	
+	* tao/ORB_Core.cpp:
+
+	  Added the two new options. 
+	
+	* tao/params.cpp:
+	* tao/params.h:
+
+	  Stored the options. 
+	
+	* tao/Strategies/SCIOP_Connection_Handler.cpp:
+	* tao/Strategies/SCIOP_Connector.cpp:
+	* tao/Strategies/SCIOP_Endpoint.cpp:
+	* tao/Strategies/SCIOP_Endpoint.h:
+	* tao/Strategies/SCIOP_Profile.cpp:
+	* tao/Strategies/SCIOP_Profile.h:
+
+	  Cut and pasted the changes from IIOP for SCIOP. There is too
+	  much of similar code out here. We can do some nice
+	  implementation inheritance to save some footprint.
+
 Sat Nov 27 12:52:57 2004  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/XML_Loader.h:

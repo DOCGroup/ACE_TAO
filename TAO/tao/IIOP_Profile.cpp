@@ -64,7 +64,8 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_INTERNET_IOP,
                  orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
+                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
+                                           TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
     count_ (1)
 {
@@ -103,6 +104,9 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
     {
       // Invalidate the object_addr_ until first access.
       this->endpoint_.object_addr_.set_type (-1);
+
+      this->count_ +=
+        this->endpoint_.preferred_interfaces (this->orb_core ());
 
       return 1;
     }
@@ -144,7 +148,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
                    ACE_LIB_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
                    ACE_LIB_TEXT ("Host address may be omited only when no port has been specified.\n")));
         }
-          
+
       ACE_THROW (CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
@@ -309,7 +313,7 @@ TAO_IIOP_Profile::add_endpoint (TAO_IIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *
