@@ -161,6 +161,8 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
+  // To aviod compiler warnings.
+  return 0;
 }
 
 // Allows a client to create a new TAO_PropertySet with specific
@@ -211,6 +213,8 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
+  // To aviod compiler warnings.
+  return 0;
 }
 
 // Destructor.
@@ -299,6 +303,8 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
+  // To aviod compiler warnings.
+  return 0;
 }
 
 // Allows the client to create a new TAO_PropertySetDef with specific
@@ -349,6 +355,8 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
+  // To aviod compiler warnings.
+  return 0;
 }
 // Makes default sized hash_table_.
 
