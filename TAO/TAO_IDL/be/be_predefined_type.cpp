@@ -1,3 +1,4 @@
+// $Id$
 // ============================================================================
 //
 // = LIBRARY
@@ -100,6 +101,24 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
         case AST_PredefinedType::PT_boolean:
           {
             new_name->nconc (new UTL_ScopedName (new Identifier ("Boolean", 1, 0,
+                                                                 I_FALSE), NULL));
+          }
+          break;
+        case AST_PredefinedType::PT_longlong:
+          {
+            new_name->nconc (new UTL_ScopedName (new Identifier ("LongLong", 1, 0,
+                                                                 I_FALSE), NULL));
+          }
+          break;
+        case AST_PredefinedType::PT_ulonglong:
+          {
+            new_name->nconc (new UTL_ScopedName (new Identifier ("ULongLong", 1, 0,
+                                                                 I_FALSE), NULL));
+          }
+          break;
+        case AST_PredefinedType::PT_longdouble:
+          {
+            new_name->nconc (new UTL_ScopedName (new Identifier ("LongDouble", 1, 0,
                                                                  I_FALSE), NULL));
           }
           break;
