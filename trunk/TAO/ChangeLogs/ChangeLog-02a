@@ -1,3 +1,12 @@
+Mon Sep 25 20:03:11 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp (locate_servant_i): The incarnate()
+	  implementation is supposed to hand to the POA the ownership of
+	  the servant reference.  This means that the POA should not call
+	  _add_ref() after the return of incarnate().  Thanks to Bruce
+	  Trask <btrask@contactsystems.com> and Jon Biggar
+	  <jon@biggar.org> for pointing out this bug.
+
 Mon Sep 25 16:17:01 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosNotification:
