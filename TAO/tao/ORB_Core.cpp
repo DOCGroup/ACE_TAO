@@ -2711,6 +2711,7 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 
 TAO_TSS_Resources::TAO_TSS_Resources (void)
   :  poa_current_impl_ (0),
+     rtscheduler_current_impl_ (0),
      default_environment_ (&this->tss_environment_)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
