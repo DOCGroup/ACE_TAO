@@ -172,27 +172,21 @@ public:
 
 
   // = Access a thread priority.
-//  TBD - put this back in, but with dynamic subpriority as well as static
-//  int priority (const handle_t handle,
-//                OS_Priority &OS_priority,
-//                 Preemption_Priority &preemption_priority,
-//                 Sub_Priority &dynamic_subpriority,
-//                 Sub_Priority &static_subpriority);
-  // Defines "priority" as the priority that was assigned to the Task that
-  // was assigned "handle".  Defines "dynamic subpriority" as the strategy
-  // specific assignment of dynamic subpriority within a priority level, and
-  // "static subpriority" as the minimal importance and topological ordering.
-  // Returns 0 on success, or -1 if an invalid handle was supplied.
-  // Queue numbers are platform-independent priority values, ranging from
-  // a highest priority value of 0 to the lowest priority value, which is
-  // returned by "minimum_priority_queue ()".
+  virtual int priority (const handle_t handle,
+                        OS_Priority &priority,
+                        Sub_Priority &subpriority,
+                        Preemption_Priority &preemption_prio);
+  // "priority" is the OS thread priority that was assigned to the Task that
+  // was assigned "handle".  "subpriority" combines the dynamic and static
+  // subpriorities of the Task that was assigned handle.  "preemption_prio"
+  // is a platform-independent priority queue number, ranging from a
+  // highest priority value of 0 to the lowest priority value, which is
+  // returned by "minimum_priority_queue ()".  Returns 0 on success, 
+  // or -1 if an invalid handle was supplied.
 
   // = Access the platform-independent priority value of the lowest-priority
   //   thread.
-
    Preemption_Priority minimum_priority_queue () const;
-  // This is intended for use by the Event Channel, so it can determine the
-  // number of priority dispatch queues to create.
 
   // = Access the number of tasks.
   u_int tasks () const;
@@ -218,7 +212,6 @@ public:
   static int number_of_dependencies(RT_Info* rt_info);
   static int number_of_dependencies(RT_Info& rt_info);
 
-  // TBD - modify these to take a Task_Entry and show all its dispatches
   static void export(RT_Info*, FILE* file);
   static void export(RT_Info&, FILE* file);
 

@@ -5806,6 +5806,29 @@ NODEP_CPP_PROFI=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\RB_Tree.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -12509,6 +12532,10 @@ SOURCE=.\Profile_Timer.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RB_Tree.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Reactor.h
 # End Source File
 # Begin Source File
@@ -13110,6 +13137,10 @@ SOURCE=.\Process_Manager.i
 # Begin Source File
 
 SOURCE=.\Profile_Timer.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RB_Tree.i
 # End Source File
 # Begin Source File
 

@@ -19,6 +19,7 @@ class TAO_ORBSVCS_Export ACE_Config_Scheduler
   //   distributed with the EC.
 {
 public:
+
   ACE_Config_Scheduler (void);
   virtual ~ACE_Config_Scheduler (void);
 
@@ -83,7 +84,59 @@ public:
                     RtecScheduler::TASK_COUNT_MISMATCH));
 
 private:
-  class ACE_Scheduler* impl;
+
+#if defined (TAO_USES_STRATEGY_SCHEDULER)
+
+  // trait for the scheduler implementation base class
+  typedef ACE_DynScheduler BaseSchedImplType;
+
+  // traits for the scheduler strategy 
+#if defined (TAO_USES_MUF_SCHEDULING)
+
+  typedef ACE_MUF_Scheduler_Strategy Scheduler_Strategy;
+
+#elif defined (TAO_USES_MLF_SCHEDULING)
+
+  #if ! defined (TAO_MIN_CRITICAL_PRIORITY)
+    #define TAO_MIN_CRITICAL_PRIORITY 0
+  #endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
+
+  typedef ACE_MLF_Scheduler_Strategy Scheduler_Strategy;
+
+#elif defined (TAO_USES_EDF_SCHEDULING)
+
+  #if ! defined (TAO_MIN_CRITICAL_PRIORITY)
+    #define TAO_MIN_CRITICAL_PRIORITY 0
+  #endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
+
+  typedef ACE_EDF_Scheduler_Strategy Scheduler_Strategy;
+
+#elif defined (TAO_USES_RMS_SCHEDULING)
+
+  typedef ACE_RMS_Scheduler_Strategy Scheduler_Strategy;
+
+#elif defined (TAO_USES_RMS_DYN_SCHEDULING)
+
+  typedef ACE_RMS_Dyn_Scheduler_Strategy Scheduler_Strategy;
+
+#else
+
+  #error scheduling strategy must be defined
+
+#endif /* defined (TAO_USES_MUF_SCHEDULING) */
+
+  Scheduler_Strategy scheduler_strategy_;
+
+#else /* ! defined (TAO_USES_STRATEGY_SCHEDULER) */
+
+  // trait for the scheduler implementation base class
+  typedef ACE_DynScheduler BaseSchedImplType;
+
+#endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
+
+  // implementation base class pointer
+  BaseSchedImplType* impl;
+
 };
 
 #if defined (__ACE_INLINE__)
@@ -91,3 +144,12 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_CONFIG_SCHEDULER_H */
+
+
+
+
+
+
+
+
+
