@@ -1,3 +1,8 @@
+Tue Aug 31 14:17:44 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp: Rearranged the code so that it'll 
+	  compile properly.  Thanks to Bala for reporting this.
+
 Tue Aug 31 13:33:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Quoter/Makefile:
