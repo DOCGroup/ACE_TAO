@@ -1,3 +1,23 @@
+Wed Oct  4 12:03:07 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in (ACE_HAS_STREAM_PIPES):
+
+	  Verify that we can actually set a STREAM option that ACE uses.
+	  This is particularly necessary for platforms that have ioctl
+	  conflicts.  For example, the Linux kernel's CDROM ioctls have
+	  the same values as glibc 2.1.94's STREAM ioctls.  Attempting to
+	  set a STREAM ioctl actually causes one of the CDROM ioctls to be
+	  set (unsuccessfully)!
+
+	* configure.in:
+	* m4/ace.m4:
+	* m4/compiler.m4:
+
+	  Changed all uses of "$target" to "$host."  "$target" is only
+	  used for compiler tool chains.  "$host" is the correct variable
+	  since it refers to the host the application will be run on (as
+	  opposed to the host the application was built on $build).
+
 Wed Oct  4 09:15:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/RMCast/RMCast.dsp:

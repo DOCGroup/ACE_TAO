@@ -244,7 +244,7 @@ dnl
 dnl Platform specific libraries needed for ACE's autoconf tests
 dnl that currently do not have tests themselves.
 dnl Platform specific flags
-case "$target" in
+case "$host" in
   *freebsd*)
     LIBS="$LIBS -lcompat"
     ;;
@@ -1285,7 +1285,7 @@ ACE_CHECK_STRUCT(flock, fcntl.h, , AC_DEFINE(ACE_LACKS_FILELOCKS))
 ACE_CHECK_STRUCT(rwlock_t, synch.h, , AC_DEFINE(ACE_LACKS_RWLOCK_T))
 ACE_CHECK_STRUCT(strbuf, stropts.h, AC_DEFINE(ACE_HAS_STRBUF_T),)
 ACE_CHECK_STRUCT(msgbuf, sys/msg.h, , AC_DEFINE(ACE_LACKS_MSGBUF_T))
-case "$target" in
+case "$host" in
 *irix*)
   dnl IRIX prusage fields don't match what ACE currently supports.
   ;;
@@ -3480,7 +3480,7 @@ fi
 dnl Check for `strftime' in the `intl' library, for SCO UNIX
 AC_FUNC_STRFTIME
 
-case "$target" in
+case "$host" in
   *win32*)
      AC_CHECK_FUNC(CancelIO, dnl
        AC_DEFINE(ACE_HAS_CANCEL_IO),)
@@ -3521,10 +3521,55 @@ AC_CHECK_FUNC(fsync, dnl
   ,
   AC_DEFINE(ACE_LACKS_FSYNC))
 
-dnl TODO:  Right now we only check for the getmsg() function when checking
-dnl        for ACE_HAS_STREAM_PIPES.  Is this enough?
 AC_CHECK_FUNC(getmsg, dnl
-  AC_DEFINE(ACE_HAS_STREAM_PIPES),)
+  [
+   AC_TRY_RUN(
+     [
+#ifndef ACE_LACKS_UNISTD_H
+# include <unistd.h>
+#endif  /* !ACE_LACKS_UNISTD_H */
+
+#ifdef ACE_HAS_SYS_IOCTL_H
+# include <sys/ioctl.h>
+#endif  /* ACE_HAS_SYS_IOCTL_H */
+
+#ifdef ACE_HAS_STREAMS
+#  include <stropts.h>
+#endif  /* ACE_HAS_STREAMS */
+
+int
+main ()
+{
+  int fds[2];
+
+  if (pipe (fds) != 0)
+    return -1;
+
+/*
+ * Verify that we can actually set a STREAM option that ACE uses.
+ * This is particularly necessary for platforms that have ioctl
+ * conflicts.  For example, the Linux kernel's CDROM ioctls have
+ * the same values as glibc 2.1.94's STREAM ioctls.  Attempting to
+ * set a STREAM ioctl actually causes one of the CDROM ioctls to be
+ * set (unsuccessfully)!
+ */
+
+  int arg = RMSGN;
+
+  if (ioctl (fds[0], I_SRDOPT, (void *) arg) != 0)
+    return -1;
+
+  return 0;
+}
+     ],
+     [
+      AC_DEFINE(ACE_HAS_STREAM_PIPES)
+     ],,
+     [
+      dnl action if cross-compiling
+      AC_DEFINE(ACE_HAS_STREAM_PIPES)
+     ])
+  ],)
 
 AC_CHECK_FUNC(gethostbyaddr,,) dnl
 
@@ -6671,7 +6716,7 @@ dnl Some platforms define ip_mreq in <sys/netinet/in.h>.
 
 ACE_CACHE_CHECK(if running on an Alpha,
   ace_cv_feature_alpha,[
-    case "$target" in
+    case "$host" in
       alpha*)
         ace_cv_feature_alpha=yes
         ;;
@@ -6681,7 +6726,7 @@ ACE_CACHE_CHECK(if running on an Alpha,
     esac
   ],
   [
-   case "$target" in
+   case "$host" in
      *linux*)
        dnl We only define ACE_HAS_ALPHA_TIMER if we are running Linux
        dnl on an Alpha and are using GNU C++!
@@ -6694,7 +6739,7 @@ ACE_CACHE_CHECK(if running on an Alpha,
 
 ACE_CACHE_CHECK(if running on a Power PC,
   ace_cv_feature_powerpc,[
-    case "$target" in
+    case "$host" in
       powerpc*)
         ace_cv_feature_powerpc=yes
         ;;
@@ -6704,7 +6749,7 @@ ACE_CACHE_CHECK(if running on a Power PC,
     esac
   ],
   [
-   case "$target" in
+   case "$host" in
      *aix*)
        dnl We don't do anything for AIX since AIX already has a
        dnl hi-res timer function!
@@ -6720,7 +6765,7 @@ ACE_CACHE_CHECK(if running on a Power PC,
 
 ACE_CACHE_CHECK(if running on a Pentium(tm) processor,
   ace_cv_feature_pentium,[    
-    case "$target" in
+    case "$host" in
       i386-* | i486-* |i586-* | i686-*)
 dnl If we do have a pentium, than define ACE_HAS_PENTIUM and add
 dnl gethrtime.cpp to the source list, but only if we're using GNU C++
@@ -6797,7 +6842,7 @@ fi
 dnl FIXME!!!
 dnl The following is a kludge until the netdb reentrant function
 dnl number of arguments is handled.
-case "$target" in
+case "$host" in
   *linux*) AC_DEFINE(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS);;
   *) ;;
 esac
@@ -7351,7 +7396,7 @@ the following information:
   Linker Flags:       $LDFLAGS
   Libraries:          $LIBS
   System type information:
-    Build: $build  Host: $host  Target: $target
+    Build: $build  Host: $host
 
 In the meantime, please use the stock ACE build procedure detailed in
 the file \`ACE-INSTALL.html'.
