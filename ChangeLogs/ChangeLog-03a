@@ -1,3 +1,7 @@
+Thu Jun 08 01:53:03 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Message_Queue.i (peek_dequeue_head): Fixed typo.
+
 Wed Jun  7 20:41:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Message_Queue: Added some "no-op" impls for the new
