@@ -1,3 +1,11 @@
+Sun Nov 21 10:34:42 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Message_Queue_T.h: Changed the access control specifier
+	  of ACE_Message_Queue_Ex::queue_ from private to protected to
+ 	  enabled subclasses to access it.  Thanks to Nuno Silva
+ 	  <Nuno.Silva@edisoft.pt> for this suggestion.  This change fixes
+ 	  bugid 1984.
+	
 Sat Nov 20 18:12:55 UTC 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS_NS_Thread.inl:

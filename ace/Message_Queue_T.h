@@ -1219,7 +1219,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
+protected:
   /// Implement this via an <ACE_Message_Queue>.
   ACE_Message_Queue<ACE_SYNCH_USE> queue_;
 };
