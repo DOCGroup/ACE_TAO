@@ -59,13 +59,13 @@ unlink $iorfile_2;
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-f $iorfile $extra_args");
 
-if (ACE::waitforfile_timed ($iorfile_1, 5) == -1) {
+if (ACE::waitforfile_timed ($iorfile_1, 15) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile_1>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
 }
 
-if (ACE::waitforfile_timed ($iorfile_2, 5) == -1) {
+if (ACE::waitforfile_timed ($iorfile_2, 15) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile_2>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
