@@ -168,6 +168,10 @@ SOURCE=.\Default_Acceptor_Filter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Servant_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Direct_Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
@@ -224,11 +228,19 @@ SOURCE=.\RT_Acceptor_Filters.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Servant_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTPortableServerC.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Servant_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Servant_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
@@ -257,6 +269,10 @@ SOURCE=.\Collocated_Object.h
 # Begin Source File
 
 SOURCE=.\Default_Acceptor_Filter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Servant_Dispatcher.h
 # End Source File
 # Begin Source File
 
@@ -332,11 +348,19 @@ SOURCE=.\RT_Acceptor_Filters.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Servant_Dispatcher.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTPortableServerC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Servant_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Servant_Dispatcher.h
 # End Source File
 # Begin Source File
 

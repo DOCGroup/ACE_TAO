@@ -1,3 +1,22 @@
+Wed May 16 16:05:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/PortableServer/Default_Servant_Dispatcher.cpp:
+	* tao/PortableServer/Default_Servant_Dispatcher.h:
+	* tao/PortableServer/RT_Servant_Dispatcher.cpp:
+	* tao/PortableServer/RT_Servant_Dispatcher.h:
+	* tao/PortableServer/Servant_Dispatcher.cpp:
+	* tao/PortableServer/Servant_Dispatcher.h:
+	* tao/PortableServer/Makefile:
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/Object_Adapter.h:
+	* tao/PortableServer/Object_Adapter.i:
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/Servant_Base.h:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+          Strategized the servant dispatch logic as part of the
+          RTCORBA subsetting effort.
+
 Wed May 16 13:53:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_module.cpp:
