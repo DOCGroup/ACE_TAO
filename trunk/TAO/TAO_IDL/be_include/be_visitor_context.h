@@ -100,6 +100,14 @@ public:
   idl_bool comma (void);
   // are we supposed to generate a comma?
 
+  be_interface* interface (void) const;
+  void interface (be_interface*);
+  // In some cases we need to generate the objects of one interface as
+  // members of a derived visitor (the TIE classes are a good
+  // example). This field is use to hold the interface where we are
+  // *generating* code, as opposed to the interfaces where the methods
+  // or structures are defined.
+
   // = helpers
 
   // visitors may need the actual type of the node stored in this context. We
@@ -223,6 +231,9 @@ private:
 
   idl_bool comma_;
   // whether scope should generate a comma after every element
+
+  be_interface* interface_;
+  // See the method declaration above.
 };
 
 

@@ -35,7 +35,8 @@ be_visitor_context::be_visitor_context (void)
     tdef_ (0),
     attr_ (0),
     exception_ (0),
-    comma_ (0)
+    comma_ (0),
+    interface_ (0)
 {
 }
 
@@ -48,7 +49,8 @@ be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
     tdef_ (ctx.tdef_),
     attr_ (ctx.attr_),
     exception_ (ctx.exception_),
-    comma_ (ctx.comma_)
+    comma_ (ctx.comma_),
+    interface_ (ctx.interface_)
 {
 }
 
@@ -64,6 +66,7 @@ be_visitor_context::operator= (const be_visitor_context &ctx)
   this->attr_ = ctx.attr_;
   this->exception_ = ctx.exception_;
   this->comma_ = ctx.comma_;
+  this->interface_ = ctx.interface_;
 
   return *this;
 }
@@ -197,6 +200,20 @@ be_visitor_context::comma (void)
 {
   return this->comma_;
 }
+
+void
+be_visitor_context::interface (be_interface *interface)
+{
+  this->interface_ = interface;
+}
+
+be_interface *
+be_visitor_context::interface (void) const
+{
+  return this->interface_;
+}
+
+// ****************************************************************
 
 // return the node as argument if possible
 be_argument *
