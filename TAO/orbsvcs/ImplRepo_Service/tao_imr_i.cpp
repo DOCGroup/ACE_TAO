@@ -764,23 +764,22 @@ TAO_IMR_Op_IOR::run (void)
       char *pos = ACE_OS::strstr (imr_str.inout (),
                                   "://");
 
-      pos =
-        ACE_OS::strchr (
-            pos + 3,
-            this->implrepo_->_stubobj ()->profile_in_use ()->object_key_delimiter ()
-          );
-
-      if (pos)
-        {
-          *(pos + 1) = 0;  // Crop the string
-        }
+      if (pos == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Could not parse IMR IOR\n"),
+                          -1);
       else
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Could not parse IMR IOR\n"),
-                            -1);
-        }
+          pos = ACE_OS::strchr (pos + 3,
+                                this->implrepo_->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
+          if (pos)
+            *(pos + 1) = 0;  // Crop the string
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Could not parse IMR IOR\n"),
+                              -1);
+        }
       ACE_TString ior (imr_str.in ());
 
       // Add the key

@@ -97,7 +97,7 @@ public:
 
 private:
   // Win32 emulation functions
-  static DIR *opendir_emulation (const ACE_TCHAR *filename);
+  static ACE_DIR *opendir_emulation (const ACE_TCHAR *filename);
   static void closedir_emulation (ACE_DIR *);
   static struct dirent *readdir_emulation (ACE_DIR *);
 };
