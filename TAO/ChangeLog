@@ -24,7 +24,7 @@ Fri Sep  3 11:54:49 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Updated.
 
-        * utils/catior/caitor.mpc:
+        * utils/catior/catior.mpc:
         * utils/nslist/nslist.mpc:
 
           Changed to inherit from core.mpb so utilities will be installed.
