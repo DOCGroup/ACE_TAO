@@ -1,9 +1,16 @@
+Mon Sep  8 07:04:06 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Added support to the 'after' keyword to use the '*' mechanism as
+          can be used in the project() definition.
+
 Fri Sep  5 13:39:07 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/client.mpb:
         * bin/MakeProjectCreator/config/server.mpb:
 
-          I realized that many more mpc projects use client and server. 
+          I realized that many more mpc projects use client and server.
           They should be converted to use taoserver and taoclient, but until
           that happens I will put these back.
 
