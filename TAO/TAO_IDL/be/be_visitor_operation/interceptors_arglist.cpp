@@ -69,6 +69,7 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
+        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT:
           break;
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
@@ -180,7 +181,9 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_PARAMLIST);
       break;
-
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_RESULT);
+      break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_SH);
       break;
@@ -238,6 +241,8 @@ be_visitor_operation_interceptors_arglist::post_process (be_decl *bd)
   os->indent ();
   switch (this->ctx_->state ())
     {
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT:
+      break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:

@@ -173,8 +173,6 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           << excep_count << ";";
     }
 
-
-
   *os << "// we have the is_system_exception boolean" << be_nl
       << "// the byte_order boolean and" << be_nl
       << "// the marshaled_exception sequence of octet" << be_nl
@@ -186,9 +184,14 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "if ((_tao_in >> type_id.inout ()) == 0)" << be_nl
       << "  {" << be_nl
       << "    // Could not demarshal the exception id, raise an local" << be_nl
-      << "    // CORBA::MARSHAL" << be_nl
-      << "    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_nl
-      << "                               CORBA::COMPLETED_YES));" << be_nl
+      << "    // CORBA::MARSHAL" << be_nl;
+
+  if (idl_global->use_raw_throw ())
+    *os << "    throw (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_nl;
+  else
+    *os << "    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_nl;
+
+  *os << "                               CORBA::COMPLETED_YES));" << be_nl
       << "  }" << be_nl << be_nl;
 
   *os << "if (this->is_system_exception ())" << be_idt_nl
@@ -196,9 +199,12 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "CORBA::ULong minor = 0;" << be_nl
       << "CORBA::ULong completion = 0;" << be_nl
       << "if ((_tao_in >> minor) == 0 ||" << be_nl
-      << "  (_tao_in >> completion) == 0)" << be_idt_nl
-      << "ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_idt_nl
-      << "CORBA::COMPLETED_MAYBE));" << be_uidt << be_uidt_nl;
+      << "  (_tao_in >> completion) == 0)" << be_idt_nl;
+  if (idl_global->use_raw_throw ())
+    *os << "    throw (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_idt_nl;
+  else
+    *os << "    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_idt_nl;
+    *os << "CORBA::COMPLETED_MAYBE));" << be_uidt << be_uidt_nl;
 
   *os << "CORBA::SystemException* exception =" << be_idt_nl
       << "TAO_Exceptions::create_system_exception (type_id.in ()," << be_idt_nl
@@ -247,10 +253,14 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           << "CORBA::Exception *exception = exceptions_data[i].alloc ();"
           << be_nl << be_nl
 
-          << "if (exception == 0)" << be_idt_nl
-          << "ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE," << be_nl
-          << "                             CORBA::COMPLETED_YES));" << be_uidt_nl
+          << "if (exception == 0)" << be_idt_nl;
 
+      if (idl_global->use_raw_throw ())
+        *os << "throw (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE," << be_nl;
+      else
+        *os << "ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE," << be_nl;
+
+      *os << "                             CORBA::COMPLETED_YES));" << be_uidt_nl
           << "exception->_tao_decode (_tao_in, ACE_TRY_ENV);"
           << be_nl << be_nl;
 
@@ -266,12 +276,17 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
 
       *os << "// @@ It would seem like if the remote exception is a" << be_nl
           << "//    UserException we can assume that the request was" << be_nl
-          << "//    completed." << be_nl
-          << "ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE," << be_nl
-          << "                           CORBA::COMPLETED_YES));" << be_uidt_nl
+          << "//    completed." << be_nl;
+
+      if (idl_global->use_raw_throw ())
+        *os << "throw (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE," << be_nl;
+      else
+        *os << "ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE," << be_nl;
+
+      *os << "                           CORBA::COMPLETED_YES));" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl;
     }
 
-  *os << "};\n\n";
+  *os << "}\n\n";
   return 0;
 }

@@ -734,7 +734,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       *os << parent->full_name () << "::";
     }
 
-  *os << "TAO_ClientRequest_Info_"<< node->flat_name () << "  ri_next (" << this->compute_operation_name (node) << ",\n"
+  *os << "TAO_ClientRequest_Info_"<< node->flat_name ()  << "  ri_next (" << this->compute_operation_name (node) << ",\n"
       << "_tao_call.service_info ()," << be_nl
       << "(CORBA::Object_ptr) this" << be_nl;
 
@@ -800,6 +800,11 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << be_uidt_nl << "}\n";
 
   // Generate exception occurred interceptor code
+  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
+      << be_uidt_nl << "}" << be_uidt_nl
+      << "ACE_CATCHANY" << be_idt_nl
+      << "{" << be_idt_nl;
+
   // Obtain the scope.
 
   os->indent ();
@@ -847,11 +852,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
   delete visitor;
   *os << ");\n";
   
-  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
-      << be_uidt_nl << "}" << be_uidt_nl
-      << "ACE_CATCHANY" << be_idt_nl
-      << "{" << be_idt_nl
-      << "_tao_vfr.received_exception (" << be_idt << be_idt_nl
+  *os << "_tao_vfr.receive_exception (" << be_idt << be_idt_nl
            // << "_tao_call.request_id ()," << be_nl;
       << "&ri_excp," << be_nl
            /*
