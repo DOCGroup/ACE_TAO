@@ -61,9 +61,9 @@ Server_Events::wait_time (void)
 Server_Events::Server_Events (u_short port, 
 			      const char *mcast_addr,
 			      long time_interval)
-  : total_bytes_received_ (0),
-    interval_ (time_interval),
-    mcast_addr_ (port, mcast_addr)
+  : interval_ (time_interval),
+    mcast_addr_ (port, mcast_addr),
+    total_bytes_received_ (0)
 {
   // use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
 
