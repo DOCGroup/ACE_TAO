@@ -10,6 +10,11 @@ Thu Feb 15 13:43:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Doug Warner <dougwarner@micron.com> for sending in the 
           example IDL file that pointed this out.
 
+        * tests/IDL_Test/interface.idl:
+
+          Added a modified version of the example IDL file to the
+          test suite.
+
 Thu Feb 15 11:47:53 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Stub.cpp (parse_policies):
