@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_constant, 
-           constant_cs, 
+ACE_RCSID (be_visitor_constant,
+           constant_cs,
            "$Id$")
 
 
@@ -39,12 +39,12 @@ be_visitor_constant_cs::~be_visitor_constant_cs (void)
 
 // visit the Constant_cs node and its scope
 int
-be_visitor_constant_cs::visit_constant (be_constant *node)
+be_visitor_constant_cs::visit_constant (be_constant * /* node */)
 {
 /*
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (!node->cli_stub_gen () 
+  if (!node->cli_stub_gen ()
       && !node->imported ()
       && !be_global->gen_inline_constants ())
     {
@@ -64,7 +64,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
                 }
 
               *os << ")" << be_nl;
-              be_module *module = 
+              be_module *module =
                 be_module::narrow_from_scope (node->defined_in ());
 
               if (!module || this->gen_nested_namespace_begin (module) == -1)
@@ -106,7 +106,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
               os->indent ();
 
               *os << "const ";
-              
+
               if (node->et () == AST_Expression::EV_enum)
                 {
                   *os << node->enum_full_name ();
@@ -115,7 +115,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
                 {
                   *os << node->exprtype_to_string ();
                 }
-               
+
               *os << " "
                   << node->name () << " = " << node->constant_value ()
                   << ";\n\n";

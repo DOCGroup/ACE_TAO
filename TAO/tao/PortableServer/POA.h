@@ -134,7 +134,6 @@ public:
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
-  friend class TAO_ObjectReferenceFactory;
   friend class TAO_ObjectReferenceTemplate;
 
   typedef ACE_CString String;
