@@ -246,7 +246,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
                   "Employee with key = %s not found\n",
                   key));
 
-      ACE_THROW_RETURN (Database::Unknown_Key (),
+      ACE_THROW_RETURN (Database::Not_Found (),
                         Database::Entry::_nil ());
     }
 
