@@ -21,8 +21,8 @@
 #    define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
 #endif /* 0 */
-#   define ACE_HAS_ANSI_CASTS
-#  endif /* >= 0x420 */
+// #   define ACE_HAS_ANSI_CASTS
+#  endif /* < 0x410 */
 #  define ACE_CAST_CONST const
 #endif /* __SUNPRO_CC */
 
