@@ -28,7 +28,7 @@
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
 #if defined (ACE_NDEBUG)
-#define ACE_ASSERT(x)
+#define ACE_ASSERT(x) ACE_UNUSED_ARG(x)
 #elif !defined (ACE_ASSERT)
 #define ACE_ASSERT(X) \
   do { if(!(X)) { \
