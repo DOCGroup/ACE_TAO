@@ -1,3 +1,14 @@
+Mon Jul 20 06:52:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/{array_ch, array_ci, array_cs}.cpp:
+	Added support for anonymous arrays. This is yet to be tested
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp: Handled anonymous
+	array declaration in structures.
+
+	*Note* that although the above changes were made a couple of weeks
+	back I have not been able to test them.
+
 Sun Jul 19 22:58:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Trader.cpp: added

@@ -68,8 +68,12 @@ be_visitor_field_ch::visit_field (be_field *node)
                          "codegen for field type failed\n"
                          ), -1);
     }
-  // now output the field name
-  *os << " " << node->local_name () << ";\n";
+  // now output the field name. However, don't do it if the type was an
+  // anonymous array because generation of the field member got handled by the
+  // array code generation
+
+  if (bt->node_type () != AST_Decl::NT_array)
+    *os << " " << node->local_name () << ";\n";
   return 0;
 }
 
@@ -79,25 +83,30 @@ be_visitor_field_ch::visit_field (be_field *node)
 int
 be_visitor_field_ch::visit_array (be_array *node)
 {
-  // @@ TODO Anonymous arrays do *not* work. Further the spec does not
-  // clarify the names for those types (yikes!).
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream *os; // output stream
+  be_type *bt;
 
-  be_type *bt = node;
+  os = this->ctx_->stream ();
+  // set the right type;
   if (this->ctx_->alias ())
     bt = this->ctx_->alias ();
+  else
+    bt = node;
 
   // if not a typedef and we are defined in the use scope, we must be defined
+
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()))
     {
+      // this is the case for anonymous arrays.
+
       // instantiate a visitor context with a copy of our context. This info
       // will be modified based on what type of node we are visiting
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node); // set the node to be the node being visited. The scope
                        // is still the same
 
-      // first generate the array declaration
+      // first generate the struct declaration
       ctx.state (TAO_CodeGen::TAO_ARRAY_CH);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
@@ -118,9 +127,12 @@ be_visitor_field_ch::visit_array (be_array *node)
         }
       delete visitor;
     }
-
-  os->indent (); // start from current indentation level
-  *os << bt->nested_type_name (this->ctx_->scope ());
+  else
+    {
+      // this was a typedefed array
+      os->indent (); // start from current indentation level
+      *os << bt->nested_type_name (this->ctx_->scope ());
+    }
   return 0;
 }
 

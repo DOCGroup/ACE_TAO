@@ -42,7 +42,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
 
   // generate the class name
   be_type  *pt; // base types
-      
+
   if (bt->node_type () == AST_Decl::NT_typedef)
   {
     // get the primitive base type of this typedef node
@@ -60,7 +60,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  
+
   os->gen_ifdef_macro (class_name);
 
   os->indent ();
@@ -77,8 +77,10 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << be_nl;
 
   // constructor
-  *os << class_name << " (CORBA::ULong maximum) // Constructor using a maximum length value." << be_idt_nl
-      << ": TAO_Unbounded_Base_Sequence (maximum, allocbuf (maximum))" << be_uidt_nl
+  *os << class_name << " (CORBA::ULong maximum) "
+      << "// Constructor using a maximum length value." << be_idt_nl
+      << ": TAO_Unbounded_Base_Sequence (maximum, allocbuf (maximum))"
+      << be_uidt_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
@@ -86,7 +88,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   // constructor
   *os << class_name << " (CORBA::ULong maximum," << be_idt_nl
       << "CORBA::ULong length," << be_nl;
-  // the accept is here the first time used and if an 
+  // the accept is here the first time used and if an
   // error occurs, it will occur here. Later no check
   // for errors will be done.
   if (pt->accept (visitor) == -1)
@@ -109,10 +111,12 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "// Copy constructor." << be_idt_nl;
   *os << ": TAO_Unbounded_Base_Sequence (rhs)" << be_uidt_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor); *os <<" *tmp1 = allocbuf (this->maximum_);" << be_nl;
   pt->accept(visitor);
-  *os << " * const tmp2 = ACE_reinterpret_cast ("; 
-  pt->accept (visitor); *os << " * ACE_CAST_CONST, rhs.buffer_);" << be_nl
+  *os <<" *tmp1 = allocbuf (this->maximum_);" << be_nl;
+  pt->accept(visitor);
+  *os << " * const tmp2 = ACE_reinterpret_cast (";
+  pt->accept (visitor);
+  *os << " * ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
       << "tmp1[i] = tmp2[i];" << be_uidt_nl
@@ -121,7 +125,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
 
-  // operator = 
+  // operator =
   *os << class_name << " &operator= (const " << class_name << " &rhs)" << be_nl
       << "// Assignment operator." << be_nl
       << "{" << be_idt_nl
@@ -133,7 +137,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "if (this->maximum_ < rhs.maximum_)" << be_nl
       << "{" << be_idt_nl
       << "// free the old buffer" << be_nl;
-  pt->accept(visitor); *os <<" *tmp = ACE_reinterpret_cast ("; 
+  pt->accept(visitor); *os <<" *tmp = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " *, this->buffer_);" << be_nl
       << "freebuf (tmp);" << be_nl
       << "this->buffer_ = allocbuf (rhs.maximum_);" << be_uidt_nl
@@ -144,9 +148,9 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << be_nl
       << "TAO_Unbounded_Base_Sequence::operator= (rhs);" << be_nl
       << be_nl;
-  pt->accept(visitor); *os <<" *tmp1 = ACE_reinterpret_cast ("; 
+  pt->accept(visitor); *os <<" *tmp1 = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " *, this->buffer_);" << be_nl;
-  pt->accept(visitor); *os <<" * const tmp2 = ACE_reinterpret_cast ("; 
+  pt->accept(visitor); *os <<" * const tmp2 = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " * ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
@@ -163,13 +167,13 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
 
-  // Accessors  
+  // Accessors
   *os << "// = Accessors." << be_nl;
   pt->accept(visitor); *os <<" &operator[] (CORBA::ULong i)" << be_nl
       << "// operator []" << be_nl
       << "{" << be_idt_nl
       << "ACE_ASSERT (i < this->maximum_);" << be_nl;
-  pt->accept(visitor); *os <<"* tmp = ACE_reinterpret_cast("; 
+  pt->accept(visitor); *os <<"* tmp = ACE_reinterpret_cast(";
   pt->accept (visitor); *os << "*,this->buffer_);" << be_nl
       << "return tmp[i];" << be_uidt_nl
       << "}" << be_nl
@@ -180,7 +184,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "// operator []" << be_nl
       << "{" << be_idt_nl
       << "ACE_ASSERT (i < this->maximum_);" << be_nl;
-  pt->accept(visitor); *os <<" * const tmp = ACE_reinterpret_cast ("; 
+  pt->accept(visitor); *os <<" * const tmp = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << "* ACE_CAST_CONST, this->buffer_);" << be_nl
       << "return tmp[i];" << be_uidt_nl
       << "}" << be_nl
@@ -208,7 +212,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << be_nl
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor); *os <<" *old = ACE_reinterpret_cast ("; 
+  pt->accept(visitor); *os <<" *old = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " *,this->buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
@@ -227,14 +231,14 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl
       << be_nl;
-  pt->accept(visitor); *os <<" *tmp = ACE_reinterpret_cast ("; 
+  pt->accept(visitor); *os <<" *tmp = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " *,this->buffer_);" << be_nl
       << be_nl
       << "freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
       << "} " << be_nl
       << be_nl;
-      
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   *os << "// Implement the TAO_Base_Sequence methods (see Sequence.h)" << be_nl
       << be_nl;
@@ -307,4 +311,3 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   delete visitor;
   return 0;
 }
-

@@ -103,13 +103,15 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
     {
+      // this is the case of an anonymous array inside a union
+
       // instantiate a visitor context with a copy of our context. This info
       // will be modified based on what type of node we are visiting
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node); // set the node to be the node being visited. The scope
                        // is still the same
 
-      // first generate the enum declaration
+      // first generate the array declaration
       ctx.state (TAO_CodeGen::TAO_ARRAY_CH);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
@@ -131,7 +133,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
       delete visitor;
     }
 
-  // now use this enum as a "type" for the subsequent declarator
+  // now use this array as a "type" for the subsequent declarator
   os->indent (); // start from current indentation
   // the set method
   *os << "void " << ub->local_name () << " ("

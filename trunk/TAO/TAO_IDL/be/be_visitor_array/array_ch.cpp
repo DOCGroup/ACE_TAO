@@ -68,48 +68,44 @@ int be_visitor_array_ch::visit_array (be_array *node)
     {
       // this is a typedef to an array node
       *os << "typedef ";
-      if (bt->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_array_ch::"
-                             "visit_array - "
-                             "base type decl failed\n"),
-                            -1);
-        }
-      *os << " " << node->local_name ();
-      if (node->gen_dimensions (os) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_array_ch::"
-                             "visit_array - "
-                             "gen dimensions failed\n"),
-                            -1);
-        }
-      *os << ";" << be_nl;
-      *os << "typedef ";
-      if (bt->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_array_ch::"
-                             "visit_array - "
-                             "base type decl failed\n"),
-                            -1);
-        }
-      *os << " " << node->local_name () << "_slice";
-      if (node->gen_dimensions (os, 1) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_array_ch::"
-                             "visit_array - "
-                             "gen slice dimensions failed\n"),
-                            -1);
-        }
-      *os << ";\n";
     }
-  else
+  if (bt->accept (this) == -1)
     {
-      // anonymous array case - TO-DO
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_array_ch::"
+                         "visit_array - "
+                         "base type decl failed\n"),
+                        -1);
     }
+  *os << " " << node->local_name ();
+  if (node->gen_dimensions (os) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_array_ch::"
+                         "visit_array - "
+                         "gen dimensions failed\n"),
+                        -1);
+    }
+  *os << ";" << be_nl;
+  *os << "typedef ";
+  if (bt->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_array_ch::"
+                         "visit_array - "
+                         "base type decl failed\n"),
+                        -1);
+    }
+  *os << " " << node->local_name () << "_slice";
+  if (node->gen_dimensions (os, 1) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_array_ch::"
+                         "visit_array - "
+                         "gen slice dimensions failed\n"),
+                        -1);
+    }
+  *os << ";\n";
 
   // typedef the _var, _out, and _forany types
   if (node->gen_var_defn () == -1)
@@ -134,9 +130,38 @@ int be_visitor_array_ch::visit_array (be_array *node)
     }
   else
     {
+      // fixed size
       os->indent ();
-      *os << "typedef " << node->local_name () << " " << node->local_name ()
-          << "_out;\n";
+      // if we are a typedefed array, we can use the TYPE name to define an
+      // _out type. However, for anonymous arrays that do not give rise to a
+      // new type, we use the base type for defining an out type
+      if (this->ctx_->tdef ())
+        {
+          *os << "typedef " << node->local_name () << " "
+              << node->local_name () << "_out;\n";
+        }
+      else
+        {
+          *os << "typedef ";
+          if (bt->accept (this) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_array_ch::"
+                                 "visit_array - "
+                                 "base type decl failed\n"),
+                                -1);
+            }
+          *os << " " << node->local_name () << "_out";
+          if (node->gen_dimensions (os) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_array_ch::"
+                                 "visit_array - "
+                                 "gen dimensions failed\n"),
+                                -1);
+            }
+          *os << ";" << be_nl;
+        }
     }
 
   if (node->gen_forany_defn () == -1)

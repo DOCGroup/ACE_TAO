@@ -178,6 +178,27 @@ int be_visitor_array_cs::visit_array (be_array *node)
     }
   *os << be_uidt_nl << "}\n\n";
 
+  // is this a typedefined array? if so, then let the typedef deal with
+  // generation of the typecode
+  if (!this->ctx_->tdef ())
+    {
+      // by using a visitor to declare and define the TypeCode, we have the
+      // added advantage to conditionally not generate any code. This will be
+      // based on the command line options. This is still TO-DO
+      be_visitor_context ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_array_cs::"
+                             "visit_array - "
+                             "TypeCode definition failed\n"
+                             ), -1);
+        }
+      delete visitor;
+    }
+
   node->cli_stub_gen (1);
 
   return 0;
