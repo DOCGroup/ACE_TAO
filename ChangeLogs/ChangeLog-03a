@@ -1,3 +1,10 @@
+Thu May 25 20:23:45 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/Process_Win32.pm:
+
+          The timed_wait wasn't returning the correct value if the
+          server actually timed out.
+
 Thu May 25 18:21:41 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (max_handles): If an ACE_LACKS_RLIMIT platform, let

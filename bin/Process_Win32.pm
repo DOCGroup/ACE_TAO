@@ -47,7 +47,9 @@ sub TimedWait
 {
   my $self = shift;
   my $maxtime = shift;
-  Win32::Process::Wait ($self->[0], $maxtime * 1000);
+  if (Win32::Process::Wait ($self->[0], $maxtime * 1000) == 0) {
+    return -1;
+  }
   $status = 0;
   Win32::Process::GetExitCode ($self->[0], $status);
   return $status;
