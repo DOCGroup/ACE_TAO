@@ -104,6 +104,11 @@ public:
       CORBA::SystemException
     ));
 
+  virtual CORBA::Boolean remove_primary_tag (
+      CORBA::Object_ptr iogr
+      ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   /// Reset the underlying tagged components held by the class
   CORBA::Boolean reset_tagged_components (
       FT::TagFTGroupTaggedComponent &ft_group);

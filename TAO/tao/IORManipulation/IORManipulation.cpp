@@ -309,6 +309,16 @@ TAO_IOR_Manipulation_impl::is_primary_set (
   return prop->is_primary_set (ior ACE_ENV_ARG_PARAMETER);
 }
 
+CORBA::Boolean
+TAO_IOR_Manipulation_impl:: remove_primary_tag (
+    TAO_IOP::TAO_IOR_Property_ptr prop,
+    CORBA::Object_ptr ior
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+	ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return prop->remove_primary_tag (ior ACE_ENV_ARG_PARAMETER);
+}
+
 CORBA::ULong
 TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior1,

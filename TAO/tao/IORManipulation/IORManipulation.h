@@ -130,6 +130,14 @@ public:
       CORBA::SystemException
     ));
 
+   virtual CORBA::Boolean remove_primary_tag (
+       TAO_IOP::TAO_IOR_Property_ptr prop,
+       CORBA::Object_ptr iogr
+       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
   virtual CORBA::ULong is_in_ior (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2
