@@ -229,6 +229,7 @@ lex.yy.cpp.target:
 		    -e "/#include </d" \
 		    -e "s@ECHO@TAO_YY_ECHO@" \
 		    -e 's/\$$Hea''der.*\$$/$$I''d$$/' > fe/lex.yy.cpp
+		(cd fe ; patch < lex.yy.cpp.diff)
 
 fe/y.tab.cpp:	fe/idl.yy
 	@echo "WARNING: Potentially outdated fe/y.tab.cpp"
