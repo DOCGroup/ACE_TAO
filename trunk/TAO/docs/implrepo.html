@@ -1,0 +1,438 @@
+<html>
+
+<head>
+<title>TAO Implementation Repository</title>
+</head>
+
+<body text="#000000" link="#0000FF" vlink="#CC0000" bgcolor="#FFFFFF">
+
+<hr>
+
+<h1>TAO Implementation Repository </h1>
+
+<p>This document describes the proposed design of the TAO Implementation Repository (also
+known as the reactivator or activation service). </p>
+
+<p>This is the second major revision of our plans for implementation of this service for
+TAO.</p>
+
+<hr>
+
+<h2>CORBA Spec</h2>
+
+<p>What does the CORBA spec say about the Implementation Repository?&nbsp; In the CORBA
+Specification Revision 2.2, Section 2.1.14 states:</p>
+
+<table border="0" width="100%">
+  <tr>
+    <td width="10%" height="17"></td>
+    <td width="80%" height="17">The Implementation Repository contains information that allows
+    the ORB to locate and activate implementations of objects. Although most of the
+    information in the Implementation Repository is specific to an ORB or operating
+    environment, the Implementation Repository is the conventional place for recording such
+    information.&nbsp; Ordinarily, installation of implementations and control of policies
+    related to the activation and execution of object implementations is done through
+    operations on the Implementation Repository.&nbsp; In addition to its role in the
+    functioning of the ORB, the Implementation Repository is a common place to store
+    additional information associated with implementations of ORB objects. For example,
+    debugging information, administrative control, resource allocation, security, etc., might
+    be associated with the Implementation Repository.</td>
+    <td width="10%" height="17"></td>
+  </tr>
+</table>
+
+<p>And also in section 15.2.1:</p>
+
+<table border="0" width="100%">
+  <tr>
+    <td width="10%"></td>
+    <td width="80%">. . .CORBA does not specify the interface or characteristics of the
+    Implementation Repository or the ImplementationDef. As such, implementation typing and
+    descriptions vary from ORB to ORB and are not part of this specification.</td>
+    <td width="10%"></td>
+  </tr>
+</table>
+
+<hr>
+
+<h2>Goals of the Implementation Repository</h2>
+
+<p>The Implementation Repository will add support to TAO's architecture so that servers
+using Persistent Object References, as defined in the Portable Object Adapter (POA)
+specification, can be restarted. This service will allow servers to come and go without
+invalidating the Persistent Object References that they use. </p>
+
+<h3>Constraints when using the Information Repository</h3>
+
+<ul>
+  <li>When a server is restarted by the Implementation Repository, it must be able to recreate
+    enough state to deal correctly with the request issued by a client on the Persistent
+    Object Reference. Therefore, the restarted server's endpoint must be the same endpoint
+    specified in the Persistent Object Reference. Unless dynamic servant and POA activation is
+    used, the restarted server must also recreate the POA in which the Persistent object was
+    registered and register the persistent object with that POA. </li>
+  <li>The Implementation Repository will track all processes it has restarted. It will ensure
+    that multiple instances of same server processes are not started simultaneously. This will
+    be implemented by a &quot;ping&quot; call made by the server at a certain interval.</li>
+  <li>The use of the Implementation Repository in TAO will be optional. Real-time applications
+    can choose not to use the Implementation Repository. IIOP 1.1 helps in this respect by
+    grouping all the extra information in components.</li>
+</ul>
+
+<h3>Alternate Implementations </h3>
+
+<p>Other ORB vendors use alternative techniques for Implementation Repository. These
+techniques usually require new naming techniques for persistent objects and new
+client-side APIs to bind to persistent objects. TAO's Implementation Repository will not
+require such extensions. </p>
+
+<p>One implementation of an Implementation Repository is to use an Object Reference that
+points to the Implementation Repository instead of pointing directly to the persistent
+object. This extra level of indirection is used by the Implementation Repository to start
+the server, and then use the Location Forwarding mechanism to forward the client request
+to the server. This technique forces clients to use the Implementation Repository (at
+least once) even when the server is already running. </p>
+
+<h3>Design Constraints of the Implementation Repository</h3>
+
+<p>This design makes TAO dependent on the Implementation Repository. </p>
+
+<hr>
+
+<h2>Implementation </h2>
+
+<h3>IOR Changes</h3>
+
+<p>Currently, TAO IORs are set up as the following:</p>
+
+<table border="0">
+  <tr>
+    <td><table border="1">
+      <tr>
+        <td>Type ID</td>
+        <td>Host/Port</td>
+        <td>T/P Flag</td>
+        <td>TimeStamp</td>
+        <td>POA ID</td>
+        <td>OBJ ID</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+
+<p>For Persistent IORs, the T/P Flag is set for perisistant and the TimeStamp is
+ignored.&nbsp; </p>
+
+<p>We plan on implementing IIOP 1.1 to make the implementation of the Implementation
+Repository easier.&nbsp; Persistant IORs will have an extra profile pointing to an
+Information Repository.&nbsp; If the connection attempt to the first profile fails, then
+the next profile (the Information Repository) will be contacted it it will return a
+Location Forward to the server.&nbsp; The new IORs will contain multiple profiles and tags
+for such things as the ORB type and server name.</p>
+
+<table border="1" width="100%">
+  <tr>
+    <td rowspan="3">Type ID</td>
+    <td><table border="0" width="100%">
+      <tr>
+        <td width="25%"><em>Profile 1</em></td>
+        <td width="75%"><table border="1" width="100%">
+          <tr>
+            <td>Host</td>
+            <td>Port</td>
+            <td>Object Key</td>
+            <td><em>Components</em> <table border="1" width="100%">
+              <tr>
+                <td>TAG_ORB_TYPE</td>
+              </tr>
+              <tr>
+                <td>tag_orb_version</td>
+              </tr>
+              <tr>
+                <td>tag_server_name</td>
+              </tr>
+              <tr>
+                <td>tag_timestamp</td>
+              </tr>
+              <tr>
+                <td>tag_priority</td>
+              </tr>
+            </table>
+            </td>
+          </tr>
+        </table>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td><table border="0" width="100%">
+      <tr>
+        <td width="25%"><em>Profile 2(Impl Repo)</em></td>
+        <td width="75%"><table border="1" width="100%">
+          <tr>
+            <td>Host</td>
+            <td>Port</td>
+            <td>Object Key</td>
+            <td><em>Components</em> <table border="1" width="100%">
+              <tr>
+                <td>TAG_ORB_TYPE</td>
+              </tr>
+              <tr>
+                <td>tag_orb_version</td>
+              </tr>
+              <tr>
+                <td>tag_server_name</td>
+              </tr>
+              <tr>
+                <td>tag_timestamp</td>
+              </tr>
+              <tr>
+                <td>tag_priority</td>
+              </tr>
+            </table>
+            </td>
+          </tr>
+        </table>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td><table border="0" width="100%">
+      <tr>
+        <td width="25%"><em>Profile 3 (Impl Repo)</em></td>
+        <td width="75%"><table border="1" width="100%">
+          <tr>
+            <td>Host</td>
+            <td>Port</td>
+            <td>Object Key</td>
+            <td><em>Components</em> <table border="1" width="100%">
+              <tr>
+                <td>TAG_ORB_TYPE</td>
+              </tr>
+              <tr>
+                <td>tag_orb_version</td>
+              </tr>
+              <tr>
+                <td>tag_server_name</td>
+              </tr>
+              <tr>
+                <td>tag_timestamp</td>
+              </tr>
+              <tr>
+                <td>tag_priority</td>
+              </tr>
+            </table>
+            </td>
+          </tr>
+        </table>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<h3>Preliminary Interface</h3>
+
+<p>Here is a preliminary interface of the Implementation Repository in IDL: </p>
+
+<pre>module TAO
+{
+  // ....
+
+  exception Already_Registered {};
+  // Object already bound in the Information Repository
+
+  exception Cannot_Activate
+  {
+    string reason_;
+  }
+
+  exception Not_Found {};
+  // Object not found in the Information Repository  
+  
+  struct Environment_Variable
+  {
+    string name_;
+    string value_;
+  };
+  // One environment variable
+      
+  typedef sequence&lt;Environment_Variable&gt; Environment;
+  // Complete environment
+
+  typedef sequence&lt;string&gt; Command_Line_Options;
+  // Command line options
+
+  struct Process_Options
+  {
+    string executable_name_;
+    // Executable name
+
+    Command_Line_Options command_line_options_; 
+    // Command line options
+
+    Environment environment_; 
+    // Environment
+
+    string working_directory_;  
+    // Working directory
+
+    unsigned long creation_flags_;
+    // Creation flags
+  };
+
+  interface Information_Repository
+  {
+    Object activate_object (in Object obj)
+      raises (Not_Found,
+              Cannot_Activate);
+      // Restart server that will contain this persistent object and return the
+      // new Object reference.
+      //
+      // The &lt;Not_Found&gt; exception is raised when &lt;obj&gt; is not found
+      // in the Implementation Repository.  The &lt;Cannot_Activate&gt; exception
+      // is raised when &lt;obj&gt; is found in the Repository but could not be
+      // activated.
+
+    InetAddr activate_server (in string server);
+      raises (Not_Found,
+              Cannot_Activate);
+      // Restart server that is named &lt;server&gt; and return the host/port
+      // 
+      //
+      // The &lt;Not_Found&gt; exception is raised when &lt;server&gt; is not found
+      // in the Implementation Repository.  The &lt;Cannot_Activate&gt; exception
+      // is raised when &lt;server&gt; is found in the Repository but could not be
+      // activated.
+
+    void register_server (in string server,
+                          in Process_Options options)
+      raises (Already_Registered,
+              Object_Not_Persistent);
+      // Restart server process when client is looking for &lt;server&gt;.
+      //
+      // The &lt;Already_Registered&gt; exception is raised when &lt;server&gt; has
+      // already been registered with the Implementation Repository.
+      // 
+      // The &lt;Object_Not_Persistent&gt; exception is raised when &lt;server&gt; is
+      // not a Persistent Object Reference.
+
+    void reregister_server (in string server,
+                            in Process_Options options)
+      raises (Already_Registered,
+              Object_Not_Persistent);
+      // Restart server process when client is looking for &lt;server&gt;.
+      //
+      // The &lt;Already_Registered&gt; exception is raised when &lt;server&gt; has
+      // already been registered with the Implementation Repository.
+      // 
+      // The &lt;Object_Not_Persistent&gt; exception is raised when &lt;server&gt; is
+      // not a Persistent Object Reference.
+
+    void remove_server (in string server)
+      raises (Not_Found);
+      // Remove &lt;server&gt; from the Implementation Repository.
+      //
+      // The &lt;Not_Found&gt; exception is raised when &lt;server&gt; is not found
+      // in the Implementation Repository.
+
+    void server_is_alive (in string server,
+                          in INET_Addr addr, 
+                          in TAO_Ping_Object ping);
+      // Used to notify the Implementation Repository that &lt;server&gt; is alive and
+      // well at &lt;addr&gt;.
+    };
+};</pre>
+
+<hr>
+
+<h2>Accessing the Implementation Repository </h2>
+
+<p>Servers can use either of the following techniques to get access to the Implementation
+Repository. Remember that the Implementation Repository will be transparent to the
+clients. 
+
+<ul>
+  <li><strong>Use ORB::resolve_initial_reference (&quot;TAO Implementation Repository&quot;)</strong><br>
+    This works like the bootstrapping mechanism to obtain the Naming Service. This method will
+    return the reference to a Implementation Repository. </li>
+  <li><strong>Use a Helper Application</strong><br>
+    A helper application will be part of the Implementation Repository. It will be a
+    command-line utility that will assist users with adding and removing Persistent Object
+    References from the Implementation Repository. </li>
+</ul>
+
+<h3>Locating an instance of Implementation Repository </h3>
+
+<h4>Server side</h4>
+
+<p>The Implementation Repository will be located on the same host as the server. If not,
+host information can be specified through command line options or environment variables.
+The default port of the Implementation Repository can be overriden through command line
+options or environment variables. </p>
+
+<h4>Client side</h4>
+
+<p>The correct Implementation Repository will be stored in another profile in the IOR.
+&nbsp; Other Implementation Repsoitories can also be located by multicasting (on a default
+multicast group) the server name of the Persistent Object the client is interested in. The
+default multicast group can be override through command line options or environment
+variables. The default port of the Implementation Repository can be overriden through
+command line options or environment variables. </p>
+
+<hr>
+
+<h2>How the Client Side works</h2>
+
+<p>The first part should work on all clients that support IIOP 1.1:
+
+<ul>
+  <li>Client obtains a Persistent Object Reference, which contains multiple profiles to both
+    regular objects and Implementation Repositories.</li>
+  <li>It will now make a requestion on the first profile, which is the last known profile for
+    the object.</li>
+  <li>If this fails, then the next one will be tried.&nbsp; And if that fails, the next.
+    &nbsp; One of the other profiles will be a reference to the Implementation Repository, in
+    which it will either return NOT_FOUND or will start up the server and return a Location
+    Forward message.</li>
+</ul>
+
+<p>TAO clients will also have added functionality since other Implementation Repositories
+can be specified on the command line, in environment variables, or found through
+multicast. 
+
+<ul>
+  <li>If all of the profiles fail, then contact the other Implementation Repositories. &nbsp;
+    First get those specified on the command line or in environment variables.</li>
+  <li>Then, if multicast is available: <ul>
+      <li>Multicast the Object Reference to a group of Implementation Repositories&nbsp; </li>
+      <li>Wait until response or a timeout. The response will contain the Object Reference of a
+        Implementation Repository that knows about the Object Reference </li>
+    </ul>
+  </li>
+  <li>Now connect to any Implementation Repositories that have been found.</li>
+  <li>Call <i>activate ()</i> passing the Persistent Object Reference.</li>
+  <li>If a new Object Reference was sent back then retry the request using the it. If this
+    request fails, then fail (no more retries).</li>
+  <li>If a null reference was sent back, then fail.</li>
+</ul>
+
+<p>TAO clients will (eventually) have an optimization where if there are several IORs that
+have the same server name, and one of them gets forwarded, then the client will be able to
+change its other IORs without going through the overhead of contacting Implementation
+Repository.</p>
+
+<hr>
+
+<p>Back to the <a HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/index.html">TAO
+documentation</a> page. <!--#include virtual="/~schmidt/cgi-sig.html" --> </p>
+</body>
+</html>
