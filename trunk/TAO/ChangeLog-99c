@@ -1,3 +1,8 @@
+Sun Mar 07 17:39:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp (send): Remember to reset <iovcnt> after
+	  we send out a batch of data.
+
 Sun Mar  7 17:27:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Pluggable/client.cpp:
