@@ -336,8 +336,14 @@ typedef long      id_t;
 # endif /* ACE_DEFAULT_DIR_PERMS */
 
 // Default size of the ACE Reactor.
+# if defined (FD_SETSIZE)
+int const ACE_FD_SETSIZE = FD_SETSIZE;
+# else
+#   define ACE_FD_SETSIZE FD_SETSIZE
+# endif /* ACE_FD_SETSIZE */
+
 # if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
-#   define ACE_DEFAULT_SELECT_REACTOR_SIZE FD_SETSIZE
+#   define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
 # endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
 
 # if !defined (ACE_DEFAULT_TIMEPROBE_TABLE_SIZE)
@@ -6648,7 +6654,7 @@ public:
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
-  
+
 
 private:
 
@@ -6698,22 +6704,22 @@ private:
 
   static int cond_timedwait_i (ACE_cond_t *cv,
                        ACE_mutex_t *m,
-                       ACE_Time_Value *); 
-  
+                       ACE_Time_Value *);
+
   static u_int alarm_i (u_int secs);
 
   static u_int ualarm_i (u_int usecs, u_int interval = 0);
-  
+
   static u_int ualarm_i (const ACE_Time_Value &tv,
                          const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
-  
+
   static int sleep_i (u_int seconds);
 
   static int sleep_i (const ACE_Time_Value &tv);
-  
+
   static int nanosleep_i (const struct timespec *requested,
                           struct timespec *remaining = 0);
-  
+
   static int select_i (int width,
                        fd_set *rfds,
                        fd_set *wfds,
@@ -6725,11 +6731,11 @@ private:
                        fd_set *wfds,
                        fd_set *efds,
                        const ACE_Time_Value &tv);
-  
+
   static int poll_i (struct pollfd *pollfds,
                      u_long len,
                      const ACE_Time_Value *tv = 0);
-    
+
   static int poll_i (struct pollfd *pollfds,
                      u_long len,
                      const ACE_Time_Value &tv);
