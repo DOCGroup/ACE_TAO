@@ -1,3 +1,10 @@
+Fri Feb  6 22:55:30 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/CORBALOC_Parser.cpp: Remove TAO_HAS_SCIOP.
+	  It is reasonable for the corbaloc parser to fail
+	  if a user specifies an sciop URL but did not compile
+	  SCTP support into ACE.
+
 Fri Feb  6 16:40:06 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.RTKokyuEvent: Added a LIBCHECK for
