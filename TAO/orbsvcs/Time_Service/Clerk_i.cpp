@@ -31,12 +31,14 @@ Clerk_i::~Clerk_i (void)
 int
 Clerk_i::read_ior (const char *filename)
 {
-
   // Open the file for reading.
+
+  // @@ Vishal, please make sure to check for invalid filenames, i.e.,
+  // if fopen() returns 0.
   this->ior_fp_ = ACE_OS::fopen (filename, "r");
 
-  // @@ Make sure you don't use magic numbers like 1024 * 10.
-  // Instead, add a const or an enum to the Clerk_i class.  Check
+  // @@ Vishal, please sure you don't use magic numbers like 1024 *
+  // 10.  Instead, add a const or an enum to the Clerk_i class.  Check
   // other applications in TAO that read IORs and see if there's a
   // default size for these things.  Please update Andy's stuff to
   // also use a const.
@@ -51,9 +53,9 @@ Clerk_i::read_ior (const char *filename)
 	  ACE_DEBUG ((LM_DEBUG,
 		      "iors -> %s\n",
 		      str));
-
-	  CORBA::Object_var objref = this->orb_->string_to_object
-	    (str, TAO_TRY_ENV);
+	  CORBA::Object_var objref =
+            this->orb_->string_to_object (str,
+                                          TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
 	  // Return if the server reference is nil.
@@ -61,13 +63,11 @@ Clerk_i::read_ior (const char *filename)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "IOR for the server is Null\n"),
 			      -1);
-
 	  // Insert the server reference into the set of server IORs.
 	  this->server_.insert (CosTime::TimeService::_narrow
 				(objref.in (),
 				 TAO_TRY_ENV));
 	  TAO_CHECK_ENV;
-
 	}
       TAO_CATCHANY
 	{
@@ -191,8 +191,8 @@ Clerk_i::get_first_IOR (void)
       char machine_clerk_name[MAXHOSTNAMELEN];
       int index = 0;
 
-      ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
-
+      ACE_OS::hostname (host_name,
+                        MAXHOSTNAMELEN);
       CosNaming::BindingList_var bindings_list;
       CosNaming::BindingIterator_var iter;
 
@@ -208,8 +208,9 @@ Clerk_i::get_first_IOR (void)
 
       TAO_CHECK_ENV;
 
-      CosNaming::NamingContext_var server_context = CosNaming::NamingContext::_narrow
-	(temp_object.in (), TAO_TRY_ENV);
+      CosNaming::NamingContext_var server_context =
+        CosNaming::NamingContext::_narrow (temp_object.in (),
+                                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (server_context.in ()))
@@ -222,7 +223,6 @@ Clerk_i::get_first_IOR (void)
       server_context->list (1,
 			    bindings_list.out (),
 			    iter.out ());
-
       CosNaming::Name server_name;
       server_name.length (1);
       server_name[0].id = bindings_list[0].binding_name[0].id;
@@ -230,11 +230,11 @@ Clerk_i::get_first_IOR (void)
       temp_object =
 	server_context->resolve (server_name,
 				 TAO_TRY_ENV);
-
       TAO_CHECK_ENV;
 
-      CosTime::TimeService_var obj = CosTime::TimeService::_narrow
-	(temp_object.in (), TAO_TRY_ENV);
+      CosTime::TimeService_var obj =
+        CosTime::TimeService::_narrow (temp_object.in (),
+                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (obj.in ()))
@@ -248,7 +248,8 @@ Clerk_i::get_first_IOR (void)
       this->server_.insert (obj);
 
       // Iterate over the server context to get the next N IORs.
-      if (next_n_IORs (iter, server_context) != 0)
+      if (next_n_IORs (iter,
+                       server_context) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs "),
 			  -1);;
@@ -275,12 +276,11 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
     {
       CosNaming::Binding_var binding;
 
-      if(!CORBA::is_nil (iter.in ()))
+      if (!CORBA::is_nil (iter.in ()))
 	{
 	  while (iter->next_one (binding.out (),
 				 TAO_TRY_ENV))
 	    {
-
 	      TAO_CHECK_ENV;
 
 	      ACE_DEBUG ((LM_DEBUG,
@@ -294,14 +294,12 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 	      CORBA::Object_var temp_object =
 		server_context->resolve (server_name,
 					 TAO_TRY_ENV);
-
 	      TAO_CHECK_ENV;
 
 	      this->server_.insert (CosTime::TimeService::_narrow (temp_object.in (),
 								   TAO_TRY_ENV));
 	      TAO_CHECK_ENV;
 	    }
-
 	  TAO_CHECK_ENV;
 	}
 
@@ -318,13 +316,12 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 }
 
 // Initialise the Naming Service.
+
 int
 Clerk_i::init_naming_service (CORBA::Environment& env)
 {
-
   TAO_TRY
     {
-
       // Initialize the POA.
       this->orb_manager_.init_child_poa (this->argc_,
 					 this->argv_,
@@ -369,7 +366,8 @@ Clerk_i::create_clerk (void)
 					      this->server_),
 		      0);
       // Generate IOR of the Clerk and register with POA.
-      this->time_service_clerk_ = this->time_service_clerk_impl_->_this ();
+      this->time_service_clerk_ =
+        this->time_service_clerk_impl_->_this ();
 
       // Convert the clerk reference to a string.
       CORBA::String_var objref_clerk =
@@ -391,9 +389,8 @@ Clerk_i::create_clerk (void)
 	  ACE_OS::fclose (this->ior_output_file_);
 	}
 
-      // Register the clerk implementation with the Interface Repository.
-      // init_IR();
-
+      // Register the clerk implementation with the Interface
+      // Repository.  init_IR();
     }
   TAO_CATCHANY
     {
@@ -439,8 +436,8 @@ Clerk_i::register_clerk (void)
       char host_name[MAXHOSTNAMELEN];
       char clerk_mc_name[MAXHOSTNAMELEN];
 
-      ACE_OS::hostname (host_name,MAXHOSTNAMELEN);
-
+      ACE_OS::hostname (host_name,
+                        MAXHOSTNAMELEN);
       CosNaming::Name clerk_name (clerk_context_name);
       clerk_name.length (2);
 
@@ -480,9 +477,9 @@ Clerk_i::init (int argc,
 
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
-
-      this->orb_manager_.init (argc, argv, TAO_TRY_ENV);
-
+      this->orb_manager_.init (argc,
+                               argv,
+                               TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       if (this->orb_manager_.init_child_poa (argc,
@@ -493,7 +490,6 @@ Clerk_i::init (int argc,
 			   "%p\n",
 			   "init_child_poa"),
 			  -1);
-
       TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       // Get the ORB.
@@ -525,7 +521,7 @@ Clerk_i::init (int argc,
 	return -1;
 
       // Register the clerk with the Naming Service.
-      if (!this->ior_fp_)
+      if (this->ior_fp_ == 0)
 	if (this->register_clerk () != 0)
 	  return -1;
 
