@@ -56,6 +56,47 @@ ACE_TP_Token_Guard::grab_token (ACE_Time_Value *max_wait_time)
 }
 
 
+int
+ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
+{
+  ACE_TRACE ("ACE_TP_Token_Guard::acquire_token");
+
+  // Try to grab the lock.  If someone if already there, don't wake
+  // them up, just queue up in the thread pool.
+  int result = 0;
+
+  if (max_wait_time)
+    {
+      ACE_Time_Value tv = ACE_OS::gettimeofday ();
+      tv += *max_wait_time;
+
+      ACE_MT (result = this->token_.acquire (&ACE_TP_Reactor::no_op_sleep_hook,
+                                             0,
+                                             &tv));
+    }
+  else
+    {
+      ACE_MT (result = this->token_.acquire (&ACE_TP_Reactor::no_op_sleep_hook));
+    }
+
+  // Now that this thread owns the token let us make
+  // Check for timeouts and errors.
+  if (result == -1)
+    {
+      if (errno == ETIME)
+        return 0;
+      else
+        return -1;
+    }
+
+  // We got the token and so let us mark ourseleves as owner
+  this->owner_ = 1;
+
+  return result;
+}
+
+
+
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
                                 int mask_signals)
@@ -134,6 +175,123 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
                            guard);
 }
 
+
+int
+ACE_TP_Reactor::remove_handler (ACE_Event_Handler *eh,
+                                ACE_Reactor_Mask mask)
+{
+  // Artificial scoping for grabbing and releasing the token
+  {
+    ACE_TP_Token_Guard guard (this->token_);
+
+    // Acquire the token
+    guard.acquire_token ();
+
+    // Call the remove_handler_i () with a DONT_CALL mask. We dont
+    // want to call the handle_close with the token held.
+    if (this->remove_handler_i (eh->get_handle (),
+                                mask | ACE_Event_Handler::DONT_CALL) == -1)
+      return -1;
+  }
+
+  // Close down the <Event_Handler> unless we've been instructed not
+  // to.
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
+    eh->handle_close (ACE_INVALID_HANDLE, mask);
+
+  return 0;
+}
+
+int
+ACE_TP_Reactor::remove_handler (ACE_HANDLE handle,
+                                ACE_Reactor_Mask mask)
+{
+
+  ACE_Event_Handler *eh = 0;
+
+  // Artificial scoping for grabbing and releasing the token
+  {
+    ACE_TP_Token_Guard guard (this->token_);
+
+    // Acquire the token
+    guard.acquire_token ();
+
+    size_t slot = 0;
+    eh =  this->handler_rep_.find (handle, &slot);
+
+    if (eh == 0)
+      return -1;
+
+    // Call the remove_handler_i () with a DONT_CALL mask. We dont
+    // want to call the handle_close with the token held.
+    if (this->remove_handler_i (handle,
+                                mask | ACE_Event_Handler::DONT_CALL) == -1)
+      return -1;
+  }
+
+  // Close down the <Event_Handler> unless we've been instructed not
+  // to.
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
+    eh->handle_close (handle, mask);
+
+  return 0;
+}
+
+
+int
+ACE_TP_Reactor::remove_handler (const ACE_Handle_Set &handles,
+                                ACE_Reactor_Mask m)
+{
+  // Array of <Event_Handlers> corresponding to <handles>
+  ACE_Event_Handler **aeh = 0;
+
+  // Allocate memory for the size of the handle set
+  ACE_NEW_RETURN (aeh,
+                  ACE_Event_Handler *[handles.num_set ()],
+                  -1);
+
+  size_t index = 0;
+
+  // Artificial scoping for grabbing and releasing the token
+  {
+    ACE_TP_Token_Guard guard (this->token_);
+
+    // Acquire the token
+    guard.acquire_token ();
+
+    ACE_HANDLE h;
+
+    ACE_Handle_Set_Iterator handle_iter (handles);
+
+    while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
+      {
+        size_t slot = 0;
+        ACE_Event_Handler *eh =
+          this->handler_rep_.find (h, &slot);
+
+        if (this->remove_handler_i (h,
+                                    m | ACE_Event_Handler::DONT_CALL) == -1)
+          {
+            delete [] aeh;
+            return -1;
+          }
+
+        aeh [index] = eh;
+        index ++;
+      }
+  }
+
+  // Close down the <Event_Handler> unless we've been instructed not
+  // to.
+  if (ACE_BIT_ENABLED (m, ACE_Event_Handler::DONT_CALL) == 0)
+    {
+      for (size_t i = 0; i < index; i++)
+        aeh[i]->handle_close (ACE_INVALID_HANDLE, m);
+    }
+
+  delete [] aeh;
+  return 0;
+}
 
 int
 ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
@@ -379,9 +537,9 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
 
       // Hack of the decade ;-). We make an extra check for the handle
       // in addition to the event handler before we make a check for
-      // the resume_handler (). 
+      // the resume_handler ().
       if (dispatch_info.event_handler_ != 0 &&
-	  this->handler_rep_.find (dispatch_info.handle_) != 0)
+          this->handler_rep_.find (dispatch_info.handle_) != 0)
         {
          flag =
            dispatch_info.event_handler_->resume_handler ();

@@ -1,3 +1,24 @@
+Wed Oct 17 15:49:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp:
+	* ace/TP_Reactor.h: Added remove_handler () calls to the
+	  TP_Reactor.  Before this, the  call on the reactor used to be
+	  handled by the Select_Reactor's implementation. The
+	  implementation has a problem. It tries to call handle_close ()
+	  (an upcall) as one of the calls after holding the token. This
+	  was asking for trouble. This could lead to deadlocks as
+	  mentioned in [BUG ID 1055]. 
+
+	  The method in the TP_Reactor now calls remove_handler () on the
+	  Select_Reactor (its base class) with a DONT_CALL flag. Then it
+	  calls handle_close () on the Event_Handler if the user did not
+	  pass in the DONT_CALL mask. This two step process would get
+	  around the problem that was mentioned before. Thanks to Graeme
+	  Clark <gclark@opentext.com> for reporting the problem and
+	  testing this fix. 
+
+	  This should close [BUG ID 1055].
+	  
 Wed Oct 17 10:40:17 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
@@ -17,13 +38,13 @@ Wed Oct 17 10:40:17 2001  Ossama Othman  <ossama@uci.edu>
 Wed Oct 17 12:15:15 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* ace/Select_Reactor_T.cpp (handle_error, check_handles): Add
- 	vxworks to the ever-growing list of OSs which return unpredictable
- 	values in errno when there's a bad file descriptor in a select
- 	mask. [Bug 1058].
+	  vxworks to the ever-growing list of OSs which return
+	  unpredictable values in errno when there's a bad file descriptor
+	  in a select mask. [Bug 1058].
 
-	Thanks to Dave Arndt <darndt@oresis.com>, Tad Hetke
- 	<thetke@oresis.com>, and Erik Johannes <ejohannes@oresis.com> for
- 	tracking down and providing this fix.
+	  Thanks to Dave Arndt <darndt@oresis.com>, Tad Hetke
+	  <thetke@oresis.com>, and Erik Johannes <ejohannes@oresis.com>
+	  for tracking down and providing this fix. 
 
 Tue Oct 16 23:08:27 2001  Ossama Othman  <ossama@uci.edu>
 
