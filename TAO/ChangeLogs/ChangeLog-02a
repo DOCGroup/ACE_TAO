@@ -1,3 +1,8 @@
+Wed May 15 15:59:42 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Event/rtcorba_event_export.h:
+	  MOdified the export file to fix the Winxp build errors.
+
 Wed May 15 15:44:54 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp
@@ -31,6 +36,7 @@ Wed May 15 15:20:15 2002  Jeff Parsons <parsons@cs.wustl.edu>
           before it was returned. Thanks to Craig Rodrigues 
           <crodrigu@bbn.com> for reporting the bug.
 
+>>>>>>> 1.5549
 Wed May 15 11:26:15 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/tests/Security/Big_Request/Makefile: 
