@@ -1,27 +1,33 @@
+Fri Apr 23 10:48:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/New_Fail_Test.cpp (main): added uses of the
+          two static functions when they're not otherwise used,
+          to prevent g++ warnings.
+
 Fri Apr 23 09:11:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Reverse_Lock_Test.cpp:
-	  Fixed template instantiation problems.
+        * tests/Reverse_Lock_Test.cpp:
+          Fixed template instantiation problems.
 
 Thu Apr 22 21:39:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tests/Makefile.am: 
+        * tests/Makefile.am:
 
-	  Added support to create the `tests/log' directory after
-	  the tests have been built.
+          Added support to create the `tests/log' directory after
+          the tests have been built.
 
-	* tests/log/Makefile.am
+        * tests/log/Makefile.am
 
-	  The above change deprecates this Makefile.am file.  Thanks to
-	  Nanbor for motivating this change.
+          The above change deprecates this Makefile.am file.  Thanks to
+          Nanbor for motivating this change.
 
 Thu Apr 22 20:50:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/CDR_Stream.i:
-	  Modified reset() to reset all the message blocks, instead of
-	  just the first one as it had previously done. Thanks to
-	  Jerry D. De Master <jdemaste@ipdinc.com> for pointing out
-	  the problem and suggesting a fix.
+        * ace/CDR_Stream.i:
+          Modified reset() to reset all the message blocks, instead of
+          just the first one as it had previously done. Thanks to
+          Jerry D. De Master <jdemaste@ipdinc.com> for pointing out
+          the problem and suggesting a fix.
 
 Thu Apr 22 19:40:52 1999  Steve Huston  <shuston@riverace.com>
 
@@ -31,29 +37,29 @@ Thu Apr 22 19:40:52 1999  Steve Huston  <shuston@riverace.com>
 
 Thu Apr 22 19:30:01 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Synch_T.h (class ACE_Reverse_Lock): Added an interesting
-	  adapter class that changes a lock into a reverse lock, i.e.,
-	  acquire() on this class calls release() on the lock, and
-	  release() on this class calls acquire() on the lock.
+        * ace/Synch_T.h (class ACE_Reverse_Lock): Added an interesting
+          adapter class that changes a lock into a reverse lock, i.e.,
+          acquire() on this class calls release() on the lock, and
+          release() on this class calls acquire() on the lock.
 
-	  One motivation for this class is when we temporarily want to
-	  release a lock (which we have already acquired) but then
-	  reaquire it soon after.  An alternative design would be to add a
-	  Anti_Guard or Reverse_Guard class which would release() on
-	  construction and acquire() destruction.  However, there are
-	  *many* varieties of the Guard class and this design choice would
-	  lead to at least 6 new classes.  One new ACE_Reverse_Lock class
-	  seemed more reasonable.
+          One motivation for this class is when we temporarily want to
+          release a lock (which we have already acquired) but then
+          reaquire it soon after.  An alternative design would be to add a
+          Anti_Guard or Reverse_Guard class which would release() on
+          construction and acquire() destruction.  However, there are
+          *many* varieties of the Guard class and this design choice would
+          lead to at least 6 new classes.  One new ACE_Reverse_Lock class
+          seemed more reasonable.
 
-	* tests/Reverse_Lock_Test.cpp: Test for the new ACE_Reverse_Lock
-	  class.
+        * tests/Reverse_Lock_Test.cpp: Test for the new ACE_Reverse_Lock
+          class.
 
-	* tests/Env_Value_Test.cpp (main): Fixed UNICODE string
-	  concatenation problem.
+        * tests/Env_Value_Test.cpp (main): Fixed UNICODE string
+          concatenation problem.
 
-	* tests/version_tests: Added a bunch of missing project files.
+        * tests/version_tests: Added a bunch of missing project files.
 
-	* ace/ace_lib.dsp: Added missing files.
+        * ace/ace_lib.dsp: Added missing files.
 
 Thu Apr 22 19:10:52 1999  Steve Huston  <shuston@riverace.com>
 
@@ -61,17 +67,17 @@ Thu Apr 22 19:10:52 1999  Steve Huston  <shuston@riverace.com>
 
 Thu Apr 22 17:05:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/auto_compile_win32.pl: Added version_tests.
+        * bin/auto_compile_win32.pl: Added version_tests.
 
-	* include/makeinclude/platform_sunos5_kcc.GNU: Makefile macros for
-	  KAI C++ compiler.
+        * include/makeinclude/platform_sunos5_kcc.GNU: Makefile macros for
+          KAI C++ compiler.
 
-	* ace/config-sunos5.5.h: Added KAI C++ compiler support.
+        * ace/config-sunos5.5.h: Added KAI C++ compiler support.
 
-	* docs/exceptions.html: Explicitly state that ACE try macros will
-	  replace TAO try macros and advise users to take action if they
-	  are still using TAO try macros.  Thanks to Don Busch
-	  <busch_d@ociweb.com> for pointing this out.
+        * docs/exceptions.html: Explicitly state that ACE try macros will
+          replace TAO try macros and advise users to take action if they
+          are still using TAO try macros.  Thanks to Don Busch
+          <busch_d@ociweb.com> for pointing this out.
 
 Thu Apr 22 15:07:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
