@@ -2373,7 +2373,7 @@ ACE::format_hexdump (const char *buffer,
           if (i == 7)
             {
               ACE_OS::sprintf (obuf,
-                               ACE_LIB_TEXT (" "));
+                               ACE_LIB_TEXT (" \n"));
               obuf++;
             }
           textver[i] = ACE_OS::ace_isprint (c) ? c : '.';

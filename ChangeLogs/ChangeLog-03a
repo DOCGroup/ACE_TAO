@@ -1,3 +1,8 @@
+Tue Jun 26 17:37:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Proactor.h: Fixed a compile error with g++. There were two
+	  return types. Retained the return type as int.
+
 Tue Jun 26 16:22:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS_TLI.h: Zapped a dummy declaration of struct rlimit { }.
