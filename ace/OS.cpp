@@ -2234,7 +2234,7 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 #else
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS);
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-      ::_beingthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID);
+      ::_beginthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID);
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
 void *
