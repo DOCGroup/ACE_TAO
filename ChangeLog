@@ -3,7 +3,7 @@ Fri Feb  6 14:13:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	* ace/Time_Value.inl (msec): Changed the return type of 
           ACE_Time_Value::msec() from long to unsigned long to prevent
  	  problems with wrap-arounds that yield negative numbers.  Thanks
- 	  to gillen@ohio.edu for this fix.
+ 	  to Matthew Gillen <gillen@ohio.edu> for this fix.
 
 Fri Feb  6 11:50:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
