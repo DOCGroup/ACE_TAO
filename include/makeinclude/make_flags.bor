@@ -1,4 +1,6 @@
 #
+# $Id$
+#
 # Makefile flags for recursive invocations of make
 #
 
