@@ -188,9 +188,17 @@ EDF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
   ACE_OS::memcpy (&int_guid,
                   guid.get_buffer (),
                   guid.length ());
+  EDF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
+  EDF_Scheduling::SchedulingParameterPolicy::_narrow (sched_param);
+
+  EDF_Scheduling::SchedulingParameter_var sched_para = sched_param_policy->value ();
 
   Object_ID tmp;
   tmp.guid = int_guid;
+  tmp.id = sched_para->id;
+  tmp.pid = sched_para->pid;
+  tmp.tid = sched_para->tid;
+  tmp.task_id = sched_para->task_id;
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, START_NESTED_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
   this->begin_new_scheduling_segment (guid,
@@ -274,7 +282,7 @@ EDF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 void
 EDF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
                                               const char *,
-                                              CORBA::Policy_ptr
+                                              CORBA::Policy_ptr sched_policy
                                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -282,8 +290,18 @@ EDF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdTyp
   ACE_OS::memcpy (&int_guid,
                   guid.get_buffer (),
                   guid.length ());
+    EDF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
+    EDF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
+
+    EDF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
+
   Object_ID tmp;
   tmp.guid = int_guid;
+  tmp.id = sched_param->id;
+  tmp.pid = sched_param->pid;
+  tmp.tid = sched_param->tid;
+  tmp.task_id = sched_param->task_id;
+
   DSUI_EVENT_LOG (EDF_SCHED_FAM, END_NESTED_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
 }
 
@@ -325,7 +343,7 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   CORBA::Long importance;
   TimeBase::TimeT deadline;
   TimeBase::TimeT period;
-  int task_id=-1;
+  int task_id=0;
 
   if (CORBA::is_nil (sched_policy))
     {
@@ -346,6 +364,11 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
       importance = sched_param->importance;
       period = sched_param->period;
       task_id = sched_param->task_id;
+      tmp.id = sched_param->id;
+      tmp.pid = sched_param->pid;
+      tmp.tid = sched_param->tid;
+      tmp.task_id = sched_param->task_id;
+
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
@@ -385,7 +408,7 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              "(%t|%T): send_request : about to add sched SC and guid is %d\n",int_guid));
+              "(%t|%T): send_request : about to add sched SC and guid is %d and importance is %d\n",int_guid, sc_qos.importance));
 #endif
 
   // Add this context to the service context list.
@@ -459,11 +482,10 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
     ri->get_request_service_context (Server_Interceptor::SchedulingInfo
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
   CORBA::Long importance;
   TimeBase::TimeT deadline;
   TimeBase::TimeT period;
-  CORBA::Long task_id=-1;
+  CORBA::Long task_id=0;
 
   if (sc.ptr () == 0)
     {

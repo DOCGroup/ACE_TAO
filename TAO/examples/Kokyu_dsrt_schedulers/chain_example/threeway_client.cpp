@@ -607,7 +607,7 @@ Worker::svc (void)
 
       timeval tv;
 
-      DSUI_EVENT_LOG (WORKER_GROUP_FAM, RUNNING_SUBTASK, 0, sizeof(Object_ID), (char*)&oid);
+      DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
       tv.tv_sec = server_load_-1;
       tv.tv_usec = 800000;
@@ -621,6 +621,7 @@ Worker::svc (void)
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG((LM_DEBUG,"(%t|%T)after running the client workload\n"));
 #endif
+      DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
       sched_param.deadline = sched_param.deadline + left_work*10000000;
       DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
