@@ -59,7 +59,9 @@ ACE_SSL_SOCK_Stream::operator= (const ACE_SSL_SOCK_Stream &stream)
 
 ASYS_INLINE
 ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &stream)
-  : ACE_SSL_SOCK ()
+  : ACE_SSL_SOCK (),
+    ssl_ (0),
+    stream_ ()
 {
   // NOT thread safe!
 
