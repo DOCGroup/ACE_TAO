@@ -1,3 +1,11 @@
+Thu Nov 20 17:43:15 1997    <nw1@COYOTE>
+
+	* ace/Thread_Manager.cpp (kill_thr): Changed to prevent thread
+ 	  manager from "discard" a thread when a certain operation is not
+ 	  supported by the operation system.  Removed the mechanism that
+ 	  preserves errno during "thread removal."  We no longer remove
+ 	  thread right after an error occured.
+
 Thu Nov 20 17:53:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/Shared_Malloc/test_multiple_mallocs.cpp (main): Make
