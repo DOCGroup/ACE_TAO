@@ -1,26 +1,13 @@
-/* -*- C++ -*- */
-// $Id$
-
 // The following configuration file is designed to work for SCO UNIX
-// version 4.2 without threads.
+// 5.0 with Florida State pthreads.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
-
-#if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
-#endif /* ! __ACE_INLINE__ */
 
 // Compiling for SCO.
 #if !defined (SCO)
 #define SCO
 #endif /* SCO */
-
-#define __ACE_INLINE__
-
-#if defined (__ACE_INLINE__)
-#define ACE_HAS_INLINED_OSCALLS
-#endif /* __ACE_INLINE__ */
 
 #if defined (SCO) && !defined (MAXPATHLEN)
 #define MAXPATHLEN 1023
@@ -30,20 +17,11 @@
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
-#define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_STRRECVFD
-#define ACE_LACKS_MMAP
-#define ACE_LACKS_SOCKETPAIR
-#define ACE_HAS_SEMUN
-#define ACE_LACKS_MSYNC
-#define ACE_LACKS_MADVISE
-#define ACE_NEEDS_WRITEV
-#define ACE_NEEDS_READV
 #define ACE_NEEDS_FTRUNCATE
 #define ACE_LACKS_RLIMIT
-#define ACE_LACKS_RECVMSG
-#define ACE_LACKS_SENDMSG
+#define ACE_LACKS_MADVISE
 
 // Compiler doesn't support static data member templates.
 //#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
@@ -98,7 +76,7 @@
 //#define ACE_HAS_GETRUSAGE
 
 // Platform uses int for select() rather than fd_set.
-#define ACE_SELECT_USES_INT
+#define ACE_HAS_SELECT_H
 
 // Platform has prototypes for ACE_TLI.
 //#define ACE_HAS_TLI_PROTOTYPES
@@ -111,5 +89,42 @@
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+
+#define ACE_HAS_SIGINFO_T
+#define	ACE_HAS_UCONTEXT_T
+
+#define	ACE_NEEDS_SYSTIME_H
+#define ACE_HAS_INLINED_OSCALLS
+
+// Threads
+#define	ACE_HAS_THREADS
+#define	ACE_HAS_PTHREADS
+#define ACE_HAS_FSU_PTHREADS
+#define	ACE_HAS_PTHREAD_T
+#define	ACE_HAS_SIGWAIT
+#define	ACE_HAS_ONEARG_SIGWAIT
+#define	ACE_HAS_PTHREAD_YIELD_VOID_PTR
+#define	ACE_HAS_YIELD_VOID_PTR
+#define	ACE_HAS_PTHREAD_ATTR_INIT
+#define	ACE_HAS_PTHREAD_ATTR_DESTROY
+#define	ACE_HAS_PTHREAD_DSTATE_PTR
+#define	ACE_HAS_PTHREAD_EQUAL
+#define	ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
+#define ACE_LACKS_THREAD_STACK_ADDR
+#define ACE_LACKS_CONDATTR_PSHARED
+
+#define	ACE_HAS_POSIX_TIME
+
+#define PTHREAD_STACK_MIN 1024
+
+#include <pthread.h>
+
+#undef PTHREAD_INHERIT_SCHED
+
+struct sched_param  
+{
+  int sched_priority;
+  int prio;
+};
 
 #endif /* ACE_CONFIG_H */

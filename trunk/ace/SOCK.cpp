@@ -53,7 +53,7 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
   if (ACE_OS::getsockname (this->get_handle (), addr, &len) == -1)
     return -1;
 
-  sa.set_size ((int)len);
+  sa.set_size (len);
   return 0;
 }
 

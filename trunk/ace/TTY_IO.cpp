@@ -1,7 +1,6 @@
 // TTY_IO.cpp
 // $Id$
 
-
 #define ACE_BUILD_DLL
 #include "ace/TTY_IO.h"
 
@@ -29,8 +28,13 @@ ACE_TTY_IO::control (Control_Mode cmd,
 
   // Get default device parameters.
  
-  if (this->ACE_IO_SAP::control (TCGETS, (void *) &devpar) == -1)
-    return -1;
+    // Get default device parameters.
+#if defined (M_UNIX)
+  return -1;
+#else
+    if (this->ACE_IO_SAP::control (TCGETS, (void *) &devpar) == -1)
+      return -1;
+#endif /* M_UNIX */
 
   switch (cmd)
     {
@@ -100,9 +104,11 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->ctsenb) /* enable CTS/RTS protocoll */
 	c_cflag |= CRTSCTS;
 #endif /* CRTSCTS */
+#if defined (CREAD)
       if (arg->rcvenb) /* enable receiver */
 	c_cflag |= CREAD;
- 
+#endif /* CREAD */
+
       c_oflag=0;
       c_iflag=IGNPAR|INPCK|ISTRIP;
       c_lflag=0;
@@ -116,7 +122,11 @@ ACE_TTY_IO::control (Control_Mode cmd,
       devpar.c_cc[4] = ivmin_cc4;
       devpar.c_cc[5] = ivtime_cc5;
       
+#if defined (M_UNIX)
+      return -1;
+#else      
       return this->ACE_IO_SAP::control (TCSETS, (void *) &devpar);
+#endif /* M_UNIX */
 
     case GETPARAMS:
       return -1; // Not yet implemented.
@@ -208,8 +218,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
 
     } // arg switch
 #else
-  cmd = cmd;
-  arg = arg;
+  ACE_UNUSED_ARG (cmd);
+  ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_TERM_IOCTLS */
 }
