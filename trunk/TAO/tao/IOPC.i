@@ -60,10 +60,27 @@ ACE_INLINE ::IOP::TaggedProfile_var &
 IOP::TaggedProfile_var::operator= (const ::IOP::TaggedProfile_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::TaggedProfile (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::TaggedProfile *deep_copy = 
+            new IOP::TaggedProfile (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::TaggedProfile *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -247,10 +264,27 @@ ACE_INLINE IOP::TaggedProfile::_tao_seq_Octet_var &
 IOP::TaggedProfile::_tao_seq_Octet_var::operator= (const ::IOP::TaggedProfile::_tao_seq_Octet_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::TaggedProfile::_tao_seq_Octet (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::TaggedProfile::_tao_seq_Octet *deep_copy = 
+            new IOP::TaggedProfile::_tao_seq_Octet (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::TaggedProfile::_tao_seq_Octet *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -443,10 +477,27 @@ ACE_INLINE ::IOP::IOR_var &
 IOP::IOR_var::operator= (const ::IOP::IOR_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::IOR (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::IOR *deep_copy = 
+            new IOP::IOR (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::IOR *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -799,10 +850,27 @@ ACE_INLINE IOP::IOR::_tao_seq_TaggedProfile_var &
 IOP::IOR::_tao_seq_TaggedProfile_var::operator= (const ::IOP::IOR::_tao_seq_TaggedProfile_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::IOR::_tao_seq_TaggedProfile (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::IOR::_tao_seq_TaggedProfile *deep_copy = 
+            new IOP::IOR::_tao_seq_TaggedProfile (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::IOR::_tao_seq_TaggedProfile *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -990,10 +1058,27 @@ ACE_INLINE ::IOP::TaggedComponent_var &
 IOP::TaggedComponent_var::operator= (const ::IOP::TaggedComponent_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::TaggedComponent (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::TaggedComponent *deep_copy = 
+            new IOP::TaggedComponent (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::TaggedComponent *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -1177,10 +1262,27 @@ ACE_INLINE IOP::TaggedComponent::_tao_seq_Octet_var &
 IOP::TaggedComponent::_tao_seq_Octet_var::operator= (const ::IOP::TaggedComponent::_tao_seq_Octet_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::TaggedComponent::_tao_seq_Octet (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::TaggedComponent::_tao_seq_Octet *deep_copy = 
+            new IOP::TaggedComponent::_tao_seq_Octet (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::TaggedComponent::_tao_seq_Octet *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -1553,10 +1655,27 @@ ACE_INLINE IOP::MultipleComponentProfile_var &
 IOP::MultipleComponentProfile_var::operator= (const ::IOP::MultipleComponentProfile_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::MultipleComponentProfile (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::MultipleComponentProfile *deep_copy = 
+            new IOP::MultipleComponentProfile (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::MultipleComponentProfile *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -1924,10 +2043,27 @@ ACE_INLINE IOP::TaggedComponentList_var &
 IOP::TaggedComponentList_var::operator= (const ::IOP::TaggedComponentList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::TaggedComponentList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::TaggedComponentList *deep_copy = 
+            new IOP::TaggedComponentList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::TaggedComponentList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2115,10 +2251,27 @@ ACE_INLINE ::IOP::ServiceContext_var &
 IOP::ServiceContext_var::operator= (const ::IOP::ServiceContext_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::ServiceContext (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::ServiceContext *deep_copy = 
+            new IOP::ServiceContext (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::ServiceContext *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2302,10 +2455,27 @@ ACE_INLINE IOP::ServiceContext::_tao_seq_Octet_var &
 IOP::ServiceContext::_tao_seq_Octet_var::operator= (const ::IOP::ServiceContext::_tao_seq_Octet_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::ServiceContext::_tao_seq_Octet (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::ServiceContext::_tao_seq_Octet *deep_copy = 
+            new IOP::ServiceContext::_tao_seq_Octet (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::ServiceContext::_tao_seq_Octet *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2678,10 +2848,27 @@ ACE_INLINE IOP::ServiceContextList_var &
 IOP::ServiceContextList_var::operator= (const ::IOP::ServiceContextList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::IOP::ServiceContextList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          IOP::ServiceContextList *deep_copy = 
+            new IOP::ServiceContextList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              IOP::ServiceContextList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

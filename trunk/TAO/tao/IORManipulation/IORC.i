@@ -398,10 +398,27 @@ ACE_INLINE TAO_IOP::TAO_IOR_Manipulation::IORList_var &
 TAO_IOP::TAO_IOR_Manipulation::IORList_var::operator= (const ::TAO_IOP::TAO_IOR_Manipulation::IORList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::TAO_IOP::TAO_IOR_Manipulation::IORList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          TAO_IOP::TAO_IOR_Manipulation::IORList *deep_copy = 
+            new TAO_IOP::TAO_IOR_Manipulation::IORList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              TAO_IOP::TAO_IOR_Manipulation::IORList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

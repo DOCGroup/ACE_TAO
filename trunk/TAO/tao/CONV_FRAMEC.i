@@ -41,12 +41,27 @@ ACE_INLINE CONV_FRAME::CodeSetComponent_var &
 CONV_FRAME::CodeSetComponent_var::operator= (const CONV_FRAME::CodeSetComponent_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    CONV_FRAME::CodeSetComponent (*p.ptr_),
-		    *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CONV_FRAME::CodeSetComponent *deep_copy = 
+                new CONV_FRAME::CodeSetComponent (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CONV_FRAME::CodeSetComponent *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -385,12 +400,28 @@ ACE_INLINE CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId_var &
 CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId_var::operator= (const CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId (*p.ptr_),
-		    *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId *deep_copy = 
+            new CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId *tmp = 
+                deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -571,12 +602,27 @@ ACE_INLINE CONV_FRAME::CodeSetComponentInfo_var &
 CONV_FRAME::CodeSetComponentInfo_var::operator= (const CONV_FRAME::CodeSetComponentInfo_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    CONV_FRAME::CodeSetComponentInfo (*p.ptr_),
-		    *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CONV_FRAME::CodeSetComponentInfo *deep_copy = 
+            new CONV_FRAME::CodeSetComponentInfo (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CONV_FRAME::CodeSetComponentInfo *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -742,12 +788,27 @@ ACE_INLINE CONV_FRAME::CodeSetContext_var &
 CONV_FRAME::CodeSetContext_var::operator= (const CONV_FRAME::CodeSetContext_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_,
-                    CONV_FRAME::CodeSetContext (*p.ptr_),
-		    *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CONV_FRAME::CodeSetContext *deep_copy = 
+            new CONV_FRAME::CodeSetContext (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CONV_FRAME::CodeSetContext *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

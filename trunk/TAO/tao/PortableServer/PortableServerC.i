@@ -378,10 +378,27 @@ ACE_INLINE PortableServer::POAList_var &
 PortableServer::POAList_var::operator= (const ::PortableServer::POAList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::PortableServer::POAList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          PortableServer::POAList *deep_copy = 
+            new PortableServer::POAList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              PortableServer::POAList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -580,10 +597,27 @@ ACE_INLINE PortableServer::ObjectId_var &
 PortableServer::ObjectId_var::operator= (const ::PortableServer::ObjectId_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::PortableServer::ObjectId (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          PortableServer::ObjectId *deep_copy = 
+            new PortableServer::ObjectId (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              PortableServer::ObjectId *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

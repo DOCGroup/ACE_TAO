@@ -576,10 +576,27 @@ ACE_INLINE ::DynamicAny::NameValuePair_var &
 DynamicAny::NameValuePair_var::operator= (const ::DynamicAny::NameValuePair_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::DynamicAny::NameValuePair (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          DynamicAny::NameValuePair *deep_copy = 
+            new DynamicAny::NameValuePair (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              DynamicAny::NameValuePair *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -932,10 +949,27 @@ ACE_INLINE DynamicAny::NameValuePairSeq_var &
 DynamicAny::NameValuePairSeq_var::operator= (const ::DynamicAny::NameValuePairSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::DynamicAny::NameValuePairSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          DynamicAny::NameValuePairSeq *deep_copy = 
+            new DynamicAny::NameValuePairSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              DynamicAny::NameValuePairSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -1129,10 +1163,27 @@ ACE_INLINE ::DynamicAny::NameDynAnyPair_var &
 DynamicAny::NameDynAnyPair_var::operator= (const ::DynamicAny::NameDynAnyPair_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::DynamicAny::NameDynAnyPair (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          DynamicAny::NameDynAnyPair *deep_copy = 
+            new DynamicAny::NameDynAnyPair (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              DynamicAny::NameDynAnyPair *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -1485,10 +1536,27 @@ ACE_INLINE DynamicAny::NameDynAnyPairSeq_var &
 DynamicAny::NameDynAnyPairSeq_var::operator= (const ::DynamicAny::NameDynAnyPairSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::DynamicAny::NameDynAnyPairSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          DynamicAny::NameDynAnyPairSeq *deep_copy = 
+            new DynamicAny::NameDynAnyPairSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              DynamicAny::NameDynAnyPairSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2202,10 +2270,27 @@ ACE_INLINE DynamicAny::AnySeq_var &
 DynamicAny::AnySeq_var::operator= (const ::DynamicAny::AnySeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::DynamicAny::AnySeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          DynamicAny::AnySeq *deep_copy = 
+            new DynamicAny::AnySeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              DynamicAny::AnySeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -2559,10 +2644,27 @@ ACE_INLINE DynamicAny::DynAnySeq_var &
 DynamicAny::DynAnySeq_var::operator= (const ::DynamicAny::DynAnySeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::DynamicAny::DynAnySeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          DynamicAny::DynAnySeq *deep_copy = 
+            new DynamicAny::DynAnySeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              DynamicAny::DynAnySeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
