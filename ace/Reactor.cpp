@@ -1433,6 +1433,7 @@ ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 
 #if defined (ACE_MT_SAFE)
   ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1);
+
   if (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_) == 0)
     return -1;
 

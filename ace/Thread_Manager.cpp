@@ -730,7 +730,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
     if (this->zero_cond_.wait (timeout) == -1)
       return -1;
 #else
-  timeout = timeout;
+  ACE_UNUSED_ARG (timeout);
 #endif /* ACE_HAS_THREADS */
 
   return 0;

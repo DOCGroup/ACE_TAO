@@ -47,9 +47,14 @@ private:
   int get (T &value, ACE_Time_Value *tv);
   // Wait up to <tv> time to get the <value>.
 
-  operator T();
-  // Type conversion. will block forever until the
-  // result is available.
+  operator T ();
+  // Type conversion. will block forever until the result is
+  // available.  Note that this method is going away in a subsequent
+  // release since it doesn't distinguish between failure results and
+  // success results (exceptions should be used, but they aren't
+  // portable...).  The <get> method should be used instead since it
+  // separates the error value from the result, and also permits
+  // timeouts.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -123,8 +128,13 @@ public:
   // Wait up to <tv> time to get the <value>.
 
   operator T ();
-  // type conversion. obtain the result of the asynchronous method
-  // invocation. will block forever.
+  // Type conversion, which obtains the result of the asynchronous
+  // method invocation.  Will block forever.  Note that this method is
+  // going away in a subsequent release since it doesn't distinguish
+  // between failure results and success results (exceptions should be
+  // used, but they aren't portable...).  The <get> method should be
+  // used instead since it separates the error value from the result,
+  // and also permits timeouts.
 
   int ready (void);
   // Check if the result is available.
