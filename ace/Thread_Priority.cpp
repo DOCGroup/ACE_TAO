@@ -324,7 +324,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
 }
 
 
-#elif defined(LINUX) \
+#elif defined(linux) \
    && defined(ACE_HAS_PTHREADS) // not sure 
 /* mapping of
       ACE_Thread_Priority::                    to        POSIX 1003.1c
