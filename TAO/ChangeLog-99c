@@ -1,3 +1,13 @@
+Thu Jun  3 16:30:46 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/GIOP.h: 
+	* tao/GIOP.cpp:
+	* tao/Invocation.cpp
+	* tao/Invocation.h: 
+	
+	Moved the request/locate request header writing code from
+	Invocation class to GIOP class.
+
 Thu Jun  3 16:17:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
