@@ -1,3 +1,10 @@
+Tue Aug 10 12:11:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/TAO_Test.dsw:
+	* TAO/tests/README:
+	  Added IDL_Test project to workspace and added a
+	  paragraph about IDL_Test to README.
+
 Tue Aug 10 11:52:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
