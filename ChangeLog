@@ -1,3 +1,13 @@
+Fri May  7 15:59:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Kokyu/tests/DSRT_MIF/MIF.cpp (svc):
+
+	  Fixed "variable set but never used" Compaq C++ warning.
+
+	* ace/TMCast/Protocol.cpp:
+
+	  Fixed "declared but never referenced" Compaq C++ warning.
+
 Fri May  7 14:45:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* GNUmakefile:
