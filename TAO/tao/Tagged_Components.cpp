@@ -72,7 +72,6 @@ TAO_Tagged_Components::set_tao_priority (CORBA::Short p)
 
   TAO_OutputCDR cdr;
   cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
-  cdr << this->orb_type_;
 
   cdr << this->tao_priority_;
 
