@@ -1,3 +1,8 @@
+Mon Jul 28 04:54:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* server/Parse_Headers.cpp (place): Reformatted the same
+	  stuff again...
+
 Mon Jul 28 01:48:40 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* server/Parse_Headers.cpp (place): Fixed a compile error found by

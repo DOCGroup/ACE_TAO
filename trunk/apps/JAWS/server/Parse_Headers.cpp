@@ -265,16 +265,17 @@ Headers_Map::place (const char *const header)
 
   while (i > 0)
     {
-      if (Headers_Map::compare (&this->map_[i], &this->map_[i - 1]) > 0)
+      if (Headers_Map::compare (&this->map_[i],
+				&this->map_[i - 1]) > 0)
         break;
-      ACE_OS::memcpy (&temp_item,
-                      &(this->map_[i-1]),
+      ACE_OS::memcpy ((void *) &temp_item,
+                      (const void *) &this->map_[i - 1],
                       sizeof (Headers_Map::Map_Item));
-      ACE_OS::memcpy (&(this->map_[i-1]),
-                      &(this->map_[i]),
+      ACE_OS::memcpy ((void *) &this->map_[i - 1],
+                      (const void *) &this->map_[i],
                       sizeof (Headers_Map::Map_Item));
-      ACE_OS::memcpy (&(this->map_[i]),
-                      &temp_item,
+      ACE_OS::memcpy ((void *) &this->map_[i],
+                      (const void *) &temp_item,
                       sizeof (Headers_Map::Map_Item));
       i--;
     }
