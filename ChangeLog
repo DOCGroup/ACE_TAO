@@ -99,7 +99,7 @@ Fri Aug  6 07:58:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Message_Block.cpp (crunch): If rd_ptr_ was greater than
 	  wr_ptr_ memory was overwritten, so added a check for this case
- 	  and avoid doing any harm.  Also, simplified the initial if
+ 	  and return -1 in this case.  Also, simplified the initial if
  	  statement.  Thanks to Boris Kaminer for reporting this.
 
 	* ace/OS_NS_string.inl: Updated ACE_OS::strerror() so it checks
