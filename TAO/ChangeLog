@@ -1,7 +1,12 @@
+Wed Apr 14 06:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Any.h:
+          Added include of tao/Exception.h to fix compile problems
+
 Tue Apr 13 12:22:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/GIOP.pidl:
-        
+
           In the suggested IDL compiler command line options to
           regenerate this file, removed -Gp (thru-POA collocation)
           and -Gd (direct collocation) since the file contains
@@ -12,17 +17,17 @@ Tue Apr 13 12:00:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO/TAO_IDL/be/be_visitor_root/any_op.cpp:
         * TAO/TAO_IDL/be/be_visitor_root/root.cpp:
-        
+
           Moved the check for the -GA option set and resulting
           conditional switch of the output stream file pointer
           from the root visitor to the any_op visitor.
-          
+
         * TAO/TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-        
-          Added check for the -GA option set and resulting 
+
+          Added check for the -GA option set and resulting
           conditional generation of type code body in *A.cpp
           instead of the default *C.cpp.
-          
+
         * TAO/TAO_IDL/driver/drv_args.cpp:
         * TAO/docs/compiler.html:
         * TAO/tests/Hello/Hello.mpc:
@@ -31,29 +36,29 @@ Tue Apr 13 12:00:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO/tests/IDL_Test/README:
         * TAO/tests/Param_Test/Param_Test.mpc:
         * TAO/tests/Param_Test/README:
-        
+
           Made the IDL compiler option -GA (generation of Any operator
           and type code bodies into a separate file with the extension
           *A.cpp), recently added and up until now intended only for
           TAO developers, available to all users. More flexible than
           the -Sa and -St options, which suppress generation of Any
           operators and type codes respectively, this option enables
-          clients and servers to independently decide whether to 
+          clients and servers to independently decide whether to
           compile and link TypeCode- and Any-related code. Changes
           involving this option include:
-          
+
           - Add usage message to the IDL compiler.
-          
+
           - Adding the option to the IDL compiler command line in
             Param_Test, IDL_Test and the Hello test. In the latter
             test, the resulting testA.cpp file is not included in
             either the client or server build, testing the decoupling
             of the dependency when a client or server does not use
             type codes or Anys.
-            
+
           - Updating the README files of the above tests to document
             the added option.
-            
+
           - Adding documentation of the option to the table of IDL
             compiler command line options in TAO/docs/compiler.html.
 
