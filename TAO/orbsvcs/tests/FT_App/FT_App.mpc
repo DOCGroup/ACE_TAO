@@ -1,0 +1,139 @@
+project(*Server): taoserver, fault_tolerance, orbsvcsexe{
+  exename = ft_replica
+  Source_Files {
+    FT_Replica.cpp
+    FT_TestReplica_i.cpp
+    FT_ReplicaFactory_i.cpp
+  }
+  Documentation_Files {
+    README
+    FT_App.mpc
+  }
+}
+
+project(*Client): taoclient, fault_tolerance, orbsvcsexe {
+  exename = ft_client
+  includes += $(TAO_ROOT)
+  Source_Files {
+    FT_Client.cpp
+  }
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_basic.pl
+  }
+}
+
+project(*Notifier): taoserver, fault_tolerance, orbsvcsexe {
+  exename = ft_notifier
+  Source_Files {
+    FTAPP_Notifier_Main.cpp
+    StubFaultNotifier.cpp
+  }
+
+  // Custom folder: script to run this test
+// too bad this doesn't work!
+// If you omit the generic_outputext, it creates an empty folder
+// if you include the generic_outputext, it tries to "build" the .pl
+//    file which runs the test even when you don't want to.
+//  Define_Custom(Script) {
+//    inputext = .pl, .py, .rb
+//    generic_outputext = .txt
+//  }
+//  Script_Files {
+//    run_test_detector.pl
+//  }
+
+  // explicitly omit IDL and doc files
+  IDL_Files {
+  }
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_detector.pl
+  }
+}
+
+project(*Analyzer): taoclient, fault_tolerance, orbsvcsexe {
+  exename = ft_analyzer
+
+  Source_Files {
+    FTAPP_Analyzer_Main.cpp
+    StubFaultAnalyzer.cpp
+    StubFaultConsumer.cpp
+    StubBatchConsumer.cpp
+  }
+
+  // explicitly omit IDL files
+  IDL_Files {
+  }
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_notifier.pl
+  }
+}
+
+project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
+  exename = ft_fault_consumer
+
+  Source_Files {
+    FTApp_FaultConsumer_Main.cpp
+    ReplicationManagerFaultConsumerAdapter.cpp
+    ../../FT_ReplicationManager/FT_FaultConsumer.cpp
+    ../../FT_ReplicationManager/FT_FaultAnalyzer.cpp
+    ../../FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp
+  }
+
+  // explicitly omit IDL files
+  IDL_Files {
+  }
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_fault_consumer.pl
+  }
+}
+
+project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
+  exename = ft_registry
+
+  Source_Files {
+    FTAPP_FactoryRegistry_Main.cpp
+  }
+
+  // explicitly omit IDL files
+  IDL_Files {
+  }
+  Documentation_Files {
+  }
+}
+
+project(*Creator): taoclient, fault_tolerance, orbsvcsexe {
+  exename = ft_create
+
+  Source_Files {
+    FT_Creator.cpp
+    TAO_Object_Group_Creator.cpp
+  }
+
+  // explicitly omit IDL files
+  IDL_Files {
+  }
+
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_registry.pl
+    run_test_rmregistry.pl
+  }
+}
+
+project(*RMController): taoclient, fault_tolerance, orbsvcsexe {
+  exename = replmgr_controller
+  Source_Files {
+    FT_ReplicationManagerController.cpp
+  }
+  // explicitly omit IDL files
+  IDL_Files {
+  }
+  Documentation_Files {
+    // pretend the pl file is documentation for now
+    run_test_replication_mgr.pl
+  }
+}
