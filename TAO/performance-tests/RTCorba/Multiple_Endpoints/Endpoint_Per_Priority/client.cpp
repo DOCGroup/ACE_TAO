@@ -131,8 +131,9 @@ main (int argc, char *argv[])
           flags = THR_NEW_LWP|THR_JOINABLE;
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "server (%P|%t): sched_params failed\n"),
+                          1);
     }
 
   ACE_TRY_NEW_ENV
@@ -178,7 +179,11 @@ main (int argc, char *argv[])
                          &after_connection);
 
           CORBA::Short native_priority = 0;
-          pm->to_native (priorities[i], native_priority);
+          if (pm->to_native (priorities[i], native_priority) == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot convert corba priority %d to native priority\n",
+                               priorities[i]),
+                              1);
 
           if (client[i].activate (flags,
                                   1, 1,
