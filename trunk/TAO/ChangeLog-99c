@@ -1,3 +1,12 @@
+Mon Mar  1 17:57:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/dynany_test/test_dynsequence.cpp:
+	  Fixed a double-deletion problem with a data string.
+	  All the dynany test code will need to be looked over
+	  for memory-handling behavior since the many recent
+	  changes to the IDL compiler. Thanks to Barry Hoggard
+	  for reporting this bug.
+
 Mon Mar  1 17:31:57 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/sfp.cpp: Added the flowProtocol:: class

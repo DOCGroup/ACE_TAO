@@ -93,7 +93,7 @@ Test_DynSequence::run_test (void)
         this->orb_->create_dyn_sequence (DynAnyTests::_tc_test_seq,
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      ts[0] = data.m_string1;
+      ts[0] = CORBA::string_dup (data.m_string1);
       CORBA_Any in_any2;
       in_any2 <<= ts;
       ftc1->from_any (in_any2,
