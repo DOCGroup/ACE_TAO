@@ -196,12 +196,8 @@ IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 $(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %$(IDL_CLIENT_HDR_EXT)
 	@
 # Invoke the idl compiler to create the client header
-# The $(TAO_IDL_DEP) dependency is commented out, since this rule won't fire
-# without it.  By letting this rule fire, you get an error saying the idl
-# compiler can't be found--which is much nicer than "no rule to build xC.h
-# needed by xC.cpp."
 ifneq ($(tao_dont_use_idl_make_rule),1)
-%C.h: %.idl #$(TAO_IDL_DEP)
+%C.h: %.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 endif
 
@@ -209,10 +205,9 @@ $(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
 	@
 
 ifneq ($(tao_dont_use_idl_make_rule),1)
-%Cli.h: %.idl #$(TAO_IDL_DEP)
+%Cli.h: %.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 endif
-
 
 # Turn on symbol versioning. The scheme that we follow is to allow
 # applications dependent on libraries, with same version numbers (major,
