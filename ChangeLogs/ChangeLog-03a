@@ -1,3 +1,7 @@
+Sat Apr 29 17:13:55 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/Makefile.am: Added the SOCK_Dgram_Mcast_QoS.{cpp,h,i}
+
 Sat Apr 29 14:49:13 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/DLL/Newsweek.dsp:
