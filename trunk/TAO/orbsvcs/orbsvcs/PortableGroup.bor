@@ -31,7 +31,7 @@ OBJFILES = \
         $(OBJDIR)\UIPMC_Factory.obj \
         $(OBJDIR)\UIPMC_Profile.obj \
         $(OBJDIR)\UIPMC_Transport.obj \
-        $(OBJDIR)\UIPMC_Wait_Never.obj
+        $(OBJDIR)\UIPMC_Wait_Never.obj \
 	$(OBJDIR)\PG_Factory_Map.obj \
 	$(OBJDIR)\PG_Factory_Set.obj \
 	$(OBJDIR)\PG_GenericFactory.obj \

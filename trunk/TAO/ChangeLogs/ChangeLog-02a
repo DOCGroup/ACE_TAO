@@ -1,3 +1,8 @@
+Fri Jun  7 09:26:44 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+	* orbsvcs/orbsvcs/PortableGroup.bor (OBJFILES):
+	  Added a missing line continuation backslash.
+
 Thu Jun  6 13:36:22 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_throw_spec): 
