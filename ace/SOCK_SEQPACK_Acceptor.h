@@ -7,7 +7,7 @@
  *
  *  $Id$
  *  @author  Patrick J. Lardieri <plardier@atl.lmco.com>
- *  @author  based on SOCK_STREAM_Acceptor 
+ *  @author  based on SOCK_STREAM_Acceptor
  *            by Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *
  */
@@ -93,13 +93,13 @@ public:
             int protocol = 0);
 
   /// Multihomed version of same
-  
+
   int open (const ACE_Multihomed_INET_Addr &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
-  
+
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
