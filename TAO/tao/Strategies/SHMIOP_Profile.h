@@ -122,10 +122,6 @@ private:
   CORBA::ULong count_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "SHMIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #include /**/ "ace/post.h"

@@ -28,15 +28,9 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Wait_Strategy.h"
 
-#if !defined (__ACE_INLINE__)
-# include "SCIOP_Connection_Handler.i"
-#endif /* ! __ACE_INLINE__ */
-
-
 ACE_RCSID (tao,
            SCIOP_Connection_Handler,
            "$Id$")
-
 
 TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SCIOP_SVC_HANDLER (t, 0 , 0),

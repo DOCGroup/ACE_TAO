@@ -19,10 +19,6 @@
 #include "DIOP_Transport.h"
 #include "DIOP_Endpoint.h"
 
-#if !defined (__ACE_INLINE__)
-# include "DIOP_Connection_Handler.i"
-#endif /* ! __ACE_INLINE__ */
-
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 

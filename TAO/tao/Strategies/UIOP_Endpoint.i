@@ -16,5 +16,4 @@ TAO_UIOP_Endpoint::rendezvous_point (void) const
   return this->object_addr_.get_path_name ();
 }
 
-
 #endif  /* TAO_HAS_UIOP == 1 */

@@ -68,7 +68,7 @@ public:
 
   TAO_SCIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. 
+  /// Constructor.
   TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                 CORBA::Boolean flag);
 
@@ -136,10 +136,6 @@ private:
   /// Stores the type of service value.
   int dscp_codepoint_;
 };
-
-#if defined (__ACE_INLINE__)
-#include "SCIOP_Connection_Handler.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SCIOP == 1 */
 

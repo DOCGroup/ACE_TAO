@@ -13,10 +13,6 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/CDR.h"
 
-#if !defined(__ACE_INLINE__)
-#include "SHMIOP_Acceptor.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/os_include/os_netdb.h"
 #include "ace/os_include/os_ctype.h"
 

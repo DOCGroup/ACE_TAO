@@ -22,10 +22,6 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
 
-#if !defined (__ACE_INLINE__)
-# include "DIOP_Transport.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (tao, DIOP_Transport, "$Id$")
 
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,

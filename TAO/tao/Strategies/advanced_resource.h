@@ -11,7 +11,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "tao/ORB_Core.h"
 
 class TAO_Connection_Purging_Strategy;
@@ -133,10 +132,6 @@ protected:
   virtual int load_default_protocols (void);
 
 };
-
-#if defined (__ACE_INLINE__)
-#include "advanced_resource.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_Advanced_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_Advanced_Resource_Factory)
