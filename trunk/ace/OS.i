@@ -7723,7 +7723,19 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 {
   ACE_TRACE ("ACE_OS::hostname");
 #if !defined (ACE_HAS_WINCE)
-# if defined (ACE_WIN32)
+# if defined (ACE_HAS_PHARLAP)
+  // PharLap only can do net stuff with the RT version.
+#   if defined (ACE_HAS_PHARLAP_RT)
+  // @@This is not at all reliable... requires ethernet and BOOTP to be used.
+  // A more reliable way is to go thru the devices w/ EtsTCPGetDeviceCfg until
+  // a legit IP address is found, then get its name w/ gethostbyaddr.
+  ACE_SOCKCALL_RETURN (gethostname (name, maxnamelen), int, SOCKET_ERROR);
+#   else
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (maxnamelen);
+  ACE_NOTSUP_RETURN (-1);
+#   endif /* ACE_HAS_PHARLAP_RT */
+# elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
 # elif defined (VXWORKS)
@@ -7943,6 +7955,9 @@ ACE_OS::dlerror (void)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
   static char buf[128];
+#   if defined (ACE_HAS_PHARLAP)
+  ACE_OS::sprintf (buf, "error code %d", GetLastError());
+#   else
   FormatMessageA (FORMAT_MESSAGE_FROM_SYSTEM,
                   NULL,
                   ::GetLastError (),
@@ -7950,6 +7965,7 @@ ACE_OS::dlerror (void)
                   buf,
                   sizeof buf,
                   NULL);
+#   endif /* ACE_HAS_PHARLAP */
   return buf;
 # else
   ACE_NOTSUP_RETURN (0);
@@ -8306,7 +8322,7 @@ ACE_OS::mmap (void *addr,
               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_OS::mmap");
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
   int nt_flags = 0;
   ACE_HANDLE local_handle = ACE_INVALID_HANDLE;
 
@@ -8452,7 +8468,7 @@ ACE_INLINE int
 ACE_OS::mprotect (void *addr, size_t len, int prot)
 {
   ACE_TRACE ("ACE_OS::mprotect");
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
   DWORD dummy; // Sigh!
   return ::VirtualProtect(addr, len, prot, &dummy) ? 0 : -1;
 #elif !defined (ACE_LACKS_MPROTECT)
@@ -8469,7 +8485,7 @@ ACE_INLINE int
 ACE_OS::msync (void *addr, size_t len, int sync)
 {
   ACE_TRACE ("ACE_OS::msync");
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
   ACE_UNUSED_ARG (sync);
 
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FlushViewOfFile (addr, len), ace_result_), int, -1);
@@ -9786,7 +9802,7 @@ ACE_INLINE int
 ACE_OS::getpagesize (void)
 {
   ACE_TRACE ("ACE_OS::getpagesize");
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return (int) sys_info.dwPageSize;
@@ -10761,7 +10777,7 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 ACE_INLINE int
 ACE_OS::hostname (wchar_t *name, size_t maxnamelen)
 {
-#   if !defined (ACE_HAS_WINCE)
+#   if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
   ACE_TRACE ("ACE_OS::hostname");
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameW (name, LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
