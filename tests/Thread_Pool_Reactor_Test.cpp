@@ -9,8 +9,8 @@
 //    Thread_Pool_Reactor_Test.cpp
 //
 // = DESCRIPTION
-//      This program is a torture test of thread poll reactors.
-//      It starts by spawning several server threads waiting to handle
+//      This program is a torture test of thread poll reactors.  It
+//      starts by spawning several server threads waiting to handle
 //      events.  Several other client threads are spawned right after
 //      to initiate connections to server threads.  Each connection
 //      adds a new Svc_Handler into the TP_Reactor and sends out
@@ -64,6 +64,9 @@ static size_t cli_thrno = ACE_MAX_ITERATIONS;
 static size_t cli_conn_no = ACE_MAX_ITERATIONS;
 static size_t cli_req_no = ACE_MAX_THREADS;
 static int req_delay = 50;
+// @@ Nanbor, rather than "main event loop" is it possible to use the
+// ACE_Reactor::end_event_loop() stuff or does that just work for the
+// default Reactor?
 static int main_event_loop = 1;
 static ACE_Reactor *main_reactor = 0;
 
@@ -106,7 +109,8 @@ parse_arg (int argc, ASYS_TCHAR *argv[])
 }
 
 Acceptor_Handler::Acceptor_Handler (ACE_Thread_Manager *thr_mgr)
-  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr), nr_msgs_rcvd_(0)
+  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr),
+    nr_msgs_rcvd_(0)
 {
   // Make sure we use TP_Reactor with this class (that's the whole
   // point, right?)
@@ -118,15 +122,20 @@ Acceptor_Handler::handle_input (ACE_HANDLE fd)
 {
   ASYS_TCHAR buffer[BUFSIZ];
   ASYS_TCHAR len = 0;
-  int result = this->peer ().recv (&len, sizeof (ASYS_TCHAR));
+  ssize_t result = this->peer ().recv (&len,
+                                       sizeof (ASYS_TCHAR));
 
-  if (result > 0 && this->peer ().recv_n (buffer, len) == len)
+  if (result > 0 
+      && this->peer ().recv_n (buffer, len) == len)
     {
       ++this->nr_msgs_rcvd_;
+
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%t) svr input; fd: 0x%x; input: %s\n"),
-                  fd, buffer));
-      if (ACE_OS::strcmp (buffer, ASYS_TEXT ("shutdown")) == 0)
+                  fd,
+                  buffer));
+      if (ACE_OS::strcmp (buffer,
+                          ASYS_TEXT ("shutdown")) == 0)
         {
           main_event_loop = 0;
           main_reactor->notify ();
@@ -146,11 +155,13 @@ Acceptor_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) svr close; fd: 0x%x, rcvd %d msgs\n"),
-              fd, this->nr_msgs_rcvd_));
+              fd,
+              this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
-    ACE_ERROR((LM_ERROR, ASYS_TEXT ("(%t) Expected %d messages; got %d\n"),
-               cli_req_no, this->nr_msgs_rcvd_));
-
+    ACE_ERROR((LM_ERROR,
+               ASYS_TEXT ("(%t) Expected %d messages; got %d\n"),
+               cli_req_no,
+               this->nr_msgs_rcvd_));
   this->destroy ();
   return 0;
 }
@@ -173,7 +184,6 @@ svr_worker (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) I am done handling events. Bye, bye\n")));
-
   return 0;
 }
 
@@ -185,7 +195,9 @@ cli_worker (void *arg)
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connect;
   ACE_Time_Value delay (0, req_delay);
-  size_t len = * (ASYS_TCHAR*) arg;
+  // @@ Nanbor, can you please use the right ACE_foo_cast() macro
+  // here?
+  size_t len = *(ASYS_TCHAR *) arg;
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {
@@ -201,7 +213,9 @@ cli_worker (void *arg)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ASYS_TEXT ("(%t) conn_worker handle 0x%x, req %d\n"),
-                      stream.get_handle (), j+1));
+                      stream.get_handle (),
+                      j+1));
+          // @@ Nanbor, please check the return value here!
           stream.send_n (arg,
                          len + sizeof (ASYS_TCHAR));
           ACE_OS::sleep (delay);
@@ -225,7 +239,8 @@ worker (void *)
   ACE_INET_Addr addr (rendezvous);
 
   ACE_DEBUG((LM_DEBUG,
-             ASYS_TEXT ("(%t) Spawning %d client threads...\n"), cli_thrno));
+             ASYS_TEXT ("(%t) Spawning %d client threads...\n"),
+             cli_thrno));
   int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
                                                       buf);
@@ -238,17 +253,20 @@ worker (void *)
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connect;
 
-  if (connect.connect (stream, addr) < 0)
+  if (connect.connect (stream, addr) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%t) %p Error while connecting\n"),
                 ASYS_TEXT ("connect")));
 
   char *sbuf = "\011shutdown";
+
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("shutdown stream handle = %x\n"),
               stream.get_handle ()));
 
-  stream.send_n (sbuf, ACE_OS::strlen (sbuf) + 1);
+  // @@ Nanbor, please check the return value here.
+  stream.send_n (sbuf,
+                 ACE_OS::strlen (sbuf) + 1);
   stream.close ();
 
   return 0;
@@ -267,13 +285,14 @@ main (int argc, ASYS_TCHAR *argv[])
 
   // Most platforms seem to have trouble accepting connections
   // simultaneously in multiple threads.  Therefore, we can't quite
-  // use the Acceptor with the TP_Reactor.  Create a Select_Reactor
-  // and run the event_loop in the main thread.
+  // use the <Acceptor> with the <TP_Reactor>.  Create a
+  // <Select_Reactor> and run the event_loop in the main thread.
   ACE_Select_Reactor slr;
   ACE_Reactor mreactor (&slr);
   main_reactor = &mreactor;
   ACCEPTOR acceptor;
   ACE_INET_Addr accept_addr (rendezvous);
+
   if (acceptor.open (accept_addr,
                      main_reactor) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -282,17 +301,20 @@ main (int argc, ASYS_TCHAR *argv[])
                       1);
 
   ACE_DEBUG((LM_DEBUG,
-             ASYS_TEXT ("(%t) Spawning %d server threads...\n"), svr_thrno));
+             ASYS_TEXT ("(%t) Spawning %d server threads...\n"),
+             svr_thrno));
   ACE_Thread_Manager::instance ()->spawn_n (svr_thrno,
                                             svr_worker);
   ACE_Thread_Manager::instance ()->spawn (worker);
 
-  int result = 0;
+  while (main_event_loop)
+    {
+      // @@ Nanbor, I changed the test here a little bit.  Can you
+      // plase check this to make sure it's still correct?!
+      int result = slr.handle_events ();
 
-  while (result >= 0 && main_event_loop)
-    result = slr.handle_events ();
-
-  ACE_ASSERT (result != -1);
+      ACE_ASSERT (result != -1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 
