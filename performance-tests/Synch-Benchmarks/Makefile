@@ -10,7 +10,7 @@
 
 BIN	= synch_driver
 LIB	= libSynch_Tests.a
-SHLIB	= libSynch_Tests.so
+SHLIB	= libSynch_Tests.$(SOEXT)
 
 FILES	= mutex_test \
 	  recursive_lock_test \
