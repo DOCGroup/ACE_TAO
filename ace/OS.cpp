@@ -299,49 +299,47 @@ ACE_Recursive_Thread_Mutex ACE_TSS_Cleanup::lock_;
 void 
 ACE_TSS_Cleanup::exit (void *status)
 {
-// ACE_TRACE ("ACE_TSS_Cleanup::exit");
+  // ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
-  {
-    ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, ACE_TSS_Cleanup::lock_);
 
-    // Prevent recursive deletions (note that when a recursive mutex
-    // is first acquired it has a nesting level of 1...).
-    if (ACE_TSS_Cleanup::lock_.get_nesting_level () > 1)
-      return;
+  // Prevent recursive deletions (note that when a recursive mutex
+  // is first acquired it has a nesting level of 1...).
+  if (ACE_TSS_Cleanup::lock_.get_nesting_level () > 1)
+    return;
 
-    ACE_thread_key_t key_arr[TLS_MINIMUM_AVAILABLE];
-    int index = 0;
+  ACE_thread_key_t key_arr[TLS_MINIMUM_AVAILABLE];
+  int index = 0;
 
-    ACE_TSS_Info *key_info = 0;
+  ACE_TSS_Info *key_info = 0;
 
-    // Iterate through all the thread-specific items and free them all
-    // up.
+  // Iterate through all the thread-specific items and free them all
+  // up.
 
-    for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
-	 iter.next (key_info) != 0;
-	 iter.advance ())
-      {
-	void *tss_info = 0;
+  for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
+       iter.next (key_info) != 0;
+       iter.advance ())
+    {
+      void *tss_info = 0;
 
-	int val = key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
+      int val = key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
 
-	if ((ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0)
-	    && (key_info->destructor_) 
-	    && tss_info)
-	  // Probably need to have an exception handler here...
-	  (*key_info->destructor_) (tss_info);   
+      if ((ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0)
+	  && (key_info->destructor_) 
+	  && tss_info)
+	// Probably need to have an exception handler here...
+	(*key_info->destructor_) (tss_info);   
 
- 	if (key_info->ref_table_.size () == 0 
-	    && key_info->tss_obj_ == 0)
-	  key_arr[index++] = key_info->key_;
-      }
+      if (key_info->ref_table_.size () == 0 
+	  && key_info->tss_obj_ == 0)
+	key_arr[index++] = key_info->key_;
+    }
 
-    for (int i = 0; i < index; i++)
-      {
-	::TlsFree (key_arr[i]);
-	this->table_.remove (ACE_TSS_Info (key_arr[i]));
-      }
-  }
+  for (int i = 0; i < index; i++)
+    {
+      ::TlsFree (key_arr[i]);
+      this->table_.remove (ACE_TSS_Info (key_arr[i]));
+    }
 
 #if 0 
   ::ExitThread ((DWORD) status);

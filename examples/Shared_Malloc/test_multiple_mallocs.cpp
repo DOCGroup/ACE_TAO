@@ -1,7 +1,8 @@
+// $Id$
+
 // Test the capabilities of the ACE shared memory manager in terms of
 // its ability to handle multiple mallocs rooted at different base
 // addresses.
-// $Id$
 
 #include "ace/Malloc.h"
 #include "ace/Synch.h"
