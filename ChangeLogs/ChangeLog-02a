@@ -1,3 +1,15 @@
+Mon Nov  5 13:02:50 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-hpux-11.00.h:
+
+          Added #define of ACE_HAS_CHARPTR_DL.  This corresponds with the
+          declaration of dlopen(char*,unsigned int).
+
+        * ace/OS.cpp:
+
+          Changed the default thread scope to system (similar to Linux). 
+          Process thread scope is not supported in HP-UX.
+
 Sun Nov 04 11:18:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (fopen): Changed to forward call to fopen instead of
