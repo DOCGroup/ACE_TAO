@@ -1,3 +1,10 @@
+Wed Oct  7 21:44:20 1998  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* ace/Stream.h: Added a default value of 0 for both put() and
+ 	  get(), which is more consistent with the underlying putq() and
+ 	  getq() methods on ACE_Task.  Thanks to Bob McWhirter
+ 	  <bob@netwrench.com> for this suggestion.
+
 Wed Oct  7 18:18:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* README: 
