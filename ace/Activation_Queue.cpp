@@ -83,3 +83,4 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mo,
   // Enqueue in priority order.
   return this->queue_->enqueue_prio (mb, tv);
 }
+
