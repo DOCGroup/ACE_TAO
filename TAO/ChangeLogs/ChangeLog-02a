@@ -1,3 +1,35 @@
+Thu May 11 02:28:24 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Active_Object_Map.cpp
+	* tao/Active_Object_Map.h
+	* tao/Active_Object_Map.i
+	* tao/POA.cpp
+	* tao/POA.h
+	* tao/POA.i
+	* tao/POA.pidl
+
+	  The POA now has support for the new RT POA interfaces and it can
+	  associate priorities with servants.
+
+Thu May 11 01:53:49 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/TAO.pidl
+	* tao/TAOC.cpp
+	* tao/Messaging.pidl
+	* tao/MessagingC.cpp
+
+	  tests/Timed_Buffered_Test was failing because of this change:
+
+	    Sat Apr 29 15:24:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	  SYNC_DELAYED_BUFFERING has the value -1; -1 and 255
+	  (TAO_TWOWAY_RESPONSE_FLAG) are the same for octets.  Hence the
+	  server started sending unexpected replies to the client causing
+	  problems.  Previously, TAO_TWOWAY_RESPONSE_FLAG was 131 and
+	  hence there was no conflicts.  I changed SYNC_DELAYED_BUFFERING
+	  to have the value -2.  It only took two whole days to figure
+	  this out ;-)
+
 Wed May 10 23:24:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/Event_Service/Event_Service.dsp:
