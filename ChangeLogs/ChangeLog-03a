@@ -1,12 +1,19 @@
+Thu Aug 15 15:22:49 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/tests.dsw: Re-added Thread_Manager_Test.dsp into this
+	  workspace.  It got accidentally removed when someone merged a
+	  branch into the main trunk.  Thanks to Ronald Berger
+	  <ronald.berger@wpafb.af.mil> for noticing this.
+
 Mon Aug 12 10:17:55 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Thread_Manager.h (ACE_Thread_Manager): Fixed a type where
 	  "manipulated" was spelled "maniputated".  Thanks to
 	 Eric Newton <ecn@metaslash.com> for reporting this.
-  
+
 	* PROBLEM-REPORT-FORM: Fixed a typo where "ASCII text" was spelled
 	  "ASCII test".  Thanks to Eric Newton <ecn@metaslash.com> for
-	  reporting this. 
+	  reporting this.
 
 Fri Aug  9 12:13:21 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
@@ -66,7 +73,7 @@ Sat Aug 03 17:57:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Sat Aug 03 15:42:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.dsp: Made sure that it
-	  builds only in MFC debug builds. 
+	  builds only in MFC debug builds.
 
 Sat Aug  3 14:56:23 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
