@@ -20,6 +20,11 @@
 #include "Servant_Activator.h"
 #include "MyFooServant.h"
 
+MyFooServantActivator::MyFooServantActivator (CORBA::ORB_ptr orb)
+  :  orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
 PortableServer::Servant
 MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
                                   PortableServer::POA_ptr poa,
@@ -33,7 +38,7 @@ MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
   // MyFooServant.
 
   if (ACE_OS::strstr (s.in (), "Foo") != 0)
-    return new MyFooServant (poa, 27);
+    return new MyFooServant (this->orb_.in (), poa, 27);
   else
     {
       CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);

@@ -20,8 +20,9 @@
 #include "Servant_Locator.h"
 #include "MyFooServant.h"
 
-MyFooServantLocator::MyFooServantLocator (void)
-  : counter_ (0)
+MyFooServantLocator::MyFooServantLocator (CORBA::ORB_ptr orb)
+  : counter_ (0),
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -29,12 +30,10 @@ MyFooServantLocator::MyFooServantLocator (void)
 PortableServer::Servant
 MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr poa,
-                                const char *operation,
+                                const char * /* operation */,
                                 PortableServer::ServantLocator::Cookie &cookie,
                                 CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (operation);
-
   // Convert ObjectID to String.
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
@@ -43,7 +42,8 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
 
   if (ACE_OS::strstr (s.in (), "Foo") != 0)
     {
-      PortableServer::Servant servant = new MyFooServant (poa, ++this->counter_);
+      PortableServer::Servant servant =
+	new MyFooServant (this->orb_.in (), poa, ++this->counter_);
 
       // Return the servant as the cookie , used as a check when
       // postinvoke is called on this MyFooServantLocator.
@@ -53,25 +53,21 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
     }
   else
     {
-      CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
+      CORBA::Exception *exception =
+	new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
       env.exception (exception);
       return 0;
     }
 }
 
 void
-MyFooServantLocator::postinvoke (const PortableServer::ObjectId &oid,
-                                 PortableServer::POA_ptr poa,
-                                 const char *operation,
+MyFooServantLocator::postinvoke (const PortableServer::ObjectId & /* oid */,
+                                 PortableServer::POA_ptr /* poa */,
+                                 const char * /* operation */,
                                  PortableServer::ServantLocator::Cookie cookie,
                                  PortableServer::Servant servant,
-                                 CORBA::Environment &env)
+                                 CORBA::Environment &/* env */)
 {
-  ACE_UNUSED_ARG (oid);
-  ACE_UNUSED_ARG (poa);
-  ACE_UNUSED_ARG (operation);
-  ACE_UNUSED_ARG (env);
-
   // Check the passed servant with the cookie.
 
   PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
