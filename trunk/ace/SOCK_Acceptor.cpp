@@ -8,6 +8,8 @@
 #include "ace/SOCK_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Synch.h"
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Acceptor)
 
 // Do nothing routine for constructor. 
@@ -110,6 +112,13 @@ ACE_SOCK_Acceptor::shared_accept (ACE_Addr *remote_addr,
       do
 	new_handle = ACE_OS::accept (this->get_handle (), addr, len_ptr);
       while (new_handle == ACE_INVALID_HANDLE && restart && errno == EINTR);
+      
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+      // Reset the event association inherited by the new handle
+      ::WSAEventSelect ((SOCKET) new_handle,
+                        NULL,
+                        0);      
+#endif /* ACE_WIN32 */
 
       // Reset the size of the addr (really only necessary for the
       // UNIX domain sockets).

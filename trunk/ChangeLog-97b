@@ -1,3 +1,24 @@
+Wed Sep 24 13:37:02 1997    <irfan@TWOSTEP>
+
+	* ace/config-win32-common.h (ACE_LACKS_FORK): Added in macro to
+ 	  distinguish between ACE_LACKS_FORK and ACE_LACKS_EXEC. Also
+ 	  updated config-chorus.h, config-vxworks-ghs-1.8.h, and
+ 	  config-vxworks5.x-g++.h.
+
+	* ace/OS.h (ACE_WIN32CALL_RETURN && ACE_WIN32CALL): Added new
+ 	  macros to distinguish between Win32 calls that set GetLastError
+ 	  and those that set errno. Also updated ACE_OSCALL_RETURN and
+ 	  ACE_OSCALL such that they do not set errno to GetLastError. This
+ 	  is because these calls automatically set errno.
+
+	  Updates OS.* files to reflect these changes.
+
+	* ace/SOCK_Acceptor.cpp (shared_accept): Make sure to reset the
+ 	  event association inherited by the new handle.
+
+	* ace/WFMO_Reactor.i (unbind): Added a check for invalid handles
+ 	  being passed in for removals.
+
 Wed Sep 24 10:34:29 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/OS.h: 

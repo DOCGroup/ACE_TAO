@@ -309,6 +309,9 @@ ACE_INLINE int
 ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 					     ACE_Reactor_Mask mask)
 {
+  if (this->invalid_handle (handle))
+    return -1;
+
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->wfmo_reactor_.lock_, -1);
     
   int changes_required = 0;

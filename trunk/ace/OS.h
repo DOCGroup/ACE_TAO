@@ -4292,13 +4292,21 @@ private:
   } while (0)
 #elif defined (ACE_WIN32)
 #define ACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
+  do \
+    return (TYPE) X; \
+  while (0)
+#define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
+  do \
+    RESULT = (TYPE) X; \
+  while (0)
+#define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
     TYPE ace_result_ = (TYPE) X; \
     if (ace_result_ == FAILVALUE) \
       errno = ::GetLastError (); \
     return ace_result_; \
   } while (0)
-#define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
+#define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
     RESULT = (TYPE) X; \
     if (RESULT == FAILVALUE) \

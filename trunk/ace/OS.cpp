@@ -2250,7 +2250,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
     // Extract out the thread-specific table instance and free up
     // the key and destructor.
     ACE_TSS_Cleanup::instance ()->remove (key);
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::TlsFree (key), ace_result_), int, -1);
+    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::TlsFree (key), ace_result_), int, -1);
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (key);
@@ -2693,7 +2693,7 @@ pid_t
 ACE_OS::fork (const char *program_name)
 {
   // ACE_TRACE ("ACE_OS::fork");
-#if defined (ACE_LACKS_EXEC)
+#if defined (ACE_LACKS_FORK)
   ACE_UNUSED_ARG (program_name);
   ACE_NOTSUP_RETURN (pid_t (-1));
 #else
