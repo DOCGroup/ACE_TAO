@@ -40,6 +40,8 @@ Wed Sep 24 09:36:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	  changed name of "list" argument ot "listParam" to resolve name
  	  conflict with STL.  Thanks to Brian Mendel for reporting this.
 
+	* tests/run_tests.check: print out filename with error messages.
+
 Tue Sep 23 17:11:44 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/config-hpux-10.x-g++.h: 
