@@ -20,7 +20,6 @@
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 # include "tao/ImplRepoC.h"
 # include "tao/ImplRepoS.h"
-# include "tao/Acceptor_Registry.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 

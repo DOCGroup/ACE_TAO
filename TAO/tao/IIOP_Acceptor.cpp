@@ -46,7 +46,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_IIOP_PROFILE),
     addrs_ (0),
     hosts_ (0),
-    num_hosts_ (0),
+    endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
     base_acceptor_ (),
@@ -78,13 +78,13 @@ int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
 {
-  // Adding this->num_hosts_ to the TAO_MProfile.
+  // Adding this->endpoint_count_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
-  if ((mprofile.size () - count) < this->num_hosts_
-      && mprofile.grow (count + this->num_hosts_) == -1)
+  if ((mprofile.size () - count) < this->endpoint_count_
+      && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
 
-  for (size_t i = 0; i < this->num_hosts_; ++i)
+  for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       TAO_IIOP_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
@@ -132,7 +132,7 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
   if (profile == 0)
     return 0;
 
-  for (size_t i = 0; i < this->num_hosts_; ++i)
+  for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       // compare the port and sin_addr (numeric host address)
       if (profile->object_addr () == this->addrs_[i])
@@ -214,14 +214,14 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     return -1;
 
 
-  this->num_hosts_ = 1;  // Only one hostname to store
+  this->endpoint_count_ = 1;  // Only one hostname to store
 
   ACE_NEW_RETURN (this->addrs_,
-                  ACE_INET_Addr[this->num_hosts_],
+                  ACE_INET_Addr[this->endpoint_count_],
                   -1);
 
   ACE_NEW_RETURN (this->hosts_,
-                  ACE_CString[this->num_hosts_],
+                  ACE_CString[this->endpoint_count_],
                   -1);
 
   if (this->hostname (orb_core,
@@ -239,6 +239,8 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
 int
 TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                 int major,
+                                 int minor,
                                  const char *options)
 {
   if (this->hosts_ != 0)
@@ -251,6 +253,12 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
+
+  if (major >=0 && minor >= 0)
+    this->version_.set_version (ACE_static_cast (CORBA::Octet,
+                                                 major),
+                                ACE_static_cast (CORBA::Octet,
+                                                 minor));
 
   // Parse options
   if (this->parse_options (options) == -1)
@@ -327,12 +335,12 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
   u_short port = address.get_port_number ();
-  for (size_t j = 0; j < this->num_hosts_; ++j)
+  for (size_t j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
   if (TAO_debug_level > 5)
     {
-      for (size_t i = 0; i < this->num_hosts_; ++i)
+      for (size_t i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
@@ -426,16 +434,16 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   if (if_cnt == lo_cnt)
-    this->num_hosts_ = if_cnt;
+    this->endpoint_count_ = if_cnt;
   else
-    this->num_hosts_ = if_cnt - lo_cnt;
+    this->endpoint_count_ = if_cnt - lo_cnt;
 
   ACE_NEW_RETURN (this->addrs_,
-                  ACE_INET_Addr[this->num_hosts_],
+                  ACE_INET_Addr[this->endpoint_count_],
                   -1);
 
   ACE_NEW_RETURN (this->hosts_,
-                  ACE_CString[this->num_hosts_],
+                  ACE_CString[this->endpoint_count_],
                   -1);
 
   // The number of hosts/interfaces we want to cache may not be the
@@ -470,7 +478,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
 CORBA::ULong
 TAO_IIOP_Acceptor::endpoint_count (void)
 {
-  return this->num_hosts_;
+  return this->endpoint_count_;
 }
 
 int
@@ -479,7 +487,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 {
   // Create the decoding stream from the encapsulation in the buffer,
   TAO_InputCDR cdr (profile.profile_data.mb ());
-  
+
   CORBA::Octet major, minor;
   
   // Read the version. We just read it here. We don't*do any*

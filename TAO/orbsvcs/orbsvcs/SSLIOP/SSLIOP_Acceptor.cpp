@@ -95,13 +95,13 @@ int
 TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                       TAO_MProfile &mprofile)
 {
-  // Adding this->num_hosts_ to the TAO_MProfile.
+  // Adding this->endpoint_count_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
-  if ((mprofile.size () - count) < this->num_hosts_
-      && mprofile.grow (count + this->num_hosts_) == -1)
+  if ((mprofile.size () - count) < this->endpoint_count_
+      && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
 
-  for (size_t i = 0; i < this->num_hosts_; ++i)
+  for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       TAO_SSLIOP_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
@@ -171,7 +171,7 @@ TAO_SSLIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
   if (profile == 0)
     return 0;
 
-  for (size_t i = 0; i < this->num_hosts_; ++i)
+  for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       // compare the port and sin_addr (numeric host address)
       if (profile->object_addr () == this->addrs_[i])
@@ -217,11 +217,16 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
 int
 TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+                                   int major,
+                                   int minor,
                                    const char *options)
 {
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
-  if (this->TAO_IIOP_Acceptor::open_default (orb_core, options) == -1)
+  if (this->TAO_IIOP_Acceptor::open_default (orb_core,
+                                             major,
+                                             minor,
+                                             options) == -1)
     return -1;
 
   // Now that each network interface's hostname has been cached, open
@@ -292,7 +297,7 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 
   if (TAO_debug_level > 5)
     {
-      for (size_t i = 0; i < this->num_hosts_; ++i)
+      for (size_t i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) ")

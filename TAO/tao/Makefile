@@ -602,24 +602,21 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
- Object_Adapter.i \
- POA.h \
- Object_KeyC.h \
- Object_KeyC.i \
- POAManager.h \
- POAManager.i \
  RTCORBAC.h \
  IOPC.h \
  IOPC.i \
  TimeBaseC.h \
  TimeBaseC.i \
  RTCORBAC.i \
+ Object_Adapter.i \
+ POA.h \
+ Object_KeyC.h \
+ Object_KeyC.i \
+ POAManager.h \
+ POAManager.i \
  POA.i \
  ORB.h \
  IOR_LookupTable.h \
@@ -1004,23 +1001,20 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
- Object_Adapter.i \
- Object_KeyC.h \
- Object_KeyC.i \
- POAManager.h \
- POAManager.i \
  RTCORBAC.h \
  IOPC.h \
  IOPC.i \
  TimeBaseC.h \
  TimeBaseC.i \
  RTCORBAC.i \
+ Object_Adapter.i \
+ Object_KeyC.h \
+ Object_KeyC.i \
+ POAManager.h \
+ POAManager.i \
  POA.i \
  ORB_Core.h \
  ORB.h \
@@ -1104,8 +1098,6 @@ realclean:
  ImplRepoS_T.i \
  ImplRepoS_T.cpp \
  ImplRepoS.i \
- Acceptor_Registry.h \
- Acceptor_Registry.i \
  Forwarding_Servant.h
 
 .obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp \
@@ -1231,9 +1223,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  POA.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1284,17 +1273,17 @@ realclean:
  poa_macros.h \
  Active_Object_Map.h \
  Active_Object_Map.i \
- Object_Adapter.i \
- Object_KeyC.h \
- Object_KeyC.i \
- POAManager.h \
- POAManager.i \
  RTCORBAC.h \
  IOPC.h \
  IOPC.i \
  TimeBaseC.h \
  TimeBaseC.i \
  RTCORBAC.i \
+ Object_Adapter.i \
+ Object_KeyC.h \
+ Object_KeyC.i \
+ POAManager.h \
+ POAManager.i \
  POA.i \
  Invocation.h \
  ORB_Core.h \
@@ -1495,9 +1484,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  Server_Request.h \
  IOPC.h \
@@ -1706,9 +1692,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  poa_macros.h \
  POAManager.i \
@@ -1760,15 +1743,15 @@ realclean:
  Server_Strategy_Factory.h \
  Active_Object_Map.h \
  Active_Object_Map.i \
- Object_Adapter.i \
- Object_KeyC.h \
- Object_KeyC.i \
  RTCORBAC.h \
  IOPC.h \
  IOPC.i \
  TimeBaseC.h \
  TimeBaseC.i \
  RTCORBAC.i \
+ Object_Adapter.i \
+ Object_KeyC.h \
+ Object_KeyC.i \
  POA.i
 
 .obj/Active_Object_Map.o .obj/Active_Object_Map.so .shobj/Active_Object_Map.o .shobj/Active_Object_Map.so: Active_Object_Map.cpp \
@@ -2102,9 +2085,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -2162,15 +2142,15 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
+ RTCORBAC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ RTCORBAC.i \
  Object_Adapter.i \
  Object_KeyC.h \
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- RTCORBAC.h \
- TimeBaseC.h \
- TimeBaseC.i \
- RTCORBAC.i \
  POA.i \
  Stub.h \
  MProfile.h \
@@ -2456,8 +2436,7 @@ realclean:
  Any.h \
  Typecode.h \
  Typecode.i \
- Any.i \
- ImplRepoC.i \
+ Any.i ImplRepoC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2550,9 +2529,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -2588,8 +2564,7 @@ realclean:
  Invocation.i
 
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
- $(ACE_ROOT)/ace/pre.h \
- ImplRepoC.h \
+ $(ACE_ROOT)/ace/pre.h ImplRepoC.h \
  Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -2695,8 +2670,7 @@ realclean:
  Any.h \
  Typecode.h \
  Typecode.i \
- Any.i \
- ImplRepoC.i \
+ Any.i ImplRepoC.i \
  POAC.h \
  PolicyC.h \
  CurrentC.h \
@@ -2766,12 +2740,13 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
+ RTCORBAC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ RTCORBAC.i \
  Object_Adapter.i \
  Stub.h \
  Pluggable.h \
@@ -3001,7 +2976,6 @@ realclean:
  CDR.i \
  IOPC.i \
  Pluggable.i \
- Stub.h \
  MProfile.h \
  Profile.h \
  Tagged_Components.h \
@@ -3019,6 +2993,7 @@ realclean:
  PolicyC.i \
  Profile.i \
  MProfile.i \
+ ORB_Core.h \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -3037,8 +3012,6 @@ realclean:
  InterceptorC.i \
  Interceptor.i \
  ORB.i \
- Stub.i \
- ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
  DynAnyC.h \
@@ -3047,9 +3020,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -3064,8 +3034,6 @@ realclean:
  Client_Strategy_Factory.h \
  Wait_Strategy.h \
  Transport_Mux_Strategy.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
  debug.h \
  target_specification.h \
  Object_KeyC.h \
@@ -3462,9 +3430,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -3707,9 +3672,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -4125,9 +4087,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -4411,9 +4370,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -4701,9 +4657,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -4738,13 +4691,13 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
- Object_Adapter.i \
- POAManager.h \
- POAManager.i \
  RTCORBAC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  RTCORBAC.i \
+ Object_Adapter.i \
+ POAManager.h \
+ POAManager.i \
  POA.i \
  debug.h
 
@@ -5006,9 +4959,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5305,9 +5255,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -5560,9 +5507,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5833,9 +5777,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -6120,9 +6061,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -6408,9 +6346,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -6700,9 +6635,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -6737,13 +6669,13 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
- Object_Adapter.i \
- POAManager.h \
- POAManager.i \
  RTCORBAC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  RTCORBAC.i \
+ Object_Adapter.i \
+ POAManager.h \
+ POAManager.i \
  POA.i \
  debug.h
 
@@ -7008,9 +6940,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7312,9 +7241,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -7567,9 +7493,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7837,9 +7760,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8131,9 +8051,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -8427,9 +8344,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8464,13 +8378,13 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
- Object_Adapter.i \
- POAManager.h \
- POAManager.i \
  RTCORBAC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  RTCORBAC.i \
+ Object_Adapter.i \
+ POAManager.h \
+ POAManager.i \
  POA.i \
  debug.h
 
@@ -8738,9 +8652,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9045,9 +8956,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -9304,9 +9212,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9580,9 +9485,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9824,9 +9726,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -10339,9 +10238,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10558,9 +10454,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10790,9 +10683,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -12139,9 +12029,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -12373,10 +12260,7 @@ realclean:
  DynAnyC.h \
  DynAnyC.i \
  DomainC.h \
- DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ DomainC.i
 
 .obj/CurrentS.o .obj/CurrentS.so .shobj/CurrentS.o .shobj/CurrentS.so: CurrentS.cpp \
  CurrentC.h \
@@ -12526,9 +12410,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Server_Request.h \
  IOPC.h \
  IOPC.i \
@@ -12900,9 +12781,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -13107,12 +12985,15 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
+ RTCORBAC.h \
+ IOPC.h \
+ IOPC.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ RTCORBAC.i \
  Object_Adapter.i \
  Stub.h \
  Pluggable.h \
@@ -13137,8 +13018,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- IOPC.h \
- IOPC.i \
  Pluggable.i \
  MProfile.h \
  Profile.h \
@@ -13173,8 +13052,6 @@ realclean:
  ValueBase.i \
  ValueFactory.h \
  ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
  PollableC.h \
  PollableC.i \
  MessagingC.i \
@@ -13384,12 +13261,15 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
+ RTCORBAC.h \
+ IOPC.h \
+ IOPC.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ RTCORBAC.i \
  Object_Adapter.i \
  Stub.h \
  Pluggable.h \
@@ -13414,8 +13294,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- IOPC.h \
- IOPC.i \
  Pluggable.i \
  MProfile.h \
  Profile.h \
@@ -13450,8 +13328,6 @@ realclean:
  ValueBase.i \
  ValueFactory.h \
  ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
  PollableC.h \
  PollableC.i \
  MessagingC.i \
@@ -13889,9 +13765,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  ORB_Core.h \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -13923,16 +13796,16 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
+ RTCORBAC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ RTCORBAC.i \
  Object_Adapter.i \
  POA.h \
  Object_KeyC.h \
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- RTCORBAC.h \
- TimeBaseC.h \
- TimeBaseC.i \
- RTCORBAC.i \
  POA.i \
  Request.h \
  Context.h \
@@ -14245,9 +14118,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
@@ -14438,9 +14308,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -14885,9 +14752,6 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  DynAnyC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -15075,9 +14939,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -15682,9 +15543,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16093,9 +15951,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -16510,9 +16365,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16968,9 +16820,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17461,9 +17310,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17538,6 +17384,25 @@ realclean:
  Connector_Registry.i \
  Wait_Strategy.h \
  Transport_Mux_Strategy.h \
+ RT_Policy_i.h \
+ RTCORBAS.h \
+ IOPS.h \
+ IOPS_T.h \
+ IOPS_T.i \
+ IOPS_T.cpp \
+ IOPS.i \
+ TimeBaseS.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ RTCORBAC.h \
+ RTCORBAC.i \
+ RTCORBAS_T.h \
+ RTCORBAS_T.i \
+ RTCORBAS_T.cpp \
+ RTCORBAS.i \
+ RT_Policy_i.i \
  Messaging_Policy_i.h \
  MessagingC.h \
  ValueBase.h \
@@ -17720,9 +17585,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17970,9 +17832,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18645,9 +18504,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18739,15 +18595,15 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
+ RTCORBAC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ RTCORBAC.i \
  Object_Adapter.i \
  Object_KeyC.h \
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- RTCORBAC.h \
- TimeBaseC.h \
- TimeBaseC.i \
- RTCORBAC.i \
  POA.i \
  Priority_Mapping.h \
  Priority_Mapping.i \
@@ -18922,9 +18778,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -19222,9 +19075,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -19434,9 +19284,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -19785,9 +19632,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -20098,9 +19942,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -21175,9 +21016,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -21380,9 +21218,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -22108,9 +21943,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -22332,9 +22164,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -22893,8 +22722,7 @@ realclean:
  Exception.h \
  Exception.i \
  CDR.h \
- CDR.i \
- PollableC.i \
+ CDR.i PollableC.i \
  POA_CORBA.h \
  CurrentC.h \
  Environment.h \
@@ -22922,9 +22750,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -23129,8 +22954,8 @@ realclean:
  Exception.h \
  Exception.i \
  CDR.h \
- CDR.i \
- PollableC.i PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
+ CDR.i PollableC.i \
+ PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
@@ -23788,8 +23613,7 @@ realclean:
  Typecode.i \
  Any.i \
  TimeBaseC.i \
- TAOC.i \
- TAOS.h \
+ TAOC.i TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -24874,9 +24698,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -24930,8 +24751,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- MessagingS.h orbconf.h TimeBaseS.h \
+ $(ACE_ROOT)/ace/OS.i MessagingS.h \
+ orbconf.h TimeBaseS.h \
  TimeBaseC.h \
  Any.h \
  CDR.h \
@@ -25120,17 +24941,13 @@ realclean:
  InterceptorC.i \
  Interceptor.i \
  ORB.i \
- Stub.i \
- ORB_Core.h \
+ Stub.i ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
  DynAnyC.h \
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -25164,6 +24981,8 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
+ RTCORBAC.h \
+ RTCORBAC.i \
  Object_Adapter.i
 
 .obj/Policy_Manager.o .obj/Policy_Manager.so .shobj/Policy_Manager.o .shobj/Policy_Manager.so: Policy_Manager.cpp \
@@ -25289,9 +25108,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  ORB_Core.h \
  ORB.h \
@@ -26370,9 +26186,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -27000,9 +26813,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -27050,8 +26860,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- corbafwd.h \
+ $(ACE_ROOT)/ace/OS.i corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -27116,8 +26925,7 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
- corbafwd.i \
- IOPC.h \
+ corbafwd.i IOPC.h \
  CDR.h \
  corbafwd.h \
  CDR.i \
@@ -27140,14 +26948,12 @@ realclean:
  CurrentC.i \
  Encodable.h \
  PolicyC.i \
- TimeBaseC.h \
- Any.h \
+ TimeBaseC.h Any.h \
  Typecode.h \
  Typecode.i \
  Any.i \
  TimeBaseC.i \
- RTCORBAC.i \
- TAOS.h \
+ RTCORBAC.i TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -27175,8 +26981,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RTCORBAS.h orbconf.h IOPS.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAS.h \
+ orbconf.h IOPS.h \
  IOPC.h \
  CDR.h \
  corbafwd.h \
@@ -27479,10 +27285,7 @@ realclean:
  Stub.i \
  POA_CORBA.h \
  DomainC.h \
- DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ DomainC.i
 
 .obj/DynAnyS.o .obj/DynAnyS.so .shobj/DynAnyS.o .shobj/DynAnyS.so: DynAnyS.cpp \
  DynAnyC.h \
@@ -27605,10 +27408,7 @@ realclean:
  Servant_Base.h \
  POAC.h \
  POAC.i \
- Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ Servant_Base.i
 
 .obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp \
  DynAny_i.h \
@@ -27733,9 +27533,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynStruct_i.h \
  DynSequence_i.h \
  DynEnum_i.h \
@@ -27871,9 +27668,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynArray_i.h \
  InconsistentTypeCodeC.h \
  Marshal.h \
@@ -28045,9 +27839,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynEnum_i.h \
  InconsistentTypeCodeC.h
 
@@ -28174,9 +27965,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynSequence_i.h \
  InconsistentTypeCodeC.h \
  Marshal.h \
@@ -28348,9 +28136,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynStruct_i.h \
  InconsistentTypeCodeC.h \
  ORB.h \
@@ -28522,9 +28307,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  DynUnion_i.h \
  DynUnion_i_T.h \
  DynUnion_i_T.cpp \
@@ -28839,134 +28621,7 @@ realclean:
  Sequence.i \
  Sequence_T.h \
  Sequence_T.i \
- Sequence_T.cpp \
- InterfaceC.i \
- Stub.h \
- Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Encodable.h \
- PolicyC.i \
- Profile.i \
- MProfile.i \
- ORB.h \
- IOR_LookupTable.h \
- Services.h \
- Services.i \
- IORManipulation.h \
- IORS.h \
- IORC.h \
- IORC.i \
- Servant_Base.h \
- POAC.h \
- POAC.i \
- Servant_Base.i \
- IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- Stub.i \
- Invocation.h \
- ORB_Core.h \
- Policy_Manager.h \
- POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
- DomainC.h \
- DomainC.i \
- InterfaceC.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- params.h \
- params.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Synch_Reply_Dispatcher.i \
- TAOC.h \
- TimeBaseC.h \
- TimeBaseC.i \
- TAOC.i \
- operation_details.h \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- NVList.h \
- NVList.i
+ Sequence_T.cpp
 
 .obj/Pluggable_Messaging.o .obj/Pluggable_Messaging.so .shobj/Pluggable_Messaging.o .shobj/Pluggable_Messaging.so: Pluggable_Messaging.cpp \
  Pluggable_Messaging.h \
@@ -29728,9 +29383,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -29789,13 +29441,13 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
- Object_Adapter.i \
- POAManager.h \
- POAManager.i \
  RTCORBAC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  RTCORBAC.i \
+ Object_Adapter.i \
+ POAManager.h \
+ POAManager.i \
  POA.i \
  debug.h \
  GIOP_Utils.h \
@@ -30169,9 +29821,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -30608,9 +30257,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -30675,13 +30321,13 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
- Object_Adapter.i \
- POAManager.h \
- POAManager.i \
  RTCORBAC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  RTCORBAC.i \
+ Object_Adapter.i \
+ POAManager.h \
+ POAManager.i \
  POA.i
 
 .obj/GIOP_Message_Lite.o .obj/GIOP_Message_Lite.so .shobj/GIOP_Message_Lite.o .shobj/GIOP_Message_Lite.so: GIOP_Message_Lite.cpp \
@@ -30858,9 +30504,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -30924,13 +30567,13 @@ realclean:
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
+ RTCORBAC.h \
+ RTCORBAC.i \
  Object_Adapter.i \
  Object_KeyC.h \
  Object_KeyC.i \
  POAManager.h \
  POAManager.i \
- RTCORBAC.h \
- RTCORBAC.i \
  POA.i \
  operation_details.h \
  target_specification.h \
@@ -31124,9 +30767,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -31333,9 +30973,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \

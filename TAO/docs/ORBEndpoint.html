@@ -284,6 +284,9 @@
       <LI><CODE>-ORBEndpoint iiop://1.0@foo:0,1.1@bar,baz:3456/priority=300</CODE></LI>
       <LI><CODE>-ORBEndpoint iiop:///priority=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
       <LI><CODE>-ORBEndpoint iiop://:2020/priority=12345</CODE>
+      <LI><CODE>-ORBEndpoint iiop://1.1@</CODE>
+      <LI><CODE>-ORBEndpoint iiop://1.1@:1234</CODE>
+      <LI><CODE>-ORBEndpoint iiop://1.1@,1.0@:1234,1.1@</CODE>
     </UL>
 
     <hr>
@@ -355,6 +358,9 @@
       <LI><CODE>-ORBEndpoint shmiop://1.0@:0,:3456/priority=300</CODE></LI>
       <LI><CODE>-ORBEndpoint shmiop:///priority=2</CODE> <FONT COLOR=RED>(notice three slashes "<CODE>///</CODE>")</FONT>
       <LI><CODE>-ORBEndpoint shmiop://:2020/priority=12345</CODE>
+      <LI><CODE>-ORBEndpoint shmiop://1.1@</CODE>
+      <LI><CODE>-ORBEndpoint shmiop://1.1@:1234</CODE>
+      <LI><CODE>-ORBEndpoint shmiop://1.1@,1.0@:1234,1.1@</CODE>
     </UL>
 
     <hr>
@@ -453,13 +459,15 @@
       <LI><CODE>-ORBEndpoint uiop://1.0@/tmp/foo,1.1@/home/bar/baz</CODE>
       <LI><CODE>-ORBEndpoint 'uiop://1.1@/tmp/bar|priority=300'</CODE></LI>
       <LI><CODE>-ORBEndpoint 'uiop://|priority=2'</CODE>
+      <LI><CODE>-ORBEndpoint uiop://1.1@</CODE>
+      <LI><CODE>-ORBEndpoint uiop://1.1@,1.0@/tmp/foo,1.1@</CODE>
     </UL>
 
     <hr>
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Thu May 18 08:37:25 PDT 2000 -->
 <!-- hhmts start -->
-Last modified: Thu May 18 17:01:44 PDT 2000
+Last modified: Mon Jun 26 12:44:25 PDT 2000
 <!-- hhmts end -->
   </body>
 </html>
