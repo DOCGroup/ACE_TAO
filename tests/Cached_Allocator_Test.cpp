@@ -218,12 +218,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Writing to chunk 1:   %s\n"), str1));
   ACE_OS::memcpy (ptr1, str1, chunk_size);
-  ptr1[chunk_size] = '\0';
+  ptr1[chunk_size - 1] = '\0';
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Reading from chunk 1: %s\n"), ptr1));
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Writing to chunk 3:   %s\n"), str3));
   ACE_OS::memcpy (ptr3, str3, chunk_size);
-  ptr3[chunk_size] = '\0';
+  ptr3[chunk_size - 1] = '\0';
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Reading from chunk 3: %s\n"), ptr3));
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT (" (%t) Deallocating chunk 1\n")));
