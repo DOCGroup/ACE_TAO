@@ -1,34 +1,27 @@
 Sat Jun 12 14:28:20 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_union.cpp:
-	  TAO_IDL/be_include/be_union.h:
-	  
-	  Removed the cast to long for the case when the union member is
-	  of type boolean. We handled this by making the blval union
-	  member as a long.
+	  TAO_IDL/be_include/be_union.h: Removed the cast to long for the
+ 	  case when the union member is of type boolean. We handled this
+ 	  by making the blval union member as a long.
 
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	  TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
-	
-	  We were not handling the code generation of union defined inside
-	  a structure or another union.
+	  TAO_IDL/be/be_visitor_union_branch/public_ch.cpp: We were not
+ 	  handling the code generation of union defined inside a structure
+ 	  or another union.
 
-	* TAO_IDL/be/be_visitor_field/field_ci.cpp:
-	 	
-	  Cosmetic changes.
+	* TAO_IDL/be/be_visitor_field/field_ci.cpp: Cosmetic changes.
 
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-
-	  Fixed indentation problem in generated code.
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: Fixed
+ 	  indentation problem in generated code.
 
 	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
 	  TAO_IDL/be/be_visitor_operation/argument.cpp:
 	  TAO_IDL/be_include/be_visitor_operation/arglist.h:
-	  TAO_IDL/be_include/be_visitor_operation/argument.h:
-
-	  These operation visitors now inherit from the be_operation
-	  visitor so that we can use the base operations defined on the
-	  base class operation visitor. Additional changes are described below.
+	  TAO_IDL/be_include/be_visitor_operation/argument.h: These
+ 	  operation visitors now inherit from the be_operation visitor so
+ 	  that we can use the base operations defined on the base class
+ 	  operation visitor. Additional changes are described below.
 
 	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
 	  TAO_IDL/be/be_visitor_operation/argument.cpp:
@@ -42,38 +35,44 @@ Sat Jun 12 14:28:20 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-lab
 	  TAO_IDL/be_include/be_visitor_operation/operation_is.h:
 	  TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
 	  TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	  TAO_IDL/be/be_visitor_operation/tie_si.cpp:
-
-	  Generated stubs/skeletons now support real C++ exceptions as
-	  specified by the IDL->C++ mapping. We also generate the
-	  ACE_THROW_SPEC macro for the stubs and skeletons. To support
-	  this, some common code was factored out and put into the base
-	  operation visitor. Users will need to use the -Ge option to the
-	  IDL compiler to enable support for C++ exceptions.
+	  TAO_IDL/be/be_visitor_operation/tie_si.cpp: Generated
+ 	  stubs/skeletons now support real C++ exceptions as specified by
+ 	  the IDL->C++ mapping. We also generate the ACE_THROW_SPEC macro
+ 	  for the stubs and skeletons. To support this, some common code
+ 	  was factored out and put into the base operation visitor. Users
+ 	  will need to use the -Ge option to the IDL compiler to enable
+ 	  support for C++ exceptions.
 
 	* docs/releasenotes/index.html:
-	  docs/compiler.html:
-
-	  Updated documentation.
+	  docs/compiler.html: Updated documentation.
 
 Fri Jun 11 20:36:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/TIE/run_test.pl: Changed the way the client process
-	was launched. Initial a system call was used. But now we are using
-	a Process::Create call to do that.
+ 	  was launched. Initial a system call was used. But now we are
+ 	  using a Process::Create call to do that.
 
 Fri Jun 11 20:04:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
-	  Removed obsolete options
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: Removed
+ 	  obsolete options
 
 Fri Jun 11 19:26:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/TIE/server.cpp (main): Fixed a small problem on
-	NT. It was not writing the IOR to a file. It was fixed.
+ 	  NT. It was not writing the IOR to a file. It was fixed.
 
 	* examples/POA/TIE/run_test.pl: Made a change to be on par with
-	Carlos's latest standard. 
+ 	  Carlos's latest standard.
+
+	* examples/POA/TIE/run_test.pl: Added a new file.
+
+	* examples/POA/TIE/server.cpp : To facilitate usage of a perl
+ 	  script for running the test, made the server to ior to a file.
+
+	* examples/POA/TIE/client.cpp: To facilitate reading the ior by
+ 	  the perl script, change was made to read the ior from the
+ 	  command line in "file://" format .
 
 Fri Jun 11 19:08:45 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
@@ -87,53 +86,33 @@ Fri Jun 11 19:08:45 1999  John Heitmann  <jwh1@cs.wustl.edu>
 	* TAO/examples/POA/On_Demand_Activation/run_test.pl:
 	* TAO/examples/POA/On_Demand_Loading/run_test.pl:
 	* TAO/examples/POA/Adapter_Activator/run_test.pl:
-	* TAO/examples/POA/Reference_Counted_Servant/run_test.pl:
-	  Changed all instances where a test would wait
-	  forever to waits which time out after a period
-	  of time.
-
-Fri Jun 11 19:03:49 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
-
-	* examples/POA/TIE/run_test.pl: Added a new file.
-	* examples/POA/TIE/server.cpp : To facilitate usage of a perl
-	script for running the test, made the server to ior to a file.
-	* examples/POA/TIE/client.cpp: To facilitate reading the ior by
-	the perl script, change was made to read the ior from the command
-	line in "file://" format . 
+	* TAO/examples/POA/Reference_Counted_Servant/run_test.pl: Changed
+ 	  all instances where a test would wait forever to waits which
+ 	  time out after a period of time.
 
 Fri Jun 11 18:33:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/server.cpp:
-	  Added a const to avoid a SunC++ "string literal to 
-	  char*" warning.
+	* TAO/tests/Param_Test/server.cpp: Added a const to avoid a SunC++
+ 	  "string literal to char*" warning.
 
-Fri Jun 11 17:35:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
-
-	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
-	  Various changes to avoid SunC++ 5.0's "string literal to char*" 
-          warnings.
-
-Fri Jun 11 17:26:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp: Various
+ 	  changes to avoid SunC++ 5.0's "string literal to char*"
+ 	  warnings.
 
 	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
 	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
 	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
-	  Various maneuvers to avoid SunC++ 5.0 "string literal to
-	  char*" warnings.
+ 	  Various maneuvers to avoid SunC++ 5.0 "string literal to char*"
+ 	  warnings.
 
-Fri Jun 11 17:08:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+	* TAO/tests/DynAny_Test/data.h: Added a 'const' to get rid of
+ 	  SunC++ warnings.
 
-	* TAO/tests/DynAny_Test/data.h:
-	  Added a 'const' to get rid of SunC++ warnings.
-
-Fri Jun 11 16:20:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
-
-	* TAO/tests/Param_Test/run_test.pl:
-	  Added an unlink $iorfile at the beginning so the client won't
-	  get the wrong IOR if the file already exists. This was 
-	  causing the first test to show CORBA::TRANSIENT exceptions
-	  on NT. Thanks to Carlos for suggesting a better fix than the
-	  one I had.
+	* TAO/tests/Param_Test/run_test.pl: Added an unlink $iorfile at
+ 	  the beginning so the client won't get the wrong IOR if the file
+ 	  already exists. This was causing the first test to show
+ 	  CORBA::TRANSIENT exceptions on NT. Thanks to Carlos for
+ 	  suggesting a better fix than the one I had.
 
 Fri Jun 11 12:27:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
