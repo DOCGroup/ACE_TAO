@@ -375,14 +375,14 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_
 // If neither a consumer nor a supplier has registered an interface,
 // the function calls cache_interface_description and returns 0 if successful.
 int
-TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_interface_
+TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_interface
                                                             ACE_ENV_ARG_DECL)
 {
-  // Check if a consumer has already registered an inerface with the typed EC
+  // Check if a consumer has already registered an interface with the typed EC
   if (this->uses_interface_.length() > 0)
     {
-      // Check if the registered uses_interface_ == the new uses_interface_
-      if (this->uses_interface_ == ACE_CString (uses_interface_))
+      // Check if the registered uses_interface_ == the new uses_interface
+      if (this->uses_interface_ == ACE_CString (uses_interface))
         {
           return 0;
         }
@@ -399,10 +399,10 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
   // Check if a supplier has already registered an inerface with the typed EC
   if (this->supported_interface_.length() > 0)
     {
-      // Check if the registered supported_interface_ == the new uses_interface_
-      if (this->supported_interface_ == ACE_CString (uses_interface_))
+      // Check if the registered supported_interface_ == the new uses_interface
+      if (this->supported_interface_ == ACE_CString (uses_interface))
         {
-          this->uses_interface_ = uses_interface_;
+          this->uses_interface_ = uses_interface;
           return 0;
         }
       else
@@ -417,12 +417,12 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (uses_interface_ ACE_ENV_ARG_PARAMETER);
+      int result = cache_interface_description (uses_interface ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (result == 0)
         {
-          this->uses_interface_ = uses_interface_;
+          this->uses_interface_ = uses_interface;
         }
       return result;
     }
@@ -439,14 +439,14 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
 // If neither a consumer nor a supplier has registered an interface,
 // the function calls cache_interface_description and returns 0 if successful.
 int
-TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *supported_interface_
+TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *supported_interface
                                                                   ACE_ENV_ARG_DECL)
 {
-  // Check if a supplier has already registered an inerface with the typed EC
+  // Check if a supplier has already registered an interface with the typed EC
   if (this->supported_interface_.length() > 0)
     {
       // Check if the registered interface == the new supported_interface
-      if (this->supported_interface_ == ACE_CString (supported_interface_))
+      if (this->supported_interface_ == ACE_CString (supported_interface))
         {
           return 0;
         }
@@ -464,9 +464,9 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
   if (this->uses_interface_.length() > 0)
     {
       // Check if the registered uses_interface_ == the new supported_interface
-      if (this->uses_interface_ == ACE_CString (supported_interface_))
+      if (this->uses_interface_ == ACE_CString (supported_interface))
         {
-          this->supported_interface_ = supported_interface_;
+          this->supported_interface_ = supported_interface;
           return 0;
         }
       else
@@ -481,12 +481,12 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (supported_interface_ ACE_ENV_ARG_PARAMETER);
+      int result = cache_interface_description (supported_interface ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (result == 0)
         {
-          this->supported_interface_ = supported_interface_;
+          this->supported_interface_ = supported_interface;
         }
       return result;
     }
@@ -494,7 +494,7 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
   return -1;
 }
 
-// Function creates a NVList and populates it from the paramter information.
+// Function creates a NVList and populates it from the parameter information.
 void
 TAO_CEC_TypedEventChannel::create_operation_list (TAO_CEC_Operation_Params *oper_params,
                                                   CORBA::NVList_out new_list
