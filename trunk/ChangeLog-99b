@@ -4,6 +4,9 @@ Wed Jan 13 22:30:49 1999  David L. Levine  <levine@cs.wustl.edu>
           explicit link with libedgnoe.a, because GreenHills adds
           that implicitly.
 
+        * ace/OS.h: added quick hack to ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
+          logic to allow compilation with g++.
+
 Wed Jan 13 18:48:30 EST 1999  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/004/client.cpp:
