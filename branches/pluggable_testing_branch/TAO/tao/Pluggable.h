@@ -285,7 +285,7 @@ class TAO_Export TAO_Unknown_Profile : public TAO_Profile
   //
   // = DESCRIPTION
   //   The CORBA spec implies that ORBs must be prepared to save and
-  //   pass around profiles for protocols it does not recognize. It is 
+  //   pass around profiles for protocols it does not recognize. It is
   //   not mandatory to *use* those profiles but they shouldn't be
   //   dropped.
   //   This class stores the information required to marshal and
@@ -386,8 +386,7 @@ public:
   // Parse a string containing a URL style IOR and return an
   // MProfile.
 
-  virtual int open (TAO_Resource_Factory *trf,
-                    ACE_Reactor *reactor) = 0;
+  virtual int open (TAO_ORB_Core *orb_core) = 0;
   //  Initialize object and register with reactor.
 
   virtual int close (void) = 0;
@@ -403,7 +402,7 @@ public:
   // Initial set of connections to be established.
 
   virtual TAO_Profile *create_profile (TAO_InputCDR& cdr) = 0;
-  // Create a profile for this protocol and initialize it based on the 
+  // Create a profile for this protocol and initialize it based on the
   // encapsulation in <cdr>
 
 protected:

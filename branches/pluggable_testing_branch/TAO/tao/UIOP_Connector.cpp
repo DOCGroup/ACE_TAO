@@ -25,9 +25,25 @@
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 
-TAO_UIOP_CACHED_CONNECT_STRATEGY TAO_UIOP_Connector::UIOP_Cached_Connect_Strategy_;
-TAO_UIOP_NULL_CREATION_STRATEGY TAO_UIOP_Connector::UIOP_Null_Creation_Strategy_;
-TAO_UIOP_NULL_ACTIVATION_STRATEGY TAO_UIOP_Connector::UIOP_Null_Activation_Strategy_;
+// ****************************************************************
+
+TAO_UIOP_MT_Connect_Creation_Strategy::
+  TAO_UIOP_MT_Connect_Creation_Strategy (ACE_Thread_Manager* t)
+    :  ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler> (t)
+{
+}
+
+int
+TAO_UIOP_MT_Connect_Creation_Strategy::make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh)
+{
+  if (sh == 0)
+    {
+      ACE_NEW_RETURN (sh, TAO_MT_UIOP_Client_Connection_Handler, -1);
+    }
+  return 0;
+}
+
+// ****************************************************************
 
 TAO_UIOP_Connector::TAO_UIOP_Connector (void)
   : TAO_Connector (TAO_IOP_TAG_UNIX_IOP),
@@ -36,13 +52,20 @@ TAO_UIOP_Connector::TAO_UIOP_Connector (void)
 }
 
 int
-TAO_UIOP_Connector::open (TAO_Resource_Factory *trf,
-                          ACE_Reactor *reactor)
+TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
-  return this->base_connector_.open (reactor,
-                                     &UIOP_Null_Creation_Strategy_,
-                                     &UIOP_Cached_Connect_Strategy_,
-                                     &UIOP_Null_Activation_Strategy_);
+  typedef ACE_Cached_Connect_Strategy<TAO_UIOP_Client_Connection_Handler,
+                                    ACE_LSOCK_CONNECTOR,
+                                    TAO_Cached_Connector_Lock>
+        TAO_CACHED_CONNECT_STRATEGY;
+
+  TAO_CACHED_CONNECT_STRATEGY* cached_connect_strategy =
+    new TAO_CACHED_CONNECT_STRATEGY (new TAO_UIOP_MT_Connect_Creation_Strategy);
+
+  return this->base_connector_.open (orb_core->reactor (),
+                                     &this->null_creation_strategy_,
+                                     cached_connect_strategy,
+                                     &this->null_activation_strategy_);
 }
 
 int
@@ -228,7 +251,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
   TAO_Profile* pfile;
   ACE_NEW_RETURN (pfile, TAO_UIOP_Profile, 0);
-  
+
   int r = pfile->decode (cdr);
   if (r == -1)
     {
@@ -285,6 +308,9 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 }
 
 
+#define TAO_UIOP_SVC_TUPLE ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>
+#define UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr>
+
 # if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Node<ACE_UNIX_Addr>;
@@ -303,6 +329,33 @@ template class ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>;
 template class ACE_NOOP_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>;
 template class ACE_NOOP_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>;
 template class ACE_Recycling_Strategy<TAO_UIOP_Client_Connection_Handler>;
+
+template class ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
+template class UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR;
+template class TAO_UIOP_SVC_TUPLE;
+template class ACE_Map_Manager<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>;
+
+template class ACE_Hash_Map_Entry<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *>;
+template class ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>;
+template class ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>;
+template class ACE_Hash_Map_Manager<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
 
 # elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -323,6 +376,33 @@ template class ACE_Recycling_Strategy<TAO_UIOP_Client_Connection_Handler>;
 #pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>
 
 #pragma instantiate ACE_Recycling_Strategy<TAO_UIOP_Client_Connection_Handler>
+
+#pragma instantiate ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR
+#pragma instantiate TAO_UIOP_SVC_TUPLE
+#pragma instantiate ACE_Map_Manager<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<int, TAO_UIOP_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>
+
+#pragma instantiate ACE_Hash_Map_Entry<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *>
+#pragma instantiate ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>
+#pragma instantiate ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>
+#pragma instantiate ACE_Hash_Map_Manager<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
 
 # endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

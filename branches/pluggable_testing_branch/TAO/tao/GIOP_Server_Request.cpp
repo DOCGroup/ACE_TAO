@@ -155,7 +155,7 @@ GIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
   CORBA::Long length;
   hdr_status = hdr_status && input.read_long (length);
   if (hdr_status)
-    {     
+    {
       // Do not include NULL character at the end.
       this->operation_.set (input.rd_ptr (),
                             length - 1,
@@ -402,7 +402,7 @@ GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
       if (this->retval_)
         {
           CORBA::TypeCode_var tc = this->retval_->type ();
-	        if (this->retval_->any_owns_data ())
+                if (this->retval_->any_owns_data ())
             {
               (void) this->outgoing_->encode (tc.in (), retval_->value (), 0, env);
             }
@@ -567,8 +567,8 @@ GIOP_ServerRequest::init_reply (CORBA::Environment &env)
 {
   // Construct a REPLY header.
   TAO_GIOP::start_message (TAO_GIOP::Reply,
-			                     *this->outgoing_,
-			                     this->orb_core_);
+                                             *this->outgoing_,
+                                             this->orb_core_);
 
   TAO_GIOP_ServiceContextList resp_ctx;
   resp_ctx.length (0);

@@ -97,4 +97,4 @@ private:
   // list of acceptors currently open.
 };
 
-#endif TAO_ACCEPTOR_REGISTRY_H
+#endif /* TAO_ACCEPTOR_REGISTRY_H */

@@ -24,13 +24,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "tao/Pluggable.h"
 #include "tao/Connect.h"
-
-// @@ Fred&Ossama: Could we make this a typedef inside the
-//    IIOP_Acceptor class?
-typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
-                              TAO_SOCK_ACCEPTOR>
-        TAO_IIOP_BASE_ACCEPTOR;
-// was defined in Connect.h
+#include "tao/Acceptor_Impl.h"
 
 // TAO IIOP_Acceptor concrete call defination
 
@@ -66,6 +60,8 @@ public:
   CORBA::ULong endpoint_count (void);
   // return the number of profiles this will generate
 
+  typedef TAO_Acceptor_Impl<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_BASE_ACCEPTOR;
+
 private:
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to it's base class.
@@ -77,7 +73,7 @@ private:
   // @@ there will be possibly a different hostname for each interface.
 
   CORBA::UShort port_;
-  // port number for this host.  This shouyld be non-zero.
+  // port number for this host.  This should be non-zero.
 };
 
 #endif  /* TAO_IIOP_ACCEPTOR_H */

@@ -56,24 +56,6 @@ TAO_Resource_Factory::get_connector_registry (void)
   return 0;
 }
 
-TAO_CACHED_CONNECT_STRATEGY *
-TAO_Resource_Factory::get_cached_connect_strategy (void)
-{
-  return 0;
-}
-
-TAO_NULL_CREATION_STRATEGY *
-TAO_Resource_Factory::get_null_creation_strategy (void)
-{
-  return 0;
-}
-
-TAO_NULL_ACTIVATION_STRATEGY *
-TAO_Resource_Factory::get_null_activation_strategy (void)
-{
-  return 0;
-}
-
 TAO_Acceptor_Registry *
 TAO_Resource_Factory::get_acceptor_registry (void)
 {

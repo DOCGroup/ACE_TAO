@@ -261,6 +261,3 @@ CORBA_Environment_var::operator= (const CORBA_Environment_var &r)
   this->ptr_ = new CORBA::Environment (*r.ptr_);
   return *this;
 }
-
-
-

@@ -18,6 +18,7 @@
 #include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
+#include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
@@ -27,18 +28,37 @@ TAO_IIOP_Connector::TAO_IIOP_Connector (void)
 }
 
 int
-TAO_IIOP_Connector::open (TAO_Resource_Factory *trf,
-                          ACE_Reactor *reactor)
+TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
-  return this->base_connector_.open (reactor,
-                                     trf->get_null_creation_strategy (),
-                                     trf->get_cached_connect_strategy (),
-                                     trf->get_null_activation_strategy ());
+  typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler,
+                                      TAO_SOCK_CONNECTOR,
+                                      TAO_Cached_Connector_Lock>
+        TAO_CACHED_CONNECT_STRATEGY;
+
+  TAO_Client_Strategy_Factory *f = orb_core->client_factory ();
+
+  TAO_CACHED_CONNECT_STRATEGY* cached_connect_strategy =
+    new TAO_CACHED_CONNECT_STRATEGY (f->create_client_creation_strategy ());
+
+  return this->base_connector_.open (orb_core->reactor (),
+                                     &this->null_creation_strategy_,
+                                     cached_connect_strategy,
+                                     &this->null_activation_strategy_);
 }
 
 int
 TAO_IIOP_Connector::close (void)
 {
+#if 0
+  // @@ We should destroy the strategies that we created above...
+  if (this->cached_connect_strategy_ != 0)
+    {
+      // Zap the creation strategy that we created earlier
+      delete this->cached_connect_strategy_->creation_strategy ();
+      delete this->cached_connect_strategy_;
+    }
+#endif /* 0 */
+
   this->base_connector_.close ();
   return 0;
 }
@@ -223,7 +243,7 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
   TAO_Profile* pfile;
   ACE_NEW_RETURN (pfile, TAO_IIOP_Profile, 0);
-  
+
   int r = pfile->decode (cdr);
   if (r == -1)
     {
@@ -279,16 +299,98 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
 }
 
 
+#define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
+#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
+#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Node<ACE_INET_Addr>;
 template class ACE_Unbounded_Stack<ACE_INET_Addr>;
 template class ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>;
 
+template class ACE_Creation_Strategy<TAO_Client_Connection_Handler>;
+template class ACE_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
+template class ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
+template class ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>;
+template class ACE_Concurrency_Strategy<TAO_Client_Connection_Handler>;
+template class ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>;
+template class ACE_Recycling_Strategy<TAO_Client_Connection_Handler>;
+template class ACE_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
+
+template class ACE_Node<TAO_Client_Connection_Handler *>;
+
+template class ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class CACHED_CONNECT_STRATEGY;
+template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
+template class TAO_SVC_TUPLE;
+template class ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
+
+template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>;
+template class ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
+template class ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>;
+template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Node<ACE_INET_Addr>
 #pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
 #pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>
+
+#pragma instantiate ACE_Creation_Strategy<TAO_Client_Connection_Handler>
+#pragma instantiate ACE_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
+#pragma instantiate ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
+#pragma instantiate ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<TAO_Client_Connection_Handler>
+#pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
+#pragma instantiate ACE_Recycling_Strategy<TAO_Client_Connection_Handler>
+#pragma instantiate ACE_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
+
+#pragma instantiate ACE_Node<TAO_Client_Connection_Handler *>
+
+#pragma instantiate ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate CACHED_CONNECT_STRATEGY
+#pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
+#pragma instantiate TAO_SVC_TUPLE
+#pragma instantiate ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<int, TAO_SVC_TUPLE*>
+
+#pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>
+#pragma instantiate ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>
+#pragma instantiate ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>
+#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDR>, ACE_SYNCH_NULL_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

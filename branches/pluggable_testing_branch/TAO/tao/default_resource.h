@@ -18,7 +18,6 @@
 #ifndef TAO_DEFAULT_RESOURCE_H
 #define TAO_DEFAULT_RESOURCE_H
 
-#include "ace/Strategies_T.h"
 #include "ace/Singleton.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -26,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Resource_Factory.h"
-#include "tao/IIOP_Acceptor.h"
 #include "tao/POA.h"
 
 // ****************************************************************
@@ -54,14 +52,6 @@ public:
   ACE_Thread_Manager tm_;
   // The Thread Manager
 
-  TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
-  // This no-op creation strategy is necessary for using the
-  // <Strategy_Connector> with the <Cached_Connect_Strategy>.
-
-  TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
-  // This no-op activation strategy prevents the cached connector from
-  // calling the service handler's <open> method multiple times.
-
   TAO_Acceptor_Registry ar_;
   // The Acceptor Registry!
 
@@ -73,9 +63,6 @@ public:
 
   TAO_Object_Adapter *object_adapter_;
   // Object Adapter.
-
-  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
-  // The Cached Connect Strategy
 
   TAO_POA *poa_;
   // Pointer to application-created POA.
@@ -154,9 +141,6 @@ public:
   virtual ACE_Thread_Manager *get_thr_mgr (void);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
-  virtual TAO_CACHED_CONNECT_STRATEGY *get_cached_connect_strategy (void);
-  virtual TAO_NULL_CREATION_STRATEGY *get_null_creation_strategy (void);
-  virtual TAO_NULL_ACTIVATION_STRATEGY *get_null_activation_strategy (void);
   virtual TAO_POA *get_root_poa (void);
   virtual TAO_Object_Adapter *object_adapter (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);

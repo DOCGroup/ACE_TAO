@@ -27,11 +27,9 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/GIOP.h"
 
+ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 
-UIOP_CREATION_STRATEGY TAO_UIOP_Acceptor::UIOP_Creation_Strategy_;
-UIOP_ACCEPT_STRATEGY TAO_UIOP_Acceptor::UIOP_Accept_Strategy_;
-UIOP_CONCURRENCY_STRATEGY TAO_UIOP_Acceptor::UIOP_Concurrency_Strategy_;
-UIOP_SCHEDULING_STRATEGY TAO_UIOP_Acceptor::UIOP_Scheduling_Strategy_;
+// ****************************************************************
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_UNIX_IOP),
@@ -41,7 +39,7 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
 
 int
 TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile &mprofile) 
+                                    TAO_MProfile &mprofile)
 {
   ACE_UNIX_Addr addr;
 
@@ -96,21 +94,16 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 {
   ACE_UNIX_Addr addr (address.c_str ());
 
-  if (this->base_acceptor_.open (
-                  // orb_core->orb_params ()->addr (),
-                  addr,
-                  orb_core->reactor()//,
-//                   &UIOP_Creation_Strategy_,
-//                   &UIOP_Accept_Strategy_,
-//                   &UIOP_Concurrency_Strategy_,
-//                   &UIOP_Scheduling_Strategy_
-                  ) != 0)
-    return -1;  // Failure
+  if (this->base_acceptor_.open (orb_core, addr) != 0)
+    return -1;
 
-  return 0;  // Success
+  // @@ If Profile creation is slow we may need to cache the
+  //    rendezvous point here
+
+  return 0;
 }
 
-CORBA::ULong 
+CORBA::ULong
 TAO_UIOP_Acceptor::endpoint_count (void)
 {
   // @@ for now just assume one!
@@ -121,22 +114,12 @@ TAO_UIOP_Acceptor::endpoint_count (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_Acceptor>;
-template class ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_Acceptor>;
-
-template class ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>;
-template class ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>;
+template class TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_Acceptor>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_Acceptor>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_Acceptor>
-
-#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>
+#pragma instantiate TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_Acceptor>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -10,7 +10,6 @@
 #include "tao/Servant_Base.h"
 #include "tao/Request.h"
 #include "tao/varout.h"
-#include "tao/IIOP_Profile.h"
 #include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
