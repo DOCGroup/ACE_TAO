@@ -23,7 +23,7 @@
 #include "ace/Service_Config.h"
 #include "test_config.h"
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
 
 // Global pattern
 static ACE_UPIPE_Addr addr (__TEXT ("pattern"));
@@ -136,7 +136,7 @@ acceptor (void *args)
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting thread\n"));
   return 0;
 }
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS && defined ACE_HAS_STREAM_PIPES || ACE_WIN32 */
 
 int 
 main (int, char *[])
