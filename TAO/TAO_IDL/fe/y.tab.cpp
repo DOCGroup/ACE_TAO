@@ -1962,7 +1962,7 @@ case 45:
 break;
 case 46:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.nlval = 0;
         }
 break;
@@ -2154,7 +2154,7 @@ case 65:
 break;
 case 66:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.bval = I_FALSE;
         }
 break;
@@ -2166,7 +2166,7 @@ case 67:
 break;
 case 68:
 {
-/*      |   /* EMPTY * /*/
+/*      |    EMPTY */
           tao_yyval.nlval = 0;
         }
 break;
@@ -2376,7 +2376,7 @@ case 101:
 break;
 case 102:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.nlval = 0;
         }
 break;
@@ -3168,7 +3168,7 @@ case 193:
 break;
 case 194:
 {
-/*      | /* EMPTY * /*/
+/*      | EMPTY */
           tao_yyval.dlval = 0;
         }
 break;
@@ -3213,7 +3213,7 @@ case 199:
 break;
 case 200:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.dlval = 0;
         }
 break;
@@ -3831,7 +3831,7 @@ case 261:
 break;
 case 262:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.llval = 0;
         }
 break;
@@ -4395,7 +4395,7 @@ case 302:
 break;
 case 303:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.elval = 0;
         }
 break;
@@ -4504,7 +4504,7 @@ case 310:
 break;
 case 311:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.bval = I_FALSE;
         }
 break;
@@ -4676,7 +4676,7 @@ case 323:
 break;
 case 324:
 {
-/*      | /* EMPTY * /*/
+/*      | EMPTY */
           tao_yyval.ofval = AST_Operation::OP_noflags;
         }
 break;
@@ -4987,7 +4987,7 @@ break;
 case 362:
 {
           tao_yyval.nlval = 0;
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
         }
 break;
 case 363:
@@ -5011,7 +5011,7 @@ case 365:
 break;
 case 366:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.slval = 0;
         }
 break;
@@ -5054,7 +5054,7 @@ case 369:
 break;
 case 370:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.slval = 0;
         }
 break;
@@ -5227,7 +5227,7 @@ case 384:
 break;
 case 385:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY  */
           tao_yyval.idlist = 0;
         }
 break;
@@ -5384,7 +5384,7 @@ case 404:
 break;
 case 405:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.bval = I_FALSE;
         }
 break;
@@ -5578,7 +5578,7 @@ case 419:
 break;
 case 420:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.idlist = 0;
         }
 break;
@@ -5590,7 +5590,7 @@ case 421:
 break;
 case 422:
 {
-/*      | /* EMPTY * /*/
+/*      |  EMPTY */
           tao_yyval.idlist = 0;
         }
 break;
