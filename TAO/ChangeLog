@@ -1,3 +1,18 @@
+Sun Nov 23 14:31:46 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+	* docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+	* docs/tutorials/Quoter/idl/Quoter_idl.mpc:
+	* docs/tutorials/Quoter/AMI/Quoter_AMI.mpc:
+	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
+	  Updated these MPC files, exceptions are needed for all at this moment and
+	  the Quoter_idl file must be build before the Simple ones.
+
 Sun Nov 23 08:20:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/OctetSeq.pidl:
@@ -5,13 +20,13 @@ Sun Nov 23 08:20:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/OctetSeqC.i:
 
 	  Thanks to Johnny for reporting a small problem with generated
-	  code that caused the Borland builds to freak out. 
+	  code that caused the Borland builds to freak out.
 
 Sat Nov 22 20:44:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Simple/grid/Makefile:
 
-	  Added TAO_Messaging to the link line. 
+	  Added TAO_Messaging to the link line.
 
 Sat Nov 22 20:39:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -113,8 +128,8 @@ Sat Nov 22 10:12:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* rules.tao.GNU:
 
-	  If messaging is set to zero, set RTCORBA to zero. 
-	
+	  If messaging is set to zero, set RTCORBA to zero.
+
 	* tests/RTCORBA/Linear_Priority/Makefile:
 	* tests/RTCORBA/Persistent_IOR/Makefile:
 	* tests/RTCORBA/Policy_Combinations/Makefile:
@@ -124,7 +139,7 @@ Sat Nov 22 10:12:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Fixed what I broke before. The makefiles also need to ensure
 	  that RTCORBA is available in addition to minimum_corba being set
-	  to zero. 
+	  to zero.
 
 Sat Nov 22 08:34:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -141,16 +156,16 @@ Sat Nov 22 08:34:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* performance-tests/POA/Demux/Makefile:
 
 	  Fixed the above Makefiles to link in the messaging
-	  library. Fallout due to the change from Simon. 
+	  library. Fallout due to the change from Simon.
 
 	* orbsvcs/tests/Notify/RT_lib/RT_Notify_lib.mpc:
 
-	  Do not build if minimum_corba is enabled. 
+	  Do not build if minimum_corba is enabled.
 
 Sat Nov 22 07:42:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Smart_Proxies/On_Demand/Makefile:
-	  
+
 	  Fix the static build linking errors. Thanks to Don Hinton for
 	  the patches.
 
@@ -159,7 +174,7 @@ Fri Nov 21 22:19:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Bug_1636_Regression/client.cpp:
 
 	  Fixed compilation errors in builds where exceptions are turned
-	  off.  
+	  off.
 
 	* tests/Bug_1639_Regression/Makefile:
 	* tests/Bug_1639_Regression/Makefile.Bug_1639_testclient:
@@ -168,14 +183,14 @@ Fri Nov 21 22:19:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Made this test compilable only when exceptions are turned
 	  on. The right way would be to use ACE_EXCEPTION macros. But
 	  Simon has to be doing that. Till then, let me  get the builds
-	  clean. 
+	  clean.
 
 Fri Nov 21 21:48:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/AV.mpc:
 
 	  Added SCT_SEQ.cpp coditionally in makefiles only when sctp is
-	  enabled. 
+	  enabled.
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
 	* orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp:
@@ -196,7 +211,7 @@ Fri Nov 21 21:05:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.h:
         * orbsvcs/orbsvcs/Log/PersistStore.cpp:
-        
+
           Added missing file includes, and made the RTFT Event Channel build
           work when TAO_HAS_SCIOP is not defined.
           
