@@ -347,7 +347,12 @@ test_ostream (void)
 
   // Open up the file.
   if (connector.connect (file,
-                         ACE_FILE_Addr (filename)) == -1)
+                         ACE_FILE_Addr (filename),
+                         0,
+                         ACE_Addr::sap_any,
+                         0,
+                         O_RDWR,
+                         ACE_DEFAULT_FILE_PERMS) == -1)
     {
       // Set the ostream back to NULL to prevent "later functions using myostream".
       ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
