@@ -381,6 +381,29 @@ public:
                                  ACEXML_Char *&systemId,
                                  ACEXML_Env &xmlenv);
 
+  /**
+   * Parse the "children" and "Mixed" non-terminals in contentspec.
+   *
+   * The first character this function sees must be the first
+   * open paren '(' in children.
+   *
+   * @retval 0 on success, -1 otherwise.
+   */
+  int parse_children_definition (ACEXML_Env &xmlenv);
+
+  /**
+   * Parse a @c cp non-terminal.  @c cp can either be a @c seq or a @c choice.
+   * This function calls itself recursively.
+   *
+   * @param skip_open_paren when non-zero, it indicates that the open paren of
+   *        the @c seq or @c choice has already been removed from the input
+   *        stream.
+   *
+   * @retval 0 on success, -1 otherwise.
+   */
+  int parse_child (int skip_open_paren,
+                   ACEXML_Env &xmlenv);
+
 protected:
   /// Get a character.
   ACEXML_Char get (void);
