@@ -492,7 +492,6 @@ CC_Excep_Cmd::execute(void)
       excep_ = 0;
       return 0; // CC_FAIL
     }
-  return 0; // CC_FAIL - we shouldn't end here
 }
 
 CC_Dummy_Cmd::CC_Dummy_Cmd(void)

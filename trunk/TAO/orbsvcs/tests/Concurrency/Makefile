@@ -62,7 +62,7 @@ lex.CC_command.cpp:	CC_command.l CC_command.tab.h
 		-e "s@#include <@#include /**/ <@" \
 		-e "s@ECHO@ACE_CC_ECHO@" < /tmp/$(USER).CC_L1 > /tmp/$(USER).CC_L2
 		cp /tmp/$(USER).CC_L2 $@
-#		patch < ../etc/lex.CC_command.cpp.diff
+		patch < lex.CC_command.cpp.diff
 		$(RM) -f /tmp/$(USER).CC_L1 /tmp/$(USER).CC_L2
 
 CC_command.tab.cpp CC_command.tab.h:	CC_command.y

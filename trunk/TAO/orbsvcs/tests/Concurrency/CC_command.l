@@ -16,6 +16,7 @@
  * ============================================================================
  */
 %option noyywrap
+%option nounput
 %{
 #include "CC_command.h"
 #include "CC_command.tab.h"
