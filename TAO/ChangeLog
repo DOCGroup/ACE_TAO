@@ -1,22 +1,29 @@
+Mon Dec 20 09:34:08 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_1436_Regression/run_test.pl:
+
+          Removed an extra kill of the tao_ifr exe (which was causing a
+          timeout error to be printed).
+
 Sun Dec 19 14:50:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
 
-	  Fixed the warning about not completely initializing all the
-	  virtual base classes. 
-	
-	* orbsvcs/orbsvcs/Notify/Topology_Object.h:
+          Fixed the warning about not completely initializing all the
+          virtual base classes.
 
-	  Cosmetoc fixes.
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+
+          Cosmetoc fixes.
 
 Sat Dec 18 20:08:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
 
-	  Changed BasicLog_Test::test_log_destroy() to explicitly catch
-	  CORBA::OBJECT_NOT_EXIST, the expected results of this test; and
-	  to invoke ACE_PRINT_EXCEPTION() for unexpected exceptions only.
-	  This avoids false positives on the nightly scoreboard.
+          Changed BasicLog_Test::test_log_destroy() to explicitly catch
+          CORBA::OBJECT_NOT_EXIST, the expected results of this test; and
+          to invoke ACE_PRINT_EXCEPTION() for unexpected exceptions only.
+          This avoids false positives on the nightly scoreboard.
 
 Sat Dec 18 09:56:04 2004  Olli Savia  <ops@iki.fi>
 
@@ -27,8 +34,8 @@ Sat Dec 18 09:56:04 2004  Olli Savia  <ops@iki.fi>
         * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
         * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
           Replaced __Lynx__ macro with
-	  ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO macro. This makes code
-	  maintenace easier across different LynxOS versions.
+          ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO macro. This makes code
+          maintenace easier across different LynxOS versions.
 
 Sat Dec 18 01:08:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
