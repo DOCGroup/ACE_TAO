@@ -1,9 +1,15 @@
+Fri Oct 20 02:52:17 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added RTCORBA Server_Declared test.
+
 Thu Oct 19 18:02:54 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/OS_Log_Msg_Attributes.h : 
+	* ace/OS_Log_Msg_Attributes.h :
 	  Modified u_long to 'unsigned long' as the compiler was
 	  complaining.
-	
+
 Thu Oct 19 13:52:49 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Malloc_Allocator.cpp:
@@ -15,7 +21,7 @@ Thu Oct 19 13:52:49 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS.h:
         * ace/OS_Log_Msg_Attributes.h:
 
-          Moved the definition of ACE_OSTREAM_TYPE from OS.h to 
+          Moved the definition of ACE_OSTREAM_TYPE from OS.h to
           OS_Log_Msg_Attributes.h, since some include paths in
           ACE_LEGACY_MODE needed it there.
 
@@ -25,7 +31,7 @@ Thu Oct 19 13:17:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Changed the method used to detect errors in a log file.  Since
           the log contains the log message type (such as LM_ERROR),
-          I changed the detection to look for this.  
+          I changed the detection to look for this.
 
         * tests/ACE_Init_Test.cpp:
 
@@ -35,7 +41,7 @@ Thu Oct 19 13:17:41 2000  Darrell Brunsch <brunsch@uci.edu>
         * tests/test_config.h:
 
           With the way ACE_ALPHABET and some functions were defined,
-          they would cause duplicate symbols if test_config.h was 
+          they would cause duplicate symbols if test_config.h was
           included in more than one object file.  Changed them so
           the symbols are static to the file.
 
@@ -49,7 +55,7 @@ Thu Oct 19 13:17:41 2000  Darrell Brunsch <brunsch@uci.edu>
         * tests/SOCK_Send_Recv_Test.cpp:
 
           The test was checking errno without checking a return value.
-          As a result, it was getting an out-of-date errno and 
+          As a result, it was getting an out-of-date errno and
           incorrectly interpreted that as an error.  Fixed.
 
 Thu Oct 19 12:12:00 2000  Darrell Brunsch <brunsch@uci.edu>
