@@ -91,7 +91,7 @@ sub optionError {
   my($base) = $self->{'name'};
 
   if (defined $line) {
-    print STDERR "$line\n";
+    print STDERR "ERROR: $line\n";
   }
   my($spaces) = (' ' x (length($base) + 8));
   print STDERR "$base v$self->{'version'}\n" .
