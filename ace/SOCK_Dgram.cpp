@@ -302,7 +302,7 @@ ACE_SOCK_Dgram::recv (void *buf,
 			       handle_set,
 			       0, 0, 
 			       timeout);
-  if (result <= 0) // Other error or timeout.
+  if (result <= 0) // Other error (-1) or timeout (0).
     return result;
   else  // Goes fine, call <recv> to get data
     return this->recv (buf, n, addr, flags);
