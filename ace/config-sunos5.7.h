@@ -26,11 +26,17 @@
     typedef unsigned long t_uscalar_t;
     typedef void          *timeout_id_t;
 # endif /* __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8 */
-#endif /* __GNUG__ */
 
-#if defined (__KCC)
+#elif defined (ghs)
+  // SunOS 5.7's /usr/include/sys/procfs_isa.h needs uint64_t,
+  // but /usr/include/sys/int_types.h doesn't #define it because
+  // _NO_LONGLONG is #
+# undef ACE_HAS_PROC_FS
+# undef ACE_HAS_PRUSAGE_T
+
+#elif defined (__KCC)
 typedef unsigned long long uint64_t;
-#endif
+#endif /* __GNUG__ || ghs || __KCC */
 
 // Solaris 5.7 supports SCHED_FIFO and SCHED_RR, as well as SCHED_OTHER.
 #undef ACE_HAS_ONLY_SCHED_OTHER
