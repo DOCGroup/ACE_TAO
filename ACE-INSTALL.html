@@ -188,13 +188,15 @@ Hopefully newer compiler releases will alleviate these problems.<P>
 CXX 6.0 is _much_ improved in this regard.  Please note that
 include/makeinclude/platform_osf1_4.0.GNU has a WARNING_FLAGS
 macro that is disabled by default, because most users probably
-don't have 6.0 yet.  If you do, uncomment that macro definition
-for a nearly clean compile.  (There are a few warnings that appear
-to be harmless.)<P>
+don't have 6.0 yet.  If you do, enable that macro definition
+by either adding CXX_VER=POST_5X to your gmake invocation, or
+editing your include/makeinclude/platform_macros.GNU file.<P>
 
-ACE_wrappers/tests/Naming_Test does not run properly with CXX 6.0.
-If you have the facilities and time to debug this test, please
-let us know.<P>
+All of the tests in ACE_wrappers/tests run successfully with
+CXX 6.0 on the version of Digital UNIX 4.0 that we tested with
+at Washington U.  There appear to be variations in Digital UNIX 4.0,
+however, because users elsewhere report test failures with the
+same version of CXX 6.0.<P>
 
 GNU gcc 2.7.2.1 compiles without problems. All tests run (besides
 minor problems).  Thanks to Thilo Kielmann &lt<A
