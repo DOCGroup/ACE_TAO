@@ -1,3 +1,7 @@
+Wed Jun 10 20:00:21 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tests/POA/Forwarding/*: enhanced the Forwarding test enormously.
+
 Wed Jun 10 19:00:21 1998  Carlos O'Ryan  <coryan@JIG>
 
 	* tao/Sequence.cpp: 
