@@ -699,6 +699,10 @@ SOURCE=.\RtecUDPAdminS_T.i
 # PROP Default_Filter "cpp"
 # Begin Source File
 
+SOURCE=.\Event\CRC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_And_Filter.cpp
 # End Source File
 # Begin Source File
@@ -989,6 +993,10 @@ SOURCE=.\RtecUDPAdminS.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Event\CRC.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_And_Filter.h
