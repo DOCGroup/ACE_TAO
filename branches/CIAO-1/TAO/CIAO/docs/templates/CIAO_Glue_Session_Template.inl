@@ -72,12 +72,4 @@ ACE_INLINE void
 }
 # end [type]
 
-// Inherit from ::Compopnents::EventBConsumerBase
-ACE_INLINE void
-[ciao module name]::[event type]Consumer_Servant::push_event (EventBase_ptr ev)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Components::BadEventType))
-{
-  // ??
-}
-#end foreach [facet name]
+#end foreach [event type]
