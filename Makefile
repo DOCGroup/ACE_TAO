@@ -77,6 +77,7 @@ CIAO_CORE_DIRS= \
         ace \
         apps/gperf/src \
 	ACEXML \
+	Kokyu \
         TAO/tao \
         TAO/TAO_IDL \
         TAO/orbsvcs/orbsvcs \
