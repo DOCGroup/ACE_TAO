@@ -31,11 +31,11 @@ RSC=rc.exe
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
 
 # PROP Ignore_Export_Lib 0
-# ADD CPP /MD
+# ADD CPP /MD /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D TAO_IDL_BE_HAS_DLL=1 /D TAO_IDL_FE_HAS_DLL=1
 BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 TAO_IDL_BE_DLL.lib TAO_IDL_FE_DLL.lib ace.lib /nologo /subsystem:console /debug /machine:IX86 /out:"..\..\bin\Release\tao_idl.exe"
+# ADD LINK32 TAO_IDL_BE_DLL.lib TAO_IDL_FE_DLL.lib ace.lib /nologo /subsystem:console /debug /machine:IX86 /out:"..\..\bin\Release\tao_idl.exe" /libpath:"..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
@@ -51,8 +51,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /YX /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_DEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG" /d "_DEBUG"
 BSC32=bscmake.exe
@@ -74,6 +74,14 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\driver\drv_args.cpp
+NODEP_CPP_DRV_A=\
+	".\driver\ace\Process.h"\
+	".\driver\be.h"\
+	".\driver\drv_extern.h"\
+	".\driver\drv_private.h"\
+	".\driver\idl.h"\
+	".\driver\idl_extern.h"\
+	
 
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
 
@@ -85,6 +93,12 @@ SOURCE=.\driver\drv_args.cpp
 # Begin Source File
 
 SOURCE=.\driver\drv_init.cpp
+NODEP_CPP_DRV_I=\
+	".\driver\be.h"\
+	".\driver\drv_private.h"\
+	".\driver\idl.h"\
+	".\driver\idl_extern.h"\
+	
 
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
 
@@ -96,6 +110,16 @@ SOURCE=.\driver\drv_init.cpp
 # Begin Source File
 
 SOURCE=.\driver\drv_preproc.cpp
+NODEP_CPP_DRV_P=\
+	".\driver\ace\ARGV.h"\
+	".\driver\ace\Env_Value_T.h"\
+	".\driver\ace\Process_Manager.h"\
+	".\driver\ace\SString.h"\
+	".\driver\drv_extern.h"\
+	".\driver\drv_private.h"\
+	".\driver\idl.h"\
+	".\driver\idl_extern.h"\
+	
 
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
 
@@ -107,6 +131,11 @@ SOURCE=.\driver\drv_preproc.cpp
 # Begin Source File
 
 SOURCE=.\driver\drv_private.cpp
+NODEP_CPP_DRV_PR=\
+	".\driver\drv_private.h"\
+	".\driver\idl.h"\
+	".\driver\idl_extern.h"\
+	
 
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
 
@@ -118,6 +147,16 @@ SOURCE=.\driver\drv_private.cpp
 # Begin Source File
 
 SOURCE=.\tao_idl.cpp
+NODEP_CPP_TAO_I=\
+	"..\Version.h"\
+	".\ace\Process.h"\
+	".\be.h"\
+	".\drv_extern.h"\
+	".\drv_private.h"\
+	".\fe_extern.h"\
+	".\global_extern.h"\
+	".\idl.h"\
+	
 
 !IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
 
