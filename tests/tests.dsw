@@ -219,6 +219,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Notify_Performance_Test"=.\Notify_Performance_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Pipe_Test"=.\Pipe_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -304,6 +316,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Reactor_Notify_Test"=.\Reactor_Notify_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Reactor_Performance_Test"=.\Reactor_Performance_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
