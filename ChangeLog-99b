@@ -1,3 +1,9 @@
+Thu Mar 11 10:12:51 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Thread_Manager: Added a method to return the current number
+ 	  of threads in the ACE_Thread_Manager.  Thanks to Zoran Ivanovic
+ 	  <zorani@pathcom.com> for suggesting this.
+
 Thu Mar 11 10:27:51 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/DLL_Test.cpp (main): Allowed the main to be accessible on
