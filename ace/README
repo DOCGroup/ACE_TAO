@@ -308,12 +308,12 @@ ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS   GNUC 2.7.3 mistakenly
                                         as the place where an inline
                                         function of an argument class
                                         is first used.
-ACE_HAS_BROKEN_EXTENDED_TEMPLATES       GNU CC < 2.8 is broken for 
-                                        template classes. This label 
+ACE_HAS_BROKEN_EXTENDED_TEMPLATES       GNU CC < 2.8 is broken for
+                                        template classes. This label
                                         shortens the template parameter
                                         list by removing the iterator
                                         functionality in the
-                                        Cache_Map_Manager class. 
+                                        Cache_Map_Manager class.
 ACE_HAS_GNU_CSTRING_H                   Denotes that GNU has cstring.h
                                         as standard which redefines
                                         memchr()
@@ -405,7 +405,7 @@ ACE_HAS_OSF_TIMOD_H                     Platform supports the OSF TLI
 ACE_HAS_PENTIUM                         Platform is an Intel Pentium
                                         microprocessor.
 ACE_HAS_POLL                            Platform contains <poll.h>
-ACE_HAS_POSITION_INDEPENDENT_MALLOC     The ACE_Malloc<> class uses
+ACE_HAS_POSITION_INDEPENDENT_POINTERS   Platform supports
                                         "position-independent" features
                                         provided by ACE_Based_Pointer<>.
 ACE_HAS_POSIX_NONBLOCK                  Platform supports POSIX

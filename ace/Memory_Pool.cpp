@@ -10,10 +10,10 @@
 
 #include "ace/Auto_Ptr.h"
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"
 #include "ace/Based_Pointer_Repository.h"
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
 ACE_RCSID(ace, Memory_Pool, "$Id$")
 
@@ -96,9 +96,9 @@ ACE_MMAP_Memory_Pool::release (void)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::release");
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (this->mmap_.addr ());
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   this->mmap_.remove ();
   return 0;
@@ -286,11 +286,11 @@ ACE_MMAP_Memory_Pool::map_file (off_t map_size)
     }
   else
     {
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
       this->base_addr_ = this->mmap_.addr ();
       ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->base_addr_,
                                                        map_size);
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
       return 0;
     }
 }
@@ -1092,10 +1092,10 @@ ACE_Pagefile_Memory_Pool::remap (void *addr)
 int
 ACE_Pagefile_Memory_Pool::unmap (void)
 {
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   ACE_BASED_POINTER_REPOSITORY::instance ()->unbind
     (this->local_cb_.mapped_base_);
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   // Cleanup cached pool pointer.
   this->shared_cb_ = 0;
@@ -1267,11 +1267,11 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
   // Update local copy of the shared memory statistics.
   this->local_cb_.sh_ =
     this->shared_cb_->sh_;
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   ACE_BASED_POINTER_REPOSITORY::instance ()->bind
     (this->local_cb_.mapped_base_,
      this->local_cb_.sh_.mapped_size_);
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   return 0;
 }

@@ -159,7 +159,7 @@ ACE_Control_Block::ACE_Name_Node::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 void
 ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
 {
@@ -291,7 +291,7 @@ ACE_PI_Control_Block::ACE_Name_Node::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 ACE_Allocator *
 ACE_Allocator::instance (void)
@@ -440,7 +440,7 @@ template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_HAS_MALLOC_STATS */
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Based_Pointer_Basic<ACE_PI_Control_Block::ACE_Malloc_Header>;
 template class ACE_Based_Pointer_Basic<ACE_PI_Control_Block::ACE_Name_Node>;
@@ -454,6 +454,6 @@ template class ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Name_Node>;
 #pragma instantiate ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Malloc_Header>
 #pragma instantiate ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Name_Node>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1*/
 
 #endif /* ACE_MALLOC_CPP */

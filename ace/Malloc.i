@@ -20,7 +20,7 @@ ACE_Control_Block::ACE_Name_Node::init_ptr
   *ptr = init;
 }
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 ACE_INLINE
 ACE_PI_Control_Block::ACE_Name_Node::~ACE_Name_Node (void)
 {
@@ -41,7 +41,7 @@ ACE_PI_Control_Block::ACE_Name_Node::init_ptr
   new ((void *) ptr) NAME_NODE_PTR (base_addr, 0);
   *ptr = init;
 }
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 ACE_INLINE void *
 ACE_New_Allocator::malloc (size_t nbytes)

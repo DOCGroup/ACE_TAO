@@ -243,10 +243,10 @@ ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_FIFO_Iterator (AC
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE void
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::init_malloc_header_ptr (void* ptr)
 {
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
   new (ptr) ACE_MALLOC_HEADER_PTR (this->cb_ptr_, 0);
 #else
   ACE_UNUSED_ARG (ptr);
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 }
 #endif
