@@ -1,3 +1,14 @@
+Wed Jul 21 12:05:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor_union_branch.h:
+	* TAO_IDL/be/be_visitor_union_branch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	  Added gen_default_label_value() to be_visitor_union_branch.* and
+	  added a call to this instead of gen_label_value() in code
+	  generation of mutator method for a union branch if it is an
+	  explicit default case. This particular bit of default case
+	  functionality had not yet been implemented.
+
 Wed Jul 21 10:46:50 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
 
 	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
