@@ -1688,7 +1688,7 @@ template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
 #if !defined (VXWORKS)
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor>
-  #pragma instantiate ACE_Node<ACE_Thread_Descriptor
+  #pragma instantiate ACE_Node<ACE_Thread_Descriptor>
 #endif /* ! VXWORKS */
   #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
