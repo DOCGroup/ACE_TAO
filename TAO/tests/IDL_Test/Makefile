@@ -62,7 +62,7 @@ SRC = $(IDL_SRC) \
 	main.cpp \
         namespace_check.cpp
 
-TAO_IDLFLAGS += -Ge 1
+TAO_IDLFLAGS += -Ge 1 
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
@@ -83,6 +83,9 @@ BUILD += 	namespace_check.cpp   \
 BIN = main
 endif #templates == implicit
 
+ifeq ($(ami),1)
+TAO_IDLFLAGS += -GC
+endif # ami
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -112,7 +115,7 @@ nested_scopeC.h: nested_scope.idl $(TAO_IDL)
 	$(TAO_IDL) -w $(TAO_IDLFLAGS) nested_scope.idl
 
 main:	$(addprefix $(VDIR),$(TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ -lTAO_Messaging $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean:	clean
 	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))

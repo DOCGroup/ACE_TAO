@@ -36,3 +36,8 @@ struct Keywords
   double int;
 };
 
+interface Testing
+{
+  void foo (in string namespace);
+};
+
