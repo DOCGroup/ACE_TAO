@@ -1,3 +1,9 @@
+1998-09-11  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* tests/Simple/chat: Added new test program.  This simple chat
+	  program was originally a test in ORBacus and should help ORBacus
+	  users to move to TAO and the POA.
+
 Fri Sep 11 12:14:03 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp : Fixed a memory allocation

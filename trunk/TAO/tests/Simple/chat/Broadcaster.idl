@@ -1,0 +1,23 @@
+// $Id$
+
+#include "Receiver.idl"
+
+interface Broadcaster
+{
+  // = TITLE
+  //   This interface is to be implemented by the simple chat server.
+  //   It broadcasts messages received from one registered client to all
+  //   its registered clients.
+
+  long register (in Receiver receiver, in string nickname);
+  // registers a Receiver with the chat server.
+  // a registered client must call un_register before it goes away.
+  // returns 0 on success.
+
+  long un_register (in Receiver receiver);
+  // unregisters a Receiver.
+  // returns 0 on success.
+
+  void say (in string text);
+  // say something to all registered clients.
+};
