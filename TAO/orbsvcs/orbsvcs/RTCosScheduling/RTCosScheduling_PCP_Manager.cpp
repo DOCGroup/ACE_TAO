@@ -13,6 +13,7 @@
 #include "RTCosScheduling_PCP_Manager.h"
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Thread.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (__ACE_INLINE__)
 #include "RTCosScheduling_PCP_Manager.i"
