@@ -53,7 +53,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
-  void timeout_occured (Object_ID& oid ACE_ENV_ARG_DECL);
+  void timeout_occured (Object_ID oid ACE_ENV_ARG_DECL);
 
   void set_consumer_proxy(const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy);
 

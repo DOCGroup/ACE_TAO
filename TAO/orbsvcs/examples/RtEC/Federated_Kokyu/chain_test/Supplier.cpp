@@ -41,7 +41,7 @@ Supplier::rt_info(void) const
 }
 
 void
-Supplier::timeout_occured (Object_ID& oid ACE_ENV_ARG_DECL)
+Supplier::timeout_occured (Object_ID oid ACE_ENV_ARG_DECL)
 {
   RtecEventComm::EventSet event (1);
   event.length (1);
@@ -146,10 +146,11 @@ Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
   ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) in thread %t BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),ACE_OS::gettimeofday().msec()));
 
-  Object_ID oid;
+  Object_ID oid = ACE_OBJECT_COUNTER->increment();
+  //Object_ID oid ;
   //oid.id = events[0].header.eid.id;
-  oid.tid = ACE_Thread::self();
-  oid.pid = ACE_OS::getpid();
+  //oid.tid = ACE_Thread::self();
+  //oid.pid = ACE_OS::getpid();
   //oid.queue_id = events[0].header.eid.queue_id;
   //oid.type = events[0].header.type;
 
