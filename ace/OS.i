@@ -7719,13 +7719,32 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
                      int, -1);
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+  int ace_result;
 #     if defined (ACE_LACKS_NULL_PTHREAD_STATUS)
   void *temp;
-  ACE_OSCALL_RETURN (::pthread_join (thr_handle,
-    status == 0  ?  &temp  :  status), int, -1);
+  ACE_OSCALL (::pthread_join (thr_handle,
+                              status == 0  ?  &temp  :  status),
+              int, -1, ace_result);
 #     else
-  ACE_OSCALL_RETURN (::pthread_join (thr_handle, status), int, -1);
-#     endif
+  ACE_OSCALL (::pthread_join (thr_handle, status), int, -1, ace_result);
+#     endif /* ACE_LACKS_NULL_PTHREAD_STATUS */
+  // Joinable threads need to be detached after joining on Pthreads
+  // draft 4 (at least) to reclaim thread storage.
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
+#       if defined (HPUX_10)
+  // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
+  // as an argument.  Since the id is still needed, give pthread_detach
+  // a junker to scribble on.
+  ACE_thread_t  junker;
+  cma_handle_assign(&thr_handle, &junker);
+  ::pthread_detach (&junker);
+#       else
+  ::pthread_detach (&thr_handle);
+#       endif  /* HPUX_10 */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+
+    return ace_result;
+
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (thr_handle, status), ace_result_),
                      int, -1);

@@ -952,20 +952,6 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
   return ACE_Thread::join (td->thr_handle_);
 #else
   int result = ACE_Thread::join (td->thr_handle_);
-
-# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
-#   if defined (HPUX_10)
-  // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
-  // as an argument.  Since the id is still needed, give pthread_detach
-  // a junker to scribble on.
-  ACE_thread_t  junker;
-  cma_handle_assign(&td->thr_handle_, &junker);
-  ::pthread_detach (&junker);
-#   else
-  ::pthread_detach (&td->thr_handle_);
-#   endif  /* HPUX_10 */
-# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
-
   if (result != 0)
     {
       // Since the thread are being joined, we should
