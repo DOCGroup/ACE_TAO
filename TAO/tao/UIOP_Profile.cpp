@@ -597,11 +597,9 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &env)
                                       this->object_key ());
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
-                  1 /* major # */ + 1 /* minor # */ +
+                  2 /* major # */ + 2 /* minor # */ + 1 /* DOT */ +
                   2 /* double-slash separator */ +
                   ACE_OS::strlen (this->rendezvous_point_) +
-                  1 /* colon separator */ +
-                  5 /* port number */ +
                   1 /* slash separator */ +
                   ACE_OS::strlen (key) +
                   1 /* zero terminator */);
@@ -611,7 +609,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &env)
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "%s%c.%c//%s/%s",
+                   "%s%d.%d//%s/%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],

@@ -46,11 +46,12 @@ typedef ACE_Unbounded_Set_Iterator<TAO_Connector*>
 class TAO_Export TAO_Connector_Registry
 {
   // = TITLE
+  //   Per ORB TAO Connector Registry
+  //
+  // = DESCRIPTION
   //   Connector Registry and Generic Connector interface definitions.
   //   All loaded ESIOP or GIOP connector bridges must register with
   //   this object.
-  //
-  // = DESCRIPTION
   //   @@ Fred: this class should be able to dynamically load a set of
   //            connectors using the service configurator.
 public:

@@ -13,6 +13,9 @@
 
 #include "ace/Auto_Ptr.h"
 
+typedef ACE_Unbounded_Set_Iterator<TAO_Acceptor*>
+        TAO_AcceptorSetItor;
+
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
 {
 }

@@ -1408,6 +1408,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // This only works for IIOP objrefs.  If we're handed an objref
       // that's not an IIOP objref, fail -- application must use an
       // ORB that's configured differently.  @@ Is this true? FRED
+      // @@ Need to fix!!
 
       if (obj->_stubobj () == 0)
         return CORBA::string_copy ((CORBA::String) TAO_IIOP_Profile::prefix ());
