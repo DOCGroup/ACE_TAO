@@ -114,36 +114,20 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	  // Register for Notification and Shutdown events
 	  
 	  
-	  RtecEventComm.Event disjunction_designator = 
-	    new RtecEventComm.Event (ACE_ES_DISJUNCTION_DESIGNATOR,  0, 
-				     1,        // ttl
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new RtecEventComm.EventData (0, 0, orb_.create_any())
-				      );
+
 	  RtecEventComm.Event notification_event = 
 	    new RtecEventComm.Event (ACE_ES_EVENT_NOTIFICATION,  0, 
 				     1,        // ttl
 				     new TimeBase.ulonglong (0,0),
 				     new TimeBase.ulonglong (0,0),
 				     new TimeBase.ulonglong (0,0),
-				     new RtecEventComm.EventData (0, 0, orb_.create_any())
+				     new RtecEventComm.EventData (orb_.create_any())
 				      );
-	  RtecEventComm.Event shutdown_event = 
-	    new RtecEventComm.Event (ACE_ES_EVENT_SHUTDOWN,  0, 
-				     1,        // ttl
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new RtecEventComm.EventData (0, 0, orb_.create_any())
-				      );
+
 	  
 	  
-	  RtecEventChannelAdmin.Dependency dependencies[] = new RtecEventChannelAdmin.Dependency[3];  
-	  dependencies[0] = new RtecEventChannelAdmin.Dependency (disjunction_designator, rt_info_);
-	  dependencies[1] = new RtecEventChannelAdmin.Dependency (notification_event, rt_info_);
-	  dependencies[2] = new RtecEventChannelAdmin.Dependency (shutdown_event, rt_info_); 
+	  RtecEventChannelAdmin.Dependency dependencies[] = new RtecEventChannelAdmin.Dependency[1];  
+	  dependencies[0] = new RtecEventChannelAdmin.Dependency (notification_event, rt_info_);
 	  	 	  
 	  RtecEventChannelAdmin.ConsumerQOS qos = new RtecEventChannelAdmin.ConsumerQOS (dependencies); 
 	  
