@@ -161,8 +161,8 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
       // Merge it with the passed set.
       offset = offers->length ();
       offers->length (out_offers->length () + offset);
-      for (CORBA::ULong j = out_offers->length () - 1; j >= 0; j--)
-        offers[j + offset] = out_offers[j];
+      for (CORBA::ULong j = out_offers->length (); j > 0; j--)
+        offers[j + offset - 1] = out_offers[j - 1];
 
       offers_left -= out_offers->length ();
     }
@@ -279,29 +279,29 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
     {
       // Allocate space for the returned OfferIds.
       CosTrading::OfferId* id_buf =
-	CosTrading::OfferIdSeq::allocbuf (returnable_items);
+        CosTrading::OfferIdSeq::allocbuf (returnable_items);
 
       if (id_buf != 0)
-	{
-	  // Copy in those ids!
-	  for (int i = 0; i < returnable_items; i++)
-	    {
-	      CosTrading::OfferId offer_id = 0;
+        {
+          // Copy in those ids!
+          for (int i = 0; i < returnable_items; i++)
+            {
+              CosTrading::OfferId offer_id = 0;
 
-	      this->ids_.dequeue_head (offer_id);
-	      id_buf[i] = offer_id;
-	    }
+              this->ids_.dequeue_head (offer_id);
+              id_buf[i] = offer_id;
+            }
 
-	  // Place them into an OfferIdSeq.
-	  ACE_NEW_RETURN (_ids,
-			  CosTrading::OfferIdSeq (returnable_items,
-						  returnable_items,
-						  id_buf,
-						  1),
-			  return_value);
-	}
+          // Place them into an OfferIdSeq.
+          ACE_NEW_RETURN (_ids,
+                          CosTrading::OfferIdSeq (returnable_items,
+                                                  returnable_items,
+                                                  id_buf,
+                                                  1),
+                          return_value);
+        }
       else
-	ACE_NEW_RETURN (_ids,
+        ACE_NEW_RETURN (_ids,
                         CosTrading::OfferIdSeq,
                         return_value);
     }
