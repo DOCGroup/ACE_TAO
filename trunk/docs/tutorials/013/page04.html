@@ -37,78 +37,95 @@ since the actual data is not copied.
 <P>
 <HR WIDTH="100%">
 <PRE>
-/*
-  In this Tutorial, we derive from ACE_Data_Block for our special
-  data.  With the possiblilty that our Task object may forward the
-  unit of work on to another thread pool, we have to make sure that
-  the data object doesn't go out of scope unexpectedly.  An
-  ACE_Message_Block will be deleted as soon as it's release() method
-  is called but the ACE_Data_Blocks it uses are reference counted and
-  only delete when the last reference release()es the block.  We use
-  that trait to simply our object memory management.
- */
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>BLOCK_H</font>
+<font color=blue>#define</font> <font color=purple>BLOCK_H</font>
+
+<font color=blue>#include</font> "<font color=green>ace/Message_Block.h</font>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=blue>#include</font> "<font color=green>ace/Synch.h</font>"
+<font color=blue>#include</font> "<font color=green>mld.h</font>"
+<font color=blue>#include</font> "<font color=green>work.h</font>"
+
+<font color=red>/*
+   In this Tutorial, we derive from ACE_Data_Block for our special data.  With
+   the possiblilty that our Task object may forward the unit of work on to
+   another thread pool, we have to make sure that the data object doesn't go
+   out of scope unexpectedly.  An ACE_Message_Block will be deleted as soon as
+   it's release() method is called but the ACE_Data_Blocks it uses are
+   reference counted and only delete when the last reference release()es the
+   block.  We use that trait to simply our object memory management.
+ */</font>
 class Data_Block : public ACE_Data_Block
 {
 public:
-    typedef ACE_Data_Block inherited;
+  typedef ACE_Data_Block inherited;
 
-        // Create a data block with a unit of work to be done
-    Data_Block( Unit_Of_Work * _data );
-    
-    ~Data_Block(void);
+  <font color=red>// Create a data block with a unit of work to be done</font>
+    Data_Block (Unit_Of_Work * _data);
 
-        // Returns the work pointer
-    Unit_Of_Work * data(void);
-    
+   ~Data_Block (void);
+
+  <font color=red>// Returns the work pointer</font>
+  Unit_Of_Work *data (void);
+
 protected:
     Unit_Of_Work * data_;
-    MLD;    // Our memory leak detector
+    MLD;                        <font color=red>// Our memory leak detector</font>
 
-        // The ACE_Data_Block allows us to choose a locking strategy
-        // for making the reference counting thread-safe.  The
-        // ACE_Lock_Adaptor&lt;&gt; template adapts the interface of a
-        // number of lock objects so that the ACE_Message_Block will
-        // have an interface it can use.
-    class Lock : public ACE_Lock_Adapter&lt;ACE_Mutex&gt;
-    {
-    public:
-        typedef ACE_Lock_Adapter&lt;ACE_Mutex&gt; inherited;
+  <font color=red>// The ACE_Data_Block allows us to choose a locking strategy</font>
+  <font color=red>// for making the reference counting thread-safe.  The</font>
+  <font color=red>// ACE_Lock_Adaptor&lt;> template adapts the interface of a</font>
+  <font color=red>// number of lock objects so thatthe ACE_Message_Block will</font>
+  <font color=red>// have an interface it can use.</font>
+  class Lock : public ACE_Lock_Adapter &lt; ACE_Mutex >
+  {
+public:
+    typedef ACE_Lock_Adapter &lt; ACE_Mutex > inherited;
 
-        Lock(void);
-        ~Lock(void);
+      Lock (void);
+     ~Lock (void);
 
-            // When the Data_Block is destroyed, the Message_Block is
-            // holding a lock with this object.  If we were to destroy 
-            // the Lock with the Data_Block, we would have a
-            // segfault.  Instead, the Data_Block invokes destroy() to 
-            // mark the object as un-needed so that when the
-            // Message_Block invokes release() to drop the lock, the
-            // Lock can delete itself.
-        int destroy(void);
-        int release(void);
-    protected:
-        int destroy_;
-        MLD;
-    };
+    <font color=red>// When the Data_Block is destroyed, the Message_Block is</font>
+    <font color=red>// holding a lock with this object.  If we were to destroy</font>
+    <font color=red>// the Lock with the Data_Block, we would have a</font>
+    <font color=red>// segfault.  Instead, the Data_Block invokes destroy() to</font>
+    <font color=red>// mark the object as un-needed so that when the</font>
+    <font color=red>// Message_Block invokes release() to drop the lock, the</font>
+    <font color=red>// Lock can delete itself.</font>
+    int destroy (void);
+    int release (void);
+protected:
+    int destroy_;
+      MLD;
+  };
 };
 
-/*
-  This simple derivative of ACE_Message_Block will construct our
-  Data_Block object to contain a unit of work.
- */
+<font color=red>/*
+   This simple derivative of ACE_Message_Block will construct our Data_Block
+   object to contain a unit of work.
+ */</font>
 class Message_Block : public ACE_Message_Block
 {
 public:
-    typedef ACE_Message_Block inherited;
-    
-    Message_Block( void );
-    Message_Block( Unit_Of_Work * _data );
-    
-    ~Message_Block( void );
+  typedef ACE_Message_Block inherited;
+
+    Message_Block (void);
+    Message_Block (Unit_Of_Work * _data);
+
+   ~Message_Block (void);
 
 protected:
     MLD;
 };
+
+<font color=blue>#endif</font>
 </PRE>
 <HR WIDTH="100%">
 <P>
@@ -123,9 +140,5 @@ destroyed at the proper time to prevent both memory leaks and core
 dumps.  The finaly product may be a little bit intimidating at first
 but it's really quite simple once you understand the motivation.
 <P>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page05.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>
