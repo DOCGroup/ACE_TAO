@@ -50,7 +50,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #       Local targets
 #----------------------------------------------------------------------------
 
-LDFLAGS += -I$(TAO_ROOT)/tao
+LDFLAGS += -L$(TAO_ROOT)/tao
 
 realclean: clean
 
