@@ -7,7 +7,7 @@
 //    ACE
 //
 // = FILENAME
-//    Scheduling_Params.h
+//    Sched_Params.h
 //
 // = CREATION DATE
 //    28 January 1997
@@ -17,61 +17,130 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SCHEDULING_PARAMS_H)
-#define ACE_SCHEDULING_PARAMS_H
+#if !defined (ACE_SCHED_PARAMS_H)
+#define ACE_SCHED_PARAMS_H
 
-#include "ace/Thread_Priority.h"
-// for ACE_Time_Value and ACE_SCOPE_PROCESS
 #include "ace/OS.h"
 
-class ACE_Export ACE_Scheduling_Params
+class ACE_Export ACE_Sched_Params
   // = TITLE
-  //    Container for thread scheduling-related parameters.
+  //    Container for scheduling-related parameters.
   //
   // = DESCRIPTION
-  //    ACE_Scheduling_Params are passed via
-  //    ACE_OS::set_sched_params () to the OS to specify scheduling
-  //    parameters.  It is intended that ACE_OS::set_sched_params ()
-  //    be called from main () before any threads have been spawned.
+  //    ACE_Sched_Params are passed via
+  //    ACE_OS::sched_params () to the OS to specify scheduling
+  //    parameters.  These parameters include scheduling policy,
+  //    such as FIFO, round-robin, or an implementation-defined
+  //    "OTHER" (to which many systems default); priority; and
+  //    a time-slice quantum for round-robin scheduling.
+  //    A "scope" parameter specifies whether the ACE_Sched_Params
+  //    applies to the current process, current lightweight process
+  //    (LWP) (on Solaris), or current thread.  Please see the "NOTE"
+  //    below about not all combinations of parameters being legal
+  //    on a particular platform.
+  //
+  //    For the case of thread priorities, it is intended that
+  //    ACE_OS::sched_params () usually be called from main () before
+  //    any threads have been spawned.
   //    If spawned threads inherit their parent's priority (I think
-  //    that's the case for all of our platforms), then this sets
-  //    the default base priority.  Individual thread priorities can
-  //    be adjusted as usual using ACE_OS::thr_prio () or via the
+  //    that's the default behavior for all of our platforms), then
+  //    this sets the default base priority.  Individual thread priorities
+  //    can be adjusted as usual using ACE_OS::thr_prio () or via the
   //    ACE_Thread interface.  See the parameter descriptions in the
   //    private: section below.
+  //
+  //    NOTE:  this class does not do any checking of parameters.
+  //    It is just a container class.  If it is constructed with values
+  //    that are not supported on a platform, the call to
+  //    ACE_OS::sched_params () will fail by returning -1 with EINVAL
+  //    (available through ACE_OS::last_error ()).
+
+  //    OS Scheduling parameters are complicated and often confusing.  Many
+  //    thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for his
+  //    careful review of this class design, thoughtful comments, and
+  //    assistance with implementation, especially for PTHREADS platforms.
+  //    Please send any comments or corrections to the ACE developers.
 {
 public:
+  typedef int Policy;
+
   // = Initialization and termination methods.
-  ACE_Scheduling_Params (const ACE_Thread_Priority &priority = ACE_Thread_Priority (),
-                         const int scope = ACE_SCOPE_PROCESS,
-                         const ACE_Time_Value &quantum = ACE_Time_Value::zero);
+  ACE_Sched_Params (const Policy policy,
+                    const ACE_Sched_Priority priority,
+                    const int scope = ACE_SCOPE_THREAD,
+                    const ACE_Time_Value &quantum = ACE_Time_Value::zero);
   // Constructor.
 
-  ~ACE_Scheduling_Params (void);
+  ~ACE_Sched_Params (void);
   // Termination.
 
   // = Get/Set methods:
 
+  // = Get/Set policy
+  Policy policy (void) const;
+  void policy (const Policy);
+
   // = Get/Set priority.
-  const ACE_Thread_Priority &priority (void) const;
-  void set_priority (const ACE_Thread_Priority &);
+  ACE_Sched_Priority priority (void) const;
+  void priority (const ACE_Sched_Priority);
 
   // = Get/Set scope.
   int scope (void) const;
-  void set_scope(const int);
+  void scope(const int);
 
   // = Get/Set quantum.
   const ACE_Time_Value &quantum (void) const;
-  void set_quantum (const ACE_Time_Value &);
+  void quantum (const ACE_Time_Value &);
+
+  // = Accessors for OS-specific priorities.
+  // These return priority values for ACE_SCHED_OTHER if the Policy value 
+  // is invalid.
+  static int priority_min (const Policy,
+                           const int scope = ACE_SCOPE_THREAD);
+  static int priority_max (const Policy,
+                           const int scope = ACE_SCOPE_THREAD);
+
+  static int next_priority (const Policy,
+                            const int priority,
+                            const int scope = ACE_SCOPE_THREAD);
+  // The next higher priority.  "Higher" refers to scheduling priority,
+  // not to the priority value itself.  (On some platforms, higher scheduling
+  // priority is indicated by a lower priority value.)  If "priority" is
+  // already the highest priority (for the specified policy), then it is
+  // returned.
+
+  static int previous_priority (const Policy,
+                                const int priority,
+                                const int scope = ACE_SCOPE_THREAD);
+  // The previous, lower priority.  "Lower" refers to scheduling priority,
+  // not to the priority value itself.  (On some platforms, lower scheduling
+  // priority is indicated by a higher priority value.)  If "priority" is
+  // already the lowest priority (for the specified policy), then it is
+  // returned.
 
 private:
-  ACE_Thread_Priority priority_;
-  // Default <priority_>: sets the priority to be used for newly
-  // spawned threads.
+  Policy policy_;
+  // Scheduling policy.
+
+  ACE_Sched_Priority priority_;
+  // Default <priority_>: for setting the priority for the process, LWP,
+  // or thread, as indicated by the scope_ parameter.
 
   int scope_;
-  // <scope_> must be either ACE_SCOPE_PROCESS or ACE_SCOPE_LWP (which
-  // is only used on Solaris, and ignored on Win32 and VxWorks)
+  // <scope_> must be one of the following:
+  //   ACE_SCOPE_PROCESS:  sets the scheduling policy for the
+  //     process, and the process priority.  On some platforms,
+  //     such as Win32, the scheduling policy can _only_ be
+  //     set at process scope.
+  //   ACE_SCOPE_LWP: lightweight process scope, only used with
+  //     Solaris threads.
+  //   ACE_SCOPE_THREAD: sets the scheduling policy for the thread,
+  //     if the OS supports it, such as with Posix threads, and the
+  //     thread priority.
+  // NOTE:  I don't think that these are the same as POSIX
+  //        contention scope.  POSIX users who are interested in,
+  //        and understand, contention scope will have to set it
+  //        by using system calls outside of ACE.
 
   ACE_Time_Value quantum_;
   // The <quantum_> is for time slicing.  An ACE_Time_Value of 0 has
@@ -83,7 +152,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Scheduling_Params.i"
+#include "ace/Sched_Params.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_SCHEDULING_PARAMS_H */
+#endif /* ACE_SCHED_PARAMS_H */
