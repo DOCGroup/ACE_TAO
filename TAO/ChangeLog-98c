@@ -1,3 +1,8 @@
+Thu Nov 20 10:31:24 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/object.cpp (_is_a): Explicitly specify which conversion
+ 	operator to use when comparing type_id to 0.
+
 Thu Nov 20 00:10:52 1997  Sergio Flores  <sergio@cs.wustl.edu>
 
 	* orbsvcs/tests/Logger/clnt.h : 
