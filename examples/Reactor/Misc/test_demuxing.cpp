@@ -111,13 +111,9 @@ Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 
 // This method handles all the signals that are being caught by this
 // object.  In our simple example, we are simply catching SIGALRM,
-// SIGINT, and SIGQUIT.  Anything else is logged and ignored.
-//
-// There are several advantages to using this approach.  First, the
-// behavior triggered by the signal is handled in the main event loop,
-// rather than in the signal handler.  Second, the ACE_Reactor's
-// signal handling mechanism eliminates the need to use global signal
-// handler functions and data.
+// SIGINT, and SIGQUIT.  Anything else is logged and ignored.  Note
+// that the ACE_Reactor's signal handling mechanism eliminates the
+// need to use global signal handler functions and data.
 
 int
 Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
@@ -134,7 +130,8 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       // Tell the ACE_Reactor to enable the ready bit for
       // this->handle_.  The ACE_Reactor will subsequently call the
       // <Sig_Handler::handle_input> method from within its event
-      // loop.
+      // loop, i.e., the behavior triggered by the signal is handled
+      // in the main event loop, rather than in the signal handler.
       return ACE_Reactor::instance ()->ready_ops
         (this->handle_,
          ACE_Event_Handler::READ_MASK,
