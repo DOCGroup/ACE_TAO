@@ -442,7 +442,14 @@ ACE_EH_Dispatch_Info::reset (void)
   this->handle_ = ACE_INVALID_HANDLE;
   this->event_handler_ = 0;
   this->mask_ = ACE_Event_Handler::NULL_MASK;
+#if defined (ACE_HAS_BROKEN_PTMF)
+  ACE_OS::memset ((void *) &this->callback_,
+                  0,
+                  sizeof this->callback_);
+
+#else
   this->callback_ = 0;
+#endif /* ACE_HAS_BROKEN_PTMF */
 }
 
 int
