@@ -196,10 +196,6 @@ private:
   /// Reference to the POA used to create object group references.
   PortableServer::POA_var poa_;
 
-  /// The GroupCreationId that will be assigned to the next object
-  /// group that is created.
-//  PortableGroup::ObjectGroupId next_group_id_;
-
   /// Reference to the ObjectGroup map.
   TAO_PG_ObjectGroupManager & object_group_manager_;
 
@@ -228,7 +224,7 @@ private:
    * addition to another value that makes it unique to a given Load
    * Balancer.
    */
-  CORBA::ULong next_fcid_;
+//  CORBA::ULong next_fcid_;
 
   const char * domain_id_;
 

@@ -22,20 +22,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//@@ Review all these header files and make sure they are all needed
-//   or if some can be replaced with forward declarations.
 #include <orbsvcs/FT_ReplicationManagerS.h>
-#include <orbsvcs/FT_NotifierC.h>
-#include <tao/IORManipulation/IORC.h>
-#include <orbsvcs/PortableGroupC.h>
 #include <orbsvcs/PortableGroup/PG_PropertyManager.h>
 #include <orbsvcs/PortableGroup/PG_GenericFactory.h>
 #include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
 #include <orbsvcs/PortableGroup/PG_FactoryRegistry.h>
 #include <orbsvcs/PortableGroup/PG_Object_Group_Map.h>
-#include <orbsvcs/FaultTolerance/FT_Service_Activate.h>
 #include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
-#include <orbsvcs/CosNamingC.h>
 
 namespace TAO
 {
@@ -64,75 +57,53 @@ namespace TAO
 
   public:
 
-  /**
-   * Parse command line arguments.
-   * @param argc traditional C argc
-   * @param argv traditional C argv
-   * @return zero for success; nonzero is process return code for failure.
-   */
-  int parse_args (int argc, char * argv[]);
-
-  /**
-   * Initialize this object.
-   * @param orb Our CORBA::ORB -- we keep var to it.
-   * @return zero for success; nonzero is process return code for failure.
-   */
-  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
-
-  /**
-   * Prepare to exit.
-   * @return zero for success; nonzero is process return code for failure.
-   */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
-
-  /**
-   * Idle-time activity.
-   *
-   * @param result is set to process return code if return value is non-zero.
-   * @return zero to continue; nonzero to exit
-   */
-  int idle(int & result);
-
-
-  /**
-   * Identify this fault detector factory.
-   * @return a string to identify this object for logging/console message purposes.
-   */
-  const char * identity () const;
-
-  /**
-   * Get the type_id associated with an object group.
-   * @param object_group The ObjectGroup.
-   * @return String identifying the type id associated with the ObjectGroup.
-   */
-  char * type_id (PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL);
-
-    /////////////////////////
-    // Implementation methods
-  private:
     /**
-    * Write this factory's IOR to a file
-    */
-    int write_ior (void);
+     * Parse command line arguments.
+     * @param argc traditional C argc
+     * @param argv traditional C argv
+     * @return zero for success; nonzero is process return code for failure.
+     */
+    int parse_args (int argc, char * argv[]);
 
     /**
-    * Extract the value of the InitialNumberReplicas property from
-    * the_criteria.
-    */
-    int get_initial_number_replicas (
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      CORBA::UShort & initial_number_replicas) const;
+     * Initialize this object.
+     * @param orb Our CORBA::ORB -- we keep var to it.
+     * @return zero for success; nonzero is process return code for failure.
+     */
+    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
-    /// Registers the Fault Notifier with the Replication Manager.
-    void register_fault_notifier_i (
-        FT::FaultNotifier_ptr fault_notifier
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+    /**
+     * Prepare to exit.
+     * @return zero for success; nonzero is process return code for failure.
+     */
+    int fini (ACE_ENV_SINGLE_ARG_DECL);
+
+    /**
+     * Idle-time activity.
+     *
+     * @param result is set to process return code if return value is non-zero.
+     * @return zero to continue; nonzero to exit
+     */
+    int idle(int & result);
+
+
+    /**
+     * Identify this fault detector factory.
+     * @return a string to identify this object for logging/console message purposes.
+     */
+    const char * identity () const;
+
+    /**
+     * Get the type_id associated with an object group.
+     * @param object_group The ObjectGroup.
+     * @return String identifying the type id associated with the ObjectGroup.
+     */
+    char * type_id (PortableGroup::ObjectGroup_ptr object_group
+        ACE_ENV_ARG_DECL);
+
+
+  //////////////////////
+  // CORBA interface(s)
 
   public:
 
@@ -208,8 +179,10 @@ namespace TAO
                       PortableGroup::InvalidProperty,
                       PortableGroup::UnsupportedProperty));
 
-    /// Set properties associated with a given Replica type.  These
-    /// properties override the default properties.
+    /**
+     * Set properties associated with a given Replica type.  These
+     * properties override the default properties.
+     */
     virtual void set_type_properties (
         const char * type_id,
         const PortableGroup::Properties & overrides
@@ -219,10 +192,10 @@ namespace TAO
                       PortableGroup::UnsupportedProperty));
 
     /**
-    * Return the properties associated with a give Replica type.  These
-    * properties include the type-specific properties in use, in
-    * addition to the default properties that were not overridden.
-    */
+     * Return the properties associated with a given Replica type.  These
+     * properties include the type-specific properties in use, in
+     * addition to the default properties that were not overridden.
+     */
     virtual PortableGroup::Properties * get_type_properties (
         const char * type_id
         ACE_ENV_ARG_DECL)
@@ -238,11 +211,11 @@ namespace TAO
                       PortableGroup::UnsupportedProperty));
 
     /**
-    * Dynamically set the properties associated with a given object
-    * group as the replication manager and replicas are being executed.
-    * These properties override the type-specific and default
-    * properties.
-    */
+     * Dynamically set the properties associated with a given object
+     * group as the replication manager and replicas are being executed.
+     * These properties override the type-specific and default
+     * properties.
+     */
     virtual void set_properties_dynamically (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Properties & overrides
@@ -253,12 +226,12 @@ namespace TAO
                       PortableGroup::UnsupportedProperty));
 
     /**
-    * Return the properties currently in use by the given object
-    * group.  These properties include those that were set dynamically,
-    * type-specific properties that weren't overridden, properties that
-    * were used when the Replica was created, and default properties
-    * that weren't overridden.
-    */
+     * Return the properties currently in use by the given object
+     * group.  These properties include those that were set dynamically,
+     * type-specific properties that weren't overridden, properties that
+     * were used when the Replica was created, and default properties
+     * that weren't overridden.
+     */
     virtual PortableGroup::Properties * get_properties (
         PortableGroup::ObjectGroup_ptr object_group
         ACE_ENV_ARG_DECL)
@@ -268,11 +241,11 @@ namespace TAO
     //@}
 
     /**
-    * @name FT::FTObjectGroupManager methods
-    *
-    * Methods required by the FTup::FTObjectGroupManager
-    * interface.
-    */
+     * @name FT::FTObjectGroupManager methods
+     *
+     * Methods required by the FT::FTObjectGroupManager
+     * interface.
+     */
     //@{
 
     /// Create a member using the ObjectGroupManager, and
@@ -303,12 +276,12 @@ namespace TAO
                       PortableGroup::ObjectNotAdded));
 
     /**
-    * Remove an object at a specific location from the given
-    * ObjectGroup.  Deletion of application created objects must be
-    * deleted by the application.  Objects created by the
-    * infrastructure (replication manager) will be deleted by the
-    * infrastructure.
-    */
+     * Remove an object at a specific location from the given
+     * ObjectGroup.  Deletion of application created objects must be
+     * deleted by the application.  Objects created by the
+     * infrastructure (replication manager) will be deleted by the
+     * infrastructure.
+     */
     virtual PortableGroup::ObjectGroup_ptr remove_member (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location
@@ -357,8 +330,10 @@ namespace TAO
         , PortableGroup::ObjectGroupNotFound
       ));
 
-    /// Return the reference corresponding to the Replica of a given
-    /// ObjectGroup at the given location.
+    /**
+     * Return the reference corresponding to the Replica of a given
+     * ObjectGroup at the given location.
+     */
     virtual CORBA::Object_ptr get_member_ref (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & loc
@@ -368,9 +343,9 @@ namespace TAO
                       PortableGroup::MemberNotFound));
 
     /// Sets the primary member of a group.
-    virtual FT::ObjectGroup_ptr set_primary_member (
-        FT::ObjectGroup_ptr object_group,
-        const FT::Location & the_location
+    virtual PortableGroup::ObjectGroup_ptr set_primary_member (
+        PortableGroup::ObjectGroup_ptr object_group,
+        const PortableGroup::Location & the_location
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -384,18 +359,18 @@ namespace TAO
     //@}
 
     /**
-    * @name PortableGroup::GenericFactory methods
-    *
-    * Methods required by the PortableGroup::GenericFactory interface.
-    */
+     * @name PortableGroup::GenericFactory methods
+     *
+     * Methods required by the PortableGroup::GenericFactory interface.
+     */
     //@{
 
     /**
-    * Create an object of the specified type that adheres to the
-    * restrictions defined by the provided Criteria.  The out
-    * FactoryCreationId parameter may be passed to the delete_object()
-    * method to delete the object.
-    */
+     * Create an object of the specified type that adheres to the
+     * restrictions defined by the provided Criteria.  The out
+     * FactoryCreationId parameter may be passed to the delete_object()
+     * method to delete the object.
+     */
     virtual CORBA::Object_ptr create_object (
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
@@ -410,11 +385,11 @@ namespace TAO
                       PortableGroup::CannotMeetCriteria));
 
     /**
-    * Delete the object corresponding to the provided
-    * FactoryCreationId.  If the object is actually an ObjectGroup,
-    * then all members within the ObjectGroup will be deleted.
-    * Afterward, the ObjectGroup itself will be deleted.
-    */
+     * Delete the object corresponding to the provided
+     * FactoryCreationId.  If the object is actually an ObjectGroup,
+     * then all members within the ObjectGroup will be deleted.
+     * Afterward, the ObjectGroup itself will be deleted.
+     */
     virtual void delete_object (
         const PortableGroup::GenericFactory::FactoryCreationId &
           factory_creation_id
@@ -423,6 +398,23 @@ namespace TAO
                       PortableGroup::ObjectNotFound));
 
     //@}
+
+    /////////////////////////
+    // Implementation methods
+  private:
+    /**
+     * Write this factory's IOR to a file
+     */
+    int write_ior (void);
+
+    /// Registers the Fault Notifier with the Replication Manager.
+    void register_fault_notifier_i (
+        FT::FaultNotifier_ptr fault_notifier
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     ////////////////
     // Forbidden methods
@@ -433,31 +425,16 @@ namespace TAO
     // Data Members
   private:
 
-    /**
-    * Protect internal state.
-    * Mutex should be locked by corba methods, or by
-    * external (public) methods before calling implementation
-    * methods.
-    * Implementation methods should assume the mutex is
-    * locked if necessary.
-    */
-    ACE_SYNCH_MUTEX internals_;
-    typedef ACE_Guard<ACE_SYNCH_MUTEX> InternalGuard;
-
     /// The orb
     CORBA::ORB_var orb_;
 
     /// The POA.
     PortableServer::POA_var poa_;
 
-    // The ORB's IORManipulation object
-    TAO_IOP::TAO_IOR_Manipulation_var iorm_;
-
     /// A file to which the factory's IOR should be written.
     const char * ior_output_file_;
 
     /// A name to be used to register the factory with the name service.
-    //@@ Are *all* of these needed?
     const char * ns_name_;
     CosNaming::NamingContext_var naming_context_;
     CosNaming::Name this_name_;
@@ -470,7 +447,6 @@ namespace TAO
 
     /// The ObjectGroupManager that implements the functionality
     /// necessary for application-controlled object group membership.
-//    TAO::PG_ObjectGroupManager object_group_manager_;
     TAO_PG_ObjectGroupManager object_group_manager_;
 
     /// The PropertyManager that is reponsible for parsing all criteria,
@@ -481,13 +457,22 @@ namespace TAO
     TAO_PG_GenericFactory generic_factory_;
 
 
+    // @@ The PortableGroup::ObjectGroupManager contains information about object groups
+    // in a TAO_PG_ObjectGroup_Map  object.  Unfortunatly this doesn't contain
+    // then information necessary to manage IOGRs.  Originally I planned to extend that
+    // structure to support fault tolerance, but I ran into a large number of side effects
+    // as I changed that structure, so as an interim step I defined a new collection:
+    // TAO::PG_Object_Group_Map.  The similarity in names is intentional.  I still hope
+    // to replace the TAO_PG_ObjectGroup_Map int the ObjectGroupManager a with TAO::PG_Object_Group_Map
+    // but not right now.   Dale Wilson wilson_d@ociweb.com
     /// A container for our object group information
     TAO::PG_Object_Group_Map object_group_map_;
 
 
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
-    const char * fault_notifier_ior_;
+    /// set by command line -f option
+    const char * fault_notifier_ior_string_;
 
     /// The fault consumer.
     TAO::FT_FaultConsumer fault_consumer_;

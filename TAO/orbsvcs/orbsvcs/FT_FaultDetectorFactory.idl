@@ -94,20 +94,20 @@ module FT
    * The create_object requires the following criteria:
    *  FT::Notifier Notifier
    *  FT::PullMonitorable Monitorable
-   *  FT::DomainId domain_id,
-   *  FT::ObjectGroupId group_id,
-   *  FT::Location object_location,
-   *  FT::_TypeId object_type
+   *  PortableGroup::DomainId domain_id,
+   *  PortableGroup::ObjectGroupId group_id,
+   *  PortableGroup::Location object_location,
+   *  PortableGroup::_TypeId object_type
    */
-  interface FaultDetectorFactory : GenericFactory, PullMonitorable
+  interface FaultDetectorFactory : ::PortableGroup::GenericFactory, PullMonitorable
   {
     /**
      * Adjust properties on-the-fly.
      * Applies to all FaultDetectors created by this factory.
      * @param property_set is a set of properties that (may) have new values.
      */
-    void change_properties(in Properties property_set)
-      raises (PortableGroup::InvalidProperty);
+    void change_properties(in ::PortableGroup::Properties property_set)
+      raises (::PortableGroup::InvalidProperty);
 
     /**
      * Ask the Fault Detector Factory to come to an orderly end.

@@ -71,9 +71,9 @@ namespace TAO
       FT::FaultNotifier_ptr & notifier,
       FT::PullMonitorable_ptr & monitorable,
       FT::FTDomainId domain_id,
-      const FT::Location & object_location,
-      FT::TypeId object_type,
-      FT::ObjectGroupId group_id
+      const PortableGroup::Location & object_location,
+      PortableGroup::TypeId object_type,
+      PortableGroup::ObjectGroupId group_id
       );
     /**
      * destructor.
@@ -162,9 +162,9 @@ namespace TAO
      * Data for the notification message.
      */
     FT::FTDomainId domain_id_;
-    FT::Location object_location_;
-    FT::TypeId object_type_;
-    FT::ObjectGroupId group_id_;
+    PortableGroup::Location object_location_;
+    PortableGroup::TypeId object_type_;
+    PortableGroup::ObjectGroupId group_id_;
 
     /**
      * An Event (in the Win32 sense) to implement interruptable sleep.

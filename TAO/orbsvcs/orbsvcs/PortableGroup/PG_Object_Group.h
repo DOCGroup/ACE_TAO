@@ -38,7 +38,7 @@ namespace TAO
 #include <ace/Hash_Map_Manager_T.h>
 #include "PG_Location_Hash.h"
 #include "PG_Location_Equal_To.h"
-
+#include <tao/IORManipulation/IORC.h>
 
 /////////////////////
 // Forward references
@@ -102,14 +102,29 @@ namespace TAO
       TAO_PG_Location_Equal_To,
       MemberMapMutex> MemberMap_Iterator;
 
-  public:
-    /// Constructor
-    PG_Object_Group (
+    /**
+     * Private constructor -- use static create method.
+     */
+  private:
+    TAO::PG_Object_Group::PG_Object_Group (
       CORBA::ORB_ptr orb,
-      PortableGroup::ObjectGroupId oid,
+      TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
+      CORBA::Object_ptr empty_group,
+      const PortableGroup::TagGroupTaggedComponent & tag_component,
       const char * type_id,
       PortableGroup::Criteria the_criteria);
 
+  public:
+    /**
+     * Static creation method needed because exceptions can happen.
+     */
+    static PG_Object_Group * create (
+      CORBA::ORB_ptr orb,
+      CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
+      const char * type_id,
+      PortableGroup::Criteria the_criteria
+      ACE_ENV_ARG_DECL);
+    
     /// Destructor
     ~PG_Object_Group ();
 
@@ -123,16 +138,6 @@ namespace TAO
     /// Set type ID
 
     void set_typeid (PortableGroup::TypeId type_id);
-
-    /// Set a reference to the group (IOGR)
-    /// @param reference the new IOGR for this group.
-    /// @param version of this IOGR
-    /// @param distribute bool if true, distribute IOGR to all members
-    void set_reference (
-      PortableGroup::ObjectGroup_ptr reference,
-      PortableGroup::ObjectGroupRefVersion version,
-      int distribute
-      ACE_ENV_ARG_DECL);
 
     /// return a duplicated reference to this group (IOGR)
     PortableGroup::ObjectGroup_ptr reference()const;
@@ -155,18 +160,6 @@ namespace TAO
     void group_specific_factories (PortableGroup::FactoryInfos & result) const;
 
     /**
-     * Set the member at "location" to be primary.
-     *
-     * Note: primary location is a concept from FT CORBA.
-     * It doesn't hurt other PortableGroup-based services to
-     * have these two methods and the underlying members.
-     */
-    void set_primary_location (
-        const PortableGroup::Location & location
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((PortableGroup::MemberNotFound));
-
-    /**
      * get location of primary member
      */
     const PortableGroup::Location & primary_location() const;
@@ -177,63 +170,6 @@ namespace TAO
      */
     PortableGroup::TypeId get_type_id ()const;
 
-    void get_properties (PortableGroup::Properties_var & result) const;
-
-    /////////////////////////////////////////////
-    // Applicable ObjectGroupManager(OGM) methods
-    // The following methods in OGM all have an object group as the
-    // first parameter.  The OGM should implement these methods by finding
-    // the corresponding TAO_PG_Object_Group and delegating to these methods.
-#ifdef NOT_IMPLEMENTED
-    void create_member (
-        const PortableGroup::Location & the_location,
-        const char * type_id,
-        const PortableGroup::Criteria & the_criteria
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableGroup::MemberAlreadyPresent,
-        PortableGroup::ObjectNotCreated,
-        PortableGroup::InvalidCriteria,
-        PortableGroup::CannotMeetCriteria));
-#endif
-
-    void add_member (
-        const PortableGroup::Location & the_location,
-        CORBA::Object_ptr member
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableGroup::MemberAlreadyPresent,
-        PortableGroup::ObjectNotAdded));
-
-#ifdef NOT_IMPLEMENTED
-    void remove_member (
-        const PortableGroup::Location & the_location
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableGroup::MemberNotFound));
-#endif
-
-#ifdef NOT_IMPLEMENTED
-    void locations_of_members (
-        PortableGroup::Locations & locations
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-#endif
-
-    PortableGroup::ObjectGroupId  get_object_group_id () const;
-
-#ifdef NOT_IMPLEMENTED
-    CORBA::Object_ptr get_member_ref (
-        const PortableGroup::Location & loc
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableGroup::MemberNotFound));
-#endif
-
     void set_properties_dynamically (
         const PortableGroup::Properties & overrides
         ACE_ENV_ARG_DECL)
@@ -241,9 +177,47 @@ namespace TAO
                        PortableGroup::InvalidProperty,
                        PortableGroup::UnsupportedProperty));
 
+    void get_properties (PortableGroup::Properties_var & result) const;
+
+    PortableGroup::ObjectGroupId  get_object_group_id () const;
+
+    /**
+     * Add a new member to the group.
+     * @param reference  a group that the ObjectManager has already operated upon.
+     * @param the_location the location for the new member
+     * @param member_ior_string the IOR for the new memeber (expressed as a string.)
+     */
+    void add_member ( 
+        const PortableGroup::Location & the_location, 
+        CORBA::Object_ptr member
+        ACE_ENV_ARG_PARAMETER)
+      ACE_THROW_SPEC ( (CORBA::SystemException,
+                       PortableGroup::ObjectNotAdded));
+      
+      
+    int set_primary_member (
+      TAO_IOP::TAO_IOR_Property * prop,
+      const PortableGroup::Location & the_location
+      ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableGroup::MemberNotFound
+      ));
+
+    void remove_member (
+        const PortableGroup::Location & the_location
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ( (CORBA::SystemException,
+                       PortableGroup::MemberNotFound));
+
+
     /////////////////////////
     // Implementation methods
   private:
+
+    int increment_version ();
+    void distribute_iogr (ACE_ENV_ARG_DECL);
+
 
     /////////////////////////
     // Forbidden methods
@@ -281,22 +255,34 @@ namespace TAO
      * Implementation methods should assume the mutex is
      * locked if necessary.
      */
-    ACE_SYNCH_MUTEX internals_;
-    typedef ACE_Guard<ACE_SYNCH_MUTEX> InternalGuard;
+    TAO_SYNCH_MUTEX internals_;
+    typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
 
     CORBA::ORB_var orb_;
 
+    // The ORB's IORManipulation object
+    TAO_IOP::TAO_IOR_Manipulation_var iorm_;
+
+    /// boolean true if empty group
+    int empty_;
+
     ACE_CString role_;
     PortableGroup::TypeId type_id_;
-    PortableGroup::ObjectGroupId group_id_;
+
+    /**
+     * the GroupTaggedComponent that defines this group
+     * contains:
+     *   GIOP::Version component_version;
+     *   TAO_String_Manager group_domain_id;
+     *   PortableGroup::ObjectGroupId object_group_id;
+     *   PortableGroup::ObjectGroupRefVersion object_group_ref_version;
+     */
+    PortableGroup::TagGroupTaggedComponent tagged_component_;
+
     /**
      * the reference (IOGR) to this group
      */
     PortableGroup::ObjectGroup_var reference_;
-
-    CORBA::String_var IOGR_;
-    PortableGroup::ObjectGroupRefVersion version_;
-
 
 
     /**
@@ -309,16 +295,17 @@ namespace TAO
 
     PortableGroup::Location primary_location_;
 
+    // Miscellaneous properties passed to create_object when this group
+    // was initially created.  To be used to create new members.
+    PortableGroup::Properties properties_;
+
+
     // Cached property information
 
     PortableGroup::MembershipStyleValue membership_style_;
     PortableGroup::InitialNumberMembersValue initial_number_members_;
     PortableGroup::MinimumNumberMembersValue minimum_number_members_;
     PortableGroup::FactoryInfos group_specific_factories_;
-
-    // Miscellaneous properties passed to create_object when this group
-    // was initially created.  To be used to create new members.
-    PortableGroup::Properties properties_;
 
   };
 } // namespace TAO

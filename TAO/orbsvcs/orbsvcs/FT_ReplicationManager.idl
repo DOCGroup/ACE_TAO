@@ -27,9 +27,9 @@ module FT
   exception InterfaceNotFound {};
 
   // Specification of ReplicationManager Interface
-  interface ReplicationManager : PropertyManager,
+  interface ReplicationManager : ::PortableGroup::PropertyManager,
                                  FTObjectGroupManager,
-                                 GenericFactory
+                                 ::PortableGroup::GenericFactory
   {
 
     /**

@@ -50,9 +50,13 @@ int TAO::PG_Object_Group_Map::find_group (PortableGroup::ObjectGroupId group_id,
 
 int TAO::PG_Object_Group_Map::find_group (PortableGroup::ObjectGroup_ptr object_group, ::TAO::PG_Object_Group *& group) const
 {
+  int result = 0;
   PortableGroup::TagGroupTaggedComponent tc;
-  TAO::PG_Utils::get_tagged_component (object_group, tc);
-  return find_group (tc.object_group_id, group);
+  if (TAO::PG_Utils::get_tagged_component (object_group, tc))
+  {
+    result = find_group (tc.object_group_id, group);
+  }
+  return result;
 }
 
 int TAO::PG_Object_Group_Map::destroy_group (PortableGroup::ObjectGroupId group_id)

@@ -39,12 +39,11 @@ namespace TAO
 
     /////////////////
     // pre-init methods
-    int set_factory_registry ( const char * factory_ior);
     int set_factory_registry (PortableGroup::FactoryRegistry_ptr factory);
 
     /////////////////
     // initialization
-    int init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
     /////////////////
     // functionality
