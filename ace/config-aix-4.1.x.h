@@ -1,8 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to work for HP
-// platforms running AIX 4.1.x.
+// The following configuration file is designed to work for OS
+// platforms running AIX 4.1.x using the IBM C++ compiler.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H

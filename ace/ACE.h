@@ -53,12 +53,32 @@ public:
   // Receive up to <len> bytes into <buf> from <handle> (uses the
   // <read> system call on UNIX and the <recv> call on Win32).
 
+  static ssize_t recv (ACE_HANDLE handle, 
+		       void *buf, 
+		       size_t len, 
+		       int flags,
+		       const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to receive up to <len> bytes
+  // into <buf> from <handle> (uses the <recv> call).  If <recv> times
+  // out a -1 is returned with <errno == ETIME>.  If it succeeds the
+  // number of bytes received is returned.
+
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
 		       size_t len, 
 		       int flags);
   // Send up to <len> bytes into <buf> from <handle> (uses the <send>
   // call).
+
+  static ssize_t send (ACE_HANDLE handle, 
+		       const void *buf, 
+		       size_t len, 
+		       int flags,
+		       const ACE_Time_Value *timeout);
+  // Wait to to <timeout> amount of time to send up to <len> bytes
+  // into <buf> from <handle> (uses the <send> call).  If <send> times
+  // out a -1 is returned with <errno == ETIME>.  If it succeeds the
+  // number of bytes sent is returned.
 
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
@@ -84,14 +104,14 @@ public:
 			 const void *buf, 
 			 size_t len, 
 			 int flags);
-  // Receive <len> bytes into <buf> from <handle> (uses the <send>
-  // system call).
+  // Send <len> bytes from <buf> to <handle> (uses the <send> system
+  // call).
 
   static ssize_t send_n (ACE_HANDLE handle, 
 			 const void *buf, 
 			 size_t len);
-  // Receive <len> bytes into <buf> from <handle> (uses the <write>
-  // system call on UNIX and the <recv> call on Win32).
+  // Send <len> bytes from <buf> to <handle> (uses the <write> system
+  // call on UNIX and the <recv> call on Win32).
 
   // = File system I/O functions that encapsulate differences between
   // UNIX and Win32 and also send and recv exactly n bytes.
@@ -104,8 +124,8 @@ public:
   static ssize_t write_n (ACE_HANDLE handle, 
 			  const void *buf, 
 			  size_t len);
-  // Receive <len> bytes into <buf> from <handle> (uses the <write>
-  // system call on UNIX and the <WriteFile> call on Win32).
+  // Send <len> bytes from <buf> to <handle> (uses the <write> system
+  // call on UNIX and the <WriteFile> call on Win32).
 
   // = Functions that perform useful behavior related to establishing
   // socket connections active and passively.
@@ -134,6 +154,7 @@ public:
   // This method doesn't perform the <connect>, it just does the timed
   // wait...
 
+  // = Set/get/clear various flags related to I/O HANDLE.
   static int set_flags (ACE_HANDLE handle, 
 			int flags);
   // Set flags associated with <handle>.
@@ -141,6 +162,9 @@ public:
   static int clr_flags (ACE_HANDLE handle, 
 			int flags);
   // Clear flags associated with <handle>.
+
+  static int get_flags (ACE_HANDLE handle);
+  // Return the current setting of flags associated with <handle>.
 
   static int set_handle_limit (int new_limit = -1);
   // Reset the limit on the number of open handles.  If <new_limit> ==

@@ -18,6 +18,9 @@ ACE::register_stdin_handler (ACE_Event_Handler *eh,
 #if defined (ACE_WIN32)
   return thr_mgr->spawn (&ACE::read_adapter, eh, flags);
 #else  
+  // Keep compilers happy.
+  flags = flags;
+  thr_mgr = thr_mgr;
   return reactor->register_handler (ACE_STDIN, eh, ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
 }
@@ -433,7 +436,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   if (n <= 0)
     {
       if (n == 0)
-	errno = ETIMEDOUT;
+	errno = ETIME;
       return ACE_INVALID_HANDLE;
     }
   // Check if the handle is ready for reading and the handle is *not*
@@ -657,7 +660,7 @@ ACE::set_handle_limit (int new_limit)
 int
 ACE::set_flags (ACE_HANDLE handle, int flags)
 {
-  ACE_TRACE ("ACE::set_fl");
+  ACE_TRACE ("ACE::set_flags");
 #if defined (ACE_WIN32)
   switch (flags)
     {
@@ -673,12 +676,13 @@ ACE::set_flags (ACE_HANDLE handle, int flags)
       return -1;
     }
 #else
-  int val;
+  int val = ACE_OS::fcntl (handle, F_GETFL, 0);
 
-  if ((val = ACE_OS::fcntl (handle, F_GETFL, 0)) == -1)
+  if (val == -1)
     return -1;
 
-  val |= flags; /* turn on flags */
+  // Turn on flags.
+  ACE_SET_BITS (val, flags); 
 
   if (ACE_OS::fcntl (handle, F_SETFL, val) == -1)
     return -1;
@@ -692,7 +696,7 @@ ACE::set_flags (ACE_HANDLE handle, int flags)
 int
 ACE::clr_flags (ACE_HANDLE handle, int flags)
 {
-  ACE_TRACE ("ACE::clr_fl");
+  ACE_TRACE ("ACE::clr_flags");
 
 #if defined (ACE_WIN32)
   switch (flags)
@@ -709,12 +713,13 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
       return -1;
     }
 #else
-  int val;
+  int val = ACE_OS::fcntl (handle, F_GETFL, 0);
 
-  if ((val = ACE_OS::fcntl (handle, F_GETFL, 0)) == -1)
+  if (val == -1)
     return -1;
 
-  val &= ~flags; /* turn flags off */
+  // Turn flags off.
+  ACE_CLR_BITS (val, flags); 
 
   if (ACE_OS::fcntl (handle, F_SETFL, val) == -1)
     return -1;
@@ -735,4 +740,121 @@ ACE::map_errno (int error)
     }
 
   return error;
+}
+
+ssize_t
+ACE::send (ACE_HANDLE handle, 
+	   const void *buf, 
+	   size_t n, 
+	   int flags, 
+	   const ACE_Time_Value *tv)
+{
+  if (tv == 0)
+    return ACE::send (handle, buf, n, flags);
+  else
+    {
+      // We need to record whether we are already *in* nonblocking mode,
+      // so that we can correctly reset the state when we're done.
+
+      int val = ACE::get_flags (handle);
+
+      if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+	// Set the descriptor into non-blocking mode if it's not already
+	// in it.
+	ACE::set_flags (handle, ACE_NONBLOCK);
+
+      ACE_Time_Value timeout (*tv);
+      ACE_Time_Value start_time = ACE_OS::gettimeofday();
+
+      ssize_t bytes_written;
+
+      // Use the non-timeout version to do the actual send.
+      bytes_written = ACE::send (handle, buf, n, flags);
+
+      if (bytes_written == -1 && errno == EWOULDBLOCK) 
+	{
+	  // We couldn't send due to flow control.
+
+	  // Compute time that has elapsed thus far.
+	  ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - start_time;
+
+	  if (elapsed_time > timeout) 
+	    // We've timed out, so break;
+	    errno = ETIME;
+	  else
+	    {
+	      // Update the timeout.
+	      timeout -= elapsed_time;
+      
+	      ACE_Handle_Set handle_set;
+
+	      handle_set.set_bit (handle);
+
+	      switch (ACE_OS::select (int (handle) + 1,
+				      0, // read_fds.
+				      handle_set, // write_fds.
+				      0, // exception_fds.
+				      timeout))
+		{
+		case 0:
+		  errno = ETIME;
+		  /* FALLTHRU */
+		default:
+		  /* FALLTHRU */
+		case -1:
+		  break;
+		case 1:
+		  // We should be able to send something now.
+		  bytes_written = ACE::send (handle, buf, n, flags);
+		  break;
+		}
+	    }
+	}
+
+      if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
+	{
+	  // We need to stash errno here because ACE::clr_flags() may
+	  // reset it.
+	  int error = errno;
+
+	  // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
+	  // originally.
+	  ACE::clr_flags (handle, ACE_NONBLOCK);
+	  errno = error;
+	}
+
+      return bytes_written;
+    }				 
+}
+
+int
+ACE::recv (ACE_HANDLE handle, 
+	   void *buf, 
+	   size_t n, 
+	   int flags, 
+	   const ACE_Time_Value *tv)
+{
+  if (tv == 0)
+    return ACE::recv (handle, buf, n, flags);
+  else
+    {
+      ACE_Handle_Set handle_set;
+
+      handle_set.set_bit (handle);
+
+      switch (ACE_OS::select (int (handle) + 1,
+			      (fd_set *) handle_set, // read_fds.
+			      (fd_set *) 0, // write_fds.
+			      (fd_set *) 0, // exception_fds.
+			      tv))
+	{
+	case -1:
+	  return -1;
+	case 0:
+	  errno = ETIME;
+	  return -1;
+	default:
+	  return ACE::recv (handle, buf, n, flags);
+	}
+    }
 }

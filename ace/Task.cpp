@@ -131,14 +131,14 @@ ACE_Task<ACE_SYNCH_2>::dump (void) const
 template<ACE_SYNCH_1>
 ACE_Task<ACE_SYNCH_2>::ACE_Task (ACE_Thread_Manager *thr_man, 
 				 ACE_Message_Queue<ACE_SYNCH_2> *mq)
-  : delete_msg_queue_ (0),
+  : thr_count_ (0),
     thr_mgr_ (thr_man),
-    mod_ (0), 
-    flags_ (0),
-    grp_id_ (0),
-    thr_count_ (0),
     msg_queue_ (0),
-    next_ (0)
+    delete_msg_queue_ (0),
+    flags_ (0),
+    mod_ (0), 
+    next_ (0),
+    grp_id_ (0)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::ACE_Task");
 

@@ -195,8 +195,8 @@ ACE_Handle_Set_Iterator::operator++ (void)
 
 ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &f)
   : handles_ (f), 
-    index_ (0), 
-    num_ (0)
+    num_ (0),
+    index_ (0)
 {
   ACE_TRACE ("ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator");
 #if !defined(ACE_WIN32)

@@ -151,7 +151,7 @@ public:
   // since it enables us to assign objects to thread-specific data
   // that have arbitrarily complex constructors!
 
-  ~ACE_TSS (void);
+  virtual ~ACE_TSS (void);
   // Deregister with thread-key administration.
 
   TYPE *ts_object (void) const;

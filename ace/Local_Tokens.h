@@ -124,22 +124,21 @@ public:
   void call_sleep_hook (void);
   // Call the sleep hook function or method passing arg.
 
-  ACE_TPQ_Entry *next_;
-  // Pointer to next in list.
-
   void dump (void) const;
   // Dump the state of the class.
 
   // = Used to block the thread if an acquire fails with EWOULDBLOCK.
-  ACE_TOKEN_CONST::MUTEX lock_;
   ACE_TOKEN_CONST::COND_VAR cond_var_;
+  ACE_TOKEN_CONST::MUTEX lock_;
+
+  ACE_TPQ_Entry *next_;
+  // Pointer to next in list.
 
   // = Get/set whether this client is blocked waiting for a token.
   int waiting (void) const;
   void waiting (int w);
 
 private:
-
   int waiting_;
   // This client is waiting for a token.
 
@@ -432,7 +431,7 @@ public:
   ACE_Mutex_Token (const char* name);
   // life
 
-  ~ACE_Mutex_Token (void);
+  virtual ~ACE_Mutex_Token (void);
   // death
 
   // = Synchronization operations.
@@ -519,7 +518,7 @@ public:
   ACE_RW_Token (const char* name);
   // Life.
 
-  ~ACE_RW_Token (void);
+  virtual ~ACE_RW_Token (void);
   // Death.
 
   // = Synchronization operations.
@@ -614,7 +613,7 @@ public:
   ACE_Token_Name (const ACE_Token_Name &rhs);
   // Copy construction.
 
-  ~ACE_Token_Name (void);
+  virtual ~ACE_Token_Name (void);
   // Death.
 
   void operator= (const ACE_Token_Name &rhs);
@@ -676,7 +675,7 @@ public:
   ACE_Token_Proxy (void);
   // Construction.
 
-  ~ACE_Token_Proxy (void);
+  virtual ~ACE_Token_Proxy (void);
   // Death.
 
   virtual int open (const char *name,

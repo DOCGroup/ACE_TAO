@@ -51,15 +51,13 @@ friend ostream &operator << (ostream &, ACE_Log_Record &);
 
   int print (const char host_name[], 
 	     int verbose = 1, 
-	     FILE *fp = stderr,
-	     size_t msg_data_len = 0);
+	     FILE *fp = stderr);
   // Write the contents of the logging record to the appropriate
   // <FILE>.
 
   int print (const char host_name[], 
 	     int verbose, 
-	     ostream &stream,
-	     size_t msg_data_len = 0);
+	     ostream &stream);
   // Write the contents of the logging record to the appropriate
   // <ostream>.
 

@@ -17,9 +17,9 @@ ACE_Service_Repository::dump (void) const
 }
 
 ACE_Service_Repository::ACE_Service_Repository (void)
-  : current_size_ (0), 
+  : service_vector_ (0),
     total_size_ (0),
-    service_vector_ (0)
+    current_size_ (0)
 {
   ACE_TRACE ("ACE_Service_Repository::ACE_Service_Repository");
 }

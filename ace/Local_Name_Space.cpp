@@ -38,15 +38,15 @@ ACE_NS_String::char_rep (void) const
 }
 
 ACE_NS_String::ACE_NS_String (void)
-  : rep_ (0), 
-    len_ (0)
+  : len_ (0),
+    rep_ (0)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }
 
 ACE_NS_String::ACE_NS_String (const ACE_WString &s)
-  : rep_ (s.fast_rep ()), 
-    len_ ((s.length () + 1) * sizeof (ACE_USHORT16))
+  : len_ ((s.length () + 1) * sizeof (ACE_USHORT16)),
+    rep_ (s.fast_rep ())
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }
@@ -146,7 +146,6 @@ template class ACE_Set_Node<ACE_Name_Binding>;
 template class ACE_Guard<ACE_RW_Process_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Process_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
-template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
 template class ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal>;

@@ -14,23 +14,6 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_Malloc)
 
 template <class MALLOC>
-ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const MEMORY_POOL_OPTIONS &options,
-						      const char *pool_name,
-						      const char *lock_name)
-  : allocator_ (options, pool_name, lock_name)
-{ 
-  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
-}
-
-template <class MALLOC>
-ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const MEMORY_POOL_OPTIONS &options,
-						      const char *pool_name)
-  : allocator_ (options, pool_name)
-{ 
-  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
-}
-
-template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name,
 						      const char *lock_name)
   : allocator_ (pool_name, lock_name)

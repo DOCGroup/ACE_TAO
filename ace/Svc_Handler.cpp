@@ -181,7 +181,7 @@ template <PR_ST_1, ACE_SYNCH_1> ACE_INLINE ACE_PEER_STREAM &
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::peer (void) const
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::peer");
-  return (PEER_STREAM &) this->peer_;
+  return (ACE_PEER_STREAM &) this->peer_;
 }
 
 // Extract the underlying PEER_STREAM (e.g., used by ACE_Connector and

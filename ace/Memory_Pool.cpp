@@ -349,14 +349,14 @@ ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const OPTIONS &options,
 }
 
 int
-ACE_Lite_MMAP_Memory_Pool::sync (ssize_t len, int flags)
+ACE_Lite_MMAP_Memory_Pool::sync (ssize_t, int)
 {
   ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::sync");
   return 0;
 }
 
 int
-ACE_Lite_MMAP_Memory_Pool::sync (void *addr, size_t len, int flags)
+ACE_Lite_MMAP_Memory_Pool::sync (void *, size_t, int)
 {
   ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::sync");
   return 0;
@@ -500,7 +500,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   return 0;
 }
 
-ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const OPTIONS &options,
+ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const OPTIONS &,
 						const char *)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool");
@@ -509,7 +509,7 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const OPTIONS &options,
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Sig_Handler::register_handler"));
 }
 
-ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const char *pool_name)
+ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const char *)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool");
 

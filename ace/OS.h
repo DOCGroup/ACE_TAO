@@ -1996,7 +1996,7 @@ public:
   static int writev (ACE_HANDLE handle, ACE_WRITEV_TYPE *iov, int iovcnt);
 
   // = A set of wrappers for event demultiplexing and IPC.
-  static int select (int width, fd_set *rfds, fd_set *wfds, fd_set *efds, ACE_Time_Value *tv = 0);
+  static int select (int width, fd_set *rfds, fd_set *wfds, fd_set *efds, const ACE_Time_Value *tv = 0);
   static int select (int width, fd_set *rfds, fd_set *wfds, fd_set *efds, const ACE_Time_Value &tv);
   static int poll (struct pollfd *pollfds, u_long len, ACE_Time_Value *tv = 0);
   static int poll (struct pollfd *pollfds, u_long len, const ACE_Time_Value &tv); 

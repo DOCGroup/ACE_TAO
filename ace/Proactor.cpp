@@ -155,9 +155,9 @@ ACE_Overlapped_IO::operator ACE_OVERLAPPED * (void)
 }
 
 ACE_Proactor::ACE_Proactor (size_t number_of_threads)
-  : completion_port_ (0),
-    number_of_threads_ (number_of_threads),
-    timer_skew_ (0, ACE_TIMER_SKEW)
+  : timer_skew_ (0, ACE_TIMER_SKEW),
+    completion_port_ (0),
+    number_of_threads_ (number_of_threads)
 {
 #if defined (ACE_WIN32)
   // Create an "auto-reset" event to indicate that one or more I/O
@@ -425,16 +425,16 @@ ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
 
 ACE_Overlapped_File::ACE_Overlapped_File (const ACE_Overlapped_File &file)
   : offset_ (file.offset ()),
-    handle_ (file.get_handle ()),
     file_size_ (0),
+    handle_ (file.get_handle ()),
     delete_handle_ (0)
 {
 }
 
 ACE_Overlapped_File::ACE_Overlapped_File (void)
   : offset_ (0),
-    handle_ (ACE_INVALID_HANDLE),
     file_size_ (0),
+    handle_ (ACE_INVALID_HANDLE),
     delete_handle_ (0)
 {
 }

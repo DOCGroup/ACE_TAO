@@ -68,8 +68,7 @@ ACE_Log_Record::ACE_Log_Record (void)
 int
 ACE_Log_Record::print (const char host_name[],
 		       int verbose, 
-		       FILE *fp,
-		       size_t len)
+		       FILE *fp)
 {
   // ACE_TRACE ("ACE_Log_Record::print");
 
@@ -100,8 +99,7 @@ ACE_Log_Record::print (const char host_name[],
 int
 ACE_Log_Record::print (const char host_name[],
 		       int verbose, 
-		       ostream &s,
-		       size_t len)
+		       ostream &s)
 {
   // ACE_TRACE ("ACE_Log_Record::print");
 

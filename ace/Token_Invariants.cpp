@@ -334,5 +334,10 @@ ACE_RWLock_Invariants::dump (void) const
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-// template class ACE_TSS <ACE_TPQ_Entry>;
+template class ACE_Map_Manager<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
+template class ACE_Map_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
+template class ACE_Map_Entry<ACE_Token_Name, ACE_Mutex_Invariants *>;
+template class ACE_Map_Manager<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
+template class ACE_Map_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
+template class ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

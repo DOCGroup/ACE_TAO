@@ -224,13 +224,13 @@ ACE_Log_Msg::ACE_Log_Msg (void)
   : status_ (0),
     errnum_ (0),
     linenum_ (0),
-    ostream_ (0),
     restart_ (1),  // Restart by default...
-    thr_state_ (0),
+    ostream_ (0),
     trace_depth_ (0),
     thr_handle_ (0),
     trace_active_ (0),
     tracing_enabled_ (0), // Off by default?
+    thr_state_ (0),
     priority_mask_ (LM_SHUTDOWN // By default, all priorities are enabled.
 		    | LM_TRACE 
 		    | LM_DEBUG
@@ -601,8 +601,7 @@ ACE_Log_Msg::log (const char *format_str,
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR))
 	log_record.print (ACE_Log_Msg::local_host_,
 			  ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE),
-			  stderr, 
-			  bp - this->msg ());
+			  stderr);
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
 	{
 	  ACE_Str_Buf log_msg ((void *) &log_record, 
@@ -627,8 +626,7 @@ ACE_Log_Msg::log (const char *format_str,
 	  && this->msg_ostream () != 0)
 	log_record.print (ACE_Log_Msg::local_host_,
 			  ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE),
-			  *this->msg_ostream (),
-			  bp - this->msg ());
+			  *this->msg_ostream ());
       this->start_tracing ();
     }
 

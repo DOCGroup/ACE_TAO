@@ -470,8 +470,8 @@ template <ACE_SYNCH_1> ACE_INLINE
 ACE_Stream<ACE_SYNCH_2>::ACE_Stream (void * a, 
 				     ACE_Module<ACE_SYNCH_2> *head, 
 				     ACE_Module<ACE_SYNCH_2> *tail)
-  : final_close_ (this->lock_), 
-    linked_us_ (0)
+  : linked_us_ (0),
+    final_close_ (this->lock_)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::ACE_Stream");
   if (this->open (a, head, tail) == -1)
@@ -484,8 +484,8 @@ ACE_INLINE
 ACE_Stream<ACE_SYNCH_2>::ACE_Stream (void *a, 
 				     ACE_Multiplexor &muxer, 
 				     ACE_Module<ACE_SYNCH_2> *head)
-  : final_close_ (this->lock_), 
-    linked_us_ (0)
+  : linked_us_ (0),
+    final_close_ (this->lock_)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::ACE_Stream");
   if (this->open (a, muxer, head) == -1)

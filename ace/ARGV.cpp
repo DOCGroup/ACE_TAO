@@ -31,8 +31,8 @@ ACE_ARGV::dump (void) const
 
 ACE_ARGV::ACE_ARGV (char buf[], 
 		    int substitute_env_args)
-  : argv_ (0), 
-    argc_ (0),
+  : argc_ (0),
+    argv_ (0), 
     buf_ (0)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV");
@@ -129,8 +129,8 @@ ACE_ARGV::ACE_ARGV (char buf[],
 
 ACE_ARGV::ACE_ARGV (char *argv[],
 		    int substitute_env_args)
-  : argv_ (0), 
-    argc_ (0),
+  : argc_ (0),
+    argv_ (0), 
     buf_ (0)
 {
   ACE_TRACE ("ACE_ARGV::ACE_ARGV");
