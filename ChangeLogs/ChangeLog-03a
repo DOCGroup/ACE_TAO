@@ -35,6 +35,9 @@ Sat Nov  9 18:49:11 2002  Steve Huston  <shuston@riverace.com>
           Removed all the methods that said they were only there to kill
           dominance warnings. These are not needed.
 
+          These things all simplify the proactor framework code. Thanks to
+          Alex Libman for these ideas.
+
 Sat Nov  9 13:16:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Simon McQueen to the hall of fame.
