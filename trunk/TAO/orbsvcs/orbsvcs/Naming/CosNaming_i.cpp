@@ -82,8 +82,8 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
 
 void
 NS_NamingContext::bind (const CosNaming::Name& n,
-			CORBA::Object_ptr obj,
-			CORBA::Environment &_env)
+                        CORBA::Object_ptr obj,
+                        CORBA::Environment &_env)
 {
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
@@ -125,30 +125,30 @@ NS_NamingContext::bind (const CosNaming::Name& n,
       // Try binding the name.
       result = context_.bind (name, entry);
       if (result == 1)
-	{
-	  _env.clear ();
-	  _env.exception (new CosNaming::NamingContext::AlreadyBound);
-	  return;
-	}
+        {
+          _env.clear ();
+          _env.exception (new CosNaming::NamingContext::AlreadyBound);
+          return;
+        }
       // Something went wrong with the internal structure
       else if (result == -1)
-	{
-	  _env.clear ();
-	  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-	  return;
-	}
+        {
+          _env.clear ();
+          _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+          return;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "bound: <%s,%s>\n",
-		  n[0].id.in ()==0? "nil" : n[0].id.in (),
-		  n[0].kind.in ()==0? "nil" : n[0].kind.in ()));
+                  n[0].id.in ()==0? "nil" : n[0].id.in (),
+                  n[0].kind.in ()==0? "nil" : n[0].kind.in ()));
     }
 }
 
 void
 NS_NamingContext::rebind (const CosNaming::Name& n,
-			  CORBA::Object_ptr obj,
-			  CORBA::Environment &_env)
+                          CORBA::Object_ptr obj,
+                          CORBA::Environment &_env)
 {
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
@@ -196,18 +196,18 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
 
       // Something went wrong with the internal structure
       if (result == -1)
-	{
-	  _env.clear ();
-	  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-	  return;
-	}
+        {
+          _env.clear ();
+          _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+          return;
+        }
     }
 }
 
 void
 NS_NamingContext::bind_context (const CosNaming::Name &n,
-				CosNaming::NamingContext_ptr nc,
-				CORBA::Environment &_env)
+                                CosNaming::NamingContext_ptr nc,
+                                CORBA::Environment &_env)
 {
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
@@ -250,25 +250,25 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
       // Try binding the name.
       result = context_.bind (name, entry);
       if ( result == 1)
-	{
-	  _env.clear ();
-	  _env.exception (new CosNaming::NamingContext::AlreadyBound);
-	  return;
-	}
+        {
+          _env.clear ();
+          _env.exception (new CosNaming::NamingContext::AlreadyBound);
+          return;
+        }
       // Something went wrong with the internal structure
       else if (result == -1)
-	{
-	  _env.clear ();
-	  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-	  return;
-	}	
+        {
+          _env.clear ();
+          _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+          return;
+        }
     }
 }
 
 void
 NS_NamingContext::rebind_context (const CosNaming::Name &n,
-				  CosNaming::NamingContext_ptr nc,
-				  CORBA::Environment &_env)
+                                  CosNaming::NamingContext_ptr nc,
+                                  CORBA::Environment &_env)
 {
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
@@ -311,19 +311,19 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
 
       // try rebinding the name.
       if (context_.rebind (name, entry, oldname, oldentry) < 0);
-	// deal with consequences
+        // deal with consequences
     }
 }
 
 CORBA::Object_ptr
 NS_NamingContext::resolve (const CosNaming::Name& n,
-			   CORBA::Environment &_env)
+                           CORBA::Environment &_env)
 {
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
   _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, CORBA::Object::_nil ());
-  
+
   // clear the environment.
   _env.clear ();
 
@@ -340,7 +340,7 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
 
   ACE_DEBUG ((LM_DEBUG,
               "Trying to resolve <%s,%s>\n",
-	      n[0].id.in (),
+              n[0].id.in (),
               n[0].kind.in ()));
 
   // Resolve the first component of the name.
@@ -361,34 +361,34 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
     {
       CosNaming::NamingContext_var cont;
       if (entry.type_ == CosNaming::ncontext)
-	{
-	  cont = CosNaming::NamingContext::_narrow (item, _env);
-	  if (_env.exception () != 0)
-	    {
-	      _env.print_exception ("NS_NamingContext::resolve");
-	      return CORBA::Object::_nil ();
-	    }
-	}
+        {
+          cont = CosNaming::NamingContext::_narrow (item, _env);
+          if (_env.exception () != 0)
+            {
+              _env.print_exception ("NS_NamingContext::resolve");
+              return CORBA::Object::_nil ();
+            }
+        }
       else
-	{
-	  _env.clear ();
-	  _env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context, n));
-	  return CORBA::Object::_nil ();
-	}
+        {
+          _env.clear ();
+          _env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context, n));
+          return CORBA::Object::_nil ();
+        }
 
       CosNaming::Name rest_of_name (len - 1);
       rest_of_name.length (len - 1);
       for (CORBA::ULong i = 1; i < len; i++)
-	rest_of_name[i-1] = n[i];
+        rest_of_name[i-1] = n[i];
 
       return (cont->resolve (rest_of_name, _env));
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "Resolved <%s,%s> to %08.8x\n",
-	      n[0].id.in (),
+              n[0].id.in (),
               n[0].kind.in (),
-	      item));
+              item));
 
   // If the name we had to resolve was simple, we just need to return
   // the result.
@@ -397,7 +397,7 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
 
 void
 NS_NamingContext::unbind (const CosNaming::Name& n,
-			  CORBA::Environment &_env)
+                          CORBA::Environment &_env)
 {
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
@@ -436,16 +436,16 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
       NS_ExtId name (n[0].id, n[0].kind);
       // try unbinding the name.
       if (context_.unbind (name) == -1)
-	{
-	  _env.clear ();
-	  _env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n));
-	  return;
-	}
+        {
+          _env.clear ();
+          _env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_object, n));
+          return;
+        }
     }
 }
-    
-CosNaming::NamingContext_ptr 
-NS_NamingContext::new_context (CORBA::Environment &_env) 
+
+CosNaming::NamingContext_ptr
+NS_NamingContext::new_context (CORBA::Environment &_env)
 {
   NS_NamingContext * c = 0;
 
@@ -453,18 +453,18 @@ NS_NamingContext::new_context (CORBA::Environment &_env)
   _env.clear ();
   _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_NEW_RETURN (c, NS_NamingContext, CosNaming::NamingContext::_nil ());
-  
+
   // clear the environment.
   _env.clear ();
 
-  // (1) do we have to duplicate () the object reference???!
+  // (1) do we have to duplicate () the object reference????
   // (2) Also, how about memory leaks?
   return c->_this (_env);
 }
-    
-CosNaming::NamingContext_ptr 
-NS_NamingContext::bind_new_context (const CosNaming::Name& n, 
-				    CORBA::Environment &_env) 
+
+CosNaming::NamingContext_ptr
+NS_NamingContext::bind_new_context (const CosNaming::Name& n,
+                                    CORBA::Environment &_env)
 {
   NS_NamingContext * c = 0;
 
@@ -472,19 +472,19 @@ NS_NamingContext::bind_new_context (const CosNaming::Name& n,
   _env.clear ();
   _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_NEW_RETURN (c, NS_NamingContext, CosNaming::NamingContext::_nil ());
-  
+
   // clear the environment.
   _env.clear ();
 
   bind_context (n, c->_this (_env), _env);
-  
-  // Release object if exception occurs.   
+
+  // Release object if exception occurs.
   if (_env.exception () != 0)
     {
       delete c;
       return CosNaming::NamingContext::_nil ();
     }
-  
+
   return c->_this (_env);
 }
 
@@ -505,12 +505,12 @@ NS_NamingContext::destroy (CORBA::Environment &_env)
       return;
     }
 }
-    
-void 
-NS_NamingContext::list (CORBA::ULong how_many, 
-			CosNaming::BindingList_out bl, 
-			CosNaming::BindingIterator_out bi, 
-			CORBA::Environment &_env) 
+
+void
+NS_NamingContext::list (CORBA::ULong how_many,
+                        CosNaming::BindingList_out bl,
+                        CosNaming::BindingIterator_out bi,
+                        CORBA::Environment &_env)
 {
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
@@ -531,15 +531,15 @@ NS_NamingContext::list (CORBA::ULong how_many,
   if (context_.current_size () > how_many)
      {
        NS_BindingIterator *bind_iter;
-       
+
        // if allocation fails, the environment must be set to indicate error.
        _env.clear ();
        _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
        ACE_NEW (bind_iter, NS_BindingIterator (hash_iter, this->lock_));
-       
+
        // clear the environment.
        _env.clear ();
-       
+
        bi = bind_iter->_this (_env);
 
        CosNaming::BindingIterator::_duplicate (bi);
@@ -568,9 +568,9 @@ NS_NamingContext::list (CORBA::ULong how_many,
 
       bindings[i].binding_name.length (1);
       bindings[i].binding_name[0].id =
-	CORBA::string_dup (hash_entry->ext_id_.id_.fast_rep ());
+        CORBA::string_dup (hash_entry->ext_id_.id_.fast_rep ());
       bindings[i].binding_name[0].kind =
-	CORBA::string_dup (hash_entry->ext_id_.kind_.fast_rep ());
+        CORBA::string_dup (hash_entry->ext_id_.kind_.fast_rep ());
     }
 
   // check for memory failure.
@@ -578,18 +578,18 @@ NS_NamingContext::list (CORBA::ULong how_many,
   _env.clear ();
   _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_NEW (bl, CosNaming::BindingList (bindings));
-  
+
   // clear the environment.
   _env.clear ();
-  
+
   // If did not allocate BindingIterator, deallocate hash map
   // iterator.
   if (context_.current_size () <= how_many)
     delete hash_iter;
 }
 
-NS_BindingIterator::NS_BindingIterator (NS_NamingContext::HASH_MAP::ITERATOR *hash_iter, 
-					ACE_Lock * lock)
+NS_BindingIterator::NS_BindingIterator (NS_NamingContext::HASH_MAP::ITERATOR *hash_iter,
+                                        ACE_Lock * lock)
   : hash_iter_ (hash_iter),
     lock_ (lock)
 {
@@ -602,7 +602,7 @@ NS_BindingIterator::~NS_BindingIterator (void)
 
 CORBA::Boolean
 NS_BindingIterator::next_one (CosNaming::Binding_out b,
-			      CORBA::Environment &_env)
+                              CORBA::Environment &_env)
 {
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
@@ -611,9 +611,9 @@ NS_BindingIterator::next_one (CosNaming::Binding_out b,
 
   _env.clear ();
 
-  if (hash_iter_->done ()) 
+  if (hash_iter_->done ())
     {
-      // @@ Marina, why would we want to allocate a binding when the 
+      // @@ Marina, why would we want to allocate a binding when the
       //    iteration is done?
 
       // check for memory failure.
@@ -621,10 +621,10 @@ NS_BindingIterator::next_one (CosNaming::Binding_out b,
       _env.clear ();
       _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
       ACE_NEW_RETURN (b, CosNaming::Binding, 0);
-      
+
       // clear the environment.
       _env.clear ();
-      
+
       return 0;
     }
   else
@@ -634,10 +634,10 @@ NS_BindingIterator::next_one (CosNaming::Binding_out b,
       _env.clear ();
       _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
       ACE_NEW_RETURN (b, CosNaming::Binding, 0);
-      
+
       // clear the environment.
       _env.clear ();
-      
+
       NS_NamingContext::HASH_MAP::ENTRY *hash_entry;
       hash_iter_->next (hash_entry);
       hash_iter_->advance ();
@@ -646,9 +646,9 @@ NS_BindingIterator::next_one (CosNaming::Binding_out b,
 
       b->binding_name.length (1);
       b->binding_name[0].id =
-	CORBA::string_dup (hash_entry->ext_id_.id_.fast_rep ());
+        CORBA::string_dup (hash_entry->ext_id_.id_.fast_rep ());
       b->binding_name[0].kind =
-	CORBA::string_dup (hash_entry->ext_id_.kind_.fast_rep ());
+        CORBA::string_dup (hash_entry->ext_id_.kind_.fast_rep ());
 
       return 1;
     }
@@ -656,8 +656,8 @@ NS_BindingIterator::next_one (CosNaming::Binding_out b,
 
 CORBA::Boolean
 NS_BindingIterator::next_n (CORBA::ULong how_many,
-			    CosNaming::BindingList_out bl,
-			    CORBA::Environment &_env)
+                            CosNaming::BindingList_out bl,
+                            CORBA::Environment &_env)
 {
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
@@ -666,17 +666,17 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
 
   _env.clear ();
 
-  if (hash_iter_->done ()) 
+  if (hash_iter_->done ())
     {
       // check for memory failure.
       // if allocation fails, the environment must be set to indicate error.
       _env.clear ();
       _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
       ACE_NEW_RETURN (bl, CosNaming::BindingList, 0);
-      
+
       // clear the environment.
       _env.clear ();
-      
+
       return 0;
     }
   else
@@ -691,25 +691,25 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
       // Iterate and populate the BindingList.
       NS_NamingContext::HASH_MAP::ENTRY *hash_entry;
       for (CORBA::ULong i = 0; i < how_many; i++)
-	{
-	  hash_iter_->next (hash_entry);
+        {
+          hash_iter_->next (hash_entry);
 
-	  bindings[i].binding_type = hash_entry->int_id_.type_;
+          bindings[i].binding_type = hash_entry->int_id_.type_;
 
-	  bindings[i].binding_name.length (1);
-	  bindings[i].binding_name[0].id =
-	    CORBA::string_dup (hash_entry->ext_id_.id_.fast_rep ());
-	  bindings[i].binding_name[0].kind =
-	    CORBA::string_dup (hash_entry->ext_id_.kind_.fast_rep ());
+          bindings[i].binding_name.length (1);
+          bindings[i].binding_name[0].id =
+            CORBA::string_dup (hash_entry->ext_id_.id_.fast_rep ());
+          bindings[i].binding_name[0].kind =
+            CORBA::string_dup (hash_entry->ext_id_.kind_.fast_rep ());
 
-	  if (hash_iter_->advance () == 0)
-	    {
-	      // If no more bindings left, reset length to the actual
-	      // number of bindings populated and get out of the loop.
-	      bindings.length (i + 1);
-	      break;
-	    }
-	}
+          if (hash_iter_->advance () == 0)
+            {
+              // If no more bindings left, reset length to the actual
+              // number of bindings populated and get out of the loop.
+              bindings.length (i + 1);
+              break;
+            }
+        }
 
       // if mem allocation fails, the environment must be set to throw
       //   an exception.
@@ -718,10 +718,10 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
 
       // Check for failed memory allocation.
       ACE_NEW_RETURN (bl, CosNaming::BindingList (bindings), 0);
-      
+
       // if allocation went well, clear the exception.
-      _env.clear ();  
-      
+      _env.clear ();
+
       return 1;
     }
 }
