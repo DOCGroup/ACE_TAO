@@ -47,6 +47,10 @@ TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST
+TAO/tests/OBV/Any/run_test.pl
+TAO/tests/OBV/Factory/run_test.pl
+TAO/tests/OBV/Forward/run_test.pl
+TAO/tests/OBV/TC_Alignment/run_test.pl
 TAO/tests/Hello/run_test.pl
 TAO/tests/Cache_Growth_Test/run_test.pl
 TAO/tests/Muxing/run_test.pl: !ST

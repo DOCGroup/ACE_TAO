@@ -1,3 +1,12 @@
+Fri May 23 11:43:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_orb_tests.lst: Added the OBV tests to our daily
+	  builds. This is going to be one of the *most* important features
+	  for CIAO and it is really sad that it is not being tested at
+	  all! Ran into this when I was running some smoke tests and found
+	  a surprise. No prizes  for getting it right! As you would have
+	  guessed it one of the tests failed :(!
+
 Fri May 23 10:38:13 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
