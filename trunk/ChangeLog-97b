@@ -1,4 +1,4 @@
-Sun Oct 19 13:49:17 1997    <coryan@MILONGA>
+Sun Oct 19 13:49:17 1997  Carlos O'Ryan  <coryan@MILONGA>
 
 	* ace/Proactor.cpp: 
 	  The mutex vs lock name change strikes back, this time under NT.
