@@ -1,3 +1,10 @@
+Sun Jan 23 15:45:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+
+	  Split --enable-{fl,qt,tk,xt}-reactor processing into separate
+	  autoconf macros.
+
 Sun Jan 23 15:07:08 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:
