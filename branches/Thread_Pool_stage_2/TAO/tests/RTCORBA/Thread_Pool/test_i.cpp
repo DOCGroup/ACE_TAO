@@ -19,7 +19,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 CORBA::Long
 test_i::method (CORBA::Long client_id,
                 CORBA::Long iteration,
-                CORBA::Environment &ACE_TRY_ENV)
+                CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ORB_Core's TSS resources.
@@ -49,7 +49,7 @@ test_i::method (CORBA::Long client_id,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (CORBA_Environment &ACE_TRY_ENV)
+test_i::_default_POA (CORBA_Environment &)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

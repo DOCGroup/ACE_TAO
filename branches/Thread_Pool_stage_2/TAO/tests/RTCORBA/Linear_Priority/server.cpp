@@ -36,7 +36,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (CORBA::Environment &ACE_TRY_ENV)
+test_i::method (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -61,8 +61,6 @@ test_i::_default_POA (CORBA_Environment &)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-static CORBA::Short server_priority = 2;
-static CORBA::Short client_priority = 6;
 static CORBA::ULong stacksize = 0;
 static CORBA::ULong static_threads = 2;
 static CORBA::ULong dynamic_threads = 2;
