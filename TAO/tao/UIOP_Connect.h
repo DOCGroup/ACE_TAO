@@ -28,11 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Acceptor.h"
-#include "ace/LSOCK_Acceptor.h"
 #include "ace/Reactor.h"
-#include "ace/Synch.h"
-#include "ace/Svc_Handler.h"
-
 #include "tao/Connection_Handler.h"
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
@@ -41,15 +37,13 @@
 // Forward Decls
 class TAO_Pluggable_Messaging;
 
-typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_UIOP_SVC_HANDLER;
-
 class TAO_UIOP_Properties
 {
   // = TITLE
   //   Unix Domain Sockets protocol properties for a set of
   //   connections.
   //
+public:
   int send_buffer_size;
   int recv_buffer_size;
 };

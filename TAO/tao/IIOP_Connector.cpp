@@ -13,6 +13,31 @@
 
 ACE_RCSID(tao, IIOP_Connector, "$Id$")
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
+template class ACE_Unbounded_Stack<ACE_INET_Addr>;
+template class ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>;
+template class ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>;
+template class ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>;
+template class ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>;
+template class ACE_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>;
+template class ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
+#pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>
+#pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>
+#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>
+#pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>
+#pragma instantiate ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 TAO_IIOP_Connect_Creation_Strategy::
   TAO_IIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,

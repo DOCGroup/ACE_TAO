@@ -28,9 +28,7 @@
 
 #include "ace/Reactor.h"
 #include "ace/Acceptor.h"
-#include "ace/MEM_Acceptor.h"
-#include "ace/Synch.h"
-#include "ace/Svc_Handler.h"
+
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
@@ -39,13 +37,12 @@
 
 
 
-typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
-        TAO_SHMIOP_SVC_HANDLER;
+
 
 
 // ****************************************************************
 
-class TAO_Export TAO_SHMIOP_Client_Connection_Handler : public TAO_SHMIOP_SVC_HANDLER
+class TAO_Export TAO_SHMIOP_Client_Connection_Handler : public TAO_SHMIOP_SVC_HANDLER,
                                                         public TAO_Connection_Handler
 {
   // = TITLE
@@ -104,7 +101,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_SHMIOP_Server_Connection_Handler : public TAO_SHMIOP_SVC_HANDLER
+class TAO_Export TAO_SHMIOP_Server_Connection_Handler : public TAO_SHMIOP_SVC_HANDLER,
                                                         public TAO_Connection_Handler
 {
   // = TITLE

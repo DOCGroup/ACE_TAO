@@ -25,9 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Acceptor.h"
-#include "ace/SOCK_Stream.h"
-#include "ace/Synch.h"
-#include "ace/Svc_Handler.h"
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
@@ -35,27 +32,24 @@
 #include "tao/IIOP_Transport.h"
 
 // Forward Decls
-class Pluggable_Messaging;
-
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_IIOP_SVC_HANDLER;
-
+class TAO_Pluggable_Messaging;
 
 // ****************************************************************
 
-class TAO_TCP_Properties
+class TAO_IIOP_Properties
 {
   // = TITLE
   //   TCP protocol properties specification for a set of
   //   connections.
   //
+public:
   int send_buffer_size;
   int recv_buffer_size;
   int no_delay;
 };
 
 
-class TAO_Export TAO_IIOP_Client_Connection_Handler: public TAO_IIOP_SVC_HANDLER
+class TAO_Export TAO_IIOP_Client_Connection_Handler: public TAO_IIOP_SVC_HANDLER,
                                                      public TAO_Connection_Handler
 {
   // = TITLE
@@ -116,7 +110,7 @@ protected:
   TAO_IIOP_Client_Transport transport_;
   // Reference to the transport object, it is owned by this class.
 
-  TAO_TCP_Properties *tcp_properties_;
+  TAO_IIOP_Properties *tcp_properties_;
   // TCP configuration for this connection.
 
 private:
@@ -130,7 +124,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_IIOP_Server_Connection_Handler : public TAO_IIOP_Handler_Base,
+class TAO_Export TAO_IIOP_Server_Connection_Handler : public TAO_IIOP_SVC_HANDLER,
                                                       public TAO_Connection_Handler
 {
   // = TITLE
@@ -201,7 +195,7 @@ protected:
   // you should not delete the svc_handler until the stack unwinds
   // from the nested upcalls.
 
-  TAO_TCP_Properties *tcp_properties_;
+  TAO_IIOP_Properties *tcp_properties_;
   // TCP configuration for this connection.
 };
 

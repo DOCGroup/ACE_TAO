@@ -57,11 +57,9 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler,
-                                        TAO_ORB_Core *orb_core)
+TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_IIOP_PROFILE,
-                   orb_core),
-    handler_ (handler)
+                   orb_core)
 {
 }
 
@@ -80,30 +78,24 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
     }
 }
 
-TAO_IIOP_Handler_Base *&
-TAO_IIOP_Transport::handler (void)
-{
-  return this->handler_;
-}
-
 
 
 void
 TAO_IIOP_Transport::close_connection (void)
 {
-  this->handler_->handle_close ();
+  this->service_handler ()->handle_close ();
 }
 
 ACE_HANDLE
 TAO_IIOP_Transport::handle (void)
 {
-  return this->handler_->get_handle ();
+  return this->service_handler ()->get_handle ();
 }
 
 ACE_Event_Handler *
 TAO_IIOP_Transport::event_handler (void)
 {
-  return this->handler_;
+  return this->service_handler ();
 }
 
 
@@ -112,8 +104,9 @@ TAO_IIOP_Transport::event_handler (void)
 TAO_IIOP_Server_Transport::
     TAO_IIOP_Server_Transport (TAO_IIOP_Server_Connection_Handler *handler,
                                TAO_ORB_Core* orb_core)
-  : TAO_IIOP_Transport (handler, orb_core),
-    message_state_ (orb_core)
+  : TAO_IIOP_Transport (orb_core),
+    message_state_ (orb_core),
+    handler_ (handler)
 {
 }
 
@@ -139,12 +132,12 @@ TAO_IIOP_Server_Transport::service_handler (void)
 TAO_IIOP_Client_Transport::
     TAO_IIOP_Client_Transport (TAO_IIOP_Client_Connection_Handler *handler,
                                TAO_ORB_Core *orb_core)
-  :  TAO_IIOP_Transport (handler,
-                         orb_core),
-     client_mesg_factory_ (0),
-     orb_core_ (orb_core),
-     lite_flag_ (0),
-     params_ ()
+      : TAO_IIOP_Transport (orb_core),
+        handler_ (handler),
+        client_mesg_factory_ (0),
+        orb_core_ (orb_core),
+        lite_flag_ (0),
+        params_ ()
 {
 }
 
@@ -336,16 +329,16 @@ TAO_IIOP_Client_Transport::register_handler (void)
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core ()->reactor ();
-  if (r == this->handler ()->reactor ())
+  if (r == this->service_handler ()->reactor ())
     return 0;
 
-  return r->register_handler (this->handler (),
+  return r->register_handler (this->service_handler (),
                               ACE_Event_Handler::READ_MASK);
 }
 
 
 TAO_IIOP_SVC_HANDLER *
-TAO_IIOP_Server_Transport::service_handler (void)
+TAO_IIOP_Client_Transport::service_handler (void)
 {
   return this->handler_;
 }
@@ -467,9 +460,9 @@ TAO_IIOP_Transport::send (const u_char *buf,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
 
-  return this->handler_->peer ().send_n (buf,
-                                         len,
-                                         max_wait_time);
+  return this->service_handler ()->peer ().send_n (buf,
+                                                   len,
+                                                   max_wait_time);
 }
 
 ssize_t
@@ -479,9 +472,9 @@ TAO_IIOP_Transport::recv (char *buf,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
 
-  return this->handler_->peer ().recv_n (buf,
-                                         len,
-                                         max_wait_time);
+  return this->service_handler ()->peer ().recv_n (buf,
+                                                   len,
+                                                   max_wait_time);
 }
 
 // Default action to be taken for send request.

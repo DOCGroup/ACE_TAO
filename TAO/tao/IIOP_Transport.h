@@ -23,22 +23,27 @@
 
 #include "tao/Pluggable.h"
 
-#include "tao/operation_details.h"
-#include "tao/GIOP_Message_State.h"
-#include "tao/Pluggable_Messaging_Utils.h"
-
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
+#include "tao/operation_details.h"
+#include "tao/GIOP_Message_State.h"
+#include "tao/Pluggable_Messaging_Utils.h"
+#include "ace/SOCK_Stream.h"
+#include "ace/Synch.h"
+#include "ace/Svc_Handler.h"
+
+
 // Forward decls.
-class TAO_IIOP_Handler_Base;
 class TAO_IIOP_Client_Connection_Handler;
 class TAO_IIOP_Server_Connection_Handler;
 class TAO_ORB_Core;
 
+// Service Handler for this transport
+typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+        TAO_IIOP_SVC_HANDLER;
 
 class TAO_Export TAO_IIOP_Transport : public TAO_Transport
 {
@@ -51,15 +56,11 @@ class TAO_Export TAO_IIOP_Transport : public TAO_Transport
   //   protocol.  This class in turn will be further specialized for
   //   the client and server side.
 public:
-  TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler,
-                      TAO_ORB_Core *orb_core);
+  TAO_IIOP_Transport (TAO_ORB_Core *orb_core);
   // Base object's creator method.
 
   ~TAO_IIOP_Transport (void);
   // Default destructor.
-
-  TAO_IIOP_Handler_Base *&handler (void);
-  // Return a reference to the corresponding connection handler.
 
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
@@ -93,10 +94,12 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
 
+  virtual TAO_IIOP_SVC_HANDLER *service_handler (void) = 0;
+  // Return the connection service handler
+
 protected:
 
-  virtual TAO_IIOP_SVC_HANLDER *service_handler (void) = 0;
-  // Return the connection service handler
+
 };
 
 
@@ -153,7 +156,7 @@ public:
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
 
-  virtual TAO_IIOP_SVC_HANLDER *service_handler (void);
+  virtual TAO_IIOP_SVC_HANDLER *service_handler (void);
 
   int messaging_init (CORBA::Octet major,
                       CORBA::Octet minor);
@@ -165,7 +168,7 @@ public:
 
 private:
 
-  TAO_IIOP_Client_Connection_Hanler *handler_;
+  TAO_IIOP_Client_Connection_Handler *handler_;
   // The connection service handler used for accessing lower layer
   // communication protocols.
 
@@ -207,7 +210,7 @@ public:
   // Please see Pluggable.h for documentation
   virtual int idle (void);
 
-  virtual TAO_IIOP_SVC_HANLDER *service_handler (void);
+  virtual TAO_IIOP_SVC_HANDLER *service_handler (void);
 
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
@@ -216,7 +219,7 @@ public:
 
 private:
 
-  TAO_IIOP_Server_Connection_Hanler *handler_;
+  TAO_IIOP_Server_Connection_Handler *handler_;
   // The connection service handler used for accessing lower layer
   // communication protocols.
 };

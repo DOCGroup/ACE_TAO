@@ -83,7 +83,7 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
     transport_ (this, orb_core),
     refcount_ (1),
     uiop_properties_ (ACE_static_cast
-                      (TAO_UIOP_Handler_Base::UIOP_Properties *, arg))
+                      (TAO_UIOP_Properties *, arg))
 {
   if (lite_flag)
     {
@@ -275,9 +275,8 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 // ****************************************************************
 
 TAO_UIOP_Client_Connection_Handler::
-TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_UIOP_Handler_Base (t),
-    TAO_Connection_Handler (0),
+TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager * /* t */)
+  : TAO_Connection_Handler (0),
     transport_ (this, 0),
     uiop_properties_ (0)
 {
@@ -290,11 +289,11 @@ TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                     TAO_ORB_Core* orb_core,
                                     CORBA::Boolean flag,
                                     void *arg)
-  : TAO_UIOP_Handler_Base (t, 0, 0),
+  : TAO_UIOP_SVC_HANDLER (t, 0, 0),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     uiop_properties_ (ACE_static_cast
-                      (TAO_UIOP_Handler_Base::UIOP_Properties *, arg))
+                      (TAO_UIOP_Properties *, arg))
 {
   this->transport_.use_lite (flag);
 }
