@@ -1,3 +1,10 @@
+Mon Apr  3 04:07:47 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Added a #define for
+	  ACE_HAS_ALT_CUSERID so that ACE will build on recent FreeBSD
+ 	  releases.  Thanks to Raymond Wiker <raymond@orion.no> for
+ 	  reporting this.
+
 Sun Apr  2 21:32:20 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/SOCK.cpp: removed the extra #ifdef 
