@@ -295,10 +295,6 @@ ACE_Log_Msg::ACE_Log_Msg (void)
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 }
 
-ACE_Log_Msg::~ACE_Log_Msg (void)
-{
-}
-
 // Open the sender-side of the Message ACE_Queue.
 
 int
