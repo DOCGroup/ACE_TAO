@@ -1,3 +1,9 @@
+Sun Jan 4 16:04:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Utils/Server_Main.cpp:
+
+	  Another wrong macros usage problem.
+
 Sun Jan 4 16:01:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FT_App/FT_App.mpc:
