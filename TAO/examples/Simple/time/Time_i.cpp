@@ -35,7 +35,7 @@ Time_i::orb (CORBA::ORB_ptr o)
 
 CORBA::Long
 Time_i::time (CORBA::Environment &)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Long (ACE_OS::time (0));
 }
@@ -44,7 +44,7 @@ Time_i::time (CORBA::Environment &)
 
 void 
 Time_i::shutdown (CORBA::Environment & )
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",
