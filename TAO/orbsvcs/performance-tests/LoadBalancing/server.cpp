@@ -15,10 +15,15 @@ ACE_RCSID (LoadBalancing,
 
 const char *ior_output_file = "test.ior";
 
+CORBA::Float reject_threshold = 0;
+CORBA::Float critical_threshold = 0;
+CORBA::Float dampening = 0;
+const char * strategy = "Random";
+
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:s:r:c:d:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -28,11 +33,34 @@ parse_args (int argc, char *argv[])
         ior_output_file = get_opts.opt_arg ();
         break;
 
+      case 's':
+        strategy = get_opts.opt_arg ();
+        break;
+
+      case 'r':
+        reject_threshold =
+          ACE_static_cast (CORBA::Float, ::atof (get_opts.opt_arg ()));
+        break;
+
+      case 'c':
+        critical_threshold =
+          ACE_static_cast (CORBA::Float, ::atof (get_opts.opt_arg ()));
+        break;
+
+      case 'd':
+        dampening =
+          ACE_static_cast (CORBA::Float, ::atof (get_opts.opt_arg ()));
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
+                           "usage:  %s\n"
+                           "  -o <iorfile>\n"
+                           "  -s <RoundRobin | Random | LeastLoaded>\n"
+                           "  -r <reject threshold>    (LeastLoaded only)\n"
+                           "  -c <critical threshold>  (LeastLoaded only)\n"
+                           "  -d <damping value>       (LeastLoaded only)\n"
                            "\n",
                            argv [0]),
                           -1);
@@ -103,6 +131,70 @@ join_object_group (CORBA::ORB_ptr orb,
                     group.in ()
                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (foo);
+
+          PortableGroup::Properties props (1);
+          props.length (1);
+          props[0].nam.length (1);
+          props[0].nam[0].id =
+            CORBA::string_dup ("org.omg.CosLoadBalancing.StrategyInfo");
+
+          CosLoadBalancing::StrategyInfo strategy_info;
+
+          strategy_info.name = CORBA::string_dup (strategy);
+
+          if (ACE_OS::strcasecmp (strategy, "LeastLoaded") == 0
+              && (reject_threshold != 0
+                  || critical_threshold != 0
+                  || dampening != 0))
+            {
+              CORBA::ULong len = 1;
+
+              PortableGroup::Properties & props =
+                strategy_info.props;
+
+              if (reject_threshold != 0)
+                {
+                  const CORBA::ULong i = len - 1;
+
+                  props.length (len++);
+
+                  props[i].nam.length (1);
+                  props[i].nam[0].id =
+                    CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.RejectThreshold");
+                  props[i].val <<= reject_threshold;
+                }
+
+              if (critical_threshold != 0)
+                {
+                  const CORBA::ULong i = len - 1;
+
+                  props.length (len++);
+
+                  props[i].nam.length (1);
+                  props[i].nam[0].id =
+                    CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.CriticalThreshold");
+                  props[i].val <<= critical_threshold;
+                }
+
+              if (dampening != 0)
+                {
+                  const CORBA::ULong i = len - 1;
+
+                  props.length (len++);
+
+                  props[i].nam.length (1);
+                  props[i].nam[0].id =
+                    CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.Dampening");
+                  props[i].val <<= dampening;
+                }
+
+            }
+
+          props[0].val <<= strategy_info;
+
+          lm->set_default_properties (props
+                                      ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
       ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
         {
