@@ -1,3 +1,25 @@
+Mon May 12 13:49:54 1997    <irfan@TWOSTEP>
+
+	* ace/Thread_Manager.cpp (wait): We have to make sure that while
+ 	  we wait for these threads to exit, we do not have the
+ 	  lock. Therefore we make a copy of all interesting entries and
+ 	  let go of the lock. We then do the join().
+
+	* ace/Task.cpp (wait): Removed the extra locking in wait(). The
+ 	  Thread Manager will handle this correctly.
+
+	* ace/ACE.cpp (register_stdin_handler): Changed the options such
+	  that the Thread Manager used for the adapter is passed along to
+	  the method executed by the new thread. We can then notify the
+	  thread manager when this adapter thread exits.
+
+	* examples/ASX/Event_Server/Event_Server: Changed the way the
+ 	  reference count was being kept on the context. Now, the
+ 	  reference count starts with zero and every instance and every
+ 	  active Task increments it. This works well as Task::close() is
+ 	  called one from the module being deleted and from the active
+ 	  thread going away.
+
 Mon May 12 11:11:51 1997    <harrison@samba.cs.wustl.edu>
 
 	* ace/Process.*: Removed the old ACE_Process and replaced it with

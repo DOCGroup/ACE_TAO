@@ -130,12 +130,11 @@ ACE_Task_Base::wait (void)
 {
   ACE_TRACE ("ACE_Task_Base::wait");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-
-  if (this->thr_count_ <= 0)
-    return 0;
-  else
+  // If we don't have a thread manager, we probably were never activated
+  if (this->thr_mgr () != 0)
     return this->thr_mgr ()->wait_task (this);
+  else
+    return 0;
 }
 
 // Suspend a task.
@@ -175,6 +174,10 @@ ACE_Task_Base::activate (long flags,
 #if defined (ACE_MT_SAFE)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
   
+  // If the task passed in is zero, we will use <this>
+  if (task == 0)
+    task = this;
+
   if (this->thr_count_ > 0 && force_active == 0)
     return 1; // Already active.
   else

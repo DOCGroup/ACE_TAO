@@ -327,13 +327,13 @@ private:
   // This call updates the TSS cache if possible to speed up
   // subsequent searches.
 
-  int apply_task (ACE_Task_Base *task, THR_FUNC, int = 0);
+  int apply_task (ACE_Task_Base *task, THR_FUNC, int  = 0);
   // Apply <func> to all members of the table that match the <task>
 
-  int apply_grp (int grp_id, THR_FUNC, int = 0);
+  int apply_grp (int grp_id, THR_FUNC, int  = 0);
   // Apply <func> to all members of the table that match the <grp_id>.
 
-  int apply_all (THR_FUNC, int = 0);
+  int apply_all (THR_FUNC, int  = 0);
   // Apply <func> to all members of the table.
 
   int join_thr (int i);

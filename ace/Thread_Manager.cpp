@@ -469,9 +469,11 @@ ACE_Thread_Manager::cancel_thr (int i)
 }
 
 int
-ACE_Thread_Manager::kill_thr (int i, int signum)
+ACE_Thread_Manager::kill_thr (int i, int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
+
+  int signum = (int) arg;
 
   int result = ACE_Thread::kill ((ACE_thread_t) this->thr_table_[i].thr_id_,
 				 signum);
@@ -728,8 +730,34 @@ ACE_Thread_Manager::wait_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait_grp");
 
-  return this->apply_grp (grp_id, 
-			  THR_FUNC (&ACE_Thread_Manager::join_thr));
+  int copy_count = 0;
+  ACE_Thread_Descriptor *copy_table = 0;
+
+  // We have to make sure that while we wait for these threads to
+  // exit, we do not have the lock. Therefore we make a copy of all
+  // interesting entries and let go of the lock.
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+    copy_table = new ACE_Thread_Descriptor [this->current_count_];  
+
+    for (size_t i = 0; i < this->current_count_; i++)
+      if (this->thr_table_[i].grp_id_ == grp_id)
+	{
+	  copy_table[copy_count] = this->thr_table_[i];
+	  copy_count++;
+	}
+  }
+  
+  // Now to do the actual work
+  int result = 0;
+  for (size_t i = 0; i < copy_count && result != -1; i++)
+    if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
+      result = -1;
+  
+  delete []copy_table;
+
+  return result;
 }
 
 // Must be called when thread goes out of scope to clean up its table
@@ -805,17 +833,34 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
 int 
 ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
 {
-  // This method will be implemented in the future.  The way we
-  // thought about it is by adding a linked list of pointers to
-  // ACE_Condition_Thread_Mutex, where one will be allocated
-  // dynamically when needed.  Broadcasting the waiters will be done
-  // in a similar manner to what's done today. When a thread is
-  // removed (in remove_thr()) we'll check whether it is last in its
-  // task and whether "somebody" is waiting for this task to end, if
-  // so we'll broadcast the waiters.
+  int copy_count = 0;
+  ACE_Thread_Descriptor *copy_table = 0;
 
-  return this->apply_task (task, 
-			   THR_FUNC (&ACE_Thread_Manager::join_thr));
+  // We have to make sure that while we wait for these threads to
+  // exit, we do not have the lock. Therefore we make a copy of all
+  // interesting entries and let go of the lock.
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+    copy_table = new ACE_Thread_Descriptor [this->current_count_];  
+
+    for (size_t i = 0; i < this->current_count_; i++)
+      if (this->thr_table_[i].task_ == task)
+	{
+	  copy_table[copy_count] = this->thr_table_[i];
+	  copy_count++;
+	}
+  }
+  
+  // Now to do the actual work
+  int result = 0;
+  for (size_t i = 0; i < copy_count && result != -1; i++)
+    if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
+      result = -1;
+  
+  delete []copy_table;
+
+  return result;
 }
 
 // Suspend a task
