@@ -1,3 +1,11 @@
+Fri Jan 11 17:36:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Removed the #if defined clause for the
+	  TAO_NAMESPACE definition. Now TAO_NAMESPACE will define
+	  namespace by default with no conditionality associated. The
+	  macro has been left behind for backward compatibility. This
+	  shoudl fix the LynxOS builds.
+
 Fri Jan 11 12:28:48 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/tests/Security/Makefile (DIRS): 
