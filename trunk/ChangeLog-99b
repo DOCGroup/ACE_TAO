@@ -1,3 +1,15 @@
+Thu Jun 10 12:47:52 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linux-lxpthreads.h: removed ACE_HAS_AIO_CALLS.
+          It's now enabled in the platform_macros.GNU file:
+
+        * include/makeinclude/platform_linux_lxpthread.GNU: added
+          automatic detection of AIO support, based on existence
+          of /usr/lib/librt.so.
+
+        Thanks to Jake Hamby <jehamby@anobject.com> for reporting that
+        not all Linux platforms have AIO support.
+
 Thu Jun 10 10:17:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: with Sun C++ 5.0, #define
