@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Default_Protocols_Hooks.h"
+#include "PolicyC.h"
 #include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
