@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "IOP_CodecC.h"
@@ -41,7 +41,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -50,7 +50,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for IOP::Codec.
 
@@ -96,7 +96,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (void)
   : CORBA::UserException (
@@ -188,11 +188,16 @@ void IOP::Codec::InvalidTypeForEncoding::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr IOP::Codec::InvalidTypeForEncoding::_type (void) const
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("This TAO-specific method is now")
+              ACE_LIB_TEXT (" deprecated and will be removed")
+              ACE_LIB_TEXT (" in future versions.\n")));
+  
   return ::IOP::Codec::_tc_InvalidTypeForEncoding;
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Codec_InvalidTypeForEncoding[] =
 {
@@ -233,7 +238,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_InvalidTypeForEncoding (
   &_tc_TAO_tc_IOP_Codec_InvalidTypeForEncoding;
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::FormatMismatch::FormatMismatch (void)
   : CORBA::UserException (
@@ -325,11 +330,16 @@ void IOP::Codec::FormatMismatch::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr IOP::Codec::FormatMismatch::_type (void) const
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("This TAO-specific method is now")
+              ACE_LIB_TEXT (" deprecated and will be removed")
+              ACE_LIB_TEXT (" in future versions.\n")));
+  
   return ::IOP::Codec::_tc_FormatMismatch;
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Codec_FormatMismatch[] =
 {
@@ -366,7 +376,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_FormatMismatch (
   &_tc_TAO_tc_IOP_Codec_FormatMismatch;
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::TypeMismatch::TypeMismatch (void)
   : CORBA::UserException (
@@ -458,11 +468,16 @@ void IOP::Codec::TypeMismatch::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr IOP::Codec::TypeMismatch::_type (void) const
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("This TAO-specific method is now")
+              ACE_LIB_TEXT (" deprecated and will be removed")
+              ACE_LIB_TEXT (" in future versions.\n")));
+  
   return ::IOP::Codec::_tc_TypeMismatch;
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Codec_TypeMismatch[] =
 {
@@ -597,7 +612,7 @@ IOP::Codec::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Codec[] =
 {
@@ -630,7 +645,7 @@ namespace IOP
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_EncodingFormat[] =
 {
@@ -669,7 +684,7 @@ namespace IOP
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Encoding[] =
 {
@@ -743,7 +758,7 @@ namespace IOP
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 IOP::Encoding::_tao_any_destructor (
@@ -756,7 +771,7 @@ IOP::Encoding::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for IOP::CodecFactory.
 
@@ -802,7 +817,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 IOP::CodecFactory::UnknownEncoding::UnknownEncoding (void)
   : CORBA::UserException (
@@ -894,11 +909,16 @@ void IOP::CodecFactory::UnknownEncoding::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr IOP::CodecFactory::UnknownEncoding::_type (void) const
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("This TAO-specific method is now")
+              ACE_LIB_TEXT (" deprecated and will be removed")
+              ACE_LIB_TEXT (" in future versions.\n")));
+  
   return ::IOP::CodecFactory::_tc_UnknownEncoding;
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_CodecFactory_UnknownEncoding[] =
 {
@@ -1036,7 +1056,7 @@ IOP::CodecFactory::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_CodecFactory[] =
 {
@@ -1073,7 +1093,32 @@ namespace IOP
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IOP::Encoding &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.format) &&
+    (strm << CORBA::Any::from_octet (_tao_aggregate.major_version)) &&
+    (strm << CORBA::Any::from_octet (_tao_aggregate.minor_version));
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IOP::Encoding &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.format) &&
+    (strm >> CORBA::Any::to_octet (_tao_aggregate.major_version)) &&
+    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor_version));
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
