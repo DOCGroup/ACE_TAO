@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-//=============================================================================
+//====================================================================
 /**
  *  @file    Service_Config.h
  *
@@ -8,7 +8,7 @@
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
-//=============================================================================
+//====================================================================
 
 #ifndef ACE_SERVICE_CONFIG_H
 #define ACE_SERVICE_CONFIG_H
@@ -28,6 +28,7 @@
 
 
 // Forward decl.
+class ACE_Service_Object;
 class ACE_Service_Type;
 class ACE_Service_Type_Impl;
 class ACE_Service_Repository;
