@@ -79,9 +79,7 @@ public:
   // return the underlying output stream
 
 protected:
-  void start (CORBA::Boolean is_roundtrip,
-              TAO_GIOP::Message_Type message_type,
-              CORBA_Environment &ACE_TRY_ENV =
+  void start (CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Establishes a connection to the remote server, initializes
@@ -199,7 +197,7 @@ private:
   // send/reply code and the system exceptions.
 
 private:
-  TAO_InputCDR inp_stream_;
+  TAO_GIOP_Message_State message_state_;
   // Stream into which the reply is placed.
 
   TAO_Synch_Reply_Dispatcher rd_;
@@ -249,8 +247,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Send request, without blocking for any response.
 
+  TAO_InputCDR &inp_stream (void);
+  // return the underlying input stream
+
 private:
-  TAO_InputCDR inp_stream_;
+  TAO_GIOP_Message_State message_state_;
   // Stream into which the request is placed.
 
   TAO_Synch_Reply_Dispatcher rd_;

@@ -23,7 +23,6 @@
 #include "tao/corbafwd.h"
 #include "tao/Sequence.h"
 #include "tao/Typecode.h"
-#include "tao/GIOP.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -118,16 +117,28 @@ public:
   // not clear this this is the best place to specify this.  The actual
   // timeout values will be kept in the Policies.
 
+  virtual void start_request (TAO_ORB_Core *orb_core,
+                              const TAO_Profile *profile,
+                              const char* opname,
+                              CORBA::ULong request_id,
+                              CORBA::Boolean is_twoway,
+                              TAO_OutputCDR &output,
+                              CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Fill into <output> the right headers to make a request.
+
+  virtual void start_locate (TAO_ORB_Core *orb_core,
+                             const TAO_Profile *profile,
+                             CORBA::ULong request_id,
+                             TAO_OutputCDR &output,
+                             CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Fill into <output> the right headers to make a locate request.
+
   virtual int send_request (TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
                             int twoway) = 0;
   // Default action to be taken for send request.
-
-  TAO_InputCDR *input_cdr_stream (void) const;
-  // Get the CDR stream for reading the input message.
-
-  void destroy_cdr_stream (TAO_InputCDR *) const;
-  // Release a CDR stream, simply pass it to the RMS...
 
   // = Get and set methods for the ORB Core.
 
@@ -182,43 +193,6 @@ protected:
 
   TAO_Wait_Strategy *ws_;
   // Strategy for waiting for the reply after sending the request.
-
-  TAO_GIOP_Version version_;
-  // Version information found in the incoming message.
-};
-
-class TAO_Export TAO_IOP_Version
-{
-  // = TITLE
-  //   Major and Minor version number of the Inter-ORB Protocol.
-public:
-  CORBA::Octet major;
-  // Major version number
-
-  CORBA::Octet minor;
-  // Minor version number
-
-  TAO_IOP_Version (const TAO_IOP_Version &src);
-  // Copy constructor
-
-  TAO_IOP_Version (CORBA::Octet maj = 0,
-           CORBA::Octet min = 0);
-  // Default constructor.
-
-  ~TAO_IOP_Version (void);
-  // Destructor.
-
-  void set_version (CORBA::Octet maj, CORBA::Octet min);
-  // Explicitly set the major and minor version.
-
-  TAO_IOP_Version &operator= (const TAO_IOP_Version &src);
-  // Copy operator.
-
-  int operator== (const TAO_IOP_Version &src);
-  // Equality operator
-
-  int operator== (const TAO_IOP_Version *&src);
-  // Equality operator
 };
 
 class TAO_Export TAO_Profile
@@ -372,7 +346,10 @@ public:
                                TAO_MProfile &mprofile) = 0;
   // Create the corresponding profile for this endpoint.
 
-  virtual int open (TAO_ORB_Core *orb_core, ACE_CString &address) = 0;
+  virtual int open (TAO_ORB_Core *orb_core,
+                    int version_major,
+                    int version_minor,
+                    ACE_CString &address) = 0;
   // method to initialize acceptor for address.
 
   virtual int open_default (TAO_ORB_Core *orb_core) = 0;

@@ -37,6 +37,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Sequence.h"
+#include "tao/CDR.h"
 
 class TAO_Transport;
 class TAO_ORB_Core;
@@ -124,59 +125,141 @@ public:
   TAO_opaque component_data;
 };
 
+// ****************************************************************
+
 typedef TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>
         TAO_IOP_MultipleComponentProfile;
 
-// namespace TAO_GIOP
-
-struct TAO_GIOP_Version
-{
-  CORBA::Octet major;
-  CORBA::Octet minor;
-};
-
-class TAO_GIOP_MessageHeader
+class TAO_Export TAO_GIOP_Version
 {
   // = TITLE
-  //   This is the header sent with ever GIOP request!
-
+  //   Major and Minor version number of the Inter-ORB Protocol.
 public:
+  CORBA::Octet major;
+  // Major version number
 
-  TAO_GIOP_MessageHeader (void);
-  // Constructor.
+  CORBA::Octet minor;
+  // Minor version number
 
-  // version numbers
-  enum
-  {
-    // = DESCRIPTION
-    //   GIOP protocol version 1.0 information.
+  TAO_GIOP_Version (const TAO_GIOP_Version &src);
+  // Copy constructor
 
-    MY_MAJOR = 1,
-    MY_MINOR = 0
-  };
+  TAO_GIOP_Version (CORBA::Octet maj = TAO_DEF_GIOP_MAJOR,
+                    CORBA::Octet min = TAO_DEF_GIOP_MINOR);
+  // Default constructor.
 
-  CORBA::Octet magic [4]; // "GIOP"
-  TAO_GIOP_Version giop_version;
-  CORBA::Octet byte_order; // 0 = big, 1 = little
-  CORBA::Octet message_type; // MsgType above
-  CORBA::ULong message_size; // in byte_order!
+  ~TAO_GIOP_Version (void);
+  // Destructor.
+
+  void set_version (CORBA::Octet maj, CORBA::Octet min);
+  // Explicitly set the major and minor version.
+
+  TAO_GIOP_Version &operator= (const TAO_GIOP_Version &src);
+  // Copy operator.
+
+  int operator== (const TAO_GIOP_Version &src);
+  int operator!= (const TAO_GIOP_Version &src);
+  // Equality operator
 };
 
-// defined by GIOP 1.0 protocol @@ Is this portable? The structure
-// above could have some padding on machines with absurd padding
-// requirements (like 8 byte boundaries); hence the size of it may not
-// match the size of the header on the wire.
-//#define       TAO_GIOP_HEADER_LEN sizeof (TAO_GIOP_MessageHeader)
-// @@ - I made this explicitly 12 (ASG)
+// ****************************************************************
+
+class TAO_GIOP_Message_State
+{
+  // = TITLE
+  //   Represent the state of an incoming GIOP message.
+  //
+  // = DESCRIPTION
+  //   As the ORB processes a GIOP messages it needs to keep track of
+  //   how much of the message has been read, if there are any
+  //   fragments following this message, the contents of the header,
+  //   etc.
+  //   Notice that it is not a direct mapping from the
+  //   GIOP::MessageHeader IDL structure, for example, the message
+  //   flags introduced in GIOP 1.1 are expanded in several fields.
+
+public:
+  TAO_GIOP_Message_State (TAO_ORB_Core* orb_core);
+  // Constructor.
+  // The parameters are used to initialize the InputCDR stream
+
+  void reset (void);
+  // Reset the message header state and prepare it to receive the next
+  // event.
+  // already read.
+  // This method will reset the header to indicate that the last
+  // message was procesno data (not
+  // event the
+
+  int header_received (void) const;
+  // Has the header been received?
+
+  int is_complete (void);
+  // Check if the current message is complete, adjusting the fragments
+  // if required...
+
+  // = The GIOP header for the current fragment...
+  CORBA::Octet magic [4];        // "GIOP"
+  TAO_GIOP_Version giop_version; // 1.1 or 1.0
+  CORBA::Octet byte_order;       // 0 = big, 1 = little
+  CORBA::Octet more_fragments;   // For GIOP 1.1 (Requests and Replys)
+  CORBA::Octet message_type;     // MsgType above
+  CORBA::ULong message_size;     // in byte_order!
+
+  CORBA::ULong current_offset;
+  // How much of the payload has been received
+
+  TAO_InputCDR cdr;
+  // This is the InputCDR that will be used to decode the message.
+
+  ACE_Message_Block* fragments_begin;
+  ACE_Message_Block* fragments_end;
+  // The fragments are collected in a chain of message blocks (using
+  // the cont() field).  When the complete message is received the
+  // chain is reassembled into <cdr>
+
+  CORBA::Octet first_fragment_byte_order;
+  // The byte order for the the first fragment
+  // @@ The current implementation cannot handle fragments with
+  //    different byte orders, this should not be a major problem
+  //    because:
+  //    1) It is unlikely that we are going to receive fragments.
+  //    2) The spec *seems* to allow different byte_orders, but it is
+  //       unlikely that any ORB will do that.
+  //    3) Even if we allowed that at this layer the CDR classes are
+  //       not prepared to handle that.
+
+  TAO_GIOP_Version first_fragment_giop_version;
+  // The GIOP version for the first fragment
+  // @@ Same as above, all GIOP versions must match.
+
+  CORBA::Octet first_fragment_message_type;
+  // If the messages are chained this represents the message type for
+  // the *complete* message (remember that the last message will be
+  // fragment and the upper level needs to know if it is a request,
+  // locate request or what).
+
+private:
+  int append_fragment (ACE_Message_Block* current);
+  // Append <current> to the list of fragments
+  // Also resets the state, because the current message was consumed.
+};
+
+// The GIOP message header size
 #define TAO_GIOP_HEADER_LEN 12
 
 // The offset the message_size field inside the GIOP HEADER
+#define TAO_GIOP_VERSION_MAJOR_OFFSET 4
+#define TAO_GIOP_VERSION_MINOR_OFFSET 5
+#define TAO_GIOP_MESSAGE_FLAGS_OFFSET 6
+#define TAO_GIOP_MESSAGE_TYPE_OFFSET 7
 #define TAO_GIOP_MESSAGE_SIZE_OFFSET 8
 
 // The IIOP Lite header length and the offset of the message size
 // field in it.
 #define TAO_GIOP_LITE_HEADER_LEN 5
 #define TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET 0
+#define TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET 4
 
 // Support for Implicit ORB Service Context.
 typedef CORBA::ULong TAO_GIOP_ServiceID;
@@ -191,6 +274,8 @@ enum
   // More service IDs may be defined by OMG.
   // This is where our RIOP service ID will be defined...
 };
+
+// namespace TAO_GIOP
 
 class TAO_GIOP_ServiceContext
 {
@@ -321,17 +406,18 @@ public:
     Fragment = 7                // by both.
   };
 
-  static void close_connection (TAO_Transport *transport,
+  static void close_connection (const TAO_GIOP_Version &version,
+                                TAO_Transport *transport,
                                 void *ctx);
   // Close a connection, first sending GIOP::CloseConnection.
 
-  static CORBA::Boolean start_message (TAO_GIOP::Message_Type t,
+  static CORBA::Boolean start_message (const TAO_GIOP_Version &version,
+                                       TAO_GIOP::Message_Type t,
                                        TAO_OutputCDR &msg,
                                        TAO_ORB_Core* orb_core);
   // Build the header for a message of type <t> into stream <msg>.
 
-  static CORBA::Boolean write_request_header (const TAO_GIOP_ServiceContextList& svc_ctx,
-                                              CORBA::ULong request_id,
+  static CORBA::Boolean write_request_header (CORBA::ULong request_id,
                                               CORBA::Boolean is_roundtrip,
                                               const TAO_opaque& key,
                                               const char* opname,
@@ -355,7 +441,8 @@ public:
                         size_t len);
   // Print out a message header.
 
-  static void send_error (TAO_Transport *transport);
+  static void send_error (const TAO_GIOP_Version &version,
+                          TAO_Transport *transport);
   // Send an error message back to a caller.
 
   static ssize_t read_buffer (TAO_Transport *transport,
@@ -369,33 +456,29 @@ public:
 
   static int read_header (TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,
-                          TAO_GIOP_MessageHeader &header,
+                          TAO_GIOP_Message_State &state,
                           CORBA::ULong &header_size,
                           TAO_InputCDR &input);
   static int handle_input (TAO_Transport *transport,
                            TAO_ORB_Core *orb_core,
-                           TAO_GIOP_MessageHeader &header,
-                           CORBA::ULong &current_offset,
-                           TAO_InputCDR& input);
+                           TAO_GIOP_Message_State &state);
 
   static int parse_reply (TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,
-                          TAO_InputCDR& input,
-                          const TAO_GIOP_MessageHeader& header,
+                          TAO_GIOP_Message_State& state,
                           TAO_GIOP_ServiceContextList& reply_ctx,
                           CORBA::ULong& request_id,
                           CORBA::ULong& reply_status);
   static void process_server_message (TAO_Transport *transport,
                                       TAO_ORB_Core *orb_core,
-                                      TAO_InputCDR &cdr,
-                                      const TAO_GIOP_MessageHeader& header);
+                                      TAO_InputCDR &input,
+                                      const TAO_GIOP_Message_State& state);
 
   static void process_server_request (TAO_Transport *transport,
                                       TAO_ORB_Core* orb_core,
                                       TAO_InputCDR &input,
                                       TAO_OutputCDR &output,
-                                      CORBA::Boolean &response_required,
-                                      CORBA::ULong &request_id);
+                                      const TAO_GIOP_Version& version);
   // A request was received on the server side.
   // <transport> is the source of the message (and thus where the
   // replies should be sent).
@@ -409,8 +492,7 @@ public:
                                      TAO_ORB_Core* orb_core,
                                      TAO_InputCDR &input,
                                      TAO_OutputCDR &output,
-                                     CORBA::Boolean &response_required,
-                                     CORBA::ULong &request_id);
+                                     const TAO_GIOP_Version& version);
   // A LocateRequest was received on the server side.
   // <transport> is the source of the message (and thus where the
   // replies should be sent).
@@ -420,7 +502,8 @@ public:
   // <request_id> and <response_required> are set as part of the
   // message processing.
 
-  static int send_reply_exception (TAO_Transport *transport,
+  static int send_reply_exception (const TAO_GIOP_Version &version,
+                                   TAO_Transport *transport,
                                    TAO_ORB_Core* orb_core,
                                    CORBA::ULong request_id,
                                    CORBA::Exception *x);
@@ -428,12 +511,14 @@ public:
   // resulted in some kind of exception.
 
 private:
-  static CORBA::Boolean start_message_std (TAO_GIOP::Message_Type t,
+  static CORBA::Boolean start_message_std (const TAO_GIOP_Version &version,
+                                           TAO_GIOP::Message_Type t,
                                            TAO_OutputCDR &msg);
   // Build the standard header for a message of type <t> into
   // stream <msg>.
 
-  static CORBA::Boolean start_message_lite (TAO_GIOP::Message_Type t,
+  static CORBA::Boolean start_message_lite (const TAO_GIOP_Version &version,
+                                            TAO_GIOP::Message_Type t,
                                             TAO_OutputCDR &msg);
   // Build the lightweight header for a message of type <t> into
   // stream <msg>.
@@ -460,14 +545,14 @@ private:
 
   static int parse_header (TAO_ORB_Core *orb_core,
                            TAO_InputCDR &input,
-                           TAO_GIOP_MessageHeader& header);
+                           TAO_GIOP_Message_State& state);
   // Parse the header, extracting all the relevant info.
 
   static int parse_header_std (TAO_InputCDR &input,
-                               TAO_GIOP_MessageHeader& header);
+                               TAO_GIOP_Message_State& state);
 
   static int parse_header_lite (TAO_InputCDR &input,
-                                TAO_GIOP_MessageHeader& header);
+                                TAO_GIOP_Message_State& state);
 };
 
 #if defined (__ACE_INLINE__)

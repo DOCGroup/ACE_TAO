@@ -328,7 +328,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
         ACE_DEBUG ((LM_DEBUG,
                     "%s: %s\n",
                     anomaly_severity_msg,
-                    (*anomaly)->description));
+                    (*anomaly)->description.in ()));
 
         // Store the anomaly in the anomaly sequence out parameter
         anomalies[anomaly_index] = **anomaly;

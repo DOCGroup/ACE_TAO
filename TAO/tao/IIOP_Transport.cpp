@@ -5,6 +5,7 @@
 
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Connect.h"
+#include "tao/IIOP_Profile.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
@@ -58,43 +59,6 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
 {
 }
 
-TAO_IIOP_Server_Transport::
-    TAO_IIOP_Server_Transport (TAO_IIOP_Server_Connection_Handler *handler,
-                               TAO_ORB_Core* orb_core)
-  : TAO_IIOP_Transport (handler, orb_core),
-    server_handler_ (handler)
-{
-}
-
-TAO_IIOP_Client_Transport::
-    TAO_IIOP_Client_Transport (TAO_IIOP_Client_Connection_Handler *handler,
-                               TAO_ORB_Core *orb_core)
-  :  TAO_IIOP_Transport (handler,
-                         orb_core),
-     client_handler_ (handler)
-{
-}
-
-TAO_IIOP_Server_Transport::~TAO_IIOP_Server_Transport (void)
-{
-}
-
-TAO_IIOP_Client_Transport::~TAO_IIOP_Client_Transport (void)
-{
-}
-
-TAO_IIOP_Client_Connection_Handler *
-TAO_IIOP_Client_Transport::client_handler (void)
-{
-  return this->client_handler_;
-}
-
-TAO_IIOP_Server_Connection_Handler *
-TAO_IIOP_Server_Transport::server_handler (void)
-{
-  return this->server_handler_;
-}
-
 TAO_IIOP_Handler_Base *&
 TAO_IIOP_Transport::handler (void)
 {
@@ -117,6 +81,122 @@ ACE_HANDLE
 TAO_IIOP_Transport::handle (void)
 {
   return this->handler_->get_handle ();
+}
+
+// ****************************************************************
+
+TAO_IIOP_Server_Transport::
+    TAO_IIOP_Server_Transport (TAO_IIOP_Server_Connection_Handler *handler,
+                               TAO_ORB_Core* orb_core)
+  : TAO_IIOP_Transport (handler, orb_core),
+    server_handler_ (handler),
+    message_state_ (orb_core)
+{
+}
+
+TAO_IIOP_Server_Transport::~TAO_IIOP_Server_Transport (void)
+{
+}
+
+// ****************************************************************
+
+TAO_IIOP_Client_Transport::
+    TAO_IIOP_Client_Transport (TAO_IIOP_Client_Connection_Handler *handler,
+                               TAO_ORB_Core *orb_core)
+  :  TAO_IIOP_Transport (handler,
+                         orb_core),
+     client_handler_ (handler)
+{
+}
+
+TAO_IIOP_Client_Transport::~TAO_IIOP_Client_Transport (void)
+{
+}
+
+TAO_IIOP_Client_Connection_Handler *
+TAO_IIOP_Client_Transport::client_handler (void)
+{
+  return this->client_handler_;
+}
+
+void
+TAO_IIOP_Client_Transport::
+    start_request (TAO_ORB_Core *orb_core,
+                   const TAO_Profile* pfile,
+                   const char* opname,
+                   CORBA::ULong request_id,
+                   CORBA::Boolean is_roundtrip,
+                   TAO_OutputCDR &output,
+                   CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  const TAO_IIOP_Profile* profile =
+    ACE_dynamic_cast(const TAO_IIOP_Profile*,pfile);
+
+  // Obtain object key.
+  const TAO_ObjectKey& key = profile->object_key ();
+
+  // @@ This should be implemented in the transport object, which
+  //    would query the profile to obtain the version...
+  if (TAO_GIOP::start_message (profile->version (),
+                               TAO_GIOP::Request,
+                               output,
+                               orb_core) == 0)
+    ACE_THROW (CORBA::MARSHAL ());
+
+  // Then fill in the rest of the RequestHeader
+  //
+  // The first element of header is service context list;
+  // transactional context would be acquired here using the
+  // transaction service APIs.  Other kinds of context are as yet
+  // undefined.
+  //
+  // Last element of request header is the principal; no portable way
+  // to get it, we just pass empty principal (convention: indicates
+  // "anybody").  Steps upward in security include passing an
+  // unverified user ID, and then verifying the message (i.e. a dummy
+  // service context entry is set up to hold a digital signature for
+  // this message, then patched shortly before it's sent).
+  static CORBA::Principal_ptr principal = 0;
+
+  if (TAO_GIOP::write_request_header (request_id,
+                                      is_roundtrip,
+                                      key,
+                                      opname,
+                                      principal,
+                                      output,
+                                      orb_core) == 0)
+    ACE_THROW (CORBA::MARSHAL ());
+}
+
+void
+TAO_IIOP_Client_Transport::
+    start_locate (TAO_ORB_Core *orb_core,
+                  const TAO_Profile* pfile,
+                  CORBA::ULong request_id,
+                  TAO_OutputCDR &output,
+                  CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  const TAO_IIOP_Profile* profile =
+    ACE_dynamic_cast(const TAO_IIOP_Profile*,pfile);
+
+  // Obtain object key.
+  const TAO_ObjectKey& key = profile->object_key ();
+
+  // @@ This should be implemented in the transport object, which
+  //    would query the profile to obtain the version...
+  if (TAO_GIOP::start_message (profile->version (),
+                               TAO_GIOP::Request,
+                               output,
+                               orb_core) == 0)
+    ACE_THROW (CORBA::MARSHAL ());
+
+
+  if (TAO_GIOP::write_locate_request_header (this->request_id (),
+                                             key,
+                                             output) != 0)
+    ACE_THROW (CORBA::MARSHAL ());
 }
 
 int
@@ -167,13 +247,12 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   //    removed.
   //    Do I make any sense?
 
-  TAO_InputCDR* cdr = this->tms_->get_cdr_stream ();
+  TAO_GIOP_Message_State* message_state =
+    this->tms_->get_message_state ();
 
   int result = TAO_GIOP::handle_input (this,
                                        this->orb_core_,
-                                       this->message_header_,
-                                       this->current_offset_,
-                                       *cdr);
+                                       *message_state);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -187,17 +266,13 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
 
   // OK, the complete message is here...
 
-  TAO_GIOP_MessageHeader header_copy = this->message_header_;
-  this->message_header_.message_size = 0;
-
   TAO_GIOP_ServiceContextList reply_ctx;
   CORBA::ULong request_id;
   CORBA::ULong reply_status;
 
   result = TAO_GIOP::parse_reply (this,
                                   this->orb_core_,
-                                  *cdr,
-                                  header_copy,
+                                  *message_state,
                                   reply_ctx,
                                   request_id,
                                   reply_status);
@@ -207,26 +282,28 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - %p\n",
                     "IIOP_Transport::handle_client_input, parse reply"));
+      message_state->reset ();
       return -1;
     }
 
   if (this->tms_->dispatch_reply (request_id,
                                   reply_status,
-                                  header_copy.giop_version,
+                                  message_state->giop_version,
                                   reply_ctx,
-                                  cdr) != 0)
+                                  message_state) != 0)
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) : IIOP_Client_Transport::"
                     "handle_client_input - "
                     "dispatch reply failed\n"));
+      message_state->reset ();
       return -1;
     }
 
   // This is a NOOP for the Exclusive request case, but it actually
   // destroys the stream in the muxed case.
-  this->tms_->destroy_cdr_stream (cdr);
+  this->tms_->destroy_message_state (message_state);
 
   // Return something to indicate the reply is received.
   return 1;

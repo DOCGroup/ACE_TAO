@@ -26,8 +26,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Reply_Dispatcher;
-struct TAO_GIOP_Version;
-class TAO_InputCDR;
 
 class TAO_Export TAO_Transport_Mux_Strategy
 {
@@ -63,7 +61,7 @@ public:
                               CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
                               TAO_GIOP_ServiceContextList& reply_ctx,
-                              TAO_InputCDR* cdr) = 0;
+                              TAO_GIOP_Message_State* message_state) = 0;
   // Dispatch the reply for <request_id>, cleanup any resources
   // allocated for that request.
 
@@ -71,10 +69,10 @@ public:
   //    the factory simply allocates a new one, in the Exclusive case
   //    the factory returns a pointer to the pre-allocated CDR.
 
-  virtual TAO_InputCDR *get_cdr_stream (void) = 0;
+  virtual TAO_GIOP_Message_State *get_message_state (void) = 0;
   // Get a CDR stream.
 
-  virtual void destroy_cdr_stream (TAO_InputCDR *) = 0;
+  virtual void destroy_message_state (TAO_GIOP_Message_State *) = 0;
   // Destroy a CDR stream.
 };
 
@@ -102,9 +100,9 @@ public:
                               CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
                               TAO_GIOP_ServiceContextList& reply_ctx,
-                              TAO_InputCDR* cdr);
-  virtual TAO_InputCDR *get_cdr_stream (void);
-  virtual void destroy_cdr_stream (TAO_InputCDR *);
+                              TAO_GIOP_Message_State* message_state);
+  virtual TAO_GIOP_Message_State *get_message_state (void);
+  virtual void destroy_message_state (TAO_GIOP_Message_State *);
 
 protected:
   // @@ HASH TABLE???
@@ -134,9 +132,9 @@ public:
                               CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
                               TAO_GIOP_ServiceContextList& reply_ctx,
-                              TAO_InputCDR* cdr);
-  virtual TAO_InputCDR *get_cdr_stream (void);
-  virtual void destroy_cdr_stream (TAO_InputCDR *);
+                              TAO_GIOP_Message_State* message_state);
+  virtual TAO_GIOP_Message_State *get_message_state (void);
+  virtual void destroy_message_state (TAO_GIOP_Message_State *);
 
 protected:
   CORBA::ULong request_id_generator_;

@@ -26,6 +26,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/GIOP.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 
@@ -34,6 +35,7 @@ ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_UNIX_IOP),
     base_acceptor_ (),
+    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0)
 {
 }
@@ -59,6 +61,7 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   ACE_NEW_RETURN (pfile,
                   TAO_UIOP_Profile (addr,
                                     object_key,
+                                    this->version_,
                                     this->orb_core_),
                   -1);
 
@@ -103,8 +106,13 @@ TAO_UIOP_Acceptor::close (void)
 
 int
 TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
+                         int major,
+                         int minor,
                          ACE_CString &address)
 {
+  if (major >= 0 && minor >= 0)
+    this->version_.set_version (ACE_static_cast (CORBA::Octet,major),
+                                ACE_static_cast (CORBA::Octet,minor));
   ACE_UNIX_Addr addr (address.c_str ());
 
   return this->open_i (orb_core, addr);
@@ -135,13 +143,20 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   // @@ If Profile creation is slow we may need to cache the
   //    rendezvous point here
 
+  if (TAO_debug_level > 5)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nTAO (%P|%t) UIOP_Acceptor::open_i - "
+                  "listening on: <%s>\n",
+                  addr.get_path_name ()));
+    }
+
   return 0;
 }
 
 CORBA::ULong
 TAO_UIOP_Acceptor::endpoint_count (void)
 {
-  // @@ for now just assume one!
   return 1;
 }
 

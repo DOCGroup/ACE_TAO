@@ -25,11 +25,12 @@ const char TAO_IIOP_Profile::object_key_delimiter = '/';
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
+                                    const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0),
@@ -42,11 +43,12 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
                                     const TAO_ObjectKey &object_key,
                                     const ACE_INET_Addr &addr,
+                                    const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (port),
-    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0),
@@ -82,7 +84,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
     hint_ (0),
@@ -95,7 +97,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
-    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
     hint_ (0),
@@ -159,9 +161,9 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
   if (!(cdr.read_octet (this->version_.major)
-        && this->version_.major == TAO_IIOP_Profile::DEF_IIOP_MAJOR
+        && this->version_.major == TAO_DEF_GIOP_MAJOR
         && cdr.read_octet (this->version_.minor)
-        && this->version_.minor <= TAO_IIOP_Profile::DEF_IIOP_MINOR))
+        && this->version_.minor <= TAO_DEF_GIOP_MINOR))
   {
     if (TAO_debug_level > 0)
       {
@@ -237,8 +239,8 @@ TAO_IIOP_Profile::parse_string (const char *string,
       // Skip over the "N.n@"
     }
 
-  if (this->version_.major != TAO_IIOP_Profile::DEF_IIOP_MAJOR ||
-      this->version_.minor >  TAO_IIOP_Profile::DEF_IIOP_MINOR)
+  if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
+      this->version_.minor >  TAO_DEF_GIOP_MINOR)
     {
       ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
     }
@@ -490,7 +492,7 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
   // CHAR describing byte order, starting the encapsulation
   stream.write_octet (TAO_ENCAP_BYTE_ORDER);
 
-  // IIOP::TAO_IOP_Version, two characters (version 1.0) padding
+  // The GIOP version
   stream.write_char (this->version_.major);
   stream.write_char (this->version_.minor);
 

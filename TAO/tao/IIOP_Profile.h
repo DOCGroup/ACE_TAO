@@ -20,10 +20,12 @@
 #ifndef TAO_IIOP_PROFILE_H
 #define TAO_IIOP_PROFILE_H
 
-#include "ace/Synch.h"
-#include "ace/INET_Addr.h"
 #include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
+#include "tao/GIOP.h"
+
+#include "ace/Synch.h"
+#include "ace/INET_Addr.h"
 
 class TAO_IIOP_Client_Connection_Handler;
 
@@ -38,13 +40,6 @@ class TAO_Export TAO_IIOP_Profile : public TAO_Profile
   //   This class defines the IIOP profile as specified in the CORBA
   //   specification.
 public:
-  // = Currently, TAO supports IIOP 1.0.
-  enum
-    {
-      DEF_IIOP_MAJOR = 1,
-      DEF_IIOP_MINOR = 0
-    };
-
   static const char object_key_delimiter;
   // The object key delimiter that IIOP uses or expects.
 
@@ -53,6 +48,7 @@ public:
 
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                     const TAO_ObjectKey &object_key,
+                    const TAO_GIOP_Version &version,
                     TAO_ORB_Core *orb_core);
   // Profile constructor, same as above except the object_key has
   // already been marshaled.
@@ -61,6 +57,7 @@ public:
                     CORBA::UShort port,
                     const TAO_ObjectKey &object_key,
                     const ACE_INET_Addr &addr,
+                    const TAO_GIOP_Version &version,
                     TAO_ORB_Core *orb_core);
   //  Profile constructor, this is the most efficient since it
   // doesn't require any address resolution processing.
@@ -132,12 +129,8 @@ public:
   CORBA::UShort port (CORBA::UShort p);
   // Set the port number.
 
-  const TAO_IOP_Version *version (void);
+  const TAO_GIOP_Version& version (void) const;
   // Return a pointer to this profile's version.  This object
-  // maintains ownership.
-
-  const TAO_IOP_Version *version (TAO_IOP_Version *v);
-  // First set the version then return a pointer to it.  This object
   // maintains ownership.
 
   TAO_IIOP_Client_Connection_Handler *&hint (void);
@@ -164,7 +157,7 @@ private:
   CORBA::UShort port_;
   // TCP port number
 
-  TAO_IOP_Version version_;
+  TAO_GIOP_Version version_;
   // IIOP version number.
 
   TAO_ObjectKey object_key_;

@@ -34,17 +34,10 @@ TAO_UIOP_Profile::rendezvous_point (void)
   return this->rendezvous_point_;
 }
 
-ACE_INLINE const TAO_IOP_Version *
-TAO_UIOP_Profile::version (void)
+ACE_INLINE const TAO_GIOP_Version &
+TAO_UIOP_Profile::version (void) const
 {
-  return &this->version_;
-}
-
-ACE_INLINE const TAO_IOP_Version *
-TAO_UIOP_Profile::version (TAO_IOP_Version *v)
-{
-  this->version_ = *v;
-  return &this->version_;
+  return this->version_;
 }
 
 ACE_INLINE TAO_UIOP_Client_Connection_Handler *&

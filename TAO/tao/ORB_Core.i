@@ -114,6 +114,12 @@ TAO_ORB_Core::to_unicode (void) const
   return this->to_unicode_;
 }
 
+ACE_INLINE TAO_GIOP_ServiceContextList&
+TAO_ORB_Core::service_context (void)
+{
+  return this->service_context_;
+}
+
 ACE_INLINE ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {

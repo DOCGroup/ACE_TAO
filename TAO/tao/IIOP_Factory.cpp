@@ -9,6 +9,8 @@ ACE_RCSID(tao, IIOP_Factory, "$Id$")
 
 
 TAO_IIOP_Protocol_Factory::TAO_IIOP_Protocol_Factory (void)
+  :  major_ (TAO_DEF_GIOP_MAJOR),
+     minor_ (TAO_DEF_GIOP_MINOR)
 {
 }
 

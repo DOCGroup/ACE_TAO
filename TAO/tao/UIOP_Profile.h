@@ -43,13 +43,6 @@ class TAO_Export TAO_UIOP_Profile : public TAO_Profile
   // = DESCRIPTION
   //   This class defines the UIOP profile.
 public:
-  // = Currently, TAO supports UIOP 1.0.
-  enum
-    {
-      DEF_UIOP_MAJOR = 1,  // FIXME:  Version numbers?
-      DEF_UIOP_MINOR = 0
-    };
-
   static const char object_key_delimiter;
   // The object key delimiter that UIOP uses or expects.
 
@@ -58,6 +51,7 @@ public:
 
   TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
                     const TAO_ObjectKey &object_key,
+                    const TAO_GIOP_Version &version,
                     TAO_ORB_Core *orb_core);
   // Profile constructor, same as above except the object_key has
   // already been marshaled.  (actually, no marshalling for this protocol)
@@ -65,6 +59,7 @@ public:
   TAO_UIOP_Profile (const char *rendezvous_point,
                     const TAO_ObjectKey &object_key,
                     const ACE_UNIX_Addr &addr,
+                    const TAO_GIOP_Version &version,
                     TAO_ORB_Core *orb_core);
   // Profile constructor
 
@@ -131,12 +126,8 @@ public:
   // resulting pointer.
   // This object maintains ownership of this string.
 
-  const TAO_IOP_Version *version (void);
+  const TAO_GIOP_Version &version (void) const;
   // Return a pointer to this profile's version.  This object
-  // maintains ownership.
-
-  const TAO_IOP_Version *version (TAO_IOP_Version *v);
-  // First set the version then return a pointer to it.  This object
   // maintains ownership.
 
   TAO_UIOP_Client_Connection_Handler *&hint (void);
@@ -160,7 +151,7 @@ private:
   char *rendezvous_point_;
   // String representing the rendezvous point.
 
-  TAO_IOP_Version version_;
+  TAO_GIOP_Version version_;
   // UIOP version number.
 
   TAO_ObjectKey object_key_;

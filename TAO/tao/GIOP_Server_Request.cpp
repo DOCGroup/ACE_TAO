@@ -40,10 +40,12 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_GIOP_ServerRequest::TAO_GIOP_ServerRequest (TAO_InputCDR &input,
-                                                TAO_OutputCDR &output,
-                                                TAO_ORB_Core *orb_core,
-                                                CORBA::Environment &env)
+TAO_GIOP_ServerRequest::
+    TAO_GIOP_ServerRequest (TAO_InputCDR &input,
+                            TAO_OutputCDR &output,
+                            TAO_ORB_Core *orb_core,
+                            const TAO_GIOP_Version &version,
+                            int &parse_error)
   : incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (0),
@@ -58,6 +60,7 @@ TAO_GIOP_ServerRequest::TAO_GIOP_ServerRequest (TAO_InputCDR &input,
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
+    version_ (version),
     service_info_ (),
     request_id_ (0),
     object_key_ (),
@@ -65,11 +68,11 @@ TAO_GIOP_ServerRequest::TAO_GIOP_ServerRequest (TAO_InputCDR &input,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
 
-  this->parse_header (env);
+  parse_error = this->parse_header ();
 }
 
-void
-TAO_GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
+int
+TAO_GIOP_ServerRequest::parse_header_std (void)
 {
   // Tear out the service context ... we currently ignore it, but it
   // should probably be passed to each ORB service as appropriate
@@ -109,6 +112,8 @@ TAO_GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
   if (hdr_status)
     {
       // Do not include NULL character at the end.
+      // @@ This is not getting demarshaled using the codeset
+      //    translators!
       this->operation_.set (input.rd_ptr (),
                             length - 1,
                             0);
@@ -121,13 +126,11 @@ TAO_GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
       hdr_status = input.good_bit ();
     }
 
-  if (!hdr_status)
-    ACE_THROW (CORBA::COMM_FAILURE ());
-
+  return hdr_status ? 0 : -1;
 }
 
-void
-TAO_GIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
+int
+TAO_GIOP_ServerRequest::parse_header_lite (void)
 {
   TAO_InputCDR& input = *this->incoming_;
 
@@ -157,36 +160,37 @@ TAO_GIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
   if (hdr_status)
     {
       // Do not include NULL character at the end.
+      // @@ This is not getting demarshaled using the codeset
+      //    translators!
       this->operation_.set (input.rd_ptr (),
                             length - 1,
                             0);
       hdr_status = input.skip_bytes (length);
     }
 
-  if (!hdr_status)
-    ACE_THROW (CORBA::COMM_FAILURE ());
+  return hdr_status ? 0 : -1;
 }
 
-
-
-void
-TAO_GIOP_ServerRequest::parse_header (CORBA::Environment &env)
+int
+TAO_GIOP_ServerRequest::parse_header (void)
 {
   if (this->orb_core_->orb_params ()->use_lite_protocol ())
-    this->parse_header_lite (env);
+    return this->parse_header_lite ();
   else
-    this->parse_header_std (env);
+    return this->parse_header_std ();
 }
 
 // This constructor is used, by the locate request code
 
-TAO_GIOP_ServerRequest::TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
-                                                CORBA::Boolean &response_expected,
-                                                TAO_ObjectKey &object_key,
-                                                const ACE_CString &operation,
-                                                TAO_OutputCDR &output,
-                                                TAO_ORB_Core *orb_core,
-                                                CORBA::Environment &)
+TAO_GIOP_ServerRequest::
+    TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
+                            CORBA::Boolean &response_expected,
+                            TAO_ObjectKey &object_key,
+                            const ACE_CString &operation,
+                            TAO_OutputCDR &output,
+                            TAO_ORB_Core *orb_core,
+                            const TAO_GIOP_Version &version,
+                            int &parse_error)
   : operation_ (operation),
     incoming_ (0),
     outgoing_ (&output),
@@ -202,11 +206,13 @@ TAO_GIOP_ServerRequest::TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
+    version_ (version),
     service_info_ (0),
     request_id_ (request_id),
     object_key_ (object_key),
     requesting_principal_ (0)
 {
+  parse_error = 0;
 }
 
 TAO_GIOP_ServerRequest::~TAO_GIOP_ServerRequest (void)
@@ -577,10 +583,11 @@ TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
 }
 
 void
-TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &env)
+TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
 {
   // Construct a REPLY header.
-  TAO_GIOP::start_message (TAO_GIOP::Reply,
+  TAO_GIOP::start_message (this->version_,
+                           TAO_GIOP::Reply,
                            *this->outgoing_,
                            this->orb_core_);
 
@@ -607,7 +614,12 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &env)
     }
 
   // Any exception at all.
-  else if (this->exception_)
+  else if (this->exception_ == 0)
+    {
+      // First finish the GIOP header ...
+      this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
+    }
+  else
     {
       CORBA::TypeCode_ptr except_tc;
 
@@ -620,11 +632,8 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &env)
 
       // we use the any's ACE_Message_Block
       TAO_InputCDR cdr (this->exception_->_tao_get_cdr ());
-      (void) this->outgoing_->append (except_tc, &cdr, env);
+      (void) this->outgoing_->append (except_tc, &cdr, ACE_TRY_ENV);
     }
-  else // Normal reply
-    // First finish the GIOP header ...
-    this->outgoing_->write_ulong (TAO_GIOP_NO_EXCEPTION);
 }
 
 CORBA::Object_ptr

@@ -25,7 +25,6 @@
 class TAO_Acceptor;
 class TAO_Connector;
 
-
 class TAO_Export TAO_IIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
@@ -46,6 +45,12 @@ public:
 
   virtual TAO_Connector *make_connector  (void);
   // create a connector
+
+private:
+  int major_;
+  int minor_;
+  // Changing the version number can be used to provide backwards
+  // compatibility with old clients.
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_IIOP_Protocol_Factory)

@@ -40,8 +40,9 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 
 LIBS = -lTAO
-LSRC = $(addsuffix .cpp,$(SHLIB_SRC)) client.cpp
+LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
+PSRC = $(addsuffix .cpp,$(BIN))
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

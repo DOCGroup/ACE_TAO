@@ -48,6 +48,12 @@ public:
 
   virtual TAO_Connector *make_connector  (void);
   // create a connector
+
+private:
+  int major_;
+  int minor_;
+  // Changing the version number can be used to provide backwards
+  // compatibility with old clients.
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)
