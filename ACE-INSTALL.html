@@ -155,7 +155,7 @@ try to help you fix the problems.
 	  patches for the compiler show up we will be able to make
 	  that our compiler of choice on Solaris.
 	</p>
-	
+
   <LI><B> Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
       Energize 3.2. </B> <P>
 
@@ -704,6 +704,17 @@ If you use the GNU GCC g++ compiler please note the following:
 
 The following explains how to build the ACE on <A
 HREF="#unix">UNIX</A> and <A HREF="#win32">Win32</A>.
+
+<h4>General Rules</h4>
+<UL>
+  <li><p>Many features in ACE can be modified by defining some macros in
+      <code>$ACE_ROOT/ace/config.h</code>.  These macros should
+      <em><b>always</b></em> appear <em><b>before</b></em> including
+      your platform specific config file.</p>
+  <li><p>However, if you want to undefine/redefine macros defined in the
+      platform specific config file, these <code>#undef</code> should
+      come <em><b>after</b></em> the config file.</p>
+</UL>
 
 <H4><A NAME="unix">Building and Installing ACE on UNIX</A></H4>
 
