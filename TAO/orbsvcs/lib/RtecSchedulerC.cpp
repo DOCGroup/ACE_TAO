@@ -158,9 +158,9 @@ RtecScheduler::_tao__seq_Dependency_Set::length (CORBA::ULong length)
     this->buffer_ = tmp;
     this->release_ = 1;
 
-    this->length_ = length;
 this->maximum_ = length;
   }
+    this->length_ = length;
 }
 
 static const CORBA::Long _oc_RtecScheduler__tao__seq_Dependency_Set[] =
@@ -502,9 +502,9 @@ RtecScheduler::_tao__seq_RT_Info_Set::length (CORBA::ULong length)
     this->buffer_ = tmp;
     this->release_ = 1;
 
-    this->length_ = length;
 this->maximum_ = length;
   }
+    this->length_ = length;
 }
 
 static const CORBA::Long _oc_RtecScheduler__tao__seq_RT_Info_Set[] =
@@ -1032,6 +1032,7 @@ static const TAO_Call_Data RtecScheduler_Scheduler_compute_scheduling_calldata =
 void  RtecScheduler::Scheduler::compute_scheduling (CORBA::Long minimum_priority, CORBA::Long maximum_priority, RtecScheduler::RT_Info_Set_out infos, CORBA::Environment &env)
 {
   STUB_Object *istub;
+  RT_Info_Set* tmp = new RtecScheduler::RT_Info_Set;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
   {
@@ -1039,7 +1040,8 @@ void  RtecScheduler::Scheduler::compute_scheduling (CORBA::Long minimum_priority
     return;
     }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &RtecScheduler_Scheduler_compute_scheduling_calldata, 0, &minimum_priority, &maximum_priority, &infos);
+  istub->do_call (env, &RtecScheduler_Scheduler_compute_scheduling_calldata, 0, &minimum_priority, &maximum_priority, &tmp);
+  infos.ptr () = tmp;
   return; // no value
   
 }

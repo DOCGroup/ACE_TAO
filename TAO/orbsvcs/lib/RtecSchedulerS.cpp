@@ -265,20 +265,22 @@ void POA_RtecScheduler::Scheduler::compute_scheduling_skel (CORBA::ServerRequest
   CORBA::Any 	 any_maximum_priority (CORBA::_tc_long, &maximum_priority); // ORB does not own
   RtecScheduler::RT_Info_Set *infos;
   RtecScheduler::RT_Info_Set_out infos_out (infos);
-  CORBA::NamedValue_ptr nv_infos;
-  CORBA::Any 	 any_infos (RtecScheduler::_tc_RT_Info_Set, infos, 1); // ORB owns
   
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
   // add each argument according to the in, out, inout semantics
   nv_minimum_priority = nvlist->add_value ("minimum_priority", any_minimum_priority, CORBA::ARG_IN, _tao_environment);
   nv_maximum_priority = nvlist->add_value ("maximum_priority", any_maximum_priority, CORBA::ARG_IN, _tao_environment);
-  nv_infos = nvlist->add_value ("infos", any_infos, CORBA::ARG_OUT, _tao_environment);
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
   impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
   impl->compute_scheduling(minimum_priority, maximum_priority, infos_out, _tao_environment);
+  if (_tao_environment.exception ()) return;
+
+  CORBA::NamedValue_ptr nv_infos;
+  CORBA::Any 	 any_infos (RtecScheduler::_tc_RT_Info_Set, infos, 1); // ORB owns
+  nv_infos = nvlist->add_value ("infos", any_infos, CORBA::ARG_OUT, _tao_environment);
   
 }
 
