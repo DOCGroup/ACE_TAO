@@ -319,301 +319,302 @@ Command_Handler::init_video (void)
 
 int
 Command_Handler::init_video_channel (char *phostname, char *videofile)
-{  int dataSocket = -1;
+{  
+  int dataSocket = -1;
 
- if (ComOpenConnPair(phostname, &videoSocket,
-                     &dataSocket, &shared->videoMaxPktSize) == -1) {
-   return -1;
- }
+  //  if (ComOpenConnPair(phostname, &videoSocket,
+  //                      &dataSocket, &shared->videoMaxPktSize) == -1) {
+  //    return -1;
+  // }
+  if (this->connect_to_server (phostname,
+                               &videoSocket,
+                               &dataSocket,
+                               &shared->videoMaxPktSize) == -1)
+    return -1;
 
- // Write the CmdINITvideo to tell the server that this is a video
- // client.
- unsigned char tmp;
- tmp = CmdINITvideo;
- VideoWrite(&tmp, 1);
 
- /* Initialize with VS */
- {
-   Video_Control::INITvideoPara_var  para (new Video_Control::INITvideoPara);
-   Video_Control::INITvideoReply_var reply (new Video_Control::INITvideoReply);
+  /* Initialize with VS */
+  {
+    Video_Control::INITvideoPara_var  para (new Video_Control::INITvideoPara);
+    Video_Control::INITvideoReply_var reply (new Video_Control::INITvideoReply);
 
-   para->sn = shared->cmdsn;
-   para->version = VERSION;
-   para->videofile.length (strlen(videofile));
+    para->sn = shared->cmdsn;
+    para->version = VERSION;
+    para->videofile.length (strlen(videofile));
 
-   // string to sequence <char>    
-   for (int i=0;i<para->videofile.length ();i++)
-     para->videofile [i] = videofile [i];
+    // string to sequence <char>    
+    for (int i=0;i<para->videofile.length ();i++)
+      para->videofile [i] = videofile [i];
 
-   // CORBA call
-   TAO_TRY
-     {
-       CORBA::Boolean result;
-       result = this->video_control_->init_video (para.in (),
-                                                  reply.out (),
-                                                  TAO_TRY_ENV);
-       TAO_CHECK_ENV;
-       if (result == (CORBA::B_FALSE))
-         return -1;
-       else
-         ACE_DEBUG ((LM_DEBUG,"(%P|%t) init_video success \n"));
-     }
-   TAO_CATCHANY
-     {
-       TAO_TRY_ENV.print_exception ("video_control_->init_video (..)");
-       return -1;
-     }
-   TAO_ENDTRY;
-   shared->live += reply->live;
-   shared->videoFormat = reply->format;
-   shared->totalHeaders = reply->totalHeaders;
-   shared->totalFrames = reply->totalFrames;
-   shared->totalGroups = reply->totalGroups;
-   shared->averageFrameSize = reply->averageFrameSize;
-   shared->horizontalSize = reply->horizontalSize;
-   shared->verticalSize = reply->verticalSize;
-   shared->pelAspectRatio = reply->pelAspectRatio;
-   shared->pictureRate = ((double)reply->pictureRate1000) / 1000.0;
-   shared->vbvBufferSize = reply->vbvBufferSize;
-   shared->firstGopFrames = reply->firstGopFrames;
-   shared->patternSize = reply->pattern.length ();
-   if (shared->patternSize == 0) {
+    // CORBA call
+    TAO_TRY
+      {
+        CORBA::Boolean result;
+        result = this->video_control_->init_video (para.in (),
+                                                   reply.out (),
+                                                   TAO_TRY_ENV);
+        TAO_CHECK_ENV;
+        if (result == (CORBA::B_FALSE))
+          return -1;
+        else
+          ACE_DEBUG ((LM_DEBUG,"(%P|%t) init_video success \n"));
+      }
+    TAO_CATCHANY
+      {
+        TAO_TRY_ENV.print_exception ("video_control_->init_video (..)");
+        return -1;
+      }
+    TAO_ENDTRY;
+    shared->live += reply->live;
+    shared->videoFormat = reply->format;
+    shared->totalHeaders = reply->totalHeaders;
+    shared->totalFrames = reply->totalFrames;
+    shared->totalGroups = reply->totalGroups;
+    shared->averageFrameSize = reply->averageFrameSize;
+    shared->horizontalSize = reply->horizontalSize;
+    shared->verticalSize = reply->verticalSize;
+    shared->pelAspectRatio = reply->pelAspectRatio;
+    shared->pictureRate = ((double)reply->pictureRate1000) / 1000.0;
+    shared->vbvBufferSize = reply->vbvBufferSize;
+    shared->firstGopFrames = reply->firstGopFrames;
+    shared->patternSize = reply->pattern.length ();
+    if (shared->patternSize == 0) {
 	
-     Fprintf(stderr, "CTR warning: patternsize %d\n", shared->patternSize);
+      Fprintf(stderr, "CTR warning: patternsize %d\n", shared->patternSize);
 	
-     shared->patternSize = 1;
-     shared->pattern[0]  = 'I';
-     shared->pattern[1] = 0;
-     shared->IframeGap = 1;
-   }
-   else if (shared->patternSize < PATTERN_SIZE)
-     {
-       int i;
-       char * ptr = shared->pattern + shared->patternSize;
-       //       strncpy(shared->pattern, reply->pattern, shared->patternSize);
-       for (i=0;i<shared->patternSize;i++)
-         shared->pattern[i] = reply->pattern [i];
-       for (i = 1; i < PATTERN_SIZE / shared->patternSize; i ++) {
-         //         memcpy(ptr, shared->pattern, shared->patternSize);
-         for (int j=0; j < shared->patternSize ;j++)
-           ptr [j] = shared->pattern [j];
-         ptr += shared->patternSize;
-       }
-       shared->IframeGap = 1;
-       while (shared->IframeGap < shared->patternSize)
-         {
-           if (shared->pattern[shared->IframeGap] == 'I')
-             break;
-           else
-             shared->IframeGap ++;
-         }
-     }
-   else
-     {
-       fprintf(stderr, "CTR Error: patternSize %d greater than PATTERN_SIZE %d.\n",
-               shared->patternSize, PATTERN_SIZE);
-       exit(1);
-     }
-   fprintf(stderr, "Video: %s, %s\n",
-           shared->videoFormat == VIDEO_SIF ? "SIF" :
-           shared->videoFormat == VIDEO_JPEG ? "JPEG" :
-           shared->videoFormat == VIDEO_MPEG1 ? "MPEG1" :
-           shared->videoFormat == VIDEO_MPEG2 ? "MPEG2" : "UNKOWN format",
-           reply->live ? "live source" : "stored source");
+      shared->patternSize = 1;
+      shared->pattern[0]  = 'I';
+      shared->pattern[1] = 0;
+      shared->IframeGap = 1;
+    }
+    else if (shared->patternSize < PATTERN_SIZE)
+      {
+        int i;
+        char * ptr = shared->pattern + shared->patternSize;
+        //       strncpy(shared->pattern, reply->pattern, shared->patternSize);
+        for (i=0;i<shared->patternSize;i++)
+          shared->pattern[i] = reply->pattern [i];
+        for (i = 1; i < PATTERN_SIZE / shared->patternSize; i ++) {
+          //         memcpy(ptr, shared->pattern, shared->patternSize);
+          for (int j=0; j < shared->patternSize ;j++)
+            ptr [j] = shared->pattern [j];
+          ptr += shared->patternSize;
+        }
+        shared->IframeGap = 1;
+        while (shared->IframeGap < shared->patternSize)
+          {
+            if (shared->pattern[shared->IframeGap] == 'I')
+              break;
+            else
+              shared->IframeGap ++;
+          }
+      }
+    else
+      {
+        fprintf(stderr, "CTR Error: patternSize %d greater than PATTERN_SIZE %d.\n",
+                shared->patternSize, PATTERN_SIZE);
+        exit(1);
+      }
+    fprintf(stderr, "Video: %s, %s\n",
+            shared->videoFormat == VIDEO_SIF ? "SIF" :
+            shared->videoFormat == VIDEO_JPEG ? "JPEG" :
+            shared->videoFormat == VIDEO_MPEG1 ? "MPEG1" :
+            shared->videoFormat == VIDEO_MPEG2 ? "MPEG2" : "UNKOWN format",
+            reply->live ? "live source" : "stored source");
 	      
-   fprintf(stderr, "Video: numS-%d, numG-%d, numF-%d, aveFrameSize-%d\n",
-           reply->totalHeaders, reply->totalGroups, reply->totalFrames,
-           reply->averageFrameSize);
-   fprintf(stderr, "Video: maxS-%d, maxG-%d, maxI-%d, maxP-%d, maxB-%d\n",
-           reply->sizeSystemHeader, reply->sizeGop,
-           reply->sizeIFrame, reply->sizePFrame, reply->sizeBFrame);
-   fprintf(stderr,
-           "Video: SHinfo: hsize-%d, vsize-%d, pelAspect-%d, rate-%f, vbv-%d.\n",
-           reply->horizontalSize, reply->verticalSize, reply->pelAspectRatio,
-           shared->pictureRate, reply->vbvBufferSize);
-   shared->pattern[shared->patternSize] = 0;
-   fprintf(stderr, "Video: firstGopFrames %d, IframeGap %d\n",
-           reply->firstGopFrames,  shared->IframeGap);
-   shared->pattern[shared->patternSize] = 'I';
-   if (reply->totalFrames > MAX_FRAMES && (!shared->live))
-     {
-       fprintf(stderr,
-               "Error: totalFrames %d > MAX_FRAMES %d, needs change and recompile.\n",
-               reply->totalFrames, MAX_FRAMES);
-       ComCloseConn(dataSocket);
-       ComCloseConn(videoSocket);
-       videoSocket = -1;
-       return -1;
-     }
+    fprintf(stderr, "Video: numS-%d, numG-%d, numF-%d, aveFrameSize-%d\n",
+            reply->totalHeaders, reply->totalGroups, reply->totalFrames,
+            reply->averageFrameSize);
+    fprintf(stderr, "Video: maxS-%d, maxG-%d, maxI-%d, maxP-%d, maxB-%d\n",
+            reply->sizeSystemHeader, reply->sizeGop,
+            reply->sizeIFrame, reply->sizePFrame, reply->sizeBFrame);
+    fprintf(stderr,
+            "Video: SHinfo: hsize-%d, vsize-%d, pelAspect-%d, rate-%f, vbv-%d.\n",
+            reply->horizontalSize, reply->verticalSize, reply->pelAspectRatio,
+            shared->pictureRate, reply->vbvBufferSize);
+    shared->pattern[shared->patternSize] = 0;
+    fprintf(stderr, "Video: firstGopFrames %d, IframeGap %d\n",
+            reply->firstGopFrames,  shared->IframeGap);
+    shared->pattern[shared->patternSize] = 'I';
+    if (reply->totalFrames > MAX_FRAMES && (!shared->live))
+      {
+        fprintf(stderr,
+                "Error: totalFrames %d > MAX_FRAMES %d, needs change and recompile.\n",
+                reply->totalFrames, MAX_FRAMES);
+        ComCloseConn(dataSocket);
+        ComCloseConn(videoSocket);
+        videoSocket = -1;
+        return -1;
+      }
   
-   /* create VB, and put INIT frame to VB*/
-   {
-     int sp[2];  /* sp[0] is for CTR and sp[1] is for VB */
+    /* create VB, and put INIT frame to VB*/
+    {
+      int sp[2];  /* sp[0] is for CTR and sp[1] is for VB */
       
-     /* create command socket pair for sending INIT frame to VB, the pipe
-        should be discard/non-discard in consistent with videoSocket*/
-     if (socketpair(AF_UNIX,
-                    shared->videoMaxPktSize >= 0 ? SOCK_STREAM :
-                    SOCK_DGRAM, 0, sp) == -1)
-       {
-         perror("CTR error on open CTR-VB socketpair");
-         exit(1);
-       }
+      /* create command socket pair for sending INIT frame to VB, the pipe
+         should be discard/non-discard in consistent with videoSocket*/
+      if (socketpair(AF_UNIX,
+                     shared->videoMaxPktSize >= 0 ? SOCK_STREAM :
+                     SOCK_DGRAM, 0, sp) == -1)
+        {
+          perror("CTR error on open CTR-VB socketpair");
+          exit(1);
+        }
       
-     switch (VBpid = fork())
-       {
-       case -1:
-         perror("CTR error on forking VB process");
-         exit(1);
-         break;
-       case 0:
-         if (realTimeFlag) {
-           SetRTpriority("VB", -1);
-         }
-         free(vh);
-         free(videofile);
-         free(ah);
-         free(af);
-         ::close(sp[0]);
-         ComCloseFd(videoSocket);
-         if (audioSocket >= 0)
-           ComCloseFd(audioSocket);
-         ABdeleteBuf();
-         VDdeleteBuf();
-         if (cmdSocket >= 0)
-           ::close(cmdSocket);
-         if (realTimeFlag >= 2) {
+      switch (VBpid = fork())
+        {
+        case -1:
+          perror("CTR error on forking VB process");
+          exit(1);
+          break;
+        case 0:
+          if (realTimeFlag) {
+            SetRTpriority("VB", -1);
+          }
+          free(vh);
+          free(videofile);
+          free(ah);
+          free(af);
+          ::close(sp[0]);
+          ComCloseFd(videoSocket);
+          if (audioSocket >= 0)
+            ComCloseFd(audioSocket);
+          ABdeleteBuf();
+          VDdeleteBuf();
+          if (cmdSocket >= 0)
+            ::close(cmdSocket);
+          if (realTimeFlag >= 2) {
 #ifdef __svr4__
-           if (SetRTpriority("VB", 0)) realTimeFlag = 0;
+            if (SetRTpriority("VB", 0)) realTimeFlag = 0;
 #elif defined(_HPUX_SOURCE)
-           if (SetRTpriority("VB", 1)) realTimeFlag = 0;
+            if (SetRTpriority("VB", 1)) realTimeFlag = 0;
 #endif
-         }
-         VBprocess(sp[1], dataSocket);
-         break;
-       default:
-         ::close(sp[1]);
-         ComCloseFd(dataSocket);
-         {
-           int bytes, res;
-           /* passing all messages of INIT frame to VB here. */
-           char * buf = (char *)malloc(INET_SOCKET_BUFFER_SIZE);
-           VideoMessage *msg = (VideoMessage *)buf;
-           int pkts = 1, msgo = 0, msgs = 0;
+          }
+          VBprocess(sp[1], dataSocket);
+          break;
+        default:
+          ::close(sp[1]);
+          ComCloseFd(dataSocket);
+          {
+            int bytes, res;
+            /* passing all messages of INIT frame to VB here. */
+            char * buf = (char *)malloc(INET_SOCKET_BUFFER_SIZE);
+            VideoMessage *msg = (VideoMessage *)buf;
+            int pkts = 1, msgo = 0, msgs = 0;
 	  
-           if (buf == NULL) {
-             perror("CTR error on malloc() for INIT frame");
-             exit(1);
-           }
-           while (msgo + msgs < pkts) {
-             VideoRead(buf, sizeof(*msg));
-             pkts = ntohl(msg->packetSize);
-             msgo = ntohl(msg->msgOffset);
-             msgs = ntohl(msg->msgSize);
-             if (shared->videoMaxPktSize >= 0) {  /* non-discard mode */
-               write_bytes(sp[0], buf, sizeof(*msg));
-               bytes = msgs;
-               while (bytes > 0) {
-                 int size = min(bytes, INET_SOCKET_BUFFER_SIZE);
-                 VideoRead(buf, size);
-                 write_bytes(sp[0], buf, size);
-                 bytes -= size;
-               }
-             }
-             else {
-               VideoRead(buf + sizeof(*msg), msgs);
-               bytes = sizeof(*msg) + msgs;
-               while ((res = write(sp[0], buf, bytes)) == -1) {
-                 if (errno == EINTR || errno == ENOBUFS) continue;
-                 perror("CTR error on sending INIT frame to VB");
-                 exit(1);
-               }
-               if (res < bytes) {
-                 fprintf(stderr, "CTR warn: send() res %dB < bytes %dB\n", res, bytes);
-               }
-               /*
-		 Fprintf(stderr,
-                 "CTR transferred INIT frame to VB: pkts %d, msgo %d, msgs %d\n",
-                 pkts, msgo, msgs);
-               */
-             }
-           }
-           read(sp[0], buf, 1); /* read a garbage byte, to sync with VB */
-           ::close(sp[0]);
-           free(buf);
-         }
-         break;
-       }
-   }
- }
+            if (buf == NULL) {
+              perror("CTR error on malloc() for INIT frame");
+              exit(1);
+            }
+            while (msgo + msgs < pkts) {
+              VideoRead(buf, sizeof(*msg));
+              pkts = ntohl(msg->packetSize);
+              msgo = ntohl(msg->msgOffset);
+              msgs = ntohl(msg->msgSize);
+              if (shared->videoMaxPktSize >= 0) {  /* non-discard mode */
+                write_bytes(sp[0], buf, sizeof(*msg));
+                bytes = msgs;
+                while (bytes > 0) {
+                  int size = min(bytes, INET_SOCKET_BUFFER_SIZE);
+                  VideoRead(buf, size);
+                  write_bytes(sp[0], buf, size);
+                  bytes -= size;
+                }
+              }
+              else {
+                VideoRead(buf + sizeof(*msg), msgs);
+                bytes = sizeof(*msg) + msgs;
+                while ((res = write(sp[0], buf, bytes)) == -1) {
+                  if (errno == EINTR || errno == ENOBUFS) continue;
+                  perror("CTR error on sending INIT frame to VB");
+                  exit(1);
+                }
+                if (res < bytes) {
+                  fprintf(stderr, "CTR warn: send() res %dB < bytes %dB\n", res, bytes);
+                }
+                /*
+                  Fprintf(stderr,
+                  "CTR transferred INIT frame to VB: pkts %d, msgo %d, msgs %d\n",
+                  pkts, msgo, msgs);
+                */
+              }
+            }
+            read(sp[0], buf, 1); /* read a garbage byte, to sync with VB */
+            ::close(sp[0]);
+            free(buf);
+          }
+          break;
+        }
+    }
+  }
 #ifdef STAT
- if (shared->config.collectFrameInfo && (!shared->live))
-   {
-     int i;
-     int count = 0;
-     char ch;
-     char buf[100];
-     FILE *fp;
+  if (shared->config.collectFrameInfo && (!shared->live))
+    {
+      int i;
+      int count = 0;
+      char ch;
+      char buf[100];
+      FILE *fp;
     
-     for (;;)
-       {
-         sprintf(buf, "struct.%d", count++);
-         if (access(buf, 0))
-           break;
-         if (count > 10000)
-           {
-             fprintf(stderr, "CTR generating struct file, weired thing happened.\n");
-             exit(1);
-           }
-       }
-     fprintf(stderr, "MPEG info collected to %s. . .", buf);
-     fp = fopen(buf, "w");
-     if (fp == NULL)
-       {
-         fprintf(stderr, "CTR failed to open %s for write.\n", buf);
-         perror("");
-         exit(1);
-       }
-     {
-       time_t val = time(NULL);
-       get_hostname(buf, 100);
-       buf[99] = 0;
-       fprintf(fp, "ClientHost: %s\n", buf);
-       fprintf(fp, "Date: %s\n", ctime(&val));
-     }
-     fprintf(fp, "VideoHost: %s\nVideoFile: %s\n", vh, videofile);
-     fprintf(fp, "AudioHost: %s\nAudioFile: %s\n\n", ah, af);
-     fprintf(fp, "TotalFrames: %d\nTotalGroups: %d\n",
-             shared->totalFrames, shared->totalGroups);
-     fprintf(fp, "TotalHeaders: %d\n", shared->totalHeaders);
-     fprintf(fp, "PictureRate: %f\nPictureSize: %d x %d\n",
-             shared->pictureRate, shared->horizontalSize, shared->verticalSize);
-     fprintf(fp, "AverageFrameSize: %d\n", shared->averageFrameSize);
-     shared->pattern[shared->patternSize] = 0;
-     fprintf(fp, "Pattern(%d frames): %s\n\n", shared->patternSize, shared->pattern);
-     shared->pattern[shared->patternSize] = 'I';
-     {
-       fprintf(fp, "FrameInfo:\n      ");
-       for (i = 0; i < 10; i++)
-         fprintf(fp, " %-6d", i);
-       fprintf(fp, "\n      ----------------------------------------------------");
-       ch = CmdSTATstream;
-       VideoWrite(&ch, 1);
-       for (i = 0; i < shared->totalFrames; i++)
-         {
-           short size;
-           VideoRead(&ch, 1);
-           VideoRead((char*)&size, 2);
-           size = ntohs(size);
-           if (i % 10 == 0)
-             fprintf(fp, "\n%4d: ", i / 10);
-           fprintf(fp, "%c%-6d", ch, (int)size);
-         }
-     }
-   }
+      for (;;)
+        {
+          sprintf(buf, "struct.%d", count++);
+          if (access(buf, 0))
+            break;
+          if (count > 10000)
+            {
+              fprintf(stderr, "CTR generating struct file, weired thing happened.\n");
+              exit(1);
+            }
+        }
+      fprintf(stderr, "MPEG info collected to %s. . .", buf);
+      fp = fopen(buf, "w");
+      if (fp == NULL)
+        {
+          fprintf(stderr, "CTR failed to open %s for write.\n", buf);
+          perror("");
+          exit(1);
+        }
+      {
+        time_t val = time(NULL);
+        get_hostname(buf, 100);
+        buf[99] = 0;
+        fprintf(fp, "ClientHost: %s\n", buf);
+        fprintf(fp, "Date: %s\n", ctime(&val));
+      }
+      fprintf(fp, "VideoHost: %s\nVideoFile: %s\n", vh, videofile);
+      fprintf(fp, "AudioHost: %s\nAudioFile: %s\n\n", ah, af);
+      fprintf(fp, "TotalFrames: %d\nTotalGroups: %d\n",
+              shared->totalFrames, shared->totalGroups);
+      fprintf(fp, "TotalHeaders: %d\n", shared->totalHeaders);
+      fprintf(fp, "PictureRate: %f\nPictureSize: %d x %d\n",
+              shared->pictureRate, shared->horizontalSize, shared->verticalSize);
+      fprintf(fp, "AverageFrameSize: %d\n", shared->averageFrameSize);
+      shared->pattern[shared->patternSize] = 0;
+      fprintf(fp, "Pattern(%d frames): %s\n\n", shared->patternSize, shared->pattern);
+      shared->pattern[shared->patternSize] = 'I';
+      {
+        fprintf(fp, "FrameInfo:\n      ");
+        for (i = 0; i < 10; i++)
+          fprintf(fp, " %-6d", i);
+        fprintf(fp, "\n      ----------------------------------------------------");
+        ch = CmdSTATstream;
+        VideoWrite(&ch, 1);
+        for (i = 0; i < shared->totalFrames; i++)
+          {
+            short size;
+            VideoRead(&ch, 1);
+            VideoRead((char*)&size, 2);
+            size = ntohs(size);
+            if (i % 10 == 0)
+              fprintf(fp, "\n%4d: ", i / 10);
+            fprintf(fp, "%c%-6d", ch, (int)size);
+          }
+      }
+    }
 #endif
 
- return 0;
+  return 0;
 }
 
 CORBA::Boolean 
@@ -1293,6 +1294,90 @@ Command_Handler::stop_playing (void)
       else
         shared->nextGroup = shared->currentGroup + 1;
     }
+}
+
+// connects and handshakes with the server
+int
+Command_Handler::connect_to_server (char *address, 
+                                    int *ctr_fd, 
+                                    int *data_fd, 
+                                    int *max_pkt_size)
+{
+  ::VideoComOpenConnPair (address,
+                          ctr_fd,
+                          data_fd,
+                          max_pkt_size);
+
+  // Write the CmdINITvideo to tell the server that this is a video
+  // client.
+  unsigned char tmp;
+  tmp = CmdINITvideo;
+  ::write (*ctr_fd,
+           &tmp,
+           sizeof (tmp));
+  int ack;
+  ::read (*ctr_fd,
+          &ack,
+          sizeof (ack));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  
+  // initialize the command handler , ORB
+  if (this->resolve_server_reference () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) command_handler: resolve_server_reference returned -1"),
+                       -1);
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  // Resolve the video control object reference.
+  int i = sizeof (sockaddr_in);
+  struct sockaddr_in addressIn;
+  if (::getsockname(*data_fd, 
+                    (struct sockaddr *)&addressIn, 
+                    &i) == -1) 
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "(%P|%t) Command_Handler::connect_to_server"
+                       " failed to getsocketname on TCP dfd:"),
+                      -1);
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  CORBA::Short server_port;
+  TAO_TRY
+    {
+      CORBA::String client_address_string;
+      ACE_NEW_RETURN (client_address_string,
+                      char [BUFSIZ],
+                      -1);
+      ::sprintf (client_address_string,
+                 "%s:%d",
+                 ::inet_ntoa (addressIn.sin_addr),
+                 &addressIn.sin_port);
+      
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Client string is %s\n",
+                  client_address_string));
+      
+      server_port = this->video_control_->set_peer (client_address_string,
+                                                    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      if (server_port == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) set_peer failed\n"),
+                          -1);
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t) set_peer done\n"));
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("video_control_->fast_forward_video (..)");
+      return CORBA::B_FALSE;
+    }
+  TAO_ENDTRY;
+
+  ACE_INET_Addr server_addr (server_port,
+                             address);
+
+  this->dgram_.set_handle (*data_fd);
+
+  return this->dgram_.open (server_addr);
 }
 
 // ----------------------------------------------------------------------

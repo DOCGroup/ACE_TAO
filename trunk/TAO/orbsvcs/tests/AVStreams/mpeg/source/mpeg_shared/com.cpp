@@ -192,26 +192,6 @@ int ComCloseConn(int fd)
   }
 }
 
-/* address format: [ATM:|INET:]real_address | ""
-
-   "" -- UNIX socket, reliable byte stream
-   [INET:]real_address -- INET sockets, reliable control byte stream, and
-                          *max_pkt_size == 0 : reliable data byte stream, or
-			                != 0 : unreliable packet stream;
-   ATM:real_address -- ATM sockets, both data and control are
-                       unreliable packet streams;
-   DATM:real_address -- INET/UNIX control reliable byte stream
-                        and ATM unreliable byte stream;
-			
-   Communication between client and server:
-
-   ctr_fd:   client --> server	    server --> client
-             -2: conn-less INET	   Open udp sock, send addr in net byte order
-	         <port, addr>                     <port(short), addr(long)>
-	     -1: conn-orient	   Send value of fd, wait to be paired
-	     cfd>=0: data sock     Paired with cfd and return.
-   */
-
 int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size)
 {
   int i;
@@ -718,6 +698,568 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
     return -1;
 #endif
   }
+  for (i = 0; i < size; i ++) {  /* guaranteed to succeed */
+    if (fdTable[i].fd == -1) break;
+  }
+  if (i < size) {
+    fdTable[i].fd = cfd;
+    fdTable[i].type = csocktype;
+    fdTable[i].stime = get_sec();
+    fdTable[i].state = STATE_CONTROL;
+  }
+  else {
+    fprintf(stderr, "<Weird>Error ComOpenConnPair: no entry for cfd %d\n", cfd);
+    return -1;
+  }
+  for (; i < size; i ++) {
+    if (fdTable[i].fd == -1) break;
+  }
+  if (i < size) {
+    fdTable[i].fd = dfd;
+    fdTable[i].type = dsocktype;
+    fdTable[i].stime = get_sec();
+    fdTable[i].state = STATE_DATA;
+  }
+  else {
+    fprintf(stderr, "<Wierd>Error ComOpenConnPair: no entry for dfd %d\n", dfd);
+    return -1;
+  }
+  *ctr_fd = cfd;
+  *data_fd = dfd;
+  return 0;
+}
+
+/* address format: [ATM:|INET:]real_address | ""
+
+   "" -- UNIX socket, reliable byte stream
+   [INET:]real_address -- INET sockets, reliable control byte stream, and
+                          *max_pkt_size == 0 : reliable data byte stream, or
+			                != 0 : unreliable packet stream;
+   ATM:real_address -- ATM sockets, both data and control are
+                       unreliable packet streams;
+   DATM:real_address -- INET/UNIX control reliable byte stream
+                        and ATM unreliable byte stream;
+			
+   Communication between client and server:
+
+   ctr_fd:   client --> server	    server --> client
+             -2: conn-less INET	   Open udp sock, send addr in net byte order
+	         <port, addr>                     <port(short), addr(long)>
+	     -1: conn-orient	   Send value of fd, wait to be paired
+	     cfd>=0: data sock     Paired with cfd and return.
+   */
+
+int VideoComOpenConnPair (char * address, 
+                          int *ctr_fd, 
+                          int *data_fd, 
+                          int *max_pkt_size)
+{
+  int i;
+  int cfd, dfd, csocktype, dsocktype;
+  int conn_tag = !(*max_pkt_size);
+  struct sockaddr_in addressIn;
+  struct sockaddr_un addressUn;
+  
+  if (!size) {
+    fprintf(stderr,
+	    "Error ComOpenConnPair: pid %d not done ComInitClient/Server yet.\n",
+	    getpid());
+    return -1;
+  }
+
+  cfd = 0;
+  for (i = 0; i < size; i ++) {
+    if (fdTable[i].fd == -1) cfd ++;
+  }
+  if (cfd < 2) {
+    fprintf(stderr,
+	    "Error ComOpenConnPair: pid %d no faTable entry for the pair",
+	    getpid());
+    return -1;
+  }
+  
+  /* tell the type of connections to establish:
+     If the server is on the same host, then UNIX socket is used */
+  if (address[0] == 0) {
+    csocktype = CONN_UNIX;
+    dsocktype = CONN_UNIX;
+  }
+  else if (!strncasecmp(address, "atm:", 4)) {
+    address += 4;
+    csocktype = CONN_ATM;
+    dsocktype = CONN_ATM;
+  }
+  else if (!strncasecmp(address, "datm:", 5)) {
+    address += 5;
+    csocktype = CONN_INET;
+    dsocktype = CONN_ATM;
+  }
+  else {
+    csocktype = CONN_INET;
+    dsocktype = CONN_INET;
+  }
+  if (csocktype == CONN_INET || dsocktype == CONN_INET) {
+    struct hostent *hp;
+    char hostname[100];
+    addressIn.sin_family = AF_INET;
+    if (!strncasecmp(address, "inet:", 5)) {
+      address += 5;
+    }
+    if (isascii(address[0]) && isdigit(address[0]))
+      addressIn.sin_addr.s_addr = inet_addr(address);
+    else {
+      if ((hp = gethostbyname(address)) == NULL) { /* No such host! */
+        fprintf(stderr,
+		"Error ComOpenConnPair: pid %d host %s can't be found:",
+		getpid(), address);
+	perror("");
+        return -1;
+      }
+      if (hp->h_addrtype != AF_INET) {
+        fprintf(stderr,
+		"Error ComOpenConnPair: pid %d host %s is not of INET type address.\n",
+		getpid(), address);
+        return -1;
+      }
+      memcpy((char *)&addressIn.sin_addr.s_addr, (char *)hp->h_addr,
+	    sizeof(addressIn.sin_addr.s_addr));
+      /*
+      bcopy((char *)hp->h_addr, (char *)&addressIn.sin_addr.s_addr,
+	    sizeof(addressIn.sin_addr.s_addr));
+      */
+    }
+    if (get_hostname(hostname, 100)) {
+      fprintf(stderr, "Error ComOpenConnPair: pid %d failed to get_hostname:",
+	      getpid());
+      perror("");
+      return -1;
+    }
+    if ((hp = gethostbyname(hostname)) == NULL) {
+      fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d failed to its own IP address:",
+	      getpid());
+      perror("");
+      return -1;
+    }
+    if (hp->h_addrtype != AF_INET) {
+      fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d own address is not INET type",
+	      getpid());
+      return -1;
+    }
+    
+    if (!memcmp((char *)hp->h_addr, (char *)&addressIn.sin_addr.s_addr,
+	        sizeof(addressIn.sin_addr.s_addr))) {
+      if (csocktype == CONN_INET) csocktype = CONN_UNIX;
+      if (dsocktype == CONN_INET) dsocktype = CONN_UNIX;
+    }
+  }
+
+  /* build appropriate type of Connections to Server */
+  if (csocktype == CONN_UNIX && dsocktype == CONN_UNIX) {
+    /* build UNIX connection to server */
+    addressUn.sun_family = AF_UNIX;
+    strncpy(addressUn.sun_path, unix_port,
+	    sizeof(struct sockaddr_un) - sizeof(short));
+    cfd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (cfd == -1) {
+      fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d failed to open UNIX cfd:",
+	      getpid());
+      perror("");
+      return -1;
+    }
+    usleep(10000); /* this is for waiting for the uncaught signal mentioned
+		      below */
+    if (connect(cfd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
+      fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d failed to conn UNIX cfd to server:",
+	      getpid());
+      perror("");
+      i = -3;  /* I don't understand why when connect() returns EINTR, the connection
+		  is still built, and the other end can still get what written at
+		  this end, 'i = -3' is a garbage to be written. */
+      write(cfd, &i, 4);
+      close(cfd);
+      return -1;
+    }
+    if (time_write_int(cfd, -1) == -1 || time_read_int(cfd, &i) == -1) {
+      fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d failed to write -1 to UNIX cfd:",
+	      getpid());
+      perror("");
+      close(cfd);
+      return -1;
+    }
+    
+    dfd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (dfd == -1) {
+      fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d failed to open UNIX dfd:",
+	      getpid());
+      perror("");
+      close(cfd);
+      return -1;
+    }
+    usleep(10000);
+    if (connect(dfd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
+       fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d failed to conn UNIX dfd to server:",
+	      getpid());
+      perror("");
+      i = -3;
+      write(dfd, &i, 4);
+      close(cfd);
+      close(dfd);
+      return -1;
+    }
+    if (time_write_int(dfd, i) == -1) {
+      fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d failed to write (cfd) to UNIX dfd:",
+	      getpid());
+      perror("");
+      close(cfd);
+      close(dfd);
+      return -1;
+    }
+    *max_pkt_size = 0;
+  }
+  else if (csocktype == CONN_INET && dsocktype == CONN_INET)  {
+    /* build TCP connection to server */
+    addressIn.sin_port = htons(inet_port);
+    cfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (cfd == -1) {
+      fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d failed to open TCP cfd:",
+	      getpid());
+      perror("");
+      return -1;
+    }
+    usleep(10000);
+    if (connect(cfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
+       fprintf(stderr,
+	      "Error ComOpenConnPair: pid %d failed to conn TCP cfd to server:",
+	      getpid());
+      perror("");
+      i = -3;
+      write(cfd, &i, 4);
+      close(cfd);
+      return -1;
+    }
+//     if (conn_tag) { /* create a second connection with server */
+//       if (time_write_int(cfd, -1) == -1 || time_read_int(cfd, &i) == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to write -1 to TCP cfd:",
+// 		getpid());
+// 	perror("");
+// 	close(cfd);
+// 	return -1;
+//       }
+      dfd = socket(AF_INET, SOCK_STREAM, 0);
+      if (dfd == -1) {
+	fprintf(stderr,
+		"Error ComOpenConnPair: pid %d failed to open TCP dfd:",
+		getpid());
+	perror("");
+	close(cfd);
+	return -1;
+      }
+      usleep(10000);
+      if (connect(dfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
+ 	fprintf(stderr,
+		"Error ComOpenConnPair: pid %d failed to conn TCP dfd to server:",
+		getpid());
+	perror("");
+	i = -3;
+	write(dfd, &i, 4);
+	close(cfd);
+	close(dfd);
+	return -1;
+      }
+      if (time_write_int(dfd, i) == -1) {
+	fprintf(stderr,
+		"Error ComOpenConnPair: pid %d failed to write (cfd) to TCP dfd:",
+		getpid());
+	perror("");
+	close(cfd);
+	close(dfd);
+	return -1;
+      }
+      *max_pkt_size = 0;
+    }
+    else {  /* create a UDP socket for data */
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) ::VideoComOpenConnPair: making UDP connection\n"));
+      dfd = socket(AF_INET, SOCK_DGRAM, 0);
+      if (dfd == -1) {
+	fprintf(stderr,
+		"Error ComOpenConnPair: pid %d failed to open UDP dfd:",
+		getpid());
+	perror("");
+	close(cfd);
+	return -1;
+      }
+      memset((char *)&addressIn, 0, sizeof(addressIn));
+
+      i = sizeof(addressIn);
+      if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
+	fprintf(stderr,
+		"Error ComOpenConnPair: pid %d failed to getsocketname on TCP cfd:",
+		getpid());
+	perror("");
+	close(dfd);
+	close(cfd);
+	return -1;
+      }
+      
+//       addressIn.sin_family = AF_INET;
+//       addressIn.sin_port = 0;
+//       if (bind(dfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to bind UDP dfd:",
+// 		getpid());
+// 	perror("");
+// 	close(cfd);
+// 	close(dfd);
+// 	return -1;
+//       }
+//       if (time_write_int(cfd, -2) == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to write -2 to TCP cfd:",
+// 		getpid());
+// 	perror("");
+// 	close(cfd);
+// 	close(dfd);
+// 	return -1;
+//       }
+      
+//       i = sizeof(addressIn);
+//       if (getsockname(dfd, (struct sockaddr *)&addressIn, &i) == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to getsocketname on UDP fd:",
+// 		getpid());
+// 	perror("");
+// 	close(dfd);
+// 	close(cfd);
+// 	return -1;
+//       }
+//       if (time_write_bytes(cfd, (char *)&addressIn.sin_port, sizeof(short)) == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to write (port) to TCP cfd:",
+// 		getpid());
+// 	perror("");
+// 	close(dfd);
+// 	close(cfd);
+// 	return -1;
+//       }
+      
+//       fprintf(stderr, "ComOpenConnPair local UDP socket: addr - %s, port - %u.\n",
+// 	      inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
+      
+      
+//       fprintf(stderr, "ComOpenConnPair UDP port %d (should be > 0)\n",
+// 	      ntohs(addressIn.sin_port));
+      
+//       /*
+//       i = sizeof(addressIn);
+//       if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to getsocketname on TCP cfd:",
+// 		getpid());
+// 	perror("");
+// 	close(dfd);
+// 	close(cfd);
+// 	return -1;
+//       }
+//       */
+//       if (time_write_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to write (IP addr) to TCP cfd:",
+// 		getpid());
+// 	perror("");
+// 	close(dfd);
+// 	close(cfd);
+// 	return -1;
+//       }
+      
+//       fprintf(stderr, "ComOpenConnPair TCP cfd socket: addr - %s, port - %u.\n",
+// 	      inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
+      
+//       if (time_read_bytes(cfd, (char *)&addressIn.sin_port, sizeof(short)) == -1 ||
+// 	  time_read_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to read (IP addr/port) from TCP cfd:",
+// 		getpid());
+// 	perror("");
+// 	close(dfd);
+// 	close(cfd);
+      // 	return -1;
+      //       }
+      //      usleep(10000);
+      //            if (connect(dfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
+      //	fprintf(stderr,
+      //		"Error ComOpenConnPair: pid %d failed conn UDP dfd to peer:",
+      //		getpid());
+      //	perror("");
+      //	close(cfd);
+      //	close(dfd);
+      //	return -1;
+      //      }
+      
+      fprintf(stderr, "ComOpenConnPair UDP dfd connects to host-%s (port %u)\n",
+  	      inet_ntoa(addressIn.sin_addr),
+	      ntohs(addressIn.sin_port));
+      
+#ifndef LINUX
+      /* adjust the dfd REVBUF size */
+      {
+	int len;
+	len = INET_SOCKET_BUFFER_SIZE + 100;
+	/*
+	if (setsockopt(dfd, SOL_SOCKET, SO_SNDBUF, (char *)&len, sizeof(len)) == -1) {
+	  fprintf(stderr,
+		  "Warning ComOpenConnPair: pid %d failed to set UDP dfd-snd to size %d:",
+		  getpid(), len);
+	  perror("");
+	  close(dfd);
+	  close(cfd);
+	  return -1;
+	}
+	*/
+	len = 65536;
+	while (setsockopt(dfd, SOL_SOCKET, SO_RCVBUF, (char *)&len, sizeof(len)) == -1) {
+	  len -= 1024;
+	  if (len < 8192) break;
+	  /*
+	  fprintf(stderr,
+		  "Warning ComOpenConnPair: pid %d failed to set UDP dfd-rcv to size %d:",
+		  getpid(), len);
+	  perror("");
+	  close(dfd);
+	  close(cfd);
+	  return -1;
+	  */
+	}
+	if (getuid() == DEVELOPER_UID)
+	fprintf(stderr,	"Set UDP dfd-rcv to %dB\n", len);
+      }
+#endif
+      *max_pkt_size = - INET_SOCKET_BUFFER_SIZE;
+                        /* UDP sockets on HP and SUN are discard mode */
+    }
+    if (setsockopt(cfd, IPPROTO_TCP, TCP_NODELAY,
+		   (const char *)&i, sizeof(i)) == -1) {
+      fprintf(stderr,
+    "Error ComOpenConnPair: pid %d failed to setsockopt on TCP cfd with TCP_NODELAY:",
+	      getpid());
+      perror("");
+      close(dfd);
+      close(cfd);
+      return -1;
+    }
+    //  }
+//   else if (dsocktype == CONN_ATM) { /* CONN_ATM */
+// #ifdef NATIVE_ATM
+//     if (csocktype == CONN_INET) {
+//       /* build TCP connection to server */
+//       addressIn.sin_port = htons(inet_port);
+//       cfd = socket(AF_INET, SOCK_STREAM, 0);
+//       if (cfd == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to open TCP1 cfd:",
+// 		getpid());
+// 	perror("");
+// 	return -1;
+//       }
+//       usleep(10000);
+//       if (connect(cfd, (struct sockaddr *)&addressIn, sizeof(addressIn)) == -1) {
+// 	 fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to conn TCP1 cfd to server:",
+// 		getpid());
+// 	perror("");
+// 	i = -3;
+// 	write(cfd, &i, 4);
+// 	close(cfd);
+// 	return -1;
+//       }
+//     }
+//     else if (csocktype == CONN_UNIX) {
+//       /* build UNIX connection to server */
+//       addressUn.sun_family = AF_UNIX;
+//       strncpy(addressUn.sun_path, unix_port,
+// 	      sizeof(struct sockaddr_un) - sizeof(short));
+//       cfd = socket(AF_UNIX, SOCK_STREAM, 0);
+//       if (cfd == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to open UNIX1 cfd:",
+// 		getpid());
+// 	perror("");
+// 	return -1;
+//       }
+//       usleep(10000); /* this is for waiting for the uncaught signal mentioned
+// 			below */
+//       if (connect(cfd, (struct sockaddr *)&addressUn, sizeof(addressUn)) == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to conn UNIX1 cfd to server:",
+// 		getpid());
+// 	perror("");
+// 	i = -3;  /* I don't understand why when select() returns EINTR, the connection
+// 		    is still built, and the other end can still get what written at
+// 		    this end, 'i = -3' is a garbage to be written. */
+// 	write(cfd, &i, 4);
+// 	close(cfd);
+// 	return -1;
+//       }
+//     }
+//     else {  /* CONN_ATM */
+//       cfd = ATMopenConn(address, max_pkt_size);
+//       if (cfd == -1) {
+// 	fprintf(stderr,
+// 		"Error ComOpenConnPair: pid %d failed to open ATM cfd conn:",
+// 		getpid());
+// 	perror("");
+// 	return -1;
+//       }
+//       usleep(100000);  /* be nice to buggy ATM driver */
+//     }
+//     if (time_write_int(cfd, -1) == -1 || time_read_int(cfd, &i) == -1) {
+//       fprintf(stderr,
+// 	      "Error ComOpenConnPair: pid %d failed to write -1 to %s cfd:",
+// 	      getpid(),
+// 	      (csocktype == CONN_UNIX) ? "UNIX1" :
+// 	      (csocktype == CONN_INET) ? "INET1" : "ATM");
+//       perror("");
+//       if (csocktype == CONN_ATM) ATMcloseConn(cfd);
+//       else close(cfd);
+//       return -1;
+//     }
+
+//     dfd = ATMopenConn(address, max_pkt_size);
+//     if (dfd == -1) {
+//       fprintf(stderr,
+// 	      "Error ComOpenConnPair: pid %d failed to open ATM dfd conn:",
+// 	      getpid());
+//       perror("");
+//       ATMcloseConn(cfd);
+//       return -1;
+//     }
+//     usleep(100000); /* be nice to buggy ATM driver */
+//     if (time_write_int(dfd, i) == -1) {
+//       fprintf(stderr,
+// 	      "Error ComOpenConnPair: pid %d failed to write (cfd) to ATM dfd:",
+// 	      getpid());
+//       perror("");
+//       ATMcloseConn(cfd);
+//       ATMcloseConn(dfd);
+//       return -1;
+//     }
+// #else
+//     fprintf(stderr,
+// 	    "Error ComOpenConnPair: pid %d addresstype %d not supported\n",
+// 	    getpid(), dsocktype);
+//     return -1;
+// #endif
+//   }
   for (i = 0; i < size; i ++) {  /* guaranteed to succeed */
     if (fdTable[i].fd == -1) break;
   }

@@ -2935,12 +2935,6 @@ int CTRmain(void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) command_handler: init returned -1"),
                       -1);
-  // initialize the command handler , ORB
-  if (command_handler->resolve_server_reference () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) command_handler: resolve_server_reference returned -1"),
-                       -1);
-  // Resolve the video control object reference.
  
   // .. and register it with the reactor.
   if (ACE_Reactor::instance ()->register_handler (command_handler,
