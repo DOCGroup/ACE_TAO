@@ -17,6 +17,51 @@ ACE_RCSID(tao, Thread_Pool, "$Id$")
 # include "Thread_Pool.i"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane)
+  : lane_ (lane)
+{
+}
+
+void
+TAO_RT_New_Leader_Generator::no_leaders_available (void)
+{
+  if (this->lane_.dynamic_threads () == 0)
+    return;
+
+  TAO_Thread_Pool_Manager &manager =
+    this->lane_.pool ().manager ();
+
+  ACE_GUARD (ACE_SYNCH_MUTEX,
+             mon,
+             manager.lock ());
+
+  if (this->lane_.current_threads () <
+      (this->lane_.static_threads () +
+       this->lane_.dynamic_threads ()) &&
+      !manager.orb_core ().has_shutdown ())
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO Process %P Pool %d Lane %d Thread %t\n")
+                    ACE_TEXT ("Current number of threads = %d; static threads = %d; dynamic threads = %d\n")
+                    ACE_TEXT ("No leaders available; creating new leader!\n"),
+                    this->lane_.pool ().id (),
+                    this->lane_.id (),
+                    this->lane_.current_threads (),
+                    this->lane_.static_threads (),
+                    this->lane_.dynamic_threads ()));
+
+      int result =
+        this->lane_.create_dynamic_threads (1);
+
+      if (result != 0)
+        ACE_ERROR ((LM_ERROR,
+                    "Pool %d Lane %d Thread %t: cannot create dynamic thread\n",
+                    this->lane_.pool ().id (),
+                    this->lane_.id ()));
+    }
+}
+
 TAO_Thread_Pool_Threads::TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane)
   : ACE_Task_Base (lane.pool ().manager ().orb_core ().thr_mgr ()),
     lane_ (lane)
@@ -34,6 +79,9 @@ TAO_Thread_Pool_Threads::svc (void)
 {
   TAO_ORB_Core &orb_core =
     this->lane ().pool ().manager ().orb_core ();
+
+  if (orb_core.has_shutdown ())
+    return 0;
 
   // Set TSS resources for this thread.
   TAO_Thread_Pool_Threads::set_tss_resources (orb_core,
@@ -85,8 +133,11 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
     lane_priority_ (lane_priority),
     static_threads_ (static_threads),
     dynamic_threads_ (dynamic_threads),
+    current_threads_ (0),
+    new_thread_generator_ (*this),
     threads_ (*this),
-    resources_ (pool.manager ().orb_core ()),
+    resources_ (pool.manager ().orb_core (),
+                &new_thread_generator_),
     native_priority_ (TAO_INVALID_PRIORITY)
 {
 }
@@ -229,15 +280,24 @@ TAO_Thread_Lane::create_dynamic_threads (CORBA::ULong number_of_threads)
     orb_core.orb_params ()->sched_policy ();
 
   // Activate the threads.
-  return this->threads_.activate (flags,
-                                  number_of_threads,
-                                  force_active,
-                                  this->native_priority_,
-                                  default_grp_id,
-                                  default_task,
-                                  default_thread_handles,
-                                  default_stack,
-                                  stack_size_array);
+  int result =
+    this->threads_.activate (flags,
+                             number_of_threads,
+                             force_active,
+                             this->native_priority_,
+                             default_grp_id,
+                             default_task,
+                             default_thread_handles,
+                             default_stack,
+                             stack_size_array);
+
+  if (result != 0)
+    return result;
+
+  this->current_threads_ +=
+    number_of_threads;
+
+  return result;
 }
 
 CORBA::ULong
@@ -274,6 +334,18 @@ CORBA::ULong
 TAO_Thread_Lane::dynamic_threads (void) const
 {
   return this->dynamic_threads_;
+}
+
+CORBA::ULong
+TAO_Thread_Lane::current_threads (void) const
+{
+  return this->current_threads_;
+}
+
+void
+TAO_Thread_Lane::current_threads (CORBA::ULong current_threads)
+{
+  this->current_threads_ = current_threads;
 }
 
 TAO_Thread_Pool_Threads &
@@ -787,6 +859,12 @@ TAO_ORB_Core &
 TAO_Thread_Pool_Manager::orb_core (void) const
 {
   return this->orb_core_;
+}
+
+ACE_SYNCH_MUTEX &
+TAO_Thread_Pool_Manager::lock (void)
+{
+  return this->lock_;
 }
 
 TAO_Thread_Pool_Manager::THREAD_POOLS &

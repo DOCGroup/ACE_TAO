@@ -24,9 +24,36 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/New_Leader_Generator.h"
 #include "ace/Task.h"
 
 class TAO_Thread_Lane;
+
+/**
+ * @class TAO_RT_New_Leader_Generator
+ *
+ * @brief Class for creating dynamic threads.
+ *
+ * \nosubgrouping
+ *
+ **/
+class TAO_RTCORBA_Export TAO_RT_New_Leader_Generator
+  : public TAO_New_Leader_Generator
+{
+public:
+
+  /// Constructor.
+  TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane);
+
+  /// Leader/Follower class uses this method to notify the system that
+  /// we are out of leaders.
+  void no_leaders_available (void);
+
+private:
+
+  /// Lane associated with this leader generator.
+  TAO_Thread_Lane &lane_;
+};
 
 /**
  * @class TAO_Thread_Pool_Threads
@@ -116,6 +143,9 @@ public:
   CORBA::ULong static_threads (void) const;
   CORBA::ULong dynamic_threads (void) const;
 
+  CORBA::ULong current_threads (void) const;
+  void current_threads (CORBA::ULong);
+
   CORBA::Short native_priority (void) const;
 
   TAO_Thread_Pool_Threads &threads (void);
@@ -136,7 +166,11 @@ private:
   CORBA::ULong static_threads_;
   CORBA::ULong dynamic_threads_;
 
+  CORBA::ULong current_threads_;
+
   TAO_Thread_Pool_Threads threads_;
+
+  TAO_RT_New_Leader_Generator new_thread_generator_;
 
   TAO_Thread_Lane_Resources resources_;
 
@@ -301,14 +335,19 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::InvalidThreadpool));
 
-  /// ORB_Core accessor.
-  TAO_ORB_Core &orb_core (void) const;
-
   /// Collection of thread pools.
   typedef ACE_Hash_Map_Manager<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Null_Mutex> THREAD_POOLS;
 
-  /// Access the thread pools managed by this class.
+  /// @name Accessors
+  // @{
+
+  ACE_SYNCH_MUTEX &lock (void);
+
+  TAO_ORB_Core &orb_core (void) const;
+
   THREAD_POOLS &thread_pools (void);
+
+  // @}
 
 private:
 

@@ -25,6 +25,7 @@ class TAO_Acceptor_Registry;
 class TAO_Transport_Cache_Manager;
 class TAO_Leader_Follower;
 class TAO_MProfile;
+class TAO_New_Leader_Generator;
 
 /**
  * @class TAO_Thread_Lane_Resources
@@ -38,7 +39,8 @@ class TAO_Export TAO_Thread_Lane_Resources
 {
 public:
   /// Constructor.
-  TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core);
+  TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core,
+                             TAO_New_Leader_Generator *new_leader_generator = 0);
 
   /// Destructor.
   ~TAO_Thread_Lane_Resources (void);
@@ -87,6 +89,9 @@ private:
 
   /// Synchronization.
   TAO_SYNCH_MUTEX lock_;
+
+  /// Generator of new leader threads.
+  TAO_New_Leader_Generator *new_leader_generator_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -14,11 +14,13 @@ ACE_RCSID(tao, Thread_Lane_Resources, "$Id$")
 # include "tao/Thread_Lane_Resources.i"
 #endif /* ! __ACE_INLINE__ */
 
-TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core)
+TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core,
+                                                      TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
     acceptor_registry_ (0),
     transport_cache_ (0),
-    leader_follower_ (0)
+    leader_follower_ (0),
+    new_leader_generator_ (new_leader_generator)
 {
   // Create the transport cache.
   ACE_NEW (this->transport_cache_,
@@ -84,7 +86,8 @@ TAO_Thread_Lane_Resources::leader_follower (void)
         {
           // Create a new Leader Follower object.
           ACE_NEW_RETURN (this->leader_follower_,
-                          TAO_Leader_Follower (&this->orb_core_),
+                          TAO_Leader_Follower (&this->orb_core_,
+                                               this->new_leader_generator_),
                           *this->leader_follower_);
         }
     }
