@@ -2583,5 +2583,3 @@ namespace CIAO
 
   }
 }
-
-#endif /* DOMAIN_HANDLER_C */
