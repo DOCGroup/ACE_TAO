@@ -1,3 +1,9 @@
+Thu Aug 20 14:32:12 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/Any.{h,i,cpp}:
+	  We now have <<= and >>= (copying and non-copying
+	  versions) for typecodes and CORBA objects.
+
 Thu Aug 20 14:14:30 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : 

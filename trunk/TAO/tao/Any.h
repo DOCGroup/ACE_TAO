@@ -107,6 +107,18 @@ public:
   void operator<<= (const char*);
   // insert unbounded strings
 
+  void operator<<= (CORBA::TypeCode_ptr&);
+  // insert a TypeCode - copying version
+
+  void operator<<= (CORBA::TypeCode_ptr*);
+  // insert a TypeCode - non-copying version
+
+  void operator<<= (CORBA::Object_ptr&);
+  // insert an object reference - copying version
+
+  void operator<<= (CORBA::Object_ptr*);
+  // insert an object reference - non-copying version
+
   // =type safe extraction
 
   CORBA::Boolean operator>>= (CORBA::Short&) const;
@@ -129,6 +141,9 @@ public:
 
   CORBA::Boolean operator>>= (CORBA_Any&) const;
   // extract an Any
+
+  CORBA::Boolean operator>>= (CORBA::TypeCode_ptr&) const;
+  // extract a TypeCode
 
   CORBA::Boolean operator>>= (char*&) const;
   // extract an unbounded string
