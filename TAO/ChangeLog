@@ -1,3 +1,16 @@
+Fri Sep 12 12:50:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/RTScheduling/Current/Current.dsp:
+        * tests/RTScheduling/DT_Spawn/DT_Spawn.dsp:
+        * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp:
+        * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.dsp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Cancel.dsp:
+        * tests/RTScheduling/VoidData/VoidData.dsp:
+
+          Fixed release settings, and changed debug settings to link to
+          debug multi-threaded DLLs. Also added dependency on
+          IDL compiler to all configurations.
+
 Fri Sep 12 10:42:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
