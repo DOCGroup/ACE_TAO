@@ -24,13 +24,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-#include "ciao/DeploymentS.h"
-#include "CIAO_NAM_Export.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ciao/NodeApp_CB_Impl.h"
-#include "ImplementationInfo.h"
+#include "ciao/DeploymentS.h"
 #include "ciao/CIAO_common.h"
-#include "ace/SString.h"
-
+#include "CIAO_NAM_Export.h"
+#include "ImplementationInfo.h"
 
 namespace CIAO
 {
