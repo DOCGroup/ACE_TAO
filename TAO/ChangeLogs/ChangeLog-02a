@@ -1,3 +1,14 @@
+Tue Apr 16 00:48:52 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+	* tao/Makefile.bor:
+	  Added missing files Transport_Acceptor and Transport_Connector.
+
+	* tao/ORB_Table.h:
+	* tao/ORBInitializer_Registry.h:
+	  Added #pragmas to force the export of the singleton templates
+	  from a Win32 DLL. This is needed in addition to the
+	  TAO_SINGLETON_DECLARE macro to work with Borland C++.
+
 Mon Apr 15 23:13:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport_Connector.h:
