@@ -231,7 +231,7 @@ public:
   // Dump the state of the object.
 };
 
-class ACE_New_Allocator : public ACE_Allocator
+class ACE_Export ACE_New_Allocator : public ACE_Allocator
   // = TITLE
   //     Defines a class that provided a simple implementation of
   //     memory allocation.
