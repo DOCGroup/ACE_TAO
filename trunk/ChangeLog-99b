@@ -1,3 +1,9 @@
+Mon May 10 12:14:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/RB_Tree.cpp: fixed a dangling pointer bug in 
+	  RB_Tree::delete_fixup.  Added pointer tests to all
+	  dereferences in this piece of code.
+
 Mon May 10 11:35:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * COPYING:
