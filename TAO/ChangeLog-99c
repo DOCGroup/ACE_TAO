@@ -1,3 +1,8 @@
+Tue Jul 27 13:57:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed broken custome build
+	  setting and updated source file lists.
+
 Tue Jul 27 13:48:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Quoter/run_test.pl: added missing }.

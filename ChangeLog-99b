@@ -1,3 +1,10 @@
+Tue Jul 27 14:16:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (cancel_thr): This method should return
+	  the result of thread cancel operation if async_cancel is used.
+	  Thanks to Peter Mueller <pmueller@decrc.abb.de> for suggesting
+	  the fix.
+
 Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS: Addded a new pair of priority() fields as place
