@@ -228,7 +228,7 @@ void
 ACE_Service_Manager::process_request (ACE_TCHAR *request)
 {
   ACE_TRACE("ACE_Service_Manager::process_request");
-  char *p;
+  ACE_TCHAR *p;
  
   // Kill trailing newlines.
   for (p = request;
@@ -238,9 +238,9 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
  
   *p = '\0';
 
-  if (ACE_OS::strcmp (request, "help") == 0)
+  if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("help")) == 0)
     this->list_services ();
-  else if (ACE_OS::strcmp (request, "reconfigure") == 0)
+  else if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("reconfigure") )== 0)
     this->reconfigure_services ();
   else
     ACE_Service_Config::process_directive (request);
@@ -287,7 +287,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
                   sa.get_port_number ()));
     }
 
-  char request[BUFSIZ];
+  ACE_TCHAR request[BUFSIZ];
 
   // Read service request from client.
 

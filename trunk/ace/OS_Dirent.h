@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_WIN32) && !defined (ACE_PSOS) && !defined (ACE_WINCE)
+#if !defined (ACE_WIN32) && !defined (ACE_PSOS) && !defined (ACE_HAS_WINCE)
 # include /**/ <sys/types.h>
 # if !defined (ACE_LACKS_UNISTD_H)
 #   include /**/ <unistd.h>  // VxWorks needs this to compile
