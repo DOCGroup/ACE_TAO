@@ -14,6 +14,7 @@ DIRS  = CDR \
         Cubit \
 	OctetSeq \
 	Param_Test \
+	NestedUpcall \
 	POA \
 	Quoter \
 	Thruput

@@ -49,3 +49,4 @@ interface Reactor
   void stop ();
   // Stops the reactor.
 };
+
