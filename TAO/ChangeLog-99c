@@ -6,6 +6,9 @@ Fri Jul  9 10:58:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/ImplRepo_Service/Makefile:
 	  Updated dependencies
 
+	* examples/OBV/Typed_Events/run_test.pl:
+	  Added missing run_test script
+
 Fri Jul  9 01:55:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
