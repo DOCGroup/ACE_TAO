@@ -102,8 +102,9 @@ ACE_INET_Addr::string_to_addr (const ASYS_TCHAR s[])
   ASYS_TCHAR *t;
 
   // Need to make a duplicate since we'll be overwriting the string.
-  ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (s), -1);
-
+  ACE_ALLOCATOR_RETURN (t,
+                        ACE_OS::strdup (s),
+                        -1);
   ASYS_TCHAR *ip_addr = ACE_OS::strchr (t, ':');
 
   if (ip_addr == 0) // Assume it's a port number.
