@@ -240,7 +240,6 @@
 #define ACE_HAS_SYS_SIGLIST
 
 #if defined (_REENTRANT) || \
- (defined (_POSIX_C_SOURCE) && (_POSIX_C_SOURCE - 0 >= 199506L)) || \
  defined (_POSIX_PTHREAD_SEMANTICS)
   // Compile using multi-thread libraries.
 # define ACE_HAS_THREADS
