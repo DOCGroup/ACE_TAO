@@ -1,3 +1,19 @@
+Tue Aug 26 17:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h
+	* tao/Strategies/SCIOP_Connector.cpp
+	* tao/Strategies/SCIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h (make_connection): Implemented
+	  the new virtual function in all the protocols. This should get
+	  the strategies library building cleanly now.
+	
+	* tao/Strategies/advanced_resource.cpp: Added a couple of new
+	  #includes 
+
 Tue Aug 26 16:33:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Transport.h:
