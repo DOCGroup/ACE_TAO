@@ -289,7 +289,7 @@ IIOP_Object::Release (void)
 
     ACE_ASSERT (this != 0);
 
-    if (--this->refcount_ != 0)
+    if (--this->refcount_ > 0)
       return this->refcount_;
   }
 

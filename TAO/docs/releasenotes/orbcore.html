@@ -94,6 +94,14 @@
     Recently Completed Work:
 
     <UL>
+      <li>Broke the tight coupling between <code>CORBA_Object</code>
+      and <code>IIOP_Object</code> so that multiple
+      <code>CORBA_Object</code>s can share a single
+      <code>IIOP_Object</code>.  This has a big win in
+      <code>_narrow</code> operations.</li>
+
+      <li>Eliminated substantial memory leaks in servers.</li>
+
       <li>Added documentation for <a
       href="../Options.html#-ORBpoa"><b>-ORBpoa</b></a>, which allows
       individual tweaking of the POA's locality (global
