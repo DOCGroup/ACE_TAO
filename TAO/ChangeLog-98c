@@ -29,6 +29,17 @@ Mon Jul  6 15:46:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  invalid.  The problem only shows up now because we were ignoring
 	  the bounds in previous releases.
 
+Mon Jul  6 15:24:21 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* tests/Logger/client.h
+	* tests/Logger/client.cpp
+	* orbsvcs/orbsvcs/Log/Logger_i.h
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp
+	* orbsvcs/orbsvcs/Logger.idl
+
+	Routine checkin. Ignore the man behind that curtain....
+	Fully working version complete, but not yet Purified. 
+	
 Mon Jul 06 15:13:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/compat/initguid.h: Reordered some stuff.
