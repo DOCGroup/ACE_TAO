@@ -207,12 +207,13 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
       char *buf = this->message_handler_.message_block ()->rd_ptr ();
       buf -= len;
       size_t msg_len =
-        this->message_handler_.message_block ()->length () + len;
+        state.message_size + len;
 
-      TAO_GIOP_Message_Base::dump_msg ("recv",
-                                       ACE_reinterpret_cast (u_char *,
-                                                             buf),
-                                       msg_len);
+      this->dump_msg ("recv",
+                      ACE_reinterpret_cast (u_char *,
+                                            buf),
+                      msg_len);
+      cout << "We are here " << "jj" <<endl;
     }
   return this->message_handler_.is_message_ready ();
 }
@@ -333,7 +334,10 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           orb_core);
 
 
-
+  // When the data block is used for creating the CDR stream, we loose
+  // track of the read pointer of the message block in the message
+  // handler.
+  input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Send the message state for the service layer like FT to log the
   // messages
@@ -377,8 +381,12 @@ TAO_GIOP_Message_Base::process_reply_message (
 
   // Steal the input CDR from the message block
   TAO_InputCDR input_cdr (msg_block->data_block (),
-                          ACE_CDR_BYTE_ORDER,
-                          orb_core);
+                          ACE_CDR_BYTE_ORDER);
+
+  // When the data block is used for creating the CDR stream, we loose
+  // track of the read pointer of the message block in the message
+  // handler.
+  input_cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.
@@ -498,6 +506,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = 0;
 
+  cout << "Amba are we here " <<endl;
   int parse_error = 0;
 
   ACE_TRY
