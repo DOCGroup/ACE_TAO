@@ -33,6 +33,10 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
     return -1;
   int msg_file_length = ACE_OS::strlen (msg_file);
 
+  // If a logger_key has been supplied then we use that as the event
+  // source name, otherwise we default to the program name.
+  const ACE_TCHAR *event_source_name = logger_key ? logger_key : ACE_Log_Msg::program_name ();
+
   // Information is stored in the registry at a location based on the
   // program name.
   ACE_TCHAR reg_key [MAXPATHLEN];
@@ -40,7 +44,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
                   ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
   int reg_key_length = ACE_OS::strlen(reg_key);
   ACE_OS::strncat (reg_key,
-                   logger_key ? logger_key : ACE_Log_Msg::program_name (),
+                   event_source_name,
                    MAXPATHLEN - reg_key_length);
 
   // Add the event source to the registry. Note that if this fails it
@@ -66,7 +70,8 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   RegCloseKey (hkey);
 
   // Obtain a handle to the event source.
-  this->evlog_handle_ = ACE_TEXT_RegisterEventSource (0, ACE_Log_Msg::program_name ());
+  this->evlog_handle_ = ACE_TEXT_RegisterEventSource (0,
+                                                      event_source_name);
   return this->evlog_handle_ ? 0 : -1;
 }
 
@@ -92,17 +97,21 @@ int
 ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
 {
   // Make a copy of the log text and replace any newlines with
-  // spaces. Newline characters do not appear correctly in the event
-  // viewer.
+  // CR-LF. Newline characters on their own do not appear correctly
+  // in the event viewer. We allow for a doubling in the size of
+  // the msg data for the worst case of all newlines.
   const ACE_TCHAR* src_msg_data = log_record.msg_data ();
-  ACE_TCHAR msg_data [ACE_Log_Record::MAXLOGMSGLEN];
+  ACE_TCHAR msg_data [ACE_Log_Record::MAXLOGMSGLEN * 2];
 
-  for (long i = 0; i < log_record.length (); ++i)
+  for (long i = 0, j = 0; i < log_record.length (); ++i)
     {
       if (src_msg_data[i] == '\n')
-        msg_data[i] = ' ';
+        {
+          msg_data[j++] = '\r';
+          msg_data[j++] = '\n';
+        }
       else
-        msg_data[i] = src_msg_data[i];
+        msg_data[j++] = src_msg_data[i];
     }
 
   // Map the ACE log record type to an event log type.
@@ -136,7 +145,7 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
   if (ACE_TEXT_ReportEvent (this->evlog_handle_,
                             event_type, 0, 0, 0, 1, 0, msgs, 0) == 0)
     return -1;
-  else 
+  else
     return 0;
 }
 

@@ -1,3 +1,14 @@
+Fri May 24 20:51:25 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/Log_Msg_NT_Event_Log.cpp (open):
+          Need to use logger_key, when it is supplied, to register the
+          event source with the system.
+
+        * ace/Log_Msg_NT_Event_Log.cpp (log):
+          Replace all newlines in the message with the CR-LF character
+          sequence so that line breaks are correctly displayed in the
+          event viewer.
+
 Fri May 24 20:18:41 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Reactor_Logging_Server.cpp:
