@@ -11,6 +11,7 @@
 #BIN   	= main
 
 LIB = libJAWS.a
+SHLIB = libJAWS.$(SOEXT)
 
 MYFILES  	= \
 	Pipeline \
@@ -32,7 +33,8 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 #LDLIBS	= -lJAWS
 
-BUILD	= $(VOBJS) $(VLIB) #$(VBIN)
+#BUILD	= $(VOBJS) $(VLIB) #$(VBIN)
+BUILD	= $(VSHLIB) $(SHLIBA) $(VLIB)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

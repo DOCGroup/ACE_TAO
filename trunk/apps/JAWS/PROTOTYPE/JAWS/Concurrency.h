@@ -10,6 +10,7 @@
 
 #include "JAWS/IO.h"
 
+class JAWS_Data_Block;
 class JAWS_Dispatch_Policy;
 
 class JAWS_Concurrency_Base : public ACE_Task<ACE_MT_SYNCH>
@@ -28,6 +29,16 @@ public:
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
   virtual int svc (void);
+
+  virtual int svc_loop (JAWS_Data_Block *db);
+  // in thread pool, this is an infinite loop
+  // in thread per request, it is a single iteration
+
+  virtual int svc_hook (JAWS_Data_Block *db);
+  // does the work of following the pipeline tasks
+
+  virtual int activate_hook (void);
+  // callback for IO_Handler when accept completes
 
   virtual ACE_Message_Block *singleton_mb (void);
 
@@ -71,6 +82,7 @@ public:
   // Initiate the thread_pool task
 
 private:
+  long flags_;
   int nthreads_;
   int maxthreads_;
 };
@@ -89,6 +101,12 @@ public:
   // Initiate the thread_per task
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+
+  virtual int svc_loop (JAWS_Data_Block *db);
+  // a single iteration
+
+  virtual int activate_hook (void);
+  // callback for IO_Handler when accept completes
 
 private:
   long flags_;

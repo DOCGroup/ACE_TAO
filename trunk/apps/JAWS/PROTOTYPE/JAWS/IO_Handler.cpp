@@ -5,6 +5,7 @@
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Data_Block.h"
+#include "JAWS/Policy.h"
 
 JAWS_IO_Handler::~JAWS_IO_Handler (void)
 {
@@ -40,6 +41,11 @@ JAWS_Synch_IO_Handler::accept_complete (ACE_HANDLE handle)
   // callback into pipeline task, notify that the accept has completed
   this->handle_ = handle;
   this->status_ = ACCEPT_OK;
+
+  JAWS_Dispatch_Policy *policy = this->mb_->policy ();
+
+  // Do this so that Thread Per Request can spawn a new thread
+  policy->concurrency ()->activate_hook ();
 }
 
 void
