@@ -1,8 +1,8 @@
 ACKNOWLEDGEMENTS
 
 ACE and TAO have been deeply influenced and improved by the following
-members of my research group at Vanderbilt University, Washington
-University, and at the University of California at Irvine.
+members of my research group at Washington University and at the
+University of California at Irvine.
 
 Everett Anderson <eea1@cec.wustl.edu>
 Alexander Babu Arulanthu <alex@cs.wustl.edu>
@@ -1658,10 +1658,9 @@ Michael Soden <soden@ikv.de>
 Dennis Sporcic <dennis@hsa.com.au>
 Emmanuel Thevenot Beaufort <emmanuel.thevenot-beaufort@jci.com>
 Denis Parnaland <denis.parnaland@tde.alstom.com>
-Proum Chauk-Mean <Chauk-Mean.Proum@fr.thalesgroup.com>
-Carl Halvorson <cyberdesk@yahoo.com>
 Matthias Blankenhaus <matthias@ingrian.com>
 Wolfgang Schroeder <cpp_kurs@arcor.de>
+Mario Hofmann <Mario.Hofmann@SystemaGmbH.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
