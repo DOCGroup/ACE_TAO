@@ -1,3 +1,8 @@
+Mon May  7 21:35:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+	  Fixed a compile error with SunCC4.2.	
+
 Mon May  7 17:45:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional_NestedUpcall/test_i.cpp:
