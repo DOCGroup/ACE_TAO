@@ -1,3 +1,8 @@
+Thu Nov 28 03:07:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* netsvcs: netsvcs.mak and netsvcs.mdp were changes such that it
+ 	  becomes easier to find ace.lib while compiling netsvcs.lib.
+
 Fri Nov 29 12:54:12 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Stream.cpp (open): Changed tail->close() and head->close()
