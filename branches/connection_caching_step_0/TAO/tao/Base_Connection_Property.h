@@ -18,7 +18,8 @@
 #define TAO_BASE_CONNECTION_PROPERTY_H
 #include "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/Endpoint.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,9 +32,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "tao/corbafwd.h"
 
-class TAO_Endpoint;
 
 class TAO_Export TAO_Base_Connection_Property
 {
@@ -47,8 +46,13 @@ class TAO_Export TAO_Base_Connection_Property
   //     used to do a look up of the connection from the cache.
   //     Note 1: Additional properties for connection like Qos,
   //     Priority that the RT folks would need, can be added by
-  //     inheriting from this class.
-
+  //     inheriting from this class and providing the following
+  //     methods.
+  //     1. duplicate ()
+  //     2. operator==
+  //     3. operator=
+  //     4. operator!=
+  //     5. hash ()
 public:
 
   TAO_Base_Connection_Property (void);
@@ -102,7 +106,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Base_Connection_Property.i"
+# include "tao/Base_Connection_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

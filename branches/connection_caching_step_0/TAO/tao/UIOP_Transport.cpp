@@ -87,11 +87,6 @@ TAO_UIOP_Transport::handler (void)
   return this->handler_;
 }
 
-int
-TAO_UIOP_Transport::idle (void)
-{
-  return this->handler_->idle ();
-}
 
 void
 TAO_UIOP_Transport::close_connection (void)
@@ -126,6 +121,18 @@ TAO_UIOP_Server_Transport::~TAO_UIOP_Server_Transport (void)
 {
 }
 
+int
+TAO_UIOP_Server_Transport::idle (void)
+{
+   return this->handler_->make_idle ();
+}
+
+TAO_IIOP_SVC_HANLDER *
+TAO_UIOP_Server_Transport::service_handler (void)
+{
+  return this->handler_;
+}
+
 // ****************************************************************
 
 TAO_UIOP_Client_Transport::
@@ -144,6 +151,11 @@ TAO_UIOP_Client_Transport::~TAO_UIOP_Client_Transport (void)
   delete this->client_mesg_factory_;
 }
 
+int
+TAO_UIOP_Client_Transport::idle (void)
+{
+   return this->handler_->make_idle ();
+}
 
 void
 TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
@@ -318,6 +330,11 @@ TAO_UIOP_Client_Transport::register_handler (void)
                               ACE_Event_Handler::READ_MASK);
 }
 
+TAO_IIOP_SVC_HANLDER *
+TAO_UIOP_Client_Transport::service_handler (void)
+{
+  return this->handler_;
+}
 
 int
 TAO_UIOP_Client_Transport::
@@ -419,14 +436,14 @@ TAO_UIOP_Transport::send (TAO_Stub *stub,
 ssize_t
 TAO_UIOP_Transport::send (const ACE_Message_Block *message_block,
                           const ACE_Time_Value *max_wait_time,
-			  size_t *bytes_transferred)
+                          size_t *bytes_transferred)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_TRANSPORT_SEND_START);
 
   return ACE::send_n (this->handle (),
                       message_block,
                       max_wait_time,
-		      bytes_transferred);
+                      bytes_transferred);
 }
 
 ssize_t

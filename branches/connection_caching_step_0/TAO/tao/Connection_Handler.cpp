@@ -7,7 +7,7 @@
 #include "tao/Messaging_Policy_i.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Connection_Handler.i"
+#include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Connection_Handler, "$Id$")
@@ -24,6 +24,12 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
 {
 }
 
+int
+TAO_Connection_Handler::make_idle (void)
+{
+  return
+    this->orb_core_->connection_cache ().make_idle (this->cache_map_entry_);
+}
 
 void
 TAO_Connection_Handler::remove_handle (ACE_HANDLE handle)

@@ -1,14 +1,22 @@
 //$Id$
 
 #include "tao/Base_Connection_Property.h"
-#include "tao/Endpoint.h"
-#include "tao/IIOP_Endpoint.h"
+
+
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Base_Connection_Property.i"
+# include "tao/Base_Connection_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Base_Connection_Property, "$Id$")
+
+
+TAO_Base_Connection_Property::~TAO_Base_Connection_Property (void)
+{
+  if (endpoint_flag_)
+    delete this->endpoint_;
+}
+
 
 TAO_Base_Connection_Property *
 TAO_Base_Connection_Property::duplicate (void)

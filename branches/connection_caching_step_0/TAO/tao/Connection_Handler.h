@@ -86,17 +86,6 @@ public:
   TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
   // Ste/Get the Cache Map entry
 
-
-  //  virtual int mark_as_closed (const void *recycling_act);
-  // Mark as closed.
-
-  //virtual int mark_as_closed_i (const void *recycling_act);
-  // Mark as closed.(non-locking version)
-
-  //virtual int cleanup_hint (const void *recycling_act,
-  //                          void **act_holder = 0) = 0;
-  // Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
-
   int make_idle (void);
   // Make ourselves ready for use
 
@@ -152,7 +141,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "tao/Connection_Handler.i"
+#include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /*TAO_CONNECTION_HANDLER_H*/

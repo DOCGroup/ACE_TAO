@@ -44,28 +44,20 @@ class TAO_Pluggable_Messaging;
 typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
         TAO_UIOP_SVC_HANDLER;
 
-class TAO_UIOP_Handler_Base : public TAO_UIOP_SVC_HANDLER
+class TAO_UIOP_Properties
 {
-public:
-  TAO_UIOP_Handler_Base (ACE_Thread_Manager *t);
-  TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core);
-
-  virtual TAO_Transport *transport (void) = 0;
-
-  struct UIOP_Properties
-  {
-    // = TITLE
-    //   Unix Domain Sockets protocol properties for a set of
-    //   connections.
-    //
-    int send_buffer_size;
-    int recv_buffer_size;
-  };
+  // = TITLE
+  //   Unix Domain Sockets protocol properties for a set of
+  //   connections.
+  //
+  int send_buffer_size;
+  int recv_buffer_size;
 };
+
 
 // ****************************************************************
 
-class TAO_Export TAO_UIOP_Client_Connection_Handler : public TAO_UIOP_Handler_Base,
+class TAO_Export TAO_UIOP_Client_Connection_Handler : public TAO_UIOP_SVC_HANDLER,
                                                       public TAO_Connection_Handler
 {
   // = TITLE
@@ -123,7 +115,7 @@ protected:
   TAO_UIOP_Client_Transport transport_;
   // Reference to the transport object, it is owned by this class.
 
-  UIOP_Properties *uiop_properties_;
+  TAO_UIOP_Properties *uiop_properties_;
   // UIOP configuration properties for this connection.
 
 private:
@@ -137,7 +129,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_UIOP_Server_Connection_Handler : public TAO_UIOP_Handler_Base,
+class TAO_Export TAO_UIOP_Server_Connection_Handler : public TAO_UIOP_SVC_HANDLER,
                                                       public TAO_Connection_Handler
 {
   // = TITLE
@@ -207,7 +199,7 @@ protected:
   // you should not delete the svc_handler until the stack unwinds
   // from the nested upcalls.
 
-  UIOP_Properties *uiop_properties_;
+  TAO_UIOP_Properties *uiop_properties_;
   // UIOP configuration properties for this connection.
 };
 

@@ -119,7 +119,8 @@ PLUGGABLE_PROTOCOLS_FILES = \
   SHMIOP_Connector \
   SHMIOP_Acceptor \
   SHMIOP_Connect \
-  SHMIOP_Endpoint
+  SHMIOP_Endpoint \
+  Connection_Handler
 
 PLUGGABLE_MESSAGING_FILES = \
   Pluggable_Messaging \
@@ -244,7 +245,10 @@ ORB_CORE_FILES = \
   CORBALOC_Parser \
   CORBANAME_Parser \
   Bind_Dispatcher_Guard \
-  Fault_Tolerance_Service
+  Fault_Tolerance_Service \
+  Cache_Entries \
+  Base_Connection_Property \
+  Connection_Cache_Manager
 
 DYNAMIC_ANY_FILES =
 

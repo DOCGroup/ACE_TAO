@@ -38,30 +38,24 @@
 class Pluggable_Messaging;
 
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_SVC_HANDLER;
+        TAO_IIOP_SVC_HANDLER;
 
 
 // ****************************************************************
 
-class TAO_IIOP_Handler_Base : public TAO_SVC_HANDLER
+class TAO_TCP_Properties
 {
-public:
-  TAO_IIOP_Handler_Base (ACE_Thread_Manager *t);
-  TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core);
-
-  struct TCP_Properties
-  {
-    // = TITLE
-    //   TCP protocol properties specification for a set of
-    //   connections.
-    //
-    int send_buffer_size;
-    int recv_buffer_size;
-    int no_delay;
-  };
+  // = TITLE
+  //   TCP protocol properties specification for a set of
+  //   connections.
+  //
+  int send_buffer_size;
+  int recv_buffer_size;
+  int no_delay;
 };
 
-class TAO_Export TAO_IIOP_Client_Connection_Handler: public TAO_IIOP_Handler_Base,
+
+class TAO_Export TAO_IIOP_Client_Connection_Handler: public TAO_IIOP_SVC_HANDLER
                                                      public TAO_Connection_Handler
 {
   // = TITLE
@@ -115,13 +109,14 @@ public:
   // Return the transport objects
 
 protected:
+
   int handle_cleanup (void);
   // This method deregisters the handler from the reactor and closes it.
 
   TAO_IIOP_Client_Transport transport_;
   // Reference to the transport object, it is owned by this class.
 
-  TCP_Properties *tcp_properties_;
+  TAO_TCP_Properties *tcp_properties_;
   // TCP configuration for this connection.
 
 private:
@@ -206,7 +201,7 @@ protected:
   // you should not delete the svc_handler until the stack unwinds
   // from the nested upcalls.
 
-  TCP_Properties *tcp_properties_;
+  TAO_TCP_Properties *tcp_properties_;
   // TCP configuration for this connection.
 };
 

@@ -809,7 +809,7 @@ enum MCAST_SERVICEID
 # if (TAO_HAS_MINIMUM_CORBA == 1)
 #   define TAO_HAS_INTERCEPTORS 0
 # else
-#   define TAO_HAS_INTERCEPTORS 1
+#   define TAO_HAS_INTERCEPTORS 0
 # endif /* TAO_HAS_MINIMUM_CORBA */
 #endif
 

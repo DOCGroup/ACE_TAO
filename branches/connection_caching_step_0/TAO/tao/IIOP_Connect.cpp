@@ -53,20 +53,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_Connect_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core)
-  : TAO_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
-{
-}
-
-TAO_IIOP_Handler_Base::TAO_IIOP_Handler_Base (ACE_Thread_Manager *t)
-  : TAO_SVC_HANDLER (t, 0, 0)
-{
-}
-
-// ****************************************************************
-
 TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_IIOP_Handler_Base (t),
+  : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
     transport_ (this, 0),
     acceptor_factory_ (0),
@@ -81,10 +69,11 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thre
   ACE_ASSERT (this->orb_core () != 0);
 }
 
+
 TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
                                                                         CORBA::Boolean flag,
                                                                         void *arg)
-  : TAO_IIOP_Handler_Base (orb_core),
+  : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     acceptor_factory_ (0),
@@ -295,7 +284,7 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
 TAO_IIOP_Client_Connection_Handler::
 TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager* t)
-  : TAO_IIOP_Handler_Base (t),
+  : TAO_IIOP_SVC_HANDLER (t, 0, 0),
     TAO_Connection_Handler (0),
     transport_ (this, 0),
     tcp_properties_ (0)
@@ -309,7 +298,7 @@ TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
                                     TAO_ORB_Core* orb_core,
                                     CORBA::Boolean flag,
                                     void *arg)
-  : TAO_IIOP_Handler_Base (t),
+  : TAO_IIOP_SVC_HANDLER (t, 0 ,0),
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core),
     tcp_properties_ (ACE_static_cast

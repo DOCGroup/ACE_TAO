@@ -159,8 +159,12 @@ TAO_SHMIOP_Endpoint::duplicate (void)
 CORBA::Boolean
 TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
+  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
+                                        other_endpoint);
+
   TAO_SHMIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
-                                                    other_endpoint);
+                                                    endpt);
+
   if (endpoint == 0)
     return 0;
 

@@ -253,8 +253,9 @@ TAO_Transport::start_locate (TAO_ORB_Core *,
 
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
-  : orb_core_ (0),
-    tag_(tag)
+  : tag_(tag),
+    orb_core_ (0)
+
 {
 }
 

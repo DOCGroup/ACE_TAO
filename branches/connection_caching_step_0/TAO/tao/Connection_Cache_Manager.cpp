@@ -4,7 +4,7 @@
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Connection_Cache_Manager.i"
+# include "tao/Connection_Cache_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 
@@ -38,8 +38,8 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
   // Get the entry too
   HASH_MAP_ENTRY *entry = 0;
   int retval = this->cache_map_.bind (ext_id,
-                              int_id,
-                              entry);
+                                      int_id,
+                                      entry);
   if (retval == 0)
     {
       // The entry has been added to cache succesfully
@@ -50,9 +50,9 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
     {
       // There was an entry like this before, so let us do some
       // minor adjustments
-      retval = get_last_index_bind (ext_id,
-                                    int_id,
-                                    entry);
+      retval = this->get_last_index_bind (ext_id,
+                                          int_id,
+                                          entry);
       int_id.handler ()->cache_map_entry (entry);
     }
 
@@ -65,9 +65,10 @@ TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
                                       TAO_Cache_IntId &value)
 {
   HASH_MAP_ENTRY *entry = 0;
+
   // Get the entry from the Hash Map
   int retval = this->cache_map_.find (key,
-                              entry);
+                                      entry);
   if (retval == 0)
     {
       retval = this->get_idle_handler (key,
@@ -85,7 +86,7 @@ TAO_Connection_Cache_Manager::rebind_i (const TAO_Cache_ExtId &key,
                                            const TAO_Cache_IntId &value)
 {
   return this->cache_map_.rebind (key,
-                          value);
+                                  value);
 }
 
 int
@@ -112,6 +113,7 @@ TAO_Connection_Cache_Manager::unbind_i (const TAO_Cache_ExtId &key,
 int
 TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 {
+
   // First get the entry again (if at all things had changed in the
   // cache map in the mean time)
   HASH_MAP_ENTRY *new_entry = 0;
@@ -157,8 +159,8 @@ TAO_Connection_Cache_Manager::
 
 int
 TAO_Connection_Cache_Manager::
-    get_idle_handler (const TAO_Cache_ExtId &ext_id,
-                      HASH_MAP_ENTRY *&entry)
+get_idle_handler (const TAO_Cache_ExtId & /*ext_id*/,
+                  HASH_MAP_ENTRY *&entry)
 {
   // We are sure that we have an entry
   do
