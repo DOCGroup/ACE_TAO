@@ -759,7 +759,7 @@ AST_Module::set_has_nested_valuetype (void)
     {
       AST_Module *pm = AST_Module::narrow_from_scope (parent);
 
-      if (pm)
+      if (pm != 0)
         {
           pm->set_has_nested_valuetype ();
         }

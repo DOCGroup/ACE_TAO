@@ -47,7 +47,7 @@ public:
   virtual ~be_valuetype_fwd (void);
   // Destructor.
 
-  virtual void set_abstract_valuetype ();
+  virtual void set_abstract_valuetype (void);
 
   virtual int gen_var_defn (char *local_name = 0);
   // Generate the _var class definition.

@@ -29,8 +29,7 @@ ACE_RCSID(be, be_valuetype, "$Id$")
 
 // Default constructor.
 be_valuetype::be_valuetype (void)
-  : full_obv_skel_name_ (0),
-    abstract_ (0)
+  : full_obv_skel_name_ (0)
 {
   // Always the case.
   this->size_type (be_decl::VARIABLE);
@@ -44,6 +43,9 @@ be_valuetype::be_valuetype (void)
 
   // Always the case.
   this->has_constructor (I_TRUE);
+
+  // Set the base (AST_Interface) class member.
+  this->set_valuetype ();
 }
 
 // Constructor used to build the AST.
@@ -59,7 +61,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                   0, 
                   p, 
                   0, 
-                  0),
+                  set_abstract),
     AST_Interface (n, 
                    ih, 
                    nih, 
@@ -67,15 +69,14 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    0, 
                    p, 
                    0, 
-                   0),
+                   set_abstract),
     AST_Decl (AST_Decl::NT_interface,  // It's like an interface.
               n, 
               p),
     UTL_Scope (AST_Decl::NT_interface),
     COMMON_Base (0, 
                  set_abstract),
-    full_obv_skel_name_ (0),
-    abstract_ (set_abstract)
+    full_obv_skel_name_ (0)
 {
   // Check that redefine() copies all members.
 
@@ -91,6 +92,9 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
 
   // Always the case.
   this->has_constructor (I_TRUE);
+
+  // Set the base (AST_Interface) class member.
+  this->set_valuetype ();
 }
 
 be_valuetype::~be_valuetype (void)
@@ -105,7 +109,7 @@ be_valuetype::redefine (AST_Interface *from,
   this->AST_Interface::redefine (from, 
                                  p);
 
-  abstract_ = from->is_abstract_valuetype ();
+  this->is_abstract_ = from->is_abstract_valuetype ();
 }
 
 // Is true if non-virtual accessor and modifier should be generated
@@ -114,24 +118,6 @@ idl_bool
 be_valuetype::opt_accessor (void)
 {
   return be_global->obv_opt_accessor ();
-}
-
-idl_bool
-be_valuetype::is_valuetype (void)
-{
-  return 1;
-}
-
-idl_bool
-be_valuetype::is_abstract_valuetype (void)
-{
-  return this->abstract_;
-}
-
-void
-be_valuetype::set_abstract_valuetype (void)
-{
-  this->abstract_ = 1;
 }
 
 // Compute stringified fully scoped skeleton name (OBV_name).

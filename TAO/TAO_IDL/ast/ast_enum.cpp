@@ -313,10 +313,10 @@ AST_Enum::dump (ostream &o)
   while (!i->is_done ())
     {
       d = i->item ();
-      d->local_name()->dump (o);
+      d->local_name ()->dump (o);
       i->next ();
 
-      if (!i->is_done())
+      if (!i->is_done ())
         {
           o << ", ";
         }

@@ -98,14 +98,6 @@ public:
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  virtual idl_bool is_valuetype (void);
-
-  // Data accessors.
-
-  virtual idl_bool is_abstract_valuetype (void);
-
-  virtual void set_abstract_valuetype (void);
-
  // Narrowing.
   DEF_NARROW_METHODS1 (be_valuetype, be_interface);
   DEF_NARROW_FROM_DECL (be_valuetype);
@@ -117,8 +109,6 @@ public:
 
 private:
   char *full_obv_skel_name_;
-
-  idl_bool abstract_;
 };
 
 #endif  /* IDL_HAS_VALUETYPE */
