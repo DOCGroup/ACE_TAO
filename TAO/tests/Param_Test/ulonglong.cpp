@@ -85,10 +85,9 @@ Test_ULongLong::run_sii_test (Param_Test_ptr objref,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_ULongLong::run_sii_test\n");
 
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 }
 
 int
@@ -149,10 +148,9 @@ Test_ULongLong::add_args (CORBA::NVList_ptr param_list,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_ULongLong::add_args\n");
 
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 }
 
 CORBA::Boolean

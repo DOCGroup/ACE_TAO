@@ -82,13 +82,10 @@ Test_Any::init_parameters (Param_Test_ptr objref,
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      //ACE_UNUSED_ARG (sysex);
-
       ACE_PRINT_EXCEPTION (sysex, "System Exception doing make_coffee");
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 }
 
 int
@@ -298,10 +295,9 @@ Test_Any::add_args (CORBA::NVList_ptr param_list,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_Any::add_args\n");
 
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 }
 
 CORBA::Boolean
