@@ -1,3 +1,12 @@
+Mon Dec  3 13:59:06 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/README:
+
+	  The ACE_HAS_IP6 macro has been superceded by the ACE_HAS_IPV6
+	  macro.  Also added description of the
+	  ACE_USES_IPV4_IPV6_MIGRATION macro based on Steve's description
+	  below.
+
 Mon Dec  3 15:50:42 2001  Steve Huston  <shuston@riverace.com>
 
         * IPv6 changes done by John Aughey and myself. To enable IPv6
