@@ -105,15 +105,15 @@ endif
 #### Solaris 2.5.1, and gnu cpio 2.3, do support that option.
 
 cleanrelease:
-	($(TIMESTAMP)make realclean; cd ..; /bin/rm -f ACE.tar.gz; \
-	 find $(RELEASE_FILES) -print | egrep -v CVS | cpio -o -H tar > ACE.tar; \
-	 gzip -9 ACE.tar; chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
+	($(TIMESTAMP)make realclean; cd ..; 
+	 find $(RELEASE_FILES) -print | egrep -v /CVS | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
 release:
-	($(TIMESTAMP)cd ..; /bin/rm -f ACE.tar.gz; \
-	 find $(RELEASE_FILES) -print | egrep -v CVS | cpio -o -H tar > ACE.tar; \
-	 gzip -9 ACE.tar; chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
-	(cd ..; /bin/rm -f ACE-lib.tar.gz; \
-	 find $(RELEASE_LIB_FILES) -print | egrep -v CVS | cpio -o -H tar > ACE-lib.tar; \
-	 gzip -9 ACE-lib.tar; chmod a+r ACE-lib.tar.gz; mv ACE-lib.tar.gz ./ACE_wrappers/)
+	($(TIMESTAMP)cd ..; \
+	 find $(RELEASE_FILES) -print | egrep -v /CVS | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
+	(cd ..; \
+	 find $(RELEASE_LIB_FILES) -print | egrep -v /CVS | cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
+	 chmod a+r ACE-lib.tar.gz; mv ACE-lib.tar.gz ./ACE_wrappers/)
 
