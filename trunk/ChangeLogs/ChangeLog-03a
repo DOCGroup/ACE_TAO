@@ -1,3 +1,13 @@
+Thu Feb 14 01:01:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ACEXML/ACEXML.dsw:
+        * ACEXML/common/XML_Common.dsp:
+        * ACEXML/examples/SAXPrint/SAXPrint.dsp:
+        * ACEXML/parser/debug_validator/Debug_Validator.dsp:
+        * ACEXML/parser/parser/Parser.dsp:
+        * ACEXML/tests/NamespaceSupport_Test.dsp:
+        * ACEXML/tests/Transcoder_Test.dsp: Updated base include directories.
+
 Thu Feb 14 00:20:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Makefile:

@@ -26,6 +26,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name XML_Common
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -38,9 +41,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name Debug_Validator
-    End Project Dependency
 }}}
 
 ###############################################################################
