@@ -556,7 +556,7 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
                       -1);
 
   // Clear the LM_DEBUG bit from log messages if appropriate
-  if (ACE::debug ())
+  if (ACE::debug () == 0)
     ACE_Log_Msg::disable_debug_messages ();
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
