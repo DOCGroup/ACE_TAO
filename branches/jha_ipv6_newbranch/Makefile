@@ -21,8 +21,7 @@ DIRS    = ace \
           apps \
           examples \
           performance-tests \
-          websvcs \
-          PACE
+          websvcs
 
 CLONE   = Makefile \
           ace \
