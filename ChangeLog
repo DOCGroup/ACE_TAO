@@ -1,3 +1,11 @@
+Wed Nov  6 11:12:28 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Recursive_Condition_Test.cpp: Replaced ACE_TRACE with
+          ACE_DEBUG so the log gets all the info. Re-enabled the timer queue
+          part of the test and added a check to be sure "enough" expirations
+          are recorded. Added a piece of data protected by the mutex/condition
+          to be sure threads aren't released too early.
+
 Tue Nov  5 21:54:40 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/run_tests.lst:
