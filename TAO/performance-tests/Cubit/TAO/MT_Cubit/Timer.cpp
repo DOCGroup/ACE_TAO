@@ -39,44 +39,17 @@ MT_Cubit_Timer::get_elapsed (void)
 {
   ACE_timer_t real_time;
 #if defined (ACE_LACKS_FLOATING_POINT)
-#   if defined (CHORUS)
+# if defined (CHORUS)
   real_time = (this->pstopTime_ - this->pstartTime_) / this->granularity_;
-#   else /* CHORUS */
+# else /* CHORUS */
   // Store the time in usecs.
   real_time = (this->delta_.sec () * ACE_ONE_SECOND_IN_USECS  +
                this->delta_.usec ()) / this->granularity_;
-#endif /* !CHORUS */
-#else /* !ACE_LACKS_FLOATING_POINT */
-
+# endif /* !CHORUS */
+#else  /* !ACE_LACKS_FLOATING_POINT */
   // Store the time in usecs.
-
-#if defined (VXWORKS)
-  // @@ David, these comments are to temporarily fix what seems a bug
-  // in the ACE_Long_Long class that is used to calc the elapsed time.
-  // It seems that subtraction of two ACE_Long_Long are not done
-  // correctly when the least significant value has wrapped around.
-  // For example to subtract these values: 00ff1001:00000001 minus
-  // 00ff1000:ffffffff would give a huge number, instead of giving 2.
-
-  // This is only occuring in VxWorks.  I'll leave these here to debug
-  // it later.
-  ACE_timer_t tmp = (ACE_timer_t) this->delta_.sec ();
-  ACE_timer_t tmp2 = (ACE_timer_t) this->delta_.usec ();
-
-  if (tmp > 100000)
-    {
-      tmp = 0.0;
-      tmp2 = 2000.0;
-      ACE_DEBUG ((LM_DEBUG,
-                  "tmp > 100000!, this->delta_.usec ()=%ld\n",
-                  this->delta_.usec ()));
-    }
-
-  real_time = tmp * ACE_ONE_SECOND_IN_USECS + tmp2;
-#else
-  real_time = ((ACE_timer_t) this->delta_.sec () * ACE_ONE_SECOND_IN_USECS) +
-               (ACE_timer_t) this->delta_.usec ();
-#endif /* VXWORKS */
+  real_time = (ACE_timer_t) this->delta_.sec () * ACE_ONE_SECOND_IN_USECS  +
+              (ACE_timer_t) this->delta_.usec ();
   real_time = real_time/this->granularity_;
 #endif /* !ACE_LACKS_FLOATING_POINT */
   return real_time; // in usecs.
