@@ -1,3 +1,16 @@
+Wed Jul 14 02:27:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Collocation/Coll_Tester.cpp:
+	* tests/Collocation/Coll_Tester.h:
+	* tests/Collocation/Collocation.dsp:
+	* tests/Collocation/Collocation.dsw:
+	* tests/Collocation/Diamond.idl:
+	* tests/Collocation/Diamond_i.cpp:
+	* tests/Collocation/Diamond_i.h:
+	* tests/Collocation/README:
+	* tests/Collocation/main.cpp:
+	* tests/Collocation/svc.conf: New collocation support sanity check.
+
 Tue Jul 13 22:09:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service: removed ACE_Equal_To<ACE_CString>
