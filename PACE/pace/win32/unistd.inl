@@ -15,6 +15,7 @@
 
 #include <stdarg.h>
 #include <io.h>
+#include <stdio.h>
 #include <direct.h>
 #include <process.h>
 
@@ -73,9 +74,7 @@ PACE_INLINE
 int
 pace_close (PACE_HANDLE fildes)
 {
-  PACE_WIN32CALL_RETURN
-    (PACE_ADAPT_RETVAL
-     (CloseHandle (fildes), pace_result_), int, -1);
+  return win32_close (fildes);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
@@ -84,21 +83,7 @@ PACE_INLINE
 PACE_HANDLE
 pace_dup (PACE_HANDLE fildes)
 {
-  PACE_HANDLE new_fd;
-  if (DuplicateHandle(GetCurrentProcess (),
-                      fildes,
-                      GetCurrentProcess(),
-                      &new_fd,
-                      0,
-                      TRUE,
-                      DUPLICATE_SAME_ACCESS))
-    {
-      return new_fd;
-    }
-  else
-    {
-      PACE_FAIL_RETURN (PACE_INVALID_HANDLE);
-    }
+  return win32_dup (fildes);
 }
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
@@ -194,16 +179,7 @@ PACE_INLINE
 int
 pace_ftruncate (PACE_HANDLE fildes, pace_off_t length)
 {
-  if (SetFilePointer (fildes, length, NULL, FILE_BEGIN) != (unsigned) -1)
-    {
-      PACE_WIN32CALL_RETURN
-        (PACE_ADAPT_RETVAL
-         (SetEndOfFile (fildes), pace_result_), int, -1);
-    }
-  else
-    {
-      PACE_FAIL_RETURN (-1);
-    }
+  return win32_ftruncate (fildes, length);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -338,42 +314,7 @@ PACE_INLINE
 pace_off_t
 pace_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
 {
-# if SEEK_SET != FILE_BEGIN \
-  || SEEK_CUR != FILE_CURRENT \
-  || SEEK_END != FILE_END
-
-  /* #error Windows NT is evil AND rude! */
-  switch (whence) {
-
-    case SEEK_SET: {
-      whence = FILE_BEGIN;
-      break;
-    }
-    case SEEK_CUR: {
-      whence = FILE_CURRENT;
-      break;
-    }
-    case SEEK_END: {
-      whence = FILE_END;
-      break;
-    }
-    default: {
-      errno = EINVAL;
-      return (off_t)-1; // rather safe than sorry
-    }
-  }
-  PACE_OSCALL_RETURN (lseek (handle, offset, whence), off_t, -1);
-# endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
-  DWORD result = SetFilePointer (fildes, offset, NULL, whence);
-  if (result == PACE_SYSCALL_FAILED)
-    {
-      off_t retval = -1;
-      PACE_FAIL_RETURN (retval);
-    }
-  else
-    {
-      return result;
-    }
+  return win32_lseek (fildes, offset, whence);
 }
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
@@ -540,7 +481,7 @@ PACE_INLINE
 int
 pace_unlink (const char * path)
 {
-  return unlink (path);
+  return _unlink (path);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
@@ -549,15 +490,6 @@ PACE_INLINE
 ssize_t
 pace_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
 {
-  DWORD bytes_written; /* This is set to 0 byte WriteFile. */
-
-  if (WriteFile (fildes, buf, nbyte, &bytes_written, 0))
-    {
-      return (ssize_t) bytes_written;
-    }
-  else
-    {
-      PACE_FAIL_RETURN (-1);
-    }
+  return win32_write (fildes, buf, nbyte);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */

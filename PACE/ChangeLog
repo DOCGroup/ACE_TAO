@@ -1,3 +1,37 @@
+Tue Jul 25 17:00:13 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/dirent.h:
+	* pace/win32/dirent.inl:
+	* pace/win32/dirent.c:
+	* pace/win32/fcntl.h:
+	* pace/win32/fcntl.inl:
+	* pace/win32/fcntl.c:
+	* pace/win32/mman.h:
+	* pace/win32/mman.inl:
+	* pace/win32/mman.c:
+	* pace/win32/semaphore.h:
+	* pace/win32/semaphore.inl:
+	* pace/win32/semaphore.c:
+	* pace/win32/signal.h:
+	* pace/win32/signal.inl:
+	* pace/win32/signal.c:
+	* pace/win32/stat.h:
+	* pace/win32/stat.inl:
+	* pace/win32/stat.c:
+	* pace/win32/unistd.h:
+	* pace/win32/unistd.inl:
+	* pace/win32/unistd.c:
+	* pace/win32/utime.h:
+	* pace/win32/utime.inl:
+	* pace/win32/utime.c:
+	* pace/win32/utsname.h:
+	* pace/win32/utsname.inl:
+	* pace/win32/utsname.c:
+
+	  Placed emulation prototype in the .h file.
+	  Removed emulation code from the .inl file.
+	  Moved emulation code to the .c file.
+
 Mon Jul 24 15:57:24 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/posix/string.inl

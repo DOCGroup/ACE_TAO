@@ -41,6 +41,23 @@ extern "C" {
 # define PACE_PROT_READ PROT_READ
 # define PACE_PROT_WRITE PROT_WRITE
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  void * mmap (void * addr, size_t len, int prot, int flags,
+               PACE_HANDLE fildes, pace_off_t off);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int mprotect (void * addr, size_t len, int prot);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int msync (void * addr, size_t len, int flags);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int munmap (void * addr, size_t len);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */

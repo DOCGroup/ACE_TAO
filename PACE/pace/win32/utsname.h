@@ -32,6 +32,10 @@ extern "C" {
 } pace_utsname;
 # endif /* PACE_UTSNAME */
 
+#if (PACE_HAS_POSIX_SP_UOF)
+  int uname (pace_utsname * name);
+#endif /* PACE_HAS_POSIX_SP_UOF */
+
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
