@@ -1,3 +1,14 @@
+Tue Jun 22 11:45:07 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        
+          Added VPATH statement to the verbatim block of the TAO_IFR_EXE
+          project. This allows the gnu linker to find object files
+          built from source files in some directory which is not a
+          subdirectory of the local one. Thanks to Don Hinton
+          <dhinton@dre.vanderbilt.edu> and Bala Natarajan 
+          <bala@dre.vanderbilt.edu> for their help with this problem.
+
 Tue Jun 22 14:10:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
