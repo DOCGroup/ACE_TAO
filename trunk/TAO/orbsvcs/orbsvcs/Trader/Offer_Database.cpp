@@ -14,7 +14,6 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database (void)
 {
   ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, this->db_lock_);
 
-  ACE_DEBUG ((LM_DEBUG, "Offer Database Destruction.\n"));
   for (ACE_TYPENAME Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
        type_iter++)
@@ -26,10 +25,11 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database (void)
         // we delete the lock along with the offer_map_entry.
         ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, offer_map_entry->lock_);
         
-        for (TAO_Offer_Map::iterator offer_iter (*offer_map_entry->offer_map_);
+        for (ACE_TYPENAME TAO_Offer_Map::iterator offer_iter (*offer_map_entry->offer_map_);
              ! offer_iter.done ();
              offer_iter++)
           {
+            ACE_DEBUG ((LM_DEBUG, "Deleting an offer.\n"));
             // Delete all the offers in the offer map.
             CosTrading::Offer* offer = (*offer_iter).int_id_;
             delete offer;
@@ -104,6 +104,7 @@ remove_offer (const char* type, CORBA::ULong id)
         return -1;
       
       return_value = offer_map_entry->offer_map_->unbind (id, offer);
+      ACE_DEBUG ((LM_DEBUG, "Deleting an offer.\n"));
       delete offer;
 
       // If the service type has no more offers, free the map, lest
