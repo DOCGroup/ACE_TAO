@@ -120,7 +120,7 @@ ACE_INLINE ::Components::Cookie_ptr
   if (CORBA::is_nil (c))
     ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
 
-  CIAO::Active_Objref_Map::key_type key;
+  ACE_Active_Map_Manager_Key key;
   this->ciao_muses_[receptacle name]_.bind (c,
                                             key);
 
@@ -137,7 +137,7 @@ ACE_INLINE [uses type]_ptr
   [uses type]_var retv;
 
   if (ck == 0 ||
-      this->ciao_muses_[receptacle name]_.unbind (ck,
+      this->ciao_muses_[receptacle name]_.unbind (*ck,
                                                   retv) != 0)
     ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
 

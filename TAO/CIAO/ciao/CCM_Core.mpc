@@ -10,6 +10,7 @@ project (CAIO_Client) : taolib_with_idl {
     CCM_Base.idl
     CCM_Event.idl
     CCM_Component.idl
+    CIAO_Value.idl
   }
 
   Source_Files {
@@ -69,5 +70,6 @@ project (CAIO_Server) :taolib_with_idl {
     ContainerBase.cpp
     HomeRegistrar_i.cpp
     Server_init.cpp
+    Assembly_Impl.cpp
   }
 }

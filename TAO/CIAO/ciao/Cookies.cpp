@@ -28,11 +28,19 @@ CIAO::Map_Key_Cookie::insert (ACE_Active_Map_Manager_Key &key)
 }
 
 int
-CIAO::Map_Key_Cookie::extract (ACE_Active_Map_Manager_Key &key)
+CIAO::Map_Key_Cookie::extract (::Components::Cookie *ck,
+                               ACE_Active_Map_Manager_Key &key)
 {
-  if (this->cookieValue ().length () != ACE_Active_Map_Manager_Key::size ())
+  CIAO::Cookie *c = CIAO::Cookie::_downcast (ck);
+
+  if (c == 0)
     return -1;
-  key.decode (this->cookieValue ().get_buffer ());
+
+  ::CORBA::OctetSeq *x = c->get_cookie ();
+
+  if (x->length () != ACE_Active_Map_Manager_Key::size ())
+    return -1;
+  key.decode (x->get_buffer ());
   return 0;
 }
 
@@ -47,4 +55,10 @@ CIAO::Map_Key_Cookie_init::create_for_unmarshal (void)
       0
     );
   return ret_val;
+}
+
+::CORBA::OctetSeq *
+CIAO::Map_Key_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL)
+{
+  return &this->cookieValue ();
 }

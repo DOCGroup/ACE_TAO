@@ -14,6 +14,7 @@
 
 #include "CCM_BaseC.h"
 #include "CIAO_Container_Export.h"
+#include "CIAO_ValueC.h"
 #include "ace/Active_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,11 +24,12 @@
 namespace CIAO
 {
   /**
-   * @class Cookie
+   * @class Map_Key_Cookie
    *
    * @brief A CIAO internal Cookie valuetype implementation.
    */
-  class CIAO_CONTAINER_Export Map_Key_Cookie : public virtual ::OBV_Components::Cookie
+  class CIAO_CONTAINER_Export Map_Key_Cookie
+    : public virtual OBV_CIAO::Cookie
   {
   public:
     /// Default constructor.
@@ -35,6 +37,8 @@ namespace CIAO
 
     /// Initialize a @c Cookie with an @c ACE_Active_Map_Manager_Key
     Map_Key_Cookie (const ACE_Active_Map_Manager_Key &key);
+
+    virtual ::CORBA::OctetSeq * get_cookie (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     /// Initialize a @c Cookie with an @c ACE_Active_Map_Manager_Key
     /// This contructor make a copy of the Cookie.  Perhaps we can somehow
@@ -48,7 +52,8 @@ namespace CIAO
     int insert (ACE_Active_Map_Manager_Key &key);
 
     /// Extract the @c ACE_Active_Map_Manager_Key
-    int extract (ACE_Active_Map_Manager_Key &key);
+    static int extract (::Components::Cookie *c,
+                        ACE_Active_Map_Manager_Key &key);
 
   protected:
   };

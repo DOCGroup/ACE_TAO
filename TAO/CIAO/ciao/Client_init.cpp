@@ -3,12 +3,15 @@
 #include "ciao/Client_init.h"
 #include "ciao/CIAO_common.h"
 #include "ciao/CCM_ComponentC.h"
+#include "CIAO/CIAO_ValueC.h"
 
 int
 CIAO::Client_init (CORBA::ORB_ptr o)
 {
   CIAO_REGISTER_VALUE_FACTORY (o, Components::Cookie_init,
                                Components::Cookie);
+  CIAO_REGISTER_VALUE_FACTORY (o, Components::Cookie_init,
+                               CIAO::Cookie);
   CIAO_REGISTER_VALUE_FACTORY (o, Components::PortDescription_init,
                                Components::PortDescription);
   CIAO_REGISTER_VALUE_FACTORY (o, Components::FacetDescription_init,
