@@ -30,6 +30,28 @@ import ACE.OS.*;
 
 public class Stream
 {
+
+  public Stream ()
+  {
+    this (null, null, null);
+  }
+
+  // Create a Stream consisting of <head> and <tail> as the Stream
+  // head and Stream tail, respectively.  If these are 0 then the
+  // <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
+  // <arg> is the value past in to the open() methods of the tasks.
+
+  public Stream (Object a,
+		 Module head,
+		 Module tail)
+  {
+    this.linkedUs_ = null;
+    // this.final_close_ = this.lock_;
+
+    if (this.open (a, head, tail) == -1)
+      ACE.ERROR ("open" + head.name () + " " +  tail.name ());
+  }
+
   public int push (Module newTop)
   {
     if (this.pushModule  (newTop, 
@@ -356,17 +378,6 @@ public class Stream
   public synchronized int unlink ()
   {
     return this.unlinkInternal ();
-  }
-
-  public Stream (Object a,
-		 Module head,
-		 Module tail)
-  {
-    this.linkedUs_ = null;
-    // this.final_close_ = this.lock_;
-
-    if (this.open (a, head, tail) == -1)
-      ACE.ERROR ("open" + head.name () + " " +  tail.name ());
   }
 
   public void dump ()
