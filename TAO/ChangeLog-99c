@@ -1,12 +1,18 @@
+Fri Apr 02 15:42:34 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf{,.static}:
+          updated ORB configuration to correspond to that of IDL_Cubit,
+          except to use -ORBresources tss.
+
 Fri Apr  2 13:25:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/POA/Default_Servant/File_i.cpp: 
-	  Fixed some more warnings.
+        * examples/POA/Default_Servant/File_i.cpp:
+          Fixed some more warnings.
 
 Fri Apr  2 12:33:45 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/Default_Servant/File_i.cpp: 
-	Fixed error in IRIX
+        * examples/POA/Default_Servant/File_i.cpp:
+        Fixed error in IRIX
 
 Thu Apr 01 22:52:00 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -14,127 +20,127 @@ Thu Apr 01 22:52:00 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Apr  1 21:41:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* $TAO_ROOT/examples/POA/FindPOA/FindPOA.cpp
-	Made some cosmetic changes
+        * $TAO_ROOT/examples/POA/FindPOA/FindPOA.cpp
+        Made some cosmetic changes
 
 Thu Apr  1 13:47:56 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* tao/Connect.cpp (handle_message): Changed a c-style cast to 
-	  ACE_reinterpret_cast ().
+        * tao/Connect.cpp (handle_message): Changed a c-style cast to
+          ACE_reinterpret_cast ().
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Fixed a warning
-	  for g++.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Fixed a warning
+          for g++.
 
 Thu Apr  1 12:17:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	  Moved _duplicate() to the .cpp file again, this eliminates a
-	  pesky warning from the broken g++ 2.7.X compilers.
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          Moved _duplicate() to the .cpp file again, this eliminates a
+          pesky warning from the broken g++ 2.7.X compilers.
 
 Thu Apr 01 03:26:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO/tao/ORB_Core.{h,cpp}:
-	* TAO/tao/TAO_Internal.{h,i,cpp}:
-	* TAO/tao/default_client.{h,cpp}:
-	* TAO/tao/default_server.{h,cpp}:
-	  TAO is now build with static services enabled.  You can use TAO
-	  components as either static or dynamic services (wrt. Service
-	  Configurator.)  There are many ways to set up the svc.conf
-	  entries.  All these are documented in
+        * TAO/tao/ORB_Core.{h,cpp}:
+        * TAO/tao/TAO_Internal.{h,i,cpp}:
+        * TAO/tao/default_client.{h,cpp}:
+        * TAO/tao/default_server.{h,cpp}:
+          TAO is now build with static services enabled.  You can use TAO
+          components as either static or dynamic services (wrt. Service
+          Configurator.)  There are many ways to set up the svc.conf
+          entries.  All these are documented in
 
-	    http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/configurations.html#programming
+            http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/configurations.html#programming
 
-	* Changed all svc.conf file to use TAO components as static
-	  services.  A perl script call tao_svcconf.pl under
-	  $ACE_ROOT/bin/ can help you convert svc.conf files.
+        * Changed all svc.conf file to use TAO components as static
+          services.  A perl script call tao_svcconf.pl under
+          $ACE_ROOT/bin/ can help you convert svc.conf files.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:  Renamed
-	  svc.conf.static to svc.conf.dynamic as a sample svc.conf file
-	  that uses dynamic services.
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:  Renamed
+          svc.conf.static to svc.conf.dynamic as a sample svc.conf file
+          that uses dynamic services.
 
 Wed Mar 31 23:32:13 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Purified the INS changes in the following files. Also minimised data
-	copying.
+        Purified the INS changes in the following files. Also minimised data
+        copying.
 
-	* tao/IOR_LookupTable.cpp:
-	* tao/IOR_LookupTable.h: Passed params by reference for the add ()
-	  and find ().
-	* tao/Connect.cpp: Removed data copying.
-	* tao/ORB_Core.cpp: Changed the add_to_ior_table () to fix some memory
-	  leaks.
-	* tao/ORB.cpp: Fixed memory leaks in resolve_initial_references ()
-	  and iioploc_string_to_object (). Changed the add/find IOR APIs
-	  to take params by reference for minimal copying.
-	* tao/ORB.h: Changed the signatures of the add/find IOR APIs.
+        * tao/IOR_LookupTable.cpp:
+        * tao/IOR_LookupTable.h: Passed params by reference for the add ()
+          and find ().
+        * tao/Connect.cpp: Removed data copying.
+        * tao/ORB_Core.cpp: Changed the add_to_ior_table () to fix some memory
+          leaks.
+        * tao/ORB.cpp: Fixed memory leaks in resolve_initial_references ()
+          and iioploc_string_to_object (). Changed the add/find IOR APIs
+          to take params by reference for minimal copying.
+        * tao/ORB.h: Changed the signatures of the add/find IOR APIs.
 
 Wed Mar 31 14:09:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/Explicit_Activation/server.cpp:
-	Made some cosmetic changes to the ACETRY macros
+        * examples/POA/Explicit_Activation/server.cpp:
+        Made some cosmetic changes to the ACETRY macros
         defined inside
 
 Wed Mar 31 09:02:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
-	  Moved the output CDR allocators from the ORB_Core into the
-	  resource factory.  Even though this resources can always be TSS
-	  the ORB_Core is not used is a single thread anymore.
-	  Changes similar to this may be required as the ORB-thread
-	  relationship is decoupled.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Moved the output CDR allocators from the ORB_Core into the
+          resource factory.  Even though this resources can always be TSS
+          the ORB_Core is not used is a single thread anymore.
+          Changes similar to this may be required as the ORB-thread
+          relationship is decoupled.
 
 Wed Mar 31 06:58:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_to_service): Fixed a couple mistakes in
- 	  this function that were causing it to fail on errors.  Thanks to
- 	  Mike Mazurek <mmazurek@std.saic.com> for reporting this.
+        * tao/ORB.cpp (multicast_to_service): Fixed a couple mistakes in
+          this function that were causing it to fail on errors.  Thanks to
+          Mike Mazurek <mmazurek@std.saic.com> for reporting this.
 
 Wed Mar 31 03:24:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/POAS.{h,cpp}:
-	* tao/POAC.{h,i,cpp}:  Brought these files in-synch with TAO_IDL
-	  generated files.  Major changes are:
-	  Use of namespace on platforms that support it.
-	  Use of perfect-hash optable.
-	  Use of compile marshalling.
-	  Added _interface_repository_id accessors.
-	  Added _non_existent_skel for skeletons.
-	  Repository ID changed to start with IDL:omg.org/.
-	  Remote operation invocation now understand MP.
-	  Use of ACE_TRY macros.
+        * tao/POAS.{h,cpp}:
+        * tao/POAC.{h,i,cpp}:  Brought these files in-synch with TAO_IDL
+          generated files.  Major changes are:
+          Use of namespace on platforms that support it.
+          Use of perfect-hash optable.
+          Use of compile marshalling.
+          Added _interface_repository_id accessors.
+          Added _non_existent_skel for skeletons.
+          Repository ID changed to start with IDL:omg.org/.
+          Remote operation invocation now understand MP.
+          Use of ACE_TRY macros.
 
-	  Thanks to Jeff for the reminder.
+          Thanks to Jeff for the reminder.
 
 Wed Mar 31 000:42:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/lex.yy.cpp:
-	  Added a definition above the rules section to generalize newline
- 	  to handle '\n' and "\r\n", and plugged the definition in where
- 	  appropriate in the rules section.  Since we don't regenerate
- 	  lex.yy.cpp with every build, that had to be generated and
- 	  checked in as well. Thanks to Ossama for his quick hack of a
- 	  simple test for this.  Also tested by ftp of Ping.idl (in binary
- 	  mode) from NT to Unix and rebuild of orbsvcs after removing
- 	  generated Ping interface files.  Also, thanks to Andreas Geisler
- 	  <andreas.geisler@erls.siemens.de> for reporting the problem.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/lex.yy.cpp:
+          Added a definition above the rules section to generalize newline
+          to handle '\n' and "\r\n", and plugged the definition in where
+          appropriate in the rules section.  Since we don't regenerate
+          lex.yy.cpp with every build, that had to be generated and
+          checked in as well. Thanks to Ossama for his quick hack of a
+          simple test for this.  Also tested by ftp of Ping.idl (in binary
+          mode) from NT to Unix and rebuild of orbsvcs after removing
+          generated Ping interface files.  Also, thanks to Andreas Geisler
+          <andreas.geisler@erls.siemens.de> for reporting the problem.
 
 Wed Mar 31 00:25:17 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
-	  fixed a bug in counting down the events received in the
-	  consumer's <push> method.
+        * orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
+          fixed a bug in counting down the events received in the
+          consumer's <push> method.
 
 Wed Mar 31 00:14:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/Default_Servant/File_i.cpp (destroy):
-	* examples/POA/Default_Servant/server.cpp
-	* examples/POA/Default_Servant/client.cpp
+        * examples/POA/Default_Servant/File_i.cpp (destroy):
+        * examples/POA/Default_Servant/server.cpp
+        * examples/POA/Default_Servant/client.cpp
 
-	* examples/POA/DSI/Database_i.cpp
+        * examples/POA/DSI/Database_i.cpp
           examples/POA/DSI/server.cpp
           examples/POA/DSI/client.cpp
           MAde some cosmetic changes to the ACETRY macros
@@ -142,10 +148,10 @@ Wed Mar 31 00:14:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Mar 30 18:30:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html: Added a paragraph describing the relation and
-	  useage of command-line options, environment variables, and
-	  svc.conf files.  Thanks to Don Busch <busch_d@ociweb.com> for
-	  pointing this out.
+        * docs/Options.html: Added a paragraph describing the relation and
+          useage of command-line options, environment variables, and
+          svc.conf files.  Thanks to Don Busch <busch_d@ociweb.com> for
+          pointing this out.
 
 Tue Mar 30 12:33:06 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -153,41 +159,41 @@ Tue Mar 30 12:33:06 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Mar 30 11:16:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp
-	  (resolve_initial_references,iioploc_string_to_object):  We don't
-	  need a char* array here.
+        * tao/ORB.cpp
+          (resolve_initial_references,iioploc_string_to_object):  We don't
+          need a char* array here.
 
 Tue Mar 30 09:51:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.cpp:
-	  Missing ORB_Core argument in the InputCDR for
-	  ior_string_to_object.
+        * tao/ORB.cpp:
+          Missing ORB_Core argument in the InputCDR for
+          ior_string_to_object.
 
-	* tao/GIOP.cpp:
-	  Improved error messages.
+        * tao/GIOP.cpp:
+          Improved error messages.
 
-	* tao/Server_Request.cpp:
-	  Use ACE_TRY macros to throw exceptions.
+        * tao/Server_Request.cpp:
+          Use ACE_TRY macros to throw exceptions.
 
-	* tao/ORB_Core.cpp:
-	  We cannot cache the allocators because the ORB_Core_instance
-	  will not be TSS in the future.
+        * tao/ORB_Core.cpp:
+          We cannot cache the allocators because the ORB_Core_instance
+          will not be TSS in the future.
 
-	* tests/MT_Client/server.conf:
-	  Use global resources.
+        * tests/MT_Client/server.conf:
+          Use global resources.
 
-	* tests/MT_Client/client.cpp:
-	  Use ACE_PRINT_EXCEPTION to print the exception.
+        * tests/MT_Client/client.cpp:
+          Use ACE_PRINT_EXCEPTION to print the exception.
 
 Mon Mar 29 22:42:31 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* tao/Connect.cpp : Used CORBA::string_dup () in handle_message ().
-	  Un-owned memory was being assigned to an auto-ptr, which caused
-	  the INS test to fail on NT.
-	  Also added a check for TAO_debug_level.
+        * tao/Connect.cpp : Used CORBA::string_dup () in handle_message ().
+          Un-owned memory was being assigned to an auto-ptr, which caused
+          the INS test to fail on NT.
+          Also added a check for TAO_debug_level.
 
-	* tests/InterOp-Naming/InterOp_test.cpp (main): Removed some Debug
-	  statements.
+        * tests/InterOp-Naming/InterOp_test.cpp (main): Removed some Debug
+          statements.
 
 Mon Mar 29 21:27:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -196,20 +202,20 @@ Mon Mar 29 21:27:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Mar 29 20:12:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Changed the ACE_TRY_ENV in ACE_PRINT_EXCEPTION to ACE_ANY_EXCEPTION.
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp
+        Changed the ACE_TRY_ENV in ACE_PRINT_EXCEPTION to ACE_ANY_EXCEPTION.
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp
         * orbsvcs/orbsvcs/Time/TAO_TIO.cpp
         * orbsvcs/orbsvcs/Time/Timer_Helper.cpp
 
-	* TAO/examples/Simple/time:
-	  Updated the following projects to contain Simple_util.*
-	  Removed the obsolete files. Thanks to Barry Hoggard
-	  <hoggard@cfx.com> for pointing this out.
+        * TAO/examples/Simple/time:
+          Updated the following projects to contain Simple_util.*
+          Removed the obsolete files. Thanks to Barry Hoggard
+          <hoggard@cfx.com> for pointing this out.
 
-	  * TAO/examples/Simple/timeserver.dsp
-	  * TAO/examples/Simple/timeclient.dsp
-	  * TAO/examples/Simple/timeserver_static.dsp
-	  * TAO/examples/Simple/timeclient_static.dsp
+          * TAO/examples/Simple/timeserver.dsp
+          * TAO/examples/Simple/timeclient.dsp
+          * TAO/examples/Simple/timeserver_static.dsp
+          * TAO/examples/Simple/timeclient_static.dsp
 
         * TAO/examples/Simple/time:
           Updated the following projects to contain Simple_util.*
