@@ -26,7 +26,7 @@ ACE_RCSID(tests, Process_Mutex_Test, "$Id$")
 #if !defined (ACE_LACKS_FORK)
 static int release_mutex = 1;
 static int child_process = 0;
-static const char *mutex_name = ACE_DEFAULT_MUTEX_A;
+static const char *mutex_name = ACE_DEFAULT_MUTEX;
 #if defined (__Lynx__)
 static const u_int n_processes = 4;
 #else  /* ! __Lynx__ */

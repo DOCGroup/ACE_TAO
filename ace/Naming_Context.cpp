@@ -423,8 +423,8 @@ ACE_Name_Options::ACE_Name_Options (void)
   if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1) 
     {
       ACE_ERROR ((LM_ERROR, 
-                  "Temporary path too long, "
-                  "defaulting to current directory\n"));
+                  ACE_TEXT ("Temporary path too long, ")
+                  ACE_TEXT ("defaulting to current directory\n")));
       ACE_OS::strcat (this->namespace_dir_, ACE_TEXT ("."));
       ACE_OS::strcat (this->namespace_dir_, ACE_DIRECTORY_SEPARATOR_STR);
     }
