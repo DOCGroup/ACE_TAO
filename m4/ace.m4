@@ -24,6 +24,27 @@ dnl Macros that add ACE configuration options to a `configure' script.
 dnl ACE_CONFIGURATION_OPTIONS
 AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
 [
+ AC_ARG_ENABLE([alloca],
+  AC_HELP_STRING([--enable-alloca],[compile with alloca() support [[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_alloca=yes
+      ;;
+    no)
+      ace_user_enable_alloca=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-alloca])
+      ;;
+   esac
+  ],
+  [
+   dnl Disable alloca() support by default since its use is generally
+   dnl not recommended.
+   ace_user_enable_alloca=no
+  ])
+
  AC_ARG_ENABLE([log-msg-prop],
   AC_HELP_STRING([--enable-log-msg-prop],[enable threads inheriting ACE_Log_Msg properties from parent thread [[yes]]]),
   [
