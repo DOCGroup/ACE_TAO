@@ -83,6 +83,7 @@ Quoter_Client::run (void)
   }
   ACE_DEBUG ((LM_DEBUG, "ACE Hardware = %i\n", q));
 
+  // Copy the Quoter
   CosLifeCycle::Criteria criteria;
   CORBA::Object_var quoterObj_var =
     this->quoter_var_->copy (factory_Finder_var_.in (), 
@@ -95,7 +96,7 @@ Quoter_Client::run (void)
     return -1;
   }
 
-  Stock::Quoter_var quoter_var =
+  Stock::Quoter_var copied_quoter_var =
     Stock::Quoter::_narrow (quoterObj_var.in (),
 			    this->env_);
   if (this->env_.exception () != 0)
@@ -108,7 +109,8 @@ Quoter_Client::run (void)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Copied object\n"));
 
-  q = this->quoter_var_->get_quote ("ACE Hardware", this->env_);
+  q = 0;
+  q = copied_quoter_var->get_quote ("ACE Hardware", this->env_);
   if (this->env_.exception () != 0)
   {
     this->env_.print_exception ("with get_quote on copied object.");
@@ -118,6 +120,33 @@ Quoter_Client::run (void)
   
   ACE_DEBUG ((LM_DEBUG, "Copied object: ACE Hardware = %i\n", q));
 
+  // Move the Quoter
+/*
+  this->quoter_var_->move (factory_Finder_var_.in (), 
+			     criteria,
+			     this->env_);
+  if (this->env_.exception () != 0)
+  {
+    this->env_.print_exception ("with move.");
+    this->env_.clear();
+    return -1;
+  }
+
+  // Caution, the object reference stays the same
+    
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Moved object\n"));
+
+  q = 0;
+  q = this->quoter_var_->get_quote ("ACE Hardware", this->env_);
+  if (this->env_.exception () != 0)
+  {
+    this->env_.print_exception ("with get_quote on moved object.");
+    this->env_.clear();
+    return -1;
+  }
+  
+  ACE_DEBUG ((LM_DEBUG, "Moved object: ACE Hardware = %i\n", q)); */
   return 0;  
 }
 
