@@ -234,8 +234,6 @@ Client_i::run (void)
   ACE_DEBUG ((LM_DEBUG,
 	      "\n============= Consumer Client! =================\n"));
 
-  CORBA::Environment TAO_TRY_ENV;
-
   TAO_TRY
     {
       this->consumer_var_ =
