@@ -64,7 +64,7 @@ private:
   // Initialize the message we're sending to the user and set up the
   // barrier.
 
-  void *shared_client_test (u_short port,
+  char *shared_client_test (u_short port,
                             ACE_SOCK_Stream &cli_stream);
   // Performs the shared behavior of the oneway and twoway client
   // tests.
@@ -268,7 +268,7 @@ Options::sleep_time (void) const
   return this->sleep_time_;
 }
 
-void *
+char *
 Options::shared_client_test (u_short port,
                              ACE_SOCK_Stream &cli_stream)
 {

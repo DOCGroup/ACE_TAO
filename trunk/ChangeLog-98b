@@ -1,3 +1,8 @@
+Tue Sep  1 19:05:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/XtReactor_Test.cpp: Added a new version that should work
+	  on Linux.  Thanks to Eric Newton for this fix.
+
 Tue Sep  1 19:40:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/XtReactor_Test.cpp: 
