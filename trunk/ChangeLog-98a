@@ -36,7 +36,7 @@ Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
           multiple ACE executables on a target, though I haven't tried it.
 
         * include/makeinclude/rules.local.GNU: set SOEXT if it was not set,
-          to that it's always non-null for make depend.
+          so that it's always non-null for make depend.
 
 Wed Jan 21 21:37:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
