@@ -1,3 +1,17 @@
+Wed Jul 17 11:34:28 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.{i cpp}: Windows, in calls to _open_osfhandle(), cast
+          handle to long for C++Builder. Only MSVC has the intptr_t type.
+
+        * ace/WFMO_Reactor.cpp (make_changes_in_current_infos,
+          make_changes_in_suspension_infos): Run the index from 0 to
+          last_valid_slot rather than valid slot down to 0 to allow
+          correct use of size_t index.
+
+        * ace/WIN32_Proactor.cpp (register_handle, post_completion): Use
+          a reinterpret_cast, not static_cast to cast void* to ULONG for
+          non-Win64.
+
 Wed Jul 17 03:50:56 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 
 	* ace/ACE.cpp:

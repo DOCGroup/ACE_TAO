@@ -676,7 +676,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
       // handle arrays
       size_t last_valid_slot = this->max_handlep1_ - 1;
 
-      for (int i = last_valid_slot; i >= 0; i--)
+      for (size_t i = 0; i <= last_valid_slot; i++)
         {
           // This stuff is necessary here, since we should not make
           // the upcall until all the internal data structures have
@@ -771,13 +771,13 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
 int
 ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
 {
-  int i;
+  size_t i;
 
   // Go through the <suspended_handle> array
   if (this->handles_to_be_deleted_ > 0 || this->handles_to_be_resumed_ > 0)
     {
       size_t last_valid_slot = this->suspended_handles_ - 1;
-      for (i = last_valid_slot; i >= 0; i--)
+      for (i = 0; i <= last_valid_slot; i++)
         {
           // This stuff is necessary here, since we should not make
           // the upcall until all the internal data structures have

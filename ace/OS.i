@@ -9160,7 +9160,11 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
   FILE *file = 0;
 
+#  if defined (__BORLANDC__)
+  int crt_handle = ::_open_osfhandle (long (handle), 0);
+#  else
   int crt_handle = ::_open_osfhandle (intptr_t (handle), 0);
+#  endif /* __BORLANDC__ */
 
   if (crt_handle != -1)
     {
@@ -10745,7 +10749,12 @@ ACE_OS::isatty (ACE_HANDLE handle)
   ACE_UNUSED_ARG (handle);
   return 0;
 #else
+#  if defined (__BORLANDC__)
+  int fd = ::_open_osfhandle (long (handle), 0);
+#  else
   int fd = ::_open_osfhandle (intptr_t (handle), 0);
+#  endif /* __BORLANDC__ */
+
   int status = ::_isatty (fd);
   ::_close (fd);
   return status;
