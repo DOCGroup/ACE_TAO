@@ -260,7 +260,6 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_timeout (
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::handle_timeout");
   AST *ast = 0;
-  int retval = 0;
 
   if (this->cleanup_AST (((AST *) arg)->handle (),
                          ast) == -1)
