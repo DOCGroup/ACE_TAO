@@ -71,16 +71,19 @@ typedef ACE_SYNCH_MUTEX ACE_TIMEPROBE_MUTEX;
 typedef ACE_SYNCH_NULL_MUTEX ACE_TIMEPROBE_MUTEX;
 #  endif /* ACE_MT_TIMEPROBES */
 
-typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX> ACE_TIMEPROBE_WITH_LOCKING;
+typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX> 
+        ACE_TIMEPROBE_WITH_LOCKING;
 
 // If ACE_TSS_TIMEPROBES is defined, store the ACE_Timeprobe singleton
 // in thread specific storage.  This allows multiple threads to use
 // their own instance of ACE_Timerprobe, without interfering with each
 // other.
 #  if defined (ACE_TSS_TIMEPROBES)
-typedef ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX> ACE_TIMEPROBE_SINGLETON;
+typedef ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX> 
+        ACE_TIMEPROBE_SINGLETON;
 #  else /* ACE_TSS_TIMEPROBES */
-typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX> ACE_TIMEPROBE_SINGLETON;
+typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX> 
+        ACE_TIMEPROBE_SINGLETON;
 #  endif /* ACE_TSS_TIMEPROBES */
 
 #endif /* ACE_COMPILE_TIMEPROBES */
