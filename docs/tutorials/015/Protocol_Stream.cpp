@@ -10,12 +10,21 @@
 #include "Compressor.h"
 #include "Crypt.h"
 
+#include "ace/Stream_Modules.h"
+
+/* You can choose at compile time to include/exclude the protocol
+   pieces.
+*/
 #define ENABLE_COMPRESSION
 #define ENABLE_ENCRYPTION
 
+// The usual typedefs to make things easier to type.
 typedef ACE_Module<ACE_MT_SYNCH> Module;
 typedef ACE_Thru_Task<ACE_MT_SYNCH> Thru_Task;
 
+/* Do-nothing constructor and destructor
+ */
+  
 Protocol_Stream::Protocol_Stream( void )
 {
     ;
@@ -26,16 +35,24 @@ Protocol_Stream::~Protocol_Stream( void )
     ;
 }
 
+/* Even opening the stream is rather simple.  The important thing to
+   rememer is that the modules you push onto the stream first will be
+   at the tail (eg -- most downstream) end of things when you're
+   done.
+ */
 int Protocol_Stream::open( ACE_SOCK_Stream & _peer, Protocol_Task * _reader )
 {
         // Initialize our peer() to read/write the socket we're given
     peer_.set_handle( _peer.get_handle() );
 
         // Construct (and remember) the Recv object so that we can
-        // read from the peer()
+        // read from the peer().
     recv_ = new Recv( peer() );
 
-        // Add the transmit and receive tasks to the head of the stream
+        // Add the transmit and receive tasks to the head of the
+        // stream.  As we add more modules these will get pushed
+        // downstream and end up nearest the tail by the time we're
+        // done.
     if( stream().push( new Module( "Xmit/Recv", new Xmit( peer() ), recv_ ) ) == -1 )
     {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "stream().push( xmit/recv )"), -1);
@@ -54,6 +71,8 @@ int Protocol_Stream::open( ACE_SOCK_Stream & _peer, Protocol_Task * _reader )
         // from the peer() will be sent through here last.  Server
         // applications will typically use this task to do the actual
         // processing of data.
+        // Note the use of Thru_Task.  Since a module must always have 
+        // a pair of tasks we use this on the writter side as a no-op.
     if( _reader )
     {
         if( stream().push( new Module( "Reader", new Thru_Task(), _reader ) ) == -1 )
@@ -65,6 +84,9 @@ int Protocol_Stream::open( ACE_SOCK_Stream & _peer, Protocol_Task * _reader )
     return(0);
 }
 
+/* Add the necessary protocol objects to the stream.  The way we're
+   pushing things on we will encrypt the data before compressing it.
+*/
 int Protocol_Stream::open(void)
 {
 #if defined(ENABLE_COMPRESSION)
@@ -83,6 +105,7 @@ int Protocol_Stream::open(void)
     return( 0 );
 }
 
+// Closing the Protocol_Stream is as simple as closing the ACE_Stream.
 int Protocol_Stream::close(void)
 {
     return stream().close();
@@ -94,21 +117,32 @@ int Protocol_Stream::put(ACE_Message_Block * & _message, ACE_Time_Value * _timeo
     return stream().put(_message,_timeout);
 }
 
-/* Tell the Recv module to read some data (eg -- get() from the peer
-   and pass it upstream.
+/* Tell the Recv module to read some data from the peer and pass it
+   upstream.  Servers will typically use this method in a
+   handle_input() method to tell the stream to get a client's request.
 */
 int Protocol_Stream::get(void)
 {
+        // If there is no Recv module, we're in big trouble!
     if( ! recv_ )
     {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) No Recv object!\n"), -1);
     }
-        
+
+        // This tells the Recv module to go to it's peer() and read
+        // some data.  Once read, that data will be pushed upstream.
+        // If there is a reader object then it will have a chance to
+        // process the data.  If not, the received data will be
+        // available in the message queue of the stream head's reader
+        // object (eg -- stream().head()->reader()->msg_queue()) and
+        // can be read with our other get() method below.
     if( recv_->get() == -1 )
     {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Cannot queue read request\n"), -1);
     }
 
+        // For flexibility I've added an error() method to tell us if
+        // something bad has happened to the Recv object.
     if( recv_->error() )
     {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Recv object error!\n"), -1);
@@ -119,6 +153,9 @@ int Protocol_Stream::get(void)
 
 /* Take a message block off of the stream head reader's message
    queue.  If the queue is empty, use get() to read from the peer.
+   This is most often used by client applications.  Servers will
+   generaly insert a reader that will prevent the data from getting
+   all the way upstream to the head.
 */
 int Protocol_Stream::get(ACE_Message_Block * & _response, ACE_Time_Value * _timeout )
 {

@@ -18,13 +18,6 @@
 #
 # Input files:
 #
-#     links
-#      A list of links to be created before combining.  The format of this
-#      file is:
-#        source-file   destination-file    format-code
-#      A hard-link will be created from source to dest.  The format-code 'P'
-#      will tell the combiner to wrap the destination in <PRE></PRE> if it
-#      is later used as a bdy file.
 #
 #     hdr
 #      If no *.hdr exists for the current page, this is used.  You will typically
@@ -42,6 +35,9 @@
 #      links between source-code and a bdy filename.  The bdy files are
 #      examined and "fontified" (think emacs).
 #
+#     bodies
+#      The list of files to use for the body of the HTML pages generated
+#
 #    *.pst
 #      Post files.  This content follows the bdy content.
 #
@@ -53,14 +49,25 @@ use File::Copy;
 
 %format = ();
 
-open(LINKS,"<links") || die;
-while( (($src,$dst,$fmt) = split(/\s+/,<LINKS>)) ) {
+$PAGE=0;
 
-  next if( $src =~ /^#/ || $src eq '' );
+open(LINKS,"<bodies") || die;
+while( ($file = <LINKS>) ) {
 
-  unlink($dst);
-  link($src,$dst) || die "Failed to link ($src) to ($dst): $!\n";
-  $format{"$dst"} = "$fmt";
+	chomp($file);
+
+  next if( $file =~ /^#/ || $file eq '' );
+
+
+	if( $file =~ /^.*=/ ) {
+		($var,$value) = split(/=/,$file);
+		if( $var =~ /PAGE/ ) {
+			$PAGE = $value + 0;
+		}
+		next;
+	}
+
+  $body{$PAGE++} = "$file";
 }
 close(LINKS);
 
@@ -85,9 +92,42 @@ foreach $file (@ARGV) {
   }
   # .bdy is the body of the page
   if( -f "$base.bdy" ) {
-	if( $format{"$base\.bdy"} eq 'P' ) {
+		&addFile("$base.bdy");
+  }
+
+  ($num = $base) =~ s/[A-z]//g;
+   $num += 0;
+
+  if( -f "$body{$num}" ) {
+	&addFile("$body{$num}");
+  }
+  # .pst summarizes what was seen
+  if( -f "$base.pst" ) {
+	copy("$base.pst",\*FILE);
+  }
+  # .ftr follows the footer to show "continue to next page" stuff
+  if( -f "$base.ftr" ) {
+	copy("$base.ftr",\*FILE);
+  }
+  else {
+	++$num;
+	$base =~ s/[0-9]//g;
+	$next = sprintf("$base%02.2d",$num);
+	print FILE "<P><HR WIDTH=\"100%\">\n";
+	print FILE "<CENTER>[<A HREF=\"..\">Tutorial Index</A>] ";
+	if( $file ne $ARGV[$#ARGV] ) {
+	  print FILE "[<A HREF=\"$next.html\">Continue This Tutorial</A>]";
+	}
+	print FILE "</CENTER>\n";
+  }
+  close(FILE);
+}
+
+sub addFile {
+	local($file) = @_;
+
 	  print FILE "<PRE>\n" ;
-          open(INPUT,"<$base.bdy") || die "Cannot open $base.bdy for read\n";
+          open(INPUT,"<$file") || die "Cannot open $file for read\n";
           # Do some substitutes on each line to try and get the output to
           # look like it does in fontified emacs.
           while( <INPUT> )
@@ -103,31 +143,4 @@ foreach $file (@ARGV) {
               print FILE $_;
             }
 	  print FILE "</PRE>\n";
-	}
-	else {
-	  copy("$base.bdy",\*FILE);
-	}
-  }
-  # .pst summarizes what was seen
-  if( -f "$base.pst" ) {
-	copy("$base.pst",\*FILE);
-  }
-  # .ftr follows the footer to show "continue to next page" stuff
-  if( -f "$base.ftr" ) {
-	copy("$base.ftr",\*FILE);
-  }
-  else {
-	($num = $base) =~ s/[A-z]//g;
-	$base =~ s/[0-9]//g;
-	++$num;
-	$next = sprintf("$base%02.2d",$num);
-	print FILE "<P><HR WIDTH=\"100%\">\n";
-	print FILE "<CENTER>[<A HREF=\"..\">Tutorial Index</A>] ";
-	if( $file ne $ARGV[$#ARGV] ) {
-	  print FILE "[<A HREF=\"$next.html\">Continue This Tutorial</A>]";
-	}
-	print FILE "</CENTER>\n";
-  }
-  close(FILE);
 }
-

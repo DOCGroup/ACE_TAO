@@ -7,12 +7,17 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Stream.h"
 
+// Shorthand for the stream.
 typedef ACE_Stream<ACE_MT_SYNCH> Stream;
 
+// Forward references to cut down on the number of #includes
 class ACE_Message_Block;
 class Recv;
 class Protocol_Task;
 
+/* The Protocol_Stream provides a tidy interface to an ACE_Stream
+   setup to process a data block through a series of protocol stages.
+*/
 class Protocol_Stream
 {
 public:
@@ -54,7 +59,10 @@ public:
         }
     
 private:
+        // Our peer connection
     ACE_SOCK_Stream peer_;
+
+        // The stream managing the various protocol tasks
     Stream stream_;
 
         // A task which is capable of receiving data on a socket.
