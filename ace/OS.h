@@ -3008,7 +3008,8 @@ public:
 };
 
 // Adapter for cleanup, used by ACE_Object_Manager.
-extern "C" void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
+extern "C" ACE_Export
+void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
 
 struct ACE_Cleanup_Info
   // = TITLE
