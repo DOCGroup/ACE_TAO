@@ -8,13 +8,11 @@
 #include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-class ACE_Scheduler; 
-class ACE_DynScheduler; 
-class ACE_RMS_Scheduler_Strategy;
-class ACE_RMS_Dyn_Scheduler_Strategy;
-class ACE_MUF_Scheduler_Strategy;
-class ACE_EDF_Scheduler_Strategy;
-class ACE_MLF_Scheduler_Strategy;
+#if defined (TAO_USES_STRATEGY_SCHEDULER)
+#include "orbsvcs/Sched/Strategy_Scheduler.h"
+#else
+#include "orbsvcs/Sched/Scheduler_Generic.h"
+#endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
 
 class TAO_ORBSVCS_Export ACE_Config_Scheduler

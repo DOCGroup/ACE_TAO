@@ -7,12 +7,6 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
-#if defined (TAO_USES_STRATEGY_SCHEDULER)
-#include "Strategy_Scheduler.h"
-#else
-#include "Scheduler_Generic.h"
-#endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
-
 #include "Config_Scheduler.h"
 
 #if defined (__ACE_INLINE__)
