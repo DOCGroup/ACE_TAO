@@ -4,6 +4,8 @@ Wed May 26 10:28:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Fixed extractor for bounded strings. Existing
 	  code assumed that CORBA::Any::to_string::bound_
 	  includes the terminating '\0', which it does not.
+	  Thanks to Keith Nichol <knichol@syscorp.com.au> 
+	  for pointing this out.
 
 Wed May 26 08:41:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
