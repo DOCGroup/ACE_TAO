@@ -21,12 +21,23 @@
 // The second #undef protects against being reset in a config.h file.
 #undef ACE_NDEBUG
 
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-# include /**/ <iostream.h>
+#include "ace/stdcpp.h"
+
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+# include /**/ <fstream>
+
+# if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
+               (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+   using std::ofstream;
+   using std::ios;
+# endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+
+#else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 # include /**/ <fstream.h>
-#else
-# include "ace/stdcpp.h"
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+
+
+
 
 #if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 class KEY
