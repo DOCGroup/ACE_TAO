@@ -115,9 +115,6 @@ public:
   ~TAO_IIOP_Client_Transport (void);
   // destructor
 
-  TAO_IIOP_Client_Connection_Handler *client_handler (void);
-  // return a pointer to the client's connection handler.
-
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
   virtual void start_request (TAO_ORB_Core *orb_core,
@@ -155,9 +152,6 @@ public:
   void use_lite (CORBA::Boolean flag);
   // Sets the lite flag
 private:
-  TAO_IIOP_Client_Connection_Handler *client_handler_;
-  // pointer to the corresponding client side connection handler.
-
   TAO_Pluggable_Messaging *client_mesg_factory_;
   // The message_factor instance specific for this particular
   // transport protocol.
@@ -192,9 +186,6 @@ public:
 
   ~TAO_IIOP_Server_Transport (void);
   // Default destructor
-
-  TAO_IIOP_Server_Connection_Handler *server_handler_;
-  // Pointer to the corresponding connection handler.
 
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
