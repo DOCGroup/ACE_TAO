@@ -102,11 +102,11 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
 		   ACE_OS::strdup (""));
   else
   {
-	#if defined (ACE_HAS_REGEX)	  
+	#if defined (ACE_HAS_REGEX)
     // Compile the regular expression (the 0's cause ACE_OS::compile
     // to allocate space).
     compile_buffer = ACE_OS::compile (filtering_criteria, 0, 0);
-	#else 
+	#else
 	// Win32 does not support regular expression functions such as compile.
 	ACE_ALLOCATOR (compile_buffer,
 		   ACE_OS::strdup (""));
@@ -135,10 +135,10 @@ Consumer_Entry::~Consumer_Entry (void)
 Notifier_i::Notifier_i (size_t size)
   : map_ (size)
 {
-// if platforms (such as win32) do not support the REGEXP functions 
+// if platforms (such as win32) do not support the REGEXP functions
 // such as <compile> and <step> then warn the user that the regular
 // expression feature is not available.
-	#ifndef ACE_HAS_REGEX	
+	#ifndef ACE_HAS_REGEX
 	ACE_DEBUG ((LM_DEBUG, "\n WARNING: This platform does not support the functions\
 	for regular expressions.\n\
 	The filtering criteria will not work.\n"));
@@ -344,13 +344,13 @@ Notifier_i::push (const Event_Comm::Event &event,
       const char *criteria = me->int_id_->criteria ();
       ACE_ASSERT (criteria);
 
-	#if defined (ACE_HAS_REGEX)	
+	#if defined (ACE_HAS_REGEX)
 	  // Do a regular expression comparison to determine matching.
       if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
 	  || ACE_OS::step (event.tag_, regexp) != 0)
-	#endif // #if defined (ACE_HAS_REGEX)	
-	  // if ACE_HAS_REGEX	has not been defined, 
-	  // let everything through. 
+	#endif // #if defined (ACE_HAS_REGEX)
+	  // if ACE_HAS_REGEX	has not been defined,
+	  // let everything through.
 	{
 	  ACE_DEBUG ((LM_DEBUG,
                       "string %s matched regexp \"%s\" for client %x\n",
@@ -383,6 +383,7 @@ Notifier_i::push (const Event_Comm::Event &event,
 }
 
 Consumer_i::Consumer_i (void)
+  : consumershutdown (0)
 {
 }
 
@@ -415,13 +416,15 @@ Consumer_i::disconnect (const char *reason,
               "**** got disconnected due to %s\n",
               reason));
 
-  // @@ Pradeep, can you please revise this so that rather than using
-  // TAO_ORB_Core_instance() you instead keep a pointer to your ORB
-  // instance and do the shutdown that way?  The current approach
-  // won't be valid shortly when we add some new features to TAO.
+  ACE_ASSERT (consumershutdown != 0);
 
-  // Shutdown the orb.
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+  consumershutdown->close ();
+}
+
+void
+Consumer_i::set (ConsumerShutdown *_consumershutdown)
+{
+  consumershutdown = _consumershutdown;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
