@@ -59,10 +59,10 @@
 #endif /* TAO_MAXBUFSIZE */
 
 // This controls the alignment for TAO structs.  It supports built-in
-// types up to and including 16 bytes in size.
-#if !defined (TAO_ALIGNMENT_MAGIC_NUMBER)
-# define TAO_ALIGNMENT_MAGIC_NUMBER 128
-#endif /* TAO_ALIGNMENT_MAGIC_NUMBER */
+// types up to and including 16 bytes (128 bits) in size.
+#if !defined (TAO_MAXIMUM_NATIVE_TYPE_SIZE)
+# define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
+#endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
 
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
