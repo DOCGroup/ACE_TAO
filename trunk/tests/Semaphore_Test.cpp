@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //    This test verifies the functionality of the ACE_Thread_Semaphore
-//    implementation.  It is a variation of the Reader/Writer test.
+//    implementation.  
 //
 // = AUTHOR
 //    Darrell Brunsch
@@ -25,162 +25,101 @@
 
 #if defined (ACE_HAS_THREADS)
 
+// Semaphore used in the tests.
+static ACE_Thread_Semaphore s(0);
+
 // Default number of iterations.
-static size_t n_iterations = 50;
+static size_t n_iterations = 10;
 
-// Default number of loops.
-static size_t n_loops = 100;
+static size_t n_workers = 10;
 
-// Default number of readers.
-static size_t n_readers = 4;
+static size_t n_semcount = 3;
 
-// Default number of writers.
-static size_t n_writers = 4;
-
-// Thread id of last writer.
-static ACE_thread_t shared_data;  
-
-// Lock for shared_data.
-//static ACE_RW_Mutex rw_mutex;     
-ACE_sema_t semaphore;
-
-// Count of the number of readers and writers.
-static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers;
-static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_writers;
+static size_t timeouts = 0;
 
 // Explain usage and exit.
 static void 
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));
+	      "usage: %n [-s n_semcount] [-w n_workers] [-n iteration_count]\n"));
   ACE_OS::exit (1);
 }
 
 static void
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "r:w:n:");
+  ACE_Get_Opt get_opt (argc, argv, "s:w:n:");
 
   int c; 
 
   while ((c = get_opt ()) != -1)
     switch (c)
     {
-    case 'r':
-      n_readers = ACE_OS::atoi (get_opt.optarg);
+    case 's':
+      n_semcount = ACE_OS::atoi (get_opt.optarg);
       break;
     case 'w':
-      n_writers = ACE_OS::atoi (get_opt.optarg);
+      n_workers = ACE_OS::atoi (get_opt.optarg);
       break;
     case 'n':
-      n_iterations = atoi (get_opt.optarg);
+      n_iterations = ACE_OS::atoi (get_opt.optarg);
       break;
     default:
       print_usage_and_die ();
       break;
   }
 }
- 
-// Iterate <n_iterations> each time checking that nobody modifies the data
-// while we have a read lock.
 
-static void *
-reader (void *)
+
+// Tests the amount of time spent in a timed wait.
+static int 
+test_timeout (void)
 {
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-  ACE_NEW_THREAD;
-
+  ACE_Time_Value begin, wait, diff;
   
-  ACE_DEBUG ((LM_DEBUG, " (%t) reader starting\n"));
-
-  for (size_t iterations = 1; iterations <= n_iterations; iterations++)
-    {
-      while (ACE_OS::sema_wait (&semaphore, ACE_Time_Value (0, 10000)))
-        ACE_DEBUG ((LM_DEBUG, " (%t) Reader waiting for lock...\n"));
-    
-      if (current_writers > 0)
-        ACE_DEBUG ((LM_DEBUG, " (%t) writers found!!!\n"));
-	
-      ACE_thread_t data = shared_data;
-
-      for (size_t loop = 1; loop <= n_loops; loop++)
-        {
-	  ACE_Thread::yield ();
-
-	  if (!ACE_OS::thr_equal (shared_data, data))
-            ACE_DEBUG ((LM_DEBUG, 
-			" (%t) somebody changed %d to %d\n", 
-			data, shared_data));
-        }
-
-      --current_readers;
-      //ACE_DEBUG ((LM_DEBUG, " (%t) done with reading guarded data\n"));
-
-      ACE_Thread::yield ();
-
-      ACE_OS::sema_post (&semaphore);
-    }
-
-  ACE_DEBUG ((LM_DEBUG, " (%t) reader ending\n"));
-
+  // Pick some random number of milliseconds to 
+  wait = ACE_Time_Value (0, (ACE_OS::rand () % 10) * 100000);
+  begin = ACE_OS::gettimeofday ();
+  s.acquire(wait);
+  diff = ACE_OS::gettimeofday () - begin;
+  if (diff < wait)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Timed wait fails length test\n"));
+    ACE_DEBUG ((LM_DEBUG, "Value: %d us      Actual %d us\n", wait.usec (), diff.usec ()));
+    return -1;
+  }
   return 0;
 }
 
-// Iterate <n_iterations> each time modifying the global data
-// and checking that nobody steps on it while we can write it.
+// Worker tries to acquire the semaphore, hold it for a while, and then releases it.
 
 static void *
-writer (void *)
+worker (void *)
 {
   ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
-
-  ACE_DEBUG ((LM_DEBUG, " (%t) writer starting\n"));
   
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
-      while (ACE_OS::sema_wait (&semaphore, ACE_Time_Value (0, 10000)))
-        ACE_DEBUG ((LM_DEBUG, " (%t) Writer waiting for lock...\n"));
-
-      ++current_writers;
-
-      if (current_writers > 1)
-        ACE_DEBUG ((LM_DEBUG, " (%t) other writers found!!!\n"));
-
-      if (current_readers > 0)
-        ACE_DEBUG ((LM_DEBUG, " (%t) readers found!!!\n"));
-	
-      ACE_thread_t self = ACE_Thread::self ();
-
-      shared_data = self;
-
-      for (size_t loop = 1; loop <= n_loops; loop++)
+      if (s.acquire (ACE_Time_Value (0, (ACE_OS::rand () % 1000) * 1000)))
+        ++timeouts;
+      else
         {
-	  ACE_Thread::yield ();
-
-	  if (!ACE_OS::thr_equal (shared_data, self))
-            ACE_DEBUG ((LM_DEBUG, 
-			" (%t) somebody wrote on my data %d\n", 
-			shared_data));
+          // Hold the lock for a while.
+          ACE_OS::sleep (ACE_Time_Value (0, (ACE_OS::rand () % 1000) * 1000));
+          s.release ();
         }
 
-      --current_writers;
-
-      //ACE_DEBUG ((LM_DEBUG, " (%t) done with guarded data\n"));
       ACE_Thread::yield ();
-
-      ACE_OS::sema_post (&semaphore);
     }
 
-  ACE_DEBUG ((LM_DEBUG, " (%t) writer ending\n"));
-  
   return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
 
-// Spawn off threads.
+// Test semaphore functionality
 
 int main (int argc, char *argv[])
 {
@@ -188,34 +127,35 @@ int main (int argc, char *argv[])
 
 #if defined (ACE_HAS_THREADS)
   parse_args (argc, argv);
+  ACE_OS::srand (ACE_OS::time (0L));
+#if !defined (ACE_HAS_STHREADS)
+  size_t i;  // Loop variable
+  
+  // Test out timed waits
+  for (i = 0; i < 5; i++)
+    test_timeout ();
 
-  ACE_OS::sema_init (&semaphore, 1);
+  // Initialize the semaphore to a certain number
+  for (i = 0; i < n_semcount; i++)
+    s.release ();
 
-  current_readers = 0; // Possibly already done
-  current_writers = 0; // Possibly already done
-
-  ACE_DEBUG ((LM_DEBUG, " (%t) main thread starting\n"));
-
-  if (ACE_Thread_Manager::instance ()->spawn_n (n_readers, 
-						ACE_THR_FUNC (reader), 
+  if (ACE_Thread_Manager::instance ()->spawn_n (n_workers, 
+						ACE_THR_FUNC (worker), 
 						0, 
 						THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
-  else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers, 
-						     ACE_THR_FUNC (writer), 
-						     0, 
-						     THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  ACE_DEBUG ((LM_DEBUG, " (%t) exiting main thread\n"));
+  size_t percent = (timeouts * 100) / (n_workers * n_iterations);
 
-  ACE_OS::sema_destroy (&semaphore);
+  ACE_DEBUG ((LM_DEBUG, "Worker Threads timed out %d percent of the time\n", percent));
+
+#endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, "Threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
