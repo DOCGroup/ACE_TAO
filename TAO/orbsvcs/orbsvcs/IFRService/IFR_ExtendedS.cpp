@@ -801,7 +801,7 @@ namespace TAO
 
 
 // Stub/skeleton argument selection function templates.
-// TAO_IDL - Generated from be\be_visitor_root/root.cpp:110
+// TAO_IDL - Generated from be\be_visitor_root/root.cpp:111
 
 namespace
 {
@@ -1186,13 +1186,7 @@ void POA_CORBA::FixedDef::_get_digits_skel (
         this->servant_->digits (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -1284,13 +1278,7 @@ void POA_CORBA::FixedDef::_set_digits_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -1384,13 +1372,7 @@ void POA_CORBA::FixedDef::_get_scale_skel (
         this->servant_->scale (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -1482,13 +1464,7 @@ void POA_CORBA::FixedDef::_set_scale_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -1589,13 +1565,7 @@ void POA_CORBA::FixedDef::_is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -1686,13 +1656,7 @@ void POA_CORBA::FixedDef::_non_existent_skel (
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -1830,13 +1794,7 @@ void POA_CORBA::FixedDef::_component_skel (
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -2300,13 +2258,7 @@ void POA_CORBA::ValueMemberDef::_get_type_skel (
         this->servant_->type (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -2398,13 +2350,7 @@ void POA_CORBA::ValueMemberDef::_get_type_def_skel (
         this->servant_->type_def (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -2496,13 +2442,7 @@ void POA_CORBA::ValueMemberDef::_set_type_def_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -2596,13 +2536,7 @@ void POA_CORBA::ValueMemberDef::_get_access_skel (
         this->servant_->access (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -2694,13 +2628,7 @@ void POA_CORBA::ValueMemberDef::_set_access_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -2801,13 +2729,7 @@ void POA_CORBA::ValueMemberDef::_is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -2898,13 +2820,7 @@ void POA_CORBA::ValueMemberDef::_non_existent_skel (
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -3042,13 +2958,7 @@ void POA_CORBA::ValueMemberDef::_component_skel (
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -3551,13 +3461,7 @@ void POA_CORBA::ValueDef::_get_supported_interfaces_skel (
         this->servant_->supported_interfaces (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -3649,13 +3553,7 @@ void POA_CORBA::ValueDef::_set_supported_interfaces_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -3749,13 +3647,7 @@ void POA_CORBA::ValueDef::_get_initializers_skel (
         this->servant_->initializers (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -3847,13 +3739,7 @@ void POA_CORBA::ValueDef::_set_initializers_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -3947,13 +3833,7 @@ void POA_CORBA::ValueDef::_get_base_value_skel (
         this->servant_->base_value (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4045,13 +3925,7 @@ void POA_CORBA::ValueDef::_set_base_value_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4145,13 +4019,7 @@ void POA_CORBA::ValueDef::_get_abstract_base_values_skel (
         this->servant_->abstract_base_values (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4243,13 +4111,7 @@ void POA_CORBA::ValueDef::_set_abstract_base_values_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4343,13 +4205,7 @@ void POA_CORBA::ValueDef::_get_is_abstract_skel (
         this->servant_->is_abstract (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4441,13 +4297,7 @@ void POA_CORBA::ValueDef::_set_is_abstract_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4541,13 +4391,7 @@ void POA_CORBA::ValueDef::_get_is_custom_skel (
         this->servant_->is_custom (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4639,13 +4483,7 @@ void POA_CORBA::ValueDef::_set_is_custom_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4739,13 +4577,7 @@ void POA_CORBA::ValueDef::_get_is_truncatable_skel (
         this->servant_->is_truncatable (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4837,13 +4669,7 @@ void POA_CORBA::ValueDef::_set_is_truncatable_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -4944,13 +4770,7 @@ void POA_CORBA::ValueDef::is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -5044,13 +4864,7 @@ void POA_CORBA::ValueDef::describe_value_skel (
         this->servant_->describe_value (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -5177,13 +4991,7 @@ void POA_CORBA::ValueDef::create_value_member_skel (
           , arg_5
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -5320,13 +5128,7 @@ void POA_CORBA::ValueDef::create_attribute_skel (
           , arg_5
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -5484,13 +5286,7 @@ void POA_CORBA::ValueDef::create_operation_skel (
           , arg_8
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -5605,13 +5401,7 @@ void POA_CORBA::ValueDef::_is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -5702,13 +5492,7 @@ void POA_CORBA::ValueDef::_non_existent_skel (
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -5846,13 +5630,7 @@ void POA_CORBA::ValueDef::_component_skel (
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -6368,13 +6146,7 @@ void POA_CORBA::ExtValueDef::_get_ext_initializers_skel (
         this->servant_->ext_initializers (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -6466,13 +6238,7 @@ void POA_CORBA::ExtValueDef::_set_ext_initializers_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -6566,13 +6332,7 @@ void POA_CORBA::ExtValueDef::describe_ext_value_skel (
         this->servant_->describe_ext_value (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -6713,13 +6473,7 @@ void POA_CORBA::ExtValueDef::create_ext_attribute_skel (
           , arg_7
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -6832,13 +6586,7 @@ void POA_CORBA::ExtValueDef::_is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -6929,13 +6677,7 @@ void POA_CORBA::ExtValueDef::_non_existent_skel (
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -7073,13 +6815,7 @@ void POA_CORBA::ExtValueDef::_component_skel (
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -7555,13 +7291,7 @@ void POA_CORBA::ValueBoxDef::_get_original_type_def_skel (
         this->servant_->original_type_def (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -7653,13 +7383,7 @@ void POA_CORBA::ValueBoxDef::_set_original_type_def_skel (
         arg_1
         ACE_ENV_ARG_PARAMETER);
       
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -7760,13 +7484,7 @@ void POA_CORBA::ValueBoxDef::_is_a_skel (
           arg_1
           ACE_ENV_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -7857,13 +7575,7 @@ void POA_CORBA::ValueBoxDef::_non_existent_skel (
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -8001,13 +7713,7 @@ void POA_CORBA::ValueBoxDef::_component_skel (
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
         
-      ACE_CHECK;
     }
-  
-  private:
-    
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
   
   private:
     
@@ -8144,7 +7850,7 @@ POA_CORBA::ValueBoxDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1673
+// be\be_visitor_root/root.cpp:1674
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
