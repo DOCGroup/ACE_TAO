@@ -3,9 +3,6 @@
 #include "NodeDaemon_Impl.h"
 #include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
                                         CORBA::ORB_ptr orb,
                                         PortableServer::POA_ptr poa,
@@ -22,27 +19,30 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
-  {
-    //create the call back poa for NAM.
-    PortableServer::POAManager_var mgr
-      = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    {
+      //create the call back poa for NAM.
+      PortableServer::POAManager_var mgr
+        = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-    this->callback_poa_ =
-      this->poa_->create_POA ("callback_poa",
-                              mgr.in (),
-                              0
-                              ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      this->callback_poa_ =
+        this->poa_->create_POA ("callback_poa",
+                                mgr.in (),
+                                0
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-  }
+    }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "NodeDaemon_Impl::constructor\t\n");
-    ACE_RE_THROW;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "NodeDaemon_Impl::constructor\t\n");
+      // @@ This is bogus and will not work with emulated exceptions
+      // -- Bala
+      ACE_RE_THROW;
+    }
   ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 CIAO::NodeDaemon_Impl::~NodeDaemon_Impl ()
@@ -125,19 +125,12 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // Obtain the Object Reference
-          //CORBA::Object_var obj =
-          //  this->poa_->servant_to_reference (app_mgr ACE_ENV_ARG_PARAMETER);
-          //ACE_TRY_CHECK;
-
-          //this->manager_ =
-          //  Deployment::NodeApplicationManager::_narrow (obj.in ());
-
           if (CORBA::is_nil (this->manager_.in ()))
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "NodeDaemon_Impl:preparePlan: "
-                          "NodeApplicationManager ref is nil\n"));
+              ACE_ERROR ((LM_ERROR,
+                          "CIAO.NodeDaemon (%P|%t) -- ",
+                          "preparePlan: NodeApplicationManager ref",
+                          "is nil\n"));
               ACE_TRY_THROW (Deployment::StartError ());
             }
         }
@@ -159,7 +152,8 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
 void
 CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
                                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException, Deployment::StopError))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StopError))
 {
   ACE_TRY
     {
@@ -169,10 +163,12 @@ CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
                                      ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    this->poa_->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+    this->poa_->deactivate_object (id.in ()
+                                   ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    this->manager_ = Deployment::NodeApplicationManager::_nil ();
+    this->manager_ =
+      Deployment::NodeApplicationManager::_nil ();
     }
   ACE_CATCHANY
     {

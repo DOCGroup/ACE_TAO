@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file NodeDaemon_Impl.h
@@ -7,11 +6,11 @@
  *  $Id$
  *
  *  This file contains servant implementation for Deployment:NodeManager
- *  interface. In the current design of the NodeManager, as with the legacy
- *  implementation of CIAO, Each NodeManager corresponds to ONE NodeApplication
- *  Manager. Though, the name intuitively suggests that there be one NodeManager
- *  for every node, our design, allows the end-user to have multiple components
- *  run on the same node.
+ *  interface. In the current design of the NodeManager, as with the
+ *  legacy  implementation of CIAO, Each NodeManager corresponds to
+ *  ONE NodeApplication Manager. Though, the name intuitively suggests
+ *  that there be one NodeManager  for every node, our design, allows
+ *  the end-user to have multiple components run on the same node.
  *
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
@@ -28,13 +27,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (_MSC_VER)
+# if (_MSC_VER >= 1200)
+#  pragma warning(push)
+# endif /* _MSC_VER >= 1200 */
+# pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
 
 namespace CIAO
 {
   /**
    * @class NodeDaemon_Impl
    *
-   * @brief Servant implementation CIAO's daemon process control interface
+   * @brief Servant implementation CIAO's daemon process control
+   * interface
    *
    * This class implements the CIAO:NodeDaemon interface.
    *
@@ -51,10 +58,9 @@ namespace CIAO
                      PortableServer::POA_ptr p,
                      const char * nodeapp_loc,
                      int spawn_delay)
-                ACE_THROW_SPEC ((CORBA::SystemException));
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Get the containing POA.  This operation does *not*
-    /// increase the reference count of the POA.
+    /// POA operation..
     virtual PortableServer::POA_ptr _default_POA (void);
 
     /// CIAO::Daemon defined attributes/operations.
@@ -88,12 +94,11 @@ namespace CIAO
                        Deployment::StopError));
 
   protected:
-    // Since this class is reference counted, making this
-    // destructor protected to enforce proper memory managment
-    // through the reference counting mechanism (i.e. to
-    // disallow calling operator delete() on an instance of
-    // this class.
-    /// Destructor
+    /// Since this class is reference counted, making this
+    /// destructor protected to enforce proper memory managment
+    /// through the reference counting mechanism (i.e. to
+    /// disallow calling operator delete() on an instance of
+    /// this class.
     virtual ~NodeDaemon_Impl (void);
 
     // Keep a pointer to the managing ORB serving this servant.
@@ -116,7 +121,6 @@ namespace CIAO
 
     // Cache reference of last NodeAppManager
     Deployment::NodeApplicationManager_var manager_;
-
   };
 }
 #if defined (__ACE_INLINE__)

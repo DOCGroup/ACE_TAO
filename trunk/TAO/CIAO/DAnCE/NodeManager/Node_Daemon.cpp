@@ -1,30 +1,8 @@
 // $Id$
 
-//==============================================================
-/**
- * @file Node_Daemon.cpp
- *
- * @brief CIAO's Node Daemon implementation
- *
- * NodeDaemon is the bootstraping mechanism to create new
- * NodeApplication on the localhost.  We currently depend on
- * starting the NodeApplicationManager process on some port of all
- * the hosts that have NodeApplication install to function properly.
- * The port to run this daemon can be set by using the TAO ORB options
- * command of -ORBEndpoint <port>. This replaces the earlier CIAO_Daemon
- * implementation of CIAO as defined in the CCM specification.
- *
- * @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
- * @author Tao Lu <lu@dre.vanderbilt.edu>
- */
-//===============================================================
-
 #include "NodeDaemon_Impl.h"
-#include "tao/IORTable/IORTable.h"
-
-// Include Name Service header
 #include "orbsvcs/orbsvcs/CosNamingC.h"
-
+#include "tao/IORTable/IORTable.h"
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
@@ -121,7 +99,7 @@ register_with_ns (const char * name_context,
   CORBA::Object_var naming_context_object =
     orb->resolve_initial_references ("NameService"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (false);
 
   CosNaming::NamingContext_var naming_context =
     CosNaming::NamingContext::_narrow (naming_context_object.in ());

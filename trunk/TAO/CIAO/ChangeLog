@@ -1,3 +1,16 @@
+Sat Aug 14 15:36:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/NodeManager/NodeDaemon_Impl.cpp:
+	* DAnCE/NodeManager/NodeDaemon_Impl.h:
+	* DAnCE/NodeManager/Node_Daemon.cpp:
+
+	  Cosmetic fixes for fuzz errors and other simple fixes for the
+	  daily builds.
+	
+	* DAnCE/NodeManager/README:
+
+	  Added a README file in the directory.
+
 Sat Aug 14 04:20:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ExecutionManager/ExecutionManager_Impl.h:
