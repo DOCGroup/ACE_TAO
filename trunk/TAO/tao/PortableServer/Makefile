@@ -45,6 +45,8 @@ CPP_SRCS += \
   Servant_Dispatcher \
   POA_Cached_Policies \
   POA_Policies \
+  PortableServer_ORBInitializer \
+  PortableServer_PolicyFactory \
   POA_Policy_Set \
   Default_Policy_Validator \
   IORInfo \

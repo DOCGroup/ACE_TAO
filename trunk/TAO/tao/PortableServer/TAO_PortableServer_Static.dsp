@@ -260,6 +260,14 @@ SOURCE=.\POAManager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableServer_PolicyFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServer_ORBInitializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableServer.h
 # End Source File
 # Begin Source File
@@ -389,6 +397,14 @@ SOURCE=.\POAManager.cpp
 # Begin Source File
 
 SOURCE=.\PolicyS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServer_PolicyFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableServer_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
