@@ -3,10 +3,10 @@ Fri Mar 02 23:54:41 2001  Ossama Othman  <ossama@uci.edu>
 	* tao/OctetSeqC.cpp:
 	* tao/StringSeqC.cpp:
 
-	  Use the TAO_NAMESPACE_{TYPE,DEFINE} preprocessor macros on
-	  platforms that do not define the ACE_HAS_USING_KEYWORD
-	  preprocessor macro.  Fixes a "multiple definition" compile-time
-	  error on those platforms.
+	  Use the TAO_NAMESPACE_{TYPE,DEFINE} preprocessor to macros
+	  correct compile-time errors on platforms that do not define the
+	  ACE_HAS_USING_KEYWORD.  Fixes a "multiple definition"
+	  compile-time error on those platforms.
 
 	* tao/diffs/OctetSeq.diff:
 	* tao/diffs/StringSeq.diff:
