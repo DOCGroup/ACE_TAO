@@ -1,23 +1,23 @@
 Fri Dec 22 12:22:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional_Upcall: New test for BiDirectional
+	* tests/BiDirectional_NestedUpcall: New test for BiDirectional
 	  connections that tests for callbacks in an upcall.
 
-        * tests/BiDirectional_Upcall/README:
-        * tests/BiDirectional_Upcall/client.cpp:
-        * tests/BiDirectional_Upcall/server.cpp:
-        * tests/BiDirectional_Upcall/test_i.h:
-        * tests/BiDirectional_Upcall/test_i.cpp:
-        * tests/BiDirectional_Upcall/test_i.i:
-        * tests/BiDirectional_Upcall/test.idl:
-        * tests/BiDirectional_Upcall/BiDir.dsw:
-        * tests/BiDirectional_Upcall/client.dsp:
-        * tests/BiDirectional_Upcall/server.dsp:
-        * tests/BiDirectional_Upcall/client.bor:
-        * tests/BiDirectional_Upcall/server.bor:
-        * tests/BiDirectional_Upcall/Makefile.bor:
-        * tests/BiDirectional_Upcall/svc.conf:
-        * tests/BiDirectional_Upcall/Makefile: Files for the new test.
+        * tests/BiDirectional_NestedUpcall/README:
+        * tests/BiDirectional_NestedUpcall/client.cpp:
+        * tests/BiDirectional_NestedUpcall/server.cpp:
+        * tests/BiDirectional_NestedUpcall/test_i.h:
+        * tests/BiDirectional_NestedUpcall/test_i.cpp:
+        * tests/BiDirectional_NestedUpcall/test_i.i:
+        * tests/BiDirectional_NestedUpcall/test.idl:
+        * tests/BiDirectional_NestedUpcall/BiDir.dsw:
+        * tests/BiDirectional_NestedUpcall/client.dsp:
+        * tests/BiDirectional_NestedUpcall/server.dsp:
+        * tests/BiDirectional_NestedUpcall/client.bor:
+        * tests/BiDirectional_NestedUpcall/server.bor:
+        * tests/BiDirectional_NestedUpcall/Makefile.bor:
+        * tests/BiDirectional_NestedUpcall/svc.conf:
+        * tests/BiDirectional_NestedUpcall/Makefile: Files for the new test.
 
 Fri Dec 22 07:30:37 2000  Johnny Willemsen
 
