@@ -125,6 +125,12 @@
 #   define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 # endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
 
+# if !defined (ACE_HAS_PROCESS_SPAWN)
+#   if !defined (ACE_LACKS_FORK) || defined (ACE_WIN32) || defined (ACE_WINCE) || defined (ACE_OPENVMS) || defined (CHORUS)
+#     define ACE_HAS_PROCESS_SPAWN 1
+#   endif
+# endif /* ACE_HAS_PROCESS_SPAWN */
+
 // =========================================================================
 // RCSID Macros
 // =========================================================================
