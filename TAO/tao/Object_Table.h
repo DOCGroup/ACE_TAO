@@ -301,6 +301,7 @@ protected:
   // internal hash table.
 
   CORBA::ULONG counter_;
+  
 };
 
 class TAO_Export TAO_Dynamic_Hash_ObjTable_Iterator : public TAO_Object_Table_Iterator_Impl
