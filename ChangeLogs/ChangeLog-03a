@@ -1,3 +1,10 @@
+Sat Jul 01 11:46:23 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-cxx-common.h: moved ACE_HAS_STANDARD_CPP_LIBRARY
+          and ACE_HAS_CPLUSPLUS_HEADERS defines out of Linux-only
+          section, to minimize the differences between Linux and Tru64.
+          Those defines don't hurt on Tru64.
+
 Fri Jun 30 16:51:48 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/CDR_Array_Test.cpp: Add template type specifiers to copy
@@ -18,9 +25,9 @@ Fri Jun 30 03:21:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
 Thu Jun 29 18:44:07 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
         * ace/OS.{i,cpp,inl}:
-	* ace/OS_Dirent.{inl,h}:
-	  Began integration of pace with ACE_OS. #define
-	  ACE_HAS_PACE to activate. About 25% is complete.
+        * ace/OS_Dirent.{inl,h}:
+          Began integration of pace with ACE_OS. #define
+          ACE_HAS_PACE to activate. About 25% is complete.
 
 Thu Jun 29 15:49:16 2000  Steve Huston  <shuston@riverace.com>
 
@@ -44,25 +51,25 @@ Thu Jun 29 15:49:16 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Jun 28 19:35:23 2000 Jerry D. De Master <jdemaste@rite-solutions.com>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Client_Logging_Handler.cpp:
           Currently, the client logging daemon attempts to connect to a
- 	  server logging daemon to which all logging records are
- 	  forwarded.  In the event that a connection cannot be established
- 	  at initialization, or if the connection is lost during daemon
- 	  execution, logging output "rolls-over" to STDERR.  This seems
- 	  like reasonable behavior, however....
+          server logging daemon to which all logging records are
+          forwarded.  In the event that a connection cannot be established
+          at initialization, or if the connection is lost during daemon
+          execution, logging output "rolls-over" to STDERR.  This seems
+          like reasonable behavior, however....
 
           One interesting use case of the client logging daemon is to use
- 	  it to collect all logging output from all clients, on a single
- 	  node system.  For this use case, there is no need for a server
- 	  logging daemon.  One could run the client logging daemon without
- 	  a server logging daemon and redirect STDERR to a logfile,
- 	  however, this methodology does not allow the use of the
- 	  ACE_Logging_Strategy class to configure the client daemon's
- 	  logging behavior (especially the new -i and -m options).  This
- 	  problem can be easily fixed by first testing if the client
- 	  daemon is already logging to a msg_ostream - if it is, do not
- 	  roll-over logging to STDERR upon connection failure.
+          it to collect all logging output from all clients, on a single
+          node system.  For this use case, there is no need for a server
+          logging daemon.  One could run the client logging daemon without
+          a server logging daemon and redirect STDERR to a logfile,
+          however, this methodology does not allow the use of the
+          ACE_Logging_Strategy class to configure the client daemon's
+          logging behavior (especially the new -i and -m options).  This
+          problem can be easily fixed by first testing if the client
+          daemon is already logging to a msg_ostream - if it is, do not
+          roll-over logging to STDERR upon connection failure.
 
 Wed Jun 28 11:20:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
