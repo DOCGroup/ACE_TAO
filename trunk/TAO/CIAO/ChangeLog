@@ -1,3 +1,10 @@
+Tue Nov  2 04:45:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Addressing compile errors in Borland. Thanks to Johnny for the
+	  suggestion.
+
 Mon Nov  1 15:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * VERSION:
