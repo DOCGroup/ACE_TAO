@@ -4,4 +4,8 @@
 project(RMCast) : acelib, core, exceptions, threads {
   sharedname   = ACE_RMCast
   dynamicflags = ACE_RMCAST_BUILD_DLL
+
+  Pkgconfig_Files {
+    ACE_RMCast.pc.in
+  }
 }
