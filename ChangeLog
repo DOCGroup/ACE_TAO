@@ -1,3 +1,17 @@
+Tue Oct  3 12:25:46 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Thread_Exit.cpp:
+
+          Removed default argument in the function definition.
+
+        * ace/Thread_Adapter.cpp:
+        * ace/Thread_Adapter.h:
+
+          Separated ACE_Thread_Adapter::invoke into invoke and 
+          invoke_i because it uses SEH and James added local vars
+          with destructors.  They don't work together in the same
+          function.
+
 Tue Oct 03 12:53:28 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* bin/run_all_list.pm:

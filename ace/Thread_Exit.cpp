@@ -105,7 +105,7 @@ ACE_Thread_Exit::~ACE_Thread_Exit (void)
   ACE_OS_TRACE ("ACE_Thread_Exit::~ACE_Thread_Exit");
 }
 
-ACE_Thread_Exit_Maybe::ACE_Thread_Exit_Maybe (int flag = 0)
+ACE_Thread_Exit_Maybe::ACE_Thread_Exit_Maybe (int flag)
   : instance_ (0)
 {
   if (flag)
