@@ -1,4 +1,18 @@
+/* -*- C++ -*- */
 // $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    Runtime_Scheduler.h
+//
+// = AUTHOR
+//     Chris Gill <cdgill@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef ACE_RUNTIME_SCHEDULER_H
 #define ACE_RUNTIME_SCHEDULER_H
@@ -16,19 +30,18 @@ class TAO_ORBSVCS_Export ACE_Runtime_Scheduler : public POA_RtecScheduler::Sched
   //   This class offers the services of the scheduler, but based on
   //   precomputed and precompiled information. This results in a
   //   highly optimized execution after the configuration runs.
-  //
 public:
   ACE_Runtime_Scheduler (int config_count,
                          ACE_Scheduler_Factory::POD_Config_Info config_info[],
                          int entry_count,
                          ACE_Scheduler_Factory::POD_RT_Info rt_info[]);
-
-  // Initialize the data from the POD_RT_Info array.
-  // Only basic validation is done.
+  // Initialize the data from the POD_RT_Info array.  Only basic
+  // validation is done.
 
   virtual RtecScheduler::handle_t create (const char * entry_point,
                                           CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::DUPLICATE_NAME));
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::DUPLICATE_NAME));
 
   virtual RtecScheduler::handle_t lookup (const char * entry_point,
                                           CORBA::Environment &_env)
@@ -36,7 +49,8 @@ public:
 
   virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle,
                                        CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::UNKNOWN_TASK));
 
   virtual void set (RtecScheduler::handle_t handle,
                     RtecScheduler::Criticality_t criticality,
@@ -49,7 +63,8 @@ public:
                     CORBA::Long threads,
                     RtecScheduler::Info_Type_t info_type,
                     CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::UNKNOWN_TASK));
 
   virtual void priority (RtecScheduler::handle_t handle,
                          RtecScheduler::OS_Priority& o_priority,
@@ -100,13 +115,12 @@ public:
   virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED));
-  // Returns the last priority number assigned to an operation in the schedule.
-  // The number returned is one less than the total number of scheduled priorities.
-  // All scheduled priorities range from 0 to the number returned, inclusive.
-
+  // Returns the last priority number assigned to an operation in the
+  // schedule.  The number returned is one less than the total number
+  // of scheduled priorities.  All scheduled priorities range from 0
+  // to the number returned, inclusive.
 
 private:
-
   int config_count_;
   // The number of elements in the config array.
 
@@ -118,7 +132,6 @@ private:
 
   ACE_Scheduler_Factory::POD_RT_Info* rt_info_;
   // The array of precomputed RT_Info structures.
-
 };
 
 #if defined (__ACE_INLINE__)

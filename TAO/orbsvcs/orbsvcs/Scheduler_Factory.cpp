@@ -24,27 +24,30 @@ ACE_Scheduler_Factory::POD_Config_Info* TAO_SF_config_info = 0;
 int TAO_SF_entry_count = -1;
 ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info = 0;
 
-
-// Helper struct, to encapsulate the singleton static server and
-// ACE_TSS objects.  We can't use ACE_Singleton directly, because
-// construction of ACE_Runtime_Scheduler takes arguments.
 struct ACE_Scheduler_Factory_Data
 {
+  // = TITLE
+  //   Helper struct, to encapsulate the singleton static server and
+  //   ACE_TSS objects.  We can't use ACE_Singleton directly, because
+  //   construction of ACE_Runtime_Scheduler takes arguments.
+
   ACE_Runtime_Scheduler scheduler_;
   // The static runtime scheduler.
 
   ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
-    preemption_priority_;
+  preemption_priority_;
   // The dispatch queue number of the calling thread.  For access by
   // applications; must be set by either the application or Event
   // Channel.
 
   ACE_Scheduler_Factory_Data (void)
-    : scheduler_ (TAO_SF_config_count, TAO_SF_config_info,
-                      TAO_SF_entry_count, TAO_SF_rt_info),
+    : scheduler_ (TAO_SF_config_count,
+                  TAO_SF_config_info,
+                  TAO_SF_entry_count,
+                  TAO_SF_rt_info),
       preemption_priority_ ()
-    {
-    }
+  {
+  }
 };
 
 static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = 0;
@@ -55,12 +58,10 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_RT_Info rti[])
 {
   if (server_ != 0 || TAO_SF_entry_count != -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "ACE_Scheduler_Factory::use_runtime - "
-                         "server already configured\n"), -1);
-    }
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_Scheduler_Factory::use_runtime - "
+                       "server already configured\n"),
+                      -1);
   TAO_SF_config_count = cc;
   TAO_SF_config_info = cfgi;
   TAO_SF_entry_count = ec;
@@ -71,12 +72,12 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
 }
 
 static RtecScheduler::Scheduler_ptr
-static_server ()
+static_server (void)
 {
   RtecScheduler::Scheduler_ptr server_ = 0;
 
   // This isn't thread safe, but the static instance that it replaces
-  // wasn't thread safe either.  Hola, Sr. Sandiego :-)  If it needs to
+  // wasn't thread safe either.  Hola, Sr. Sandiego :-) If it needs to
   // be made thread safe, it should be protected using double-checked
   // locking.
   if (! ace_scheduler_factory_data  &&
@@ -94,11 +95,10 @@ static_server ()
                   "ACE_Scheduler_Factory - configured static server\n"));
     }
   TAO_CATCHANY
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "ACE_Scheduler_Factory::config_runtime - "
-                         "cannot allocate server\n"), 0);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_Scheduler_Factory::config_runtime - "
+                       "cannot allocate server\n"),
+                      0);
   TAO_ENDTRY;
 
   return server_;
@@ -116,11 +116,9 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
                                    const char* name)
 {
   if (server_ != 0 || TAO_SF_entry_count != -1)
-    {
-      // No errors, runtime execution simply takes precedence over
-      // config runs.
-      return 0;
-    }
+    // No errors, runtime execution simply takes precedence over
+    // config runs.
+    return 0;
 
   TAO_TRY
     {
@@ -128,11 +126,13 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup (name);
       CORBA::Object_var objref =
-        naming->resolve (schedule_name, TAO_TRY_ENV);
+        naming->resolve (schedule_name,
+                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       server_ =
-        RtecScheduler::Scheduler::_narrow(objref.in (), TAO_TRY_ENV);
+        RtecScheduler::Scheduler::_narrow(objref.in (),
+                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -140,7 +140,8 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
       server_ = 0;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "ACE_Scheduler_Factory::use_config - "
-                         " exception while resolving server\n"), -1);
+                         " exception while resolving server\n"),
+                        -1);
     }
   TAO_ENDTRY;
 
@@ -162,16 +163,13 @@ RtecScheduler::Scheduler_ptr
 ACE_Scheduler_Factory::server (void)
 {
   if (server_ == 0 && TAO_SF_entry_count != -1)
-    {
-      server_ = static_server ();
-    }
+    server_ = static_server ();
 
   if (server_ == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "ACE_Scheduler_Factor::server - "
-                         "no scheduling service configured\n"), 0);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "ACE_Scheduler_Factor::server - "
+                       "no scheduling service configured\n"),
+                      0);
   return server_;
 }
 
@@ -232,32 +230,26 @@ int ACE_Scheduler_Factory::dump_schedule
 
   // Default format for printing RT_Info output.
   if (rt_info_format == 0)
-  {
     rt_info_format = "{%20s, %10d, %10d, %10d, "
                      "%10d, %10d, "
                      "(RtecScheduler::Criticality_t) %d, "
                      "(RtecScheduler::Importance_t) %d, "
                      "%10d, %10d, %10d, %10d, %10d, "
                      "(RtecScheduler::Info_Type_t) %d }";
-  }
 
   // Default format for printing Config_Info output.
   if (config_info_format == 0)
-  {
     config_info_format = "  { %10d, %10d, "
                          "(RtecScheduler::Dispatching_Type_t) %d }";
-  }
 
   FILE* file = stdout;
   if (file_name != 0)
     {
       file = ACE_OS::fopen (file_name, "w");
       if (file == 0)
-        {
           return -1;
-        }
     }
-  ACE_OS::fprintf(file, header);
+  ACE_OS::fprintf (file, header);
 
   // Indicate anomalies encountered during scheduling.
 
@@ -287,23 +279,28 @@ int ACE_Scheduler_Factory::dump_schedule
             break;
         }
 
-      ACE_OS::fprintf (file, "%s\n", (const char*) anomaly.description);
+      ACE_OS::fprintf (file,
+                       "%s\n",
+                       (const char *) anomaly.description);
     }
 
   // Print out operation QoS info.
-  ACE_OS::fprintf(file, start_infos);
-  for (i = 0; i < infos.length (); ++i)
+  ACE_OS::fprintf (file, start_infos);
+
+  for (i = 0;
+       i < infos.length ();
+       ++i)
     {
       if (i != 0)
-        {
-          // Finish previous line.
-          ACE_OS::fprintf(file, ",\n");
-        }
+        // Finish previous line.
+        ACE_OS::fprintf(file, ",\n");
 
       const RtecScheduler::RT_Info& info = infos[i];
 
       // Put quotes around the entry point name, exactly as it is stored.
-      ACE_OS::sprintf (entry_point, "\"%s\"", (const char*) info.entry_point);
+      ACE_OS::sprintf (entry_point,
+                       "\"%s\"", 
+                       (const char *) info.entry_point);
 
       // @@ TODO Eventually the TimeT structure will be a 64-bit
       // unsigned int, we will have to change this dump method then.
@@ -325,26 +322,25 @@ int ACE_Scheduler_Factory::dump_schedule
                        info.info_type);
     }
   // Finish last line.
-  ACE_OS::fprintf(file, "\n");
+  ACE_OS::fprintf(file,
+                  "\n");
 
   if (infos.length () > 0)
-  {
-    ACE_OS::fprintf(file, end_infos);
-  }
+    ACE_OS::fprintf (file, end_infos);
   else
-  {
-    ACE_OS::fprintf(file, end_infos_empty);
-  }
+    ACE_OS::fprintf (file, end_infos_empty);
 
   // Print out queue configuration info.
-  ACE_OS::fprintf(file, start_configs);
-  for (i = 0; i < configs.length (); ++i)
+  ACE_OS::fprintf (file, start_configs);
+
+  for (i = 0;
+       i < configs.length ();
+       ++i)
     {
       if (i != 0)
-        {
-          // Finish previous line.
-          ACE_OS::fprintf(file, ",\n");
-        }
+        // Finish previous line.
+        ACE_OS::fprintf (file, ",\n");
+
       const RtecScheduler::Config_Info& config = configs[i];
       ACE_OS::fprintf (file,
                        config_info_format,
@@ -352,19 +348,16 @@ int ACE_Scheduler_Factory::dump_schedule
                        config.thread_priority,
                        config.dispatching_type);
     }
+
   // Finish last line.
-  ACE_OS::fprintf(file, "\n");
+  ACE_OS::fprintf (file, "\n");
 
   if (configs.length () > 0)
-  {
-    ACE_OS::fprintf(file, end_configs);
-  }
+    ACE_OS::fprintf (file, end_configs);
   else
-  {
-    ACE_OS::fprintf(file, end_configs_empty);
-  }
+    ACE_OS::fprintf (file, end_configs_empty);
 
-  ACE_OS::fprintf(file, footer);
+  ACE_OS::fprintf (file, footer);
   ACE_OS::fclose (file);
   return 0;
 }
@@ -376,7 +369,7 @@ int ACE_Scheduler_Factory::dump_schedule
 #endif /* HPUX && !g++ */
 
 RtecScheduler::Preemption_Priority_t
-ACE_Scheduler_Factory::preemption_priority ()
+ACE_Scheduler_Factory::preemption_priority (void)
 {
   // Return whatever we've got.  The application or Event Channel is
   // responsible for making sure that it was set.
@@ -408,10 +401,10 @@ ACE_Scheduler_Factory::set_preemption_priority
   // Probably don't need this, because it should be safe to assume
   // that static_server () was called before this function.  But just
   // in case . . .
-  if (! ace_scheduler_factory_data  &&
-      (ace_scheduler_factory_data =
-         ACE_Singleton<ACE_Scheduler_Factory_Data,
-                       ACE_Null_Mutex>::instance ()) == 0)
+  if (!ace_scheduler_factory_data 
+      && (ace_scheduler_factory_data =
+          ACE_Singleton<ACE_Scheduler_Factory_Data,
+          ACE_Null_Mutex>::instance ()) == 0)
         return;
 
   ace_scheduler_factory_data->preemption_priority_->
