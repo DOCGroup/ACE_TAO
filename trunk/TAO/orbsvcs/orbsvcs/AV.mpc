@@ -45,14 +45,10 @@ project(AV) : orbsvcslib, core, property, naming, qos {
       AV/default_resource.cpp
       AV/media_timer.cpp
       AV/sfp.cpp
+      AV/SCTP_SEQ.cpp
     }
   }
 
-  verbatim(gnuace,top) {
-  ifeq ($(sctp),1)
-    AV += SCTP_SEQ
-  endif
-  }
   Header_Files {
     Channel_Clients_T.h
     AV/AVStreams_i.h
@@ -79,6 +75,7 @@ project(AV) : orbsvcslib, core, property, naming, qos {
     AV/media_timer.h
     AV/ntp-time.h
     AV/sfp.h
+    AV/SCTP_SEQ.h
   }
   Template_Files {
     Channel_Clients_T.cpp
