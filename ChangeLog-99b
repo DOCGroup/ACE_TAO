@@ -6,6 +6,9 @@ Thu Jun 10 10:17:08 1999  David L. Levine  <levine@cs.wustl.edu>
           ignored with -noex.  See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h
           for more information.
 
+        * ace/os-patches/vxworks-5.1.txt,ACE-INSTALL.html: added these notes
+          for using ACE with VxWorks 5.1.
+
 Wed Jun  9 21:45:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tests/Svc_Handler_Test.cpp (main): Revised the test a bit to
