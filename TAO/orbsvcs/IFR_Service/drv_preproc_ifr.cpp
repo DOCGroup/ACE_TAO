@@ -442,11 +442,6 @@ static char     tmp_ifile[128];
 void
 DRV_pre_proc (const char *myfile)
 {
-  long  readfromstdin = I_FALSE;
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (readfromstdin);
-
   const char* tmpdir = idl_global->temp_dir ();
 
   ACE_OS::strcpy (tmp_file, tmpdir);
@@ -462,57 +457,28 @@ DRV_pre_proc (const char *myfile)
 
   be_global->filename (ACE_const_cast (char *, myfile));
 
-  if (strcmp (myfile, "standard input") == 0)
-    {
-      ACE_NEW (tmp,
-               UTL_String (tmp_ifile));
-      idl_global->set_filename (tmp);
+  FILE *file = fopen (myfile, "r");
+  DRV_copy_input (file,
+                  tmp_ifile,
+                  myfile);
+  fclose (file);
 
-      ACE_NEW (tmp,
-               UTL_String (tmp_ifile));
-      idl_global->set_main_filename (tmp);
+  ACE_NEW (tmp,
+            UTL_String (myfile));
+  idl_global->set_filename (tmp);
 
-      ACE_NEW (tmp,
-               UTL_String (DRV_stripped_name (tmp_ifile)));
-      idl_global->set_stripped_filename (tmp);
+  ACE_NEW (tmp,
+            UTL_String (myfile));
+  idl_global->set_main_filename (tmp);
 
-      ACE_NEW (tmp,
-               UTL_String (tmp_ifile));
-      idl_global->set_real_filename (tmp);
+  ACE_Auto_String_Free safety (ACE_OS::strdup (myfile));
+  ACE_NEW (tmp,
+            UTL_String (DRV_stripped_name (safety.get ())));
+  idl_global->set_stripped_filename (tmp);
 
-      DRV_copy_input (stdin,
-                      tmp_ifile,
-                      "standard input");
-
-      idl_global->set_read_from_stdin (I_TRUE);
-    }
-  else
-    {
-      FILE *fd = fopen (myfile, "r");
-      DRV_copy_input (fd,
-                      tmp_ifile,
-                      myfile);
-      fclose (fd);
-
-      idl_global->set_read_from_stdin (I_FALSE);
-
-      ACE_NEW (tmp,
-               UTL_String (myfile));
-      idl_global->set_filename (tmp);
-
-      ACE_NEW (tmp,
-               UTL_String (myfile));
-      idl_global->set_main_filename (tmp);
-
-      ACE_Auto_String_Free safety (ACE_OS::strdup (myfile));
-      ACE_NEW (tmp,
-               UTL_String (DRV_stripped_name (safety.get ())));
-      idl_global->set_stripped_filename (tmp);
-
-      ACE_NEW (tmp,
-               UTL_String (tmp_ifile));
-      idl_global->set_real_filename (tmp);
-    }
+  ACE_NEW (tmp,
+            UTL_String (tmp_ifile));
+  idl_global->set_real_filename (tmp);
 
   // We use ACE instead of the (low level) fork facilities, this also
   // works on NT.

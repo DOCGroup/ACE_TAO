@@ -1,3 +1,13 @@
+Fri Jun 18 08:42:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
+        * orbsvcs/IFR_Service/tao_ifr.cpp:
+        
+          Updated files to reflect recent changes to IDL compiler front
+          end in
+          
+          Thu Jun 17 12:51:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Jun 18 09:48:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.cpp:
