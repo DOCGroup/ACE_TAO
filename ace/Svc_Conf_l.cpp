@@ -225,10 +225,10 @@ YY_BUFFER_STATE ace_yy_create_buffer YY_PROTO(( FILE *file, int size ));
 void ace_yy_delete_buffer YY_PROTO(( YY_BUFFER_STATE b ));
 void ace_yy_init_buffer YY_PROTO(( YY_BUFFER_STATE b, FILE *file ));
 
+#if 0
 static int ace_yy_start_stack_ptr = 0;
 static int ace_yy_start_stack_depth = 0;
 static int *ace_yy_start_stack = 0;
-#if 0
 static void ace_yy_push_state YY_PROTO(( int new_state ));
 static void ace_yy_pop_state YY_PROTO(( void ));
 static int ace_yy_top_state YY_PROTO(( void ));
