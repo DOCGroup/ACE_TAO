@@ -125,13 +125,14 @@ SOURCE=.\Grid.idl
 
 !IF  "$(CFG)" == "Simple Grid Client - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__GRID_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Grid.idl
 InputName=Grid
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 -Gd $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -163,13 +164,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Simple Grid Client - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__GRID_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\Grid.idl
 InputName=Grid
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 -Gd $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
