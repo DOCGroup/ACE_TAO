@@ -8,7 +8,7 @@ template <class CONCRETE> ACE_INLINE CONCRETE *
 ACE_Based_Pointer<CONCRETE>::operator->(void)
 {
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::operator->");
-  return (CONCRETE *)(ACE_COMPUTE_BASED_POINTER (this));
+  return reinterpret_cast<CONCRETE *> (ACE_COMPUTE_BASED_POINTER (this));
 }
 
 template <class CONCRETE> ACE_INLINE void
