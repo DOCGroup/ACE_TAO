@@ -42,6 +42,7 @@ public:
                 const RtecEventChannelAdmin::ConsumerQOS &qos,
                 CORBA::Environment &ACE_TRY_ENV);
   void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void deactivate (CORBA::Environment &ACE_TRY_ENV);
   // Simple connect/disconnect methods..
 
   void dump_results (int expected_count, int tolerance);

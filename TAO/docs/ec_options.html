@@ -19,10 +19,10 @@
 
     <UL>
       <LI><P>To eliminate the <CODE>CORBA::Any</CODE> field in the
-	  event payload you should define the
-	  <CODE>TAO_LACKS_EVENT_CHANNEL_ANY</CODE>
-	  macro when invoking the IDL compiler.
-	  You can do as follows:
+          event payload you should define the
+          <CODE>TAO_LACKS_EVENT_CHANNEL_ANY</CODE>
+          macro when invoking the IDL compiler.
+          You can do as follows:
 <PRE>
 $ cd $TAO_ROOT/orbsvcs/orbsvcs
 $ make TAO_IDLFLAGS=-DTAO_LACKS_EVENT_CHANNEL_ANY
@@ -30,7 +30,7 @@ $ make TAO_IDLFLAGS=-DTAO_LACKS_EVENT_CHANNEL_ANY
         </P>
       </LI>
       <LI><P>Similarly you can eliminate the octet sequence field in
-	  the event payload using:
+          the event payload using:
 <PRE>
 $ cd $TAO_ROOT/orbsvcs/orbsvcs
 $ make TAO_IDLFLAGS=-DTAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE
@@ -38,11 +38,11 @@ $ make TAO_IDLFLAGS=-DTAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE
         </P>
       </LI>
       <LI><P>Finally you can provide your own event payload, to do
-	  this you should Replace the contents of the
-	  <CODE>RtecDefaultEventData.idl</CODE>
-	  and define some IDL structure named
-	  <CODE>RtecEventData</CODE>.
-	  For example, you could define you own event type as follows:
+          this you should Replace the contents of the
+          <CODE>RtecDefaultEventData.idl</CODE>
+          and define some IDL structure named
+          <CODE>RtecEventData</CODE>.
+          For example, you could define you own event type as follows:
 <PRE>
 // Replace RtecDefaultEventData.idl with this:
 
@@ -241,8 +241,8 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>orbid</EM>
           </TD>
           <TD>Set the name of the ORB used by the event service, only
-	    useful in applications that create multiple ORBs and
-	    activate the event service in one of them.
+            useful in applications that create multiple ORBs and
+            activate the event service in one of them.
           </TD>
         </TR>
 
@@ -252,8 +252,8 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>policy</EM>
           </TD>
           <TD>Select the consumer control policy (<EM>null</EM> or
-	    <EM>reactive</EM>) to detect and discard broken consumer
-	    proxies.
+            <EM>reactive</EM>) to detect and discard broken consumer
+            proxies.
           </TD>
         </TR>
 
@@ -263,97 +263,97 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>policy</EM>
           </TD>
           <TD>Select the supplier control policy (<EM>null</EM> or
-	    <EM>reactive</EM>) to detect and discard broken supplier
-	    proxies.
+            <EM>reactive</EM>) to detect and discard broken supplier
+            proxies.
           </TD>
         </TR>
 
-        <!-- <TR NAME="ECConsumerPeriod"> -->
+        <!-- <TR NAME="ECConsumerControlPeriod"> -->
         <TR>
-          <TD><CODE>-ECConsumerPeriod</CODE>
+          <TD><CODE>-ECConsumerControlPeriod</CODE>
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-	    consumer control policy to poll the state of the
-	    consumer proxies.
+            consumer control policy to poll the state of the
+            consumer proxies.
           </TD>
         </TR>
 
-        <!-- <TR NAME="ECSupplierPeriod"> -->
+        <!-- <TR NAME="ECSupplierControlPeriod"> -->
         <TR>
-          <TD><CODE>-ECSupplierPeriod</CODE>
+          <TD><CODE>-ECSupplierControlPeriod</CODE>
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-	    supplier control policy to poll the state of the
-	    supplier proxies.
+            supplier control policy to poll the state of the
+            supplier proxies.
           </TD>
         </TR>
 
         <!-- <TR NAME="ECProxyPushConsumerCollection"> -->
         <TR>
           <TD><CODE>-ECProxyPushConsumerCollection</CODE>
-	    <EM>flag[:flags]</EM>
+            <EM>flag[:flags]</EM>
           </TD>
           <TD><P>Configure the data structure and strategies used to
-	      implement collections of
-	      <CODE>ProxyPushConsumers</CODE>.
-	      The argument is a colon separated list of flags, with
-	      the following semantics:
-	      <TABLE>
-	      <TR><TH>Flag</TH><TH>Description</TH><
-	      </TR>
-	      <TR>
-		<TD>MT</TD>
-		<TD>Use regular mutexes and/or condition
-		  variables for serialization.
-		</TD>
-		<TD>ST</TD>
-		<TD>Use null mutexes and/or condition
-		  variables for serialization.
-		</TD>
-		<TD>LIST</TD>
-		<TD>Implement the collection using an ordered list,
-		  fast for iteration (i.e. during event dispatching),
-		  but slow for insertion and removal (i.e. when
-		  clients connect and disconnect from the EC).
-		</TD>
-		<TD>RB_TREE</TD>
-		<TD>Implement the collection using a Red-Black tree,
-		  slow for iteration (i.e. during event dispatching),
-		  but fast for insertion and removal (i.e. when
-		  clients connect and disconnect from the EC).
-		</TD>
-		<TD>IMMEDIATE</TD>
-		<TD>Threads block until they can execute a change on
-		  the data structure, the system must use other
-		  approaches to guarantee that the iterators are not
-		  invalidated during event dispatching.  For example,
-		  use a separate dispatching thread.
-		</TD>
-		<TD>COPY_ON_READ</TD>
-		<TD>Before initiating an iteration to dispatch events
-		  (or similar tasks) a copy of the complete collection
-		  is performed.
-		  This solves most of the synchronization problems,
-		  but introduces a significant source of overhead and
-		  priority inversions on the critical path.
-		</TD>
-		<TD>COPY_ON_WRITE <STRONG>UNIMPLEMENTED</STRONG></TD>
-		<TD>Similar to the previous one, but the copy is only
-		  performed when needed.
-		</TD>
-		<TD>DELAYED</TD>
-		<TD>Threads that need to change the collection can
-		  detect if that change will invalidate iterators used
-		  by other threads.
-		  If so, the thread posts the change on a queue that
-		  is executed once the collection is no longer in
-		  use.
-		</TD>
-	      </TR>
-	      </TABLE>
-	    </P>
+              implement collections of
+              <CODE>ProxyPushConsumers</CODE>.
+              The argument is a colon separated list of flags, with
+              the following semantics:
+              <TABLE>
+              <TR><TH>Flag</TH><TH>Description</TH><
+              </TR>
+              <TR>
+                <TD>MT</TD>
+                <TD>Use regular mutexes and/or condition
+                  variables for serialization.
+                </TD>
+                <TD>ST</TD>
+                <TD>Use null mutexes and/or condition
+                  variables for serialization.
+                </TD>
+                <TD>LIST</TD>
+                <TD>Implement the collection using an ordered list,
+                  fast for iteration (i.e. during event dispatching),
+                  but slow for insertion and removal (i.e. when
+                  clients connect and disconnect from the EC).
+                </TD>
+                <TD>RB_TREE</TD>
+                <TD>Implement the collection using a Red-Black tree,
+                  slow for iteration (i.e. during event dispatching),
+                  but fast for insertion and removal (i.e. when
+                  clients connect and disconnect from the EC).
+                </TD>
+                <TD>IMMEDIATE</TD>
+                <TD>Threads block until they can execute a change on
+                  the data structure, the system must use other
+                  approaches to guarantee that the iterators are not
+                  invalidated during event dispatching.  For example,
+                  use a separate dispatching thread.
+                </TD>
+                <TD>COPY_ON_READ</TD>
+                <TD>Before initiating an iteration to dispatch events
+                  (or similar tasks) a copy of the complete collection
+                  is performed.
+                  This solves most of the synchronization problems,
+                  but introduces a significant source of overhead and
+                  priority inversions on the critical path.
+                </TD>
+                <TD>COPY_ON_WRITE <STRONG>UNIMPLEMENTED</STRONG></TD>
+                <TD>Similar to the previous one, but the copy is only
+                  performed when needed.
+                </TD>
+                <TD>DELAYED</TD>
+                <TD>Threads that need to change the collection can
+                  detect if that change will invalidate iterators used
+                  by other threads.
+                  If so, the thread posts the change on a queue that
+                  is executed once the collection is no longer in
+                  use.
+                </TD>
+              </TR>
+              </TABLE>
+            </P>
           </TD>
         </TR>
 
@@ -362,7 +362,7 @@ static EC_Factory "-ECFiltering basic ....."
           <TD><CODE>-ECPushSupplierSet</CODE>
           </TD>
           <TD><P>Obsolete option, ignored.
-	    </P>
+            </P>
           </TD>
         </TR>
 
@@ -480,7 +480,7 @@ static EC_Factory "-ECFiltering basic ....."
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Thu Jul  1 21:44:28 CDT 1999 -->
 <!-- hhmts start -->
-Last modified: Tue Feb  1 13:50:47 PST 2000
+Last modified: Thu Mar 23 21:17:40 PST 2000
 <!-- hhmts end -->
   </body>
 </html>
