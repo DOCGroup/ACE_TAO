@@ -17,8 +17,8 @@
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_signal.h"
 
-#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
-# include "ace/Object_Manager.h"
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
+# include "ace/Object_Manager_Base.h"
 #endif /* ! ACE_MT_SAFE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
