@@ -1,3 +1,7 @@
+Mon Apr 28 22:11:05 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* ace/OS.h and ace/OS.i: Added support for memmove().
+
 Mon Apr 28 21:35:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/IOStream.h: Added a new macro called
