@@ -143,13 +143,6 @@
 #else
 #  define PTHREAD_MAX_PRIORITY          32      // JCEJ 12/22/96	#3
 #endif
-// LinuxThreads 0.5 doesn't define these, but they're easy to fake
-#define PRI_FIFO_MIN   (sched_get_priority_min(SCHED_FIFO))
-#define PRI_FIFO_MAX   (sched_get_priority_max(SCHED_FIFO))
-#define PRI_RR_MIN     (sched_get_priority_min(SCHED_RR))
-#define PRI_RR_MAX     (sched_get_priority_max(SCHED_RR))
-#define PRI_OTHER_MIN  (sched_get_priority_min(SCHED_OTHER))
-#define PRI_OTHER_MAX  (sched_get_priority_max(SCHED_OTHER))
 #define	ACE_HAS_PTHREADS_1003_DOT_1C		// JCEJ 12/22/96	#4
 
 #define ACE_LACKS_THREAD_STACK_ADDR		// JCEJ 12/17/96
