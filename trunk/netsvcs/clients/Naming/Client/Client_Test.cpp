@@ -122,6 +122,7 @@ Client_Test::open (void)
 				  ACE_Service_Config::reactor (),
 				  ACE_Service_Config::thr_mgr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_stdin_handler"), -1);
+  return 0;
 }
 
 

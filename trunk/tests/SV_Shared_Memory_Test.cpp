@@ -74,7 +74,7 @@ main (int, char *argv[])
   switch (ACE_OS::fork ())
     {
     case -1:
-      ACE_OS::perror (argv[0]), ACE_OS::exit (1);
+      ACE_ERROR ((LM_ERROR, "%p%a", "main", 1));
     case 0: 
       ACE_OS::sleep (1); 
       client ();
