@@ -271,6 +271,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+  static int process_directive (const ASYS_TCHAR directive[]);
+  // Process one service configuration <directive>, which is passed as
+  // a string.  Returns the number of errors that occurred.
+
 protected:
   static int process_directives (void);
   // Process service configuration requests that are provided in the
@@ -280,10 +284,6 @@ protected:
   static int process_commandline_directives (void);
   // Process service configuration requests that were provided on the
   // command-line.  Returns the number of errors that occurred.
-
-  static int process_directive (const ASYS_TCHAR directive[]);
-  // Process one service configuration <directive>, which is passed as
-  // a string.  Returns the number of errors that occurred.
 
   static int process_directives_i (void);
   // This is the implementation function that <process_directives> and
