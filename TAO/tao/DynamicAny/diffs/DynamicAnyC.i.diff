@@ -1,7 +1,0 @@
---- orig/DynamicAnyC.i	Fri Aug 25 15:14:31 2000
-+++ DynamicAnyC.i	Fri Aug 25 15:21:40 2000
-@@ -3418,4 +3418,3 @@
-   );
- 
- #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_I_ */
--
