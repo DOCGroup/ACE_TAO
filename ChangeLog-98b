@@ -1,3 +1,14 @@
+Mon Jun  8 19:15:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.h:
+	* ace/Malloc_Base.h (ACE_Allocator): Moved the definition of
+	  abstract class ACE_Allocator from Malloc.h to a new file called
+	  Malloc_Base.h to resolve a circular dependency among a bunch of
+	  header files when compiling with UNICODE and inline enabled.
+
+	* ace/SString.i: Changed to include "ace/Malloc_Base.h" to avoid
+	  circular inclusion.
+
 Mon Jun 08 18:35:23 1998  Steve Huston  <shuston@riverace.com>
 
 	* ACE-INSTALL.html: Added some updated HP-UX info (and a pointer to
