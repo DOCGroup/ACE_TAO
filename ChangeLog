@@ -1,3 +1,10 @@
+Wed Aug 25 08:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          The warnings disabled in this file are for major version 03 of aCC
+          only (PA-RISC), for version 05 (Itanium), disable 1016 and 1031,
+          these are binary incompatible warnings.
+
 Wed Aug 25 07:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_loadavg.h:
