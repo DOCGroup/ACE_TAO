@@ -60,6 +60,11 @@ CPP_SRCS = \
 	AV/RTP\
         AV/sfp
 
+ifeq ($(rapi),1)
+  CPP_SRCS += AV/Fill_ACE_QoS\
+	      AV/QoS_UDP	
+endif # rapi   
+
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
         $(addsuffix C.cpp, $(IDL_FILES))
