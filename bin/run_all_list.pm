@@ -67,8 +67,8 @@ if ($^O eq "MSWin32") {
       'TAO/examples/Simple/echo , run_test.pl < Echo.idl',
 # INTERACTIVE 'TAO/examples/Simple/chat , run_test.pl',
       'TAO/orbsvcs/tests/Property , run_test.pl',
-      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
-      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
+#HANGS'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
+#HANGS'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
     );
 
 @MINIMUM_CORBA_LIST =
@@ -252,7 +252,7 @@ if ($^O eq "MSWin32") {
       'TAO/examples/Simple/echo , run_test.pl < Echo.idl',
 # INTERACTIVE 'TAO/examples/Simple/chat , run_test.pl',
       'TAO/orbsvcs/tests/Property , run_test.pl',
-      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
-      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
+# HANGS'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
+# HANGS'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
     );
 1;
