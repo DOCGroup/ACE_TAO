@@ -3,8 +3,6 @@
 
 // ATM_Stream.i
 
-#include "ace/ATM_Stream.h"
-
 ACE_INLINE
 ACE_ATM_Stream::ACE_ATM_Stream (void)
 {

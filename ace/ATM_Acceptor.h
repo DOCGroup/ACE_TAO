@@ -92,7 +92,9 @@ private:
   ATM_Acceptor acceptor_;
 };
 
+#if defined (__ACE_INLINE__)
 #include "ace/ATM_Acceptor.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
 #endif /* ACE_ATM_ACCEPTOR_H */

@@ -3,7 +3,7 @@
 
 // XTI_ATM_Mcast.i
 
-inline
+ACE_INLINE
 ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast (ACE_TLI_Stream &new_stream, 
 				      const ACE_Addr &remote_sap, 
 				      ACE_Time_Value *timeout,
@@ -31,7 +31,7 @@ ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast (ACE_TLI_Stream &new_stream,
 // through function to ACE_TLI_Connector::connect(). It is over-
 // ridden to change the default device from TCP to XTI/ATM.
 
-inline
+ACE_INLINE
 int
 ACE_XTI_ATM_Mcast::connect (ACE_TLI_Stream &new_stream, 
 			    const ACE_Addr &remote_sap, 
