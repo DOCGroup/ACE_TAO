@@ -62,8 +62,17 @@ Broadcaster_i::add (Receiver_ptr receiver,
     + ACE_CString (nickname)
     + ACE_CString (" has joined the chat ****\n");
 
-  this->broadcast (broadcast_string.fast_rep (),
-                   TAO_TRY_ENV);
+  TAO_TRY
+    {
+      this->broadcast (broadcast_string.fast_rep (),
+		       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Broadcaster_i::add\t\n");
+    }
+  TAO_ENDTRY;
 }
 
 void
@@ -132,6 +141,7 @@ Broadcaster_i::say (Receiver_ptr receiver,
 
       this->broadcast (broadcast_string.fast_rep (),
                        TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
@@ -154,6 +164,7 @@ Broadcaster_i::broadcast (const char *text,
         {
           (*iter).receiver_->message (text,
                                       TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
         }
       TAO_CATCHANY
         {
