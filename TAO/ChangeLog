@@ -1,3 +1,18 @@
+Mon May  5 17:03:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/OctetSeq/server.cpp:
+
+          Set the default output filename for the IOR to be
+          consistent with that for the client.
+
+        * tests/Portable_Interceptors/AMI/client.bor:
+        * tests/Portable_Interceptors/AMI/client.dsp:
+        * tests/Portable_Interceptors/AMI/server.bor:
+        * tests/Portable_Interceptors/AMI/server.dsp:
+
+          Fixed project and BCB makefile settings to link the
+          TAO_Valuetype library.
+
 Mon May  5 16:37:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE_Static.dsw:
