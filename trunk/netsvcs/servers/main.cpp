@@ -33,7 +33,12 @@ main (int argc, char *argv[])
 	{
 	  char *l_argv[3];
 
-	  l_argv[0] = "-p " ACE_DEFAULT_NAME_SERVER_PORT_STR;
+          // Calling ACE_SVC_INVOKE to create a new Service_Object.
+          // Stash the newly created Service_Object into an 
+          // ACE_Service_Object_Ptr which is an <auto_ptr> specialized
+          // for ACE_Service_Object.
+
+          l_argv[0] = "-p " ACE_DEFAULT_NAME_SERVER_PORT_STR;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_1 = ACE_SVC_INVOKE (ACE_Name_Acceptor);
 
