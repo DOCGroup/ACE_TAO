@@ -77,8 +77,12 @@ public:
   void foo (CORBA::Long result,
             CORBA::Long out_l,
             const char* in_str,
-            CORBA::Environment&)
+            CORBA::Environment &ACE_TRY_ENV)
     {
+      ACE_UNUSED_ARG (result);
+      ACE_UNUSED_ARG (out_l);
+      ACE_UNUSED_ARG (in_str);
+      ACE_UNUSED_ARG (ACE_TRY_ENV);
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -92,6 +96,8 @@ public:
                   CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      ACE_UNUSED_ARG (result);
+      ACE_UNUSED_ARG (ACE_TRY_ENV);
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -103,6 +109,7 @@ public:
   void set_yadda (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      ACE_UNUSED_ARG (ACE_TRY_ENV);
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -123,29 +130,30 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var object =
+      CORBA::Object_var object_var =
         orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object, ACE_TRY_ENV);
+      PortableServer::POA_var poa_var =
+        PortableServer::POA::_narrow (object_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+      PortableServer::POAManager_var poa_manager_var =
+        poa_var->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager_var->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
+      
       if (parse_args (argc, argv) != 0)
         return 1;
-
-      object = orb->string_to_object (ior, ACE_TRY_ENV);
+      
+      // We reuse the object_var smart pointer!
+      object_var = orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       A::AMI_Test_var ami_test_var =
-        A::AMI_Test::_narrow (object.in (), ACE_TRY_ENV);
+        A::AMI_Test::_narrow (object_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ami_test_var.in ()))
@@ -216,6 +224,13 @@ main (int argc, char *argv[])
                                               "Let's talk AMI.",
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG, 
+                      "Received the following number: %d\n",
+                      number));
+        }
       
       //if (shutdown_flag)
       //  ami_test_var->shutdown ();
@@ -227,6 +242,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-
+  
   return 0;
 }
