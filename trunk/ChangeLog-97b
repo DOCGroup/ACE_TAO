@@ -1,4 +1,7 @@
-Fri Nov 21 10:23:14 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Fri Nov 21 12:18:28 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Acceptor.cpp,Strategy_T.cpp: Removed the use of gotos.  See
+ 	  Dijkstra '67 for motivation...
 
 	* tests/Process_Strategy_Test.cpp (open): Make sure that we set
  	  the Reactor of the Svc_Handler to 0 if we're running the

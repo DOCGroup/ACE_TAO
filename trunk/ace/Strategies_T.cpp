@@ -239,23 +239,26 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_ha
 {
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler");
 
+  int result = 0;
+
   // See if we should enable non-blocking I/O on the <svc_handler>'s
   // peer.
   if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
-        goto failure;
+        result = -1;
     }
   // Otherwise, make sure it's disabled by default.
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
-    goto failure;
+    result = -1;
 
-  if (svc_handler->open ((void *) this) != -1)
-    return 0;
+  if (result == 0 && svc_handler->open ((void *) this) == -1)
+    result = -1;
 
-failure:
-  svc_handler->close (0);
-  return -1;
+  if (result == -1)
+    svc_handler->close (0);
+
+  return result;
 }
 
 template <class SVC_HANDLER> 
@@ -328,16 +331,18 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
 							  void *arg)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler");
+
+  int result = 0;
   
   if (this->reactor_ == 0)
-    goto failure;
+    result = -1;
   
   // Register with the Reactor with the appropriate <mask>.
-  if (this->reactor_->register_handler (svc_handler, this->mask_) == -1)
-    goto failure;
+  else if (this->reactor_->register_handler (svc_handler, this->mask_) == -1)
+    result = -1;
   
   // If the implementation of the reactor uses event associations
-  if (this->reactor_->uses_event_associations ())
+  else if (this->reactor_->uses_event_associations ())
     {
       // If we don't have non-block on, it won't work with
       // WFMO_Reactor
@@ -347,15 +352,15 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
       if (svc_handler->open ((void *) this) != -1)
         return 0;      
       else
-        goto failure;
+        result = -1;
     }
   else
     // Call up to our parent to do the SVC_HANDLER initialization.
     return this->inherited::activate_svc_handler (svc_handler, arg);
   
-failure:
-  svc_handler->close (0);
-  return -1;
+  if (result == -1)
+    svc_handler->close (0);
+  return result;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Strategy)

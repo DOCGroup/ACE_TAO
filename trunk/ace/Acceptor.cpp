@@ -259,23 +259,26 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler");
 
+  int result = 0;
+
   // See if we should enable non-blocking I/O on the <svc_handler>'s
   // peer.
   if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
-        goto failure;
+        result = -1;
     }
   // Otherwise, make sure it's disabled by default.
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
-    goto failure;
+    result = -1;
 
   if (svc_handler->open ((void *) this) != -1)
-    return 0;
+    result = -1;
 
-failure:
-  svc_handler->close (0);
-  return -1;
+  if (result == -1)
+    svc_handler->close (0);
+
+  return result;
 }
 
 // Template Method that makes a SVC_HANDLER (using the appropriate
