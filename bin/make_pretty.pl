@@ -140,7 +140,7 @@ sub is_warning ()
     }
 
     # IBM's compilers don't say the word "warning" - check for their code
-    return 1 if ($^O eq 'aix' && m/\d+-\d+ \(W\)/);
+    return 1 if ($^O eq 'aix' && m/\d+-\d+:? \(W\)/);
 
     # didn't find anything
     return 0;
@@ -182,7 +182,7 @@ sub is_error ()
                  || /: fatal:/);
 
     # Again, IBM's compilers speak in code langauge
-    return 1 if ($^O eq 'aix' && m/\d+-\d+ \([SI]\)/);
+    return 1 if ($^O eq 'aix' && m/\d+-\d+:? \([SI]\)/);
 
     # didn't find anything
     return 0;
