@@ -1,3 +1,13 @@
+Mon Apr 28 17:35:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all immediate build issues to jcohen@atl.lmco.com
+        if problems occur as a result of this check in.  Thank you.
+
+        * ace/Makefile.bor
+
+        Added SOCK_SEQPACK_{Acceptor,Assocication,Connector}.obj and
+        Multihomed_INET_Addr.obj
+
 Mon Apr 28 15:15:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all immediate build issues to jcohen@atl.lmco.com
