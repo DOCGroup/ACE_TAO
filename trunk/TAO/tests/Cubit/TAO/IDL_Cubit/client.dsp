@@ -137,6 +137,10 @@ BuildCmds= \
 
 SOURCE=.\cubitC.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\cubitS.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
