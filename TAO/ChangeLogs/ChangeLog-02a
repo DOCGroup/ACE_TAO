@@ -1,3 +1,9 @@
+Sat Jul  8 17:26:49 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/Acceptor_Registry.cpp (open_i): Changed astr from
+	  char * to const char * to prevent a warning.  Thanks to
+	  Marina for reporting this.
+
 Sat Jul 08 18:08:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* test/Exposed_Policies/server.cpp:
@@ -13,25 +19,25 @@ Sat Jul 08 18:08:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 Sat Jul  8 17:45:00 2000  Bruce Trask  <brucetrask@aol.com>
 
-      * tao/DomainS.cpp:
-        Changed all _dispatch functions in skeletons to call
-        synchronous_upcall_dispatch function. 
- 
-      * tao/ImplRepoS.cpp:
-        Changed all _dispatch functions in skeletons to call
-        synchronous_upcall_dispatch function. 
+        * tao/DomainS.cpp:
+          Changed all _dispatch functions in skeletons to call
+          synchronous_upcall_dispatch function. 
+   
+        * tao/ImplRepoS.cpp:
+          Changed all _dispatch functions in skeletons to call
+          synchronous_upcall_dispatch function. 
 
-      * tao/MessagingS.cpp:
-        Changed all _dispatch functions in skeletons to call
-        synchronous_upcall_dispatch function. 
-
-      * tao/POAS.cpp:
-        Changed all _dispatch functions in skeletons to call
-        synchronous_upcall_dispatch function. 
+        * tao/MessagingS.cpp:
+          Changed all _dispatch functions in skeletons to call
+          synchronous_upcall_dispatch function. 
+  
+        * tao/POAS.cpp:
+          Changed all _dispatch functions in skeletons to call
+          synchronous_upcall_dispatch function. 
  
-      * tao/PolicyS.cpp:
-        Changed all _dispatch functions in skeletons to call
-        synchronous_upcall_dispatch function.      
+        * tao/PolicyS.cpp:
+          Changed all _dispatch functions in skeletons to call
+          synchronous_upcall_dispatch function.      
 
 Sat Jul  8 16:10:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 

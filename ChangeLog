@@ -2,6 +2,12 @@ Sat Jul 08 14:50:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * all Makefiles: updated dependencies.
 
+Fri Jul  7 20:24:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Reactor/Multicast/server.cpp:  The last character 0x0D in the
+	  message was messing up the display.  Thanks to Zoran Ivanovic
+ 	  <Zoran_Ivanovic@i2.com> for this fix.
+
 Fri Jul 07 17:17:21 2000  George Reid <greid@entrenet.com>
 
         * ace/config-mvs.h: long long support was introduced in os/390

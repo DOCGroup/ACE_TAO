@@ -1736,17 +1736,17 @@ CORBA_ORB::ior_string_to_object (const char *str,
 }
 
 CORBA::Object_ptr
-CORBA_ORB::file_string_to_object (const char* filename,
+CORBA_ORB::file_string_to_object (const char *filename,
                                   CORBA::Environment& ACE_TRY_ENV)
 {
-  FILE* file = ACE_OS::fopen (filename, "r");
+  FILE *file = ACE_OS::fopen (filename, "r");
 
   if (file == 0)
     return CORBA::Object::_nil ();
 
   ACE_Read_Buffer reader (file, 1);
 
-  char* string = reader.read ();
+  char *string = reader.read ();
 
   if (string == 0)
     return CORBA::Object::_nil ();
