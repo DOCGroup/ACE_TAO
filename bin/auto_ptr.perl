@@ -10,6 +10,5 @@
 #
 #
 s/auto_basic_ptr/ACE_Auto_Basic_Ptr/g;
-s/auto_ptr/ACE_Auto_Ptr/g;
 s/auto_basic_array_ptr/ACE_Auto_Basic_Array_Ptr/g;
 s/auto_array_ptr/ACE_Auto_Array_Ptr/g;
