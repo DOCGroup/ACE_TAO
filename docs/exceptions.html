@@ -20,7 +20,9 @@ to 322.
 <P>CORBA::Environment provides a way to handle exceptions when
 native c++ exception handling is unavailable or undesirable.
 However, writing portable code for both (with and without) native
-exception handling capability is very hairy.
+exception handling capability is very hairy.  If you plan to write
+portable code that must run on platforms that do not have native C++
+exceptions, we recommend you use the ACE exception macros.
 </P>
 
 <P>ACE provides a set of macros to help dealing with the chaos,

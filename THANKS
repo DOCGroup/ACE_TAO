@@ -790,10 +790,11 @@ Vladimir Kondratiev <vladimir.kondratiev@intel.com>
 John Glynn <Jjg9419@bjc.org>
 Raymond Wiker <raymond@orion.no>
 Michael Pitman <mcp@mira.net>
-Andreas Terstegge <Andreas.Terstegge@nokia.com>
 Joseph Jefferson <jjefferson@relinc.com>
 Engelbert Staller <engelbert.staller@siemens.at>
 George Ball <george@jgserv.co.uk>
+Ronald Fischer <ronald.fischer@icn.siemens.de>
+Marvin Allen Wolfthal <maw@ziplink.net>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

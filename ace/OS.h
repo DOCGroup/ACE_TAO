@@ -7405,7 +7405,7 @@ private:
 
 # if defined (ACE_NEW_THROWS_EXCEPTIONS)
 # if (__SUNPRO_CC)
-#      if (__SUNPRO_CC < 0x500) || ((__SUNPRO_CC == 0x500 && > __SUNPRO_CC_COMPAT == 4))
+#      if (__SUNPRO_CC < 0x500) || ((__SUNPRO_CC == 0x500 && __SUNPRO_CC_COMPAT == 4))
 #        include /**/ <exception.h>
          // Note: we catch ::xalloc rather than just xalloc because of
          // a name clash with unsafe_ios::xalloc()
