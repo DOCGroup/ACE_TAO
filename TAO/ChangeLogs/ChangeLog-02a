@@ -1,3 +1,10 @@
+Wed Feb 13 18:39:01 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/Miop/McastHello/Makefile: Added a check for
+	  compilation. 
+	* orbsvcs/orbsvcs/Makefile.PortableGroup: Added CosNaming to list
+	  of libraries against which this needs to be linked.
+
 Wed Feb 13 12:47:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/ConstantDef_i.cpp: Changed the usage of

@@ -32,10 +32,10 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-
-ifeq ($(minimum_corba),0)
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (PortableGroup,$(findstring PortableGroup,$(TAO_ORBSVCS)))
   BIN = $(BIN_UNCHECKED)
-endif  # minimum_corba == 0
+endif # PortableGroup
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
