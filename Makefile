@@ -161,14 +161,14 @@ release: ACE-INSTALL NEWS
 	@$(GENERATE_MAN_PAGES)
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
            -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
-           -l "$(RELEASE_LIB_FILES)"
+           -l "$(RELEASE_LIB_FILES)" -u
 
 #### The following target is for use by the TAO Makefile.  It should not
 #### be called directly from the command line.  The releasetao target
 #### creates the combined ACE-TAO kit.
 releasetao:
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace+tao -t $(REL) \
-           -c "$(CONTROLLED_FILES)" -r "$(ALL_RELEASE_FILES)"
+           -c "$(CONTROLLED_FILES)" -r "$(ALL_RELEASE_FILES)" -u
 
 #### The releaseall target:
 ####   1) Creates the ACE kit.
