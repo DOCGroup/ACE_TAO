@@ -58,3 +58,19 @@ project (client) : ciao_client {
     client.cpp
   }
 }
+
+// Client for interacting with the Simple_Component_Server
+project (simple_client) : ciao_client {
+  libpaths += $(CIAO_ROOT)/tools/Simple_Component_Server
+  depends += hello_stub Simple_Server_Stbu
+  libpaths += $(CIAO_ROOT)/tools/Simple_Component_Server
+  libs += hello_stub CIAO_Simple_Server_Stub
+  exename = simple_client
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    simple_client.cpp
+  }
+}
