@@ -288,36 +288,27 @@ int ACE_QtReactor::remove_handler_i (ACE_HANDLE handle ,
   if ((this->read_notifier_.find (handle, 
                                   qsock_notifier) != -1))
     {
-      if (qsock_notifier != (*iter).int_id_)
-        {
-          this->read_notifier_.unbind (handle,
-                                       qsock_notifier);
-          delete qsock_notifier;
-        }
+      this->read_notifier_.unbind (handle,
+                                   qsock_notifier);
+      delete qsock_notifier;
     }
 
   iter = this->write_notifier_.end ();
   if ((this->write_notifier_.find (handle, 
                                    qsock_notifier) != -1))
     {
-      if (qsock_notifier != (*iter).int_id_)
-        {
-          this->write_notifier_.unbind (handle,
-                                        qsock_notifier);
-          delete qsock_notifier;
-        }
+      this->write_notifier_.unbind (handle,
+                                    qsock_notifier);
+      delete qsock_notifier;
     }
 
   iter = this->exception_notifier_.end ();
   if ((this->exception_notifier_.find (handle, 
                                        qsock_notifier) != -1))
     {
-      if (qsock_notifier != (*iter).int_id_)
-        {
-          this->exception_notifier_.unbind (handle,
-                                            qsock_notifier);
-          delete qsock_notifier;
-        }
+      this->exception_notifier_.unbind (handle,
+                                        qsock_notifier);
+      delete qsock_notifier;
     }
   
   // Now let the reactor do its work.
