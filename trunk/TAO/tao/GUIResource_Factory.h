@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   GUI_Resource_Factory.h
+ *  @file   GUIResource_Factory.h
  *
  *  $Id$
  *

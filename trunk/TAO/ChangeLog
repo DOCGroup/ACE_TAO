@@ -1,3 +1,7 @@
+Sun Jan 23 13:17:29 2005  Marek Brudka  <mbrudka@aster.pl>
+
+        * tao/Strategies/advanced_resource.h (Module):
+	Removed unecessarty commma.
 
 Sun Jan 23 12:38:45 2005  Marek Brudka  <mbrudka@aster.pl>
 
