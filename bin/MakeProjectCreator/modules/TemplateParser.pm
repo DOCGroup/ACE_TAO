@@ -385,6 +385,8 @@ sub process_foreach {
         $$scope{'forlast'}    = 1;
         $$scope{'fornotlast'} = 0;
       }
+      $$scope{'forcount'} = $i + 1;
+
       ## We don't use adjust_value here because these names
       ## are generated from a foreach and should not be adjusted.
       $$scope{$name} = $value;
