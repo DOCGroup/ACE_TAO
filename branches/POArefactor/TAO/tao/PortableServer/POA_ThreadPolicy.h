@@ -6,9 +6,6 @@
  *
  *  $Id$
  *
- *
- *
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -20,6 +17,8 @@
 #include "portableserver_export.h"
 #include "ThreadPolicyC.h"
 #include "tao/LocalObject.h"
+#include "ace/Service_Object.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,36 +35,34 @@
 
 namespace TAO
 {
-  class Thread_Policy_Value : public virtual ACE_Service_Object
+  class TAO_PortableServer_Export Thread_Policy_Value : public virtual ACE_Service_Object
   {
-    PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    public:
+      virtual PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   };
 
 
-  class ORB_CTRL_MODEL_Policy : public Thread_Policy_Value
+  class TAO_PortableServer_Export ORB_CTRL_Thread_Policy : public Thread_Policy_Value
   {
-    PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    public:
+      virtual PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
   };
 
+  class TAO_PortableServer_Export SINGLE_THREAD_Thread_Policy : public Thread_Policy_Value
+  {
+    public:
+      virtual PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+  };
 
   class TAO_PortableServer_Export POA_ThreadPolicy :
     public virtual PortableServer::ThreadPolicy,
     public virtual CORBA::LocalObject
-    {
+  {
     public:
-      POA_ThreadPolicy (PortableServer::ThreadPolicyValue v)
-      {
-        if (v == ORB_CTRL_MODEL)
-          {
-            this->value_ =
-              ACE_Dynamic_Service<ORB_CTRL_MODEL_Policy>::instance ();
-          }
-          else if (// for other stuff)
-          {
-          }
-      }
+      POA_ThreadPolicy (PortableServer::ThreadPolicyValue value);
 
       CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
@@ -73,20 +70,16 @@ namespace TAO
       void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      PortableServer::ThreadPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-     // todo
      private:
        Thread_Policy_Value *value_;
-    };
+  };
+
+  ACE_STATIC_SVC_DECLARE (ORB_CTRL_Thread_Policy)
+  ACE_FACTORY_DECLARE (TAO_PortableServer, ORB_CTRL_Thread_Policy)
 }
-
-
-// Define SVC configurator stuff for ORB_CTRL_MODEL_Policy so that we
-//can only one instance of ORB_CTRL_MODEL_Policy. Theoretically it is a
-//*const class* just shared among multiple instances of
-//POA_ThreadID_Policy.
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
@@ -94,5 +87,4 @@ namespace TAO
 
 #include /**/ "ace/post.h"
 #endif /* TAO_POA_THREADPOLICY_H */
-
 

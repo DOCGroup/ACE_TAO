@@ -1,3 +1,8 @@
+Tue Sep 14 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_ThreadPolicy.{cpp,h}:
+          Intermediate commit, not finished yet.
+
 Tue Sep 14 12:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ORT_Adapter_Factory.h:
