@@ -1,3 +1,11 @@
+Tue Mar 08 08:53:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp (make_connection): 
+
+ 	  Fixed a compile error due to the changes in 
+
+	  Mon Mar 07 16:37:25 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
 Tue Mar 08 08:49:12 IST 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp (make_connection): 
