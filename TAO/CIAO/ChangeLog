@@ -1,3 +1,15 @@
+Fri Jun 11 18:58:04 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Utils.h:
+        * DnC/Config_Handlers/Utils.cpp:
+
+          Last ChangeLog:
+
+          Fri Jun 11 17:31:04 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+          Reverted the changes back to an earlier version since parse_href_tags
+          is used by other classes, and last change caused compilation error.
+
 Fri Jun 11 17:31:04 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Utils.h:
