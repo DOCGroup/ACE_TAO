@@ -169,7 +169,7 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
         {
           // Resolve the name using the stringified form of the name
           factory_object =
-            this->naming_context_->resolve_str (str_name.in (), 
+            this->naming_context_->resolve_str (str_name.in (),
                                                 ACE_TRY_ENV);
           ACE_TRY_CHECK_EX (InnerBlock);
         }
@@ -214,7 +214,7 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
       // the LocateReply or LOCATION_FORWARD reply by an agent listening
       // at that address
       //
-      CORBA::String_var address = "myhost.555xyz.com:9999";
+      CORBA::String_var address = CORBA::string_dup ("myhost.555xyz.com:9999");
 
       // Since we are just testing the functionality of the to_url
       // function, use a random object name.
