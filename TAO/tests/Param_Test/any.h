@@ -33,6 +33,17 @@ public:
   ~Test_Any (void);
   // dtor
 
+  enum
+  {
+    ANY_SHORT = 0,
+    ANY_STRING,
+    ANY_OBJREF,
+    ANY_ARRAY,
+    ANY_BD_SHORT_SEQ,
+    ANY_STRUCT,
+    ANY_LAST_TEST_ITEM
+  };
+
   int run_sii_test (Param_Test_ptr objref,
                     CORBA::Environment &env);
   // run the SII test
@@ -64,6 +75,12 @@ public:
 private:
   char *opname_;
   // operation name
+
+  Coffee_var cobj_;
+  // Coffee object used to test Any with object.
+
+  static size_t counter;
+  // test counter.
 
   CORBA::Any in_;
   // in parameter
