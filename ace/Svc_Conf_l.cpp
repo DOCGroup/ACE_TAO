@@ -923,12 +923,12 @@ case ACE_YY_STATE_EOF(PARAMETERS):
 case ACE_YY_STATE_EOF(NORMAL):
 #line 89 "Svc_Conf.l"
 { ACE_YY_NEW_FILE; ace_yyterminate(); }
-	ACE_YY_BREAK
+//	ACE_YY_BREAK
 case 25:
 ACE_YY_RULE_SETUP
 #line 90 "Svc_Conf.l"
 ACE_SVC_CONF_ECHO;
-//	ACE_YY_BREAK
+	ACE_YY_BREAK
 
 	case ACE_YY_END_OF_BUFFER:
 		{

@@ -11029,14 +11029,13 @@ ACE_OS::mkdir (const char *path, mode_t mode)
 
   phile_path = (char *)ACE_OS::malloc(strlen(path));
   if (phile_path == 0)
-  {
-     ACE_OS::printf ("malloc in make_dir failed: [%X]\n", errno);
-     return -1;
-  }
+    {
+      ACE_OS::printf ("malloc in make_dir failed: [%X]\n",
+                      errno);
+      return -1;
+    }
   else
-  {
-     ACE_OS::strcpy (phile_path, path);
-  }
+    ACE_OS::strcpy (phile_path, path);
 
   location = ACE_OS::strlen(phile_path);
   if(phile_path[location-1] == '/')
