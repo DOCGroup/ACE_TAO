@@ -94,9 +94,9 @@ typedef String ACE_IOStream_String;
 
 #if defined (ACE_HAS_STRING_CLASS)
 
-#if defined (__alpha)
+#if defined (DIGITAL_UNIX) && defined (DEC_CXX)
 #include <stl_macros>
-#endif /* __alpha */
+#endif /* DIGITAL_UNIX && DEC_CXX */
 
 class QuotedString : public ACE_IOStream_String
 {

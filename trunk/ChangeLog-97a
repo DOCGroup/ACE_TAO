@@ -1,4 +1,7 @@
-Fri May  9 01:02:29 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+Fri May  9 07:32:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/IOStream.h: Replaced __alpha with DIGITAL_UNIX && DEC_CXX.
+	  Thanks to Thilo for reporting this.
 
 	* build/gcc/tests/Simple_Message_Block_Test.cpp (main): Changed
  	  the use of ACE_Mutex to ACE_SYNCH_MUTEX so that everything will
