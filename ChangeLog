@@ -1,3 +1,20 @@
+Thu Apr 22 22:22:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/clone.cpp:
+
+	  Replaced "ace/OS.h" include with lighterweight "ace/OS_NS_*.h"
+	  includes.  Fixes a "fuzz" error.
+
+Thu Apr 22 20:54:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/SSL/SSL_Asynch_Stream.h:
+	* ace/SSL/SSL_Context.cpp:
+	* ace/SSL/SSL_Context.h:
+	* ace/SSL/SSL_SOCK_Stream.i:
+
+	  Updated included headers as necessary due to removal of
+	  "ace/Synch.h" #include.
+
 Thu Apr 22 20:01:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ATM_Addr.cpp:
