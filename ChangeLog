@@ -1,3 +1,10 @@
+Fri Jan 23 07:20:02 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          Changed wxwindows to wxWindows to match the changes put in by
+          Scott Harris.
+
 Fri Jan 23 13:06:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-tru64.h:
@@ -66,61 +73,61 @@ Fri Jan 23 07:38:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan 22 19:57:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Makefile.am (install-data-local):
+        * ace/Makefile.am (install-data-local):
 
-	  Fixed problem that occurred when performing a "make install".
-	  The "os_include" source and installation directories were not
-	  properly referenced.
+          Fixed problem that occurred when performing a "make install".
+          The "os_include" source and installation directories were not
+          properly referenced.
 
 Thu Jan 22 18:11:00 2004  Gary Maxey <gary.maxey@hp.com>
 
-	* ace/os_include/os_pthread.h
+        * ace/os_include/os_pthread.h
 
-	  Fix for BUGID 1707
+          Fix for BUGID 1707
 
-	  Added #ifdef so correct pthreads include file is used when
-	  compiling for Tandem NSK platform.
+          Added #ifdef so correct pthreads include file is used when
+          compiling for Tandem NSK platform.
 
 Thu Jan 22 17:48:56 2004  Gary Maxey <gary.maxey@hp.com>
 
-	* ace/config-tandem-nsk-mips-v2.h
+        * ace/config-tandem-nsk-mips-v2.h
 
-	  Added missing #endif to end of file
+          Added missing #endif to end of file
 
 Thu Jan 22 19:08:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_sys_stat.inl (mkdir):
+        * ace/OS_NS_sys_stat.inl (mkdir):
 
-	  ACE_OS::mkdir for OS PSOS wrote one character behind allocated
-	  memory. Fixed it by adding an extra byte for allocation. Thanks
-	  to Dieter Knueppel <dknueppel@datus.com> for reporting the
-	  problem and suggesting a fix.
+          ACE_OS::mkdir for OS PSOS wrote one character behind allocated
+          memory. Fixed it by adding an extra byte for allocation. Thanks
+          to Dieter Knueppel <dknueppel@datus.com> for reporting the
+          problem and suggesting a fix.
 
 Thu Jan 22 19:00:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/os_include/os_signal.h:
+        * ace/os_include/os_signal.h:
 
           This patch fixes redeclaration of pthread_sigmask
-	  function which showe up RH 9 systems with glibc
-	  2.3. pthread_sigmask declaration is now protected by a guard
-	  which will be defined in the platform configuration file. Thanks
-	  to Olli Savia for providing the patch.
+          function which showe up RH 9 systems with glibc
+          2.3. pthread_sigmask declaration is now protected by a guard
+          which will be defined in the platform configuration file. Thanks
+          to Olli Savia for providing the patch.
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  A fix similar to this fix "Wed Jan 21 13:38:11 UTC 2004  Johnny
-	  Willemsen  <jwillemsen@remedy.nl>", but added
-	  ACE_HAS_PTHREAD_SIGMASK_PROTO within the block for glib 2.3.
+          A fix similar to this fix "Wed Jan 21 13:38:11 UTC 2004  Johnny
+          Willemsen  <jwillemsen@remedy.nl>", but added
+          ACE_HAS_PTHREAD_SIGMASK_PROTO within the block for glib 2.3.
 
 Thu Jan 22 19:02:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/ThreadPools/Task_ThreadPool.cpp: Use 0, not NULL, to
-	  initialize a pointer.
+        * examples/APG/ThreadPools/Task_ThreadPool.cpp: Use 0, not NULL, to
+          initialize a pointer.
 
 Thu Jan 22 18:08:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/ThreadPools/ThreadPool.cpp: Don't ACE_ASSERT action
-	  that needs to be performed regardless of the ACE_NDEBUG setting.
+        * examples/APG/ThreadPools/ThreadPool.cpp: Don't ACE_ASSERT action
+          that needs to be performed regardless of the ACE_NDEBUG setting.
 
 Thu Jan 22 13:25:49 2004  Chad Elliott  <elliott_c@ociweb.com>
 
