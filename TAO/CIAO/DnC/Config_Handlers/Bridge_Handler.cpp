@@ -10,6 +10,7 @@
 #include "Node_Handler.h"
 #include "IC_handler.h"
 #include "SR_handler.h"
+#include "Resource_handler.h"
 #include "Bridge_handler.h"
 
 #include <iostream>
