@@ -170,7 +170,7 @@ void
 CORBA_ORB::create_list (CORBA_Long count,
                         CORBA_NVList_ptr &retval)
 {
-  assert (count <= UINT_MAX);
+  assert (CORBA_ULong(count) <= UINT_MAX);
 
   retval = new CORBA_NVList;
 
