@@ -129,7 +129,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
       if (be_global->gen_thru_poa_collocation ())
         {
           os << "get_ret_arg< ";
-          
+
           this->gen_arg_template_param_name (node,
                                              node->return_type (),
                                              &os);
@@ -255,7 +255,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
             }
 
           os << "_arg< ";
-          
+
           this->gen_arg_template_param_name (arg,
                                              arg->field_type (),
                                              &os);
@@ -273,12 +273,28 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
                                              arg->field_type (),
                                              &os);
 
-          os << ">::ret_val *> (this->args_[" << index << "])->arg ();"
+          os << ">::";
+
+          switch (arg->direction ())
+            {
+            case AST_Argument::dir_IN:
+              os << "in";
+              break;
+            case AST_Argument::dir_INOUT:
+              os << "inout";
+              break;
+            case AST_Argument::dir_OUT:
+              os << "out";
+            default:
+              break;
+            }
+
+          os << "_arg_val *> (this->args_[" << index << "])->arg ();"
              << be_nl;
         }
 
       os << be_uidt_nl;
-      
+
     }
 
 

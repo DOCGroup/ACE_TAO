@@ -173,7 +173,7 @@ int be_visitor_root::visit_root (be_root *node)
                   << "skel_args[i])->arg ();" << be_uidt << be_uidt
                   << be_uidt << be_uidt_nl
                   << "}" << be_nl << be_nl;
-                
+
               // OUT argument selection function template
               *os << "template<typename T>" << be_nl
                   << "typename TAO::SArg_Traits<T>::out_arg_type" << be_nl
