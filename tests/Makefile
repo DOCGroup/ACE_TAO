@@ -137,8 +137,12 @@ ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
   endif
 endif
 
+ifeq ($(rmcast),1)
+  DIRS += RMCast
+endif
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
 ifdef purify

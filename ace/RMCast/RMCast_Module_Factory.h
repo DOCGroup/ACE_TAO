@@ -27,19 +27,40 @@
 class ACE_RMCast_Module;
 class ACE_RMCast_IO_UDP;
 
+//! Create Module stacks
+/*!
+ * Different application will probably require different
+ * configurations in their Module stack, some will just want best
+ * effort semantics.  Others will use Reliable communication with a
+ * maximum retransmission time.  Furthermore, applications may want to
+ * receive messages in send order, or just as soon as they are
+ * received.
+ * Obviously most applications will want to change want happens once a
+ * message is completely received.
+ *
+ * To achieve all this flexibility the IO layer uses this factory to
+ * create the full stack of Modules corresponding to a single
+ * consumer.
+ * To keep the complexity under control the intention is to create
+ * helper Factories, such as Reliable_Module_Factory where
+ * applications only need to customize a few features.
+ */
 class ACE_RMCast_Export ACE_RMCast_Module_Factory
 {
-  // = DESCRIPTION
-  //
 public:
+  //! Destructor
   virtual ~ACE_RMCast_Module_Factory (void);
-  // Destructor
 
+  //! Create a new proxy
   virtual ACE_RMCast_Module *create (ACE_RMCast_IO_UDP *) = 0;
-  // Create a new proxy
 
+  //! Destroy a proxy
+  /*!
+   * Some factories may allocate modules from a pool, or return the
+   * same module for all proxies.  Consequently, only the factory
+   * knows how to destroy them.
+   */
   virtual void destroy (ACE_RMCast_Module *) = 0;
-  // Destroy a proxy
 };
 
 #if defined (__ACE_INLINE__)

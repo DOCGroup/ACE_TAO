@@ -28,41 +28,59 @@
 
 class ACE_RMCast_Proxy;
 
+//! Track peer membership
+/*!
+ * Reliable senders of events need to know exactly how many peers are
+ * receiving the events, and how many events has each peer received so
+ * far.
+ * This class uses the Join, Leave and Ack messages to build that
+ * information, it also summarizes the Ack events and propagate only
+ * the global info to the upper layer.
+ */
 class ACE_RMCast_Export ACE_RMCast_Membership : public ACE_RMCast_Module
 {
-  // = TITLE
-  //     Track Receiver membership
-  //
-  // = DESCRIPTION
-  //     Define the interface for all reliable multicast membership
 public:
-  // = Initialization and termination methods.
+  //! Constructor
   ACE_RMCast_Membership (void);
-  // Constructor
 
+  //! Destructor
   virtual ~ACE_RMCast_Membership (void);
-  // Destructor
 
-  // = The RMCast_Module methods
+  //! Receive an process an Ack message
+  /*!
+   * After receiving the Ack message we find out what is the lowest
+   * sequence number received in order among all the acks received by
+   * the proxies in the collection. We also find out what is the
+   * highest sequence number received by any proxy.
+   * We only propagate that information back to the upper layer, and
+   * then only if there are any news since the last Ack.
+   */
   virtual int ack (ACE_RMCast::Ack &);
+
+  //! Add a new member to the collection, using the <source> field in
+  //! the Join message
   virtual int join (ACE_RMCast::Join &);
+
+  //! Remove a member from the collection, using the <source> field in
+  //! the Join message
   virtual int leave (ACE_RMCast::Leave &);
 
 protected:
+  //! Use an unbounded set to maintain the collection of proxies.
   typedef ACE_Unbounded_Set<ACE_RMCast_Proxy*> Proxy_Collection;
   typedef ACE_Unbounded_Set_Iterator<ACE_RMCast_Proxy*> Proxy_Iterator;
 
+  //! The collection of proxies
   Proxy_Collection proxies_;
-  // The membership buffer
 
-  ACE_UINT32 highest_in_sequence_;
-  // The smallest value of <highest_in_sequence> for all the proxies
+  //! The smallest value of \param next_expected for all the proxies
+  ACE_UINT32 next_expected_;
 
+  //! The highest value of \param highest_received for all the proxies
   ACE_UINT32 highest_received_;
-  // The highest value of <highest_received> for all the proxies
 
+  //! Synchronization
   ACE_SYNCH_MUTEX mutex_;
-  // Synchronization
 };
 
 #if defined (__ACE_INLINE__)

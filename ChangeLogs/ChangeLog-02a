@@ -1,13 +1,68 @@
+Mon Oct  2 11:29:47 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/RMCast_Retransmission.h:
+        * ace/RMCast/RMCast_Retransmission.cpp:
+          Fixed several minor problems in the Retransmission module.
+          Use Copy_On_Write dispatching for synchronization of the
+          internal message buffer.
+
+        * ace/RMCast/RMCast_Copy_On_Write.h:
+        * ace/RMCast/RMCast_Copy_On_Write.i:
+        * ace/RMCast/RMCast_Copy_On_Write.cpp:
+          Implement Copy_On_Write semantics for a collection like the
+          retransmission buffer.  This is based on the ESF_Copy_On_Write
+          strategy developed for the event channel.
+          We should try to refactor this one in a reusable strategy.
+
+        * ace/RMCast/RMCast_Worker.h:
+        * ace/RMCast/RMCast_Worker.i:
+        * ace/RMCast/RMCast_Worker.cpp:
+          To implement copy-on-write we need the "alternative" form of
+          iterators.
+
+        * ace/RMCast/RMCast.h:
+        * ace/RMCast/RMCast_Fragment.h:
+        * ace/RMCast/RMCast_IO_UDP.h:
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_Membership.h:
+        * ace/RMCast/RMCast_Membership.i:
+        * ace/RMCast/RMCast_Membership.cpp:
+        * ace/RMCast/RMCast_Module.h:
+        * ace/RMCast/RMCast_Module_Factory.h:
+        * ace/RMCast/RMCast_Partial_Message.h:
+        * ace/RMCast/RMCast_Proxy.h:
+        * ace/RMCast/RMCast_Proxy.i:
+        * ace/RMCast/RMCast_Proxy.cpp:
+        * ace/RMCast/RMCast_UDP_Event_Handler.h:
+        * ace/RMCast/RMCast_UDP_Proxy.cpp:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+          Made the comments more doxygen friendly.
+          Renamed the highest_in_sequence field to next_expected, the new
+          name really reflects its semantics, this is the next sequence
+          number that the peer is expecting.  All the previous numbers
+          have been either received or are simply assumed lost.
+
+        * tests/Makefile:
+          If the rmcast makefile flag is set to 1 we build the RMCast
+          subdirectory too.
+
+        * tests/RMCast/Makefile:
+        * tests/RMCast/RMCast_Tests.dsw:
+        * tests/RMCast/RMCast_Retransmission_Test.dsp:
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+          New test for the Retransmission module
+
+
 Sun Oct 01 15:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/auto_run_tests.pl:
 
           Added support for a sandbox program that can shutdown a test
-          if it hangs.  
+          if it hangs.
 
 Fri Sep 29 16:32:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * bin/msvc_auto_compile.pl: 
+        * bin/msvc_auto_compile.pl:
 
           Added the BE and FE projects for TAO_IDL so the static version
           gets built correctly in auto_compiles.
@@ -24,123 +79,123 @@ Fri Sep 29 16:17:34 2000  Steve Huston  <shuston@riverace.com>
 
 Thu Sep 28 22:06:44 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Connector.h:
-	* ace/SSL/SSL_SOCK_Connector.cpp (ACE_SSL_SOCK_Connector,
-	  shared_connect_start, shared_connect_finish, connect, complete):
+        * ace/SSL/SSL_SOCK_Connector.h:
+        * ace/SSL/SSL_SOCK_Connector.cpp (ACE_SSL_SOCK_Connector,
+          shared_connect_start, shared_connect_finish, connect, complete):
 
-	  Made ACE_Time_Value arguments const to match the changes
-	  detailed in:
+          Made ACE_Time_Value arguments const to match the changes
+          detailed in:
 
-	  Thu Sep 28 15:02:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+          Thu Sep 28 15:02:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Fri Sep 29 00:23:59 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Log_Msg.h (ACE_RETURN): Fixed minor error.
+        * ace/Log_Msg.h (ACE_RETURN): Fixed minor error.
 
 Thu Sep 28 22:13:04 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Log_Msg: Macros are evil! All the ACE debugging macros were
-	  evaluating the user arguments twice, once in
-	  log_priority_enabled() and the other in log().  The problem was
-	  that set() was making a deep copy of the filename.  Hence, this
-	  change:
+        * ace/Log_Msg: Macros are evil! All the ACE debugging macros were
+          evaluating the user arguments twice, once in
+          log_priority_enabled() and the other in log().  The problem was
+          that set() was making a deep copy of the filename.  Hence, this
+          change:
 
-	  Wed May 3 11:43:05 2000 Douglas C. Schmidt <schmidt@ace.cs.wustl.edu>
+          Wed May 3 11:43:05 2000 Douglas C. Schmidt <schmidt@ace.cs.wustl.edu>
 
-	  was made to prevent the deep copy which was unnecessary when the
-	  message was not actually logged.  However, this resulted in the
-	  macro evaluating the user arguments twice.  Previously, a
-	  statement like this:
+          was made to prevent the deep copy which was unnecessary when the
+          message was not actually logged.  However, this resulted in the
+          macro evaluating the user arguments twice.  Previously, a
+          statement like this:
 
           ACE_DEBUG ((LM_DEBUG,
                       "timeout occured, iterations left %d\n",
                       --iterations));
 
-	  <iterations> got reduced by one - now it got reduced by two ;-)
+          <iterations> got reduced by one - now it got reduced by two ;-)
 
-	  The solution was to make a shallow copy of the filename in
-	  conditional_set().  Then in log(), if the log priority is
-	  correct, make a deep copy and then continue will log().  The
-	  macros were changed to call conditional_set() instead of set().
+          The solution was to make a shallow copy of the filename in
+          conditional_set().  Then in log(), if the log priority is
+          correct, make a deep copy and then continue will log().  The
+          macros were changed to call conditional_set() instead of set().
 
-	  Also, changed ACE_RETURN to specify all the parameters,
-	  including <restart>, <callback>, and <stream>.  Otherwise, the
-	  default parameters of set() will end up losing these parameters
-	  set by the user.
+          Also, changed ACE_RETURN to specify all the parameters,
+          including <restart>, <callback>, and <stream>.  Otherwise, the
+          default parameters of set() will end up losing these parameters
+          set by the user.
 
 Thu Sep 28 15:49:00 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Stream.h (class ACE_Stream): Updated the documentation to clarify
-	  that the ACE_Time_Value's are *absolute* time.  Thanks to Pedro
- 	  for reporting this.  Thanks to Pedro Brandao
- 	  <pbrandao@inescn.pt> for reporting this.
+        * ace/Stream.h (class ACE_Stream): Updated the documentation to clarify
+          that the ACE_Time_Value's are *absolute* time.  Thanks to Pedro
+          for reporting this.  Thanks to Pedro Brandao
+          <pbrandao@inescn.pt> for reporting this.
 
 Thu Sep 28 15:02:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/SOCK_Connector.cpp: ACE_Time_Value args to
-	  ACE_SOCK_Connector could be const.  Had to patch functions in
-	  the following files to make it happen:
+        * ace/SOCK_Connector.cpp: ACE_Time_Value args to
+          ACE_SOCK_Connector could be const.  Had to patch functions in
+          the following files to make it happen:
 
-	  ACE.cpp
-	  ACE.h	  
-	  OS.h
-	  OS.i
-	  SOCK_Connector.cpp
-	  SOCK_Connector.h
+          ACE.cpp
+          ACE.h
+          OS.h
+          OS.i
+          SOCK_Connector.cpp
+          SOCK_Connector.h
 
-	  Thanks to Steve Huston <shuston@riverace.com> for reporting
-	  this.  This also fixes bug 673.
+          Thanks to Steve Huston <shuston@riverace.com> for reporting
+          this.  This also fixes bug 673.
 
 Thu Sep 28 11:14:29 2000  Martin Stack <mstack@cambertx.com>
 
-	* ace/config-freebsd.h:
-	* ace/config-freebsd-pthread.h:
-	* ace/config-linux-common.h:
-	* ace/config-irix6.x-common.h: Added/Renamed to
-	  ACE_USES_NEW_TERMIOS_STRUCT.
+        * ace/config-freebsd.h:
+        * ace/config-freebsd-pthread.h:
+        * ace/config-linux-common.h:
+        * ace/config-irix6.x-common.h: Added/Renamed to
+          ACE_USES_NEW_TERMIOS_STRUCT.
 
-	* ace/TTY_IO.h:
-	* ace/TTY_IO.cpp: The Win32 section was modified to implement a
-	  non-blocking read when read-timeout=0 is set.  Also, it was
-	  modified to ensure proper operations when a read_timeout is
-	  required.
+        * ace/TTY_IO.h:
+        * ace/TTY_IO.cpp: The Win32 section was modified to implement a
+          non-blocking read when read-timeout=0 is set.  Also, it was
+          modified to ensure proper operations when a read_timeout is
+          required.
 
-	  Code was added to enable the DTR line on both Win32 and unix
-	  platforms when the port is opened.
+          Code was added to enable the DTR line on both Win32 and unix
+          platforms when the port is opened.
 
-	  Several new flags where added to give proper access to the
-	  serial device.
+          Several new flags where added to give proper access to the
+          serial device.
 
-	  Relabled macro "ACE_USES_OLD_TERMIOS_STRUCT" to
-	  "ACE_USES_NEW_TERMIOS_STRUCT" to properly indicate its purpose.
+          Relabled macro "ACE_USES_OLD_TERMIOS_STRUCT" to
+          "ACE_USES_NEW_TERMIOS_STRUCT" to properly indicate its purpose.
 
 Thu Sep 28 09:01:19 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-g++-common.h:
+        * ace/config-g++-common.h:
 
-	  Reverted my g++ 2.95 updates.  They work on all platforms but
-	  the cross-compiler used for VxWorks.
+          Reverted my g++ 2.95 updates.  They work on all platforms but
+          the cross-compiler used for VxWorks.
 
 Wed Sep 27 16:17:36 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/IOStream.h:
-	* ace/IOStream_T.h:
+        * ace/IOStream.h:
+        * ace/IOStream_T.h:
 
-	  Moved inclusion of `ace/INET_Addr.h' and `ace/Handle_Set.h' to
-	  `IOStream_T.h'.  They weren't needed in `IOStream.h'.
+          Moved inclusion of `ace/INET_Addr.h' and `ace/Handle_Set.h' to
+          `IOStream_T.h'.  They weren't needed in `IOStream.h'.
 
-	* ace/config-g++-common.h (ACE_LACKS_AUTO_PTR,
-	  ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES,
-	  ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS):
+        * ace/config-g++-common.h (ACE_LACKS_AUTO_PTR,
+          ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES,
+          ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS):
 
-	  G++ 2.95.x properly support the auto_ptr class, templates with
-	  static data members, and inlined template functions.
+          G++ 2.95.x properly support the auto_ptr class, templates with
+          static data members, and inlined template functions.
 
 Wed Sep 27 14:02:30 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Reactor/WFMO_Reactor/test_abandoned.cpp
-	  (handle_timeout): Moved <--this->iterations_> outside the DEBUG
-	  statement.
+        * examples/Reactor/WFMO_Reactor/test_abandoned.cpp
+          (handle_timeout): Moved <--this->iterations_> outside the DEBUG
+          statement.
 
 Wed Sep 27 08:46:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 

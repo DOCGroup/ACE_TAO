@@ -26,44 +26,72 @@
 #define ACE_RMCAST_DEFAULT_HOLE_COUNT 16
 #endif /* ACE_RMCAST_DEFAULT_HOLE_COUNT */
 
+//! Represent a partially received message in the
+//! ACE_RMCast_Reassembly module
+/*!
+ * This class provides temporary storage for the fragments as they are
+ * received in the ACE_RMCast_Reassembly module.  It also keeps track
+ * of what portions of the message are still missing.
+ */
 class ACE_RMCast_Export ACE_RMCast_Partial_Message
 {
 public:
+  //! Constructor, reserve enough memory for the complete message
   ACE_RMCast_Partial_Message (ACE_UINT32 message_size);
+
+  //! Destructor
   ~ACE_RMCast_Partial_Message (void);
 
+  //! Process a fragment
+  /*!
+   * A fragment starting at <offset> has been received, copy the
+   * fragment contents and update the list of holes.
+   */
   int fragment_received (ACE_UINT32 message_size,
                          ACE_UINT32 offset,
                          ACE_Message_Block *mb);
+
+  //! Return 1 if the message is complete
   int is_complete (void) const;
 
+  //! Return the body of the message, the memory is *not* owned by the
+  //! caller
   ACE_Message_Block *message_body (void);
-  // Return the body of the message, the memory is owned by the
-  // class.
 
 private:
+  //! Insert a new hole into the list
+  /*!
+   * The class keeps an array to represent the missing portions of the
+   * message.  This method inserts a new hole, i.e. a new element in
+   * the array at index <i>. The <start> and <end> arguments represent
+   * the offsets of the missing portion of the message.
+   */
   int insert_hole (size_t i,
                    ACE_UINT32 start,
                    ACE_UINT32 end);
-  // Insert a new hole into the list
 
+  //! Remove a hole from the list
   int remove_hole (size_t i);
-  // Remove a hole from the list
 
 private:
+  //! Maintain the message storage
   ACE_Message_Block message_body_;
-  // Used to rebuild the body of the message
 
+  //! Represent a missing portion of a message
   struct Hole
   {
+    //! Offset where the missing portion of the message starts
     ACE_UINT32 start;
+    //! Offset where the missing portion of the message ends
     ACE_UINT32 end;
   };
 
+  //! Implement a growing array of Hole structures
+  //@{
   Hole *hole_list_;
   size_t max_hole_count_;
   size_t hole_count_;
-  // The current list of holes in the message_body.
+  //@}
 };
 
 #if defined (__ACE_INLINE__)
