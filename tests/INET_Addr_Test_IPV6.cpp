@@ -2,7 +2,7 @@
 
 // ============================================================================
 /**
- * @file INET_Addr_Test_IPv6.cpp
+ * @file INET_Addr_Test_IPV6.cpp
  *
  * @brief  Additional tests on the ACE_INET_Addr class above and beyond
  * those found in INET_Addr_Test. These primarily focus on additional

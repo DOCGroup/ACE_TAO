@@ -1,3 +1,15 @@
+Sat Jan 17 19:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/C++NPv2/AC_CLD_export.h:
+	* examples/C++NPv2/AIO_CLD_export.h:
+	* examples/C++NPv2/CLD_export.h:
+	* examples/C++NPv2/SLD_export.h:
+	* examples/C++NPv2/SLDEX_export.h:
+	* examples/C++NPv2/TPCLS_export.h:
+	* examples/C++NPv2/TPLS_export.h:
+          Added check for ACE_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Sat Jan 17 19:19:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ASNMP/asnmp/ASNMP_Export.h:
