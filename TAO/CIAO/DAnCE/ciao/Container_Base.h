@@ -31,6 +31,7 @@
 namespace CIAO
 {
   class Servant_Activator;
+  class Dynamic_Component_Servant_Base;
 
   /**
    * @class Container
@@ -48,6 +49,8 @@ namespace CIAO
         Component,
         Facet_Consumer
       };
+
+    explicit Container (void);
 
     Container (CORBA::ORB_ptr o);
 
@@ -92,6 +95,16 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
+    virtual void add_servant_map (PortableServer::ObjectId &oid,
+                                  Dynamic_Component_Servant_Base* servant
+                                  ACE_ENV_ARG_DECL) = 0;
+
+    virtual void delete_servant_map (PortableServer::ObjectId &oid
+                                     ACE_ENV_ARG_DECL) = 0;
+
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   protected:
     CORBA::ORB_var orb_;
@@ -107,6 +120,7 @@ namespace CIAO
      * are distinct from the component.
      */
     PortableServer::POA_var facet_cons_poa_;
+    PortableServer::POA_var home_servant_poa_;
   };
 
   class Session_Container;
@@ -144,6 +158,8 @@ namespace CIAO
   class CIAO_SERVER_Export Session_Container : public Container
   {
   public:
+
+    explicit Session_Container (void);
 
     // @@ (OO) Does the static_config_flag really need to be an int?
     //         It appears to be a boolean value.  Please use bool
@@ -195,7 +211,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Install a servant for component or home.
-    CORBA::Object_ptr install_servant (PortableServer::Servant p,
+    virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
                                        Container::OA_Type t
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -207,7 +223,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Get an object reference to a component or home from the servant.
-    CORBA::Object_ptr get_objref (PortableServer::Servant p
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -221,6 +237,21 @@ namespace CIAO
     void uninstall (PortableServer::Servant svt,
                     Container::OA_Type t
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void add_servant_map (PortableServer::ObjectId &oid,
+                                  Dynamic_Component_Servant_Base* servant
+                                  ACE_ENV_ARG_DECL);
+
+    virtual void delete_servant_map (PortableServer::ObjectId &oid
+                                     ACE_ENV_ARG_DECL);
+
+    virtual void deactivate_facet (PortableServer::ObjectId &oid
+                                   ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Analog of the POA method that creates an object reference from

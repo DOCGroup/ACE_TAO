@@ -13,9 +13,14 @@ namespace CIAO
             typename CONTEXT>
   Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::Servant_Impl (
       EXEC * exe,
+      Components::CCMHome_ptr home,
+      Home_Servant_Impl_Base *home_servant,
       Session_Container * c
     )
-    : Servant_Impl_Base (c),
+    : Servant_Impl_Base (home, home_servant, c),
+      activated_ (0),
+      pre_activated_ (0),
+      post_activated_ (0),
       executor_ (EXEC::_duplicate (exe))
   {
   }
@@ -76,6 +81,7 @@ namespace CIAO
 
     return me->_is_equivalent (the_other.in ()
                                ACE_ENV_ARG_PARAMETER);
+
   }
 
   template <typename BASE_SKEL,
@@ -89,6 +95,25 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->context_->get_CCM_home (ACE_ENV_SINGLE_ARG_PARAMETER);
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename CONTEXT>
+  Components::SessionComponent_ptr
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_executor (
+      ACE_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ::Components::SessionComponent_var temp =
+      ::Components::SessionComponent::_narrow (
+          this->executor_.in ()
+          ACE_ENV_ARG_PARAMETER
+        );
+    ACE_CHECK;
+    return temp._retn ();
   }
 
   template <typename BASE_SKEL,
@@ -136,6 +161,29 @@ namespace CIAO
             typename EXEC_VAR,
             typename CONTEXT>
   void
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::activate_component (
+      ACE_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    if (this->is_activated () == 0)
+      {
+        this->ciao_preactivate (
+                ACE_ENV_SINGLE_ARG_PARAMETER);
+
+        this->ciao_activate (
+                ACE_ENV_SINGLE_ARG_PARAMETER);
+
+        this->ciao_postactivate (
+                ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename CONTEXT>
+  void
   Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::ciao_preactivate (
       ACE_ENV_SINGLE_ARG_DECL
     )
@@ -150,7 +198,11 @@ namespace CIAO
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
-        temp->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        if (this->pre_activated_ == 0)
+          {
+            this->pre_activated_ = 1;
+            temp->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          }
       }
   }
 
@@ -172,7 +224,11 @@ namespace CIAO
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
-        temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        if (this->activated_ == 0)
+          {
+            this->activated_ = 1;
+            temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          }
       }
   }
 
@@ -195,8 +251,25 @@ namespace CIAO
 
     if (! ::CORBA::is_nil (temp.in ()))
       {
-        temp->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        if (this->post_activated_ == 0)
+          {
+            this->post_activated_ = 1;
+            temp->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          }
       }
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename CONTEXT>
+  CORBA::Boolean
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::is_activated (
+      ACE_ENV_SINGLE_ARG_DECL
+    )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return this->pre_activated_;
   }
 
   template <typename BASE_SKEL,
@@ -209,6 +282,7 @@ namespace CIAO
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    // @@ Jai, could you please see why this is required?
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
           this->executor_.in ()
@@ -217,9 +291,7 @@ namespace CIAO
     ACE_CHECK;
 
     if (! ::CORBA::is_nil (temp.in ()))
-      {
-        temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      }
+      temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 }
 
