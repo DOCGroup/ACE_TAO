@@ -77,6 +77,10 @@ public:
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Perform appropriate closing.
 
+  virtual int handle_close_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  // Perform appropriate closing but without grabbing any locks.
+
   virtual int close (u_long flags = 0);
   // Object termination hook.
 
@@ -84,6 +88,9 @@ public:
   // Return the transport objects
 
 protected:
+  int handle_cleanup (void);
+  // This method deregisters the handler from the reactor and closes it.
+
   TAO_IIOP_Client_Transport transport_;
   // Reference to the transport object, it is owned by this class.
 

@@ -423,6 +423,35 @@ TAO_IIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
     this->recycler ()->mark_as_closed (this->recycling_act ());
 
   // Deregister this handler with the ACE_Reactor.
+  return this->handle_cleanup ();
+}
+
+int
+TAO_IIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
+                                                    ACE_Reactor_Mask rm)
+{
+  // @@ Alex: we need to figure out if the transport decides to close
+  //    us or something else.  If it is something else (for example
+  //    the cached connector trying to make room for other
+  //    connections) then we should let the transport know, so it can
+  //    in turn take appropiate action (such as sending exceptions to
+  //    all waiting reply handlers).
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG  ((LM_DEBUG,
+                 "TAO (%P|%t) IIOP_Client_Connection_Handler::"
+                 "handle_close_i (%d, %d)\n", handle, rm));
+
+  if (this->recycler ())
+    this->recycler ()->mark_as_closed_i (this->recycling_act ());
+
+  return this->handle_cleanup ();
+}
+
+int
+TAO_IIOP_Client_Connection_Handler::handle_cleanup (void)
+{
+  // Deregister this handler with the ACE_Reactor.
   if (this->reactor ())
     {
       ACE_Reactor_Mask mask =
@@ -439,7 +468,6 @@ TAO_IIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   return 0;
 }
-
 
 // ****************************************************************
 
