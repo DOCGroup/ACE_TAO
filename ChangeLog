@@ -1,3 +1,22 @@
+Fri Dec 26 18:22:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/all_in_one.GNU:
+          Test CLEANUP_BIN, etc., instead of BIN to determine whether or
+          not to include rules.bin.GNU, etc.  These file define the
+          CLEANUP_INSTALL variables needed to properly do a realclean.
+          This is needed because Makefiles might use BIN2 or BIN_UNCHECKED
+          instead of BIN, but still need to be cleaned up.
+
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+          Added '*' to end of lib name so that *all* versions of a lib are
+          cleaned up, not just the current one.
+
+        * include/makeinclude/rules.local.GNU:
+          No need to test to see if a variable is defined in order to
+          define it, just use ?= which only sets a variable if not yet
+          defined.
+
 Thu Dec 25 18:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ftorbutils.mpb:
