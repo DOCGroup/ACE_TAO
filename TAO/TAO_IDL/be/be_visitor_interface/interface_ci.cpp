@@ -105,6 +105,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << "template<>" << be_nl
+          << "ACE_INLINE" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Impl_T<" << node->name () << ">::to_object ("
           << be_idt <<  be_idt_nl
@@ -119,6 +120,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
         {
           *os << be_nl << be_nl
               << "template<>" << be_nl
+              << "ACE_INLINE" << be_nl
               << "CORBA::Boolean" << be_nl
               << "TAO::Any_Impl_T<" << node->name () 
               << ">::to_abstract_base ("
@@ -142,6 +144,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
         {
           *os << be_nl << be_nl
               << "template<>" << be_nl
+              << "ACE_INLINE" << be_nl
               << "CORBA::Boolean" << be_nl
               << "TAO::Any_Impl_T<" << node->name ()
               << ">::marshal_value (TAO_OutputCDR &)" << be_nl
@@ -151,6 +154,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
           *os << be_nl << be_nl
               << "template<>" << be_nl
+              << "ACE_INLINE" << be_nl
               << "CORBA::Boolean" << be_nl
               << "TAO::Any_Impl_T<" << node->name () 
               << ">::demarshal_value (TAO_InputCDR &)" << be_nl

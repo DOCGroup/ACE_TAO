@@ -710,6 +710,33 @@ RTCORBA::ThreadpoolPolicy::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ThreadpoolPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ThreadpoolPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<RTCORBA::ThreadpoolPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -963,6 +990,22 @@ ACE_INLINE ::RTCORBA::Protocol *
 RTCORBA::Protocol_out::operator-> (void)
 {
   return this->ptr_;
+}
+
+template<>
+ACE_INLINE 
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE 
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from 
@@ -1419,6 +1462,22 @@ RTCORBA::Protocol &
 RTCORBA::ProtocolList_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
 }
 
 #endif /* end #if !defined */

@@ -545,6 +545,14 @@ SOURCE=.\ImplRepoS_T.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImR_ActivatorC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImR_LocatorC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IORInfo.inl
 # End Source File
 # Begin Source File
