@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_ADD_Handler_H
 #include /**/ "ace/pre.h"
 
-#include "Base_Handler.h"
+
 #include "Config_Handlers_Export.h"
 #include "ace/config-lite.h"
 
