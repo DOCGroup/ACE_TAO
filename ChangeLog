@@ -1,3 +1,8 @@
+Fri Dec 19 13:29:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/C++NPv2/C++NPv2.mpc:
+          Use the new wfmo base project.
+
 Fri Dec 19 13:27:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/SCTP/Options_Manager.cpp:
