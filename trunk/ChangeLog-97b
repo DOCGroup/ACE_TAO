@@ -1,5 +1,21 @@
 Tue Sep  2 18:26:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Task: Revised the ACE_Task_Base::svc_run() method to
+ 	  register a thread exit hook (ACE_Task_Base::cleanup())
+
+	* ace/Task: Added a static method called cleanup() that can serve
+ 	  as a thread exit hook to ensure that close() is always called
+ 	  when a task exits a thread.
+
+	* ace/Thread_Manager: Added the first-cut implementation of the
+ 	  thread exit hooks.  This one is butt-simple -- just allowing a
+ 	  single hook per-thread, but that should be enough to get us over
+ 	  the hump...
+
+	* ace/OS.h: Moved the object_info_t type from Object_Manager.h and
+ 	  renamed it to ACE_Cleanup_Info since we will use it with the
+ 	  Thread_Manager and the Object_Manager.
+
 	* ChangeLog-97b: Emptied out the ChangeLog-97b file until
 	  we move the ChangeLog to this file...
 

@@ -121,12 +121,26 @@ ACE_Task_Base::activate (long flags,
 #endif /* ACE_MT_SAFE */
 }
 
+void
+ACE_Task_Base::cleanup (void *object, void *)
+{
+  ACE_Task_Base *t = (ACE_Task_Base *) object;
+  
+  // The thread count must be decremented first in case the <close>
+  // hook does something crazy like "delete this".
+  t->thr_count_dec ();
+  // @@ Is it possible to pass in the exit status somehow?
+  t->close ();
+}
+
 void *
 ACE_Task_Base::svc_run (void *args)
 {
   ACE_TRACE ("ACE_Task_Base::svc_run");
 
   ACE_Task_Base *t = (ACE_Task_Base *) args;
+
+  t->thr_mgr ()->at_exit (t, ACE_Task_Base::cleanup, 0);
 
   // Call the Task's svc() hook method.
   return (void *) t->svc ();

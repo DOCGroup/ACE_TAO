@@ -53,8 +53,20 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
-private:
+  int at_exit (void *object,
+	       ACE_CLEANUP_FUNC cleanup_hook,
+	       void *param);
+  // Register an object (or array) for cleanup at thread termination.
+  // "cleanup_hook" points to a (global, or static member) function
+  // that is called for the object or array when it to be destroyed.
+  // It may perform any necessary cleanup specific for that object or
+  // its class.  "param" is passed as the second parameter to the
+  // "cleanup_hook" function; the first parameter is the object (or
+  // array) to be destroyed.  Returns 0 on success, non-zero on
+  // failure: -1 if virtual memory is exhausted or 1 if the object (or
+  // arrayt) had already been registered.
 
+private:
   ACE_thread_t thr_id_;
   // Unique thread ID.
     
@@ -66,6 +78,11 @@ private:
 
   ACE_Thread_State thr_state_;
   // Current state of the thread.
+
+  ACE_Cleanup_Info cleanup_info_;
+  // Stores the cleanup info for a thread.  
+  // @@ Note, this should be generalized to be a stack of
+  // <ACE_Cleanup_Info>s.
 };
 
 // Forward declaration.
@@ -282,6 +299,18 @@ public:
   int set_grp (ACE_Task_Base *task, int grp_id);
   int get_grp (ACE_Task_Base *task, int &grp_id);
 
+  int at_exit (void *object,
+	       ACE_CLEANUP_FUNC cleanup_hook,
+	       void *param);
+  // Register an object (or array) for cleanup at thread termination.
+  // "cleanup_hook" points to a (global, or static member) function
+  // that is called for the object or array when it to be destroyed.
+  // It may perform any necessary cleanup specific for that object or
+  // its class.  "param" is passed as the second parameter to the
+  // "cleanup_hook" function; the first parameter is the object (or
+  // array) to be destroyed.  "cleanup_hook", for example, may delete
+  // the object (or array).
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -301,7 +330,9 @@ protected:
 		       ACE_Task_Base *task = 0);
   // Create a new thread (must be called with locks held).
 
-protected:
+  void run_thread_exit_hooks (int i);
+  // Run the registered hooks when the thread exits.
+
   int resize (size_t);
   // Resize the pool of Thread_Descriptors.
 

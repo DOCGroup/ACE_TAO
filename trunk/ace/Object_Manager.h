@@ -48,8 +48,6 @@ class ACE_Export ACE_Object_Manager
   //     is likely to change, without providing backward capability.
 {
 public:
-  typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
-
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
@@ -74,28 +72,14 @@ public:
 #endif /* 0 */
 
 private:
-  // typedef void (*ACE_CONSTRUCT_FUNC)(void *object, void *param);
-  // not currently used:
-
   static ACE_Object_Manager *instance_;
   // Singleton pointer.
 
-public:
-  // For template instantiation, with some compilers that need the
-  // struct definition to be public.
-  typedef struct object_info
-  {
-    void *object_;
-    ACE_CLEANUP_FUNC cleanup_hook_;
-    void *param_;
-  } object_info_t;
-
-private:
-
-  ACE_Unbounded_Queue<object_info_t> *registered_objects_;
+  ACE_Unbounded_Queue<ACE_Cleanup_Info> *registered_objects_;
   // Keeps track of all the registered objects.
 
-  int shutting_down_;           // Non-zero if this being destroyed
+  int shutting_down_; 
+  // Non-zero if this being destroyed
 
   static ACE_Object_Manager *instance (void);
   // Accessor to singleton instance.  Because static member functions
