@@ -1,3 +1,27 @@
+Fri Jul 23 02:02:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (_get_collocated_servant): The origianl
+	  implementation was somewhat broken in that it check the
+	  collocation strategy of the client ORB to determine whether an
+	  object is collocated or not.  However, the server ORB's
+	  collocation strategy should be the one that determine whether an
+	  object be considered collocated or not.  The revised
+	  implementation now check with the the client ORB first if the
+	  client ORB allows collocation.  If yes, regardless of the
+	  collocation table strategy, we check to see if the object
+	  resides in the same ORB or not.  If not, we then check the
+	  global collocation table which only contains information of ORBs
+	  that use global collocation table strategy.
+
+	  (key_to_object): This method should also respect the ORB's
+	  collocation strategy so we can generate the right stubs from POA
+	  if collocation optimization is turned off.
+
+Thu Jul 22 21:13:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object.cpp (_non_existent): This function can also enjoy the
+	  benefit of collocated object.
+
 Thu Jul 22 15:05:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Invocation.cpp:
@@ -6,7 +30,7 @@ Thu Jul 22 15:05:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Wait_Strategy.cpp:
 	  Improved loop conditions to cope with reactors that return 0
-	  even when there is no timeout. Thanks to Irfan for pointing this 
+	  even when there is no timeout. Thanks to Irfan for pointing this
 	  out.
 
 	* orbsvcs/tests/Event/lib/Makefile:
