@@ -68,7 +68,6 @@ struct TAO_Export CORBA_ServiceDetail
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE */
     };
 
-  typedef _tao_seq_Octet *_tao_seq_Octet_ptr;
   static CORBA::TypeCode_ptr _tc__tao_seq_Octet;
 #endif /* end #if !defined */
 

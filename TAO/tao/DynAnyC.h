@@ -194,7 +194,7 @@ public:
     // = TAO extension
     static CORBA::Exception *_alloc (void);
 
- }; // exception CORBA_DynAny::TypeMismatch
+  }; // exception CORBA_DynAny::TypeMismatch
 
     static CORBA::TypeCode_ptr _tc_TypeMismatch;
 

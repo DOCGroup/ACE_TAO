@@ -71,7 +71,7 @@ exception_occurred (CORBA::ULong request_id,
                     CORBA::Object_ptr objref,
                     const char *operation,
                     //IOP::ServiceContextList &,
-                    //CORBA::Exception_ptr &,
+                    //CORBA::Exception *&,
                     PortableInterceptor::Cookies &cookies,
                     CORBA::Environment &ACE_TRY_ENV)
 {
@@ -154,7 +154,7 @@ exception_occurred (CORBA::ULong request_id,
                     CORBA::Object_ptr objref,
                     const char *operation,
                     //IOP::ServiceContextList &,
-                    //CORBA::Exception_ptr &,
+                    //CORBA::Exception *&,
                     PortableInterceptor::Cookies &cookies,
                     CORBA::Environment &ACE_TRY_ENV)
 {

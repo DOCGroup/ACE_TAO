@@ -34,7 +34,6 @@ class TAO_Export TAO_ObjectKey : public TAO_Unbounded_Sequence<CORBA::Octet>
   //
 public:
   #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef TAO_ObjectKey_ptr _ptr_type;
     typedef TAO_ObjectKey_var _var_type;
   #endif /* __GNUC__ */
 

@@ -671,7 +671,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
             continue;
 
           // match
-          CORBA::Exception_ptr exception = excepts[i].alloc ();
+          CORBA::Exception *exception = excepts[i].alloc ();
 
           if (exception == 0)
             ACE_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,

@@ -169,15 +169,6 @@ TAO_NAMESPACE  TAO_IOP
 #endif /* end #if !defined */
 
 
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_NOTFOUND___PTR_CH_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION_NOTFOUND___PTR_CH_
-
-    class NotFound;
-    typedef NotFound *NotFound_ptr;
-
-#endif /* end #if !defined */
-
-
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_NOTFOUND_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_NOTFOUND_CH_
 

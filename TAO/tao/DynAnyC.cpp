@@ -1296,7 +1296,7 @@ CORBA_DynSequence::length (CORBA::ULong,
 {
 }
 
-CORBA_AnySeq_ptr
+CORBA_AnySeq *
 CORBA_DynSequence::get_elements (CORBA::Environment &)
 {
   return 0;
@@ -1398,7 +1398,7 @@ CORBA_DynArray_ptr CORBA_DynArray::_nil (void)
   return (CORBA_DynArray_ptr) NULL;
 } // end of _nil
 
-CORBA_AnySeq_ptr
+CORBA_AnySeq *
 CORBA_DynArray::get_elements (CORBA::Environment &)
 {
   return 0;

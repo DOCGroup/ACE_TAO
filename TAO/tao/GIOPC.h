@@ -80,13 +80,11 @@ TAO_NAMESPACE  GIOP
 
   struct IORAddressingInfo;
   class IORAddressingInfo_var;
-  typedef IORAddressingInfo* IORAddressingInfo_ptr;
 
   struct TAO_Export IORAddressingInfo
   {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef IORAddressingInfo_ptr _ptr_type;
     typedef IORAddressingInfo_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
     static void _tao_any_destructor (void*);
@@ -145,9 +143,8 @@ TAO_NAMESPACE  GIOP
 
   class TargetAddress;
   class TargetAddress_var;
-  typedef TargetAddress* TargetAddress_ptr;
-
-  class TAO_Export TargetAddress: public TAO_Base_Union
+  
+  class TAO_Export TargetAddress: public TAO_Base_Union 
   {
   public:
     TargetAddress (void); // default constructor
@@ -159,7 +156,6 @@ TAO_NAMESPACE  GIOP
     CORBA::Short _d (void) const;
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef TargetAddress_ptr _ptr_type;
     typedef TargetAddress_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
     static void _tao_any_destructor (void*);

@@ -217,7 +217,6 @@ class TAO_Export  CORBA_PolicyList : public TAO_Unbounded_Object_Sequence<CORBA_
 {
 public:
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_PolicyList_ptr _ptr_type;
   typedef CORBA_PolicyList_var _var_type;
 #endif /* __GNUC__ */
 
@@ -234,7 +233,6 @@ public:
 
   static void _tao_any_destructor (void*);
 };
-typedef CORBA_PolicyList *CORBA_PolicyList_ptr;
 
 // *************************************************************
 // class CORBA::PolicyList_var

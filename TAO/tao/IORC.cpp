@@ -173,11 +173,11 @@ TAO_IOP::TAO_IOR_Manipulation::NotFound::operator= (const TAO_IOP::TAO_IOR_Manip
 }
 
 // narrow
-TAO_IOP::TAO_IOR_Manipulation::NotFound_ptr
+TAO_IOP::TAO_IOR_Manipulation::NotFound *
 TAO_IOP::TAO_IOR_Manipulation::NotFound::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/NotFound:1.0", exc->_id ())) // same type
-    return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::NotFound_ptr, exc);
+    return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::NotFound *, exc);
   else
     return 0;
 }
