@@ -12226,7 +12226,7 @@ realclean:
   DomainC.h \
   WrongTransactionC.h \
   WrongTransactionC.i \
-  ObjectIDListC.h \
+  ObjectIdListC.h \
   StringSeqC.h \
   StringSeqC.i \
   PortableInterceptorC.h \
@@ -20047,7 +20047,7 @@ realclean:
   TimeBaseC.i \
   TAOC.i \
   Sync_Strategies.i Object_Loader.h \
-  Object_Loader.i ObjectIDListC.h Services_Activate.h Invocation.h CDR.h \
+  Object_Loader.i ObjectIdListC.h Services_Activate.h Invocation.h CDR.h \
   Synch_Reply_Dispatcher.h \
   Reply_Dispatcher.h \
   Condition.h \
@@ -24353,7 +24353,7 @@ realclean:
   ValueFactory.i \
   WrongTransactionC.h \
   WrongTransactionC.i \
-  ObjectIDListC.h \
+  ObjectIdListC.h \
   StringSeqC.h \
   StringSeqC.i \
   PortableInterceptorC.h \
