@@ -173,7 +173,7 @@ TCHAR this_exe[MAXPATHLEN];
       if (GetModuleFileName(0, this_exe, sizeof(this_exe)) == 0)
         return -1;
       exe_path = this_exe;
-    }	
+    }
 
   SC_HANDLE sc_mgr = OpenSCManager(0, 0, SC_MANAGER_ALL_ACCESS);
   if (sc_mgr == 0)
@@ -407,8 +407,8 @@ ACE_NT_Service::test_access (DWORD desired_access)
       CloseServiceHandle(sc_mgr);
       if (handle != 0)
         {
-	  status = 0;
-	  CloseServiceHandle (handle);
+          status = 0;
+          CloseServiceHandle (handle);
         }
     }
 
