@@ -1,3 +1,12 @@
+Tue Nov  2 12:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PS_ForwardC.h:
+        * tao/PortableServer/diffs/PS_Forward.diff:
+          Added TAO_DynamicImplementation forward declaration
+
+        * tao/orbsvcs/examples/ORT/Gateway_i.h:
+          Include PortableServer.h, not PortableServerC.h
+
 Mon Nov  1 19:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Request_Processing_Strategy.{h,cpp}:

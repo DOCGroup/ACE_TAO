@@ -73,6 +73,7 @@ class TAO_ServantBase_var;
 class TAO_RefCountServantBase;
 class TAO_Local_ServantBase;
 class TAO_POA;
+class TAO_DynamicImplementation;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
@@ -85,34 +86,35 @@ namespace PortableServer
    typedef ServantBase *Servant;
 
    typedef TAO_Local_ServantBase LocalServantBase;
-  
+   typedef TAO_DynamicImplementation DynamicImplementation;
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:435
-  
+
   typedef CORBA::OctetSeq ObjectId;
   typedef CORBA::OctetSeq_var ObjectId_var;
   typedef CORBA::OctetSeq_out ObjectId_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectId;
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:603
 
 #if !defined (_PORTABLESERVER_POA__VAR_OUT_CH_)
 #define _PORTABLESERVER_POA__VAR_OUT_CH_
-  
+
   class POA;
   typedef POA *POA_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         POA
       >
     POA_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         POA
@@ -135,7 +137,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_POA__TRAITS_CH_)
 #define _PORTABLESERVER_POA__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POA>
   {
