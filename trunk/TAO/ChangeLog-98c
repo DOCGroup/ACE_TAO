@@ -9,7 +9,7 @@ Fri Jan  1 18:11:07 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 Fri Jan 01 16:48:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp TAO_UTO): replaced cast
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): replaced cast
           with ACE_U64_TO_U32 macro invocation.
 
         * orbsvcs/orbsvcs/Event/Event_Channel.cpp: added
