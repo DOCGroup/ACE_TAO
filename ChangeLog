@@ -1,7 +1,7 @@
 Mon Nov 10 04:37:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:
-          Added mpb and mpt to the MPC files to check for $Id$.
+          Added mpb and mpt to the MPC files to check for Id.
 
         * ACEXML/apps/svcconf/svcconf.mpc:
         * ACEXML/common/common.mpc:
