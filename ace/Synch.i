@@ -527,5 +527,30 @@ ACE_Recursive_Thread_Mutex::set_thread_id (ACE_thread_t t)
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::set_thread_id");
   this->owner_id_ = t;
 }
+
+ACE_INLINE int
+ACE_Recursive_Thread_Mutex::acquire_read (void)
+{
+  return acquire ();
+}
+
+ACE_INLINE int
+ACE_Recursive_Thread_Mutex::acquire_write (void)
+{
+  return acquire ();
+}
+
+ACE_INLINE int
+ACE_Recursive_Thread_Mutex::tryacquire_read (void)
+{
+  return tryacquire ();
+}
+
+ACE_INLINE int
+ACE_Recursive_Thread_Mutex::tryacquire_write (void)
+{
+  return tryacquire ();
+}
+
 #endif /* ACE_HAS_THREADS */
 
