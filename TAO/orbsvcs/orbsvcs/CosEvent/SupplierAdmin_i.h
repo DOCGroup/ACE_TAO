@@ -43,7 +43,8 @@ public:
 
   int init (const RtecEventChannelAdmin::SupplierQOS &supplierqos,
             RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin);
-  // @@ Pradeep, please add comments.
+  // Initializes the SupplierAdmin.
+  // Returns 0 on success, -1 on error.
 
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
   obtain_push_consumer (CORBA::Environment &TAO_TRY_ENV);
@@ -57,11 +58,9 @@ private:
   RtecEventChannelAdmin::SupplierQOS qos_;
   // The SupplierQOS specified by the user of this class.
 
-  RtecEventChannelAdmin::SupplierAdmin_var rtec_supplieradmin_;
+  RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin_;
   // The RtecEventChannelAdmin::SupplierAdmin specified by the user of
   // this class.
 };
 
-// @@ Pradeep, please don't use // here, but use /* ... */ instead.
-// Please fix all uses of this in your code since it's not portable.
-#endif // _SUPPLIERADMIN_I_H
+#endif /* _SUPPLIERADMIN_I_H */

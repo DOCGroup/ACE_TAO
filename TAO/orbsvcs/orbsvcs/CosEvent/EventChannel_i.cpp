@@ -4,8 +4,8 @@
 EventChannel_i::EventChannel_i (void)
   : consumer_admin_ (),
     supplier_admin_ (),
-    consumeradmin_ (0),
-    supplieradmin_ (0)
+    consumeradmin_ (CosEventChannelAdmin::ConsumerAdmin::_nil ()),
+    supplieradmin_ (CosEventChannelAdmin::SupplierAdmin::_nil ())
 {
   // No-Op.
 }
@@ -21,14 +21,13 @@ EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
                       RtecEventChannelAdmin::EventChannel_ptr rtec,
                       CORBA::Environment &TAO_TRY_ENV)
 {
-  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin = 
+  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin =
     rtec->for_consumers (TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-  // @@ Pradeep, make sure to check the return value of this and
-  // handle failures correctly.
-  this->consumer_admin_.init (consumerqos,
-                              rtec_consumeradmin);
+  if (this->consumer_admin_.init (consumerqos,
+                                  rtec_consumeradmin) == -1)
+    return -1;
 
   this->consumeradmin_ = consumer_admin_._this (TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
@@ -37,10 +36,9 @@ EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
     rtec->for_suppliers (TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-  // @@ Pradeep, make sure to check the return value of this and
-  // handle failures correctly.
-  this->supplier_admin_.init (supplierqos,
-                              rtec_supplieradmin);
+  if (this->supplier_admin_.init (supplierqos,
+                              rtec_supplieradmin) == -1)
+    return -1;
 
   this->supplieradmin_ = supplier_admin_._this (TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);

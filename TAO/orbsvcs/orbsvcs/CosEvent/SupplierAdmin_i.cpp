@@ -4,14 +4,14 @@
 
 SupplierAdmin_i::SupplierAdmin_i (void)
   : qos_ (),
-    rtec_supplieradmin_ ()
+    rtec_supplieradmin_ (RtecEventChannelAdmin::SupplierAdmin::_nil ())
 {
   // No-Op.
 }
 
 SupplierAdmin_i::~SupplierAdmin_i (void)
 {
-  // No-Op.
+  CORBA::release (this->rtec_supplieradmin_);
 }
 
 int
@@ -27,18 +27,19 @@ SupplierAdmin_i::init (const RtecEventChannelAdmin::SupplierQOS &supplierqos,
 CosEventChannelAdmin::ProxyPushConsumer_ptr
 SupplierAdmin_i::obtain_push_consumer (CORBA::Environment &TAO_TRY_ENV)
 {
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr rtecproxypushconsumer =
+  RtecEventChannelAdmin::ProxyPushConsumer_var rtecproxypushconsumer =
     this->rtec_supplieradmin_->obtain_push_consumer (TAO_TRY_ENV);
   TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, 0);
 
-  ProxyPushConsumer_i *ppc =
-    // @@ Pradeep, make sure you ALWAYS use the ACE_NEW_RETURN or
-    // ACE_NEW macros when you allocate memory in order to avoid
-    // problems if the dynamically allocation fails.
-    new ProxyPushConsumer_i (this->qos_,
-                             rtecproxypushconsumer);
+  ProxyPushConsumer_i *ppc;
+
+  ACE_NEW_RETURN (ppc,
+                  ProxyPushConsumer_i (this->qos_,
+                                       rtecproxypushconsumer),
+                  CosEventChannelAdmin::ProxyPushConsumer::_nil ());
 
   return ppc->_this (TAO_TRY_ENV);
+
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
