@@ -17,7 +17,6 @@ Thread_Task::Thread_Task (int importance,
   this->load_ = load;
   this->start_time_ = start_time;
   this->importance_ = importance;
-  this->count_ = ++thread_count.value_i ();
   this->dt_creator_ = dt_creator;
   this->task_ = task;
 }
@@ -37,11 +36,18 @@ Thread_Task::activate_task (RTScheduling::Current_ptr current,
   ACE_CHECK;
 
   sched_param_ = CORBA::Policy::_duplicate (sched_param);
+
+  this->count_ = ++thread_count.value_i ();
  
+//    ACE_DEBUG ((LM_DEBUG,
+//  	      "thr_id = %d \n importance = %d\n",
+//  	      count_,
+//  	      importance_));
+
   if (this->activate (flags,
 		      1,
 		      0,
-		      2) == -1)
+		      this->importance_) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -55,9 +61,32 @@ Thread_Task::activate_task (RTScheduling::Current_ptr current,
 int
 Thread_Task::svc (void)
 {
-  this->barrier_->wait ();
+  //this->barrier_->wait ();
+  
+  //ACE_OS::sleep (start_time_);
+  
+  //    ACE_hthread_t current;
+  //    ACE_Thread::self (current);
+  
+  //    int priority;
+  //    if (ACE_Thread::getprio (current, priority) == -1)
+  //      {
+  //        ACE_DEBUG ((LM_DEBUG,
+  //                    ACE_TEXT ("TAO (%P|%t) - ")
+  //                    ACE_TEXT ("RT_Protocols_Hooks::get_thread_priority: ")
+  //                    ACE_TEXT (" ACE_Thread::get_prio\n")));
+  
+  //        return -1;
+  //      }
+  
+  //    ACE_DEBUG ((LM_DEBUG,
+  //  	      "::svc %d priority = %d\n",
+  //  	      count_,
+  //  	      priority));
 
-  ACE_OS::sleep (start_time_);
+  char msg [BUFSIZ];
+  ACE_OS::sprintf (msg, "Thread_Task::svc %d\n", count_);
+  dt_creator_->log_msg (msg);
   
   const char * name = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
@@ -84,5 +113,11 @@ int
 Thread_Task::importance (void)
 {
   return this->importance_;
+}
+
+int
+Thread_Task::start_time (void)
+{
+  return this->start_time_;
 }
 

@@ -29,6 +29,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
 
   int importance (void);
 
+  int start_time (void);
 
  protected:
   /// task svc
