@@ -1,3 +1,26 @@
+Tue Nov 23 17:44:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DomainC.cpp:
+	* tao/InterfaceC.cpp:
+	* tao/MessagingC.cpp:
+	* tao/POAC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PollableC.cpp:
+	* tao/Object.cpp:
+	  Changed code around calls to 
+	  TAO_GIOP_Invoccation::prepare_header(). It is part
+	  of the changes relating to the request header required
+	  by reliable oneways. I had overlooked these calls.
+	  Thanks to Irfan for uncovering the tip of this iceberg.
+
+	* tao/Stub.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	  Changed the type of flag variable (declared to be an
+	  argument to prepare_header) to be CORBA::Short. Nanbor
+	  had made these CORBA::Long, thinking that was the type
+	  of TAO::SyncScope.
+
 Tue Nov 23 11:43:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Revised guidelines on "adding IDL to your
