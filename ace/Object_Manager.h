@@ -297,9 +297,9 @@ public:
   // arrays.
 
   /**
-   * Accesses a default signal set used, for example, in ACE_Sig_Guard
-   * methods.
-   * Deprecated:  use ACE_Object_Manager::default_mask () instead.
+   * @deprecated Accesses a default signal set used, for example,
+   * in ACE_Sig_Guard methods.
+   * Deprecated: use ACE_Object_Manager::default_mask () instead.
    */
   static ACE_Sig_Set &default_mask (void);
 
