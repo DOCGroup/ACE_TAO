@@ -1,3 +1,9 @@
+Wed Jun 18 08:48:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * orbsvcs/tests/EC_MT_Mcast/Makefile:
+          Updated this test for all RTEC changes and updated dependencies
+
 Wed Jun 18 08:18:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
