@@ -1,4 +1,3 @@
-/* $Id$ */
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/INET_Addr.h"
 
@@ -34,22 +33,24 @@ public:
     };
 
   static void addr_to_string (const ACE_INET_Addr &ip_addr,
-                              char *ret_string,    // results here.
-                              int clip_portnum)    // clip port# info?
+                              ACE_TCHAR *ret_string,  // results here.
+                              int clip_portnum)       // clip port# info?
     {
-      static const char *cvt_err_string = "<?>";    // if conversion error.
+      // Text displayed in case of conversion error.
+      static const ACE_TCHAR *cvt_err_string = ACE_LIB_TEXT("<?>");
 
       if (ip_addr.addr_to_string (ret_string,
                                   ADDR_STRING_MAX,
                                   1) == -1)
         {
-          strcpy (ret_string, cvt_err_string);       // (assume big enough)
+          ACE_OS_String::strcpy (ret_string, 
+				 cvt_err_string);
         }
       else
         {
-          char *pc;
+          ACE_TCHAR *pc;
           if (clip_portnum
-              && (pc = ACE_OS::strchr (ret_string, ':')))
+              && (pc = ACE_OS_String::strchr (ret_string, ':')))
             *pc = '\0'; // clip port# info.
         }
     }
@@ -69,7 +70,7 @@ void ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::dump (void) ACE_CONST_WHEN_MUTABL
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_Ex::dump");
 
-  char addr_string[ACE_SDM_helpers::ADDR_STRING_MAX+1];
+  ACE_TCHAR addr_string[ACE_SDM_helpers::ADDR_STRING_MAX+1];
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT( \
@@ -90,7 +91,7 @@ void ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::dump (void) ACE_CONST_WHEN_MUTABL
   ACE_SDM_helpers::addr_to_string (this->send_addr_, addr_string, 0);
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Send addr=%s iface=%s\n"),
              addr_string,
-             (this->send_net_if_ ? this->send_net_if_ : "<default>")));
+             (this->send_net_if_ ? this->send_net_if_ : ACE_LIB_TEXT("<default>"))));
 
   // Show list of subscribed addresses.
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Subscription list:\n"), ""));
@@ -99,7 +100,7 @@ void ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::dump (void) ACE_CONST_WHEN_MUTABL
     subscription_list_iter_t  iter (this->subscription_list_);
     for ( ; !iter.done (); iter.advance ())
       {
-        char iface_string[ACE_SDM_helpers::ADDR_STRING_MAX+1];
+        ACE_TCHAR iface_string[ACE_SDM_helpers::ADDR_STRING_MAX+1];
         ip_mreq *pm = iter.next ();
 
         // Get subscribed address (w/out port# info - not relevant).
@@ -111,10 +112,10 @@ void ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::dump (void) ACE_CONST_WHEN_MUTABL
         ACE_INET_Addr if_addr (ACE_static_cast (u_short, 0),
                                ntohl (pm->imr_interface.s_addr));
         ACE_SDM_helpers::addr_to_string (if_addr, iface_string, 1);
-        if (strcmp (iface_string, "0.0.0.0") == 0)
+        if (ACE_OS_String::strcmp (iface_string, ACE_LIB_TEXT("0.0.0.0")) == 0)
           // Receives on system default iface. (Note that null_iface_opt_
           // option processing has already occurred.)
-          strcpy (iface_string, "<default>");    // (assume big enough)
+          ACE_OS_String::strcpy (iface_string, ACE_LIB_TEXT("<default>"));
 
         // Dump info.
         ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\taddr=%s iface=%s\n"),
@@ -238,8 +239,9 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::open (const ACE_INET_Addr &mcast_a
                                           &(send_mreq.imr_interface),
                                           sizeof send_mreq.imr_interface) == -1)
             return -1;
-          this->send_net_if_ = new char[strlen (net_if)+1];
-          strcpy (this->send_net_if_, net_if);
+          this->send_net_if_ = new ACE_TCHAR[ACE_OS_String::strlen (net_if)+1];
+          ACE_OS_String::strcpy (this->send_net_if_, 
+                                 net_if);
 #else
           // Send interface option not supported - ignore it.
           // (We may have been invoked by ::subscribe, so we have to allow
@@ -267,7 +269,7 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::open (const ACE_Addr &mcast_addr,
   return ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>
                      ::open (ACE_reinterpret_cast (const ACE_INET_Addr&,
                                ACE_const_cast (ACE_Addr &, mcast_addr)),
-                             ACE_static_cast (char*, NULL),
+                             ACE_static_cast (ACE_TCHAR*, NULL),
                              reuse_addr);
 }
 
@@ -364,8 +366,8 @@ int ACE_SOCK_Dgram_Mcast_Ex<ACE_SDMOPT_LOCK>::subscribe_ifs (const ACE_INET_Addr
   if (bind_addr_opt_ == ACE_SDM_OPTIONS::OPT_BINDADDR_YES
       && mcast_addr != this->bound_addr_)
     {
-      char sub_addr_string[ACE_SDM_helpers::ADDR_STRING_MAX + 1],
-           bound_addr_string[ACE_SDM_helpers::ADDR_STRING_MAX + 1];
+      ACE_TCHAR sub_addr_string[ACE_SDM_helpers::ADDR_STRING_MAX + 1],
+                bound_addr_string[ACE_SDM_helpers::ADDR_STRING_MAX + 1];
       ACE_SDM_helpers::addr_to_string (mcast_addr, sub_addr_string, 1);
       ACE_SDM_helpers::addr_to_string (this->bound_addr_,
                                        bound_addr_string, 1);

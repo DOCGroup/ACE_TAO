@@ -1,3 +1,9 @@
+Wed Jun 19 21:30:05 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+                              Bill Fulton <Bill_A_Fulton@raytheon.com>
+
+	* ace/SOCK_Dgram_Mcast_T.cpp: Fix Win32 wchar build problems.
+	  Thanks to Bill Fulton for supplying these fixes.
+
 Wed Jun 19 16:16:32 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw:
