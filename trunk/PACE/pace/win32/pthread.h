@@ -67,6 +67,57 @@ extern "C" {
 
 #endif /* PACE_HAS_CPLUPLUS */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  /* Returns -1 if attr is invalid! */
+  int pthread_attr_destroy (pace_pthread_attr_t * attr);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  /* Returns -1 if attr is already valid! */
+  int pthread_attr_init (pace_pthread_attr_t * attr);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_attr_setdetachstate (pace_pthread_attr_t * attr,
+				   int detachstate);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_attr_setinheritsched (pace_pthread_attr_t * attr,
+				    int inheritsched);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_attr_setschedparam (pace_pthread_attr_t * attr,
+				  const pace_sched_param * param);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_attr_setschedpolicy (pace_pthread_attr_t * attr,
+				   int policy);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_attr_setscope (pace_pthread_attr_t * attr,
+			     int contentionscope);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_attr_setstackaddr (pace_pthread_attr_t * attr,
+				 void * stackaddr);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_attr_setstacksize (pace_pthread_attr_t * attr,
+				 size_t stacksize);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_create (pace_pthread_t * thread,
+		      const pace_pthread_attr_t * attr,
+		      void * (*start_routine) (void*),
+		      void * arg);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }

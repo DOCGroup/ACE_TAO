@@ -1,3 +1,11 @@
+Wed Aug 16 16:26:32 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/pthread.h:
+	* pace/win32/pthread.inl:
+	* pace/win32/pthread.c:
+
+	  The first commit in a long series of emulations.
+
 Mon Aug 14 22:24:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/sched.inl (pace_sched_get_priority_max):
