@@ -12,6 +12,7 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Lock.h"
 #include "ace/Synch_Traits.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (FaultTolerance,
            FT_ClientRequest_Interceptor,

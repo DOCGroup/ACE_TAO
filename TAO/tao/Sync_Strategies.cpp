@@ -6,6 +6,7 @@
 #include "debug.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_time.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Sync_Strategies.i"

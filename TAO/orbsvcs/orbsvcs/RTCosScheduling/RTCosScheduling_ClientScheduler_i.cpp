@@ -11,6 +11,7 @@
 //=============================================================================
 
 #include "RTCosScheduling_ClientScheduler_i.h"
+#include "ace/OS_NS_errno.h"
 
 #if !defined (__ACE_INLINE__)
 #include "RTCosScheduling_ClientScheduler_i.i"
