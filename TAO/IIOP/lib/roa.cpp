@@ -22,11 +22,11 @@
 static void request_dispatcher(GIOP::RequestHeader& req,
 			       CDR& request_body,
 			       CDR* reply,
-			       Dispatch_Context* context,
+			       TAO_Dispatch_Context* context,
 			       CORBA_Environment& env);
 static GIOP::LocateStatusType request_forwarder(opaque& target_key,
 						CORBA_Object_ptr& forward_reference,
-						Dispatch_Context* ctx);
+						TAO_Dispatch_Context* ctx);
 
 ROA_ptr
 ROA::init (CORBA_ORB_ptr parent,
@@ -80,7 +80,7 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
     // XXXCJC Need to return an error somehow!!  Maybe set do_exit?
     ;
 
-  client_acceptor_.acceptor().get_local_addr(addr);
+  client_acceptor_.acceptor().get_local_addr(addr_);
   this->objtable_ = f->objlookup_strategy();
   if (this->objtable_ != 0)
     p->oa(this);
@@ -124,8 +124,9 @@ ROA::create (CORBA_OctetSeq& key,
   else
     id = 0;
   IIOP::Version ver(IIOP::MY_MAJOR, IIOP::MY_MINOR);
+  CORBA_String h = addr_.get_host_name();
   data = new IIOP_Object (id, IIOP::ProfileBody(ver,
-                                                addr_.get_host_name(),
+                                                h,
                                                 addr_.get_port_number(),
                                                 key));
 
@@ -241,7 +242,7 @@ ROA::register_dir (CORBA_BOA::dsi_handler handler, void* ctx, CORBA_Environment&
     }
 
   skeleton_ = handler;
-  context = ctx;
+  context_ = ctx;
 
   env.clear ();
 }
@@ -415,7 +416,7 @@ ROA::get_request (
     // THREADING NOTE:  This is the last of the need to have the OA
     // locked ... next, let other threads in to access its state.
     //
-    call_count++;
+    call_count_++;
   }
 
   //
@@ -439,15 +440,15 @@ ROA::get_request (
     // connection resource too -- when this dispatch context gets
     // destroyed, only then is the connection released.
     //
-    Dispatch_Context* ctx;
+    TAO_Dispatch_Context* ctx;
 
-    ctx = new Dispatch_Context;
-    ctx->skeleton = handler;
-    ctx->check_forward = check_forward;
-    ctx->context = app_state;
-    ctx->oa = this;
+    ctx = new TAO_Dispatch_Context;
+    ctx->skeleton_ = handler;
+    ctx->check_forward_ = check_forward;
+    ctx->context_ = app_state;
+    ctx->oa_ = this;
 #if 0 // g++ didn't complain about this, but Sun C++ does
-    ctx->endpoint = fd;
+    ctx->endpoint_ = fd;
 #endif
 
     //
@@ -474,7 +475,7 @@ ROA::get_request (
     //
     dmsg2 ("pthread_create error: %d (%s)", errcode,
 	   strerror (errcode));
-    delete context;
+    delete context_;
 
 #endif	// _POSIX_THREADS
   }
@@ -707,7 +708,7 @@ request_forwarder (opaque& target_key,
   CORBA_Environment		env;
 
   assert (helper->check_forward_ != 0);
-  helper->check_forward (target_key, forward_reference, helper->context_, env);
+  helper->check_forward_ (target_key, forward_reference, helper->context_, env);
 
   if (env.exception () != 0)
     return GIOP::UNKNOWN_OBJECT;

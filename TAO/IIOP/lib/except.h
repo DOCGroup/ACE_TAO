@@ -7,13 +7,14 @@
 #if !defined (TAO_EXCEPT_H)
 #  define TAO_EXCEPT_H
 
+#  include "ace/OS.h"
 #  include "ace/Synch.h"
 
 extern const IID IID_CORBA_Exception;
 extern const IID IID_CORBA_UserException;
 extern const IID IID_CORBA_SystemException;
 
-class _EXPCLASS CORBA_Exception : public IUnknown
+class ACE_Svc_Export CORBA_Exception : public IUnknown
 // = TITLE
 // CORBA2-specified exception hierarchy.
 //
@@ -57,7 +58,7 @@ private:
 // User exceptions are those defined by application developers
 // using OMG-IDL.
 //
-class _EXPCLASS CORBA_UserException : public CORBA_Exception 
+class ACE_Svc_Export CORBA_UserException : public CORBA_Exception 
 {
 public:
   CORBA_UserException (CORBA_TypeCode_ptr tc);
@@ -77,7 +78,7 @@ enum CORBA_CompletionStatus
   COMPLETED_MAYBE		// can't say what happened; retry unsafe
 };
 
-class _EXPCLASS CORBA_SystemException : public CORBA_Exception 
+class ACE_Svc_Export CORBA_SystemException : public CORBA_Exception 
 {
 public:
   // 94-9-14 also sez:  public copy constructor
@@ -105,43 +106,42 @@ private:
 // XXX shouldn't have a default minor code, at least for code that's
 // inside the ORB.  All minor codes should be symbolically catalogued.
 
-#define SYSEX (name) \
+#define SYSEX(name) \
 extern CORBA_TypeCode_ptr		_tc_CORBA_ ## name ; \
-class _EXPCLASS CORBA_ ## name : public CORBA_SystemException { \
-  public: \
-			    CORBA_ ## name ( \
-				CORBA_CompletionStatus	completed, \
-				CORBA_ULong		code = 0xffff0000L \
-			    ) : CORBA_SystemException ( \
-				    _tc_CORBA_ ## name, \
-				    code, completed) { } }
+class ACE_Svc_Export CORBA_ ## name : public CORBA_SystemException { \
+public: \
+  CORBA_ ## name (CORBA_CompletionStatus completed, \
+                  CORBA_ULong code = 0xffff0000L) \
+    : CORBA_SystemException (_tc_CORBA_ ## name, code, completed) \
+    { } \
+}
 
-SYSEX (UNKNOWN);
-SYSEX (BAD_PARAM);
-SYSEX (NO_MEMORY);
-SYSEX (IMP_LIMIT);
-SYSEX (COMM_FAILURE);
-SYSEX (INV_OBJREF);
-SYSEX (OBJECT_NOT_EXIST);
-SYSEX (NO_PERMISSION);
-SYSEX (INTERNAL);
-SYSEX (MARSHAL);
-SYSEX (INITIALIZE);
-SYSEX (NO_IMPLEMENT);
-SYSEX (BAD_TYPECODE);
-SYSEX (BAD_OPERATION);
-SYSEX (NO_RESOURCES);
-SYSEX (NO_RESPONSE);
-SYSEX (PERSIST_STORE);
-SYSEX (BAD_INV_ORDER);
-SYSEX (TRANSIENT);
-SYSEX (FREE_MEM);
-SYSEX (INV_IDENT);
-SYSEX (INV_FLAG);
-SYSEX (INTF_REPOS);
-SYSEX (BAD_CONTEXT);
-SYSEX (OBJ_ADAPTER);
-SYSEX (DATA_CONVERSION);
+SYSEX(UNKNOWN);
+SYSEX(BAD_PARAM);
+SYSEX(NO_MEMORY);
+SYSEX(IMP_LIMIT);
+SYSEX(COMM_FAILURE);
+SYSEX(INV_OBJREF);
+SYSEX(OBJECT_NOT_EXIST);
+SYSEX(NO_PERMISSION);
+SYSEX(INTERNAL);
+SYSEX(MARSHAL);
+SYSEX(INITIALIZE);
+SYSEX(NO_IMPLEMENT);
+SYSEX(BAD_TYPECODE);
+SYSEX(BAD_OPERATION);
+SYSEX(NO_RESOURCES);
+SYSEX(NO_RESPONSE);
+SYSEX(PERSIST_STORE);
+SYSEX(BAD_INV_ORDER);
+SYSEX(TRANSIENT);
+SYSEX(FREE_MEM);
+SYSEX(INV_IDENT);
+SYSEX(INV_FLAG);
+SYSEX(INTF_REPOS);
+SYSEX(BAD_CONTEXT);
+SYSEX(OBJ_ADAPTER);
+SYSEX(DATA_CONVERSION);
 
 #undef	SYSEX
 

@@ -14,14 +14,14 @@
 // ============================================================================
 
 #if !defined(TAO_OBJECT_TABLE_H)
-#define TAO_OBJECT_TABLE_H
+#  define TAO_OBJECT_TABLE_H
 
-#include <ace/ACE.h>
-#include <ace/Synch.h>
-#include <ace/Hash_Map_Manager.h>
-#include <ace/SString.h>
+#  include "ace/ACE.h"
+#  include "ace/Synch.h"
+#  include "ace/Hash_Map_Manager.h"
+#  include "ace/SString.h"
 
-#include "orb.h"
+#  include "orb.h"
 
 // Dynamic Hashing scheme
 typedef ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX> OBJ_MAP_MANAGER;
@@ -46,13 +46,13 @@ private:
 };
 
 // Linear strategy
-struct TAO_Linear_Entry
+struct TAO_Linear_ObjTable_Entry
 {
   CORBA_OctetSeq     key;
   CORBA_Object_ptr   obj;
 
-  TAO_Linear_Entry();
-  ~TAO_Linear_Entry();
+  TAO_Linear_ObjTable_Entry();
+  ~TAO_Linear_ObjTable_Entry();
 };
 
 class TAO_Linear_ObjTable: public TAO_Object_Table
@@ -73,7 +73,7 @@ public:
 private:
   CORBA_ULong next_;
   CORBA_ULong tablesize_;
-  TAO_Linear_Entry *tbl_;
+  TAO_Linear_ObjTable_Entry *tbl_;
 };
 
 // Active Demux
