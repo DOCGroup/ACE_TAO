@@ -148,6 +148,17 @@
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
 
+// This deals with the strategies for connection caching. By default
+// it is the Least Recently Used (LRU) with the default purging
+// percentage of 20%.
+#if !defined (TAO_CONNECTION_CACHING_STRATEGY)
+# define TAO_CONNECTION_CACHING_STRATEGY TAO_Resource_Factory::LRU
+#endif /* TAO_CONNECTION_CACHING_STRATEGY */
+
+#if !defined (TAO_PURGE_PERCENT)
+# define TAO_PURGE_PERCENT 20
+#endif /* TAO_PURGE_PERCENT */
+
 // This deals with platforms that support namespaces vs platforms that
 // don't.  @@ MSVC's namespace implementation is somehow broken.
 // The following macros are required to deal with the most bizarre and insane

@@ -91,6 +91,9 @@ public:
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
   virtual int init_protocol_factories (void);
 
+  virtual TAO_Resource_Factory::Caching_Strategy connection_caching_strategy_type (void) const;
+  virtual double purge_percentage (void) const;
+
 protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
   // Obtain the reactor implementation
@@ -111,6 +114,14 @@ protected:
 
   TAO_ProtocolFactorySet protocol_factories_;
   // list of loaded protocol factories.
+
+  TAO_Resource_Factory::Caching_Strategy connection_caching_type_;
+  // Specifies the typeof caching strategy we should use for
+  // connection management.
+
+  double purge_percentage_;
+  // Specifies the percentage of entries which should get purged on
+  // demand.
 };
 
 #if defined (__ACE_INLINE__)

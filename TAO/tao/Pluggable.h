@@ -456,6 +456,9 @@ public:
   virtual char object_key_delimiter (void) const = 0;
   // Return the object key delimiter to use or expect.
 
+  virtual int purge_connections (void) = 0;
+  // Purge "old" connections.
+
 protected:
   virtual void make_profile (const char *endpoint,
                              TAO_Profile *&,
