@@ -4283,8 +4283,10 @@ ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
                               ACE_SERVICE_TYPE service_type,
                               u_long max_sdu_size,
                               u_long minimum_policed_size,
-                              int ttl)
+                              int ttl,
+                              int priority)
 {
+  ACE_UNUSED_ARG (priority);
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->TokenRate = token_rate;
   this->TokenBucketSize = token_bucket_size;
@@ -4517,6 +4519,29 @@ ACE_Flow_Spec::ttl (int t)
   // TBD...
 #else
   ACE_UNUSED_ARG (t);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE int
+ACE_Flow_Spec::priority (void)
+{
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void
+ACE_Flow_Spec::priority (int p)
+{
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
+  ACE_UNUSED_ARG (p);
+  // TBD...
+#else
+  ACE_UNUSED_ARG (p);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
