@@ -16,10 +16,11 @@
 #    define ACE_NEEDS_DEV_IO_CONVERSION
 #  elif (__SUNPRO_CC >= 0x420)
 #  define ACE_HAS_ANSI_CASTS
-#  if 0 /* Explicit instantiation isn't useful without -instances=global,
-           but that results in link collisions.  We need to figure out how
-           to disable CC's implicit template instantiation. */
-      // Sun C++ 4.2 (and beyond) supports template specialization.
+#  if 0 /* Explicit instantiation requires the -instances=explicit
+           CCFLAG.  It seems to work for the most part, except for:
+           1) Static data members get instantiated multiple times.
+           2) In TAO, the TAO_Unbounded_Sequence vtbl can't be found. */
+     // Sun C++ 4.2 (and beyond) supports template specialization.
 #    define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
 #  endif /* 0 */
@@ -263,23 +264,23 @@
 #define ACE_HAS_DIRENT
 
 #if defined (__SUNPRO_CC)
-#define ACE_CC_NAME "SunPro C++"
-#define ACE_CC_MAJOR_VERSION (__SUNPRO_CC >> 8)
-#define ACE_CC_MINOR_VERSION (__SUNPRO_CC & 0x00ff)
-#define ACE_CC_BETA_VERSION  (0)
+# define ACE_CC_NAME "SunPro C++"
+# define ACE_CC_MAJOR_VERSION (__SUNPRO_CC >> 8)
+# define ACE_CC_MINOR_VERSION (__SUNPRO_CC & 0x00ff)
+# define ACE_CC_BETA_VERSION  (0)
 #elif defined (__GNUG__)
-#define ACE_CC_MAJOR_VERSION __GNUC__
-#define ACE_CC_MINOR_VERSION __GNUC_MINOR__
-#define ACE_CC_BETA_VERSION  (0)
-#if __GNUC_MINOR__ >= 90
-#define ACE_CC_NAME "egcs"
-#else
-#define ACE_CC_NAME "g++"
-#endif /* __GNUC_MINOR__ */
+# define ACE_CC_MAJOR_VERSION __GNUC__
+# define ACE_CC_MINOR_VERSION __GNUC_MINOR__
+# define ACE_CC_BETA_VERSION  (0)
+# if __GNUC_MINOR__ >= 90
+#   define ACE_CC_NAME "egcs"
+# else
+#   define ACE_CC_NAME "g++"
+# endif /* __GNUC_MINOR__ */
 #endif /* __GNUG__ */
 
 #if defined (i386)
-#define ACE_HAS_X86_STAT_MACROS
+# define ACE_HAS_X86_STAT_MACROS
 #endif /* i386 */
 
 #endif /* ACE_CONFIG_H */
