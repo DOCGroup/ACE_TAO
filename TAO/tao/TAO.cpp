@@ -160,6 +160,15 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant,
   return str;
 }
 
+void
+TAO_ORB_Manager::deactivate (const char *id,
+                             CORBA_Environment &ACE_TRY_ENV)
+{
+  PortableServer::ObjectId_var object_id = PortableServer::string_to_ObjectId (id);
+  this->poa_->deactivate_object (object_id,
+                                 ACE_TRY_ENV);
+}
+
 // Activate the object with the object_name under the child POA.
 
 CORBA::String
@@ -193,6 +202,15 @@ TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
   TAO_CHECK_ENV_RETURN (env, 0);
 
   return str;
+}
+
+void
+TAO_ORB_Manager::deactivate_under_child_poa (const char *id,
+                                             CORBA_Environment &ACE_TRY_ENV)
+{
+  PortableServer::ObjectId_var object_id = PortableServer::string_to_ObjectId (id);
+  this->child_poa_->deactivate_object (object_id,
+                                       ACE_TRY_ENV);
 }
 
 // Enter the ORB event loop.
