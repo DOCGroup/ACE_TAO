@@ -995,7 +995,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
   param = tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  CORBA::TCKind const k = param->kind (ACE_ENV_SINGLE_ARG_PARAMETER)
+  CORBA::TCKind const k = param->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   if (k != CORBA::tk_null)
