@@ -27,7 +27,7 @@ char *installation_datafile_ = "CIAO_Installation_Data.ini";
 char *section_name_ = 0;
 char *default_svcconf_ = 0;
 char *svcconf_config_ = 0;
-char *extra_flags_ 0;
+char *extra_flags_ = 0;
 
 int
 parse_args (int argc, char *argv[])
@@ -82,7 +82,7 @@ parse_args (int argc, char *argv[])
                            "-c <default svc.conf file for starting ComponentServer>\n"
                            "-m <svc.conf mapping data file>\n"
                            "-s <section name to use in installation data file>\n"
-                           "-f <extra command line flags for component server>\n"
+                           "-f <extra command line flags for component server>\n",
                            argv [0]),
                           -1);
       }
