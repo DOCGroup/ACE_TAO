@@ -1,5 +1,37 @@
 Sun Apr 13 11:40:26 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/OS: Added a new #define called ACE_HAS_NONCONST_MSGSND which
+ 	  can be used for platforms (e.g., SCO) that don't have a const
+ 	  parameter for msgsend().  Thanks to Arturo Montes
+ 	  <mitosys@colomsat.net.co> for reporting this.
+
+	* ace/config-sco-5.0.0-mit-pthread.h: Added some fixes to make
+ 	  this work on SCO.  Thanks to Arturo Montes
+ 	  <mitosys@colomsat.net.co> for reporting this.
+
+	* ace/OS.i (cond_timedwait): There is a *small* chance for a
+ 	  context switch before ACE_OS::cond_timedwait() is reached.  In
+ 	  this case, the current time *may* advance by some milliseconds.
+  	  The code in ACE_OS::cond_timedwait() then converts the given
+ 	  absolute time to a relative time.  In the described situation
+ 	  this will be a very, very long t ime (0xfffffffn).  Therefore, I
+ 	  added a check to avoid the "negative timespan" case.  Thanks to
+ 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for suggesting this.
+
+	* ace/Set: Moved all the size() methods out of the *.i file and
+ 	  into the *.cpp file to avoid problems with quirky compilers
+	  (e.g., SGI) that can't handle this.  Thanks to Torbjorn Lindgren
+ 	  <tl@funcom.no> for pointing this out.
+
+	* examples/Threads/process_semaphore.cpp (main): Removed a stray
+ 	  ^M that was causing the SGI C++ compiler some grief.  Thanks to
+ 	  Torbjorn Lindgren <tl@funcom.no> for pointing this out.
+
+	* ace/OS.i (gettimeofday): Rearranged the code a bit to return
+ 	  errors correctly if they occur (which should be *very*
+ 	  unlikely).  Thanks to Torbjorn Lindgren <tl@funcom.no> for
+	  pointing this out.
+
 	* netsvcs/lib/Server_Logging_Handler.cpp: Replaced the use of
  	  ACE_TLI* with LOGGING_PEER*.  Thanks to Tom Wright
  	  <twright@gem-net.demon.co.uk> for reporting this.

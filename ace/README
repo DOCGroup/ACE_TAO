@@ -60,6 +60,7 @@ ACE_HAS_MFC				Platform supports Microsoft Foundation Classes
 ACE_HAS_MSG				Platform supports recvmsg and sendmsg
 ACE_HAS_MT_SAFE_SOCKETS			Sockets may be called in multi-threaded programs
 ACE_HAS_NONCONST_GETBY			Platform uses non-const char * in calls to gethostbyaddr, gethostbyname, getservbyname
+ACE_HAS_NONCONST_MSGSND			Platform has a non-const parameter to msgsend() (e.g., SCO).
 ACE_HAS_NONCONST_SELECT_TIMEVAL		Platform's select() uses non-const timeval* (only found on Linux right now)
 ACE_HAS_OLD_MALLOC			Compiler/platform uses old malloc()/free() prototypes (ugh)
 ACE_HAS_ONEARG_SIGWAIT			sigwait() takes only one argument.
