@@ -316,7 +316,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << "return this->CORBA_Object::_is_a (" << be_idt << be_idt_nl
+      << "return this->Object::_is_a (" << be_idt << be_idt_nl
       << "value" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
@@ -518,4 +518,3 @@ be_visitor_component_cs::gen_unchecked_narrow (be_component *node,
 
   *os << "}" << be_nl << be_nl;
 }
-
