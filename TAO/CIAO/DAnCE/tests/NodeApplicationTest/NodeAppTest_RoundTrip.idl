@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * @file RoundTrip.idl
+ * @file NodeAppTest_RoundTrip.idl
  *
  * Definition of the Component that provides the LatencyTest interface
  *
