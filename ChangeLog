@@ -1,3 +1,10 @@
+Sat Sep 22 08:59:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Service_Manager.cpp (handle_input): Added some logic to
+	  strip off newlines and carriage returns for Windows platforms.
+  	  Thanks to Kyle Brost <Kyle.Brost@quest.com> for contributing
+ 	  this.
+
 Sat Sep 22 12:28:21 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/ACE_SSL_LIB.dsp:
