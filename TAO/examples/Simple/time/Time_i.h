@@ -43,10 +43,13 @@ public:
   ~Time_i (void);
   // Destructor
   
-  virtual CORBA::Long time (CORBA::Environment &env);
+  virtual CORBA::Long time (CORBA::Environment &env)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // Return the current time/date on the server
   
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env)
+    ACE_THROW_SPEC (CORBA::SystemException);
+  
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);
