@@ -247,7 +247,7 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
   this->stop ();
 }
 
-#if defined (ACE_HAS_POWERPC) && defined (ghs)
+#if defined (ghs) && defined (ACE_HAS_POWERPC_TIMER)
 void
 ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 {
@@ -267,7 +267,7 @@ ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
   asm("stw r5, 0(r3)");
   asm("stw r6, 0(r4)");
 }
-#endif /* ACE_HAS_POWERPC && ghs */
+#endif /* ghs && ACE_HAS_POWERPC_TIMER */
 
 #if defined (ACE_WIN32) || defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
 // Don't inline on those platforms because this function contains
@@ -1201,7 +1201,7 @@ ACE_TSS_Ref::operator!= (const ACE_TSS_Ref &tss_ref)
   return !(*this == tss_ref);
 }
 
-// moved class ACE_TSS_Info declaration 
+// moved class ACE_TSS_Info declaration
 // to OS.h so it can be visible to the
 // single file of template instantiations
 
@@ -1265,7 +1265,7 @@ ACE_TSS_Info::dump (void)
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// moved class ACE_TSS_Keys declaration 
+// moved class ACE_TSS_Keys declaration
 // to OS.h so it can be visible to the
 // single file of template instantiations
 
@@ -1766,7 +1766,7 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
   tss_base = (u_long) ts_storage;
   t_setreg (0, PSOS_TASK_REG_TSS, tss_base);
 
-  // Zero the entire TSS array.  
+  // Zero the entire TSS array.
   void **tss_base_p = ts_storage;
   for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
   {
@@ -2168,8 +2168,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
-    ACE_NEW_RETURN (thread_args, 
-                    ACE_Thread_Adapter (func, args, 
+    ACE_NEW_RETURN (thread_args,
+                    ACE_Thread_Adapter (func, args,
                                         (ACE_THR_C_FUNC) ace_thread_adapter),
                     -1);
   else
@@ -2802,11 +2802,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   // lowest priority is reserved for the IDLE pSOS+ system daemon,
   // highest are reserved for high priority pSOS+ system daemons
-  if (priority < PSOS_TASK_MIN_PRIORITY) 
+  if (priority < PSOS_TASK_MIN_PRIORITY)
   {
     priority = PSOS_TASK_MIN_PRIORITY;
   }
-  else if (priority > PSOS_TASK_MAX_PRIORITY) 
+  else if (priority > PSOS_TASK_MAX_PRIORITY)
   {
     priority = PSOS_TASK_MAX_PRIORITY;
   }
@@ -2834,7 +2834,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   targs[3] = 0;
 
   // start the thread
-  if (t_start (tid,            
+  if (t_start (tid,
                T_PREEMPT |            // Task can be preempted
                T_NOTSLICE |           // Task is not timesliced with other tasks at same priority
                T_NOASR |              // Task level signals disabled
