@@ -1,3 +1,17 @@
+	Tue Jun 18 19:23:01 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAOACE_Static.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
+
+	  Added new Security_Static and SSLIOP_Static projects to these
+	  MSVC++ workspaces.
+
+	* orbsvcs/orbsvcs/Security_Static.dsp:
+	* orbsvcs/orbsvcs/SSLIOP_Static.dsp:
+
+	  New static library project files contributed by Wayne Erchak
+	  <wayne@stentor.com>.  [Bug 1232]
+
 Tue Jun 18 15:16:32 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation): 
