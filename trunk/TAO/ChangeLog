@@ -1,6 +1,20 @@
+Mon Jun  2 00:25:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/IDL_Test/Makefile: Disable the test if
+	  templates=explicit. The test is sufficiently complicated (for
+	  very good reasons) to get it right with explicit template
+	  instantiations. It is easy to fix the problem by changing the
+	  way the IDL's are specified. But we dont want to loose the
+	  structure of the exisiting IDL files in our test directories. 
+
+	  Once we have a nice way to handle these cases with explicit
+	  templates we can revert this. We will open up a bugzilla entry
+	  to remind us. The IDL compiler needs to get smarterwith users
+	  cooperation to handle all this weird cases.
+
 Sun Jun  1 23:38:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Makefile: Added paths to the CONTROLLE_FILES.w
+	* Makefile: Added paths to the CONTROLLE_FILES
 
 Sun Jun 01 19:34:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 

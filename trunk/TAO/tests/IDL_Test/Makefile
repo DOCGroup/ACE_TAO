@@ -72,6 +72,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
+ifeq ($(templates),implicit)
 BUILD += 	namespace_check.cpp   \
 		reopened_modulesC.cpp \
 		reopen_include1C.cpp  \
@@ -80,6 +81,8 @@ BUILD += 	namespace_check.cpp   \
                 nested_scopeC.cpp
 
 BIN = main
+endif #templates == implicit
+
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
