@@ -1839,8 +1839,8 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
     }
   return result;
 #elif defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
   // its maximum value initialized to <max>.
   *s = ::CreateSemaphore (0, count, max, name);
@@ -1851,14 +1851,14 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
   else
     return 0;
 #elif defined (VXWORKS)
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
   s->name_ = 0;
   s->sema_ = ::semCCreate (SEM_Q_FIFO, count);
-  
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (s-> sema_ = ::semCCreate (SEM_Q_FIFO, count), 
-                                       ace_result_), 
-		     int, -1);
+
+  return s->sema_ ? 0 : -1;
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (s);
@@ -2074,7 +2074,9 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     }
   /* NOTREACHED */
 #elif defined (VXWORKS)
-  int ticks = tv.sec() * ::sysClkRateGet () + tv.usec () * ::sysClkRateGet / 1000000;
+  int ticks_per_sec = ::sysClkRateGet ();
+  int ticks = tv.sec() * ticks_per_sec +
+              tv.usec () * ticks_per_sec / 1000000;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, ticks), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
 #else
