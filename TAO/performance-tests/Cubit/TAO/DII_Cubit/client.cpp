@@ -228,17 +228,13 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       mc_req->set_return_type (CORBA::_tc_Object);
 
-      // Insert the result-holding variable into the request.
-      mc_req->result ()->value ()->replace (CORBA::_tc_Object,
-                                            &this->obj_var_,
-                                            0,
-                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Invoke the <make_cubit> operation to ask the Cubit factory
       // for a Cubit object.
       mc_req->invoke (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      // Extract the returned object reference from the request.
+      mc_req->return_value () >>= CORBA::Any::to_object (this->obj_var_.out ());
 
       if (CORBA::is_nil (this->obj_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
