@@ -3624,7 +3624,7 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     include /**/ <sys/sem.h>
 #     include /**/ <sys/time.h>
 #     include /**/ <sys/wait.h>
-// #     include /**/ <sys/resource.h>   // David, I'd like to add this.
+#     include /**/ <sys/resource.h>
 #     include /**/ <pwd.h>
       // sets O_NDELAY
 #     include /**/ <unix.h>
