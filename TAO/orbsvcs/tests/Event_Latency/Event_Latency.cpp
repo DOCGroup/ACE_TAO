@@ -30,7 +30,7 @@ static const char *Event_Latency_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER = 20000,
   EVENT_LATENCY_START_WITH_NEW_EVENT_IN_SUPPLIER,
   EVENT_LATENCY_SUPPLIER_STARTS_PUSHING_EVENT,
@@ -205,24 +205,22 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
                                              events[i].ec_send_time_);
 
               const ACE_hrtime_t now = ACE_OS::gethrtime ();
-              // Sun C++ 4.2 on SunOS 5.6 doesn't like the cast of a
-              // const long long to (non-const) unsigned in ACE_U64_TO_U32.
-              /* const */ ACE_hrtime_t elapsed = now - creation;
+              const ACE_hrtime_t elapsed = now - creation;
               ACE_Time_Value latency ((long) (elapsed / ACE_ONE_SECOND_IN_NSECS),
-                                      (long) (ACE_U64_TO_U32 (elapsed) % ACE_ONE_SECOND_IN_NSECS) / 1000);
+                                      (long) (ACE_CU64_TO_CU32 (elapsed) % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
-              /* const */ long to_ec_nsecs =
+              const long to_ec_nsecs =
                 ACE_static_cast (long, ec_recv - creation);
               ACE_Time_Value to_ec (to_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
-                                    (ACE_U64_TO_U32 (to_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
+                                    (ACE_CU64_TO_CU32 (to_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
-              /* const */ ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
+              const ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
               ACE_Time_Value in_ec ((long) (in_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
-                                    (long) (ACE_U64_TO_U32 (in_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
+                                    (long) (ACE_CU64_TO_CU32 (in_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
-              /* const */ ACE_hrtime_t from_ec_nsecs = now - ec_send;
+              const ACE_hrtime_t from_ec_nsecs = now - ec_send;
               ACE_Time_Value from_ec ((long) (from_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
-                                      (long) (ACE_U64_TO_U32 (from_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
+                                      (long) (ACE_CU64_TO_CU32 (from_ec_nsecs) % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
               if (! shutting_down)
                 {
@@ -447,9 +445,9 @@ Latency_Supplier::disconnect_push_supplier (CORBA::Environment &)
 int
 Latency_Supplier::start_generating_events (void)
 {
-  /* const */ ACE_hrtime_t now = ACE_OS::gethrtime ();
+  const ACE_hrtime_t now = ACE_OS::gethrtime ();
   test_start_time_.set (ACE_static_cast (long, now / 1000000000),
-                        ACE_static_cast (long, (ACE_U64_TO_U32 (now) % 1000000000) / 1000));
+                        ACE_static_cast (long, (ACE_CU64_TO_CU32 (now) % 1000000000) / 1000));
 
   TAO_TRY
     {
@@ -609,7 +607,7 @@ Latency_Supplier::shutdown (void)
 {
   shutting_down = 1;
 
-  #if defined (quantify)
+#if defined (quantify)
     // Need to stop recording here even if testing for jitter, because
     // recording is still probably enabled.
     quantify_stop_recording_data ();
@@ -617,11 +615,11 @@ Latency_Supplier::shutdown (void)
       {
         ACE_DEBUG ((LM_DEBUG, "(%t) stopped Quantify recording\n"));
       }
-  #endif /* quantify */
+#endif /* quantify */
 
-  /* const */ ACE_hrtime_t now = ACE_OS::gethrtime ();
+  const ACE_hrtime_t now = ACE_OS::gethrtime ();
   test_stop_time_.set (ACE_static_cast (long, now / ACE_ONE_SECOND_IN_NSECS),
-                       ACE_static_cast (long, (ACE_U64_TO_U32 (now) % ACE_ONE_SECOND_IN_NSECS) / 1000));
+                       ACE_static_cast (long, (ACE_CU64_TO_CU32 (now) % ACE_ONE_SECOND_IN_NSECS) / 1000));
 
   static int total_iterations = 1;
   if (--total_iterations > 0)
@@ -899,13 +897,13 @@ main (int argc, char *argv [])
                               -1);
         }
 
-  #if defined (quantify)
+#if defined (quantify)
       if (! measure_jitter)
         {
           ACE_DEBUG ((LM_DEBUG, "(%t) start Quantify recording\n"));
           quantify_start_recording_data ();
         }
-  #endif /* quantify */
+#endif /* quantify */
 
       // Tell supplier(s) to generate events.
       for (i = 0; i < suppliers; ++i)
