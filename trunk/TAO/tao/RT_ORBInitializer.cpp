@@ -19,14 +19,28 @@ ACE_RCSID (tao, RT_ORBInitializer, "$Id$")
 void
 TAO_RT_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_ENV_ARG_DEFN;
+
   // Sets the name of the Protocol_Hooks to be the RT_Protocols_Hooks.
   TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
 
   // Set the Priority_Mapping_Manager
-  TAO_Priority_Mapping_Manager *manager = new TAO_Priority_Mapping_Manager;
+  TAO_Priority_Mapping_Manager *manager = 0;
+
+  ACE_NEW_THROW_EX (manager,
+                    TAO_Priority_Mapping_Manager,
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+  TAO_Priority_Mapping_Manager_var safe_manager = manager;
+
   TAO_ORB_Core::priority_mapping_manager (manager);
 
   // Sets the client_protocol policy.
@@ -66,7 +80,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
   ACE_NEW_THROW_EX (temp_factory,
                     TAO_RT_PolicyFactory,
                     CORBA::NO_MEMORY (
-					CORBA::SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                          TAO_DEFAULT_MINOR_CODE,
                          ENOMEM),
                       CORBA::COMPLETED_NO));

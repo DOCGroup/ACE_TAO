@@ -64,7 +64,8 @@ const char * TAO_ORB_Core::dynamic_adapter_name_ = "Dynamic_Adapter";
 const char * TAO_ORB_Core::ifr_client_adapter_name_ = "IFR_Client_Adapter";
 
 #if (TAO_HAS_RT_CORBA == 1)
-CORBA::Object_ptr TAO_ORB_Core::priority_mapping_manager_ = 0;
+CORBA::Object_ptr TAO_ORB_Core::priority_mapping_manager_ =
+  CORBA::Object::_nil ();
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
@@ -141,7 +142,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     client_priority_policy_selector_ (0),
     rt_orb_ (0),
     rt_current_ (0),
-    //    priority_mapping_manager_ (0),
 #endif /* TAO_HAS_RT_CORBA == 1 */
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
@@ -254,7 +254,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->client_priority_policy_selector_;
   // delete this->rt_orb_;
   // delete this->rt_current_;
-  //  delete this->priority_mapping_manager_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -1094,6 +1093,8 @@ TAO_ORB_Core::fini (void)
 {
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
+
+  CORBA::release (TAO_ORB_Core::priority_mapping_manager_);
 
   CORBA::release (this->implrepo_service_);
 
@@ -2601,17 +2602,21 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 CORBA::Object_ptr
 TAO_ORB_Core::priority_mapping_manager (void)
 {
-  if (CORBA::is_nil (TAO_ORB_Core::priority_mapping_manager_))
-    return TAO_ORB_Core::priority_mapping_manager_;
-  else
-    return CORBA::Object::_nil ();
+  return
+    CORBA::Object::_duplicate (TAO_ORB_Core::priority_mapping_manager_);
 }
 
 void
 TAO_ORB_Core::priority_mapping_manager (CORBA::Object_ptr manager)
 {
-  TAO_ORB_Core::priority_mapping_manager_ =
-    CORBA::Object::_duplicate (manager);
+  if (TAO_ORB_Core::priority_mapping_manager_ != manager)
+    {
+      // Release the old reference before setting the new one.
+      CORBA::release (TAO_ORB_Core::priority_mapping_manager_);
+
+      TAO_ORB_Core::priority_mapping_manager_ =
+        CORBA::Object::_duplicate (manager);
+    }
 }
 
 CORBA::Policy *
