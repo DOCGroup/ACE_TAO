@@ -3,6 +3,7 @@
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Pipeline.h"
+#include "JAWS/Pipeline_Tasks.h"
 #include "JAWS/Policy.h"
 #include "JAWS/Data_Block.h"
 
@@ -34,7 +35,6 @@ JAWS_Concurrency_Base::svc (void)
       // threading strategy can delete a thread if there is nothing to
       // do.  Carefully think how to implement it so you don't leave
       // yourself with 0 threads.
-
       result = this->getq (mb);
 
       // Use a NULL message block to indicate that the thread should shut
@@ -44,46 +44,65 @@ JAWS_Concurrency_Base::svc (void)
 
       db = ACE_dynamic_cast (JAWS_Data_Block *, mb->data_block ());
       policy = db->policy ();
-      handler = db->io_handler ();
-      task = handler->task ();
+
+      // Each time we iterate, we create a handler to maintain
+      // our state for us.
+      handler = policy->ioh_factory ()->create_io_handler ();
+      if (handler == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "JAWS_Server::open, can't create handler\n"));
+          return -1;
+        }
+
+      // Set the initial task in the handler
+      handler->task (db->task ());
+
+      // Thread specific message block
+      JAWS_Data_Block ts_db;
+      ACE_Message_Block ts_mb (&ts_db);
+
+      ts_db.task (db->task ());
+      ts_db.policy  (db->policy ());
+      ts_db.io_handler (handler);
 
       do
         {
-          task = db->task ();
-
-          while (task != 0)
-            {
-              result = task->put (mb);
-              switch (result)
-                {
-                case 0:
-                  // everything went fine, take the next task
-                  // task = task->next ();
-                  break;
-                case 1:
-                  // need to wait for an asynchronous event
-                  // I don't know how to do this yet, so pretend it's
-                  // an error
-                  result = -1;
-                  break;
-                default:
-                  // definately something wrong.
-                  ACE_ERROR ((LM_ERROR, "%p\n",
-                              "JAWS_Concurrency_Base::svc"));
-                  break;
-                }
-
-              if (result == -1)
-                break;
-            }
+          //  handler maintains the state of the protocol
+          task = handler->task ();
 
           // Use a NULL task to make the thread recycle now
           if (task == 0)
             break;
 
+          // the task should set the handler to the appropriate next step
+          result = task->put (&ts_mb);
+
+          if (result == 1)
+            {
+              ACE_TRACE (("%p\n", "JAWS_Concurrency_Base::svc, waiting"));
+              // need to wait for an asynchronous event
+              // I don't know how to do this yet, so pretend it's
+              // an error
+
+              // handler = wait for completion ();
+              // db->io_handler (handler);
+              // result = 0;
+              result = -1;
+            }
+
+          if (result == -1)
+            {
+              // definately something wrong.
+              ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc"));
+              break;
+            }
+
         }
       while (result == 0);
+
+      policy->ioh_factory ()->destroy_io_handler (handler);
     }
+
   return 0;
 }
 

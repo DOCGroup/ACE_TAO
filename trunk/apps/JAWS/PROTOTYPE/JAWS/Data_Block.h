@@ -10,9 +10,7 @@
 class JAWS_IO_Handler;
 class JAWS_Dispatch_Policy;
 class JAWS_Data_Block;
-
-typedef JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
-        JAWS_Pipeline_Handler;
+class JAWS_Pipeline_Handler;
 
 class JAWS_Data_Block : public ACE_Data_Block
 // = TITLE
