@@ -52,13 +52,16 @@ INTDIR=.\Release
 ALL : "$(OUTDIR)\jaws.exe"
 
 CLEAN : 
+	-@erase "$(INTDIR)\HTTP_Config.obj"
 	-@erase "$(INTDIR)\HTTP_Handler.obj"
 	-@erase "$(INTDIR)\HTTP_Helpers.obj"
 	-@erase "$(INTDIR)\HTTP_Request.obj"
+	-@erase "$(INTDIR)\HTTP_Response.obj"
 	-@erase "$(INTDIR)\HTTP_Server.obj"
 	-@erase "$(INTDIR)\IO.obj"
+	-@erase "$(INTDIR)\JAWS_File.obj"
 	-@erase "$(INTDIR)\main.obj"
-	-@erase "$(INTDIR)\VFS.obj"
+	-@erase "$(INTDIR)\Parse_Headers.obj"
 	-@erase "$(OUTDIR)\jaws.exe"
 
 "$(INTDIR)" :
@@ -86,13 +89,16 @@ LINK32_FLAGS=wsock32.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no\
  /pdb:"$(OUTDIR)/jaws.pdb" /machine:I386 /out:"$(OUTDIR)/jaws.exe" 
 LINK32_OBJS= \
+	"$(INTDIR)\HTTP_Config.obj" \
 	"$(INTDIR)\HTTP_Handler.obj" \
 	"$(INTDIR)\HTTP_Helpers.obj" \
 	"$(INTDIR)\HTTP_Request.obj" \
+	"$(INTDIR)\HTTP_Response.obj" \
 	"$(INTDIR)\HTTP_Server.obj" \
 	"$(INTDIR)\IO.obj" \
+	"$(INTDIR)\JAWS_File.obj" \
 	"$(INTDIR)\main.obj" \
-	"$(INTDIR)\VFS.obj"
+	"$(INTDIR)\Parse_Headers.obj"
 
 "$(OUTDIR)\jaws.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -117,15 +123,18 @@ INTDIR=.\Debug
 ALL : "$(OUTDIR)\jaws.exe"
 
 CLEAN : 
+	-@erase "$(INTDIR)\HTTP_Config.obj"
 	-@erase "$(INTDIR)\HTTP_Handler.obj"
 	-@erase "$(INTDIR)\HTTP_Helpers.obj"
 	-@erase "$(INTDIR)\HTTP_Request.obj"
+	-@erase "$(INTDIR)\HTTP_Response.obj"
 	-@erase "$(INTDIR)\HTTP_Server.obj"
 	-@erase "$(INTDIR)\IO.obj"
+	-@erase "$(INTDIR)\JAWS_File.obj"
 	-@erase "$(INTDIR)\main.obj"
+	-@erase "$(INTDIR)\Parse_Headers.obj"
 	-@erase "$(INTDIR)\vc40.idb"
 	-@erase "$(INTDIR)\vc40.pdb"
-	-@erase "$(INTDIR)\VFS.obj"
 	-@erase "$(OUTDIR)\jaws.exe"
 	-@erase "$(OUTDIR)\jaws.ilk"
 	-@erase "$(OUTDIR)\jaws.pdb"
@@ -155,13 +164,16 @@ LINK32_FLAGS=wsock32.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/jaws.pdb" /debug /machine:I386 /out:"$(OUTDIR)/jaws.exe" 
 LINK32_OBJS= \
+	"$(INTDIR)\HTTP_Config.obj" \
 	"$(INTDIR)\HTTP_Handler.obj" \
 	"$(INTDIR)\HTTP_Helpers.obj" \
 	"$(INTDIR)\HTTP_Request.obj" \
+	"$(INTDIR)\HTTP_Response.obj" \
 	"$(INTDIR)\HTTP_Server.obj" \
 	"$(INTDIR)\IO.obj" \
+	"$(INTDIR)\JAWS_File.obj" \
 	"$(INTDIR)\main.obj" \
-	"$(INTDIR)\VFS.obj"
+	"$(INTDIR)\Parse_Headers.obj"
 
 "$(OUTDIR)\jaws.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -213,63 +225,9 @@ DEP_CPP_MAIN_=\
 	"..\..\JAWS/server/HTTP_Server.h"\
 	"..\..\JAWS/server/HTTP_Server_T.cpp"\
 	"..\..\JAWS/server/HTTP_Server_T.h"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-
-"$(INTDIR)\main.obj" : $(SOURCE) $(DEP_CPP_MAIN_) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
-
-DEP_CPP_MAIN_=\
-	"..\..\JAWS/server/HTTP_Handler.h"\
-	"..\..\JAWS/server/HTTP_Request.h"\
-	"..\..\JAWS/server/HTTP_Server.h"\
-	"..\..\JAWS/server/HTTP_Server_T.cpp"\
-	"..\..\JAWS/server/HTTP_Server_T.h"\
+	"..\..\JAWS/server/IO.h"\
+	".\HTTP_Response.h"\
+	".\Parse_Headers.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -281,12 +239,22 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Dynamic.h"\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -332,9 +300,6 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Set.cpp"\
-	{$(INCLUDE)}"\ace\Set.h"\
-	{$(INCLUDE)}"\ace\Set.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
@@ -349,9 +314,156 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Stack.cpp"\
-	{$(INCLUDE)}"\ace\Stack.h"\
-	{$(INCLUDE)}"\ace\Stack.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
+	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
+	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Task.h"\
+	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
+	{$(INCLUDE)}"\ace\Timer_List.h"\
+	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_List_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
+	{$(INCLUDE)}"\ace\Token.h"\
+	{$(INCLUDE)}"\ace\Token.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\main.obj" : $(SOURCE) $(DEP_CPP_MAIN_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
+
+DEP_CPP_MAIN_=\
+	"..\..\JAWS/server/HTTP_Handler.h"\
+	"..\..\JAWS/server/HTTP_Request.h"\
+	"..\..\JAWS/server/HTTP_Server.h"\
+	"..\..\JAWS/server/HTTP_Server_T.cpp"\
+	"..\..\JAWS/server/HTTP_Server_T.h"\
+	"..\..\JAWS/server/IO.h"\
+	".\HTTP_Response.h"\
+	".\Parse_Headers.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Asynch_IO.h"\
+	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\Local_Tokens.h"\
+	{$(INCLUDE)}"\ace\Local_Tokens.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Pipe.h"\
+	{$(INCLUDE)}"\ace\Pipe.i"\
+	{$(INCLUDE)}"\ace\Proactor.h"\
+	{$(INCLUDE)}"\ace\Proactor.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\ReactorEx.h"\
+	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Service_Object.h"\
+	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Shared_Object.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
@@ -417,7 +529,34 @@ SOURCE=.\HTTP_Helpers.cpp
 
 DEP_CPP_HTTP_=\
 	"..\..\JAWS/server/HTTP_Helpers.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\HTTP_Helpers.obj" : $(SOURCE) $(DEP_CPP_HTTP_) "$(INTDIR)"
@@ -475,41 +614,18 @@ DEP_CPP_HTTP_H=\
 	"..\..\JAWS/server/HTTP_Helpers.h"\
 	"..\..\JAWS/server/HTTP_Request.h"\
 	"..\..\JAWS/server/IO.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-
-"$(INTDIR)\HTTP_Handler.obj" : $(SOURCE) $(DEP_CPP_HTTP_H) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
-
-DEP_CPP_HTTP_H=\
-	"..\..\JAWS/server/HTTP_Handler.h"\
-	"..\..\JAWS/server/HTTP_Helpers.h"\
-	"..\..\JAWS/server/HTTP_Request.h"\
-	"..\..\JAWS/server/IO.h"\
+	".\HTTP_Response.h"\
+	".\JAWS_File.h"\
+	".\Parse_Headers.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -529,9 +645,67 @@ DEP_CPP_HTTP_H=\
 	{$(INCLUDE)}"\ace\Message_Block.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Set.cpp"\
-	{$(INCLUDE)}"\ace\Set.h"\
-	{$(INCLUDE)}"\ace\Set.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\HTTP_Handler.obj" : $(SOURCE) $(DEP_CPP_HTTP_H) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
+
+DEP_CPP_HTTP_H=\
+	"..\..\JAWS/server/HTTP_Handler.h"\
+	"..\..\JAWS/server/HTTP_Helpers.h"\
+	"..\..\JAWS/server/HTTP_Request.h"\
+	"..\..\JAWS/server/IO.h"\
+	".\HTTP_Response.h"\
+	".\JAWS_File.h"\
+	".\Parse_Headers.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Asynch_IO.h"\
+	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
@@ -566,71 +740,9 @@ SOURCE=.\IO.cpp
 !IF  "$(CFG)" == "jaws - Win32 Release"
 
 DEP_CPP_IO_CP=\
-	"..\..\JAWS/server/HTTP_Handler.h"\
 	"..\..\JAWS/server/HTTP_Helpers.h"\
-	"..\..\JAWS/server/HTTP_Request.h"\
 	"..\..\JAWS/server/IO.h"\
-	"..\..\JAWS/server/JXH_List.h"\
-	"..\..\JAWS/server/VFS.h"\
-	"..\..\JAWS/server/VFS_T.cpp"\
-	"..\..\JAWS/server/VFS_T.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-
-"$(INTDIR)\IO.obj" : $(SOURCE) $(DEP_CPP_IO_CP) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
-
-DEP_CPP_IO_CP=\
-	"..\..\JAWS/server/HTTP_Handler.h"\
-	"..\..\JAWS/server/HTTP_Helpers.h"\
-	"..\..\JAWS/server/HTTP_Request.h"\
-	"..\..\JAWS/server/IO.h"\
-	"..\..\JAWS/server/JXH_List.h"\
-	"..\..\JAWS/server/VFS.h"\
-	"..\..\JAWS/server/VFS_T.cpp"\
-	"..\..\JAWS/server/VFS_T.h"\
+	".\JAWS_File.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -639,6 +751,9 @@ DEP_CPP_IO_CP=\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
@@ -662,14 +777,77 @@ DEP_CPP_IO_CP=\
 	{$(INCLUDE)}"\ace\Message_Block.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Set.cpp"\
-	{$(INCLUDE)}"\ace\Set.h"\
-	{$(INCLUDE)}"\ace\Set.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\IO.obj" : $(SOURCE) $(DEP_CPP_IO_CP) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
+
+DEP_CPP_IO_CP=\
+	"..\..\JAWS/server/HTTP_Helpers.h"\
+	"..\..\JAWS/server/IO.h"\
+	".\JAWS_File.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Asynch_IO.h"\
+	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_IO.h"\
@@ -703,60 +881,43 @@ DEP_CPP_IO_CP=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\VFS.cpp
+SOURCE=.\HTTP_Request.cpp
 
 !IF  "$(CFG)" == "jaws - Win32 Release"
 
-DEP_CPP_VFS_C=\
+DEP_CPP_HTTP_R=\
 	"..\..\JAWS/server/HTTP_Helpers.h"\
-	"..\..\JAWS/server/JXH_List.h"\
-	"..\..\JAWS/server/VFS.h"\
-	"..\..\JAWS/server/VFS_T.cpp"\
-	"..\..\JAWS/server/VFS_T.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	
-
-"$(INTDIR)\VFS.obj" : $(SOURCE) $(DEP_CPP_VFS_C) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
-
-DEP_CPP_VFS_C=\
-	"..\..\JAWS/server/HTTP_Helpers.h"\
-	"..\..\JAWS/server/JXH_List.h"\
-	"..\..\JAWS/server/VFS.h"\
-	"..\..\JAWS/server/VFS_T.cpp"\
-	"..\..\JAWS/server/VFS_T.h"\
+	"..\..\JAWS/server/HTTP_Request.h"\
+	".\HTTP_Config.h"\
+	".\Parse_Headers.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
@@ -775,57 +936,58 @@ DEP_CPP_VFS_C=\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
-"$(INTDIR)\VFS.obj" : $(SOURCE) $(DEP_CPP_VFS_C) "$(INTDIR)"
-
-
-!ENDIF 
-
-# End Source File
-################################################################################
-# Begin Source File
-
-SOURCE=.\HTTP_Request.cpp
-
-!IF  "$(CFG)" == "jaws - Win32 Release"
-
-DEP_CPP_HTTP_R=\
-	"..\..\JAWS/server/HTTP_Request.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-
 "$(INTDIR)\HTTP_Request.obj" : $(SOURCE) $(DEP_CPP_HTTP_R) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
 
 DEP_CPP_HTTP_R=\
+	"..\..\JAWS/server/HTTP_Helpers.h"\
 	"..\..\JAWS/server/HTTP_Request.h"\
+	".\HTTP_Config.h"\
+	".\Parse_Headers.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
@@ -850,89 +1012,8 @@ DEP_CPP_HTTP_S=\
 	"..\..\JAWS/server/HTTP_Server_T.cpp"\
 	"..\..\JAWS/server/HTTP_Server_T.h"\
 	"..\..\JAWS/server/IO.h"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Asynch_Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Asynch_Acceptor.h"\
-	{$(INCLUDE)}"\ace\Asynch_Acceptor.i"\
-	{$(INCLUDE)}"\ace\Asynch_IO.h"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Proactor.h"\
-	{$(INCLUDE)}"\ace\Proactor.i"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Set.cpp"\
-	{$(INCLUDE)}"\ace\Set.h"\
-	{$(INCLUDE)}"\ace\Set.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap.h"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
-	{$(INCLUDE)}"\ace\Timer_List.h"\
-	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_List_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-
-"$(INTDIR)\HTTP_Server.obj" : $(SOURCE) $(DEP_CPP_HTTP_S) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
-
-DEP_CPP_HTTP_S=\
-	"..\..\JAWS/server/HTTP_Handler.h"\
-	"..\..\JAWS/server/HTTP_Request.h"\
-	"..\..\JAWS/server/HTTP_Server.h"\
-	"..\..\JAWS/server/HTTP_Server_T.cpp"\
-	"..\..\JAWS/server/HTTP_Server_T.h"\
-	"..\..\JAWS/server/IO.h"\
+	".\HTTP_Response.h"\
+	".\Parse_Headers.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -947,14 +1028,24 @@ DEP_CPP_HTTP_S=\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Dynamic.h"\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -1000,9 +1091,6 @@ DEP_CPP_HTTP_S=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Set.cpp"\
-	{$(INCLUDE)}"\ace\Set.h"\
-	{$(INCLUDE)}"\ace\Set.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
@@ -1017,9 +1105,161 @@ DEP_CPP_HTTP_S=\
 	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\Stack.cpp"\
-	{$(INCLUDE)}"\ace\Stack.h"\
-	{$(INCLUDE)}"\ace\Stack.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
+	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
+	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Task.h"\
+	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap.h"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Heap_T.h"\
+	{$(INCLUDE)}"\ace\Timer_List.h"\
+	{$(INCLUDE)}"\ace\Timer_List_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_List_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Timer_Wheel.h"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Wheel_T.h"\
+	{$(INCLUDE)}"\ace\Token.h"\
+	{$(INCLUDE)}"\ace\Token.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\HTTP_Server.obj" : $(SOURCE) $(DEP_CPP_HTTP_S) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "jaws - Win32 Debug"
+
+DEP_CPP_HTTP_S=\
+	"..\..\JAWS/server/HTTP_Handler.h"\
+	"..\..\JAWS/server/HTTP_Request.h"\
+	"..\..\JAWS/server/HTTP_Server.h"\
+	"..\..\JAWS/server/HTTP_Server_T.cpp"\
+	"..\..\JAWS/server/HTTP_Server_T.h"\
+	"..\..\JAWS/server/IO.h"\
+	".\HTTP_Response.h"\
+	".\Parse_Headers.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Asynch_Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Asynch_Acceptor.h"\
+	{$(INCLUDE)}"\ace\Asynch_Acceptor.i"\
+	{$(INCLUDE)}"\ace\Asynch_IO.h"\
+	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\Local_Tokens.h"\
+	{$(INCLUDE)}"\ace\Local_Tokens.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Pipe.h"\
+	{$(INCLUDE)}"\ace\Pipe.i"\
+	{$(INCLUDE)}"\ace\Proactor.h"\
+	{$(INCLUDE)}"\ace\Proactor.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\ReactorEx.h"\
+	{$(INCLUDE)}"\ace\ReactorEx.i"\
+	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Service_Object.h"\
+	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Shared_Object.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
@@ -1074,6 +1314,153 @@ DEP_CPP_HTTP_S=\
 
 
 !ENDIF 
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\HTTP_Config.cpp
+DEP_CPP_HTTP_C=\
+	".\HTTP_Config.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\HTTP_Config.obj" : $(SOURCE) $(DEP_CPP_HTTP_C) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\JAWS_File.cpp
+DEP_CPP_JAWS_=\
+	".\JAWS_File.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\JAWS_File.obj" : $(SOURCE) $(DEP_CPP_JAWS_) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\HTTP_Response.cpp
+DEP_CPP_HTTP_RE=\
+	"..\..\JAWS/server/HTTP_Helpers.h"\
+	"..\..\JAWS/server/HTTP_Request.h"\
+	"..\..\JAWS/server/IO.h"\
+	".\HTTP_Config.h"\
+	".\HTTP_Response.h"\
+	".\Parse_Headers.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Asynch_IO.h"\
+	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Process.h"\
+	{$(INCLUDE)}"\ace\Process.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\HTTP_Response.obj" : $(SOURCE) $(DEP_CPP_HTTP_RE) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\Parse_Headers.cpp
+DEP_CPP_PARSE=\
+	".\Parse_Headers.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\Parse_Headers.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
+
 
 # End Source File
 # End Target
