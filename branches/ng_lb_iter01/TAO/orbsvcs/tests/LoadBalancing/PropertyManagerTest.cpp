@@ -137,7 +137,7 @@ PropertyManagerTest::set_default_properties (void)
       minimum_number_replicas.nam[0].id =
         CORBA::string_dup ("MinimumNumberReplicas");
       minimum_number_replicas.val <<= MIN_NUM_REPLICAS;
-      
+
 
       // Default factories (simulated locations)
       LoadBalancing::Property &factories =
@@ -204,7 +204,7 @@ PropertyManagerTest::set_default_properties (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;
@@ -251,7 +251,7 @@ PropertyManagerTest::test_invalid_property (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;
@@ -287,7 +287,7 @@ PropertyManagerTest::test_unsupported_property (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;
@@ -326,7 +326,7 @@ PropertyManagerTest::get_default_properties (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
 
@@ -381,7 +381,7 @@ PropertyManagerTest::remove_default_properties (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;
@@ -411,7 +411,7 @@ PropertyManagerTest::set_type_properties (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;
@@ -435,7 +435,7 @@ PropertyManagerTest::get_type_properties (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;
@@ -462,7 +462,7 @@ PropertyManagerTest::remove_type_properties (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;
@@ -490,7 +490,7 @@ PropertyManagerTest::set_properties_dynamically (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;
@@ -517,7 +517,7 @@ PropertyManagerTest::test_object_group_not_found (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;
@@ -542,7 +542,7 @@ PropertyManagerTest::get_properties (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("Caught unexpected exception:"));
- 
+
       return -1;
     }
   ACE_ENDTRY;

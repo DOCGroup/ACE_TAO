@@ -58,7 +58,8 @@ public:
       const char *type_id,
       const LoadBalancing::Criteria &the_criteria,
       LoadBalancing::GenericFactory::FactoryCreationId_out
-        factory_creation_id)
+        factory_creation_id,
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      LoadBalancing::NoFactory,
                      LoadBalancing::ObjectNotCreated,
@@ -70,7 +71,8 @@ public:
   /// corresponds to the given FactoryCreationId.
   virtual void delete_object (
      const LoadBalancing::GenericFactory::FactoryCreationId
-       &factory_creation_id)
+       &factory_creation_id,
+     CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      LoadBalancing::ObjectNotFound));
 
@@ -84,7 +86,7 @@ public:
   /// LoadBalancing::GenericFactory::FactoryCreationId type.
   typedef CORBA::ULong FactoryCreationId;
 
-  typedef ACE_Hash_Map_Manager_Ex<FactoryCreationId, PortableServer::ObjectId *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex> Table;
+  typedef ACE_Hash_Map_Manager_Ex<FactoryCreationId, PortableServer::ObjectId, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex> Table;
 
 private:
 
@@ -101,14 +103,15 @@ private:
    * This method also binds the generated FactoryCreationId to the
    * ObjectId in the underlying table.
    */
-  FactoryCreationId bind_fcid (PortableServer::ObjectId *oid,
+  FactoryCreationId bind_fcid (const PortableServer::ObjectId &oid,
                                CORBA::Environment &ACE_TRY_ENV);
 
   /// Unbind the ObjectId associated with the given
   /// FactoryCreationId from the underlying table.  The ObjectId is
   /// returned as an "out" argument.
-  void unbind_fcid (FactoryCreationId &fcid,
-                    PortableServer::ObjectId_out oid);
+  void unbind_fcid (const FactoryCreationId &fcid,
+                    PortableServer::ObjectId_out oid,
+                    CORBA::Environment &ACE_TRY_ENV);
 
 private:
 
@@ -116,10 +119,10 @@ private:
   CORBA::ORB_var orb_;
 
   /// Reference to the RootPOA.
-  PortableServer::POA_ptr root_poa_;
+  PortableServer::POA_var root_poa_;
 
   /// POA responsible for creation of the replica references.
-  PortableServer::POA_ptr poa_;
+  PortableServer::POA_var poa_;
 
   /// The shared Hasher servant.
   /*
