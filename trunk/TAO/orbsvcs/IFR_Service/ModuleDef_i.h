@@ -10,7 +10,7 @@
 //    ModuleDef_i.h
 //
 // = DESCRIPTION
-//    IR::ModuleDef servant class.
+//    IR_ModuleDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -50,7 +50,7 @@ public:
   virtual ~TAO_ModuleDef_i (void);
   // Destructor
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -71,14 +71,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual IR::Contained::Description *describe (
+  virtual IR_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual IR::Contained::Description *describe_i (
+  virtual IR_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

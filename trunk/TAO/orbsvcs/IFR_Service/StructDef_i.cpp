@@ -22,11 +22,11 @@ TAO_StructDef_i::~TAO_StructDef_i (void)
 {
 }
 
-IR::DefinitionKind
+IR_DefinitionKind
 TAO_StructDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return IR::dk_Struct;
+  return dk_Struct;
 }
 
 void 
@@ -74,7 +74,7 @@ TAO_StructDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
                                             "name",
                                             name);
 
-  IR::StructMemberSeq_var members = this->members_i (ACE_TRY_ENV);
+  IR_StructMemberSeq_var members = this->members_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_struct_tc (id.c_str (),
@@ -83,7 +83,7 @@ TAO_StructDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
                                                        ACE_TRY_ENV);
 }
 
-IR::StructMemberSeq *
+IR_StructMemberSeq *
 TAO_StructDef_i::members (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -92,11 +92,11 @@ TAO_StructDef_i::members (CORBA::Environment &ACE_TRY_ENV)
   return this->members_i (ACE_TRY_ENV);
 }
 
-IR::StructMemberSeq *
+IR_StructMemberSeq *
 TAO_StructDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_Unbounded_Queue<IR::DefinitionKind> kind_queue;
+  ACE_Unbounded_Queue<IR_DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;
   ACE_Unbounded_Queue<ACE_TString> name_queue;
 
@@ -149,8 +149,8 @@ TAO_StructDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
                                                      "def_kind",
                                                      kind);
 
-          IR::DefinitionKind def_kind = 
-            ACE_static_cast (IR::DefinitionKind, kind);
+          IR_DefinitionKind def_kind = 
+            ACE_static_cast (IR_DefinitionKind, kind);
 
           kind_queue.enqueue_tail (def_kind);
         }
@@ -158,18 +158,18 @@ TAO_StructDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
 
   size_t size = kind_queue.size ();
                     
-  IR::StructMemberSeq *members = 0;
+  IR_StructMemberSeq *members = 0;
   ACE_NEW_THROW_EX (members,
-                    IR::StructMemberSeq (size),
+                    IR_StructMemberSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   members->length (size);
 
-  IR::StructMemberSeq_var retval = members;
+  IR_StructMemberSeq_var retval = members;
 
   ACE_TString name, path;
-  IR::DefinitionKind kind = IR::dk_none;
+  IR_DefinitionKind kind = dk_none;
   CORBA::Object_var obj;
   ACE_Configuration_Section_Key member_key;
   TAO_IDLType_i *impl = 0;
@@ -190,7 +190,7 @@ TAO_StructDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
                                                         ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     
-      retval[k].type_def = IR::IDLType::_narrow (obj.in (),
+      retval[k].type_def = IR_IDLType::_narrow (obj.in (),
                                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
@@ -214,7 +214,7 @@ TAO_StructDef_i::members_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void 
-TAO_StructDef_i::members (const IR::StructMemberSeq &members,
+TAO_StructDef_i::members (const IR_StructMemberSeq &members,
                           CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -225,7 +225,7 @@ TAO_StructDef_i::members (const IR::StructMemberSeq &members,
 }
 
 void 
-TAO_StructDef_i::members_i (const IR::StructMemberSeq &members,
+TAO_StructDef_i::members_i (const IR_StructMemberSeq &members,
                             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

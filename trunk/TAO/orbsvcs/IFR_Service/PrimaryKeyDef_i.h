@@ -10,7 +10,7 @@
 //    PrimaryKeyDef_i.h
 //
 // = DESCRIPTION
-//    IR::PrimaryKeyDef servant class.
+//    IR_PrimaryKeyDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -51,7 +51,7 @@ public:
   virtual ~TAO_PrimaryKeyDef_i (void);
   // Destructor
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -71,14 +71,14 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::Contained::Description *describe (
+  virtual IR_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual IR::Contained::Description *describe_i (
+  virtual IR_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -99,13 +99,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::ValueDef_ptr primary_key (
+  virtual IR_ValueDef_ptr primary_key (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::ValueDef_ptr primary_key_i (
+  IR_ValueDef_ptr primary_key_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

@@ -10,7 +10,7 @@
 //    ArrayDef_i.h
 //
 // = DESCRIPTION
-//    IR::ArrayDef servant class.
+//    IR_ArrayDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -49,7 +49,7 @@ public:
   virtual ~TAO_ArrayDef_i (void);
   // Destructor
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -119,27 +119,27 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::IDLType_ptr element_type_def (
+  virtual IR_IDLType_ptr element_type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::IDLType_ptr element_type_def_i (
+  IR_IDLType_ptr element_type_def_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void element_type_def (
-      IR::IDLType_ptr element_type_def,
+      IR_IDLType_ptr element_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void element_type_def_i (
-      IR::IDLType_ptr element_type_def,
+      IR_IDLType_ptr element_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

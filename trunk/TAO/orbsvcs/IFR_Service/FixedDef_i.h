@@ -10,7 +10,7 @@
 //    FixedDef_i.h
 //
 // = DESCRIPTION
-//    IR::FixedDef servant class.
+//    IR_FixedDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -49,7 +49,7 @@ public:
   virtual ~TAO_FixedDef_i (void);
   // Destructor
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )

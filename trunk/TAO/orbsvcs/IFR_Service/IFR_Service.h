@@ -97,7 +97,7 @@ protected:
   TAO_Repository_i *repo_impl_;
   // The IFR implementation instance.
 
-  IR::Repository_ptr repository_;
+  IR_Repository_ptr repository_;
   // The Interface Repository object reference.
 
   CORBA::String_var ifr_ior_;

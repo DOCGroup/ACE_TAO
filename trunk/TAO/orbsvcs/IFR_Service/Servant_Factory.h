@@ -66,7 +66,7 @@ public:
                                       CORBA::Environment &ACE_TRY_ENV);
   // Used by the servant locator to create a servant.
 
-  CORBA::Object_ptr create_objref (IR::DefinitionKind def_kind,
+  CORBA::Object_ptr create_objref (IR_DefinitionKind def_kind,
                                    const char *obj_id,
                                    CORBA::Environment &ACE_TRY_ENV);
   // Used to create return values.

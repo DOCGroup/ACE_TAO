@@ -19,11 +19,11 @@ TAO_WstringDef_i::~TAO_WstringDef_i (void)
 {
 }
 
-IR::DefinitionKind
+IR_DefinitionKind
 TAO_WstringDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return IR::dk_Wstring;
+  return dk_Wstring;
 }
 
 void 

@@ -10,7 +10,7 @@
 //    HomeDef_i.h
 //
 // = DESCRIPTION
-//    IR::HomeDef servant class.
+//    IR_HomeDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -49,7 +49,7 @@ public:
   virtual ~TAO_HomeDef_i (void);
   // Destructor  
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -69,14 +69,14 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::Contained::Description *describe (
+  virtual IR_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual IR::Contained::Description *describe_i (
+  virtual IR_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -97,61 +97,61 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual IR::HomeDef_ptr base_home (
+  virtual IR_HomeDef_ptr base_home (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::HomeDef_ptr base_home_i (
+  IR_HomeDef_ptr base_home_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::ComponentDef_ptr managed_component (
+  virtual IR_ComponentDef_ptr managed_component (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::ComponentDef_ptr managed_component_i (
+  IR_ComponentDef_ptr managed_component_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::PrimaryKeyDef_ptr primary_key (
+  virtual IR_PrimaryKeyDef_ptr primary_key (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::PrimaryKeyDef_ptr primary_key_i (
+  IR_PrimaryKeyDef_ptr primary_key_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::FactoryDefSeq *factories (
+  virtual IR_FactoryDefSeq *factories (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::FactoryDefSeq *factories_i (
+  IR_FactoryDefSeq *factories_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::FinderDefSeq *finders (
+  virtual IR_FinderDefSeq *finders (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::FinderDefSeq *finders_i (
+  IR_FinderDefSeq *finders_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -169,65 +169,65 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::PrimaryKeyDef_ptr create_primary_key (
+  virtual IR_PrimaryKeyDef_ptr create_primary_key (
       const char *id,
       const char *name,
       const char *version,
-      IR::ValueDef_ptr primary_key,
+      IR_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::PrimaryKeyDef_ptr create_primary_key_i (
+  IR_PrimaryKeyDef_ptr create_primary_key_i (
       const char *id,
       const char *name,
       const char *version,
-      IR::ValueDef_ptr primary_key,
+      IR_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::FactoryDef_ptr create_factory (
+  virtual IR_FactoryDef_ptr create_factory (
       const char *id,
       const char *name,
       const char *version,
-      const IR::ParDescriptionSeq &params,
-      const IR::ExceptionDefSeq &exceptions,
+      const IR_ParDescriptionSeq &params,
+      const IR_ExceptionDefSeq &exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::FactoryDef_ptr create_factory_i (
+  IR_FactoryDef_ptr create_factory_i (
       const char *id,
       const char *name,
       const char *version,
-      const IR::ParDescriptionSeq &params,
-      const IR::ExceptionDefSeq &exceptions,
+      const IR_ParDescriptionSeq &params,
+      const IR_ExceptionDefSeq &exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::FinderDef_ptr create_finder (
+  virtual IR_FinderDef_ptr create_finder (
       const char *id,
       const char *name,
       const char *version,
-      const IR::ParDescriptionSeq &params,
-      const IR::ExceptionDefSeq &exceptions,
+      const IR_ParDescriptionSeq &params,
+      const IR_ExceptionDefSeq &exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::FinderDef_ptr create_finder_i (
+  IR_FinderDef_ptr create_finder_i (
       const char *id,
       const char *name,
       const char *version,
-      const IR::ParDescriptionSeq &params,
-      const IR::ExceptionDefSeq &exceptions,
+      const IR_ParDescriptionSeq &params,
+      const IR_ExceptionDefSeq &exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

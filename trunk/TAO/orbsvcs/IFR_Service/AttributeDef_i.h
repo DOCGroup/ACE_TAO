@@ -10,7 +10,7 @@
 //    AttributeDef_i.h
 //
 // = DESCRIPTION
-//    IR::AttributeDef servant class.
+//    IR_AttributeDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -50,21 +50,21 @@ public:
   virtual ~TAO_AttributeDef_i (void);
   // Destructor
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
-  virtual IR::Contained::Description *describe (
+  virtual IR_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual IR::Contained::Description *describe_i (
+  virtual IR_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -83,59 +83,59 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::IDLType_ptr type_def (
+  virtual IR_IDLType_ptr type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::IDLType_ptr type_def_i (
+  IR_IDLType_ptr type_def_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void type_def (
-      IR::IDLType_ptr type_def,
+      IR_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void type_def_i (
-      IR::IDLType_ptr type_def,
+      IR_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::AttributeMode mode (
+  virtual IR_AttributeMode mode (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::AttributeMode mode_i (
+  IR_AttributeMode mode_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void mode (
-      IR::AttributeMode mode,
+      IR_AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void mode_i (
-      IR::AttributeMode mode,
+      IR_AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::AttributeDescription make_description (
+  IR_AttributeDescription make_description (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -144,13 +144,13 @@ public:
   // making its own description.
 
   // These two are called by Contained::move().
-  IR::ExceptionDefSeq *get_exceptions (
+  IR_ExceptionDefSeq *get_exceptions (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::ExceptionDefSeq *put_exceptions (
+  IR_ExceptionDefSeq *put_exceptions (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

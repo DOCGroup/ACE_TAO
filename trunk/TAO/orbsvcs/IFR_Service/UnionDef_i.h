@@ -10,7 +10,7 @@
 //    UnionDef_i.h
 //
 // = DESCRIPTION
-//    IR::UnionDef servant class.
+//    IR_UnionDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -51,7 +51,7 @@ public:
   virtual ~TAO_UnionDef_i (void);
   // Destructor
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -97,53 +97,53 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::IDLType_ptr discriminator_type_def (
+  virtual IR_IDLType_ptr discriminator_type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::IDLType_ptr discriminator_type_def_i (
+  IR_IDLType_ptr discriminator_type_def_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void discriminator_type_def (
-      IR::IDLType_ptr discriminator_type_def,
+      IR_IDLType_ptr discriminator_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void discriminator_type_def_i (
-      IR::IDLType_ptr discriminator_type_def,
+      IR_IDLType_ptr discriminator_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::UnionMemberSeq *members (
+  virtual IR_UnionMemberSeq *members (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::UnionMemberSeq *members_i (
+  IR_UnionMemberSeq *members_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void members (
-      const IR::UnionMemberSeq &members,
+      const IR_UnionMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void members_i (
-      const IR::UnionMemberSeq &members,
+      const IR_UnionMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -152,7 +152,7 @@ public:
 private:
   void fetch_label (
       const ACE_Configuration_Section_Key member_key,
-      IR::UnionMember &member,
+      IR_UnionMember &member,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

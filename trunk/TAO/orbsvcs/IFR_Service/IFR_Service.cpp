@@ -16,7 +16,7 @@ IFR_Service::IFR_Service (void)
     ior_multicast_ (0),
     config_ (0),
     repo_impl_ (0),
-    repository_ (IR::Repository::_nil ())
+    repository_ (IR_Repository::_nil ())
 {
 }
 
