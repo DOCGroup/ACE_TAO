@@ -25,9 +25,6 @@
 // This is lock defines a monitor that is shared by all threads
 // calling certain ACE_OS methods.
 static ACE_Thread_Mutex ace_os_monitor_lock;
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-  static u_int ace_tss_cleanup_lock = ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK;
-#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 int 
@@ -974,7 +971,7 @@ public:
   // Free all key left in the table before destruct myself.
 
   static int lockable () { return instance_ != 0; }
-  // Indication of whether the ace_tss_cleanup_lock is usable, and
+  // Indication of whether the ACE_TSS_CLEANUP_LOCK is usable, and
   // therefore whether we are in static constructor/destructor phase
   // or not.
 
@@ -1040,7 +1037,9 @@ ACE_TSS_Cleanup::exit (void * /* status */)
   // ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
   //  ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
+#if 0
   int index = 0;
+#endif /* 0 */
 
   ACE_TSS_Info *key_info = 0;
   ACE_TSS_Info info_arr[ACE_DEFAULT_THREAD_KEYS];
@@ -1051,9 +1050,9 @@ ACE_TSS_Cleanup::exit (void * /* status */)
 
   {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-      (ace_tss_cleanup_lock);
-    if (lock == 0) return;
+    ACE_Thread_Mutex *lock =
+      ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+        (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
     ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock);
 #endif /* ACE_MT_SAFE */
 
@@ -1120,9 +1119,9 @@ ACE_TSS_Cleanup::exit (void * /* status */)
   // entries from ACE_TSS_Info table.
   {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-      (ace_tss_cleanup_lock);
-    if (lock == 0) return;
+    ACE_Thread_Mutex *lock =
+      ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+        (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
     ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock);
 #endif /* ACE_MT_SAFE */
 
@@ -1185,9 +1184,9 @@ ACE_TSS_Cleanup::instance (void)
     {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       // Insure that we are serialized!
-      ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-        (ace_tss_cleanup_lock);
-      if (lock == 0) return 0;
+      ACE_Thread_Mutex *lock =
+        ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+          (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
 #endif /* ACE_MT_SAFE */
 
@@ -1207,9 +1206,9 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::insert");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-    (ace_tss_cleanup_lock);
-  if (lock == 0) return -1;
+  ACE_Thread_Mutex *lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
 #endif /* ACE_MT_SAFE */
 
@@ -1221,9 +1220,9 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::remove");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-    (ace_tss_cleanup_lock);
-  if (lock == 0) return -1;
+  ACE_Thread_Mutex *lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
 #endif /* ACE_MT_SAFE */
 
@@ -1234,9 +1233,9 @@ int
 ACE_TSS_Cleanup::detach (void *inst)
 { 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-    (ace_tss_cleanup_lock);
-  if (lock == 0) return -1;
+  ACE_Thread_Mutex *lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
 #endif /* ACE_MT_SAFE */
   
@@ -1285,9 +1284,9 @@ int
 ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock = ACE_Managed_Object<ACE_Thread_Mutex>::get_object
-    (ace_tss_cleanup_lock);
-  if (lock == 0) return -1;
+  ACE_Thread_Mutex *lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
 #endif /* ACE_MT_SAFE */
 
@@ -2633,8 +2632,11 @@ int sys_nerr = ERRMAX + 1;
 #include /**/ <usrLib.h>   /* for ::sp() */
 
 // This global function can be used from the VxWorks shell to pass
-// arguments to a C main () function.  usage: -> spa main, "arg1",
-// "arg2" All arguments must be quoted, even numbers.
+// arguments to a C main () function.
+//
+// usage: -> spa main, "arg1", "arg2"
+//
+// All arguments must be quoted, even numbers.
 int
 spa (FUNCPTR entry, ...)
 {

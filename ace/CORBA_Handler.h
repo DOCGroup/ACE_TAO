@@ -53,16 +53,16 @@ public:
   // = Activation and deactivation methods.
 
   virtual int activate_service (const char *service_name, 
-				const char *marker_name = 0,
-				const char *service_location = 0);
+                                const char *marker_name = 0,
+                                const char *service_location = 0);
   // Activate and register <service_name> with the Orbix daemon.  If
   // <marker_name> and <service_location> are != 0 then do a "putit"
   // to register this service with orbixd.  This method also
   // increments the reference count of active services using the
   // ACE_ST_CORBA_Handler.
-			       
+                               
   virtual int deactivate_service (const char *service_name = 0,
-				  const char *marker_name = 0);
+                                  const char *marker_name = 0);
   // Decrement the reference count and free up all the 
   // resources if this is the last service to be using
   // the ACE_ST_CORBA_Handler...
@@ -87,14 +87,14 @@ protected:
   // Note virtual destructor...
 
   virtual int register_service (const char *service_name, 
-				const char *marker_name,
-				const char *service_location);
+                                const char *marker_name,
+                                const char *service_location);
   // Register <service_name> by doing a "putit" to register 
   // the <service_name> using the <marker_name> at <service_location> 
   // with orbixd.
 
   virtual int remove_service (const char *service_name,
-			      const char *marker_name = 0);
+                              const char *marker_name = 0);
   // Register <service_name> by doing a "putit" to register
   // <service_name> using the <marker_name> with orbixd.
 
@@ -215,7 +215,7 @@ protected:
   // Destructor cleans up resources.
 
   virtual int inRequestPreMarshal (ACE_CORBA_1 (Request) &r,
-				   ACE_CORBA_1 (Environment) &IT_env = ACE_CORBA_1 (default_environment));
+                                   ACE_CORBA_1 (Environment) &IT_env = ACE_CORBA_1 (default_environment));
   // Take the incoming request and pass it to this->handle_input() but
   // through the Reactor.
 
@@ -227,11 +227,6 @@ protected:
 
   ACE_Pipe pipe_;
   // Used to send CORBA::Requests through the server
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  static u_int ace_mt_corba_handler_lock_;
-  // Double-Check lock identifier.
-#endif /* ACE_MT_SAFE */
 };
 #endif /* ACE_HAS_MT_ORBIX */
 
