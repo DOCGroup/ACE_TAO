@@ -109,7 +109,7 @@ main (int argc, char* argv[])
 									      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_Scheduler scheduler (orb);
+      TAO_Scheduler scheduler (orb.in ());
 
       manager->rtscheduler (&scheduler);
 
