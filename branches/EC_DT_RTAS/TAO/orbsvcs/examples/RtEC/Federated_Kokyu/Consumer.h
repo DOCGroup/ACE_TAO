@@ -18,6 +18,8 @@
 #define CONSUMER_H
 
 #include "orbsvcs/RtecEventCommS.h"
+#include "Supplier.h"
+#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,7 +41,7 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   and it is up to the driver program to use the right one.
   //
 public:
-  Consumer (void);
+  Consumer (ACE_Time_Value& worktime, Supplier *fwddest = 0);
   // Constructor
 
   // = The RtecEventComm::PushConsumer methods
@@ -53,6 +55,9 @@ public:
 
 private:
   int deadline_missed_;
+  ACE_Time_Value worktime_;
+
+  Supplier *fwddest_;
 };
 
 #endif /* CONSUMER_H */
