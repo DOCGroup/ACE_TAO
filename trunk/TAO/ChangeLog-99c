@@ -1,3 +1,30 @@
+Fri Dec  3 12:37:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_visitor_union.cdr_op_ci.cpp
+	  For union implicit default case, the discriminant of the
+	  decoded union must be set to the default value. Thanks to
+	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting
+	  this bug.
+
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+	  Reversed the order of generation of the stub export macro
+	  (if any) and the return type for the Any and CDR 
+	  insertion and extraction operators, and for the ostream
+	  operator for exceptions.
+
 Fri Dec  3 12:02:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/AMI/Makefile:
