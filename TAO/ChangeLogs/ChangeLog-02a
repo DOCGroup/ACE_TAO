@@ -1,3 +1,55 @@
+Sat Jan 27 19:42:01 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/Client_ORBInitializer.cpp (post_init):
+	* tests/Portable_Interceptors/Service_Context_Manipulation/Server_ORBInitializer.cpp (post_init):
+	* tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
+
+	  Do not call _retn() on the "_var."  The caller (post_init() in
+	  this case) is responsible for storage.  Fixes several memory
+	  leaks.
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp
+	  (main):
+
+	  Fixed a memory leak.
+
+	  Fixed ACE_TRY_CHECK/ACE_CHECK_RETURN mismatches.
+
+	  Added missing ACE_TRY_ENV argument to
+	  resolve_initial_references() call.
+
+	  Corrected spelling.
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+
+	  Fixed memory leaks.
+
+	  Added missing ACE_TRY_ENV argument to all of the invocations
+	  that were missing it.
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
+
+	  Derive/mix-in CORBA::LocalObject into both the client side and
+	  server side interceptors, since interceptors are indeed local
+	  objects.
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/test_i.h:
+
+	  Fixed broken throw specs and missing default CORBA::Environment
+	  arguments.
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/test_i.cpp
+	  (shutdown):
+
+	  Do not wait for completion.  Fixes a problem where the server
+	  wouldn't shutdown properly.
+
+	* tests/Portable_Interceptors/Service_Context_Manipulation/Service_Context_Manipulation.dsw:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/client.dsp:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/server.dsp:
+
+	  New MSVC project files.
+
 Sat Jan 27 18:41:28 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/RT_ORBInitializer.cpp (pre_init):

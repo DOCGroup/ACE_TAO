@@ -40,11 +40,8 @@ Server_ORBInitializer::post_init (
   PortableInterceptor::ServerRequestInterceptor_var
     server_interceptor = interceptor;
 
-  info->add_server_request_interceptor (server_interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (server_interceptor.in (),
+                                        ACE_TRY_ENV);
   ACE_CHECK;
-
-  // Transfer ownership to the ORB.
-  (void) server_interceptor._retn ();
 }
 
