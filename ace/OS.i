@@ -10283,53 +10283,25 @@ ACE_OS::fseek (FILE *fp, long offset, int whence)
 }
 
 ACE_INLINE pid_t
-ACE_OS::wait (int *status)
-{
-  ACE_TRACE ("ACE_OS::wait");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined(CHORUS) || defined (ACE_PSOS)
-  ACE_UNUSED_ARG (status);
-
-  ACE_NOTSUP_RETURN (0);
-#else
-# if defined (ACE_HAS_UNION_WAIT)
-  ACE_OSCALL_RETURN (::wait ((union wait *) status), pid_t, -1);
-# else
-  ACE_OSCALL_RETURN (::wait (status), pid_t, -1);
-# endif /* ACE_HAS_UNION_WAIT */
-#endif /* defined (ACE_WIN32) */
-}
-
-ACE_INLINE pid_t
 ACE_OS::waitpid (pid_t pid,
-                 int *status,
-                 int options)
+                 ACE_exitcode *status,
+                 int wait_options)
 {
   ACE_TRACE ("ACE_OS::waitpid");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)
+#if defined (VXWORKS) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (status);
   ACE_UNUSED_ARG (options);
 
   ACE_NOTSUP_RETURN (0);
-#elif defined (CHORUS)
-  ACE_OSCALL_RETURN (::await (&ACE_OS::actorcaps_[pid]),
-                     pid_t, -1);
-#else
-  ACE_OSCALL_RETURN (::waitpid (pid, status, options),
-                     pid_t, -1);
-#endif /* ACE_WIN32 */
-}
+#elif defined (ACE_WIN32)
+  int blocking_period = ACE_BIT_ENABLED (wait_options, WNOHANG) 
+    ? 0 /* don't hang */ 
+    : INFINITE;
 
-ACE_INLINE pid_t
-ACE_OS::wait (pid_t pid,
-              int *status,
-              int wait_options)
-{
-  ACE_TRACE ("ACE_OS::wait");
-#if defined (ACE_WIN32)
-  int blocking_period = ACE_BIT_ENABLED (wait_options, WNOHANG) ? 0 /* don't hang */ : INFINITE;
-
-  ACE_HANDLE handle = ::OpenProcess (SYNCHRONIZE, FALSE, pid);
+  ACE_HANDLE handle = ::OpenProcess (SYNCHRONIZE,
+                                     FALSE,
+                                     pid);
   if (handle == 0)
     {
       ACE_OS::set_errno_to_last_error ();
@@ -10348,7 +10320,7 @@ ACE_OS::wait (pid_t pid,
         // The error status of <GetExitCodeProcess> is nonetheless
         // not tested because we don't know how to return the value.
         ::GetExitCodeProcess (handle,
-                              (LPDWORD) status);
+                              status);
       break;
     case WAIT_TIMEOUT:
       errno = ETIME;
@@ -10360,17 +10332,47 @@ ACE_OS::wait (pid_t pid,
     }
   ::CloseHandle (handle);
   return result;
-#else /* ACE_WIN32 */
-  // The <ACE_OSCALL_RETURN> macro handles EINTR.
-  ACE_OSCALL_RETURN (ACE_OS::waitpid (pid,
-                                      status,
-                                      wait_options),
-                     int, -1);
+#elif defined (CHORUS)
+  ACE_OSCALL_RETURN (::await (&ACE_OS::actorcaps_[pid]),
+                     pid_t, -1);
+#else
+  ACE_OSCALL_RETURN (::waitpid (pid, status, wait_options),
+                     pid_t, -1);
 #endif /* ACE_WIN32 */
 }
 
+ACE_INLINE pid_t
+ACE_OS::wait (pid_t pid,
+              ACE_exitcode *status,
+              int wait_options)
+{
+  ACE_TRACE ("ACE_OS::wait");
+  return ACE_OS::waitpid (pid,
+                          status,
+                          wait_options);
+}
+
+ACE_INLINE pid_t
+ACE_OS::wait (int *status)
+{
+  ACE_TRACE ("ACE_OS::wait");
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined(CHORUS) || defined (ACE_PSOS)
+  ACE_UNUSED_ARG (status);
+
+  ACE_NOTSUP_RETURN (0);
+#else
+# if defined (ACE_HAS_UNION_WAIT)
+  ACE_OSCALL_RETURN (::wait ((union wait *) status), pid_t, -1);
+# else
+  ACE_OSCALL_RETURN (::wait (status), pid_t, -1);
+# endif /* ACE_HAS_UNION_WAIT */
+#endif /* defined (ACE_WIN32) */
+}
+
 ACE_INLINE int
-ACE_OS::ioctl (ACE_HANDLE handle, int cmd, void *val)
+ACE_OS::ioctl (ACE_HANDLE handle,
+               int cmd,
+               void *val)
 {
   ACE_TRACE ("ACE_OS::ioctl");
 
