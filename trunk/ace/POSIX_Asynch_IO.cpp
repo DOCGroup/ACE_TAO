@@ -181,9 +181,9 @@ ACE_POSIX_Asynch_Operation::open (ACE_Handler &handler,
 int
 ACE_POSIX_Asynch_Operation::cancel (void)
 {
-  if (!posix_aiocb_proactor_)
+  if (!posix_proactor_)
     return -1;
-  return posix_aiocb_proactor_->cancel_aio (this->handle_);
+  return posix_proactor_->cancel_aio (this->handle_);
 }
 
 ACE_Proactor *
@@ -192,26 +192,19 @@ ACE_POSIX_Asynch_Operation::proactor (void) const
   return this->proactor_;
 }
 
-ACE_POSIX_AIOCB_Proactor *
+ACE_POSIX_Proactor *
 ACE_POSIX_Asynch_Operation::posix_proactor (void) const
 {
-  return this->posix_aiocb_proactor_;
-}
-
-int
-ACE_POSIX_Asynch_Operation::register_and_start_aio (ACE_POSIX_Asynch_Result *result,
-                                                    int op)
-{
-  return this->posix_proactor ()->register_and_start_aio (result, op);
+  return this->posix_proactor_;
 }
 
 ACE_POSIX_Asynch_Operation::~ACE_POSIX_Asynch_Operation (void)
 {
 }
 
-ACE_POSIX_Asynch_Operation::ACE_POSIX_Asynch_Operation (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
+ACE_POSIX_Asynch_Operation::ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
-    posix_aiocb_proactor_ (posix_aiocb_proactor),
+    posix_proactor_ (posix_proactor),
     handler_ (0),
     handle_  (ACE_INVALID_HANDLE)
 {
@@ -284,81 +277,12 @@ ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result (void)
 {
 }
 
-// = Base class operations. These operations are here to kill
-//   dominance warnings. These methods call the base class methods.
-
-size_t
-ACE_POSIX_Asynch_Read_Stream_Result::bytes_transferred (void) const
-{
-  return ACE_POSIX_Asynch_Result::bytes_transferred ();
-}
-
-const void *
-ACE_POSIX_Asynch_Read_Stream_Result::act (void) const
-{
-  return ACE_POSIX_Asynch_Result::act ();
-}
-
-int
-ACE_POSIX_Asynch_Read_Stream_Result::success (void) const
-{
-  return ACE_POSIX_Asynch_Result::success ();
-}
-
-const void *
-ACE_POSIX_Asynch_Read_Stream_Result::completion_key (void) const
-{
-  return ACE_POSIX_Asynch_Result::completion_key ();
-}
-
-u_long
-ACE_POSIX_Asynch_Read_Stream_Result::error (void) const
-{
-  return ACE_POSIX_Asynch_Result::error ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Read_Stream_Result::event (void) const
-{
-  return ACE_POSIX_Asynch_Result::event ();
-}
-
-u_long
-ACE_POSIX_Asynch_Read_Stream_Result::offset (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset ();
-}
-
-u_long
-ACE_POSIX_Asynch_Read_Stream_Result::offset_high (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset_high ();
-}
-
-int
-ACE_POSIX_Asynch_Read_Stream_Result::priority (void) const
-{
-  return ACE_POSIX_Asynch_Result::priority ();
-}
-
-int
-ACE_POSIX_Asynch_Read_Stream_Result::signal_number (void) const
-{
-  return ACE_POSIX_Asynch_Result::signal_number ();
-}
-
-int
-ACE_POSIX_Asynch_Read_Stream_Result::post_completion (ACE_Proactor_Impl *proactor)
-{
-  return ACE_POSIX_Asynch_Result::post_completion (proactor);
-}
-
 // ************************************************************
 
-ACE_POSIX_Asynch_Read_Stream::ACE_POSIX_Asynch_Read_Stream (ACE_POSIX_AIOCB_Proactor  *posix_aiocb_proactor)
+ACE_POSIX_Asynch_Read_Stream::ACE_POSIX_Asynch_Read_Stream (ACE_POSIX_Proactor  *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Read_Stream_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_aiocb_proactor)
+    ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
@@ -381,19 +305,19 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 
   // Create the Asynch_Result.
   ACE_POSIX_Asynch_Read_Stream_Result *result = 0;
+  ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Read_Stream_Result (*this->handler_,
                                                        this->handle_,
                                                        message_block,
                                                        bytes_to_read,
                                                        act,
-                                                       this->posix_proactor ()->get_handle (),
+                                                       proactor->get_handle (),
                                                        priority,
                                                        signal_number),
                   -1);
 
-  ssize_t return_val = this->register_and_start_aio (result, 0);
-
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::READ);
   if (return_val == -1)
     delete result;
 
@@ -402,34 +326,6 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 
 ACE_POSIX_Asynch_Read_Stream::~ACE_POSIX_Asynch_Read_Stream (void)
 {
-}
-
-// Methods belong to ACE_POSIX_Asynch_Operation base class. These
-// methods are defined here to avoid dominance warnings. They route
-// the call to the ACE_POSIX_Asynch_Operation base class.
-
-int
-ACE_POSIX_Asynch_Read_Stream::open (ACE_Handler &handler,
-                                          ACE_HANDLE handle,
-                                          const void *completion_key,
-                                          ACE_Proactor *proactor)
-{
-  return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
-}
-
-int
-ACE_POSIX_Asynch_Read_Stream::cancel (void)
-{
-  return ACE_POSIX_Asynch_Operation::cancel ();
-}
-
-ACE_Proactor *
-ACE_POSIX_Asynch_Read_Stream::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
 }
 
 // *********************************************************************
@@ -452,14 +348,15 @@ ACE_POSIX_Asynch_Write_Stream_Result::handle (void) const
   return this->aio_fildes;
 }
 
-ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result (ACE_Handler &handler,
-                                                                            ACE_HANDLE handle,
-                                                                            ACE_Message_Block &message_block,
-                                                                            size_t bytes_to_write,
-                                                                            const void* act,
-                                                                            ACE_HANDLE event,
-                                                                            int priority,
-                                                                            int signal_number)
+ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result
+  (ACE_Handler &handler,
+   ACE_HANDLE handle,
+   ACE_Message_Block &message_block,
+   size_t bytes_to_write,
+   const void* act,
+   ACE_HANDLE event,
+   int priority,
+   int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
     ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
@@ -500,81 +397,12 @@ ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result (voi
 {
 }
 
-// Base class operations. These operations are here to kill dominance
-// warnings. These methods call the base class methods.
-
-size_t
-ACE_POSIX_Asynch_Write_Stream_Result::bytes_transferred (void) const
-{
-  return ACE_POSIX_Asynch_Result::bytes_transferred ();
-}
-
-const void *
-ACE_POSIX_Asynch_Write_Stream_Result::act (void) const
-{
-  return ACE_POSIX_Asynch_Result::act ();
-}
-
-int
-ACE_POSIX_Asynch_Write_Stream_Result::success (void) const
-{
-  return ACE_POSIX_Asynch_Result::success ();
-}
-
-const void *
-ACE_POSIX_Asynch_Write_Stream_Result::completion_key (void) const
-{
-  return ACE_POSIX_Asynch_Result::completion_key ();
-}
-
-u_long
-ACE_POSIX_Asynch_Write_Stream_Result::error (void) const
-{
-  return ACE_POSIX_Asynch_Result::error ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Write_Stream_Result::event (void) const
-{
-  return ACE_POSIX_Asynch_Result::event ();
-}
-
-u_long
-ACE_POSIX_Asynch_Write_Stream_Result::offset (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset ();
-}
-
-u_long
-ACE_POSIX_Asynch_Write_Stream_Result::offset_high (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset_high ();
-}
-
-int
-ACE_POSIX_Asynch_Write_Stream_Result::priority (void) const
-{
-  return ACE_POSIX_Asynch_Result::priority ();
-}
-
-int
-ACE_POSIX_Asynch_Write_Stream_Result::signal_number (void) const
-{
-  return ACE_POSIX_Asynch_Result::signal_number ();
-}
-
-int
-ACE_POSIX_Asynch_Write_Stream_Result::post_completion (ACE_Proactor_Impl *proactor)
-{
-  return ACE_POSIX_Asynch_Result::post_completion (proactor);
-}
-
 // *********************************************************************
 
-ACE_POSIX_Asynch_Write_Stream::ACE_POSIX_Asynch_Write_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
+ACE_POSIX_Asynch_Write_Stream::ACE_POSIX_Asynch_Write_Stream (ACE_POSIX_Proactor *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Write_Stream_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_aiocb_proactor)
+    ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
@@ -585,7 +413,7 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                       int priority,
                                       int signal_number)
 {
-  size_t len = message_block.length();
+  size_t len = message_block.length ();
   if (bytes_to_write > len)
      bytes_to_write = len;
 
@@ -597,19 +425,19 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
       -1);
 
   ACE_POSIX_Asynch_Write_Stream_Result *result = 0;
+  ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Write_Stream_Result (*this->handler_,
                                                         this->handle_,
                                                         message_block,
                                                         bytes_to_write,
                                                         act,
-                                                        this->posix_proactor ()->get_handle (),
+                                                        proactor->get_handle (),
                                                         priority,
                                                         signal_number),
                   -1);
 
-  ssize_t return_val = this->register_and_start_aio (result, 1);
-
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::WRITE);
   if (return_val == -1)
     delete result;
 
@@ -620,47 +448,19 @@ ACE_POSIX_Asynch_Write_Stream::~ACE_POSIX_Asynch_Write_Stream (void)
 {
 }
 
-
-// Methods belong to ACE_POSIX_Asynch_Operation base class. These
-// methods are defined here to avoid dominance warnings. They route
-// the call to the ACE_POSIX_Asynch_Operation base class.
-
-int
-ACE_POSIX_Asynch_Write_Stream::open (ACE_Handler &handler,
-                                     ACE_HANDLE handle,
-                                     const void *completion_key,
-                                     ACE_Proactor *proactor)
-{
-  return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
-}
-
-int
-ACE_POSIX_Asynch_Write_Stream::cancel (void)
-{
-  return ACE_POSIX_Asynch_Operation::cancel ();
-}
-
-ACE_Proactor *
-ACE_POSIX_Asynch_Write_Stream::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
-}
-
 // *********************************************************************
 
-ACE_POSIX_Asynch_Read_File_Result::ACE_POSIX_Asynch_Read_File_Result (ACE_Handler &handler,
-                                                                      ACE_HANDLE handle,
-                                                                      ACE_Message_Block &message_block,
-                                                                      size_t bytes_to_read,
-                                                                      const void* act,
-                                                                      u_long offset,
-                                                                      u_long offset_high,
-                                                                      ACE_HANDLE event,
-                                                                      int priority,
-                                                                      int signal_number)
+ACE_POSIX_Asynch_Read_File_Result::ACE_POSIX_Asynch_Read_File_Result
+  (ACE_Handler &handler,
+   ACE_HANDLE handle,
+   ACE_Message_Block &message_block,
+   size_t bytes_to_read,
+   const void* act,
+   u_long offset,
+   u_long offset_high,
+   ACE_HANDLE event,
+   int priority,
+   int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
     ACE_Asynch_Read_File_Result_Impl (),
@@ -709,105 +509,13 @@ ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result (void)
 {
 }
 
-// Base class operations. These operations are here to kill dominance
-// warnings. These methods call the base class methods.
-
-size_t
-ACE_POSIX_Asynch_Read_File_Result::bytes_transferred (void) const
-{
-  return ACE_POSIX_Asynch_Result::bytes_transferred ();
-}
-
-const void *
-ACE_POSIX_Asynch_Read_File_Result::act (void) const
-{
-  return ACE_POSIX_Asynch_Result::act ();
-}
-
-int
-ACE_POSIX_Asynch_Read_File_Result::success (void) const
-{
-  return ACE_POSIX_Asynch_Result::success ();
-}
-
-const void *
-ACE_POSIX_Asynch_Read_File_Result::completion_key (void) const
-{
-  return ACE_POSIX_Asynch_Result::completion_key ();
-}
-
-u_long
-ACE_POSIX_Asynch_Read_File_Result::error (void) const
-{
-  return ACE_POSIX_Asynch_Result::error ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Read_File_Result::event (void) const
-{
-  return ACE_POSIX_Asynch_Result::event ();
-}
-
-u_long
-ACE_POSIX_Asynch_Read_File_Result::offset (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset ();
-}
-
-u_long
-ACE_POSIX_Asynch_Read_File_Result::offset_high (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset_high ();
-}
-
-int
-ACE_POSIX_Asynch_Read_File_Result::priority (void) const
-{
-  return ACE_POSIX_Asynch_Result::priority ();
-}
-
-int
-ACE_POSIX_Asynch_Read_File_Result::signal_number (void) const
-{
-  return ACE_POSIX_Asynch_Result::signal_number ();
-}
-
-// The following methods belong to
-// ACE_POSIX_Asynch_Read_Stream_Result. They are here to avoid
-// dominace warnings. These methods route their call to the
-// ACE_POSIX_Asynch_Read_Stream_Result base class.
-
-size_t
-ACE_POSIX_Asynch_Read_File_Result::bytes_to_read (void) const
-{
-  return ACE_POSIX_Asynch_Read_Stream_Result::bytes_to_read ();
-}
-
-ACE_Message_Block &
-ACE_POSIX_Asynch_Read_File_Result::message_block (void) const
-{
-  return ACE_POSIX_Asynch_Read_Stream_Result::message_block ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Read_File_Result::handle (void) const
-{
-  return ACE_POSIX_Asynch_Read_Stream_Result::handle ();
-}
-
-int
-ACE_POSIX_Asynch_Read_File_Result::post_completion (ACE_Proactor_Impl *proactor)
-{
-  return ACE_POSIX_Asynch_Result::post_completion (proactor);
-}
-
 // *********************************************************************
 
-ACE_POSIX_Asynch_Read_File::ACE_POSIX_Asynch_Read_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
+ACE_POSIX_Asynch_Read_File::ACE_POSIX_Asynch_Read_File (ACE_POSIX_Proactor *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Read_Stream_Impl (),
     ACE_Asynch_Read_File_Impl (),
-    ACE_POSIX_Asynch_Read_Stream (posix_aiocb_proactor)
+    ACE_POSIX_Asynch_Read_Stream (posix_proactor)
 {
 }
 
@@ -832,6 +540,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
        -1);
 
   ACE_POSIX_Asynch_Read_File_Result *result = 0;
+  ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Read_File_Result (*this->handler_,
                                                      this->handle_,
@@ -840,13 +549,12 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                      act,
                                                      offset,
                                                      offset_high,
-                                                     this->posix_proactor ()->get_handle (),
+                                                     posix_proactor ()->get_handle (),
                                                      priority,
                                                      signal_number),
                   -1);
 
-  ssize_t return_val = this->register_and_start_aio (result, 0);
-
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::READ);
   if (return_val == -1)
     delete result;
 
@@ -871,46 +579,19 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                                    signal_number);
 }
 
-// Methods belong to ACE_POSIX_Asynch_Operation base class. These
-// methods are defined here to avoid dominance warnings. They route
-// the call to the ACE_POSIX_Asynch_Operation base class.
-
-int
-ACE_POSIX_Asynch_Read_File::open (ACE_Handler &handler,
-                                        ACE_HANDLE handle,
-                                        const void *completion_key,
-                                        ACE_Proactor *proactor)
-{
-  return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
-}
-
-int
-ACE_POSIX_Asynch_Read_File::cancel (void)
-{
-  return ACE_POSIX_Asynch_Operation::cancel ();
-}
-
-ACE_Proactor *
-ACE_POSIX_Asynch_Read_File::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
-}
-
 // ************************************************************
 
-ACE_POSIX_Asynch_Write_File_Result::ACE_POSIX_Asynch_Write_File_Result (ACE_Handler &handler,
-                                                                        ACE_HANDLE handle,
-                                                                        ACE_Message_Block &message_block,
-                                                                        size_t bytes_to_write,
-                                                                        const void* act,
-                                                                        u_long offset,
-                                                                        u_long offset_high,
-                                                                        ACE_HANDLE event,
-                                                                        int priority,
-                                                                        int signal_number)
+ACE_POSIX_Asynch_Write_File_Result::ACE_POSIX_Asynch_Write_File_Result
+  (ACE_Handler &handler,
+   ACE_HANDLE handle,
+   ACE_Message_Block &message_block,
+   size_t bytes_to_write,
+   const void* act,
+   u_long offset,
+   u_long offset_high,
+   ACE_HANDLE event,
+   int priority,
+   int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
     ACE_Asynch_Write_File_Result_Impl (),
@@ -959,105 +640,13 @@ ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  (void)
 {
 }
 
-// Base class operations. These operations are here to kill dominance
-// warnings. These methods call the base class methods.
-
-size_t
-ACE_POSIX_Asynch_Write_File_Result::bytes_transferred (void) const
-{
-  return ACE_POSIX_Asynch_Result::bytes_transferred ();
-}
-
-const void *
-ACE_POSIX_Asynch_Write_File_Result::act (void) const
-{
-  return ACE_POSIX_Asynch_Result::act ();
-}
-
-int
-ACE_POSIX_Asynch_Write_File_Result::success (void) const
-{
-  return ACE_POSIX_Asynch_Result::success ();
-}
-
-const void *
-ACE_POSIX_Asynch_Write_File_Result::completion_key (void) const
-{
-  return ACE_POSIX_Asynch_Result::completion_key ();
-}
-
-u_long
-ACE_POSIX_Asynch_Write_File_Result::error (void) const
-{
-  return ACE_POSIX_Asynch_Result::error ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Write_File_Result::event (void) const
-{
-  return ACE_POSIX_Asynch_Result::event ();
-}
-
-u_long
-ACE_POSIX_Asynch_Write_File_Result::offset (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset ();
-}
-
-u_long
-ACE_POSIX_Asynch_Write_File_Result::offset_high (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset_high ();
-}
-
-int
-ACE_POSIX_Asynch_Write_File_Result::priority (void) const
-{
-  return ACE_POSIX_Asynch_Result::priority ();
-}
-
-int
-ACE_POSIX_Asynch_Write_File_Result::signal_number (void) const
-{
-  return ACE_POSIX_Asynch_Result::signal_number ();
-}
-
-// The following methods belong to
-// ACE_POSIX_Asynch_Write_Stream_Result. They are here to avoid
-// dominance warnings. These methods route their call to the
-// ACE_POSIX_Asynch_Write_Stream_Result base class.
-
-size_t
-ACE_POSIX_Asynch_Write_File_Result::bytes_to_write (void) const
-{
-  return ACE_POSIX_Asynch_Write_Stream_Result::bytes_to_write ();
-}
-
-ACE_Message_Block &
-ACE_POSIX_Asynch_Write_File_Result::message_block (void) const
-{
-  return ACE_POSIX_Asynch_Write_Stream_Result::message_block ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Write_File_Result::handle (void) const
-{
-  return ACE_POSIX_Asynch_Write_Stream_Result::handle ();
-}
-
-int
-ACE_POSIX_Asynch_Write_File_Result::post_completion (ACE_Proactor_Impl *proactor)
-{
-  return ACE_POSIX_Asynch_Result::post_completion (proactor);
-}
-
 // *********************************************************************
 
-ACE_POSIX_Asynch_Write_File::ACE_POSIX_Asynch_Write_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
+ACE_POSIX_Asynch_Write_File::ACE_POSIX_Asynch_Write_File (ACE_POSIX_Proactor *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Write_Stream_Impl (),
     ACE_Asynch_Write_File_Impl (),
-    ACE_POSIX_Asynch_Write_Stream (posix_aiocb_proactor)
+    ACE_POSIX_Asynch_Write_Stream (posix_proactor)
 {
 }
 
@@ -1070,7 +659,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                     int priority,
                                     int signal_number)
 {
-  size_t len = message_block.length();
+  size_t len = message_block.length ();
   if (bytes_to_write > len)
      bytes_to_write = len;
 
@@ -1082,6 +671,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
       -1);
 
   ACE_POSIX_Asynch_Write_File_Result *result = 0;
+  ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Write_File_Result (*this->handler_,
                                                       this->handle_,
@@ -1090,13 +680,12 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                       act,
                                                       offset,
                                                       offset_high,
-                                                      this->posix_proactor ()->get_handle (),
+                                                      proactor->get_handle (),
                                                       priority,
                                                       signal_number),
                   -1);
 
-  ssize_t return_val = this->register_and_start_aio (result, 1);
-
+  int return_val = proactor->start_aio (result, ACE_POSIX_Proactor::WRITE);
   if (return_val == -1)
     delete result;
 
@@ -1119,34 +708,6 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                                      act,
                                                      priority,
                                                      signal_number);
-}
-
-// Methods belong to ACE_POSIX_Asynch_Operation base class. These
-// methods are defined here to avoid dominance warnings. They route
-// the call to the ACE_POSIX_Asynch_Operation base class.
-
-int
-ACE_POSIX_Asynch_Write_File::open (ACE_Handler &handler,
-                                   ACE_HANDLE handle,
-                                   const void *completion_key,
-                                   ACE_Proactor *proactor)
-{
-  return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
-}
-
-int
-ACE_POSIX_Asynch_Write_File::cancel (void)
-{
-  return ACE_POSIX_Asynch_Operation::cancel ();
-}
-
-ACE_Proactor *
-ACE_POSIX_Asynch_Write_File::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
 }
 
 // *********************************************************************
@@ -1176,15 +737,16 @@ ACE_POSIX_Asynch_Accept_Result::accept_handle (void) const
   return this->aio_fildes;
 }
 
-ACE_POSIX_Asynch_Accept_Result::ACE_POSIX_Asynch_Accept_Result (ACE_Handler &handler,
-                                                                ACE_HANDLE listen_handle,
-                                                                ACE_HANDLE accept_handle,
-                                                                ACE_Message_Block &message_block,
-                                                                size_t bytes_to_read,
-                                                                const void* act,
-                                                                ACE_HANDLE event,
-                                                                int priority,
-                                                                int signal_number)
+ACE_POSIX_Asynch_Accept_Result::ACE_POSIX_Asynch_Accept_Result
+  (ACE_Handler &handler,
+   ACE_HANDLE listen_handle,
+   ACE_HANDLE accept_handle,
+   ACE_Message_Block &message_block,
+   size_t bytes_to_read,
+   const void* act,
+   ACE_HANDLE event,
+   int priority,
+   int signal_number)
 
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Accept_Result_Impl (),
@@ -1222,78 +784,9 @@ ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result (void)
 {
 }
 
-// Base class operations. These operations are here to kill dominance
-// warnings. These methods call the base class methods.
-
-size_t
-ACE_POSIX_Asynch_Accept_Result::bytes_transferred (void) const
-{
-  return ACE_POSIX_Asynch_Result::bytes_transferred ();
-}
-
-const void *
-ACE_POSIX_Asynch_Accept_Result::act (void) const
-{
-  return ACE_POSIX_Asynch_Result::act ();
-}
-
-int
-ACE_POSIX_Asynch_Accept_Result::success (void) const
-{
-  return ACE_POSIX_Asynch_Result::success ();
-}
-
-const void *
-ACE_POSIX_Asynch_Accept_Result::completion_key (void) const
-{
-  return ACE_POSIX_Asynch_Result::completion_key ();
-}
-
-u_long
-ACE_POSIX_Asynch_Accept_Result::error (void) const
-{
-  return ACE_POSIX_Asynch_Result::error ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Accept_Result::event (void) const
-{
-  return ACE_POSIX_Asynch_Result::event ();
-}
-
-u_long
-ACE_POSIX_Asynch_Accept_Result::offset (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset ();
-}
-
-u_long
-ACE_POSIX_Asynch_Accept_Result::offset_high (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset_high ();
-}
-
-int
-ACE_POSIX_Asynch_Accept_Result::priority (void) const
-{
-  return ACE_POSIX_Asynch_Result::priority ();
-}
-
-int
-ACE_POSIX_Asynch_Accept_Result::signal_number (void) const
-{
-  return ACE_POSIX_Asynch_Result::signal_number ();
-}
-
-int
-ACE_POSIX_Asynch_Accept_Result::post_completion (ACE_Proactor_Impl *proactor)
-{
-  return ACE_POSIX_Asynch_Result::post_completion (proactor);
-}
-
 // *********************************************************************
 
-ACE_POSIX_Asynch_Accept::ACE_POSIX_Asynch_Accept (ACE_POSIX_AIOCB_Proactor * posix_proactor)
+ACE_POSIX_Asynch_Accept::ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Accept_Impl (),
     ACE_POSIX_Asynch_Operation (posix_proactor),
@@ -1306,12 +799,6 @@ ACE_POSIX_Asynch_Accept::~ACE_POSIX_Asynch_Accept (void)
 {
   this->close ();
   this->reactor(0); // to avoid purge_pending_notifications
-}
-
-ACE_Proactor *
-ACE_POSIX_Asynch_Accept::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
 }
 
 ACE_HANDLE
@@ -1742,12 +1229,13 @@ void ACE_POSIX_Asynch_Connect_Result::connect_handle (ACE_HANDLE handle)
 }
 
 
-ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result (ACE_Handler &handler,
-                                                                  ACE_HANDLE connect_handle,
-                                                                  const void* act,
-                                                                  ACE_HANDLE event,
-                                                                  int priority,
-                                                                  int signal_number)
+ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result
+  (ACE_Handler &handler,
+   ACE_HANDLE connect_handle,
+   const void* act,
+   ACE_HANDLE event,
+   int priority,
+   int signal_number)
 
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Connect_Result_Impl (),
@@ -1780,78 +1268,9 @@ ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result (void)
 {
 }
 
-// Base class operations. These operations are here to kill dominance
-// warnings. These methods call the base class methods.
-
-size_t
-ACE_POSIX_Asynch_Connect_Result::bytes_transferred (void) const
-{
-  return ACE_POSIX_Asynch_Result::bytes_transferred ();
-}
-
-const void *
-ACE_POSIX_Asynch_Connect_Result::act (void) const
-{
-  return ACE_POSIX_Asynch_Result::act ();
-}
-
-int
-ACE_POSIX_Asynch_Connect_Result::success (void) const
-{
-  return ACE_POSIX_Asynch_Result::success ();
-}
-
-const void *
-ACE_POSIX_Asynch_Connect_Result::completion_key (void) const
-{
-  return ACE_POSIX_Asynch_Result::completion_key ();
-}
-
-u_long
-ACE_POSIX_Asynch_Connect_Result::error (void) const
-{
-  return ACE_POSIX_Asynch_Result::error ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Connect_Result::event (void) const
-{
-  return ACE_POSIX_Asynch_Result::event ();
-}
-
-u_long
-ACE_POSIX_Asynch_Connect_Result::offset (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset ();
-}
-
-u_long
-ACE_POSIX_Asynch_Connect_Result::offset_high (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset_high ();
-}
-
-int
-ACE_POSIX_Asynch_Connect_Result::priority (void) const
-{
-  return ACE_POSIX_Asynch_Result::priority ();
-}
-
-int
-ACE_POSIX_Asynch_Connect_Result::signal_number (void) const
-{
-  return ACE_POSIX_Asynch_Result::signal_number ();
-}
-
-int
-ACE_POSIX_Asynch_Connect_Result::post_completion (ACE_Proactor_Impl *proactor)
-{
-  return ACE_POSIX_Asynch_Result::post_completion (proactor);
-}
-
 // *********************************************************************
 
-ACE_POSIX_Asynch_Connect::ACE_POSIX_Asynch_Connect (ACE_POSIX_AIOCB_Proactor * posix_proactor)
+ACE_POSIX_Asynch_Connect::ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Connect_Impl (),
     ACE_POSIX_Asynch_Operation (posix_proactor),
@@ -1864,12 +1283,6 @@ ACE_POSIX_Asynch_Connect::~ACE_POSIX_Asynch_Connect (void)
 {
   this->close ();
   this->reactor(0); // to avoid purge_pending_notifications
-}
-
-ACE_Proactor *
-ACE_POSIX_Asynch_Connect::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
 }
 
 ACE_HANDLE
@@ -2409,19 +1822,21 @@ ACE_POSIX_Asynch_Transmit_File_Result::flags (void) const
   return this->flags_;
 }
 
-ACE_POSIX_Asynch_Transmit_File_Result::ACE_POSIX_Asynch_Transmit_File_Result (ACE_Handler &handler,
-                                                                              ACE_HANDLE socket,
-                                                                              ACE_HANDLE file,
-                                                                              ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                                              size_t bytes_to_write,
-                                                                              u_long offset,
-                                                                              u_long offset_high,
-                                                                              size_t bytes_per_send,
-                                                                              u_long flags,
-                                                                              const void *act,
-                                                                              ACE_HANDLE event,
-                                                                              int priority,
-                                                                              int signal_number)
+ACE_POSIX_Asynch_Transmit_File_Result::ACE_POSIX_Asynch_Transmit_File_Result
+  (ACE_Handler &handler,
+   ACE_HANDLE socket,
+   ACE_HANDLE file,
+   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
+   size_t bytes_to_write,
+   u_long offset,
+   u_long offset_high,
+   size_t bytes_per_send,
+   u_long flags,
+   const void *act,
+   ACE_HANDLE event,
+   int priority,
+   int signal_number)
+
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Transmit_File_Result_Impl (),
     ACE_POSIX_Asynch_Result (handler, act, event, offset, offset_high, priority, signal_number),
@@ -2473,74 +1888,6 @@ ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result (v
 {
 }
 
-// Base class operations. These operations are here to kill dominance
-// warnings. These methods call the base class methods.
-
-size_t
-ACE_POSIX_Asynch_Transmit_File_Result::bytes_transferred (void) const
-{
-  return ACE_POSIX_Asynch_Result::bytes_transferred ();
-}
-
-const void *
-ACE_POSIX_Asynch_Transmit_File_Result::act (void) const
-{
-  return ACE_POSIX_Asynch_Result::act ();
-}
-
-int
-ACE_POSIX_Asynch_Transmit_File_Result::success (void) const
-{
-  return ACE_POSIX_Asynch_Result::success ();
-}
-
-const void *
-ACE_POSIX_Asynch_Transmit_File_Result::completion_key (void) const
-{
-  return ACE_POSIX_Asynch_Result::completion_key ();
-}
-
-u_long
-ACE_POSIX_Asynch_Transmit_File_Result::error (void) const
-{
-  return ACE_POSIX_Asynch_Result::error ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Transmit_File_Result::event (void) const
-{
-  return ACE_POSIX_Asynch_Result::event ();
-}
-
-u_long
-ACE_POSIX_Asynch_Transmit_File_Result::offset (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset ();
-}
-
-u_long
-ACE_POSIX_Asynch_Transmit_File_Result::offset_high (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset_high ();
-}
-
-int
-ACE_POSIX_Asynch_Transmit_File_Result::priority (void) const
-{
-  return ACE_POSIX_Asynch_Result::priority ();
-}
-
-int
-ACE_POSIX_Asynch_Transmit_File_Result::signal_number (void) const
-{
-  return ACE_POSIX_Asynch_Result::signal_number ();
-}
-
-int
-ACE_POSIX_Asynch_Transmit_File_Result::post_completion (ACE_Proactor_Impl *proactor)
-{
-  return ACE_POSIX_Asynch_Result::post_completion (proactor);
-}
 
 // *********************************************************************
 
@@ -2559,7 +1906,7 @@ public:
   /// Constructor. Result pointer will have all the information to do
   /// the file transmission (socket, file, application handler, bytes
   /// to write).
-  ACE_POSIX_Asynch_Transmit_Handler (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor,
+  ACE_POSIX_Asynch_Transmit_Handler (ACE_POSIX_Proactor *posix_proactor,
                                      ACE_POSIX_Asynch_Transmit_File_Result *result);
 
   /// Destructor.
@@ -2623,7 +1970,7 @@ protected:
 
 // Constructor.
 ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
-      (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor,
+      (ACE_POSIX_Proactor *posix_proactor,
        ACE_POSIX_Asynch_Transmit_File_Result *result)
   : result_ (result),
     mb_ (0),
@@ -2633,8 +1980,8 @@ ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
     file_offset_ (result->offset ()),
     file_size_ (0),
     bytes_transferred_ (0),
-    rf_ (posix_aiocb_proactor),
-    ws_ (posix_aiocb_proactor)
+    rf_ (posix_proactor),
+    ws_ (posix_proactor)
 {
   // Allocate memory for the message block.
   ACE_NEW (this->mb_,
@@ -2875,24 +2222,24 @@ ACE_POSIX_Asynch_Transmit_Handler::initiate_read_file (void)
 
 // *********************************************************************
 
-ACE_POSIX_Asynch_Transmit_File::ACE_POSIX_Asynch_Transmit_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
+ACE_POSIX_Asynch_Transmit_File::ACE_POSIX_Asynch_Transmit_File (ACE_POSIX_Proactor *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Transmit_File_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_aiocb_proactor)
+    ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
 int
 ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
-                                                     ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                     size_t bytes_to_write,
-                                                     u_long offset,
-                                                     u_long offset_high,
-                                                     size_t bytes_per_send,
-                                                     u_long flags,
-                                                     const void *act,
-                                                     int priority,
-                                                     int signal_number)
+                                               ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
+                                               size_t bytes_to_write,
+                                               u_long offset,
+                                               u_long offset_high,
+                                               size_t bytes_per_send,
+                                               u_long flags,
+                                               const void *act,
+                                               int priority,
+                                               int signal_number)
 {
   // Adjust these parameters if there are default values specified.
   ssize_t file_size = ACE_OS::filesize (file);
@@ -2958,34 +2305,6 @@ ACE_POSIX_Asynch_Transmit_File::~ACE_POSIX_Asynch_Transmit_File (void)
 {
 }
 
-// Methods belong to ACE_POSIX_Asynch_Operation base class. These
-// methods are defined here to avoid dominance warnings. They route the
-// call to the ACE_POSIX_Asynch_Operation base class.
-
-int
-ACE_POSIX_Asynch_Transmit_File::open (ACE_Handler &handler,
-                                      ACE_HANDLE handle,
-                                      const void *completion_key,
-                                      ACE_Proactor *proactor)
-{
-  return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
-}
-
-int
-ACE_POSIX_Asynch_Transmit_File::cancel (void)
-{
-  return ACE_POSIX_Asynch_Operation::cancel ();
-}
-
-ACE_Proactor *
-ACE_POSIX_Asynch_Transmit_File::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
-}
-
 // *********************************************************************
 size_t
 ACE_POSIX_Asynch_Read_Dgram_Result::bytes_to_read (void) const
@@ -3028,88 +2347,24 @@ ACE_POSIX_Asynch_Read_Dgram_Result::handle (void) const
   return this->handle_;
 }
 
-size_t
-ACE_POSIX_Asynch_Read_Dgram_Result::bytes_transferred (void) const
-{
-  return ACE_POSIX_Asynch_Result::bytes_transferred ();
-}
-
-const void *
-ACE_POSIX_Asynch_Read_Dgram_Result::act (void) const
-{
-  return ACE_POSIX_Asynch_Result::act ();
-}
-
-int
-ACE_POSIX_Asynch_Read_Dgram_Result::success (void) const
-{
-  return ACE_POSIX_Asynch_Result::success ();
-}
-
-const void *
-ACE_POSIX_Asynch_Read_Dgram_Result::completion_key (void) const
-{
-  return ACE_POSIX_Asynch_Result::completion_key ();
-}
-
-u_long
-ACE_POSIX_Asynch_Read_Dgram_Result::error (void) const
-{
-  return ACE_POSIX_Asynch_Result::error ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Read_Dgram_Result::event (void) const
-{
-  return ACE_POSIX_Asynch_Result::event ();
-}
-
-u_long
-ACE_POSIX_Asynch_Read_Dgram_Result::offset (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset ();
-}
-
-u_long
-ACE_POSIX_Asynch_Read_Dgram_Result::offset_high (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset_high ();
-}
-
-int
-ACE_POSIX_Asynch_Read_Dgram_Result::priority (void) const
-{
-  return ACE_POSIX_Asynch_Result::priority ();
-}
-
-int
-ACE_POSIX_Asynch_Read_Dgram_Result::signal_number (void) const
-{
-  return ACE_POSIX_Asynch_Result::signal_number ();
-}
-
-int
-ACE_POSIX_Asynch_Read_Dgram_Result::post_completion (ACE_Proactor_Impl *proactor)
-{
-  return ACE_POSIX_Asynch_Result::post_completion (proactor);
-}
-
 ACE_Message_Block*
 ACE_POSIX_Asynch_Read_Dgram_Result::message_block () const
 {
-	return this->message_block_;
+  return this->message_block_;
 }
 
-ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result (ACE_Handler &handler,
-                                                                        ACE_HANDLE handle,
-                                                                        ACE_Message_Block *message_block,
-                                                                        size_t bytes_to_read,
-                                                                        int flags,
-                                                                        int protocol_family,
-                                                                        const void* act,
-                                                                        ACE_HANDLE event,
-                                                                        int priority,
-                                                                        int signal_number)
+ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
+  (ACE_Handler &handler,
+   ACE_HANDLE handle,
+   ACE_Message_Block *message_block,
+   size_t bytes_to_read,
+   int flags,
+   int protocol_family,
+   const void* act,
+   ACE_HANDLE event,
+   int priority,
+   int signal_number)
+
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Dgram_Result_Impl(),
     ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
@@ -3174,88 +2429,24 @@ ACE_POSIX_Asynch_Write_Dgram_Result::handle (void) const
   return this->handle_;
 }
 
-size_t
-ACE_POSIX_Asynch_Write_Dgram_Result::bytes_transferred (void) const
-{
-  return ACE_POSIX_Asynch_Result::bytes_transferred ();
-}
-
-const void *
-ACE_POSIX_Asynch_Write_Dgram_Result::act (void) const
-{
-  return ACE_POSIX_Asynch_Result::act ();
-}
-
-int
-ACE_POSIX_Asynch_Write_Dgram_Result::success (void) const
-{
-  return ACE_POSIX_Asynch_Result::success ();
-}
-
-const void *
-ACE_POSIX_Asynch_Write_Dgram_Result::completion_key (void) const
-{
-  return ACE_POSIX_Asynch_Result::completion_key ();
-}
-
-u_long
-ACE_POSIX_Asynch_Write_Dgram_Result::error (void) const
-{
-  return ACE_POSIX_Asynch_Result::error ();
-}
-
-ACE_HANDLE
-ACE_POSIX_Asynch_Write_Dgram_Result::event (void) const
-{
-  return ACE_POSIX_Asynch_Result::event ();
-}
-
-u_long
-ACE_POSIX_Asynch_Write_Dgram_Result::offset (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset ();
-}
-
-u_long
-ACE_POSIX_Asynch_Write_Dgram_Result::offset_high (void) const
-{
-  return ACE_POSIX_Asynch_Result::offset_high ();
-}
-
-int
-ACE_POSIX_Asynch_Write_Dgram_Result::priority (void) const
-{
-  return ACE_POSIX_Asynch_Result::priority ();
-}
-
-int
-ACE_POSIX_Asynch_Write_Dgram_Result::signal_number (void) const
-{
-  return ACE_POSIX_Asynch_Result::signal_number ();
-}
 
 ACE_Message_Block*
 ACE_POSIX_Asynch_Write_Dgram_Result::message_block () const
 {
-	return this->message_block_;
+  return this->message_block_;
 }
 
+ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result
+  (ACE_Handler &handler,
+   ACE_HANDLE handle,
+   ACE_Message_Block *message_block,
+   size_t bytes_to_write,
+   int flags,
+   const void* act,
+   ACE_HANDLE event,
+   int priority,
+   int signal_number)
 
-int
-ACE_POSIX_Asynch_Write_Dgram_Result::post_completion (ACE_Proactor_Impl *proactor)
-{
-  return ACE_POSIX_Asynch_Result::post_completion (proactor);
-}
-
-ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result (ACE_Handler &handler,
-                                                                          ACE_HANDLE handle,
-                                                                          ACE_Message_Block *message_block,
-                                                                          size_t bytes_to_write,
-                                                                          int flags,
-                                                                          const void* act,
-                                                                          ACE_HANDLE event,
-                                                                          int priority,
-                                                                          int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Dgram_Result_Impl(),
     ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
@@ -3265,9 +2456,8 @@ ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result (ACE_Ha
     handle_ (handle)
 
 {
-	this->aio_fildes = handle;
-	this->aio_nbytes = bytes_to_write;
-
+  this->aio_fildes = handle;
+  this->aio_nbytes = bytes_to_write;
 }
 
 void
@@ -3306,12 +2496,12 @@ ACE_POSIX_Asynch_Read_Dgram::~ACE_POSIX_Asynch_Read_Dgram (void)
 
 ssize_t
 ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
-                                         size_t &number_of_bytes_recvd,
-                                         int flags,
-                                         int protocol_family,
-                                         const void *act,
-                                         int priority,
-                                         int signal_number)
+                                   size_t &number_of_bytes_recvd,
+                                   int flags,
+                                   int protocol_family,
+                                   const void *act,
+                                   int priority,
+                                   int signal_number)
 {
   ACE_UNUSED_ARG (message_block);
   ACE_UNUSED_ARG (number_of_bytes_recvd);
@@ -3323,36 +2513,13 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
   ACE_NOTSUP_RETURN (-1);
 }
 
-int
-ACE_POSIX_Asynch_Read_Dgram::open (ACE_Handler &handler,
-                                   ACE_HANDLE handle,
-                                   const void *completion_key,
-                                   ACE_Proactor *proactor)
-{
-  return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
-}
-
-int
-ACE_POSIX_Asynch_Read_Dgram::cancel (void)
-{
-  return ACE_POSIX_Asynch_Operation::cancel ();
-}
-
-ACE_Proactor *
-ACE_POSIX_Asynch_Read_Dgram::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
-}
-
-ACE_POSIX_Asynch_Read_Dgram::ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
+ACE_POSIX_Asynch_Read_Dgram::ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Read_Dgram_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_aiocb_proactor)
+    ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
+
 //***************************************************************************
 
 ACE_POSIX_Asynch_Write_Dgram::~ACE_POSIX_Asynch_Write_Dgram (void)
@@ -3361,12 +2528,12 @@ ACE_POSIX_Asynch_Write_Dgram::~ACE_POSIX_Asynch_Write_Dgram (void)
 
 ssize_t
 ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
-                                          size_t &number_of_bytes_sent,
-                                          int flags,
-                                          const ACE_Addr &addr,
-                                          const void *act,
-                                          int priority,
-                                          int signal_number)
+                                    size_t &number_of_bytes_sent,
+                                    int flags,
+                                    const ACE_Addr &addr,
+                                    const void *act,
+                                    int priority,
+                                    int signal_number)
 {
   ACE_UNUSED_ARG (message_block);
   ACE_UNUSED_ARG (number_of_bytes_sent);
@@ -3378,34 +2545,11 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
   ACE_NOTSUP_RETURN (-1);
 }
 
-int
-ACE_POSIX_Asynch_Write_Dgram::open (ACE_Handler &handler,
-                                    ACE_HANDLE handle,
-                                    const void *completion_key,
-                                    ACE_Proactor *proactor)
-{
-  return ACE_POSIX_Asynch_Operation::open (handler,
-                                           handle,
-                                           completion_key,
-                                           proactor);
-}
-
-int
-ACE_POSIX_Asynch_Write_Dgram::cancel (void)
-{
-  return ACE_POSIX_Asynch_Operation::cancel ();
-}
-
-ACE_Proactor *
-ACE_POSIX_Asynch_Write_Dgram::proactor (void) const
-{
-  return ACE_POSIX_Asynch_Operation::proactor ();
-}
-
-ACE_POSIX_Asynch_Write_Dgram::ACE_POSIX_Asynch_Write_Dgram (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
+ACE_POSIX_Asynch_Write_Dgram::ACE_POSIX_Asynch_Write_Dgram
+  (ACE_POSIX_Proactor *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     ACE_Asynch_Write_Dgram_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_aiocb_proactor)
+    ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
