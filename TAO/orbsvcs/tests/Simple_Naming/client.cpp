@@ -477,7 +477,7 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
       Test_Object_var obj = impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       root_context->bind (test_name,
-                          obj,
+                          obj.in (),
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
@@ -510,7 +510,7 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
       Test_Object_var obj = impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       root_context->bind (test_name,
-                          obj,
+                          obj.in (),
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
