@@ -479,7 +479,7 @@ public:
 
     // Generating the arglist for the stub version of the
     // interceptors request info class constructor.
-    TAO_INTERCEPTORS_INFO_ARGUMENT_STUB,
+    TAO_INTERCEPTORS_INFO_STUB,
 
     // Used to denote either error or don't care.
     TAO_SUB_STATE_UNKNOWN
