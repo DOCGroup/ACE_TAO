@@ -31,7 +31,7 @@ class TAO_Export CORBA_NamedValue
   // the value is packaged as an Any.  The flags indicate parameter
   // mode, and some ownership rules for "top level" memory.
 public:
-  TAO_CONST char *name (void) const;
+  const char *name (void) const;
   // optional name
 
   CORBA::Any_ptr value (void) const;
