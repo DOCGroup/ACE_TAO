@@ -1,3 +1,8 @@
+Fri Oct 01 15:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_operation/ami_reply_handler_stub_operation_cs.cpp:
+	  Fixed a hardcoded operation name to use the correct one.
+
 Fri Oct  1 13:46:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/ImplRepo.idl:
