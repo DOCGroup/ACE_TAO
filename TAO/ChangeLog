@@ -1,3 +1,13 @@
+Wed Apr  9 13:47:26 2003  Stuart Jones  <jones_s@ociweb.com>
+
+	* tao/Messaging/Messaging.cpp
+
+	  Added code to register exception pointer with ACE_Auto_Basic_Ptr
+	  when TAO is compiled with exceptions. When using AMI, a leak
+	  appeared if an exception was raised.  The exception was created
+	  on the heap, but the "raise" made a copy of this on the stack.
+	  See DOC bug# 1487.
+
 Wed Apr  9 17:12:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         List of changed gathered the last weeks by me and Mark Drijver
