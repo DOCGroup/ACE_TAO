@@ -71,6 +71,11 @@ Test_Bounded_Struct_Sequence::init_parameters (Param_Test_ptr /* objref */,
       // the sequence
       this->in_[i] = gen->gen_fixed_struct ();
     }
+
+  this->inout_->length (0);
+  this->out_->length (0);
+  this->ret_->length (0);
+
   return 0;
 }
 
@@ -80,6 +85,11 @@ Test_Bounded_Struct_Sequence::reset_parameters (void)
   this->inout_ = new Param_Test::Bounded_StructSeq; // delete the previous ones
   this->out_ = new Param_Test::Bounded_StructSeq;
   this->ret_ = new Param_Test::Bounded_StructSeq;
+
+  this->inout_->length (0);
+  this->out_->length (0);
+  this->ret_->length (0);
+
   return 0;
 }
 

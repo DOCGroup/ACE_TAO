@@ -65,6 +65,7 @@ Test_Bounded_Short_Sequence::init_parameters (Param_Test_ptr /*objref*/,
 
   // set the length of the sequence
   this->in_->length (len);
+  this->inout_->length (len);
   // now set each individual element
   for (CORBA::ULong i=0; i < this->in_->maximum (); i++)
     {
@@ -73,6 +74,11 @@ Test_Bounded_Short_Sequence::init_parameters (Param_Test_ptr /*objref*/,
       this->in_[i] = i;
       this->inout_[i] = i+1; // different from in_
     }
+
+  this->inout_->length (0);
+  this->out_->length (0);
+  this->ret_->length (0);
+
   return 0;
 }
 
@@ -82,6 +88,11 @@ Test_Bounded_Short_Sequence::reset_parameters (void)
   this->inout_ = new Param_Test::Bounded_Short_Seq; // delete the previous ones
   this->out_ = new Param_Test::Bounded_Short_Seq;
   this->ret_ = new Param_Test::Bounded_Short_Seq;
+
+  this->inout_->length (0);
+  this->out_->length (0);
+  this->ret_->length (0);
+
   return 0;
 }
 
