@@ -51,20 +51,20 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
             {
               result = TAO_Unbounded_Sequence<T>::allocbuf (this->length_);
               this->buffer_ = result;
-	      this->release_ = 1;
+              this->release_ = 1;
             }
         }
       else
         {
           result =
-            ACE_reinterpret_cast (T*, 
-	                          this->buffer_);
+            ACE_reinterpret_cast (T*,
+                                  this->buffer_);
         }
     }
   else // if (orphan == 1)
     {
       result = ACE_reinterpret_cast (T*,
-	                             this->buffer_);
+                                     this->buffer_);
 
       if (this->release_ != 0)
         {
@@ -145,7 +145,7 @@ TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
         {
           result = TAO_Bounded_Sequence<T,MAX>::allocbuf (this->maximum_);
           this->buffer_ = result;
-	  this->release_ = 1;
+          this->release_ = 1;
         }
       else
         {
@@ -339,6 +339,84 @@ TAO_Pseudo_Object_Manager<T,T_var>::_retn (void)
 }
 
 // *************************************************************
+// Inline operations for class TAO_Valuetype_Manager
+// *************************************************************
+
+template <class T, class T_var> ACE_INLINE
+TAO_Valuetype_Manager<T,T_var>::~TAO_Valuetype_Manager (void)
+{
+}
+
+template <class T, class T_var> ACE_INLINE
+TAO_Valuetype_Manager<T,T_var>::TAO_Valuetype_Manager (const TAO_Valuetype_Manager<T,T_var> &rhs)
+  : ptr_ (rhs.ptr_),
+    release_ (rhs.release_)
+{
+}
+
+template <class T, class T_var> ACE_INLINE
+TAO_Valuetype_Manager<T,T_var>::TAO_Valuetype_Manager(T** buffer, CORBA::Boolean release)
+  : ptr_ (buffer),
+    release_ (release)
+{
+}
+
+template <class T, class T_var> ACE_INLINE T *
+TAO_Valuetype_Manager<T,T_var>::operator-> (void) const
+{
+  return *this->ptr_;
+}
+
+template <class T, class T_var> ACE_INLINE
+TAO_Valuetype_Manager<T,T_var>::operator const T_var () const
+{
+  if (*this->ptr_ != 0)
+    (*this->ptr_)->_add_ref ();
+  return *this->ptr_;
+}
+
+template <class T, class T_var> ACE_INLINE
+TAO_Valuetype_Manager<T,T_var>::operator const T* () const // cast
+{
+  return *this->ptr_;
+}
+
+template <class T, class T_var> ACE_INLINE
+TAO_Valuetype_Manager<T,T_var>::operator T* &() // cast
+{
+  return *this->ptr_;
+}
+
+template <class T, class T_var> ACE_INLINE T *
+TAO_Valuetype_Manager<T,T_var>::in (void) const
+{
+  return *this->ptr_;
+}
+
+template <class T, class T_var> ACE_INLINE T *&
+TAO_Valuetype_Manager<T,T_var>::inout (void)
+{
+  return *this->ptr_;
+}
+
+template <class T, class T_var> ACE_INLINE T *&
+TAO_Valuetype_Manager<T,T_var>::out (void)
+{
+  if (*this->ptr_ != 0)
+    (*this->ptr_)->_remove_ref ();
+  *this->ptr_ = 0;
+  return *this->ptr_;
+}
+
+template <class T, class T_var> ACE_INLINE T *
+TAO_Valuetype_Manager<T,T_var>::_retn (void)
+{
+  T *temp = *this->ptr_;
+  *this->ptr_ = 0;
+  return temp;
+}
+
+// *************************************************************
 // class TAO_Unbounded_Object_Sequence
 // *************************************************************
 
@@ -451,6 +529,61 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::operator[] (CORBA::ULong slot) const
 }
 
 // *************************************************************
+// class TAO_Unbounded_Valuetype_Sequence
+// *************************************************************
+
+//default constructor
+template <class T, class T_var> ACE_INLINE
+TAO_Unbounded_Valuetype_Sequence<T,T_var>::TAO_Unbounded_Valuetype_Sequence (void)
+{
+}
+
+template <class T, class T_var> ACE_INLINE
+TAO_Unbounded_Valuetype_Sequence<T,T_var>::
+TAO_Unbounded_Valuetype_Sequence (CORBA::ULong maximum,
+                                  CORBA::ULong length,
+                                  T* *value,
+                                  CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+{
+}
+
+template <class T, class T_var> ACE_INLINE TAO_Valuetype_Manager<T,T_var>
+TAO_Unbounded_Valuetype_Sequence<T,T_var>::operator[] (CORBA::ULong slot) const
+{
+  ACE_ASSERT (slot < this->maximum_);
+  T ** const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Valuetype_Manager<T,T_var> (tmp + slot, this->release_);
+}
+
+// *************************************************************
+// class TAO_Bounded_Valuetype_Sequence
+// *************************************************************
+
+template<class T, class T_var, size_t MAX> ACE_INLINE
+TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::~TAO_Bounded_Valuetype_Sequence (void)
+{
+  this->_deallocate_buffer ();
+}
+
+template <class T, class T_var, size_t MAX> ACE_INLINE
+TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::
+TAO_Bounded_Valuetype_Sequence (CORBA::ULong length,
+                                T **value,
+                                CORBA::Boolean release)
+  : TAO_Bounded_Base_Sequence (MAX, length, value, release)
+{
+}
+
+template <class T, class T_var, size_t MAX> ACE_INLINE TAO_Valuetype_Manager<T,T_var>
+TAO_Bounded_Valuetype_Sequence<T, T_var,MAX>::operator[] (CORBA::ULong slot) const
+{
+  ACE_ASSERT (slot < this->maximum_);
+  T **const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Valuetype_Manager<T,T_var> (tmp + slot, this->release_);
+}
+
+// *************************************************************
 // class TAO_Unbounded_Array_Sequence
 // *************************************************************
 
@@ -523,19 +656,19 @@ TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (CORBA::Boolean orphan)
         {
           if (this->length_ > 0)
             {
-              result = 
-	        TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (
+              result =
+                TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (
                     this->length_
                   );
               this->buffer_ = result;
-	      this->release_ = 1;
+              this->release_ = 1;
             }
         }
       else
         {
           result =
-            ACE_reinterpret_cast (T*, 
-	                          this->buffer_);
+            ACE_reinterpret_cast (T*,
+                                  this->buffer_);
         }
     }
   else // if (orphan == 1)
@@ -545,7 +678,7 @@ TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (CORBA::Boolean orphan)
           // We set the state back to default and relinquish
           // ownership.
           result = ACE_reinterpret_cast (T*,
-	                                 this->buffer_);
+                                         this->buffer_);
           this->maximum_ = 0;
           this->length_ = 0;
           this->buffer_ = 0;
@@ -558,13 +691,13 @@ TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (CORBA::Boolean orphan)
 template <class T, class T_var> ACE_INLINE const T *
 TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (void) const
 {
-  return ACE_reinterpret_cast (const T * ACE_CAST_CONST, 
+  return ACE_reinterpret_cast (const T * ACE_CAST_CONST,
                                this->buffer_);
 }
 
 template <class T, class T_var> ACE_INLINE void
 TAO_Unbounded_Array_Sequence<T, T_var>::replace (CORBA::ULong max,
-				                   CORBA::ULong length,
+                                                   CORBA::ULong length,
                                                    T *data,
                                                    CORBA::Boolean release)
 {
@@ -643,10 +776,10 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::get_buffer (CORBA::Boolean orphan)
 
       if (this->buffer_ == 0)
         {
-          result = 
-	    TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (this->maximum_);
+          result =
+            TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (this->maximum_);
           this->buffer_ = result;
-	  this->release_ = 1;
+          this->release_ = 1;
         }
       else
         {
@@ -673,7 +806,7 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::get_buffer (CORBA::Boolean orphan)
 template <class T, class T_var, size_t MAX> ACE_INLINE const T *
 TAO_Bounded_Array_Sequence<T, T_var, MAX>::get_buffer (void) const
 {
-  return ACE_reinterpret_cast (const T * ACE_CAST_CONST, 
+  return ACE_reinterpret_cast (const T * ACE_CAST_CONST,
                                this->buffer_);
 }
 
@@ -687,7 +820,7 @@ TAO_Bounded_Array_Sequence<T, T_var, MAX>::replace (CORBA::ULong max,
   this->length_ = length;
   if (this->buffer_ && this->release_ == 1)
     {
-      T* tmp = ACE_reinterpret_cast (T*, 
+      T* tmp = ACE_reinterpret_cast (T*,
                                      this->buffer_);
       TAO_Bounded_Array_Sequence<T, T_var, MAX>::freebuf (tmp);
     }

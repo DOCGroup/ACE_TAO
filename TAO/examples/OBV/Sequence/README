@@ -1,0 +1,11 @@
+This example demonstrate how to use valuetypes with some
+structured data type like sequence.
+
+To run the test, run:
+
+  server -f ior
+  client -f ior
+
+At this moment, TAO_IDL compiler does not support putting valuetype in
+a sequence.  Make sure you copy seriesC.*.bak to seriesC.* after
+running the IDL compiler.

@@ -1,3 +1,33 @@
+Mon Aug 13 16:48:05 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Sequence_T.h:
+	* tao/Sequence_T.i:
+	* tao/Sequence_T.cpp: Added TAO_Valuetype_Manager,
+	  TAO_Unbounded_Valuetype_Sequence, and
+	  TAO_Bounded_Valuetype_Sequence.  Valuetype's memory is managed
+	  thru _add_ref and _remove_ref (as oppose to _duplicate and
+	  release.)
+
+	* examples/OBV/Sequence/README:
+	* examples/OBV/Sequence/client.cpp:
+	* examples/OBV/Sequence/client.dsp:
+	* examples/OBV/Sequence/registry_i.cpp:
+	* examples/OBV/Sequence/registry_i.h:
+	* examples/OBV/Sequence/sequence.dsw:
+	* examples/OBV/Sequence/series.idl:
+	* examples/OBV/Sequence/series_i.cpp:
+	* examples/OBV/Sequence/series_i.h:
+	* examples/OBV/Sequence/server.cpp:
+	* examples/OBV/Sequence/server.dsp: New example to show how to use
+	  valuetypes in structured data type.  Currently only sequence is
+	  tested and we'll need to hack the IDL compiler to get this to
+	  work out of the box.
+
+	* examples/OBV/Sequence/seriesC.cpp.bak:
+	* examples/OBV/Sequence/seriesC.h.bak:
+	* examples/OBV/Sequence/seriesC.i.bak: These files showed what
+	  needs to be done for the test to run.
+
 Thu Aug  9 16:15:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/ORB_init/ORB_init.cpp: Fixed a warning in KCC
@@ -16,7 +46,7 @@ Thu Aug  9 11:46:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/CDR.h: Fixed the ambigous constructor problem. The InputCDR
 	  class had two constructors which were  similar if the default
 	  values for the arguments were exercised. Thanks to Torbjorn
-	  Backstrom <torbjorn.k.backstrom@volvo.com>  for reporting this. 
+	  Backstrom <torbjorn.k.backstrom@volvo.com>  for reporting this.
 
 Wed Aug  8 22:53:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
