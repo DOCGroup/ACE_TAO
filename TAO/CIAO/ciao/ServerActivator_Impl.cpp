@@ -3,6 +3,7 @@
 #include "ServerActivator_Impl.h"
 #include "ace/Process.h"
 #include "ace/Read_Buffer.h"
+#include "CIAO_common.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ServerActivator_Impl.inl"
@@ -163,15 +164,17 @@ CIAO::ServerActivator_Impl::init_svcconf_map (const char *filename)
             case 0:
               // All is fine.
               // Debug info:
-              ACE_DEBUG ((LM_DEBUG,
-                          "Bound svc.conf hint \"%s\" successfully\n",
-                          hint.c_str ()));
+              if (CIAO::debug_level () > 0)
+                ACE_DEBUG ((LM_DEBUG,
+                            "Bound svc.conf hint \"%s\" successfully\n",
+                            hint.c_str ()));
               break;
 
             case 1:
-              ACE_DEBUG ((LM_DEBUG,
-                          "Duplication svc.conf hint \"%s\" found - ignore\n",
-                          hint.c_str ()));
+              if (CIAO::debug_level () > 0)
+                ACE_DEBUG ((LM_DEBUG,
+                            "Duplication svc.conf hint \"%s\" found - ignore\n",
+                            hint.c_str ()));
               break;
 
             case -1:
@@ -262,7 +265,8 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  ACE_DEBUG ((LM_DEBUG, "CIAO::ServerActivator_Impl::create_component_server\n"));
+  if (CIAO::debug_level () > 0)
+    ACE_DEBUG ((LM_DEBUG, "CIAO::ServerActivator_Impl::create_component_server\n"));
 
   Components::Deployment::ComponentServer_var retval;
 
@@ -314,8 +318,9 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
 
       if (svcconf_path != 0)
         {
-          ACE_DEBUG((LM_DEBUG, "Using svcconf file: %s\n",
-                     svcconf_path));
+          if (CIAO::debug_level () > 0)
+            ACE_DEBUG((LM_DEBUG, "Using svcconf file: %s\n",
+                       svcconf_path));
           additional_options += ACE_CString (" -ORBSvcConf ");
           additional_options += ACE_CString (svcconf_path);
         }
