@@ -87,8 +87,8 @@ public:
 
   /// Initialize this object using the given input string.
   /// Supports URL style of object references
-  virtual int parse_string (const char *string,
-                            CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void parse_string (const char *string,
+                             CORBA::Environment &ACE_TRY_ENV) = 0;
 
   /// Return a string representation for this profile.  client must
   /// deallocate memory.
@@ -242,8 +242,8 @@ public:
                        TAO_ORB_Core *orb_core);
 
   // = The TAO_Profile methods look above
-  virtual int parse_string (const char *string,
-                            CORBA::Environment &ACE_TRY_ENV);
+  virtual void parse_string (const char *string,
+                             CORBA::Environment &ACE_TRY_ENV);
   virtual char object_key_delimiter (void) const;
   virtual char* to_string (CORBA::Environment &ACE_TRY_ENV);
   virtual int decode (TAO_InputCDR& cdr);

@@ -43,7 +43,7 @@ Server_ORBInitializer::post_init (
   PortableInterceptor::ServerRequestInterceptor_var si_interceptor =
     si;
 
-  info->add_server_request_interceptor (si_interceptor,
+  info->add_server_request_interceptor (si_interceptor.in (),
                                         ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -58,7 +58,7 @@ Server_ORBInitializer::post_init (
 
   si_interceptor = si;
 
-  info->add_server_request_interceptor (si_interceptor,
+  info->add_server_request_interceptor (si_interceptor.in (),
                                         ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -73,7 +73,7 @@ Server_ORBInitializer::post_init (
 
   si_interceptor = si;
 
-  info->add_server_request_interceptor (si_interceptor,
+  info->add_server_request_interceptor (si_interceptor.in (),
                                         ACE_TRY_ENV);
   ACE_CHECK;
 }

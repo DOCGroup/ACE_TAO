@@ -11,6 +11,7 @@ TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\client.obj \
+	$(OBJDIR)\Request_Interceptor.obj \
 	$(OBJDIR)\Client_Request_Interceptor.obj \
 	$(OBJDIR)\Client_ORBInitializer.obj
 
@@ -36,4 +37,4 @@ IDLDIR = .
 #
 
 $(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
-	$(TAO_IDL) -DCORBA3 -I..\..\.. $**
+	$(TAO_IDL) $**

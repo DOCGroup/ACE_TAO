@@ -331,12 +331,11 @@ TAO_Unknown_Profile::endpoint_count (void)
   return 0;
 }
 
-int
+void
 TAO_Unknown_Profile::parse_string (const char *,
                                    CORBA::Environment &)
 {
   // @@ THROW something????
-  return -1;
 }
 
 char

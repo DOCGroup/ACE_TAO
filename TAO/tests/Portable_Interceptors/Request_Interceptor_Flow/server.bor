@@ -13,6 +13,7 @@ OBJFILES = \
 	$(OBJDIR)\testS.obj \
 	$(OBJDIR)\server.obj \
 	$(OBJDIR)\test_i.obj \
+	$(OBJDIR)\Request_Interceptor.obj \
 	$(OBJDIR)\Server_Request_Interceptor.obj \
 	$(OBJDIR)\Server_ORBInitializer.obj
 
@@ -40,5 +41,5 @@ IDLDIR = .
 #
 
 $(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
-	$(TAO_IDL) -DCORBA3 -I..\..\.. $**
+	$(TAO_IDL)  $**
 

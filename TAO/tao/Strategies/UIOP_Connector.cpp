@@ -389,24 +389,26 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
   return pfile;
 }
 
-void
-TAO_UIOP_Connector::make_profile (const char *endpoint,
-                                  TAO_Profile *&profile,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_Profile *
+TAO_UIOP_Connector::make_profile (CORBA::Environment &ACE_TRY_ENV)
 {
   // The endpoint should be of the form:
   //    N.n@rendezvous_point|object_key
   // or:
   //    rendezvous_point|object_key
 
+  TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
-                    TAO_UIOP_Profile (endpoint,
-                                      this->orb_core (),
-                                      ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+                    TAO_UIOP_Profile (this->orb_core ()),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
 
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
+  return profile;
 }
 
 int

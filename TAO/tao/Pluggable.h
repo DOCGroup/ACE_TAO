@@ -193,10 +193,9 @@ public:
   virtual char object_key_delimiter (void) const = 0;
 
 protected:
+
   /// Create a profile with a given endpoint.
-  virtual void make_profile (const char *endpoint,
-                             TAO_Profile *&,
-                             CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual TAO_Profile *make_profile (CORBA::Environment &ACE_TRY_ENV) = 0;
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);

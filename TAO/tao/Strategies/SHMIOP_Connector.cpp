@@ -14,7 +14,9 @@
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(Strategies, SHMIOP_Connector, "$Id$")
+ACE_RCSID (Strategies,
+           SHMIOP_Connector,
+           "$Id$")
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -410,23 +412,25 @@ TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
   return pfile;
 }
 
-void
-TAO_SHMIOP_Connector::make_profile (const char *endpoint,
-                                    TAO_Profile *&profile,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_Profile *
+TAO_SHMIOP_Connector::make_profile (CORBA::Environment &ACE_TRY_ENV)
 {
   // The endpoint should be of the form:
-  //    N.n@host:port/object_key
+  //    N.n@port/object_key
   // or:
-  //    host:port/object_key
+  //    port/object_key
 
+  TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
-                    TAO_SHMIOP_Profile (endpoint,
-                                        this->orb_core (),
-                                        ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+                    TAO_SHMIOP_Profile (this->orb_core ()),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
 
-  ACE_CHECK;
+  return profile;
 }
 
 int

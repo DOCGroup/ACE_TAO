@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 //
 // $Id$
 
@@ -11,7 +11,9 @@
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(TAO_SSLIOP, SSLIOP_Connector, "$Id$")
+ACE_RCSID (TAO_SSLIOP,
+           SSLIOP_Connector,
+           "$Id$")
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -66,7 +68,7 @@ int
 TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   if (this->TAO_IIOP_SSL_Connector::open (orb_core) == -1)
-  return -1;
+    return -1;
 
   // Our connect creation strategy
   TAO_SSLIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
@@ -306,22 +308,24 @@ TAO_SSLIOP_Connector::create_profile (TAO_InputCDR& cdr)
   return pfile;
 }
 
-void
-TAO_SSLIOP_Connector::make_profile (const char *endpoint,
-                                    TAO_Profile *&profile,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_Profile *
+TAO_SSLIOP_Connector::make_profile (CORBA::Environment &ACE_TRY_ENV)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
   // or:
   //    host:port/object_key
 
+  TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
-                    TAO_SSLIOP_Profile (endpoint,
-                                        this->orb_core (),
-                                        0, // @@ ssl_port
-                                        ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+                    TAO_SSLIOP_Profile (this->orb_core (),
+                                        0), // SSL component
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
 
-  ACE_CHECK;
+  return profile;
 }
