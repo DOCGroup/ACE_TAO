@@ -2037,42 +2037,58 @@ sub write_output_file {
             mkpath($dir, 0, 0777);
           }
 
-          ## First write the output to a temporary file
-          my($tmp) = "MPC$>.$$";
-          my($different) = 1;
-          if (open($fh, ">$tmp")) {
-            my($lines) = $tp->get_lines();
-            foreach my $line (@$lines) {
-              print $fh $line;
-            }
-            close($fh);
-
-            if (-r $name &&
-                -s $tmp == -s $name && compare($tmp, $name) == 0) {
-              $different = 0;
-            }
-          }
-          else {
-            $error = "ERROR: Unable to open $tmp for output.";
-            $status = 0;
-          }
-
-          if ($status) {
-            ## If they are different, then rename the temporary file
-            if ($different) {
-              unlink($name);
-              if (rename($tmp, $name)) {
-                $self->add_file_written($name);
+          if ($self->compare_output()) {
+            ## First write the output to a temporary file
+            my($tmp) = "MPC$>.$$";
+            my($different) = 1;
+            if (open($fh, ">$tmp")) {
+              my($lines) = $tp->get_lines();
+              foreach my $line (@$lines) {
+                print $fh $line;
               }
-              else {
-                $error = "ERROR: Unable to open $name for output.";
-                $status = 0;
+              close($fh);
+
+              if (-r $name &&
+                  -s $tmp == -s $name && compare($tmp, $name) == 0) {
+                $different = 0;
               }
             }
             else {
-              ## We will pretend that we wrote the file
-              unlink($tmp);
+              $error = "ERROR: Unable to open $tmp for output.";
+              $status = 0;
+            }
+
+            if ($status) {
+              ## If they are different, then rename the temporary file
+              if ($different) {
+                unlink($name);
+                if (rename($tmp, $name)) {
+                  $self->add_file_written($name);
+                }
+                else {
+                  $error = "ERROR: Unable to open $name for output.";
+                  $status = 0;
+                }
+              }
+              else {
+                ## We will pretend that we wrote the file
+                unlink($tmp);
+                $self->add_file_written($name);
+              }
+            }
+          }
+          else {
+            if (open($fh, ">$name")) {
+              my($lines) = $tp->get_lines();
+              foreach my $line (@$lines) {
+                print $fh $line;
+              }
+              close($fh);
               $self->add_file_written($name);
+            }
+            else {
+              $error = "ERROR: Unable to open $name for output.";
+              $status = 0;
             }
           }
         }

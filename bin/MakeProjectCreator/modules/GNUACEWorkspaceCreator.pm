@@ -76,9 +76,8 @@ sub write_comps {
   my($crlf)     = $self->crlf();
   my($projects) = $self->get_projects();
   my(%targnum)  = ();
-  my(@list)     = $self->number_target_deps($projects,
-                                            $self->get_project_info(),
-                                            \%targnum);
+  my($pjs)      = $self->get_project_info();
+  my(@list)     = $self->number_target_deps($projects, $pjs, \%targnum);
 
   ## Only use the list if there is more than one project
   if ($#list > 0) {
@@ -91,14 +90,17 @@ sub write_comps {
               "  KEEP_GOING = 1$crlf" .
               "else$crlf" .
               "  KEEP_GOING = 0$crlf" .
-              "endif$crlf$crlf";
+              "endif$crlf";
 
     ## Print out each of the individual targets
     foreach my $project (@list) {
-      print $fh "\%.tgt$count:";
+      my($pjname) = $$pjs{$project}->[0];
+      print $fh "$crlf$pjname: all.$pjname$crlf$crlf" .
+                "%.$pjname:";
       if (defined $targnum{$project}) {
         foreach my $number (@{$targnum{$project}}) {
-          print $fh " %.tgt$number";
+          print $fh ' %.' .
+                    $$pjs{$list[$number]}->[0];
         }
       }
       my($cmd) = "\@\$(MAKE) -f " . basename($project) . ' -C ' . dirname($project) . " \$(*);$crlf";
@@ -118,7 +120,7 @@ sub write_comps {
       my($splitter) = 0;
       print $fh "$crlf$crlf$target:";
       for(my $i = 0; $i < $count; ++$i) {
-        print $fh " $target.tgt$i";
+        print $fh " $target." . $$pjs{$list[$i]}->[0];
         ++$splitter;
         if ($i != $count - 1 && $splitter == $cutoff) {
           print $fh " \\$crlf " . (' ' x $tlen);
@@ -136,7 +138,7 @@ sub write_comps {
       my($splitter) = 0;
       print $fh "$crlf$crlf$target:";
       for(my $i = $count - 1; $i >= 0; --$i) {
-        print $fh " realclean.tgt$i";
+        print $fh ' realclean.' . $$pjs{$list[$i]}->[0];
         ++$splitter;
         if ($i != 0 && $splitter == $cutoff) {
           print $fh " \\$crlf " . (' ' x $tlen);
@@ -144,6 +146,7 @@ sub write_comps {
         }
       }
     }
+    print $fh "$crlf$crlf";
   }
   else {
     ## Otherwise, just list the call to make without a for loop
@@ -154,9 +157,15 @@ sub write_comps {
               "\$(TARGETS_NESTED):$crlf" .
               "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .
               "\$(\@);$crlf$crlf" .
+              $$pjs{$list[0]}->[0] . ": all$crlf$crlf" .
               "reverseclean:$crlf" .
               "\t\@\$(MAKE) -f $base " . ($dir ne '.' ? "-C $dir " : '') .
-              "realclean$crlf";
+              "realclean$crlf$crlf";
+  }
+
+  print $fh "project_name_list:$crlf";
+  foreach my $project (@list) {
+    print $fh "\t\@echo $$pjs{$project}->[0]$crlf";
   }
 }
 
