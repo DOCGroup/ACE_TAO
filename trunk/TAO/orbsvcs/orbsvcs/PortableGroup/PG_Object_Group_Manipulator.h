@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <tao/IORManipulation/IORManip_Loader.h>
+#include "tao/IORManipulation/IORManip_Loader.h"
 
 namespace TAO
 {
@@ -47,7 +47,9 @@ namespace TAO
     /**
      * Initializes the group creator.
      */
-    void init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
+    void init (CORBA::ORB_ptr orb,
+               PortableServer::POA_ptr poa
+               ACE_ENV_ARG_DECL);
 
     /**
      * Create an empty object group.
@@ -64,7 +66,8 @@ namespace TAO
       ACE_ENV_ARG_DECL) const;
 
     PortableGroup::ObjectGroup_ptr merge_iors (
-      TAO_IOP::TAO_IOR_Manipulation::IORList & iors ACE_ENV_ARG_PARAMETER) const;
+      TAO_IOP::TAO_IOR_Manipulation::IORList & iors
+      ACE_ENV_ARG_DECL) const;
 
     int set_primary (
       TAO_IOP::TAO_IOR_Property * prop,
@@ -72,7 +75,8 @@ namespace TAO
       CORBA::Object_ptr new_primary
       ACE_ENV_ARG_DECL) const;
 
-  void dump_membership (const char * label, PortableGroup::ObjectGroup_ptr member) const;
+  void dump_membership (const char * label,
+                        PortableGroup::ObjectGroup_ptr member) const;
 
   private:
 
@@ -84,7 +88,8 @@ namespace TAO
     /**
      * convert numeric OGID to Sequence<Octet> oid
      */
-    PortableServer::ObjectId * convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid) const;
+    PortableServer::ObjectId *
+      convert_ogid_to_oid (PortableGroup::ObjectGroupId ogid) const;
 
   private:
 

@@ -8,8 +8,9 @@
  *  Manage all information related to an object group.
  *  @@ Note: the above description is optimistic.  The hope is to eventually
  *  @@ consolidate all information related to an object group into this object.
- *  @@ however at the moment GenericFactory, ObjectGroupManager, and FT_ReplicationManager
- *  @@ have parallel collections of object group information.
+ *  @@ however at the moment GenericFactory, ObjectGroupManager, and
+ *  FT_ReplicationManager have parallel collections of object group
+ *  information.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
@@ -202,7 +203,7 @@ namespace TAO
     void add_member (
         const PortableGroup::Location & the_location,
         CORBA::Object_ptr member
-        ACE_ENV_ARG_PARAMETER)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ( (CORBA::SystemException,
                        PortableGroup::ObjectNotAdded));
 
@@ -286,7 +287,7 @@ namespace TAO
 
     int increment_version ();
 
-    void distribute_iogr (ACE_ENV_ARG_DECL);
+    void distribute_iogr (ACE_ENV_SINGLE_ARG_DECL);
 
     PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member ACE_ENV_ARG_DECL);
 
