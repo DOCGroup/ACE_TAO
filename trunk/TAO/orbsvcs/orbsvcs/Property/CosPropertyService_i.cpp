@@ -378,7 +378,7 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
                       TAO_PropertiesIterator (*prop_set),
                       );
       
-      rest = CosPropertyService::PropertiesIterator::_duplicate ( iterator->_this (env));
+      rest = CosPropertyService::PropertiesIterator::_duplicate (iterator->_this (env));
       TAO_CHECK_ENV_RETURN (env, );
 
       ACE_DEBUG ((LM_DEBUG, "DB:TAO_PropSet::get_all_properties-Done\n"));
@@ -449,11 +449,15 @@ TAO_PropertySet::is_property_defined (const char *property_name,  CORBA::Environ
                       CORBA::B_FALSE);
 
   return CORBA::B_TRUE;
-}  
+} 
+
+// Makes default sized hash_table_.
 
 TAO_PropertySetDef::TAO_PropertySetDef (void)
 {
 }
+
+// Destructor.
 
 TAO_PropertySetDef::~TAO_PropertySetDef (void)
 {
@@ -471,27 +475,132 @@ TAO_PropertySetDef::get_allowed_properties (CosPropertyService::PropertyDefs_out
 {
 }
 
+// Check for name's validity. If name not there define it. If there
+// and if type is equal and if mode allows define it else raise exception.
 void 
 TAO_PropertySetDef::define_property_with_mode (const char *property_name,
                                                const CORBA::Any &property_value,
                                                CosPropertyService::PropertyModeType property_mode,
                                                CORBA::Environment &env)
 {
+  // Check the names validity.
+  if (property_name == 0)
+    {
+      env.clear ();
+      env.exception (new CosPropertyService::InvalidPropertyName);
+      return;
+    }
+  
+  // Try to bind the Property. 
+  CosProperty_Hash_Key hash_key (property_name);
+  CosProperty_Hash_Value hash_value (property_value,
+                                     property_mode);
+  CosProperty_Hash_Entry_ptr entry_ptr;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "define_property with mode : property_name %s \n",
+              property_name));
+  
+  int ret = this->hash_table_.bind (hash_key, hash_value, entry_ptr);
+  CosProperty_Hash_Value old_value;
+  CosProperty_Hash_Key old_key;
+  switch (ret)
+    {
+    case 0: // Bind successful.
+      ACE_DEBUG ((LM_DEBUG,
+                  "define_property with mode: retval : %d\n",
+                  ret));
+      return;
+    case 1: // Property name exists.
+      // Is the pointer valid.
+      if (entry_ptr == 0)
+        {
+          env.clear ();
+          env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+          return;
+        }
+      // If type is not the same, raise exception.
+      if (entry_ptr->int_id_.pvalue_->type () != property_value.type ())
+        {
+          env.clear ();
+          env.exception (new CosPropertyService::ConflictingProperty);
+          return;
+        }
+      // If mode is read only, raise exception.
+      if ((entry_ptr->int_id_.pmode_ == CosPropertyService::read_only) ||
+          (entry_ptr->int_id_.pmode_ == CosPropertyService::fixed_readonly))
+        {
+          env.clear ();
+          env.exception (new CosPropertyService::ReadOnlyProperty);
+          return;
+        }
+      // Everything is fine. Overwrite the value.
+      if (this->hash_table_.rebind (hash_key,
+                                    hash_value,
+                                    old_key,
+                                    old_value) > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Property Defined\n"));
+          return;
+        }
+    default:
+      {
+        env.clear ();
+        env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+        return;
+      }
+    }
 }  
 
+// Define one by one. If any excceptions raised, build
+// MultipleExceptions sequence and raise that.
 void 
 TAO_PropertySetDef::define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs,
                                                   CORBA::Environment &env)
 {
+  //  Get the length, init env.
+  size_t sequence_length = property_defs.length ();
+  env.clear ();
+  
+  // Try defining the propdefs one by one.
+  for (size_t i = 0; i < sequence_length; i++)
+    {
+      this->define_property_with_mode (property_defs[i].property_name,
+                                       property_defs[i].property_value,
+                                       property_defs[i].property_mode,
+                                       env);
+    }
 }
 
+// Get the mode of a property. Raises InvalidpropertyName,
+// PropertyNotFound exceptions.
 CosPropertyService::PropertyModeType 
 TAO_PropertySetDef::get_property_mode (const char *property_name,
                                        CORBA::Environment &env)
 {
-  CosPropertyService::PropertyModeType return_val = CosPropertyService::undefined;
-
-  return return_val;
+  // Check for the name's validity.
+  if (property_name == 0)
+    {
+      env.clear ();
+      env.exception (new CosPropertyService::InvalidPropertyName);
+      return CosPropertyService::undefined;
+    }
+  // Find the property in the hash table.
+  CosProperty_Hash_Key hash_key (property_name);
+  CosProperty_Hash_Value hash_value;
+  
+  int ret = this->hash_table_.find (hash_key, hash_value);
+  switch (ret)
+    {
+    case 0:
+      // Property found.
+      return hash_value.pmode_;
+    default:
+      // Raise exception.
+      env.clear ();
+      env.exception (new CosPropertyService::PropertyNotFound);
+      return CosPropertyService::undefined; 
+    }
 }
 
 CORBA::Boolean 
@@ -504,11 +613,128 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
   return return_val;
 }  
 
+// Changing the mode of the property.
+// "Normal" to anything is possible.
+// "Readonly" mode to "Fixed-Readonly" is possible. Others not possible.
+// "Fixed-Normal" to "Fixed-Readonly" is possible. Other things are impossible.
+// "Fixed-Readonly" to anything is *not* possible.
 void 
 TAO_PropertySetDef::set_property_mode (const char *property_name,
                                        CosPropertyService::PropertyModeType property_mode, 
                                        CORBA::Environment &env)
-{ 
+{
+  // Check the names validity.
+  if (property_name == 0)
+    {
+      env.clear ();
+      env.exception (new CosPropertyService::InvalidPropertyName);
+      return;
+    }
+  
+  // Trying to set to undefined mode is not allowed.
+  if (property_mode == CosPropertyService::undefined) 
+    {
+      env.clear ();
+      env.exception (new CosPropertyService::UnsupportedMode);
+      return;
+    }
+  
+  // Find the property from the Hash Table.
+  CosProperty_Hash_Key hash_key (property_name);
+  CosProperty_Hash_Value hash_value;
+  
+  int ret = this->hash_table_.find (hash_key, hash_value);
+
+  CosProperty_Hash_Value old_value;
+  CosProperty_Hash_Key old_key;
+  switch (ret)
+    {
+    case 0:
+      // Property found.
+      // Check for legality of the mode change.
+      switch (hash_value.pmode_)
+        {
+        case CosPropertyService::normal:
+          // Set the new mode and update the hash table.
+          hash_value.pmode_ = property_mode;
+          if (this->hash_table_.rebind (hash_key,
+                                        hash_value,
+                                        old_key,
+                                        old_value) != 1)
+            {
+              // Return values 0 and -1 are not possible.
+              env.clear ();
+              env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+              return;
+            }
+          ACE_DEBUG ((LM_DEBUG, "Mode set succesful\n"));
+          return;
+          
+        case CosPropertyService::read_only:
+          // Read_only to fixed read only alone is possible.
+          if (property_mode != CosPropertyService::fixed_readonly) 
+            {
+              env.clear ();
+              env.exception (new CosPropertyService::UnsupportedMode);
+              return;
+            }
+          else 
+            {
+              // Change the mode and update hash table.
+              hash_value.pmode_ = property_mode;
+              if (this->hash_table_.rebind (hash_key,
+                                            hash_value,
+                                            old_key,
+                                            old_value) != 1)
+                {
+                  // Return values 0 and -1 are not possible.
+                  env.clear ();
+                  env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+                  return;
+                }
+              ACE_DEBUG ((LM_DEBUG, "Mode set successful\n"));
+              return;
+            }
+
+        case CosPropertyService::fixed_normal:
+          // Fixed_normal to fixed_readonly alone is possible.
+          if (property_mode != CosPropertyService::fixed_readonly)
+            {
+              env.clear ();
+              env.exception (new CosPropertyService::UnsupportedMode);
+              return;
+            }
+          else 
+            {
+              // Change the mode and update the hash table.
+              hash_value.pmode_ = property_mode;
+              if (this->hash_table_.rebind (hash_key,
+                                            hash_value,
+                                            hash_key,
+                                            hash_value) != 1)
+                {
+                  // Return values 0 and -1 are not possible.
+                  env.clear ();
+                  env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+                  return;
+                }
+              ACE_DEBUG ((LM_DEBUG, "Mode set successful\n"));
+              return;
+            } 
+
+        default:
+          // Fixed_readonly to any mode is not possible.
+          env.clear ();
+          env.exception (new CosPropertyService::UnsupportedMode);
+          return;
+        }
+    case -1:
+    default:
+      // Property not found in the Hash Table.
+      env.clear ();
+      env.exception (new CosPropertyService::PropertyNotFound);
+      return;
+    }
 }
 
 void 
@@ -536,7 +762,7 @@ TAO_PropertyNamesIterator::~TAO_PropertyNamesIterator (void)
 void 
 TAO_PropertyNamesIterator::reset (CORBA::Environment &env)
 {
-  this->iterator_.reset ();
+  this->iterator_ = this->iterator_.map ().begin ();
 }
 
 // The next_one operation returns true if an item exists at the
@@ -608,7 +834,7 @@ TAO_PropertiesIterator::~TAO_PropertiesIterator (void)
 void 
 TAO_PropertiesIterator::reset (CORBA::Environment &env)
 {
-  this->iterator_.reset ();
+  this->iterator_ = this->iterator_.map ().begin ();
 }
 
 CORBA::Boolean
@@ -616,17 +842,20 @@ TAO_PropertiesIterator::next_one (CosPropertyService::Property_out aproperty,
                                   CORBA::Environment &env)
 {   
   CosProperty_Hash_Entry_ptr entry_ptr;
-
+  
   if (this->iterator_.next (entry_ptr) != 0)
     {
-      aproperty = new CosPropertyService::Property ;
+      aproperty = new CosPropertyService::Property;
       aproperty->property_name = entry_ptr->ext_id_.pname_;
       aproperty->property_value = entry_ptr->int_id_.pvalue_.in ();
       this->iterator_.advance ();
       return CORBA::B_TRUE;
     }
   else
-    return CORBA::B_FALSE;
+    {
+      aproperty = new CosPropertyService::Property;
+      return CORBA::B_FALSE;
+    }
 }  
 
 CORBA::Boolean

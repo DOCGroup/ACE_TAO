@@ -161,7 +161,7 @@ public:
                                               CORBA::Environment &env);
   // Tell whether this property is defined or no. Forget about the
   // value.
-private:
+protected:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> 
           CosProperty_Hash_Map;
   typedef ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value> 
@@ -171,9 +171,11 @@ private:
   typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> 
           CosProperty_Hash_Iterator;
   // Typedefs are useful.
-
+  
   CosProperty_Hash_Map hash_table_;
   // This Hash_Table manages storage for our properties.
+  
+  
 };
 
 class TAO_ORBSVCS_Export TAO_PropertySetDef : public virtual TAO_PropertySet
@@ -230,8 +232,9 @@ public:
 
   virtual CosPropertyService::PropertyModeType get_property_mode (const char *property_name,
                                                                   CORBA::Environment &env);
-  // Get the mode of a property.
-
+  // Get the mode of a property. Raises InvalidpropertyName,
+  // PropertyNotFound exceptions.
+  
   virtual CORBA::Boolean get_property_modes (const CosPropertyService::PropertyNames &property_names,
                                              CosPropertyService::PropertyModes_out property_modes,
                                              CORBA::Environment &env);
@@ -240,8 +243,16 @@ public:
   virtual void set_property_mode (const char *property_name,
                                   CosPropertyService::PropertyModeType property_mode, 
                                   CORBA::Environment &env);
-  // Set the mode of a property.
-  
+  // Set the mode of a property. Watch the following. The change of
+  // mode is allowed introduce more constraints, but it should not
+  // relax the constraints. The following decisions have been made, in
+  // TAO's implementation. The Property Spec has left this to the implenters.
+  // "Normal" to anything is possible.
+  // "Readonly" mode to "Fixed-Readonly" is possible. Others not possible.
+  // "Fixed-Normal" to "Fixed-Readonly" is possible. Other things are impossible.
+  // "Fixed-Readonly" to anything is *not* possible.
+  // For all illegal set_mode attempts, UnsupportedMode exception is raised.
+
   virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes,
                                    CORBA::Environment &env);
   // Batch operation for setting the property.
