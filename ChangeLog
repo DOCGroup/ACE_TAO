@@ -1,3 +1,33 @@
+Fri Aug 23 18:20:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-all.h:
+        * ace/OS_Memory.h: Moved the ACE_NEW macros from config-all.h to
+          OS_Memory.h
+
+        * ace/Log_Msg.h: Removed #include "ace/Basic_Types.h" (not needed)
+          and replaced "ace/OS_Errno.h" with "ace/OS.h" since thread defs
+          are necessary.
+
+        * ace/Basic_Types.h: Don't make thread definitions here - they belong
+          in ace/OS.h.
+
+        * ace/Cache_Map_Manager_T.h: Added #include "ace/Default_Constants.h"
+          to get ACE_DEFAULT_MAP_SIZE when instantiating templates on AIX
+          with Visual Age C++.
+
+        * ace/Caching_Utility_T.cpp: #include "ace/Min_Max.h" and
+          "ace/OS_Memory.h" so Visual Age C++ can see ACE_MAX and ACE_NEW
+          when instantiating templates.
+
+        * ace/Arg_Shifter.cpp: Added #include "ace/OS_Memory.h" to get ACE_NEW.
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: Added
+          #include "ace/Malloc_Base.h" to pick up ACE_Allocator.
+
+        * tests/Cached_Allocator_Test.cpp: Changed default speed tests loops
+          from 100,000,000 to 10,000,000. run_test.pl times it out on
+          non-nuclear processors ;-)
+
 Fri Aug 23 16:59:51 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/svcconf-convert.pl: Fixed regex to handle empty option

@@ -628,45 +628,6 @@ typedef unsigned char ACE_Byte;
 #   endif
 # endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
 
-
-// These were moved from OS.h.
-#if defined (ACE_HAS_THREADS)
-#  if defined (ACE_HAS_PTHREADS)
-#    if defined (ACE_HAS_TSS_EMULATION)
-       typedef u_long ACE_thread_key_t;
-#    else  /* ! ACE_HAS_TSS_EMULATION */
-#      include /**/ <pthread.h>
-       typedef pthread_key_t ACE_thread_key_t;
-#    endif /* ! ACE_HAS_TSS_EMULATION */
-#  elif defined (ACE_HAS_STHREADS)
-     // Solaris threads, without PTHREADS.
-     // Typedefs to help compatibility with Windows NT and Pthreads.
-     typedef thread_t ACE_thread_t;
-     typedef thread_key_t ACE_thread_key_t;
-//     typedef mutex_t ACE_mutex_t;
-#  elif defined (ACE_PSOS)
-#    if defined (ACE_PSOS_HAS_TSS)
-       typedef u_long ACE_thread_key_t;
-#    else
-       typedef u_int ACE_thread_key_t;
-#    endif /* ACE_PSOS_HAS_TSS */
-#  elif defined (VXWORKS)
-     typedef u_int ACE_thread_key_t;
-#  elif defined (ACE_WIN32)
-#    if !defined(__MINGW32__)
-       typedef long pid_t;
-#    endif /* __MINGW32__ */
-#    if defined (ACE_HAS_TSS_EMULATION)
-//     typedef DWORD ACE_OS_thread_key_t;
-       typedef u_int ACE_thread_key_t;
-#    else  /* ! ACE_HAS_TSS_EMULATION */
-       typedef DWORD ACE_thread_key_t;
-#    endif /* ! ACE_HAS_TSS_EMULATION */
-#  endif
-#else
-   typedef u_int ACE_thread_key_t;
-#endif
-
 #if !defined (ACE_HAS_SSIZE_T)
 #  if defined (ACE_WIN64)
   typedef SSIZE_T ssize_t;

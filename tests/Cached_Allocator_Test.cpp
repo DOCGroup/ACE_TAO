@@ -155,7 +155,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const char *str3 = "ABCDEFGH";
 
   if (argc < 2)
-    loops = 100000000;
+    loops = 10000000;
   else
     loops = ACE_OS::atoi (argv[1]);
 
