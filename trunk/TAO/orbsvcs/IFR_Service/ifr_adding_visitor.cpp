@@ -3780,6 +3780,15 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
         CORBA::ComponentIR::HomeDef::_narrow (holder.in ()
                                               ACE_ENV_ARG_PARAMETER);
     }
+  else
+    {
+      /// Maybe the base home is in an included IDL file - put it in
+      /// the repository and go again.
+      (void) base_home->ast_accept (this);
+      this->fill_base_home (result,
+                            node
+                            ACE_ENV_ARG_DECL);
+    }
 }
 
 void 
@@ -3808,6 +3817,15 @@ ifr_adding_visitor::fill_managed_component (
         CORBA::ComponentIR::ComponentDef::_narrow (holder.in ()
                                                    ACE_ENV_ARG_PARAMETER);
     }
+  else
+    {
+      /// Maybe the managed component is in an included IDL file - put it in
+      /// the repository and go again.
+      (void) managed_component->ast_accept (this);
+      this->fill_managed_component (result,
+                                    node
+                                    ACE_ENV_ARG_DECL);
+    }
 }
 
 void 
@@ -3833,6 +3851,15 @@ ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
       result = 
         CORBA::ValueDef::_narrow (holder.in ()
                                   ACE_ENV_ARG_PARAMETER);
+    }
+  else
+    {
+      /// Maybe the primary key is in an included IDL file - put it in
+      /// the repository and go again.
+      (void) primary_key->ast_accept (this);
+      this->fill_primary_key (result,
+                              node
+                              ACE_ENV_ARG_DECL);
     }
 }
 
@@ -3926,8 +3953,8 @@ ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
       case AST_Decl::NT_home:
         {
           AST_Home *h = AST_Home::narrow_from_decl (node);
-          s_length = h->n_inherits ();
-          list = h->inherits ();
+          s_length = h->n_supports ();
+          list = h->supports ();
           break;
         }
       default:
@@ -4134,17 +4161,20 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
 
   for (UTL_ExceptlistActiveIterator ei (list);
        !ei.is_done ();
-       ei.next ())
+       ei.next (), ++index)
     {
       d = ei.item ();
-      holder =
-        be_global->repository ()->lookup_id (d->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
+
+      // Just to make sure. The call will return quickly if d has already
+      // been visited. Can't use ir_current_ because ExceptionDef doesn't
+      // inherit from IDLType.
+      (void) d->ast_accept (this);
+
+      holder = be_global->repository ()->lookup_id (d->repoID ()
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      // @@@ (JP) We should probably throw some kind of exception here
-      // if the lookup return 0.
-      result[index++] =
+      result[index] =
         CORBA::ExceptionDef::_narrow (holder.in ()
                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -4166,23 +4196,22 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
   for (UTL_ScopeActiveIterator iter (node,
                                      UTL_Scope::IK_decls);
        ! iter.is_done ();
-       iter.next ())
+       iter.next (), ++index)
     {
       arg = AST_Argument::narrow_from_decl (iter.item ());
       result[index].name = 
         CORBA::string_dup (arg->local_name ()->get_string ());
-      result[index].type = CORBA::TypeCode::_nil ();
-      holder =
-        be_global->repository ()->lookup_id (arg->field_type ()->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      result[index].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
+
+      // Get the arg type into ir_current_.
+      (void) arg->ast_accept (this);
 
       result[index].type_def =
-        CORBA::IDLType::_narrow (holder.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+        CORBA::IDLType::_duplicate (this->ir_current_.in ()
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      result[index++].mode = CORBA::PARAM_IN;
+      result[index].mode = CORBA::PARAM_IN;
     }
 }
 

@@ -18,6 +18,11 @@ const char *VALUETYPE_ID = "IDL:mod/test_valuetype:1.0";
 const char *VALUETYPE_SCOPED_NAME = "::mod::test_valuetype";
 const char *VT_BASE_ID = "IDL:help/v_base:1.0";
 
+const char *HOME_ID = "IDL:mod/test_home:1.0";
+const char *HOME_SCOPED_NAME = "::mod::test_home";
+const char *HOME_BASE_ID = "IDL:help/h_base:1.0";
+const char *HOME_KEY_ID = "IDL:help/h_key:1.0";
+
 const CORBA::ULong ATTRS_LEN = 1;
 const CORBA::ULong OPS_LEN = 1;
 const CORBA::ULong FACTORY_LEN = 2;
@@ -163,28 +168,79 @@ const char *MEM_IDS[] =
     "IDL:mod/test_valuetype/test_mem2:1.0",
   };
 
-const CORBA::ULong FACTORY_MEMBER_LENS[] =
+const CORBA::ULong VT_FACTORY_PARAM_LENS[] =
   {
     1,
     2
   };
 
-const CORBA::ULong FACTORY_EXCEP_LENS[] =
+const CORBA::ULong VT_FACTORY_EXCEP_LENS[] =
   {
     0,
     2
   };
 
-const char *FACTORY_MEMBER_NAMES[][2] =
+const char *VT_FACTORY_PARAM_NAMES[][2] =
   {
     {"set_tm1", 0},
     {"set_tm1a", "set_tm2"}
   };
 
-const char *FACTORY_EXCEP_NAMES[][2] =
+const char *VT_FACTORY_EXCEP_NAMES[][2] =
   {
     {0, 0},
-    {"help::whups", "help::doh"}
+    {"whups", "doh"}
+  };
+
+const CORBA::ULong HOME_SUPPORTED_LEN = 2;
+
+const char *HOME_SUPPORTED_IDS[] =
+  {
+    "IDL:help/h_supp1:1.0",
+    "IDL:help/h_supp2:1.0"
+  };
+
+const CORBA::ULong HOME_FACTORY_LEN = 1;
+const CORBA::ULong HOME_FINDER_LEN = 1;
+
+const CORBA::ULong HOME_FACTORY_PARAM_LENS[] =
+  {
+    1
+  };
+
+const char *HOME_FACTORY_PARAM_NAMES[][1] =
+  {
+    {"set_uid"}
+  };
+
+const CORBA::ULong HOME_FACTORY_EXCEP_LENS[] =
+  {
+    1
+  };
+
+const char *HOME_FACTORY_EXCEP_NAMES[][1] =
+  {
+    {"doh"}
+  };
+
+const CORBA::ULong HOME_FINDER_PARAM_LENS[] =
+  {
+    3
+  };
+
+const char *HOME_FINDER_PARAM_NAMES[][3] =
+  {
+    {"id_number", "id_string", "pkey"}
+  };
+
+const CORBA::ULong HOME_FINDER_EXCEP_LENS[] =
+  {
+    1
+  };
+
+const char *HOME_FINDER_EXCEP_NAMES[][1] =
+  {
+    {"whups"}
   };
 
 IDL3_Client::IDL3_Client (void)
@@ -251,6 +307,14 @@ IDL3_Client::run (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   status = this->valuetype_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return status;
+    }
+
+  status = this->home_test (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (status != 0)
@@ -420,6 +484,140 @@ IDL3_Client::component_test (ACE_ENV_SINGLE_ARG_DECL)
 int
 IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
 {
+  CORBA::Contained_var result =
+    this->repo_->lookup_id (HOME_ID
+                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (result.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_test: lookup by id failed\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::ComponentIR::HomeDef_var home =
+    CORBA::ComponentIR::HomeDef::_narrow (result.in ()
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (result.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_test: home narrow failed\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::ComponentIR::ComponentDef_var managed =
+    home->managed_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (managed.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_test: managed component is null\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::String_var str = managed->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (str.in () == 0 || ACE_OS::strcmp (str.in (), COMPONENT_ID) != 0)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_test: bad id for managed component\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::ValueDef_var pkey = 
+    home->primary_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (pkey.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_test: primary key is null\n"));
+        }
+
+      return -1;
+    }
+
+  str = pkey->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (str.in () == 0 || ACE_OS::strcmp (str.in (), HOME_KEY_ID) != 0)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_test: bad id for managed component\n"));
+        }
+
+      return -1;
+    }
+
+  int status = this->home_inheritance_test (home
+                                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  CORBA::Contained::Description_var desc =
+    home->describe (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::ComponentIR::HomeDescription *home_desc = 0;
+
+  if ((desc->value >>= home_desc) == 0)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_test: extraction of HomeDescription failed\n"));
+        }
+
+      return -1;
+    }
+
+  status = this->home_factory_test (home_desc
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->home_finder_test (home_desc
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
   return 0;
 }
 
@@ -972,7 +1170,7 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd
   CORBA::String_var str = bvd->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (str.in () ==0 || ACE_OS::strcmp (str.in (), VT_BASE_ID) != 0)
+  if (str.in () == 0 || ACE_OS::strcmp (str.in (), VT_BASE_ID) != 0)
     {
       if (this->debug_)
         {
@@ -1304,7 +1502,7 @@ IDL3_Client::valuetype_factory_test (
     {
       inside_len = desc->initializers[i].members.length ();
 
-      if (inside_len != FACTORY_MEMBER_LENS[i])
+      if (inside_len != VT_FACTORY_PARAM_LENS[i])
         {
           if (this->debug_)
             {
@@ -1319,12 +1517,12 @@ IDL3_Client::valuetype_factory_test (
 
       CORBA::ULong j = 0;
 
-      for (j = 0; j < FACTORY_MEMBER_LENS[i]; ++j)
+      for (j = 0; j < VT_FACTORY_PARAM_LENS[i]; ++j)
         {
           tmp = desc->initializers[i].members[j].name.in ();
 
           if (tmp == 0 
-              || ACE_OS::strcmp (tmp, FACTORY_MEMBER_NAMES[i][j]) != 0)
+              || ACE_OS::strcmp (tmp, VT_FACTORY_PARAM_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
@@ -1341,7 +1539,7 @@ IDL3_Client::valuetype_factory_test (
 
       inside_len = desc->initializers[i].exceptions.length ();
 
-      if (inside_len != FACTORY_EXCEP_LENS[i])
+      if (inside_len != VT_FACTORY_EXCEP_LENS[i])
         {
           if (this->debug_)
             {
@@ -1354,12 +1552,12 @@ IDL3_Client::valuetype_factory_test (
           return -1;
         }
 
-      for (j = 0; j < FACTORY_EXCEP_LENS[i]; ++j)
+      for (j = 0; j < VT_FACTORY_EXCEP_LENS[i]; ++j)
         {
           tmp = desc->initializers[i].exceptions[j].name.in ();
 
           if (tmp == 0 
-              || ACE_OS::strcmp (tmp, FACTORY_EXCEP_NAMES[i][j]) != 0)
+              || ACE_OS::strcmp (tmp, VT_FACTORY_EXCEP_NAMES[i][j]) != 0)
             {
               if (this->debug_)
                 {
@@ -1377,3 +1575,276 @@ IDL3_Client::valuetype_factory_test (
 
   return 0;
 }
+
+int
+IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd
+                                    ACE_ENV_ARG_DECL)
+{
+  CORBA::ComponentIR::HomeDef_var bhd = 
+    hd->base_home (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (bhd.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_inheritance_test: "
+                      "base home is null\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::String_var str = bhd->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (str.in () == 0 || ACE_OS::strcmp (str.in (), HOME_BASE_ID) != 0)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_inheritance_test: "
+                      "wrong repo id for base home\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::InterfaceDefSeq_var supported = 
+    hd->supported_interfaces (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  CORBA::ULong length = supported->length ();
+
+  if (length != HOME_SUPPORTED_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_inheritance_test: "
+                      "wrong number of supported interfaces\n"));
+        }
+
+      return -1;
+    }
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      str = supported[i].in ()->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (str.in () == 0 
+          || ACE_OS::strcmp (str.in (), HOME_SUPPORTED_IDS[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "home_inheritance_test: "
+                          "bad id on supported interface #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+    }
+
+  return 0;
+}
+
+int
+IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription *hd
+                                ACE_ENV_ARG_DECL)
+{
+  CORBA::ULong length = hd->factories.length ();
+
+  if (length != HOME_FACTORY_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_factory_test: "
+                      "wrong number of factories\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::ULong inside_len = 0;
+  CORBA::ULong j = 0;
+  const char *tmp = 0;
+
+  for (CORBA::ULong i = 0; i < HOME_FACTORY_LEN; ++i)
+    {
+      inside_len = hd->factories[i].parameters.length ();
+
+      if (inside_len != HOME_FACTORY_PARAM_LENS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "home_factory_test: "
+                          "wrong number of params in factory #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      for (j = 0; j < inside_len; ++j)
+        {
+          tmp = hd->factories[i].parameters[j].name.in ();
+
+          if (tmp == 0 
+              || ACE_OS::strcmp (tmp, HOME_FACTORY_PARAM_NAMES[i][j]) != 0)
+            {
+              if (this->debug_)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "home_factory_test: "
+                              "wrong name for param #%d in factory #%d\n",
+                              j + 1,
+                              i + 1));
+                }
+
+              return -1;
+            }
+        }
+
+      inside_len = hd->factories[i].exceptions.length ();
+
+      if (inside_len != HOME_FACTORY_EXCEP_LENS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "home_factory_test: "
+                          "wrong number of exceptions in factory #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      for (j = 0; j < inside_len; ++j)
+        {
+          tmp = hd->factories[i].exceptions[j].name.in ();
+
+          if (tmp == 0 
+              || ACE_OS::strcmp (tmp, HOME_FACTORY_EXCEP_NAMES[i][j]) != 0)
+            {
+              if (this->debug_)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "home_factory_test: "
+                              "wrong name for exception #%d in factory #%d\n",
+                              j + 1,
+                              i + 1));
+                }
+
+              return -1;
+            }
+        }
+    }
+
+  return 0;
+}
+
+int
+IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription *hd
+                               ACE_ENV_ARG_DECL)
+{
+  CORBA::ULong length = hd->finders.length ();
+
+  if (length != HOME_FINDER_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "home_finder_test: "
+                      "wrong number of finders\n"));
+        }
+
+      return -1;
+    }
+
+  CORBA::ULong inside_len = 0;
+  CORBA::ULong j = 0;
+  const char *tmp = 0;
+
+  for (CORBA::ULong i = 0; i < HOME_FINDER_LEN; ++i)
+    {
+      inside_len = hd->finders[i].parameters.length ();
+
+      if (inside_len != HOME_FINDER_PARAM_LENS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "home_finder_test: "
+                          "wrong number of params in finder #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      for (j = 0; j < inside_len; ++j)
+        {
+          tmp = hd->finders[i].parameters[j].name.in ();
+
+          if (tmp == 0 
+              || ACE_OS::strcmp (tmp, HOME_FINDER_PARAM_NAMES[i][j]) != 0)
+            {
+              if (this->debug_)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "home_finder_test: "
+                              "wrong name for param #%d in finder #%d\n",
+                              j + 1,
+                              i + 1));
+                }
+
+              return -1;
+            }
+        }
+
+      inside_len = hd->finders[i].exceptions.length ();
+
+      if (inside_len != HOME_FINDER_EXCEP_LENS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "home_finder_test: "
+                          "wrong number of exceptions in finder #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      for (j = 0; j < inside_len; ++j)
+        {
+          tmp = hd->finders[i].exceptions[j].name.in ();
+
+          if (tmp == 0 
+              || ACE_OS::strcmp (tmp, HOME_FINDER_EXCEP_NAMES[i][j]) != 0)
+            {
+              if (this->debug_)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "home_finder_test: "
+                              "wrong name for exception #%d in finder #%d\n",
+                              j + 1,
+                              i + 1));
+                }
+
+              return -1;
+            }
+        }
+    }
+
+  return 0;
+}
+

@@ -16,6 +16,10 @@ module help
   valuetype v_base : v_base_base {};
   interface v_supp1 {};
   abstract interface v_supp2 {};
+  home h_base manages c_base {};
+  valuetype h_key {};
+  interface h_supp1 {};
+  interface h_supp2 {};
 };
 
 module help
@@ -69,6 +73,18 @@ module mod
     factory create_tv (in string set_tm1a,
                        in short set_tm2)
       raises (help::whups, help::doh);
+  };
+
+  home test_home : help::h_base supports help::h_supp1, help::h_supp2 
+    manages test_component primarykey help::h_key 
+  {
+    factory create_tc (in string set_uid)
+      raises (help::doh);
+
+    finder find_tc (in long id_number,
+                    in string id_string,
+                    in help::h_key pkey)
+      raises (help::whups);
   };
 };
 

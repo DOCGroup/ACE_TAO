@@ -687,6 +687,13 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                   this->repo_->config ()->get_string_value (arg_key,
                                                             "arg_path",
                                                             holder);
+                  TAO_IDLType_i *impl = 
+                    TAO_IFR_Service_Utils::path_to_idltype (holder,
+                                                             this->repo_);
+                  fv_desc->initializers[i].members[j].type =
+                    impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_CHECK_RETURN (0);
+
                   obj = 
                     TAO_IFR_Service_Utils::path_to_ir_object (
                                                holder,
