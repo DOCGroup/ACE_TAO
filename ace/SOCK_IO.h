@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -26,9 +25,13 @@ class ACE_Export ACE_SOCK_IO : public ACE_SOCK
   //     Defines the methods for the ACE socket wrapper I/O routines
   //     (e.g., send/recv).
 public:
+  // = Initialization and termination methods.
+
   ACE_SOCK_IO (void);
+  // Constructor.
+
   ~ACE_SOCK_IO (void);
-  // Default ctor/dtor.
+  // Destructor.
 
   ssize_t send (const void *buf,
                 size_t n,
@@ -54,12 +57,16 @@ public:
 
   ssize_t send (const iovec iov[],
                 size_t n) const;
+  // Send a vector of an <n> byte messages to the connected socket.
+
   ssize_t send (const ACE_IO_Vector iov[],
                 size_t n) const;
   // Send a vector of an <n> byte messages to the connected socket.
 
   ssize_t recv (iovec iov[],
                 size_t n) const;
+  // Recv a vector of an <n> byte messages to the connected socket.
+
   ssize_t recv (ACE_IO_Vector iov[],
                 size_t n) const;
   // Recv a vector of an <n> byte messages to the connected socket.
@@ -76,6 +83,22 @@ public:
   ssize_t recv (void *buf,
                 size_t n,
                 int flags, 
+		const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to receive up to <n> bytes
+  // into <buf> from <handle> (uses the <recv> call).  If <recv> times
+  // out a -1 is returned with <errno == ETIME>.  If it succeeds the
+  // number of bytes received is returned.
+
+  ssize_t send (const void *buf,
+                size_t n, 
+		const ACE_Time_Value *timeout);
+  // Wait to to <timeout> amount of time to send up to <n> bytes into
+  // <buf> from <handle> (uses the <send> call).  If <send> times out
+  // a -1 is returned with <errno == ETIME>.  If it succeeds the
+  // number of bytes sent is returned.
+
+  ssize_t recv (void *buf,
+                size_t n,
 		const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to receive up to <n> bytes
   // into <buf> from <handle> (uses the <recv> call).  If <recv> times
@@ -101,6 +124,12 @@ public:
   // Recv <n> bytes via Win32 ReadFile using overlapped I/O.
 
   ssize_t recv (iovec *io_vec);
+  // Allows a client to read from a socket without having to provide a
+  // buffer to read.  This method determines how much data is in the
+  // socket, allocates a buffer of this size, reads in the data, and
+  // returns the number of bytes read.  The caller is responsible for
+  // deleting the member in the <iov_base> field of <io_vec>.
+
   ssize_t recv (ACE_IO_Vector *io_vec);
   // Allows a client to read from a socket without having to provide a
   // buffer to read.  This method determines how much data is in the
