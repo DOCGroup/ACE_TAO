@@ -256,12 +256,16 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Calls TAO_GIOP_Invocation::start.
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
   int invoke (CORBA::ExceptionList_ptr exceptions,
               CORBA_Environment &ACE_TRY_ENV =
                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException));
   // Send request, block until any reply comes back, and unmarshal
   // reply parameters as appropriate.
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   int invoke (TAO_Exception_Data *excepts,
               CORBA::ULong except_count,

@@ -571,6 +571,8 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->rd_.reply_received () = 0;
 }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 int
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
@@ -639,6 +641,8 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
 
   return retval;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
