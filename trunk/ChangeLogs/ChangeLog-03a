@@ -1,3 +1,13 @@
+Thu Jul 12 09:43:36 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/FILE_Connector.h (ACE_FILE_Connector, connect):
+
+	  Removed the default O_EXCL flag I added a few days ago.  It is
+	  mostly useful for preventing symbolic link attacks in a
+	  directory with global write permissions.  Pass the
+	  responsibility of using the O_EXCL flag when necessary on to the
+	  application developer.
+
 Wed Jul 11 22:31:50 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU (clean.local):
