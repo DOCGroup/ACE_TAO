@@ -1,6 +1,6 @@
-// This program sends logging records directly to the server, rather
 // $Id$
 
+// This program sends logging records directly to the server, rather
 // than going through the client logging daemon.
 
 #include "ace/SOCK_Connector.h"

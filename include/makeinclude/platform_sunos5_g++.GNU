@@ -2,8 +2,8 @@
 #
 # SOBUILD - compile into .so directly
 #
-CC		= gcc 
 CXX		= gcc -I. -fno-strict-prototypes -D__ACE_INLINE__ -Wall -Wpointer-arith -Winline 
+CC		= $(CXX)
 DLD		= $(CXX)
 LD		= $(CXX)
 LDFLAGS		+= -L $(WRAPPER_ROOT)/ace -L ./ # -z muldefs
