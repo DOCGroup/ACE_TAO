@@ -15,7 +15,7 @@
 #define ACE_BASED_POINTER_T_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"              // Need ACE_Export
+#include "ace/OS/OS.h"              // Need ACE_Export
 
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
@@ -183,11 +183,11 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Based_Pointer_T.i"
+#include "ace/Memory/Based_Pointer_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Based_Pointer_T.cpp"
+#include "ace/Memory/Based_Pointer_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

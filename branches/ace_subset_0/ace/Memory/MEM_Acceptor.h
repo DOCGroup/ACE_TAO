@@ -15,7 +15,7 @@
 #define ACE_MEM_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Acceptor.h"
+#include "ace/Sockets/SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,9 +23,9 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/MEM_Stream.h"
-#include "ace/MEM_Addr.h"
-#include "ace/OS_QoS.h"
+#include "ace/Memory/MEM_Stream.h"
+#include "ace/Memory/MEM_Addr.h"
+#include "ace/OS/OS_QoS.h"
 
 // Forward decl.
 class ACE_Reactor;
@@ -164,7 +164,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/MEM_Acceptor.i"
+#include "ace/Memory/MEM_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

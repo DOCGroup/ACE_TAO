@@ -2,13 +2,16 @@
 
 // Defines the Internet domain address family address format.
 
-#include "ace/MEM_Addr.h"
-#include "ace/Log_Msg.h"
+#include "ace/Memory/MEM_Addr.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/MEM_Addr.i"
+#include "ace/Memory/MEM_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, MEM_Addr, "$Id$")
@@ -139,6 +142,7 @@ ACE_MEM_Addr::get_host_name (void) const
   return this->external_.get_host_name ();
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_MEM_Addr::dump (void) const
 {
@@ -149,5 +153,6 @@ ACE_MEM_Addr::dump (void) const
   this->internal_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

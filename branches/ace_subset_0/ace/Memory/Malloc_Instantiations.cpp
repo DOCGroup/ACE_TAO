@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Malloc.h"
+#include "ace/Memory/Malloc.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

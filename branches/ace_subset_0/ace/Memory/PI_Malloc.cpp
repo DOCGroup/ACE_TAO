@@ -11,15 +11,15 @@
 #if !defined (ACE_PI_MALLOC_CPP)
 #define ACE_PI_MALLOC_CPP
 
-#include "ace/PI_Malloc.h"
-#include "ace/Object_Manager.h"
-#include "ace/Process_Mutex.h"
+#include "ace/Memory/PI_Malloc.h"
+#include "ace/Utils/Object_Manager.h"
+#include "ace/Threads/Process_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/PI_Malloc.i"
+#include "ace/Memory/PI_Malloc.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch_T.h"
+#include "ace/Threads/Synch_T.h"
 
 ACE_RCSID(ace, PI_Malloc, "$Id$")
 

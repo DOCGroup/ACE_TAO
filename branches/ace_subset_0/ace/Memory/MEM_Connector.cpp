@@ -1,18 +1,19 @@
 // MEM_Connector.cpp
 // $Id$
 
-#include "ace/MEM_Connector.h"
+#include "ace/Memory/MEM_Connector.h"
 
 ACE_RCSID(ace, MEM_Connector, "$Id$")
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/MEM_Connector.i"
+#include "ace/Memory/MEM_Connector.i"
 #endif
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Connector)
 
+#ifdef ACE_SUBSET_0	
 void
 ACE_MEM_Connector::dump (void) const
 {
@@ -22,6 +23,7 @@ ACE_MEM_Connector::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 ACE_MEM_Connector::ACE_MEM_Connector (void)
   : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),

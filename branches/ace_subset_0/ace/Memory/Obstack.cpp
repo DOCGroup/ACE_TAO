@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Obstack.h"
+#include "ace/Memory/Obstack.h"
 
 ACE_RCSID(ace, Obstack, "$Id$")
 

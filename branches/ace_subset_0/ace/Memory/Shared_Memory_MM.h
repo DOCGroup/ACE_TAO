@@ -15,13 +15,13 @@
 #define ACE_SHARED_MALLOC_MM_H
 #include "ace/pre.h"
 
-#include "ace/Shared_Memory.h"
+#include "ace/Memory/Shared_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Mem_Map.h"
+#include "ace/Memory/Mem_Map.h"
 
 /**
  * @class ACE_Shared_Memory_MM
@@ -109,7 +109,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Shared_Memory_MM.i"
+#include "ace/Memory/Shared_Memory_MM.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -1,10 +1,10 @@
 // Shared_Memory_MM.cpp
 // $Id$
 
-#include "ace/Shared_Memory_MM.h"
+#include "ace/Memory/Shared_Memory_MM.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Shared_Memory_MM.i"
+#include "ace/Memory/Shared_Memory_MM.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Shared_Memory_MM, "$Id$")

@@ -14,7 +14,7 @@
 #define ACE_MEM_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Connector.h"
+#include "ace/Sockets/SOCK_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,8 +22,8 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/MEM_Stream.h"
-#include "ace/MEM_Addr.h"
+#include "ace/Memory/MEM_Stream.h"
+#include "ace/Memory/MEM_Addr.h"
 
 /**
  * @class ACE_MEM_Connector
@@ -116,7 +116,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/MEM_Connector.i"
+#include "ace/Memory/MEM_Connector.i"
 #endif
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

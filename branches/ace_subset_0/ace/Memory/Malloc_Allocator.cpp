@@ -11,14 +11,14 @@
 #if !defined (ACE_MALLOC_ALLOCATOR_CPP)
 #define ACE_MALLOC_ALLOCATOR_CPP
 
-#include "ace/Malloc_Allocator.h"
-#include "ace/Object_Manager.h"
+#include "ace/Memory/Malloc_Allocator.h"
+#include "ace/Utils/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Malloc_Allocator.i"
+#include "ace/Memory/Malloc_Allocator.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch_T.h"
+#include "ace/Threads/Synch_T.h"
 
 ACE_RCSID (ace, Malloc_Allocator, "$Id$")
 
