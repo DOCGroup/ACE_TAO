@@ -38,7 +38,7 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:712
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:242
 
 #if defined (__ACE_INLINE__)
 

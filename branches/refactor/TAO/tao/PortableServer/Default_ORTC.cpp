@@ -42,10 +42,8 @@
 static const CORBA::Long _oc_TAO_Default_ORT_ObjectReferenceTemplate[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
-  56,
+  48,
   ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
   ACE_NTOHL (0x54414f5f), 
   ACE_NTOHL (0x44656661), 
   ACE_NTOHL (0x756c745f), 
@@ -56,7 +54,7 @@ static const CORBA::Long _oc_TAO_Default_ORT_ObjectReferenceTemplate[] =
   ACE_NTOHL (0x6e636554), 
   ACE_NTOHL (0x656d706c), 
   ACE_NTOHL (0x6174653a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/TAO_Default_ORT/ObjectReferenceTemplate:1.0
+  ACE_NTOHL (0x312e3000),  // repository ID = IDL:TAO_Default_ORT/ObjectReferenceTemplate:1.0
     24,
   ACE_NTOHL (0x4f626a65), 
   ACE_NTOHL (0x63745265), 
@@ -88,211 +86,47 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:95
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:94
 
 void
-tao_TAO_Default_ORT_ObjectReferenceTemplate_add_ref (
-    TAO_Default_ORT::ObjectReferenceTemplate *p
+TAO_Default_ORT::tao_ObjectReferenceTemplate_life::tao_add_ref (
+    TAO_Default_ORT::ObjectReferenceTemplate * p
   )
 {
   CORBA::add_ref (p);
 }
 
 void
-tao_TAO_Default_ORT_ObjectReferenceTemplate_remove_ref (
-    TAO_Default_ORT::ObjectReferenceTemplate *p
+TAO_Default_ORT::tao_ObjectReferenceTemplate_life::tao_remove_ref (
+    TAO_Default_ORT::ObjectReferenceTemplate * p
   )
 {
   CORBA::remove_ref (p);
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:298
-
-// *************************************************************
-// Operations for class TAO_Default_ORT::ObjectReferenceTemplate_var
-// *************************************************************
-
-TAO_Default_ORT::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (void)
-  : ptr_ (0)
-{}
-
-TAO_Default_ORT::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (ObjectReferenceTemplate* p)
-  : ptr_ (p)
-{}
-
-TAO_Default_ORT::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (const ObjectReferenceTemplate* p)
-  : ptr_ (ACE_const_cast (ObjectReferenceTemplate *, p))
-{}
-
-TAO_Default_ORT::ObjectReferenceTemplate *
-TAO_Default_ORT::ObjectReferenceTemplate_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (const ObjectReferenceTemplate_var &p)
-{
-  CORBA::add_ref (p.ptr ());
-  this->ptr_ = p.ptr ();
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_var::~ObjectReferenceTemplate_var (void) // destructor
-{
-  CORBA::remove_ref (this->ptr_);
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_var &
-TAO_Default_ORT::ObjectReferenceTemplate_var::operator= (ObjectReferenceTemplate *p)
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_var &
-TAO_Default_ORT::ObjectReferenceTemplate_var::operator= (const ObjectReferenceTemplate_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::remove_ref (this->ptr_);
-    ObjectReferenceTemplate *tmp = p.ptr ();
-    CORBA::add_ref (tmp);
-    this->ptr_ = tmp;
-  }
-  
-  return *this;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_var::operator const TAO_Default_ORT::ObjectReferenceTemplate* () const // cast
-{
-  return this->ptr_;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_var::operator TAO_Default_ORT::ObjectReferenceTemplate*& () // cast 
-{
-  return this->ptr_;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate *
-TAO_Default_ORT::ObjectReferenceTemplate_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate *
-TAO_Default_ORT::ObjectReferenceTemplate_var::in (void) const
-{
-  return this->ptr_;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate *&
-TAO_Default_ORT::ObjectReferenceTemplate_var::inout (void)
-{
-  return this->ptr_;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate *&
-TAO_Default_ORT::ObjectReferenceTemplate_var::out (void)
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate *
-TAO_Default_ORT::ObjectReferenceTemplate_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ObjectReferenceTemplate* tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-void
-TAO_Default_ORT::ObjectReferenceTemplate_var::tao_add_ref (
-    ObjectReferenceTemplate *p
-  )
-{
-  CORBA::add_ref (p);
-}
-
-void
-TAO_Default_ORT::ObjectReferenceTemplate_var::tao_remove_ref (
-    ObjectReferenceTemplate *p
-  )
-{
-  CORBA::remove_ref (p);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:568
-
-// *************************************************************
-// Operations for class TAO_Default_ORT::ObjectReferenceTemplate_out
-// *************************************************************
-
-TAO_Default_ORT::ObjectReferenceTemplate_out::ObjectReferenceTemplate_out (ObjectReferenceTemplate *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_out::ObjectReferenceTemplate_out (ObjectReferenceTemplate_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = 0;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_out::ObjectReferenceTemplate_out (const ObjectReferenceTemplate_out &p)
-  : ptr_ (ACE_const_cast (ObjectReferenceTemplate_out&, p).ptr_)
-{}
-
-TAO_Default_ORT::ObjectReferenceTemplate_out &
-TAO_Default_ORT::ObjectReferenceTemplate_out::operator= (const ObjectReferenceTemplate_out &p)
-{
-  this->ptr_ = ACE_const_cast (ObjectReferenceTemplate_out&, p).ptr_;
-  return *this;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_out &
-TAO_Default_ORT::ObjectReferenceTemplate_out::operator= (const ObjectReferenceTemplate_var &p)
-{
-  ObjectReferenceTemplate *tmp = p.ptr ();
-  CORBA::add_ref (tmp);
-  this->ptr_ = tmp;
-  return *this;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_out &
-TAO_Default_ORT::ObjectReferenceTemplate_out::operator= (ObjectReferenceTemplate *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate_out::operator TAO_Default_ORT::ObjectReferenceTemplate*& () // cast
-{
-  return this->ptr_;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate *&
-TAO_Default_ORT::ObjectReferenceTemplate_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-TAO_Default_ORT::ObjectReferenceTemplate *
-TAO_Default_ORT::ObjectReferenceTemplate_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:138
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Value_Var_T<
+        TAO_Default_ORT::ObjectReferenceTemplate,
+        TAO_Default_ORT::tao_ObjectReferenceTemplate_life
+      >;
+  template class
+    TAO_Value_Out_T<
+        TAO_Default_ORT::ObjectReferenceTemplate,
+        TAO_Default_ORT::tao_ObjectReferenceTemplate_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Value_Var_T< \
+        TAO_Default_ORT::ObjectReferenceTemplate, \
+        TAO_Default_ORT::tao_ObjectReferenceTemplate_life \
+      >
+# pragma instantiate \
+    TAO_Value_Out_T< \
+        TAO_Default_ORT::ObjectReferenceTemplate, \
+        TAO_Default_ORT::tao_ObjectReferenceTemplate_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_Default_ORT::ObjectReferenceTemplate *
 TAO_Default_ORT::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
@@ -471,6 +305,17 @@ operator>>= (
       );
 }
 
+template<>
+CORBA::Boolean
+TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>::to_value (
+    CORBA::ValueBase *&_tao_elem
+  ) const
+{
+  CORBA::add_ref (this->value_);
+  _tao_elem = this->value_;
+  return 1;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Valuetype_Manager<TAO_Default_ORT::ObjectReferenceTemplate, TAO_Default_ORT::ObjectReferenceTemplate_var>;
@@ -481,7 +326,7 @@ operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:740
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:270
 
 void
 CORBA::add_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
@@ -562,3 +407,4 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR
       return 0;
     }
 }
+

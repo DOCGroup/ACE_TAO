@@ -58,6 +58,8 @@
 
 module CORBA
 {
+  typeprefix CORBA "omg.org";
+
 // Already defined in corbafwd.h, included from orb.idl.
 /*
   typedef short ValueModifier;

@@ -39,7 +39,7 @@
 int RTPortableServer::POA::_tao_class_id = 0;
 
 RTPortableServer::POA_ptr
-tao_RTPortableServer_POA_duplicate (
+RTPortableServer::tao_POA_life::tao_duplicate (
     RTPortableServer::POA_ptr p
   )
 {
@@ -47,7 +47,7 @@ tao_RTPortableServer_POA_duplicate (
 }
 
 void
-tao_RTPortableServer_POA_release (
+RTPortableServer::tao_POA_life::tao_release (
     RTPortableServer::POA_ptr p
   )
 {
@@ -55,15 +55,24 @@ tao_RTPortableServer_POA_release (
 }
 
 RTPortableServer::POA_ptr
-tao_RTPortableServer_POA_nil (
+RTPortableServer::tao_POA_life::tao_nil (
     void
   )
 {
   return RTPortableServer::POA::_nil ();
 }
 
+CORBA::Boolean
+RTPortableServer::tao_POA_life::tao_marshal (
+    RTPortableServer::POA_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTPortableServer::POA_ptr
-tao_RTPortableServer_POA_narrow (
+RTPortableServer::tao_POA_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -72,7 +81,7 @@ tao_RTPortableServer_POA_narrow (
 }
 
 CORBA::Object *
-tao_RTPortableServer_POA_upcast (
+RTPortableServer::tao_POA_cast::tao_upcast (
     void *src
   )
 {
@@ -81,205 +90,32 @@ tao_RTPortableServer_POA_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTPortableServer_POA_marshal (
-    RTPortableServer::POA_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTPortableServer::POA_var
-// *************************************************************
-
-RTPortableServer::POA_var::POA_var (void)
-  : ptr_ (POA::_nil ())
-{}
-
-::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTPortableServer::POA_var::POA_var (const ::RTPortableServer::POA_var &p)
-  : TAO_Base_var (),
-    ptr_ (POA::_duplicate (p.ptr ()))
-{}
-
-RTPortableServer::POA_var::~POA_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTPortableServer::POA_var &
-RTPortableServer::POA_var::operator= (POA_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTPortableServer::POA_var &
-RTPortableServer::POA_var::operator= (const ::RTPortableServer::POA_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTPortableServer::POA::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTPortableServer::POA_var::operator const ::RTPortableServer::POA_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTPortableServer::POA_var::operator ::RTPortableServer::POA_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTPortableServer::POA_ptr &
-RTPortableServer::POA_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTPortableServer::POA_ptr &
-RTPortableServer::POA_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTPortableServer::POA::_nil ();
-  return this->ptr_;
-}
-
-::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTPortableServer::POA_ptr val = this->ptr_;
-  this->ptr_ = ::RTPortableServer::POA::_nil ();
-  return val;
-}
-
-::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::tao_duplicate (POA_ptr p)
-{
-  return ::RTPortableServer::POA::_duplicate (p);
-}
-
-void
-RTPortableServer::POA_var::tao_release (POA_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::tao_nil (void)
-{
-  return ::RTPortableServer::POA::_nil ();
-}
-
-::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTPortableServer::POA::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTPortableServer::POA_var::tao_upcast (void *src)
-{
-  POA **tmp =
-    ACE_static_cast (POA **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTPortableServer::POA_out
-// *************************************************************
-
-RTPortableServer::POA_out::POA_out (POA_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTPortableServer::POA::_nil ();
-}
-
-RTPortableServer::POA_out::POA_out (POA_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTPortableServer::POA::_nil ();
-}
-
-RTPortableServer::POA_out::POA_out (const ::RTPortableServer::POA_out &p)
-  : ptr_ (ACE_const_cast (POA_out &, p).ptr_)
-{}
-
-::RTPortableServer::POA_out &
-RTPortableServer::POA_out::operator= (const ::RTPortableServer::POA_out &p)
-{
-  this->ptr_ = ACE_const_cast (POA_out&, p).ptr_;
-  return *this;
-}
-
-RTPortableServer::POA_out &
-RTPortableServer::POA_out::operator= (const ::RTPortableServer::POA_var &p)
-{
-  this->ptr_ = ::RTPortableServer::POA::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTPortableServer::POA_out &
-RTPortableServer::POA_out::operator= (POA_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTPortableServer::POA_out::operator ::RTPortableServer::POA_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTPortableServer::POA_ptr &
-RTPortableServer::POA_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTPortableServer::POA_ptr
-RTPortableServer::POA_out::operator-> (void)
-{
-  return this->ptr_;
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTPortableServer::POA,
+        RTPortableServer::tao_POA_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTPortableServer::POA,
+        RTPortableServer::tao_POA_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTPortableServer::POA, \
+        RTPortableServer::tao_POA_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTPortableServer::POA, \
+        RTPortableServer::tao_POA_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTPortableServer::POA::POA (void)
 {}
@@ -385,6 +221,12 @@ void *RTPortableServer::POA::_tao_QueryInterface (ptr_arith_t type)
 const char* RTPortableServer::POA::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTPortableServer/POA:1.0";
+}
+
+CORBA::Boolean
+RTPortableServer::POA::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from

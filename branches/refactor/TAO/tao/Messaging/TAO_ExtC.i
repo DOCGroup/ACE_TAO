@@ -26,12 +26,5 @@
 #if !defined (_TAO_CONNECTIONTIMEOUTPOLICY___CI_)
 #define _TAO_CONNECTIONTIMEOUTPOLICY___CI_
 
-ACE_INLINE
-CORBA::Boolean
-TAO::ConnectionTimeoutPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 

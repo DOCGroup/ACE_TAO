@@ -206,7 +206,8 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   // Generate helper struct for use of array in a sequence.
   *os << be_nl << be_nl
-      << "struct tao_" << node->local_name () << "_life" << be_nl
+      << "struct " << be_global->stub_export_macro () 
+      << " tao_" << node->local_name () << "_life" << be_nl
       << "{" << be_idt_nl
       << "static void tao_free (" << anon_p << node->local_name () 
       << "_slice * _tao_slice);" << be_nl

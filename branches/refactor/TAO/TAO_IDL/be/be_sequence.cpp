@@ -465,7 +465,8 @@ be_sequence::instance_name ()
 }
 
 int
-be_sequence::gen_base_class_name (TAO_OutStream *os)
+be_sequence::gen_base_class_name (TAO_OutStream *os,
+                                  AST_Decl *elem_scope)
 {
   be_type *elem = be_type::narrow_from_decl (this->base_type ());
 
@@ -476,8 +477,8 @@ be_sequence::gen_base_class_name (TAO_OutStream *os)
       if (this->unbounded ())
         {
           *os << "TAO_Unbounded_Object_Sequence<" << be_idt << be_idt_nl
-              << elem->name () << "," << be_nl
-              << elem->name () << "_var," << be_nl
+              << elem->nested_type_name (elem_scope) << "," << be_nl
+              << elem->nested_type_name (elem_scope, "_var") << "," << be_nl
               << elem->fwd_helper_name () << "_life," << be_nl
               << elem->fwd_helper_name () << "_cast" << be_uidt_nl
               << ">" << be_uidt;
@@ -485,8 +486,8 @@ be_sequence::gen_base_class_name (TAO_OutStream *os)
       else
         {
           *os << "TAO_Bounded_Object_Sequence<" << be_idt << be_idt_nl
-              << elem->name () << "," << be_nl
-              << elem->name () << "_var," << be_nl
+              << elem->nested_type_name (elem_scope) << "," << be_nl
+              << elem->nested_type_name (elem_scope, "_var") << "," << be_nl
               << elem->fwd_helper_name () << "_life," << be_nl
               << elem->fwd_helper_name () << "_cast," << be_nl
               << this->max_size ()->ev ()->u.ulval << be_uidt_nl
@@ -498,16 +499,16 @@ be_sequence::gen_base_class_name (TAO_OutStream *os)
       if (this->unbounded ())
         {
           *os << "TAO_Unbounded_Abstract_Sequence<" << be_idt << be_idt_nl
-              << elem->name () << "," << be_nl
-              << elem->name () << "_var," << be_nl
+              << elem->nested_type_name (elem_scope) << "," << be_nl
+              << elem->nested_type_name (elem_scope, "_var") << "," << be_nl
               << elem->fwd_helper_name () << "_life" << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
           *os << "TAO_Bounded_Abstract_Sequence<" << be_idt << be_idt_nl
-              << elem->name () << "," << be_nl
-              << elem->name () << "_var," << be_nl
+              << elem->nested_type_name (elem_scope) << "," << be_nl
+              << elem->nested_type_name (elem_scope, "_var") << "," << be_nl
               << elem->fwd_helper_name () << "_life," << be_nl
               << this->max_size ()->ev ()->u.ulval << be_uidt_nl
               << ">" << be_uidt;
@@ -518,14 +519,14 @@ be_sequence::gen_base_class_name (TAO_OutStream *os)
       if (this->unbounded ())
         {
           *os << "TAO_Unbounded_Pseudo_Sequence<" << be_idt << be_idt_nl
-              << elem->name () << "," << be_nl
+              << elem->nested_type_name (elem_scope) << "," << be_nl
               << elem->name () << "_var" << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
           *os << "TAO_Bounded_Pseudo_Sequence<" << be_idt << be_idt_nl
-              << elem->name () << "," << be_nl
+              << elem->nested_type_name (elem_scope) << "," << be_nl
               << elem->name () << "_var," << be_nl
               << this->max_size ()->ev ()->u.ulval << be_uidt_nl
               << ">" << be_uidt;
@@ -536,16 +537,16 @@ be_sequence::gen_base_class_name (TAO_OutStream *os)
       if (this->unbounded ())
         {
           *os << "TAO_Unbounded_Valuetype_Sequence<" << be_idt << be_idt_nl
-              << elem->name () << "," << be_nl
-              << elem->name () << "_var," << be_nl
+              << elem->nested_type_name (elem_scope) << "," << be_nl
+              << elem->nested_type_name (elem_scope, "_var") << "," << be_nl
               << elem->fwd_helper_name () << "_life" << be_uidt_nl
               << ">" << be_uidt;
         }
       else
         {
           *os << "TAO_Bounded_Valuetype_Sequence<" << be_idt << be_idt_nl
-              << elem->name () << "," << be_nl
-              << elem->name () << "_var," << be_nl
+              << elem->nested_type_name (elem_scope) << "," << be_nl
+              << elem->nested_type_name (elem_scope, "_var") << "," << be_nl
               << elem->fwd_helper_name () << "_life," << be_nl
               << this->max_size ()->ev ()->u.ulval << be_uidt_nl
               << ">" << be_uidt;
@@ -583,7 +584,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os)
             {
               *os << "TAO_Unbounded_Array_Sequence<"
                   << be_idt << be_idt_nl
-                  << elem->name () << "," << be_nl
+                  << elem->nested_type_name (elem_scope) << "," << be_nl
                   << elem->fwd_helper_name () << "_life" << be_uidt_nl
                   << ">" << be_uidt;
             }
@@ -591,7 +592,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os)
             {
               *os << "TAO_Bounded_Array_Sequence<"
                   << be_idt << be_idt_nl
-                  << elem->name () << "," << be_nl
+                  << elem->nested_type_name (elem_scope) << "," << be_nl
                   << elem->fwd_helper_name () << "_life," << be_nl
                   << this->max_size ()->ev ()->u.ulval << be_uidt_nl
                   << ">" << be_uidt;
@@ -602,13 +603,13 @@ be_sequence::gen_base_class_name (TAO_OutStream *os)
           if (this->unbounded ())
             {
               *os << "TAO_Unbounded_Sequence<" << be_idt << be_idt_nl
-                  << elem->name () << be_uidt_nl
+                  << elem->nested_type_name (elem_scope) << be_uidt_nl
                   << ">" << be_uidt;
             }
           else
             {
               *os << "TAO_Bounded_Sequence<" << be_idt << be_idt_nl
-                  << elem->name () << "," << be_nl
+                  << elem->nested_type_name (elem_scope) << "," << be_nl
                   << this->max_size ()->ev ()->u.ulval << be_uidt_nl
                   << ">" << be_uidt;
             }

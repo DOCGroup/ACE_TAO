@@ -26,12 +26,5 @@
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___CI_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___CI_
 
-ACE_INLINE
-CORBA::Boolean
-Messaging::RelativeRoundtripTimeoutPolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 

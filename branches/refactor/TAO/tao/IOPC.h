@@ -625,7 +625,7 @@ TAO_NAMESPACE  IOP
   typedef TAO_Objref_Var_T<Codec, tao_Codec_life> Codec_var;
   typedef TAO_Objref_Out_T<Codec, tao_Codec_life> Codec_out;
   
-  struct tao_Codec_life
+  struct TAO_Export tao_Codec_life
   {
     static Codec_ptr tao_duplicate (Codec_ptr);
     static void tao_release (Codec_ptr);
@@ -636,7 +636,7 @@ TAO_NAMESPACE  IOP
       );
   };
   
-  struct tao_Codec_cast
+  struct TAO_Export tao_Codec_cast
   {
     static Codec_ptr tao_narrow (
         CORBA::Object_ptr
@@ -955,7 +955,7 @@ TAO_NAMESPACE  IOP
   typedef TAO_Objref_Var_T<CodecFactory, tao_CodecFactory_life> CodecFactory_var;
   typedef TAO_Objref_Out_T<CodecFactory, tao_CodecFactory_life> CodecFactory_out;
   
-  struct tao_CodecFactory_life
+  struct TAO_Export tao_CodecFactory_life
   {
     static CodecFactory_ptr tao_duplicate (CodecFactory_ptr);
     static void tao_release (CodecFactory_ptr);
@@ -966,7 +966,7 @@ TAO_NAMESPACE  IOP
       );
   };
   
-  struct tao_CodecFactory_cast
+  struct TAO_Export tao_CodecFactory_cast
   {
     static CodecFactory_ptr tao_narrow (
         CORBA::Object_ptr

@@ -79,7 +79,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<Interceptor, tao_Interceptor_life> Interceptor_var;
   typedef TAO_Objref_Out_T<Interceptor, tao_Interceptor_life> Interceptor_out;
   
-  struct tao_Interceptor_life
+  struct TAO_Export tao_Interceptor_life
   {
     static Interceptor_ptr tao_duplicate (Interceptor_ptr);
     static void tao_release (Interceptor_ptr);
@@ -90,7 +90,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_Interceptor_cast
+  struct TAO_Export tao_Interceptor_cast
   {
     static Interceptor_ptr tao_narrow (
         CORBA::Object_ptr
@@ -354,7 +354,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<Current, tao_Current_life> Current_var;
   typedef TAO_Objref_Out_T<Current, tao_Current_life> Current_out;
   
-  struct tao_Current_life
+  struct TAO_Export tao_Current_life
   {
     static Current_ptr tao_duplicate (Current_ptr);
     static void tao_release (Current_ptr);
@@ -365,7 +365,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_Current_cast
+  struct TAO_Export tao_Current_cast
   {
     static Current_ptr tao_narrow (
         CORBA::Object_ptr
@@ -471,7 +471,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<RequestInfo, tao_RequestInfo_life> RequestInfo_var;
   typedef TAO_Objref_Out_T<RequestInfo, tao_RequestInfo_life> RequestInfo_out;
   
-  struct tao_RequestInfo_life
+  struct TAO_Export tao_RequestInfo_life
   {
     static RequestInfo_ptr tao_duplicate (RequestInfo_ptr);
     static void tao_release (RequestInfo_ptr);
@@ -482,7 +482,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_RequestInfo_cast
+  struct TAO_Export tao_RequestInfo_cast
   {
     static RequestInfo_ptr tao_narrow (
         CORBA::Object_ptr
@@ -707,7 +707,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<ClientRequestInfo, tao_ClientRequestInfo_life> ClientRequestInfo_var;
   typedef TAO_Objref_Out_T<ClientRequestInfo, tao_ClientRequestInfo_life> ClientRequestInfo_out;
   
-  struct tao_ClientRequestInfo_life
+  struct TAO_Export tao_ClientRequestInfo_life
   {
     static ClientRequestInfo_ptr tao_duplicate (ClientRequestInfo_ptr);
     static void tao_release (ClientRequestInfo_ptr);
@@ -718,7 +718,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_ClientRequestInfo_cast
+  struct TAO_Export tao_ClientRequestInfo_cast
   {
     static ClientRequestInfo_ptr tao_narrow (
         CORBA::Object_ptr
@@ -894,7 +894,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<ServerRequestInfo, tao_ServerRequestInfo_life> ServerRequestInfo_var;
   typedef TAO_Objref_Out_T<ServerRequestInfo, tao_ServerRequestInfo_life> ServerRequestInfo_out;
   
-  struct tao_ServerRequestInfo_life
+  struct TAO_Export tao_ServerRequestInfo_life
   {
     static ServerRequestInfo_ptr tao_duplicate (ServerRequestInfo_ptr);
     static void tao_release (ServerRequestInfo_ptr);
@@ -905,7 +905,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_ServerRequestInfo_cast
+  struct TAO_Export tao_ServerRequestInfo_cast
   {
     static ServerRequestInfo_ptr tao_narrow (
         CORBA::Object_ptr
@@ -1103,7 +1103,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<ClientRequestInterceptor, tao_ClientRequestInterceptor_life> ClientRequestInterceptor_var;
   typedef TAO_Objref_Out_T<ClientRequestInterceptor, tao_ClientRequestInterceptor_life> ClientRequestInterceptor_out;
   
-  struct tao_ClientRequestInterceptor_life
+  struct TAO_Export tao_ClientRequestInterceptor_life
   {
     static ClientRequestInterceptor_ptr tao_duplicate (ClientRequestInterceptor_ptr);
     static void tao_release (ClientRequestInterceptor_ptr);
@@ -1114,7 +1114,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_ClientRequestInterceptor_cast
+  struct TAO_Export tao_ClientRequestInterceptor_cast
   {
     static ClientRequestInterceptor_ptr tao_narrow (
         CORBA::Object_ptr
@@ -1253,7 +1253,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<ServerRequestInterceptor, tao_ServerRequestInterceptor_life> ServerRequestInterceptor_var;
   typedef TAO_Objref_Out_T<ServerRequestInterceptor, tao_ServerRequestInterceptor_life> ServerRequestInterceptor_out;
   
-  struct tao_ServerRequestInterceptor_life
+  struct TAO_Export tao_ServerRequestInterceptor_life
   {
     static ServerRequestInterceptor_ptr tao_duplicate (ServerRequestInterceptor_ptr);
     static void tao_release (ServerRequestInterceptor_ptr);
@@ -1264,7 +1264,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_ServerRequestInterceptor_cast
+  struct TAO_Export tao_ServerRequestInterceptor_cast
   {
     static ServerRequestInterceptor_ptr tao_narrow (
         CORBA::Object_ptr
@@ -1404,7 +1404,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<IORInfo, tao_IORInfo_life> IORInfo_var;
   typedef TAO_Objref_Out_T<IORInfo, tao_IORInfo_life> IORInfo_out;
   
-  struct tao_IORInfo_life
+  struct TAO_Export tao_IORInfo_life
   {
     static IORInfo_ptr tao_duplicate (IORInfo_ptr);
     static void tao_release (IORInfo_ptr);
@@ -1415,7 +1415,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_IORInfo_cast
+  struct TAO_Export tao_IORInfo_cast
   {
     static IORInfo_ptr tao_narrow (
         CORBA::Object_ptr
@@ -1581,7 +1581,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<IORInterceptor, tao_IORInterceptor_life> IORInterceptor_var;
   typedef TAO_Objref_Out_T<IORInterceptor, tao_IORInterceptor_life> IORInterceptor_out;
   
-  struct tao_IORInterceptor_life
+  struct TAO_Export tao_IORInterceptor_life
   {
     static IORInterceptor_ptr tao_duplicate (IORInterceptor_ptr);
     static void tao_release (IORInterceptor_ptr);
@@ -1592,7 +1592,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_IORInterceptor_cast
+  struct TAO_Export tao_IORInterceptor_cast
   {
     static IORInterceptor_ptr tao_narrow (
         CORBA::Object_ptr
@@ -1719,7 +1719,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<PolicyFactory, tao_PolicyFactory_life> PolicyFactory_var;
   typedef TAO_Objref_Out_T<PolicyFactory, tao_PolicyFactory_life> PolicyFactory_out;
   
-  struct tao_PolicyFactory_life
+  struct TAO_Export tao_PolicyFactory_life
   {
     static PolicyFactory_ptr tao_duplicate (PolicyFactory_ptr);
     static void tao_release (PolicyFactory_ptr);
@@ -1730,7 +1730,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_PolicyFactory_cast
+  struct TAO_Export tao_PolicyFactory_cast
   {
     static PolicyFactory_ptr tao_narrow (
         CORBA::Object_ptr
@@ -1835,7 +1835,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<ORBInitInfo, tao_ORBInitInfo_life> ORBInitInfo_var;
   typedef TAO_Objref_Out_T<ORBInitInfo, tao_ORBInitInfo_life> ORBInitInfo_out;
   
-  struct tao_ORBInitInfo_life
+  struct TAO_Export tao_ORBInitInfo_life
   {
     static ORBInitInfo_ptr tao_duplicate (ORBInitInfo_ptr);
     static void tao_release (ORBInitInfo_ptr);
@@ -1846,7 +1846,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_ORBInitInfo_cast
+  struct TAO_Export tao_ORBInitInfo_cast
   {
     static ORBInitInfo_ptr tao_narrow (
         CORBA::Object_ptr
@@ -2156,7 +2156,7 @@ TAO_NAMESPACE  PortableInterceptor
   typedef TAO_Objref_Var_T<ORBInitializer, tao_ORBInitializer_life> ORBInitializer_var;
   typedef TAO_Objref_Out_T<ORBInitializer, tao_ORBInitializer_life> ORBInitializer_out;
   
-  struct tao_ORBInitializer_life
+  struct TAO_Export tao_ORBInitializer_life
   {
     static ORBInitializer_ptr tao_duplicate (ORBInitializer_ptr);
     static void tao_release (ORBInitializer_ptr);
@@ -2167,7 +2167,7 @@ TAO_NAMESPACE  PortableInterceptor
       );
   };
   
-  struct tao_ORBInitializer_cast
+  struct TAO_Export tao_ORBInitializer_cast
   {
     static ORBInitializer_ptr tao_narrow (
         CORBA::Object_ptr

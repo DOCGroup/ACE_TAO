@@ -242,8 +242,6 @@ namespace CORBA
 
   class TypeCodeFactory;
   typedef TypeCodeFactory *TypeCodeFactory_ptr;
-  class TypeCodeFactory_out;
-  class TypeCodeFactory_var;
 
   class ValueBase;
   class ValueFactoryBase;

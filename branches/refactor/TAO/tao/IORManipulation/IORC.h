@@ -26,7 +26,7 @@
 #define _TAO_IDL_ORIG_IORC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "tao/Exception.h"
 
 #ifndef TAO_IORMANIP_SAFE_INCLUDE
 #error "You should not include IORC.h directly, use IORManip_Loader.h"
@@ -37,7 +37,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ior_manip_export.h"
-#include "tao/Exception.h"
 #include "tao/Object.h"
 #include "tao/Sequence.h"
 
@@ -311,90 +310,53 @@ TAO_NAMESPACE  TAO_IOP
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_TAO_IOP_TAO_IOR_PROPERTY___PTR_CH_)
-#define _TAO_IOP_TAO_IOR_PROPERTY___PTR_CH_
+#if !defined (_TAO_IOP_TAO_IOR_PROPERTY__ODDS_N_ENDS_CH_)
+#define _TAO_IOP_TAO_IOR_PROPERTY__ODDS_N_ENDS_CH_
   
   class TAO_IOR_Property;
   typedef TAO_IOR_Property *TAO_IOR_Property_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_IOP_TAO_IOR_PROPERTY___VAR_CH_)
-#define _TAO_IOP_TAO_IOR_PROPERTY___VAR_CH_
+  struct tao_TAO_IOR_Property_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        TAO_IOR_Property,
+        tao_TAO_IOR_Property_life
+      >
+    TAO_IOR_Property_var;
   
-  class TAO_IORManip_Export TAO_IOR_Property_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        TAO_IOR_Property,
+        tao_TAO_IOR_Property_life
+      >
+    TAO_IOR_Property_out;
+  
+  struct TAO_IORManip_Export tao_TAO_IOR_Property_life
   {
-  public:
-    TAO_IOR_Property_var (void); // default constructor
-    TAO_IOR_Property_var (TAO_IOR_Property_ptr p) : ptr_ (p) {} 
-    TAO_IOR_Property_var (const TAO_IOR_Property_var &); // copy constructor
-    ~TAO_IOR_Property_var (void); // destructor
-    
-    TAO_IOR_Property_var &operator= (TAO_IOR_Property_ptr);
-    TAO_IOR_Property_var &operator= (const TAO_IOR_Property_var &);
-    TAO_IOR_Property_ptr operator-> (void) const;
-    
-    operator const TAO_IOR_Property_ptr &() const;
-    operator TAO_IOR_Property_ptr &();
-    // in, inout, out, _retn 
-    TAO_IOR_Property_ptr in (void) const;
-    TAO_IOR_Property_ptr &inout (void);
-    TAO_IOR_Property_ptr &out (void);
-    TAO_IOR_Property_ptr _retn (void);
-    TAO_IOR_Property_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static TAO_IOR_Property_ptr tao_duplicate (TAO_IOR_Property_ptr);
     static void tao_release (TAO_IOR_Property_ptr);
     static TAO_IOR_Property_ptr tao_nil (void);
-    static TAO_IOR_Property_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        TAO_IOR_Property_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    TAO_IOR_Property_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    TAO_IOR_Property_var (const TAO_Base_var &rhs);
-    TAO_IOR_Property_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_IOP_TAO_IOR_PROPERTY___OUT_CH_)
-#define _TAO_IOP_TAO_IOR_PROPERTY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IORManip_Export TAO_IOR_Property_out
+  struct TAO_IORManip_Export tao_TAO_IOR_Property_cast
   {
-  public:
-    TAO_IOR_Property_out (TAO_IOR_Property_ptr &);
-    TAO_IOR_Property_out (TAO_IOR_Property_var &);
-    TAO_IOR_Property_out (const TAO_IOR_Property_out &);
-    TAO_IOR_Property_out &operator= (const TAO_IOR_Property_out &);
-    TAO_IOR_Property_out &operator= (const TAO_IOR_Property_var &);
-    TAO_IOR_Property_out &operator= (TAO_IOR_Property_ptr);
-    operator TAO_IOR_Property_ptr &();
-    TAO_IOR_Property_ptr &ptr (void);
-    TAO_IOR_Property_ptr operator-> (void);
-  
-  private:
-    TAO_IOR_Property_ptr &ptr_;
+    static TAO_IOR_Property_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_TAO_IOP_TAO_IOR_PROPERTY_CH_)
 #define _TAO_IOP_TAO_IOR_PROPERTY_CH_
@@ -477,7 +439,7 @@ TAO_NAMESPACE  TAO_IOP
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -487,10 +449,6 @@ TAO_NAMESPACE  TAO_IOP
   protected:
     TAO_IOR_Property (void);
     virtual ~TAO_IOR_Property (void);
-    
-    friend class _TAO_TAO_IOR_Property_Remote_Proxy_Impl;
-    friend class _TAO_TAO_IOR_Property_ThruPOA_Proxy_Impl;
-    friend class _TAO_TAO_IOR_Property_Direct_Proxy_Impl;
   
   private:
     TAO_IOR_Property (const TAO_IOR_Property &);
@@ -505,90 +463,53 @@ TAO_NAMESPACE  TAO_IOP
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TAO_IOR_Property;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION___PTR_CH_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION___PTR_CH_
+#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION__ODDS_N_ENDS_CH_)
+#define _TAO_IOP_TAO_IOR_MANIPULATION__ODDS_N_ENDS_CH_
   
   class TAO_IOR_Manipulation;
   typedef TAO_IOR_Manipulation *TAO_IOR_Manipulation_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION___VAR_CH_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION___VAR_CH_
+  struct tao_TAO_IOR_Manipulation_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        TAO_IOR_Manipulation,
+        tao_TAO_IOR_Manipulation_life
+      >
+    TAO_IOR_Manipulation_var;
   
-  class TAO_IORManip_Export TAO_IOR_Manipulation_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        TAO_IOR_Manipulation,
+        tao_TAO_IOR_Manipulation_life
+      >
+    TAO_IOR_Manipulation_out;
+  
+  struct TAO_IORManip_Export tao_TAO_IOR_Manipulation_life
   {
-  public:
-    TAO_IOR_Manipulation_var (void); // default constructor
-    TAO_IOR_Manipulation_var (TAO_IOR_Manipulation_ptr p) : ptr_ (p) {} 
-    TAO_IOR_Manipulation_var (const TAO_IOR_Manipulation_var &); // copy constructor
-    ~TAO_IOR_Manipulation_var (void); // destructor
-    
-    TAO_IOR_Manipulation_var &operator= (TAO_IOR_Manipulation_ptr);
-    TAO_IOR_Manipulation_var &operator= (const TAO_IOR_Manipulation_var &);
-    TAO_IOR_Manipulation_ptr operator-> (void) const;
-    
-    operator const TAO_IOR_Manipulation_ptr &() const;
-    operator TAO_IOR_Manipulation_ptr &();
-    // in, inout, out, _retn 
-    TAO_IOR_Manipulation_ptr in (void) const;
-    TAO_IOR_Manipulation_ptr &inout (void);
-    TAO_IOR_Manipulation_ptr &out (void);
-    TAO_IOR_Manipulation_ptr _retn (void);
-    TAO_IOR_Manipulation_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static TAO_IOR_Manipulation_ptr tao_duplicate (TAO_IOR_Manipulation_ptr);
     static void tao_release (TAO_IOR_Manipulation_ptr);
     static TAO_IOR_Manipulation_ptr tao_nil (void);
-    static TAO_IOR_Manipulation_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        TAO_IOR_Manipulation_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    TAO_IOR_Manipulation_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    TAO_IOR_Manipulation_var (const TAO_Base_var &rhs);
-    TAO_IOR_Manipulation_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION___OUT_CH_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_IORManip_Export TAO_IOR_Manipulation_out
+  struct TAO_IORManip_Export tao_TAO_IOR_Manipulation_cast
   {
-  public:
-    TAO_IOR_Manipulation_out (TAO_IOR_Manipulation_ptr &);
-    TAO_IOR_Manipulation_out (TAO_IOR_Manipulation_var &);
-    TAO_IOR_Manipulation_out (const TAO_IOR_Manipulation_out &);
-    TAO_IOR_Manipulation_out &operator= (const TAO_IOR_Manipulation_out &);
-    TAO_IOR_Manipulation_out &operator= (const TAO_IOR_Manipulation_var &);
-    TAO_IOR_Manipulation_out &operator= (TAO_IOR_Manipulation_ptr);
-    operator TAO_IOR_Manipulation_ptr &();
-    TAO_IOR_Manipulation_ptr &ptr (void);
-    TAO_IOR_Manipulation_ptr operator-> (void);
-  
-  private:
-    TAO_IOR_Manipulation_ptr &ptr_;
+    static TAO_IOR_Manipulation_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_CH_
@@ -622,177 +543,54 @@ TAO_NAMESPACE  TAO_IOP
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:62
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_
-    
-    class TAO_IORManip_Export _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
-      : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (void);
-      _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (CORBA::ULong maximum);
-      _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (
-          CORBA::ULong maximum,
-          CORBA::ULong length,
-          CORBA::Object* *value,
-          CORBA::Boolean release = 0
-        );
-      _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (
-          const _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList &rhs
-        );
-      _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList &operator= (
-          const _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList &rhs
-        );
-      virtual ~_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (void);
-      
-      // = Accessors.
-      TAO_Object_Manager<CORBA::Object,CORBA::Object_var> operator[] (CORBA::ULong index) const;
-      
-      // = Static operations.
-      static CORBA::Object **allocbuf (CORBA::ULong nelems);
-      static void freebuf (CORBA::Object **buffer);
-      
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      CORBA::Object* *get_buffer (CORBA::Boolean orphan = 0);
-      const CORBA::Object* *get_buffer (void) const;
-      virtual void _shrink_buffer (
-          CORBA::ULong nl,
-          CORBA::ULong ol
-        );
-      
-      virtual void _downcast (
-          void* target,
-          CORBA::Object *src
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS
-        );
-      virtual CORBA::Object* _upcast (void *src) const;
-    };
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_
-    
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:371
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
     
     class IORList;
-    class IORList_var;
     
-    // *************************************************************
-    // TAO_IOP::TAO_IOR_Manipulation::IORList
-    // *************************************************************
+    typedef
+      TAO_MngSeq_Var_T<
+          IORList,
+          TAO_Pseudo_Object_Manager<
+              CORBA::Object,
+              CORBA::Object
+            >
+        >
+      IORList_var;
     
-    class TAO_IORManip_Export IORList : public 
+    typedef
+      TAO_Seq_Out_T<
+          IORList,
+          IORList_var,
+          TAO_Pseudo_Object_Manager<
+              CORBA::Object,
+              CORBA::Object
+            >
+        >
+      IORList_out;
     
-    // TAO_IDL - Generated from 
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:51
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+    class TAO_IORManip_Export IORList
+      : public
+          TAO_Unbounded_Pseudo_Sequence<
+              CORBA::Object,
+              CORBA::Object_var
+            >
     {
     public:
       IORList (void);
       IORList (CORBA::ULong max);
       IORList (
-          CORBA::ULong max, 
-          CORBA::ULong length, 
-          CORBA::Object_ptr *buffer, 
+          CORBA::ULong max,
+          CORBA::ULong length,
+          CORBA::Object_ptr* buffer, 
           CORBA::Boolean release = 0
         );
       IORList (const IORList &);
       ~IORList (void);
       
-      static void _tao_any_destructor (void*);
+      static void _tao_any_destructor (void *);
       
       typedef IORList_var _var_type;
     };
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST___VAR_CH_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST___VAR_CH_
-    
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:549
-    
-    // *************************************************************
-    // class TAO_IOP::TAO_IOR_Manipulation::IORList_var
-    // *************************************************************
-    
-    class TAO_IORManip_Export IORList_var
-    {
-    public:
-      IORList_var (void);
-      IORList_var (IORList *);
-      IORList_var (const IORList_var &);
-      ~IORList_var (void);
-      
-      IORList_var &operator= (IORList *);
-      IORList_var &operator= (const IORList_var &);
-      IORList *operator-> (void);
-      const IORList *operator-> (void) const;
-      
-      operator const IORList &() const;
-      operator IORList &();
-      operator IORList &() const;
-      
-      // Variable-size base types only.
-      operator IORList *&();
-      
-      TAO_Object_Manager<CORBA::Object,CORBA::Object_var> operator[] (CORBA::ULong index);
-      
-      // in, inout, out, _retn 
-      const IORList &in (void) const;
-      IORList &inout (void);
-      IORList *&out (void);
-      IORList *_retn (void);
-      IORList *ptr (void) const;
-    
-    private:
-      IORList *ptr_;
-    };
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST___OUT_CH_)
-#define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST___OUT_CH_
-    
-    // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:753
-    
-    class TAO_IORManip_Export IORList_out
-    {
-    public:
-      IORList_out (IORList *&);
-      IORList_out (IORList_var &);
-      IORList_out (const IORList_out &);
-      IORList_out &operator= (const IORList_out &);
-      IORList_out &operator= (IORList *);
-      operator IORList *&();
-      IORList *&ptr (void);
-      IORList *operator-> (void);
-      TAO_Object_Manager<CORBA::Object,CORBA::Object_var> operator[] (CORBA::ULong index);
-    
-    private:
-      IORList *&ptr_;
-      // Assignment from T_var not allowed.
-      void operator= (const IORList_var &);
-    };
-
-#endif /* end #if !defined */
     
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
@@ -925,7 +723,7 @@ TAO_NAMESPACE  TAO_IOP
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -935,10 +733,6 @@ TAO_NAMESPACE  TAO_IOP
   protected:
     TAO_IOR_Manipulation (void);
     virtual ~TAO_IOR_Manipulation (void);
-    
-    friend class _TAO_TAO_IOR_Manipulation_Remote_Proxy_Impl;
-    friend class _TAO_TAO_IOR_Manipulation_ThruPOA_Proxy_Impl;
-    friend class _TAO_TAO_IOR_Manipulation_Direct_Proxy_Impl;
   
   private:
     TAO_IOR_Manipulation (const TAO_IOR_Manipulation &);
@@ -1061,7 +855,7 @@ TAO_IORManip_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::MultiPro
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "IORC.i"

@@ -77,7 +77,7 @@ TAO_NAMESPACE  CORBA
   typedef TAO_Objref_Var_T<PollableSet, tao_PollableSet_life> PollableSet_var;
   typedef TAO_Objref_Out_T<PollableSet, tao_PollableSet_life> PollableSet_out;
   
-  struct tao_PollableSet_life
+  struct TAO_Export tao_PollableSet_life
   {
     static PollableSet_ptr tao_duplicate (PollableSet_ptr);
     static void tao_release (PollableSet_ptr);
@@ -88,7 +88,7 @@ TAO_NAMESPACE  CORBA
       );
   };
   
-  struct tao_PollableSet_cast
+  struct TAO_Export tao_PollableSet_cast
   {
     static PollableSet_ptr tao_narrow (
         CORBA::Object_ptr
@@ -111,7 +111,7 @@ TAO_NAMESPACE  CORBA
   typedef TAO_Objref_Var_T<Pollable, tao_Pollable_life> Pollable_var;
   typedef TAO_Objref_Out_T<Pollable, tao_Pollable_life> Pollable_out;
   
-  struct tao_Pollable_life
+  struct TAO_Export tao_Pollable_life
   {
     static Pollable_ptr tao_duplicate (Pollable_ptr);
     static void tao_release (Pollable_ptr);
@@ -122,7 +122,7 @@ TAO_NAMESPACE  CORBA
       );
   };
   
-  struct tao_Pollable_cast
+  struct TAO_Export tao_Pollable_cast
   {
     static Pollable_ptr tao_narrow (
         CORBA::Object_ptr
@@ -219,7 +219,7 @@ TAO_NAMESPACE  CORBA
   typedef TAO_Objref_Var_T<DIIPollable, tao_DIIPollable_life> DIIPollable_var;
   typedef TAO_Objref_Out_T<DIIPollable, tao_DIIPollable_life> DIIPollable_out;
   
-  struct tao_DIIPollable_life
+  struct TAO_Export tao_DIIPollable_life
   {
     static DIIPollable_ptr tao_duplicate (DIIPollable_ptr);
     static void tao_release (DIIPollable_ptr);
@@ -230,7 +230,7 @@ TAO_NAMESPACE  CORBA
       );
   };
   
-  struct tao_DIIPollable_cast
+  struct TAO_Export tao_DIIPollable_cast
   {
     static DIIPollable_ptr tao_narrow (
         CORBA::Object_ptr
