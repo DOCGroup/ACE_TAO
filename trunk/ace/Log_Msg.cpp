@@ -889,8 +889,10 @@ ACE_Log_Msg::log (const char *format_str,
       log_record.msg_data (this->msg ());
       this->stop_tracing ();
 
+#if !defined (ACE_WIN32)
       // Make this block signal safe.
       ACE_Sig_Guard sb;
+#endif /* ACE_WIN32 */
 
       // Make sure that the lock is held during all this.
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), -1));

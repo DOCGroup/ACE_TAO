@@ -77,7 +77,13 @@ ACE_Sig_Action::ACE_Sig_Action (void)
 {
   ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
   this->sa_.sa_flags = 0;
+
+  // Since Service_Config::signal_handler_ is static and has an
+  // ACE_Sig_Action instance, Win32 will get errno set unless this is
+  // commented out.
+#if !defined (ACE_WIN32)
   ACE_OS::sigemptyset (&this->sa_.sa_mask);
+#endif /* ACE_WIN32 */
   this->sa_.sa_handler = 0;
 }
 
