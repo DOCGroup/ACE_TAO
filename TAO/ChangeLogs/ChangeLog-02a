@@ -1,3 +1,17 @@
+Sun Mar 18 11:50:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.cpp (_info):
+
+	  Fixed exception informational message so that it displays the
+	  properly masked TAO and OMG minor codes, rather than the raw
+	  minor codes.  The masked minor codes are more meaningful.
+
+	* tao/ORB_Core.i (check_shutdown):
+
+	  Bitwise-OR the minor code in the CORBA::BAD_INV_ORDER()
+	  exception being thrown with the TAO_OMG_VMCID constant/macro.
+	  The minor code in use is one assigned by the OMG.
+
 Sun Mar 18 12:34:44 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Sequence.i:
