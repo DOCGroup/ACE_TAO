@@ -134,7 +134,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
       if (ssl_component_found)
         {
           // It is true ssl profile, i.e., not just IIOP, so must have
-          // ssl endpoints encoded. 
+          // ssl endpoints encoded.
           return this->decode_endpoints ();
         }
       else
@@ -172,27 +172,15 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
 }
 
 int
-TAO_SSLIOP_Profile::encode (TAO_OutputCDR &stream) const
+TAO_SSLIOP_Profile::encode_endpoints (void)
 {
-#if (TAO_HAS_RT_CORBA == 1)
-  // For now, use/transfer multiple endpoints per profile only with
-  // RTCORBA. 
-
   int r = -1;
-
-  // Encode profile endpoints.
-  TAO_SSLIOP_Profile *p =
-    ACE_const_cast (TAO_SSLIOP_Profile *, this);
-
-  if (!this->endpoints_encoded_)
-    r = p->encode_endpoints ();
+  r = this->encode_endpoints ();
 
   if (r != 1)
     return r;
 
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-  return this->TAO_IIOP_Profile::encode (stream);
+  return this->TAO_IIOP_Profile::encode_endpoints ();
 }
 
 CORBA::Boolean
@@ -247,7 +235,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
       // transferred through standard profile component.
 
       // Create a data structure and fill it with endpoint info for wire
-      // transfer. 
+      // transfer.
       TAO_SSLEndpointSequence endpoints;
       endpoints.length (this->count_ - 1);
 
@@ -283,7 +271,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
         }
 
       // Add component with encoded endpoint data to this profile's
-      // TaggedComponents. 
+      // TaggedComponents.
       tagged_components_.set_component (tagged_component);
     }
 
@@ -349,7 +337,7 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
     }
 
   // Since this method is only called if we are expecting
-  // TAO_TAG_SSL_ENDPOINTS component, failure to find it is an error. 
+  // TAO_TAG_SSL_ENDPOINTS component, failure to find it is an error.
   return -1;
 }
 
