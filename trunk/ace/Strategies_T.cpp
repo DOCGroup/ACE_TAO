@@ -675,6 +675,19 @@ ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::compare_i (const ADDR_T &b1,
     return ACE_OS::memcmp (&b1, &b2, sizeof b1);
 }
 
+// Automatic conversion operators
+template<class ADDR_T, class SVC_HANDLER>
+ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::operator ADDR_T& (void)
+{
+  return addr_;
+}
+
+template<class ADDR_T, class SVC_HANDLER>
+ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::operator const ADDR_T& (void) const
+{
+  return addr_;
+}
+
 template<class ADDR_T, class SVC_HANDLER>
 ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::ACE_Hash_Addr (void)
   : hash_value_ (0),
@@ -684,9 +697,9 @@ ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::ACE_Hash_Addr (void)
 
 template<class ADDR_T, class SVC_HANDLER>
 ACE_Hash_Addr<ADDR_T, SVC_HANDLER>::ACE_Hash_Addr (const ADDR_T &a, SVC_HANDLER *sh)
-  : ADDR_T (a),
-    hash_value_ (0),
-    svc_handler_ (sh)
+  : hash_value_ (0),
+    svc_handler_ (sh),
+    addr_ (a)
 {
   (void) this->hash ();
 }
@@ -701,7 +714,7 @@ ACE_Hash_Addr<ADDR_T,SVC_HANDLER>::hash (void) const
   // relative to the simple comparison.
 
   if (this->hash_value_ == 0)
-    ((ACE_Hash_Addr<ADDR_T, SVC_HANDLER> *) this)->hash_value_ = this->hash_i (*((ADDR_T *) this));
+    ((ACE_Hash_Addr<ADDR_T, SVC_HANDLER> *) this)->hash_value_ = this->hash_i (addr_);
 
   return this->hash_value_;
 }
@@ -710,10 +723,10 @@ template<class ADDR_T, class SVC_HANDLER> int
 ACE_Hash_Addr<ADDR_T,SVC_HANDLER>::operator== (const ACE_Hash_Addr<ADDR_T, SVC_HANDLER> &rhs) const
 {
   if (svc_handler_ == 0)
-    return this->compare_i (*((ADDR_T *) this), rhs) == 0;
+    return this->compare_i (addr_, rhs.addr_) == 0;
   else
     return svc_handler_->in_use () == 0 
-      && this->compare_i (*((ADDR_T *) this), rhs) == 0;
+      && this->compare_i (addr_, rhs.addr_) == 0;
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int

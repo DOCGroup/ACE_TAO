@@ -501,7 +501,7 @@ public:
 };
 
 template <class ADDR_T, class SVC_HANDLER>
-class ACE_Hash_Addr : public ADDR_T
+class ACE_Hash_Addr
   // = TITLE
   //     Internal class to compute hash values on addresses in
   //     <ACE_Cached_Connect_Strategy>.  
@@ -517,7 +517,7 @@ class ACE_Hash_Addr : public ADDR_T
   // = END<CODE>
   // = END<INDENT>
   //     Likewise, the <ADDR_T> parameter/subclass is typically
-  //     <ACE_INET_Addr>.
+  //     <ACE_INET_Addr>.  It is expected to implement operator==().
 {
 public:
   // = Initialization methods.
@@ -534,6 +534,11 @@ public:
 
   int operator== (const ACE_Hash_Addr<ADDR_T, SVC_HANDLER> &rhs) const;
   // Compares two hash values.
+
+  operator ADDR_T& (void);
+  operator const ADDR_T& (void) const;
+  // Conversion operators allowing <ACE_Hash_Addr> to be used in place
+  // of an <{ADDR_T}>.
 
 private:
   size_t hash_i (const ADDR_T &) const;
@@ -552,6 +557,9 @@ private:
   // Pointer to associated <SVC_HANDLER> which is used to detect
   // "in-use" <SVC_HANDLER>s so we can ignore them.  See <DESCRIPTION>
   // for details on methods required on <SVC_HANDLER>.
+
+  ADDR_T addr_;
+  // The underlying address.
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>

@@ -1,3 +1,10 @@
+Wed May 21 15:23:37 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/Strategies_T.* (ACE_Hash_Addr): Eliminated the ADDR_T
+ 	  template parameter as a base class.  It is now a wholly-contained
+ 	  member of the ACE_Hash_Addr<> with conversion operators.
+          This caused problems on certain compilers, notably HP-UX.
+
 Wed May 21 14:13:36 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* ace/OS.{h,i} (difftime): Added implementation to ACE_OS.  I
