@@ -95,32 +95,30 @@ ACE_Task_Base::activate (long flags,
 
   if (thread_names == 0)
     // thread names were not specified
-    this->grp_id_ = this->thr_mgr_->spawn_n (
-                              n_threads,
-                              ACE_THR_FUNC (&ACE_Task_Base::svc_run),
-                              (void *) this,
-                              flags,
-                              priority,
-                              grp_id,
-                              task,
-                              thread_handles,
-                              stack,
-                              stack_size);
+    this->grp_id_ =
+      this->thr_mgr_->spawn_n (n_threads,
+                               ACE_THR_FUNC (&ACE_Task_Base::svc_run),
+                               (void *) this,
+                               flags,
+                               priority,
+                               grp_id,
+                               task,
+                               thread_handles,
+                               stack,
+                               stack_size);
   else
     // thread names were specified
-    this->grp_id_ = this->thr_mgr_->spawn_n (
-                              thread_names,
-                              n_threads,
-                              ACE_THR_FUNC (&ACE_Task_Base::svc_run),
-                              (void *) this,
-                              flags,
-                              priority,
-                              grp_id,
-                              stack,
-                              stack_size,
-                              thread_handles);
-
-
+    this->grp_id_ =
+      this->thr_mgr_->spawn_n (thread_names,
+                               n_threads,
+                               ACE_THR_FUNC (&ACE_Task_Base::svc_run),
+                               (void *) this,
+                               flags,
+                               priority,
+                               grp_id,
+                               stack,
+                               stack_size,
+                               thread_handles);
   if (this->grp_id_ == -1)
     return -1;
   else
@@ -138,8 +136,7 @@ ACE_Task_Base::activate (long flags,
     ACE_UNUSED_ARG (stack);
     ACE_UNUSED_ARG (stack_size);
     ACE_UNUSED_ARG (thread_names);
-    errno = EINVAL;
-    return -1;
+    ACE_NOTSUP_RETURN (-1);
   }
 #endif /* ACE_MT_SAFE */
 }

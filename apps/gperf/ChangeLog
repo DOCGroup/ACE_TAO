@@ -1,3 +1,7 @@
+Thu May 14 16:37:39 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* src: ACE'ifed most of the gperf source code, yow!
+
 Sun Apr 14 14:31:10 1996  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
 
 	* src: Changed things so that there's no longer any use of the
