@@ -1,3 +1,8 @@
+Tue Feb 20 06:34:26 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (cancel_grp): Fixed a typo in
+	  the ACE_TRACE macro.  Thanks to Mike Curtis for reporting this.
+
 Mon Feb 19 16:38:08 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* ace/Asynch_Acceptor.{h,cpp}:

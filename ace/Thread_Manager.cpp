@@ -1307,7 +1307,7 @@ ACE_Thread_Manager::kill_grp (int grp_id, int signum)
 int
 ACE_Thread_Manager::cancel_grp (int grp_id, int async_cancel)
 {
-  ACE_TRACE ("ACE_Thread_Manager::resume_grp");
+  ACE_TRACE ("ACE_Thread_Manager::cancel_grp");
   return this->apply_grp (grp_id,
                           ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::cancel_thr),
                           async_cancel);
