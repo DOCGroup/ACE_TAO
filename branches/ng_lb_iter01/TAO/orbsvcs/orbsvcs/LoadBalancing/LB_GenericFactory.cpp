@@ -1,6 +1,8 @@
 // -*- C++ -*-
 
 #include "LB_GenericFactory.h"
+#include "LB_ReplicaInfo.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_GenericFactory,
@@ -141,39 +143,44 @@ TAO_LB_GenericFactory::delete_object (
       if (this->object_group_map_.find (fcid, object_group) == -1)
         ACE_THROW (LoadBalancing::ObjectNotFound ());
 
-      TAO_LB_Replica_Map *replica_map = object_group->replica_map;
+      TAO_LB_ReplicaInfo_Set &replica_infos = object_group->replica_infos;
 
-      for (TAO_LB_Replica_Map::Table::iterator i = replica_map->begin ();
-           i != replica_map->end ();
-           ++i)
-        {
-          TAO_LB_Replica_Map_Entry *replica = (*i).ext_id_;
+      {
+        ACE_GUARD (TAO_SYNCH_MUTEX, guard, object_group->lock);
+        for (TAO_LB_ReplicaInfoSetIterator i = replica_infos.begin ();
+             i != replica_infos.end ();
+             ++i)
+          {
+            TAO_LB_ReplicaInfo *replica_info = (*i).ext_id_;
 
-          LoadBalancing::GenericFactory_ptr factory =
-            replica->factory.in ();
+            LoadBalancing::GenericFactory_ptr factory =
+              replica_info->factory_info.the_factory.in ();
 
-          if (!CORBA::is_nil (factory))
-            {
-              LoadBalancing::GenericFactory::FactoryCreationId
-                &replica_fcid = replica->factory_creation_id;
+            // If the factory reference is not nil, then the replica
+            // was created using a GenericFactory.  Make sure that
+            // factory deletes it.
+            if (!CORBA::is_nil (factory))
+              {
+                LoadBalancing::GenericFactory::FactoryCreationId
+                  &replica_fcid = replica_info->factory_creation_id;
 
-              factory->delete_object (replica_fcid.in, ACE_TRY_ENV);
-              ACE_CHECK;
-            }
+                factory->delete_object (replica_fcid.in (), ACE_TRY_ENV);
+                ACE_CHECK;
+              }
 
-          
-          (void) replica_map->unbind (&(*i));
+            (void) replica_info->unbind (&(*i));
 
-          delete replica_map;
-        }
+            delete replica_info;
+          }
+      }
 
       // Now delete the ObjectGroup from the set of ObjectGroups.
       this->object_group_map_.unbind (fcid);
 
       delete object_group;
     }
-
-  ACE_THROW (LoadBalancing::ObjectNotFound ());
+  else
+    ACE_THROW (LoadBalancing::ObjectNotFound ());
 }
 
 void
@@ -184,7 +191,7 @@ TAO_LB_GenericFactory::populate_object_group (
   for (CORBA::ULong j = 0; j < factory_infos_count; ++j)
     {
       // The FactoryInfo::the_location member was used when
-      // determining which FactoryInfo 
+      // determining which FactoryInfo
       //    member?
       // @@ It looks like it is only used when the application
       //    control membership style is used.  The application
@@ -270,7 +277,7 @@ TAO_LB_GenericFactory::populate_object_group (
         }
 
       // No longer need to protect the allocated Replica_Map.
-      safe_replica_entry.release ();
+      safe_replica_info.release ();
     }
 }
 

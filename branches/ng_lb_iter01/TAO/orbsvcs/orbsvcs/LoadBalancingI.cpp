@@ -36,7 +36,7 @@ TAO_LoadBalancing_ReplicationManager_i::register_load_notifier (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT());
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 LoadBalancing::LoadNotifier_ptr
@@ -358,6 +358,17 @@ TAO_LoadBalancing_ReplicationManager_i::delete_object (
   return
     this->generic_factory_.delete_object (factory_creation_id,
                                           ACE_TRY_ENV);
+}
+
+CORBA::Object_ptr
+TAO_LoadBalancing_ReplicationManager_i::replica (
+  const PortableServer::ObjectId &oid,
+  CORBA::Environment &ACE_TRY_ENV)
+{
+  // Convert the ObjectId to the hash map key.
+  CORBA::String_var stroid = PortableServer::ObjectId_to_string (oid);
+
+  int tmp = ACE_OS::atoi (stroid.in ());
 }
 
 int
