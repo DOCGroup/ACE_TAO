@@ -3,6 +3,7 @@
 
 project(Engagement_stub): ciao_client {
   
+  after += BBN_UAV_stub
   sharedname = Engagement_stub
   idlflags += -Wb,stub_export_macro=ENGAGEMENT_STUB_Export -Wb,stub_export_include=Engagement_stub_export.h -Wb,skel_export_macro=ENGAGEMENT_SVNT_Export -Wb,skel_export_include=Engagement_svnt_export.h
   dynamicflags   = ENGAGEMENT_STUB_BUILD_DLL
@@ -17,7 +18,7 @@ project(Engagement_stub): ciao_client {
 }
 
 project(Engagement_svnt) : ciao_servant {
-  after +=  Engagement_stub
+  after +=  BBN_UAV_svnt Engagement_stub
   sharedname  = Engagement_svnt
   libs    += Engagement_stub 
   
@@ -41,7 +42,7 @@ project(Engagement_svnt) : ciao_servant {
 
 
 project(Engagement_exec) : ciao_component {
-  after   += Engagement_svnt
+  after   += BBN_UAV_svnt Engagement_svnt
   sharedname = Engagement_exec
   libs      += Engagement_stub Engagement_svnt 
   

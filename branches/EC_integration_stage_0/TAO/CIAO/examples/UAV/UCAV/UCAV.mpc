@@ -3,6 +3,7 @@
 
 project(UCAV_stub): ciao_client {
   
+  after += BBN_UAV_svnt
   sharedname = UCAV_stub
   idlflags += -Wb,stub_export_macro=UCAV_STUB_Export -Wb,stub_export_include=UCAV_stub_export.h -Wb,skel_export_macro=UCAV_SVNT_Export -Wb,skel_export_include=UCAV_svnt_export.h
   dynamicflags   = UCAV_STUB_BUILD_DLL
@@ -17,7 +18,7 @@ project(UCAV_stub): ciao_client {
 }
 
 project(UCAV_svnt) : ciao_servant {
-  after +=  UCAV_stub
+  after +=  BBN_UAV_svnt UCAV_stub
   sharedname  = UCAV_svnt
   libs    += UCAV_stub 
   
@@ -41,7 +42,7 @@ project(UCAV_svnt) : ciao_servant {
 
 
 project(UCAV_exec) : ciao_component {
-  after   += UCAV_svnt
+  after   += BBN_UAV_svnt UCAV_svnt
   sharedname = UCAV_exec
   libs      += UCAV_stub UCAV_svnt 
   

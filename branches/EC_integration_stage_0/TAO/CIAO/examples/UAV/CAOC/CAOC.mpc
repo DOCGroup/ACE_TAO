@@ -2,7 +2,8 @@
 // This file is generated with "generate_component_mpc.pl CAOC"
 
 project(CAOC_stub): ciao_client {
-  
+
+  after += BBN_UAV_stub
   sharedname = CAOC_stub
   idlflags += -Wb,stub_export_macro=CAOC_STUB_Export -Wb,stub_export_include=CAOC_stub_export.h -Wb,skel_export_macro=CAOC_SVNT_Export -Wb,skel_export_include=CAOC_svnt_export.h
   dynamicflags   = CAOC_STUB_BUILD_DLL
@@ -17,9 +18,9 @@ project(CAOC_stub): ciao_client {
 }
 
 project(CAOC_svnt) : ciao_servant {
-  after +=  CAOC_stub
+  after += BBN_UAV_svnt CAOC_stub
   sharedname  = CAOC_svnt
-  libs    += CAOC_stub 
+  libs    += BBN_UAV_svnt CAOC_stub 
   
   idlflags  +=  -Wb,export_macro=CAOC_SVNT_Export -Wb,export_include=CAOC_svnt_export.h
   dynamicflags = CAOC_SVNT_BUILD_DLL
@@ -41,7 +42,7 @@ project(CAOC_svnt) : ciao_servant {
 
 
 project(CAOC_exec) : ciao_component {
-  after   += CAOC_svnt
+  after   += BBN_UAV_svnt CAOC_svnt
   sharedname = CAOC_exec
   libs      += CAOC_stub CAOC_svnt 
   
