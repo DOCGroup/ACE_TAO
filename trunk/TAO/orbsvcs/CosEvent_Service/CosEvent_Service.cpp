@@ -12,11 +12,11 @@ CosEvent_Service::CosEvent_Service (void)
   : service_name ("CosEventService"),
     rt_service_name ("EventService"),
     schedule_name_ ("ScheduleService"),
+    scheduler_ (RtecScheduler::Scheduler::_nil ()),
     ec_impl_ (0,
               ACE_DEFAULT_EVENT_CHANNEL_TYPE,
               &module_factory_),
     rtec_ (RtecEventChannelAdmin::EventChannel::_nil ()),
-    scheduler_ (RtecScheduler::Scheduler::_nil ()),
     cos_ec_ (CosEventChannelAdmin::EventChannel::_nil ()),
     global_scheduler_ (0),
     remote_Rtec_ (1),
@@ -35,17 +35,20 @@ CosEvent_Service::~CosEvent_Service (void)
 int
 CosEvent_Service::init_ORB  (int argc, char *argv [])
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
                                     "",
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object  =
         this->orb_->resolve_initial_references("RootPOA",
-                                               TAO_TRY_ENV);
+                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -53,24 +56,30 @@ CosEvent_Service::init_ORB  (int argc, char *argv [])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (),
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+        root_poa->the_POAManager (ACE_TRY_ENV);
 
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
+
+      ACE_TRY_CHECK;
 
       return 0;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception in CosEvent_Service::init_ORB");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in CosEvent_Service::init_ORB");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int
@@ -150,28 +159,20 @@ CosEvent_Service::parse_args (int argc, char *argv [])
 int
 CosEvent_Service::init_NamingService (void)
 {
-  TAO_TRY
-  {
-    // Initialization of the naming service.
-    if (this->naming_client_.init (this->orb_.in ()) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
-                        -1);
-    return 0;
-  }
- TAO_CATCHANY
-   {
-     TAO_TRY_ENV.print_exception ("Exception in CosEvent_Service::get_Rtec_viaNamingService\n");
-     return -1;
-   }
- TAO_ENDTRY;
+  // Initialization of the naming service.
+  if (this->naming_client_.init (this->orb_.in ()) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Unable to initialize "
+                       "the TAO_Naming_Client. \n"),
+                      -1);
+  return 0;
 }
 
 int
 CosEvent_Service::get_Rtec_viaNamingService (void)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       CosNaming::Name rt_ref_name (1); // name of the RT Event service.
       rt_ref_name.length (1);
@@ -180,42 +181,47 @@ CosEvent_Service::get_Rtec_viaNamingService (void)
 
       CORBA::Object_var rtEC_obj =
        this->naming_client_->resolve (rt_ref_name,
-				      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+				      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to
       // RtecEventChannelAdmin::EventChannel
       // using the <_narrow> method.
       this->rtec_ =
         RtecEventChannelAdmin::EventChannel::_narrow (rtEC_obj.in (),
-                                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       return 0;
   }
- TAO_CATCHANY
+  ACE_CATCHANY
    {
-     TAO_TRY_ENV.print_exception ("Exception in CosEvent_Service::get_Rtec_viaNamingService\n");
+     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                          "Exception in CosEvent_Service::get_Rtec_viaNamingService\n");
      return -1;
    }
- TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int
 CosEvent_Service::start_Scheduler (void)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       if (this->global_scheduler_ == 0)
         {
           this->scheduler_ =
-            this->scheduler_impl_._this (TAO_TRY_ENV);
-          TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+            this->scheduler_impl_._this (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           CORBA::String_var str =
             this->orb_->object_to_string (this->scheduler_.in (),
-                                          TAO_TRY_ENV);
-          TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+                                          ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "CosEvent_Service: The (local) scheduler IOR is <%s>\n",
@@ -232,15 +238,15 @@ CosEvent_Service::start_Scheduler (void)
 
           CORBA::Object_var sched_obj =
             this->naming_client_->resolve (schedule_name,
-                                           TAO_TRY_ENV);
-          TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+                                           ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           // The CORBA::Object_var object is downcast to
           // RtecScheduler::Scheduler using the <_narrow> method.
           this->scheduler_ =
             RtecScheduler::Scheduler::_narrow (sched_obj.in (),
-                                               TAO_TRY_ENV);
-          TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+                                               ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           if (ACE_Scheduler_Factory::server (this->scheduler_.in ()) == -1)
             return -1;
@@ -249,25 +255,29 @@ CosEvent_Service::start_Scheduler (void)
       ACE_Scheduler_Factory::use_config (this->naming_client_.get_context());
       return 0;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception in CosEvent_Service::start_Scheduler\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in CosEvent_Service::start_Scheduler\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 int
 CosEvent_Service::create_local_RtecService (void)
 {
- TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      this->rtec_ = this->ec_impl_._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
-
+      this->rtec_ = this->ec_impl_._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::String_var str = this->orb_->object_to_string (this->rtec_.in (),
-                                                            TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+                                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "CosEvent_Service: The RTEC IOR is <%s>\n",
@@ -277,12 +287,16 @@ CosEvent_Service::create_local_RtecService (void)
 
       return 0;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception in CosEvent_Service::create_local_RtecService\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in CosEvent_Service::create_local_RtecService\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 void
@@ -418,21 +432,21 @@ CosEvent_Service::init_ConsumerQOS (RtecScheduler::handle_t cons_handle)
 int
 CosEvent_Service::create_CosEC (void)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       RtecScheduler::handle_t supp_handle =
         this->scheduler_->create ("supplier",
-                                  TAO_TRY_ENV);
+                                  ACE_TRY_ENV);
 
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+      ACE_TRY_CHECK;
 
       this->init_SupplierQOS (supp_handle);
 
       RtecScheduler::handle_t cons_handle =
         this->scheduler_->create ("consumer",
-                                  TAO_TRY_ENV);
-
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       this->init_ConsumerQOS (cons_handle);
 
@@ -445,35 +459,40 @@ CosEvent_Service::create_CosEC (void)
       if (this->ec_i_.init (consumerqos,
                             supplierqos,
                             this->rtec_,
-                            TAO_TRY_ENV) != 0)
+                            ACE_TRY_ENV) != 0)
         return -1;
 
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+      ACE_TRY_CHECK;
 
-      this->cos_ec_ = this->ec_i_._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+      this->cos_ec_ = this->ec_i_._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::String_var str = this->orb_->object_to_string (this->cos_ec_,
-                                                            TAO_TRY_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+                                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "CosEvent_Service: The COSEC IOR is <%s>\n",
                   str.in ()));
       return 0;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception in CosEvent_Service::create_CosEC");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in CosEvent_Service::create_CosEC");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int
 CosEvent_Service::register_CosEC (void)
 {
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
    {
       // Name the object.
       CosNaming::Name ec_obj_name (1);
@@ -484,16 +503,20 @@ CosEvent_Service::register_CosEC (void)
       // Now, attach the object name to the context.
       this->naming_client_->rebind (ec_obj_name,
                                     this->cos_ec_,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       return 0;
     }
- TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("CosEvent_Service::register_CosEC.\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in CosEvent_Service::register_CosEC.\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int
@@ -579,9 +602,10 @@ CosEvent_Service::run (void)
 int
 CosEvent_Service::shutdown (void)
 {
- TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV
+  ACE_TRY
     {
-      if (this->cos_ec_ != CosEventChannelAdmin::EventChannel::_nil ())
+      if (!this->cos_ec_->_nil ())
         {
           // unbind the cosEC from the naming service.
           CosNaming::Name ec_obj_name (1);
@@ -589,27 +613,31 @@ CosEvent_Service::shutdown (void)
           ec_obj_name[0].id =
             CORBA::string_dup (this->service_name);
           this->naming_client_->unbind (ec_obj_name,
-                                        TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-          this->cos_ec_->destroy (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          this->cos_ec_->destroy (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
 
       this->ec_impl_.shutdown ();
 
       // shutdown the ORB.
-      if (this->orb_ != CORBA::ORB::_nil ())
+      if (!this->orb_->_nil ())
         this->orb_->shutdown ();
 
       return 0;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Exception in shutdown.\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in shutdown.\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int

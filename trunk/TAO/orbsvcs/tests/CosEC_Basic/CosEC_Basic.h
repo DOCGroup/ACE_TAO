@@ -82,7 +82,7 @@ private:
   RtecScheduler::Scheduler_var scheduler_;
   // Reference to the Scheduler after activating it in the ORB.
 
-  ACE_EventChannel ec_impl_;
+  ACE_EventChannel *ec_impl_;
   // The servant object of the Rtec.
 
   RtecEventChannelAdmin::EventChannel_var rtec_;
