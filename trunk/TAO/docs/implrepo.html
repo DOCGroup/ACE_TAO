@@ -79,9 +79,18 @@ The next section details our goals and plans for the implementation.</p>
 
 <h3>Virtual Server Name</h3>
 
-<p>[what is a virtual server name and why it is useful]</p>
+<p>The Implementation Repository must keep track of which servers are started and stopped.
+&nbsp; The question is at what resolution?&nbsp; It cannot contain an entry for every
+object, since that would take up too much room.&nbsp; It could contain an entry for every
+server, and then group objects there.&nbsp; But that is sort of inflexible for object
+migration, since objects are tied to their executable.&nbsp; Instead, we want it to be
+something between object and executable.&nbsp; In the <a
+href="http://www.cs.wustl.edu/~schmidt/michi.pdf">Henning</a> paper, he mentions the use
+of a server name as the index for the table in the Implementation Repository.&nbsp; </p>
 
-<p>[how does a user specify a virtual server name]</p>
+<p>We will use a virtual server name for a group of objects.&nbsp; So the virtual server
+isn't restricted to being tied to an executable or to an object.&nbsp;&nbsp; Since it
+isn't tied to an executable, the virtual servers can be migrated to other servers.</p>
 
 <h3>New IORs</h3>
 
@@ -205,7 +214,7 @@ back.&nbsp; Then all the profiles will be combined to produce an Persistent IOR.
 <h3>Possible Future Goals</h3>
 
 <p>Some things that may be implemented in TOA relating to the Implementation Repository
-domain:
+domain: 
 
 <ul>
   <li>Optimization on TAO clients to recognize when a server is restarted, and change all
@@ -406,7 +415,7 @@ command line options or environment variables. </p>
 <h3>How a server produces a Persistent IOR (in the default case)</h3>
 
 <p>Before the server starts, it must be registered (via a command-line utility) with an
-implementation repository that supports multicast.
+implementation repository that supports multicast. 
 
 <ol>
   <li>Now the server will start up and call ORB_init.&nbsp; ORB_init, if not passed a server
@@ -428,7 +437,7 @@ implementation repository that supports multicast.
 <h3>How a server produces a Persistent IOR (in complex cases)</h3>
 
 <p>As in the default case, the server must be registered with an Implementation Repository
-already, although it does not need to be multicast aware.
+already, although it does not need to be multicast aware. 
 
 <ol>
   <li>ORB_init () is called with a server name and a list of Implementation Repositories. </li>
@@ -440,7 +449,7 @@ already, although it does not need to be multicast aware.
 
 <h3>How a client uses a Persistent IOR</h3>
 
-<p>For all Clients:
+<p>For all Clients: 
 
 <ul>
   <li>Client obtains a Persistent Object Reference, which contains multiple profiles to both
@@ -456,7 +465,7 @@ already, although it does not need to be multicast aware.
 <p>If everything fails, then most clients will return failure for the request.&nbsp; TAO
 clients will also have added functionality where other Implementation Repositories can be
 specified on the command line, in environment variables, or found through multicast will
-also be contacted.
+also be contacted. 
 
 <ul>
   <li>If all of the profiles fail, then contact the other Implementation Repositories. &nbsp;
