@@ -1,3 +1,15 @@
+Wed Jan  3 12:20:15 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/Makefile.BE:
+        * orbsvcs/IFR_Service/Makefile.EX:
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Makefile:
+
+          Updated dependencies.
+
 Wed Jan  3 12:14:12 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
