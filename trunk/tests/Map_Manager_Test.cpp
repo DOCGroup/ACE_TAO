@@ -73,10 +73,10 @@ test_hash_map_manager (size_t table_size, size_t iterations)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
-  
+
   {
     HASH_REVERSE_ITERATOR iterator (map);
-    
+
     HASH_ENTRY *entry = 0;
     for (entry = 0, i = iterations - 1;
 	 iterator.next (entry) != 0;
@@ -129,16 +129,28 @@ test_map_manager (size_t table_size, size_t iterations)
   for (i = 0; i < iterations; i++)
     ACE_ASSERT (map.bind (i, i) != -1);
 
+#if defined (ACE_TEST_STL_ITERATOR_FUNCTIONS
+  {
+    ENTRY item;
+    for (MAP_MANAGER::iterator iter = map.begin ();
+         iter != map.end (); i++, iter ++)
+      {
+        item = *iter;
+        ACE_DEBUG ((LM_DEBUG, "%d ", i));
+      }
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+#else
   {
     ITERATOR iterator (map);
-
     ENTRY *entry = 0;
     for (entry = 0, i = 0;
-	 iterator.next (entry) != 0;
-	 iterator.advance (), i++)
+ 	 iterator.next (entry) != 0;
+ 	 iterator.advance (), i++)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
+#endif /* ACE_TEST_STL_ITERATOR_FUNCTIONS */
 
   {
     REVERSE_ITERATOR iterator (map);
