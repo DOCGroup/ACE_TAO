@@ -12,20 +12,34 @@ override TAO_IDLFLAGS += -Ge 1
 LDLIBS = -lTAO
 
 IDL_SRC	= \
-	Load_BalancerC.cpp Load_BalancerS.cpp IdentityC.cpp IdentityS.cpp
+	Load_BalancerC.cpp \
+	Load_BalancerS.cpp \
+	IdentityC.cpp \
+	IdentityS.cpp
 
 PROG_SRCS = \
 	Load_Balancing_Service.cpp \
 	Identity_Server.cpp \
-	Identity_Client.cpp \
+       	Identity_Client.cpp \
         Load_Balancer_i.cpp \
 	Identity_i.cpp
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
-CLIENT_OBJS = Identity_Client.o IdentityC.o Load_BalancerC.o
-SERVER_OBJS = Identity_Server.o Identity_i.o IdentityC.o IdentityS.o Load_BalancerC.o
-LOAD_BALANCER_OBJS = Load_Balancer_i.o Load_BalancerC.o Load_BalancerS.o Load_Balancing_Service.o
+CLIENT_OBJS = Identity_Client.o \
+              IdentityC.o \
+	      Load_BalancerC.o
+
+SERVER_OBJS = Identity_Server.o \
+              Identity_i.o \ 
+	      IdentityC.o \
+	      IdentityS.o \
+	      Load_BalancerC.o
+
+LOAD_BALANCER_OBJS = Load_Balancer_i.o \
+                     Load_BalancerC.o \
+		     Load_BalancerS.o \
+		     Load_Balancing_Service.o
 
 BIN = load_balancer server client
 
