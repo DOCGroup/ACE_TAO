@@ -1,10 +1,5 @@
 Thu Apr  9 17:31:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Hash_Map_Manager_Test.cpp: Changed this example to
- 	  illustrate ACE_Static_Allocator_Base rather than
- 	  ACE_Static_Allocator<> since the latter isn't representative of
- 	  what we'll need to do for TAO.
-
 	* Updated all the Makefile dependencies and also added the
  	  appropriate CVS strings to all Makefiles.
 
