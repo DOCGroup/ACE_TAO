@@ -25,10 +25,7 @@ ACE_RCSID (ace,
 #  include "ace/OS_NS_fcntl.h"
 #  include "ace/OS_NS_ctype.h"
 #  include "ace/OS_NS_sys_time.h"
-
-#  if !defined (ACE_HAS_WINCE) && !defined (ACE_VXWORKS)
-#    include /**/ <limits>
-#  endif
+#  include "ace/os_include/os_limits.h"
 #endif  /* ACE_LACKS_MKSTEMP */
 
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;

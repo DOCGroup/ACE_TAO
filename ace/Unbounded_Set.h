@@ -206,7 +206,7 @@ public:
   /**
    * Perform a deep copy of the rhs into the lhs.
    */
-  void operator= (const ACE_Unbounded_Set<T> &);
+  ACE_Unbounded_Set<T> & operator= (const ACE_Unbounded_Set<T> &);
 
   /// Destructor.
   /**
@@ -230,30 +230,30 @@ public:
 
   // = Classic unordered set operations.
 
-  ///Linear insertion of an item.
+  /// Linear insertion of an item.
   /**
-   * Insert <new_item> into the set (doesn't allow duplicates).
+   * Insert @a new_item into the set (doesn't allow duplicates).
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
   int insert (const T &new_item);
 
-  /// Insert <item> at the tail of the set (doesn't check for
+  /// Insert @a item at the tail of the set (doesn't check for
   /// duplicates).
   /**
    * Constant time insert at the end of the set.
    */
   int insert_tail (const T &item);
 
-  ///Linear remove operation.
+  /// Linear remove operation.
   /**
-   * Remove first occurrence of <item> from the set.  Returns 0 if
+   * Remove first occurrence of @a item from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.
    */
   int remove (const T &item);
 
-  /// Finds if <item> occurs in the set.  Returns 0 if find succeeds,
+  /// Finds if @a item occurs in the set.  Returns 0 if find succeeds,
   /// else -1.
   /**
    * Performs a linear find operation.

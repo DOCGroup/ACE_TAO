@@ -1118,34 +1118,6 @@ class ACE_event_t;
 class ACE_Base_Thread_Adapter;
 
 namespace ACE_OS {
-
-# if 0
-  //@{ @name A set of wrappers for threads (these are portable since they use the ACE_Thread_ID).
-  int thr_continue (const ACE_Thread_ID &thread);
-  int thr_create (ACE_THR_FUNC,
-                  void *args,
-                  long flags,
-                  ACE_Thread_ID *,
-                  long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                  void *stack = 0,
-                  size_t stacksize = 0);
-  int thr_getprio (ACE_Thread_ID thr_id,
-                   int &prio,
-                   int *policy = 0);
-  int thr_join (ACE_Thread_ID waiter_id,
-                ACE_THR_FUNC_RETURN *status);
-  int thr_kill (ACE_Thread_ID thr_id,
-                int signum);
-  ACE_Thread_ID thr_self (void);
-  int thr_setprio (ACE_Thread_ID thr_id,
-                   int prio);
-  int thr_setprio (const ACE_Sched_Priority prio);
-  int thr_suspend (ACE_Thread_ID target_thread);
-  int thr_cancel (ACE_Thread_ID t_id);
-  //@}
-# endif /* 0 */
-
-
   //@{ @name A set of wrappers for threads
 
   /// This is necessary to deal with POSIX pthreads and their use of

@@ -51,9 +51,9 @@ private:
 int
 My_Task::recursive (size_t depth)
 {
-  ACE_Trace _ (ACE_TEXT("int recursive (size_t depth)"),
-               __LINE__,
-               ACE_TEXT(__FILE__));
+  ACE_Trace trace (ACE_TEXT("int recursive (size_t depth)"),
+                   __LINE__,
+                   ACE_TEXT(__FILE__));
 
   if (depth > 0)
     return recursive (depth - 1);

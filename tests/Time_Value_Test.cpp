@@ -196,7 +196,7 @@ run_main (int, ACE_TCHAR *[])
   // NOTE:  this is intended to show what happens with
   // ACE_Time_Value (2.5).  Some compilers, such as g++ 2.7.2.3,
   // actually warn about it without the case.
-  ACE_Time_Value tv8 (ACE_static_cast (long, 2.5));
+  ACE_Time_Value tv8 (static_cast <long> (2.5));
 
   // Test assignment operator, tv9 and tv6 must be the same after this
   ACE_Time_Value tv9;

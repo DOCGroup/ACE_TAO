@@ -35,7 +35,7 @@ Cached_Conn_Test: !VxWorks
 Capabilities_Test
 Codecs_Test
 Collection_Test
-Config_Test: !LynxOS
+Config_Test: !LynxOS !VxWorks
 Conn_Test: !chorus
 DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test
@@ -45,7 +45,7 @@ Dirent_Test
 Dynamic_Priority_Test
 Enum_Interfaces_Test: !LynxOS
 Env_Value_Test: !chorus !WinCE
-FIFO_Test: !Win32 !Cygwin
+FIFO_Test
 Framework_Component_Test: !STATIC !LynxOS
 Future_Set_Test
 Future_Test
@@ -61,8 +61,8 @@ Log_Msg_Test: !LynxOS
 Logging_Strategy_Test: !STATIC !ST
 MEM_Stream_Test: !VxWorks !LynxOS
 MM_Shared_Memory_Test: !chorus !Unicos !VxWorks
-MT_Reactor_Timer_Test: !VxWorks
-MT_Reactor_Upcall_Test: !VxWorks
+MT_Reactor_Timer_Test
+MT_Reactor_Upcall_Test
 MT_Reference_Counted_Event_Handler_Test
 MT_Reference_Counted_Notify_Test
 MT_SOCK_Test: !chorus !LynxOS
@@ -106,7 +106,7 @@ Reactors_Test
 Reader_Writer_Test
 Recursive_Condition_Test: !ST
 Recursive_Mutex_Test: !ST
-Refcounted_Auto_Ptr_Test: !VxWorks
+Refcounted_Auto_Ptr_Test
 Reference_Counted_Event_Handler_Test
 Reverse_Lock_Test
 SOCK_Connector_Test
@@ -129,7 +129,7 @@ Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
 Thread_Pool_Reactor_Resume_Test: !ST
 Thread_Pool_Reactor_Test
-Thread_Pool_Test: !VxWorks
+Thread_Pool_Test
 Time_Service_Test: !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
 Time_Value_Test
 Timeprobe_Test

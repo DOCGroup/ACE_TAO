@@ -345,15 +345,15 @@ run_main (int argc, ACE_TCHAR *argv[])
           break;
         case '?':
         default:
-          usage (argv[0]);
+          usage ("CDR_File_Test");
         }
     }
 
   if ((!reading || !writing) && fn == 0)
-    usage (argv[0]);
+    usage ("CDR_File_Test");
 
   if (!reading && !writing)
-    usage (argv[0]);
+    usage ("CDR_File_Test");
 
   // Create a temporary filename.
   ACE_FILE_Addr filename (ACE_sap_any_cast (ACE_FILE_Addr &));

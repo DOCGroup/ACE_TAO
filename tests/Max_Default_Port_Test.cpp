@@ -178,7 +178,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (ACE_Thread_Manager::instance ()->spawn_n
           (1,
            ACE_THR_FUNC (client),
-           ACE_reinterpret_cast (void *, &addr),
+           reinterpret_cast <void *> (&addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
 
         ACE_ERROR_RETURN ((LM_ERROR,

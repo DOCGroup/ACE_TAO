@@ -28,7 +28,11 @@
 #include "ace/os_include/os_stdio.h" // for FILENAME_MAX on Windows
 
 #if !defined (ACE_LACKS_LIMITS_H)
-# include /**/ <limits.h>
+#  if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#    include /**/ <limits>
+#  else
+#    include /**/ <limits.h>
+#   endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #endif /* !ACE_LACKS_LIMITS_H */
 
 #if !defined (ACE_LACKS_SYS_PARAM_H)

@@ -932,7 +932,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               int v = ACE_OS::atoi (get_opt.opt_arg ());
               if (!(opts[i].checkf) (v))
                 {
-                  usage(argv[0]);
+                  usage("CDR_Array_Test");
                 }
 
               *(opts[i].v) = v;
@@ -943,7 +943,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       if (!got)
         {
-          usage(argv[0]);
+          usage("CDR_Array_Test");
         }
     }
 
