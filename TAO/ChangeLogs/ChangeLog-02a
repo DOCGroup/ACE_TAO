@@ -1,89 +1,99 @@
+Tue Feb 20 15:02:01 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/Options.html:
+          Add documentation about the secret -ORBIORParser option in the
+          resource factory.
+
+        * docs/ior_parsing.html:
+          Document the pluggable IOR parser feature in TAO, and how you
+          can go about adding a new version.
+
 Tue Feb 20 16:35:27 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/RT_ORBInitializer.cpp:
-	  We must add the RT_Protocols_Hooks service, after the
-	  Service_Configurator is opened.  This is a bit more complicated
-	  than the usual ACE_Service_Config::static_svcs()->insert().
-	  After the beta we need to revisit this code and factor out some
-	  commonalities with ACE_Service_Config::load_static_svcs(), and
-	  probably rethink this portion of the RT-CORBA initialization.
+        * tao/RT_ORBInitializer.cpp:
+          We must add the RT_Protocols_Hooks service, after the
+          Service_Configurator is opened.  This is a bit more complicated
+          than the usual ACE_Service_Config::static_svcs()->insert().
+          After the beta we need to revisit this code and factor out some
+          commonalities with ACE_Service_Config::load_static_svcs(), and
+          probably rethink this portion of the RT-CORBA initialization.
 
-	  This fix should solve the crashes under Sun/CC 4.2 that have
-	  plagued TAO-1.1.12 and our nightly builds too.
+          This fix should solve the crashes under Sun/CC 4.2 that have
+          plagued TAO-1.1.12 and our nightly builds too.
 
-	  This problem was identified by many members of the community,
-	  including Scott Gunn <gunns@tvratings.com>, J. Russell
-	  Noseworthy <rnosewor@objectsciences.com> and Keith Nicewarner
-	  <knicewar@erg.sri.com>.
+          This problem was identified by many members of the community,
+          including Scott Gunn <gunns@tvratings.com>, J. Russell
+          Noseworthy <rnosewor@objectsciences.com> and Keith Nicewarner
+          <knicewar@erg.sri.com>.
 
 Tue Feb 20 16:13:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp (handle_close):  Fixed a problem
-	  with lingering handles in the cache when the server is
-	  shutdown. We need to pro-actively purge the handles from
-	  cache. Thanks to Christian von Mueffling <cvm@aiss.de> for
-	  reporting this problem. 
+        * tao/IIOP_Connection_Handler.cpp (handle_close):  Fixed a problem
+          with lingering handles in the cache when the server is
+          shutdown. We need to pro-actively purge the handles from
+          cache. Thanks to Christian von Mueffling <cvm@aiss.de> for
+          reporting this problem.
 
-	* tao/IIOP_Transport.cpp: We were explicitly purging connections
-	  after a handle_close () in close_connection (). That is not
-	  required as we purge the connections from cache during
-	  handle_close () itself.
+        * tao/IIOP_Transport.cpp: We were explicitly purging connections
+          after a handle_close () in close_connection (). That is not
+          required as we purge the connections from cache during
+          handle_close () itself.
 
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Transport.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Replicated the
-	  changes done for IIOP.
-	
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Replicated the
+          changes done for IIOP.
+
 Tue Feb 20 12:02:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp (handle_close): 
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed a
-	  leak from open handles on the server side when the clients
-	  exit. 
+        * tao/IIOP_Connection_Handler.cpp (handle_close):
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed a
+          leak from open handles on the server side when the clients
+          exit.
 
 Tue Feb 20 10:25:37 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation.operation_ss.cpp:
 
           Added missing carriage return in skeleton code generation.
-          Thanks to Alexandr Gavrilov <gavr@trustworks.com> for 
+          Thanks to Alexandr Gavrilov <gavr@trustworks.com> for
           reporting this bug.
 
 Tue Feb 20 06:27:17 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/Makefile.bor (OBJFILES): Remove
-  
-	  $(OBJDIR)\GIOP_Message_Headers.obj 
-	  
-	  since this file no longer exists.  Thanks to Johnny Willemsen
- 	  for reporting this.
+        * tao/Makefile.bor (OBJFILES): Remove
+
+          $(OBJDIR)\GIOP_Message_Headers.obj
+
+          since this file no longer exists.  Thanks to Johnny Willemsen
+          for reporting this.
 
 Mon Feb 19 20:19:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp: 
-	* tao/GIOP_Message_Locate_Header.cpp:
-	* tao/GIOP_Message_Generator_Parser_10.cpp: Corrected the wrong
-	  inclusions.  
-	
-	* tao/Makefile:
-	* tao/Domain/Makefile:
-	* tao/DynamicAny/Makefile:
-	* tao/DynamicInterface/Makefile:
-	* tao/IFR_Client/Makefile:
-	* tao/IORManipulation/Makefile:
-	* tao/IORTable/Makefile:
-	* tao/PortableServer/Makefile:
-	* tao/SmartProxies/Makefile:
-	* tao/Strategies/Makefile: Updated dependencies.
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Locate_Header.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp: Corrected the wrong
+          inclusions.
+
+        * tao/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/SmartProxies/Makefile:
+        * tao/Strategies/Makefile: Updated dependencies.
 
 Mon Feb 19 19:59:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Locate_Header.h: Changed the wrong inclusion of
-	  .i file.  
+        * tao/GIOP_Message_Locate_Header.h: Changed the wrong inclusion of
+          .i file.
 
 Mon Feb 19 19:15:11 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
