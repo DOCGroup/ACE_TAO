@@ -1,3 +1,11 @@
+Sat Jun 10 18:14:04 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS):
+
+	  Only compile the Load Balancer if Minimum CORBA is disabled,
+	  since it requires DSI support which is disabled in the Minimum
+	  CORBA configuration.
+
 Sat Jun 10 17:44:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/be/be_predefined_type.cpp:

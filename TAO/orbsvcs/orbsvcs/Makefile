@@ -26,7 +26,6 @@ ifndef TAO_ORBSVCS
   #### TAO_ORBSVCS.
   TAO_ORBSVCS = Naming \
                 Time \
-		LoadBalancing \
                 Property \
 		RTEvent \
                 CosEvent \
@@ -45,6 +44,9 @@ ifndef TAO_ORBSVCS
     ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
       TAO_ORBSVCS += LifeCycle Notify
     endif # ACE_HAS_GNUG_PRE_2_8
+
+    # The Load Balancer requires DSI support, which Minimum CORBA disables.
+    TAO_ORBSVCS += LoadBalancing
 
   endif # minimum_corba
 endif # TAO_ORBSVCS
