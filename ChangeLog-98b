@@ -1,17 +1,26 @@
-Mon May 18 13:48:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/Synch.i: Added #ifdef (ACE_HAS_THREADS) to make it compile
- 	  on non-threaded platforms.
-
 Mon May 18 12:24:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * ace/config-*.h: Commented out most of the
+ 	  ACE_LACKS_CONDATTR_PSHARED so we can see what platforms really
+ 	  DON'T support this...
+
+	* ace/OS.i (mutex_init): Added support for
+ 	  pthread_mutexattr_setpshared() so we can initialize POSIX
+ 	  pthreads process-wide mutexes.  Thanks to Ki-hyun Yoon
+ 	  <abird@nextware.co.kr> for suggesting this.
+
+  	* ace/config-sunos5.6.h: Added an #define for
+ 	  ACE_THREAD_POSIX_SEM.  Thanks to Ki-hyun Yoon
+ 	  <abird@nextware.co.kr> for reporting this.
 
 	* ace/config-sunos5*.h: Removed the ACE_LACKS_RWLOCK_T stuff since
  	  it's unnecessary.  Thanks to Chris Lahey for reminding me of
  	  this...
 
-  	* ace/config-sunos5.6.h: Added an #define for
- 	  ACE_THREAD_POSIX_SEM.  Thanks to Ki-hyun Yoon
- 	  <abird@nextware.co.kr> for reporting this.
+Mon May 18 13:48:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch.i: Added #ifdef (ACE_HAS_THREADS) to make it compile
+ 	  on non-threaded platforms.
 
 Mon May 18 12:31:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
