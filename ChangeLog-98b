@@ -1,8 +1,15 @@
+Thu May 28 13:57:50 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Filecache.cpp: removed redundant template instantiations.
+
+        * ace/config-lynxos.cpp: added undef ACE_HAS_TEMPLATE_SPECIALIZATION
+          for LynxOS 3.0.0.
+
 Thu May 28 07:47:41 1998  Steve Huston  <shuston@riverace.com>
 
-	* tests/SOCK_Connector_Test.cpp: Changed the "should succeed" test
-	  from port 25 (smtp) to 7 (echo) to try and get a higher success
-	  rate.  Thanks to David Levine for this suggestion.
+        * tests/SOCK_Connector_Test.cpp: Changed the "should succeed" test
+          from port 25 (smtp) to 7 (echo) to try and get a higher success
+          rate.  Thanks to David Levine for this suggestion.
 
 Wed May 27 13:45:24 1998  Steve Huston  <shuston@riverace.com>
 
