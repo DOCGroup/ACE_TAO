@@ -1,0 +1,121 @@
+# ACE one-button test for VxWorks 5.2/3.x
+# To use:  -> < run_tests.vxworks > run_tests.log
+# The output logs can be checked from a Unix host:
+#    % ./run_tests.check log/*.log
+
+memShow
+
+ld < Atomic_Op_Test
+ace_main; unld "Atomic_Op_Test"
+
+ld < TSS_Test
+ace_main; unld "TSS_Test"
+
+ld < Time_Value_Test
+ace_main; unld "Time_Value_Test"
+
+ld < SString_Test
+ace_main; unld "SString_Test"
+
+#### ld < Naming_Test; ace_main; unld "Naming_Test"
+
+ld < Handle_Set_Test
+ace_main; unld "Handle_Set_Test"
+
+ld < Hash_Map_Manager_Test
+ace_main; unld "Hash_Map_Manager_Test"
+
+#### ld < Mem_Map_Test; ace_main; unld "Mem_Map_Test"
+
+ld < SV_Shared_Memory_Test
+ace_main; unld "SV_Shared_Memory_Test"
+
+#### ld < MM_Shared_Memory_Test; ace_main; unld "MM_Shared_Memory_Test"
+
+ld < Sigset_Ops_Test
+ace_main; unld "Sigset_Ops_Test"
+
+#### ld < Mutex_Test; ace_main; unld "Mutex_Test"
+
+ld < Timer_Queue_Test
+ace_main; unld "Timer_Queue_Test"
+
+ld < Task_Test
+ace_main; unld "Task_Test"
+
+ld < Thread_Manager_Test
+ace_main; unld "Thread_Manager_Test"
+
+ld < Thread_Pool_Test
+ace_main; unld "Thread_Pool_Test"
+
+ld < Future_Test
+ace_main; unld "Future_Test"
+
+#### ld < Reactors_Test; ace_main; unld "Reactors_Test"
+
+ld < Reactor_Exceptions_Test
+ace_main; unld "Reactor_Exceptions_Test"
+
+#### ld < Reactor_Notify_Test; ace_main; unld "Reactor_Notify_Test"
+
+ld < Reactor_Timer_Test
+ace_main; unld "Reactor_Timer_Test"
+
+ld < Reader_Writer_Test
+ace_main; unld "Reader_Writer_Test"
+
+ld < SOCK_Test
+ace_main; unld "SOCK_Test"
+
+#### ld < Conn_Test; ace_main; unld "Conn_Test"
+
+ld < SPIPE_Test
+ace_main; unld "SPIPE_Test"
+
+ld < UPIPE_SAP_Test
+ace_main; unld "UPIPE_SAP_Test"
+
+ld < Barrier_Test
+ace_main; unld "Barrier_Test"
+
+#### ld < Buffer_Stream_Test; ace_main; unld "Buffer_Stream_Test"
+
+ld < Priority_Buffer_Test
+ace_main; unld "Priority_Buffer_Test"
+
+ld < Recursive_Mutex_Test
+ace_main; unld "Recursive_Mutex_Test"
+
+#### ld < Time_Service_Test; ace_main; unld "Time_Service_Test"
+#### ld < Tokens_Test; ace_main; unld "Tokens_Test"
+
+ld < Map_Manager_Test
+ace_main; unld "Map_Manager_Test"
+
+ld < Message_Queue_Notifications_Test
+ace_main; unld "Message_Queue_Notifications_Test"
+
+#### ld < Message_Queue_Test; ace_main; unld "Message_Queue_Test"
+
+ld < Simple_Message_Block_Test
+ace_main; unld "Simple_Message_Block_Test"
+
+ld < Message_Block_Test
+ace_main; unld "Message_Block_Test"
+
+#### ld < Pipe_Test; ace_main; unld "Pipe_Test"
+#### ld < Process_Mutex_Test; ace_main; unld "Process_Mutex_Test"
+#### ld < Process_Strategy_Test; ace_main; unld "Process_Strategy_Test"
+#### ld < Service_Config_Test; ace_main; unld "Service_Config_Test"
+
+ld < Priority_Task_Test
+ace_main; unld "Priority_Task_Test"
+
+ld < IOStream_Test
+ace_main; unld "IOStream_Test"
+
+ld < Enum_Interfaces_Test
+ace_main; unld "Enum_Interfaces_Test"
+
+memShow
