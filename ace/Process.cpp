@@ -155,6 +155,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
   if (this->child_id_ == 0)
     {
+# if !defined (ACE_LACKS_SETPGID)
       // If we're the child and the options specified a non-default
       // process group, try to set our pgid to it.  This allows the
       // <ACE_Process_Manager> to wait for processes by their
@@ -165,8 +166,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("%p.\n"),
                     ACE_LIB_TEXT ("ACE_Process::spawn: setpgid failed.")));
+# endif /* ACE_LACKS_SETPGID */
 
-#if !defined (ACE_LACKS_SETREGID)
+# if !defined (ACE_LACKS_SETREGID)
       if (options.getrgid () != (uid_t) -1
           || options.getegid () != (uid_t) -1)
         if (ACE_OS::setregid (options.getrgid (),
@@ -174,9 +176,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("%p.\n"),
                       ACE_LIB_TEXT ("ACE_Process::spawn: setregid failed.")));
-#endif /* ACE_LACKS_SETREGID */
+# endif /* ACE_LACKS_SETREGID */
 
-#if !defined (ACE_LACKS_SETREUID)
+# if !defined (ACE_LACKS_SETREUID)
       // Set user and group id's.
       if (options.getruid () != (uid_t) -1
           || options.geteuid () != (uid_t) -1)
@@ -185,7 +187,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("%p.\n"),
                       ACE_LIB_TEXT ("ACE_Process::spawn: setreuid failed.")));
-#endif /* ACE_LACKS_SETREUID */
+# endif /* ACE_LACKS_SETREUID */
 
       this->child (ACE_OS::getppid ());
     }
@@ -238,11 +240,11 @@ ACE_Process::spawn (ACE_Process_Options &options)
                                    options.command_line_argv ());
         else
           {
-#if defined (ghs)
+# if defined (ghs)
             // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile this
             // code.  Processes aren't supported on VxWorks anyways.
             ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-#else
+# else
             // Add the new environment variables to the environment
             // context of the context before doing an <execvp>.
             for (char *const *user_env = options.env_argv ();
@@ -255,7 +257,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
             // the user's supplied variables.
             result = ACE_OS::execvp (options.process_name (),
                                      options.command_line_argv ());
-#endif /* ghs */
+# endif /* ghs */
           }
         if (result == -1)
           {
