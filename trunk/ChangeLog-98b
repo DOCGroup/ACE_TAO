@@ -1,3 +1,8 @@
+Thu Jun 11 11:15:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/XtReactor.cpp: 
+	  The notify_handler_ open method requires an extra argument.
+
 Wed Jun 10 14:31:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Strategies_T.cpp (ACE_Recyclable ctors): reordered
