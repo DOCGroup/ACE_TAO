@@ -259,7 +259,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception& ex)
     {
       ACE_PRINT_EXCEPTION (ex, "Caught CORBA Exception: ");
-      while (true);
       return -1;
     }
   catch (const DOMException& e)
@@ -278,13 +277,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       //ACE_PRINT_EXCEPTION ("Caught DOM Exception: ");
       ACE_ERROR ((LM_ERROR, "Caught DOM exception\n"));
-      while (true);
       return -1;
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Caught unknown exception\n"));
-      while (true);
       return -1;
     }
 

@@ -55,7 +55,7 @@ installPackage (const char* installation_name,
 
       if (tpd_err_handler.getErrors())
         {
-          throw DOMException ();
+          throw Deployment::PackageError ();
         }
 
       CIAO::Config_Handler::TPD_Handler top_pc_handler
@@ -72,7 +72,7 @@ installPackage (const char* installation_name,
 
       if (pc_err_handler.getErrors())
         {
-          throw DOMException ();
+          throw Deployment::PackageError ();
         }
 
       CIAO::Config_Handler::PC_Handler pc_handler (pc_doc,

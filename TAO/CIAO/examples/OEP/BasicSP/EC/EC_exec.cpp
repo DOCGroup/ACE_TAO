@@ -24,13 +24,13 @@ MyImpl::timeout_Handler::~timeout_Handler ()
 }
 
 int
-MyImpl::timeout_Handler::open ()
+MyImpl::timeout_Handler::open_h ()
 {
   return this->activate ();
 }
 
 int
-MyImpl::timeout_Handler::close ()
+MyImpl::timeout_Handler::close_h()
 {
   this->done_ = 1;
   this->reactor ()->notify ();
@@ -217,7 +217,7 @@ MyImpl::EC_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::ccm_activate\n"));
 
-  this->pulser_.open ();
+  this->pulser_.open_h ();
 }
 
 void
@@ -234,7 +234,7 @@ MyImpl::EC_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::ccm_passivate\n"));
-  this->pulser_.close ();
+  this->pulser_.close_h ();
 }
 
 void

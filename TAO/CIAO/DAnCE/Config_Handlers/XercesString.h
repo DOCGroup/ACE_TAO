@@ -54,9 +54,6 @@ namespace Config_Handler
 
     operator const XMLCh* () const { return _wstr; };
 
-    bool operator== (const XMLCh* wstr) const;
-
-
   private:
 
     XMLCh* _wstr; // Internal representation
