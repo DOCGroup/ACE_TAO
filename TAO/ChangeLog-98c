@@ -1,3 +1,9 @@
+Wed Feb 18 02:58:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp (IOR_Multicast): Make
+	  sure that response_addr_ is properly initialized before it is
+	  used to initialize response_, which is an ACE_SOCK_Dgram.
+
 Tue Feb 17 20:20:35 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/giop.cpp: Removed an extra explicit template instantiation
