@@ -67,6 +67,7 @@ public:
   ssize_t get_buf_len (const off_t off, ACE_MEM_SAP_Node *&buf);
 };
 
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
 class ACE_Export ACE_MT_MEM_IO : public ACE_MEM_SAP
 {
 public:
@@ -131,6 +132,7 @@ private:
   Channel recv_channel_;
   Channel send_channel_;
 };
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 
 /**
  * @class ACE_MEM_IO

@@ -157,7 +157,13 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   // Protocol negociation:
   //   Tell the client side what level of signaling strategy
   //   we support.
-  ACE_INT16 client_signaling = this->preferred_strategy_;
+  ACE_INT16 client_signaling =
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+    this->preferred_strategy_;
+#else
+    // We don't support MT.
+    ACE_MEM_IO::Reactive;
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
   if (ACE::send (new_handle, &client_signaling,
                  sizeof (ACE_INT16)) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
