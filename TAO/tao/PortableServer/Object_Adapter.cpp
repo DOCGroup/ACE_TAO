@@ -1280,8 +1280,7 @@ TAO_Object_Adapter::Servant_Upcall::pre_invoke_remote_request (TAO_ServerRequest
 {
   this->object_adapter_->servant_dispatcher_->pre_invoke_remote_request (this->poa (),
                                                                          this->priority (),
-                                                                         req.request_service_context (),
-                                                                         req.reply_service_context (),
+                                                                         req,                                                                         
                                                                          this->pre_invoke_state_
                                                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
