@@ -1,3 +1,50 @@
+Tue Aug 14 23:57:42 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Handle_Set.h: Replace include ace/ACE.h with ace/OS.h. This
+          class is part of the OS subset.
+
+        * ace/Process.h: Added the following methods:
+          - ACE_Process_Options::pass_handle (ACE_HANDLE). Cause the specified
+            handle to be passed to a child process when it's spawned. Has
+            meaning mainly for Win32. The handle value will be included
+            in the spawned process's command line as +H <handle>. The passed
+            handle value will be duplicated if on Win32 less than NT4.
+
+          - ACE_Process_Options::dup_handles (ACE_Handle_Set set) const
+	    Get a copy of the handles the ACE_Process_Options duplicated
+            for the spawned process.
+
+          - ACE_Process_Options::passed_handles (ACE_Handle_Set set) const
+            Get a copy of the handles passed to the spawned process. This
+            will be the set of handles previously passed to pass_handle().
+
+          - ACE_Process::close_dup_handles (). Close all the handles in
+            the set obtained from ACE_Process_Options::dup_handles.
+
+          - ACE_Process::close_passed_handles (). Close all the handles in
+            the set obtained from ACE_Process_Options::passed_handles.
+
+          Also moved the avoid_zombies() functions and flag out of the
+          non-Win32 section - it can safely be ignored, maintain the
+          intended semantics, and help apps stay portable.
+
+        * Process.cpp: Implement the above new methods. Also, after spawning
+          a process, the parent will call the above dup_handles/passed_handles
+          methods to get any passed handles. The close_*_handles() methods
+          can then close them. Also, the destructor will call close_dup_handles
+          to be sure that no handles leak on Win32 less than NT4.
+
+        * Process.i (command_line_buf ()): Added a new arg to receive the
+          maximum length of the buffer pointed to on return. To maintain
+          backward compatibility, the arg defaults to 0 (don't return
+          the max length).
+
+        * ace/Makefile: Moved Handle_Set from the UTILS group to the OS group.
+
+        * ace/ace.icc: Moved Handle_Set from DEMUX to OS.
+
+        * docs/ACE-subsets.html: Move Handle_Set from DEMUX to OS.
+
 Tue Aug 14 21:42:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: Fixed a typo.
