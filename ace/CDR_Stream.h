@@ -724,6 +724,12 @@ public:
   /// Note: We now do only with the start_ message block.
   void exchange_data_blocks (ACE_InputCDR &cdr);
 
+  /// Copy the data portion from the <cdr> to this cdr and return the
+  /// data content (ie. the ACE_Data_Block) from this CDR to the
+  /// caller. The caller is responsible for managing the memory of the
+  /// returned ACE_Data_Block.
+  ACE_Data_Block* clone_from (ACE_InputCDR &cdr);
+
   /// Re-initialize the CDR stream, forgetting about the old contents
   /// of the stream and allocating a new buffer (from the allocators).
   void reset_contents (void);

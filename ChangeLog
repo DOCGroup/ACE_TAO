@@ -1,3 +1,12 @@
+Sat Jun 17 17:33:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Base.cpp (grow): Cleared the DONT_DELETE flag of the
+	  message block whose data block is expanded.
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.cpp: Added a new method clone_from () in the
+	  ACE_InputCDR class. This method is used in the bug #575 fix.
+
 Sun Jun 17 17:11:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/Timer_Queue_Adapters.cpp (schedule):
