@@ -544,7 +544,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
         }
 
       // If we're here, we have an implicit default case, and we
-      // should just return without demarshaling anything, since no
+      // should just return without skipping anything, since no
       // union member was marshaled in the first place.
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
