@@ -1,6 +1,12 @@
+Mon Jun 21 17:46:32 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/Update_Plan.cpp:
+
+          Made changes to fix a run-time error.
+
 Fri Jun 18 16:40:14 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* examples/OEP/BasicSP/README.html: 
+	* examples/OEP/BasicSP/README.html:
 
           ".exe" extensions are deleted, because they are not exist in
           linux

@@ -19,10 +19,15 @@ void traverse_package (Deployment::PackageConfiguration* &pc,
       for (CORBA::ULong y = 0; 
            y < pc->basePackage[x].implementation.length (); ++y)
         {
+          // traverse the .cpd file and get to the referenced .cid file
+          //
           Deployment::ComponentImplementationDescription cid =
             pc->basePackage[x].implementation[y].referencedImplementation;
           for (CORBA::ULong z = 0; z < cid.assemblyImpl.length (); ++z)
             {
+              // traverse the .cid file and get to each
+              // of the "assemblyImpl" tags.
+              //
               Deployment::ComponentAssemblyDescription assembly =
                 cid.assemblyImpl[z];
               //
@@ -192,21 +197,25 @@ void update_artifacts (Deployment::MonolithicImplementationDescription &mid,
     {
       Deployment::ImplementationArtifactDescription
         pack_iad = mid.primaryArtifact[q].referencedArtifact;
-
+      ACE_TString artifact_name = (const char*)mid.primaryArtifact[q].name;
+      int arti_len;
       CORBA::ULong art_length (plan.artifact.length ());
-      plan.artifact.length (art_length + 1);
-      plan.artifact[art_length].name = mid.primaryArtifact[q].name;
-      plan.artifact[art_length].node = instance.node;
-      ACE_TString artifact_name = (const char*)plan.artifact[art_length].name;
-      ref_map.bind (artifact_name, art_length);
-      primary_ref_map.bind (artifact_name, art_length);
-      CORBA::ULong art_ref_len (mdd.artifactRef.length ());
-      mdd.artifactRef.length (art_ref_len + 1);
-      mdd.artifactRef[art_ref_len] = art_length;
-      update_artifact_location (pack_iad,
-                                plan.artifact[art_length]);
-      update_artifact_property (pack_iad,
-                                plan.artifact[art_length]);
+
+      if (ref_map.find (artifact_name, arti_len) != 0)
+        {
+          plan.artifact.length (art_length + 1);
+          plan.artifact[art_length].name = mid.primaryArtifact[q].name;
+          plan.artifact[art_length].node = instance.node;
+          ref_map.bind (artifact_name, art_length);
+          primary_ref_map.bind (artifact_name, art_length);
+          CORBA::ULong art_ref_len (mdd.artifactRef.length ());
+          mdd.artifactRef.length (art_ref_len + 1);
+          mdd.artifactRef[art_ref_len] = art_length;
+          update_artifact_location (pack_iad,
+                                    plan.artifact[art_length]);
+          update_artifact_property (pack_iad,
+                                    plan.artifact[art_length]);
+        }
       update_common_artifact_and_art_ref (pack_iad,
                                           primary_ref_map, ref_map,
                                           art_ref_map, mdd,
