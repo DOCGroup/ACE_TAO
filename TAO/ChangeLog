@@ -1,3 +1,15 @@
+Thu Sep 16 10:09:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_scope.cpp (lookup_by_name_local):
+        
+          Reverted inadvertent checkin that changed the scope iterator
+          instantiation parameters, and added a comment about why it
+          needs to be the way it is (for lookup of sequence parameter
+          in the deprecated declaration of a recursive type using an
+          anonymous sequence). Thanks to Johnny Willemsen 
+          <jwillemsen@rememdy.nl> for reporting the problem in union.idl
+          of IDL_Test, which contains such a recursive union.
+
 Thu Sep 16 09:28:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/orbsvcs/PortableGroup/MIOP.cpp:
