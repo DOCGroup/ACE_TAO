@@ -522,7 +522,7 @@ public:
    * threads with an ACE_Task instance, which defaults to <this>.
    *
    * @retval -1 on failure (<errno> will explain...), otherwise returns the
-   * group id of the threads.  */
+   * group id of the threads.
    */
   int spawn_n (size_t n,
                ACE_THR_FUNC func,
