@@ -2,7 +2,9 @@ Thu Jan  2 12:38:55 2003  Johnny Willemsen <jwillemsen@remedy.nl>
 
 	* ace/Makefile.ace: Set the dllflags in Makefile. This makes it
 	  possible to do __declspec (dllexport) for the symbols in the
-	  dll. This is needed for the Cygwin/MingW and Kylix compiler.
+	  dll. This is needed for the Cygwin/MingW and Kylix compiler. 
+
+	  Thid change takes care of the static and dynamic library cases.  
 
 Thu Jan  2 08:57:26 2003  Johnny Willemsen <jwillemsen@remedy.nl>
 
