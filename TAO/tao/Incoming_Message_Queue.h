@@ -97,7 +97,7 @@ private:
 
 private:
 
-  /// A circular linked listof messages that await processing
+  /// A linked listof messages that await processing
   TAO_Queued_Data *queued_data_;
 
   /// The size of the queue

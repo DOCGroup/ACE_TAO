@@ -13,13 +13,11 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TRANSPORT_H
 #define TAO_TRANSPORT_H
 #include "ace/pre.h"
 
 #include "corbafwd.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,8 +27,8 @@
 #include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
-#include "ace/Refcountable.h"
 #include "Incoming_Message_Queue.h"
+#include "Synch_Refcountable.h"
 
 class TAO_ORB_Core;
 class TAO_Target_Specification;
@@ -43,21 +41,7 @@ class TAO_Pluggable_Messaging;
 class TAO_Queued_Message;
 class TAO_Resume_Handle;
 
-class TAO_Export TAO_Synch_Refcountable : private ACE_Refcountable
-{
-public:
-  virtual ~TAO_Synch_Refcountable (void);
 
-  int increment (void);
-  int decrement (void);
-
-  int refcount (void) const;
-
-protected:
-  TAO_Synch_Refcountable (ACE_Lock *lock, int refcount);
-
-  ACE_Lock *refcount_lock_;
-};
 
 /**
  * @class TAO_Transport
@@ -235,6 +219,10 @@ public:
   /// destructor
   virtual ~TAO_Transport (void);
 
+  // Maintain reference counting with these
+  static TAO_Transport* _duplicate (TAO_Transport* transport);
+  static void release (TAO_Transport* transport);
+
   /// Return the protocol tag.
   /**
    * The OMG assigns unique tags (a 32-bit unsigned number) to each
@@ -280,34 +268,30 @@ public:
   void cache_map_entry (TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
   TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
 
-  /// Return the identifier for this transport instance.
+  /// Set and Get the identifier for this transport instance.
   /**
    * If not set, this will return an integer representation of
    * the <code>this</code> pointer for the instance on which
    * it's called.
    */
   int id (void) const;
-  /// Set the identifier for this transport instance.
   void id (int id);
 
-  /// Return the order for the purging strategy.
+  /// Get and Set the purging order. The purging strategy uses the set
+  /// version to set the purging order.
   unsigned long purging_order (void) const;
-
-  /// Allow the purging strategy to set the order.
   void purging_order(unsigned long value);
 
+  /// Check if there are messages pending in the queue
   /**
-   * Initialising the messaging object. This would be used by the
-   * connector side. On the acceptor side the connection handler
-   * would take care of the messaging objects.
+   * @return 1 if the queue is empty
    */
-  virtual int messaging_init (CORBA::Octet major,
-                              CORBA::Octet minor) = 0;
+  int queue_is_empty (void);
 
   /// Fill in a handle_set with any associated handler's reactor handle.
   /**
    * Called by the cache when the cache is closing in order to fill
-   * in a handle_set in a lock-safe manner.
+   * in a handle_set in a thread-safe manner.
    *
    * @param reactor_registered the ACE_Handle_Set into which the
    *        transport should place any handle registered with the reactor
@@ -319,58 +303,22 @@ public:
   void provide_handle (ACE_Handle_Set &reactor_registered,
                        TAO_EventHandlerSet &unregistered);
 
-  /// Extracts the list of listen points from the <cdr> stream. The
-  /// list would have the protocol specific details of the
-  /// ListenPoints
-  virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
   /// Remove all messages from the outgoing queue.
   /**
    * @todo: shouldn't this be automated?
    */
-  void dequeue_all (void);
+  // void dequeue_all (void);
 
-  /// Check if there are messages pending in the queue
   /**
-   * @return 1 if the queue is empty
+   * Register the handler with the reactor. This method is used by the
+   * Wait_On_Reactor strategy. The transport must register its event
+   * handler with the ORB's Reactor.
    */
-  int queue_is_empty (void);
-
-  /// Register the handler with the reactor.
-  /**
-   * This method is used by the Wait_On_Reactor strategy. The
-   * transport must register its event handler with the ORB's Reactor.
-   *
-   * @todo: I think this method is pretty much useless, the
-   * connections are *always* registered with the Reactor, except in
-   * thread-per-connection mode.  In that case putting the connection
-   * in the Reactor would produce unpredictable results anyway.
-   */
-  // @@ lockme
   int register_handler (void);
 
-  /**
-   * @name Control connection lifecycle
-   *
-   * These methods are routed through the TMS object. The TMS
-   * strategies implement them correctly.
-   */
-  //@{
 
-  /// Request has been just sent, but the reply is not received. Idle
-  /// the transport now.
-  virtual int idle_after_send (void);
-
-  /// Request is sent and the reply is received. Idle the transport
-  /// now.
-  virtual int idle_after_reply (void);
-
-  /// Call the implementation method after obtaining the lock.
-  virtual void close_connection (void);
-
-  //@}
-
-  /// Write the complete Message_Block chain to the connection.
+    /// Write the complete Message_Block chain to the connection.
   /**
    * This method serializes on handler_lock_, guaranteeing that only
    * thread can execute it on the same instance concurrently.
@@ -428,6 +376,48 @@ public:
 
 
 
+  /**
+   * @name Control connection lifecycle
+   *
+   * These methods are routed through the TMS object. The TMS
+   * strategies implement them correctly.
+   */
+  //@{
+
+  /// Request has been just sent, but the reply is not received. Idle
+  /// the transport now.
+  virtual int idle_after_send (void);
+
+  /// Request is sent and the reply is received. Idle the transport
+  /// now.
+  virtual int idle_after_reply (void);
+
+  /// Call the implementation method after obtaining the lock.
+  virtual void close_connection (void);
+
+  //@}
+
+  /** @name Template methods
+   *
+   * The Transport class uses the Template Method Pattern to implement
+   * the protocol specific functionality.
+   * Implementors of a pluggable protocol should override the
+   * following methods with the semantics documented below.
+   */
+  /**
+   * Initialising the messaging object. This would be used by the
+   * connector side. On the acceptor side the connection handler
+   * would take care of the messaging objects.
+   */
+  virtual int messaging_init (CORBA::Octet major,
+                              CORBA::Octet minor) = 0;
+
+
+
+  /// Extracts the list of listen points from the <cdr> stream. The
+  /// list would have the protocol specific details of the
+  /// ListenPoints
+  virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
 protected:
   /** @name Template methods
@@ -536,6 +526,13 @@ public:
   virtual int generate_request_header (TAO_Operation_Details &opd,
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
+
+  /// recache ourselves in the cache
+  int recache_transport (TAO_Transport_Descriptor_Interface* desc);
+
+  /// Method for the connection handler to signify that it
+  /// is being closed and destroyed.
+  virtual void connection_handler_closing (void);
 
   /// Callback to read incoming data
   /**
@@ -681,16 +678,7 @@ protected:
   TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
 
 public:
-  /// Method for the connection handler to signify that it
-  /// is being closed and destroyed.
-  virtual void connection_handler_closing (void);
 
-  // Maintain reference counting with these
-  static TAO_Transport* _duplicate (TAO_Transport* transport);
-  static void release (TAO_Transport* transport);
-
-  /// recache ourselves in the cache
-  int recache_transport (TAO_Transport_Descriptor_Interface* desc);
 
 
 
