@@ -52,7 +52,7 @@ public:
   // END SPEC
   
   virtual void add_offer (CosTrading::OfferId offer_id,
-			  CosTrading::Offer* offer) = 0;
+			  const CosTrading::Offer* offer) = 0;
   // Add an offer to the collection of offers the iterator will
   // iterate over. 
 

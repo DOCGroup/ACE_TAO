@@ -19,7 +19,6 @@
 #define TAO_SERVICE_TYPE_REPOSITORY_H
 
 #include "Trader.h"
-#include "Monitor.h"
 
 class TAO_Service_Type_Repository :
   public POA_CosTradingRepos::ServiceTypeRepository
@@ -225,7 +224,7 @@ private:
   typedef ACE_Hash_Map_Manager
     <
     TAO_String_Hash_Key,
-    CosTradingRepos::ServiceTypeRepository::PropStruct,
+    CosTradingRepos::ServiceTypeRepository::PropStruct*,
     ACE_Null_Mutex
     >
     Prop_Map;

@@ -32,9 +32,9 @@ TAO_Query_Only_Offer_Iterator::~TAO_Query_Only_Offer_Iterator(void)
 
 void
 TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
-					  CosTrading::Offer* offer)
+					  const CosTrading::Offer* offer)
 {
-  this->offers_.enqueue_tail (offer);
+  this->offers_.enqueue_tail ((CosTrading::Offer*) offer);
   CORBA::string_free (offer_id);
 }
 

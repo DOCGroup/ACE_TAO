@@ -100,7 +100,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::SERVICE_TYPE_MAP&
+TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::Service_Type_Map&
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::service_type_map (void) 
 {
   return this->service_type_map_;

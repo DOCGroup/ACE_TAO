@@ -149,8 +149,7 @@ public:
   
 private:
 
-  typedef TRADER::LOCAL_OFFER_ITER Local_Offer_Iter;
-  typedef TRADER::SERVICE_TYPE_MAP SERVICE_TYPE_MAP;
+  typedef TRADER::Service_Type_Map Service_Type_Map;
  
   struct Offer_Info
   {
@@ -169,7 +168,7 @@ private:
   void perform_lookup (const char* type,
 		       const char* constraint,
 		       const char* preferences,
-		       SERVICE_TYPE_MAP& service_type_map,
+		       Service_Type_Map& service_type_map,
 		       CosTradingRepos::ServiceTypeRepository_ptr rep,
 		       TAO_Policies& policies,
 		       Offer_Queue& ordered_offers,
@@ -192,7 +191,7 @@ private:
 
   void lookup_all_subtypes (const char* type,
 			    CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
-			    SERVICE_TYPE_MAP& service_type_map,
+			    Service_Type_Map& service_type_map,
 			    CosTradingRepos::ServiceTypeRepository_ptr rep,
 			    TAO_Constraint_Interpreter& constr_inter,
 			    TAO_Preference_Interpreter& pref_inter,
@@ -201,7 +200,7 @@ private:
   // subtypes of the root type.
   
   void lookup_one_type (const char* type,
-			SERVICE_TYPE_MAP& service_type_map,
+			Service_Type_Map& service_type_map,
 			TAO_Constraint_Interpreter& constr_inter,
 			TAO_Preference_Interpreter& pref_inter,
 			TAO_Offer_Filter& offer_filter);

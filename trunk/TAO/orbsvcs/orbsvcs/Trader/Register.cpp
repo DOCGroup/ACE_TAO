@@ -18,14 +18,11 @@
 #if !defined (TAO_REGISTER_C)
 #define TAO_REGISTER_C
 
+#include "Trader.h"
 #include "Register.h"
 #include "Property_Evaluator.h"
-#include "Trader.h"
-#include <iostream.h>
-#include <algorithm>
 
-template <class TRADER>
-const char* TAO_Register<TRADER>::NAME = "Trader: Register";
+#include "ace/Containers.h"
 
 template <class TRADER>
 TAO_Register<TRADER>::TAO_Register (TRADER &trader)
@@ -57,8 +54,7 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
 		  CosTrading::DuplicatePropertyName))
 {
   // Get service type map
-  TRADER::SERVICE_TYPE_MAP &service_type_map = 
-    this->trader_.service_type_map ();
+  Service_Type_Map &service_type_map = this->trader_.service_type_map ();
 
   CosTrading::Offer offer;
   TAO_Support_Attributes_Impl& support_attrs =
@@ -71,7 +67,7 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   
   // Yank our friend, the type struct, and confirm that the given
   // properties match the type definition.
-  TYPE_STRUCT* type_struct = rep->fully_describe_type (type, _env);
+  CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct = rep->fully_describe_type (type, _env);
   TAO_CHECK_ENV_RETURN (_env, 0);
   
   // Oops the type is masked, we shouldn't let exporters know the type 
@@ -101,7 +97,6 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
     {
       // Add type, if it's already been added in that split second
       // since we've released the lock, nothing bad will happen.
-      service_type_map.add_type (type);      
       id = service_type_map.insert_offer (type, offer);
     }
   
@@ -117,9 +112,7 @@ TAO_Register<TRADER>::withdraw (const char *id,
 		   CosTrading::Register::ProxyOfferId))
 {
   // Get service type map.
-  TRADER::SERVICE_TYPE_MAP &service_type_map = 
-    this->trader_.service_type_map ();
-
+  Service_Type_Map &service_type_map = this->trader_.service_type_map ();
   service_type_map.remove_offer ((CosTrading::OfferId) id, _env);
 }
 
@@ -133,8 +126,7 @@ TAO_Register<TRADER>::describe (const char *id,
 {
   // Get service type map.
   char* type = 0;
-  TRADER::SERVICE_TYPE_MAP &service_type_map = 
-    this->trader_.service_type_map ();
+  Service_Type_Map &service_type_map = this->trader_.service_type_map ();
 
   // Perform a lookup to find the offer.
   CosTrading::Offer* offer =
@@ -173,42 +165,38 @@ TAO_Register<TRADER>::modify (const char *id,
   // to support properties modification.
   if (! this->supports_modifiable_properties (_env))
     TAO_THROW (CosTrading::NotImplemented ());
-  else
+
+  char* type = 0;
+  TAO_Support_Attributes_Impl& support_attrs =
+    this->trader_.support_attributes ();  
+  CosTrading::TypeRepository_ptr type_repos = support_attrs.type_repos ();
+  CosTradingRepos::ServiceTypeRepository_ptr rep = 
+    CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  Service_Type_Map &service_type_map = this->trader_.service_type_map ();
+      
+  CosTrading::Offer* offer =
+    service_type_map.lookup_offer ((CosTrading::OfferId) id, type, _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  
+  if (offer != 0)
     {
-      char* type = 0;
-      TAO_Support_Attributes_Impl& support_attrs =
-	this->trader_.support_attributes ();  
-      CosTrading::TypeRepository_ptr type_repos =
-	support_attrs.type_repos ();
-      CosTradingRepos::ServiceTypeRepository_ptr rep = 
-	CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
+      // Yank our friend, the type struct.
+      CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct = rep->describe_type (type, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      TRADER::SERVICE_TYPE_MAP &service_type_map = 
-	this->trader_.service_type_map ();
+      TAO_Offer_Modifier offer_mod (type, type_struct, *offer);
       
-      CosTrading::Offer* offer =
-	service_type_map.lookup_offer ((CosTrading::OfferId) id, type, _env);
+      // Delete, add, and change properties of the offer.
+      this->validate_properties (type, type_struct,
+				 (CosTrading::PropertySeq) modify_list, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      offer_mod.delete_properties (del_list, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+      offer_mod.merge_properties (modify_list, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
       
-      if (offer != 0)
-	{
-	  // Yank our friend, the type struct.
-	  TYPE_STRUCT* type_struct = rep->describe_type (type, _env);
-	  TAO_CHECK_ENV_RETURN_VOID (_env);
-	  TAO_Offer_Modifier offer_mod (type, type_struct, *offer);
-
-	  // Delete, add, and change properties of the offer.
-	  this->validate_properties (type, type_struct,
-				     (CosTrading::PropertySeq) modify_list, _env);
-	  TAO_CHECK_ENV_RETURN_VOID (_env);
-	  offer_mod.delete_properties (del_list, _env);
-	  TAO_CHECK_ENV_RETURN_VOID (_env);
-	  offer_mod.merge_properties (modify_list, _env);
-	  TAO_CHECK_ENV_RETURN_VOID (_env);
-
-	  // Alter our reference to the offer. 
-	  offer_mod.affect_change ();
-	}
+      // Alter our reference to the offer. 
+      offer_mod.affect_change ();
     }
 }
 
@@ -223,58 +211,48 @@ TAO_Register<TRADER>::withdraw_using_constraint (const char *type,
 		  CosTrading::Register::NoMatchingOffers))
 {
   int num_removed = 0;
-  deque<CosTrading::OfferId_var> ids;
-  TAO_Support_Attributes_Impl& support_attrs =
-    this->trader_.support_attributes ();  
-  CosTrading::TypeRepository_ptr type_repos =
-    support_attrs.type_repos ();
+  TAO_Support_Attributes_Impl&
+    support_attrs = this->trader_.support_attributes ();
+  CosTrading::TypeRepository_ptr type_repos = support_attrs.type_repos ();
   CosTradingRepos::ServiceTypeRepository_ptr rep = 
     CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
-  TRADER::SERVICE_TYPE_MAP &service_type_map = 
-    this->trader_.service_type_map ();
-  CORBA::Boolean dp_support =
-    support_attrs.supports_dynamic_properties ();
+  Service_Type_Map &service_type_map =  this->trader_.service_type_map ();
+  CORBA::Boolean dp_support = support_attrs.supports_dynamic_properties ();
+  ACE_Unbounded_Queue<CosTrading::OfferId_var> ids;
   
   // Retrieve the type struct
-  TYPE_STRUCT* type_struct = rep->describe_type (type, _env);
+  CosTradingRepos::ServiceTypeRepository::TypeStruct*
+    type_struct = rep->describe_type (type, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // Try to find the map of offers of desired service type.
-  TRADER::SERVICE_TYPE_MAP::Local_Offer_Iterator*
-    offer_iter = service_type_map.get_offers (type);
-
-  if (offer_iter != 0)
+  Service_Type_Map::offer_iterator offer_iter (type, service_type_map);
+  TAO_Constraint_Validator validator (type_struct);
+  TAO_Constraint_Interpreter constr_inter (validator, constr, _env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+  
+  while (offer_iter.has_more_offers ())
     {
-      TAO_Constraint_Validator validator (type_struct);
-      TAO_Constraint_Interpreter constr_inter (validator, constr, _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      CosTrading::Offer* offer = offer_iter.get_offer ();
+      // Add offer if it matches the constraints
       
-      while (offer_iter->has_more_offers ())
-	{
-	  CosTrading::Offer* offer = offer_iter->get_offer ();
-	  // Add offer if it matches the constraints
-
-	  TAO_Constraint_Evaluator evaluator (offer, dp_support);
-	  if (constr_inter.evaluate (evaluator))
-	    ids.push_back (offer_iter->get_id ());
-	  
-	  offer_iter->next_offer ();
-	}
+      TAO_Constraint_Evaluator evaluator (offer, dp_support);
+      if (constr_inter.evaluate (evaluator))
+	ids.enqueue_tail (offer_iter.get_id ());
       
-      // Must delete the iterator, so we can write to the service type map.
-      delete offer_iter;
-    }
+      offer_iter.next_offer ();
+    }      
   
   if (ids.size () == 0)
     TAO_THROW (CosTrading::Register::NoMatchingOffers (constr));
   else
     {      
-      for (deque<CosTrading::OfferId_var>::iterator id_iter = ids.begin ();
-	   id_iter != ids.end ();
-	   id_iter++)
+      while (! ids.is_empty ())
 	{
-	  service_type_map.remove_offer
-	    ((CosTrading::OfferId) ids.front ().in (), _env);
+	  CosTrading::OfferId_var offer_id;
+	  
+	  ids.dequeue_head (offer_id);
+	  service_type_map.remove_offer (offer_id, _env);
 	}
     }
 }
@@ -334,7 +312,7 @@ TAO_Register<TRADER>::resolve (const CosTrading::TraderName &name,
 template <class TRADER> void
 TAO_Register<TRADER>::
 validate_properties (const char* type, 
-		     TYPE_STRUCT* type_struct,
+		     CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
 		     CosTrading::PropertySeq& properties,
 		     CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTrading::IllegalPropertyName, 

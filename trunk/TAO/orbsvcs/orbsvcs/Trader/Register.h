@@ -275,15 +275,13 @@ public:
   // return the Register interface reference to their client (another
   // trader).
   // END SPEC
-    
-  static const char* NAME;
-  
-protected:
 
-  typedef CosTradingRepos::ServiceTypeRepository::TypeStruct TYPE_STRUCT;
+ protected:
+
+  typedef TRADER::Service_Type_Map Service_Type_Map;
   
   void validate_properties (const char* type,
-			    TYPE_STRUCT* type_struct,
+			    CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
 			    CosTrading::PropertySeq& properties,
 			    CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalPropertyName, 

@@ -17,8 +17,8 @@
 #ifndef TAO_PROPERTY_FILTER_H
 #define TAO_PROPERTY_FILTER_H
 
-#include "stl.h"
 #include "Trader.h"
+#include "ace/Containers.h"
 
 class TAO_Property_Filter
 // = TITLE
@@ -46,12 +46,12 @@ public:
   
 private:
 
-  typedef set< string,  less <string> > PROP_NAMES;
-  typedef deque< CosTrading::Property* > PROP_QUEUE;
+  typedef ACE_Unbounded_Set< TAO_String_Hash_Key > Prop_Names;
+  typedef ACE_Unbounded_Queue< CosTrading::Property* > Prop_Queue;
   
   int verify_property_name (const char* name);
 
-  PROP_NAMES props_;
+  Prop_Names props_;
   CosTrading::Lookup::HowManyProps policy_;
 };
 

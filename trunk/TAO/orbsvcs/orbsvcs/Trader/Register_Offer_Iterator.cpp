@@ -19,7 +19,6 @@
 #define  TAO_REGISTER_OFFER_ITERATOR_C
 
 #include "Register_Offer_Iterator.h"
-#include <iostream.h>
 
 #ifndef min
 #define        min(a, b)               ((a) > (b) ? (b) : (a))
@@ -37,11 +36,19 @@ TAO_Register_Offer_Iterator (TRADER &trader,
 template <class TRADER>
 TAO_Register_Offer_Iterator<TRADER>::~TAO_Register_Offer_Iterator (void)
 {
+  while (! this->offer_ids_.is_empty ())
+    {
+      CosTrading::OfferId offer_id = 0;
+      this->offer_ids_.dequeue_head (offer_id);
+
+      CORBA::string_free (offer_id);
+    }
 }
 
 template <class TRADER> void
-TAO_Register_Offer_Iterator<TRADER>::add_offer (CosTrading::OfferId id,
-						CosTrading::Offer* offer)
+TAO_Register_Offer_Iterator<TRADER>::
+add_offer (CosTrading::OfferId id,
+	   const CosTrading::Offer* offer)
 {
   this->offer_ids_.enqueue_tail (id);
 }
@@ -57,7 +64,7 @@ TAO_Register_Offer_Iterator<TRADER>::max_left (CORBA::Environment& _env)
 template <class TRADER> CORBA::Boolean 
 TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n, 
                                              CosTrading::OfferSeq_out offers,
-					      CORBA::Environment& _env) 
+					     CORBA::Environment& _env) 
   TAO_THROW_SPEC (CORBA::SystemException)
 {
   offers = new CosTrading::OfferSeq;
@@ -65,7 +72,7 @@ TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n,
   CORBA::ULong ret_offers = 0;
   
   // Get service type map (monitor object).
-  TRADER::SERVICE_TYPE_MAP &service_type_map = 
+  TRADER::Service_Type_Map &service_type_map =
     this->trader_.service_type_map ();
 
   CORBA::ULong max_possible_offers_in_sequence =
@@ -80,13 +87,14 @@ TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n,
       // If offer is found, put it into the sequence.	  
       // remove this id irrespective of whether the offer is found
       // or not.
-      CosTrading::OfferId_var id;
+      CosTrading::OfferId id;
       this->offer_ids_.dequeue_head (id);
       
       TAO_TRY
 	{
+	  CosTrading::OfferId_var offerid_var (id);
 	  CosTrading::Offer* offer =
-	    service_type_map.lookup_offer ((CosTrading::OfferId) id, TAO_TRY_ENV);
+	    service_type_map.lookup_offer (id, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  
 	  if (offer != 0)

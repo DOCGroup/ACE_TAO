@@ -367,7 +367,7 @@ TAO_Policies::request_id (CORBA::Environment& _env)
       CosTrading::PolicyValue& value = policy->value;
       CORBA::TypeCode* type = value.type ();
       
-      if (!type->equal (CosTrading::Admin::_tc_OctetSeq_seq, _env))
+      if (!type->equal (CosTrading::Admin::_tc_OctetSeq, _env))
 	TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
 			  request_id);
       else

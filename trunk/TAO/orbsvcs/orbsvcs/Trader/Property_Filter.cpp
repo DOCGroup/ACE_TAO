@@ -25,8 +25,8 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,
 	    {
 	      // Insert returns a pair whose second element is a flag
 	      // indicating whether a collision occured.
-	      string prop_name (pname);
-	      if (this->props_.insert (prop_name).second == 0)
+	      TAO_String_Hash_Key prop_name (pname);
+	      if (this->props_.insert (prop_name) == 1)
 		TAO_THROW_SPEC (CosTrading::DuplicatePropertyName (pname));
 	    }	    
 	}
@@ -44,7 +44,7 @@ void
 TAO_Property_Filter::filter_offer (CosTrading::Offer& source,
 				   CosTrading::Offer& destination)
 {
-  PROP_QUEUE prop_queue;
+  Prop_Queue prop_queue;
   CosTrading::PropertySeq& s_props = source.properties;
   CosTrading::PropertySeq& d_props = destination.properties;
   int length = s_props.length (), elem = 0;
@@ -55,14 +55,14 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer& source,
       for (int i = 0; i < length; i++)
 	{
 	  if (this->policy_ == CosTrading::Lookup::all)
-	    prop_queue.push_back (&s_props[i]);
+	    prop_queue.enqueue_tail (&s_props[i]);
 	  else
 	    {
-	      string prop_name (s_props[i].name);
+	      TAO_String_Hash_Key prop_name ((const char*) s_props[i].name);
 
 	      // Save those property that match.
-	      if (this->props_.find (prop_name) != this->props_.end ())
-		prop_queue.push_back (&s_props[i]);
+	      if (this->props_.find (prop_name) == 0)
+		prop_queue.enqueue_tail (&s_props[i]);
 	    }
 	}
 
@@ -70,10 +70,15 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer& source,
       // sequence. 
       length = prop_queue.size ();
       d_props.length (prop_queue.size ());
-      for (PROP_QUEUE::iterator prop_iter = prop_queue.begin ();
-	   prop_iter != prop_queue.end ();
-	   prop_iter++)      
-	d_props[elem++] = *(*prop_iter);
+      for (Prop_Queue::ITERATOR prop_iter (prop_queue);
+	   ! prop_iter.done ();
+	   prop_iter.advance (), elem++)
+	{
+	  CosTrading::Property** prop_ptr = 0;
+	  
+	  prop_iter.next (prop_ptr);
+	  d_props[elem] = **prop_ptr;
+	}
     }
 }
 

@@ -21,7 +21,6 @@
 
 // ACE includes
 #include "Trader.h"
-#include "Monitor.h"
 #include "Service_Type_Map.h"
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -57,9 +56,7 @@ public:
   // The desired combination of interfaces to be passed to the 
   // TAO_Trader constructor.
 
-  typedef TAO_Service_Type_Map<MAP_LOCK_TYPE> SERVICE_TYPE_MAP;
-  typedef SERVICE_TYPE_MAP::Local_Offer_Iterator LOCAL_OFFER_ITER;
-  typedef MAP_LOCK_TYPE LOCK_TYPE;
+  typedef TAO_Service_Type_Map<MAP_LOCK_TYPE> Service_Type_Map;
 
   TAO_Trader (Trader_Components components = LOOKUP);
   // Constructor which based on its arguments will create 
@@ -70,7 +67,7 @@ public:
   ~TAO_Trader (void);
   // destructor.
   
-  SERVICE_TYPE_MAP& service_type_map (void);
+  Service_Type_Map& service_type_map (void);
   // Accessor for the structure with all the service offers.
 
   ACE_Lock &lock (void);
@@ -80,7 +77,7 @@ protected:
 
   typedef TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> TRADER_SELF;
   
-  SERVICE_TYPE_MAP service_type_map_; 
+  Service_Type_Map service_type_map_; 
   // A monitor (i.e. an STL map + a lock) serving as a storage for
   // all the service offers of a trader.
   // Structure: a map (actually a monitor) of service type names to  

@@ -288,7 +288,7 @@ TAO_Admin<TRADER>::list_offers (CORBA::ULong how_many,
   if (CORBA::is_nil(this->trader_.trading_components().register_if()))
     TAO_THROW (CosTrading::NotImplemented());
 
-  TRADER::SERVICE_TYPE_MAP& type_map = this->trader_.service_type_map();
+  TRADER::Service_Type_Map& type_map = this->trader_.service_type_map();
 
   CosTrading::OfferIdIterator_ptr oi =
     type_map.retrieve_all_offer_ids ()->_this (_env);

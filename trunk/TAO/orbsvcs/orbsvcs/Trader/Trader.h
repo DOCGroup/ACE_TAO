@@ -21,7 +21,6 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "Attributes.h"
-#include "Monitor.h"
 
 // Forward Declaration.
 class TAO_Trader_Base;
