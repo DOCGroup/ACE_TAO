@@ -29,6 +29,9 @@
 
 #if !defined (ACE_WIN32) && !defined (ACE_PSOS)
 # include /**/ <sys/types.h>
+# if !defined (ACE_LACKS_UNISTD_H)
+#   include /**/ <unistd.h>  // VxWorks needs this to compile
+# endif /* !ACE_LACKS_UNISTD_H */
 # include /**/ <dirent.h>
 #endif /* !ACE_WIN32 && !ACE_PSOS */
 
