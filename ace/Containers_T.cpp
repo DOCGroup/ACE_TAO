@@ -647,7 +647,7 @@ template <class T>
 ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &dll)
   : dllist_ (dll)
 {
-  this->current_ = dll.head_->next_;  // Initialize head ptr.
+  this->current_ = ACE_dynamic_cast (T*, dll.head_->next_);  // Initialize head ptr.
 }
 
 template <class T> T *
@@ -664,7 +664,7 @@ ACE_Double_Linked_List_Iterator<T>::do_advance (void)
 {
   if (this->not_done ())
     {
-      this->current_ = this->current_->next_;
+      this->current_ = ACE_dynamic_cast (T*, this->current_->next_);
       return this->not_done ();
     }
   else
@@ -686,7 +686,7 @@ ACE_Double_Linked_List_Iterator<T>::advance (void)
 template <class T> int
 ACE_Double_Linked_List_Iterator<T>::first (void)
 {
-  this->current_ = dllist_.head_->next_;
+  this->current_ = ACE_dynamic_cast (T*, dllist_.head_->next_);
   return this->not_done () ? 1 : 0;
 }
 
@@ -788,7 +788,7 @@ ACE_Double_Linked_List<T>::delete_head (void)
   if (this->is_empty ())
     return 0;
 
-  temp = this->head_->next_;
+  temp = ACE_dynamic_cast (T *, this->head_->next_);
   this->remove_element (temp);  // Detach it from the list.
   return temp;
 }
@@ -801,7 +801,7 @@ ACE_Double_Linked_List<T>::delete_tail (void)
   if (this->is_empty ())
     return 0;
 
-  temp = this->head_->prev_;
+  temp = ACE_dynamic_cast (T*, this->head_->prev_);
   this->remove_element (temp);  // Detach it from the list.
   return temp;
 }
@@ -878,7 +878,7 @@ ACE_Double_Linked_List<T>::delete_nodes (void)
 {
   while (! this->is_empty ())
     {
-      T * temp = this->head_->next_;
+      T * temp = ACE_dynamic_cast (T*, this->head_->next_);
       this->remove_element (temp);
       delete temp;
     }
@@ -908,7 +908,7 @@ ACE_Double_Linked_List<T>::insert_element (T *new_item,
     old_item = this->head_;
 
   if (before)
-    old_item = old_item->prev_;
+    old_item = ACE_dynamic_cast (T*, old_item->prev_);
 
   new_item->next_ = old_item->next_;
   new_item->next_->prev_ = new_item;
@@ -1325,6 +1325,21 @@ ACE_Bounded_Set_Iterator<T>::advance (void)
     continue;
 
   return ACE_static_cast(size_t, this->next_) < this->s_.cur_size_;
+}
+
+template <class T> T*
+ACE_Double_Linked_List_Iterator<T>::advance_and_remove (int dont_remove)
+{
+  T* item = 0;
+  if (dont_remove)
+      this->do_advance ();
+  else
+    {
+      item = this->next ();
+      this->do_advance ();
+      this->dllist_.remove_element (item);
+    }
+  return item;
 }
 
 template <class T> int
