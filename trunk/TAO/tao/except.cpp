@@ -7,11 +7,13 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
-#include "orb.h"
-#include "ace/Log_Msg.h"
-#include "cdr.h"
-
+#include <objbase.h>
 #include <initguid.h>
+
+#include "ace/Log_Msg.h"
+
+#include "tao/orb.h"
+#include "tao/cdr.h"
 
 #if defined (HAVE_WIDEC_H)
 #  include <widec.h>

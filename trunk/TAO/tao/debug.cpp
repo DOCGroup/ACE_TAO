@@ -11,8 +11,8 @@
 //
 // XXX on Windows, make it always use OutputDebugString () instead of stdio
 
-#include	"orb.h"
-#include "debug.h"
+#include "tao/orb.h"
+#include "tao/debug.h"
 
 #if !defined (ACE_HAS_PTHREADS)		// _POSIX_THREAD_SAFE_FUNCTIONS implied
 #define	flockfile(f)

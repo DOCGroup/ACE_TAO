@@ -19,6 +19,7 @@
 #include "iioporb.h"
 #include "roa.h"
 
+#include <objbase.h>
 #include <initguid.h>
 
 

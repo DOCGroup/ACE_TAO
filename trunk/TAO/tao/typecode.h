@@ -29,7 +29,9 @@
 #  define TAO_TYPECODE_H
 
 #  include "ace/OS.h"
-#  include "any.h"
+
+#  include "tao/any.h"
+#  include "tao/except.h"
 
 struct CDR;
 
@@ -102,7 +104,7 @@ public:
 void CORBA_release (CORBA_TypeCode_ptr);
 CORBA_Boolean CORBA_is_nil (CORBA_TypeCode_ptr obj);
 
-extern const IID IID_CORBA_TypeCode;
+extern "C" const IID IID_CORBA_TypeCode;
 class TC_Private_State;
 
 class ACE_Svc_Export CORBA_TypeCode : public IUnknown

@@ -16,9 +16,12 @@
 // only mutual exclusion relates to reference counting and
 // construction.
 
-#include "orb.h"
-#include "cdr.h"
+#include <objbase.h>
 #include <initguid.h>
+
+#include "tao/orb.h"
+#include "tao/cdr.h"
+#include "tao/debug.h"
 
 // @@ This is a botch...
 size_t 

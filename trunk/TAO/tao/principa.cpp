@@ -5,8 +5,11 @@
 // ORB:		Principal identifier pseudo-objref
 //
 
-#include	"orb.h"
-#include	<initguid.h>
+#include <objbase.h>
+#include <initguid.h>
+
+#include "tao/orb.h"
+#include "tao/principa.h"
 
 void
 CORBA_release (CORBA_Principal_ptr principal)

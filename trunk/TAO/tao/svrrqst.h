@@ -25,12 +25,13 @@
 #  define TAO_SVRRQST_H
 
 #  include "ace/OS.h"
-#  include "cdr.h"
+
+#  include "tao/cdr.h"
 
 void CORBA_release (CORBA_ServerRequest_ptr req);
 CORBA_Boolean CORBA_is_nil (CORBA_ServerRequest_ptr req);
 
-extern const IID IID_CORBA_ServerRequest;
+extern "C" const IID IID_CORBA_ServerRequest;
 
 class ACE_Svc_Export CORBA_ServerRequest : public IUnknown
 // = TITLE
@@ -79,7 +80,7 @@ public:
   virtual CORBA_ORB_ptr __stdcall orb (void) = 0;
 };
 
-extern const IID IID_IIOP_ServerRequest;
+extern "C" const IID IID_IIOP_ServerRequest;
 
 class ACE_Svc_Export IIOP_ServerRequest : public CORBA_ServerRequest
 {

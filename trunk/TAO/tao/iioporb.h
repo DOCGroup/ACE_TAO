@@ -22,7 +22,7 @@
 
 typedef class IIOP_ORB *IIOP_ORB_ptr;
 
-extern const IID IID_IIOP_ORB;
+extern "C" const IID IID_IIOP_ORB;
 
 // ORB pseudo-objref
 

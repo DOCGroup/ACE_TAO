@@ -21,16 +21,12 @@
 
 #  include "ace/OS.h"
 #  include "ace/SOCK_Stream.h"
-#  if defined (__IIOP_BUILD)
-#    include "orb.h"
-#    include "stub.h"
-#  else
-#    include <corba/orb.h>
-#    include <corba/stub.h>
-#  endif /* __IIOP_BUILD */
 
-#  include "iiopobj.h"		// XXX -- not generic!
-#  include "factories.h"
+#  include "tao/orb.h"
+#  include "tao/stub.h"
+
+#  include "tao/iiopobj.h"		// XXX -- not generic!
+#  include "tao/factories.h"
 
 // XXX this same typedef is used in other places, e.g. iiopobj.hh
 typedef CORBA_SEQUENCE <CORBA_Octet> opaque;

@@ -24,14 +24,15 @@
 #  define TAO_ORBOBJ_H
 
 #  include "ace/OS.h"
-#  include "factories.h"
-#  include "params.h"
+
+#  include "tao/factories.h"
+#  include "tao/params.h"
 
 // Can't have forward decls if we're doing inlines of these functions
 ACE_INLINE void CORBA_release (CORBA_ORB_ptr orb);
 ACE_INLINE CORBA_Boolean CORBA_is_nil (CORBA_ORB_ptr orb);
 
-extern const IID 		IID_CORBA_ORB;
+extern "C" const IID 		IID_CORBA_ORB;
 
 // @@ Shoudn't this be hidden within a namespace?  According to the
 // spec, CORBA_ORB_init() is a valid signature for this function, as

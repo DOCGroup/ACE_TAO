@@ -1,4 +1,4 @@
-#include "optable.h"
+#include "tao/optable.h"
 
 TAO_Operation_Table::~TAO_Operation_Table (void)
 {

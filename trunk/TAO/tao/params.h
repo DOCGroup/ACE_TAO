@@ -16,13 +16,11 @@
 #if !defined (TAO_PARAMS_H)
 #  define TAO_PARAMS_H
 
-#  if defined(__IIOP_BUILD)
-#    include "boa.h"
-#  else
-#    include <corba/boa.h>
-#  endif
+#  include "ace/OS.h"
 
-#  include "ace/Singleton.h"
+#  include "tao/orb.h" // get types
+#  include "tao/boa.h" // Need the DSI Handler
+#  include "tao/sequence.h" // for CORBA_OctetSeq
 
 // Forward decls.
 

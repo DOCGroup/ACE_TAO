@@ -23,7 +23,8 @@
 
 #  include "ace/OS.h"
 
-#  include "sequence.h"
+#  include "tao/sequence.h"
+#  include "tao/except.h"
 
 void ACE_Svc_Export CORBA_release (CORBA_Request_ptr req);
 CORBA_Boolean ACE_Svc_Export CORBA_is_nil (CORBA_Request_ptr req);
@@ -31,7 +32,7 @@ CORBA_Boolean ACE_Svc_Export CORBA_is_nil (CORBA_Request_ptr req);
 typedef CORBA_SEQUENCE <CORBA_TypeCode_ptr> CORBA_ExceptionList;
 typedef CORBA_ExceptionList *CORBA_ExceptionList_ptr;
 
-extern const IID IID_CORBA_Request;
+extern "C" const IID IID_CORBA_Request;
 
 class ACE_Svc_Export CORBA_Request : public IUnknown
 {

@@ -23,6 +23,10 @@
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
 
+#include "tao/typecode.h"
+#include "tao/object.h"  // CORBA_Object::_duplicate() needed by inline method
+#include "tao/principa.h"
+
 CORBA_TypeCode::traverse_status
 DEEP_COPY (CORBA_TypeCode_ptr  param,
 	   const void *source,

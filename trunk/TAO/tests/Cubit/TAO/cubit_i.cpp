@@ -7,13 +7,14 @@
 // Modified version of Cubit Example written by Sun Microsystems Inc.
 // Modified by: Brian Mendel
 
-#include	"cubit_i.h"
+#include "tao/boa.h"    // ... and skeletons
+#include "tao/debug.h"  // ... and debugging
 
-#include	<corba/boa.h>    // ... and skeletons
-#include	<corba/debug.h>  // ... and debugging
+#include "tao/connect.h"
+#include "tao/params.h"
 
-#include "connect.h"
-#include "params.h"
+#include "cubit_i.h"
+
 
 Cubit_i::Cubit_i(const char* obj_name)
 : _skel_Cubit(obj_name)
@@ -83,7 +84,7 @@ Cubit_i::Cubit_cube_union (Cubit_oneof       &values,
 
 void Cubit_i::Cubit_please_exit (CORBA_Environment &env)
 {
-   TAO_OA_Parameters* params = TAO_OA_PARAMS::instance();
+   TAO_OA_Parameters* params = TAO_OA_Parameters::instance();
    
    dmsg ("I've been asked to shut down...");
    params->oa()->please_shutdown(env);

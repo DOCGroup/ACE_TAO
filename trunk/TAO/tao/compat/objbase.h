@@ -1,3 +1,4 @@
+/* This may look like C, but it's really -*- C++ -*- */
 // @(#)objbase.h	1.4 95/09/25
 // Copyright 1995 by Sun Microsystems, Inc.
 //
@@ -28,6 +29,12 @@ typedef unsigned long HRESULT;
 //
 #define __stdcall		// MS-Windows non-varargs call convention
 
+#if defined(__cplusplus)
+#  define EXTERN_C extern "C"
+#else
+#  define EXTERN_C extern
+#endif
+
 //
 // IDs come built from UUIDs
 //	IID -- interface ID
@@ -35,14 +42,18 @@ typedef unsigned long HRESULT;
 //
 typedef char IID [16];		// XXX actually a struct
 typedef const IID &REFIID;
-#define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) extern "C" const IID name;
+#if !defined(INITGUID)
+#  define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) extern "C" const IID name
+#else
+#  define DEFINE_GUID(name,b,c,d,e,f,g,h,i,j,k,l) extern "C" const IID name = { 0 }
+#endif
 
 
 //
 // All objects in the "Component Object Model" (COM) inherit from
 // this pure virtual base class.
 //
-DEFINE_GUID (IID_IUnknown, b,c,d,e,f,g,h,i,j,k,l)
+DEFINE_GUID (IID_IUnknown, b,c,d,e,f,g,h,i,j,k,l);
 
 class IUnknown {
   public:

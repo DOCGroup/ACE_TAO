@@ -1,15 +1,19 @@
 //     $Id$
 
-#include "orb.h"
-#include "roa.h"
-#include "boa.h"
-#include "cdr.h"
-#include "connect.h"
-#include "giop.h"
-#include "params.h"
-#include "factories.h"
-#include "orbobj.h"
+#include <objbase.h>
 #include <initguid.h>
+
+#include "tao/orb.h"
+#include "tao/roa.h"
+#include "tao/boa.h"
+#include "tao/cdr.h"
+#include "tao/connect.h"
+#include "tao/giop.h"
+#include "tao/params.h"
+#include "tao/factories.h"
+#include "tao/orbobj.h"
+#include "tao/nvlist.h"
+#include "tao/debug.h"
 
 // Forward declarations...
 static void request_dispatcher (GIOP::RequestHeader &req,

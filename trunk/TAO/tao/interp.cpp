@@ -66,8 +66,8 @@
 // only the data being fed to the interpreter must be protected
 // against concurrency.
 
-#include	"orb.h"
-#include	"cdr.h"
+#include "tao/orb.h"
+#include "tao/cdr.h"
 
 // Utility routines are used to manipulate CDR-encapsulated TypeCode
 // parameter lists, calculating the size and alignment of the data

@@ -5,16 +5,16 @@
 // TEST:	hand-written C-style "Cubit" stubs and "skeletons"
 //
 
-#include	"cubitS.h"
-#include	"cubitC.cpp"
+#include "tao/connect.h"
+#include "tao/params.h"
+#include "tao/debug.h"    // ... and debugging
+#include "tao/optable.h"  // TAO Dynamic Operation Table
+#include "tao/iiopobj.h"
 
-#include "connect.h"
-#include "params.h"
+#include "cubitS.h"
+#include "cubitC.cpp"
 
-#include "corba/debug.h"    // ... and debugging
-#include "corba/optable.h"  // TAO Dynamic Operation Table
 #include "method_db.i"
-#include "iiopobj.h"
 
 #if defined(CUBIT_USE_DYNAMIC_HASH)
 TAO_Dynamic_Hash_OpTable tao_cubit_optable(7);  // Dynamic Operation Table
@@ -33,7 +33,7 @@ _skel_Cubit::_skel_Cubit(const char* obj_name)
    // CORBA_String type_id = "IDL:Cubit:1.0";
    IIOP_Object *data;
 
-   CORBA_BOA_ptr oa = TAO_OA_PARAMS::instance()->oa();
+   CORBA_BOA_ptr oa = TAO_OA_Parameters::instance()->oa();
    if (oa == 0)
      {
        // We just have to assume that oa will be good, or we have to

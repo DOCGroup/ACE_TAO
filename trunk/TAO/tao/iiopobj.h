@@ -25,6 +25,11 @@
 
 #  include "ace/OS.h"
 
+#  include "tao/corbacom.h"
+#  include "tao/sequence.h"
+#  include "tao/object.h"
+#  include "tao/stub.h"
+
 // @@ Can we use the ACE_SYNCH_MUTEX here rather than these typedefs?
 #  if !defined (ACE_HAS_THREADS)
 typedef ACE_Null_Mutex ACE_Thread_Mutex;

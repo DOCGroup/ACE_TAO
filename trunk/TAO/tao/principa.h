@@ -23,13 +23,18 @@
 #if !defined (TAO_PRINCIPAL_H)
 #  define TAO_PRINCIPAL_H
 
+#  include <objbase.h>
+#  include <initguid.h>
+
 #  include "ace/OS.h"
 #  include "ace/Synch.h"
 
+#  include "tao/sequence.h"
+
+extern "C" const IID IID_CORBA_Principal;
+
 void CORBA_release (CORBA_Principal_ptr principal);
 CORBA_Boolean CORBA_is_nil (CORBA_Principal_ptr principal);
-
-extern const IID IID_CORBA_Principal;
 
 class ACE_Svc_Export CORBA_Principal : public IUnknown
 {

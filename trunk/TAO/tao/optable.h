@@ -22,7 +22,7 @@
 #include "ace/SString.h"
 #include "ace/Singleton.h"
 
-#include "orb.h"
+#include "tao/orb.h"
 
 typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Skeleton, ACE_SYNCH_RW_MUTEX> OP_MAP_MANAGER;
 

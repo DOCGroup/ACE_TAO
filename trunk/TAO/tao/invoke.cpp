@@ -28,9 +28,11 @@
 // generate better code, which in some cases may be very hard to
 // unwind.
 
-#include "orb.h"
-#include "cdr.h"
-#include "giop.h"
+#include "tao/orb.h"
+#include "tao/cdr.h"
+#include "tao/giop.h"
+#include "tao/nvlist.h"
+#include "tao/debug.h"
 
 class ACE_Synchronous_Cancellation_Required
   // = TITLE

@@ -33,9 +33,9 @@
 //
 
 #include	"cubit.h"		// for stubs ...
-#include	<corba/boa.h>		// ... and skeletons
+#include	"tao/boa.h"		// ... and skeletons
 
-#include	<corba/debug.h>		// ... and debugging
+#include	"tao/debug.h"		// ... and debugging
 
 
 //

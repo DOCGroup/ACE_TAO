@@ -7,12 +7,14 @@
 // This includes objref stringification/destringification for IIOP
 // object references.
 
-#include	"orb.h"
-#include	<initguid.h>
-#include	"stub.h"
-#include	"cdr.h"
-#include	"iioporb.h"
-#include	"iiopobj.h"
+#include <objbase.h>
+#include <initguid.h>
+
+#include "tao/orb.h"
+#include "tao/stub.h"
+#include "tao/cdr.h"
+#include "tao/iioporb.h"
+#include "tao/iiopobj.h"
 
 static const char ior_prefix [] = "IOR:";
 static const char iiop_prefix [] = "iiop:";

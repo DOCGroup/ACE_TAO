@@ -1,3 +1,53 @@
+Tue Jul 15 16:13:53 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/cubitC.cpp: Added missing calls to Release()
+ 	after QueryInterface() calls.  The tip-off that this wasn't
+ 	happening was the fact that, upon client exit, there were upwards
+ 	of 15 references to the object references.  Now it's only 5-7
+ 	(more work to go).
+	
+	* tests/Cubit/TAO/*: Changed all #include paths to be "tao/...".
+  	Also, changes to orb.h (see below) obviated additional header
+ 	inclusion in certain files.
+
+	* tao/compat/*.h: Changed the guts of these files so that they
+ 	work more like their "real" counterparts in the VC++ 5.0.  This
+ 	should encourage compatibility.  Note that, unlike the previous
+ 	files, objbase.h MUST be included before initguid.h; this is
+ 	consistent with the model on WIN32.
+
+	* tao/*.{h,cpp}: Changed all #include paths to be "tao/...".
+  	Also, changes to orb.h (see below) obviated additional header
+ 	inclusion in certain files.
+
+	* tao/giop.cpp: Removed get_request() crufty old code.
+
+	* tao/iiopobj.cpp: Backed out many prior special-code additions
+ 	for defining IIDs.  Hopefully the need for these is negated by
+ 	changes elsewhere in the "compat" files.
+
+	* tao/object.cpp: Corrected the conditional compilation switch
+ 	used to determine if we define IID_IUnknown.  This now happens
+ 	whenever WIN32 isn't defined, instead of before when it was only
+ 	on unix or vxworks platforms.
+
+	* tao/Makefile: Eliminated the need to copy files into a "proto/"
+ 	directory; now, everything is built into and used from the "tao"
+ 	directory.
+  	
+	There is also a new, optional, environment
+ 	variable--TAO_ROOT--which should be set to the ".../TAO"
+ 	directory.  If it's not set, the Makefile will set it to
+ 	$WRAPPER_ROOT/TAO.
+  	
+	Lastly, libcorba.* has changed to libTAO.*.
+	
+	* tao/orb.h: Eliminated many header files which had been
+ 	explicitly included here and were causing all manner of problems
+ 	with circular includes.  Library components must now be careful to
+ 	include appropriate headers for all components they use, and we
+ 	will likely have to create a corba.h file for clients to use.
+
 Fri Jul 11 12:12:40 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/TAO.dsp: changed to use ace-r.dll in the release 

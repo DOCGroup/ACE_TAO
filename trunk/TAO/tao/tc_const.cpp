@@ -14,7 +14,8 @@
 // THREADING NOTE:  no issues, these are immutable constants
 //
 
-#include	"orb.h"
+#include "tao/orb.h"
+#include "tao/typecode.h"
 
 // Null and void
 

@@ -4,10 +4,14 @@
 //
 // Implementation of the Dynamic Server Skeleton Interface
 
-#include "orb.h"
+#include <objbase.h>
 #include <initguid.h>
-#include "cdr.h"
-#include "svrrqst.h"
+
+#include "tao/orb.h"
+#include "tao/cdr.h"
+#include "tao/svrrqst.h"
+#include "tao/nvlist.h"
+#include "tao/debug.h"
 
 // {77420086-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_IIOP_ServerRequest,

@@ -17,8 +17,10 @@ implementation
 #pragma	pack (push, 1)			// VC++, known padding rules
 #endif	// VC++
 
-#include "corba/orb.h"
-#include "corba/stub.h"
+#include "tao/orb.h"
+#include "tao/object.h"
+#include "tao/stub.h"
+#include "tao/typecode.h"
 
 #include <iostream.h>
 

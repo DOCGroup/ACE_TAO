@@ -18,6 +18,8 @@
 
 #  include "ace/OS.h"
 
+#  include "tao/any.h"
+
 // @@ IS it necessary to use ACE_Svc_Export on a forward decl?  I
 // simply did a global replace of _EXPCLASS with ACE_Svc_Export.  I'm
 // not familiar enough with crazy MSVC nuances to know if this is
