@@ -62,8 +62,8 @@ Options::Options (void)
     max_queue_size_ (MAX_QUEUE_SIZE),
     connection_id_ (1)
 {
-  ACE_OS::strcpy (this->connection_config_file_, "connection_config");
-  ACE_OS::strcpy (this->consumer_config_file_, "consumer_config");
+  ACE_OS::strcpy (this->connection_config_file_, ACE_TEXT("connection_config"));
+  ACE_OS::strcpy (this->consumer_config_file_, ACE_TEXT("consumer_config"));
 }
 
 int
@@ -125,13 +125,13 @@ Options::threading_strategy (void) const
   return this->threading_strategy_;
 }
 
-const char *
+const ACE_TCHAR *
 Options::connection_config_file (void) const
 {
   return this->connection_config_file_;
 }
 
-const char *
+const ACE_TCHAR *
 Options::consumer_config_file (void) const
 {
   return this->consumer_config_file_;
@@ -170,12 +170,12 @@ Options::supplier_connector_port (void) const
 // Parse the "command-line" arguments and set the corresponding flags.
 
 int
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Assign defaults.
   ACE_Get_Opt get_opt (argc,
                        argv,
-                       "a:bC:c:dm:P:p:q:r:t:vw:",
+                       ACE_TEXT("a:bC:c:dm:P:p:q:r:t:vw:"),
                        0);
 
   for (int c; (c = get_opt ()) != EOF; )
@@ -186,10 +186,10 @@ Options::parse_args (int argc, char *argv[])
           {
             // Become an Acceptor.
 
-            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
+            for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (), ACE_TEXT("|"));
                  flag != 0;
-                 flag = ACE_OS::strtok (0, "|"))
-              if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
+                 flag = ACE_OS::strtok (0, ACE_TEXT("|")))
+              if (ACE_OS::strncasecmp (flag, ACE_TEXT("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::CONSUMER_ACCEPTOR);
@@ -197,7 +197,7 @@ Options::parse_args (int argc, char *argv[])
                     // Set the Consumer Acceptor port number.
                     this->consumer_acceptor_port_ = ACE_OS::atoi (flag + 2);
                 }
-              else if (ACE_OS::strncasecmp (flag, "S", 1) == 0)
+              else if (ACE_OS::strncasecmp (flag, ACE_TEXT("S"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::SUPPLIER_ACCEPTOR);
@@ -221,10 +221,10 @@ Options::parse_args (int argc, char *argv[])
           {
             // Become a Connector.
 
-            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
+            for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (), ACE_TEXT("|"));
                  flag != 0;
-                 flag = ACE_OS::strtok (0, "|"))
-              if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
+                 flag = ACE_OS::strtok (0, ACE_TEXT("|")))
+              if (ACE_OS::strncasecmp (flag, ACE_TEXT("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::CONSUMER_CONNECTOR);
@@ -232,7 +232,7 @@ Options::parse_args (int argc, char *argv[])
                     // Set the Consumer Connector port number.
                     this->consumer_connector_port_ = ACE_OS::atoi (flag + 2);
                 }
-              else if (ACE_OS::strncasecmp (flag, "S", 1) == 0)
+              else if (ACE_OS::strncasecmp (flag, ACE_TEXT("S"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
                                 Options::SUPPLIER_CONNECTOR);
@@ -257,13 +257,13 @@ Options::parse_args (int argc, char *argv[])
           break;
         case 't': // Use a different threading strategy.
           {
-            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
+            for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (), ACE_TEXT("|"));
                  flag != 0;
-                 flag = ACE_OS::strtok (0, "|"))
-              if (ACE_OS::strcmp (flag, "OUTPUT_MT") == 0)
+                 flag = ACE_OS::strtok (0, ACE_TEXT("|")))
+              if (ACE_OS::strcmp (flag, ACE_TEXT("OUTPUT_MT")) == 0)
                 ACE_SET_BITS (this->threading_strategy_,
                               Options::OUTPUT_MT);
-              else if (ACE_OS::strcmp (flag, "INPUT_MT") == 0)
+              else if (ACE_OS::strcmp (flag, ACE_TEXT("INPUT_MT")) == 0)
                 ACE_SET_BITS (this->threading_strategy_,
                               Options::INPUT_MT);
             break;
