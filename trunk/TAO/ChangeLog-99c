@@ -1,52 +1,60 @@
+Thu Aug 12 19:54:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile: set CONTROLLED_FILES to be the entire TAO
+          directory.  There were some files and directories that
+          weren't be labelled for releases/betas because they
+          weren't specifically listed.  I don't think that any
+          of them need to be excluded from kits.
+
 Thu Aug 12 17:12:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_rettype.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	* TAO_IDL/include/ast_predefined_type.h:
-	  Fixed some incorrect comments found as a by-product of
-	  making the changes below.
+        * TAO_IDL/be/be_visitor_rettype.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/include/ast_predefined_type.h:
+          Fixed some incorrect comments found as a by-product of
+          making the changes below.
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/fe/lex.yy.cpp.diff:
-	* TAO_IDL/include/ast_expression.h:
-	* TAO_IDL/include/ast_generator.h:
-	* TAO_IDL/be_include/be_expression.h:
-	* TAO_IDL/be_include/be_generator.h:
-	* TAO_IDL/ast/ast_constant.cpp:
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/ast/ast_generator.cpp:
-	* TAO_IDL/be/be_constant.cpp:
-	* TAO_IDL/be/be_expression.cpp:
-	* TAO_IDL/be/be_generator.cpp:
-	* TAO_IDL/be/be_sunsoft.cpp:
-	* TAO_IDL/util/utl_error.cpp:
-	  Implementation of wide characters in IDL. Includes two new lex
-	  rules, one to recognize the L' ' form and one to recognize the
-	  L'\uxxxx' form. Also two new yacc tokens for wchar literal
-	  and wstring literal, a new production rule for wchar constants,
-	  a function to parse the escape form of wchar literals, AST_Expression
-	  and be_expression constructor overloads for wchars, changes in 
-	  coercion of constant values (ACE_OS::WChar has been resized to
-	  2 bytes to optimize for the Unicode common case), and several
-	  fill-ins of empty wchar case statements. Modified I/O format for
-	  wchars, but there's more to be done on that score yet.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/be_include/be_expression.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_sunsoft.cpp:
+        * TAO_IDL/util/utl_error.cpp:
+          Implementation of wide characters in IDL. Includes two new lex
+          rules, one to recognize the L' ' form and one to recognize the
+          L'\uxxxx' form. Also two new yacc tokens for wchar literal
+          and wstring literal, a new production rule for wchar constants,
+          a function to parse the escape form of wchar literals, AST_Expression
+          and be_expression constructor overloads for wchars, changes in
+          coercion of constant values (ACE_OS::WChar has been resized to
+          2 bytes to optimize for the Unicode common case), and several
+          fill-ins of empty wchar case statements. Modified I/O format for
+          wchars, but there's more to be done on that score yet.
 
 Thu Aug 12 16:22:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/Event/Basic/Schedule.cpp:
-	* orbsvcs/tests/Event/lib/Driver.cpp:
-	* utils/nslist/nslist.cpp:
-	  Removed more gcc-2.95 warnings.
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event/Basic/Schedule.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * utils/nslist/nslist.cpp:
+          Removed more gcc-2.95 warnings.
 
 Thu Aug 12 16:06:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
