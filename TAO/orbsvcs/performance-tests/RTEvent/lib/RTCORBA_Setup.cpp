@@ -68,7 +68,8 @@ RTCORBA_Setup::RTCORBA_Setup (CORBA::ORB_ptr orb,
 
 void
 RTCORBA_Setup::setup_lane (int priority,
-                           RTCORBA::ThreadpoolLane &lane)
+                           RTCORBA::ThreadpoolLane &lane
+			   ACE_ENV_ARG_DECL)
 {
   if (!this->priority_mapping_->to_CORBA (priority,
                                           lane.lane_priority))
