@@ -1,3 +1,10 @@
+Fri Apr 30 14:44:12 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ACE-INSTALL.html: Added a note about manually cleaning out the
+          ACE_wrappers directories on Win32, which could be required for a
+          true start from scratch build.  Thanks to David Hooker 
+          <DHooker@uniview.net> for this insight.
+
 Fri Apr 30 14:06:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* COPYING: Updated the COPYING file to reflect the use new of
