@@ -1,3 +1,10 @@
+Mon Dec  6 10:46:02 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/APG/Threads/Guards.cpp:
+
+          Put #if guards around the body to avoid build problems when
+          threads are disabled.
+
 Mon Dec  6 06:53:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/soreduce/SO_Group.cpp:
