@@ -1,3 +1,10 @@
+Sat Aug 02 17:35:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h (class
+	  TAO_Notify_Method_Request_Dispatch_T): Removed unnecessary
+	  export declaration for the template class.  It was causing
+	  compilation errors on MSVC 7.1.
+
 Sat Aug  2 13:08:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Event_Service/Event_Service.h:
@@ -14,7 +21,7 @@ Sat Aug  2 13:08:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Sat Aug  2 09:14:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_interceptor.cpp:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp: 
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp:
 
 	  Cosmetic fixes.
 
@@ -27,7 +34,7 @@ Sat Aug  2 09:10:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Services_Activate.cpp: Moved
 	  all the initialization to the Initializer () routine. This
 	  should fix problems in the static builds. This have been long
-	  overdue. 
+	  overdue.
 
 Sat Aug  2 08:05:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -41,7 +48,7 @@ Fri Aug  1 22:45:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/ORB_Core.i (is_profile_equivalent): Intialize the default
 	  value to be true. Incorrect initializations lead to simple
 	  errors with oebjref comparisions which showed up in our daily
-	  builds. 
+	  builds.
 
 Fri Aug  1 22:33:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -73,7 +80,7 @@ Fri Aug  1 20:11:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: #included "ace/SString.h"
 	  to get them compiling for the timebeing. We need to take a
 	  closer look to see whether they are even necessary in the first
-	  place. We need to take a closer look in the next checkin. 
+	  place. We need to take a closer look in the next checkin.
 
 Fri Aug  1 20:13:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -100,7 +107,7 @@ Fri Aug  1 20:08:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Adapter.h: Forward declared CORBA::Exception.
 	* tao/Adapter.cpp: #included Exception.h
-	
+
 	* tao/Any_Basic_Impl_T.cpp:
 	* tao/Any_Dual_Impl_T.cpp:
 	* tao/Any_Impl_T.cpp:
@@ -121,36 +128,36 @@ Fri Aug  1 20:08:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Refcounted_ObjectKey.cpp: #included "ace/Log_Msg.h".
 
 	* tao/Sequence_T.cpp:
-	* tao/Sequence_T.i:	
+	* tao/Sequence_T.i:
 	* tao/Sequence.cpp:
 	* tao/Sequence.h:
 	* tao/Sequence.i: Removed dependency on Log_Msg.h ie. files
-	  including Sequence.h wouldnt get Log_msg.h free. Log_Msg.h was 
-	  included just to get ACE_ASSERT. 
+	  including Sequence.h wouldnt get Log_msg.h free. Log_Msg.h was
+	  included just to get ACE_ASSERT.
 
 	  Added a new method check_bounds () which is used for checking
 	  the bounds of the sequence.
-	
+
 	* tao/Typecode.h: #included "ace/Hash_Map_Manager.h" and
 	  "ace/Unbounded_Queue.h".
 
 	* tao/PortableServer/Key_Adapters.cpp:
 	* tao/RTScheduling/Current.cpp:
-	* tao/Transport_Cache_Manager.cpp: #included "ace/ACE.h".	
+	* tao/Transport_Cache_Manager.cpp: #included "ace/ACE.h".
 
 	* tao/Strategies/advanced_resource.cpp: #included "ace/Malloc.h".
 
 	  Thanks to Carlos for providing the patches. These patches
 	  improve the compilation times by removing unwanted dependencies
-	  that take up compilation time for TAO's applications. 
-	
+	  that take up compilation time for TAO's applications.
+
 Fri Aug  1 17:04:49 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp: 
+	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
 
 	  Removed the unused ACE_TRY_LABEL warning from RH 7.1 Explicit
 	  Template build.
-	
+
 Fri Aug 1 16:35:43 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tests/RTScheduling/VoidData/run_test.pl:
@@ -158,20 +165,20 @@ Fri Aug 1 16:35:43 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tests/RTScheduling/DT_Spawn/run_test.pl:
 	* tests/RTScheduling/Current/run_test.pl:
 	* tests/RTScheduling/Scheduling_Interceptor/run_test.pl:
-	* tao_orb_tests.lst: 
-	
+	* tao_orb_tests.lst:
+
 	  Added run_test.pl to execute the tests.
 
 Fri Aug 01 14:37:23 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * tao/Object_KeyC.h:
         * tao/Object_KeyC.cpp:
-          
-          Changed tao_encode_sequence_to_string and 
+
+          Changed tao_encode_sequence_to_string and
           decode_string_to_sequence methods to use '%' instead of '\'
           for escaping. Restricted unescaped characters to those
           permitted in a URI by RFC 2396.
-          
+
           Thanks to Dan Halbert <halbert@bbn.com> for reporting the
           problem. This closes Bug #1330.
 
