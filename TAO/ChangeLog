@@ -1,3 +1,13 @@
+Wed Nov 24 10:02:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Made generation of POA-related includes in the skeleton header
+          file, and includes of AMI and AMH related files, conditional
+          depending on whether a non-local interface has been seen
+          in the IDL file. Thanks again to Johnny Willemsen
+          <jwillemsen@remedy.nl> for making the suggestion.
+
 Wed Nov 24 08:07:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
