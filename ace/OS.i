@@ -126,11 +126,7 @@ ACE_INLINE
 ACE_Time_Value::operator const timeval * () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator timeval");
-ACE_INLINE
-ACE_Time_Value::operator timeval * () const
-{
-  // ACE_TRACE ("ACE_Time_Value::operator timeval");
-  return (timeval *) &this->tv_;
+  return (const timeval *) &this->tv_;
 }
 
 ACE_INLINE void
@@ -3881,7 +3877,7 @@ ACE_OS::select (int width,
                                  (ACE_FD_SET_TYPE *) rfds,
                                  (ACE_FD_SET_TYPE *) wfds,
                                  (ACE_FD_SET_TYPE *) efds,
-                                 timeout == 0 ? 0 : (timeval *) *timeout) , int, -1);
+                                 timeout == 0 ? 0 : (timeval *) (const timeval *) *timeout) , int, -1);
 }
 
 ACE_INLINE int
@@ -3900,7 +3896,8 @@ ACE_OS::select (int width,
                                  (ACE_FD_SET_TYPE *) rfds,
                                  (ACE_FD_SET_TYPE *) wfds,
                                  (ACE_FD_SET_TYPE *) efds,
-                                 ___ACE_TIMEOUT) , int, -1);
+                                 (timeval *) (const timeval *) ___ACE_TIMEOUT),
+                       int, -1);
 #undef ___ACE_TIMEOUT
 }
 
