@@ -49,7 +49,9 @@ Mon Apr 10 13:41:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OBV/Typed_Events/client.dsp:
 	* examples/OBV/Typed_Events/server.dsp: Removed -Gc flag from
-	  TAO_IDL command.  Compile marshaling is no longer supported.
+	  TAO_IDL command.  Compiled marshaling is now the only type of
+	  marshaling supported by TAO, so there's no longer any need for
+	  the -Gc option.
 
 Mon Apr 10 09:11:43 2000  Ossama Othman  <ossama@uci.edu>
 
