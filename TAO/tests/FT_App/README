@@ -21,48 +21,58 @@ to find out when death can be scheduled.
 
 The client provides a command interface to operate on the server.
 Tests may be run manually by typing commands, or may be automated by
-redirecting standard input to a file or pipe.
+reading the commands from a file.
 
 Commands consist of a single character followed by an optional number
 (with no space between).  For example: =10 sets the value of the counter
 to 10.  +5 increments the counter by 5 (thereby setting the value to 15).
-Commands should be separated by spaces or newlines.
 
-Commands are:
-  =N set to N
-  +N increment by N
-  -N decrement by N
-  >N set attribute to N
-  < get and display attribite
-  ! call is_alive and display result
-  s get_state (to be saved for the next S command)
-  S set_state (restore the state from the previous s command)
-  u get_update (to be saved for the next U command)
-  U set_update (restore the update information from the previous u command)
-  dN die on condition N (see below)
-  vN set verbosity (see below)
-  q quit
-  ? help
+Each command must be at the beginning of a separate line.
+Everything after the command (and operand if any) is ignored.
+Valid commands are:
+  Access via method call:
+    =N    set counter to N
+    cN    get counter and compare to N (c stands for "check"
+    +N    increment counter by N
+    -N    decrement counter by N
+  Access as attribute:
+    >N    set attribute to N
+    <     get attribite
+  Try methods to be used by fault tolerant infrastructure:
+    !     is_alive
+    s     get_state
+    S     set_state
+    u     get_update
+    U     set_update
+  Simulate failure:
+    dN    die on condition:
+ Logistics commands:
+   #    ignore this line (comment).
+   vN    set verbosity:
+   q    quit (end the client, not the replica(s).)
+   q1   quit (end the client, and shutdown the currently active replica.)
+   ?    help (this message)
+
 
 The conditions recognized on the 'd' command are:
-     0 don't die  (cancels a previous die request)
-     1 immediately
-     2 during next get
-     3 before next set
-     4 after next set
-     5 before next increment
-     6 after next increment
-     7 during next attribute get
-     8 before next attribute set
-     9 after next attribute set
-     10 during get update
-     11 before set update
-     12 after set update
-     13 during get state
-     14 before set state
-     15 after set state
-     16 during is_alive
-     17 is_alive returns false
+      0 don't die
+      1 immediately
+      2 during next get
+      3 before next set
+      4 after next set
+      5 before next increment
+      6 after next increment
+      7 during next attribute get
+      8 before next attribute set
+      9 after next attribute set
+      10 during get update
+      11 before set update
+      12 after set update
+      13 during get state
+      14 before set state
+      15 after set state
+      16 during is alive
+      17 is_alive returns false
 
 The verbosity levels:
      0 silent  -- Do not check the counter value.
@@ -75,26 +85,14 @@ The verbosity levels:
                   the method.
 
 To run:
-Start a NameService if necessary.
-Start the FT_Replica.
-Note: due to a bug in a support routine, the FT_Replica must be started
-with a -n option.  I'll fix this when the DOC repository is unfrozen.
+Start one or more FT_Replicas.  Use a -o <filename> to tell the replica
+where to write its ior..
 
-Start the FT_Client -- redirecting the input and/or output as necessary.
-
-The client may be run as many times as desired.  Multiple clients may
-be run simultaneously, but they will complain when the counter changes 
-unexpectedly.
+Start the FT_Client with -f file1<,filen>...  (i.e. a comma separated list
+of replica IOR files.  To read commands from a file, use -c <command file>
 
 The counter is persistent and will survive server failures.  It's 
 stored in a file named persistent.dat.  
-
-Right now only one copy of the server can be run.  This is because
-it registers with the name service using a hard coded name.  
-TODO: add support to client and server for alternate name service names.
-TODO: figure out how to register the server with the ObjectGroup!
-
-After one or both of the above TODO's are done:
 
 Replicas of the server may be run in separate directories to simulate 
 replicated stateful objects (i.e. mirrored databases) , or multiple 
