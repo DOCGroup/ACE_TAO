@@ -1,0 +1,13 @@
+// $Id$
+
+module TAO
+{
+  module Test
+    {
+      interface Hang
+        {
+          void send_stuff (in string foo,
+                           in boolean flag);
+        };
+    };
+};
