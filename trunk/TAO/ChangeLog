@@ -1,3 +1,9 @@
+Wed Dec 24 08:55:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+          Added setting of source_outputext to get also build rules for the
+          to generate cpp files.
+
 Tue Dec 23 22:39:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableInterceptorC.h:
@@ -52,20 +58,20 @@ Tue Dec 23 21:24:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Regenerated these files. By this we have completed almost all
 	  the files that *need* regeneration in $TAO_ROOT/tao. We go to
-	  the next from here. 
-	
+	  the next from here.
+
 	* tao/TimeBase.pidl:
 	* tao/TimeBaseC.cpp:
 	* tao/TimeBaseC.h:
 	* tao/TimeBaseC.i:
 
-	  Regenerated the files with the documentation. 
+	  Regenerated the files with the documentation.
 
 	* tao/TimeBaseA.cpp:
 	* tao/TimeBaseA.h:
 
 	  New files added with Any operators in it.
-	
+
 	* tao/tao.mpc:
 	* tao/Makefile.bor:
 	* tao/Makefile.tao:
@@ -84,7 +90,7 @@ Tue Dec 23 20:35:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Buffering_Constraint_Policy.cpp:
 
 	  Added a new header.
-	
+
 	* tao/Messaging_PolicyValue.pidl:
 	* tao/Messaging_PolicyValueA.cpp:
 	* tao/Messaging_PolicyValueA.h:
@@ -104,12 +110,12 @@ Tue Dec 23 20:35:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/WrongTransactionC.i:
 
 	  Regenerated all these files and added TAOA* and
-	  WrongTransactionA*. 
-	
+	  WrongTransactionA*.
+
 	* tao/Makefile.tao:
 	* tao/Makefile.bor:
 	* tao/tao.mpc: Added new files.
-	
+
 
 Tue Dec 23 20:11:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -118,9 +124,9 @@ Tue Dec 23 20:11:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Current.pidl:
 	* tao/Domain.pidl:
 	* tao/Dynamic_Parameter.pidl:
-	
+
 	  Updated the documentaion.
-	
+
 	* tao/DomainC.cpp:
 
 	  Regenerated the file again.
