@@ -1,3 +1,9 @@
+Thu Aug 26 19:22:31 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+
+	  Added If_Then_Else.h to HEADER_FILES.
+
 Thu Aug 26 11:53:26 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Time_Value.h: Added extern "C++" around the ACE_Time_Value class
