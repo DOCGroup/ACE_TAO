@@ -263,7 +263,7 @@ namespace CIAO
                                 {
 
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_sr_href_doc (href_doc, 
+                                  this->parse_sr_href_doc (href_doc,
                                                            DOMNodeFilter::SHOW_ELEMENT |
                                                            DOMNodeFilter::SHOW_TEXT,
                                                            domain.sharedResource[i]);
@@ -273,7 +273,7 @@ namespace CIAO
                                 {
                                   url_string = aceattrnodevalue.c_str ();
                                   DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                  this->parse_sr_href_doc (href_doc, 
+                                  this->parse_sr_href_doc (href_doc,
                                                            DOMNodeFilter::SHOW_ELEMENT |
                                                            DOMNodeFilter::SHOW_TEXT,
                                                            domain.sharedResource[i]);
@@ -337,18 +337,18 @@ namespace CIAO
                               if (xml_url.isRelative ())
                                 {
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_node_href_doc (href_doc, 
+                                  this->parse_node_href_doc (href_doc,
                                                              DOMNodeFilter::SHOW_ELEMENT |
                                                              DOMNodeFilter::SHOW_TEXT,
                                                              domain.node[i]);
-                                  
+
 
                                 }
                               else
                                 {
                                   url_string = aceattrnodevalue.c_str ();
                                   DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                  this->parse_node_href_doc (href_doc, 
+                                  this->parse_node_href_doc (href_doc,
                                                              DOMNodeFilter::SHOW_ELEMENT |
                                                              DOMNodeFilter::SHOW_TEXT,
                                                              domain.node[i]);
@@ -412,7 +412,7 @@ namespace CIAO
                               if (xml_url.isRelative ())
                                 {
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_ic_href_doc (href_doc, 
+                                  this->parse_ic_href_doc (href_doc,
                                                            DOMNodeFilter::SHOW_ELEMENT |
                                                            DOMNodeFilter::SHOW_TEXT,
                                                            domain.interconnect[i]);
@@ -421,7 +421,7 @@ namespace CIAO
                                 {
                                   url_string = aceattrnodevalue.c_str ();
                                   DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                  this->parse_ic_href_doc (href_doc, 
+                                  this->parse_ic_href_doc (href_doc,
                                                            DOMNodeFilter::SHOW_ELEMENT |
                                                            DOMNodeFilter::SHOW_TEXT,
                                                            domain.interconnect[i]);
@@ -484,7 +484,7 @@ namespace CIAO
                               if (xml_url.isRelative ())
                                 {
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_bridge_href_doc (href_doc, 
+                                  this->parse_bridge_href_doc (href_doc,
                                                                DOMNodeFilter::SHOW_ELEMENT |
                                                                DOMNodeFilter::SHOW_TEXT,
                                                                domain.bridge[i]);
@@ -494,7 +494,7 @@ namespace CIAO
                                 {
                                   url_string = aceattrnodevalue.c_str ();
                                   DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                  this->parse_bridge_href_doc (href_doc, 
+                                  this->parse_bridge_href_doc (href_doc,
                                                                DOMNodeFilter::SHOW_ELEMENT |
                                                                DOMNodeFilter::SHOW_TEXT,
                                                                domain.bridge[i]);
@@ -736,7 +736,7 @@ namespace CIAO
                                 {
 
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_node.resource[resource_length]);
@@ -745,7 +745,7 @@ namespace CIAO
                                 {
                                   url_string = aceattrnodevalue.c_str ();
                                   DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_node.resource[resource_length]);
@@ -957,7 +957,7 @@ namespace CIAO
                 {
                   named_node_map = node->getAttributes ();
                   length = named_node_map->getLength ();
-                  
+
                   if (length == 1)
                     {
                       for (node = this->iter_->nextNode();
@@ -1013,7 +1013,7 @@ namespace CIAO
                                 {
 
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_bridge.resource[resource_length]);
@@ -1022,7 +1022,7 @@ namespace CIAO
                                 {
                                   url_string = aceattrnodevalue.c_str ();
                                   DOMDocument* href_doc = this->create_document (url_string.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_bridge.resource[resource_length]);
@@ -1249,7 +1249,7 @@ namespace CIAO
                                 {
 
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_ic.resource[resource_length]);
@@ -1258,7 +1258,7 @@ namespace CIAO
                                 {
                                   std::string s3 (aceattrnodevalue.c_str ());
                                   DOMDocument* href_doc = this->create_document (s3.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_ic.resource[resource_length]);
@@ -1626,7 +1626,7 @@ namespace CIAO
       DOMDocument* doc = parser->parseURI (url);
       ACE_TString root_node_name;
       root_node_name = XMLString::transcode (doc->getDocumentElement ()->getNodeName ());
-      
+
       return doc;
     }
 
@@ -1663,7 +1663,7 @@ namespace CIAO
 
           int length;
           int j;
-        
+
           if (node_name == XStr (ACE_TEXT ("name")))
             {
               node = iter->nextNode ();
@@ -1744,7 +1744,7 @@ namespace CIAO
                                 {
 
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_node.resource[resource_length]);
@@ -1753,7 +1753,7 @@ namespace CIAO
                                 {
                                   std::string s3 (aceattrnodevalue.c_str ());
                                   DOMDocument* href_doc = this->create_document (s3.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_node.resource[resource_length]);
@@ -2110,7 +2110,7 @@ namespace CIAO
                                 {
 
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_ic.resource[resource_length]);
@@ -2119,7 +2119,7 @@ namespace CIAO
                                 {
                                   std::string s3 (aceattrnodevalue.c_str ());
                                   DOMDocument* href_doc = this->create_document (s3.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_ic.resource[resource_length]);
@@ -2336,7 +2336,7 @@ namespace CIAO
                 {
                   named_node_map = node->getAttributes ();
                   length = named_node_map->getLength ();
-                  
+
                   if (length == 1)
                     {
                       for (node = iter->nextNode();
@@ -2394,7 +2394,7 @@ namespace CIAO
                                 {
 
                                   DOMDocument* href_doc = this->create_document (final_url.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_bridge.resource[resource_length]);
@@ -2403,7 +2403,7 @@ namespace CIAO
                                 {
                                   std::string s3 (aceattrnodevalue.c_str ());
                                   DOMDocument* href_doc = this->create_document (s3.c_str ());
-                                  this->parse_resource_href_doc (href_doc, 
+                                  this->parse_resource_href_doc (href_doc,
                                                                  DOMNodeFilter::SHOW_ELEMENT |
                                                                  DOMNodeFilter::SHOW_TEXT,
                                                                  domain_bridge.resource[resource_length]);
