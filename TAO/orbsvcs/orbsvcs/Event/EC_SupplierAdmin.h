@@ -51,13 +51,6 @@ class TAO_ORBSVCS_Export TAO_EC_SupplierAdmin : public POA_RtecEventChannelAdmin
   // = MEMORY MANAGMENT
   //   It does not assume ownership of the TAO_EC_Event_Channel object
   //
-  // = LOCKING
-  //   @@ TODO
-  //   No provisions for locking, access must be serialized
-  //   externally.
-  //
-  // = TODO
-  //
 public:
   TAO_EC_SupplierAdmin (TAO_EC_Event_Channel* event_channel);
   // constructor...

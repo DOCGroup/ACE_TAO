@@ -135,6 +135,7 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event,
                                      CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
+  has_event = 0;
   if (this->is_connected () == 0)
     ACE_THROW_RETURN (CosEventComm::Disconnected (), 0);
 
@@ -143,7 +144,6 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event,
   if (this->queue_.is_empty ())
     {
       any <<= CORBA::Long(0);
-      has_event = 0;
       return new CORBA::Any (any);
     }
 
@@ -151,6 +151,7 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event,
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
+  has_event = 1;
   return new CORBA::Any (any);
 }
 

@@ -16,7 +16,8 @@ DIRS  = Callback_Quoter \
         Simple \
         Event_Comm \
         OBV \
-        Load_Balancing
+        Load_Balancing \
+	Persistent_Grid
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
