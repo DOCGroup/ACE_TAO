@@ -1,3 +1,8 @@
+Thu Apr 27 14:32:45 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-INSTALL (make): Updated the documentation.  Thanks to
+	  Ken Weinert <kenw@ihs.com> for reporting this.
+
 Thu Apr 27 12:41:42 2000  James C. Hu  <jxh@entera.com>
 
         * ace/OS.i:
@@ -104,10 +109,10 @@ Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
           sema_init (): Needed to cast an void *arg to ACE_mutexattr_t.  
 
-          dlsym (): Changed the way ACE declares symbolname so it uses
-          the right one on Win32 (WinNT always uses char *, CE always uses
-          wchar_t *).  The function still takes in ACE_TCHAR * though.  
-          Thanks to "Jeff Greif" <jmg@trivida.com> for reporting this.
+          dlsym (): Changed the way ACE declares symbolname so it uses the
+ 	  right one on Win32 (WinNT always uses char *, CE always uses
+ 	  wchar_t *).  The function still takes in ACE_TCHAR * though.
+  	  Thanks to Jeff Greif <jmg@trivida.com> for reporting this.
 
           Removed a few global function definitions that were just for
           CE (like fwrite, fread, getc, etc.).  These are either supported

@@ -962,6 +962,7 @@ Moore Y. Cao <yilincao@lucent.com>
 Wai Keung Fung <wkfung@maews69.mae.cuhk.edu.hk>
 Michael Laing <mpl@flni.com>
 Benoit Viaud <benoit.viaud@artal.fr>
+Ken Weinert <kenw@ihs.com> 
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
