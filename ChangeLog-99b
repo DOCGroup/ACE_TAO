@@ -1,3 +1,11 @@
+Tue Dec 07 21:20:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added ace.rc to project files.  One can use
+	  GetFileVersionInfo on Win32 to get the ACE library version info
+	  now.  Thanks to David Hauck <davidh@realtimeint.com> for
+	  suggesting this.
+
 Tue Dec 07 15:27:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added guideline to use THR_BOUND

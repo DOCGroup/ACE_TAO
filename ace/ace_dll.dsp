@@ -8641,5 +8641,13 @@ SOURCE=.\Readme
 SOURCE=..\Version
 # End Source File
 # End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=.\ace.rc
+# End Source File
+# End Group
 # End Target
 # End Project
