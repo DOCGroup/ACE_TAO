@@ -47,9 +47,7 @@ public:
   virtual ~TAO_Client_Strategy_Factory (void);
 
   /**
-   * Create the lock for the forwarding Profile used by the
-   * <TAO_GIOP_Invocation::location_forward> and the
-   * <TAO_GIOP_Invocation::start>.
+   * Create the lock for the stub and the profile
    */
   virtual ACE_Lock* create_profile_lock (void);
 

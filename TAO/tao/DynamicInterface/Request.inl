@@ -136,7 +136,7 @@ CORBA::Request::ctx (CORBA::Context_ptr ctx)
 }
 
 ACE_INLINE void
-CORBA::Request::_tao_lazy_evaluation (int lazy_evaluation)
+CORBA::Request::_tao_lazy_evaluation (bool lazy_evaluation)
 {
   this->lazy_evaluation_ = lazy_evaluation;
 }

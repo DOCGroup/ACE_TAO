@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Exception.h"
 #include "Initiator_i.h"
 
 ACE_RCSID(Triangle_Test, Initiator_i, "$Id$")

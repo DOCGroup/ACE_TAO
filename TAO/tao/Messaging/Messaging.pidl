@@ -11,11 +11,11 @@
  * The command used to generate code from this file is:
  *
  *   tao_idl
- *        -o orig -Gp -Gd -Ge 1
+ *        -o orig -Gp -Gd -GT -Ge 1
  *        -Wb,export_macro=TAO_Messaging_Export
  *        -Wb,export_include=messaging_export.h
  *        -Wb,pre_include="ace/pre.h"
- *        -Wb,post_include="ace/post.h"
+ *        -Wb,post_include="ace/post.h" -I$(TAO_ROOT)
  *        Messaging.pidl
  *
  * after the file is generated a patch must be applied:
@@ -36,11 +36,11 @@
 #ifndef TAO_MESSAGING_PIDL
 #define TAO_MESSAGING_PIDL
 
-#include <Pollable.pidl>
-#include <Messaging_SyncScope_Policy.pidl>
-#include <Messaging_RT_Policy.pidl>
-#include <Messaging_No_Impl.pidl>
-#include <OctetSeq.pidl>
+#include "tao/Pollable.pidl"
+#include "tao/Messaging/Messaging_SyncScope_Policy.pidl"
+#include "tao/Messaging/Messaging_RT_Policy.pidl"
+#include "tao/Messaging/Messaging_No_Impl.pidl"
+#include "tao/OctetSeq.pidl"
 
 #pragma prefix "omg.org"
 

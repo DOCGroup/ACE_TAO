@@ -3,6 +3,9 @@
 #include "Client_Request_Interceptor.h"
 #include "testC.h"
 
+#include "tao/DynamicC.h"
+#include "tao/Typecode.h"
+
 ACE_RCSID (Request_Interceptor_Flow,
            Client_Request_Interceptor,
            "$Id$")

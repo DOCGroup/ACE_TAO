@@ -50,11 +50,12 @@ be_visitor_interface_thru_poa_proxy_impl_ss::visit_interface (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::"
                          "visit_interface - "
-                         "codegen for Base Proxy Broker class failed\n"),
+                         "codegen for ThruPOA Proxy Impl failed\n"),
                         -1);
     }
 
-  *os << "//\n"
+  *os << be_nl << be_nl
+      << "//\n"
       << "//           End ThruPOA Proxy Implementation\n"
       << "///////////////////////////////////////////////////////////////////////";
 

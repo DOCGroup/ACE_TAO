@@ -4,6 +4,7 @@
 #include "DynUnion_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (DynamicAny,
            DynUnion_i,
@@ -103,39 +104,15 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynUnion_i *
-TAO_DynUnion_i::_narrow (CORBA::Object_ptr obj
+TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref
                          ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return 0;
     }
 
-  return ACE_reinterpret_cast (
-             TAO_DynUnion_i*,
-             obj->_tao_QueryInterface (
-                      ACE_reinterpret_cast (
-                          ptrdiff_t,
-                          &TAO_DynUnion_i::_narrow
-                        )
-                    )
-           );
-}
-
-void*
-TAO_DynUnion_i::_tao_QueryInterface (ptrdiff_t type)
-{
-  ptrdiff_t mytype =
-    ACE_reinterpret_cast (ptrdiff_t,
-                          &TAO_DynUnion_i::_narrow);
-  if (type == mytype)
-    {
-      this->_add_ref ();
-      return this;
-    }
-
-  return
-    this->ACE_NESTED_CLASS (DynamicAny, DynUnion::_tao_QueryInterface) (type);
+  return dynamic_cast<TAO_DynUnion_i *> (_tao_objref);
 }
 
 // This code is common to from_any() and the init() overload that takes
@@ -167,7 +144,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
 
   CORBA::TypeCode_var tc = any.type ();
 
-  CORBA::TypeCode_var disc_tc = 
+  CORBA::TypeCode_var disc_tc =
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -187,7 +164,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
     }
 
   // Set the discriminator.
-  this->discriminator_ = 
+  this->discriminator_ =
     TAO_DynAnyFactory::make_dyn_any (disc_any
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -198,12 +175,12 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::TypeCode_var unaliased = 
+  CORBA::TypeCode_var unaliased =
     TAO_DynAnyFactory::strip_alias (tc.in ()
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::ULong count = 
+  CORBA::ULong count =
     unaliased->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 

@@ -24,12 +24,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/orbconf.h"
+#include "tao/Basic_Types.h"
+#include "tao/ORB_Constants.h"
+#include "tao/default_environment.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Synch_Traits.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -38,8 +42,24 @@
 
 namespace CORBA
 {
+  typedef ULong Flags;
+
+  class NVList;
+  typedef NVList *NVList_ptr;
+
+  class ContextList;
+  typedef ContextList *ContextList_ptr;
+
+  class Context;
+  typedef Context *Context_ptr;
+
+  class Environment;
+
+  TAO_NAMESPACE_INLINE_FUNCTION void release (Context_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Context_ptr );
+
   TAO_NAMESPACE_INLINE_FUNCTION void release (ContextList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ContextList_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ContextList_ptr );
 
   typedef TAO_Pseudo_Var_T<Context> Context_var;
   typedef TAO_Pseudo_Out_T<Context, Context_var> Context_out;
@@ -57,7 +77,7 @@ namespace CORBA
    * the feature may eventaully disappear from CORBA.  It is
    * implemented only to make the arg list of
    * CORBA::Object::_create_request() compliant. The only (pointer)
-   * value that should be passed is 0. 
+   * value that should be passed is 0.
    */
   class TAO_DynamicInterface_Export Context
   {

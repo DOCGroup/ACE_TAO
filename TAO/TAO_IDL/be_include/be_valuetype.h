@@ -149,6 +149,40 @@ public:
   const char *fwd_helper_name (void) const;
   // Accessor to the member.
 
+  // There are three possible situations.
+  // (1) If there is no initializers but at least one operation.
+  //     In this case we don't need to bother about factory.
+  //
+  // (2) There are no (operations or initializers) (i.e. only state
+  //     members) then we need a concrete type-specific factory
+  //     class whose create_for_unmarshal creates OBV_ class.
+  //
+  // (3) There is at least one operation and at least one initializer.
+  //     In this case we need to generate abstract factory class.
+  //
+  // Here I reflect these situations.
+  enum FactoryStyle
+  {
+    FS_UNKNOWN,
+    FS_NO_FACTORY,
+    FS_CONCRETE_FACTORY,
+    FS_ABSTRACT_FACTORY
+  };
+
+  FactoryStyle determine_factory_style (void);
+  // Determine what kind of factory needed.
+
+  idl_bool have_operation (void);
+  // Recurse down the inheritance tree to determine
+  // if valuetype has at least one operation/attribute.
+
+	static idl_bool have_supported_op (be_interface *node);
+  // Check if VT supports an interface with at least 1 operation.
+
+  virtual idl_bool will_have_factory (void);
+  // Use the above enum and methods to determine this after the
+  // node's scope is visited but before code generation.
+
 private:
   char *full_obv_skel_name_;
 

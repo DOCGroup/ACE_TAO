@@ -4,12 +4,15 @@
 
 #ifndef TAO_INTERCEPTORS_H
 #define TAO_INTERCEPTORS_H
+#include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
+#include "tao/PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -38,12 +41,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_poll (
-        PortableInterceptor::ClientRequestInfo_ptr
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        ));
+      PortableInterceptor::ClientRequestInfo_ptr
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -69,9 +69,10 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
+  // Some identifiers that are used for error checking
+  static CORBA::ULong client_interceptor_check_;
 private:
   const char *myname_;
-
 };
 
 class Echo_Server_Request_Interceptor
@@ -94,8 +95,7 @@ public:
 
   virtual void receive_request_service_contexts (
         PortableInterceptor::ServerRequestInfo_ptr
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-        )
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       PortableInterceptor::ForwardRequest
@@ -124,13 +124,16 @@ public:
       PortableInterceptor::ForwardRequest
       ));
 
+  // Some identifiers that are used for error checking
+  static CORBA::ULong server_interceptor_check_;
+
 private:
   const char *myname_;
-
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include /**/ "ace/post.h"
 #endif /* TAO_INTERCEPTORS_H */

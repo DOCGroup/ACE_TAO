@@ -3,6 +3,10 @@
 
 #include "INSC.h"
 
+#include "tao/ObjectIdListC.h"
+
+#include "ace/Log_Msg.h"
+
 int
 main (int argc, char *argv[])
 {

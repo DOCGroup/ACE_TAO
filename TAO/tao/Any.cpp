@@ -1,15 +1,19 @@
 // $Id$
 
+#include "tao/Any_Basic_Impl.h"
 #include "tao/Any_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
 #include "tao/Any_Special_Impl_T.h"
-#include "tao/Any_Special_Basic_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
+#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/Object.h"
+#include "tao/Typecode.h"
 
-#include "tao/ORB_Core.h"
-#include "tao/Valuetype_Adapter.h"
+#include "ace/Log_Msg.h"
 
-#include "ace/Dynamic_Service.h"
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
+    || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#include "Var_Size_Argument_T.h"
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any.i"
@@ -20,110 +24,6 @@ ACE_RCSID (tao,
            "$Id$")
 
 using namespace TAO;
-
-// Specializations of the create_empty method for long long and long double.
-
-template<>
-Any_Basic_Impl_T<CORBA::LongLong> *
-Any_Basic_Impl_T<CORBA::LongLong>::create_empty (
-    CORBA::TypeCode_ptr tc
-  )
-{
-  const CORBA::LongLong zero = ACE_CDR_LONGLONG_INITIALIZER;
-  Any_Basic_Impl_T<CORBA::LongLong> * retval = 0;
-  ACE_NEW_RETURN (retval,
-                  Any_Basic_Impl_T<CORBA::LongLong> (tc,
-                                                     zero),
-                  0);
-  return retval;
-}
-
-template<>
-Any_Basic_Impl_T<CORBA::LongDouble> *
-Any_Basic_Impl_T<CORBA::LongDouble>::create_empty (
-    CORBA::TypeCode_ptr tc
-  )
-{
-  const CORBA::LongDouble zero = ACE_CDR_LONG_DOUBLE_INITIALIZER;
-  Any_Basic_Impl_T<CORBA::LongDouble> * retval = 0;
-  ACE_NEW_RETURN (retval,
-                  Any_Basic_Impl_T<CORBA::LongDouble> (tc,
-                                                       zero),
-                  0);
-  return retval;
-}
-
-// =======================================================================
-
-// Specializations for CORBA::Exception
-
-template<>
-Any_Dual_Impl_T<CORBA::Exception>::Any_Dual_Impl_T (
-    _tao_destructor destructor,
-    CORBA::TypeCode_ptr tc,
-    const CORBA::Exception & val
-  )
-  : Any_Impl (destructor,
-              tc)
-{
-  this->value_ = val._tao_duplicate ();
-}
-
-template<>
-CORBA::Boolean
-Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)
-{
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_encode (cdr
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      return 1;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-Any_Dual_Impl_T<CORBA::Exception>::demarshal_value (TAO_InputCDR &cdr)
-{
-  ACE_TRY_NEW_ENV
-    {
-      this->value_->_tao_decode (cdr
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      return 1;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
-// This should never get called since we don't have extraction operators
-// for CORBA::Exception, but it is here to sidestep the constructor call
-// in the unspecialized version that causes a problem with compilers that
-// require explicit instantiation
-template<>
-CORBA::Boolean
-Any_Dual_Impl_T<CORBA::Exception>::extract (const CORBA::Any &,
-                                            _tao_destructor,
-                                            CORBA::TypeCode_ptr,
-                                            const CORBA::Exception *&)
-{
-  return 0;
-}
-
-// =======================================================================
 
 CORBA::Any::Any (void)
   : impl_ (0)
@@ -331,358 +231,6 @@ CORBA::Any::checked_to_abstract_base (
   return this->impl_->to_abstract_base (_tao_elem);
 }
 
-// =======================================================================
-
-TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
-                         CORBA::TypeCode_ptr tc)
-  : value_destructor_ (destructor),
-    type_ (CORBA::TypeCode::_duplicate (tc)),
-    refcount_ (1)
-{
-}
-
-TAO::Any_Impl::~Any_Impl (void)
-{
-}
-
-CORBA::Boolean
-TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
-{
-  if ((cdr << this->type_) == 0)
-    {
-      return 0;
-    }
-
-  return this->marshal_value (cdr);
-}
-
-void
-TAO::Any_Impl::_tao_any_string_destructor (void *x)
-{
-  char *tmp = ACE_static_cast (char *, x);
-  CORBA::string_free (tmp);
-}
-
-void
-TAO::Any_Impl::_tao_any_wstring_destructor (void *x)
-{
-  CORBA::WChar *tmp = ACE_static_cast (CORBA::WChar *, x);
-  CORBA::wstring_free (tmp);
-}
-
-void
-TAO::Any_Impl::_add_ref (void)
-{
-  ++this->refcount_;
-}
-
-void
-TAO::Any_Impl::_remove_ref (void)
-{
-  if (--this->refcount_ != 0)
-    {
-      return;
-    }
-
-  this->free_value ();
-  delete this;
-}
-
-void
-TAO::Any_Impl::assign_translator (CORBA::TCKind,
-                                  TAO_InputCDR *)
-{
-}
-
-void
-TAO::Any_Impl::_tao_decode (TAO_InputCDR &
-                            ACE_ENV_ARG_DECL)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-}
-
-// =======================================================================
-
-TAO::Unknown_IDL_Type::Unknown_IDL_Type (
-    CORBA::TypeCode_ptr tc,
-    const ACE_Message_Block *mb,
-    int byte_order,
-    ACE_Char_Codeset_Translator *ctrans,
-    ACE_WChar_Codeset_Translator *wtrans
-  )
-  : TAO::Any_Impl (0, tc),
-    cdr_ (ACE_Message_Block::duplicate (mb)),
-    byte_order_ (byte_order),
-    char_translator_ (ctrans),
-    wchar_translator_ (wtrans)
-{
-}
-
-TAO::Unknown_IDL_Type::~Unknown_IDL_Type (void)
-{
-}
-
-CORBA::Boolean
-TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
-{
-  ACE_TRY_NEW_ENV
-    {
-      TAO_InputCDR input (this->cdr_,
-                          this->byte_order_);
-
-      CORBA::TypeCode::traverse_status status =
-        TAO_Marshal_Object::perform_append (this->type_,
-                                            &input,
-                                            &cdr
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-        {
-          return 0;
-        }
-    }
-  ACE_CATCH (CORBA::Exception, ex)
-    {
-      return 0;
-    }
-  ACE_ENDTRY;
-
-  return 1;
-}
-
-void
-TAO::Unknown_IDL_Type::free_value (void)
-{
-  CORBA::release (this->type_);
-  ACE_Message_Block::release (this->cdr_);
-}
-
-void
-TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
-                                    ACE_ENV_ARG_DECL)
-{
-  // @@ (JP) The following code depends on the fact that
-  //         TAO_InputCDR does not contain chained message blocks,
-  //         otherwise <begin> and <end> could be part of
-  //         different buffers!
-
-  // This will be the start of a new message block.
-  char *begin = cdr.rd_ptr ();
-
-  // Skip over the next argument.
-  CORBA::TypeCode::traverse_status status =
-    TAO_Marshal_Object::perform_skip (this->type_,
-                                      &cdr
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    {
-      ACE_THROW (CORBA::MARSHAL ());
-    }
-
-  // This will be the end of the new message block.
-  char *end = cdr.rd_ptr ();
-
-  // The ACE_CDR::mb_align() call can shift the rd_ptr by up to
-  // ACE_CDR::MAX_ALIGNMENT - 1 bytes. Similarly, the offset adjustment
-  // can move the rd_ptr by up to the same amount. We accommodate
-  // this by including 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional
-  // space in the message block.
-  size_t size = end - begin;
-
-  ACE_Message_Block::release (this->cdr_);
-  ACE_NEW (this->cdr_,
-           ACE_Message_Block (size + 2 * ACE_CDR::MAX_ALIGNMENT));
-
-  ACE_CDR::mb_align (this->cdr_);
-  ptrdiff_t offset = ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
-
-  if (offset < 0)
-    offset += ACE_CDR::MAX_ALIGNMENT;
-
-  this->cdr_->rd_ptr (offset);
-  this->cdr_->wr_ptr (offset + size);
-
-  ACE_OS::memcpy (this->cdr_->rd_ptr (),
-                  begin,
-                  size);
-
-  // Get character translators.
-  this->char_translator_ = cdr.char_translator();
-  this->wchar_translator_ = cdr.wchar_translator();
-}
-
-void
-TAO::Unknown_IDL_Type::assign_translator (CORBA::TCKind kind,
-                                          TAO_InputCDR *cdr)
-{
-  switch (kind)
-    {
-      case CORBA::tk_string:
-      case CORBA::tk_char:
-        cdr->char_translator (this->char_translator_);
-        break;
-      case CORBA::tk_wstring:
-      case CORBA::tk_wchar:
-        cdr->wchar_translator(this->wchar_translator_);
-        break;
-      default:
-        break;
-    }
-}
-
-CORBA::Boolean
-TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
-{
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::ULong kind =
-        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
-
-      while (kind == CORBA::tk_alias)
-        {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-
-      if (kind != CORBA::tk_objref)
-        {
-          return 0;
-        }
-
-      TAO_InputCDR stream (this->cdr_,
-                           this->byte_order_,
-                           TAO_DEF_GIOP_MAJOR,
-                           TAO_DEF_GIOP_MINOR,
-                           TAO_ORB_Core_instance ());
-
-      return stream >> obj;
-    }
-  ACE_CATCH (CORBA::Exception, ex)
-    {
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
-CORBA::Boolean
-TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
-{
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::ULong kind =
-        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
-
-      while (kind == CORBA::tk_alias)
-        {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-
-      if (kind != CORBA::tk_value)
-        {
-          return 0;
-        }
-
-      TAO_InputCDR stream (this->cdr_,
-                           this->byte_order_,
-                           TAO_DEF_GIOP_MAJOR,
-                           TAO_DEF_GIOP_MINOR,
-                           TAO_ORB_Core_instance ());
-
-      TAO_Valuetype_Adapter *adapter =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
-
-      if (adapter == 0)
-        {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            0);
-        }
-
-      return adapter->stream_to_value (stream,
-                                       val);
-    }
-  ACE_CATCH (CORBA::Exception, ex)
-    {
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
-CORBA::Boolean
-TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
-{
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::ULong kind =
-        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
-
-      while (kind == CORBA::tk_alias)
-        {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-
-      if (kind != CORBA::tk_value)
-        {
-          return 0;
-        }
-
-      TAO_InputCDR stream (this->cdr_,
-                           this->byte_order_,
-                           TAO_DEF_GIOP_MAJOR,
-                           TAO_DEF_GIOP_MINOR,
-                           TAO_ORB_Core_instance ());
-
-      TAO_Valuetype_Adapter *adapter =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
-
-      if (adapter == 0)
-        {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            0);
-        }
-
-      return adapter->stream_to_abstract_base (stream,
-                                               obj);
-    }
-  ACE_CATCH (CORBA::Exception, ex)
-    {
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}
-
 // ****************************************************************
 
 CORBA::Any_var::Any_var (const CORBA::Any_var &r)
@@ -741,9 +289,9 @@ operator<< (TAO_OutputCDR &cdr, const CORBA::Any &any)
 CORBA::Boolean
 operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_var tc;
 
-  if ((cdr >> tc) == 0)
+  if ((cdr >> tc.out ()) == 0)
     {
       return 0;
     }
@@ -778,49 +326,33 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_boolean b)
 {
-  TAO::Any_Special_Basic_Impl_T<
-      CORBA::Boolean,
-      CORBA::Any::from_boolean,
-      CORBA::Any::to_boolean
-    >::insert (*this,
-               CORBA::_tc_boolean,
-               b.val_);
+  TAO::Any_Basic_Impl::insert (*this,
+                               CORBA::_tc_boolean,
+                               &b.val_);
 }
 
 void
 CORBA::Any::operator<<= (CORBA::Any::from_octet o)
 {
-  TAO::Any_Special_Basic_Impl_T<
-      CORBA::Octet,
-      CORBA::Any::from_octet,
-      CORBA::Any::to_octet
-    >::insert (*this,
-               CORBA::_tc_octet,
-               o.val_);
+  TAO::Any_Basic_Impl::insert (*this,
+                               CORBA::_tc_octet,
+                               &o.val_);
 }
 
 void
 CORBA::Any::operator<<= (CORBA::Any::from_char c)
 {
-  TAO::Any_Special_Basic_Impl_T<
-      char,
-      CORBA::Any::from_char,
-      CORBA::Any::to_char
-    >::insert (*this,
-               CORBA::_tc_char,
-               c.val_);
+  TAO::Any_Basic_Impl::insert (*this,
+                               CORBA::_tc_char,
+                               &c.val_);
 }
 
 void
 CORBA::Any::operator<<= (CORBA::Any::from_wchar wc)
 {
-  TAO::Any_Special_Basic_Impl_T<
-      CORBA::WChar,
-      CORBA::Any::from_wchar,
-      CORBA::Any::to_wchar
-    >::insert (*this,
-               CORBA::_tc_wchar,
-               wc.val_);
+  TAO::Any_Basic_Impl::insert (*this,
+                               CORBA::_tc_wchar,
+                               &wc.val_);
 }
 
 void
@@ -866,73 +398,73 @@ CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
 void
 operator<<= (CORBA::Any &any, CORBA::Short s)
 {
-  TAO::Any_Basic_Impl_T<CORBA::Short>::insert (any,
-                                               CORBA::_tc_short,
-                                               s);
+  TAO::Any_Basic_Impl::insert (any,
+                               CORBA::_tc_short,
+                               &s);
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::UShort us)
 {
-  TAO::Any_Basic_Impl_T<CORBA::UShort>::insert (any,
-                                                CORBA::_tc_ushort,
-                                                us);
+  TAO::Any_Basic_Impl::insert (any,
+                               CORBA::_tc_ushort,
+                               &us);
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::Long l)
 {
-  TAO::Any_Basic_Impl_T<CORBA::Long>::insert (any,
-                                              CORBA::_tc_long,
-                                              l);
+  TAO::Any_Basic_Impl::insert (any,
+                               CORBA::_tc_long,
+                               &l);
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::ULong ul)
 {
-  TAO::Any_Basic_Impl_T<CORBA::ULong>::insert (any,
-                                               CORBA::_tc_ulong,
-                                               ul);
+  TAO::Any_Basic_Impl::insert (any,
+                               CORBA::_tc_ulong,
+                               &ul);
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::LongLong ll)
 {
-  TAO::Any_Basic_Impl_T<CORBA::LongLong>::insert (any,
-                                                  CORBA::_tc_longlong,
-                                                  ll);
+  TAO::Any_Basic_Impl::insert (any,
+                               CORBA::_tc_longlong,
+                               &ll);
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::ULongLong ull)
 {
-  TAO::Any_Basic_Impl_T<CORBA::ULongLong>::insert (any,
-                                                   CORBA::_tc_ulonglong,
-                                                   ull);
+  TAO::Any_Basic_Impl::insert (any,
+                               CORBA::_tc_ulonglong,
+                               &ull);
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::Float f)
 {
-  TAO::Any_Basic_Impl_T<CORBA::Float>::insert (any,
-                                               CORBA::_tc_float,
-                                               f);
+  TAO::Any_Basic_Impl::insert (any,
+                               CORBA::_tc_float,
+                               &f);
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::Double d)
 {
-  TAO::Any_Basic_Impl_T<CORBA::Double>::insert (any,
-                                                CORBA::_tc_double,
-                                                d);
+  TAO::Any_Basic_Impl::insert (any,
+                               CORBA::_tc_double,
+                               &d);
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::LongDouble ld)
 {
-  TAO::Any_Basic_Impl_T<CORBA::LongDouble>::insert (any,
-                                                    CORBA::_tc_longdouble,
-                                                    ld);
+  TAO::Any_Basic_Impl::insert (any,
+                               CORBA::_tc_longdouble,
+                               &ld);
 }
 
 // Insertion of Any - copying.
@@ -974,30 +506,6 @@ operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr * tc)
       CORBA::TypeCode::_tao_any_destructor,
       CORBA::_tc_TypeCode,
       *tc
-    );
-}
-
-// Insertion of CORBA::Exception - copying.
-void
-operator<<= (CORBA::Any &any, const CORBA::Exception &exception)
-{
-  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert_copy (
-      any,
-      CORBA::Exception::_tao_any_destructor,
-      exception._type (),
-      exception
-    );
-}
-
-// Insertion of CORBA::Exception - non-copying.
-void
-operator<<= (CORBA::Any &any, CORBA::Exception *exception)
-{
-  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert (
-      any,
-      CORBA::Exception::_tao_any_destructor,
-      exception->_type (),
-      exception
     );
 }
 
@@ -1051,49 +559,33 @@ operator<<= (CORBA::Any &any, const CORBA::WChar* ws)
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_boolean b) const
 {
-  return TAO::Any_Special_Basic_Impl_T<
-      CORBA::Boolean,
-      CORBA::Any::from_boolean,
-      CORBA::Any::to_boolean
-    >::extract (*this,
-                CORBA::_tc_boolean,
-                b.ref_);
+  return TAO::Any_Basic_Impl::extract (*this,
+                                       CORBA::_tc_boolean,
+                                       &b.ref_);
 }
 
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_octet o) const
 {
-  return TAO::Any_Special_Basic_Impl_T<
-      CORBA::Octet,
-      CORBA::Any::from_octet,
-      CORBA::Any::to_octet
-    >::extract (*this,
-                CORBA::_tc_octet,
-                o.ref_);
+  return TAO::Any_Basic_Impl::extract (*this,
+                                       CORBA::_tc_octet,
+                                       &o.ref_);
 }
 
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_char c) const
 {
-  return TAO::Any_Special_Basic_Impl_T<
-      char,
-      CORBA::Any::from_char,
-      CORBA::Any::to_char
-    >::extract (*this,
-                CORBA::_tc_char,
-                c.ref_);
+  return TAO::Any_Basic_Impl::extract (*this,
+                                       CORBA::_tc_char,
+                                       &c.ref_);
 }
 
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_wchar wc) const
 {
-  return TAO::Any_Special_Basic_Impl_T<
-      CORBA::WChar,
-      CORBA::Any::from_wchar,
-      CORBA::Any::to_wchar
-    >::extract (*this,
-                CORBA::_tc_wchar,
-                wc.ref_);
+  return TAO::Any_Basic_Impl::extract (*this,
+                                       CORBA::_tc_wchar,
+                                       &wc.ref_);
 }
 
 CORBA::Boolean
@@ -1149,76 +641,76 @@ CORBA::Any::operator>>= (CORBA::Any::to_value obj) const
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::Short &s)
 {
-  return TAO::Any_Basic_Impl_T<CORBA::Short>::extract (any,
-                                                       CORBA::_tc_short,
-                                                       s);
+  return TAO::Any_Basic_Impl::extract (any,
+                                       CORBA::_tc_short,
+                                       &s);
 }
 
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::UShort &us)
 {
-  return TAO::Any_Basic_Impl_T<CORBA::UShort>::extract (any,
-                                                        CORBA::_tc_ushort,
-                                                        us);
+  return TAO::Any_Basic_Impl::extract (any,
+                                       CORBA::_tc_ushort,
+                                       &us);
 }
 
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::Long &l)
 {
-  return TAO::Any_Basic_Impl_T<CORBA::Long>::extract (any,
-                                                      CORBA::_tc_long,
-                                                      l);
+  return TAO::Any_Basic_Impl::extract (any,
+                                       CORBA::_tc_long,
+                                       &l);
 }
 
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::ULong &ul)
 {
-  return TAO::Any_Basic_Impl_T<CORBA::ULong>::extract (any,
-                                                       CORBA::_tc_ulong,
-                                                       ul);
+  return TAO::Any_Basic_Impl::extract (any,
+                                       CORBA::_tc_ulong,
+                                       &ul);
 }
 
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::LongLong &ll)
 {
   return
-    TAO::Any_Basic_Impl_T<CORBA::LongLong>::extract (any,
-                                                     CORBA::_tc_longlong,
-                                                     ll);
+    TAO::Any_Basic_Impl::extract (any,
+                                  CORBA::_tc_longlong,
+                                  &ll);
 }
 
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::ULongLong &ull)
 {
   return
-    TAO::Any_Basic_Impl_T<CORBA::ULongLong>::extract (any,
-                                                      CORBA::_tc_ulonglong,
-                                                      ull);
+    TAO::Any_Basic_Impl::extract (any,
+                                  CORBA::_tc_ulonglong,
+                                  &ull);
 }
 
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::Float &f)
 {
-  return TAO::Any_Basic_Impl_T<CORBA::Float>::extract (any,
-                                                       CORBA::_tc_float,
-                                                       f);
+  return TAO::Any_Basic_Impl::extract (any,
+                                       CORBA::_tc_float,
+                                       &f);
 }
 
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::Double &d)
 {
-  return TAO::Any_Basic_Impl_T<CORBA::Double>::extract (any,
-                                                        CORBA::_tc_double,
-                                                        d);
+  return TAO::Any_Basic_Impl::extract (any,
+                                       CORBA::_tc_double,
+                                       &d);
 }
 
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::LongDouble &ld)
 {
   return
-    TAO::Any_Basic_Impl_T<CORBA::LongDouble>::extract (any,
-                                                       CORBA::_tc_longdouble,
-                                                       ld);
+    TAO::Any_Basic_Impl::extract (any,
+                                  CORBA::_tc_longdouble,
+                                  &ld);
 }
 
 CORBA::Boolean
@@ -1233,7 +725,7 @@ operator>>= (const CORBA::Any &any, const CORBA::Any *&a)
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, const char *&s)
+operator>>= (const CORBA::Any &any, const CORBA::Char *&s)
 {
   return TAO::Any_Impl_T<char>::extract (
       any,
@@ -1267,30 +759,6 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO::Any_Special_Basic_Impl_T<
-      CORBA::Boolean,
-      CORBA::Any::from_boolean,
-      CORBA::Any::to_boolean
-    >;
-
-template class TAO::Any_Special_Basic_Impl_T<
-      CORBA::Octet,
-      CORBA::Any::from_octet,
-      CORBA::Any::to_octet
-    >;
-
-template class TAO::Any_Special_Basic_Impl_T<
-      char,
-      CORBA::Any::from_char,
-      CORBA::Any::to_char
-    >;
-
-template class TAO::Any_Special_Basic_Impl_T<
-      CORBA::WChar,
-      CORBA::Any::from_wchar,
-      CORBA::Any::to_wchar
-    >;
-
 template class TAO::Any_Special_Impl_T<
       char,
       CORBA::Any::from_string,
@@ -1303,76 +771,88 @@ template class TAO::Any_Special_Impl_T<
       CORBA::Any::to_wstring
     >;
 
-template class TAO::Any_Basic_Impl_T<CORBA::Short>;
-template class TAO::Any_Basic_Impl_T<CORBA::UShort>;
-template class TAO::Any_Basic_Impl_T<CORBA::Long>;
-template class TAO::Any_Basic_Impl_T<CORBA::ULong>;
-template class TAO::Any_Basic_Impl_T<CORBA::LongLong>;
-template class TAO::Any_Basic_Impl_T<CORBA::ULongLong>;
-template class TAO::Any_Basic_Impl_T<CORBA::Float>;
-template class TAO::Any_Basic_Impl_T<CORBA::Double>;
-template class TAO::Any_Basic_Impl_T<CORBA::LongDouble>;
 template class TAO::Any_Dual_Impl_T<CORBA::Any>;
 template class TAO::Any_Impl_T<CORBA::TypeCode>;
-template class TAO::Any_Dual_Impl_T<CORBA::Exception>;
+
 template class TAO::Any_Impl_T<char>;
 template class TAO::Any_Impl_T<CORBA::WChar>;
 template class TAO::Any_Impl_T<CORBA::Object>;
 
+template class TAO::Arg_Traits<CORBA::Any>;
+template class TAO::Var_Size_Arg_Traits_T<CORBA::Any,
+                                          CORBA::Any_var,
+                                          CORBA::Any_out>;
+
+template TAO::In_Var_Size_Argument_T<CORBA::Any>;
+template TAO::Out_Var_Size_Argument_T<CORBA::Any, CORBA::Any_out>;
+template TAO::Inout_Var_Size_Argument_T<CORBA::Any>;
+template TAO::Ret_Var_Size_Argument_T<CORBA::Any, CORBA::Any_var>;
+
+#if 0
+// Needed in the future..
+template class TAO::SArg_Traits<CORBA::Any>;
+template class TAO::Var_Size_SArg_Traits_T<CORBA::Any,
+                                           CORBA::Any_var,
+                                           CORBA::Any_out>;
+template class TAO::In_Var_Size_SArgument_T<CORBA::Any>;
+template class TAO::Inout_Var_Size_SArgument_T<CORBA::Any>;
+template class TAO::Out_Var_Size_SArgument_T<CORBA::Any,
+                                             CORBA::Any_var>;
+template class TAO::Ret_Var_Size_SArgument_T<CORBA::Any,
+                                             CORBA::Any_var>;
+#endif /*if 0*/
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO::Any_Special_Basic_Impl_T<
-      CORBA::Boolean,
-      CORBA::Any::from_boolean,
-      CORBA::Any::to_boolean
+#pragma instantiate TAO::Any_Special_Impl_T< \
+      char, \
+      CORBA::Any::from_string, \
+      CORBA::Any::to_string \
     >
 
-#pragma instantiate TAO::Any_Special_Basic_Impl_T<
-      CORBA::Octet,
-      CORBA::Any::from_octet,
-      CORBA::Any::to_octet
+#pragma instantiate TAO::Any_Special_Impl_T< \
+      CORBA::WChar, \
+      CORBA::Any::from_wstring, \
+      CORBA::Any::to_wstring \
     >
 
-#pragma instantiate TAO::Any_Special_Basic_Impl_T<
-      char,
-      CORBA::Any::from_char,
-      CORBA::Any::to_char
-    >
-
-#pragma instantiate TAO::Any_Special_Basic_Impl_T<
-      CORBA::WChar,
-      CORBA::Any::from_wchar,
-      CORBA::Any::to_wchar
-    >
-
-#pragma instantiate TAO::Any_Special_Impl_T<
-      char,
-      CORBA::Any::from_string,
-      CORBA::Any::to_string
-    >
-
-#pragma instantiate TAO::Any_Special_Impl_T<
-      CORBA::WChar,
-      CORBA::Any::from_wstring,
-      CORBA::Any::to_wstring
-    >
-
-#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Short>
-#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::UShort>
-#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Long>
-#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::ULong>
-#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::LongLong>
-#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::ULongLong>
-#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Float>
-#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Double>
-#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::LongDouble>
 #pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Any>
 #pragma instantiate TAO::Any_Impl_T<CORBA::TypeCode>
-#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Exception>
+
 #pragma instantiate TAO::Any_Impl_T<char>
 #pragma instantiate TAO::Any_Impl_T<CORBA::WChar>
 #pragma instantiate TAO::Any_Impl_T<CORBA::Object>
-#pragma instantiate TAO::Any_Impl_T<CORBA::AbstractBase>
-#pragma instantiate TAO::Any_Impl_T<CORBA::ValueBase>
+
+#pragma instantiate TAO::Arg_Traits<CORBA::Any>
+#pragma instantiate TAO::Var_Size_Arg_Traits_T<CORBA::Any, \
+                                               CORBA::Any_var, \
+                                               CORBA::Any_out>
+#pragma instantiate TAO::Var_Size_Arg_Traits_T<CORBA::Any, \
+                                          CORBA::Any_var, \
+                                          CORBA::Any_out>
+#pragma instantiate TAO::In_Var_Size_Argument_T<CORBA::Any>
+#pragma instantiate TAO::Inout_Var_Size_Argument_T<CORBA::Any>
+#pragma instantiate TAO::Out_Var_Size_Argument_T<CORBA::Any, \
+                                            CORBA::Any_out>
+#pragma instantiate TAO::Ret_Var_Size_Argument_T<CORBA::Any, \
+                                            CORBA::Any_var>
+
+#pragma instantiate TAO::SArg_Traits<CORBA::Any>
+#pragma instantiate TAO::Var_Size_SArg_Traits_T<CORBA::Any, \
+                                           CORBA::Any_var, \
+                                           CORBA::Any_out>
+#pragma instantiate TAO::In_Var_Size_SArgument_T<CORBA::Any>
+#pragma instantiate TAO::Inout_Var_Size_SArgument_T<CORBA::Any>
+#pragma instantiate TAO::Out_Var_Size_SArgument_T<CORBA::Any, \
+                                             CORBA::Any_var>
+#pragma instantiate TAO::Ret_Var_Size_SArgument_T<CORBA::Any, \
+                                             CORBA::Any_var>
+
+#pragma instantiate TAO::In_Var_Size_Argument_T<CORBA::Any>
+
+#pragma instantiate TAO::Out_Var_Size_Argument_T<CORBA::Any,  \
+                                                 CORBA::Any_out>
+#pragma instantiate TAO::Inout_Var_Size_Argument_T<CORBA::Any>
+#pragma instantiate TAO::Ret_Var_Size_Argument_T<CORBA::Any, \
+                                                 CORBA::Any_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

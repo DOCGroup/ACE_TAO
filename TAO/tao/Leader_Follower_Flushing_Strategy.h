@@ -12,6 +12,7 @@
 
 #ifndef TAO_LEADER_FOLLOWER_FLUSHING_STRATEGY_H
 #define TAO_LEADER_FOLLOWER_FLUSHING_STRATEGY_H
+
 #include /**/ "ace/pre.h"
 
 #include "Flushing_Strategy.h"
@@ -26,7 +27,8 @@
  * @brief Implement a flushing strategy that uses the Leader/Follower
  *        set.
  */
-class TAO_Export TAO_Leader_Follower_Flushing_Strategy : public TAO_Flushing_Strategy
+class TAO_Export TAO_Leader_Follower_Flushing_Strategy 
+  : public TAO_Flushing_Strategy
 {
 public:
   virtual int schedule_output (TAO_Transport *transport);
@@ -38,4 +40,5 @@ public:
 };
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_LEADER_FOLLOWER_FLUSHING_STRATEGY_H */

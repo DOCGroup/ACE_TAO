@@ -2,11 +2,10 @@
 // $Id$
 
 #include "IIOP_Profile.h"
-#include "CDR.h"
 #include "Environment.h"
 #include "ORB_Core.h"
 #include "debug.h"
-#include "iiop_endpoints.h"
+#include "IIOP_EndpointsC.h"
 
 ACE_RCSID(TAO,
           IIOP_Profile,
@@ -384,7 +383,7 @@ TAO_IIOP_Profile::encode_endpoints (void)
   // info is transmitted using standard ProfileBody components, its
   // priority is not!
 
-  TAO_IIOPEndpointSequence endpoints;
+  TAO::IIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
   const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
@@ -433,7 +432,7 @@ TAO_IIOP_Profile::decode_endpoints (void)
       in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
 
       // Extract endpoints sequence.
-      TAO_IIOPEndpointSequence endpoints;
+      TAO::IIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
         return -1;

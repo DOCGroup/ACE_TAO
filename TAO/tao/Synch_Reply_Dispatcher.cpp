@@ -3,10 +3,10 @@
 #include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
 #include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/Transport.h"
 
-ACE_RCSID(tao, Synch_Reply_Dispatcher, "$Id$")
-
+ACE_RCSID (tao, 
+           Synch_Reply_Dispatcher, 
+           "$Id$")
 
 // Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
@@ -72,7 +72,9 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   // invocations like forwarding, the release becomes essential.
   if (ACE_BIT_DISABLED (db->flags (),
                         ACE_Message_Block::DONT_DELETE))
-    db->release ();
+    {
+      db->release ();
+    }
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 

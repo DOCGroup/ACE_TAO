@@ -16,9 +16,13 @@
 // ============================================================================
 
 #include "param_testC.h"
-#include "tao/corba.h"
+
 #include "tao/debug.h"
-#include "tao/Stub.h"
+
+// Not normally needed, but we create an object reference in this test,
+// and we have to narrow it.
+#include "tao/Object_T.h"
+
 #include "ace/Get_Opt.h"
 
 ACE_RCSID (Param_Test, 
@@ -95,9 +99,11 @@ main (int argc, char *argv[])
                                      ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
-            Param_Test_var param_test =
-              Param_Test::_unchecked_narrow (obj.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+            Param_Test_var param_test = 
+              TAO::Narrow_Utils<Param_Test>::unchecked_narrow (
+                  obj.in (),
+                  _TAO_Param_Test_Proxy_Broker_Factory_function_pointer
+                );
             ACE_TRY_CHECK;
             TAO_Stub *stub = param_test->_stubobj ();
             stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");

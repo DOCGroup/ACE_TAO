@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
-
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -16,7 +15,9 @@ ACE_RCSID (tao,
            "$Id$")
 
 // Constructor.
-TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core)
+TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
+    TAO_ORB_Core *orb_core
+  )
   : db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
          this->buf_,
@@ -37,11 +38,19 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core
 // Destructor.
 TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
 {
+  // Release the transport that we own
   if (this->transport_ != 0)
-    {
-      this->transport_->idle_after_reply ();
-      this->transport_->remove_reference ();
-    }
+    this->transport_->remove_reference ();
+}
+
+void
+TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
+{
+  if (this->transport_ != 0)
+    this->transport_->remove_reference ();
+
+  this->transport_ = t;
+  this->transport_->add_reference ();
 }
 
 // Must override pure virtual method in TAO_Reply_Dispatcher.
@@ -52,7 +61,6 @@ TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
 {
   return 0;
 }
-
 
 void
 TAO_Asynch_Reply_Dispatcher_Base::connection_closed (void)
@@ -65,8 +73,10 @@ TAO_Asynch_Reply_Dispatcher_Base::reply_timed_out (void)
 }
 
 long
-TAO_Asynch_Reply_Dispatcher_Base::schedule_timer (CORBA::ULong /*request_id */,
-                                                  const ACE_Time_Value & /*max_wait_time*/)
+TAO_Asynch_Reply_Dispatcher_Base::schedule_timer (
+    CORBA::ULong /*request_id */,
+    const ACE_Time_Value & /*max_wait_time*/
+  )
 {
   return 0;
 }

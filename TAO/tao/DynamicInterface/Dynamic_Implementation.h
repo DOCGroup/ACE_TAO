@@ -19,22 +19,25 @@
 
 #ifndef TAO_DYNAMIC_IMPLEMENTATION_H
 #define TAO_DYNAMIC_IMPLEMENTATION_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/Servant_Base.h"
+#include "dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "dynamicinterface_export.h"
+#include "tao/PortableServer/Servant_Base.h"
 
-TAO_NAMESPACE CORBA
+namespace CORBA
 {
   typedef char *RepositoryId;
   typedef String_var RepositoryId_var;
-};
-TAO_NAMESPACE_CLOSE
+
+  class ServerRequest;
+  typedef ServerRequest *ServerRequest_ptr;
+}
 
 class TAO_DynamicInterface_Export TAO_DynamicImplementation
   : public virtual TAO_ServantBase
@@ -99,4 +102,5 @@ private:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_DYNAMIC_IMPLEMENTATION_H */

@@ -14,6 +14,8 @@
 // -- RTCORBA Include --
 #include "tao/RTCORBA/RT_ORB.h"
 
+#include "tao/ORB_Constants.h"
+
 ACE_RCSID (tao, Policy_Tester, "$Id$")
 
 Policy_Tester::Policy_Tester (void)

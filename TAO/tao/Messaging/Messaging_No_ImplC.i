@@ -15,393 +15,107 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_REBINDPOLICY___CI_)
 #define _MESSAGING_REBINDPOLICY___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY___CI_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY___CI_)
 #define _MESSAGING_REPLYPRIORITYPOLICY___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY___CI_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY___CI_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY___CI_
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY___CI_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY___CI_
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY___CI_)
 #define _MESSAGING_REPLYENDTIMEPOLICY___CI_
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___CI_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___CI_
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_ROUTINGPOLICY___CI_)
 #define _MESSAGING_ROUTINGPOLICY___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_MAXHOPSPOLICY___CI_)
 #define _MESSAGING_MAXHOPSPOLICY___CI_
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// be/be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_MESSAGING_QUEUEORDERPOLICY___CI_)
 #define _MESSAGING_QUEUEORDERPOLICY___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -409,17 +123,9 @@ CORBA::Boolean operator<< (
     const Messaging::PriorityRange &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.min) &&
-    (strm << _tao_aggregate.max)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.max);
 }
 
 ACE_INLINE
@@ -428,21 +134,13 @@ CORBA::Boolean operator>> (
     Messaging::PriorityRange &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.min) &&
-    (strm >> _tao_aggregate.max)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.max);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -450,17 +148,9 @@ CORBA::Boolean operator<< (
     const Messaging::RoutingTypeRange &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.min) &&
-    (strm << _tao_aggregate.max)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.max);
 }
 
 ACE_INLINE
@@ -469,15 +159,8 @@ CORBA::Boolean operator>> (
     Messaging::RoutingTypeRange &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.min) &&
-    (strm >> _tao_aggregate.max)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.max);
 }
+

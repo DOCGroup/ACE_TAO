@@ -31,7 +31,6 @@
 
 #include "Context.h"
 #include "ExceptionList.h"
-#include "tao/corbafwd.h"
 #include "tao/ORB.h"
 #include "tao/NVList.h"
 #include "tao/Environment.h"
@@ -149,7 +148,7 @@ namespace CORBA
     CORBA::ULong _decr_refcnt (void);
 
     /// Set the lazy evaluation flag.
-    void _tao_lazy_evaluation (int lazy_evaluation);
+    void _tao_lazy_evaluation (bool lazy_evaluation);
 
     /// Get the byte order member.
     int _tao_byte_order (void) const;
@@ -229,7 +228,7 @@ namespace CORBA
     TAO_SYNCH_MUTEX lock_;
 
     /// If not zero then the NVList is not evaluated by default.
-    int lazy_evaluation_;
+    bool lazy_evaluation_;
 
     /// Set to TRUE upon completion of invoke() or handle_response().
     CORBA::Boolean response_received_;

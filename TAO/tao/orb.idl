@@ -14,6 +14,8 @@
 
 module CORBA
 {
+  interface TypeCode;
+
   enum TCKind
   {
     tk_null,

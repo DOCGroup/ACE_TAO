@@ -7,7 +7,9 @@
 
 #include "Linear_Network_Priority_Mapping.h"
 #include "tao/debug.h"
+
 #include "ace/Sched_Params.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Linear_Network_Priority_Mapping.i"

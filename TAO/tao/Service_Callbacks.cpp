@@ -1,15 +1,15 @@
-#include "tao/Service_Callbacks.h"
-#include "tao/PolicyC.h"
+#include "Service_Callbacks.h"
+#include "ORB_Constants.h"
+#include "Exception.h"
+#include "Environment.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Service_Callbacks.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Service_Callbacks,
            "$Id$")
-
 
 TAO_Service_Callbacks::~TAO_Service_Callbacks (void)
 {
@@ -59,30 +59,30 @@ TAO_Service_Callbacks::hash_ft (TAO_Profile *,
   return 0;
 }
 
-int
+TAO::Invocation_Status
 TAO_Service_Callbacks::raise_comm_failure (
-    TAO_GIOP_Invocation * /*invoke*/,
+    IOP::ServiceContextList &,
     TAO_Profile * /*profile*/
     ACE_ENV_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-          errno),
+          -1),
       CORBA::COMPLETED_MAYBE),
       2);
 }
 
-int
+TAO::Invocation_Status
 TAO_Service_Callbacks::raise_transient_failure (
-    TAO_GIOP_Invocation * /*invoke*/,
+    IOP::ServiceContextList &,
     TAO_Profile * /*profile*/
     ACE_ENV_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::TRANSIENT (
       CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-          errno),
+          -1),
       CORBA::COMPLETED_MAYBE),
       2);
 }

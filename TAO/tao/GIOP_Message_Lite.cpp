@@ -6,12 +6,9 @@
 #include "tao/debug.h"
 #include "tao/TAOC.h"
 #include "tao/ORB_Core.h"
-#include "tao/GIOP_Utils.h"
 #include "tao/operation_details.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/GIOP_Message_Locate_Header.h"
-#include "tao/target_specification.h"
-#include "tao/Leader_Follower.h"
 #include "tao/LF_Strategy.h"
 #include "tao/Transport.h"
 #include "tao/Codeset_Manager.h"
@@ -48,6 +45,12 @@ TAO_GIOP_Message_Lite::init (CORBA::Octet,
                              CORBA::Octet)
 {
   return;
+}
+
+TAO_OutputCDR &
+TAO_GIOP_Message_Lite::out_stream (void)
+{
+  return this->cdr_;
 }
 
 void

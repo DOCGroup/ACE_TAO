@@ -14,6 +14,7 @@
 
 #ifndef TAO_CODESET_MANAGER_H
 #define TAO_CODESET_MANAGER_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/CONV_FRAMEC.h"
@@ -156,17 +157,14 @@ public:
   void configure_codeset_factories();
 
 private:
+  // typedefs for containers containing the list of codesets
+  // factories for character and wide character.
+  typedef ACE_Unbounded_Set<TAO_Codeset_Item*>
+          TAO_CodesetFactorySet;
 
-// typedefs for containers containing the list of codesets
-// factories for character and wide character.
-typedef ACE_Unbounded_Set<TAO_Codeset_Item*>
-        TAO_CodesetFactorySet;
-
-// Iterators
-typedef ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>
-        TAO_CodesetFactorySetItor;
-
-
+  // Iterators
+  typedef ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>
+          TAO_CodesetFactorySetItor;
 
   // Compute the TCS for Char/WChar asper the CORBA Specification
   CONV_FRAME::CodeSetId computeTCS (CONV_FRAME::CodeSetComponent &,
@@ -210,4 +208,5 @@ typedef ACE_Unbounded_Set_Iterator<TAO_Codeset_Item*>
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_CODESET_MANAGER_H */

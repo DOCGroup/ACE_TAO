@@ -22,15 +22,14 @@
 #ifndef TAO_UIOP_ACCEPTOR_H
 #define TAO_UIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
-
-#include "tao/Transport_Acceptor.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # if TAO_HAS_UIOP == 1
-
+#include "tao/Transport_Acceptor.h"
 #include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
 #include "UIOP_Connection_Handler.h"

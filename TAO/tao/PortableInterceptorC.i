@@ -32,33 +32,6 @@
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR___CI_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Interceptor>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Interceptor>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -66,33 +39,6 @@ TAO::Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR
 
 #if !defined (_PORTABLEINTERCEPTOR_CURRENT___CI_)
 #define _PORTABLEINTERCEPTOR_CURRENT___CI_
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Current>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Current>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
@@ -102,33 +48,6 @@ TAO::Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
 #if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___CI_)
 #define _PORTABLEINTERCEPTOR_REQUESTINFO___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -136,33 +55,6 @@ TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::demarshal_value (TAO_InputCDR
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___CI_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___CI_
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
@@ -172,33 +64,6 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::demarshal_value (TAO_In
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO___CI_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -206,33 +71,6 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::demarshal_value (TAO_In
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___CI_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___CI_
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
@@ -242,33 +80,6 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::demarshal_value 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___CI_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -277,99 +88,13 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::demarshal_value 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY___CI_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::DuplicateName>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::DuplicateName>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::InvalidName>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableInterceptor::ORBInitInfo::InvalidName>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO___CI_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO___CI_
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
@@ -378,33 +103,6 @@ TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER___CI_)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER___CI_
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
@@ -423,7 +121,7 @@ CORBA::Boolean operator<< (
       // Now marshal the members (if any).
       if (
         (strm << _tao_aggregate.forward.in ()) &&
-        (strm << CORBA::Any::from_boolean (_tao_aggregate.permanent))
+        (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.permanent))
        )
         {
           return 1;
@@ -448,7 +146,7 @@ CORBA::Boolean operator>> (
   // Demarshal the members.
   if (
     (strm >> _tao_aggregate.forward.out ()) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.permanent))
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.permanent))
   )
     {
       return 1;

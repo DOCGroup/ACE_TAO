@@ -1196,9 +1196,20 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   AST_Decl *d = 0;
   UTL_ScopeActiveIterator *i = 0;
   char *name_string = e->get_string ();
+  idl_bool tc_lookup = I_FALSE;
+  idl_bool obj_lookup = I_FALSE;
+  idl_bool vb_lookup = I_FALSE;
 
-  if (ACE_OS::strcmp (name_string, "Object") == 0
-      || ACE_OS::strcmp (name_string, "ValueBase") == 0)
+  if (ACE_OS_String::strcasecmp (name_string, "Object") == 0)
+    {
+      obj_lookup = I_TRUE;
+    }
+  else if (ACE_OS_String::strcasecmp (name_string, "ValueBase") == 0)
+    {
+      vb_lookup = I_TRUE;
+    }
+
+  if (obj_lookup || vb_lookup)
     {
       // Iterate over the global scope.
       ACE_NEW_RETURN (i,
@@ -1207,8 +1218,8 @@ UTL_Scope::lookup_pseudo (Identifier *e)
                               UTL_Scope::IK_decls),
                       0);
     }
-  else if (ACE_OS::strcmp (name_string, "TypeCode") == 0
-           || ACE_OS::strcmp (name_string, "TCKind") == 0)
+  else if (ACE_OS_String::strcasecmp (name_string, "TypeCode") == 0
+           || ACE_OS_String::strcasecmp (name_string, "TCKind") == 0)
     {
       // Occurrences of "TypeCode" or TCKind in IDL files must be
       // scoped with "CORBA" so we know we'll be in the CORBA module
@@ -1218,26 +1229,75 @@ UTL_Scope::lookup_pseudo (Identifier *e)
                       UTL_ScopeActiveIterator (this,
                                                UTL_Scope::IK_decls),
                       0);
+      tc_lookup = I_TRUE;
     }
   else
     {
       return 0;
     }
 
-  for (;!i->is_done (); i->next ())
+  AST_Decl *scope = ScopeAsDecl (this);
+  char *scope_name = scope->local_name ()->get_string ();
+
+  for (; !i->is_done (); i->next ())
     {
       d = i->item ();
 
       item_name = d->local_name ();
 
-      if (e->compare (item_name))
+      if (e->case_compare (item_name))
         {
+          delete i;
+
+          // These have to be located here because we are just looking
+          // up a scoped name - skip for imported nodes.
+          if (idl_global->in_main_file ())
+            {
+              if (tc_lookup)
+                {
+                  // Generation of #includes for Typecode.h
+                  // checks this bit, so we set it for TCKind as well.
+                  ACE_SET_BITS (idl_global->decls_seen_info_,
+                                idl_global->decls_seen_masks.typecode_seen_);
+                }
+              else if (obj_lookup)
+                {
+                  ACE_SET_BITS (idl_global->decls_seen_info_,
+                                idl_global->decls_seen_masks.base_object_seen_);
+                }
+              else if (vb_lookup)
+                {
+                  ACE_SET_BITS (idl_global->decls_seen_info_,
+                                idl_global->decls_seen_masks.valuetype_seen_);
+                }
+            }
+
+          return d;
+        }
+    }
+
+  if (tc_lookup)
+    {
+      d = this->look_in_previous (e);
+
+      if (d != 0)
+        {
+          // Generation of #includes for Typecode.h
+          // checks this bit, so we set it for TCKind as well.
+          ACE_SET_BITS (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.typecode_seen_);
           delete i;
           return d;
         }
     }
 
   delete i;
+  return 0;
+}
+
+AST_Decl *
+UTL_Scope::look_in_previous (Identifier *)
+{
   return 0;
 }
 
@@ -1338,6 +1398,25 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 
           if (t->pt () == pdt)
             {
+              if (idl_global->in_main_file ())
+                {
+                  switch (pdt)
+                    {
+                      case AST_PredefinedType::PT_any:
+                        ACE_SET_BITS (idl_global->decls_seen_info_,
+                                      idl_global->decls_seen_masks.any_seen_);
+                        break;
+                      case AST_PredefinedType::PT_object:
+                        ACE_SET_BITS (
+                            idl_global->decls_seen_info_,
+                            idl_global->decls_seen_masks.base_object_seen_
+                          );
+                        break;
+                      default:
+                        break;
+                    }
+                }
+
               return t;
             }
         }

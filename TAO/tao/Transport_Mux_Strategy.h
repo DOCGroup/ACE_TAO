@@ -10,21 +10,23 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TRANSPORT_MUX_STRATEGY_H
 #define TAO_TRANSPORT_MUX_STRATEGY_H
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
+
 class TAO_Reply_Dispatcher;
 class TAO_Transport;
 class TAO_Pluggable_Reply_Params;
+class ACE_Lock;
 
 /**
  * @class TAO_Transport_Mux_Strategy
@@ -46,7 +48,7 @@ public:
 
   /// Generate and return an unique request id for the current
   /// invocation.
-  virtual CORBA::ULong request_id (void)  = 0;
+  virtual CORBA::ULong request_id (void) = 0;
 
   // = Bind and Find methods for the <Request ID, ReplyDispatcher>
   //   pairs.
@@ -70,12 +72,14 @@ public:
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
 
   /// Request has been just sent, but the reply is not received. Idle
-  /// the transport now.
-  virtual int idle_after_send (void) = 0;
+  /// the transport now. The return value indicates whether idling was
+  /// successful or not.
+  virtual bool idle_after_send (void) = 0;
 
   /// Request is sent and the reply is received. Idle the transport
-  /// now.
-  virtual int idle_after_reply (void) = 0;
+  /// now. The return value indicates whether idling was successful or
+  /// not.
+  virtual bool idle_after_reply (void) = 0;
 
   /// The transport object has closed the connection, inform all Reply
   /// dispatchers and waiting strategies.

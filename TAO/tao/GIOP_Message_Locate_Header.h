@@ -16,15 +16,14 @@
 
 #ifndef TAO_GIOP_MESSAGE_LOCATE_HEADER_H
 #define TAO_GIOP_MESSAGE_LOCATE_HEADER_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Tagged_Profile.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /**
  * @class TAO_GIOP_Locate_Request_Header

@@ -5,9 +5,10 @@
 #include "Transport.h"
 #include "ORB_Core.h"
 #include "Queued_Message.h"
-#include "debug.h"
 
-ACE_RCSID(tao, Reactive_Flushing_Strategy, "$Id$")
+ACE_RCSID (tao, 
+           Reactive_Flushing_Strategy, 
+           "$Id$")
 
 int
 TAO_Reactive_Flushing_Strategy::schedule_output (TAO_Transport *transport)

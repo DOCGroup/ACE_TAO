@@ -10,19 +10,60 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_DYNAMIC_ADAPTER_H
 #define TAO_DYNAMIC_ADAPTER_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
+
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "ace/CORBA_macros.h"
+
+namespace CORBA
+{
+  class Object;
+  typedef Object *Object_ptr;
+
+  class ORB;
+  typedef ORB *ORB_ptr;
+
+  class NVList;
+  typedef NVList *NVList_ptr;
+
+  class NamedValue;
+  typedef NamedValue *NamedValue_ptr;
+
+  class ExceptionList;
+  typedef ExceptionList *ExceptionList_ptr;
+
+  class Request;
+  typedef Request *Request_ptr;
+
+  class Context;
+  typedef Context *Context_ptr;
+
+  class ServerRequest;
+  typedef ServerRequest *ServerRequest_ptr;
+
+  typedef ULong Flags;
+
+  class Environment;
+
+  TAO_Export Boolean is_nil (Request_ptr);
+  TAO_Export Boolean is_nil (ServerRequest_ptr);
+  TAO_Export Boolean is_nil (Context_ptr);
+
+  TAO_Export void release (Request_ptr);
+  TAO_Export void release (ServerRequest_ptr);
+  TAO_Export void release (Context_ptr);
+};
 
 class TAO_GIOP_Twoway_Invocation;
 

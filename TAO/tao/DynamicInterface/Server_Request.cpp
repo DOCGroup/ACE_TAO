@@ -11,11 +11,12 @@ ACE_RCSID (DynamicInterface,
 #include "tao/NVList.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/Marshal.h"
+#include "tao/Typecode.h"
+#include "tao/Any_Impl.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
-
 
 // Reference counting for DSI ServerRequest object.
 
@@ -184,7 +185,6 @@ CORBA::ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
         {
           this->params_->_tao_encode (
                              this->orb_server_request_.outgoing (),
-                             this->orb_server_request_.orb_core (),
                              CORBA::ARG_INOUT | CORBA::ARG_OUT
                              ACE_ENV_ARG_PARAMETER
                            );

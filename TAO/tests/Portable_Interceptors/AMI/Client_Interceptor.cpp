@@ -10,6 +10,8 @@
 #include "Shared_Interceptor.h"
 #include "tao/OctetSeqC.h"
 
+#include "ace/Log_Msg.h"
+
 
 ACE_RCSID (AMI,
            Client_Interceptor,

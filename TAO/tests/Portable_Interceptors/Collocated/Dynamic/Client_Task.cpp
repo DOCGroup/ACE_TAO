@@ -4,12 +4,13 @@
 
 #include "Client_Task.h"
 #include "testC.h"
+#include "interceptors.h"
 
 ACE_RCSID(Muxing, Client_Task, "$Id$")
 
 Client_Task::Client_Task (const char *ior,
-			  CORBA::ORB_ptr corb,
-			  ACE_Thread_Manager *thr_mgr)
+                          CORBA::ORB_ptr corb,
+                          ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
     , input_ (ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
@@ -40,6 +41,7 @@ Client_Task::svc (void)
         }
 
       run_test (server.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -47,10 +49,11 @@ Client_Task::svc (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Exception caught:");
+                           "Exception caught:");
       return 1;
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 
   return 0;
 
@@ -61,6 +64,9 @@ void
 Client_Task::run_test (Test_Interceptors::Visual_ptr server
           ACE_ENV_ARG_DECL)
 {
+  CORBA::Long val =
+    Echo_Client_Request_Interceptor::client_interceptor_check_;
+
   server->normal (10 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -70,14 +76,9 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server
                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "result = %d\n",
-              result));
-
-
   ACE_TRY
     {
-      server->user (ACE_ENV_SINGLE_ARG_PARAMETER);
+      (void) server->user (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (Test_Interceptors::Silly, userex)
@@ -97,4 +98,11 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
   ACE_ENDTRY;
+  ACE_CHECK;
+
+  if (Echo_Client_Request_Interceptor::client_interceptor_check_ -
+      val != 10)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) ERROR:Client Interceptors not called"
+                " properly\n"));
 }

@@ -3,13 +3,16 @@
 //
 
 #include "tao/Service_Context.h"
-#include "tao/CDR.h"
+
+#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Service_Context.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Service_Context, "$Id$")
+ACE_RCSID (tao,
+           Service_Context, 
+           "$Id$")
 
 void
 TAO_Service_Context::set_context_i (IOP::ServiceId id,
@@ -27,13 +30,12 @@ TAO_Service_Context::set_context_i (IOP::ServiceId id,
        i != 0;
        i = i->cont ())
     {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      ACE_OS_String::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 
   this->set_context_i (context);
 }
-
 
 void
 TAO_Service_Context::set_context_i (IOP::ServiceContext &context,
@@ -48,11 +50,10 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext &context,
        i != 0;
        i = i->cont ())
     {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      ACE_OS_String::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 }
-
 
 void
 TAO_Service_Context::set_context (const IOP::ServiceContext &context)
@@ -74,7 +75,9 @@ TAO_Service_Context::set_context (const IOP::ServiceContext &context,
               return 1;
             }
           else
-            return 0;
+            {
+              return 0;
+            }
         }
     }
 
@@ -101,6 +104,7 @@ TAO_Service_Context::set_context_i (const IOP::ServiceContext& context)
           return;
         }
     }
+
   this->add_context_i (context);
 }
 
@@ -118,6 +122,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext& context)
           return;
         }
     }
+
   this->add_context_i (context);
 }
 
@@ -156,11 +161,13 @@ TAO_Service_Context::get_context (IOP::ServiceContext& context) const
           return 1;
         }
     }
+
   return 0;
 }
 
 int
-TAO_Service_Context::get_context (IOP::ServiceId id, const IOP::ServiceContext **context) const
+TAO_Service_Context::get_context (IOP::ServiceId id, 
+                                  const IOP::ServiceContext **context) const
 {
   for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
     {
@@ -170,6 +177,7 @@ TAO_Service_Context::get_context (IOP::ServiceId id, const IOP::ServiceContext *
           return 1;
         }
     }
+
   return 0;
 }
 
@@ -204,7 +212,9 @@ int
 TAO_Service_Context::decode (TAO_InputCDR& cdr)
 {
   if ((cdr >> this->service_context_) == 0)
-    return 0;
+    {
+      return 0;
+    }
 
   return 1;
 }

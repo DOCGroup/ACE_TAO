@@ -19,13 +19,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+
 #if (TAO_HAS_INTERCEPTORS == 1)
+
+#include "Object_Adapter.h"
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
@@ -33,10 +37,6 @@
 #include "tao/OctetSeqC.h"
 #include "tao/Service_Context.h"
 #include "tao/TAO_Server_Request.h"
-
-#include "tao/PortableServer/Object_Adapter.h"
-
-#include "tao/PortableServer/portableserver_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

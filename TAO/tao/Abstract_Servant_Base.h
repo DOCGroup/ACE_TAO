@@ -15,22 +15,43 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ABSTRACT_SERVANT_BASE_H_
 #define TAO_ABSTRACT_SERVANT_BASE_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "tao/Collocation_Strategy.h"
+#include "tao/Pseudo_VarOut_T.h"
 
 class TAO_ServerRequest;
 class TAO_Stub;
+class TAO_Abstract_ServantBase;
+
+namespace CORBA
+{
+  class InterfaceDef;
+  typedef InterfaceDef *InterfaceDef_ptr;
+
+  class Environment;
+
+  class Object;
+  typedef Object *Object_ptr;
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+};
+
+namespace TAO
+{
+  class Argument;
+};
 
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
@@ -41,11 +62,14 @@ typedef void (*TAO_Skeleton)(
 #endif
   );
 
-namespace CORBA
-{
-  class InterfaceDef;
-  typedef InterfaceDef *InterfaceDef_ptr;
-};
+typedef void (*TAO_Collocated_Skeleton)(
+    TAO_Abstract_ServantBase *,
+    TAO::Argument **,
+    int
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
+    , CORBA::Environment &
+#endif
+  );
 
 class TAO_Export TAO_Abstract_ServantBase
 {
@@ -55,20 +79,20 @@ public:
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char* logical_type_id
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                                ACE_ENV_ARG_DECL) = 0;
 
   /// Default <_non_existent>: always returns false.
   virtual CORBA::Boolean _non_existent (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+    ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Query the Interface Repository.
   virtual CORBA::InterfaceDef_ptr _get_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_SINGLE_ARG_DECL
     ) = 0;
 
   /// Default <_get_component>: always returns nil.
   virtual CORBA::Object_ptr _get_component (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+    ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   //@{
   /**
@@ -76,8 +100,8 @@ public:
    *
    * Reference counting hooks are no-ops by default.
    */
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
   //@}
 
   /// Get the correct vtable.
@@ -85,6 +109,20 @@ public:
 
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL) = 0;
+
+    /// Find an operation in the operation table and return a
+  /// TAO_Skeleton which can be used to make upcalls
+  virtual int _find (const char *opname,
+                     TAO_Skeleton &skelfunc,
+                     const unsigned int length = 0) = 0;
+
+  /// Find an operation in the operation table and return a
+  /// TAO_Collocated_Skeleton which can be used to make upcalls onto
+  /// collocated servants.
+  virtual int _find (const char *opname,
+                     TAO_Collocated_Skeleton &skelfunc,
+                     TAO::Collocation_Strategy s,
+                     const unsigned int length = 0) = 0;
 
 protected:
 
@@ -113,15 +151,10 @@ protected:
                                             void *derived_this
                                             ACE_ENV_ARG_DECL) = 0;
 
-  /// Find an operation in the operation table.
-  virtual int _find (const char *opname,
-                     TAO_Skeleton &skelfunc,
-                     const unsigned int length = 0) = 0;
-
   /// Register a CORBA IDL operation name.
-  virtual int _bind (const char *opname,
+  /*virtual int _bind (const char *opname,
                      const TAO_Skeleton skel_ptr) = 0;
-
+  */
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 

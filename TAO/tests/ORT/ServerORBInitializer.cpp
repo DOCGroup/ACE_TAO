@@ -2,6 +2,8 @@
 #include "ServerRequestInterceptor.h"
 #include "ORT_test_IORInterceptor.h"
 
+#include "tao/ORB_Constants.h"
+
 
 ACE_RCSID (ORT,
            ServerORBInitializer,

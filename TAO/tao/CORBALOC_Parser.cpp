@@ -1,7 +1,6 @@
 #include "CORBALOC_Parser.h"
 #include "ORB_Core.h"
 #include "Stub.h"
-#include "MProfile.h"
 #include "Connector_Registry.h"
 #include "tao/debug.h"
 
@@ -9,7 +8,7 @@
 #include "CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO,
+ACE_RCSID (tao,
            CORBALOC_Parser,
            "$Id$")
 
@@ -23,7 +22,7 @@ static const char* protocol_prefixes[] = {
   "iiop",
   "miop",
   "rir",
-#if TAO_HAS_SCIOP == 1 
+#if TAO_HAS_SCIOP == 1
   "sciop",
 #endif
   "shmiop",
@@ -374,10 +373,10 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
   if (colon_slot != 0)
   {
     size_t i;
-    const size_t protocol_prefixes_size = 
+    const size_t protocol_prefixes_size =
       sizeof(protocol_prefixes)/sizeof(protocol_prefixes[0]);
 
-    for (i = 0; i < protocol_prefixes_size ; ++i) 
+    for (i = 0; i < protocol_prefixes_size ; ++i)
     {
       if (ACE_OS::strncmp (end_point,
                          protocol_prefixes[i],

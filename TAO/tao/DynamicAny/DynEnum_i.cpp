@@ -3,6 +3,7 @@
 
 #include "DynEnum_i.h"
 #include "DynAnyFactory.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (DynamicAny,
            DynEnum_i,
@@ -79,39 +80,15 @@ TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynEnum_i *
-TAO_DynEnum_i::_narrow (CORBA::Object_ptr obj
+TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return 0;
     }
 
-  return ACE_reinterpret_cast (
-             TAO_DynEnum_i*,
-             obj->_tao_QueryInterface (
-                      ACE_reinterpret_cast (
-                          ptrdiff_t,
-                          &TAO_DynEnum_i::_narrow
-                        )
-                    )
-           );
-}
-
-void*
-TAO_DynEnum_i::_tao_QueryInterface (ptrdiff_t type)
-{
-  ptrdiff_t mytype =
-    ACE_reinterpret_cast (ptrdiff_t,
-                          &TAO_DynEnum_i::_narrow);
-  if (type == mytype)
-    {
-      this->_add_ref ();
-      return this;
-    }
-
-  return
-    this->ACE_NESTED_CLASS (DynamicAny, DynEnum::_tao_QueryInterface) (type);
+  return dynamic_cast<TAO_DynEnum_i *> (_tao_objref);
 }
 
 // ****************************************************************

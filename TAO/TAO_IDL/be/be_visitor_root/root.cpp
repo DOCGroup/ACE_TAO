@@ -13,7 +13,6 @@
 //    Aniruddha Gokhale
 //
 // ============================================================================
-
 ACE_RCSID (be_visitor_root,
            root,
            "$Id$")
@@ -45,6 +44,51 @@ int be_visitor_root::visit_root (be_root *node)
                          "(%N:%l) be_visitor_root::init - "
                          "failed to initialize context\n"),
                         -1);
+    }
+
+  int status = 0;
+  be_visitor_context ctx = *this->ctx_;
+
+  switch (this->ctx_->state ())
+    {
+      case TAO_CodeGen::TAO_ROOT_CS:
+        {
+          be_visitor_arg_traits arg_visitor ("", &ctx);
+          status = node->accept (&arg_visitor);
+
+          if (status == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_root::"
+                                 "visit_root - "
+                                 "failed to generate stub arg traits\n"),
+                                -1);
+            }
+        }
+
+        break;
+      case TAO_CodeGen::TAO_ROOT_SS:
+        {
+          if (be_global->gen_thru_poa_collocation ()
+              || be_global->gen_direct_collocation ())
+            {
+              be_visitor_arg_traits arg_visitor ("", &ctx);
+              status = node->accept (&arg_visitor);
+
+              if (status == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_visitor_root::"
+                                     "visit_root - "
+                                     "failed to generate stub arg traits\n"),
+                                    -1);
+                }
+            }
+        }
+
+        break;
+      default:
+        break;
     }
 
   if (this->visit_scope (node) == -1)
@@ -82,7 +126,7 @@ int be_visitor_root::visit_root (be_root *node)
 
           *os << be_nl << be_nl
               << "extern " << be_global->stub_export_macro () << be_nl
-              << i->full_base_proxy_broker_name () << " *" << be_nl
+              << "TAO::Collocation_Proxy_Broker *" << be_nl
               << "(*" << i->flat_client_enclosing_scope ()
               << i->base_proxy_broker_name ()
               << "_Factory_function_pointer) ("
@@ -138,7 +182,7 @@ int be_visitor_root::visit_root (be_root *node)
               << be_nl
               << "// interfaces that inherit from both CORBA::Object" << be_nl
               << "// and CORBA::AbstractBase." << be_nl << be_nl
-              << "TAO_NAMESPACE CORBA" << be_nl
+              << "namespace CORBA" << be_nl
               << "{" << be_idt;
         }
 
@@ -156,18 +200,15 @@ int be_visitor_root::visit_root (be_root *node)
       if (size > 0)
         {
           *os << be_uidt_nl
-              << "}" << be_nl
-              << "TAO_NAMESPACE_CLOSE";
+              << "}";
         }
     }
-
-  be_visitor_context ctx (*this->ctx_);
 
   // Make one more pass over the entire tree and generate the OBV_ namespaces
   // and OBV_ classes.
 
   idl_bool obv = 1;
-  int status = 0;
+  status = 0;
 
   switch (this->ctx_->state ())
     {
@@ -201,6 +242,31 @@ int be_visitor_root::visit_root (be_root *node)
         }
     }
 
+  status = 0;
+  ctx = *this->ctx_;
+
+  switch (this->ctx_->state ())
+    {
+      case TAO_CodeGen::TAO_ROOT_CH:
+        {
+          be_visitor_traits visitor (&ctx);
+          status = node->accept (&visitor);
+
+          if (status == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_root::"
+                                 "visit_root - "
+                                 "failed to generate traits\n"),
+                                -1);
+            }
+        }
+
+        break;
+      default:
+        break;
+    }
+
   // The next thing we need to do is make one more pass thru the entire tree
   // and generate code for all the <<= and >>= operators for all the
   // user-defined types.
@@ -210,73 +276,46 @@ int be_visitor_root::visit_root (be_root *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_ROOT_CH:
-      {
-        ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CH);
+      case TAO_CodeGen::TAO_ROOT_CH:
+        {
+          ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CH);
 
-        if (be_global->any_support ())
-          {
-            be_visitor_root_any_op visitor (&ctx);
-            status = node->accept (&visitor);
-          }
+          if (be_global->any_support ())
+            {
+              be_visitor_root_any_op visitor (&ctx);
+              status = node->accept (&visitor);
+            }
 
+          break;
+        }
+      case TAO_CodeGen::TAO_ROOT_CS:
+        {
+          ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CS);
+
+          if (be_global->any_support ())
+            {
+              be_visitor_root_any_op visitor (&ctx);
+              status = node->accept (&visitor);
+            }
+
+          break;
+        }
+      case TAO_CodeGen::TAO_ROOT_IH:
+      case TAO_CodeGen::TAO_ROOT_SH:
+      case TAO_CodeGen::TAO_ROOT_CI:
+      case TAO_CodeGen::TAO_ROOT_IS:
+      case TAO_CodeGen::TAO_ROOT_SI:
+      case TAO_CodeGen::TAO_ROOT_SS:
+      case TAO_CodeGen::TAO_ROOT_TIE_SH:
         break;
-      }
-    case TAO_CodeGen::TAO_ROOT_CS:
-      {
-        ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CS);
-
-        if (be_global->any_support ())
-          {
-            be_visitor_root_any_op visitor (&ctx);
-            status = node->accept (&visitor);
-          }
-
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_IH:
-      (void) tao_cg->end_implementation_header (
-          be_global->be_get_implementation_hdr_fname (0)
-        );
-      break;
-    case TAO_CodeGen::TAO_ROOT_SH:
-      (void) tao_cg->end_server_header ();
-      return 0;
-    case TAO_CodeGen::TAO_ROOT_CI:
-    case TAO_CodeGen::TAO_ROOT_IS:
-      break;
-    case TAO_CodeGen::TAO_ROOT_SI:
-      if (be_global->gen_tie_classes ())
+      default:
         {
-          (void) tao_cg->end_server_template_inline ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_constant - "
+                             "Bad context state\n"),
+                            -1);
         }
-
-      *os << "\n\n";
-
-      return 0;
-    case TAO_CodeGen::TAO_ROOT_SS:
-      if (be_global->gen_tie_classes ())
-        {
-          (void) tao_cg->end_server_template_skeletons ();
-        }
-
-      (void) tao_cg->end_server_skeletons ();
-      return 0;
-    case TAO_CodeGen::TAO_ROOT_TIE_SH:
-      if (be_global->gen_tie_classes ())
-        {
-          (void) tao_cg->end_server_template_header ();
-        }
-
-      return 0;
-    default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_root::"
-                           "visit_constant - "
-                           "Bad context state\n"),
-                          -1);
-      }
     }
 
   if (status == -1)
@@ -289,7 +328,7 @@ int be_visitor_root::visit_root (be_root *node)
     }
 
 
-  // Make one more pass over the entire tree and generate the CDR operators.
+  // Make another pass over the entire tree and generate the CDR operators.
   ctx = *this->ctx_;
   status = 0;
 
@@ -318,15 +357,16 @@ int be_visitor_root::visit_root (be_root *node)
       }
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
+    case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_TIE_SH:
-      return 0; // nothing to be done
+      break; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_root::"
-                           "visit_constant - "
+                           "visit_root - "
                            "Bad context state\n"),
                           -1);
       }
@@ -341,6 +381,19 @@ int be_visitor_root::visit_root (be_root *node)
                         -1);
     }
 
+  if (be_global->gen_tmplinst ())
+    {
+      if (this->gen_explicit_tmplinst (node, os) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "explicit template instantiation "
+                             "generation failed\n"),
+                            -1);
+        }
+    }
+
   // Generate any final code such as #endifs and/or EOF newlines.
   switch (this->ctx_->state ())
     {
@@ -350,6 +403,38 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_CS:
       *os << "\n\n";
+      break;
+    case TAO_CodeGen::TAO_ROOT_SH:
+      (void) tao_cg->end_server_header ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_IS:
+      break;
+    case TAO_CodeGen::TAO_ROOT_IH:
+      (void) tao_cg->end_implementation_header (
+          be_global->be_get_implementation_hdr_fname (0)
+        );
+      break;
+    case TAO_CodeGen::TAO_ROOT_SI:
+      if (be_global->gen_tie_classes ())
+        {
+          (void) tao_cg->end_server_template_inline ();
+        }
+
+      break;
+    case TAO_CodeGen::TAO_ROOT_SS:
+      if (be_global->gen_tie_classes ())
+        {
+          (void) tao_cg->end_server_template_skeletons ();
+        }
+
+      (void) tao_cg->end_server_skeletons ();
+      break;
+    case TAO_CodeGen::TAO_ROOT_TIE_SH:
+      if (be_global->gen_tie_classes ())
+        {
+          (void) tao_cg->end_server_template_header ();
+        }
+
       break;
     default:
       break;
@@ -1598,6 +1683,95 @@ be_visitor_root::visit_typedef (be_typedef *node)
                          "visit_typedef - "
                          "failed to accept visitor"),
                         -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_root::gen_explicit_tmplinst (be_root *node,
+                                        TAO_OutStream *os)
+{
+  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CS)
+    {
+      // Make two more passes over the AST to generate the explicit
+      // template instantiations, one for 'template class ...' and
+      // one for '#pragma instantiate ...' for the client side.
+
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
+      os->gen_ifdef_AHETI ();
+
+      be_visitor_tmplinst_cs visitor (this->ctx_);
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "stub explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_elif_AHETI ();
+
+      visitor.switch_mode ();
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "stub explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_endif_AHETI ();
+    }
+  else if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS)
+    {
+      // Make two more passes over the AST to generate the explicit
+      // template instantiations, one for 'template class ...' and
+      // one for '#pragma instantiate ...' for the client side.
+
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__
+          << be_nl << be_nl;
+
+      *os << "#if 0 " << be_nl
+          << "/* Useful at a later date." << be_nl
+          << "At present will be commented out */" << be_nl;
+
+      os->gen_ifdef_AHETI ();
+
+      be_visitor_tmplinst_ss visitor (this->ctx_);
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "skel explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_elif_AHETI ();
+
+      visitor.switch_mode ();
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "skel explicit template instantiation failed\n"),
+                            -1);
+        }
+
+      os->gen_endif_AHETI ();
+
+      *os << be_nl << "#endif /*if 0*/ " << be_nl;
     }
 
   return 0;

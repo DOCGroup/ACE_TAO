@@ -1,18 +1,17 @@
 #include "tao/GIOP_Message_Generator_Parser.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
-#include "tao/CDR.h"
-#include "tao/Object_KeyC.h"
-#include "tao/IOPC.h"
-#include "tao/Tagged_Profile.h"
 #include "tao/debug.h"
+
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Generator_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, GIOP_Message_Gen_Parser, "$Id$")
-
+ACE_RCSID (tao, 
+           GIOP_Message_Gen_Parser, 
+           "$Id$")
 
 int
 TAO_GIOP_Message_Generator_Parser::parse_reply (

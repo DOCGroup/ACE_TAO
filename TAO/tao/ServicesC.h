@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -26,8 +32,8 @@
 #define _TAO_IDL_ORIG_SERVICESC_H_
 
 #include /**/ "ace/pre.h"
+
 #include "tao/OctetSeqC.h"
-#include "tao/CDR.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -61,7 +67,7 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  CORBA
+namespace CORBA
 {
   
   // TAO_IDL - Generated from
@@ -103,7 +109,7 @@ TAO_NAMESPACE  CORBA
   const CORBA::ServiceType Security = 1U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
   
   struct ServiceDetail;
   
@@ -138,7 +144,7 @@ TAO_NAMESPACE  CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceDetail;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
   
   struct ServiceInformation;
   
@@ -166,69 +172,79 @@ TAO_NAMESPACE  CORBA
     
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
+
+#if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEOPTION__CH_)
+#define _CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEOPTION__CH_
     
-    class TAO_Export _tao_seq_ServiceOption
+    class TAO_Export _tao_seq_CORBA_ServiceOption_
       : public
           TAO_Unbounded_Sequence<
-              CORBA::ServiceOption
+              ACE_NESTED_CLASS (CORBA, ServiceOption)
             >
     {
     public:
-      _tao_seq_ServiceOption (void);
-      _tao_seq_ServiceOption (CORBA::ULong max);
-      _tao_seq_ServiceOption (
+      _tao_seq_CORBA_ServiceOption_ (void);
+      _tao_seq_CORBA_ServiceOption_ (CORBA::ULong max);
+      _tao_seq_CORBA_ServiceOption_ (
           CORBA::ULong max,
           CORBA::ULong length,
           CORBA::ULong* buffer, 
           CORBA::Boolean release = 0
         );
-      _tao_seq_ServiceOption (const _tao_seq_ServiceOption &);
-      ~_tao_seq_ServiceOption (void);
+      _tao_seq_CORBA_ServiceOption_ (const _tao_seq_CORBA_ServiceOption_ &);
+      ~_tao_seq_CORBA_ServiceOption_ (void);
       
       static void _tao_any_destructor (void *);
       
       
     };
+
+#endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:447
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:453
     
-    typedef _tao_seq_ServiceOption _service_options_seq;
-    _tao_seq_ServiceOption service_options;
+    typedef _tao_seq_CORBA_ServiceOption_ _service_options_seq;
+    _tao_seq_CORBA_ServiceOption_ service_options;
     
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
+
+#if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEDETAIL__CH_)
+#define _CORBA_SERVICEINFORMATION__TAO_SEQ_CORBA_SERVICEDETAIL__CH_
     
-    class TAO_Export _tao_seq_ServiceDetail
+    class TAO_Export _tao_seq_CORBA_ServiceDetail_
       : public
           TAO_Unbounded_Sequence<
-              CORBA::ServiceDetail
+              ACE_NESTED_CLASS (CORBA, ServiceDetail)
             >
     {
     public:
-      _tao_seq_ServiceDetail (void);
-      _tao_seq_ServiceDetail (CORBA::ULong max);
-      _tao_seq_ServiceDetail (
+      _tao_seq_CORBA_ServiceDetail_ (void);
+      _tao_seq_CORBA_ServiceDetail_ (CORBA::ULong max);
+      _tao_seq_CORBA_ServiceDetail_ (
           CORBA::ULong max,
           CORBA::ULong length,
           ACE_NESTED_CLASS (CORBA, ServiceDetail)* buffer, 
           CORBA::Boolean release = 0
         );
-      _tao_seq_ServiceDetail (const _tao_seq_ServiceDetail &);
-      ~_tao_seq_ServiceDetail (void);
+      _tao_seq_CORBA_ServiceDetail_ (const _tao_seq_CORBA_ServiceDetail_ &);
+      ~_tao_seq_CORBA_ServiceDetail_ (void);
       
       static void _tao_any_destructor (void *);
       
       
     };
+
+#endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:447
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:453
     
-    typedef _tao_seq_ServiceDetail _service_details_seq;
-    _tao_seq_ServiceDetail service_details;
+    typedef _tao_seq_CORBA_ServiceDetail_ _service_details_seq;
+    _tao_seq_CORBA_ServiceDetail_ service_details;
   };
   
   // TAO_IDL - Generated from
@@ -237,10 +253,17 @@ TAO_NAMESPACE  CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceInformation;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module CORBA
+} // module CORBA
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
+};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52
@@ -264,50 +287,50 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ServiceI
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ServiceDetail &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ServiceDetail &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:54
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ch.cpp:53
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ServiceInformation &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ServiceInformation &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
-#if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceOption_H_
-#define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceOption_H_
+#if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceOption__H_
+#define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceOption__H_
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::ServiceInformation::_tao_seq_ServiceOption &
+    const CORBA::ServiceInformation::_tao_seq_CORBA_ServiceOption_ &
   );
 TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::ServiceInformation::_tao_seq_ServiceOption &
+    CORBA::ServiceInformation::_tao_seq_CORBA_ServiceOption_ &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceOption_H_ */
+#endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceOption__H_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
-#if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceDetail_H_
-#define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceDetail_H_
+#if !defined _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceDetail__H_
+#define _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceDetail__H_
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::ServiceInformation::_tao_seq_ServiceDetail &
+    const CORBA::ServiceInformation::_tao_seq_CORBA_ServiceDetail_ &
   );
 TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::ServiceInformation::_tao_seq_ServiceDetail &
+    CORBA::ServiceInformation::_tao_seq_CORBA_ServiceDetail_ &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_ServiceDetail_H_ */
+#endif /* _TAO_CDR_OP_CORBA_ServiceInformation__tao_seq_CORBA_ServiceDetail__H_ */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
@@ -315,7 +338,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "ServicesC.i"

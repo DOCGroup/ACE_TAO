@@ -1,5 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -23,15 +23,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ORB_Core.h"
+#include "Thread_Per_Connection_Handler.h"
 #include "Server_Strategy_Factory.h"
+#include "ORB_Core.h"
 #include "Transport_Cache_Manager.h"
 #include "Thread_Lane_Resources.h"
-#include "Transport.h"
-#include "Thread_Per_Connection_Handler.h"
-#include "debug.h"
-
-#include "ace/Object_Manager.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Impl.i"
@@ -41,13 +37,14 @@ ACE_RCSID (tao,
            Acceptor_Impl,
            "$Id$")
 
-
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>
-TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
-                                                           void *arg,
-                                                           CORBA::Boolean flag)
+TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (
+    TAO_ORB_Core *orb_core,
+    void *arg,
+    CORBA::Boolean flag
+  )
   : orb_core_ (orb_core),
     arg_ (arg),
     lite_flag_ (flag)

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_INTERNAL_H
 #define TAO_INTERNAL_H
 
@@ -34,7 +33,6 @@
 class TAO_Export TAO_Internal
 {
 public:
-
   /// Extract ACE Service Configurator arguments from the given
   /// argument vector, and initialize the ACE Service Configurator.
   /// This method should be called before the ORB Core is initialized,
@@ -57,7 +55,6 @@ public:
                                         const char *client_strategy_factory_args);
 
 private:
-
   /// Private constructor prevents this class from being
   /// instantiated.
   TAO_Internal (void);
@@ -81,8 +78,6 @@ private:
                               int skip_service_config_open = 0);
 
 private:
-
-
   /// Number of times open_services() has been called.  Incremented by
   /// open_services(), and decremented by close_services().  Access to
   /// this is protected via the \param ACE_Static_Object_Lock.

@@ -62,12 +62,9 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server
   server->normal (10 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "\"normal\" operation done\n"));
 
   server->nothing (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
-  ACE_DEBUG ((LM_DEBUG, "\"nothing\" operation done\n"));
 
   ACE_TRY
     {

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_POAMANAGER_H
 #define TAO_POAMANAGER_H
 #include /**/ "ace/pre.h"

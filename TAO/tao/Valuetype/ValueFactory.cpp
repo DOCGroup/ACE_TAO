@@ -31,20 +31,6 @@ CORBA::remove_ref (CORBA::ValueFactoryBase *val)
 
 // ===========================================================
 
-void
-CORBA::tao_ValueFactoryBase_life::tao_add_ref (ValueFactoryBase *p)
-{
-  CORBA::add_ref (p);
-}
-
-void
-CORBA::tao_ValueFactoryBase_life::tao_remove_ref (ValueFactoryBase *p)
-{
-  CORBA::remove_ref (p);
-}
-
-// ===========================================================
-
 CORBA::ValueFactoryBase::ValueFactoryBase (void)
   : _tao_reference_count_ (1)
 {
@@ -57,8 +43,8 @@ CORBA::ValueFactoryBase::~ValueFactoryBase (void)
 void
 CORBA::ValueFactoryBase::_add_ref (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, 
-             guard, 
+  ACE_GUARD (TAO_SYNCH_MUTEX,
+             guard,
              this->_tao_reference_count_lock_);
 
   ++this->_tao_reference_count_;
@@ -68,8 +54,8 @@ void
 CORBA::ValueFactoryBase::_remove_ref (void)
 {
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, 
-               guard, 
+    ACE_GUARD (TAO_SYNCH_MUTEX,
+               guard,
                this->_tao_reference_count_lock_);
 
     --this->_tao_reference_count_;
@@ -90,3 +76,26 @@ CORBA::ValueFactoryBase::create_for_unmarshal_abstract (void)
   return 0;
 }
 
+// =============== Template Specializations =====================
+namespace TAO
+{
+  using namespace CORBA;
+
+  void
+  Value_Traits<ValueFactoryBase>::tao_add_ref (ValueFactoryBase *p)
+  {
+    CORBA::add_ref (p);
+  }
+
+  void
+  Value_Traits<ValueFactoryBase>::tao_remove_ref (ValueFactoryBase * p)
+  {
+    CORBA::remove_ref (p);
+  }
+
+  void
+  Value_Traits<ValueFactoryBase>::tao_release (ValueFactoryBase * p)
+  {
+    CORBA::remove_ref (p);
+  }
+}
