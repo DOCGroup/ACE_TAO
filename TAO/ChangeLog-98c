@@ -1,3 +1,15 @@
+Thu Mar 12 15:53:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/except.h: Changed the member functions "type ()" and "id ()"
+	on the CORBA::Exception class to "_type ()" and "_id ()". This
+	affected the following files:
+	tao/{except, object, poaC, svrrqst}.cpp
+
+	* TAO_IDL/be/be_visitor_exception.cpp: Made changes to use the
+	_type and _id methods. Thanks to Seth Widoff for noticing this in
+	his Trader application where a user defined exception had a member
+	called "type" which clashed with the base class operation "type".
+
 Thu Mar 12 15:00:47 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_exception.cpp: In those cases where object

@@ -290,7 +290,7 @@ CORBA::TypeCode_ptr PortableServer::_tc_ObjectId = &_tc__tc_PortableServer_Objec
 
 // copy constructor
 PortableServer::ForwardRequest::ForwardRequest(const PortableServer::ForwardRequest &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
     this->forward_reference = _tao_excp.forward_reference;
 }
@@ -299,7 +299,7 @@ PortableServer::ForwardRequest::ForwardRequest(const PortableServer::ForwardRequ
 PortableServer::ForwardRequest&
 PortableServer::ForwardRequest::operator= (const PortableServer::ForwardRequest &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   this->forward_reference = _tao_excp.forward_reference;
   return *this;
 }
@@ -315,7 +315,7 @@ PortableServer::ForwardRequest::ForwardRequest(const CORBA::Object_ptr &_tao_for
 PortableServer::ForwardRequest_ptr
 PortableServer::ForwardRequest::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/ForwardRequest:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/ForwardRequest:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::ForwardRequest_ptr, exc);
   else
         return 0;
@@ -1082,7 +1082,7 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
   if (!obj->_is_collocated () || !obj->_servant())
   {
     // This can only be colocated
-    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
     return PortableServer::POAManager::_nil ();
   } // end of if
 
@@ -1113,7 +1113,7 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_bind (const char *ho
 
 // copy constructor
 PortableServer::POAManager::AdapterInactive::AdapterInactive(const PortableServer::POAManager::AdapterInactive &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1121,7 +1121,7 @@ PortableServer::POAManager::AdapterInactive::AdapterInactive(const PortableServe
 PortableServer::POAManager::AdapterInactive&
 PortableServer::POAManager::AdapterInactive::operator= (const PortableServer::POAManager::AdapterInactive &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1129,7 +1129,7 @@ PortableServer::POAManager::AdapterInactive::operator= (const PortableServer::PO
 PortableServer::POAManager::AdapterInactive_ptr
 PortableServer::POAManager::AdapterInactive::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POAManager/AdapterInactive:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POAManager/AdapterInactive:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POAManager::AdapterInactive_ptr, exc);
   else
         return 0;
@@ -1184,7 +1184,7 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
   if (!obj->_is_collocated () || !obj->_servant())
   {
     // This can only be colocated
-    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
     return PortableServer::AdapterActivator::_nil ();
   } // end of if
 
@@ -1252,7 +1252,7 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
   if (!obj->_is_collocated () || !obj->_servant())
   {
     // This can only be colocated
-    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
     return PortableServer::ServantManager::_nil ();
   } // end of if
 
@@ -1320,7 +1320,7 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
   if (!obj->_is_collocated () || !obj->_servant())
   {
     // This can only be colocated
-    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
     return PortableServer::ServantActivator::_nil ();
   } // end of if
 
@@ -1389,7 +1389,7 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
   if (!obj->_is_collocated () || !obj->_servant())
   {
     // This can only be colocated
-    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
     return PortableServer::ServantLocator::_nil ();
   } // end of if
 
@@ -1458,7 +1458,7 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
   if (!obj->_is_collocated () || !obj->_servant())
   {
     // This can only be colocated
-    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));    
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
     return PortableServer::POA::_nil ();
   } // end of if
 
@@ -1489,7 +1489,7 @@ PortableServer::POA_ptr PortableServer::POA::_bind (const char *host, CORBA::USh
 
 // copy constructor
 PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists(const PortableServer::POA::AdapterAlreadyExists &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1497,7 +1497,7 @@ PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists(const PortableSe
 PortableServer::POA::AdapterAlreadyExists&
 PortableServer::POA::AdapterAlreadyExists::operator= (const PortableServer::POA::AdapterAlreadyExists &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1505,7 +1505,7 @@ PortableServer::POA::AdapterAlreadyExists::operator= (const PortableServer::POA:
 PortableServer::POA::AdapterAlreadyExists_ptr
 PortableServer::POA::AdapterAlreadyExists::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/AdapterAlreadyExists:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/AdapterAlreadyExists:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::AdapterAlreadyExists_ptr, exc);
   else
         return 0;
@@ -1523,7 +1523,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists = &_tc__tc_Por
 
 // copy constructor
 PortableServer::POA::AdapterInactive::AdapterInactive(const PortableServer::POA::AdapterInactive &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1531,7 +1531,7 @@ PortableServer::POA::AdapterInactive::AdapterInactive(const PortableServer::POA:
 PortableServer::POA::AdapterInactive&
 PortableServer::POA::AdapterInactive::operator= (const PortableServer::POA::AdapterInactive &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1539,7 +1539,7 @@ PortableServer::POA::AdapterInactive::operator= (const PortableServer::POA::Adap
 PortableServer::POA::AdapterInactive_ptr
 PortableServer::POA::AdapterInactive::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/AdapterInactive:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/AdapterInactive:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::AdapterInactive_ptr, exc);
   else
         return 0;
@@ -1557,7 +1557,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterInactive = &_tc__tc_Portable
 
 // copy constructor
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent(const PortableServer::POA::AdapterNonExistent &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1565,7 +1565,7 @@ PortableServer::POA::AdapterNonExistent::AdapterNonExistent(const PortableServer
 PortableServer::POA::AdapterNonExistent&
 PortableServer::POA::AdapterNonExistent::operator= (const PortableServer::POA::AdapterNonExistent &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1573,7 +1573,7 @@ PortableServer::POA::AdapterNonExistent::operator= (const PortableServer::POA::A
 PortableServer::POA::AdapterNonExistent_ptr
 PortableServer::POA::AdapterNonExistent::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/AdapterNonExistent:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/AdapterNonExistent:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::AdapterNonExistent_ptr, exc);
   else
         return 0;
@@ -1591,7 +1591,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterNonExistent = &_tc__tc_Porta
 
 // copy constructor
 PortableServer::POA::InvalidPolicy::InvalidPolicy(const PortableServer::POA::InvalidPolicy &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
     this->index = _tao_excp.index;
 }
@@ -1600,7 +1600,7 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy(const PortableServer::POA::Inv
 PortableServer::POA::InvalidPolicy&
 PortableServer::POA::InvalidPolicy::operator= (const PortableServer::POA::InvalidPolicy &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   this->index = _tao_excp.index;
   return *this;
 }
@@ -1616,7 +1616,7 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy(const CORBA::UShort _tao_index
 PortableServer::POA::InvalidPolicy_ptr
 PortableServer::POA::InvalidPolicy::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/InvalidPolicy:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/InvalidPolicy:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::InvalidPolicy_ptr, exc);
   else
         return 0;
@@ -1637,7 +1637,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_InvalidPolicy = &_tc__tc_PortableSe
 
 // copy constructor
 PortableServer::POA::NoServant::NoServant(const PortableServer::POA::NoServant &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1645,7 +1645,7 @@ PortableServer::POA::NoServant::NoServant(const PortableServer::POA::NoServant &
 PortableServer::POA::NoServant&
 PortableServer::POA::NoServant::operator= (const PortableServer::POA::NoServant &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1653,7 +1653,7 @@ PortableServer::POA::NoServant::operator= (const PortableServer::POA::NoServant 
 PortableServer::POA::NoServant_ptr
 PortableServer::POA::NoServant::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/NoServant:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/NoServant:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::NoServant_ptr, exc);
   else
         return 0;
@@ -1671,7 +1671,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant = &_tc__tc_PortableServer
 
 // copy constructor
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive(const PortableServer::POA::ObjectAlreadyActive &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1679,7 +1679,7 @@ PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive(const PortableServ
 PortableServer::POA::ObjectAlreadyActive&
 PortableServer::POA::ObjectAlreadyActive::operator= (const PortableServer::POA::ObjectAlreadyActive &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1687,7 +1687,7 @@ PortableServer::POA::ObjectAlreadyActive::operator= (const PortableServer::POA::
 PortableServer::POA::ObjectAlreadyActive_ptr
 PortableServer::POA::ObjectAlreadyActive::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/ObjectAlreadyActive:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/ObjectAlreadyActive:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::ObjectAlreadyActive_ptr, exc);
   else
         return 0;
@@ -1705,7 +1705,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectAlreadyActive = &_tc__tc_Port
 
 // copy constructor
 PortableServer::POA::ObjectNotActive::ObjectNotActive(const PortableServer::POA::ObjectNotActive &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1713,7 +1713,7 @@ PortableServer::POA::ObjectNotActive::ObjectNotActive(const PortableServer::POA:
 PortableServer::POA::ObjectNotActive&
 PortableServer::POA::ObjectNotActive::operator= (const PortableServer::POA::ObjectNotActive &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1721,7 +1721,7 @@ PortableServer::POA::ObjectNotActive::operator= (const PortableServer::POA::Obje
 PortableServer::POA::ObjectNotActive_ptr
 PortableServer::POA::ObjectNotActive::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/ObjectNotActive:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/ObjectNotActive:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::ObjectNotActive_ptr, exc);
   else
         return 0;
@@ -1739,7 +1739,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectNotActive = &_tc__tc_Portable
 
 // copy constructor
 PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive(const PortableServer::POA::ServantAlreadyActive &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1747,7 +1747,7 @@ PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive(const PortableSe
 PortableServer::POA::ServantAlreadyActive&
 PortableServer::POA::ServantAlreadyActive::operator= (const PortableServer::POA::ServantAlreadyActive &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1755,7 +1755,7 @@ PortableServer::POA::ServantAlreadyActive::operator= (const PortableServer::POA:
 PortableServer::POA::ServantAlreadyActive_ptr
 PortableServer::POA::ServantAlreadyActive::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/ServantAlreadyActive:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/ServantAlreadyActive:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::ServantAlreadyActive_ptr, exc);
   else
         return 0;
@@ -1773,7 +1773,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantAlreadyActive = &_tc__tc_Por
 
 // copy constructor
 PortableServer::POA::ServantNotActive::ServantNotActive(const PortableServer::POA::ServantNotActive &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1781,7 +1781,7 @@ PortableServer::POA::ServantNotActive::ServantNotActive(const PortableServer::PO
 PortableServer::POA::ServantNotActive&
 PortableServer::POA::ServantNotActive::operator= (const PortableServer::POA::ServantNotActive &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1789,7 +1789,7 @@ PortableServer::POA::ServantNotActive::operator= (const PortableServer::POA::Ser
 PortableServer::POA::ServantNotActive_ptr
 PortableServer::POA::ServantNotActive::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/ServantNotActive:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/ServantNotActive:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::ServantNotActive_ptr, exc);
   else
         return 0;
@@ -1807,7 +1807,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantNotActive = &_tc__tc_Portabl
 
 // copy constructor
 PortableServer::POA::WrongAdapter::WrongAdapter(const PortableServer::POA::WrongAdapter &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1815,7 +1815,7 @@ PortableServer::POA::WrongAdapter::WrongAdapter(const PortableServer::POA::Wrong
 PortableServer::POA::WrongAdapter&
 PortableServer::POA::WrongAdapter::operator= (const PortableServer::POA::WrongAdapter &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1823,7 +1823,7 @@ PortableServer::POA::WrongAdapter::operator= (const PortableServer::POA::WrongAd
 PortableServer::POA::WrongAdapter_ptr
 PortableServer::POA::WrongAdapter::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/WrongAdapter:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/WrongAdapter:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::WrongAdapter_ptr, exc);
   else
         return 0;
@@ -1841,7 +1841,7 @@ CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongAdapter = &_tc__tc_PortableSer
 
 // copy constructor
 PortableServer::POA::WrongPolicy::WrongPolicy(const PortableServer::POA::WrongPolicy &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1849,7 +1849,7 @@ PortableServer::POA::WrongPolicy::WrongPolicy(const PortableServer::POA::WrongPo
 PortableServer::POA::WrongPolicy&
 PortableServer::POA::WrongPolicy::operator= (const PortableServer::POA::WrongPolicy &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1857,7 +1857,7 @@ PortableServer::POA::WrongPolicy::operator= (const PortableServer::POA::WrongPol
 PortableServer::POA::WrongPolicy_ptr
 PortableServer::POA::WrongPolicy::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/WrongPolicy:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/POA/WrongPolicy:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::POA::WrongPolicy_ptr, exc);
   else
         return 0;
@@ -1943,7 +1943,7 @@ PortableServer::Current_ptr PortableServer::Current::_bind (const char *host, CO
 
 // copy constructor
 PortableServer::Current::NoContext::NoContext(const PortableServer::Current::NoContext &_tao_excp)
-        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp.type ()))
+        :CORBA_UserException (CORBA::TypeCode::_duplicate (_tao_excp._type ()))
 {
   }
 
@@ -1951,7 +1951,7 @@ PortableServer::Current::NoContext::NoContext(const PortableServer::Current::NoC
 PortableServer::Current::NoContext&
 PortableServer::Current::NoContext::operator= (const PortableServer::Current::NoContext &_tao_excp)
 {
-  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp.type ());
+  this->type_ = CORBA::TypeCode::_duplicate (_tao_excp._type ());
   return *this;
 }
 
@@ -1959,7 +1959,7 @@ PortableServer::Current::NoContext::operator= (const PortableServer::Current::No
 PortableServer::Current::NoContext_ptr
 PortableServer::Current::NoContext::_narrow(CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:PortableServer/Current/NoContext:1.0", exc->id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:PortableServer/Current/NoContext:1.0", exc->_id ())) // same type
         return ACE_dynamic_cast (PortableServer::Current::NoContext_ptr, exc);
   else
         return 0;

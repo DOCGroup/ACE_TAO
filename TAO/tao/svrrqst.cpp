@@ -363,7 +363,7 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
     {
       CORBA::Environment env2;
       CORBA::Exception *x = env.exception ();
-      CORBA::TypeCode_ptr except_tc = x->type ();
+      CORBA::TypeCode_ptr except_tc = x->_type ();
 
       this->outgoing_->put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       (void) this->outgoing_->encode (except_tc, x, 0, env2);

@@ -53,7 +53,7 @@ CORBA_Exception::operator = (const CORBA_Exception &src)
 }
 
 const char *
-CORBA_Exception::id (void) const
+CORBA_Exception::_id (void) const
 {
   CORBA::Environment env;
 
@@ -64,7 +64,7 @@ CORBA_Exception::id (void) const
 }
 
 TAO_CONST CORBA::TypeCode_ptr
-CORBA_Exception::type (void) const
+CORBA_Exception::_type (void) const
 {
   return type_;
 }
@@ -408,7 +408,7 @@ CORBA::Environment::exception_type (void) const
   // scope are system exceptions ... except for a couple that
   // are related to TypeCodes.
 
-  const char *id = _exception->id ();
+  const char *id = _exception->_id ();
 
   if (ACE_OS::strncmp (id, sysex_prefix, sizeof sysex_prefix - 1) == 0
       && ACE_OS::strncmp (id + sizeof sysex_prefix - 1,
@@ -425,7 +425,7 @@ void
 CORBA::Environment::print_exception (const char *info,
                                      FILE *) const
 {
-  const char *id = this->_exception->id ();
+  const char *id = this->_exception->_id ();
 
   ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
 
