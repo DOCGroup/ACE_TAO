@@ -219,9 +219,10 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
     {
       log_record.print ("<localhost>", 0, stderr);
       ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
-      log_record.print ("<localhost>",
-                        0,
-                        *orig_ostream);
+      if (orig_ostream)
+        log_record.print ("<localhost>",
+                          0,
+                          *orig_ostream);
     }
   else
     {
