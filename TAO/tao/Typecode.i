@@ -43,7 +43,7 @@ CORBA_TypeCode::kind (CORBA::Environment &) const
 
 // Returns true if the two typecodes are equivalent.
 ACE_INLINE CORBA::Boolean
-CORBA_TypeCode::equivalent (const CORBA::TypeCode_ptr tc,
+CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
                             CORBA::Environment &ACE_TRY_ENV) const
 {
   return this->equ_common (tc,
@@ -53,7 +53,7 @@ CORBA_TypeCode::equivalent (const CORBA::TypeCode_ptr tc,
 
 // Returns true if the two typecodes are identical.
 ACE_INLINE CORBA::Boolean
-CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
+CORBA_TypeCode::equal (CORBA::TypeCode_ptr tc,
                        CORBA::Environment &ACE_TRY_ENV) const
 {
   return this->equ_common (tc,
