@@ -39,8 +39,6 @@ ACE_Process::terminate (void)
 
 // ************************************************************
 
-#if defined (ACE_WIN32)
-
 ACE_INLINE u_long
 ACE_Process_Options::creation_flags (void) const
 {
@@ -56,6 +54,9 @@ ACE_Process_Options::creation_flags (u_long cf)
 {
   creation_flags_ = cf;
 }
+
+// ******************************
+#if defined (ACE_WIN32)
 
 ACE_INLINE STARTUPINFO *
 ACE_Process_Options::startup_info (void)
