@@ -1,3 +1,13 @@
+Fri Apr 23 13:05:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Incoming_Message_Queue.h:
+        * tao/Interceptor_List.h:
+        * tao/LF_CH_Event.h:
+        * tao/Resource_Factory.h:
+        * tao/Resume_Handle.h:
+        * tao/Synch_Reply_Dispatcher.h:
+          Doxygen improvement
+
 Fri Apr 23 12:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Utils.h:
