@@ -1,7 +1,8 @@
 Wed May  7 22:55:00 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* JAWS/server/*: Debugging changes!  GET and HEAD both work
-	  now.
+	  now.  As well as changes to make it compile cleanly on
+	  VXWORKS, as reported by David.
 
 Wed May 07 16:05:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
