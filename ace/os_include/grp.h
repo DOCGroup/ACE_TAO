@@ -30,4 +30,5 @@
 # include /**/ <grp.h>
 #endif /* !ACE_LACKS_GRP_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_GRP_H */

@@ -28,4 +28,5 @@
 # include /**/ <nl_types.h>
 #endif /* !ACE_LACKS_nl_types_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_NL_TYPES_H */

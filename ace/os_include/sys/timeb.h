@@ -30,4 +30,5 @@
 # include /**/ <sys/timeb.h>
 #endif /* !ACE_LACKS_SYS_TIMEB_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_TIMEB_H */

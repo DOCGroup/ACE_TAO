@@ -28,4 +28,5 @@
 # include /**/ <setjmp.h>
 #endif /* !ACE_LACKS_SETJMP_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SETJMP_H */

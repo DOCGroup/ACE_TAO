@@ -30,4 +30,5 @@
 # include /**/ <sys/msg.h>
 #endif /* !ACE_LACKS_SYS_MSG_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_MSG_H */

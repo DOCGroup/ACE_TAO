@@ -32,5 +32,5 @@
 
 // @todo if needbe, we can define the macros if they aren't available.
 
-
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_INTTYPES_H */

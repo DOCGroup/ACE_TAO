@@ -28,4 +28,5 @@
 # include /**/ <fnmatch.h>
 #endif /* !ACE_LACKS_FNMATCH_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_FNMATCH_H */

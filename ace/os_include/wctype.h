@@ -31,4 +31,5 @@
 # include /**/ <wctype.h>
 #endif /* !ACE_LACKS_WCTYPE_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_WCTYPE_H */

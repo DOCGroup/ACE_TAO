@@ -28,4 +28,5 @@
 # include /**/ <float.h>
 #endif /* !ACE_LACKS_FLOAT_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_FLOAT_H */

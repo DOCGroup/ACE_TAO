@@ -30,4 +30,5 @@
 # include /**/ <pwd.h>
 #endif /* !ACE_LACKS_PWD_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_PWD_H */

@@ -31,4 +31,5 @@
 # include /**/ <unistd.h>
 #endif /* !ACE_LACKS_UNISTD_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_UNISTD_H */
