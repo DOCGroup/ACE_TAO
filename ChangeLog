@@ -1,3 +1,16 @@
+Mon Jul 28 13:01:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/UUID.h:
+	* ace/UUID.cpp: The implementations are now placed in a namespace
+	  ACE_Utils. Since we can now use namespaces, adding them to a
+	  namspace made more sense.
+
+        * ace/UUID.i: File UUID.i is now renamed to be UUID.inl
+	
+	* ace/UUID.inl: New file. 
+	
+	* tests/UUIDTest.cpp: Changes to confirm to the above changes. 
+
 Mon Jul 28 12:49:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
