@@ -37,7 +37,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "TypeCodeFactoryC.inl-Wb,export_macro=TAO_TypeCodeFactory_Export"
+#include "TypeCodeFactoryC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
