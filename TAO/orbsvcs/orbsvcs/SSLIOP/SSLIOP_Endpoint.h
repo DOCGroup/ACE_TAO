@@ -110,20 +110,18 @@ namespace TAO
       /// Return the SSLIOP-specific ACE_INET_Addr.
       const ACE_INET_Addr &object_addr (void) const;
 
-      /// Set the Quality-of-Protection settings for this endpoint.
-      void qop (::Security::QOP qop);
+      /// Set the Quality-of-Protection, establishment of trust, and
+      /// credentials for this endpoint. This is all done in one function
+      /// so that the guard may be used uniformly.
+      void set_sec_attrs (::Security::QOP qop,
+                          const ::Security::EstablishTrust &trust,
+                          TAO::SSLIOP::OwnCredentials_ptr creds);
 
       /// Get the Quality-of-Protection settings for this endpoint.
       ::Security::QOP qop (void) const;
 
-      /// Set the establishment of trust settings for this endpoint.
-      void trust (const ::Security::EstablishTrust &trust);
-
       /// Get the establishment of trust settings for this endpoint.
       ::Security::EstablishTrust trust (void) const;
-
-      /// Set the credentials for this endpoint.
-      void credentials (TAO::SSLIOP::OwnCredentials_ptr creds);
 
       /// Get the credentials for this endpoint.
       /**
