@@ -550,6 +550,8 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current
   current_->end_scheduling_segment (name
 				    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  this->check_ifexit ();
   //    }
 }
 
