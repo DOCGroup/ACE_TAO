@@ -8,10 +8,16 @@ Sun Apr 23 19:51:41 2000  Darrell Brunsch <brunsch@uci.edu>
           of things that needed updating.  Mainly some missing ACE_TEXT's
           or char's used instead of ACE_TCHAR's.
 
-        * tests/Process_Mutex_Test.cpp
+        * tests/Process_Mutex_Test.cpp:
           
           Was still using an old ACE_DEFAULT_MUTEX_A macro (updated to
           ACE_DEFAULT_MUTEX).
+
+        * ace/ace_lib.dsp:
+           
+          Added "static" to the config names (Win32 Debug => Win32 Static
+          Debug) so it is easier for the msvc_auto_compile.pl script to
+          figure out which is which. 
 
 Sun Apr 23 18:14:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
