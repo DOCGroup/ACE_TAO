@@ -167,11 +167,17 @@ ACE_INLINE int
 ACE_Reactor::register_handler (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask mask)
 {
+  // Remember the old reactor.
+  ACE_Reactor *old_reactor = event_handler->reactor ();
+
+  // Assign *this* <Reactor> to the <Event_Handler>.
+  event_handler->reactor (this);
+
   int result = this->implementation ()->register_handler (event_handler,
                                                           mask);
-  if (result != -1)
-    // Assign *this* <Reactor> to the <Event_Handler>.
-    event_handler->reactor (this);
+  if (result == -1)
+    // Reset the old reactor in case of failures.
+    event_handler->reactor (old_reactor);
 
   return result;
 }
@@ -181,12 +187,18 @@ ACE_Reactor::register_handler (ACE_HANDLE io_handle,
                                ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask mask)
 {
+  // Remember the old reactor.
+  ACE_Reactor *old_reactor = event_handler->reactor ();
+
+  // Assign *this* <Reactor> to the <Event_Handler>.
+  event_handler->reactor (this);
+
   int result = this->implementation ()->register_handler (io_handle,
                                                           event_handler,
                                                           mask);
-  if (result != -1)
-    // Assign *this* <Reactor> to the <Event_Handler>.
-    event_handler->reactor (this);
+  if (result == -1)
+    // Reset the old reactor in case of failures.
+    event_handler->reactor (old_reactor);
 
   return result;
 }
@@ -197,11 +209,17 @@ ACE_INLINE int
 ACE_Reactor::register_handler (ACE_Event_Handler *event_handler,
                                ACE_HANDLE event_handle)
 {
+  // Remember the old reactor.
+  ACE_Reactor *old_reactor = event_handler->reactor ();
+
+  // Assign *this* <Reactor> to the <Event_Handler>.
+  event_handler->reactor (this);
+
   int result = this->implementation ()->register_handler (event_handler,
                                                           event_handle);
-  if (result != -1)
-    // Assign *this* <Reactor> to the <Event_Handler>.
-    event_handler->reactor (this);
+  if (result == -1)
+    // Reset the old reactor in case of failures.
+    event_handler->reactor (old_reactor);
 
   return result;
 }
@@ -214,13 +232,19 @@ ACE_Reactor::register_handler (ACE_HANDLE event_handle,
                                ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask mask)
 {
+  // Remember the old reactor.
+  ACE_Reactor *old_reactor = event_handler->reactor ();
+
+  // Assign *this* <Reactor> to the <Event_Handler>.
+  event_handler->reactor (this);
+
   int result = this->implementation ()->register_handler (event_handle,
                                                           io_handle,
                                                           event_handler,
                                                           mask);
-  if (result != -1)
-    // Assign *this* <Reactor> to the <Event_Handler>.
-    event_handler->reactor (this);
+  if (result == -1)
+    // Reset the old reactor in case of failures.
+    event_handler->reactor (old_reactor);
 
   return result;
 }
@@ -230,12 +254,18 @@ ACE_Reactor::register_handler (const ACE_Handle_Set &handles,
                                ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask mask)
 {
+  // Remember the old reactor.
+  ACE_Reactor *old_reactor = event_handler->reactor ();
+
+  // Assign *this* <Reactor> to the <Event_Handler>.
+  event_handler->reactor (this);
+
   int result = this->implementation ()->register_handler (handles,
                                                           event_handler,
                                                           mask);
-  if (result != -1)
-    // Assign *this* <Reactor> to the <Event_Handler>.
-    event_handler->reactor (this);
+  if (result == -1)
+    // Reset the old reactor in case of failures.
+    event_handler->reactor (old_reactor);
 
   return result;
 }
@@ -358,7 +388,7 @@ ACE_Reactor::resume_handlers (void)
 
 ACE_INLINE int
 ACE_Reactor::reset_timer_interval
-  (long timer_id, 
+  (long timer_id,
    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Reactor::reset_timer_interval");
@@ -374,13 +404,19 @@ ACE_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
                              const ACE_Time_Value &delta,
                              const ACE_Time_Value &interval)
 {
+  // Remember the old reactor.
+  ACE_Reactor *old_reactor = event_handler->reactor ();
+
+  // Assign *this* <Reactor> to the <Event_Handler>.
+  event_handler->reactor (this);
+
   int result = this->implementation ()->schedule_timer (event_handler,
                                                         arg,
                                                         delta,
                                                         interval);
-  if (result != -1)
-    // Assign *this* <Reactor> to the <Event_Handler>.
-    event_handler->reactor (this);
+  if (result == -1)
+    // Reset the old reactor in case of failures.
+    event_handler->reactor (old_reactor);
 
   return result;
 }
@@ -408,11 +444,17 @@ ACE_INLINE int
 ACE_Reactor::schedule_wakeup (ACE_Event_Handler *event_handler,
                               ACE_Reactor_Mask masks_to_be_added)
 {
+  // Remember the old reactor.
+  ACE_Reactor *old_reactor = event_handler->reactor ();
+
+  // Assign *this* <Reactor> to the <Event_Handler>.
+  event_handler->reactor (this);
+
   int result = this->implementation ()->schedule_wakeup (event_handler,
                                                          masks_to_be_added);
-  if (result != -1)
-    // Assign *this* <Reactor> to the <Event_Handler>.
-    event_handler->reactor (this);
+  if (result == -1)
+    // Reset the old reactor in case of failures.
+    event_handler->reactor (old_reactor);
 
   return result;
 }
