@@ -149,6 +149,8 @@ Options::message_buf (void) const
 ssize_t
 Options::read (void *buf, size_t len, size_t &iteration)
 {
+  ACE_UNUSED_ARG (len);
+
   if (this->io_source_ == ACE_STDIN)
     return ACE_OS::read (ACE_STDIN, buf, sizeof buf);
   else if (iteration >= this->iterations_)
@@ -278,7 +280,7 @@ Options::oneway_client_test (void *)
 
   // Allocate the transmit buffer.
   void *buf;
-  ACE_ALLOCATOR_RETURN (buf, 
+  ACE_ALLOCATOR_RETURN (buf,
                         ACE_OS::malloc (len),
                         0);
 
@@ -354,7 +356,7 @@ Options::twoway_client_test (void *)
 
   // Allocate the transmit buffer.
   void *buf;
-  ACE_ALLOCATOR_RETURN (buf, 
+  ACE_ALLOCATOR_RETURN (buf,
                         ACE_OS::malloc (len),
                         0);
 
