@@ -315,11 +315,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Base_Transport_Property.h
     Basic_Arguments.h
     Basic_Argument_T.h
-    Basic_SArguments.h
-    Basic_SArgument_T.h
     Basic_Types.h
     BD_String_Argument_T.h
-    BD_String_SArgument_T.h
     BiDir_Adapter.h
     Bind_Dispatcher_Guard.h
     Blocked_Connect_Strategy.h
@@ -393,9 +390,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Fault_Tolerance_Service.h
     FILE_Parser.h
     Fixed_Array_Argument_T.h
-    Fixed_Array_SArgument_T.h
     Fixed_Size_Argument_T.h
-    Fixed_Size_SArgument_T.h
     FloatSeqC.h
     FloatSeqS.h
     Flushing_Strategy.h
@@ -481,7 +476,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Object_Proxy_Broker.h
     Object_Proxy_Impl.h
     Object_Ref_Table.h
-    Object_SArgument_T.h
     Object_T.h
     Objref_VarOut_T.h
     OBV_Constants.h
@@ -554,8 +548,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ShortSeqS.h
     Special_Basic_Arguments.h
     Special_Basic_Argument_T.h
-    Special_Basic_SArguments.h
-    Special_Basic_SArgument_T.h
     StringSeqC.h
     StringSeqS.h
     Stub_Factory.h
@@ -600,8 +592,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Typecode_typesS.h
     UB_String_Arguments.h
     UB_String_Argument_T.h
-    UB_String_SArguments.h
-    UB_String_SArgument_T.h
     ULongLongSeqC.h
     ULongLongSeqS.h
     ULongSeqC.h
@@ -613,11 +603,9 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UTF16_BOM_Translator.h
     Valuetype_Adapter.h
     Var_Array_Argument_T.h
-    Var_Array_SArgument_T.h
     varbase.h
     VarOut_T.h
     Var_Size_Argument_T.h
-    Var_Size_SArgument_T.h
     Version.h
     VisibilityC.h
     ValueModifierC.h
