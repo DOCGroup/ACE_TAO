@@ -13,12 +13,19 @@ class JAWS_Assoc_Array
 friend JAWS_Assoc_Array_Iterator<KEY, DATA>;
 
 public:
-  JAWS_Assoc_Array (unsigned long maxsize = 1024U);
-  virtual ~JAWS_Assoc_Array (void);
+  JAWS_Assoc_Array (int maxsize = 1024);
+  ~JAWS_Assoc_Array (void);
+
+  int index (const KEY &k);
+  // Returns the index into the array associated with key k
+  // Returns -1 if not found.
 
   DATA * find (const KEY &k);
-  DATA * operator[] (const KEY &k);
-  // Returns the data associated with key k.
+  // Returns the data associated with key k.  0 if not found.
+
+  DATA * find (int i);
+  // Returns the data associated with array index i.  Returns 0 if the
+  // index is invalid.
 
   DATA * insert (const KEY &k, const DATA &d);
   // Inserts a *copy* of the key and data into the associated array.
@@ -40,7 +47,7 @@ public:
 
 protected:
 
-  unsigned long find_i (const KEY &k);
+  int find_i (const KEY &k);
   // If k points to an associated data item, then this function
   // returns the index into the arrays that hold it.  Otherwise, it
   // returns an index suitable to insert the item.  If the item is not
@@ -49,7 +56,7 @@ protected:
 private:
   KEY **k_array_;
   DATA **d_array_;
-  unsigned long maxsize_;
+  int maxsize_;
 };
 
 template <class KEY, class DATA>
@@ -80,10 +87,10 @@ private:
 
   const JAWS_Assoc_Array<KEY, DATA> &aa_;
 
-  unsigned long i_;
+  int i_;
   // The current item pointed by iterator.
 
-  unsigned long j_;
+  int j_;
   // The next item to be pointed to by iterator.
 
 };
