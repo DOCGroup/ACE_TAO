@@ -42,22 +42,8 @@ class TAO_Export TAO_ClientRequest_Info
 : public virtual PortableInterceptor::ClientRequestInfo
 {
  public:
- 
-  /*ClientRequest_Info (CORBA::ULong request_id,
-                      char * operation, 
-                      Dynamic::ParameterList * arguments,
-                      Dynamic::ExceptionList * exceptions,
-                      Dynamic::ContextList * contexts,
-                      Dynamic::RequestContext * operation_context,
-                      CORBA::Object_ptr forward_reference,
-                      CORBA::Object * target,
-                      CORBA::Object * effective_target,
-                      IOP::ServiceContextList_ptr &service_context_list ,               
-                      CORBA::Environment &ACE_TRY_ENV =
-                      TAO_default_environment ());*/
-
   TAO_ClientRequest_Info (const char * operation,
-                      IOP::ServiceContextList &service_context_list,               
+                          IOP::ServiceContextList &service_context_list,               
                       CORBA::Object * target,
                       CORBA::Environment &ACE_TRY_ENV =
                       TAO_default_environment ());
@@ -106,7 +92,6 @@ class TAO_Export TAO_ClientRequest_Info
                                                TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
-  // Probably the following methods shoudl be delegated to teh POICurrentx
   virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id,
                                  CORBA::Environment &ACE_TRY_ENV = 
                                  TAO_default_environment ())
@@ -138,7 +123,15 @@ class TAO_Export TAO_ClientRequest_Info
   virtual CORBA::Any * received_exception (CORBA::Environment &ACE_TRY_ENV = 
                                            TAO_default_environment ())
       ACE_THROW_SPEC ((CORBA::SystemException));
-  
+  // This method causes problem since there is no trivial way to
+  // extract the exception from the Any. 
+
+  virtual CORBA::Exception * _received_exception (CORBA::Environment &ACE_TRY_ENV = 
+                                                  TAO_default_environment ())
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  // Note: This is TAO specific and was done to combat the previous
+  // problem to some extent.
+
   virtual char * received_exception_id (CORBA::Environment &ACE_TRY_ENV = 
                                         TAO_default_environment ())
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -274,8 +267,16 @@ class TAO_Export TAO_ServerRequest_Info
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Any * sending_exception (CORBA::Environment &ACE_TRY_ENV = 
-                                          TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                           TAO_default_environment ())
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  // This method causes problem since there is no trivial way to
+  // extract the exception from the Any. 
+
+  virtual CORBA::Exception * _sending_exception (CORBA::Environment &ACE_TRY_ENV = 
+                                                  TAO_default_environment ())
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  // Note: This is TAO specific and was done to combat the previous
+  // problem to some extent.
   
   virtual PortableInterceptor::OctetSeq * object_id (CORBA::Environment &ACE_TRY_ENV = 
                                                      TAO_default_environment ())
