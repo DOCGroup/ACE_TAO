@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SERVICE_H
-#define TAO_NS_SERVICE_H
+#ifndef TAO_Notify_SERVICE_H
+#define TAO_Notify_SERVICE_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -50,11 +50,11 @@ public:
 
 #define TAO_NOTIFY_DEF_EMO_FACTORY_NAME "Notify_Default_Event_Manager_Objects_Factory"
 
-#define TAO_NS_NOTIFICATION_SERVICE_NAME "TAO_Notify_Service"
+#define TAO_NOTIFICATION_SERVICE_NAME "TAO_Notify_Service"
 
-#define TAO_NS_COS_NOTIFICATION_SERVICE_NAME "TAO_CosNotify_Service"
+#define TAO_COS_NOTIFICATION_SERVICE_NAME "TAO_CosNotify_Service"
 
-#define TAO_NS_RT_NOTIFICATION_SERVICE_NAME "TAO_RT_Notify_Service"
+#define TAO_RT_NOTIFICATION_SERVICE_NAME "TAO_RT_Notify_Service"
 
 #include "ace/post.h"
-#endif /* TAO_NS_SERVICE_H */
+#endif /* TAO_Notify_SERVICE_H */

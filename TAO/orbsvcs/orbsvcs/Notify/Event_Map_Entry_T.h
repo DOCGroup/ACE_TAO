@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_EVENT_MAP_ENTRY_T_H
-#define TAO_NS_EVENT_MAP_ENTRY_T_H
+#ifndef TAO_Notify_EVENT_MAP_ENTRY_T_H
+#define TAO_Notify_EVENT_MAP_ENTRY_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -23,26 +23,26 @@
 #include "ace/Atomic_Op.h"
 #include "tao/corba.h"
 
-template <class PROXY, class ACE_LOCK> class TAO_NS_Event_Map_T;
+template <class PROXY, class ACE_LOCK> class TAO_Notify_Event_Map_T;
 template <class PROXY> class TAO_ESF_Proxy_Collection;
 
 /**
- * @class TAO_NS_Event_Map_Entry_T
+ * @class TAO_Notify_Event_Map_Entry_T
  *
  * @brief The entry stored in the event map.
  *
  */
 template <class PROXY>
-class TAO_NS_Event_Map_Entry_T : private ACE_Copy_Disabled
+class TAO_Notify_Event_Map_Entry_T : private ACE_Copy_Disabled
 {
 public:
   typedef TAO_ESF_Proxy_Collection<PROXY> COLLECTION;
 
   /// Constructor
-  TAO_NS_Event_Map_Entry_T (void);
+  TAO_Notify_Event_Map_Entry_T (void);
 
   /// Destructor
-  ~TAO_NS_Event_Map_Entry_T (void);
+  ~TAO_Notify_Event_Map_Entry_T (void);
 
   /// Init - Allocates collection
   void init (ACE_ENV_SINGLE_ARG_DECL);
@@ -90,4 +90,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_EVENT_MAP_ENTRY_T_H */
+#endif /* TAO_Notify_EVENT_MAP_ENTRY_T_H */

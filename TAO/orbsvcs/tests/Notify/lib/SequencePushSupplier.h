@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SEQUENCEPUSHSUPPLIER_H
-#define TAO_NS_SEQUENCEPUSHSUPPLIER_H
+#ifndef TAO_Notify_Tests_SEQUENCEPUSHSUPPLIER_H
+#define TAO_Notify_Tests_SEQUENCEPUSHSUPPLIER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -24,7 +24,7 @@
 
 #include "Supplier_T.h"
 
-class TAO_NOTIFY_TEST_Export TAO_NS_SequenceProxyPushConsumer_Traits
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequenceProxyPushConsumer_Traits
 {
 public:
   typedef CosNotifyChannelAdmin::SequenceProxyPushConsumer INTERFACE;
@@ -33,44 +33,44 @@ public:
   typedef CosNotifyChannelAdmin::ProxyID ID;
 };
 
-class TAO_NOTIFY_TEST_Export TAO_NS_SequencePushSupplier_Traits
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushSupplier_Traits
 {
 public:
-  TAO_NS_SequencePushSupplier_Traits (void);
+  TAO_Notify_Tests_SequencePushSupplier_Traits (void);
 
   typedef CosNotifyComm::SequencePushSupplier INTERFACE;
   typedef CosNotifyComm::SequencePushSupplier_ptr PTR;
   typedef CosNotifyComm::SequencePushSupplier_var VAR;
   typedef POA_CosNotifyComm::SequencePushSupplier SKELETON;
 
-  typedef TAO_NS_SequenceProxyPushConsumer_Traits Proxy_Traits;
-  typedef TAO_NS_SupplierAdmin_Traits Admin_Traits;
-  typedef TAO_NS_SupplierAdmin_Ext_Traits Admin_Ext_Traits;
+  typedef TAO_Notify_Tests_SequenceProxyPushConsumer_Traits Proxy_Traits;
+  typedef TAO_Notify_Tests_SupplierAdmin_Traits Admin_Traits;
+  typedef TAO_Notify_Tests_SupplierAdmin_Ext_Traits Admin_Ext_Traits;
 
   const CosNotifyChannelAdmin::ClientType type_;
 };
 
-typedef TAO_NS_Supplier_T<TAO_NS_SequencePushSupplier_Traits> TAO_NS_SequencePushSupplier_Base;
+typedef TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_SequencePushSupplier_Traits> TAO_Notify_Tests_SequencePushSupplier_Base;
 
 /**
- * @class TAO_NS_SequencePushSupplier
+ * @class TAO_Notify_Tests_SequencePushSupplier
  *
  * @brief SequencePushSupplier Implementation.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_SequencePushSupplier : public TAO_NS_SequencePushSupplier_Base
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushSupplier : public TAO_Notify_Tests_SequencePushSupplier_Base
 {
-  typedef TAO_NS_SequencePushSupplier_Traits Peer_Traits;
+  typedef TAO_Notify_Tests_SequencePushSupplier_Traits Peer_Traits;
   typedef Peer_Traits::Admin_Traits Admin_Traits;
   typedef Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
   typedef Peer_Traits::Proxy_Traits Proxy_Traits;
 
 public:
   /// Constuctor
-  TAO_NS_SequencePushSupplier (void);
+  TAO_Notify_Tests_SequencePushSupplier (void);
 
   /// Destructor
-  virtual ~TAO_NS_SequencePushSupplier ();
+  virtual ~TAO_Notify_Tests_SequencePushSupplier ();
 
   /// Send one event.
   virtual void send_events (const CosNotification::EventBatch& events
@@ -95,4 +95,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_SEQUENCEPUSHSUPPLIER_H */
+#endif /* TAO_Notify_Tests_SEQUENCEPUSHSUPPLIER_H */

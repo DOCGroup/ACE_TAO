@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PROPERTYSEQ_H
-#define TAO_NS_PROPERTYSEQ_H
+#ifndef TAO_Notify_PROPERTYSEQ_H
+#define TAO_Notify_PROPERTYSEQ_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -24,19 +24,19 @@
 #include "ace/SString.h"
 
 /**
- * @class TAO_NS_PropertySeq
+ * @class TAO_Notify_PropertySeq
  *
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_PropertySeq
+class TAO_Notify_Export TAO_Notify_PropertySeq
 {
 public:
   /// Constuctor
-  TAO_NS_PropertySeq (void);
+  TAO_Notify_PropertySeq (void);
 
   /// Destructor
-  ~TAO_NS_PropertySeq ();
+  ~TAO_Notify_PropertySeq ();
 
   /// Return 0 on success, -1 on error.
   int init (const CosNotification::PropertySeq& prop_seq);
@@ -59,4 +59,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_PROPERTYSEQ_H */
+#endif /* TAO_Notify_PROPERTYSEQ_H */

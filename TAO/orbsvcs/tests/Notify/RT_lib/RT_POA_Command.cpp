@@ -8,7 +8,7 @@ ACE_RCSID(lib, TAO_RT_POA_Command, "$id$")
 #include "../lib/LookupManager.h"
 #include "../lib/Name.h"
 
-TAO_NS_RT_POA_Command::TAO_NS_RT_POA_Command (void)
+TAO_Notify_Tests_RT_POA_Command::TAO_Notify_Tests_RT_POA_Command (void)
   :priority_model_ (RTCORBA::CLIENT_PROPAGATED)
   , server_priority_ (0)
   , thread_pool_static_threads_ (0)
@@ -16,24 +16,24 @@ TAO_NS_RT_POA_Command::TAO_NS_RT_POA_Command (void)
 {
 }
 
-TAO_NS_RT_POA_Command::~TAO_NS_RT_POA_Command ()
+TAO_Notify_Tests_RT_POA_Command::~TAO_Notify_Tests_RT_POA_Command ()
 {
 }
 
 const char*
-TAO_NS_RT_POA_Command::get_name (void)
+TAO_Notify_Tests_RT_POA_Command::get_name (void)
 {
-  return TAO_NS_RT_POA_Command::name ();
+  return TAO_Notify_Tests_RT_POA_Command::name ();
 }
 
 const char*
-TAO_NS_RT_POA_Command::name (void)
+TAO_Notify_Tests_RT_POA_Command::name (void)
 {
-  return TAO_NS_Name::poa_command;
+  return TAO_Notify_Tests_Name::poa_command;
 }
 
 void
-TAO_NS_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   const ACE_TCHAR *current_arg = 0;
 
@@ -177,7 +177,7 @@ TAO_NS_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_NS_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->command_ == CREATE)
     {
@@ -223,7 +223,7 @@ TAO_NS_RT_POA_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
 {
   /*
     lanes bands priomodel

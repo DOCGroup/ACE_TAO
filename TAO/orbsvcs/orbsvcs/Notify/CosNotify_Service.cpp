@@ -41,7 +41,7 @@ TAO_CosNotify_Service::init (int argc, char *argv[])
 
   int task_per_proxy = 0;
 
-  TAO_NS_Properties *properties = TAO_NS_PROPERTIES::instance();
+  TAO_Notify_Properties *properties = TAO_Notify_PROPERTIES::instance();
 
   while (arg_shifter.is_anything_left ())
     {
@@ -183,7 +183,7 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   ACE_CHECK;
 
   /// Set the properties
-    TAO_NS_Properties* properties = TAO_NS_PROPERTIES::instance();
+    TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
 
     properties->orb (orb);
     properties->default_poa (default_poa.in ());
@@ -199,26 +199,26 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 void
 TAO_CosNotify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->factory_ = ACE_Dynamic_Service<TAO_NS_Factory>::instance ("TAO_NS_Factory");
+  this->factory_ = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
 
   if (this->factory_ == 0)
     ACE_NEW_THROW_EX (this->factory_,
-                      TAO_NS_Default_Factory (),
+                      TAO_Notify_Default_Factory (),
                       CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  TAO_NS_PROPERTIES::instance()->factory (this->factory_);
+  TAO_Notify_PROPERTIES::instance()->factory (this->factory_);
 }
 
 void
 TAO_CosNotify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->builder_,
-                    TAO_NS_Builder (),
+                    TAO_Notify_Builder (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  TAO_NS_PROPERTIES::instance()->builder (this->builder_);
+  TAO_Notify_PROPERTIES::instance()->builder (this->builder_);
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
@@ -228,7 +228,7 @@ TAO_CosNotify_Service::create (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_CosNotify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CosNotify_Service::remove (TAO_Notify_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_DECL_NOT_USED)
 {
   // NOP.
 }
@@ -245,7 +245,7 @@ ACE_STATIC_SVC_DEFINE (TAO_Notify_Default_EMO_Factory_OLD,
 /*********************************************************************************************************************/
 
 ACE_STATIC_SVC_DEFINE (TAO_CosNotify_Service,
-                       ACE_TEXT (TAO_NS_COS_NOTIFICATION_SERVICE_NAME),
+                       ACE_TEXT (TAO_COS_NOTIFICATION_SERVICE_NAME),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_CosNotify_Service),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
@@ -258,10 +258,10 @@ ACE_FACTORY_DEFINE (TAO_Notify, TAO_CosNotify_Service)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Dynamic_Service<TAO_NS_Factory>;
+template class ACE_Dynamic_Service<TAO_Notify_Factory>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Dynamic_Service<TAO_NS_Factory>
+#pragma instantiate ACE_Dynamic_Service<TAO_Notify_Factory>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

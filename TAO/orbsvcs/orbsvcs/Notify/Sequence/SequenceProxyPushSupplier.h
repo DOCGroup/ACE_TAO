@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SEQUENCEPROXYPUSHSUPPLIER_H
-#define TAO_NS_SEQUENCEPROXYPUSHSUPPLIER_H
+#ifndef TAO_Notify_SEQUENCEPROXYPUSHSUPPLIER_H
+#define TAO_Notify_SEQUENCEPROXYPUSHSUPPLIER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -31,31 +31,31 @@
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class TAO_Notify_Export
-TAO_NS_ProxySupplier_T<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>;
+TAO_Notify_ProxySupplier_T<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 /**
- * @class TAO_NS_SequenceProxyPushSupplier
+ * @class TAO_Notify_SequenceProxyPushSupplier
  *
  * @brief Implements the CosNotifyChannelAdmin::SequenceProxyPushSupplier methods.
  *
  *
  */
-class TAO_Notify_Export TAO_NS_SequenceProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
+class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier : public virtual TAO_Notify_ProxySupplier_T <POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
 {
-  friend class TAO_NS_Builder;
+  friend class TAO_Notify_Builder;
 
 public:
   /// Constuctor
-  TAO_NS_SequenceProxyPushSupplier (void);
+  TAO_Notify_SequenceProxyPushSupplier (void);
 
   /// Destructor
-  ~TAO_NS_SequenceProxyPushSupplier ();
+  ~TAO_Notify_SequenceProxyPushSupplier ();
 
   /// Destroy this object.
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// TAO_NS_Destroy_Callback methods
+  /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
 
   /// = Servant methods
@@ -91,4 +91,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_SEQUENCEPROXYPUSHSUPPLIER_H */
+#endif /* TAO_Notify_SEQUENCEPROXYPUSHSUPPLIER_H */

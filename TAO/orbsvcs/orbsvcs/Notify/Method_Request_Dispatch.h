@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_DISPATCH_METHOD_REQUEST_H
-#define TAO_NS_DISPATCH_METHOD_REQUEST_H
+#ifndef TAO_Notify_DISPATCH_METHOD_REQUEST_H
+#define TAO_Notify_DISPATCH_METHOD_REQUEST_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -25,26 +25,26 @@
 #include "ProxySupplier.h"
 
 /**
- * @class TAO_NS_Method_Request_Dispatch
+ * @class TAO_Notify_Method_Request_Dispatch
  *
  * @brief Dispatchs an event to a proxy supplier.
  *
  */
 
-typedef TAO_NS_Method_Request_Dispatch_T<const TAO_NS_Event_var
-                                         , TAO_NS_ProxySupplier_Guard
-                                         , const TAO_NS_Event_var&
-                                         , TAO_NS_ProxySupplier*>  TAO_NS_Method_Request_Dispatch_Base;
+typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var
+                                         , TAO_Notify_ProxySupplier_Guard
+                                         , const TAO_Notify_Event_var&
+                                         , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_Base;
 
-class TAO_Notify_Export TAO_NS_Method_Request_Dispatch : public TAO_NS_Method_Request_Dispatch_Base
-                                                       , public TAO_NS_Method_Request
+class TAO_Notify_Export TAO_Notify_Method_Request_Dispatch : public TAO_Notify_Method_Request_Dispatch_Base
+                                                       , public TAO_Notify_Method_Request
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Dispatch (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
+  TAO_Notify_Method_Request_Dispatch (const TAO_Notify_Event_var& event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
 
   /// Destructor
-  ~TAO_NS_Method_Request_Dispatch ();
+  ~TAO_Notify_Method_Request_Dispatch ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
@@ -53,63 +53,63 @@ public:
 /*******************************************************************************************************/
 
 /**
- * @class TAO_NS_Method_Request_Dispatch_No_Copy
+ * @class TAO_Notify_Method_Request_Dispatch_No_Copy
  *
  * @brief Dispatchs an event to a proxy supplier.
  *
  */
 
-typedef TAO_NS_Method_Request_Dispatch_T<const TAO_NS_Event*
-                                         , TAO_NS_ProxySupplier*
-                                         , const TAO_NS_Event*
-                                         , TAO_NS_ProxySupplier*>  TAO_NS_Method_Request_Dispatch_No_Copy_Base;
+typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event*
+                                         , TAO_Notify_ProxySupplier*
+                                         , const TAO_Notify_Event*
+                                         , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_No_Copy_Base;
 
-class TAO_Notify_Export TAO_NS_Method_Request_Dispatch_No_Copy : public TAO_NS_Method_Request_Dispatch_No_Copy_Base
-                                                                 , public TAO_NS_Method_Request_No_Copy
+class TAO_Notify_Export TAO_Notify_Method_Request_Dispatch_No_Copy : public TAO_Notify_Method_Request_Dispatch_No_Copy_Base
+                                                                 , public TAO_Notify_Method_Request_No_Copy
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Dispatch_No_Copy (const TAO_NS_Event* event, TAO_NS_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
+  TAO_Notify_Method_Request_Dispatch_No_Copy (const TAO_Notify_Event* event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
 
   /// Destructor
-  ~TAO_NS_Method_Request_Dispatch_No_Copy ();
+  ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Create a copy of this object.
-  virtual TAO_NS_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 /*******************************************************************************************************/
 
 /**
- * @class TAO_NS_Method_Request_Dispatch_No_Copy_Ex
+ * @class TAO_Notify_Method_Request_Dispatch_No_Copy_Ex
  *
  * @brief Dispatchs an event to a proxy supplier.
  *
  */
 
-typedef TAO_NS_Method_Request_Dispatch_T<const TAO_NS_Event_var&
-                                         , TAO_NS_ProxySupplier*
-                                         , const TAO_NS_Event_var&
-                                         , TAO_NS_ProxySupplier*>  TAO_NS_Method_Request_Dispatch_No_Copy_Ex_Base;
+typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var&
+                                         , TAO_Notify_ProxySupplier*
+                                         , const TAO_Notify_Event_var&
+                                         , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex_Base;
 
-class TAO_Notify_Export TAO_NS_Method_Request_Dispatch_No_Copy_Ex : public TAO_NS_Method_Request_Dispatch_No_Copy_Ex_Base
-                                                                 , public TAO_NS_Method_Request_No_Copy
+class TAO_Notify_Export TAO_Notify_Method_Request_Dispatch_No_Copy_Ex : public TAO_Notify_Method_Request_Dispatch_No_Copy_Ex_Base
+                                                                 , public TAO_Notify_Method_Request_No_Copy
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Dispatch_No_Copy_Ex (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
+  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex (const TAO_Notify_Event_var& event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering);
 
   /// Destructor
-  ~TAO_NS_Method_Request_Dispatch_No_Copy_Ex ();
+  ~TAO_Notify_Method_Request_Dispatch_No_Copy_Ex ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Create a copy of this object.
-  virtual TAO_NS_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)
@@ -117,4 +117,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_DISPATCH_METHOD_REQUEST_H */
+#endif /* TAO_Notify_DISPATCH_METHOD_REQUEST_H */

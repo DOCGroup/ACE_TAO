@@ -9,30 +9,30 @@
  *
  */
 
-#ifndef TAO_NS_SUPPLIER_CLIENT_H
-#define TAO_NS_SUPPLIER_CLIENT_H
+#ifndef TAO_Notify_SUPPLIER_CLIENT_H
+#define TAO_Notify_SUPPLIER_CLIENT_H
 #include "ace/pre.h"
 
 #include "ORB_Objects.h"
 #include "ace/Task.h"
 #include "tao/corba.h"
 
-class TAO_NS_Supplier;
+class TAO_Notify_Lanes_Supplier;
 
 /**
- * @class TAO_NS_Supplier_Client
+ * @class TAO_Notify_Lanes_Supplier_Client
  *
  * @brief Supplier Client
  *
  */
-class TAO_NS_Supplier_Client : public ACE_Task_Base
+class TAO_Notify_Lanes_Supplier_Client : public ACE_Task_Base
 {
 public:
   /// Constuctor
-  TAO_NS_Supplier_Client (TAO_NS_ORB_Objects& orb_objects);
+  TAO_Notify_Lanes_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Destructor
-  ~TAO_NS_Supplier_Client ();
+  ~TAO_Notify_Lanes_Supplier_Client ();
 
   /// Init
   void initialize (ACE_ENV_SINGLE_ARG_DECL);
@@ -54,10 +54,10 @@ protected:
   void write_ior (ACE_ENV_SINGLE_ARG_DECL);
 
   /// ORB Objects.
-  TAO_NS_ORB_Objects orb_objects_;
+  TAO_Notify_ORB_Objects orb_objects_;
 
   /// Supplier that sends events.
-  TAO_NS_Supplier* supplier_;
+  TAO_Notify_Lanes_Supplier* supplier_;
 
   /// The Number of consumers that we expect to send an event to.
   int consumer_count_;
@@ -67,4 +67,4 @@ protected:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_SUPPLIER_CLIENT_H */
+#endif /* TAO_Notify_SUPPLIER_CLIENT_H */

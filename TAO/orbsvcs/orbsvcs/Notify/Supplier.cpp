@@ -6,28 +6,28 @@
 #include "Supplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Supplier, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Supplier, "$Id$")
 
 #include "ProxyConsumer.h"
 #include "Proxy.h"
 
-TAO_NS_Supplier::TAO_NS_Supplier (TAO_NS_ProxyConsumer* proxy)
+TAO_Notify_Supplier::TAO_Notify_Supplier (TAO_Notify_ProxyConsumer* proxy)
   :proxy_ (proxy)
 {
 }
 
-TAO_NS_Supplier::~TAO_NS_Supplier ()
+TAO_Notify_Supplier::~TAO_Notify_Supplier ()
 {
 }
 
-TAO_NS_Proxy*
-TAO_NS_Supplier::proxy (void)
+TAO_Notify_Proxy*
+TAO_Notify_Supplier::proxy (void)
 {
   return this->proxy_consumer ();
 }
 
 void
-TAO_NS_Supplier::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed
+TAO_Notify_Supplier::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed
                                      ACE_ENV_ARG_DECL)
 {
   if (!CORBA::is_nil (this->subscribe_.in ()))

@@ -1,6 +1,6 @@
 // $Id$
-#ifndef TAO_NS_Consumer_T_CPP
-#define TAO_NS_Consumer_T_CPP
+#ifndef TAO_Notify_Tests_Consumer_T_CPP
+#define TAO_Notify_Tests_Consumer_T_CPP
 
 #include "Consumer_T.h"
 
@@ -8,26 +8,26 @@
 #include "Consumer_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Consumer_T, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Tests_Consumer_T, "$id$")
 
 template <class Consumer_Traits>
-TAO_NS_Consumer_T<Consumer_Traits>::TAO_NS_Consumer_T (void)
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::TAO_Notify_Tests_Consumer_T (void)
 {
 }
 
 template <class Consumer_Traits>
-TAO_NS_Consumer_T<Consumer_Traits>::~TAO_NS_Consumer_T ()
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::~TAO_Notify_Tests_Consumer_T ()
 {
 }
 
-template <class Consumer_Traits> ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
-TAO_NS_Consumer_T<Consumer_Traits>::get_proxy_supplier (void)
+template <class Consumer_Traits> ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::get_proxy_supplier (void)
 {
   return this->get_proxy ();
 }
 
-template <class Consumer_Traits> ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
-TAO_NS_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
+template <class Consumer_Traits> ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
 {
   Consumer_Traits traits;
 
@@ -45,8 +45,8 @@ TAO_NS_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Consumer_T
   ACE_ENV_ARG_PARAMETER);
 }
 
-template <class Consumer_Traits> ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
-TAO_NS_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Consumer_T<Consumer_Traits>::Admin_Ext_Traits_PTR admin_ptr
+template <class Consumer_Traits> ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Admin_Ext_Traits_PTR admin_ptr
                                              , CosNotification::QoSProperties& qos
                                              ACE_ENV_ARG_DECL)
 {
@@ -67,7 +67,7 @@ TAO_NS_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Consumer_T
 }
 
 template <class Consumer_Traits> void
-TAO_NS_Consumer_T<Consumer_Traits>::subscription_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::subscription_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed ACE_ENV_ARG_DECL)
 {
   // Let the user see what we're subscribed for,
   ACE_DEBUG ((LM_DEBUG, "Calling Consumer subscription change: "));
@@ -98,7 +98,7 @@ TAO_NS_Consumer_T<Consumer_Traits>::subscription_change (CosNotification::EventT
 }
 
 template <class Consumer_Traits> void
-TAO_NS_Consumer_T<Consumer_Traits>::offer_change
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed*/
     ACE_ENV_ARG_DECL_NOT_USED)
@@ -108,4 +108,4 @@ TAO_NS_Consumer_T<Consumer_Traits>::offer_change
   // No-Op.
 }
 
-#endif /* TAO_NS_Consumer_T_CPP */
+#endif /* TAO_Notify_Tests_Consumer_T_CPP */

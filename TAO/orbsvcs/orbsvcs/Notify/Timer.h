@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_TIMER_H
-#define TAO_NS_TIMER_H
+#ifndef TAO_Notify_TIMER_H
+#define TAO_Notify_TIMER_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -25,16 +25,16 @@
 class ACE_Event_Handler;
 
 /**
- * @class TAO_NS_Timer
+ * @class TAO_Notify_Timer
  *
  * @brief Interface for scheduling timers.
  *
  */
-class TAO_Notify_Export TAO_NS_Timer : public TAO_NS_Refcountable
+class TAO_Notify_Export TAO_Notify_Timer : public TAO_Notify_Refcountable
 {
 public:
   /// Destructor
-  virtual ~TAO_NS_Timer (){};
+  virtual ~TAO_Notify_Timer (){};
 
   /// Schedule a timer
   virtual long schedule_timer (ACE_Event_Handler *handler,
@@ -46,4 +46,4 @@ public:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_TIMER_H */
+#endif /* TAO_Notify_TIMER_H */

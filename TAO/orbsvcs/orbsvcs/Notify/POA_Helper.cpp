@@ -6,24 +6,24 @@
 #include "POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_POA_Helper, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_POA_Helper, "$Id$")
 
 #include "tao/debug.h"
 
-TAO_NS_POA_Helper::TAO_NS_POA_Helper (void)
+TAO_Notify_POA_Helper::TAO_Notify_POA_Helper (void)
 {
 }
 
-TAO_NS_POA_Helper::~TAO_NS_POA_Helper ()
+TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper ()
 {
 
 }
 
 ACE_CString
-TAO_NS_POA_Helper::get_unique_id (void)
+TAO_Notify_POA_Helper::get_unique_id (void)
 {
   /// Factory for generating unique ids for the POAs.
-  static TAO_NS_ID_Factory poa_id_factory;
+  static TAO_Notify_ID_Factory poa_id_factory;
 
   char buf[32];
   ACE_OS_String::itoa (poa_id_factory.id (), buf, 10);
@@ -32,7 +32,7 @@ TAO_NS_POA_Helper::get_unique_id (void)
 }
 
 void
-TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name ACE_ENV_ARG_DECL)
+TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name ACE_ENV_ARG_DECL)
 {
   CORBA::PolicyList policy_list (2);
 
@@ -43,7 +43,7 @@ TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_nam
 }
 
 void
-TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
+TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
 {
   ACE_CString child_poa_name = this->get_unique_id ();
 
@@ -51,7 +51,7 @@ TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL)
+TAO_Notify_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL)
 {
   policy_list.length (2);
 
@@ -68,7 +68,7 @@ TAO_NS_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::Policy
 
 
 void
-TAO_NS_POA_Helper::create_i (PortableServer::POA_ptr parent_poa, const char* poa_name, CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL)
+TAO_Notify_POA_Helper::create_i (PortableServer::POA_ptr parent_poa, const char* poa_name, CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL)
 {
   PortableServer::POAManager_var manager =
     parent_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -93,7 +93,7 @@ TAO_NS_POA_Helper::create_i (PortableServer::POA_ptr parent_poa, const char* poa
 }
 
 PortableServer::ObjectId *
-TAO_NS_POA_Helper::long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const
+TAO_Notify_POA_Helper::long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const
 {
   // Modified code from string_to_ObjectId ..
   //
@@ -123,7 +123,7 @@ TAO_NS_POA_Helper::long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const
 }
 
 CORBA::Object_ptr
-TAO_NS_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& id ACE_ENV_ARG_DECL)
+TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& id ACE_ENV_ARG_DECL)
 {
   // Generate a new ID.
   id = this->id_factory_.id ();
@@ -146,7 +146,7 @@ TAO_NS_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& id AC
 }
 
 void
-TAO_NS_POA_Helper::deactivate (CORBA::Long id ACE_ENV_ARG_DECL) const
+TAO_Notify_POA_Helper::deactivate (CORBA::Long id ACE_ENV_ARG_DECL) const
 {
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
@@ -157,7 +157,7 @@ TAO_NS_POA_Helper::deactivate (CORBA::Long id ACE_ENV_ARG_DECL) const
 }
 
 CORBA::Object_ptr
-TAO_NS_POA_Helper::id_to_reference (CORBA::Long id ACE_ENV_ARG_DECL) const
+TAO_Notify_POA_Helper::id_to_reference (CORBA::Long id ACE_ENV_ARG_DECL) const
 {
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
@@ -169,7 +169,7 @@ TAO_NS_POA_Helper::id_to_reference (CORBA::Long id ACE_ENV_ARG_DECL) const
 }
 
 void
-TAO_NS_POA_Helper::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_POA_Helper::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   poa_->destroy (1,0 ACE_ENV_ARG_PARAMETER);
  // The <wait_for_completion> flag = 0

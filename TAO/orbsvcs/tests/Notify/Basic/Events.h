@@ -30,7 +30,7 @@
 
 class Events;
 
-class Event_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
+class Event_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
   Event_StructuredPushConsumer (Events *test_client);
@@ -50,7 +50,7 @@ protected:
 
 /***************************************************************************/
 
-class Event_StructuredPushSupplier : public TAO_Notify_StructuredPushSupplier
+class Event_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier
 {
 public:
   Event_StructuredPushSupplier (Events * test_client);
@@ -114,10 +114,10 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
   // The supplier admin used by suppliers.
 
-  TAO_Notify_StructuredPushConsumer* consumer_;
+  TAO_Notify_Tests_StructuredPushConsumer* consumer_;
   // Consumer
 
-  TAO_Notify_StructuredPushSupplier* supplier_;
+  TAO_Notify_Tests_StructuredPushSupplier* supplier_;
   // Supplier
 
 private:

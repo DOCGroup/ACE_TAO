@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_CONSUMERADMIN_H
-#define TAO_NS_CONSUMERADMIN_H
+#ifndef TAO_Notify_CONSUMERADMIN_H
+#define TAO_Notify_CONSUMERADMIN_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -30,23 +30,23 @@
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_NS_ConsumerAdmin
+ * @class TAO_Notify_ConsumerAdmin
  *
  * @brief Implementation of CosNotifyChannelAdmin::ConsumerAdmin
  *
  */
-class TAO_Notify_Export TAO_NS_ConsumerAdmin : public POA_NotifyExt::ConsumerAdmin
-                                             , public virtual TAO_NS_Admin
+class TAO_Notify_Export TAO_Notify_ConsumerAdmin : public POA_NotifyExt::ConsumerAdmin
+                                             , public virtual TAO_Notify_Admin
 {
 public:
   /// Constuctor
-  TAO_NS_ConsumerAdmin (void);
+  TAO_Notify_ConsumerAdmin (void);
 
   /// Destructor
-  ~TAO_NS_ConsumerAdmin ();
+  ~TAO_Notify_ConsumerAdmin ();
 
   /// Init
-  void init (TAO_NS_EventChannel *ec ACE_ENV_ARG_DECL);
+  void init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL);
 
   /// ServantBase refcount methods.
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
@@ -227,4 +227,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_CONSUMERADMIN_H */
+#endif /* TAO_Notify_CONSUMERADMIN_H */

@@ -6,7 +6,7 @@
 #include "ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_ProxyConsumer, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_ProxyConsumer, "$Id$")
 
 #include "tao/debug.h"
 #include "ace/Atomic_Op.h"
@@ -20,47 +20,47 @@ ACE_RCSID(RT_Notify, TAO_NS_ProxyConsumer, "$Id$")
 #include "Properties.h"
 #include "SupplierAdmin.h"
 
-TAO_NS_ProxyConsumer::TAO_NS_ProxyConsumer (void)
+TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer (void)
   : supplier_admin_ (0)
   , supplier_ (0)
 {
 }
 
-TAO_NS_ProxyConsumer::~TAO_NS_ProxyConsumer ()
+TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer ()
 {
   this->supplier_admin_->_decr_refcnt ();
 }
 
-TAO_NS_Peer*
-TAO_NS_ProxyConsumer::peer (void)
+TAO_Notify_Peer*
+TAO_Notify_ProxyConsumer::peer (void)
 {
   return this->supplier ();
 }
 
 void
-TAO_NS_ProxyConsumer::init (TAO_NS_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer::init (TAO_Notify_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Object::init (supplier_admin);
+  TAO_Notify_Object::init (supplier_admin);
 
   this->supplier_admin_ = supplier_admin;
 
   this->supplier_admin_->_incr_refcnt ();
 
   const CosNotification::QoSProperties &default_ps_qos =
-    TAO_NS_PROPERTIES::instance ()->default_proxy_consumer_qos_properties ();
+    TAO_Notify_PROPERTIES::instance ()->default_proxy_consumer_qos_properties ();
 
   this->set_qos (default_ps_qos ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_ProxyConsumer::connect (TAO_NS_Supplier *supplier ACE_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventChannelAdmin::AlreadyConnected
                    ))
 {
-  TAO_NS_Atomic_Property_Long& supplier_count = this->admin_properties_->suppliers ();
-  const TAO_NS_Property_Long& max_suppliers = this->admin_properties_->max_suppliers ();
+  TAO_Notify_Atomic_Property_Long& supplier_count = this->admin_properties_->suppliers ();
+  const TAO_Notify_Property_Long& max_suppliers = this->admin_properties_->max_suppliers ();
 
   if (max_suppliers != 0 &&
       supplier_count >= max_suppliers.value ())
@@ -86,7 +86,7 @@ TAO_NS_ProxyConsumer::connect (TAO_NS_Supplier *supplier ACE_ENV_ARG_DECL)
   // Inform QoS values.
   supplier_->qos_changed (this->qos_properties_);
 
-  TAO_NS_EventTypeSeq removed;
+  TAO_Notify_EventTypeSeq removed;
 
   this->event_manager_->offer_change (this, this->subscribed_types_, removed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -99,9 +99,9 @@ TAO_NS_ProxyConsumer::connect (TAO_NS_Supplier *supplier ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_ProxyConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_EventTypeSeq added;
+  TAO_Notify_EventTypeSeq added;
 
   event_manager_->offer_change (this, added, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -114,9 +114,9 @@ TAO_NS_ProxyConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_NS_ProxyConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (this->TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+  if (this->TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return 1;
 
   ACE_CHECK_RETURN (1);
@@ -131,7 +131,7 @@ TAO_NS_ProxyConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_ProxyConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return;
@@ -144,10 +144,10 @@ TAO_NS_ProxyConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_NS_Refcountable_Guard_T<TAO_NS_ProxyConsumer>;
+template class TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_NS_Refcountable_Guard_T<TAO_NS_ProxyConsumer>
+#pragma instantiate TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

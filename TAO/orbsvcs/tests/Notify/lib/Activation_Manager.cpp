@@ -8,7 +8,7 @@ ACE_RCSID(lib, TAO_Activation_Manager, "$id$")
 #include "Command_Builder.h"
 #include "Name.h"
 
-TAO_NS_Activation_Manager::TAO_NS_Activation_Manager (void)
+TAO_Notify_Tests_Activation_Manager::TAO_Notify_Tests_Activation_Manager (void)
   : barrier_ (0)
   , active_suppliers_ (0)
   , active_consumers_ (0)
@@ -20,7 +20,7 @@ TAO_NS_Activation_Manager::TAO_NS_Activation_Manager (void)
   LOOKUP_MANAGER->_register (this);
 }
 
-TAO_NS_Activation_Manager::~TAO_NS_Activation_Manager ()
+TAO_Notify_Tests_Activation_Manager::~TAO_Notify_Tests_Activation_Manager ()
 {
   delete this->barrier_;
 
@@ -29,7 +29,7 @@ TAO_NS_Activation_Manager::~TAO_NS_Activation_Manager ()
 }
 
 int
-TAO_NS_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name)
+TAO_Notify_Tests_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name)
 {
   this->ior_output_file_ = ACE_OS::fopen (file_name, ACE_LIB_TEXT("w"));
 
@@ -40,14 +40,14 @@ TAO_NS_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name)
 }
 
 int
-TAO_NS_Activation_Manager::ior_input_file (const ACE_TCHAR *file_name)
+TAO_Notify_Tests_Activation_Manager::ior_input_file (const ACE_TCHAR *file_name)
 {
   this->ior_input_file_ = file_name;
   return 0;
 }
 
 void
-TAO_NS_Activation_Manager::done (TAO_NS_Periodic_Supplier* /*supplier*/)
+TAO_Notify_Tests_Activation_Manager::done (TAO_Notify_Tests_Periodic_Supplier* /*supplier*/)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -58,7 +58,7 @@ TAO_NS_Activation_Manager::done (TAO_NS_Periodic_Supplier* /*supplier*/)
 }
 
 void
-TAO_NS_Activation_Manager::done (TAO_NS_Periodic_Consumer* /*consumer*/)
+TAO_Notify_Tests_Activation_Manager::done (TAO_Notify_Tests_Periodic_Consumer* /*consumer*/)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -69,7 +69,7 @@ TAO_NS_Activation_Manager::done (TAO_NS_Periodic_Consumer* /*consumer*/)
 }
 
 void
-TAO_NS_Activation_Manager::wait_for_completion (void)
+TAO_Notify_Tests_Activation_Manager::wait_for_completion (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -78,19 +78,19 @@ TAO_NS_Activation_Manager::wait_for_completion (void)
 }
 
 int
-TAO_NS_Activation_Manager::supplier_count (void)
+TAO_Notify_Tests_Activation_Manager::supplier_count (void)
 {
   return this->supplier_map_.current_size ();
 }
 
 int
-TAO_NS_Activation_Manager::consumer_count (void)
+TAO_Notify_Tests_Activation_Manager::consumer_count (void)
 {
   return this->consumer_map_.current_size ();
 }
 
 void
-TAO_NS_Activation_Manager::_register (TAO_NS_Periodic_Supplier* supplier, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -107,7 +107,7 @@ TAO_NS_Activation_Manager::_register (TAO_NS_Periodic_Supplier* supplier, const 
 }
 
 void
-TAO_NS_Activation_Manager::_register (TAO_NS_Periodic_Consumer* consumer, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -124,7 +124,7 @@ TAO_NS_Activation_Manager::_register (TAO_NS_Periodic_Consumer* consumer, const 
 }
 
 void
-TAO_NS_Activation_Manager::resolve (TAO_NS_Periodic_Supplier*& supplier, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -135,7 +135,7 @@ TAO_NS_Activation_Manager::resolve (TAO_NS_Periodic_Supplier*& supplier, const c
 }
 
 void
-TAO_NS_Activation_Manager::resolve (TAO_NS_Periodic_Consumer*& consumer, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -146,17 +146,17 @@ TAO_NS_Activation_Manager::resolve (TAO_NS_Periodic_Consumer*& consumer, const c
 }
 
 int
-TAO_NS_Activation_Manager::activate_suppliers (void)
+TAO_Notify_Tests_Activation_Manager::activate_suppliers (void)
 {
-  TAO_NS_PeriodicSupplier_Iterator iter(this->supplier_map_);
+  TAO_Notify_Tests_PeriodicSupplier_Iterator iter(this->supplier_map_);
 
-  TAO_NS_PeriodicSupplier_Entry* entry;
+  TAO_Notify_Tests_PeriodicSupplier_Entry* entry;
 
   // Create the barrier to synch activated auppiers.
   this->barrier_ = new ACE_Barrier (this->supplier_count () + 1);
 
   // For each supplier : activate
-  TAO_NS_Periodic_Supplier* supplier = 0;
+  TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
 
   for (u_int index = 0; iter.done () == 0; iter.advance (), ++index)
     {
@@ -177,7 +177,7 @@ TAO_NS_Activation_Manager::activate_suppliers (void)
 }
 
 void
-TAO_NS_Activation_Manager::dump_stats (int dump_samples)
+TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
 {
   char hostname[MAXHOSTNAMELEN];
   ACE_OS::hostname (hostname, MAXHOSTNAMELEN);
@@ -186,12 +186,12 @@ TAO_NS_Activation_Manager::dump_stats (int dump_samples)
   char msg[BUFSIZ];
   ACE_OS::sprintf (msg, "# Stats generated on %s\n", hostname);
 
-  TAO_NS_PeriodicSupplier_Iterator sup_iter(this->supplier_map_);
+  TAO_Notify_Tests_PeriodicSupplier_Iterator sup_iter(this->supplier_map_);
 
-  TAO_NS_PeriodicSupplier_Entry* sup_entry;
+  TAO_Notify_Tests_PeriodicSupplier_Entry* sup_entry;
 
   // For each supplier
-  TAO_NS_Periodic_Supplier* supplier = 0;
+  TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
 
   u_int index = 0;
   for (; sup_iter.done () == 0; sup_iter.advance (), ++index)
@@ -204,11 +204,11 @@ TAO_NS_Activation_Manager::dump_stats (int dump_samples)
     }
 
   // dump consumers
-  TAO_NS_PeriodicConsumer_Iterator cons_iter(this->consumer_map_);
+  TAO_Notify_Tests_PeriodicConsumer_Iterator cons_iter(this->consumer_map_);
 
-  TAO_NS_PeriodicConsumer_Entry* cons_entry;
+  TAO_Notify_Tests_PeriodicConsumer_Entry* cons_entry;
 
-  TAO_NS_Periodic_Consumer* consumer = 0;
+  TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
   for (index = 0; cons_iter.done () == 0; cons_iter.advance (), ++index)
     {
       if (cons_iter.next (cons_entry) != 0)
@@ -220,7 +220,7 @@ TAO_NS_Activation_Manager::dump_stats (int dump_samples)
 }
 
 void
-TAO_NS_Activation_Manager::write_ior (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Activation_Manager::write_ior (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::ServantBase_var servant_var (this);
 
@@ -246,7 +246,7 @@ TAO_NS_Activation_Manager::write_ior (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Activation_Manager::wait_for_start_signal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::wait_for_start_signal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -255,7 +255,7 @@ TAO_NS_Activation_Manager::wait_for_start_signal (ACE_ENV_SINGLE_ARG_DECL_NOT_US
 }
 
 void
-TAO_NS_Activation_Manager::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -268,7 +268,7 @@ TAO_NS_Activation_Manager::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_NS_Activation_Manager::signal_peer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Activation_Manager::signal_peer (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ORB_var orb;
   LOOKUP_MANAGER->resolve (orb);
@@ -292,32 +292,32 @@ TAO_NS_Activation_Manager::signal_peer (ACE_ENV_SINGLE_ARG_DECL)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Manager<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Manager<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_NS_Periodic_Supplier*>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_NS_Periodic_Consumer*>;
+template class ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*>;
+template class ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*>;
 
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
 
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_NS_Periodic_Supplier*>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_NS_Periodic_Consumer*>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*>
 
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
 
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

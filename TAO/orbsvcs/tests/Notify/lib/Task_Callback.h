@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_TASK_CALLBACK_H
-#define TAO_NS_TASK_CALLBACK_H
+#ifndef TAO_Notify_Tests_TASK_CALLBACK_H
+#define TAO_Notify_Tests_TASK_CALLBACK_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -19,21 +19,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_NS_Periodic_Supplier;
-class TAO_NS_Periodic_Consumer;
+class TAO_Notify_Tests_Periodic_Supplier;
+class TAO_Notify_Tests_Periodic_Consumer;
 
 /**
- * @class TAO_NS_Task_Callback
+ * @class TAO_Notify_Tests_Task_Callback
  *
  * @brief
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Task_Callback
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Task_Callback
 {
 public:
-  virtual void done (TAO_NS_Periodic_Supplier* supplier) = 0;
-  virtual void done (TAO_NS_Periodic_Consumer* consumer) = 0;
+  virtual void done (TAO_Notify_Tests_Periodic_Supplier* supplier) = 0;
+  virtual void done (TAO_Notify_Tests_Periodic_Consumer* consumer) = 0;
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_TASK_CALLBACK_H */
+#endif /* TAO_Notify_Tests_TASK_CALLBACK_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_RT_PRIORITY_MAPPING_H
-#define TAO_NS_RT_PRIORITY_MAPPING_H
+#ifndef TAO_Notify_Tests_RT_PRIORITY_MAPPING_H
+#define TAO_Notify_Tests_RT_PRIORITY_MAPPING_H
 #include "ace/pre.h"
 
 #include "rt_notify_test_export.h"
@@ -23,16 +23,16 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
 /**
- * @class TAO_NS_RT_Priority_Mapping
+ * @class TAO_Notify_Tests_RT_Priority_Mapping
  *
  * @brief Delegates to a RTCORBA::PriorityMapping
  *
  */
-class TAO_RT_NOTIFY_TEST_Export TAO_NS_RT_Priority_Mapping : public TAO_NS_Priority_Mapping
+class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_Priority_Mapping : public TAO_Notify_Tests_Priority_Mapping
 {
 public:
   /// The destructor
-  virtual ~TAO_NS_RT_Priority_Mapping (void);
+  virtual ~TAO_Notify_Tests_RT_Priority_Mapping (void);
 
   /// Init the Mapping manager.
   void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
@@ -51,4 +51,4 @@ protected:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_RT_PRIORITY_MAPPING_H */
+#endif /* TAO_Notify_Tests_RT_PRIORITY_MAPPING_H */

@@ -21,7 +21,7 @@
 #include "Notify_StructuredPushConsumer.h"
 
 
-class Notify_Push_Consumer: public TAO_Notify_StructuredPushConsumer
+class Notify_Push_Consumer: public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
   Notify_Push_Consumer (const char* name);

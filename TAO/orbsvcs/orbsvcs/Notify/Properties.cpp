@@ -8,9 +8,9 @@
 #include "Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, TAO_NS_Properties, "$Id$")
+ACE_RCSID (Notify, TAO_Notify_Properties, "$Id$")
 
-TAO_NS_Properties::TAO_NS_Properties (void)
+TAO_Notify_Properties::TAO_Notify_Properties (void)
   : factory_ (0)
   , builder_ (0)
   , asynch_updates_ (0)
@@ -27,16 +27,16 @@ TAO_NS_Properties::TAO_NS_Properties (void)
     ACE_DEBUG ((LM_DEBUG, "in TAO_Properties ctos %x\n", this));
 }
 
-TAO_NS_Properties::~TAO_NS_Properties ()
+TAO_Notify_Properties::~TAO_Notify_Properties ()
 {
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX>;
+template class TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -7,19 +7,19 @@
 #include "Batch_Buffering_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Batch_Buffering_Strategy, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Batch_Buffering_Strategy, "$id$")
 
-TAO_NS_Batch_Buffering_Strategy::TAO_NS_Batch_Buffering_Strategy (TAO_NS_Message_Queue& msg_queue, TAO_NS_AdminProperties_var& admin_properties, CORBA::Long batch_size)
-  :TAO_NS_Buffering_Strategy (msg_queue, admin_properties, batch_size)
+TAO_Notify_Batch_Buffering_Strategy::TAO_Notify_Batch_Buffering_Strategy (TAO_Notify_Message_Queue& msg_queue, TAO_Notify_AdminProperties_var& admin_properties, CORBA::Long batch_size)
+  :TAO_Notify_Buffering_Strategy (msg_queue, admin_properties, batch_size)
 {
 }
 
-TAO_NS_Batch_Buffering_Strategy::~TAO_NS_Batch_Buffering_Strategy ()
+TAO_Notify_Batch_Buffering_Strategy::~TAO_Notify_Batch_Buffering_Strategy ()
 {
 }
 
 int
-TAO_NS_Batch_Buffering_Strategy::dequeue_batch (CosNotification::EventBatch& event_batch)
+TAO_Notify_Batch_Buffering_Strategy::dequeue_batch (CosNotification::EventBatch& event_batch)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
@@ -47,7 +47,7 @@ TAO_NS_Batch_Buffering_Strategy::dequeue_batch (CosNotification::EventBatch& eve
 }
 
 int
-TAO_NS_Batch_Buffering_Strategy::dequeue_available (CosNotification::EventBatch& event_batch, int &pending)
+TAO_Notify_Batch_Buffering_Strategy::dequeue_available (CosNotification::EventBatch& event_batch, int &pending)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
@@ -62,7 +62,7 @@ TAO_NS_Batch_Buffering_Strategy::dequeue_available (CosNotification::EventBatch&
 }
 
 int
-TAO_NS_Batch_Buffering_Strategy::dequeue_i (int max_deq_count, CosNotification::EventBatch& event_batch)
+TAO_Notify_Batch_Buffering_Strategy::dequeue_i (int max_deq_count, CosNotification::EventBatch& event_batch)
 {
   ACE_Message_Block *mb;
 
@@ -77,7 +77,7 @@ TAO_NS_Batch_Buffering_Strategy::dequeue_i (int max_deq_count, CosNotification::
 
       --this->global_queue_length_;
 
-      TAO_NS_Method_Request_Event* mre = ACE_dynamic_cast (TAO_NS_Method_Request_Event*, mb);
+      TAO_Notify_Method_Request_Event* mre = ACE_dynamic_cast (TAO_Notify_Method_Request_Event*, mb);
 
       mre->event ()->convert (event_batch[deq_count]);
 

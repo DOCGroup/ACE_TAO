@@ -11,17 +11,17 @@ ACE_RCSID(Notify, FilterAdmin, "$Id$")
 #include "ace/Refcounted_Auto_Ptr.h"
 
 // Implementation skeleton constructor
-TAO_NS_FilterAdmin::TAO_NS_FilterAdmin (void)
+TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin (void)
 {
 }
 
 // Implementation skeleton destructor
-TAO_NS_FilterAdmin::~TAO_NS_FilterAdmin (void)
+TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin (void)
 {
 }
 
 CosNotifyFilter::FilterID
-TAO_NS_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (new_filter))
@@ -44,7 +44,7 @@ TAO_NS_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_ENV_A
 }
 
 void
-TAO_NS_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
@@ -59,7 +59,7 @@ TAO_NS_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_A
 }
 
 CosNotifyFilter::Filter_ptr
-TAO_NS_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
@@ -80,7 +80,7 @@ TAO_NS_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_ARG_
 }
 
 CosNotifyFilter::FilterIDSeq*
-TAO_NS_FilterAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_FilterAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -118,7 +118,7 @@ TAO_NS_FilterAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_FilterAdmin::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_FilterAdmin::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,

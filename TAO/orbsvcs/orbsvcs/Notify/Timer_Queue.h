@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_TIMER_QUEUE_H
-#define TAO_NS_TIMER_QUEUE_H
+#ifndef TAO_Notify_TIMER_QUEUE_H
+#define TAO_Notify_TIMER_QUEUE_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -25,19 +25,19 @@
 #include "ace/Timer_Heap.h"
 
 /**
- * @class TAO_NS_Timer_Queue
+ * @class TAO_Notify_Timer_Queue
  *
  * @brief ACE_Timer_Queue based timer.
  *
  */
-class TAO_Notify_Export TAO_NS_Timer_Queue : public TAO_NS_Timer
+class TAO_Notify_Export TAO_Notify_Timer_Queue : public TAO_Notify_Timer
 {
 public:
   /// Constuctor
-  TAO_NS_Timer_Queue (void);
+  TAO_Notify_Timer_Queue (void);
 
   /// Destructor
-  virtual ~TAO_NS_Timer_Queue ();
+  virtual ~TAO_Notify_Timer_Queue ();
 
   /// Release
   virtual void release (void);
@@ -63,4 +63,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_TIMER_QUEUE_H */
+#endif /* TAO_Notify_TIMER_QUEUE_H */

@@ -2,14 +2,14 @@
 
 #include "ORB_Objects.h"
 
-ACE_RCSID(Notify, TAO_NS_ORB_Objects, "$id$")
+ACE_RCSID(Notify, TAO_Notify_ORB_Objects, "$id$")
 
-TAO_NS_ORB_Objects::TAO_NS_ORB_Objects (void)
+TAO_Notify_ORB_Objects::TAO_Notify_ORB_Objects (void)
 {
 }
 
 void
-TAO_NS_ORB_Objects::init (CORBA::ORB_var& orb ACE_ENV_ARG_DECL)
+TAO_Notify_ORB_Objects::init (CORBA::ORB_var& orb ACE_ENV_ARG_DECL)
 {
   this->orb_ = orb;
 
@@ -47,12 +47,12 @@ TAO_NS_ORB_Objects::init (CORBA::ORB_var& orb ACE_ENV_ARG_DECL)
   ACE_CHECK;
 }
 
-TAO_NS_ORB_Objects::~TAO_NS_ORB_Objects ()
+TAO_Notify_ORB_Objects::~TAO_Notify_ORB_Objects ()
 {
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_NS_ORB_Objects::notify_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ORB_Objects::notify_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::EventChannelFactory_var ecf;
 

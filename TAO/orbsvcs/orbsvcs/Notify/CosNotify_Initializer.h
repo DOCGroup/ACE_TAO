@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_COSNOTIFY_INITIALIZER_H
-#define TAO_NS_COSNOTIFY_INITIALIZER_H
+#ifndef TAO_Notify_COSNOTIFY_INITIALIZER_H
+#define TAO_Notify_COSNOTIFY_INITIALIZER_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -20,19 +20,19 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class TAO_NS_CosNotify_Initializer
+ * @class TAO_Notify_CosNotify_Initializer
  *
  * @brief  Helper to load the Cos Notification service into the service conf. for static links.
  *
  */
-class TAO_Notify_Export TAO_NS_CosNotify_Initializer
+class TAO_Notify_Export TAO_Notify_CosNotify_Initializer
 {
 public:
   /// Constuctor
-  TAO_NS_CosNotify_Initializer (void);
+  TAO_Notify_CosNotify_Initializer (void);
 };
 
-static TAO_NS_CosNotify_Initializer TAO_NS_CosNotify_initializer;
+static TAO_Notify_CosNotify_Initializer TAO_Notify_CosNotify_initializer;
 
 #include "ace/post.h"
-#endif /* TAO_NS_COSNOTIFY_INITIALIZER_H */
+#endif /* TAO_Notify_COSNOTIFY_INITIALIZER_H */

@@ -35,7 +35,7 @@ class MultiTypes;
 
 /***************************************************************************/
 
-class MultiTypes_PushConsumer : public TAO_Notify_PushConsumer
+class MultiTypes_PushConsumer : public TAO_Notify_Tests_PushConsumer
 {
 public:
   MultiTypes_PushConsumer (MultiTypes* client);
@@ -55,7 +55,7 @@ protected:
 
 /***************************************************************************/
 
-class MultiTypes_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
+class MultiTypes_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
   MultiTypes_StructuredPushConsumer (MultiTypes* client);
@@ -73,7 +73,7 @@ protected:
   MultiTypes* client_;
 };
 
-class MultiTypes_SequencePushConsumer : public TAO_Notify_SequencePushConsumer
+class MultiTypes_SequencePushConsumer : public TAO_Notify_Tests_SequencePushConsumer
 {
 public:
   MultiTypes_SequencePushConsumer (MultiTypes* client);
@@ -139,14 +139,14 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
   // The supplier admin used by suppliers.
 
-  TAO_Notify_PushConsumer* any_consumer_;
-  TAO_Notify_StructuredPushConsumer* structured_consumer_;
-  TAO_Notify_SequencePushConsumer* sequence_consumer_;
+  TAO_Notify_Tests_PushConsumer* any_consumer_;
+  TAO_Notify_Tests_StructuredPushConsumer* structured_consumer_;
+  TAO_Notify_Tests_SequencePushConsumer* sequence_consumer_;
   // Consumers.
 
-  TAO_Notify_PushSupplier* any_supplier_;
-  TAO_Notify_StructuredPushSupplier* structured_supplier_;
-  TAO_Notify_SequencePushSupplier* sequence_supplier_;
+  TAO_Notify_Tests_PushSupplier* any_supplier_;
+  TAO_Notify_Tests_StructuredPushSupplier* structured_supplier_;
+  TAO_Notify_Tests_SequencePushSupplier* sequence_supplier_;
   // Suppliers
 
   // Count of Any events received;

@@ -117,24 +117,24 @@ ConnectDisconnect::init (int argc,
 
   // Arrays of Consumers.
   ACE_NEW_RETURN (this->any_consumer_,
-                  TAO_Notify_PushConsumer*[this->consumers_],
+                  TAO_Notify_Tests_PushConsumer*[this->consumers_],
                   -1);
   ACE_NEW_RETURN (this->structured_consumer_,
-                 TAO_Notify_StructuredPushConsumer*[this->consumers_],
+                 TAO_Notify_Tests_StructuredPushConsumer*[this->consumers_],
                  -1);
   ACE_NEW_RETURN (this->sequence_consumer_,
-                  TAO_Notify_SequencePushConsumer*[this->consumers_],
+                  TAO_Notify_Tests_SequencePushConsumer*[this->consumers_],
                   -1);
 
   // Arrays of Suppliers.
   ACE_NEW_RETURN (this->any_supplier_,
-                  TAO_Notify_PushSupplier*[this->suppliers_],
+                  TAO_Notify_Tests_PushSupplier*[this->suppliers_],
                   -1);
   ACE_NEW_RETURN (this->structured_supplier_,
-                  TAO_Notify_StructuredPushSupplier*[this->suppliers_],
+                  TAO_Notify_Tests_StructuredPushSupplier*[this->suppliers_],
                   -1);
   ACE_NEW_RETURN (this->sequence_supplier_,
-                  TAO_Notify_SequencePushSupplier*[this->suppliers_],
+                  TAO_Notify_Tests_SequencePushSupplier*[this->suppliers_],
                   -1);
 
   return 0;

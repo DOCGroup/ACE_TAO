@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PEER_T_H
-#define TAO_NS_PEER_T_H
+#ifndef TAO_Notify_Tests_PEER_T_H
+#define TAO_Notify_Tests_PEER_T_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -23,13 +23,13 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 /**
- * @class TAO_NS_Peer_T
+ * @class TAO_Notify_Tests_Peer_T
  *
  * @brief Base implementation for all Supplier and Consumer Classes.
  *
  */
 template <class Peer_Traits>
-class TAO_NOTIFY_TEST_Export TAO_NS_Peer_T : public TAO_NS_Peer, public Peer_Traits::SKELETON, public PortableServer::RefCountServantBase
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits::SKELETON, public PortableServer::RefCountServantBase
 {
   typedef ACE_TYPENAME Peer_Traits::Admin_Traits Admin_Traits;
   typedef ACE_TYPENAME Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
@@ -48,10 +48,10 @@ class TAO_NOTIFY_TEST_Export TAO_NS_Peer_T : public TAO_NS_Peer, public Peer_Tra
 
 public:
   /// Constuctor
-  TAO_NS_Peer_T (void);
+  TAO_Notify_Tests_Peer_T (void);
 
   /// Destructor
-  virtual ~TAO_NS_Peer_T ();
+  virtual ~TAO_Notify_Tests_Peer_T ();
 
   // Activates this servant with the POA supplied in init.
   // Connects to given proxy.
@@ -124,4 +124,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_PEER_T_H */
+#endif /* TAO_Notify_Tests_PEER_T_H */

@@ -5,7 +5,7 @@
 #include "Notify_StructuredPushSupplier.h"
 
 
-class Notify_Push_Supplier: public TAO_Notify_StructuredPushSupplier
+class Notify_Push_Supplier: public TAO_Notify_Tests_StructuredPushSupplier
 {
 public:
   void _connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,

@@ -6,4 +6,4 @@
 #include "Method_Request.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Method_Request, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Method_Request, "$Id$")

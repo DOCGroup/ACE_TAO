@@ -1,6 +1,6 @@
 // $Id$
-#ifndef TAO_NS_Supplier_T_CPP
-#define TAO_NS_Supplier_T_CPP
+#ifndef TAO_Notify_Tests_Supplier_T_CPP
+#define TAO_Notify_Tests_Supplier_T_CPP
 
 #include "Supplier_T.h"
 
@@ -8,26 +8,26 @@
 #include "Supplier_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Supplier_T, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Tests_Supplier_T, "$id$")
 
 template <class Supplier_Traits>
-TAO_NS_Supplier_T<Supplier_Traits>::TAO_NS_Supplier_T (void)
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::TAO_Notify_Tests_Supplier_T (void)
 {
 }
 
 template <class Supplier_Traits>
-TAO_NS_Supplier_T<Supplier_Traits>::~TAO_NS_Supplier_T ()
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::~TAO_Notify_Tests_Supplier_T ()
 {
 }
 
-template <class Supplier_Traits> ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
-TAO_NS_Supplier_T<Supplier_Traits>::get_proxy_consumer (void)
+template <class Supplier_Traits> ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::get_proxy_consumer (void)
 {
   return this->get_proxy ();
 }
 
-template <class Supplier_Traits> ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
-TAO_NS_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
+template <class Supplier_Traits> ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
 {
   Supplier_Traits traits;
 
@@ -45,8 +45,8 @@ TAO_NS_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Supplier_T
   ACE_ENV_ARG_PARAMETER);
 }
 
-template <class Supplier_Traits> ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
-TAO_NS_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Admin_Ext_Traits_PTR admin_ptr
+template <class Supplier_Traits> ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Admin_Ext_Traits_PTR admin_ptr
                                              , CosNotification::QoSProperties& qos
                                              ACE_ENV_ARG_DECL)
 {
@@ -67,7 +67,7 @@ TAO_NS_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Supplier_T
 }
 
 template <class Supplier_Traits> void
-TAO_NS_Supplier_T<Supplier_Traits>::offer_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::offer_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed ACE_ENV_ARG_DECL)
 {
   // Let the user see what we're subscribed for,
   ACE_DEBUG ((LM_DEBUG, "(%P, %t) Calling Supplier offer change: \n"));
@@ -93,7 +93,7 @@ TAO_NS_Supplier_T<Supplier_Traits>::offer_change (CosNotification::EventTypeSeq 
 }
 
 template <class Supplier_Traits> void
-TAO_NS_Supplier_T<Supplier_Traits>::subscription_change (
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::subscription_change (
                                                          const CosNotification::EventTypeSeq & /*added*/,
                                                          const CosNotification::EventTypeSeq & /*removed*/
         ACE_ENV_ARG_DECL_NOT_USED
@@ -105,4 +105,4 @@ TAO_NS_Supplier_T<Supplier_Traits>::subscription_change (
 {
   // No op.
 }
-#endif /* TAO_NS_Supplier_T_CPP */
+#endif /* TAO_Notify_Tests_Supplier_T_CPP */

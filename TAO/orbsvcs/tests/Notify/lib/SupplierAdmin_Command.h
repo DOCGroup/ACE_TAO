@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SUPPLIERADMIN_COMMAND_H
-#define TAO_NS_SUPPLIERADMIN_COMMAND_H
+#ifndef TAO_Notify_Tests_SUPPLIERADMIN_COMMAND_H
+#define TAO_Notify_Tests_SUPPLIERADMIN_COMMAND_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -24,19 +24,19 @@
 #include "Command.h"
 
 /**
- * @class TAO_NS_SupplierAdmin_Command
+ * @class TAO_Notify_Tests_SupplierAdmin_Command
  *
  * @brief Command for Supplier Admins.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_SupplierAdmin_Command : public TAO_NS_Command
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SupplierAdmin_Command : public TAO_Notify_Tests_Command
 {
 public:
   /// Constuctor
-  TAO_NS_SupplierAdmin_Command (void);
+  TAO_Notify_Tests_SupplierAdmin_Command (void);
 
   /// Destructor
-  ~TAO_NS_SupplierAdmin_Command ();
+  ~TAO_Notify_Tests_SupplierAdmin_Command ();
 
   /// Parse args and populate options.
   virtual void init (ACE_Arg_Shifter& arg_shifter);
@@ -86,4 +86,4 @@ protected:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_SUPPLIERADMIN_COMMAND_H */
+#endif /* TAO_Notify_Tests_SUPPLIERADMIN_COMMAND_H */

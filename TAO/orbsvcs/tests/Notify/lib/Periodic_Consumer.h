@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PERIODIC_CONSUMER_H
-#define TAO_NS_PERIODIC_CONSUMER_H
+#ifndef TAO_Notify_Tests_PERIODIC_CONSUMER_H
+#define TAO_Notify_Tests_PERIODIC_CONSUMER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -22,27 +22,27 @@
 #include "Task_Stats.h"
 #include "Notify_StructuredPushConsumer.h"
 
-class TAO_NS_Task_Callback;
+class TAO_Notify_Tests_Task_Callback;
 class ACE_Barrier;
 class ACE_Arg_Shifter;
 
 /**
- * @class TAO_NS_Periodic_Consumer
+ * @class TAO_Notify_Tests_Periodic_Consumer
  *
  * @brief Receives Structured events periodically.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Periodic_Consumer : public TAO_Notify_StructuredPushConsumer
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Consumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
   /// Constuctor
-  TAO_NS_Periodic_Consumer (void);
+  TAO_Notify_Tests_Periodic_Consumer (void);
 
   /// Destructor
-  ~TAO_NS_Periodic_Consumer ();
+  ~TAO_Notify_Tests_Periodic_Consumer ();
 
   /// set the helper callback
-  void task_callback(TAO_NS_Task_Callback* client);
+  void task_callback(TAO_Notify_Tests_Task_Callback* client);
 
   /// Init the state of this object.
   virtual int init_state (ACE_Arg_Shifter& arg_shifter);
@@ -86,7 +86,7 @@ protected:
   Task_Stats stats_;
 
   /// Client
-  TAO_NS_Task_Callback* client_;
+  TAO_Notify_Tests_Task_Callback* client_;
 
   /// Flag to indicate if we want to check the expected priority.
   int check_priority_;
@@ -96,4 +96,4 @@ protected:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_PERIODIC_CONSUMER_H */
+#endif /* TAO_Notify_Tests_PERIODIC_CONSUMER_H */

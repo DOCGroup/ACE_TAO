@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_RT_Test_FILTER_H
-#define TAO_NS_RT_Test_FILTER_H
+#ifndef TAO_Notify_Tests_RT_Test_FILTER_H
+#define TAO_Notify_Tests_RT_Test_FILTER_H
 #include "ace/pre.h"
 
 #include "rt_test_filter_export.h"
@@ -34,14 +34,14 @@
  * @brief Implementation of CosNotifyFilter::Filter servant.
  *
  */
-class TAO_RT_Test_Filter_Export TAO_NS_RT_Test_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
+class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
 {
 public:
   /// Constuctor
-  TAO_NS_RT_Test_Filter (void);
+  TAO_Notify_Tests_RT_Test_Filter (void);
 
   /// Destructor
-  ~TAO_NS_RT_Test_Filter ();
+  ~TAO_Notify_Tests_RT_Test_Filter ();
 
 protected:
   virtual char * constraint_grammar (ACE_ENV_SINGLE_ARG_DECL)

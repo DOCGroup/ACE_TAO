@@ -6,42 +6,42 @@
 #include "Peer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Peer, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Peer, "$Id$")
 
 #include "tao/debug.h"
 #include "Proxy.h"
 
-TAO_NS_Peer::TAO_NS_Peer (void)
+TAO_Notify_Peer::TAO_Notify_Peer (void)
 {
 }
 
-TAO_NS_Peer::~TAO_NS_Peer ()
+TAO_Notify_Peer::~TAO_Notify_Peer ()
 {
 }
 
 void
-TAO_NS_Peer::qos_changed (const TAO_NS_QoSProperties& /*qos_properties*/)
+TAO_Notify_Peer::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/)
 {
   // NOP.
 }
 
 void
-TAO_NS_Peer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Peer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // NOP.
 }
 
 void
-TAO_NS_Peer::handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Peer::handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Sever all association when a remote client misbehaves. Other strategies like reties are possible but not implemented.
   this->proxy ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_NS_Peer::dispatch_updates (const TAO_NS_EventTypeSeq & added, const TAO_NS_EventTypeSeq & removed ACE_ENV_ARG_DECL)
+TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const TAO_Notify_EventTypeSeq & removed ACE_ENV_ARG_DECL)
 {
-  TAO_NS_EventTypeSeq subscribed_types ;
+  TAO_Notify_EventTypeSeq subscribed_types ;
   this->proxy ()->subscribed_types (subscribed_types ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -50,7 +50,7 @@ TAO_NS_Peer::dispatch_updates (const TAO_NS_EventTypeSeq & added, const TAO_NS_E
       CosNotification::EventTypeSeq cos_added;
       CosNotification::EventTypeSeq cos_removed;
 
-      const TAO_NS_EventType& special = TAO_NS_EventType::special ();
+      const TAO_Notify_EventType& special = TAO_Notify_EventType::special ();
 
       // Don;t inform of types that we already know about.
       // E.g. if we're subscribed for {A,B,C,F}
@@ -64,8 +64,8 @@ TAO_NS_Peer::dispatch_updates (const TAO_NS_EventTypeSeq & added, const TAO_NS_E
       // then, we should only send {A,B} because the peer is not interested in D.
       // However if we're subscribed for everything, send all kinds of removes.
 
-      TAO_NS_EventTypeSeq added_result = added;
-      TAO_NS_EventTypeSeq removed_result;
+      TAO_Notify_EventTypeSeq added_result = added;
+      TAO_Notify_EventTypeSeq removed_result;
 
       if (subscribed_types.find (special) != 0)
         {
@@ -82,7 +82,7 @@ TAO_NS_Peer::dispatch_updates (const TAO_NS_EventTypeSeq & added, const TAO_NS_E
 
       if (cos_added.length () != 0 || cos_removed.length () != 0)
         {
-          TAO_NS_Proxy_Guard proxy_guard(this->proxy ()); // Protect this object from being destroyed in this scope.
+          TAO_Notify_Proxy_Guard proxy_guard(this->proxy ()); // Protect this object from being destroyed in this scope.
 
           this->dispatch_updates_i (cos_added, cos_removed ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;

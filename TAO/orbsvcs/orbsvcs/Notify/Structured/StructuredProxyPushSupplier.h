@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_STRUCTUREDPROXYPUSHSUPPLIER_H
-#define TAO_NS_STRUCTUREDPROXYPUSHSUPPLIER_H
+#ifndef TAO_Notify_STRUCTUREDPROXYPUSHSUPPLIER_H
+#define TAO_Notify_STRUCTUREDPROXYPUSHSUPPLIER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -32,26 +32,26 @@
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class TAO_Notify_Export
-TAO_NS_ProxySupplier_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
+TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 /**
- * @class TAO_NS_StructuredProxyPushSupplier
+ * @class TAO_Notify_StructuredProxyPushSupplier
  *
  * @brief Implements the CosNotifyChannelAdmin::StructuredProxyPushSupplier methods.
  *
  *
  */
-class TAO_Notify_Export TAO_NS_StructuredProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier>
+class TAO_Notify_Export TAO_Notify_StructuredProxyPushSupplier : public virtual TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier>
 {
-  friend class TAO_NS_Builder;
+  friend class TAO_Notify_Builder;
 
 public:
   /// Constuctor
-  TAO_NS_StructuredProxyPushSupplier (void);
+  TAO_Notify_StructuredProxyPushSupplier (void);
 
   /// Destructor
-  ~TAO_NS_StructuredProxyPushSupplier ();
+  ~TAO_Notify_StructuredProxyPushSupplier ();
 
   /// Destroy this object.
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
@@ -95,4 +95,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_STRUCTUREDPROXYPUSHSUPPLIER_H */
+#endif /* TAO_Notify_STRUCTUREDPROXYPUSHSUPPLIER_H */

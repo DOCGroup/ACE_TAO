@@ -1,9 +1,9 @@
 // $Id$
 
-template <class PROXY, class ACE_LOCK> ACE_INLINE  TAO_NS_Event_Map_Entry_T<PROXY>*
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL_NOT_USED)
+template <class PROXY, class ACE_LOCK> ACE_INLINE  TAO_Notify_Event_Map_Entry_T<PROXY>*
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL_NOT_USED)
 {
-  TAO_NS_Event_Map_Entry_T<PROXY>* entry;
+  TAO_Notify_Event_Map_Entry_T<PROXY>* entry;
 
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, 0);
 
@@ -17,7 +17,7 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_NS_EventType& event_type AC
 }
 
 template <class PROXY, class ACE_LOCK> ACE_INLINE void
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::release (ENTRY* entry)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::release (ENTRY* entry)
 {
   ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -25,26 +25,26 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::release (ENTRY* entry)
     delete entry;
 }
 
-template <class PROXY, class ACE_LOCK>  ACE_INLINE  ACE_TYPENAME TAO_NS_Event_Map_Entry_T<PROXY>::COLLECTION*
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::broadcast_collection (void)
+template <class PROXY, class ACE_LOCK>  ACE_INLINE  ACE_TYPENAME TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::broadcast_collection (void)
 {
   return this->broadcast_entry_.collection ();
 }
 
-template <class PROXY, class ACE_LOCK>  ACE_INLINE  ACE_TYPENAME TAO_NS_Event_Map_Entry_T<PROXY>::COLLECTION*
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::updates_collection (void)
+template <class PROXY, class ACE_LOCK>  ACE_INLINE  ACE_TYPENAME TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::updates_collection (void)
 {
   return this->updates_entry_.collection ();
 }
 
 template <class PROXY, class ACE_LOCK> ACE_INLINE int
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::proxy_count (void)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::proxy_count (void)
 {
   return this->proxy_count_;
 }
 
-template <class PROXY, class ACE_LOCK> ACE_INLINE const TAO_NS_EventTypeSeq&
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::event_types (void)
+template <class PROXY, class ACE_LOCK> ACE_INLINE const TAO_Notify_EventTypeSeq&
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::event_types (void)
 {
   return this->event_types_;
 }

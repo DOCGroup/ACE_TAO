@@ -19,7 +19,7 @@
 static CORBA::Boolean go = 0;
 static CORBA::Short n_events = 1;
 static const char* ior_file = "supplier.ior";
-static TAO_Notify_StructuredPushSupplier* supplier = 0;
+static TAO_Notify_Tests_StructuredPushSupplier* supplier = 0;
 
 // ******************************************************************
 // Subroutine Section
@@ -130,7 +130,7 @@ static void create_supplier (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
                              ACE_ENV_ARG_DECL)
 {
   ACE_NEW_THROW_EX (supplier,
-                    TAO_Notify_StructuredPushSupplier (),
+                    TAO_Notify_Tests_StructuredPushSupplier (),
                     CORBA::NO_MEMORY ());
 
   supplier->init (poa ACE_ENV_ARG_PARAMETER);

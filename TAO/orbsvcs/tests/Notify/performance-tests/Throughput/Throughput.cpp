@@ -314,7 +314,7 @@ Notify_Throughput::init (int argc, char* argv [] ACE_ENV_ARG_DECL)
       ACE_NEW_RETURN (suppliers_[i],
                       Throughput_StructuredPushSupplier (this),
                       -1);
-      suppliers_[i]->TAO_Notify_StructuredPushSupplier::init (
+      suppliers_[i]->TAO_Notify_Tests_StructuredPushSupplier::init (
                          root_poa_.in ()
                          ACE_ENV_ARG_PARAMETER
                        );
@@ -426,7 +426,7 @@ Notify_Throughput::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->collocated_ec_ == 1)
     {
-      TAO_Notify_Service* notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
+      TAO_Notify_Service* notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
 
       if (notify_service == 0)
         {
@@ -505,7 +505,7 @@ Notify_Throughput::run_test (ACE_ENV_SINGLE_ARG_DECL)
   for (int i = 0; i < this->supplier_count_; ++i)
     {
       suppliers_[i]->
-        TAO_Notify_StructuredPushSupplier::init (root_poa_.in ()
+        TAO_Notify_Tests_StructuredPushSupplier::init (root_poa_.in ()
                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 

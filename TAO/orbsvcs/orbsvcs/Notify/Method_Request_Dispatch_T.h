@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_METHOD_REQUEST_DISPATCH_T_H
-#define TAO_NS_METHOD_REQUEST_DISPATCH_T_H
+#ifndef TAO_Notify_METHOD_REQUEST_DISPATCH_T_H
+#define TAO_Notify_METHOD_REQUEST_DISPATCH_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,20 +22,20 @@
 #include "tao/corba.h"
 
 /**
- * @class TAO_NS_Method_Request_Dispatch_T
+ * @class TAO_Notify_Method_Request_Dispatch_T
  *
  * @brief
  *
  */
 template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM>
-class TAO_Notify_Export TAO_NS_Method_Request_Dispatch_T
+class TAO_Notify_Export TAO_Notify_Method_Request_Dispatch_T
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Dispatch_T (EVENT_PARAM event, PROXY_PARAM proxy, CORBA::Boolean filtering);
+  TAO_Notify_Method_Request_Dispatch_T (EVENT_PARAM event, PROXY_PARAM proxy, CORBA::Boolean filtering);
 
   /// Destructor
-  virtual ~TAO_NS_Method_Request_Dispatch_T ();
+  virtual ~TAO_Notify_Method_Request_Dispatch_T ();
 
   /// Execute the dispatch operation.
   int execute_i (ACE_ENV_SINGLE_ARG_DECL);
@@ -64,4 +64,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_METHOD_REQUEST_DISPATCH_T_H */
+#endif /* TAO_Notify_METHOD_REQUEST_DISPATCH_T_H */

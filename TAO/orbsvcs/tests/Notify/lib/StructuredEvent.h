@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_STRUCTUREDEVENT_H
-#define TAO_NS_STRUCTUREDEVENT_H
+#ifndef TAO_Notify_Tests_STRUCTUREDEVENT_H
+#define TAO_Notify_Tests_STRUCTUREDEVENT_H
 
 #include "ace/pre.h"
 #include "notify_test_export.h"
@@ -22,22 +22,22 @@
 #include "orbsvcs/CosNotificationC.h"
 
 /**
- * @class TAO_NS_StructuredEvent
+ * @class TAO_Notify_Tests_StructuredEvent
  *
  * @brief Helper class to populate a CosNotification::StructuredEvent.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_StructuredEvent
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredEvent
 {
 public:
   /// Constuctor
-  TAO_NS_StructuredEvent (void);
-  TAO_NS_StructuredEvent (const char* name);
-  TAO_NS_StructuredEvent (const char* domain, const char* type);
-  TAO_NS_StructuredEvent (const char* name, const char* domain, const char* type);
+  TAO_Notify_Tests_StructuredEvent (void);
+  TAO_Notify_Tests_StructuredEvent (const char* name);
+  TAO_Notify_Tests_StructuredEvent (const char* domain, const char* type);
+  TAO_Notify_Tests_StructuredEvent (const char* name, const char* domain, const char* type);
 
   /// Destructor
-  ~TAO_NS_StructuredEvent ();
+  ~TAO_Notify_Tests_StructuredEvent ();
 
   void name (const char* name);
   void type (const char* domain, const char* type);
@@ -64,4 +64,4 @@ private:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_STRUCTUREDEVENT_H */
+#endif /* TAO_Notify_Tests_STRUCTUREDEVENT_H */

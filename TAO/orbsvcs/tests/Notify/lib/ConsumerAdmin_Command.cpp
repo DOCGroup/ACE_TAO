@@ -8,29 +8,29 @@ ACE_RCSID(lib, TAO_ConsumerAdmin_Command, "$id$")
 #include "Name.h"
 #include "Options_Parser.h"
 
-TAO_NS_ConsumerAdmin_Command::TAO_NS_ConsumerAdmin_Command (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::TAO_Notify_Tests_ConsumerAdmin_Command (void)
   :ifgop_ (CosNotifyChannelAdmin::OR_OP), id_ (0)
 {
 }
 
-TAO_NS_ConsumerAdmin_Command::~TAO_NS_ConsumerAdmin_Command ()
+TAO_Notify_Tests_ConsumerAdmin_Command::~TAO_Notify_Tests_ConsumerAdmin_Command ()
 {
 }
 
 const char*
-TAO_NS_ConsumerAdmin_Command::get_name (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::get_name (void)
 {
-  return TAO_NS_ConsumerAdmin_Command::name ();
+  return TAO_Notify_Tests_ConsumerAdmin_Command::name ();
 }
 
 const char*
-TAO_NS_ConsumerAdmin_Command::name (void)
+TAO_Notify_Tests_ConsumerAdmin_Command::name (void)
 {
-  return TAO_NS_Name::consumer_admin_command;
+  return TAO_Notify_Tests_Name::consumer_admin_command;
 }
 
 void
-TAO_NS_ConsumerAdmin_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_ConsumerAdmin_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
@@ -50,7 +50,7 @@ TAO_NS_ConsumerAdmin_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-TAO_NS_ConsumerAdmin_Command::handle_subscriptions (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_ConsumerAdmin_Command::handle_subscriptions (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ConsumerAdmin_var admin;
 
@@ -78,7 +78,7 @@ TAO_NS_ConsumerAdmin_Command::handle_subscriptions (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_ConsumerAdmin_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_ConsumerAdmin_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ConsumerAdmin_var admin;
 
@@ -90,13 +90,13 @@ TAO_NS_ConsumerAdmin_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_ConsumerAdmin_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_ConsumerAdmin_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   //@@ TODO:
 }
 
 void
-TAO_NS_ConsumerAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_ConsumerAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
@@ -135,7 +135,7 @@ TAO_NS_ConsumerAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
           this->name_ = arg_shifter.get_current ();
           arg_shifter.consume_arg ();
 
-          TAO_NS_Options_Parser options_parser;
+          TAO_Notify_Tests_Options_Parser options_parser;
           options_parser.execute (this->added_, this->removed_, arg_shifter);
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS admin_name [Qos Options]
@@ -148,14 +148,14 @@ TAO_NS_ConsumerAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           arg_shifter.consume_arg ();
 
-          TAO_NS_Options_Parser qos_parser;
+          TAO_Notify_Tests_Options_Parser qos_parser;
           qos_parser.execute (this->qos_, arg_shifter);
         }
     }
 }
 
 void
-TAO_NS_ConsumerAdmin_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_ConsumerAdmin_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->command_ == CREATE)
     {

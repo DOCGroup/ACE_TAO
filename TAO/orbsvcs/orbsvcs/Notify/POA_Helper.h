@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_POA_Helper_H
-#define TAO_NS_POA_Helper_H
+#ifndef TAO_Notify_POA_Helper_H
+#define TAO_Notify_POA_Helper_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -24,16 +24,16 @@
 #include "ID_Factory.h"
 
 /**
- * @class TAO_NS_POA_Helper
+ * @class TAO_Notify_POA_Helper
  *
  * @brief POA Abstraction.
  *
  */
-class TAO_Notify_Export TAO_NS_POA_Helper : private ACE_Copy_Disabled
+class TAO_Notify_Export TAO_Notify_POA_Helper : private ACE_Copy_Disabled
 {
 public:
   /// Default Constructor
-  TAO_NS_POA_Helper (void);
+  TAO_Notify_POA_Helper (void);
 
   /// Create a new PortableServer::POA.
   void init (PortableServer::POA_ptr parent_poa, const char* poa_name ACE_ENV_ARG_DECL);
@@ -42,7 +42,7 @@ public:
   void init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL);
 
   /// Destructor
-  virtual ~TAO_NS_POA_Helper ();
+  virtual ~TAO_Notify_POA_Helper ();
 
   /// Get underlying POA
   PortableServer::POA_ptr poa (void);
@@ -73,7 +73,7 @@ protected:
   PortableServer::POA_var poa_;
 
   /// ID Factory for objects.
-  TAO_NS_ID_Factory id_factory_;
+  TAO_Notify_ID_Factory id_factory_;
 
   /// Convert id to ObjectID
   PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const;
@@ -84,4 +84,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_POA_Helper_H */
+#endif /* TAO_Notify_POA_Helper_H */

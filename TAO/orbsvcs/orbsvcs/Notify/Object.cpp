@@ -13,9 +13,9 @@
 #include "Object.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Object, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Object, "$Id$")
 
-TAO_NS_Object::TAO_NS_Object (void)
+TAO_Notify_Object::TAO_Notify_Object (void)
   : event_manager_ (0)
   , admin_properties_ (0)
   , id_ (0)
@@ -32,7 +32,7 @@ TAO_NS_Object::TAO_NS_Object (void)
     ACE_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
 }
 
-TAO_NS_Object::~TAO_NS_Object ()
+TAO_Notify_Object::~TAO_Notify_Object ()
 {
   if (TAO_debug_level > 2 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  destroyed\n", this ));
@@ -42,7 +42,7 @@ TAO_NS_Object::~TAO_NS_Object ()
 }
 
 void
-TAO_NS_Object::init (TAO_NS_Object* parent)
+TAO_Notify_Object::init (TAO_Notify_Object* parent)
 {
   this->event_manager_ = parent->event_manager_;
   this->admin_properties_ = parent->admin_properties_;
@@ -61,13 +61,13 @@ TAO_NS_Object::init (TAO_NS_Object* parent)
 }
 
 CORBA::Object_ptr
-TAO_NS_Object::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
+TAO_Notify_Object::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
   return this->poa_->activate (servant, this->id_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
@@ -87,7 +87,7 @@ TAO_NS_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
@@ -106,13 +106,13 @@ TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-TAO_NS_Object::ref (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::ref (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->poa_->id_to_reference (this->id_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_Object::shutdown_worker_task (void)
+TAO_Notify_Object::shutdown_worker_task (void)
 {
   // Only do this if we are the owner.
   if (this->own_worker_task_ == 1)
@@ -125,7 +125,7 @@ TAO_NS_Object::shutdown_worker_task (void)
 }
 
 void
-TAO_NS_Object::shutdown_proxy_poa (void)
+TAO_Notify_Object::shutdown_proxy_poa (void)
 {
   if (this->own_proxy_poa_ == 1)
     {
@@ -147,7 +147,7 @@ TAO_NS_Object::shutdown_proxy_poa (void)
 }
 
 void
-TAO_NS_Object::shutdown_object_poa (void)
+TAO_Notify_Object::shutdown_object_poa (void)
 {
   if (this->own_object_poa_ == 1)
     {
@@ -169,7 +169,7 @@ TAO_NS_Object::shutdown_object_poa (void)
 }
 
 void
-TAO_NS_Object::worker_task_own (TAO_NS_Worker_Task* worker_task)
+TAO_Notify_Object::worker_task_own (TAO_Notify_Worker_Task* worker_task)
 {
   this->worker_task (worker_task);
 
@@ -178,7 +178,7 @@ TAO_NS_Object::worker_task_own (TAO_NS_Worker_Task* worker_task)
 }
 
 void
-TAO_NS_Object::worker_task (TAO_NS_Worker_Task* worker_task)
+TAO_Notify_Object::worker_task (TAO_Notify_Worker_Task* worker_task)
 {
   // shutdown the current worker.
   this->shutdown_worker_task ();
@@ -192,7 +192,7 @@ TAO_NS_Object::worker_task (TAO_NS_Worker_Task* worker_task)
 }
 
 void
-TAO_NS_Object::proxy_poa_own (TAO_NS_POA_Helper* proxy_poa)
+TAO_Notify_Object::proxy_poa_own (TAO_Notify_POA_Helper* proxy_poa)
 {
   // shutdown current proxy poa.
   this->shutdown_proxy_poa ();
@@ -204,7 +204,7 @@ TAO_NS_Object::proxy_poa_own (TAO_NS_POA_Helper* proxy_poa)
 }
 
 void
-TAO_NS_Object::object_poa_own (TAO_NS_POA_Helper* object_poa)
+TAO_Notify_Object::object_poa_own (TAO_Notify_POA_Helper* object_poa)
 {
   // shutdown current object poa.
   this->shutdown_object_poa ();
@@ -217,11 +217,11 @@ TAO_NS_Object::object_poa_own (TAO_NS_POA_Helper* object_poa)
 }
 
 void
-TAO_NS_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL)
+TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL)
 {
   CosNotification::PropertyErrorSeq err_seq;
 
-  TAO_NS_QoSProperties new_qos_properties;
+  TAO_Notify_QoSProperties new_qos_properties;
 
   if (new_qos_properties.init (qos, err_seq) == -1)
     ACE_THROW (CORBA::INTERNAL ());
@@ -230,13 +230,13 @@ TAO_NS_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_D
   if (new_qos_properties.thread_pool ().is_valid ())
     {
       if (new_qos_properties.thread_pool ().value ().static_threads == 0)
-        TAO_NS_PROPERTIES::instance()->builder()->apply_reactive_concurrency (*this ACE_ENV_ARG_PARAMETER);
+        TAO_Notify_PROPERTIES::instance()->builder()->apply_reactive_concurrency (*this ACE_ENV_ARG_PARAMETER);
       else
-        TAO_NS_PROPERTIES::instance()->builder()->
+        TAO_Notify_PROPERTIES::instance()->builder()->
           apply_thread_pool_concurrency (*this, new_qos_properties.thread_pool ().value () ACE_ENV_ARG_PARAMETER);
     }
   else if (new_qos_properties.thread_pool_lane ().is_valid ())
-    TAO_NS_PROPERTIES::instance()->builder()->
+    TAO_Notify_PROPERTIES::instance()->builder()->
       apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -255,7 +255,7 @@ TAO_NS_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_D
 }
 
 CosNotification::QoSProperties*
-TAO_NS_Object::get_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::get_qos (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotification::QoSProperties_var properties;
 
@@ -269,13 +269,13 @@ TAO_NS_Object::get_qos (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Object::qos_changed (const TAO_NS_QoSProperties& /*qos_properties*/)
+TAO_Notify_Object::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/)
 {
   // NOP.
 }
 
-TAO_NS_Timer*
-TAO_NS_Object::timer (void)
+TAO_Notify_Timer*
+TAO_Notify_Object::timer (void)
 {
   return this->worker_task_->timer ();
 }

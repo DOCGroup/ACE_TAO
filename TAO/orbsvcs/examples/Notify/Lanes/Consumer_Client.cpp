@@ -9,21 +9,21 @@
 #include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID(Notify, TAO_NS_Consumer_Client, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Lanes_Consumer_Client, "$id$")
 
-TAO_NS_Consumer_Client::TAO_NS_Consumer_Client (TAO_NS_ORB_Objects& orb_objects)
+TAO_Notify_Lanes_Consumer_Client::TAO_Notify_Lanes_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
   , lane_priority_ (0)
   , consumer_ (0)
 {
 }
 
-TAO_NS_Consumer_Client::~TAO_NS_Consumer_Client ()
+TAO_Notify_Lanes_Consumer_Client::~TAO_Notify_Lanes_Consumer_Client ()
 {
 }
 
 int
-TAO_NS_Consumer_Client::parse_args (int argc, char *argv[])
+TAO_Notify_Lanes_Consumer_Client::parse_args (int argc, char *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -54,7 +54,7 @@ TAO_NS_Consumer_Client::parse_args (int argc, char *argv[])
 }
 
 void
-TAO_NS_Consumer_Client::initialize (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer_Client::initialize (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t)Initializing Consumer Client with lane priority = %d, event type = (%s)\n"
               , this->lane_priority_, this->event_type_.c_str ()));
@@ -100,14 +100,14 @@ TAO_NS_Consumer_Client::initialize (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Create a Consumer
-  this->consumer_ = new TAO_NS_Consumer (this->orb_objects_);
+  this->consumer_ = new TAO_Notify_Lanes_Consumer (this->orb_objects_);
 
   // Initialize it.
   this->consumer_->init (rt_poa, consumer_admin, this->event_type_ ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr
-TAO_NS_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POA_var rt_poa;
 
@@ -179,13 +179,13 @@ TAO_NS_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Consumer_Client::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->consumer_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 int
-TAO_NS_Consumer_Client::svc (void)
+TAO_Notify_Lanes_Consumer_Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
@@ -222,14 +222,14 @@ main (int argc, char *argv [])
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_NS_ORB_Objects orb_objects;
+      TAO_Notify_ORB_Objects orb_objects;
 
       orb_objects.init (orb ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_NS_ORB_Run_Task orb_run_task (orb_objects);
+      TAO_Notify_ORB_Run_Task orb_run_task (orb_objects);
 
-      TAO_NS_Consumer_Client client (orb_objects);
+      TAO_Notify_Lanes_Consumer_Client client (orb_objects);
 
       if (client.parse_args (argc, argv) != 0)
         {

@@ -6,34 +6,34 @@
 #include "Timer_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Timer_Reactor, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Timer_Reactor, "$Id$")
 
 #include "ace/Reactor.h"
 #include "tao/ORB_Core.h"
 #include "Properties.h"
 
-TAO_NS_Timer_Reactor::TAO_NS_Timer_Reactor (void)
+TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor (void)
   :reactor_ (0)
 {
   // Get the ORB
-  CORBA::ORB_var orb = TAO_NS_PROPERTIES::instance()->orb ();
+  CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb ();
 
   this->reactor_ =  orb->orb_core ()->reactor ();
 }
 
-TAO_NS_Timer_Reactor::~TAO_NS_Timer_Reactor ()
+TAO_Notify_Timer_Reactor::~TAO_Notify_Timer_Reactor ()
 {
 }
 
 void
-TAO_NS_Timer_Reactor::release (void)
+TAO_Notify_Timer_Reactor::release (void)
 {
   delete this;
   //@@ inform factory
 }
 
 long
-TAO_NS_Timer_Reactor::schedule_timer (ACE_Event_Handler *handler,
+TAO_Notify_Timer_Reactor::schedule_timer (ACE_Event_Handler *handler,
                                const ACE_Time_Value &delay_time,
                                const ACE_Time_Value &interval)
 {
@@ -41,7 +41,7 @@ TAO_NS_Timer_Reactor::schedule_timer (ACE_Event_Handler *handler,
 }
 
 int
-TAO_NS_Timer_Reactor::cancel_timer (long timer_id)
+TAO_Notify_Timer_Reactor::cancel_timer (long timer_id)
 {
   return this->reactor_->cancel_timer (timer_id);
 }

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_METHOD_REQUEST_UPDATES_T_H
-#define TAO_NS_METHOD_REQUEST_UPDATES_T_H
+#ifndef TAO_Notify_METHOD_REQUEST_UPDATES_T_H
+#define TAO_Notify_METHOD_REQUEST_UPDATES_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,20 +22,20 @@
 #include "tao/corba.h"
 
 /**
- * @class TAO_NS_Method_Request_Updates_T
+ * @class TAO_Notify_Method_Request_Updates_T
  *
  * @brief
  *
  */
 template <class SEQ, class PROXY, class SEQ_PARAM, class PROXY_PARAM>
-class TAO_Notify_Export TAO_NS_Method_Request_Updates_T
+class TAO_Notify_Export TAO_Notify_Method_Request_Updates_T
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Updates_T (SEQ_PARAM added, SEQ_PARAM removed, PROXY_PARAM proxy);
+  TAO_Notify_Method_Request_Updates_T (SEQ_PARAM added, SEQ_PARAM removed, PROXY_PARAM proxy);
 
   /// Destructor
-  virtual ~TAO_NS_Method_Request_Updates_T ();
+  virtual ~TAO_Notify_Method_Request_Updates_T ();
 
   /// Execute the Request
   int execute_i (ACE_ENV_SINGLE_ARG_DECL);
@@ -64,4 +64,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_METHOD_REQUEST_UPDATES_T_H */
+#endif /* TAO_Notify_METHOD_REQUEST_UPDATES_T_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SUPPLIER_T_H
-#define TAO_NS_SUPPLIER_T_H
+#ifndef TAO_Notify_Tests_SUPPLIER_T_H
+#define TAO_Notify_Tests_SUPPLIER_T_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -21,7 +21,7 @@
 
 #include "Peer_T.h"
 
-class TAO_NS_SupplierAdmin_Traits
+class TAO_Notify_Tests_SupplierAdmin_Traits
 {
  public:
   typedef CosNotifyChannelAdmin::SupplierAdmin INTERFACE;
@@ -29,7 +29,7 @@ class TAO_NS_SupplierAdmin_Traits
   typedef CosNotifyChannelAdmin::SupplierAdmin_var VAR;
 };
 
-class TAO_NS_SupplierAdmin_Ext_Traits
+class TAO_Notify_Tests_SupplierAdmin_Ext_Traits
 {
  public:
   typedef NotifyExt::SupplierAdmin INTERFACE;
@@ -38,13 +38,13 @@ class TAO_NS_SupplierAdmin_Ext_Traits
 };
 
 /**
- * @class TAO_NS_Supplier_T
+ * @class TAO_Notify_Tests_Supplier_T
  *
  * @brief Base template to implement Suppliers.
  *
  */
 template <class Supplier_Traits>
-class TAO_NOTIFY_TEST_Export TAO_NS_Supplier_T : public TAO_NS_Peer_T <Supplier_Traits>
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Supplier_T : public TAO_Notify_Tests_Peer_T <Supplier_Traits>
 {
   typedef ACE_TYPENAME Supplier_Traits::Admin_Traits Admin_Traits;
   typedef ACE_TYPENAME Supplier_Traits::Admin_Ext_Traits Admin_Ext_Traits;
@@ -57,10 +57,10 @@ class TAO_NOTIFY_TEST_Export TAO_NS_Supplier_T : public TAO_NS_Peer_T <Supplier_
 
 public:
   /// Constuctor
-  TAO_NS_Supplier_T (void);
+  TAO_Notify_Tests_Supplier_T (void);
 
   /// Destructor
-  ~TAO_NS_Supplier_T ();
+  ~TAO_Notify_Tests_Supplier_T ();
 
   /// For backward compatibility. use <get_proxy> instead.
   Proxy_Traits_PTR get_proxy_consumer (void);
@@ -102,4 +102,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_SUPPLIER_T_H */
+#endif /* TAO_Notify_Tests_SUPPLIER_T_H */
