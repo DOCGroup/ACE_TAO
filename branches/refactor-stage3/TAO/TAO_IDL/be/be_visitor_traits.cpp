@@ -114,9 +114,9 @@ be_visitor_traits::visit_interface (be_interface *node)
   // classes, we don't want to generate them unless it's necessary - thus
   // the logic surrounding each one.
 
-  // This is used by the _var and _out classes, so it should always be
-  // generated in the main file.
-  if (!node->imported ())
+  // I think we need to generate this only for non-defined forward
+  // declarations.
+  if (!node->imported () && !node->is_defined ())
     {
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -224,9 +224,9 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
 
   os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
-  // This is used by the _var and _out classes, so it should always be
-  // generated in the main file.
-  if (!node->imported ())
+  // I think we need to generate this only for non-defined forward
+  // declarations.
+  if (!node->imported () && !node->is_defined ())
     {
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -284,7 +284,7 @@ be_visitor_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
   be_valuetype *fd = 
     be_valuetype::narrow_from_decl (node->full_definition ());
 
-  // The logic in visit_interface() should handle what gets generated
+  // The logic in visit_valuetype() should handle what gets generated
   // and what doesn't.
   int status = this->visit_valuetype (fd);
 
