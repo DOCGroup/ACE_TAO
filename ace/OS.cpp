@@ -1652,8 +1652,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   if (result != -1)
     {
-      // This is the Solaris implementation of pthreads, where
-      // ACE_thread_t and ACE_hthread_t are the same.
+      // With Solaris threads, ACE_thread_t and ACE_hthread_t are the same.
       *thr_handle = *thr_id;
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
