@@ -24,11 +24,13 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
     deployment_config_ (orb)
 {
   // Initialize the <all_connections_> sequence.
+  //@@ Gan, this is not necessary.
   this->all_connections_->length (0);
 }
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
+  //@@ Gan, this is not necessary either. The destructor will do this for you.
   this->artifact_map_.unbind_all ();
 }
 
@@ -74,6 +76,8 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.  @@TODO: Does
           // preparePlan take a _var type variable?
+
+	  //@@ Gan, shouldn't you do narrow here in case something goes wrong?
           ::Deployment::NodeApplicationManager_var my_nam =
             my_node_manager->preparePlan (artifacts.child_plan_
                                           ACE_ENV_ARG_PARAMETER);
@@ -120,7 +124,7 @@ get_plan_info (void)
       for (size_t i = 0; i < this->node_manager_names_.size (); i++)
         // If a match is found do not add it to the list of unique
         // node names
-        if (ACE_OS::strcmp (this->plan_.instance [index].node,
+        if (ACE_OS::strcmp (this->plan_.instance [index].node.in (),
                             (this->node_manager_names_ [i]).c_str ()) == 0)
           {
             // Break out -- Duplicates found
@@ -133,13 +137,13 @@ get_plan_info (void)
           // Check if there is a corresponding NodeManager instance existing
           // If not present return false
           if (this->deployment_config_.get_node_manager
-              (this->plan_.instance [index].node) == 0)
+              (this->plan_.instance [index].node.in ()) == 0)
             return 0; /* Failure */
 
           // Add this unique node_name to the list of NodeManager names
           this->node_manager_names_.push_back
             (CORBA::string_dup
-             (this->plan_.instance [index].node));
+             (this->plan_.instance [index].node.in ()));
 
           // Increment the number of plans
           ++ num_plans;
@@ -153,7 +157,8 @@ get_plan_info (void)
   return 1;
 }
 
-
+//@@ We should ask those spec writers to look at the code below, hopefully
+//   They will realize some thing.
 int
 CIAO::DomainApplicationManager_Impl::
 split_plan (void)
@@ -169,6 +174,8 @@ split_plan (void)
                     0);
 
     tmp_plan->UUID = CORBA::string_dup (this->plan_.UUID.in ());
+
+    //@@Gan, all the following initialization is not necessary.
     tmp_plan->implementation.length (0);
     tmp_plan->instance.length (0);
     tmp_plan->connection.length (0);
@@ -202,6 +209,9 @@ split_plan (void)
       // Fill in the child deployment plan in the map.
 
       // Get the instance deployment description
+
+      //@@  Gan, after the first cut we should use either pointer or reference
+      //    to reduce a bit of overhead of copying.
       ::Deployment::InstanceDeploymentDescription my_instance =
         (this->plan_.instance)[i];
 
@@ -212,7 +222,8 @@ split_plan (void)
         Chained_Artifacts> *entry;
 
       if (this->artifact_map_.find
-          (ACE_CString (my_instance.node), //is this parameter correct?
+          (ACE_CString (my_instance.node.in ()), //is this parameter correct?
+	                                         //@@ Gan, now it should be correct.
                         entry) != 0)
         return 0;                          // no valid name found.
 
@@ -305,22 +316,30 @@ get_outgoing_connections (::Deployment::Connections_out provided,
   for (CORBA::ULong i = 0; i < plan.instance.length (); i++)
     {
       // Get the component instance name
-      CORBA::String_var instance_name = plan.instance[i].name;
+      CORBA::String_var instance_name = (plan.instance[i].name).in();
 
-      // Find out all the PlanConnectionDescriptions from the global plan 
+      // Find out all the PlanConnectionDescriptions from the global plan
       // where this component instance plays the role as either "receptacle"
       // or "event sink".
       for (CORBA::ULong j = 0; j < this->plan_.connection.length (); j++)
         {
+	  //@@Gan, seems that you are assuming that there is a special sequence
+	  //  between the two subcomponentportendpoints in a connection. Has Jai
+	  //  confirmed this for you about if he will follow the rule?
+
+	  //@@  Gan, after the first cut we should use either pointer or reference
+	  //    to reduce a bit of overhead of copying.
           ::Deployment::PlanConnectionDescription tmp_conn
             = this->plan_.connection[j];
 
+	  //@@  Gan, after the first cut we should use either pointer or reference
+	  //    to reduce a bit of overhead of copying.
           ::Deployment::PlanSubcomponentPortEndpoint dest_endpoint
             = tmp_conn.internalEndpoint[1]; /* The "destination" end point */
 
           // instanceRef of this particular receiver side component instance.
           CORBA::ULong dest_instanceRef = dest_endpoint.instanceRef;
-          
+
           // Check whether the name is the same as <instance_name>.
           if (! ACE_OS::strcmp (this->plan_.instance[dest_instanceRef].name.in (),
                                 instance_name.in ()))
@@ -328,6 +347,8 @@ get_outgoing_connections (::Deployment::Connections_out provided,
 
           // Otherwise, this connection is what we are interested in ...
 
+	  //@@  Gan, after the first cut we should use either pointer or reference
+	  //    to reduce a bit of overhead of copying.
           ::Deployment::PlanSubcomponentPortEndpoint src_endpoint
             = tmp_conn.internalEndpoint[0]; /* The "source" end point */
 
@@ -335,10 +356,12 @@ get_outgoing_connections (::Deployment::Connections_out provided,
           CORBA::ULong src_instanceRef = src_endpoint.instanceRef;
 
           // Get the prvoider side component instance name and port name.
-          CORBA::String_var provider_name = 
-            this->plan_.instance[src_instanceRef].name;
+	  //@@ Gan, using string_var here is not really necessary,
+	  //   a plain const char * is better. Too many copies are made unnecessarily.
+          CORBA::String_var provider_name =
+            (this->plan_.instance[src_instanceRef].name).in ();
 
-          CORBA::String_var port_name = src_endpoint.portName;
+          CORBA::String_var port_name = (src_endpoint.portName).in ();
 
           // Fetch the connections out from the <all_connections_> by
           // comparing the "component instance name" and "port name".
@@ -347,7 +370,7 @@ get_outgoing_connections (::Deployment::Connections_out provided,
               if (! ACE_OS::strcmp ((*this->all_connections_)[k].instanceName.in (),
                                     provider_name.in ()))
                 continue;
-             
+
               if (! ACE_OS::strcmp ((*this->all_connections_)[k].portName.in (),
                                     port_name.in ()))
                 continue;
@@ -355,6 +378,10 @@ get_outgoing_connections (::Deployment::Connections_out provided,
               CORBA::ULong length = retn_connections->length ();
               retn_connections->length (length + 1);
 
+	      //@@ Gan, here you have to switch the name for me. You should give back
+	      // the event_publisher/emitter or the recetacle's name to me. Because
+	      // I don't know anything about the connection as a pair of two endpoints.
+	      // also the port kind is needed to be switched.
               (*retn_connections)[length] = this->all_connections_[k];
               (*retn_connections)[length].kind = src_endpoint.kind;
             }
