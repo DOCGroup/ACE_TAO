@@ -79,7 +79,6 @@ Tue Jun 27 10:45:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
         * tao/ORB.cpp :
           Removed the file_string_to_object function as it is no longer
           needed.
->>>>>>> 1.996.2.6
 
 Mon Jun 26 14:56:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
