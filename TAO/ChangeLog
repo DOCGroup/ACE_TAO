@@ -1,27 +1,45 @@
+Thu Jan  1 15:51:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/Bug_1334_Regression/test.mpc:
+	* tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc:
+	* tests/OBV/Collocated/Forward/OBV_Forward.mpc:
+	  Removed not needed libpaths
+
+	* tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+	  Base the server on iortable instead of adding this lib by hand
+
+	* tests/Bug_1627_Regression/test.mpc:
+	  Base the server on iortable instead of adding this lib by hand and
+	  removed not needed libpaths
+
+	* tests/OBV/Supports/Supports_Test.mpc:
+	  Base the server on strategies instead of adding this lib by hand and
+	  removed not needed libpaths
+
 Thu Jan  1 09:40:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tests/Smart_Proxies/Makefile:
-	  
-	  Added new directories into theMakefile. 
-	
+
+	  Added new directories into theMakefile.
+
 	* tests/Smart_Proxies/Collocation/Coll_Tester.h:
 	* tests/Smart_Proxies/Collocation/Diamond_i.h:
 
 	  Fixed warnings with g++. This is an indication these files have
-	  never been compiled with g++. 
-	
+	  never been compiled with g++.
+
 	* tests/Smart_Proxies/Collocation/Makefile:
 	* tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
 	* tests/Smart_Proxies/Collocation/Makefile.Diamond:
 	* tests/Smart_Proxies/Collocation/Makefile.main:
 
-	  New makefiles for building these directories. 
+	  New makefiles for building these directories.
 
 	* tests/Smart_Proxies/Collocation/main.cpp:
 	* tests/Smart_Proxies/Collocation/svc.conf:
 
 	  Cosmetic fixes.
-	
+
 Thu Jan  1 15:40:04 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/DynamicInterface/DII_ClientRequestInfo.{h,cpp}:
