@@ -1,3 +1,10 @@
+Fri Nov 26 17:53:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO-INSTALL.html:
+
+	  Removed references to TAOACE.dsw. They are no longer available
+	  in the repository.
+
 Fri Nov 26 14:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
