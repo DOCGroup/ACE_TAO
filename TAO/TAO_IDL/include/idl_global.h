@@ -286,6 +286,11 @@ public:
 				  AST_PredefinedType::PredefinedType
 				);
 
+  virtual String                *idl_src_file();
+  // returns the IDL source file being copiled
+
+  virtual void                  idl_src_file(String *);
+  // set the source IDL file that is being parsed
 private:
   // Data
   UTL_ScopeStack		*pd_scopes;		// Store scopes stack
@@ -319,6 +324,7 @@ private:
   long				seen_include_file_before(String *);
 							// Seen this include
 							// before?
+  String                        *pd_idl_src_file;       // IDL source file
 };
 
 #endif	//_IDL_IDL_GLOBAL_HH
