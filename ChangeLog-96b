@@ -1,3 +1,8 @@
+Thu Dec 05 21:18:49 1996  David L. Levine  <levine@cs.wustl.edu>
+	* ace/OS.cpp (thr_create): Oops, needed to add another check if
+ 	  thr_id == 0 before assigning *thr_handle = *thr_id, for systems
+ 	  such as Solaris 5.4 that don't have PTHREADS.
+
 Wed Dec  4 09:09:56 1996  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Log_Msg.cpp (log):  added printout to stderr before call
  	  to exit().  Silent calls to exit() are bad :-}
