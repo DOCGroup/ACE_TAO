@@ -368,7 +368,6 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
 {
   this->_deallocate_buffer ();
   this->mb_ = ACE_Message_Block::duplicate (mb);
-  this->mb_->wr_ptr (this->mb_->rd_ptr () + length);
   this->buffer_ = this->mb_->rd_ptr ();
   this->maximum_ = length;
   this->length_ = length;
