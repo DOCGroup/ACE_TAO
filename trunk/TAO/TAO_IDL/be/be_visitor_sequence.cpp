@@ -198,7 +198,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   delete visitor;
   *os << " *buffer, " << be_nl
       << "CORBA::Boolean release=0" << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << ");" << be_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &); // copy ctor" << be_nl;
   *os << "~" << node->local_name () << " (void); // dtor\n";
