@@ -1,3 +1,8 @@
+Wed Apr 19 12:48:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/ACE.cpp: Added a missing pointer in the signature of
+	  ACE::t_rcv_n_i (). 
+
 Wed Apr 19 10:11:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Atomic_Op_Test.dsp:
