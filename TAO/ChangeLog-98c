@@ -1,4 +1,11 @@
-Wed Jul 22 1:43;15 1998  Jeff Parsons <jp4@cs.wustl.edu>
+Wed Jul 22 2:12:34 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+      * TAO/tests/Cubit/TAO/DII_Cubit/client.cpp
+        Changed ACE_OS::strdup () in constructor initializations to
+        CORBA::string_dup () and added corresponding CORBA::string_free ()
+        in destructor.
+
+Wed Jul 22 1:43:15 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
       * TAO/tests/Param_Test/options.{h,cpp}:
         fixed -f option in parse_args so a #define MAX_BUFFER_LENGTH

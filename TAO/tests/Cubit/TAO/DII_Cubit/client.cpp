@@ -183,7 +183,7 @@ DII_Cubit_Client::DII_Cubit_Client (void)
     obj_var_ (CORBA::Object::_nil ()),
     call_count_ (0),
     error_count_ (0),
-    factory_IOR_ (DEFAULT_FACTORY_IOR)
+    factory_IOR_ (CORBA::string_dup (DEFAULT_FACTORY_IOR))
 {
   // Initialize the array of pointers-to-member-functions.
   this->op_array_[0] = cube_short_dii;
@@ -201,6 +201,7 @@ DII_Cubit_Client::DII_Cubit_Client (void)
 // Destructor
 DII_Cubit_Client::~DII_Cubit_Client (void)
 {
+  CORBA::string_free (this->factory_IOR_);
 }
 
 // An array of messages to pass to print_stats, so we can step through
@@ -1049,3 +1050,5 @@ int main (int argc, char *argv[])
 
   return 0;
 }
+
+
