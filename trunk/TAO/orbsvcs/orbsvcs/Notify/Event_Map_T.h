@@ -23,6 +23,7 @@
 #include "Types.h"
 #include "EventType.h"
 #include "Event_Map_Entry_T.h"
+#include "EventTypeSeq.h"
 
 /**
  * @class TAO_NS_Event_Map_T

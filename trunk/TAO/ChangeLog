@@ -1,3 +1,17 @@
+Fri Nov 15 20:52:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+          Added missing include to fix BCB compile error.
+
+        * tests/Bug_1020_Basic_Regression/*.bor:
+        * tests/Bug_1020_Regression/*.bor:
+        * tests/Bug_1269_Regression/*.bor:
+        * tests/Bug_1270_Regression/*.bor:
+          Added new BCB makefiles to build these tests
+
+        * tests/Makefile.bor:
+          Added new tests for which there are now BCB makefiles.
+
 Fri Nov 15 11:06:07 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
@@ -20,13 +34,13 @@ Fri Nov 15 09:29:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_component/component_cs.cpp:
         * TAO_IDL/be/be_visitor_component/component_ch.cpp:
 
-          Fixed up some omissions and signatures in generated code. Thanks to 
+          Fixed up some omissions and signatures in generated code. Thanks to
           Nanbor <nanbor@cse.wustl.edu> for uncovering them.
 
 Thu Nov 14 19:45:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.dsp: Added required paths to the
-	  libraries. 
+	  libraries.
 
 Thu Nov 14 16:40:06 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -75,12 +89,12 @@ Thu Nov 14 16:28:13 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tests/Bug_1270_Regression/run_test.pl: Reduced the runtime
 	  further to 4 minutes. 7 minutes is too high to blow away the
 	  stack on machines like charanga!
-	  
+
 Thu Nov 14 16:21:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1270_Regression/run_test.pl: Reduced the runtime from
 	  70 minutes to 7 minutes. This will make them usable in the daily
-	  builds. 
+	  builds.
 
 Thu Nov 14 13:47:10 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -98,22 +112,22 @@ Thu Nov 14 13:47:10 2002  Ossama Othman  <ossama@uci.edu>
 
 Thu Nov 14 14:33:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/Transport.h: 
+	* tao/Transport.h:
 	* tao/Transport.cpp: Changed the semantics of one of the arguments
 	  in the call close_connection_shared (). The argument was called
 	  "disable_purge" and was used in exactly the opposite manner. The
 	  condition that was used to purge the entry from the cache was
-	  also topsy-turvy. 
+	  also topsy-turvy.
 
 	  This was fixed the following way
 
 	    - the argument is now called "purge".
 	    - a value of 1 will purge the entry from the cache manager and
 	      a value of 0 otherwise.
-	      
+
 	  This should fix the failure of the Crash_On_Write test in our
-	  daily builds.  
-	    
+	  daily builds.
+
 Thu Nov 14 14:04:27 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV.dsp:
@@ -159,8 +173,8 @@ Wed Nov 13 17:18:35 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  circumvent BUG 1294 and BUG 1361. The solution in BUG 1294, is
 	  not scalable to situations explained in BUG 1361 which leads to
 	  crashes. The only way to circumvent that is to release the OS
-	  resources at the end of the lifetime of the handler. 
-	  
+	  resources at the end of the lifetime of the handler.
+
 	  Not exactly sure how I missed this yesterday.
 
 Wed Nov 13 14:15:33 2002  Ossama Othman  <ossama@uci.edu>
