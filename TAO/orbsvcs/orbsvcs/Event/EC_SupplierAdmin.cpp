@@ -159,6 +159,10 @@ TAO_EC_Shutdown_Consumer::work (TAO_EC_ProxyPushConsumer *consumer,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_EC_Worker<TAO_EC_ProxyPushConsumer>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

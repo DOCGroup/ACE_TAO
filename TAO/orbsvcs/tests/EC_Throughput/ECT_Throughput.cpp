@@ -16,7 +16,6 @@
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "ECT_Throughput.h"
 
 ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")

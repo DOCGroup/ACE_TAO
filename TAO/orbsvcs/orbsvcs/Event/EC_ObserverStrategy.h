@@ -219,6 +219,9 @@ public:
                      const RtecEventComm::EventHeader& rhs) const;
   };
 
+  typedef ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map;
+  typedef ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map_Iterator;
+
 protected:
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos,
                  CORBA::Environment &env);
@@ -232,9 +235,6 @@ protected:
 
   ACE_Lock* lock_;
   // The lock
-
-  typedef ACE_Map_Manager<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map;
-  typedef ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle,Observer_Entry,ACE_Null_Mutex> Observer_Map_Iterator;
 
   RtecEventChannelAdmin::Observer_Handle handle_generator_;
   // The handles are generated in sequential order, but are opaque to
