@@ -45,7 +45,7 @@ print STDERR "Starting Manager\n";
 
 $MANAGER->Spawn ();
 
-$manager = $MANAGER->WaitKill (10);
+$manager = $MANAGER->WaitKill (30);
 
 $SERV1->WaitKill(5);
 
