@@ -50,6 +50,23 @@
 // relies on the standard c++ library.
 //  Runtime restrictions: You must be using MSVC 4.2 or above and your
 //                        application must link with the standard libraries.
+
+#if defined (_MSC_VER)
+
+# define ACE_CC_NAME "Visual C++"
+
+#if (_MSC_VER >= 1200)
+# define ACE_CC_MAJOR_VERSION 6
+#elif (_MSC_VER >= 1100)
+# define ACE_CC_MAJOR_VERSION 5
+#elif (_MSC_VER >= 1000)
+# define ACE_CC_MAJOR_VERSION 4
+#endif /* _MSC_VER  >= 1200 */
+
+# define ACE_CC_MINOR_VERSION (_MSC_VER % 100)
+# define ACE_CC_BETA_VERSION  (0)
+#endif /* _MSC_VER */
+
 #if defined (_MSC_VER) && (_MSC_VER >= 1020)
         #if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
                 #define ACE_HAS_STANDARD_CPP_LIBRARY    0

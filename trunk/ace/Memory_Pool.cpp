@@ -80,8 +80,7 @@ ACE_MMAP_Memory_Pool::release (void)
   ACE_TRACE ("ACE_MMAP_Memory_Pool::release");
 
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-  ACE_POSITION_INDEPENDENT_REPOSITORY::instance ()->unbind (this->mmap_.addr (),
-                                                     this->mmap_.size ());
+  ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (this->mmap_.addr ());
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
   this->mmap_.remove ();
@@ -265,7 +264,7 @@ ACE_MMAP_Memory_Pool::map_file (off_t map_size)
   else
     {
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-      ACE_POSITION_INDEPENDENT_REPOSITORY::instance ()->bind (this->base_addr_,
+      ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->base_addr_,
                                                        map_size);
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
       return 0;

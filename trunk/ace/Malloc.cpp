@@ -1,7 +1,7 @@
 // $Id$
 
-#if !defined (ACE_MALLOC_C)
-#define ACE_MALLOC_C
+#if !defined (ACE_MALLOC_CPP)
+#define ACE_MALLOC_CPP
 
 #define ACE_BUILD_DLL
 #include "ace/Malloc.h"
@@ -30,7 +30,7 @@ ACE_Control_Block::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->name_head_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), this->freep_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), (void *) this->freep_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -208,6 +208,16 @@ template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_HAS_MALLOC_STATS */
-#endif /* ACE_MALLOC_C */
+
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Based_Pointer<ACE_Malloc_Header>;
+template ACE_Based_Pointer<ACE_Malloc_Header> operator+ (const ACE_Based_Pointer<ACE_Malloc_Header> &lhs, long increment);
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Based_Pointer<ACE_Malloc_Header>
+#pragma ACE_Based_Pointer<ACE_Malloc_Header> operator+ (const ACE_Based_Pointer<ACE_Malloc_Header> &lhs, long increment);
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+
+#endif /* ACE_MALLOC_CPP */

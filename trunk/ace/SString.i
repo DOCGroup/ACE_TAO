@@ -313,7 +313,8 @@ ACE_CString::hash (void) const
 }
 
 ACE_INLINE ACE_WString
-operator+ (const ACE_WString &s, const ACE_WString &t)
+operator+ (const ACE_WString &s,
+           const ACE_WString &t)
 {
   ACE_WString temp (s);
   temp += t;
@@ -684,8 +685,6 @@ ACE_WString::hash (void) const
 {
   return ACE::hash_pjw (this->rep_);
 }
-
-// ****************************************************************
 
 ACE_INLINE
 ACE_Auto_String_Free::ACE_Auto_String_Free (char* p)
