@@ -244,14 +244,22 @@ typedef ACE_UINT16 ACE_USHORT16;
 
     // = Overloaded relation operators.
     int operator== (const ACE_U_LongLong &) const;
+    int operator== (const ACE_UINT32) const;
     int operator!= (const ACE_U_LongLong &) const;
+    int operator!= (const ACE_UINT32) const;
     int operator< (const ACE_U_LongLong &) const;
+    int operator< (const ACE_UINT32) const;
     int operator<= (const ACE_U_LongLong &) const;
+    int operator<= (const ACE_UINT32) const;
     int operator> (const ACE_U_LongLong &) const;
+    int operator> (const ACE_UINT32) const;
     int operator>= (const ACE_U_LongLong &) const;
+    int operator>= (const ACE_UINT32) const;
 
     ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
+    ACE_U_LongLong operator+ (const ACE_UINT32) const;
     ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
+    ACE_U_LongLong operator- (const ACE_UINT32) const;
     ACE_U_LongLong operator* (const ACE_UINT32);
     ACE_U_LongLong &operator*= (const ACE_UINT32);
 
@@ -263,11 +271,15 @@ typedef ACE_UINT16 ACE_USHORT16;
     double operator/ (const double) const;
 
     ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
+    ACE_U_LongLong &operator+= (const ACE_UINT32);
     ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
+    ACE_U_LongLong &operator-= (const ACE_UINT32);
     ACE_U_LongLong &operator++ ();
     ACE_U_LongLong &operator-- ();
     ACE_U_LongLong &operator|= (const ACE_U_LongLong);
+    ACE_U_LongLong &operator|= (const ACE_UINT32);
     ACE_U_LongLong &operator&= (const ACE_U_LongLong);
+    ACE_U_LongLong &operator&= (const ACE_UINT32);
 
     // Note that the following take ACE_UINT32 arguments.  These are
     // typical use cases, and easy to implement.  But, they limit the

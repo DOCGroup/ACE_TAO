@@ -442,7 +442,7 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
 {
   ++this->samples_count_;
 
-  if (this->samples_count_ == 1)
+  if (this->samples_count_ == 1u)
     {
       this->latency_min_ = latency;
       this->latency_max_ = latency;
@@ -498,7 +498,7 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
   if (rhs.samples_count_ == 0)
     return;
 
-  if (this->samples_count_ == 0)
+  if (this->samples_count_ == 0u)
     {
       this->samples_count_ = rhs.samples_count_;
 
@@ -545,7 +545,7 @@ void
 ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
                                     ACE_UINT32 sf)
 {
-  if (this->samples_count_ == 0)
+  if (this->samples_count_ == 0u)
     {
       ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%s : no data collected\n")));
       return;
