@@ -1,3 +1,24 @@
+Fri Jan 15 18:43:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/time/Time_Client_i.cpp:	
+	* examples/Simple/time/Time_Client_i.h:
+	New files added for implementing the Templates for 
+	a single client/server model
+
+	* examples/Simple/time/Time_i.cpp:
+	* examples/Simple/time/Time_i.h:
+	* examples/Simple/time/server.cpp:
+	* examples/Simple/time/client.cpp:
+	Made  changes in a way such that server and client 
+	make instantiations of templates with their interface
+	objects. 
+
+	* examples/Simple/Simple_Util.h:
+	* examples/Simple/Simple_Util.cpp:
+	New files that have the template definitions and
+	implementation of those methods.
+	
+
 Fri Jan 15 17:24:36 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/tests/Time/Client_i.cpp (init): Checked the return value
