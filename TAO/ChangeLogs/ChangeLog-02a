@@ -1,3 +1,10 @@
+Tue May 30 10:25:29 2000  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* tao/POA.pidl: Removed a dupliate declaration of CORBA::Policy,
+	  CORBA::PolicyType and CORBA::PolicyList. It is duplicated because
+	  orb.idl includes Policy.pidl, which declares these already besides
+	  other things.
+
 Mon May 29 22:38:29 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Simple/time-date/server.cpp:
