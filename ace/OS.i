@@ -8498,7 +8498,7 @@ ACE_OS::ctime (const time_t *t)
 ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 {
-ACE_OS_TRACE ("ACE_OS::ctime_r");
+  ACE_OS_TRACE ("ACE_OS::ctime_r");
 
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
@@ -8524,15 +8524,15 @@ ACE_OS_TRACE ("ACE_OS::ctime_r");
 #   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 #else /* ACE_HAS_REENTRANT_FUNCTIONS */
 #   if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
-    ACE_OS::strsncpy(buf, "ctime-return", buflen);
-    return buf;
+  ACE_OS::strsncpy (buf, "ctime-return", buflen);
+  return buf;
 #   else /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
 
   ACE_TCHAR *result;
 #     if defined (ACE_USES_WCHAR)
   ACE_OSCALL (::_wctime (t), wchar_t *, 0, result);
 #     else /* ACE_WIN32 */
-ACE_OSCALL (::ctime (t), char *, 0, result);
+  ACE_OSCALL (::ctime (t), char *, 0, result);
 #     endif /* ACE_WIN32 */
   if (result != 0)
     ACE_OS::strsncpy (buf, result, buflen);
@@ -8545,7 +8545,7 @@ ACE_OSCALL (::ctime (t), char *, 0, result);
 ACE_INLINE struct tm *
 ACE_OS::localtime (const time_t *t)
 {
-#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   ACE_OS_TRACE ("ACE_OS::localtime");
   ACE_OSCALL_RETURN (::localtime (t), struct tm *, 0);
 #else
