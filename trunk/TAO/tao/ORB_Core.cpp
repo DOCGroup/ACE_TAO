@@ -966,29 +966,33 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   this->orb_params ()->service_port (NAMESERVICE, ns_port);
 
-  char ns_port_char[33];
+  if (ns_port != 0)
+    {
+      char ns_port_char[33];
 
-  ACE_OS_String::itoa (ns_port,
-                       ns_port_char,
-                       10);
+      ACE_OS_String::itoa (ns_port,
+                           ns_port_char,
+                           10);
 
-  CORBA::String_var ns_port_ptr =
-    CORBA::string_alloc (ACE_OS::strlen ((const char *) ns_port_char));
+      CORBA::String_var ns_port_ptr =
+        CORBA::string_alloc (ACE_OS::strlen ((const char *) ns_port_char));
 
-  ns_port_ptr = (const char *) ns_port_char;
+      ns_port_ptr = (const char *) ns_port_char;
 
-  const char prefix [] = "mcast://:";
+      const char prefix [] = "mcast://:";
 
-  CORBA::String_var def_init_ref = CORBA::string_alloc (sizeof (prefix) +
-                                                        ACE_OS::strlen
-                                                        (ns_port_ptr.in ()) +
-                                                        3);
+      CORBA::String_var def_init_ref =
+        CORBA::string_alloc (sizeof (prefix) +
+                             ACE_OS::strlen
+                             (ns_port_ptr.in ()) +
+                             3);
 
-  def_init_ref = ACE_OS::strcpy (def_init_ref, prefix);
-  def_init_ref = ACE_OS::strcat (def_init_ref, ns_port_ptr.in ());
-  def_init_ref = ACE_OS::strcat (def_init_ref, ":::");
+      def_init_ref = ACE_OS::strcpy (def_init_ref, prefix);
+      def_init_ref = ACE_OS::strcat (def_init_ref, ns_port_ptr.in ());
+      def_init_ref = ACE_OS::strcat (def_init_ref, "::");
 
-  this->orb_params ()->default_init_ref (def_init_ref.in ());
+      this->orb_params ()->default_init_ref (def_init_ref.in ());
+    }
 
   this->orb_params ()->service_port (TRADINGSERVICE, ts_port);
   this->orb_params ()->service_port (IMPLREPOSERVICE, ir_port);

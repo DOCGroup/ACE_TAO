@@ -350,16 +350,35 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
       /*
        * If the port is not specified, use the default.
        * The default multicast port is the same as the default port
-       * no. for Naming_Service, for now.
+       * no. for Naming_Service, for now. But for other services,
+       * check and modify the default values as needed.
        */
-      char trial_port[33];
+      char default_port[33];
 
-      ACE_OS_String::itoa (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
-                           trial_port,
-                           10);
+      int trial_port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
 
-	  this->mcast_port_ = CORBA::string_alloc (ACE_OS::strlen ((const char *) trial_port));
-      this->mcast_port_ = (const char *) trial_port;
+      if (mcast_name_cstring.find ("InterfaceRepository") !=
+          ACE_CString::npos)
+        {
+          trial_port = TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT;
+        }
+      else if (mcast_name_cstring.find ("ImplRepoService") !=
+               ACE_CString::npos)
+        {
+           trial_port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
+        }
+      else if (mcast_name_cstring.find ("TradingService") !=
+               ACE_CString::npos)
+        {
+           trial_port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
+        }
+
+
+      ACE_OS_String::itoa (trial_port, default_port, 10);
+
+      this->mcast_port_ =
+        CORBA::string_alloc (ACE_OS::strlen ((const char *) default_port));
+      this->mcast_port_ = (const char *) default_port;
     }
   else
     {
@@ -379,7 +398,7 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
   this->mcast_nic_ =
     mcast_name_cstring.substring (0,
                                   pos_colon3).c_str ();
- 
+
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon3 + 1,
                                   mcast_name_cstring.length() - pos_colon3);
