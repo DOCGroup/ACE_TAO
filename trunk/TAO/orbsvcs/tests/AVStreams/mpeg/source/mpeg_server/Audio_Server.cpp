@@ -292,10 +292,23 @@ Audio_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
   CORBA::Boolean result;
   result = AUDIO_CONTROL_I::instance ()->set_peer (server_string,env);
   // Get media control from my vdev and call set_peer on that.
-  
-  the_spec.length (1);
-  the_spec [0]=server_string;
 
+  char server_addr [BUFSIZ];
+
+  ACE_OS::sprintf (server_addr,
+                   "%s=%s",
+                   "TCP",
+                   server_string);
+  
+  TAO_Reverse_FlowSpec_Entry server_entry ("audio",
+                              "OUT",
+                              "MIME:audio/au",
+                              "TCP",
+                              server_addr);
+     
+  the_spec.length (1);
+  the_spec [0]=server_entry.entry_to_string ();
+  
   return result;
 }
 

@@ -75,23 +75,34 @@ Command_Handler::init (int argc,
 {
   this->argc_ = argc;
   this->argv_ = argv;
-
+  
   // Increase the debug_level so that we can see the output
   TAO_debug_level++;
   CORBA::String_var ior;
   ACE_TRY_NEW_ENV
     {
-      this->orb_manager_.init_child_poa (this->argc_,
-                                         this->argv_,
-                                         "child_poa",
-                                         ACE_TRY_ENV);
+      /*
+      TAO_AV_CORE::instance ()->init (this->argc_,
+                                      this->argv_,
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      this->orb_manager_ = TAO_AV_CORE::instance ()->orb_manager ();
+      */
+      this->orb_manager_.init_child_poa (this->argc_,
+                                          this->argv_,
+                                          "child_poa",
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       this->parse_args (this->argc_, this->argv_);
       // activate the client video mmdevice under the child poa.
       ior = this->orb_manager_.activate (&this->receiver_,
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+      
       // Initialize the naming services
       if (my_name_client_.init (orb_manager_.orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -386,6 +397,9 @@ Command_Handler::init_av (void)
   cerr << "inside init_av \n";
   int i;
 
+  ACE_Time_Value sleep_delay;
+  sleep_delay.usec(10000); 
+
   /* try to stop and close previous playing */
   if (audioSocket >= 0 || videoSocket >= 0)
     {
@@ -405,7 +419,8 @@ Command_Handler::init_av (void)
              ACE_OS::write (asp[0],&message,BUFSIZ);
              ABpid = -1;
            }
-           usleep(10000);
+        
+           ACE_OS::sleep(sleep_delay);
          }
        if (videoSocket >= 0)
          {
@@ -415,16 +430,17 @@ Command_Handler::init_av (void)
              ACE_OS::write (vsp[0],&message,BUFSIZ);
              VBpid = -1;
            }
-           usleep(10000);
+
+           ACE_OS::sleep(sleep_delay);
 
            videoSocket = -1;
            while ((!vbuffer->VBbufEmpty()) || !VDbufEmpty()) {
              while (VDpeekMsg() != NULL) {
                VDreclaimMsg(VDgetMsg());
              }
-             usleep(10000);
+             ACE_OS::sleep(sleep_delay);
            }
-           usleep(10000);
+           ACE_OS::sleep(sleep_delay);
          }
     }
    this->close ();
@@ -535,6 +551,8 @@ Command_Handler::init_java_av (char *audio_ior,
                                char *audio_file,
                                char *video_file)
 {
+  ACE_Time_Value sleep_delay;
+  sleep_delay.usec(10000); 
   if (audio_file != 0)
     ACE_DEBUG ((LM_DEBUG,"%s\n",audio_file));
   if (video_file != 0)
@@ -561,7 +579,7 @@ Command_Handler::init_java_av (char *audio_ior,
             ACE_OS::write (asp[0],&message,BUFSIZ);
             ABpid = -1;
           }
-          usleep(10000);
+          ACE_OS::sleep(sleep_delay);
         }
 
       if (videoSocket >= 0)
@@ -572,16 +590,16 @@ Command_Handler::init_java_av (char *audio_ior,
             ACE_OS::write (vsp[0],&message,BUFSIZ);
             VBpid = -1;
           }
-          usleep(10000);
+          ACE_OS::sleep(sleep_delay);
 
           videoSocket = -1;
           while ((!vbuffer->VBbufEmpty()) || !VDbufEmpty()) {
             while (VDpeekMsg() != NULL) {
               VDreclaimMsg(VDgetMsg());
             }
-            usleep(10000);
+            ACE_OS::sleep(sleep_delay);
           }
-          usleep(10000);
+          ACE_OS::sleep(sleep_delay);
         }
     }
   this->close ();
@@ -1792,6 +1810,8 @@ int
 Command_Handler::stop_playing (void)
 {
   unsigned char precmd = shared->cmd;
+  ACE_Time_Value sleep_delay;
+  sleep_delay.usec(100000);
 
   ACE_TRY_NEW_ENV
     {
@@ -1831,7 +1851,7 @@ Command_Handler::stop_playing (void)
           /* stop timer and sleep for a while */
           //          cerr << "stopping timer" << endl;
           this->client_sig_handler_.stop_timer ();
-          usleep(100000);
+          ACE_OS::sleep(sleep_delay);
 
           /* purge VDbuf and audio channel from AS*/
           if (videoSocket >= 0)
@@ -1875,9 +1895,10 @@ Command_Handler::connect_to_video_server (void)
                        "(%P|%t) command_handler: resolve_video_reference returned -1"),
                        -1);
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
-  AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
+  AVStreams::flowSpec_var flow_spec (new AVStreams::flowSpec);
   // Bind the client and server mmdevices.
 
+  
   ACE_NEW_RETURN (this->video_reactive_strategy_,
                   Video_Endpoint_Reactive_Strategy_A (&this->orb_manager_,
                                                       this),
@@ -1898,7 +1919,7 @@ Command_Handler::connect_to_video_server (void)
     (this->video_client_mmdevice_->_this (ACE_TRY_ENV),
          this->video_server_mmdevice_.in (),
          the_qos.inout (),
-         the_flows.in (),
+         flow_spec.in (),
          ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
@@ -2348,7 +2369,9 @@ Client_Sig_Handler::stop_timer(void)
 
   //  this->command_handler_->stop_timer ();
   /*
-  usleep(200000);
+  ACE_Time_Value sleep_delay;
+  sleep_delay.usec(200000);
+  ACE_OS::sleep(sleep_delay);
   */
 }
 
@@ -2358,6 +2381,7 @@ Client_Sig_Handler::DisplayPicture(void)
   //  ACE_DEBUG ((LM_DEBUG,"inside DisplayPicture\n"));
   int toDisplay = 1;
   int count = timerCount;
+  ACE_Time_Value sleep_delay;
 
   if ((shared->cmd != CmdPLAY &&
        shared->cmd != CmdFF &&
@@ -2404,7 +2428,8 @@ Client_Sig_Handler::DisplayPicture(void)
       if (shared->cmd == CmdPLAY && !rtplay) {  /* if play with best effort */
         while (VDcheckMsg() <= 0)  /* keep sleeping for 10 millisec until a decoded
                                       frame show up in VD buffer */
-          usleep(10000);
+          sleep_delay.usec(10000);
+          ACE_OS::sleep(sleep_delay);
       }
 #ifdef STAT
       if (shared->collectStat)
@@ -2836,6 +2861,7 @@ Audio_Client_StreamEndPoint::handle_close (void)
 CORBA::Boolean
 Audio_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 {
+  
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_preconnect called\n"));
   ACE_INET_Addr local_addr;
 
@@ -2865,11 +2891,26 @@ Audio_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
   // form a string
   char client_address_string [BUFSIZ];
   ::sprintf (client_address_string,
-             "%s:%d",
+             "%s=%s:%d",
+             "UDP",
              this->host_ == 0 ? local_addr.get_host_name ():this->host_,
              local_addr.get_port_number ());
+
+  //AVStreams::flowSpec_var the_spec;
+  //ACE_NEW_RETURN (the_spec,
+  //              AVStreams::flowSpec,
+  //              -1);
   the_spec.length (1);
-  the_spec [0] = CORBA::string_dup (client_address_string);
+  TAO_Forward_FlowSpec_Entry udp_flow_entry ("audio",
+                                             "IN",
+                                             "MIME:audio/au",
+                                             "TCP",
+                                             CORBA::string_dup (client_address_string));
+  
+  the_spec [0] = udp_flow_entry.entry_to_string ();
+  
+  //the_spec.length (1);
+  //the_spec [0] = 
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client flow spec is %s\n",
@@ -2885,9 +2926,18 @@ Audio_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spe
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_postconnect called \n"));
 
+  TAO_Reverse_FlowSpec_Entry *entry = 0;
+  ACE_NEW_RETURN (entry,
+                  TAO_Reverse_FlowSpec_Entry,
+                  0);
+  if (entry->parse (server_spec[0].in ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Video_Client_StreamEndPoint::handle_postconnect parse  failed\n"), 0);
+  
   // Take the first string of the sequence .
-  ACE_INET_Addr server_udp_addr (server_spec [0]);
-
+  ACE_INET_Addr server_udp_addr (entry->address_str ());
+  
+  ACE_DEBUG ((LM_DEBUG, "\nFlow Spec %s\n", entry->address_str ()));
+    
   server_udp_addr.dump ();
   if (ACE_OS::connect (this->dgram_.get_handle (),(sockaddr *) server_udp_addr.get_addr (),
                        server_udp_addr.get_size ()) == -1)
@@ -2982,11 +3032,26 @@ Video_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
   // form a string
   char client_address_string [BUFSIZ];
   ::sprintf (client_address_string,
-             "%s:%d",
+             "%s=%s:%d",
+             "UDP",
              this->host_ == 0 ?local_addr.get_host_name ():this->host_,
              local_addr.get_port_number ());
+
+  // AVStreams::flowSpec_var the_spec;
+//   ACE_NEW_RETURN (the_spec,
+//                   AVStreams::theSpec,
+//                   -1);
   the_spec.length (1);
-  the_spec [0] = CORBA::string_dup (client_address_string);
+  TAO_Forward_FlowSpec_Entry udp_flow_entry ("video",
+                                             "IN",
+                                             "MIME:video/mpeg",
+                                             "UDP",
+                                             CORBA::string_dup (client_address_string));
+  
+  the_spec [0] = udp_flow_entry.entry_to_string ();
+  
+  //the_spec.length (1);
+  //the_spec [0] = CORBA::string_dup (client_address_string);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client flow spec is %s\n",
@@ -2999,8 +3064,17 @@ Video_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spe
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_postconnect called \n"));
 
+  TAO_Reverse_FlowSpec_Entry *entry = 0;
+  ACE_NEW_RETURN (entry,
+                  TAO_Reverse_FlowSpec_Entry,
+                  0);
+  if (entry->parse (server_spec[0].in ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Video_Client_StreamEndPoint::handle_postconnect parse  failed\n"), 0);
+  
   // Take the first string of the sequence .
-  ACE_INET_Addr server_udp_addr (server_spec [0]);
+  ACE_INET_Addr server_udp_addr (entry->address_str ());
+
+  ACE_DEBUG ((LM_DEBUG, "\nFlow Spec %s\n", entry->address_str ()));
 
   server_udp_addr.dump ();
   if (ACE_OS::connect (this->dgram_.get_handle (),(sockaddr *) server_udp_addr.get_addr (),
