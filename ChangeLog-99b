@@ -1,13 +1,19 @@
+Wed Oct 27 09:46:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_qnx_neutrino.GNU: removed
+          -Winline, because it was complaining about operator<<
+          in generated code.
+
 Wed Oct 27 08:32:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (timezone): Added an ACE_UNUSED_ARG to please KCC.
-	  Thanks to Dave Madden for reporting this.	 
+        * ace/OS.i (timezone): Added an ACE_UNUSED_ARG to please KCC.
+          Thanks to Dave Madden for reporting this.
 
 Tue Oct 26 14:56:15 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/FlReactor.cpp (reset_timer_interval): Fixed a compile error
-	  with Sun_Egcs. Thanks to Thomas Groth <groth.th@stn-atlas.de>
-	  for reporting this problem & also for giving a fix. 
+        * ace/FlReactor.cpp (reset_timer_interval): Fixed a compile error
+          with Sun_Egcs. Thanks to Thomas Groth <groth.th@stn-atlas.de>
+          for reporting this problem & also for giving a fix.
 
 Sat Oct 23 19:11:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -28,7 +34,7 @@ Thu Oct 21 20:21:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           base_addr_ with the new mem_map_.addr() before the call to
           update the ACE based pointer.  Thanks to Damien Dufour
           <damien.dufour@horoquartz.fr> for reporting this.
-        
+
 Thu Oct 21 17:10:17 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
         * ace/OS.i (ioctl): Corrected the implementation of
