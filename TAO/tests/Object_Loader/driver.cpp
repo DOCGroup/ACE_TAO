@@ -2,7 +2,7 @@
 // $Id$
 //
 
-#include "TestCli.h"
+#include "TestC.h"
 
 int
 main (int, char *[])

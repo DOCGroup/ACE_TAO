@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Loader.h"
-#include "test_i.h"
+#include "Test_i.h"
 
 #if !defined(__ACE_INLINE__)
 #include "Loader.i"
@@ -16,6 +16,7 @@ Loader::Loader (void)
 CORBA::Object_ptr
 Loader::create_object (CORBA::ORB_ptr orb,
                        CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC (())
 {
   ACE_TRY
     {
@@ -63,4 +64,3 @@ ACE_STATIC_SVC_DEFINE (Loader,
 #endif /* 0 */
 
 ACE_FACTORY_DEFINE (OLT, Loader)
-
