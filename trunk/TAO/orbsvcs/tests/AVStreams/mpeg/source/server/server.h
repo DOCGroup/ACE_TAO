@@ -30,18 +30,33 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_CODgram.h"
+#include "ace/Select_Reactor.h"
 
 #ifdef NATIVE_ATM
 #include "atmcom.h"
 #endif
 
+#include "../mpeg_server/Video_Server.h"
+
+class Mpeg_Svc_Handler;
+
+class Mpeg_Acceptor : public ACE_Acceptor <Mpeg_Svc_Handler, ACE_SOCK_ACCEPTOR>
+{
+public:  
+  virtual int make_svc_handler (Mpeg_Svc_Handler *&sh);
+  // Initialize the <Mpeg_Svc_Handler>.
+};
+
+// typedef ACE_Acceptor <Mpeg_Svc_Handler, ACE_SOCK_ACCEPTOR> Mpeg_Acceptor;
+
 class Mpeg_Svc_Handler 
   : public virtual ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-    
 {
+  // @@ Naga, please make sure to document all these classes with the =TITLE/=DESCRIPTION stuff!
 public:
   // = Initialization method.
-  Mpeg_Svc_Handler (ACE_Reactor * = 0);
+  Mpeg_Svc_Handler (ACE_Reactor * = 0,
+                    Mpeg_Acceptor * = 0);
 
   virtual int open (void *);
   // Perform the work of the SVC_HANDLER.
@@ -68,6 +83,11 @@ private:
   ACE_INET_Addr client_data_addr_;
   // Data (UDP) Address of the client.
 
+  Mpeg_Acceptor *acceptor_;
+  // Pointer to the Acceptor that created us so that we can remove it
+  // from the <ACE_Reactor> when we <fork>.
+
+  Video_Server vs_;
 };
 
 class Mpeg_Server
@@ -94,7 +114,7 @@ public:
   ~Mpeg_Server ();
 private:
 
-  ACE_Acceptor <Mpeg_Svc_Handler, ACE_SOCK_ACCEPTOR> acceptor_;
+  Mpeg_Acceptor acceptor_;
   // the acceptor
 
   ACE_INET_Addr server_control_addr_;

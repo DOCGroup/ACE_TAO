@@ -366,9 +366,7 @@ void VBprocess(int initSocket, int normalSocket)
 
   for (;;)
   {
-    /*
-    fprintf(stderr, "VB wait for a new packet.\n");
-    */
+    //    fprintf(stderr, "VB wait for a new packet.\n");
     if (conn_tag >= 0) {
       len = wait_read_bytes(dataSocket, (char *)&msghd, sizeof(msghd));
     }

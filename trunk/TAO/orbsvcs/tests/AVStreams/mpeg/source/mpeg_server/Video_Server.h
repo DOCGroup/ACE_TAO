@@ -29,6 +29,15 @@ int send_to_network(int timeToUse);
 void StartPlayLiveVideo (void);
 void GetFeedBack (void);
 int SendPicture (int *frame);
+int play_send (void);
+
+class Video_Time_Handler : public virtual ACE_Event_Handler
+{
+public:
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg);
+};
+
 
 class Video_Data_Handler 
   : public virtual ACE_Event_Handler
@@ -73,11 +82,21 @@ private:
 class Video_Server
 {
 public:
+  Video_Server (void);
+  // Default constructor
   Video_Server (int control_fd,
                 int data_fd,
                 int rttag,
                 int max_pkt_size);
+  // constructor taking the handles
+  int init (int control_fd,
+            int data_fd,
+            int rttag,
+            int max_pkt_size);
+  // initialize the Video Server.
   int run (void);
+static  int read_cmd (void);
+  // Read a command and demux it to various functions.
   static int SendPacket (int shtag,int gop,int frame,int timeToUse);
   static int CmdRead(char *buf, int psize);
   static void CmdWrite(char *buf, int size);
@@ -85,15 +104,15 @@ public:
   static PLAYpara para;
 
 protected:
-  int position (void);
-  int step_video (void);
-  int fast_forward (void);
-  int fast_backward (void);
-  int play (void);
-  //  int close (void);
-  int stat_stream (void);
-  int stat_sent (void);
-  int fast_video_play (void);
+static  int position (void);
+static  int step_video (void);
+static  int fast_forward (void);
+static  int fast_backward (void);
+static  int play (void);
+  //static   int close (void);
+static  int stat_stream (void);
+static  int stat_sent (void);
+static  int fast_video_play (void);
 
 private:
 
