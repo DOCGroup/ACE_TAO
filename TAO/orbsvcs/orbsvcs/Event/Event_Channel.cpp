@@ -537,7 +537,7 @@ void
 ACE_Push_Consumer_Proxy::disconnect_push_supplier (CORBA::Environment &_env)
 {
   ACE_TIMEPROBE_PRINT;
-  this->push_consumer_ = 0;
+  this->push_consumer_ = RtecEventComm::PushConsumer::_nil ();
   this->consumer_module_->disconnecting (this, _env);
 }
 
@@ -2533,9 +2533,9 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
   // Acquire a write lock and remove all disconnected consumers.
   if (disconnect_list.size () != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "EC (%t) Subscription_Module::push_source_type"
-                  " - disconnecting consumers\n"));
+      // ACE_DEBUG ((LM_DEBUG,
+      //            "EC (%t) Subscription_Module::push_source_type"
+      //            " - disconnecting consumers\n"));
       ACE_ES_WGUARD ace_mon (source->subscription_info ().lock_);
       if (ace_mon.locked () == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -2554,9 +2554,9 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
                         "ACE_ES_Subscription_Module::push_source.\n"));
           else
             (*consumer)->_release ();
-          ACE_DEBUG ((LM_DEBUG, "EC (%t) Subscription_Module::"
-                      "push_source_type - consumer %x removed\n",
-                      *consumer));
+          // ACE_DEBUG ((LM_DEBUG, "EC (%t) Subscription_Module::"
+          //            "push_source_type - consumer %x removed\n",
+          //            *Consumer));
         }
     }
 
@@ -3383,9 +3383,16 @@ ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos)
   TAO_TRY
     {
       ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_CONSUMER_NAME_PRIORITY_REQUESTED);
+
+      if (qos.dependencies.length () <= 1)
+	return "no-name";
+
       RtecScheduler::RT_Info* rt_info = ACE_Scheduler_Factory::server ()->get
         (qos.dependencies[1].rt_info, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      if (rt_info == 0)
+	return "no-name";
 
       return rt_info->entry_point;
     }
