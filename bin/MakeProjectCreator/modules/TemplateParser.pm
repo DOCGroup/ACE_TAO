@@ -51,6 +51,8 @@ sub new {
   $self->{'prjc'}     = $prjc;
   $self->{'ti'}       = $prjc->get_template_input();
   $self->{'cslashes'} = $prjc->convert_slashes();
+  $self->{'relative'} = $prjc->get_relative();
+  $self->{'addtemp'}  = $prjc->get_addtemp();
   $self->{'crlf'}     = undef;
   $self->{'values'}   = {};
   $self->{'defaults'} = {};
@@ -146,7 +148,7 @@ sub adjust_value {
 
   ## Perform any additions, subtractions
   ## or overrides for the template values.
-  my($addtemp) = $self->{'prjc'}->get_addtemp();
+  my($addtemp) = $self->{'addtemp'};
   foreach my $at (keys %$addtemp) {
     if ($at eq $name) {
       my($val) = $$addtemp{$at};
@@ -216,7 +218,7 @@ sub set_current_values {
 sub relative {
   my($self)  = shift;
   my($value) = shift;
-  my($rel)   = $self->{'prjc'}->get_relative();
+  my($rel)   = $self->{'relative'};
   my(@keys)  = keys %$rel;
 
   if (defined $value && defined $keys[0]) {
@@ -252,13 +254,10 @@ sub relative {
             }
           }
 
-          ## Fix up the value for Windows (capitalize the drive and
-          ## switch the \\'s to /
+          ## Fix up the value for Windows switch the \\'s to /
           $val =~ s/\\/\//g;
-          if ($val =~ /[a-z]:\//) {
-            substr($val, 0, 1) = uc(substr($val, 0, 1));
-          }
 
+          ## Lowercase everything if we are running on Windows
           my($icwd) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($cwd) : $cwd);
           my($ival) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($val) : $val);
           if (index($icwd, $ival) == 0) {

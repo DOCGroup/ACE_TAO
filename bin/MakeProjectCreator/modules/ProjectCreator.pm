@@ -298,12 +298,23 @@ sub parse_line {
             }
 
             if (defined $file) {
-              push(@{$self->{'reading_parent'}}, 1);
-              $status = $self->parse_file($file);
-              pop(@{$self->{'reading_parent'}});
+              foreach my $currently (@{$self->{'reading_parent'}}) {
+                if ($currently eq $file) {
+                  $status = 0;
+                  $errorString = 'ERROR: Cyclic inheritance detected: ' .
+                                 $parent;
+                }
+              }
 
-              if (!$status) {
-                $errorString = "ERROR: Invalid parent: $parent";
+              if ($status) {
+                ## Begin reading the parent
+                push(@{$self->{'reading_parent'}}, $file);
+                $status = $self->parse_file($file);
+                pop(@{$self->{'reading_parent'}});
+
+                if (!$status) {
+                  $errorString = "ERROR: Invalid parent: $parent";
+                }
               }
             }
             else {
@@ -993,8 +1004,8 @@ sub generate_default_pch_filenames {
   if (!defined $self->get_assignment('pch_header')) {
     my($count)    = 0;
     my($matching) = undef;
-    foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
-      foreach my $file (@$files) {
+    foreach my $file (@$files) {
+      foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
         if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_header', $1);
           ++$count;
@@ -1013,8 +1024,8 @@ sub generate_default_pch_filenames {
   if (!defined $self->get_assignment('pch_source')) {
     my($count)    = 0;
     my($matching) = undef;
-    foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
-      foreach my $file (@$files) {
+    foreach my $file (@$files) {
+      foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
         if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_source', $1);
           ++$count;
@@ -1262,6 +1273,10 @@ sub remove_duplicated_files {
   my($source) = shift;
   my($names)  = $self->{$dest};
   my(@slist)  = $self->get_component_list($source);
+  my(%shash)  = ();
+
+  ## Convert the array into keys for a hash table
+  @shash{@slist} = ();
 
   ## Find out which source files are listed
   foreach my $name (keys %$names) {
@@ -1270,15 +1285,12 @@ sub remove_duplicated_files {
       my($array) = $$comps{$key};
       my($count) = scalar(@$array);
       for(my $i = 0; $i < $count; ++$i) {
-        foreach my $sfile (@slist) {
-          ## Is the source file in the component array?
-          if ($$array[$i] eq $sfile) {
-            ## Remove the element and fix the index and count
-            splice(@$array, $i, 1);
-            --$count;
-            --$i;
-            last;
-          }
+        ## Is the source file in the component array?
+        if (exists $shash{$$array[$i]}) {
+          ## Remove the element and fix the index and count
+          splice(@$array, $i, 1);
+          --$count;
+          --$i;
         }
       }
     }
