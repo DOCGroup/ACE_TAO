@@ -33,7 +33,7 @@
  * canonical form before encoding.
  *
  */
-class ACE_Export ACEXML_Base64 : public ACE_Base64
+class ACEXML_Export ACEXML_Base64 : public ACE_Base64
 {
 public:
 
