@@ -1,3 +1,16 @@
+Fri Jul 14 18:05:09 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/dirent.h:
+
+	  Removed dir_init.
+
+	* pace/win32/dirent.inl:
+
+	  win32 emulation functions finished.
+	  closedir  ==  pace_win32_emulate_closedir
+	  opendir   ==  pace_win32_emulate_opendir
+	  readdir   ==  pace_win32_emulate_readdir
+
 Fri Jul 14 17:46:56 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/dirent.h:

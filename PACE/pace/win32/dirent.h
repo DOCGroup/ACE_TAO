@@ -25,38 +25,34 @@ extern "C" {
 
 #ifndef PACE_DIRENT_T
 #define PACE_DIRENT_T
-  typedef struct dirent
-  {
+
+  typedef struct dirent {
     unsigned short d_ino;
     unsigned short d_off;
     unsigned short d_reclen;
     char * d_name;
   } pace_dirent;
+
 #endif /* PACE_DIRENT_T */
 
 #ifndef PACE_DIR_T
 #define PACE_DIR_T
+
   typedef WIN32_FIND_DATA PACE_TEXT_WIN32_FIND_DATA;
-  typedef struct DIR
-  {
+
+  typedef struct DIR {
     char * directory_name_;
     // The name of the directory we are looking into
-
     HANDLE current_handle_;
     // Remember the handle between calls.
-
     pace_dirent dirent_;
     // The struct for the results
-
     PACE_TEXT_WIN32_FIND_DATA fdata_;
     // The struct for intermediate results.
-
     int started_reading_;
     // A flag to remember if we started reading already.
-
   } PACE_DIR;
 
-  PACE_INLINE void dir_init (PACE_DIR * dir);
 #endif /* PACE_DIR_T */
 
 #if defined (PACE_HAS_CPLUSPLUS)
