@@ -29,6 +29,7 @@ CFG=servers - Win32 Alpha Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "servers - Win32 Release"
 
@@ -54,7 +55,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ace.lib netsvcs.lib /nologo /subsystem:console /machine:I386 /out:"main.exe" /libpath:"..\..\ace" /libpath:"..\lib"
+# ADD LINK32 ace.lib netsvcs.lib /nologo /subsystem:console /machine:I386 /out:"main.exe" /libpath:"..\..\ace" /libpath:"..\lib"
 
 !ELSEIF  "$(CFG)" == "servers - Win32 Debug"
 
@@ -80,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib aced.lib netsvcs.lib /nologo /subsystem:console /debug /machine:I386 /out:"main.exe" /libpath:"..\..\ace" /libpath:"..\lib"
+# ADD LINK32 aced.lib netsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /out:"main.exe" /libpath:"..\..\ace" /libpath:"..\lib"
 
 !ELSEIF  "$(CFG)" == "servers - Win32 Alpha Debug"
 
@@ -98,7 +99,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\lib" /I "..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "..\lib" /I "..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\lib" /I "..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
