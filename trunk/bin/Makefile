@@ -10,18 +10,18 @@ include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 CFILES		= clone.cpp 
 OFILES		= clone.o
 DFLAGS		= -b elf
-CFLAGS		= $(CCFLAGS) -I$(ACE_ROOT)
+CCFLAGS		+= -I$(ACE_ROOT) 
 
 #############################################################################
 # C++ directives
 
 .SUFFIXES: .cpp
 .cpp.o:
-	$(CXX) $(CFLAGS) -c $<
+	$(CXX) $(CCFLAGS) -c $<
 #############################################################################
 
 clone: $(OFILES)
-	$(CXX) $(CFLAGS) -o $@ $(OFILES)
+	$(CXX) $(CCFLAGS) -o $@ $(OFILES)
 
 clean:
 	-/bin/rm -f *.o *.out *~ core

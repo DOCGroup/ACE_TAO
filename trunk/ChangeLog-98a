@@ -1,3 +1,9 @@
+Mon Jan 19 15:13:47 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* bin/Makefile: Fixed a problem with the CCFLAGS definition that
+ 	  was causing circular macro expansion.  Thanks to Philippe
+ 	  O'Reilly <philippe@robot.ireq.ca> for reporting this.
+
 Sun Jan 18 14:32:42 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
 	* ace/Timer_Heap_T.cpp: Problems were arising because of the 
