@@ -1,19 +1,24 @@
+Mon Nov 17 20:12:53 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * etc/tao_ifr.doxygen:
+        Added doxygen configuration file for IFR_Service.
+
 Mon Nov 17 20:00:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Default_Constants.h: 
-	  
+	* ace/Default_Constants.h:
+
 	  Added a new #define ACE_IPV6_LOCALHOST. The
 	  ACE_DEFAULT_SERVER_HOST would point to ACE_IPV6_LOCALHOST if
-	  IPV6 is enabled and ACE_LOCALHOSt of IPV4 is used. 
+	  IPV6 is enabled and ACE_LOCALHOSt of IPV4 is used.
 
-	  Thanks to Bryan Bruesker for providing the patches. 
+	  Thanks to Bryan Bruesker for providing the patches.
 
 Mon Nov 17 18:55:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Asynch_Connector.cpp:
-	  
-	  Use ACE_reinterpret_cast instead of a C style casts. 
-	
+
+	  Use ACE_reinterpret_cast instead of a C style casts.
+
 	* ace/INET_Addr.cpp:
 
 	  Fixes a problem with the ACE_INET_Addr::set () method, where the
@@ -21,7 +26,7 @@ Mon Nov 17 18:55:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  cause a problem when  the type of sa is different than the type
 	  of this ACE_INET_Addr. Even  though the inet_addr_ member will
 	  be set correctly, the type and size  will be, making the state
-	  of the ACE_INET_Addr inconsistent.  
+	  of the ACE_INET_Addr inconsistent.
 
 	* ace/Multihomed_INET_Addr.cpp:
 	* ace/Multihomed_INET_Addr.h:
@@ -31,7 +36,7 @@ Mon Nov 17 18:55:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  argument, so  that if the  ACE_Multihomed_INET_Addr is storing
 	  only IPv6 addresses, they can all be put into an array of
 	  sockaddr_in6 by this method. Further, changed the variable name
-	  within the class to be secondaries_, ie. with an underscore. 
+	  within the class to be secondaries_, ie. with an underscore.
 
 	* ace/SOCK_Dgram_Mcast.cpp:
 
@@ -39,8 +44,8 @@ Mon Nov 17 18:55:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  ipv6_mreq is zero'ed out before using it.
 
 
-	  Thanks to Bryan Bruesker for providing the patches. 
-	
+	  Thanks to Bryan Bruesker for providing the patches.
+
 Tue Nov 18 00:35:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/component_check.GNU:
@@ -48,8 +53,8 @@ Tue Nov 18 00:35:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Added new variable, ACE_MAKE_OPTIONS, to wrapper_macros.GNU that
           collects all the flags passed to make, e.g., ssl, sctp, rmcast,
           etc....  Use this variable in component_check.GNU so that we
-          only have to add new flags one place. 
- 
+          only have to add new flags one place.
+
 Tue Nov 18 00:04:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/all_in_one.GNU:
@@ -120,29 +125,29 @@ Sun Nov 16 23:49:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/INET_Addr.h:
 
-	  Fixed a typo in the interface documentation. 
+	  Fixed a typo in the interface documentation.
 
 	* ace/SOCK_Dgram.cpp:
 
 	  In shared_open () used INADDR_ANY when calling bind_port ()
-	  instead of 0. 
-	
+	  instead of 0.
+
 	* ace/Asynch_Acceptor.cpp:
 
 	  Modifies the call to bind_port in open () so that if the address
 	  passed in is the any address, the protocol is passed to
 	  bind_port so that when IPv6 is enabled, it will bind to the IPv6
 	  any address instead of the IPv4 one
-	
+
 	* ace/Sock_Connect.cpp:
 
 	  Modified bind_port () so that if the protocol specified is
 	  PF_INET6 and the IP address is not INADDR_ANY, then the address
 	  will be set to an IPv4-mapped IPv6 address before doing the
-	  bind. 
+	  bind.
 
 	  Thanks to Brian Buesker <bbuesker@qualcomm.com> for the
-	  patches. 
+	  patches.
 
 Sun Nov 16 23:08:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
