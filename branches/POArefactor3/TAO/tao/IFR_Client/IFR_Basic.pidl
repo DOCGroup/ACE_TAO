@@ -54,7 +54,7 @@
 #ifndef _IFR_BASIC_IDL_
 #define _IFR_BASIC_IDL_
 
-#include "IFR_Base.pidl"
+#include "tao/IFR_Client/IFR_Base.pidl"
 #include "ParameterMode.pidl"
 
 module CORBA

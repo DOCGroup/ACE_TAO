@@ -2228,6 +2228,11 @@ namespace POA_CORBA
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:997
 
+
+#if defined (__ACE_INLINE__)
+#include "IFR_BaseS.inl"
+#endif /* defined INLINE */
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */

@@ -50,7 +50,8 @@
 #ifndef _IFR_BASE_IDL_
 #define _IFR_BASE_IDL_
 
-#include <orb.idl>
+#include <orb_types.pidl>
+#include <Typecode_types.pidl>
 
 module CORBA
 {

@@ -54,13 +54,15 @@
 #ifndef _IFR_EXTENDED_IDL_
 #define _IFR_EXTENDED_IDL_
 
-#include "IFR_Basic.pidl"
+#include "tao/IFR_Client/IFR_Basic.pidl"
+#include <Visibility.pidl>
+#include <ValueModifier.pidl>
 
 module CORBA
 {
   typeprefix CORBA "omg.org";
 
-// Already defined in corbafwd.h, included from orb.idl.
+// Already defined in other files, included above
 /*
   typedef short ValueModifier;
   const ValueModifier VM_NONE = 0;

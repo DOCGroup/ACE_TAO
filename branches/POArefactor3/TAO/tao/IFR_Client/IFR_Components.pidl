@@ -54,7 +54,7 @@
 #ifndef _IFR_COMPONENTS_IDL_
 #define _IFR_COMPONENTS_IDL_
 
-#include "IFR_Extended.pidl"
+#include "tao/IFR_Client/IFR_Extended.pidl"
 
 module CORBA
 {
