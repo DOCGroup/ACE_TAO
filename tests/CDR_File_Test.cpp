@@ -223,7 +223,7 @@ run_test (int write_file,
 // Main function
 
 int 
-main (int, ASYS_TCHAR *argv[])
+main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("CDR_File_Test"));
 
