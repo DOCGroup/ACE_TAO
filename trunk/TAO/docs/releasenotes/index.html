@@ -59,20 +59,17 @@ Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
 <P>Current status: (As of March 15th, 1998.)
 <UL>
-  <LI>
-      Completely redesigned the IDL compiler using the Visitor
-      patterns. Many incomplete issues have been resolved. These
-      include support for "sequence of typecodes", passing object
-      references as in, inout, and out parameters. Code generation for
-      sequences is also properly handled i.e., for a named sequence
-      such as "typedef sequence <char> CharSeq;", we now generate a
-      new class (and hence a type) called "class CharSeq". Arrays are
-      still being worked out and will be done soon.
+<LI>
+Completely redesigned the IDL compiler using the Visitor patterns. Many
+incomplete issues have been resolved. These include support for "sequence
+of typecodes", passing object references as in, inout, and out parameters.
+Code generation for sequences is also properly handled i.e., for a named
+sequence such as "typedef sequence&nbsp;<char>CharSeq;", we now generate
+a new class (and hence a type) called "class CharSeq". Arrays are still
+being worked out and will be done soon. An important difference in the
+generated code is that the skeletons now use a table driven approach very
+similar to the stubs.</LI>
 
-      An important difference in the generated code is that the
-      skeletons now use a table driven approach very similar to the
-      stubs.
-  </LI>
 <LI>
 Support for the "native" keyword added.</LI>
 
@@ -244,25 +241,24 @@ Point of contact: <A HREF="mailto:naga@cs.wustl.edu">Nagarajan Surendran</A>
 
 <P>Current Status:
 
-<P>The TAO IDL_Cubit test application makes use of the Naming Service
-and the server holds a TAO_Naming_Server component.Just running server
-and client is enough to test the application.
+<P>The TAO IDL_Cubit test application makes use of the Naming Service and
+the server holds a TAO_Naming_Server component.Just running server and
+client is enough to test the application.
 
-<P>The various tests in the tests/POA test the different features of
-the Portable Object Adapter interface like Explicit Activation, On
-Demand Activation,etc..
+<P>The various tests in the tests/POA test the different features of the
+Portable Object Adapter interface like Explicit Activation, On Demand Activation,etc..
 
 <P>Future work:
 
-<P>Developing a one-buttoned test for all the different TAO tests
-similar to the ACE-one buttoned test.
+<P>Developing a one-buttoned test for all the different TAO tests similar
+to the ACE-one buttoned test.
 
 <P>MT_Cubit:
 
 <P>Current status:
 
-<P>The TAO MT_Cubit test application is meant to serve as a starting point for real-time
-tests on the TAO system. It comprises the following parts:
+<P>The TAO MT_Cubit test application is meant to serve as a starting point
+for real-time tests on the TAO system. It comprises the following parts:
 <UL>
 <LI>
 <I>Server.</I> The server creates multiple CORBA objects (servants), each
@@ -355,19 +351,17 @@ and <A HREF="mailto:marina@cs.wustl.edu">Marina Spivak</A>
 <LI>
 The Naming Service implementation is complete.</LI>
 </UL>
-
 Future work:
 <UL>
 <LI>
 Currently the bindings are stored as a table in memory. Future work will
-include a persistent database to store the bindings.
-</LI>
+include a persistent database to store the bindings.</LI>
+
 <LI>
-Replication of the bindings to other Naming Service's currently
-running.  It will probably be modeled after the LDAP Multi-Master
-Replication Protocol.  For more information on this replication
-protocol please read <A HREF="ftp://ds.internic.net/internet-drafts/draft-ietf-asid-ldap-mult-mast-rep-02.txt">LDAP Multi-Master Replication Protocol</A>
-</LI>
+Replication of the bindings to other Naming Service's currently running.
+It will probably be modeled after the LDAP Multi-Master Replication Protocol.
+For more information on this replication protocol please read <A HREF="ftp://ds.internic.net/internet-drafts/draft-ietf-asid-ldap-mult-mast-rep-02.txt">LDAP
+Multi-Master Replication Protocol</A></LI>
 </UL>
 For general documentation on the Naming Service please read <A HREF="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">The
 Naming Service Specification</A>.
@@ -378,11 +372,13 @@ Naming Service Specification</A>.
 <A NAME="pservices"></A>CORBA Property Service</H3>
 Point of contact: <A HREF="mailto:alex@cs.wustl.edu">Alexander Babu Arulanthu</A>
 
-<P>Current status :
+<P>Current status (as of Mar 19, 1998)
 <BR>&nbsp;
 <BR>&nbsp;&nbsp;&nbsp; It is under development and testing. TAO's&nbsp;
 AVStreams, which is currently being developed will make use of&nbsp; the
-Property Service.
+Property Service.&nbsp;&nbsp;&nbsp;&nbsp; The primary PropertySet interface
+and the Iterator interfaces have been implemented and currently AVStreams'
+test application has started using them.
 
 <P>For general documentation of the Property Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#prop">The
 Property Service Specification.</A>
@@ -496,7 +492,7 @@ cache.</UL>
 Future work:
 <BLOCKQUOTE><I>None currently scheduled.</I></BLOCKQUOTE>
 
-<hr>
+<HR>
 <H3>
 <A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
 Point of contact: <A HREF="mailto:nw1@cs.wustl.edu">Nanbor Wang</A>.
@@ -545,9 +541,11 @@ project.</LI>
 </OL>
 Notice that these procedures only setup the IDL compiler to perform correctly.
 
-<P>p.s. If anyone knows how to set a default setting in VC so we
-don't need to perform these procedures every time a new project gets set
-up, please let us know. Thanks.&nbsp; <P>
+<P>p.s. If anyone knows how to set a default setting in VC so we don't
+need to perform these procedures every time a new project gets set up,
+please let us know. Thanks.
+
+<P>
 <HR>
 
 <P>Back to the TAO <A HREF="../index.html">documentation index</A>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
