@@ -1,3 +1,9 @@
+Wed Dec 05 10:08:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* rpc++/*:
+	  Removed, this directory was not distributed with ACE and having
+	  it around just made the administration harder.
+
 Wed Dec  5 12:10:42 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/nightlybuilds/builds.lst:
