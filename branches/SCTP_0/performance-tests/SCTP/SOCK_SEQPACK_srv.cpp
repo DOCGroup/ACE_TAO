@@ -31,7 +31,7 @@ struct ArgStruct {
 
 // thread function that serves the client for the UnMarshalled Octet
 // test
-static void * unmarshalledOctetServer (void *arg){
+static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
 
   // unbundle the arguments
   ArgStruct * args = ACE_reinterpret_cast(ArgStruct *,arg);
@@ -177,8 +177,6 @@ static void run_server (ACE_HANDLE handle)
   // deallocate the header buffer
   delete[] hdrBuf;
 
-  ACE_THR_FUNC server=unmarshalledOctetServer;
-
   // bundle up the arguments
   ArgStruct * args = new ArgStruct;
   args->stream = dataModeStream;
@@ -187,14 +185,14 @@ static void run_server (ACE_HANDLE handle)
 #if defined (ACE_HAS_THREADS)
   // Spawn a new thread and run the new connection in that thread of
   // control using the <server> function as the entry point.
-  if (ACE_Thread_Manager::instance ()->spawn (server,
+  if (ACE_Thread_Manager::instance ()->spawn (unmarshalledOctetServer,
                                               ACE_reinterpret_cast(void *,args),
                                               THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) %p\n",
                 "spawn"));
 #else
-  (*server) (ACE_reinterpret_cast(void *, args));
+  (*unmarshalledOctetServer) (ACE_reinterpret_cast(void *, args));
 #endif /* ACE_HAS_THREADS */
 
 }
