@@ -64,14 +64,21 @@ namespace CIAO
             }
           else if
             (process_string(this->iter_, node_name, "label", plan.label));
+          else if
+            (process_element<Deployment::ComponentInterfaceDescription>
+             (this->doc_, this->iter_, node,
+              node_name, "realizes", plan.realizes,
+              this, &Plan_Handler::process_ccd,
+              this->id_map_));
           
-
+          /*
           else if (node_name == XStr (ACE_TEXT ("realizes")))
             {
               this->process_ccd_element (node, this->doc_,
                                          this->iter_,
                                          plan);
             }
+          */
           else if (node_name == XStr (ACE_TEXT ("implementation")))
             {
               this->process_mdd_element (node, this->doc_,
@@ -279,7 +286,7 @@ namespace CIAO
         }
 
     }
-
+    /*
     void Plan_Handler::process_ccd_element
        (DOMNode* node, DOMDocument* doc,
         DOMNodeIterator* iter,
@@ -302,7 +309,7 @@ namespace CIAO
             }
         }
     }
-
+    */
     void Plan_Handler::process_property_element
        (DOMNode* node, DOMDocument* doc,
         DOMNodeIterator* iter,
@@ -1304,8 +1311,7 @@ namespace CIAO
     }
 
     void Plan_Handler::process_ccd 
-       (DOMDocument*,
-        DOMNodeIterator* iter,
+       (DOMNodeIterator* iter,
         Deployment::ComponentInterfaceDescription& cid)
     {
       CCD_Handler handler (iter, false);
@@ -1381,7 +1387,7 @@ namespace CIAO
 
       return;
     }
-
+    /*
     void Plan_Handler::process_attributes_for_ccd
        (DOMNamedNodeMap* named_node_map,
         DOMDocument* doc,
@@ -1448,7 +1454,7 @@ namespace CIAO
 
       return;
     }
-
+    */
     DOMDocument* Plan_Handler::create_document (const char *url)
     {
 
