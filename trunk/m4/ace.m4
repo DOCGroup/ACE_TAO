@@ -941,35 +941,35 @@ AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_enable_acexml = Xyes])
 ])
 
 
-# ACE_WITH_GL
+# ACE_PATH_GL
 #---------------------------------------------------------------------------
 # Find OpenGL Libraries, flags, etc.
-AC_DEFUN([ACE_WITH_GL],
+AC_DEFUN([ACE_PATH_GL],
 [
 AM_CONDITIONAL([BUILD_GL], [false])
 ])
 
 
-# ACE_WITH_FL
+# ACE_PATH_FL
 #---------------------------------------------------------------------------
 # Find FL/TK Libraries, flags, etc.
-AC_DEFUN([ACE_WITH_FL],
-[AC_REQUIRE([ACE_WITH_GL])
+AC_DEFUN([ACE_PATH_FL],
+[AC_REQUIRE([ACE_PATH_GL])
 ])
 
 
-# ACE_WITH_QT
+# ACE_PATH_QT
 #---------------------------------------------------------------------------
 # Find Qt Libraries, flags, etc.
-AC_DEFUN([ACE_WITH_QT],
+AC_DEFUN([ACE_PATH_QT],
 [
 ])
 
 
-# ACE_WITH_TK
+# ACE_PATH_TK
 #---------------------------------------------------------------------------
 # Find Tk Libraries, flags, etc.
-AC_DEFUN([ACE_WITH_TK],
+AC_DEFUN([ACE_PATH_TK],
 [
 ])
 
@@ -977,7 +977,7 @@ AC_DEFUN([ACE_WITH_TK],
 # ACE_ENABLE_FL_REACTOR
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_FL_REACTOR],
-[AC_REQUIRE([ACE_WITH_FL])
+[AC_REQUIRE([ACE_PATH_FL])
 AC_ARG_ENABLE([fl-reactor],
   	       AS_HELP_STRING([--enable-fl-reactor],
 		              [build support for the FlReactor [[no]]]),
@@ -1006,7 +1006,7 @@ AM_CONDITIONAL([BUILD_ACE_FLREACTOR],
 # ACE_ENABLE_QT_REACTOR
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_QT_REACTOR],
-[AC_REQUIRE([ACE_WITH_QT])
+[AC_REQUIRE([ACE_PATH_QT])
 AC_ARG_ENABLE([qt-reactor],
   	       AS_HELP_STRING([--enable-qt-reactor],
 		              [build support for the QtReactor [[no]]]),
@@ -1035,7 +1035,7 @@ AM_CONDITIONAL([BUILD_ACE_QTREACTOR],
 # ACE_ENABLE_TK_REACTOR
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_TK_REACTOR],
-[AC_REQUIRE([ACE_WITH_TK])
+[AC_REQUIRE([ACE_PATH_TK])
 AC_ARG_ENABLE([tk-reactor],
   	       AS_HELP_STRING([--enable-tk-reactor],
 		              [build support for the TkReactor [[no]]]),
