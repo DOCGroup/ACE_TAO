@@ -79,12 +79,17 @@ class Event_impl : public virtual OBV_Event,
 #ifdef is_certainly_not_defined
 class Event_factory : public CORBA::ValueFactoryBase
 {
- public:
+public:
 
   // create (...) would go here
-private:
+
+protected:
+
   virtual ~Event_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Event)  create_for_unmarshal ();
+
+private:
+
+  TAO_OBV_CREATE_RETURN_TYPE (Event) create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 };
 #endif /* is not defined */
 
@@ -130,11 +135,17 @@ public:
 class Temperature_factory : public CORBA::ValueFactoryBase
 {
   friend class Temperature;
- public:
+public:
+
   // create (...) would go here
-private:
+
+protected:
+
   virtual ~Temperature_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Temperature)  create_for_unmarshal ();
+
+private:
+
+  TAO_OBV_CREATE_RETURN_TYPE (Temperature) create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 };
 
 
@@ -162,12 +173,16 @@ public:
 class Position_factory : public CORBA::ValueFactoryBase
 {
   friend class Position;
- public:
+public:
 
   // create (...) would go here
-private:
+protected:
+
   virtual ~Position_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Position)  create_for_unmarshal ();
+
+private:
+
+  TAO_OBV_CREATE_RETURN_TYPE (Position)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 };
 
 
@@ -187,12 +202,16 @@ public:
 class Log_Msg_factory : public CORBA::ValueFactoryBase
 {
   friend class Log_Msg;
- public:
+public:
 
   // create (...) would go here
-private:
+
+protected:
   virtual ~Log_Msg_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)  create_for_unmarshal ();
+
+private:
+
+  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 };
 
 
@@ -226,9 +245,14 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
 class Event_List_Link_factory : public CORBA::ValueFactoryBase
 {
   friend class Event_List_Link;
- private:
+
+protected:
+
   virtual ~Event_List_Link_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)  create_for_unmarshal ();
+
+private:
+
+  TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 };
 
 
@@ -264,9 +288,14 @@ class Event_List_impl : public virtual OBV_Event_List,
 class Event_List_factory : public CORBA::ValueFactoryBase
 {
   friend class Event_List;
- private:
+protected:
+
   virtual ~Event_List_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Event_List)  create_for_unmarshal ();
+
+private:
+
+  TAO_OBV_CREATE_RETURN_TYPE (Event_List)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 };
 
 
@@ -330,7 +359,7 @@ class Temperature_Criterion_factory : public CORBA::ValueFactoryBase
   friend class Temperature;
 private:
   virtual ~Temperature_Criterion_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion) create_for_unmarshal ();
+  TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion) create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 };
 
 
@@ -355,9 +384,13 @@ public:
 class Position_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Position;
-private:
+protected:
+
   virtual ~Position_Criterion_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)  create_for_unmarshal ();
+
+private:
+
+  TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 };
 
 
@@ -378,9 +411,12 @@ public:
 class Log_Msg_Criterion_factory : public CORBA::ValueFactoryBase
 {
   friend class Log_Msg;
-private:
+protected:
+
   virtual ~Log_Msg_Criterion_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)  create_for_unmarshal ();
+
+private:
+  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 };
 
 

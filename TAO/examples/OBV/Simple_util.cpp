@@ -8,6 +8,9 @@
 # include "Simple_util.h"
 # include "tao/debug.h"
 # include "ace/OS_NS_stdio.h"
+# include "ace/OS_NS_fcntl.h"
+# include "ace/OS_NS_unistd.h"
+# include "ace/OS_NS_string.h"
 
 // Constructor.
 
