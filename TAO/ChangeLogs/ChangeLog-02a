@@ -1,3 +1,15 @@
+Thu Jun 14 14:33:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/corbafwd.h:
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/Object.cpp:
+
+          Inlined CORBA::is_nil() and put the part that cannot be
+          inlined (the part that make a call on TAO_Stub) in a new
+          uninlined function CORBA::Object::is_nil_i(). Thanks to
+          Carlos for this idea to improve performance.
+
 Thu Jun 14 14:18:34 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Makefile: 
