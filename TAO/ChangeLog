@@ -1,3 +1,19 @@
+Fri Nov 21 22:19:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1636_Regression/client.cpp:
+
+	  Fixed compilation errors in builds where exceptions are turned
+	  off.  
+
+	* tests/Bug_1639_Regression/Makefile:
+	* tests/Bug_1639_Regression/Makefile.Bug_1639_testclient:
+	* tests/Bug_1639_Regression/test.mpc:
+
+	  Made this test compilable only when exceptions are turned
+	  on. The right way would be to use ACE_EXCEPTION macros. But
+	  Simon has to be doing that. Till then, let me  get the builds
+	  clean. 
+
 Fri Nov 21 21:48:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/AV.mpc:
