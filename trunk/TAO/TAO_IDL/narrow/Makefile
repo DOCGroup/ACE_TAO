@@ -21,7 +21,7 @@ LOBJ    = $(addsuffix .o,$(FILES))
 SHOBJ   = $(addsuffix .so,$(FILES))
 
 
-LDLIBS	= -lnarrow
+LDLIBS	= -lACE
 LIBS = -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
