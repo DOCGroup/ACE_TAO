@@ -32,6 +32,10 @@ int
 Logging_Handler::handle_timeout (const ACE_Time_Value &,
                                  const void *arg)
 {
+#if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (arg);
+#endif /* ACE_NDEBUG */
+
   ACE_ASSERT (arg == this);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) handling timeout from this = %u\n", this));
   return 0;

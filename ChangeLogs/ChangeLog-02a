@@ -1,7 +1,8 @@
 Sat Feb 12 14:40:20 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Connection/misc/Connection_Handler.cpp,
-          examples/Logger/Acceptor-server/server_loggerd.cpp (handle_timeout):
+          examples/Logger/Acceptor-server/server_loggerd.cpp,
+          examples/Logger/simple-server/Logging_Handler.cpp (handle_timeout):
           added ACE_UNUSED_ARG (arg), only with ACE_NDEBUG.
 
 Sat Feb 12 00:27:45 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
