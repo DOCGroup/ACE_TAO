@@ -1,3 +1,8 @@
+Mon Jun 16 19:05:13 1997  Steve Huston <shuston@riverace.com>
+
+	* ace/Free_List.cpp: added #include ace/Synch.h, needed by
+	  Free_List.i.  Fixes compile errors on HP-UX.
+
 Mon Jun 16 10:59:55 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Timer_Wheel_T.cpp: Changed expire () so it doesn't access past
