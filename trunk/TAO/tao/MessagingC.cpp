@@ -200,7 +200,7 @@ Messaging::RebindMode Messaging::RebindPolicy::rebind_mode (
   )
 {
     Messaging::RebindMode _tao_retval = 0;
-
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -272,6 +272,7 @@ Messaging::SyncScope Messaging::SyncScopePolicy::synchronization (
   )
 {
     Messaging::SyncScope _tao_retval = 0;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -371,6 +372,7 @@ Messaging::PriorityRange Messaging::RequestPriorityPolicy::priority_range (
   )
 {
     Messaging::PriorityRange _tao_retval;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -442,6 +444,7 @@ Messaging::PriorityRange Messaging::ReplyPriorityPolicy::priority_range (
   )
 {
     Messaging::PriorityRange _tao_retval;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -513,6 +516,7 @@ TimeBase::UtcT Messaging::RequestStartTimePolicy::start_time (
   )
 {
     TimeBase::UtcT _tao_retval;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -584,6 +588,7 @@ TimeBase::UtcT Messaging::RequestEndTimePolicy::end_time (
   )
 {
     TimeBase::UtcT _tao_retval;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -655,6 +660,7 @@ TimeBase::UtcT Messaging::ReplyStartTimePolicy::start_time (
   )
 {
     TimeBase::UtcT _tao_retval;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -726,6 +732,7 @@ TimeBase::UtcT Messaging::ReplyEndTimePolicy::end_time (
   )
 {
     TimeBase::UtcT _tao_retval;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -797,6 +804,7 @@ TimeBase::TimeT Messaging::RelativeRequestTimeoutPolicy::relative_expiry (
   )
 {
     TimeBase::TimeT _tao_retval = 0;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -868,6 +876,7 @@ TimeBase::TimeT Messaging::RelativeRoundtripTimeoutPolicy::relative_expiry (
   )
 {
     TimeBase::TimeT _tao_retval = 0;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -967,6 +976,7 @@ Messaging::RoutingTypeRange Messaging::RoutingPolicy::routing_range (
   )
 {
     Messaging::RoutingTypeRange _tao_retval;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -1038,6 +1048,7 @@ CORBA::UShort Messaging::MaxHopsPolicy::max_hops (
   )
 {
     CORBA::UShort _tao_retval = 0;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 
@@ -1109,6 +1120,7 @@ Messaging::Ordering Messaging::QueueOrderPolicy::allowed_orders (
   )
 {
     Messaging::Ordering _tao_retval = 0;
+    ACE_UNUSED_ARG (_tao_retval);
     ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 }
 

@@ -445,6 +445,7 @@ CORBA_PolicyList * CORBA_PolicyManager::get_policy_overrides (
   )
 {
   CORBA_PolicyList* _tao_retval = 0;
+  ACE_UNUSED_ARG(_tao_retval);
   ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
 }
 
