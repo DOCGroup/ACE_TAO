@@ -14,11 +14,11 @@
 
 ACE_RCSID(Notify, Notify_Event_Map, "$Id$")
 
-TAO_Notify_Event_Map::TAO_Notify_Event_Map (void)
+TAO_Notify_Event_Map::TAO_Notify_Event_Map (TAO_Notify_EMO_Factory* emo_factory)
   :default_subscription_list_ (0),
    subscription_change_listeners_ (0),
    publication_change_listeners_ (0),
-   emo_factory_ (TAO_Notify_Factory::get_event_manager_objects_factory ()),
+   emo_factory_ (emo_factory),
    collection_factory_ (TAO_Notify_Factory::get_collection_factory ())
 {
 }

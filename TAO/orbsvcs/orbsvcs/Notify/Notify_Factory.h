@@ -56,7 +56,7 @@ class TAO_Notify_Export TAO_Notify_Factory
   static TAO_Notify_Collection_Factory* get_collection_factory (void);
   // Factory for all collections in the notify service.
 
-  static TAO_Notify_EMO_Factory* get_event_manager_objects_factory (void);
+  static TAO_Notify_EMO_Factory* create_event_manager_objects_factory (void);
   // The event manager objects.
 
  protected:

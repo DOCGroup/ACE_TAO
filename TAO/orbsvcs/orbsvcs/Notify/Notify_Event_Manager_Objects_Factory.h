@@ -45,6 +45,8 @@ class TAO_Notify_Export TAO_Notify_EMO_Factory : public ACE_Service_Object
   //   Factory interface for event manager and friends.
   //
  public:
+  virtual ~TAO_Notify_EMO_Factory (){};
+
   virtual TAO_Notify_Event_Manager* create_event_manager (TAO_Notify_EventChannel_i* channel, CORBA::Environment &ACE_TRY_ENV)= 0;
   // Create an event manager.
 
@@ -58,9 +60,21 @@ class TAO_Notify_Export TAO_Notify_EMO_Factory : public ACE_Service_Object
   virtual TAO_Notify_Worker_Task* create_source_eval_task (CORBA::Environment &ACE_TRY_ENV)= 0;
   virtual TAO_Notify_Worker_Task* create_lookup_task (CORBA::Environment &ACE_TRY_ENV)= 0;
   virtual TAO_Notify_Worker_Task* create_listener_eval_task (CORBA::Environment &ACE_TRY_ENV)= 0;
+
   virtual TAO_Notify_Worker_Task* create_dispatching_task (CORBA::Environment &ACE_TRY_ENV)= 0;
+  // Task that dispatches events.
+  virtual TAO_Notify_Worker_Task* create_updates_task (CORBA::Environment &ACE_TRY_ENV)= 0;
+  // Task that dispatches updates.
+
+  // Destroy processing tasks.
+  virtual void destroy_source_eval_task (TAO_Notify_Worker_Task* task) = 0;
+  virtual void destroy_lookup_task (TAO_Notify_Worker_Task* task) = 0;
+  virtual void destroy_listener_eval_task (TAO_Notify_Worker_Task* task) = 0;
+  virtual void destroy_dispatching_task (TAO_Notify_Worker_Task* task) = 0;
+  virtual void destroy_updates_task (TAO_Notify_Worker_Task* task) = 0;
 
   virtual void print_values (void) = 0;
+  // bad hack. why is this here?!
 };
 
 #include "ace/post.h"

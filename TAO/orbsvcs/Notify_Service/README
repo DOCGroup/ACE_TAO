@@ -42,7 +42,7 @@ Command line arguments:
 "-Notify_TPReactor [threads]": Tells the Notify Service that the ORB
                                will use a TP reactor and specifies the
                                number of worker threads to utilize.
-  
+
 
 Note that the svc.conf file must instruct the oRB to use a TP reactor
 e.g. static Resource_Factory "-ORBReactorType tp -ORBReactorMaskSignals 0"
@@ -80,26 +80,70 @@ The svc.conf options:
 
 The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the following options:
 
-"-MTDispatching"                     : Enable MT dispatching 
+"-MTDispatching"                     : Enable MT dispatching
 "-DispatchingThreads [thread_count]" : How many threads for MT dispatching.
-"-MTSourceEval"                      : Enable MT proxy consumer(source) filter evaluation. 
+"-MTSourceEval"                      : Enable MT proxy consumer(source) filter evaluation.
 "-SourceThreads [thread_count]"      : How many threads for source filter evaluation.
 "-MTLookup"                          : Enable MT subscription table lookup.
 "-LookupThreads [thread_count]"      : How many lookup threads.
-"-MTListenerEval"                    : Enable MT proxy supplier (listener) filter evaluation.  
+"-MTListenerEval"                    : Enable MT proxy supplier (listener) filter evaluation.
 "-ListenerThreads"                   : How many threads for listener filter evaluation.
 "-Notify_TPReactor [threads]"        : Tells the service that the ORB
                                        is using a TP reactor and
                                        specifies the number of worker
-                                       threads to deploy.   
+                                       threads to deploy.
                                        Note that you might have to
-                                       specify  the TP reactor in the 
+                                       specify  the TP reactor in the
                                        svc.conf file.
                                        (see the ORB configutrations
                                        for details on this)
+
+"-AsynchUpdates"                     : Send subscription and
+                                       publication updates asynchronously.
+
+"-AllocateTaskperProxy"              : Allocate worker tasks per
+                                       proxy for the following
+                                       options:
+                                       "-MTDispatching",
+                                       "-MTSourceEval"
+                                       "-MTListenerEval"
+                                       *see footnote below for explaination*
+
 e.g. svc.conf
 static Notify_Default_Event_Manager_Objects_Factory "-MTSourceEval -MTDispatching -DispatchingThreads 2"
 
 This means that we want to enable MT proxy supplier filter evaluation
 (default 1 thread) and MT event dispatching with 2 threads.
 
+----------------------------------------------------------------
+What does the "-AllocateTaskperProxy" option do?
+
+A Task here implies a thread pool that performs a fixed work in the
+Notify.
+e.g. When you specify "-MTDispatching" and set "DispatchingThreads 1".
+It means that there is 1 thread to perform the event dispatching to
+consumers IRRESPECTIVE OF THE NUMBER OF PROXYSUPPLIERS.
+This is the default case.
+
+When you specify "-AllocateTaskperProxy" it asks notify to create a
+dispatching task (with the specified thread pool size) PER
+PROXYSUPPLIER. So if you use this option and connect 50 consumers with
+1 thread for the dispaching task you will have created 50 dispatching
+threads! so use this option with care and you might not need it in
+most cases.
+
+why have this feature in the first place?  The intent is to allow the
+software architect of a Notify based system, fine control over where
+and how much thread resources are deployed.  e.g. a channel could have
+2 proxy suppliers - the first one delivers an important event in huge
+quantities.  A dedicated thread pool to this proxy will ensure better
+throughput to it's consumers. (Eventually i want to be able to set the
+thread pool size via a QoS property)
+
+Similarly, the "-MTSourceEval" specifies a thread pool for the filter
+evauation at the proxyconsumer ("Source").
+and the "-MTListenerEval" specifies a thread pool for the filter
+evauation at the proxyconsumer ("Listener").
+
+thanks,
+Pradeep <pradeep@cs.wustl.edu>

@@ -52,14 +52,12 @@ TAO_Notify_Factory::init (CORBA::Environment &ACE_TRY_ENV)
     ACE_Dynamic_Service <TAO_Notify_EMO_Factory>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
 
   if (emo_factory_ == 0)
-    {
-      ACE_NEW_THROW_EX (emo_factory_,
-                        TAO_Notify_Default_EMO_Factory (),
-                        CORBA::NO_MEMORY ());
-    }
+    ACE_DEBUG ((LM_DEBUG, "Unable to load Event Manager factory...\n"));
   else
-    ACE_DEBUG ((LM_DEBUG, "Loaded EMO factory\n"));
-  emo_factory_->print_values ();
+    {
+      ACE_DEBUG ((LM_DEBUG, "Loaded Event Manager factory...\n"));
+      emo_factory_->print_values ();
+    }
 }
 
 void
@@ -87,9 +85,17 @@ TAO_Notify_Factory::get_collection_factory (void)
 }
 
 TAO_Notify_EMO_Factory*
-TAO_Notify_Factory::get_event_manager_objects_factory (void)
+TAO_Notify_Factory::create_event_manager_objects_factory (void)
 {
-  return TAO_Notify_Factory::emo_factory_;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_Notify_Default_EMO_Factory* local_emo_fact;
+  ACE_NEW_THROW_EX (local_emo_fact,
+                    TAO_Notify_Default_EMO_Factory (),
+                    CORBA::NO_MEMORY ());
+
+  local_emo_fact->init_instance ();
+  // @@ check return value
+  return local_emo_fact;
 }
 
 // ****************************************************************

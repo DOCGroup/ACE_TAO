@@ -98,7 +98,8 @@ TAO_Notify_MT_Worker_Task::svc (void)
           // Decrement the global event count.
           (*this->queue_length_)--;
 
-          ACE_DEBUG ((LM_DEBUG, "removing from queue\n"));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG, "removing from queue\n"));
           TAO_Notify_Command *command =
             ACE_dynamic_cast(TAO_Notify_Command*, mb);
 

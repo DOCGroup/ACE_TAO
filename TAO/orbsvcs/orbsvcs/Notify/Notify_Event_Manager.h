@@ -52,7 +52,8 @@ class TAO_Notify_Export TAO_Notify_Event_Manager
 
  public:
   // = Initialization and termination code.
-  TAO_Notify_Event_Manager (TAO_Notify_EventChannel_i* parent);
+  TAO_Notify_Event_Manager (TAO_Notify_EventChannel_i* parent,
+                            TAO_Notify_EMO_Factory* emo_factory);
   // Constructor.
 
   ~TAO_Notify_Event_Manager ();
@@ -103,6 +104,9 @@ class TAO_Notify_Export TAO_Notify_Event_Manager
 
   TAO_Notify_AdminProperties* admin_properties (void);
   // Get the Admin Properties.
+
+  TAO_Notify_EMO_Factory* resource_factory (void);
+  // Get the Resource Factory.
 
   // = Event forwarding methods.
   void process_event (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment &ACE_TRY_ENV);

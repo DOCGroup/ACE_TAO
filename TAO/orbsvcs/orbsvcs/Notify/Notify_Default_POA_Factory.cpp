@@ -32,7 +32,6 @@ TAO_Notify_Default_POA_Factory::init (int /*argc*/, char* /*argv*/[])
 int
 TAO_Notify_Default_POA_Factory::fini (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Default_POA_Factory::fini\n"));
   return 0;
 }
 

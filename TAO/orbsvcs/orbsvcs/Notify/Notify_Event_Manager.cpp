@@ -14,12 +14,12 @@
 
 ACE_RCSID(Notify, Notify_Event_Manager, "$Id$")
 
-TAO_Notify_Event_Manager::TAO_Notify_Event_Manager (TAO_Notify_EventChannel_i* event_channel)
+TAO_Notify_Event_Manager::TAO_Notify_Event_Manager (TAO_Notify_EventChannel_i* event_channel, TAO_Notify_EMO_Factory* emo_factory)
   :event_channel_ (event_channel),
    event_map_ (0),
    event_processor_ (0),
    updates_dispatching_task_ (0),
-   emo_factory_ (TAO_Notify_Factory::get_event_manager_objects_factory ()),
+   emo_factory_ (emo_factory),
    admin_properties_ (0)
 {
 }
@@ -28,9 +28,10 @@ TAO_Notify_Event_Manager::~TAO_Notify_Event_Manager ()
 {
   delete this->event_map_;
   delete this->event_processor_;
-  delete this->updates_dispatching_task_;
   delete this->lock_;
   delete this->admin_properties_;
+
+  emo_factory_->destroy_updates_task (this->updates_dispatching_task_);
 }
 
 void
@@ -53,8 +54,7 @@ TAO_Notify_Event_Manager::init (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   this->updates_dispatching_task_ =
-    // @@ add another method to RM
-    this->emo_factory_->create_dispatching_task (ACE_TRY_ENV);
+    this->emo_factory_->create_updates_task (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Init the objects

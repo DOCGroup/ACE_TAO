@@ -49,7 +49,7 @@ class TAO_Notify_Export TAO_Notify_Event_Map
   //   - Lists of subscriptions, publications update listeners.
   //
 public:
-  TAO_Notify_Event_Map (void);
+  TAO_Notify_Event_Map (TAO_Notify_EMO_Factory* emo_factory);
   // Constructor.
 
   virtual ~TAO_Notify_Event_Map ();
