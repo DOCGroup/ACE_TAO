@@ -1,3 +1,9 @@
+Sat Aug 22 16:01:07 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Makefile:
+		Changed to reflect the moving of pccTimer.cpp to 
+	  /project/doc/mvme.
+
 Sat Aug 22 14:47:07 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/COOL/MT_Cubit/cubit_impl.{h,cpp}:
