@@ -260,15 +260,17 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
   ndb->io_handler (nioh);
   nioh->task (db->task ());
   nioh->message_block (ndb);
+  nioh->handle (ioh->handle ());
 
   JAWS_Asynch_IO_Handler *aioh =
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, nioh);
 
-  aioh->accept_called_already (1);
+  ACE_HANDLE listen_handle = db->policy ()->acceptor ()->get_handle ();
 
+  aioh->accept_called_already (1);
   ACE_Asynch_Accept aa;
 
-  if (aa.open (*(aioh->handler ()), aioh->handle ()) == -1
+  if (aa.open (*(aioh->handler ()), listen_handle) == -1
       || aa.accept (*ndb, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE) == -1)
     aioh->accept_error ();
 }
