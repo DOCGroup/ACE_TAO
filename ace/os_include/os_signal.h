@@ -27,7 +27,7 @@
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_time.h"
 
-#if !defined (ACE_LACKS_SINGNAL_H)
+#if !defined (ACE_LACKS_SIGNAL_H)
    extern "C" {
 #  include /**/ <signal.h>
    }

@@ -3,7 +3,7 @@
 
 #include "ace/Object_Manager_Base.h"
 
-ACE_RCSID(ace, OS_NS_sys_time, "$Id$")
+ACE_RCSID(ace, Object_Manager_Base, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Object_Manager_Base.inl"
