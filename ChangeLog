@@ -1,3 +1,12 @@
+Sun Jan 23 13:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Default rtti to 1 instead of 0, we now use dynamic_cast in the
+          ACE library itself, TAO requires RTTI, so changed the default
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Simplified this file by using ?=
+
 Sun Jan 23 13:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Capabilities.cpp:
