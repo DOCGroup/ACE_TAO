@@ -1,7 +1,8 @@
 Wed Sep 29 17:11:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/TMCast/LinkListener.hpp: Added #include "Protocol.hpp" to
-	  be able to see the Protocol namespace.
+	  be able to see the Protocol namespace and "ace/OS_NS_string.h"
+	  to see ACE_OS::memcpy().
 
 Wed Sep 29 13:01:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
