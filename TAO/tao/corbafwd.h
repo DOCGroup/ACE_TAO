@@ -1692,6 +1692,13 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // types later.
 #define TAO_ORB_TYPE 0x54414f00U
 
+// The standard profile tags, they are listed here only to avoid
+// putting the raw literal in the code, it is *NOT* necessary to list
+// your own protocols here.
+#define TAO_TAG_INVALID_PROFILE -1
+#define TAO_TAG_IIOP_PROFILE 0
+#define TAO_TAG_MULTIPLE_COMPONENT_PROFILE 1
+
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own profile ids in TAO.
 #define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Local IPC (Unix Domain) */

@@ -169,7 +169,6 @@ TAO_ORB_Core::has_shutdown (void)
 
 ACE_INLINE void
 TAO_ORB_Core::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->has_shutdown ())
     {

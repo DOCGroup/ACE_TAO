@@ -1,9 +1,41 @@
+Sat Dec  4 15:47:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Removed throw specs from the ORB and ORB_Core interfaces, they
+          are not present in the spec, thus they should not be there in
+          the first place.
+
+        * tao/corbafwd.h:
+        * tao/GIOP.h:
+        * tao/Pluggable.h:
+        * tao/default_resource.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/UIOP_Acceptor.cpp:
+        * tao/UIOP_Connector.cpp:
+        * tao/UIOP_Profile.cpp:
+        * tao/UIOP_Transport.cpp:
+          Removed the TAO_IOP_TAG enum, it caused confusion as to how
+          where new profile tags added.  To add a new protocol you should
+          *NOT* modify the library code in any way, i have made comments
+          to that effect in all the places where we manipulate the IIOP
+          and UIOP protocols explicitly.  Those protocols are linked in by
+          default, but other protocols can be linked in using the service
+          configurator.
+
 Sat Dec 04 10:34:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orbconf.h:
-	* tao/corbafwd.h:
-	* tao/POAC.h: Part of my previous change wrt export macros failed
-	  to consider comilers without namespace.
+        * tao/orbconf.h:
+        * tao/corbafwd.h:
+        * tao/POAC.h: Part of my previous change wrt export macros failed
+          to consider comilers without namespace.
 
 Fri Dec  3 22:00:48 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -13,139 +45,139 @@ Fri Dec  3 22:00:48 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Fri Dec  3 14:20:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/default_resource.cpp (init_protocol_factories):
+        * tao/default_resource.cpp (init_protocol_factories):
 
-	  Added missing argument in call to ACE_ERROR.  Thanks to Chris
-	  Hafey <chris@stentorsoft.com> for reporting this.  [Bug 385]
+          Added missing argument in call to ACE_ERROR.  Thanks to Chris
+          Hafey <chris@stentorsoft.com> for reporting this.  [Bug 385]
 
 Fri Dec  3 13:26:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
-	  Changes to avert a build warning on IRIX.
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+          Changes to avert a build warning on IRIX.
 
 Fri Dec  3 12:37:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_visitor_union.cdr_op_ci.cpp
-	  For union implicit default case, the discriminant of the decoded
- 	  union must be set to the default value. Thanks to Christopher
- 	  Kohlhoff <chris@kohlhoff.com> for reporting this bug.
+        * TAO_IDL/be_visitor_union.cdr_op_ci.cpp
+          For union implicit default case, the discriminant of the decoded
+          union must be set to the default value. Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for reporting this bug.
 
-	* TAO_IDL/be/be_exception.cpp:
-	* TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
-	  Reversed the order of generation of the stub export macro
-	  (if any) and the return type for the Any and CDR
-	  insertion and extraction operators, and for the ostream
-	  operator for exceptions.
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+          Reversed the order of generation of the stub export macro
+          (if any) and the return type for the Any and CDR
+          insertion and extraction operators, and for the ostream
+          operator for exceptions.
 
 Fri Dec  3 12:02:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/AMI/Makefile:
-	* docs/tutorials/Quoter/Event_Service/Makefile:
-	* docs/tutorials/Quoter/Naming_Service/Makefile:
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
-	* docs/tutorials/Quoter/Simple/Client/Makefile:
-	* docs/tutorials/Quoter/Simple/Server/Makefile:
-	  Updated dependencies.
+        * docs/tutorials/Quoter/AMI/Makefile:
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/Naming_Service/Makefile:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile:
+        * docs/tutorials/Quoter/Simple/Client/Makefile:
+        * docs/tutorials/Quoter/Simple/Server/Makefile:
+          Updated dependencies.
 
 Fri Dec 03 11:35:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/MessagingC.h:
-	* tao/InterfaceC.h: I accidentally removed some "extern" keywords
-	  from the variable declarations.  Added them back.  Thanks to
-	  Jeff for noticing this.
+        * tao/MessagingC.h:
+        * tao/InterfaceC.h: I accidentally removed some "extern" keywords
+          from the variable declarations.  Added them back.  Thanks to
+          Jeff for noticing this.
 
 Fri Dec  3 08:58:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/Trading_Service/Makefile.bor: Add
- 	  $(OBJDIR)\Trading_Server.obj to object list.  Thanks to Mike
- 	  Gingell <mgingell@istar.ca> for reporting this.
+        * orbsvcs/Trading_Service/Makefile.bor: Add
+          $(OBJDIR)\Trading_Server.obj to object list.  Thanks to Mike
+          Gingell <mgingell@istar.ca> for reporting this.
 
-	* orbsvcs/orbsvcs/Makefile.bor: Added -I..\..\tao to compile line
-	  and added $(OBJDIR)\EC_Negation_Filter.obj to object list.
-  	  Thanks to Mike Gingell <mgingell@istar.ca> for reporting this.
+        * orbsvcs/orbsvcs/Makefile.bor: Added -I..\..\tao to compile line
+          and added $(OBJDIR)\EC_Negation_Filter.obj to object list.
+          Thanks to Mike Gingell <mgingell@istar.ca> for reporting this.
 
 Fri Dec 03 02:32:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Any.h:
-	* tao/CDR.h:
-	* tao/CONV_FRAMEC.h:
-	* tao/DomainC.h:
-	* tao/Exception.h:
-	* tao/GIOP.h:
-	* tao/IOPC.h:
-	* tao/IORC.h:
-	* tao/InterceptorC.h:
-	* tao/InterfaceC.h:
-	* tao/MessagingC.h:
-	* tao/ORB.h:
-	* tao/ORB_Core.h:
-	* tao/Object.h:
-	* tao/ObjectIDList.h:
-	* tao/POAC.h:
-	* tao/PolicyC.h:
-	* tao/PollableC.h:
-	* tao/Principal.h:
-	* tao/Sequence.h:
-	* tao/TAOC.h:
-	* tao/TimeBaseC.h:
-	* tao/corbafwd.h:
-	* tao/orbconf.h: Made sure all the top level functions are
-	  exported correctly.
+        * tao/Any.h:
+        * tao/CDR.h:
+        * tao/CONV_FRAMEC.h:
+        * tao/DomainC.h:
+        * tao/Exception.h:
+        * tao/GIOP.h:
+        * tao/IOPC.h:
+        * tao/IORC.h:
+        * tao/InterceptorC.h:
+        * tao/InterfaceC.h:
+        * tao/MessagingC.h:
+        * tao/ORB.h:
+        * tao/ORB_Core.h:
+        * tao/Object.h:
+        * tao/ObjectIDList.h:
+        * tao/POAC.h:
+        * tao/PolicyC.h:
+        * tao/PollableC.h:
+        * tao/Principal.h:
+        * tao/Sequence.h:
+        * tao/TAOC.h:
+        * tao/TimeBaseC.h:
+        * tao/corbafwd.h:
+        * tao/orbconf.h: Made sure all the top level functions are
+          exported correctly.
 
 Thu Dec  2 22:01:25 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Endpoint_Per_Priority_Scenario.dsw
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.dsw
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.dsw
-	  Added the above workspace and project files for compiling tests on NT.
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Endpoint_Per_Priority_Scenario.dsw
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.dsw
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.dsw
+          Added the above workspace and project files for compiling tests on NT.
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
-	  Use corba priority instead of native priority in the server to
-	  generate ior file names.
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
+          Use corba priority instead of native priority in the server to
+          generate ior file names.
 
 Thu Dec  2 19:19:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
-	  Did a 'make depend' to ensure automatic generation of
-	  the IDL stub and skeleton files. Thanks to Marina for
-	  pointing this out.
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile:
+          Did a 'make depend' to ensure automatic generation of
+          the IDL stub and skeleton files. Thanks to Marina for
+          pointing this out.
 
 Thu Dec  2 16:13:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* performance-tests/TAO_Perf_Tests.dsw:
-	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
-	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
-	  Changed the displayed name of the reliable oneways test
-	  projects, and added them to the performance tests
-	  workspace.
+        * performance-tests/TAO_Perf_Tests.dsw:
+        * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+          Changed the displayed name of the reliable oneways test
+          projects, and added them to the performance tests
+          workspace.
 
 Thu Dec  2 14:44:28 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* performance-tests/Makefile
-	* performance-tests/README
-	* performance-tests/RTCorba/Makefile
-	* performance-tests/RTCorba/Oneways/Makefile:
-	  Added/updated the above Makefiles so that all recently added
-	  RTCorba benchmarks get compiled with the rest of the
-	  performance-tests.
+        * performance-tests/Makefile
+        * performance-tests/README
+        * performance-tests/RTCorba/Makefile
+        * performance-tests/RTCorba/Oneways/Makefile:
+          Added/updated the above Makefiles so that all recently added
+          RTCorba benchmarks get compiled with the rest of the
+          performance-tests.
 
 Thu Dec  2 11:41:37 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -155,14 +187,14 @@ Thu Dec  2 11:41:37 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Thu Dec  2 00:32:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.conf:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf:
-	  Tuned the configuration files.  We tried to apply all the
-	  TAO optimizations that were possible, without breaking any laws
-	  of physics.
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf:
+          Tuned the configuration files.  We tried to apply all the
+          TAO optimizations that were possible, without breaking any laws
+          of physics.
 
 Wed Dec  1 23:11:42 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
