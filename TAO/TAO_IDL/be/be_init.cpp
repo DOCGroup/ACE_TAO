@@ -93,5 +93,5 @@ BE_init()
 void
 BE_version()
 {
-  cerr << GTDEVEL("Demonstration BE, version 1.0.0\n");
+  cerr << GTDEVEL("TAO C++ BE, version 0.1.0\n");
 }
