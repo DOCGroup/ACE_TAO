@@ -1,3 +1,18 @@
+Fri Jun 30 15:55:52 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/posix/time.h: 
+        * pace/posix/time.inl: 
+        * pace/win32/time.h:
+        * pace/win32/time.inl: 
+          Corrected type for timeptr arg for pace_mktime function.
+          Corrected non-const arg for pace_strftime. (NOTE: The
+          Solaris man page incorrectly documents the constness
+          of the first argument.)
+
+        * pace/posix/stdlib.inl: 
+        * pace/win32/stdlib.inl:
+          Corrected void return value for srand.
+
 Fri Jun 30 15:05:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/posix/TODO:

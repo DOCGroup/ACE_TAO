@@ -83,10 +83,11 @@ pace_rand ()
 }
 
 PACE_INLINE
-int
+void
 pace_srand (unsigned int seed)
 {
-  return srand (seed);
+  srand (seed);
+  return;
 }
 
 PACE_INLINE
