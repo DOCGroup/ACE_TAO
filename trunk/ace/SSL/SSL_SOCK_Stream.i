@@ -85,7 +85,9 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
           errno = EWOULDBLOCK;
           break;
         default:
+#ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
           break;
         }
     }
@@ -125,7 +127,9 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
           errno = EWOULDBLOCK;
           break;
         default:
+#ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
           break;
         }
     }
@@ -155,7 +159,9 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
           errno = EWOULDBLOCK;
           break;
         default:
+#ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
           break;
         }
     }
@@ -185,7 +191,9 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
           errno = EWOULDBLOCK;
           break;
         default:
+#ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
           break;
         }
     }
