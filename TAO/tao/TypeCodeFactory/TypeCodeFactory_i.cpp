@@ -1652,7 +1652,7 @@ TAO_TypeCodeFactory_i::update_map (
 #else
               if (! cdr.do_byte_swap ())
                 {
-                  *ACE_reinterpret_cast (CORBA::Long *, slot
+                  *ACE_reinterpret_cast (CORBA::Long *,
                                          ACE_const_cast (char *,
                                                          slot)) = 
                     recursion_offset;
@@ -1661,7 +1661,8 @@ TAO_TypeCodeFactory_i::update_map (
                 {
                   ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
                                                          &recursion_offset),
-                                   slot);
+                                   ACE_const_cast (char *,
+					           slot);
                 }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
             }
