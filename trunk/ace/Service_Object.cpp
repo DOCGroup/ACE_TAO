@@ -4,6 +4,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Service_Object.h"
+#include "ace/Service_Types.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Object.i"
