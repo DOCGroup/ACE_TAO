@@ -1,3 +1,43 @@
+Mon Sep 13 03:00:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	To overcome the long standing problem in DAnCE, we are now making
+        the facet and consumer servants to be on demand activatable. This
+        would make sure that application level ports are not activated
+        until used. This should help address the problems between DAnCE
+        and existing way of doing things. These changes should be useful
+        even after old CIAO is removed since we want to give existing
+        component applications the same activation semantics with DAnCE.
+
+	This checkin addresses old CIAO. DAnCE and CIDLC changes will come
+        in soon. 
+
+	* ciao/Servant_Activator.cpp:
+	* ciao/Servant_Activator.h:
+
+	  New files for facet and consumer activations. We now have a
+	  seperate servant activator for facet and consumer ports. The
+	  servant activator acts like a factory activating the right port
+	  activators which can create the right servant for every port. 
+
+	* ciao/Port_Activator.cpp:
+	* ciao/Port_Activator.h:
+	* ciao/Port_Activator_T.cpp:
+	* ciao/Port_Activator_T.h:
+
+	  Concrete port activators for every port.
+	
+	* ciao/CCM_Core.mpc:
+
+	  Added the new files for building.
+	
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* ciao/Container_Base.inl:
+
+	  Changes to the Container to use the above servant activator. The
+	  continer creates the servant activator and sets that in the POA
+	  meant for facet and consumers. 
+
 Fri Sep 10 23:08:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ciao/Container_Base.cpp:
