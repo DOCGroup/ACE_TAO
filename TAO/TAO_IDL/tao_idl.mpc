@@ -36,6 +36,13 @@ project(TAO_IDL_BE) : acelib, core, tao_output, crosscompile {
   dynamicflags = TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_FE
 
+  specific {
+    // Override the template value for optimize.  Building the backend
+    // with optimization turned on doesn't seem to work (at least not with
+    // vc6 or vc71).
+    optimize =
+  }
+
   Source_Files {
     be
   }
