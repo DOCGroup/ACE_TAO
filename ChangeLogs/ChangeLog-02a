@@ -1,6 +1,12 @@
+Thu Mar 28 16:14:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h (ACE_Time_Value::dump): Added comments that'll go to
+          the man page to explain why this is a no-op.
+
 Thu Mar 28 14:26:19 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests/Cached_Allocator_Test.cpp: Added a missing template instantiation.
+	* tests/Cached_Allocator_Test.cpp: Added a missing template
+          instantiation.
 
 Thu Mar 28 10:45:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -9,7 +15,8 @@ Thu Mar 28 10:45:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Thu Mar 28 10:12:13 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Malloc_T.{h,i,cpp}: Added support for ACE_Dynamic_Cached_Allocator.
+	* ace/Malloc_T.{h,i,cpp}: Added support for
+          ACE_Dynamic_Cached_Allocator.
 	  Thanks to Jaroslaw Nozderko <jareknz@polbox.com> for
  	  contributing this.
 
