@@ -182,9 +182,9 @@ Watermark_Test::Watermark_Test (void)
   : len_ (ACE_OS::strlen (default_message) + 1),
     hwm_ (this->len_ * default_high_water_mark),
     lwm_ (this->len_ * default_low_water_mark),
-    role_ (0),
+    role_ (0)
 #if defined (ACE_HAS_THREADS)
-    mq_full_ (worker_threads),
+    , mq_full_ (worker_threads),
     mq_low_water_mark_hit_ (worker_threads)
 #endif /* ACE_HAS_THREADS */
 {
