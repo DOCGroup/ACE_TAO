@@ -47,7 +47,7 @@ namespace TAO
     virtual int _tao_byte_order (void) const;
 
     virtual void _tao_decode (TAO_InputCDR &
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              ACE_ENV_ARG_DECL);
     virtual void assign_translator (CORBA::TypeCode_ptr,
                                     TAO_InputCDR *
                                     ACE_ENV_ARG_DECL);

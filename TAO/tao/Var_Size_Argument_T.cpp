@@ -84,8 +84,8 @@ TAO::Ret_Var_Size_Argument_T<S,S_var>::demarshal (TAO_InputCDR & cdr)
 {
   S * tmp = 0;
   ACE_NEW_RETURN (tmp,
-                  S,
-                  0); 
+                  S (),
+                  0);
   this->x_ = tmp;
   return cdr >> this->x_.inout ();
 }

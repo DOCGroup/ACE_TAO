@@ -22,6 +22,7 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
+#include "ace/CORBA_macros.h"
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
@@ -40,6 +41,8 @@ namespace CORBA
   class ValueBase;
   class AbstractBase;
   typedef AbstractBase *AbstractBase_ptr;
+
+  class Environment;
 }
 
 namespace TAO

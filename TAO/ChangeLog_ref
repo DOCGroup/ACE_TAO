@@ -1,3 +1,15 @@
+Tue Sep  9 19:52:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any.h:
+	* tao/Any_Basic_Impl.cpp:
+	* tao/Any_Basic_Impl.h:
+	* tao/Any_Impl.cpp:
+	* tao/Any_Impl.h:
+	* tao/Any_Impl_T.h:
+	* tao/Any_Unknown_IDL_Type.h:
+	* tao/Var_Size_Argument_T.cpp: Fixed simple compilation errors
+	  that were caught by gcc 3.3.1. 
+
 Tue Sep  9 19:41:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_argument.cpp:
