@@ -3322,3 +3322,23 @@ ACEXML_Parser::reset (void)
   this->external_dtd_ = 0;
   this->internal_dtd_ = 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Unbounded_Stack<ACEXML_Parser_Context*>;
+template class ACE_Unbounded_Set_Iterator<ACEXML_Parser_Context*>;
+template class ACE_Node<ACEXML_Parser_Context*>;
+template class ACE_Unbounded_Stack<ACEXML_Char *>;
+template class ACE_Node<ACEXML_Char *>;
+template class ACE_Unbounded_Set_Iterator<ACEXML_Char*>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Unbounded_Stack<ACEXML_Parser_Context*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACEXML_Parser_Context*>;
+#pragma instantiate ACE_Node<ACEXML_Parser_Context*>
+#pragma instantiate ACE_Unbounded_Stack<ACEXML_Char*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACEXML_Char*>;
+#pragma instantiate ACE_Node<ACEXML_Char *>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/
