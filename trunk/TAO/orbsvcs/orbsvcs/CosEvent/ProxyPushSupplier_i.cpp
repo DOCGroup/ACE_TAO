@@ -74,6 +74,7 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set,
         {
           this->consumer_->push (set[i].data.any_value,
                                  ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
