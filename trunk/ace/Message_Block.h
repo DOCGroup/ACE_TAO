@@ -103,6 +103,8 @@ public:
 		     size_t size = 0);
   // Create a Message Block that assumes ownership of <data> without
   // copying it (i.e., we don't delete it since we don't malloc it!).
+  // Note that the <size> of the <Message_Block> will be <size>, but
+  // the <length> will be 0 until <wr_ptr> is set.
 
   ACE_Message_Block (size_t size, 
 		     ACE_Message_Type type = MB_DATA, 
@@ -118,12 +120,16 @@ public:
   // <data> != 0 we assume ownership of the <data> (and don't delete
   // it).  If <locking_strategy> is non-0 then this is used to protect
   // regions of code that access shared state (e.g., reference
-  // counting) from race conditions.
+  // counting) from race conditions.  Note that the <size> of the
+  // <Message_Block> will be <size>, but the <length> will be 0 until
+  // <wr_ptr> is set.
 
   int init (const char *data,
 	    size_t size = 0);
   // Create a Message Block that assumes ownership of <data> (i.e.,
-  // doesn't delete it since it didn't malloc it!).
+  // doesn't delete it since it didn't malloc it!).  Note that the
+  // <size> of the <Message_Block> will be <size>, but the <length>
+  // will be 0 until <wr_ptr> is set.
 
   int init (size_t size, 
 	    ACE_Message_Type type = MB_DATA, 
@@ -139,7 +145,9 @@ public:
   // <data> != 0 we assume ownership of the <data> (and don't delete
   // it).  If <locking_strategy> is non-0 then this is used to protect
   // regions of code that access shared state (e.g., reference
-  // counting) from race conditions.
+  // counting) from race conditions.  Note that the <size> of the
+  // <Message_Block> will be <size>, but the <length> will be 0 until
+  // <wr_ptr> is set.
 
   virtual ~ACE_Message_Block (void);
   // Delete all the resources held in the message.
