@@ -124,8 +124,6 @@ namespace CIAO
         servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
       }
-    }
-
   }
 
   // Operations for keyless home interface.
