@@ -150,7 +150,12 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
 
       // Use a NULL task to make the thread recycle now
       if (task == 0)
-        break;
+        {
+          JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, recycling");
+          if (handler != ts_handler)
+            policy->ioh_factory ()->destroy_io_handler (handler);
+          break;
+        }
 
       // the task should set the handler to the appropriate next step
       result = task->put (ts_db);
@@ -163,7 +168,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
           // In the case of asynchronous accepts, the handler we just
           // created was useless.  This is ok, because we know that it
           // will not be used by another thread.  Just save the
-          // reference around so that it can be destroyed later.
+          // reference so that it can be destroyed later.
 
           // This means we need a way to destroy all the handlers
           // created by the Asynch_Acceptor.  Figure this out later.

@@ -328,24 +328,9 @@ JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
   this->dispatch_handler ();
 
   if (result.success ())
-    {
-      // Get the data from the message block of the acceptor, copy it
-      // into our Data Block and then return.
-
-      JAWS_Data_Block *db = this->handler ()->message_block ();
-      ACE_Message_Block &mb = result.message_block ();
-
-      ACE_OS::memcpy(db->base (), mb.base (), mb.size ());
-
-      db->rd_ptr (mb.rd_ptr () - mb.base ());
-      db->wr_ptr (mb.wr_ptr () - mb.base ());
-
-      mb.release ();
-
-      this->handler ()->accept_complete ();
-    }
+    this->handler ()->accept_complete (result.accept_handle ());
   else
-    this->handler ()->accept_error (-1);
+    this->handler ()->accept_error ();
 
 }
 
@@ -382,9 +367,11 @@ JAWS_Asynch_IO_Handler::accept_complete (ACE_HANDLE handle)
 
   JAWS_Dispatch_Policy *policy = this->mb_->policy ();
 
+#if 0
   // Irfan says at this point issue another accept
   if (policy->acceptor () == JAWS_IO_Asynch_Acceptor_Singleton::instance ())
-    policy->acceptor ()->accept (JAWS_Data_Block::JAWS_Data_Block_Size);
+    policy->acceptor ()->accept (this);
+#endif
 
   // Do this so that Thread Per Request can spawn a new thread
   policy->concurrency ()->activate_hook ();
@@ -394,6 +381,18 @@ ACE_Handler *
 JAWS_Asynch_IO_Handler::handler (void)
 {
   return &this->handler_;
+}
+
+void
+JAWS_Asynch_IO_Handler::accept_called_already (int called)
+{
+  this->accept_called_already_ = called;
+}
+
+int
+JAWS_Asynch_IO_Handler::accept_called_already (void)
+{
+  return this->accept_called_already_;
 }
 
 

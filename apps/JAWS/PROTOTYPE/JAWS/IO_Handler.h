@@ -180,9 +180,6 @@ protected:
 };
 
 class JAWS_Export JAWS_IO_Handler_Factory
-#if defined (ACE_WIN32)
- : public ACE_Service_Handler
-#endif
 {
 public:
   virtual ~JAWS_IO_Handler_Factory (void);
@@ -272,8 +269,12 @@ public:
 
   virtual ACE_Handler *handler (void);
 
+  virtual void accept_called_already (int called);
+  virtual int accept_called_already (void);
+
 private:
   JAWS_Asynch_Handler handler_;
+  int accept_called_already_;
 };
 
 class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory

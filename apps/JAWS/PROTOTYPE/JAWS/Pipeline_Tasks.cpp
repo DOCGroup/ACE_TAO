@@ -54,25 +54,25 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
     {
     case JAWS_IO_Handler::ACCEPT_OK:
       {
-      result = 0;
-      JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_OK");
-      // Move on to next stage in pipeline
-      break;
+        result = 0;
+        JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_OK");
+        // Move on to next stage in pipeline
+        break;
       }
     case JAWS_IO_Handler::ACCEPT_ERROR:
       {
-      result = -1;
-      JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_ERROR");
-      // Should recycle the thread
-      break;
+        result = -1;
+        JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_ERROR");
+        // Should recycle the thread
+        break;
       }
     default:
       {
-      result = 1;
-      JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_IDLE");
-      // Should mean that the IO is asynchronous, and the word isn't out
-      // yet.
-      break;
+        result = 1;
+        JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_IDLE");
+        // Should mean that the IO is asynchronous, and the word isn't out
+        // yet.
+        break;
       }
     }
 
