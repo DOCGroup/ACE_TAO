@@ -8,8 +8,13 @@
 #       @(#)mkdep.sh    1.7     (Berkeley)      10/13/87
 #
 
-PATH=/usr/local/bin:/bin:/usr/bin:/usr/ucb:\
+if [ `uname -r` = 5.7 ]; then
+  PATH=/project/danzon/pkg/egcs/bin:/usr/local/bin:/bin:/usr/bin:/usr/ucb:\
 /usr/gnu:/usr/gnu/bin:/opt/gnu/bin:/pkg/gnu/bin:$PATH
+else
+  PATH=/usr/local/bin:/bin:/usr/bin:/usr/ucb:\
+/usr/gnu:/usr/gnu/bin:/opt/gnu/bin:/pkg/gnu/bin:$PATH
+fi
 export PATH
 
 if [ $# = 0 ] ; then
