@@ -93,7 +93,7 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
-#define ACE_HAS_SOCKIO_H
+#define ACE_HAS_SYS_SOCKIO_H
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STRBUF_T
 #define ACE_HAS_STREAMS

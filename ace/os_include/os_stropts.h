@@ -46,7 +46,7 @@
 #  include /**/ <sys/filio.h>
 #endif /* ACE_HAS_SYS_FILIO_H */
 
-#if defined (ACE_HAS_SOCKIO_H)
+#if defined (ACE_HAS_SYS_SOCKIO_H)
 #  include /**/ <sys/sockio.h>
 #endif /* ACE_HAS_SOCKIO_ */
 

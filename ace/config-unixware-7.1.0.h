@@ -229,7 +229,7 @@
 #define ACE_HAS_SIZET_SOCKET_LEN 1
 
 /* Compiler/platform provides the sys/sockio.h file */
-#define ACE_HAS_SOCKIO_H 1
+#define ACE_HAS_SYS_SOCKIO_H 1
 
 /* Compiler supports the ssize_t typedef */
 #define ACE_HAS_SSIZE_T 1

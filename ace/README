@@ -532,8 +532,6 @@ ACE_HAS_SIZET_SOCKET_LEN                OS/compiler uses size_t *
 ACE_HAS_SOCKADDR_MSG_NAME               Platform requires (struct
                                         sockaddr *) for msg_name field
                                         of struct msghdr.
-ACE_HAS_SOCKIO_H                        Compiler/platform provides the
-                                        sockio.h file
 ACE_HAS_SOCKLEN_T                       Platform provides socklen_t
                                         type, such as Linux with
                                         glibc2.
@@ -592,6 +590,8 @@ ACE_HAS_SYS_FILIO_H                     Platform provides
                                         <sys/filio.h> header
 ACE_HAS_SYS_SIGLIST                     Compiler/platform supports
                                         _sys_siglist array
+ACE_HAS_SYS_SOCKIO_H                    Compiler/platform provides the
+                                        sockio.h file
 ACE_HAS_SYS_SYSCALL_H                   Compiler/platform contains the
                                         <sys/syscall.h> file.
 ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA   Compiler's template
