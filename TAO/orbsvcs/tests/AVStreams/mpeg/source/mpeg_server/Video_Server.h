@@ -198,7 +198,7 @@ public:
   //static   int close (void);
   static  int stat_stream (void);
   static  int stat_sent (void);
-  static  int fast_video_play (void);
+  static  int init_fast_play (void);
 
 private:
 
