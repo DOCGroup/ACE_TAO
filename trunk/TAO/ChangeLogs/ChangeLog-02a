@@ -1,3 +1,11 @@
+Thu Jul 13 07:21:05 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/Makefile.Security:
+
+	  Updated dependencies.  These didn't get updated with the rest of
+	  the Makefiles since they require some "special handling."
+
 Thu Jul 13 06:29:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Updated Makefile dependencies.
