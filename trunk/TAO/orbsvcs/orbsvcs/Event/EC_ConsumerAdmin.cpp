@@ -76,7 +76,7 @@ void
 TAO_EC_ConsumerAdmin::reconnected (TAO_EC_ProxyPushSupplier *supplier,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  this->collection_->connected (supplier, ACE_TRY_ENV);
+  this->collection_->reconnected (supplier, ACE_TRY_ENV);
 }
 
 void

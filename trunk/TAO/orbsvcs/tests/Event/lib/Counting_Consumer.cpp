@@ -22,9 +22,12 @@ EC_Counting_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer
     this->_this (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
-  ACE_CHECK;
+  if (CORBA::is_nil (this->supplier_proxy_.in ()))
+    {
+      this->supplier_proxy_ =
+        consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 
   this->supplier_proxy_->connect_push_consumer (consumer.in (),
                                                 qos,
@@ -46,6 +49,9 @@ EC_Counting_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
   consumer_poa->deactivate_object (consumer_id.in (), ACE_TRY_ENV);
   ACE_CHECK;
+
+  this->supplier_proxy_ =
+    RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void

@@ -96,6 +96,18 @@ TAO_EC_Type_Filter::can_match (
         return this->header_.source == header.source;
     }
 
+  if (header.source == 0)
+    {
+      if (header.type != 0)
+        return this->header_.type == header.type;
+      return 1;
+    }
+
+  if (header.type == 0)
+    {
+      return this->header_.source == header.source;
+    }
+
   return (this->header_.type == header.type
           && this->header_.source == header.source);
 }

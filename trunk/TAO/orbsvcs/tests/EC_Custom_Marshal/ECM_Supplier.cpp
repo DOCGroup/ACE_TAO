@@ -462,7 +462,7 @@ Test_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
     this->consumer_proxy_._retn ();
 
-  this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
+  proxy->disconnect_push_consumer (ACE_TRY_ENV);
 }
 
 int

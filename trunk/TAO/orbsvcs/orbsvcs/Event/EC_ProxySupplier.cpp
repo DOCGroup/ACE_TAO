@@ -264,6 +264,10 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer::_duplicate (push_consumer);
     this->qos_ = qos;
 
+#if TAO_EC_ENABLE_DEBUG_MESSAGES
+    ACE_DEBUG ((LM_DEBUG, "Building filters for consumer <%x>\n",
+                this));
+#endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
     this->child_ =
       this->event_channel_->filter_builder ()->build (this,
                                                       this->qos_,

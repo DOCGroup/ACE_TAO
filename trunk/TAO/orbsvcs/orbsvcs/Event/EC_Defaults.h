@@ -29,6 +29,10 @@
 #ifndef TAO_EC_DEFAULTS_H
 #define TAO_EC_DEFAULTS_H
 
+#ifndef TAO_EC_ENABLE_DEBUG_MESSAGES
+#define TAO_EC_ENABLE_DEBUG_MESSAGES 0
+#endif /* TAO_EC_ENABLE_DEBUG_MESSAGES */
+
 // Any of the definitions below can be overriden in the config.h file
 // or the compilation line.
 
