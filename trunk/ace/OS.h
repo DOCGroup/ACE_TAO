@@ -2025,7 +2025,7 @@ struct stat
           // the values need to be converted. The other scheduling classes
           // don't need this special treatment.
 #         define ACE_PROC_PRI_OTHER_MIN \
-                      (PRI_HPUX_TO_POSIX(sched_get_priority_min(SCHED_OTHER)))
+                      (sched_get_priority_min(SCHED_OTHER))
 #       else
 #         define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
 #       endif /* HPUX */
@@ -2041,7 +2041,7 @@ struct stat
 #       define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
 #       if defined (HPUX)
 #         define ACE_PROC_PRI_OTHER_MAX \
-                      (PRI_HPUX_TO_POSIX(sched_get_priority_max(SCHED_OTHER)))
+                      (sched_get_priority_max(SCHED_OTHER))
 #       else
 #         define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
 #       endif /* HPUX */
