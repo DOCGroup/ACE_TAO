@@ -4,7 +4,7 @@
 #include "ace/Atomic_Op.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 
-TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb)
+TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current");
   
@@ -124,7 +124,7 @@ TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
   srv_con->context_id = Client_Interceptor::SchedulingInfo;
   srv_con->context_data.length (sizeof (long));
   ACE_OS::memcpy (srv_con->context_data.get_buffer (),
-		  current_->id (ACE_ENV_ARG_PARAMETER)->get_buffer (),
+		  current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
 		  sizeof (long));
   ACE_CHECK;
   request_info->add_request_service_context (*srv_con,

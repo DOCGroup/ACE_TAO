@@ -36,16 +36,15 @@ public:
 
     RTScheduling::DistributableThread_var DT = this->current_->lookup (*(this->current_->id ())
 								       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (0);
     
-    DT->cancel (ACE_ENV_ARG_PARAMETER);
+    DT->cancel (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
     
     return CORBA::string_dup (message);
   }
 
-  virtual void shutdown (void
-			 ACE_ENV_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     orb_->shutdown ();
@@ -83,7 +82,7 @@ parse_args (int argc,
 int
 main (int argc, char* argv[])
 {
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
 	CORBA::ORB_init (argc,
