@@ -13,7 +13,6 @@
 DIRS  = Generic_Servant \
 	Default_Servant \
 	Explicit_Activation \
-	Explicit_Activation_POA_Ids \
 	FindPOA \
 	NewPOA \
 	On_Demand_Activation \

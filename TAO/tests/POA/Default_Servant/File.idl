@@ -1,0 +1,30 @@
+module File 
+{
+  exception IOError 
+    {
+      long error;
+    };
+
+  interface Descriptor 
+    {
+      typedef sequence<octet> DataBuffer;
+      
+      long write (in DataBuffer buffer)
+        raises (IOError);
+
+      DataBuffer read (in long num_bytes)
+        raises (IOError);
+
+      unsigned long lseek (in unsigned long offset,
+                           in long whence)
+        raises (IOError);
+
+      void destroy ();
+    };
+
+  interface System 
+    {
+      Descriptor open (in string file_name, in long flags)
+        raises (IOError);
+    };        
+};
