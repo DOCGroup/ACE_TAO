@@ -30,6 +30,9 @@
 #include "ace/Pair_T.h"
 #include "ace/Synch.h"
 
+// For linkers which cant grok long names...
+#define ACE_Cached_Connect_Strategy_Ex ACCSE
+
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
 class ACE_Cached_Connect_Strategy_Ex : public ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
 {
