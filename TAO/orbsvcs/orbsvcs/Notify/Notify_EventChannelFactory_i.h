@@ -25,7 +25,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  TAO_Notify_EventChannelFactory_i :
+class TAO_ORBSVCS_Export TAO_Notify_EventChannelFactory_i :
 public virtual POA_CosNotifyChannelAdmin::EventChannelFactory
 {
 public:

@@ -25,7 +25,7 @@
 
 class TAO_Notify_FilterAdmin_i;
 
-class TAO_Notify_Dispatcher
+class TAO_ORBSVCS_Export TAO_Notify_Dispatcher
 {
   // = TITLE
   //   TAO_Notify_Dispatcher
@@ -73,7 +73,7 @@ class TAO_Notify_Dispatcher
   // Dispatchers forward events to their "contained" dispatchers.
 };
 
-class Notify_Reactive_Dispatcher : public TAO_Notify_Dispatcher
+class TAO_ORBSVCS_Export Notify_Reactive_Dispatcher : public TAO_Notify_Dispatcher
 {
   // = TITLE
   //

@@ -21,7 +21,7 @@
 
 #include "orbsvcs/orbsvcs/CosNotifyCommS.h"
 
-class  TAO_NotifySubscribe_i : public virtual POA_CosNotifyComm::NotifySubscribe
+class TAO_ORBSVCS_Export TAO_NotifySubscribe_i : public virtual POA_CosNotifyComm::NotifySubscribe
 {
   // = TITLE
   //   TAO_NotifySubscribe_i
