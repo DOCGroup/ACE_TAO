@@ -2497,7 +2497,10 @@ ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh,
                                                ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::purge_pending_notifications");
-  return this->notify_handler_->purge_pending_notifications (eh, mask);
+  if (this->notify_handler_ == 0)
+    return 0;
+  else
+    return this->notify_handler_->purge_pending_notifications (eh, mask);
 }
 
 int
