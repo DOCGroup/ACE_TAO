@@ -46,7 +46,7 @@ be_visitor_sequence_ci::gen_bounded_sequence (be_sequence *node)
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
       if (this->gen_anonymous_base_type (bt,
-                                         TAO_CodeGen::TAO_SEQUENCE_CI)
+                                         TAO_CodeGen::TAO_ROOT_CI)
           == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

@@ -48,37 +48,38 @@ be_visitor_structure::visit_field (be_field *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_STRUCT_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CH:
       {
         be_visitor_field_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_STRUCT_CI:
+    case TAO_CodeGen::TAO_ROOT_CI:
       {
         be_visitor_field_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_STRUCT_CS:
+    case TAO_CodeGen::TAO_ROOT_CS:
       {
         be_visitor_field_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_STRUCT_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
         be_visitor_field_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_STRUCT_CDR_OP_CI:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       {
         be_visitor_field_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_STRUCT_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
         be_visitor_field_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);

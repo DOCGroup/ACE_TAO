@@ -43,7 +43,7 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
     {
       int status =
         this->gen_anonymous_base_type (bt,
-                                         TAO_CodeGen::TAO_SEQUENCE_CI);
+                                         TAO_CodeGen::TAO_ROOT_CI);
 
       if (status == -1)
         {

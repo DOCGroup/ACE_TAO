@@ -53,50 +53,52 @@ be_visitor_typedef::visit_array (be_array *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_TYPEDEF_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CH:
       {
         ctx.state (TAO_CodeGen::TAO_ARRAY_CH);
         be_visitor_array_ch visitor (&ctx);
         status = node->accept (&visitor);
+        ctx.state (TAO_CodeGen::TAO_ROOT_CH);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CS:
+    case TAO_CodeGen::TAO_ROOT_CS:
       {
         be_visitor_array_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CI:
+    case TAO_CodeGen::TAO_ROOT_CI:
       {
         be_visitor_array_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
       {
         be_visitor_array_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
       {
         be_visitor_array_any_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
         be_visitor_array_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       {
         be_visitor_array_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
         be_visitor_array_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
@@ -135,44 +137,45 @@ be_visitor_typedef::visit_enum (be_enum *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_TYPEDEF_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CH:
       {
         be_visitor_enum_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CS:
+    case TAO_CodeGen::TAO_ROOT_CS:
       {
         be_visitor_enum_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
       {
         be_visitor_enum_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
       {
         be_visitor_enum_any_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
         be_visitor_enum_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       {
         be_visitor_enum_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
-    case TAO_CodeGen::TAO_TYPEDEF_CI:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CI:
       return 0; // nothing to be done
     default:
       {
@@ -207,58 +210,51 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_TYPEDEF_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_SEQUENCE_CH);
         be_visitor_sequence_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CI:
+    case TAO_CodeGen::TAO_ROOT_CI:
       {
-        ctx.state (TAO_CodeGen::TAO_SEQUENCE_CI);
         be_visitor_sequence_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CS:
+    case TAO_CodeGen::TAO_ROOT_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_SEQUENCE_CS);
         be_visitor_sequence_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_SEQUENCE_ANY_OP_CH);
         be_visitor_sequence_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_SEQUENCE_ANY_OP_CS);
         be_visitor_sequence_any_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH);
         be_visitor_sequence_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       {
-        ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI);
         be_visitor_sequence_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS);
         be_visitor_sequence_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
@@ -297,58 +293,51 @@ be_visitor_typedef::visit_structure (be_structure *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_TYPEDEF_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
         be_visitor_structure_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CI:
+    case TAO_CodeGen::TAO_ROOT_CI:
       {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_CI);
         be_visitor_structure_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CS:
+    case TAO_CodeGen::TAO_ROOT_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
         be_visitor_structure_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CH);
         be_visitor_structure_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CS);
         be_visitor_structure_any_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CH);
         be_visitor_structure_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
         be_visitor_structure_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
         be_visitor_structure_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
@@ -386,58 +375,51 @@ be_visitor_typedef::visit_union (be_union *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_TYPEDEF_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_CH);
         be_visitor_union_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CI:
+    case TAO_CodeGen::TAO_ROOT_CI:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_CI);
         be_visitor_union_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CS:
+    case TAO_CodeGen::TAO_ROOT_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_CS);
         be_visitor_union_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CH);
         be_visitor_union_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CS);
         be_visitor_union_any_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CH);
         be_visitor_union_cdr_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
         be_visitor_union_cdr_op_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
         be_visitor_union_cdr_op_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;

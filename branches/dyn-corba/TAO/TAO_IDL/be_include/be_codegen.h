@@ -88,13 +88,6 @@ public:
       // variable to upcall
 
       // emitting code for attributes.
-      TAO_ATTRIBUTE_CH,                         // in client header
-      TAO_ATTRIBUTE_CS,                         // in client stubs
-      TAO_ATTRIBUTE_SH,                         // in server header
-      TAO_ATTRIBUTE_IH,                         // in implementation header
-      TAO_ATTRIBUTE_SS,                         // in server skeletons
-      TAO_ATTRIBUTE_IS,                         // in implementation skeletons
-
       TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH,         // Proxy Impl Related Attribute visitors.
 
       TAO_ATTRIBUTE_PROXY_IMPL_XH,
@@ -109,41 +102,16 @@ public:
       TAO_ATTRIBUTE_INTERCEPTORS_SH,            // in server header
       TAO_ATTRIBUTE_INTERCEPTORS_SS,            // in server source
 
-      TAO_ATTRIBUTE_TIE_SH,
-      TAO_ATTRIBUTE_TIE_SI,
-
       // Emitting code for array defn.
       TAO_ARRAY_CH,
 
       // Emitting code for exceptions.
-      TAO_EXCEPTION_CH,
       TAO_EXCEPTION_CTOR_CH,
-      TAO_EXCEPTION_CI,
-      TAO_EXCEPTION_CS,
       TAO_EXCEPTION_CTOR_CS,
       TAO_EXCEPTION_CTOR_ASSIGN_CS,
-      TAO_EXCEPTION_ANY_OP_CH,
-      TAO_EXCEPTION_ANY_OP_CS,
-      TAO_EXCEPTION_CDR_OP_CH,
-      TAO_EXCEPTION_CDR_OP_CI,
-      TAO_EXCEPTION_CDR_OP_CS,
 
       // Emitting code for the interface.
       TAO_INTERFACE_CH,
-      TAO_INTERFACE_CI,
-      TAO_INTERFACE_CS,
-      TAO_INTERFACE_SH,
-      TAO_INTERFACE_IH,
-      TAO_INTERFACE_SI,
-      TAO_INTERFACE_SS,
-      TAO_INTERFACE_IS,
-      TAO_INTERFACE_ANY_OP_CH,
-      TAO_INTERFACE_ANY_OP_CS,
-      TAO_INTERFACE_CDR_OP_CH,
-      TAO_INTERFACE_CDR_OP_CI,
-      TAO_INTERFACE_CDR_OP_CS,
-      TAO_INTERFACE_TIE_SH,
-      TAO_INTERFACE_TIE_SI,
       TAO_INTERFACE_SMART_PROXY_CH,
       TAO_INTERFACE_SMART_PROXY_CS,
       TAO_INTERFACE_INTERCEPTORS_CH,
@@ -175,87 +143,26 @@ public:
       TAO_INTERFACE_DIRECT_PROXY_IMPL_SH,
       TAO_INTERFACE_DIRECT_PROXY_IMPL_SS,
 
-      // Emitting code for the interface forward declaration.
-      TAO_INTERFACE_FWD_CH,
-      TAO_INTERFACE_FWD_CDR_OP_CH,
-      TAO_INTERFACE_FWD_CDR_OP_CI,
-      TAO_INTERFACE_FWD_ANY_OP_CH,
-
       // Emitting code for the AMH ResponseHandlers.
       TAO_INTERFACE_AMH_RH_CH,
       TAO_INTERFACE_AMH_RH_SH,
       TAO_INTERFACE_AMH_RH_SS,
 
       // Emitting code for the valuetype.
-      TAO_VALUETYPE_CH,
-      TAO_VALUETYPE_CI,
-      TAO_VALUETYPE_CS,
-      TAO_VALUETYPE_SH,
-      TAO_VALUETYPE_IH,
-      TAO_VALUETYPE_SI,
-      TAO_VALUETYPE_SS,
-      TAO_VALUETYPE_IS,
       TAO_VALUETYPE_OBV_CH,                 // OBV_ class
       TAO_VALUETYPE_OBV_CI,
       TAO_VALUETYPE_OBV_CS,
       TAO_VALUETYPE_COLLOCATED_SH,
       TAO_VALUETYPE_COLLOCATED_SS,
-      TAO_VALUETYPE_ANY_OP_CH,
-      TAO_VALUETYPE_ANY_OP_CS,
       TAO_VALUETYPE_MARSHAL_CH,     // the actual generation of CDR in header
       TAO_VALUETYPE_MARSHAL_CS,     // and the implementation, activated from:
-      TAO_VALUETYPE_CDR_OP_CH,
-      TAO_VALUETYPE_CDR_OP_CI,
-      TAO_VALUETYPE_CDR_OP_CS,
       TAO_VALUETYPE_INIT_CH,        // _init -related generation
       TAO_VALUETYPE_INIT_CI,        //
       TAO_VALUETYPE_INIT_CS,        //
       TAO_VALUETYPE_INIT_ARGLIST_CH,// unfortunately there are no CI and CS
 
-      // Emitting code for the valuetype forward declaration.
-      TAO_VALUETYPE_FWD_CH,
-      TAO_VALUETYPE_FWD_ANY_OP_CH,
-      TAO_VALUETYPE_FWD_CDR_OP_CH,
-      TAO_VALUETYPE_FWD_CDR_OP_CI,
-
-      // Emitting code for the component.
-      TAO_COMPONENT_CH,
-      TAO_COMPONENT_CI,
-      TAO_COMPONENT_CS,
-      TAO_COMPONENT_IS,
-      TAO_COMPONENT_IH,
-      TAO_COMPONENT_SH,
-      TAO_COMPONENT_SI,
-      TAO_COMPONENT_SS,
-      TAO_COMPONENT_ANY_OP_CH,
-      TAO_COMPONENT_ANY_OP_CS,
-      TAO_COMPONENT_CDR_OP_CH,
-      TAO_COMPONENT_CDR_OP_CI,
-      TAO_COMPONENT_CDR_OP_CS,
-
-      // Emitting code for the component forward declaration.
-      TAO_COMPONENT_FWD_CH,
-      TAO_COMPONENT_FWD_CDR_OP_CH,
-      TAO_COMPONENT_FWD_CDR_OP_CI,
-      TAO_COMPONENT_FWD_ANY_OP_CH,
-
       TAO_EVENTTYPE_OBV_CH,
       TAO_EVENTTYPE_OBV_CS,
-
-      // Emitting code for the component home.
-      TAO_HOME_CH,
-      TAO_HOME_CI,
-      TAO_HOME_CS,
-      TAO_HOME_IS,
-      TAO_HOME_IH,
-      TAO_HOME_SH,
-      TAO_HOME_SI,
-      TAO_HOME_SS,
-      TAO_HOME_ANY_OP_CH,
-      TAO_HOME_ANY_OP_CS,
-      TAO_HOME_CDR_OP_CH,
-      TAO_HOME_CDR_OP_CI,
-      TAO_HOME_CDR_OP_CS,
 
       // Emitting code for the module,
       TAO_MODULE_OBV_CH,                    // for OBV_ (cmp. POA_ namespace)
@@ -265,10 +172,6 @@ public:
       // Emitting code for an operation.
       TAO_OPERATION_CH,                       // in client header
       TAO_OPERATION_CS,                       // in client stubs
-      TAO_OPERATION_SH,                       // in server header
-      TAO_OPERATION_IH,                       // in implementation header
-      TAO_OPERATION_SS,                       // in server skeletons
-      TAO_OPERATION_IS,                       // in server skeletons
 
       TAO_OPERATION_BASE_PROXY_IMPL_CH,       // Proxy_Impl operation gen.
       // in client header
@@ -381,6 +284,7 @@ public:
       TAO_ROOT_SI,
       TAO_ROOT_SS,
       TAO_ROOT_TIE_SH,
+      TAO_ROOT_TIE_SI,
       TAO_ROOT_IH,
       TAO_ROOT_IS,
       TAO_ROOT_ANY_OP_CH,
@@ -388,16 +292,6 @@ public:
       TAO_ROOT_CDR_OP_CH,
       TAO_ROOT_CDR_OP_CI,
       TAO_ROOT_CDR_OP_CS,
-
-      // Emitting sequences.
-      TAO_SEQUENCE_CH,
-      TAO_SEQUENCE_CI,
-      TAO_SEQUENCE_CS,
-      TAO_SEQUENCE_ANY_OP_CH,
-      TAO_SEQUENCE_ANY_OP_CS,
-      TAO_SEQUENCE_CDR_OP_CH,
-      TAO_SEQUENCE_CDR_OP_CI,
-      TAO_SEQUENCE_CDR_OP_CS,
 
       // Emitting code for sequence base type.
       TAO_SEQUENCE_BASE_CH,
@@ -414,42 +308,6 @@ public:
       TAO_SEQUENCE_BUFFER_TYPE_CI,
       TAO_SEQUENCE_BUFFER_TYPE_CS,
 
-      // Emitting code for struct and its members.
-      TAO_STRUCT_CH,
-      TAO_STRUCT_CI,
-      TAO_STRUCT_CS,
-      TAO_STRUCT_ANY_OP_CH,
-      TAO_STRUCT_ANY_OP_CS,
-      TAO_STRUCT_CDR_OP_CH,
-      TAO_STRUCT_CDR_OP_CI,
-      TAO_STRUCT_CDR_OP_CS,
-
-      // Emitting code for a forward declared struct.
-      TAO_STRUCT_FWD_CH,
-
-      // Emitting code for typedefs.
-      TAO_TYPEDEF_CH,
-      TAO_TYPEDEF_CI,
-      TAO_TYPEDEF_CS,
-      TAO_TYPEDEF_ANY_OP_CH,
-      TAO_TYPEDEF_ANY_OP_CS,
-      TAO_TYPEDEF_CDR_OP_CH,
-      TAO_TYPEDEF_CDR_OP_CI,
-      TAO_TYPEDEF_CDR_OP_CS,
-
-      // Emitting code for unions.
-      TAO_UNION_CH,
-      TAO_UNION_CI,
-      TAO_UNION_CS,
-      TAO_UNION_ANY_OP_CH,
-      TAO_UNION_ANY_OP_CS,
-      TAO_UNION_CDR_OP_CH,
-      TAO_UNION_CDR_OP_CI,
-      TAO_UNION_CDR_OP_CS,
-
-      // Emitting code for a forward declared union.
-      TAO_UNION_FWD_CH,
-
       // Emitting code for the discriminant.
       TAO_UNION_DISCTYPEDEFN_CH,
       TAO_UNION_DISCTYPEDEFN_CI,
@@ -464,11 +322,6 @@ public:
 
       // Emitting code for private members of the union.
       TAO_UNION_PRIVATE_CH,
-
-      // Emitting code for CDR operators for types defined inside unions.
-      TAO_UNION_BRANCH_CDR_OP_CH,
-      TAO_UNION_BRANCH_CDR_OP_CI,
-      TAO_UNION_BRANCH_CDR_OP_CS,
 
       // Emitting code for typecodes.
       TAO_TYPECODE_DECL,

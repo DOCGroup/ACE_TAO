@@ -85,36 +85,33 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   switch (this->ctx_->state ())
     {
     // These two cases are the only ones that could involved a strategy.
-    case TAO_CodeGen::TAO_ATTRIBUTE_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_CS:
+    case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
       break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_SH:
+    case TAO_CodeGen::TAO_ROOT_SH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
         be_visitor_operation_sh visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_IH:
+    case TAO_CodeGen::TAO_ROOT_IH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
         be_visitor_operation_ih visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_SS:
+    case TAO_CodeGen::TAO_ROOT_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
         be_visitor_operation_ss visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_IS:
+    case TAO_CodeGen::TAO_ROOT_IS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
         be_visitor_operation_is visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
@@ -154,9 +151,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH:
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH);
         be_visitor_operation_smart_proxy_ch visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
@@ -189,16 +185,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
+    case TAO_CodeGen::TAO_ROOT_TIE_SH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
         be_visitor_operation_tie_sh visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
+    case TAO_CodeGen::TAO_ROOT_TIE_SI:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
         be_visitor_operation_tie_si visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
@@ -303,36 +297,33 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   switch (this->ctx_->state ())
     {
     // These two cases are the only ones that could involved a strategy.
-    case TAO_CodeGen::TAO_ATTRIBUTE_CH:
+    case TAO_CodeGen::TAO_ROOT_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_CS:
+    case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
       break;
-    case TAO_CodeGen::TAO_ATTRIBUTE_SH:
+    case TAO_CodeGen::TAO_ROOT_SH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
         be_visitor_operation_sh visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_IH:
+    case TAO_CodeGen::TAO_ROOT_IH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
         be_visitor_operation_ih visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_SS:
+    case TAO_CodeGen::TAO_ROOT_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
         be_visitor_operation_ss visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_IS:
+    case TAO_CodeGen::TAO_ROOT_IS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
         be_visitor_operation_is visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
@@ -372,9 +363,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH:
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH);
         be_visitor_operation_smart_proxy_ch visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
@@ -407,16 +397,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
+    case TAO_CodeGen::TAO_ROOT_TIE_SH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
         be_visitor_operation_tie_sh visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
+    case TAO_CodeGen::TAO_ROOT_TIE_SI:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
         be_visitor_operation_tie_si visitor (&ctx);
         status = set_op.accept (&visitor);
         break;

@@ -59,25 +59,25 @@ be_visitor_decl::gen_anonymous_base_type (be_type *bt,
 
       switch (cg_state)
       {
-        case TAO_CodeGen::TAO_SEQUENCE_CH:
+        case TAO_CodeGen::TAO_ROOT_CH:
           {
             be_visitor_sequence_ch visitor (&ctx);
             status = bt->accept (&visitor);
             break;
           }
-        case TAO_CodeGen::TAO_SEQUENCE_CI:
+        case TAO_CodeGen::TAO_ROOT_CI:
           {
             be_visitor_sequence_ci visitor (&ctx);
             status = bt->accept (&visitor);
             break;
           }
-        case TAO_CodeGen::TAO_SEQUENCE_CS:
+        case TAO_CodeGen::TAO_ROOT_CS:
           {
             be_visitor_sequence_cs visitor (&ctx);
             status = bt->accept (&visitor);
             break;
           }
-        case TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS:
+        case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
           {
             be_visitor_sequence_cdr_op_cs visitor (&ctx);
             status = bt->accept (&visitor);
