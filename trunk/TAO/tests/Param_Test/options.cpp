@@ -105,6 +105,8 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_VAR_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "nested_struct"))
           this->test_type_ = Options::TEST_NESTED_STRUCT;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "recursive_struct"))
+          this->test_type_ = Options::TEST_RECURSIVE_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "objref_struct"))
           this->test_type_ = Options::TEST_OBJREF_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "ub_struct_seq"))
