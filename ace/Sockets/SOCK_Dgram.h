@@ -15,14 +15,14 @@
 #define ACE_SOCK_DGRAM_H
 #include "ace/pre.h"
 
-#include "ace/SOCK.h"
-#include "ace/INET_Addr.h"
+#include "ace/Sockets/SOCK.h"
+#include "ace/IPC/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Addr.h"
+#include "ace/IPC/Addr.h"
 
 /**
  * @class ACE_SOCK_Dgram
@@ -207,7 +207,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram.i"
+#include "ace/Sockets/SOCK_Dgram.i"
 #endif
 
 #include "ace/post.h"

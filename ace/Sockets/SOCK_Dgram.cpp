@@ -1,14 +1,18 @@
 // SOCK_Dgram.cpp
 // $Id$
 
-#include "ace/SOCK_Dgram.h"
-#include "ace/Handle_Set.h"
-#include "ace/Synch.h"
-#include "ace/Log_Msg.h"
-#include "ace/INET_Addr.h"
+#include "ace/Sockets/SOCK_Dgram.h"
+#include "ace/OS/Handle_Set.h"
+#include "ace/Threads/Synch.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
+#include "ace/IPC/INET_Addr.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram.i"
+#include "ace/Sockets/SOCK_Dgram.i"
 #endif
 
 ACE_RCSID(ace, SOCK_Dgram, "$Id$")

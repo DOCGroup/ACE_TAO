@@ -1,7 +1,7 @@
 // QoS_Decorator.cpp
 // $Id$
 
-#include "QoS_Decorator.h"
+#include "ace/QoS/QoS_Decorator.h"
 
 ACE_RCSID(ace, QoS_Decorator, "$Id $")
 

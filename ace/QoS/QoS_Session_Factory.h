@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers_T.h"
-#include "ACE_QoS_Export.h"
+#include "ace/Utils/Templates/Containers_T.h"
+#include "ace/QoS/ACE_QoS_Export.h"
 
 /**
  * @class ACE_QoS_Session;

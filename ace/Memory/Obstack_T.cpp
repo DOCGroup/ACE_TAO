@@ -1,5 +1,8 @@
 // $Id$
 
+#ifndef OBSTACK_T_CPP
+#define OBSTACK_T_CPP
+
 #include "ace/Memory/Obstack_T.h"
 
 #if !defined (__ACE_INLINE__)
@@ -161,3 +164,5 @@ ACE_Obstack_T<CHAR>::release (void)
   this->curr_ = this->head_;
   this->curr_->block_ = this->curr_->cur_ = this->curr_->contents_;
 }
+
+#endif /* OBSTACK_T_CPP */

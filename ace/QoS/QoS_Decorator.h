@@ -15,16 +15,16 @@
 #define QOS_DECORATOR_H
 #include "ace/pre.h"
 
-#include "ace/Reactor.h"
+#include "ace/Demux/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/INET_Addr.h"
-#include "ace/Event_Handler.h"
-#include "SOCK_Dgram_Mcast_QoS.h"
-#include "ACE_QoS_Export.h"
+#include "ace/IPC/INET_Addr.h"
+#include "ace/Demux/Event_Handler.h"
+#include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
+#include "ace/QoS/ACE_QoS_Export.h"
 
 ACE_RCSID(QOS_Decorator, QOS_Decorator, "$Id$")
 
