@@ -1,10 +1,20 @@
+Mon Jan 22 15:38:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Containers_T.h:
+          ace/Containers_T.cpp:
+          Added operator* to the ACE_Ordered_Multiset_Iterator class
+
+        * tests/Ordmultiset_test.cpp
+          Expanded test for the new operator* of the ACE_Ordered_Multiset_
+          Iterator class
+
 Sat Jan 20 14:53:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Configuration.{h,cpp}: Fixed some problems with const char *
 	  that was busting the compilation.  Thanks to Carlos for pointing
  	  this out.
 
-	* ace/Configuration.{h,cpp}: Added several fixes for 
+	* ace/Configuration.{h,cpp}: Added several fixes for
 	  mistakes with memory management and other minor problems.
   	  Thanks to Jonathan Reis <reis@stentorsoft.com> for contributing
  	  these fixes!
