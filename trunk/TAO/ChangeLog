@@ -1,3 +1,18 @@
+Wed Mar  2 11:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp:
+          Initialise pointer with 0.
+
+        * tao/IFR_Client_Adapter.{h,cpp}:
+          Removed not needed virtual destructor
+
+        * tao/Messaging/diffs/Messaging.diff:
+        * tao/Messaging/diffs/Messaging_No_Impl.diff:
+          Updated
+
+        * tao/PortableServer/PolicyS.cpp:
+          Regenerated
+
 Tue Mar  1 15:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBALOC_Parser.cpp:
