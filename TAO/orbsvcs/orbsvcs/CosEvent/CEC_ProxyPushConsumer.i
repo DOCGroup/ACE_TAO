@@ -34,11 +34,3 @@ TAO_CEC_ProxyPushConsumer::supplier (CosEventComm::PushSupplier_ptr supplier)
 
   this->supplier_i (supplier);
 }
-
-// ****************************************************************
-
-ACE_INLINE
-TAO_CEC_Push_Event::TAO_CEC_Push_Event (const CORBA::Any& event)
-  :  event_ (event)
-{
-}

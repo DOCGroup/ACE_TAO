@@ -32,6 +32,18 @@ TAO_CEC_EventChannel::supplier_admin (void) const
   return this->supplier_admin_;
 }
 
+ACE_INLINE TAO_CEC_ConsumerControl*
+TAO_CEC_EventChannel::consumer_control (void) const
+{
+  return this->consumer_control_;
+}
+
+ACE_INLINE TAO_CEC_SupplierControl*
+TAO_CEC_EventChannel::supplier_control (void) const
+{
+  return this->supplier_control_;
+}
+
 ACE_INLINE TAO_CEC_ProxyPushSupplier*
 TAO_CEC_EventChannel::create_proxy_push_supplier (void)
 {
@@ -44,10 +56,40 @@ TAO_CEC_EventChannel::destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier* su
   this->factory_->destroy_proxy_push_supplier (supplier);
 }
 
+ACE_INLINE TAO_CEC_ProxyPullSupplier*
+TAO_CEC_EventChannel::create_proxy_pull_supplier (void)
+{
+  return this->factory_->create_proxy_pull_supplier (this);
+}
+
+ACE_INLINE void
+TAO_CEC_EventChannel::destroy_proxy_pull_supplier (TAO_CEC_ProxyPullSupplier* supplier)
+{
+  this->factory_->destroy_proxy_pull_supplier (supplier);
+}
+
 ACE_INLINE TAO_CEC_ProxyPushConsumer*
 TAO_CEC_EventChannel::create_proxy_push_consumer (void)
 {
   return this->factory_->create_proxy_push_consumer (this);
+}
+
+ACE_INLINE void
+TAO_CEC_EventChannel::destroy_proxy_push_consumer (TAO_CEC_ProxyPushConsumer* consumer)
+{
+  this->factory_->destroy_proxy_push_consumer (consumer);
+}
+
+ACE_INLINE TAO_CEC_ProxyPullConsumer*
+TAO_CEC_EventChannel::create_proxy_pull_consumer (void)
+{
+  return this->factory_->create_proxy_pull_consumer (this);
+}
+
+ACE_INLINE void
+TAO_CEC_EventChannel::destroy_proxy_pull_consumer (TAO_CEC_ProxyPullConsumer* consumer)
+{
+  this->factory_->destroy_proxy_pull_consumer (consumer);
 }
 
 ACE_INLINE TAO_CEC_ProxyPushConsumer_Collection*
@@ -62,6 +104,18 @@ TAO_CEC_EventChannel::destroy_proxy_push_consumer_collection (TAO_CEC_ProxyPushC
   this->factory_->destroy_proxy_push_consumer_collection (x);
 }
 
+ACE_INLINE TAO_CEC_ProxyPullConsumer_Collection*
+TAO_CEC_EventChannel::create_proxy_pull_consumer_collection (void)
+{
+  return this->factory_->create_proxy_pull_consumer_collection (this);
+}
+
+ACE_INLINE void
+TAO_CEC_EventChannel::destroy_proxy_pull_consumer_collection (TAO_CEC_ProxyPullConsumer_Collection* x)
+{
+  this->factory_->destroy_proxy_pull_consumer_collection (x);
+}
+
 ACE_INLINE TAO_CEC_ProxyPushSupplier_Collection*
 TAO_CEC_EventChannel::create_proxy_push_supplier_collection (void)
 {
@@ -74,10 +128,16 @@ TAO_CEC_EventChannel::destroy_proxy_push_supplier_collection (TAO_CEC_ProxyPushS
   this->factory_->destroy_proxy_push_supplier_collection (x);
 }
 
-ACE_INLINE void
-TAO_CEC_EventChannel::destroy_proxy_push_consumer (TAO_CEC_ProxyPushConsumer* consumer)
+ACE_INLINE TAO_CEC_ProxyPullSupplier_Collection*
+TAO_CEC_EventChannel::create_proxy_pull_supplier_collection (void)
 {
-  this->factory_->destroy_proxy_push_consumer (consumer);
+  return this->factory_->create_proxy_pull_supplier_collection (this);
+}
+
+ACE_INLINE void
+TAO_CEC_EventChannel::destroy_proxy_pull_supplier_collection (TAO_CEC_ProxyPullSupplier_Collection* x)
+{
+  this->factory_->destroy_proxy_pull_supplier_collection (x);
 }
 
 ACE_INLINE PortableServer::POA_ptr

@@ -35,8 +35,8 @@
 #include "orbsvcs/Event/EC_Worker.h"
 
 class TAO_CEC_EventChannel;
-class TAO_CEC_ProxyPushSupplier;
 class TAO_CEC_ProxyPushConsumer;
+class TAO_CEC_ProxyPullConsumer;
 
 class TAO_ORBSVCS_Export TAO_CEC_SupplierAdmin : public POA_CosEventChannelAdmin::SupplierAdmin
 {
@@ -69,23 +69,23 @@ public:
                  CORBA::Environment &ACE_TRY_ENV);
   // For each elements call <worker->work()>.
 
+  void for_each (TAO_EC_Worker<TAO_CEC_ProxyPullConsumer> *worker,
+                 CORBA::Environment &ACE_TRY_ENV);
+  // For each elements call <worker->work()>.
+
   virtual void connected (TAO_CEC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void reconnected (TAO_CEC_ProxyPushConsumer*,
                             CORBA::Environment&);
   virtual void disconnected (TAO_CEC_ProxyPushConsumer*,
                              CORBA::Environment&);
-  // Used to inform the EC that a Consumer has connected or
-  // disconnected from it.
-
-  virtual void connected (TAO_CEC_ProxyPushSupplier*,
+  virtual void connected (TAO_CEC_ProxyPullConsumer*,
                           CORBA::Environment&);
-  virtual void reconnected (TAO_CEC_ProxyPushSupplier*,
+  virtual void reconnected (TAO_CEC_ProxyPullConsumer*,
                             CORBA::Environment&);
-  virtual void disconnected (TAO_CEC_ProxyPushSupplier*,
+  virtual void disconnected (TAO_CEC_ProxyPullConsumer*,
                              CORBA::Environment&);
-  // Used to inform the EC that a Supplier has connected or
-  // disconnected from it.
+  // Keep track of connected consumers.
 
   virtual void shutdown (CORBA::Environment&);
   // The event channel is shutting down, inform all the consumers of
@@ -106,9 +106,14 @@ private:
   TAO_CEC_EventChannel *event_channel_;
   // The Event Channel we belong to
 
-  typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushConsumer> Collection;
+  typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushConsumer> PushCollection;
 
-  Collection *collection_;
+  PushCollection *push_collection_;
+  // The consumer container
+
+  typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullConsumer> PullCollection;
+
+  PullCollection *pull_collection_;
   // The consumer container
 
   PortableServer::POA_var default_POA_;
@@ -117,78 +122,23 @@ private:
 
 // ****************************************************************
 
-class TAO_CEC_Connect_Supplier : public TAO_EC_Worker<TAO_CEC_ProxyPushConsumer>
+class TAO_CEC_Shutdown_Push_Consumer : public TAO_EC_Worker<TAO_CEC_ProxyPushConsumer>
 {
-  // = TITLE
-  //   TAO_CEC_Connect_Supplier
-  //
-  // = DESCRIPTION
-  //   Worker class to connect the ProxyPushConsumer objects with all
-  //   the ProxyPushConsumer objects in the collection.
-  //
 public:
-  TAO_CEC_Connect_Supplier (TAO_CEC_ProxyPushSupplier *supplier);
-  // Constructor
+  TAO_CEC_Shutdown_Push_Consumer (void);
 
   void work (TAO_CEC_ProxyPushConsumer *consumer,
              CORBA::Environment &ACE_TRY_ENV);
-
-private:
-  TAO_CEC_ProxyPushSupplier *supplier_;
 };
 
 // ****************************************************************
 
-class TAO_CEC_Reconnect_Supplier : public TAO_EC_Worker<TAO_CEC_ProxyPushConsumer>
-{
-  // = TITLE
-  //   TAO_CEC_Reconnect_Supplier
-  //
-  // = DESCRIPTION
-  //   Worker class to reconnect the ProxyPushConsumer objects with all
-  //   the ProxyPushConsumer objects in the collection.
-  //
-public:
-  TAO_CEC_Reconnect_Supplier (TAO_CEC_ProxyPushSupplier *supplier);
-  // Constructor
-
-  void work (TAO_CEC_ProxyPushConsumer *consumer,
-             CORBA::Environment &ACE_TRY_ENV);
-
-private:
-  TAO_CEC_ProxyPushSupplier *supplier_;
-};
-
-// ****************************************************************
-
-class TAO_CEC_Disconnect_Supplier : public TAO_EC_Worker<TAO_CEC_ProxyPushConsumer>
-{
-  // = TITLE
-  //   TAO_CEC_Disconnect_Supplier
-  //
-  // = DESCRIPTION
-  //   Worker class to disconnect the ProxyPushConsumer objects with all
-  //   the ProxyPushConsumer objects in the collection.
-  //
-public:
-  TAO_CEC_Disconnect_Supplier (TAO_CEC_ProxyPushSupplier *supplier);
-  // Constructor
-
-  void work (TAO_CEC_ProxyPushConsumer *consumer,
-             CORBA::Environment &ACE_TRY_ENV);
-
-private:
-  TAO_CEC_ProxyPushSupplier *supplier_;
-};
-
-// ****************************************************************
-
-class TAO_CEC_Shutdown_Consumer : public TAO_EC_Worker<TAO_CEC_ProxyPushConsumer>
+class TAO_CEC_Shutdown_Pull_Consumer : public TAO_EC_Worker<TAO_CEC_ProxyPullConsumer>
 {
 public:
-  TAO_CEC_Shutdown_Consumer (void);
+  TAO_CEC_Shutdown_Pull_Consumer (void);
 
-  void work (TAO_CEC_ProxyPushConsumer *consumer,
+  void work (TAO_CEC_ProxyPullConsumer *consumer,
              CORBA::Environment &ACE_TRY_ENV);
 };
 

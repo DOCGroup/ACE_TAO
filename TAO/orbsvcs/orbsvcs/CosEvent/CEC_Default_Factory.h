@@ -59,6 +59,10 @@ public:
       create_dispatching (TAO_CEC_EventChannel*);
   virtual void
       destroy_dispatching (TAO_CEC_Dispatching*);
+  virtual TAO_CEC_Pulling_Strategy*
+      create_pulling_strategy (TAO_CEC_EventChannel*);
+  virtual void
+      destroy_pulling_strategy (TAO_CEC_Pulling_Strategy*);
   virtual TAO_CEC_ConsumerAdmin*
       create_consumer_admin (TAO_CEC_EventChannel*);
   virtual void
@@ -71,18 +75,34 @@ public:
       create_proxy_push_supplier (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier*);
+  virtual TAO_CEC_ProxyPullSupplier*
+      create_proxy_pull_supplier (TAO_CEC_EventChannel*);
+  virtual void
+      destroy_proxy_pull_supplier (TAO_CEC_ProxyPullSupplier*);
   virtual TAO_CEC_ProxyPushConsumer*
       create_proxy_push_consumer (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_push_consumer (TAO_CEC_ProxyPushConsumer*);
+  virtual TAO_CEC_ProxyPullConsumer*
+      create_proxy_pull_consumer (TAO_CEC_EventChannel*);
+  virtual void
+      destroy_proxy_pull_consumer (TAO_CEC_ProxyPullConsumer*);
   virtual TAO_CEC_ProxyPushConsumer_Collection*
       create_proxy_push_consumer_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_push_consumer_collection (TAO_CEC_ProxyPushConsumer_Collection*);
+  virtual TAO_CEC_ProxyPullConsumer_Collection*
+      create_proxy_pull_consumer_collection (TAO_CEC_EventChannel*);
+  virtual void
+      destroy_proxy_pull_consumer_collection (TAO_CEC_ProxyPullConsumer_Collection*);
   virtual TAO_CEC_ProxyPushSupplier_Collection*
     create_proxy_push_supplier_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_push_supplier_collection (TAO_CEC_ProxyPushSupplier_Collection*);
+  virtual TAO_CEC_ProxyPullSupplier_Collection*
+    create_proxy_pull_supplier_collection (TAO_CEC_EventChannel*);
+  virtual void
+      destroy_proxy_pull_supplier_collection (TAO_CEC_ProxyPullSupplier_Collection*);
 
   virtual ACE_Lock* create_consumer_lock (void);
   virtual void destroy_consumer_lock (ACE_Lock*);
@@ -99,7 +119,12 @@ public:
       destroy_supplier_control (TAO_CEC_SupplierControl*);
 
 private:
+  int parse_collection_arg (char *opt);
+  // Parse an argument to set the type of collections used.
+
+private:
   int dispatching_;
+  int pulling_strategy_;
   int consumer_collection_;
   int supplier_collection_;
   int consumer_lock_;
@@ -112,6 +137,10 @@ private:
   int dispatching_threads_force_active_;
   // The MT dispatching priority has several arguments that could be
   // controlled here...
+
+  int reactive_pulling_period_;
+  // How often (in microseconds) are the pull suppliers polled by the
+  // reactive pulling strategy.
 
   const char *orbid_;
   // Use this ORB to locate global resources.

@@ -47,4 +47,12 @@ if ($T->TimedWait (60) == -1) {
   $T->Kill (); $T->TimedWait (1);
 }
 
+#print STDERR "\n\nPull-Push Events\n";
+#$T = Process::Create ($prefix . "Pull_Push_Event".$EXE_EXT);
+#if ($T->TimedWait (60) == -1) {
+#  print STDERR "ERROR: Test timedout\n";
+#  $status = 1;
+#  $T->Kill (); $T->TimedWait (1);
+#}
+
 exit $status;

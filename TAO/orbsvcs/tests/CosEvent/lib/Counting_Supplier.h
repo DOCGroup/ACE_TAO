@@ -49,9 +49,7 @@ public:
   void push (const CORBA::Any& events,
              CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // The Consumer side methods.
+  // Push an event.
 
   virtual void disconnect_push_supplier (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -99,6 +97,47 @@ private:
   // event.
 
   ACE_SYNCH_MUTEX lock_;
+};
+
+// ****************************************************************
+
+class CEC_Test_Export CEC_Pull_Counting_Supplier : public POA_CosEventComm::PullSupplier
+{
+  // = TITLE
+  //   Simple supplier object
+  //
+  // = DESCRIPTION
+  //   This class is a supplier of events.
+  //
+public:
+  CEC_Pull_Counting_Supplier (void);
+  // Constructor
+
+  // = The CosEventComm::PullSupplier methods
+
+  void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
+                CORBA::Environment &ACE_TRY_ENV);
+  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  // Simple connect/disconnect methods..
+
+  // The PullSupplier methods.
+  CORBA::Any* pull (CORBA::Environment &_env)
+    ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
+  CORBA::Any* try_pull (CORBA::Boolean_out has_event,
+                        CORBA::Environment &_env)
+    ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
+  virtual void disconnect_pull_supplier (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::ULong event_count;
+  // Count the number of events sent
+
+  CORBA::ULong disconnect_count;
+  // Count the number of disconnect_pull_supplier calls
+
+private:
+  CosEventChannelAdmin::ProxyPullConsumer_var consumer_proxy_;
+  // Our proxy
 };
 
 #endif /* ECT_SUPPLIER_H */

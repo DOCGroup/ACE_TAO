@@ -31,16 +31,21 @@ class ACE_Lock;
 class TAO_CEC_EventChannel;
 
 class TAO_CEC_Dispatching;
+class TAO_CEC_Pulling_Strategy;
 class TAO_CEC_ConsumerAdmin;
 class TAO_CEC_SupplierAdmin;
 class TAO_CEC_ProxyPushConsumer;
+class TAO_CEC_ProxyPullConsumer;
 class TAO_CEC_ProxyPushSupplier;
+class TAO_CEC_ProxyPullSupplier;
 template<class PROXY> class TAO_EC_Proxy_Collection;
 class TAO_CEC_ConsumerControl;
 class TAO_CEC_SupplierControl;
 
 typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushConsumer> TAO_CEC_ProxyPushConsumer_Collection;
+typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullConsumer> TAO_CEC_ProxyPullConsumer_Collection;
 typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushSupplier> TAO_CEC_ProxyPushSupplier_Collection;
+typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullSupplier> TAO_CEC_ProxyPullSupplier_Collection;
 
 class TAO_ORBSVCS_Export TAO_CEC_Factory : public ACE_Service_Object
 {
@@ -69,6 +74,12 @@ public:
       destroy_dispatching (TAO_CEC_Dispatching*)  = 0;
   // Create and destroy the dispatching module.
 
+  virtual TAO_CEC_Pulling_Strategy*
+      create_pulling_strategy (TAO_CEC_EventChannel*) = 0;
+  virtual void
+      destroy_pulling_strategy (TAO_CEC_Pulling_Strategy*)  = 0;
+  // Create and destroy the pulling strategy.
+
   virtual TAO_CEC_ConsumerAdmin*
       create_consumer_admin (TAO_CEC_EventChannel*)  = 0;
   virtual void
@@ -87,11 +98,23 @@ public:
       destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier*) = 0;
   // Create and destroy a ProxyPushSupplier
 
+  virtual TAO_CEC_ProxyPullSupplier*
+      create_proxy_pull_supplier (TAO_CEC_EventChannel*) = 0;
+  virtual void
+      destroy_proxy_pull_supplier (TAO_CEC_ProxyPullSupplier*) = 0;
+  // Create and destroy a ProxyPullSupplier
+
   virtual TAO_CEC_ProxyPushConsumer*
       create_proxy_push_consumer (TAO_CEC_EventChannel*) = 0;
   virtual void
       destroy_proxy_push_consumer (TAO_CEC_ProxyPushConsumer*) = 0;
   // Create and destroy a ProxyPushConsumer
+
+  virtual TAO_CEC_ProxyPullConsumer*
+      create_proxy_pull_consumer (TAO_CEC_EventChannel*) = 0;
+  virtual void
+      destroy_proxy_pull_consumer (TAO_CEC_ProxyPullConsumer*) = 0;
+  // Create and destroy a ProxyPullConsumer
 
   virtual TAO_CEC_ProxyPushConsumer_Collection*
       create_proxy_push_consumer_collection (TAO_CEC_EventChannel*) = 0;
@@ -99,11 +122,23 @@ public:
       destroy_proxy_push_consumer_collection (TAO_CEC_ProxyPushConsumer_Collection*) = 0;
   // Create and destroy a collection of TAO_CEC_ProxyPushConsumers
 
+  virtual TAO_CEC_ProxyPullConsumer_Collection*
+      create_proxy_pull_consumer_collection (TAO_CEC_EventChannel*) = 0;
+  virtual void
+      destroy_proxy_pull_consumer_collection (TAO_CEC_ProxyPullConsumer_Collection*) = 0;
+  // Create and destroy a collection of TAO_CEC_ProxyPullConsumers
+
   virtual TAO_CEC_ProxyPushSupplier_Collection*
       create_proxy_push_supplier_collection (TAO_CEC_EventChannel*) = 0;
   virtual void
       destroy_proxy_push_supplier_collection (TAO_CEC_ProxyPushSupplier_Collection*) = 0;
   // Create and destroy a collection of TAO_CEC_ProxyPushSuppliers
+
+  virtual TAO_CEC_ProxyPullSupplier_Collection*
+      create_proxy_pull_supplier_collection (TAO_CEC_EventChannel*) = 0;
+  virtual void
+      destroy_proxy_pull_supplier_collection (TAO_CEC_ProxyPullSupplier_Collection*) = 0;
+  // Create and destroy a collection of TAO_CEC_ProxyPullSuppliers
 
   virtual ACE_Lock* create_consumer_lock (void) = 0;
   virtual void destroy_consumer_lock (ACE_Lock*) = 0;

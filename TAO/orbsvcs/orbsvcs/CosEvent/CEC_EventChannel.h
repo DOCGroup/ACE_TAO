@@ -120,33 +120,51 @@ public:
   // Access the dispatching module....
 
   TAO_CEC_ConsumerAdmin* consumer_admin (void) const;
-  // Access the consumer admin implementation, useful for controlling
-  // the activation...
+  // Access the consumer admin implementation.
 
   TAO_CEC_SupplierAdmin* supplier_admin (void) const;
-  // Access the supplier admin implementation, useful for controlling
-  // the activation...
+  // Access the supplier admin implementation.
+
+  TAO_CEC_ConsumerControl* consumer_control (void) const;
+  // Access the consumer control strategy.
+
+  TAO_CEC_SupplierControl* supplier_control (void) const;
+  // Access the supplier control strategy.
 
   // = The factory methods, they delegate on the CEC_Factory.
   TAO_CEC_ProxyPushSupplier* create_proxy_push_supplier (void);
   void destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier*);
   // Create and destroy a ProxyPushSupplier
 
+  TAO_CEC_ProxyPullSupplier* create_proxy_pull_supplier (void);
+  void destroy_proxy_pull_supplier (TAO_CEC_ProxyPullSupplier*);
+  // Create and destroy a ProxyPullSupplier
+
   TAO_CEC_ProxyPushConsumer* create_proxy_push_consumer (void);
   void destroy_proxy_push_consumer (TAO_CEC_ProxyPushConsumer*);
+  // Create and destroy a ProxyPushConsumer
+
+  TAO_CEC_ProxyPullConsumer* create_proxy_pull_consumer (void);
+  void destroy_proxy_pull_consumer (TAO_CEC_ProxyPullConsumer*);
   // Create and destroy a ProxyPushConsumer
 
   TAO_CEC_ProxyPushSupplier_Collection*
       create_proxy_push_supplier_collection (void);
   void destroy_proxy_push_supplier_collection (TAO_CEC_ProxyPushSupplier_Collection*);
+  TAO_CEC_ProxyPullSupplier_Collection*
+      create_proxy_pull_supplier_collection (void);
+  void destroy_proxy_pull_supplier_collection (TAO_CEC_ProxyPullSupplier_Collection*);
   // Create and destroy a the collections used to store
-  // ProxyPushSuppliers
+  // Proxy*Suppliers
 
   TAO_CEC_ProxyPushConsumer_Collection*
       create_proxy_push_consumer_collection (void);
   void destroy_proxy_push_consumer_collection (TAO_CEC_ProxyPushConsumer_Collection*);
+  TAO_CEC_ProxyPullConsumer_Collection*
+      create_proxy_pull_consumer_collection (void);
+  void destroy_proxy_pull_consumer_collection (TAO_CEC_ProxyPullConsumer_Collection*);
   // Create and destroy a the collections used to store
-  // ProxyPushConsumers
+  // Proxy*Consumers
 
   PortableServer::POA_ptr supplier_poa (void);
   PortableServer::POA_ptr consumer_poa (void);
@@ -165,6 +183,12 @@ public:
                             CORBA::Environment&);
   virtual void disconnected (TAO_CEC_ProxyPushConsumer*,
                              CORBA::Environment&);
+  virtual void connected (TAO_CEC_ProxyPullConsumer*,
+                          CORBA::Environment&);
+  virtual void reconnected (TAO_CEC_ProxyPullConsumer*,
+                            CORBA::Environment&);
+  virtual void disconnected (TAO_CEC_ProxyPullConsumer*,
+                             CORBA::Environment&);
   // Used to inform the EC that a Consumer has connected or
   // disconnected from it.
 
@@ -173,6 +197,12 @@ public:
   virtual void reconnected (TAO_CEC_ProxyPushSupplier*,
                             CORBA::Environment&);
   virtual void disconnected (TAO_CEC_ProxyPushSupplier*,
+                             CORBA::Environment&);
+  virtual void connected (TAO_CEC_ProxyPullSupplier*,
+                          CORBA::Environment&);
+  virtual void reconnected (TAO_CEC_ProxyPullSupplier*,
+                            CORBA::Environment&);
+  virtual void disconnected (TAO_CEC_ProxyPullSupplier*,
                              CORBA::Environment&);
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
@@ -228,6 +258,9 @@ private:
 
   TAO_CEC_Dispatching *dispatching_;
   // The dispatching "module"
+
+  TAO_CEC_Pulling_Strategy *pulling_strategy_;
+  // The pulling strategy
 
   TAO_CEC_ConsumerAdmin *consumer_admin_;
   // The ConsumerAdmin implementation
