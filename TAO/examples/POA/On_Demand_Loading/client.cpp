@@ -165,7 +165,7 @@ main (int argc, char **argv)
               "\nConnecting to: %s\n\n",
               ior.in ()));
 
-  long result;
+  long result = 0;
   for (int i = 0; i < iterations && env.exception () == 0; i++)
     {
       if (oneway)

@@ -38,6 +38,7 @@ Dir_Service_i::~Dir_Service_i (void)
 PortableServer::POA_ptr 
 Dir_Service_i::_default_POA (CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
@@ -47,6 +48,8 @@ CORBA::Long
 Dir_Service_i::tele_number (const char *name,
                             CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (env);
   // The telephone number corresponding to the name is returned.
    return 3617339;
 }
@@ -56,6 +59,7 @@ Dir_Service_i::tele_number (const char *name,
 void 
 Dir_Service_i::end_note (CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   ACE_DEBUG ((LM_DEBUG,
               "Thanks for using DIRECTORY SERVICE!\n"));
 }
@@ -65,6 +69,7 @@ Dir_Service_i::end_note (CORBA::Environment &env)
 void 
 Dir_Service_i::area_codes_info (CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   ACE_DEBUG ((LM_DEBUG,
               "Some area_codes:"
               " Indianapolis  812"
@@ -78,6 +83,7 @@ Dir_Service_i::area_codes_info (CORBA::Environment &env)
 void 
 Dir_Service_i::shutdown (CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   this->orb_->shutdown ();
 }
 
