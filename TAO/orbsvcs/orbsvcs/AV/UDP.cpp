@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "UDP.h"
 #include "AVStreams_i.h"
 #include "MCast.h"
@@ -362,7 +363,7 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
     {
       this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
-    inet_addr = (ACE_INET_Addr *) entry->control_address ();
+      inet_addr = (ACE_INET_Addr *) entry->control_address ();
     }
   else
     {
@@ -370,14 +371,17 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
       inet_addr = (ACE_INET_Addr *) entry->address ();
     }
 
-  char buf[BUFSIZ];
-  inet_addr->addr_to_string (buf,
-                             BUFSIZ);
+  if (inet_addr != 0)
+    {
+      char buf[BUFSIZ];
+      inet_addr->addr_to_string (buf,
+				 BUFSIZ);
 
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_AV_UDP_Acceptor::open: %s\n",
-                buf));
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "TAO_AV_UDP_Acceptor::open: %s\n",
+		    buf));
+    }
 
   int result = this->open_i (inet_addr, 0);
 
@@ -423,7 +427,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
 {
   int result = -1;
 
-  ACE_INET_Addr *local_addr;
+  ACE_INET_Addr *local_addr = 0;
   TAO_AV_Flow_Handler *flow_handler = 0;
 
   // if using a default address and this is the control flow component, the
@@ -525,7 +529,8 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
       this->entry_->protocol_object (object);
       this->entry_->set_local_addr (local_addr);
       this->entry_->handler (flow_handler);
-      this->entry_->address (inet_addr);
+      //this->entry_->address (inet_addr);
+	  this->entry_->address (local_addr);
     }
   else
     {
@@ -589,7 +594,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                TAO_AV_Transport *&transport,
                                TAO_AV_Core::Flow_Component flow_component)
 {
-  ACE_INET_Addr *local_addr;
+  ACE_INET_Addr *local_addr = 0;
   ACE_INET_Addr *control_inet_addr;
 
   this->entry_ = entry;
@@ -634,6 +639,16 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
           // assume the ports will be OK
           get_new_port = 0;
 
+	  ACE_Addr *addr;
+	  if ((addr = entry->get_peer_addr ()) != 0)
+	    {
+	      local_addr = ACE_dynamic_cast (ACE_INET_Addr*,addr);
+	      char buf [BUFSIZ];
+	      local_addr->addr_to_string (buf, BUFSIZ);
+	      ACE_DEBUG ((LM_DEBUG,
+			  "local_addr %s\n",
+			  buf));
+	    }
           TAO_AV_UDP_Connection_Setup::setup (flow_handler,
                                               inet_addr,
                                               local_addr,
@@ -810,14 +825,21 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 
           local_addr->set (local_addr->get_port_number (),
                            local_addr->get_host_name ());
-            handler->set_peer_addr (local_addr);
+	  handler->set_peer_addr (local_addr);
         }
     }
   else
     {
-      ACE_NEW_RETURN (local_addr,
-                      ACE_INET_Addr ("0"),
-                      -1);
+      if (local_addr == 0)
+	ACE_NEW_RETURN (local_addr,
+			ACE_INET_Addr ("0"),
+			-1);
+
+      char buf [BUFSIZ];
+      local_addr->addr_to_string (buf, BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Local Address %s\n",
+		  buf));
 
       TAO_AV_UDP_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
@@ -829,7 +851,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       if (ct == ACCEPTOR)
         result = handler->open (*inet_addr);
       else
-      result = handler->open (*local_addr);
+	result = handler->open (*local_addr);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"handler::open failed\n"),-1);
 
@@ -851,9 +873,16 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
         return 0;
 
       if (ct == CONNECTOR)
-      handler->set_remote_address  (inet_addr);
+	handler->set_remote_address  (inet_addr);
 
       result = handler->get_socket ()->get_local_addr (*local_addr);
+
+
+      local_addr->set (local_addr->get_port_number (),
+		       local_addr->get_host_name ());
+
+      local_addr->addr_to_string (buf, BUFSIZ);
+
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
     }
