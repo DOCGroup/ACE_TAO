@@ -3821,6 +3821,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     }
   else
     {
+      tv = ACE_OS::gettimeofday ();  // Update to time acquired
       return 0;
     }
 #   endif /* ACE_HAS_STHREADS */
@@ -10295,8 +10296,8 @@ ACE_OS::waitpid (pid_t pid,
 
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
-  int blocking_period = ACE_BIT_ENABLED (wait_options, WNOHANG) 
-    ? 0 /* don't hang */ 
+  int blocking_period = ACE_BIT_ENABLED (wait_options, WNOHANG)
+    ? 0 /* don't hang */
     : INFINITE;
 
   ACE_HANDLE handle = ::OpenProcess (SYNCHRONIZE,
