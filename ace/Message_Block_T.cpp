@@ -3,7 +3,6 @@
 #if !defined (ACE_MESSAGE_BLOCK_T_C)
 #define ACE_MESSAGE_BLOCK_T_C
 
-#include "ace/Message_Block_T.h"
 
 ACE_RCSID(ace, Message_Block_T, "$Id$")
 
@@ -11,8 +10,8 @@ ACE_RCSID(ace, Message_Block_T, "$Id$")
 #include "ace/Message_Block_T.i"
 #endif /* __ACE_INLINE__ */
 
-template<class ACE_LOCK>
-ACE_Locked_Data_Block<ACE_LOCK>::~ACE_Locked_Data_Block (void)
+template<class L>
+ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block (void)
 {
 }
 
