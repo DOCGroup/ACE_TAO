@@ -1555,7 +1555,8 @@ be_interface::gen_gperf_lookup_methods (void)
   // Close the file.
   if (ACE_OS::fclose (cg->gperf_input_stream ()->file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p:File close failed on temp gperf's input file\n"),
+                       "%p:File close failed on temp gperf's input file\n",
+                       "fclose"),
                       -1);
 
   // Open the temp file.
@@ -1564,7 +1565,8 @@ be_interface::gen_gperf_lookup_methods (void)
 
   if (input == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p:File open failed on gperf's temp input file\n"),
+                       "%p:File open failed on gperf's temp input file\n",
+                       "open_temp_file"),
                       -1);
 
   // Stdout is server skeleton. Do *not* close the file, just open
@@ -1578,7 +1580,8 @@ be_interface::gen_gperf_lookup_methods (void)
   //                                   O_WRONLY | O_APPEND);
   if (output == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p:File open failed on server skeleton file\n"),
+                       "%p:File open failed on server skeleton file\n",
+                       "open"),
                       -1);
 
   // Set the handles now in the process options.
@@ -1671,7 +1674,8 @@ be_interface::gen_gperf_lookup_methods (void)
   // Wait for gperf to complete.
   if (process_manager.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p:Error on wait'ing for completion of gperf program.\n"),
+                       "Error:%p:Error on wait'ing for completion of gperf program.\n",
+                       "process_manager.wait"),
                       -1);
 
   // Adjust the file offset to the EOF for the server skeleton file.
