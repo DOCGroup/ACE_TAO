@@ -222,12 +222,17 @@ be_visitor_operation_interceptors_result::visit_structure (be_structure * node)
 }
 
 int
-be_visitor_operation_interceptors_result::visit_union (be_union *)
+be_visitor_operation_interceptors_result::visit_union (be_union * node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Force copying when inserting into the Any.
-  *os << "(*result_any) <<= *this->_result;" << be_nl;
+  *os << "(*result_any) <<= ";
+
+  if (node->size_type () == AST_Type::VARIABLE)
+    *os << "*this->_result;" << be_nl;  // Force copying when
+                                        // inserting into the Any.
+  else
+    *os << "this->_result;" << be_nl;
 
   return 0;
 }
