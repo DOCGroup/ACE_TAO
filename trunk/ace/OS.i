@@ -4039,7 +4039,7 @@ ACE_OS::inet_addr (const char *name)
 
   u_long ret = 0;
   u_int segment;
-  bool valid = true;
+  u_int valid = 1;
 
   for (u_int i = 0; i < 4; ++i)
     {
@@ -4055,7 +4055,7 @@ ACE_OS::inet_addr (const char *name)
             }
           if (*name != '.' && *name != '\0')
             {
-              valid = false;
+              valid = 0;
               break;
             }
 
