@@ -12,18 +12,18 @@
    the tarball of 0.5 can be found, but I suspect that
    Xavier's site has it...
 
-	* RPM == Redhat Package Management
+        * RPM == Redhat Package Management
 
-	My system is a Caldera-based distribution with many upgraded
-	packages.  If you don't use RPM, there is a program (rpm2cpio)
-	which will extract the files for "normal consumption".
+        My system is a Caldera-based distribution with many upgraded
+        packages.  If you don't use RPM, there is a program (rpm2cpio)
+        which will extract the files for "normal consumption".
 
-	You may also want to check out the "ACE On Linux" pages at:
+        You may also want to check out the "ACE On Linux" pages at:
 
-		http://users.deltanet.com/users/slg/ACE/
+                http://users.deltanet.com/users/slg/ACE/
 
-	(They were a little out of date when I last was there
-	however.) */
+        (They were a little out of date when I last was there
+        however.) */
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -38,26 +38,26 @@
 // And they're even POSIX pthreads (MIT implementation)
 #define ACE_HAS_PTHREADS
 // ... and the final standard even!
-#define	ACE_HAS_PTHREADS_STD
+#define ACE_HAS_PTHREADS_STD
 
-#define ACE_HAS_PTHREAD_SIGMASK			// JCEJ 12/19/96
+#define ACE_HAS_PTHREAD_SIGMASK                 // JCEJ 12/19/96
 
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1				// JCEJ 12/22/96	#1
+        #define ACE_MT_SAFE 1                           // JCEJ 12/22/96        #1
 #endif
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE		// jcej 12/22/96	#2
-#define PTHREAD_MIN_PRIORITY		0	// JCEJ 12/22/96	#3
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE         // jcej 12/22/96        #2
+#define PTHREAD_MIN_PRIORITY            0       // JCEJ 12/22/96        #3
 #if defined(ACE_HAS_PTHREAD_SIGMASK)
-#  define PTHREAD_MAX_PRIORITY		99	// CJC  02/11/97
+#  define PTHREAD_MAX_PRIORITY          99      // CJC  02/11/97
 #else
-#  define PTHREAD_MAX_PRIORITY          32      // JCEJ 12/22/96	#3
+#  define PTHREAD_MAX_PRIORITY          32      // JCEJ 12/22/96        #3
 #endif
 
-#define ACE_LACKS_THREAD_STACK_ADDR		// JCEJ 12/17/96
-#define ACE_LACKS_THREAD_STACK_SIZE		// JCEJ 12/17/96
+#define ACE_LACKS_THREAD_STACK_ADDR             // JCEJ 12/17/96
+#define ACE_LACKS_THREAD_STACK_SIZE             // JCEJ 12/17/96
 
-#define	ACE_LACKS_RWLOCK_T			// JCEJ 12/23/96	#1
-#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS	// JCEJ 1/7-8/96
+#define ACE_LACKS_RWLOCK_T                      // JCEJ 12/23/96        #1
+#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    // JCEJ 1/7-8/96
 
 #define ACE_HAS_SIGWAIT
 
@@ -72,5 +72,13 @@
 #endif
 
 #include /**/ <pthread.h>
+
+#if defined (ACE_HAS_TSS_EMULATION)
+  // This seems necessary to avoid an occasional seg fault at the end
+  // of some threaded tests, only with ACE_HAS_TSS_EMULATION.  It
+  // appears to be problem in the LinuxThreads library, especially if
+  // a sleep solves it.
+# define ACE_FINI_HOOK ACE_OS::sleep (1)
+#endif /* ACE_HAS_TSS_EMULATION */
 
 #endif /* ACE_CONFIG_H */
