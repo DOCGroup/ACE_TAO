@@ -3,6 +3,7 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "Thread_Action.h"
 #include "ace/Thread_Manager.h"
+#include "ace/SString.h"
 
 int
 main (int argc, char* argv [])
@@ -34,7 +35,7 @@ main (int argc, char* argv [])
 
       TAO_Scheduler* scheduler;
       ACE_NEW_RETURN (scheduler,
-		      TAO_Scheduler (orb),
+		      TAO_Scheduler (orb.in ()),
 		      -1);
   
       manager->rtscheduler (scheduler);
@@ -47,8 +48,9 @@ main (int argc, char* argv [])
       
       ACE_TRY
 	{
+	  ACE_CString data ("Harry Potter");
 	  current->spawn (&thread_action,
-			  "Harry Potter",
+			  ACE_const_cast (char *, data.c_str ()),
 			  name,
 			  sched_param,
 			  implicit_sched_param,
@@ -74,7 +76,7 @@ main (int argc, char* argv [])
       
       Data spawn_data;
       spawn_data.data = CORBA::string_dup ("Harry Potter");
-      spawn_data.current = RTScheduling::Current::_duplicate (current);
+      spawn_data.current = RTScheduling::Current::_duplicate (current.in ());
       
       current->spawn (&thread_action,
 		      &spawn_data,
