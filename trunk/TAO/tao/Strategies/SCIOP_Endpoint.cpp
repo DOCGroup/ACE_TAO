@@ -300,7 +300,12 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       // Search for the ":"
       ssize_t col_pos = rem_tmp.find (":");
 
-      if (col_pos == ACE_CString::npos) continue;
+      if (col_pos == ACE_CString::npos)
+        {
+          pos = tmp.find (latest->host_.in (),
+                          pos + length);
+          continue;
+        }
 
       ACE_CString path = rem_tmp.substr (col_pos + 1);
 
