@@ -1,3 +1,10 @@
+Sun Jan  9 19:49:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACE-INSTALL.html:
+
+	  Updated to note that autoconf/automake build is available
+	  in ACE only and ACE+TAO releases.
+
 Sun Jan  9 18:29:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ACEXML/apps/svcconf/Makefile.am:
