@@ -512,7 +512,7 @@ public:
 
   /// Handle one of the notify call on the <handle>. This could be
   /// because of a thread trying to unblock the <Reactor_Impl>
-  virtual int dispatch_notify (ACE_HANDLE handle);
+  virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
 
   /// Read one of the notify call on the <handle> into the
   /// <buffer>. This could be because of a thread trying to unblock

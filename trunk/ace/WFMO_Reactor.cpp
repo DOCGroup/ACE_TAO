@@ -2201,7 +2201,7 @@ ACE_WFMO_Reactor_Notify::read_notify_pipe (ACE_HANDLE ,
 }
 
 int
-ACE_WFMO_Reactor_Notify::dispatch_notify (ACE_HANDLE )
+ACE_WFMO_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &)
 {
   return 0;
 }
