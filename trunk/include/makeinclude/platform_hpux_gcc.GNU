@@ -37,6 +37,11 @@ CC		= gcc
 CXX		= g++
 CFLAGS		+= -w
 
+# Enable 64-bit builds
+ifeq (64,$(buildbits))
+  CPPFLAGS      += -m64
+endif
+
 #
 # Set the appropriate preprocessor defs for threading based on OS version.
 # If the user has requested building without threads, then don't set any.
@@ -95,7 +100,7 @@ else
 
 endif
 
-# Test for template instantiation, add to SOFLAGS if versioned_so set, 
+# Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
