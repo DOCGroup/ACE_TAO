@@ -110,36 +110,43 @@
     public:
       friend class POA_CORBA_DomainManager;
       TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (
-        const char *  _tao_operation,
-        IOP::ServiceContextList &_tao_service_context_list            ,      CORBA::PolicyType& policy_type      ,
-            CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-      );
+          const char * _tao_operation,
+          IOP::ServiceContextList &_tao_service_context_list,
+          CORBA::PolicyType& policy_type,
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        );
 
-       virtual Dynamic::ParameterList * arguments (
-        CORBA::Environment &ACE_TRY_ENV =
-           TAO_default_environment ())
-       ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual Dynamic::ParameterList * arguments (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-        virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV =
-         TAO_default_environment ())
-     ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual Dynamic::ExceptionList * exceptions (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Any * result (
-    CORBA::Environment &ACE_TRY_ENV =
-       TAO_default_environment ())
-   ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Any * result (
+          CORBA::Environment &ACE_TRY_ENV =
+            TAO_default_environment ()
+        )
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-
-private:
-TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (const TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy &);
-void operator= (const TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy &);
-CORBA::PolicyType & policy_type_;
-void result (CORBA::Policy_ptr  result);
- // update the result
-CORBA::Policy_ptr  result_;
-};
+    private:
+      TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (
+          const TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy &
+        );
+      void operator= (
+          const TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy &
+        );
+      CORBA::PolicyType &policy_type_;
+      void result (CORBA::Policy_ptr  result);
+      // update the result
+      CORBA::Policy_ptr  result_;
+    };
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -149,7 +156,7 @@ CORBA::Policy_ptr  result_;
 #if !defined (_CORBA_DOMAINMANAGER___THRU_POA_COLLOCATED_SH_)
 #define _CORBA_DOMAINMANAGER___THRU_POA_COLLOCATED_SH_
 
-class TAO_PortableServer_Export POA_CORBA__tao_thru_poa_collocated_DomainManager   : public virtual ::CORBA::DomainManager
+class TAO_PortableServer_Export POA_CORBA__tao_thru_poa_collocated_DomainManager : public virtual ::CORBA::DomainManager
 {
 public:
   POA_CORBA__tao_thru_poa_collocated_DomainManager (
@@ -182,7 +189,9 @@ public:
 #if !defined (_CORBA_DOMAINMANAGER___DIRECT_COLLOCATED_SH_)
 #define _CORBA_DOMAINMANAGER___DIRECT_COLLOCATED_SH_
 
-class TAO_PortableServer_Export POA_CORBA__tao_direct_collocated_DomainManager   :  public virtual CORBA::DomainManager, public virtual TAO_Collocated_Object
+class TAO_PortableServer_Export POA_CORBA__tao_direct_collocated_DomainManager 
+  : public virtual CORBA::DomainManager, 
+    public virtual TAO_Collocated_Object
 {
 public:
   POA_CORBA__tao_direct_collocated_DomainManager (
@@ -384,7 +393,7 @@ public:
     TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
       const char *_tao_operation,
       IOP::ServiceContextList &_tao_service_context_list,
-      IR_InterfaceDef_ptr object_type,
+      IR_InterfaceDef *object_type,
       CORBA::Boolean &constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
@@ -415,7 +424,7 @@ public:
     void operator= (
         const TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &
       );
-    IR_InterfaceDef_ptr object_type_;
+    IR_InterfaceDef *object_type_;
     CORBA::Boolean &constr_policy_;
 };
 
