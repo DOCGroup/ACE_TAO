@@ -248,15 +248,27 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
 
   // two operator []s instead of ->
   os->indent ();
-  *os << "ACE_INLINE const " << nodename << "_slice &" << be_nl;
+  *os << "ACE_INLINE " << be_nl;
+  *os << "const " << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
   *os << "{" << be_idt_nl;
+
+  // MSVC requires an explicit cast for this. SunCC will 
+  // not accept one, but will do it implicitly with a temporary.
+  // It's only a problem with multidimensional arrays.
+#if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
   *os << "return ACE_const_cast (const " << nodename 
       << "_slice &, this->ptr_[index]);" << be_uidt_nl;
+#else
+  *os << "const " << nodename << "_slice &tmp = this->ptr_[index];" << be_nl;
+  *os << "return tmp;" << be_uidt_nl;
+#endif /* ACE_HAS_BROKEN_IMPLICIT_CONST_CAST */
+
   *os << "}\n\n";
 
   os->indent ();
-  *os << "ACE_INLINE " << nodename << "_slice &" << be_nl;
+  *os << "ACE_INLINE " << be_nl;
+  *os << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_[index];" << be_uidt_nl;
@@ -585,15 +597,27 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
 
   // two operator []s instead of ->
   os->indent ();
-  *os << "ACE_INLINE " << nodename << "_slice const &" << be_nl;
+  *os << "ACE_INLINE " << be_nl;
+  *os << "const " << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_const_cast (" << nodename 
-      << "_slice const &, this->ptr_[index]);" << be_uidt_nl;
+
+  // MSVC requires an explicit cast for this. SunCC will 
+  // not accept one, but will do it implicitly with a temporary.
+  // It's only a problem with multidimensional arrays.
+#if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
+  *os << "return ACE_const_cast (const " << nodename 
+      << "_slice &, this->ptr_[index]);" << be_uidt_nl;
+#else
+  *os << "const " << nodename << "_slice &tmp = this->ptr_[index];" << be_nl;
+  *os << "return tmp;" << be_uidt_nl;
+#endif /* ACE_HAS_BROKEN_IMPLICIT_CONST_CAST */
+
   *os << "}\n\n";
 
   os->indent ();
-  *os << "ACE_INLINE " << nodename << "_slice &" << be_nl;
+  *os << "ACE_INLINE " << be_nl;
+  *os << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_[index];" << be_uidt_nl;
