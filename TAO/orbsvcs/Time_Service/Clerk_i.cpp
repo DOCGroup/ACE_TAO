@@ -13,7 +13,6 @@ Clerk_i::Clerk_i (void)
     timer_value_ (3),
     server_ (Clerk_i::DEFAULT_SERVER_COUNT),
     ior_fp_ (0)
-
 {
   // no-op.
 }
@@ -154,11 +153,11 @@ Clerk_i::init_IR (void)
   TAO_TRY
     {
 
-      ACE_NEW_RETURN (this->ir_helper_, IR_Helper ( "my_child_poa",
-						    this->orb_manager_.child_poa (),
-						    this->orb_manager_.orb (),
-						    TAO_debug_level),
-		      -1);
+    ACE_NEW_RETURN (this->ir_helper_, IR_Helper ( "my_child_poa",
+    this->orb_manager_.child_poa (),
+    this->orb_manager_.orb (),
+    TAO_debug_level),
+    -1);
       this->ir_helper_->register_server ("clerk -t 5");
 
       this->ir_helper_->change_object (this->time_service_clerk_,
@@ -253,6 +252,7 @@ Clerk_i::get_first_IOR (void)
 
       // Insert the first server IOR into the unbounded set of server
       // IORs.
+
       this->insert_server (obj);
 
       // Iterate over the server context to get the next N IORs.
@@ -304,13 +304,14 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 					 TAO_TRY_ENV);
 	      TAO_CHECK_ENV;
 
-              CosTime::TimeService_ptr server = 
+              CosTime::TimeService_ptr server =
                 CosTime::TimeService::_narrow (temp_object.in (),
                                                TAO_TRY_ENV);
               TAO_CHECK_ENV;
 
 	      this->insert_server (server);
 	    }
+
 	  TAO_CHECK_ENV;
 	}
 
@@ -370,6 +371,7 @@ Clerk_i::create_clerk (void)
 {
   TAO_TRY
     {
+
       // Create a new clerk object. Pass it the timer value, the set
       // of server IORs and the no. of servers.
       ACE_NEW_RETURN (this->time_service_clerk_impl_,
@@ -521,10 +523,15 @@ Clerk_i::init (int argc,
 	  if (this->init_naming_service (TAO_TRY_ENV) !=0 )
 	    return -1;
 
+	  // Set the size of the Server IOR Array.
+	  this->server_.max_size (10);
+	  this->server_.size (0);
+
 	  // Get a reference to the Server Naming context and the
 	  // first IOR.
 	  if (this->get_first_IOR () != 0)
 	    return -1;
+
 	}
 
       // Create an instance of the Clerk.
@@ -572,20 +579,14 @@ Clerk_i::run (CORBA::Environment &env)
 void
 Clerk_i::insert_server (CosTime::TimeService_ptr server)
 {
+
   // We duplicate the capacity of the Array.
   size_t s = this->server_.size ();
+
   if (this->server_.max_size () == s)
     {
       this->server_.max_size (2 * s);
     }
-  this->server_[s] = server;
+  this->server_[s] = CosTime::TimeService::_duplicate (server);
   this->server_.size (s + 1);
 }
-
-// #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// template class ACE_Unbounded_Set <CosTime::TimeService_var>;
-// template class TAO_Unbounded_Sequence<CosNaming::NameComponent>;
-// #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// #pragma instantiate ACE_Unbounded_Set <CosTime::TimeService_var>
-// #pragma instantiate TAO_Unbounded_Sequence<CosNaming::NameComponent>;
-// #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

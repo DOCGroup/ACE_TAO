@@ -12,17 +12,17 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
     helper_ (this)
 {
 
-      // Schedule the helper to be invoked by the reactor
-      // periodically.
+  // Schedule the helper to be invoked by the reactor
+  // periodically.
 
-      if (TAO_ORB_Core_instance ()->reactor ()->schedule_timer
-	  (&helper_,
-	   0,
-	   ACE_Time_Value::zero,
-	   ACE_Time_Value (timer_value)) == -1)
-	ACE_ERROR ((LM_ERROR,
-		    "%p\n",
-		    "schedule_timer ()"));
+  if (TAO_ORB_Core_instance ()->reactor ()->schedule_timer
+      (&helper_,
+       0,
+       ACE_Time_Value::zero,
+       ACE_Time_Value (timer_value)) == -1)
+    ACE_ERROR ((LM_ERROR,
+		"%p\n",
+		"schedule_timer ()"));
 }
 
 // Destructor.
