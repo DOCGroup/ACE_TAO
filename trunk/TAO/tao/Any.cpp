@@ -673,9 +673,6 @@ CORBA_Any::operator>>= (to_string s) const
 {
   CORBA::Environment env;
 
-  // The typecode must be equal. Since we do not readily have access
-  // to the typecode of the string into which we want to retrieve, we
-  // emulate the behavior of "equal"
   if (this->type_->equivalent (CORBA::_tc_string, env))
     {
       CORBA::ULong bound = this->type_->length (env);
