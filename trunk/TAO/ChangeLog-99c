@@ -11,7 +11,9 @@ Sun Jan 31 20:32:54 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         * be_codegen.cpp
         Added these two options to the tao_idl compiler.
         -in To generate #include statements with <>'s for the standard include
-        files (e.g. tao/corba.h) indicating them as non-changing files
+        files (e.g. tao/corba.h) indicating them as non-changing files.
+	Thanks to Andreas Geisler <andreas.geisler@erls.siemens.de> for
+	this suggestion.
 
         -ic To generate #include statements with ""s for changing standard
         include files (e.g. tao/corba.h).
