@@ -9,7 +9,8 @@
 #----------------------------------------------------------------------------
 
 DIRS  =	Subscribe \
-	Filter
+	Filter \
+	Lanes
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

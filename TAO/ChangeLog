@@ -1,3 +1,56 @@
+Tue Jun 24 11:34:53 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	Simple example to show how to use RTCORBA Lanes with RT Notification.
+	
+	* orbsvcs/examples/Notify/Lanes/Consumer.cpp:
+	* orbsvcs/examples/Notify/Lanes/Consumer.h:
+
+	  Structured Consumer implementation.
+	
+ 	* orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+ 	* orbsvcs/examples/Notify/Lanes/Consumer_Client.h:
+
+	  Client program.
+	
+	* orbsvcs/examples/Notify/Lanes/ORB_Objects.cpp:
+	* orbsvcs/examples/Notify/Lanes/ORB_Objects.h:
+
+	  Holder for common ORB objects.
+	
+	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
+	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h:
+
+	Task to run ORB::run method.
+	
+	* orbsvcs/examples/Notify/Lanes/Supplier.cpp:
+	* orbsvcs/examples/Notify/Lanes/Supplier.h:
+
+	  Structured Supplier implementation.
+	
+	* orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+	* orbsvcs/examples/Notify/Lanes/Supplier_Client.h:
+
+	  Supplier Client.
+	
+	* orbsvcs/examples/Notify/Lanes/client.conf:
+	* orbsvcs/examples/Notify/Lanes/notify.conf:	
+	* orbsvcs/examples/Notify/Lanes/run_test.pl:
+	* orbsvcs/examples/Notify/Lanes/Lanes.dsp:
+	* orbsvcs/examples/Notify/Lanes/Supplier.dsp:
+	* orbsvcs/examples/Notify/Lanes/Consumer.dsp:
+	* orbsvcs/examples/Notify/Lanes/Lanes.mpc:
+	* orbsvcs/examples/Notify/Lanes/Makefile:
+
+	  Conf files, run script and project files.
+	
+	* orbsvcs/examples/Notify/Lanes/README:
+	 
+	  README for this example.
+
+	* orbsvcs/examples/Notify/Notify_Examples.dsw:
+	
+	  Updated to include Lanes example. 
+
 Tue Jun 24 03:49:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: Added patches supplied by
