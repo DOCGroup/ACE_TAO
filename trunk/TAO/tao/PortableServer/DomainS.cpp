@@ -1093,7 +1093,7 @@ POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_ma
 
 Dynamic::ExceptionList *
 POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::exceptions (
-    CORBA::Environment &
+    CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1108,7 +1108,7 @@ POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_ma
 
 CORBA::Any *
 POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::result (
-    CORBA::Environment &
+    CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
