@@ -1613,13 +1613,14 @@ Implemented Features:
         security mechanism.
       </LI>
 	  <LI>
-	    The Security::QOPPolicy policy has been implemented.  This policy
-	    is used to set the desired invocation Quality-of-Protection
-	    (QoP).  It can be created using ORB::create_policy(), and used
-	    in conjunction with the standard policy manipulation CORBA
-	    features (e.g. PolicyManager, PolicyCurrent), meaning that
-	    this policy can be set on a per-ORB, per-thread or
-	    per-object basis.
+	    The <CODE>Security::QOPPolicy</CODE> policy has been
+	    implemented.  This policy is used to set the desired
+	    invocation Quality-of-Protection (QoP).  It can be created
+	    using <CODE>ORB::create_policy()</CODE>, and used in
+	    conjunction with the standard policy manipulation CORBA
+	    features (e.g. <CODE>PolicyManager</CODE>,
+	    <CODE>PolicyCurrent</CODE>), meaning that this policy can
+	    be set on a per-ORB, per-thread or per-object basis.
 	    <P>
 	      This policy makes it possible to, for example, make both secure
 	      and insecure invocations within the same client process.
