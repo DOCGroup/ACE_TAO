@@ -1,3 +1,9 @@
+Sat Oct 30 15:28:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/tests/Trading/TT_Info.cpp:
+
+	  Fixed typos.
+
 Fri Oct 29 13:31:31 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Protocols/distributor.cpp:
