@@ -23,24 +23,6 @@ Sat Apr 21 19:02:27 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sat Apr 21 15:31:27 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-        * PACE/pace/ctype.h:
-        * PACE/pace/config/compiler.h:
-        * PACE/pace/config/platform.h:
-        * PACE/pace/win32/pthread.c:
-        * PACE/pace/win32/pthread.inl:
-        * PACE/pace/win32/semaphore.c:
-        * PACE/pace/win32/semaphore.h:
-        * PACE/pace/win32/signal.inl:
-        * PACE/pace/win32/socket.c:
-        * PACE/pace/win32/socket.h:
-        * PACE/pace/win32/socket.inl:
-        * PACE/pace/win32/stdlib.inl:
-        * PACE/pace/win32/unistd.h:
-        * PACE/pace/win32/unistd.inl:
-        * PACE/pace/win32/utime.c:
-        * PACE/pace/win32/utsname.c:
-        * PACE/pace/win32/utsname.inl:
-        * PACE/pace/win32/wait.inl:
         * ace/ACE.cpp:
         * ace/Basic_Types.h:
         * ace/Configuration.cpp:
