@@ -191,11 +191,7 @@ SOURCE=.\Asynch_Queued_Message.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Reply_Dispatcher.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Asynch_Timeout_Handler.cpp
+SOURCE=.\Asynch_Reply_Dispatcher_Base.cpp
 # End Source File
 # Begin Source File
 
@@ -575,23 +571,11 @@ SOURCE=.\MCAST_Parser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Messaging.cpp
+SOURCE=.\Messaging_PolicyValueC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Messaging_ORBInitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Messaging_Policy_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Messaging_PolicyFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingC.cpp
+SOURCE=.\Messaging_SyncScopeC.cpp
 # End Source File
 # Begin Source File
 
@@ -971,11 +955,7 @@ SOURCE=.\Asynch_Queued_Message.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Reply_Dispatcher.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Asynch_Timeout_Handler.h
+SOURCE=.\Asynch_Reply_Dispatcher_Base.h
 # End Source File
 # Begin Source File
 
@@ -1375,23 +1355,11 @@ SOURCE=.\MCAST_Parser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Messaging.h
+SOURCE=.\Messaging_PolicyValueC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Messaging_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Messaging_Policy_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Messaging_PolicyFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\MessagingC.h
+SOURCE=.\Messaging_SyncScopeC.h
 # End Source File
 # Begin Source File
 
@@ -1779,7 +1747,7 @@ SOURCE=.\Asynch_Invocation.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Reply_Dispatcher.i
+SOURCE=.\Asynch_Reply_Dispatcher_Base.i
 # End Source File
 # Begin Source File
 
@@ -2075,11 +2043,11 @@ SOURCE=.\MCAST_Parser.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Messaging_Policy_i.i
+SOURCE=.\Messaging_PolicyValueC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\MessagingC.i
+SOURCE=.\Messaging_SyncScopeC.i
 # End Source File
 # Begin Source File
 

@@ -48,7 +48,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Domain_static"=.\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
+Project: "Domain_Static"=.\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -56,9 +56,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name IFR_Client_Static
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -199,6 +196,36 @@ Package=<4>
 ###############################################################################
 
 Project: "IORTable_Static"=.\IORTable\TAO_IORTable_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Messaging"=.\Messaging\TAO_Messaging.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Messaging_Static"=.\Messaging\TAO_Messaging_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

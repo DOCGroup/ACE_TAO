@@ -342,6 +342,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Messaging_Static"=.\tao\Messaging\TAO_Messaging_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Naming Service Static"=.\orbsvcs\Naming_Service\Naming_Server_static.dsp - Package Owner=<4>
 
 Package=<5>
