@@ -89,6 +89,11 @@ Fri Jan 02 07:06:44 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/test_config.h: hacked ACE_INIT_LOG to work on VxWorks.
           VxWorks gets upset if its asked to unlink a nonexistant file.
 
+        * ace/Basic_Types.*: if using ACE_U_LongLong, #define
+          ACE_USES_ACE_U_LONGLONG and use that in the .i and .cpp files
+          instead of repeating all of the complex preprocessor tests
+          in Basic_Types.h.  Thanks to Carlos for suggesting this.
+
 Fri Jan 02 00:47:33 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.13, released Fri Jan 02 00:47:33 1998.
