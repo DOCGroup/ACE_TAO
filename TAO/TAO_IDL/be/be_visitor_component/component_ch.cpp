@@ -153,6 +153,21 @@ be_visitor_component_ch::visit_component (be_component *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  if (! node->is_abstract ())
+    {
+      node->analyze_parentage ();
+    }
+
+  // If we inherit from both CORBA::Object and CORBA::AbstractBase,
+  // we have to override _add_ref() to avoid ambiguity. A comopnent
+  // can have mixed parentage if it supports an abstract or mixed-
+  // parentage interface.
+  if (node->has_mixed_parentage ())
+    {
+      *os << be_nl << be_nl 
+          << "virtual void _add_ref (void);";
+    }
+
   *os << be_nl << be_nl
       << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char *type_id" << be_nl

@@ -715,6 +715,8 @@ be_visitor_module::visit_component (be_component *node)
     case TAO_CodeGen::TAO_ROOT_CH:
       {
         be_visitor_component_ch visitor (&ctx);
+        // So we can pick up the abstract ops helpers.
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
         status = node->accept (&visitor);
         break;
       }

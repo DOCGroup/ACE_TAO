@@ -109,6 +109,29 @@ be_visitor_component_cs::visit_component (be_component *node)
           << "}";
     }
 
+  if (node->has_mixed_parentage ())
+    {
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << "CORBA::release ("
+          << node->name ()
+          << "_ptr p)" << be_nl
+          << "{" << be_idt_nl
+          << "CORBA::AbstractBase_ptr abs = p;" << be_nl
+          << "CORBA::release (abs);" << be_uidt_nl
+          << "}";
+
+      *os << be_nl << be_nl
+          << "CORBA::Boolean" << be_nl
+          << "CORBA::is_nil ("
+          << node->name ()
+          << "_ptr p)" << be_nl
+          << "{" << be_idt_nl
+          << "CORBA::Object_ptr obj = p;" << be_nl
+          << "return CORBA::is_nil (obj);" << be_uidt_nl
+          << "}";
+    }
+
   // Generate the proxy broker factory function pointer definition.
   *os << be_nl << be_nl
       << "// Function pointer for collocation factory initialization."
@@ -169,6 +192,16 @@ be_visitor_component_cs::visit_component (be_component *node)
           << node->local_name () << " *_tao_tmp_pointer = static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_nl
           << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
+
+  if (node->has_mixed_parentage ())
+    {
+      *os << "void" << be_nl
+          << node->name () << "::_add_ref (void)" << be_nl
+          << "{" << be_idt_nl
+          << "this->ACE_NESTED_CLASS (CORBA, Object)::_add_ref ();"
+          << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 

@@ -226,15 +226,9 @@ public:
   void abstract_inheritance_error (UTL_ScopedName *v,
                                    UTL_ScopedName *i);
 
-  // Report an attempt to support more then one abstract type.
+  // Report an attempt to support more then one concrete type.
   void abstract_support_error (UTL_ScopedName *v,
                                UTL_ScopedName *i);
-
-  // Report a situation where a concrete interface was expected but we got
-  // something else instead. This most likely is a case in a supports
-  // or inheritance list.
-  void concrete_interface_expected (UTL_ScopedName *c,
-                                    UTL_ScopedName *i);
 
   // Report a situation where a non-local interface was expected but we got
   // something else instead. This most likely is a case in a supports

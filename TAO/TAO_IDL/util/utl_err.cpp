@@ -943,26 +943,7 @@ UTL_Error::abstract_support_error (UTL_ScopedName *v,
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report illegal component or home support of abstract interface.
-void
-UTL_Error::concrete_interface_expected (UTL_ScopedName *c,
-                                        UTL_ScopedName *i)
-{
-  idl_error_header (EIDL_CANT_SUPPORT,
-                    idl_global->lineno (),
-                    idl_global->filename ());
-  ACE_ERROR ((LM_ERROR,
-              " component or home "));
-  c->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR,
-              " attempts to support an abstract interface: "));
-  i->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
-  idl_global->set_err_count (idl_global->err_count () + 1);
-}
-
-// Report illegal component or home support of abstract interface.
+// Report illegal component or home support of local interface.
 void
 UTL_Error::unconstrained_interface_expected (UTL_ScopedName *c,
                                              UTL_ScopedName *i)
