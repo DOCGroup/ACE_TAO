@@ -41,12 +41,19 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
            TAO_IIOP_Transport (this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
+#else
+  ACE_UNUSED_ARG (orb_core);
+  ACE_UNUSED_ARG (flag);
+#endif
+
 }
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core)
@@ -58,7 +65,11 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   delete this->transport ();
+#endif
+
 }
 
 int
@@ -70,6 +81,8 @@ TAO_IIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_IIOP_Connection_Handler::open (void*)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   TAO_IIOP_Protocol_Properties protocol_properties;
 
   // Initialize values from ORB params.
@@ -183,15 +196,21 @@ TAO_IIOP_Connection_Handler::open (void*)
                   client, this->peer ().get_handle ()));
     }
 
+  /*
   // Set that the transport is now connected, if fails we return -1
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
     return -1;
+  */
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
   return 0;
+
+#else
+  return 0;
+#endif
 }
 
 int
@@ -260,6 +279,8 @@ TAO_IIOP_Connection_Handler::release_os_resources (void)
 int
 TAO_IIOP_Connection_Handler::add_transport_to_cache (void)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   ACE_INET_Addr addr;
 
   // Get the peername.
@@ -280,12 +301,17 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache (void)
   // Idle the transport..
   return cache.cache_idle_transport (&prop,
                                      this->transport ());
+#else
+  return 0;
+#endif
 }
 
 int
 TAO_IIOP_Connection_Handler::process_listen_point_list (
     IIOP::ListenPointList &listen_list)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   // Get the size of the list
   const CORBA::ULong len = listen_list.length ();
 
@@ -323,6 +349,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
       // Mark the connection as bidirectional
       prop.set_bidir_flag (1);
 
+      /*
       // The property for this handler has changed. Recache the
       // handler with this property
       int retval =
@@ -333,14 +360,22 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();
+      */
     }
 
   return 0;
+#else
+  ACE_UNUSED_ARG (listen_list);
+  return 0;
+#endif
+
 }
 
 int
 TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   int tos = IPDSFIELD_DSCP_DEFAULT << 2;
 
   if (set_network_priority)
@@ -378,6 +413,10 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
     }
 
   return 0;
+#else
+  ACE_UNUSED_ARG (set_network_priority);
+  return 0;
+#endif
 }
 
 // ****************************************************************

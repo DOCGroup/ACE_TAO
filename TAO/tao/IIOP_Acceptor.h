@@ -28,7 +28,7 @@
 #include "ace/SOCK_Acceptor.h"
 
 #include "tao/Transport_Acceptor.h"
-#include "tao/IIOP_Connection_Handler.h"
+# include "tao/IIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
 
@@ -55,10 +55,17 @@ public:
   /// Returns the array of endpoints in this acceptor
   const ACE_INET_Addr *endpoints (void);
 
-  typedef ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
+
+  typedef ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler,
+                                ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
+
+#if !defined (TAO_HAS_COLLOCATION)
+
   typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler,
+                              ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+#endif
 
   /**
    * The TAO_Acceptor methods, check the documentation in
@@ -196,10 +203,13 @@ private:
   /// the concrete acceptor, as a pointer to it's base class.
   BASE_ACCEPTOR base_acceptor_;
 
+#if !defined (TAO_HAS_COLLOCATION)
   /// Acceptor strategies.
   CREATION_STRATEGY *creation_strategy_;
   CONCURRENCY_STRATEGY *concurrency_strategy_;
+
   ACCEPT_STRATEGY *accept_strategy_;
+#endif
 
 };
 
