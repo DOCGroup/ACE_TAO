@@ -1318,7 +1318,7 @@ be_sequence::gen_encapsulation (void)
 
   // XXXASG - byte order must be based on what m/c we are generating code -
   // TODO
-  *os << "0, // byte order" << nl;
+  *os << "MY_BYTE_SEX, // byte order" << nl;
 
   // emit typecode of element type
   bt = be_type::narrow_from_decl (this->base_type ());

@@ -15,17 +15,6 @@ be_exception::be_exception (UTL_ScopedName *n, UTL_StrList *p)
 	      UTL_Scope (AST_Decl::NT_except),
               member_count_ (-1)
 {
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
-  // compute the flattened fully scoped name 
-  compute_flatname ();
 }
 
 // compute total number of members
@@ -43,11 +32,11 @@ be_exception::compute_member_count (void)
       // instantiate a scope iterator.
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
 
-      while (!(si->is_done ())) 
+      while (!(si->is_done ()))
 	{
 	  // get the next AST decl node
 	  d = si->item ();
-	  if (!d->imported ()) 
+	  if (!d->imported ())
 	    {
               this->member_count_++;
             }
@@ -87,7 +76,7 @@ be_exception::gen_client_header (void)
 
       this->cli_hdr_gen_ = I_TRUE;
     }
-  
+
   return 0;
 }
 
@@ -118,7 +107,7 @@ be_exception::gen_client_stubs (void)
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
-        nl; 
+        nl;
       *cs << "{\n";
       cs->incr_indent (0);
       // note that we just need the parameters here and hence we generate the
@@ -131,9 +120,9 @@ be_exception::gen_client_stubs (void)
       cs->decr_indent ();
       *cs << "};" << nl;
 
-      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () << 
-        " (CORBA::tk_struct, sizeof (_oc_" <<  this->flatname () << 
-        "), (unsigned char *) &_oc_" << this->flatname () << 
+      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () <<
+        " (CORBA::tk_struct, sizeof (_oc_" <<  this->flatname () <<
+        "), (unsigned char *) &_oc_" << this->flatname () <<
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
@@ -200,8 +189,8 @@ be_exception::gen_encapsulation (void)
   cs->indent (); // start from whatever indentation level we were at
 
   // XXXASG - byte order must be based on what m/c we are generating code -
-  // TODO 
-  *cs << "0, // byte order" << nl; 
+  // TODO
+  *cs << "0, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
   (void)this->tc_name2long (this->repoID (), arr, arrlen);
@@ -265,4 +254,3 @@ be_exception::tc_encap_len (void)
 IMPL_NARROW_METHODS3 (be_exception, AST_Exception, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_exception)
 IMPL_NARROW_FROM_SCOPE (be_exception)
-

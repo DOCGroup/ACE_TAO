@@ -84,6 +84,7 @@ TAO_CodeGen::make_state (void)
     case TAO_ARGUMENT_SH:
     case TAO_ARGUMENT_SS:
     case TAO_ARGUMENT_VARDECL_SS:
+    case TAO_ARGUMENT_UPCALL_SS:
       return TAO_BE_STATE_ARGUMENT::instance ();
     case TAO_TYPEDEF_CH:
     case TAO_TYPEDEF_CS:

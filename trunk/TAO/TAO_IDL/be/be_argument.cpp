@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_argument.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -41,7 +41,7 @@ be_argument::be_argument (AST_Argument::Direction d, AST_Type *ft,
   // computes the fully scoped name
   compute_fullname ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 }
 
@@ -150,7 +150,7 @@ be_argument::gen_server_skeletons (void)
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ARGUMENT_SS); // generating code for arguments
+  //  cg->push (TAO_CodeGen::TAO_ARGUMENT_SS); // generating code for arguments
 
   os = cg->server_skeletons ();
   cg->outstream (os);
@@ -163,13 +163,13 @@ be_argument::gen_server_skeletons (void)
       ACE_ERROR ((LM_ERROR, "be_argument: error generating type\n"));
       return -1;
     }
-  *os << " " << this->local_name () << ", ";
-  cg->pop ();
+  //  *os << " " << this->local_name () << ", ";
+  //  cg->pop ();
   return 0;
 }
 
 // Generates the client-side inline information
-int 
+int
 be_argument::gen_client_inline (void)
 {
   // nothing to be done
@@ -177,7 +177,7 @@ be_argument::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_argument::gen_server_inline (void)
 {
   // nothing to be done
@@ -187,4 +187,3 @@ be_argument::gen_server_inline (void)
 // Narrowing
 IMPL_NARROW_METHODS2 (be_argument, AST_Argument, be_decl)
 IMPL_NARROW_FROM_DECL (be_argument)
-

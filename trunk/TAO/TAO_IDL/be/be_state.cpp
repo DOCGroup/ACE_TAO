@@ -1491,7 +1491,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_argument *arg;  // argument node
   be_interface *bif; // interface inside which the operation that uses this
-                     // argument was defined
+  // argument was defined
 
   switch (cg->state ())
     {
@@ -1506,6 +1506,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
       break;
     case TAO_CodeGen::TAO_ARGUMENT_SS:
     case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+    case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
       os = cg->server_skeletons ();
       break;
     }
@@ -1524,7 +1525,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
   if (!type) // not a recursive call
     type = bt;
   else // recursively called thru a typedef. "type" will have the most primitive
-       // base class of the typedef
+    // base class of the typedef
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
   // find the direction of the argument. Depending on the direction and the
@@ -1537,79 +1538,115 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
         switch (arg->direction ())
           {
           case AST_Argument::dir_IN:
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            // what state are we in
+            switch (cg->state ())
               {
-                *os << bt->name () << "_ptr ";
-                // declare a variable
-                *os << arg->local_name () << ";" << nl;
-                // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
-                // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << bt->nested_type_name (bif, "_ptr") << " ";
-              }
-            else
-              {
-                *os << bt->name () << "_ptr ";
-              }
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
+                  *os << bt->name () << "_ptr ";
+                  // declare a variable
+                  *os << arg->local_name () << ";" << nl;
+                  // now define a NamedValue_ptr
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
+                  // declare an Any
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", " << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_ptr") << " ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name () << "_ptr ";
+                }
+              } // switch state
             break;
           case AST_Argument::dir_INOUT:
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
-                *os << bt->name () << "_ptr ";
-                // declare a variable
-                *os << arg->local_name () << ";" << nl;
-                // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
-                // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () <<
-                  ", 1); // ORB owns" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << bt->nested_type_name (bif, "_ptr") << " &";
-              }
-            else
-              {
-                *os << bt->name () << "_ptr &";
-              }
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
+                  *os << bt->name () << "_ptr ";
+                  // declare a variable
+                  *os << arg->local_name () << ";" << nl;
+                  // now define a NamedValue_ptr
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
+                  // declare an Any
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", " << arg->local_name () <<
+                    ", 1); // ORB owns" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_ptr") << " &";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name () << "_ptr &";
+                }
+              } // end switch state
             break;
           case AST_Argument::dir_OUT:
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
-                // declare a variable
-                *os << bt->name () << "_ptr ";
-                *os << arg->local_name () << ";" << nl;
-                // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
-                // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () <<
-                  ", 1); // ORB owns" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << bt->nested_type_name (bif, "_out") << " ";
-              }
-            else
-              {
-                *os << bt->name () << "_out ";
-              }
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
+                  // declare a variable
+                  *os << bt->name () << "_ptr ";
+                  *os << arg->local_name () << ";" << nl;
+                  *os << bt->name () << "_out " << arg->local_name () <<
+                    "_out (" << arg->local_name () << ");" << nl;
+                  // now define a NamedValue_ptr
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
+                  // declare an Any
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", " << arg->local_name () <<
+                    ", 1); // ORB owns" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_out") << " ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << "_out, ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name () << "_out ";
+                }
+              } // end switch state
             break;
-          }
-      }
+          } // end switch direction
+      } // end of case interface/interface_fwd
       break;
     case AST_Decl::NT_pre_defined: // type is predefined type
       {
@@ -1621,350 +1658,554 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
             switch (arg->direction ())
               {
               case AST_Argument::dir_IN:
-                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                switch (cg->state ())
                   {
-                    *os << bt->name () << " ";
+                  case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                    {
+                      *os << bt->name () << " ";
                     // declare a variable
-                    *os << arg->local_name () << ";" << nl;
+                      *os << arg->local_name () << ";" << nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () <<
-                      "); // ORB does not own" << nl;
-                  }
-                else
-                  {
-                    *os << "const " << bt->name () << " &";
-                  }
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", &" << arg->local_name () <<
+                        "); // ORB does not own" << nl;
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << "const " << bt->nested_type_name (bif) << " &";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                    {
+                      *os << arg->local_name () << ", ";
+                    }
+                    break;
+                  default:
+                    {
+                      *os << "const " << bt->name () << " &";
+                    }
+                  } // end switch state
                 break;
               case AST_Argument::dir_INOUT:
-                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                switch (cg->state ())
                   {
+                  case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                    {
                     // declare a variable
-                    *os << bt->name () << " ";
-                    *os << arg->local_name () << ";" << nl;
+                      *os << bt->name () << " ";
+                      *os << arg->local_name () << ";" << nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () <<
-                      ", 1); // ORB owns" << nl;
-                  }
-                else
-                  {
-                    *os << bt->name () << " &";
-                  }
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", &" << arg->local_name () <<
+                        ", 1); // ORB owns" << nl;
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << "const " << bt->nested_type_name (bif) << " &";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                    {
+                      *os << arg->local_name () << ", ";
+                    }
+                    break;
+                  default:
+                    {
+                      *os << bt->name () << " &";
+                    }
+                  } // end switch state
                 break;
               case AST_Argument::dir_OUT:
-                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                switch (cg->state ())
                   {
+                  case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                    {
                     // declare a variable
-                    *os << bt->name () << " *";
-                    *os << arg->local_name () << ";" << nl;
+                      *os << bt->name () << " *";
+                      *os << arg->local_name () << ";" << nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", " << arg->local_name () <<
-                      ", 1); // ORB owns" << nl;
-                  }
-                else
-                  {
-                    *os << bt->name () << "_out ";
-                  }
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", " << arg->local_name () <<
+                        ", 1); // ORB owns" << nl;
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->nested_type_name (bif, "_out") << " ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                    {
+                      *os << arg->local_name () << ", ";
+                    }
+                    break;
+                  default:
+                    {
+                      *os << bt->name () << "_out ";
+                    }
+                  } // end switch state
                 break;
-              } // end of inner switch
-          }
+              } // end switch direction
+          } // end of if
         else if (bpd->pt () == AST_PredefinedType::PT_pseudo)
           {
             switch (arg->direction ())
               {
               case AST_Argument::dir_IN:
-                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                switch (cg->state ())
                   {
+                  case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                    {
                     // declare a variable
-                    *os << bt->name () << "_ptr ";
-                    *os << arg->local_name () << ";" << nl;
+                      *os << bt->name () << "_ptr ";
+                      *os << arg->local_name () << ";" << nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", " << arg->local_name () <<
-                      "); // ORB does not own" << nl;
-                  }
-                else
-                  {
-                    *os << bt->name () << "_ptr ";
-                  }
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", " << arg->local_name () <<
+                        "); // ORB does not own" << nl;
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->nested_type_name (bif, "_ptr") << " ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                    {
+                      *os << arg->local_name () << ", ";
+                    }
+                    break;
+                  default:
+                    {
+                      *os << bt->name () << "_ptr ";
+                    }
+                  } // end of switch state
                 break;
               case AST_Argument::dir_INOUT:
-                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                switch (cg->state ())
                   {
+                  case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                    {
                     // declare a variable
-                    *os << bt->name () << "_ptr ";
-                    *os << arg->local_name () << ";" << nl;
+                      *os << bt->name () << "_ptr ";
+                      *os << arg->local_name () << ";" << nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", " << arg->local_name () <<
-                      ", 1); // ORB owns" << nl;
-                  }
-                else
-                  {
-                    *os << bt->name () << "_ptr &";
-                  }
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", " << arg->local_name () <<
+                        ", 1); // ORB owns" << nl;
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->nested_type_name (bif, "_ptr") << " &";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                    {
+                      *os << arg->local_name () << ", ";
+                    }
+                    break;
+                  default:
+                    {
+                      *os << bt->name () << "_ptr &";
+                    }
+                  } // end switch state
                 break;
               case AST_Argument::dir_OUT:
-                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                switch (cg->state ())
                   {
+                  case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                    {
                     // declare a variable
-                    *os << bt->name () << "_ptr ";
-                    *os << arg->local_name () << ";" << nl;
+                      *os << bt->name () << "_ptr ";
+                      *os << arg->local_name () << ";" << nl;
+                      *os << bt->name () << "_out ";
+                      *os << arg->local_name () << "_out (" << arg->local_name
+                        () << ");" << nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", " << arg->local_name () <<
-                      ", 1); // ORB owns" << nl;
-                  }
-                else
-                  {
-                    *os << bt->name () << "_out ";
-                  }
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", " << arg->local_name () <<
+                        ", 1); // ORB owns" << nl;
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->nested_type_name (bif, "_out") << " ";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                    {
+                      *os << arg->local_name () << "_out, ";
+                    }
+                    break;
+                  default:
+                    {
+                      *os << bt->name () << "_out ";
+                    }
+                  } // end switch state
                 break;
-              }
-          }
+              } // end switch direction
+          } // end else if
         else
           {
             switch (arg->direction ())
               {
               case AST_Argument::dir_IN:
-                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                switch (cg->state ())
                   {
+                  case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                    {
                     // declare a variable
-                    *os << bt->name () << " " << arg->local_name () << ";" <<
-                      nl;
+                      *os << bt->name () << " " << arg->local_name () << ";" <<
+                        nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () <<
-                      "); // ORB does not own" << nl;
-                  }
-                else
-                  {
-                    *os << bt->name ();
-                  }
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", &" << arg->local_name () <<
+                        "); // ORB does not own" << nl;
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->nested_type_name (bif);
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                    {
+                      *os << arg->local_name () << ", ";
+                    }
+                    break;
+                  default:
+                    {
+                      *os << bt->name ();
+                    }
+                  } // end switch state
                 break;
               case AST_Argument::dir_INOUT:
-                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                switch (cg->state ())
                   {
+                  case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                    {
                     // declare a variable
-                    *os << bt->name () << " " << arg->local_name () << ";" <<
-                      nl;
+                      *os << bt->name () << " " << arg->local_name () << ";" <<
+                        nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () <<
-                      "); // ORB does not own" << nl;
-                  }
-                else
-                  {
-                    *os << bt->name () << " &";
-                  }
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", &" << arg->local_name () <<
+                        "); // ORB does not own" << nl;
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->nested_type_name (bif) << " &";
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                    {
+                      *os << arg->local_name () << ", ";
+                    }
+                    break;
+                  default:
+                    {
+                      *os << bt->name () << " &";
+                    }
+                  } // end switch state
                 break;
               case AST_Argument::dir_OUT:
-                if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+                switch (cg->state ())
                   {
+                  case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                    {
                     // declare a variable
-                    *os << bt->name () << " " << arg->local_name () << ";" <<
-                      nl;
+                      *os << bt->name () << " " << arg->local_name () << ";" <<
+                        nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () <<
-                      ", 1); // ORB owns" << nl;
-                  }
-                else
-                  {
-                    *os << bt->name () << "_out";
-                  }
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", &" << arg->local_name () <<
+                        ", 1); // ORB owns" << nl;
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_CH:
+                  case TAO_CodeGen::TAO_ARGUMENT_SH:
+                    {
+                      *os << bt->nested_type_name (bif, "_out");
+                    }
+                    break;
+                  case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                    {
+                      *os << arg->local_name () << ", ";
+                    }
+                    break;
+                  default:
+                    {
+                      *os << bt->name () << "_out";
+                    }
+                  } // end of switch
                 break;
-              } // end of inner switch
+              } // end switch direction
           } // end of else
-      } // end of case
+      } // end of case predefined
       break;
     case AST_Decl::NT_string: // type is a string
       {
         switch (arg->direction ())
           {
           case AST_Argument::dir_IN:
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
                     // declare a variable
-                *os << "char *" << arg->local_name () << ";" <<
-                  nl;
+                  *os << "char *" << arg->local_name () << ";" <<
+                    nl;
                     // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
                     // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else
-              {
-                *os << "const char *";
-              }
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", &" << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << "const char *";
+                }
+              } // end switch state
             break;
           case AST_Argument::dir_INOUT:
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
                     // declare a variable
-                *os << "char *" << arg->local_name () << ";" <<
-                  nl;
+                  *os << "char *" << arg->local_name () << ";" <<
+                    nl;
                     // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
                     // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else
-              {
-                *os << "char *&";
-              }
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", &" << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << "char *&";
+                }
+              } // end switch state
             break;
           case AST_Argument::dir_OUT:
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
-                // declare a variable
-                *os << "char *" << arg->local_name () << ";" <<
-                  nl;
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
+                  // declare a variable
+                  *os << "char *" << arg->local_name () << ";" <<
+                    nl;
                     // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
                     // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () <<
-                  ", 1); // ORB owns" << nl;
-              }
-            else
-              {
-                *os << bt->name () << "_out";
-              }
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", &" << arg->local_name () <<
+                    ", 1); // ORB owns" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  *os << bt->nested_type_name (bif, "_out");
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name () << "_out";
+                }
+              } // end switch state
             break;
-          }
-      }
+          } // end switch direction
+      } // end case string
       break;
     case AST_Decl::NT_array: // type is an array
       switch (arg->direction ())
         {
         case AST_Argument::dir_IN:
           {
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
-                // declare a variable
-                *os << bt->name () << " " << arg->local_name ()
-                    << ";" << nl;
-                // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
-                // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << "const " << bt->nested_type_name (bif);
-              }
-            else
-              {
-                *os << "const " << bt->name ();
-              }
-          }
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
+                  // declare a variable
+                  *os << bt->name () << " " << arg->local_name ()
+                      << ";" << nl;
+                  // now define a NamedValue_ptr
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
+                  // declare an Any
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", " << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << "const " << bt->nested_type_name (bif);
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << "const " << bt->name ();
+                }
+              } // end switch state
+          } // end case
           break;
         case AST_Argument::dir_INOUT:
           {
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
                     // declare a variable
-                *os << bt->name ();
-                if (bt->size_type () == be_decl::VARIABLE)
-                  {
-                    *os << "_slice *";
-                  }
-                *os << " " << arg->local_name () << ";" << nl;
+                  *os << bt->name ();
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    {
+                      *os << "_slice *";
+                    }
+                  *os << " " << arg->local_name () << ";" << nl;
                     // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
                     // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                if (bt->size_type () == be_decl::VARIABLE)
-                  {
-                    *os << bt->nested_type_name (bif, "_slice") << " *";
-                  }
-                else
-                  {
-                    *os << bt->nested_type_name (bif);
-                  }
-              }
-            else
-              {
-                *os << bt->name ();
-                if (bt->size_type () == be_decl::VARIABLE)
-                  {
-                    *os << "_slice *";
-                  }
-              }
-          }
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", " << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    {
+                      *os << bt->nested_type_name (bif, "_slice") << " *";
+                    }
+                  else
+                    {
+                      *os << bt->nested_type_name (bif);
+                    }
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name ();
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    {
+                      *os << "_slice *";
+                    }
+                }
+              } // end switch state
+          } // end case
           break;
         case AST_Argument::dir_OUT:
           {
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
                     // declare a variable
-                *os << bt->name () << "_slice *" << arg->local_name () << ";" <<
-                  nl;
+                  *os << bt->name () << "_slice *" << arg->local_name () << ";" <<
+                    nl;
                     // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
                     // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", " << arg->local_name () <<
-                  ", 1); // ORB owns" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << bt->nested_type_name (bif, "_out") << " ";
-              }
-            else
-              {
-                *os << bt->name () << "_out";
-              }
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", " << arg->local_name () <<
+                    ", 1); // ORB owns" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_out") << " ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name () << "_out";
+                }
+              } // end switch state
           }
           break;
         } // end of switch direction
@@ -1976,183 +2217,254 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
         {
         case AST_Argument::dir_IN:
           {
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
-                // declare a variable
-                *os << bt->name () << " " << arg->local_name () <<
-                  ";" << nl;
-                // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
-                // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << "const " << bt->nested_type_name (bif) << " &";
-              }
-            else
-              {
-                *os << "const " << bt->name () << " &";
-              }
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
+                  // declare a variable
+                  *os << bt->name () << " " << arg->local_name () <<
+                    ";" << nl;
+                  // now define a NamedValue_ptr
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
+                  // declare an Any
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", &" << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << "const " << bt->nested_type_name (bif) << " &";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << "const " << bt->name () << " &";
+                }
+              } // end switch state
           }
           break;
         case AST_Argument::dir_INOUT:
           {
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
-                // declare a variable
-                *os << bt->name () << " " << arg->local_name () <<
-                  ";" << nl;
-                // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
-                // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << bt->nested_type_name (bif) << " &";
-              }
-            else
-              {
-                *os << bt->name () << " &";
-              }
-          }
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
+                  // declare a variable
+                  *os << bt->name () << " " << arg->local_name () <<
+                    ";" << nl;
+                  // now define a NamedValue_ptr
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
+                  // declare an Any
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", &" << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif) << " &";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name () << " &";
+                }
+              } // end switch state
+          } // end case
           break;
         case AST_Argument::dir_OUT:
           {
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
-                if (bt->size_type () == be_decl::VARIABLE)
-                  {
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    {
                     // declare a variable
-                    *os << bt->name () << " *" << arg->local_name () << ";" <<
-                      nl;
+                      *os << bt->name () << " *" << arg->local_name () << ";" <<
+                        nl;
+                      *os << bt->name () << "_out " << arg->local_name () <<
+                        "_out (" << arg->local_name () << ");" << nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", " << arg->local_name () <<
-                      ", 1); // ORB owns" << nl;
-                  }
-                else
-                  {
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", " << arg->local_name () <<
+                        ", 1); // ORB owns" << nl;
+                    }
+                  else
+                    {
                     // declare a variable
-                    *os << bt->name () << " " << arg->local_name () << ";" <<
-                      nl;
+                      *os << bt->name () << " " << arg->local_name () << ";" <<
+                        nl;
                     // now define a NamedValue_ptr
-                    *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                      ";" << nl;
+                      *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                        ";" << nl;
                     // declare an Any
-                    *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                      bt->tc_name () << ", &" << arg->local_name () <<
-                      ", 1); // ORB owns" << nl;
-                  }
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << bt->nested_type_name (bif, "_out") << " ";
-              }
-            else
-              {
-                *os << bt->name () << "_out";
+                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                        bt->tc_name () << ", &" << arg->local_name () <<
+                        ", 1); // ORB owns" << nl;
+                    } // end else
+                }
                 break;
-              }
-          }
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_out") << " ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    *os << arg->local_name () << "_out, ";
+                  else
+                    *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name () << "_out";
+                  break;
+                }
+              } // end switch state
+          } // end case
           break;
-        }
+        } // end switch direction
       break;
     case AST_Decl::NT_enum: // type is an enum
       switch (arg->direction ())
         {
         case AST_Argument::dir_IN:
           {
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
                     // declare a variable
-                *os << bt->name () << " " << arg->local_name () << ";" <<
-                  nl;
+                  *os << bt->name () << " " << arg->local_name () << ";" <<
+                    nl;
                     // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
                     // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << bt->nested_type_name (bif);
-              }
-            else
-              {
-                *os << bt->name ();
-              }
-          }
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", &" << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif);
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name ();
+                }
+              } // end of switch state
+          } // end case
           break;
         case AST_Argument::dir_INOUT:
           {
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
                     // declare a variable
-                *os << bt->name () << " " << arg->local_name () << ";" <<
-                  nl;
+                  *os << bt->name () << " " << arg->local_name () << ";" <<
+                    nl;
                     // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
                     // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << bt->nested_type_name (bif) << " &";
-              }
-            else
-              {
-                *os << bt->name () << " &";
-              }
-          }
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", &" << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif) << " &";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name () << " &";
+                }
+              } // end switch state
+          } // end case
           break;
         case AST_Argument::dir_OUT:
           {
-            if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS)
+            switch (cg->state ())
               {
+              case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
+                {
                     // declare a variable
-                *os << bt->name () << " " << arg->local_name () << ";" <<
-                  nl;
+                  *os << bt->name () << " " << arg->local_name () << ";" <<
+                    nl;
                     // now define a NamedValue_ptr
-                *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
-                  ";" << nl;
+                  *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
+                    ";" << nl;
                     // declare an Any
-                *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
-                  bt->tc_name () << ", &" << arg->local_name () <<
-                  "); // ORB does not own" << nl;
-              }
-            else if (cg->state () == TAO_CodeGen::TAO_ARGUMENT_CH)
-              {
-                // to keep the MSVC++ compiler happy
-                *os << bt->nested_type_name (bif, "_out") << " ";
-              }
-            else
-              {
-                *os << bt->name () << "_out";
-              }
-          }
+                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                    bt->tc_name () << ", &" << arg->local_name () <<
+                    "); // ORB does not own" << nl;
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_CH:
+              case TAO_CodeGen::TAO_ARGUMENT_SH:
+                {
+                  // to keep the MSVC++ compiler happy
+                  *os << bt->nested_type_name (bif, "_out") << " ";
+                }
+                break;
+              case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
+                {
+                  *os << arg->local_name () << ", ";
+                }
+                break;
+              default:
+                {
+                  *os << bt->name () << "_out";
+                }
+              } // end switch state
+          } // end case
           break;
-        }
+        } // end switch direction
       break;
     case AST_Decl::NT_except: // type is an exception
       {
@@ -2170,9 +2482,9 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
         temp = t->primitive_base_type ();
         // make a recursive call
         return this->gen_code (t, d, temp);
-      } // end of switch
+      } // end of case
       break;
-    }
+    } //end switch node type
   return 0;
 }
 
@@ -2222,6 +2534,8 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
     // base class of the typedef
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
+  // the typedef node has the same size type as its base type
+  tdef->size_type (bt->size_type ());
 
   switch (type->node_type ())
     {
@@ -2668,7 +2982,7 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
   // enclosing scope in which the typedef occurs
-  be_decl *scope = 
+  be_decl *scope =
     be_decl::narrow_from_decl (ScopeAsDecl (bt->defined_in ()));
 
   // for sequences, all we do is generate the type

@@ -328,6 +328,8 @@ int be_interface::gen_client_stubs (void)
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "CORBA::Environment env;" << nl;
+  *cs << "if (CORBA::is_nil (obj)) return " << this->name () << "::_nil ();" <<
+    nl;
   *cs << "if (obj->_is_a (\"" << this->repoID () << "\", env))" << nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -1291,7 +1293,7 @@ be_interface::gen_encapsulation (void)
 
   // XXXASG - byte order must be based on what m/c we are generating code -
   // TODO
-  *cs << "0, // byte order" << nl;
+  *cs << "MY_BYTE_SEX, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
   (void)this->tc_name2long (this->repoID (), arr, arrlen);
