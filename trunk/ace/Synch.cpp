@@ -19,6 +19,10 @@ ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Mutex)
 
+ACE_Lock::~ACE_Lock (void)
+{
+}
+
 ACE_TSS_Adapter::ACE_TSS_Adapter (void *object, ACE_THR_DEST f)
   : ts_obj_ (object),
     func_ (f)

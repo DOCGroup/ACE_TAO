@@ -1,3 +1,7 @@
+Sun Mar 01 10:59:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Synch.h (ACE_Lock): Added a virtual destructor to ACE_Lock.
+
 Sun Mar 01 08:38:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: use the new ACE_DEFAULT_SYNCH_TYPE for the default
@@ -6,7 +10,8 @@ Sun Mar 01 08:38:00 1998  David L. Levine  <levine@cs.wustl.edu>
           The ACE default can be easily overridden in config.h by
           defining ACE_DEFAULT_SYNCH_TYPE.
 
-        * ace/OS.i (sema_init): on VxWorks, use the type argument for the                sema type, instead of hard-coding to SEM_Q_FIFO.
+        * ace/OS.i (sema_init): on VxWorks, use the type argument for the
+ 	  sema type, instead of hard-coding to SEM_Q_FIFO.
 
         * ACE-INSTALL.html: updated Linux/alpha "as" patch.
 
