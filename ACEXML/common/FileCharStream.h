@@ -82,9 +82,15 @@ public:
   virtual void rewind (void);
 
   /*
-   * Get the character encoding for a byte stream or URI.
+   * Get the character encoding for the file.
    */
   virtual const ACEXML_Char *getEncoding (void);
+
+  /*
+   * Get the systemId for the underlying CharStream
+   */
+  virtual const ACEXML_Char* getSystemId (void);
+
 
 protected:
 

@@ -168,6 +168,12 @@ ACEXML_ZipCharStream::getEncoding (void)
   return this->encoding_;
 }
 
+const ACEXML_Char*
+ACEXML_ZipCharStream::getSystemId (void)
+{
+  return this->filename_;
+}
+
 #if defined (ACE_USES_WCHAR)
 int
 ACEXML_ZipCharStream::get_i (ACEXML_Char& ch)

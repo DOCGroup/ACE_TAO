@@ -1,3 +1,43 @@
+Tue Nov 19 20:18:09 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.cpp (normalize_systemid):
+
+          Fix an off-by-one error in normalization. The document's base
+          URI is never empty. Now we parse relative document URI
+          correctly.
+
+          Implement the previously unimplemented parsing from a systemId.
+
+        * common/InputSource.cpp:
+        * common/InputSource.h:
+
+          Implement creating an InputSource from a systemId.
+
+        * common/CharStream.h:
+
+          Added a new method getSystemId().
+
+        * common/FileCharStream.cpp:
+        * common/FileCharStream.h:
+        * common/HttpCharStream.cpp:
+        * common/HttpCharStream.h:
+        * common/ZipCharStream.cpp:
+        * common/ZipCharStream.h:
+        * common/StrCharStream.cpp:
+        * common/StrCharStream.h:
+
+          Added implementation for getSystemId().
+
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+
+          Synched up the printing of exception messages.
+
+        * examples/SAXPrint/main.cpp:
+
+          Fixed broken internal string version of a sample XML file.
+
 Tue Nov 19 15:02:06 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * apps/svcconf/XML_Svc_Conf_Parser.dsp:

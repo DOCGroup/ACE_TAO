@@ -9,8 +9,10 @@ ACEXML_StrCharStream::ACEXML_StrCharStream (void)
 {
 }
 
-ACEXML_StrCharStream::ACEXML_StrCharStream (const ACEXML_Char *str)
-  : start_ (0), ptr_ (0), end_ (0), encoding_ (0)
+ACEXML_StrCharStream::ACEXML_StrCharStream (const ACEXML_Char *str,
+                                            const ACEXML_Char* name)
+  : start_ (0), ptr_ (0), end_ (0), encoding_ (0),
+    name_ (name ? ACE::strnew (name) : 0)
 {
   this->open (str);
 }
@@ -24,8 +26,6 @@ ACEXML_StrCharStream::~ACEXML_StrCharStream (void)
 int
 ACEXML_StrCharStream::open (const ACEXML_Char *str)
 {
-  delete[] this->start_;
-  delete[] this->encoding_;
 
   if (str != 0 && (this->start_ = ACE::strnew (str)) != 0)
     {
@@ -53,6 +53,7 @@ ACEXML_StrCharStream::close (void)
 {
   delete[] this->start_;
   delete[] this->encoding_;
+  delete[] this->name_;
   this->start_ = this->ptr_ = this->end_ = 0;
   return 0;
 }
@@ -125,4 +126,10 @@ const ACEXML_Char*
 ACEXML_StrCharStream::getEncoding (void)
 {
   return this->encoding_;
+}
+
+const ACEXML_Char*
+ACEXML_StrCharStream::getSystemId(void)
+{
+  return this->name_;
 }

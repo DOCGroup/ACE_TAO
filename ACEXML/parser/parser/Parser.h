@@ -717,14 +717,14 @@ private:
    *  replace the current input stream with the newly created stream.
    */
   virtual int switch_input (ACEXML_CharStream* cstream,
-                            const ACEXML_Char* systemId = 0,
+                            const ACEXML_Char* systemId,
                             const ACEXML_Char* publicId = 0);
   /**
    *  Create a new ACEXML_InputSource from @a systemId and @a publicId and
    *  replace the current input source with the newly created InputSource.
    */
   virtual int switch_input (ACEXML_InputSource* input,
-                            const ACEXML_Char* systemId = 0,
+                            const ACEXML_Char* systemId,
                             const ACEXML_Char* publicId = 0);
 
   /**

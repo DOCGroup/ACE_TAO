@@ -118,10 +118,10 @@ public:
   virtual void setSystemId (const ACEXML_Char *systemId);
 
 private:
-  ACEXML_Char *publicId_;
-  ACEXML_Char *systemId_;
   ACEXML_CharStream *charStream_;
   ACEXML_Char *encoding_;
+  ACEXML_Char *publicId_;
+  ACEXML_Char *systemId_;
 };
 
 
