@@ -1357,16 +1357,8 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
 {
   if (tss_base () == 0)
     {
-      if (ts_storage == 0)
-        {
-          // Allocate an array off the heap for this thread's TSS.
-          ACE_NEW_RETURN (tss_base (), void *[ACE_TSS_THREAD_KEYS_MAX], 0);
-        }
-      else
-        {
-          // Use the supplied array for this thread's TSS.
-          tss_base () = ts_storage;
-        }
+      // Use the supplied array for this thread's TSS.
+      tss_base () = ts_storage;
 
       // Zero the entire TSS array.  Do it manually instead of using
       // memset, for optimum speed.
@@ -1379,17 +1371,6 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
   else
     {
       return 0;
-    }
-}
-
-void
-ACE_TSS_Emulation::tss_close (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
-{
-  if (ts_storage == 0)
-    {
-      // ts_storage had been dynamically allocated, so delete it.
-      delete [] tss_base ();
-      tss_base () = 0;
     }
 }
 
@@ -1522,12 +1503,6 @@ ACE_Thread_Adapter::invoke (void)
   // Call TSS destructors.
   ACE_OS::cleanup_tss (0 /* not main thread */);
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
-
-#if defined (ACE_HAS_TSS_EMULATION)
-  // Close the thread's local TS storage.  The argument just needs to
-  // be non-zero so that tss_close doesn't delete the storage.
-  ACE_TSS_Emulation::tss_close ((void **) 1);
-#endif /* ACE_HAS_TSS_EMULATION */
 
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   // Exit the thread.
