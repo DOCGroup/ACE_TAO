@@ -34,7 +34,9 @@
 <%if(pch_header)%>
                                 UsePrecompiledHeader="3"
                                 PrecompiledHeaderThrough="<%pch_header%>"
-                                PrecompiledHeaderFile="<%intermediate_dir%>\<%noextension(pch_header)%>.pch"
+<%if(pch_source)%>
+                                PrecompiledHeaderFile="<%intermediate_dir%>\<%noextension(pch_source)%>.pch"
+<%endif%>
 <%endif%>
                                 AssemblerListingLocation="<%intermediate_dir%>"
                                 ObjectFile="<%intermediate_dir%>"
@@ -43,6 +45,7 @@
 <%endif%>
                                 WarningLevel="<%warning_level("3")%>"
                                 SuppressStartupBanner="TRUE"
+                                Detect64BitPortabilityProblems="<%detect64("FALSE")%>"
 <%if(debug)%>
                                 DebugInformationFormat="<%debug_format("3")%>"
 <%endif%>
@@ -60,15 +63,15 @@
                                 AdditionalLibraryDirectories="<%foreach(libpaths)%><%libpath%><%fornotlast(";")%><%endfor%>"
 <%if(debug)%>
                                 GenerateDebugInformation="TRUE"
-<%endif%>
 <%if(pdb)%>
                                 ProgramDatabaseFileName="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%><%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%><%endif%><%if(type_is_static)%><%output_dir%>\<%staticdname%><%lib_modifier%><%endif%>.pdb"
+<%endif%>
 <%endif%>
                                 SubSystem="<%subsystem("2")%>"
 <%if(type_is_dynamic)%>
                                 ImportLibrary="<%sharedname%><%lib_modifier%>.lib"
 <%endif%>
-                       />
+/>
                        <Tool
                                 Name="VCPostBuildEventTool"/>
                        <Tool
@@ -138,7 +141,7 @@
                                                Name="VCCustomBuildTool"
                                                Description="Invoking TAO_IDL Compiler on <%idl_file%>"
                                                CommandLine="<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> <%idl_file%>"
-                                               Outputs="<%noextension(idl_file)%>C.h;<%noextension(idl_file)%>C.i;<%noextension(idl_file)%>C.cpp;<%noextension(idl_file)%>S.h;<%noextension(idl_file)%>S.i;<%noextension(idl_file)%>S.cpp;<%noextension(idl_file)%>S_T.h;<%noextension(idl_file)%>S_T.i;<%noextension(idl_file)%>S_T.cpp"
+                                               Outputs="<%noextension(idl_file)%>C.h;<%noextension(idl_file)%>C.i;<%noextension(idl_file)%>C.cpp;<%noextension(idl_file)%>S.h;<%noextension(idl_file)%>S.i;<%noextension(idl_file)%>S.cpp;<%noextension(idl_file)%>S_T.h;<%noextension(idl_file)%>S_T.i;<%noextension(idl_file)%>S_T.cpp"/>
                                 </FileConfiguration>
 <%endfor%>
                         </File>
@@ -177,7 +180,7 @@
 <%endif%>
 <%if(documentation_files)%>
                 <Filter
-                        Name="Documentation Files"
+                        Name="Documentation"
                         Filter="">
 <%foreach(documentation_files)%>
                         <File
